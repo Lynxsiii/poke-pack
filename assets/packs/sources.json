@@ -1,0 +1,36 @@
+{
+  "source": "https://pokesymbols.com/tcg/booster-pack-art",
+  "urlPattern": "https://pokesymbols.com/images/tcg/sets/booster-pack-art/{set-slug}-pack-{n}.avif",
+  "note": "Newer sets are isolated AVIFs with real alpha. Vintage Base Set files from the same folder are tight pack photos without alpha.",
+  "sets": {
+      "me5": {
+      "name": "Pitch Black",
+      "slug": "pitch-black",
+      "packs": [
+        { "id": "chandelure", "remote": "pitch-black-pack-0.avif", "file": "me5/chandelure.avif" },
+        { "id": "darkrai", "remote": "pitch-black-pack-1.avif", "file": "me5/darkrai.avif" },
+        { "id": "excadrill", "remote": "pitch-black-pack-2.avif", "file": "me5/excadrill.avif" },
+        { "id": "zeraora", "remote": "pitch-black-pack-3.avif", "file": "me5/zeraora.avif" }
+      ]
+    },
+    "me4": {
+      "name": "Chaos Rising",
+      "slug": "chaos-rising",
+      "packs": [
+        { "id": "dragalge", "remote": "chaos-rising-pack-0.avif", "file": "me4/dragalge.avif" },
+        { "id": "floette", "remote": "chaos-rising-pack-1.avif", "file": "me4/floette.avif" },
+        { "id": "greninja", "remote": "chaos-rising-pack-2.avif", "file": "me4/greninja.avif" },
+        { "id": "pyroar", "remote": "chaos-rising-pack-3.avif", "file": "me4/pyroar.avif" }
+      ]
+    },
+    "base1": {
+      "name": "Base",
+      "slug": "base-set",
+      "packs": [
+        { "id": "charizard", "remote": "base-set-pack-0.avif", "file": "base1/charizard.avif" },
+        { "id": "venusaur", "remote": "base-set-pack-1.avif", "file": "base1/venusaur.avif" },
+        { "id": "blastoise", "remote": "base-set-pack-2.avif", "file": "base1/blastoise.avif" }
+      ]
+    }
+  }
+}

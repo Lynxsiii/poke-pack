@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>poke-pack.rip — rip packs, fill the binder</title>
+    <meta
+      name="description"
+      content="Rip Pokémon TCG booster packs with the real printed pull rates and real card scans. Free, fan-made, no real money — start on the newest English set and work back to Base Set."
+    />
+    <meta name="theme-color" content="#09070d" />
+    <link rel="canonical" href="https://poke-pack.rip/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="poke-pack.rip" />
+    <meta property="og:url" content="https://poke-pack.rip/" />
+    <meta property="og:title" content="poke-pack.rip — rip packs, fill the binder" />
+    <meta
+      property="og:description"
+      content="Real booster odds. Real card scans. No real money."
+    />
+    <meta property="og:image" content="https://poke-pack.rip/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="poke-pack.rip — rip packs, fill the binder" />
+    <meta name="twitter:description" content="Real booster odds. Real card scans. No real money." />
+    <meta name="twitter:image" content="https://poke-pack.rip/assets/og.png" />
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>" />
+    <link rel="apple-touch-icon" href="assets/icon-180.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.scrydex.com" />
+    <link rel="preconnect" href="https://images.pokemontcg.io" />
+    <link rel="preconnect" href="https://s3.limitlesstcg.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body class="on-home">
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="#">
+        <div class="mark">P</div>
+        <div>
+          <div class="brand-name">poke-pack<span>.rip</span></div>
+          <span class="brand-sub">newest first</span>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <button class="nav-btn active" data-view="home">Home</button>
+        <button class="nav-btn" data-view="shop">Packs</button>
+        <button class="nav-btn" data-view="collection">Binder</button>
+        <button class="nav-btn" data-view="catalog">Catalog</button>
+        <span class="nav-sep"></span>
+        <button class="nav-btn" data-view="account">Account</button>
+        <button class="nav-btn" data-view="settings">Settings</button>
+      </nav>
+      <div class="header-right">
+        <div class="pill gold">✦ <span id="coin-count">0</span></div>
+        <button class="claim" id="daily-btn">Claim daily</button>
+      </div>
+    </header>
+
+    <noscript>
+      <div class="noscript-note">
+        <b>poke-pack.rip needs JavaScript.</b>
+        The pack simulator runs entirely in your browser — turn JavaScript on for
+        this site and reload to open packs and keep a binder.
+      </div>
+    </noscript>
+
+    <main class="wrap">
+      <section id="view-home" class="home-page">
+        <div class="home-hero">
+          <div class="home-copy">
+            <p class="kicker" id="home-kicker">Fan-made pack simulator</p>
+            <h1>Rip packs.<br /><em>Fill the binder.</em></h1>
+            <p class="lede">
+              Real booster odds. Real card scans. No real money. Start on the
+              newest English set and work backwards toward Base Set.
+            </p>
+            <div class="home-cta">
+              <button class="solid" type="button" data-goto="shop">Rip a pack</button>
+              <button class="ghost" type="button" data-goto="collection">Open binder</button>
+            </div>
+            <div class="home-pulse" id="home-pulse"></div>
+          </div>
+          <div class="home-stage" id="home-stage"></div>
+        </div>
+        <div id="home-body"></div>
+      </section>
+
+      <section id="view-shop" class="hidden">
+        <div class="set-switcher" id="set-switcher"></div>
+        <div class="hero">
+          <div>
+            <p class="kicker" id="shop-kicker">Mega Evolution · July 2026</p>
+            <h1 id="shop-title">Pitch Black.</h1>
+            <p class="lede" id="shop-lede">
+              Real booster math. Real card scans. Ten cards plus a basic Energy —
+              reverse, a rare slot, and an art slot.
+            </p>
+            <div class="stats">
+              <div class="stat"><b id="stat-owned">0</b><span id="stat-owned-label">Pitch Black cards</span></div>
+              <div class="stat"><b id="stat-packs">0</b><span>Packs ripped</span></div>
+              <div class="stat"><b id="stat-pulls">0</b><span>Cards pulled</span></div>
+            </div>
+          </div>
+          <div class="hero-art" id="hero-art"></div>
+        </div>
+
+        <div class="section-head">
+          <div>
+            <h2 id="shop-pack-title">Pitch Black boosters</h2>
+            <p id="shop-pack-sub">Same 11-card pack. Four wrappers from the July 2026 print.</p>
+          </div>
+          <p class="pack-odds" id="shop-odds">DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081</p>
+        </div>
+        <div class="pack-grid" id="pack-grid"></div>
+      </section>
+
+      <section id="view-collection" class="hidden">
+        <div class="section-head">
+          <div>
+            <h2 id="binder-title">Pitch Black binder</h2>
+            <p id="dex-label">0 / 120</p>
+          </div>
+        </div>
+        <div class="dex-bar"><span id="dex-fill"></span></div>
+        <p class="binder-note" id="binder-note"></p>
+        <div class="collection-tools">
+          <input class="search" id="search" placeholder="Search name, number, or artist" />
+          <select class="filter" id="rarity-filter">
+            <option value="all">All rarities</option>
+          </select>
+          <select class="filter" id="owned-filter">
+            <option value="all">Owned & missing</option>
+            <option value="owned">Owned only</option>
+            <option value="missing">Missing only</option>
+            <option value="dupes">Duplicates</option>
+          </select>
+        </div>
+        <details class="rarity-key" id="rarity-key">
+          <summary>Rarity symbols</summary>
+          <div class="rarity-key-body" id="rarity-key-body"></div>
+        </details>
+        <div class="binder-grid" id="dex-grid"></div>
+      </section>
+
+      <section id="view-catalog" class="hidden">
+        <div class="section-head">
+          <div>
+            <h2>The long game</h2>
+            <p>Every English set, newest to oldest. Playable sets are live; Base Set waits at the end of the list.</p>
+          </div>
+        </div>
+        <div id="catalog-eras"></div>
+      </section>
+
+      <section id="view-account" class="hidden">
+        <div class="section-head">
+          <div>
+            <h2>Account</h2>
+            <p>Everything lives in this browser for now. Sign-in and cloud saves are next.</p>
+          </div>
+        </div>
+        <div id="account-body"></div>
+      </section>
+
+      <section id="view-settings" class="hidden">
+        <div class="section-head">
+          <div>
+            <h2>Settings</h2>
+            <p>Tune how cards look and behave. Changes save as you make them.</p>
+          </div>
+        </div>
+        <div id="settings-body"></div>
+      </section>
+    </main>
+
+    <div class="overlay hidden" id="overlay" role="dialog" aria-modal="true" aria-label="Opening a booster pack">
+      <div class="rip-stage">
+        <p class="rip-hint" id="rip-hint">Grab the top and drag across to rip it open</p>
+        <div class="booster" id="pack-body">
+          <div class="pack-rest" id="pack-rest"><div class="pack-art" id="pack-rest-art"></div></div>
+          <div class="pack-mouth" id="pack-mouth"></div>
+          <div class="pack-scrap" id="pack-top"><div class="pack-art" id="pack-top-art"></div></div>
+          <button class="tear-handle" type="button" aria-label="Grab the top"></button>
+          <svg class="tear-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path id="tear-edge" class="tear-edge" fill="none" />
+          </svg>
+          <div class="tear-crumbs" id="tear-crumbs" aria-hidden="true"></div>
+        </div>
+        <div class="focus-wrap hidden" id="focus-wrap">
+          <div class="focus-meta" id="focus-meta"></div>
+          <div class="focus-stage">
+            <div class="focus-aura" id="focus-aura" aria-hidden="true"></div>
+            <div class="hit-fx" id="hit-fx" aria-hidden="true"></div>
+            <button class="focus-nav prev" id="focus-prev" type="button" aria-label="Previous card">‹</button>
+            <div class="focus-card" id="focus-card"></div>
+            <button class="focus-nav next" id="focus-next" type="button" aria-label="Next card">›</button>
+          </div>
+          <p class="focus-sub" id="hit-banner"></p>
+        </div>
+        <div class="spread hidden" id="spread"></div>
+        <div class="thumbs" id="thumbs"></div>
+        <div class="overlay-actions hidden" id="overlay-actions">
+          <button class="solid" id="step-btn">Tear pack</button>
+          <button class="ghost accent hidden" id="skip-hits-btn" title="Jump to reverse, rare, and art slots">Skip to rares</button>
+          <button class="ghost hidden" id="skip-btn">Reveal all</button>
+          <button class="solid hidden" id="done-btn">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="inspect" role="dialog" aria-modal="true" aria-labelledby="inspect-info">
+      <div class="inspect-stage">
+        <button class="ghost inspect-close" id="inspect-close">Close</button>
+        <div class="inspect-grid">
+          <div class="inspect-art" id="inspect-art"></div>
+          <div class="inspect-info" id="inspect-info"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <footer class="site-footer">
+      <span>poke-pack.rip is a fan-made pack simulator. Not affiliated with Nintendo, Game Freak, Wizards of the Coast, or The Pokémon Company.</span>
+      <span>Card names, numbers, artists, and scans match the public Pokémon TCG card database (the same catalog as pokemon.com/us/pokemon-tcg/pokemon-cards).</span>
+    </footer>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

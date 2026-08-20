@@ -1,0 +1,2324 @@
+import {
+  PLAYABLE_SETS,
+  DEFAULT_SET_ID,
+  getSet,
+  ROADMAP,
+  RARITY_ORDER,
+  RARITY_LABEL,
+  RARITY_MARK,
+  RARITY_GROUPS,
+  BASIC_ENERGY,
+  sellValue,
+  rarityKey,
+  setIdentity,
+} from "./catalog.js";
+import { ripPack, HIT_RARITIES } from "./engine.js";
+import {
+  loadState,
+  saveState,
+  canClaimDaily,
+  claimDaily,
+  ownedCount,
+  addPull,
+  sellOne,
+  resetProgress,
+  importState,
+  msUntilDaily,
+  DAILY_BONUS,
+} from "./state.js";
+
+const state = loadState();
+const setCache = {};
+let liveSet = getSet(state.activeSetId);
+let cards = [];
+let setCards = [];
+let byId = {};
+let view = "home";
+let currentPulls = [];
+let packPhase = "idle";
+let focusIndex = 0;
+let activeWrapper = liveSet.wrappers[0];
+let tearing = false;
+let tearStart = { x: 0, y: 0 };
+let lastPointer = { x: 0, y: 0 };
+let tearCut = 0;
+let tearLift = 0;
+let tearDir = null;
+let tearAnim = 0;
+let tearPose = { dx: 0, dy: 0, rot: 0 };
+let lastCrumbCut = 0;
+let flipBusy = false;
+let handoffTimer = 0;
+let packExiting = false;
+let showStrip = false;
+
+const els = {
+  coinCount: document.getElementById("coin-count"),
+  dailyBtn: document.getElementById("daily-btn"),
+  packGrid: document.getElementById("pack-grid"),
+  setSwitcher: document.getElementById("set-switcher"),
+  heroArt: document.getElementById("hero-art"),
+  shopKicker: document.getElementById("shop-kicker"),
+  shopTitle: document.getElementById("shop-title"),
+  shopLede: document.getElementById("shop-lede"),
+  shopPackTitle: document.getElementById("shop-pack-title"),
+  shopPackSub: document.getElementById("shop-pack-sub"),
+  shopOdds: document.getElementById("shop-odds"),
+  binderTitle: document.getElementById("binder-title"),
+  statOwned: document.getElementById("stat-owned"),
+  statOwnedLabel: document.getElementById("stat-owned-label"),
+  statPacks: document.getElementById("stat-packs"),
+  statPulls: document.getElementById("stat-pulls"),
+  viewHome: document.getElementById("view-home"),
+  viewShop: document.getElementById("view-shop"),
+  viewCollection: document.getElementById("view-collection"),
+  viewCatalog: document.getElementById("view-catalog"),
+  viewAccount: document.getElementById("view-account"),
+  viewSettings: document.getElementById("view-settings"),
+  homeKicker: document.getElementById("home-kicker"),
+  homePulse: document.getElementById("home-pulse"),
+  homeStage: document.getElementById("home-stage"),
+  homeBody: document.getElementById("home-body"),
+  accountBody: document.getElementById("account-body"),
+  settingsBody: document.getElementById("settings-body"),
+  dexGrid: document.getElementById("dex-grid"),
+  binderNote: document.getElementById("binder-note"),
+  dexFill: document.getElementById("dex-fill"),
+  dexLabel: document.getElementById("dex-label"),
+  search: document.getElementById("search"),
+  rarityFilter: document.getElementById("rarity-filter"),
+  rarityKeyBody: document.getElementById("rarity-key-body"),
+  ownedFilter: document.getElementById("owned-filter"),
+  catalogEras: document.getElementById("catalog-eras"),
+  overlay: document.getElementById("overlay"),
+  packBody: document.getElementById("pack-body"),
+  packTop: document.getElementById("pack-top"),
+  packRest: document.getElementById("pack-rest"),
+  packTopArt: document.getElementById("pack-top-art"),
+  packRestArt: document.getElementById("pack-rest-art"),
+  packMouth: document.getElementById("pack-mouth"),
+  tearEdge: document.getElementById("tear-edge"),
+  crumbs: document.getElementById("tear-crumbs"),
+  focusWrap: document.getElementById("focus-wrap"),
+  focusMeta: document.getElementById("focus-meta"),
+  focusAura: document.getElementById("focus-aura"),
+  focusCard: document.getElementById("focus-card"),
+  focusPrev: document.getElementById("focus-prev"),
+  focusNext: document.getElementById("focus-next"),
+  hitFx: document.getElementById("hit-fx"),
+  hitBanner: document.getElementById("hit-banner"),
+  spread: document.getElementById("spread"),
+  thumbs: document.getElementById("thumbs"),
+  ripHint: document.getElementById("rip-hint"),
+  overlayActions: document.getElementById("overlay-actions"),
+  stepBtn: document.getElementById("step-btn"),
+  skipHitsBtn: document.getElementById("skip-hits-btn"),
+  skipBtn: document.getElementById("skip-btn"),
+  doneBtn: document.getElementById("done-btn"),
+  inspect: document.getElementById("inspect"),
+  inspectArt: document.getElementById("inspect-art"),
+  inspectInfo: document.getElementById("inspect-info"),
+  inspectClose: document.getElementById("inspect-close"),
+  toast: document.getElementById("toast"),
+};
+
+/*
+ * Both overlays are real dialogs now. `inert` takes everything underneath out
+ * of the tab order so focus cannot wander into the page behind an open pack,
+ * and focus returns to whatever opened the dialog when it closes.
+ */
+const dialogStack = [];
+
+function backdropNodes() {
+  return [document.querySelector(".site-header"), document.querySelector(".wrap"), document.querySelector(".site-footer")];
+}
+
+function openDialog(el, firstFocus) {
+  if (dialogStack.some((entry) => entry.el === el)) return;
+  const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  if (!dialogStack.length) backdropNodes().forEach((n) => n && (n.inert = true));
+  else dialogStack.at(-1).el.inert = true;
+  dialogStack.push({ el, opener });
+  el.classList.remove("hidden");
+  const visible = (n) => n instanceof HTMLElement && n.offsetParent !== null && !n.disabled;
+  const target =
+    (visible(firstFocus) && firstFocus) ||
+    [...el.querySelectorAll("button, [href], input, select")].find(visible) ||
+    el;
+  if (target === el && !el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
+  target.focus({ preventScroll: true });
+}
+
+function closeDialog(el) {
+  const index = dialogStack.findIndex((entry) => entry.el === el);
+  el.classList.add("hidden");
+  if (index < 0) return;
+  const [entry] = dialogStack.splice(index, 1);
+  if (!dialogStack.length) backdropNodes().forEach((n) => n && (n.inert = false));
+  else dialogStack.at(-1).el.inert = false;
+  const opener = entry.opener;
+  const back =
+    opener && opener.isConnected && opener.offsetParent !== null
+      ? opener
+      : document.querySelector(".nav-btn.active");
+  back?.focus?.({ preventScroll: true });
+}
+
+/** Keep Tab inside the topmost dialog. */
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Tab" || !dialogStack.length) return;
+  const el = dialogStack.at(-1).el;
+  const focusable = [...el.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter(
+    (n) => !n.disabled && n.offsetParent !== null
+  );
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+});
+
+function toast(msg) {
+  els.toast.textContent = msg;
+  els.toast.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => els.toast.classList.remove("show"), 2400);
+}
+
+function esc(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function packPicture(wrap, extraAlt = "", set = liveSet) {
+  const alt = extraAlt || `${wrap.name} ${set.name} booster pack`;
+  const fallback = wrap.artFallback || wrap.art;
+  return `<picture>
+    <source srcset="${esc(wrap.art)}" type="image/avif" />
+    <img src="${esc(fallback)}" alt="${esc(alt)}" draggable="false" />
+  </picture>`;
+}
+
+function isExCard(card) {
+  return Boolean(
+    card?.subtypes?.some((s) => String(s).toLowerCase() === "ex") ||
+      /(^|\s)ex$/i.test(card?.name || "")
+  );
+}
+
+function hasEvoCircle(card) {
+  const subs = card?.subtypes || [];
+  return subs.includes("Stage 1") || subs.includes("Stage 2") || Boolean(card?.evolvesFrom);
+}
+
+function foilClass(card) {
+  if (!card) return "";
+  if (card.reverse) return "rare-glow";
+  if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "holo";
+  return "";
+}
+
+/**
+ * Reverse holos foil the card body (name, attacks, frame) and leave the
+ * picture matte. Regular holos do the opposite: rainbow on the art window.
+ * Pokémon ex, IRs, and chases keep a whole-card treatment.
+ */
+function foilPattern(card) {
+  if (!card) return "foil-none";
+  if (card.reverse) return "foil-reverse";
+  if (card.rarity === "Mega Hyper Rare") return "foil-gold";
+  if (card.rarity === "Special Illustration Rare") return "foil-sir";
+  if (card.rarity === "Illustration Rare") return "foil-ir";
+  if (isExCard(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) return "foil-ex";
+  if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "foil-holo";
+  return "foil-none";
+}
+
+function rarityPips(rarity) {
+  const mark = RARITY_MARK[rarity];
+  if (!mark) return "";
+  return mark.pips
+    .map(([glyph, tone]) => `<i class="pip tone-${tone}">${glyph}</i>`)
+    .join("");
+}
+
+function rarityMark(card) {
+  const pips = rarityPips(card.rarity);
+  if (!pips) return "";
+  const label = card.reverse
+    ? `Reverse holo · ${RARITY_LABEL[card.rarity] || card.rarity}`
+    : RARITY_LABEL[card.rarity] || card.rarity;
+  return `<span class="focus-mark${card.reverse ? " rev" : ""}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
+}
+
+/** Printed rarity mark, bottom-right of the card so it reads at a glance. */
+function rarityStamp(card, extraClass = "") {
+  const pips = rarityPips(card.rarity);
+  if (!pips) return "";
+  const label = card.reverse
+    ? `Reverse holo · ${RARITY_LABEL[card.rarity] || card.rarity}`
+    : RARITY_LABEL[card.rarity] || card.rarity;
+  const rev = card.reverse ? " rev" : "";
+  return `<span class="rarity-stamp${rev}${extraClass}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
+}
+
+function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
+  if (!card) return cardBack();
+  const src = small ? card.imageSmall : card.image;
+  const reverse = card.reverse ? "reverse" : "";
+  const evo = hasEvoCircle(card) ? "foil-evo" : "";
+  const load = lazy ? ` loading="lazy" decoding="async"` : ` decoding="async"`;
+  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${foilPattern(card)} ${reverse} ${evo}"
+    style="--art:url('${esc(src)}')">
+    <img src="${esc(src)}" alt="${esc(card.name)}"${load} />
+    <span class="foil" aria-hidden="true"></span>
+    <span class="glare" aria-hidden="true"></span>
+    ${stamp ? rarityStamp(card) : ""}
+  </div>`;
+}
+
+function cardBack() {
+  return `<div class="tcg back">
+    <img src="${esc(liveSet.cardBack)}" alt="Pokémon TCG card back" draggable="false" />
+  </div>`;
+}
+
+function setOwned() {
+  return ownedCount(state, setCards);
+}
+
+function numberLine(card) {
+  if (card.energy || card.number === "—") return "Energy";
+  const total = String(liveSet.printedTotal);
+  const width = Math.max(3, total.length);
+  return `${String(card.number).padStart(width, "0")}/${total.padStart(width, "0")}`;
+}
+
+function rarityLine(card) {
+  const label = RARITY_LABEL[card.rarity] || card.rarity;
+  return card.reverse ? `Reverse · ${label}` : label;
+}
+
+function fillRarityFilter() {
+  const current = els.rarityFilter.value || "all";
+  const present = new Set(cards.map((card) => card.rarity));
+  const inSet = RARITY_ORDER.filter((r) => present.has(r));
+  els.rarityFilter.innerHTML = [
+    `<option value="all">All rarities</option>`,
+    ...inSet.map((r) => `<option value="${esc(r)}">${esc(RARITY_LABEL[r] || r)}</option>`),
+  ].join("");
+  els.rarityFilter.value = [...els.rarityFilter.options].some((o) => o.value === current)
+    ? current
+    : "all";
+}
+
+function renderRarityKey() {
+  if (!els.rarityKeyBody) return;
+  const present = new Set(cards.map((card) => card.rarity));
+  els.rarityKeyBody.innerHTML = RARITY_GROUPS.map((group) => {
+    const rows = RARITY_ORDER.filter(
+      (r) => RARITY_MARK[r]?.group === group.id && r !== "Energy"
+    );
+    if (!rows.length) return "";
+    const items = rows
+      .map((r) => {
+        const here = present.has(r) ? "in-set" : "";
+        return `<span class="key-item ${here}">${rarityPips(r)}<b>${esc(RARITY_LABEL[r] || r)}</b></span>`;
+      })
+      .join("");
+    return `<div class="key-row">
+      <span class="key-era">${esc(group.label)} <b>${esc(group.era)}</b>${
+        group.note ? ` <i>${esc(group.note)}</i>` : ""
+      }</span>
+      <div class="key-items">${items}</div>
+    </div>`;
+  }).join("");
+}
+
+/** "Ready in 5h 12m" — coarse when far off, to the second in the last minute. */
+function waitLabel(ms) {
+  const total = Math.ceil(ms / 1000);
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const sec = total % 60;
+  if (h) return `Ready in ${h}h ${m}m`;
+  if (m) return `Ready in ${m}m`;
+  return `Ready in ${sec}s`;
+}
+
+function renderHeader() {
+  const wait = msUntilDaily(state);
+  els.coinCount.textContent = state.coins.toLocaleString();
+  els.dailyBtn.disabled = wait > 0;
+  els.dailyBtn.textContent = wait > 0 ? waitLabel(wait) : `Claim +${DAILY_BONUS}`;
+  els.statOwned.textContent = `${setOwned()}/${liveSet.totalCount}`;
+  if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
+  els.statPacks.textContent = state.packsOpened;
+  els.statPulls.textContent = state.pulls;
+}
+
+function renderSetChrome() {
+  const wrapCount = liveSet.wrappers.length;
+  const month = liveSet.released.replace(/ \d+,/, "");
+  if (els.shopKicker) els.shopKicker.textContent = `${liveSet.edition} · ${month}`;
+  if (els.shopTitle) els.shopTitle.textContent = `${liveSet.name}.`;
+  if (els.shopLede) els.shopLede.textContent = liveSet.lede || liveSet.blurb;
+  if (els.shopPackTitle) els.shopPackTitle.textContent = `${liveSet.name} boosters`;
+  if (els.shopPackSub) {
+    els.shopPackSub.textContent = `${liveSet.packSize}-card pack. ${wrapCount} wrapper${
+      wrapCount === 1 ? "" : "s"
+    } from the ${month} print.`;
+  }
+  if (els.shopOdds) els.shopOdds.textContent = liveSet.oddsLine;
+  if (els.binderTitle) els.binderTitle.textContent = `${liveSet.name} binder`;
+  document.title = `poke-pack.rip — ${liveSet.name}`;
+}
+
+function renderSwitcher() {
+  if (!els.setSwitcher) return;
+  const ripping = packPhase !== "idle";
+  els.setSwitcher.innerHTML = PLAYABLE_SETS.map((set) => {
+    const on = set.id === liveSet.id ? "active" : "";
+    return `<button type="button" class="set-tab ${on}" data-set="${esc(set.id)}" ${
+      ripping ? "disabled" : ""
+    }>
+      <b>${esc(set.name)}</b>
+      <span>${esc(set.edition)}</span>
+    </button>`;
+  }).join("");
+}
+
+function renderHero() {
+  els.heroArt.innerHTML = liveSet.heroIds
+    .map((id, i) => {
+      const card = byId[id];
+      return `<div class="float-card" style="animation-delay:${-i * 1.4}s">${tcgFace(card, { small: true })}</div>`;
+    })
+    .join("");
+}
+
+function renderShop() {
+  renderSetChrome();
+  renderSwitcher();
+  els.packGrid.innerHTML = liveSet.wrappers
+    .map((wrap) => {
+      const affordable = state.coins >= liveSet.cost;
+      return `<article class="pack-card" data-wrapper="${wrap.id}">
+        <div class="pack-tag">${wrap.tag}</div>
+        <div class="shop-wrapper">
+          ${packPicture(wrap)}
+        </div>
+        <h3>${wrap.name} pack</h3>
+        <p class="blurb">${liveSet.blurb}</p>
+        <div class="pack-meta">
+          <span class="cost">✦ ${liveSet.cost}</span>
+          <button class="buy" ${affordable ? "" : "disabled"}>
+            ${affordable ? "Rip pack" : "Need coins"}
+          </button>
+        </div>
+      </article>`;
+    })
+    .join("");
+}
+
+async function activateSet(id) {
+  if (packPhase !== "idle") {
+    toast("Finish this pack first.");
+    return;
+  }
+  const next = getSet(id);
+  if (next.id === liveSet.id && setCards.length) return;
+  try {
+    if (!setCache[next.id]) {
+      setCache[next.id] = await fetch(next.dataFile).then((r) => {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      });
+    }
+  } catch {
+    toast(`Couldn't load ${next.name}.`);
+    return;
+  }
+  liveSet = next;
+  state.activeSetId = next.id;
+  saveState(state);
+  setCards = setCache[next.id];
+  cards = [...setCards, ...BASIC_ENERGY];
+  byId = Object.fromEntries(cards.map((c) => [c.id, c]));
+  activeWrapper = liveSet.wrappers[0];
+  fillRarityFilter();
+  renderHero();
+  renderHeader();
+  renderShop();
+  renderCollection();
+  renderCatalog();
+  if (view === "home") renderHome();
+  if (view === "account") renderAccount();
+}
+
+function renderCollection() {
+  const q = els.search.value.trim().toLowerCase();
+  const rarity = els.rarityFilter.value;
+  const ownedMode = els.ownedFilter.value;
+  const owned = setOwned();
+  els.dexLabel.textContent = `${owned} / ${liveSet.totalCount} ${liveSet.name}`;
+  els.dexFill.style.width = `${(owned / liveSet.totalCount) * 100}%`;
+
+  const list = cards.filter((card) => {
+    const count = state.collection[card.id] || 0;
+    if (rarity !== "all" && card.rarity !== rarity) return false;
+    if (ownedMode === "owned" && count < 1) return false;
+    if (ownedMode === "missing" && count > 0) return false;
+    if (ownedMode === "dupes" && count < 2) return false;
+    if (card.energy && count < 1) return false;
+    if (
+      q &&
+      !card.name.toLowerCase().includes(q) &&
+      !String(card.number).includes(q) &&
+      !(card.artist || "").toLowerCase().includes(q)
+    ) {
+      return false;
+    }
+    return true;
+  });
+
+  if (els.binderNote) {
+    els.binderNote.textContent =
+      "Spare copies can be sold for coins — the last copy of a card always stays in the binder.";
+  }
+
+  els.dexGrid.innerHTML = list
+    .map((card) => {
+      const count = state.collection[card.id] || 0;
+      const missing = count < 1;
+      const face = missing ? null : withOwnedFoil(card);
+      const sell =
+        count > 1
+          ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell extra · +${sellValue(card)}</button>`
+          : "";
+      return `<article class="binder-slot ${missing ? "missing" : ""}">
+        ${count > 1 ? `<span class="count-badge">×${count}</span>` : ""}
+        <button type="button" class="slot-face" ${face ? inspectAttrs(face) : `data-inspect="${esc(card.id)}"`}>
+          ${missing ? cardBack() : tcgFace(face, { small: true, lazy: true })}
+        </button>
+        <div class="slot-meta">
+          <b>${missing ? "Unpulled" : esc(card.name)}</b>
+          <span>${esc(numberLine(card))} · ${rarityPips(card.rarity)} ${esc(rarityLine(face || card))}</span>
+        </div>
+        ${sell}
+      </article>`;
+    })
+    .join("");
+}
+
+function catalogCard(set, { live = false } = {}) {
+  const { logo, symbol } = setIdentity(set);
+  const eager = live ? `fetchpriority="high"` : `loading="lazy"`;
+  const released = set.released;
+  const count = live ? set.totalCount : set.cards;
+  const note = live
+    ? `${set.edition} · ${set.packSize}-card boosters`
+    : set.note || "Queued for poke-pack.rip";
+  return `<article class="catalog-card ${live ? "live" : ""}">
+    <div class="catalog-head">
+      <img class="catalog-symbol" src="${esc(symbol)}" alt="" width="24" height="24"
+        loading="lazy" decoding="async" />
+      ${live ? `<span class="live-tag">Live</span>` : `<span class="soon">Coming</span>`}
+    </div>
+    <div class="catalog-art">
+      <img class="catalog-logo" src="${esc(logo)}" alt="${esc(set.name)} set logo"
+        ${eager} decoding="async" />
+      <span class="logo-fallback">${esc(set.name)}</span>
+    </div>
+    <h3>${esc(set.name)}</h3>
+    <div class="catalog-meta">
+      <span>${esc(released)}</span>
+      <span>${count === "—" ? "Count TBA" : `${esc(count)} cards`}</span>
+    </div>
+    <p class="catalog-note">${esc(note)}</p>
+  </article>`;
+}
+
+/** Newest-first list, so the last entry holds the earliest year. */
+function eraYears(sets) {
+  const years = sets
+    .map((set) => String(set.released).match(/\d{4}/)?.[0])
+    .filter(Boolean);
+  if (!years.length) return "";
+  const newest = years[0];
+  const oldest = years[years.length - 1];
+  return newest === oldest ? newest : `${oldest}–${newest}`;
+}
+
+function renderCatalog() {
+  const queued = ROADMAP.reduce((total, era) => total + era.sets.length, 0);
+  const summary = `<div class="catalog-summary">
+    <span class="now"><b>${PLAYABLE_SETS.length}</b> playable now</span>
+    <span><b>${queued}</b> sets queued</span>
+    <span><b>${ROADMAP.length}</b> eras</span>
+  </div>`;
+
+  const eras = ROADMAP.map((era, index) => {
+    const live = index === 0
+      ? PLAYABLE_SETS.map((set) => catalogCard(set, { live: true })).join("")
+      : "";
+    const rest = era.sets.map((set) => catalogCard(set)).join("");
+    const count = era.sets.length + (index === 0 ? PLAYABLE_SETS.length : 0);
+    return `<section class="era-block">
+      <div class="era-head">
+        <h3>${esc(era.era)}</h3>
+        <span class="era-span">${eraYears(era.sets)}</span>
+        <span class="era-rule"></span>
+        <span class="era-count">${count} set${count === 1 ? "" : "s"}</span>
+      </div>
+      <div class="catalog-grid">${live}${rest}</div>
+    </section>`;
+  }).join("");
+
+  els.catalogEras.innerHTML = summary + eras;
+}
+
+/* ---- Home / Account / Settings ------------------------------------------ */
+
+const num = (n) => Number(n || 0).toLocaleString();
+
+function completion() {
+  const total = setCards.length || liveSet.totalCount || 0;
+  const owned = setOwned();
+  return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
+}
+
+function findCard(id) {
+  if (byId[id]) return byId[id];
+  for (const list of Object.values(setCache)) {
+    const hit = list?.find((c) => c.id === id);
+    if (hit) return hit;
+  }
+  return null;
+}
+
+function ownedReverse(id) {
+  return (state.reverses?.[id] || 0) > 0;
+}
+
+/** Binder / inspect copies: reverse foil if this print was pulled as a reverse. */
+function withOwnedFoil(card) {
+  if (!card) return card;
+  if (card.reverse || ownedReverse(card.id)) return { ...card, reverse: true };
+  return card;
+}
+
+function inspectAttrs(card) {
+  const rev = card.reverse ? ` data-reverse="1"` : "";
+  return `data-inspect="${esc(card.id)}"${rev}`;
+}
+
+function historyCards(entries, limit) {
+  return entries
+    .map((entry) => {
+      const card = findCard(entry.id);
+      if (!card) return null;
+      return entry.reverse ? { ...card, reverse: true } : card;
+    })
+    .filter(Boolean)
+    .slice(0, limit);
+}
+
+function miniCardRow(cards, emptyNote, rowClass = "") {
+  if (!cards.length) return `<p class="panel-empty">${esc(emptyNote)}</p>`;
+  return `<div class="mini-row ${rowClass}">${cards
+    .map(
+      (card) => `<button type="button" class="mini-card" ${inspectAttrs(card)}
+      title="${esc(card.name)}" aria-label="${esc(card.name)}">${tcgFace(card, { small: true })}</button>`
+    )
+    .join("")}</div>`;
+}
+
+function ownedInSet(set) {
+  const prefix = `${set.id}-`;
+  return Object.entries(state.collection).reduce(
+    (n, [id, count]) => n + (count > 0 && id.startsWith(prefix) ? 1 : 0),
+    0
+  );
+}
+
+const HOME_ODDS = [
+  ["Double rare", "1/5"],
+  ["Ultra rare", "1/12"],
+  ["Illustration", "1/9"],
+  ["Special art", "1/80"],
+  ["Gold", "1/1081"],
+];
+
+function renderHome() {
+  const { owned, total, pct } = completion();
+  const hits = historyCards(
+    state.history.filter((entry) => HIT_RARITIES.has(entry.rarity)),
+    8
+  );
+  const recent = historyCards(state.history, 8);
+  const chase = liveSet.heroIds.map((id) => byId[id]).filter(Boolean);
+  const queued = ROADMAP.reduce((n, era) => n + era.sets.length, 0);
+  const upcoming = ROADMAP[0]?.sets.slice(0, 4) || [];
+  const origin = ROADMAP.at(-1)?.sets.at(-1);
+
+  if (els.homeKicker) {
+    els.homeKicker.textContent = `Fan-made · ${liveSet.edition} · ${liveSet.released}`;
+  }
+
+  if (els.homePulse) {
+    els.homePulse.innerHTML = `
+      <div class="home-ring" style="--pct:${pct}" title="${esc(liveSet.name)} binder">
+        <span><b>${pct}%</b><small>set</small></span>
+      </div>
+      <div class="home-pulse-stat"><b>✦ ${num(state.coins)}</b><span>Coins</span></div>
+      <div class="home-pulse-stat"><b>${num(state.packsOpened)}</b><span>Packs ripped</span></div>
+      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>${esc(liveSet.name)}</span></div>`;
+  }
+
+  if (els.homeStage) {
+    const packs = liveSet.wrappers
+      .slice(0, 2)
+      .map((wrap) => `<div class="home-pack-float">${packPicture(wrap)}</div>`)
+      .join("");
+    const fan = chase
+      .map(
+        (card, i) =>
+          `<button type="button" class="home-float" data-inspect="${esc(card.id)}"
+            style="animation-delay:${(-i * 1.35).toFixed(2)}s" aria-label="${esc(card.name)}">
+            ${tcgFace(card, { small: true })}
+          </button>`
+      )
+      .join("");
+    els.homeStage.innerHTML = `<div class="home-stage-glow"></div>
+      <div class="home-stage-packs">${packs}</div>
+      <div class="home-fan">${fan}</div>`;
+  }
+
+  const setTiles = PLAYABLE_SETS.map((set) => {
+    const have = ownedInSet(set);
+    const pctSet = set.totalCount ? Math.round((have / set.totalCount) * 100) : 0;
+    const fan = set.wrappers
+      .slice(0, 3)
+      .map((wrap) => `<div class="home-set-pack">${packPicture(wrap, "", set)}</div>`)
+      .join("");
+    return `<button type="button" class="home-set" data-play-set="${esc(set.id)}" data-set="${esc(set.id)}">
+      <div class="home-set-fan">${fan}</div>
+      <div class="home-set-copy">
+        <span class="live-tag">Live</span>
+        <h3>${esc(set.name)}</h3>
+        <p>${esc(set.edition)} · ${esc(set.released)}</p>
+        <div class="home-set-meta"><span>Binder</span><b>${have} / ${set.totalCount}</b></div>
+        <div class="dex-bar"><span style="width:${pctSet}%"></span></div>
+      </div>
+    </button>`;
+  }).join("");
+
+  const pullsBlock = hits.length || recent.length
+    ? `${hits.length ? `<div class="home-block">
+          <div class="home-block-head">
+            <div>
+              <h2>Best pulls</h2>
+              <p>Hits from packs you’ve already torn.</p>
+            </div>
+            <button type="button" class="text-btn" data-goto="collection">Binder →</button>
+          </div>
+          ${miniCardRow(hits, "", "home-film")}
+        </div>` : ""}
+        ${recent.length ? `<div class="home-block">
+          <div class="home-block-head">
+            <div>
+              <h2>Just pulled</h2>
+              <p>Newest cards first.</p>
+            </div>
+          </div>
+          ${miniCardRow(recent, "", "home-film")}
+        </div>` : ""}`
+    : `<div class="home-block">
+        <div class="home-block-head">
+          <div>
+            <h2>On the hunt</h2>
+            <p>Art from ${esc(liveSet.name)}. Rip a pack to start the binder.</p>
+          </div>
+        </div>
+        ${miniCardRow(chase, "Load a set to see the chase.", "home-film")}
+      </div>`;
+
+  const upcomingChips = upcoming
+    .map((set) => `<span class="home-chip">${esc(set.name)}</span>`)
+    .join("");
+  const originChip = origin
+    ? `<span class="home-chip origin">${esc(origin.name)}</span>`
+    : "";
+
+  els.homeBody.innerHTML = `
+    <div class="home-block">
+      <div class="home-block-head">
+        <div>
+          <h2>Live now</h2>
+          <p>${PLAYABLE_SETS.length} playable sets · same 11-card math on every wrapper.</p>
+        </div>
+        <button type="button" class="text-btn" data-goto="shop">All packs →</button>
+      </div>
+      <div class="home-sets">${setTiles}</div>
+    </div>
+
+    <div class="home-block">
+      <div class="home-block-head">
+        <div>
+          <h2>How it works</h2>
+          <p>No checkout. Coins in this browser, odds from the printed set.</p>
+        </div>
+      </div>
+      <div class="home-steps">
+        <article class="home-step">
+          <b>01</b>
+          <h3>Claim coins</h3>
+          <p>Daily stack in the header. Spend them on boosters — nothing costs real money.</p>
+        </article>
+        <article class="home-step">
+          <b>02</b>
+          <h3>Tear the wrapper</h3>
+          <p>Drag the pack open, then flip cards one by one. Skip to rares if you want the hits first.</p>
+        </article>
+        <article class="home-step">
+          <b>03</b>
+          <h3>Stamp the binder</h3>
+          <p>Every pull lands in the set binder. Sell extras for coins and keep hunting the art.</p>
+        </article>
+      </div>
+    </div>
+
+    ${pullsBlock}
+
+    <div class="home-block">
+      <div class="home-block-head">
+        <div>
+          <h2>${esc(liveSet.name)} odds</h2>
+          <p>${esc(liveSet.oddsLine)}</p>
+        </div>
+      </div>
+      <div class="home-odds">${HOME_ODDS.map(
+        ([label, rate]) => `<div class="home-odd"><b>${rate}</b><span>${esc(label)}</span></div>`
+      ).join("")}</div>
+    </div>
+
+    <div class="home-block">
+      <div class="home-block-head">
+        <div>
+          <h2>The long game</h2>
+          <p>${PLAYABLE_SETS.length} live · ${queued} queued, newest first, all the way to Base Set.</p>
+        </div>
+        <button type="button" class="text-btn" data-goto="catalog">Full catalog →</button>
+      </div>
+      <div class="home-road">${upcomingChips}${originChip}</div>
+    </div>`;
+}
+
+function renderAccount() {
+  const { pct } = completion();
+  const since = new Date(state.createdAt || Date.now()).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  const unique = Object.values(state.collection).filter((n) => n > 0).length;
+
+  els.accountBody.innerHTML = `
+    <div class="account-card">
+      <div class="account-id">
+        <div class="mark lg">P</div>
+        <div>
+          <h3>Local player</h3>
+          <p>Playing since ${esc(since)} · saved in this browser</p>
+        </div>
+        <span class="soon">Guest</span>
+      </div>
+      <div class="panel-stats wide">
+        <div><b>✦ ${num(state.coins)}</b><span>Coins</span></div>
+        <div><b>${num(state.packsOpened)}</b><span>Packs ripped</span></div>
+        <div><b>${num(state.pulls)}</b><span>Cards pulled</span></div>
+        <div><b>${num(unique)}</b><span>Unique cards</span></div>
+        <div><b>${pct}%</b><span>${esc(liveSet.name)} complete</span></div>
+      </div>
+    </div>
+
+    <div class="panel-grid two">
+      <div class="panel">
+        <h3>Your save</h3>
+        <p class="panel-note">
+          Progress lives in this browser only, so clearing site data wipes it.
+          Download a copy to be safe.
+        </p>
+        <div class="save-actions">
+          <button class="ghost" id="export-save">Download save file</button>
+          <button class="ghost" id="import-save">Load save file</button>
+          <input type="file" id="import-file" accept="application/json,.json" hidden />
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Coming soon</h3>
+        <ul class="soon-list">
+          <li>Sign in and sync across devices</li>
+          <li>Public binder pages to show off pulls</li>
+          <li>Trading with other collectors</li>
+        </ul>
+      </div>
+    </div>`;
+}
+
+const SETTING_ROWS = [
+  ["shine", "Card shine", "Gloss highlight that follows your cursor across a card."],
+  ["tilt", "Card tilt", "Cards lean toward the cursor in 3D on hover."],
+  ["stamps", "Rarity stamps", "Show the rarity symbol in the corner of every card."],
+  ["motion", "Idle animation", "Slow shimmer on foiled cards when you're not touching them."],
+];
+
+function renderSettings() {
+  const rows = SETTING_ROWS.map(
+    ([key, label, note]) => `<label class="toggle-row">
+      <span>
+        <b>${esc(label)}</b>
+        <small>${esc(note)}</small>
+      </span>
+      <input type="checkbox" data-setting="${key}" ${state.settings[key] ? "checked" : ""} />
+      <i class="switch" aria-hidden="true"></i>
+    </label>`
+  ).join("");
+
+  els.settingsBody.innerHTML = `
+    <div class="panel">
+      <h3>Cards</h3>
+      <div class="toggle-list">${rows}</div>
+    </div>
+    <div class="panel danger">
+      <h3>Reset progress</h3>
+      <p class="panel-note">
+        Clears coins, binder, and history. Your settings stay. This cannot be undone.
+      </p>
+      <button class="ghost danger-btn" id="reset-progress">Reset everything</button>
+    </div>`;
+}
+
+function applySettings() {
+  const { shine, tilt, stamps, motion } = state.settings;
+  document.body.classList.toggle("no-shine", !shine);
+  document.body.classList.toggle("no-tilt", !tilt);
+  document.body.classList.toggle("no-stamps", !stamps);
+  document.body.classList.toggle("no-motion", !motion);
+}
+
+const VIEW_SECTIONS = {
+  home: "viewHome",
+  shop: "viewShop",
+  collection: "viewCollection",
+  catalog: "viewCatalog",
+  account: "viewAccount",
+  settings: "viewSettings",
+};
+
+const VIEW_RENDER = {
+  home: () => renderHome(),
+  collection: () => renderCollection(),
+  catalog: () => renderCatalog(),
+  account: () => renderAccount(),
+  settings: () => renderSettings(),
+};
+
+function setView(next) {
+  view = next;
+  for (const [name, key] of Object.entries(VIEW_SECTIONS)) {
+    els[key]?.classList.toggle("hidden", view !== name);
+  }
+  document.querySelectorAll(".nav-btn").forEach((btn) => {
+    const on = btn.dataset.view === view;
+    btn.classList.toggle("active", on);
+    if (on) btn.setAttribute("aria-current", "page");
+    else btn.removeAttribute("aria-current");
+  });
+  VIEW_RENDER[view]?.();
+  document.body.classList.toggle("on-home", view === "home");
+}
+
+function remainingBacks() {
+  return currentPulls.filter((card) => !card.drawn).length;
+}
+
+function motionOk() {
+  return !document.body.classList.contains("no-motion");
+}
+
+function hitTier(card) {
+  if (!card) return 0;
+  if (card.rarity === "Mega Hyper Rare" || card.rarity === "Special Illustration Rare") return 3;
+  if (HIT_RARITIES.has(card.rarity)) return 2;
+  if (card.rarity === "Rare" || card.reverse) return 1;
+  return 0;
+}
+
+const TYPE_AURA = {
+  Grass: "rgba(72, 196, 86, 0.52)",
+  Fire: "rgba(255, 92, 48, 0.55)",
+  Water: "rgba(48, 148, 236, 0.55)",
+  Lightning: "rgba(255, 208, 40, 0.52)",
+  Psychic: "rgba(204, 88, 204, 0.52)",
+  Fighting: "rgba(204, 88, 48, 0.5)",
+  Darkness: "rgba(96, 72, 144, 0.55)",
+  Metal: "rgba(176, 192, 208, 0.48)",
+  Dragon: "rgba(232, 176, 48, 0.55)",
+  Fairy: "rgba(255, 132, 188, 0.52)",
+  Colorless: "rgba(204, 196, 180, 0.36)",
+  Trainer: "rgba(240, 120, 48, 0.5)",
+};
+
+function cardType(card) {
+  if (card?.types?.[0]) return card.types[0];
+  const name = card?.name || "";
+  for (const type of Object.keys(TYPE_AURA)) {
+    if (type !== "Colorless" && type !== "Trainer" && name.includes(type)) return type;
+  }
+  if (card?.supertype === "Trainer") return "Trainer";
+  return "Colorless";
+}
+
+function isRainbowAura(card) {
+  return card?.rarity === "Special Illustration Rare" || card?.rarity === "Mega Hyper Rare";
+}
+
+function typeAura(card) {
+  return TYPE_AURA[cardType(card)] || TYPE_AURA.Colorless;
+}
+
+function auraColor(card, faceUp) {
+  if (!faceUp || !card) return "transparent";
+  return typeAura(card);
+}
+
+const AURA_FADE_MS = 420;
+let auraTimer = 0;
+let auraGen = 0;
+
+function glowKey(pull, faceUp) {
+  if (!faceUp || !pull) return "off";
+  if (isRainbowAura(pull)) return "rainbow";
+  return typeAura(pull);
+}
+
+function setGlowOn(on) {
+  els.overlay.classList.toggle("glow-on", Boolean(on));
+  els.focusWrap.classList.toggle("revealed", Boolean(on));
+}
+
+function applyFocusChrome(pull, faceUp) {
+  const wrap = els.focusWrap;
+  const rainbow = Boolean(faceUp && isRainbowAura(pull));
+  const glow = auraColor(pull, faceUp);
+  wrap.classList.toggle("rainbow", rainbow);
+  els.overlay.classList.toggle("rainbow", rainbow);
+  wrap.classList.toggle("is-hit", Boolean(faceUp && hitTier(pull) >= 2 && !rainbow));
+  wrap.classList.toggle("is-legend", rainbow);
+  wrap.classList.toggle("is-reverse", Boolean(faceUp && pull.reverse && !rainbow));
+  wrap.style.setProperty("--aura", glow);
+  els.overlay.style.setProperty("--aura", glow);
+  els.focusAura.classList.toggle("rays", rainbow);
+}
+
+function syncFocusChrome(pull, faceUp, { snap } = {}) {
+  const next = glowKey(pull, faceUp);
+  const current = els.focusWrap.dataset.glow || "off";
+  const gen = ++auraGen;
+  clearTimeout(auraTimer);
+  auraTimer = 0;
+
+  const snapClasses = (on) => {
+    els.focusWrap.classList.toggle("aura-snap", on);
+    els.overlay.classList.toggle("aura-snap", on);
+  };
+
+  const commit = (withSnap) => {
+    if (gen !== auraGen) return;
+    if (withSnap) snapClasses(true);
+    applyFocusChrome(pull, faceUp);
+    els.focusWrap.dataset.glow = next;
+    setGlowOn(next !== "off");
+    if (withSnap) {
+      void els.focusWrap.offsetWidth;
+      snapClasses(false);
+    }
+  };
+
+  if (snap || !motionOk()) {
+    commit(true);
+    return;
+  }
+
+  if (current === next) {
+    applyFocusChrome(pull, faceUp);
+    setGlowOn(next !== "off");
+    return;
+  }
+
+  const fadeIn = () => {
+    if (gen !== auraGen) return;
+    applyFocusChrome(pull, faceUp);
+    els.focusWrap.dataset.glow = next;
+    if (next === "off") {
+      setGlowOn(false);
+      return;
+    }
+    setGlowOn(false);
+    void els.focusAura.offsetWidth;
+    requestAnimationFrame(() => {
+      if (gen !== auraGen) return;
+      setGlowOn(true);
+    });
+  };
+
+  if (current !== "off") {
+    setGlowOn(false);
+    auraTimer = setTimeout(fadeIn, AURA_FADE_MS);
+    return;
+  }
+
+  fadeIn();
+}
+
+function clearFocusChrome(opts = {}) {
+  syncFocusChrome(null, false, opts);
+}
+
+function hitStartIndex() {
+  return Math.max(0, currentPulls.length - 3);
+}
+
+function canSkipToHits() {
+  if (packPhase !== "reveal") return false;
+  const start = hitStartIndex();
+  return currentPulls.slice(0, start).some((card) => !card.revealed);
+}
+
+function slotHints() {
+  const hints = [];
+  for (const slot of liveSet.slots) {
+    const label =
+      slot.pool === "energy"
+        ? "E"
+        : slot.pool === "common"
+          ? "C"
+          : slot.pool === "uncommon"
+            ? "U"
+            : slot.pool === "reverse"
+              ? "RH"
+              : slot.pool === "rare-slot"
+                ? "★"
+                : slot.pool === "art-slot"
+                  ? "✦"
+                  : "•";
+    const kind =
+      slot.pool === "rare-slot" || slot.pool === "art-slot"
+        ? "hit"
+        : slot.pool === "reverse"
+          ? "rev"
+          : slot.pool === "energy"
+            ? "energy"
+            : "basic";
+    for (let i = 0; i < slot.count; i += 1) hints.push({ label, kind });
+  }
+  return hints;
+}
+
+function renderFocusMeta(pull) {
+  if (!pull || !pull.revealed) {
+    els.focusMeta.innerHTML = "";
+    els.focusMeta.classList.remove("in");
+    els.hitBanner.innerHTML = "";
+    els.hitBanner.classList.remove("on");
+    return;
+  }
+  const bits = [liveSet.name, numberLine(pull), pull.types?.join(" / ")].filter(Boolean);
+  els.focusMeta.innerHTML = `
+    <p class="focus-kicker">${esc(bits.join(" · "))} ${rarityMark(pull)}</p>
+    <h2 class="focus-title">${esc(pull.name)}</h2>`;
+  els.hitBanner.innerHTML = "";
+  els.hitBanner.classList.remove("on");
+}
+
+function syncActions() {
+  const ready = packPhase === "ready";
+  const reveal = packPhase === "reveal";
+  const spread = packPhase === "spread";
+  const pull = currentPulls[focusIndex];
+  els.overlayActions.classList.toggle("hidden", packPhase === "idle");
+  els.stepBtn.classList.toggle("hidden", spread);
+  els.skipBtn.classList.toggle("hidden", !(ready || reveal));
+  els.skipHitsBtn.classList.toggle("hidden", !canSkipToHits());
+  els.doneBtn.classList.toggle("hidden", !spread);
+  els.ripHint.classList.toggle("hidden", reveal || spread);
+  els.thumbs.classList.toggle("hidden", !(reveal && showStrip));
+  els.skipBtn.textContent = ready ? "Skip to pack" : "Reveal all";
+  if (ready) els.stepBtn.textContent = "Tear pack";
+  else if (reveal && pull && !pull.revealed) els.stepBtn.textContent = flipBusy ? "Flipping…" : "Flip";
+  else if (reveal && remainingBacks()) els.stepBtn.textContent = "Next card";
+  else if (reveal) els.stepBtn.textContent = "See the pack";
+
+  const canPrev = reveal && !flipBusy && currentPulls.some((card, i) => i < focusIndex && card.drawn);
+  const canNext =
+    reveal &&
+    !flipBusy &&
+    (Boolean(pull && pull.drawn && !pull.revealed) ||
+      currentPulls.some((card, i) => i > focusIndex && card.drawn) ||
+      remainingBacks() > 0 ||
+      Boolean(pull && pull.revealed));
+  els.focusPrev.disabled = !canPrev;
+  els.focusNext.disabled = !canNext;
+  els.focusPrev.classList.toggle("hidden", !reveal);
+  els.focusNext.classList.toggle("hidden", !reveal);
+}
+
+function renderThumbs() {
+  const hints = slotHints();
+  els.thumbs.innerHTML = currentPulls
+    .map((card, i) => {
+      const hint = hints[i] || { label: String(i + 1), kind: "basic" };
+      if (!card.revealed) {
+        return `<div class="thumb empty ${hint.kind}" title="${esc(hint.label)}">${esc(hint.label)}</div>`;
+      }
+      const hit = hitTier(card) >= 2 ? "hit" : card.reverse ? "rev" : "";
+      return `<button type="button" class="thumb ${hit} ${i === focusIndex ? "current" : ""}"
+        data-focus="${i}" title="${esc(card.name)} · ${esc(rarityLine(card))}">
+        ${tcgFace(card, { small: true, stamp: false })}
+      </button>`;
+    })
+    .join("");
+}
+
+function clearHitFx() {
+  clearTimeout(playHitFx._t);
+  playHitFx._t = 0;
+  els.hitFx.replaceChildren();
+  els.overlay.classList.remove("hit-flash", "hit-shake");
+}
+
+function playHitFx(card) {
+  const tier = hitTier(card);
+  clearHitFx();
+  if (!tier || !motionOk()) return;
+  const count = tier === 3 ? 28 : tier === 2 ? 18 : 10;
+  for (let i = 0; i < count; i += 1) {
+    const spark = document.createElement("span");
+    spark.className = `hit-spark t${tier}`;
+    const angle = (Math.PI * 2 * i) / count + Math.random() * 0.35;
+    const dist = 70 + Math.random() * (50 + tier * 36);
+    spark.style.setProperty("--sx", `${Math.cos(angle) * dist}px`);
+    spark.style.setProperty("--sy", `${Math.sin(angle) * dist}px`);
+    spark.style.setProperty("--dly", `${Math.random() * 140}ms`);
+    els.hitFx.appendChild(spark);
+  }
+  els.overlay.classList.add("hit-flash");
+  if (tier >= 3) els.overlay.classList.add("hit-shake");
+  clearTimeout(playHitFx._t);
+  playHitFx._t = setTimeout(() => {
+    els.overlay.classList.remove("hit-flash", "hit-shake");
+    els.hitFx.replaceChildren();
+  }, tier === 3 ? 1600 : 980);
+}
+
+function mountFocus(pull, opts = {}) {
+  const faceUp = opts.faceUp ?? pull.revealed;
+  const deal = opts.deal ?? !faceUp;
+  const foil = HIT_RARITIES.has(pull.rarity) ? "hit" : pull.reverse ? "reverse" : "";
+  const tier = hitTier(pull);
+  els.focusCard.style.transform = "";
+  els.focusCard.style.setProperty("--flip-ms", tier >= 2 ? "0.92s" : tier === 1 ? "0.72s" : "0.62s");
+  els.focusCard.className = `focus-card ${rarityKey(pull.rarity)} ${foil} t${tier}`;
+  els.focusCard.innerHTML = `
+    <div class="pull-lift">
+      <div class="pull-inner">
+        <div class="face-front">${cardBack()}</div>
+        <div class="face-back">${tcgFace(pull)}${pull.wasNew ? `<span class="new-badge">NEW</span>` : ""}</div>
+      </div>
+    </div>`;
+  syncFocusChrome(pull, faceUp, { snap: opts.snap });
+  if (faceUp) {
+    els.focusCard.classList.add("no-anim", "flipped", "settled");
+    void els.focusCard.offsetWidth;
+    els.focusCard.classList.remove("no-anim");
+  } else if (deal) {
+    if (opts.fromPack) els.focusCard.classList.add("from-pack");
+    void els.focusCard.offsetWidth;
+    els.focusCard.classList.add("deal");
+  }
+  renderFocusMeta(pull);
+  if (faceUp) els.focusMeta.classList.add("in");
+  renderThumbs();
+  syncActions();
+}
+
+function showPullAt(index, { deal = false } = {}) {
+  const pull = currentPulls[index];
+  if (!pull || !pull.drawn || flipBusy) return;
+  if (index === focusIndex) return;
+  focusIndex = index;
+  clearHitFx();
+  els.packBody.classList.add("hidden");
+  els.overlay.classList.add("dealing");
+  els.focusWrap.classList.remove("hidden");
+  mountFocus(pull, { faceUp: pull.revealed, deal, snap: true });
+}
+
+function packHitLine() {
+  const hits = currentPulls.filter((card) => HIT_RARITIES.has(card.rarity));
+  if (hits.some((c) => c.rarity === "Mega Hyper Rare")) return "Gold Mega Hyper Rare. That’s the one.";
+  if (hits.some((c) => c.rarity === "Special Illustration Rare")) return "Special Illustration Rare in the pack.";
+  if (hits.length) return `${hits.map((c) => RARITY_LABEL[c.rarity]).join(" · ")} pulled.`;
+  return "Pack ripped.";
+}
+
+function bestPull() {
+  return currentPulls.reduce((best, card) => {
+    if (!best) return card;
+    return RARITY_ORDER.indexOf(card.rarity) > RARITY_ORDER.indexOf(best.rarity) ? card : best;
+  }, null);
+}
+
+function showSpread() {
+  flipBusy = false;
+  packPhase = "spread";
+  clearHitFx();
+  clearHandoff();
+  clearFocusChrome({ snap: true });
+  els.packBody.classList.add("hidden", "emptied");
+  els.focusWrap.classList.add("hidden");
+  els.thumbs.innerHTML = "";
+  els.spread.classList.remove("hidden");
+
+  const worth = currentPulls.reduce((sum, card) => sum + sellValue(card), 0);
+  const fresh = currentPulls.filter((card) => card.wasNew).length;
+  const best = bestPull();
+
+  const cardsHtml = currentPulls
+    .map((card, i) => {
+      const hit = HIT_RARITIES.has(card.rarity) ? "hit" : "";
+      const top = best && card.id === best.id ? "top-pull" : "";
+      return `<button type="button" class="spread-card ${hit} ${top}"
+          style="animation-delay:${i * 45}ms"
+          ${inspectAttrs(card)}
+          title="${esc(card.name)} · ${esc(rarityLine(card))}">
+        ${tcgFace(card, { small: true })}
+        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
+      </button>`;
+    })
+    .join("");
+
+  els.spread.innerHTML = `
+    <div class="spread-head">
+      <p class="spread-kicker">${esc(liveSet.name)} · pack #${state.packsOpened}</p>
+      <h2>${esc(packHitLine())}</h2>
+      <div class="spread-stats">
+        <span><b>${currentPulls.length}</b> cards</span>
+        <span><b>${fresh}</b> new</span>
+        <span><b>✦ ${worth.toLocaleString()}</b> value</span>
+        ${best ? `<span class="best">${rarityPips(best.rarity)} <b>${esc(best.name)}</b></span>` : ""}
+      </div>
+    </div>
+    <div class="spread-grid">${cardsHtml}</div>
+    <p class="spread-tip">Click a card to look closer</p>`;
+
+  els.ripHint.textContent = "";
+  syncActions();
+}
+
+function drawNext(opts = {}) {
+  const next = currentPulls.find((card) => !card.drawn);
+  if (!next) {
+    showSpread();
+    return;
+  }
+  next.drawn = true;
+  focusIndex = currentPulls.indexOf(next);
+  els.packBody.classList.add("hidden");
+  els.overlay.classList.add("dealing");
+  els.focusWrap.classList.remove("hidden");
+  clearHitFx();
+  mountFocus(next, { faceUp: false, deal: true, fromPack: opts.fromPack });
+}
+
+function afterFlip() {
+  if (!flipBusy) return;
+  flipBusy = false;
+  els.focusCard.classList.remove("flipping");
+  els.focusCard.classList.add("settled");
+  const pull = currentPulls[focusIndex];
+  if (pull) {
+    syncFocusChrome(pull, true);
+    renderFocusMeta(pull);
+    requestAnimationFrame(() => els.focusMeta.classList.add("in"));
+  }
+  syncActions();
+}
+
+function flipCurrent() {
+  const pull = currentPulls[focusIndex];
+  if (!pull || pull.revealed || flipBusy) return;
+  flipBusy = true;
+  pull.revealed = true;
+  const tier = hitTier(pull);
+  els.focusCard.classList.add("flipping");
+  void els.focusCard.offsetWidth;
+  els.focusCard.classList.add("flipped");
+  if (tier) playHitFx(pull);
+  renderThumbs();
+  syncActions();
+  const inner = els.focusCard.querySelector(".pull-inner");
+  let settled = false;
+  const settle = (event) => {
+    if (event && event.propertyName && event.propertyName !== "transform") return;
+    if (settled) return;
+    settled = true;
+    inner?.removeEventListener("transitionend", settle);
+    afterFlip();
+  };
+  inner?.addEventListener("transitionend", settle);
+  setTimeout(settle, tier >= 2 ? 1080 : tier === 1 ? 840 : 760);
+}
+
+function goPrevCard() {
+  if (packPhase !== "reveal" || flipBusy) return;
+  for (let i = focusIndex - 1; i >= 0; i -= 1) {
+    if (currentPulls[i].drawn) {
+      showPullAt(i);
+      return;
+    }
+  }
+}
+
+function advanceOpen() {
+  if (packPhase !== "reveal" || flipBusy) return;
+  const pull = currentPulls[focusIndex];
+  if (!pull) return;
+  if (pull.drawn && !pull.revealed) {
+    flipCurrent();
+    return;
+  }
+  const nextDrawn = currentPulls.findIndex((card, i) => i > focusIndex && card.drawn);
+  if (nextDrawn >= 0) {
+    showPullAt(nextDrawn);
+    return;
+  }
+  if (remainingBacks()) {
+    drawNext();
+    return;
+  }
+  showSpread();
+}
+
+function skipToHits() {
+  if (!canSkipToHits() || flipBusy) return;
+  const start = hitStartIndex();
+  currentPulls.forEach((card, i) => {
+    if (i < start) {
+      card.drawn = true;
+      card.revealed = true;
+    }
+  });
+  const pull = currentPulls[start];
+  pull.drawn = true;
+  focusIndex = start;
+  clearHitFx();
+  els.packBody.classList.add("hidden");
+  els.overlay.classList.add("dealing");
+  els.focusWrap.classList.remove("hidden");
+  els.spread.classList.add("hidden");
+  mountFocus(pull, { faceUp: pull.revealed, deal: !pull.revealed, snap: true });
+}
+
+function revealAllCards() {
+  if (packPhase === "ready") {
+    tearing = false;
+    packExiting = false;
+    cancelTearAnim();
+    clearHandoff();
+    els.packBody.classList.add("hidden", "emptied");
+    packPhase = "reveal";
+  }
+  if (packPhase !== "reveal") return;
+  currentPulls.forEach((card) => {
+    card.drawn = true;
+    card.revealed = true;
+  });
+  showSpread();
+}
+
+function setPackArt(wrap) {
+  const html = packPicture(wrap);
+  els.packTopArt.innerHTML = html;
+  els.packRestArt.innerHTML = html;
+}
+
+function cancelTearAnim() {
+  if (tearAnim) {
+    cancelAnimationFrame(tearAnim);
+    tearAnim = 0;
+  }
+}
+
+const TEAR_BASE = 6.6;
+let TEAR = [];
+
+// Fresh zigzag per pack so no two rips look identical.
+function buildTearPath() {
+  const pts = [];
+  let x = 0;
+  let up = Math.random() > 0.5;
+  while (x < 99) {
+    const swing = 0.45 + Math.random() * 1.75;
+    pts.push([x, clamp(TEAR_BASE + (up ? -swing : swing), 3.2, 9.8)]);
+    x += 1.8 + Math.random() * 4.2;
+    up = !up;
+  }
+  pts.push([100, TEAR_BASE + (Math.random() - 0.5) * 1.4]);
+  TEAR = pts;
+}
+
+buildTearPath();
+
+function tearY(x) {
+  const t = clamp(x, 0, 100);
+  for (let i = 0; i < TEAR.length - 1; i++) {
+    const [x0, y0] = TEAR[i];
+    const [x1, y1] = TEAR[i + 1];
+    if (t >= x0 && t <= x1) {
+      const u = x1 === x0 ? 0 : (t - x0) / (x1 - x0);
+      return y0 + (y1 - y0) * u;
+    }
+  }
+  return TEAR[TEAR.length - 1][1];
+}
+
+function jagged(from, to) {
+  const lo = Math.min(from, to);
+  const hi = Math.max(from, to);
+  const mids = TEAR.filter(([x]) => x > lo + 1e-6 && x < hi - 1e-6);
+  const pts = [[from, tearY(from)]];
+  if (from <= to) pts.push(...mids);
+  else pts.push(...mids.slice().reverse());
+  if (Math.abs(to - from) > 1e-6) pts.push([to, tearY(to)]);
+  return pts;
+}
+
+function poly(pts) {
+  return `polygon(${pts.map(([x, y]) => `${x.toFixed(2)}% ${y.toFixed(2)}%`).join(", ")})`;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+// Tearing rightward starts at the left edge, and vice versa.
+function tearFront(cut = tearCut) {
+  return tearDir === "left" ? 100 - cut * 100 : cut * 100;
+}
+
+// The strip that has already come loose, from the start edge to the tear front.
+function flapPoly(front) {
+  const f = clamp(front + (tearDir === "left" ? -0.7 : 0.7), 0, 100);
+  return tearDir === "left"
+    ? poly([[f, 0], [100, 0], ...jagged(100, f)])
+    : poly([[0, 0], [f, 0], ...jagged(f, 0)]);
+}
+
+// The pack minus that strip — the top stays intact ahead of the tear.
+function bodyPoly(front) {
+  const f = clamp(front, 0, 100);
+  return tearDir === "left"
+    ? poly([[0, 0], [f, 0], ...jagged(f, 100), [100, 100], [0, 100]])
+    : poly([[f, 0], [100, 0], [100, 100], [0, 100], ...jagged(0, f)]);
+}
+
+// Dark opening, only under the part that has torn away.
+function mouthPoly(front) {
+  const f = clamp(front, 0, 100);
+  const depth = 7;
+  return tearDir === "left"
+    ? poly([...jagged(f, 100), [100, tearY(100) + depth], [f, tearY(f) + depth]])
+    : poly([...jagged(0, f), [f, tearY(f) + depth], [0, tearY(0) + depth]]);
+}
+
+function applyTearVisuals({ fade = 1 } = {}) {
+  const live = els.packBody.classList.contains("tearing") || fade < 1;
+  if (!live || !tearDir || tearCut <= 0.001) {
+    els.packRestArt.style.clipPath = "";
+    els.packTopArt.style.clipPath = "";
+    els.packTop.style.transform = "";
+    els.packTop.style.transformOrigin = "";
+    els.packTop.style.opacity = "0";
+    els.packTop.style.visibility = "hidden";
+    if (els.packMouth) {
+      els.packMouth.style.clipPath = "";
+      els.packMouth.style.opacity = "0";
+    }
+    if (els.tearEdge) els.tearEdge.setAttribute("d", "");
+    return;
+  }
+
+  const front = tearFront();
+  els.packTopArt.style.clipPath = flapPoly(front);
+  els.packRestArt.style.clipPath = bodyPoly(front);
+  els.packTop.style.visibility = "visible";
+  els.packTop.style.opacity = String(clamp(fade, 0, 1));
+  // Hinge on the tear front so the loose strip peels off it as the tear grows.
+  els.packTop.style.transformOrigin = `${front.toFixed(2)}% ${tearY(front).toFixed(2)}%`;
+  els.packTop.style.transform =
+    `translate(${tearPose.dx.toFixed(2)}px, ${tearPose.dy.toFixed(2)}px) rotate(${tearPose.rot.toFixed(2)}deg)`;
+
+  if (els.packMouth) {
+    els.packMouth.style.clipPath = mouthPoly(front);
+    els.packMouth.style.opacity = String(clamp(tearCut * 6, 0, 1));
+  }
+
+  if (els.tearEdge) {
+    const pts = tearDir === "left" ? jagged(100, front) : jagged(0, front);
+    els.tearEdge.setAttribute(
+      "d",
+      pts.map((p, i) => `${i ? "L" : "M"} ${p[0].toFixed(2)} ${p[1].toFixed(2)}`).join(" ")
+    );
+  }
+}
+
+function addCrumbs(xPct, count, strong = false) {
+  if (!els.crumbs) return;
+  const away = tearDir === "left" ? -1 : 1;
+  const reach = strong ? 130 : 26;
+  const rise = strong ? 75 : 26;
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < count; i++) {
+    const at = clamp(xPct + (Math.random() - 0.5) * (strong ? 40 : 10), 0, 100);
+    const bit = document.createElement("i");
+    bit.className = "crumb";
+    bit.style.left = `${at.toFixed(2)}%`;
+    bit.style.top = `${(tearY(at) - 0.6 + Math.random() * 1.4).toFixed(2)}%`;
+    bit.style.width = `${2 + Math.random() * (strong ? 4 : 2.4)}px`;
+    bit.style.height = `${1.5 + Math.random() * (strong ? 3 : 2)}px`;
+    bit.style.setProperty("--cx", `${away * (10 + Math.random() * reach) + (Math.random() - 0.5) * 22}px`);
+    bit.style.setProperty("--cy", `${-8 - Math.random() * rise}px`);
+    bit.style.setProperty("--rot", `${(Math.random() - 0.5) * 620}deg`);
+    bit.style.setProperty("--dly", `${Math.random() * (strong ? 110 : 40)}ms`);
+    bit.addEventListener("animationend", () => bit.remove());
+    frag.appendChild(bit);
+  }
+  els.crumbs.appendChild(frag);
+}
+
+function tornEnough() {
+  return tearCut >= 0.45;
+}
+
+function setTearDir(dir) {
+  tearDir = dir === "right" ? "right" : "left";
+  els.packBody.classList.toggle("tear-from-left", tearDir === "left");
+  els.packBody.classList.toggle("tear-from-right", tearDir === "right");
+}
+
+function resetScrapStyle() {
+  els.packRestArt.style.clipPath = "";
+  els.packTopArt.style.clipPath = "";
+  els.packTop.style.transform = "";
+  els.packTop.style.transformOrigin = "";
+  els.packTop.style.opacity = "";
+  els.packTop.style.visibility = "";
+  els.packTop.style.pointerEvents = "";
+  els.packTop.style.animation = "";
+  if (els.packMouth) {
+    els.packMouth.style.clipPath = "";
+    els.packMouth.style.opacity = "";
+  }
+  if (els.crumbs) els.crumbs.innerHTML = "";
+  if (els.tearEdge) els.tearEdge.setAttribute("d", "");
+}
+
+function resetTear() {
+  cancelTearAnim();
+  tearing = false;
+  tearCut = 0;
+  tearLift = 0;
+  lastCrumbCut = 0;
+  tearDir = null;
+  tearPose = { dx: 0, dy: 0, rot: 0 };
+  lastPointer = { x: 0, y: 0 };
+  resetScrapStyle();
+  els.overlay.classList.remove("dealing");
+  els.packBody.classList.remove(
+    "torn",
+    "tearing",
+    "dragging",
+    "emptied",
+    "hidden",
+    "cutting",
+    "pack-exit",
+    "tear-from-left",
+    "tear-from-right"
+  );
+}
+
+function startRip(wrapper) {
+  if (!wrapper) {
+    toast("Couldn't open that pack.");
+    return;
+  }
+  if (state.coins < liveSet.cost) {
+    toast("Not enough coins.");
+    return;
+  }
+  activeWrapper = wrapper;
+  state.coins -= liveSet.cost;
+  state.packsOpened += 1;
+  const seen = new Set(Object.keys(state.collection).filter((id) => state.collection[id] > 0));
+  currentPulls = ripPack(liveSet, cards).map((card) => {
+    const wasNew = !seen.has(card.id);
+    seen.add(card.id);
+    return { ...card, wasNew, revealed: false, drawn: false };
+  });
+  currentPulls.forEach((card) => addPull(state, card, wrapper.id));
+  saveState(state);
+  renderHeader();
+  renderShop();
+
+  packPhase = "ready";
+  focusIndex = 0;
+  flipBusy = false;
+  packExiting = false;
+  showStrip = false;
+  buildTearPath();
+  resetTear();
+  clearFocusChrome({ snap: true });
+  els.packBody.classList.remove("hidden", "emptied", "pack-exit");
+  setPackArt(wrapper);
+  els.focusWrap.classList.add("hidden");
+  els.spread.classList.add("hidden");
+  els.spread.innerHTML = "";
+  els.thumbs.innerHTML = "";
+  els.ripHint.textContent = "Grab the top and drag across to rip it open";
+  syncActions();
+  openDialog(els.overlay, els.stepBtn);
+}
+
+function clearHandoff() {
+  clearTimeout(handoffTimer);
+  handoffTimer = 0;
+  els.overlay.classList.remove("handoff");
+  els.packBody.classList.remove("pack-exit");
+  els.focusCard.classList.remove("deal", "from-pack");
+}
+
+function hidePackThenDeal() {
+  packExiting = false;
+  packPhase = "reveal";
+  resetScrapStyle();
+  els.packBody.classList.add("hidden", "emptied");
+  els.packBody.classList.remove("torn", "tearing", "dragging", "cutting", "pack-exit");
+  els.overlay.classList.add("dealing");
+  els.ripHint.textContent = "";
+  showStrip = true;
+  drawNext({ fromPack: true });
+  const finish = () => {
+    if (!els.focusCard.classList.contains("from-pack")) return;
+    els.focusCard.classList.remove("deal", "from-pack");
+    renderThumbs();
+    syncActions();
+  };
+  const onEnd = (event) => {
+    if (event.target !== els.focusCard) return;
+    els.focusCard.removeEventListener("animationend", onEnd);
+    finish();
+  };
+  els.focusCard.addEventListener("animationend", onEnd);
+  clearTimeout(handoffTimer);
+  handoffTimer = setTimeout(finish, 720);
+}
+
+function flyOffPose() {
+  const away = tearDir === "left" ? -1 : 1;
+  return {
+    dx: away * (els.packBody.getBoundingClientRect().width * 0.55 + 70),
+    dy: -68,
+    rot: away * 46,
+  };
+}
+
+function completeTear() {
+  if (packPhase !== "ready" || packExiting) return;
+  packExiting = true;
+  tearing = false;
+  cancelTearAnim();
+  if (!tearDir) setTearDir("right");
+  els.packBody.classList.add("tearing", "torn");
+  els.packBody.classList.remove("dragging");
+  els.ripHint.textContent = "Wrapper coming off";
+  const startCut = tearCut;
+  const startLift = tearLift;
+  const endPose = flyOffPose();
+  const t0 = performance.now();
+  const dur = 560;
+  let ripped = false;
+  const tick = (now) => {
+    const t = Math.min(1, (now - t0) / dur);
+    // Finish the tear across the pack first, then throw the strip clear.
+    const rip = clamp(t / 0.45, 0, 1);
+    const easeRip = 1 - Math.pow(1 - rip, 2);
+    tearCut = startCut + (1 - startCut) * easeRip;
+    const toss = clamp((t - 0.4) / 0.6, 0, 1);
+    const easeToss = 1 - Math.pow(1 - toss, 3);
+    const peel = liftRot(Math.max(startLift, 0.2 + 0.5 * easeRip), tearFront());
+    tearPose = {
+      dx: endPose.dx * easeToss,
+      dy: endPose.dy * easeToss,
+      rot: peel + (endPose.rot - peel) * easeToss,
+    };
+    if (!ripped && rip >= 1) {
+      ripped = true;
+      addCrumbs(tearFront(), 10, true);
+    } else if (rip < 1 && tearCut - lastCrumbCut > 0.07) {
+      lastCrumbCut = tearCut;
+      addCrumbs(tearFront(), 2);
+    }
+    applyTearVisuals({ fade: t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3 });
+    if (t < 1) {
+      tearAnim = requestAnimationFrame(tick);
+      return;
+    }
+    tearAnim = 0;
+    hidePackThenDeal();
+  };
+  applyTearVisuals();
+  tearAnim = requestAnimationFrame(tick);
+}
+
+function clearLiveTear() {
+  tearCut = 0;
+  tearLift = 0;
+  lastCrumbCut = 0;
+  tearDir = null;
+  tearPose = { dx: 0, dy: 0, rot: 0 };
+  resetScrapStyle();
+  els.packBody.classList.remove("tearing", "dragging", "cutting", "tear-from-left", "tear-from-right");
+}
+
+function easeTearBack() {
+  cancelTearAnim();
+  const startCut = tearCut;
+  const startLift = tearLift;
+  if (startCut < 0.02) {
+    clearLiveTear();
+    return;
+  }
+  const t0 = performance.now();
+  const dur = 260;
+  const tick = (now) => {
+    if (tearing || packPhase !== "ready") return;
+    const t = Math.min(1, (now - t0) / dur);
+    const e = 1 - (1 - t) * (1 - t);
+    tearCut = startCut * (1 - e);
+    tearLift = startLift * (1 - e);
+    tearPose = { dx: 0, dy: 0, rot: liftRot(tearLift, tearFront()) };
+    applyTearVisuals();
+    if (t < 1) {
+      tearAnim = requestAnimationFrame(tick);
+      return;
+    }
+    tearAnim = 0;
+    clearLiveTear();
+  };
+  tearAnim = requestAnimationFrame(tick);
+}
+
+function finishRip() {
+  currentPulls = [];
+  packPhase = "idle";
+  flipBusy = false;
+  packExiting = false;
+  showStrip = false;
+  resetTear();
+  clearHitFx();
+  clearHandoff();
+  els.packBody.classList.add("hidden");
+  closeDialog(els.overlay);
+  clearTimeout(auraTimer);
+  auraTimer = 0;
+  auraGen += 1;
+  els.overlay.classList.remove("dealing", "hit-flash", "hit-shake", "rainbow", "glow-on", "aura-snap");
+  els.overlay.style.removeProperty("--aura");
+  els.focusWrap.classList.remove("rainbow", "revealed", "is-hit", "is-legend", "is-reverse", "aura-snap");
+  els.focusWrap.style.removeProperty("--aura");
+  delete els.focusWrap.dataset.glow;
+  els.focusAura.classList.remove("rays");
+  renderHeader();
+  renderShop();
+  if (view === "collection") renderCollection();
+  toast("Slid into the binder.");
+}
+
+function inspectFromEl(el) {
+  const slot = el.closest("[data-inspect]");
+  if (!slot) return;
+  openInspect(slot.dataset.inspect, slot.dataset.reverse === "1");
+}
+
+function openInspect(id, reverse = false) {
+  const base = findCard(id);
+  if (!base) return;
+  const card = reverse || ownedReverse(id) ? { ...base, reverse: true } : base;
+  const count = state.collection[id] || 0;
+  const body = (text) => esc(text || "").replace(/\n/g, "<br>");
+  const attacks = (card.attacks || [])
+    .map(
+      (a) => `<div class="atk"><b>${esc(a.name)}</b> <span>${esc(a.damage || "")}</span><p>${body(a.text)}</p></div>`
+    )
+    .join("");
+  const powers = (card.abilities || [])
+    .map((a) => `<div class="atk"><b>${esc(a.name)}</b> <em>${esc(a.type || "")}</em><p>${body(a.text)}</p></div>`)
+    .join("");
+  const ownedLine = count > 0 ? `You own ×${count}` : "Unpulled — still hunting this one";
+  els.inspectArt.innerHTML = tcgFace(card);
+  els.inspectInfo.innerHTML = `
+    <p class="kicker">${esc(numberLine(card))} · <span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span> · ${esc(card.supertype)}</p>
+    <h2>${esc(card.name)}</h2>
+    <p>${esc(card.subtypes?.join(" · ") || "")}${card.hp ? ` · ${esc(card.hp)} HP` : ""}${card.evolvesFrom ? ` · Evolves from ${esc(card.evolvesFrom)}` : ""}</p>
+    ${powers}${attacks}
+    ${card.flavorText ? `<p class="flavor">“${esc(card.flavorText)}”</p>` : ""}
+    <p class="artist">Illus. ${esc(card.artist || "Unknown")} · ${ownedLine}</p>`;
+  openDialog(els.inspect, els.inspectClose);
+}
+
+document.querySelectorAll(".nav-btn").forEach((btn) => {
+  btn.addEventListener("click", () => setView(btn.dataset.view));
+});
+
+els.setSwitcher.addEventListener("click", (e) => {
+  const tab = e.target.closest("[data-set]");
+  if (tab) activateSet(tab.dataset.set);
+});
+
+document.addEventListener("click", (e) => {
+  const jump = e.target.closest("[data-goto]");
+  if (jump) setView(jump.dataset.goto);
+});
+
+els.viewHome.addEventListener("click", (e) => {
+  const play = e.target.closest("[data-play-set]");
+  if (play) {
+    playSet(play.dataset.playSet);
+    return;
+  }
+  inspectFromEl(e.target);
+});
+
+async function playSet(id) {
+  await activateSet(id);
+  setView("shop");
+}
+
+document.querySelector(".brand")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  setView("home");
+});
+
+els.settingsBody.addEventListener("change", (e) => {
+  const toggle = e.target.closest("[data-setting]");
+  if (!toggle) return;
+  state.settings[toggle.dataset.setting] = toggle.checked;
+  saveState(state);
+  applySettings();
+});
+
+els.settingsBody.addEventListener("click", (e) => {
+  if (!e.target.closest("#reset-progress")) return;
+  if (!confirm("Reset coins, binder, and history? This cannot be undone.")) return;
+  resetProgress(state);
+  renderHeader();
+  renderShop();
+  renderCollection();
+  renderSettings();
+  toast("Progress reset.");
+});
+
+els.accountBody.addEventListener("click", (e) => {
+  if (e.target.closest("#import-save")) {
+    els.accountBody.querySelector("#import-file")?.click();
+    return;
+  }
+  if (!e.target.closest("#export-save")) return;
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "poke-pack-rip-save.json";
+  link.click();
+  URL.revokeObjectURL(url);
+  toast("Save downloaded.");
+});
+
+els.accountBody.addEventListener("change", async (e) => {
+  const input = e.target.closest("#import-file");
+  const file = input?.files?.[0];
+  if (!file) return;
+  input.value = "";
+  if (!confirm("Load this save file? It replaces the coins, binder, and history on this browser.")) {
+    return;
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(await file.text());
+  } catch {
+    toast("That file isn't a valid save.");
+    return;
+  }
+  if (!importState(state, parsed)) {
+    toast("That file isn't a poke-pack.rip save.");
+    return;
+  }
+  applySettings();
+  await activateSet(state.activeSetId || DEFAULT_SET_ID);
+  renderHeader();
+  scheduleDailyTick();
+  renderAccount();
+  toast("Save loaded.");
+});
+
+els.dailyBtn.addEventListener("click", () => {
+  const amount = claimDaily(state);
+  if (!amount) {
+    toast("Wait a second, then claim again.");
+    return;
+  }
+  renderHeader();
+  scheduleDailyTick();
+  renderShop();
+  toast(`Daily bonus: +${amount} coins`);
+});
+
+els.packGrid.addEventListener("click", (e) => {
+  const card = e.target.closest("[data-wrapper]");
+  if (!card) return;
+  const wrapper = liveSet.wrappers.find((w) => w.id === card.dataset.wrapper);
+  startRip(wrapper);
+});
+
+function grabTop(e) {
+  if (e.target.closest?.(".tear-handle")) return true;
+  const rect = els.packBody.getBoundingClientRect();
+  const relX = (e.clientX - rect.left) / rect.width;
+  const relY = (e.clientY - rect.top) / rect.height;
+  return relY <= 0.18 && relY >= -0.1 && relX >= -0.08 && relX <= 1.08;
+}
+
+function beginTear(e) {
+  if (packPhase !== "ready" || tearing) return false;
+  if (!grabTop(e)) return false;
+  cancelTearAnim();
+  tearing = true;
+  tearStart = { x: e.clientX, y: e.clientY };
+  lastPointer = { x: e.clientX, y: e.clientY };
+  tearCut = 0;
+  tearLift = 0;
+  lastCrumbCut = 0;
+  tearDir = null;
+  tearPose = { dx: 0, dy: 0, rot: 0 };
+  els.packBody.classList.add("tearing");
+  try {
+    els.packBody.setPointerCapture?.(e.pointerId);
+  } catch {
+    /* no capture available; window listeners still track the drag */
+  }
+  applyTearVisuals();
+  e.preventDefault();
+  return true;
+}
+
+els.packBody.addEventListener("pointerdown", beginTear);
+
+// Angle the loose strip so its free end peels up by a steady amount, however
+// long the strip has grown — a fixed angle would swing it wildly once it's long.
+function liftRot(lift, front) {
+  const w = els.packBody.getBoundingClientRect().width || 270;
+  const lenPct = tearDir === "left" ? 100 - front : front;
+  const lenPx = Math.max((lenPct / 100) * w, 1);
+  const rise = 20 + 38 * clamp(lift, 0, 1);
+  const deg = (Math.asin(clamp(rise / lenPx, 0, 0.6)) * 180) / Math.PI;
+  return (tearDir === "left" ? -1 : 1) * deg;
+}
+
+function moveTear(e) {
+  if (!tearing || packPhase !== "ready") return;
+  lastPointer = { x: e.clientX, y: e.clientY };
+  const rect = els.packBody.getBoundingClientRect();
+  const dx = e.clientX - tearStart.x;
+  const dy = e.clientY - tearStart.y;
+  if (!tearDir && Math.abs(dx) >= 5) {
+    setTearDir(dx > 0 ? "right" : "left");
+    els.packBody.classList.add("dragging");
+  }
+  if (!tearDir) return;
+
+  // 1px of drag = 1px of tear, so the front stays under the cursor.
+  const along = tearDir === "left" ? Math.max(0, -dx) : Math.max(0, dx);
+  tearCut = clamp(along / Math.max(rect.width, 1), 0, 1);
+  tearLift = Math.max(tearCut * 0.55, clamp(-dy / Math.max(rect.height * 0.3, 1), 0, 1));
+  tearPose = { dx: 0, dy: 0, rot: liftRot(tearLift, tearFront()) };
+
+  if (tearCut - lastCrumbCut > 0.07) {
+    lastCrumbCut = tearCut;
+    addCrumbs(tearFront(), 2);
+  }
+
+  applyTearVisuals();
+  if (tearCut >= 0.94) completeTear();
+}
+
+// On window so the rip keeps following the cursor past the pack edges.
+window.addEventListener("pointermove", moveTear);
+
+function endTear(e) {
+  if (!tearing) return;
+  tearing = false;
+  els.packBody.classList.remove("dragging");
+  if (packPhase === "ready") {
+    if (tornEnough()) completeTear();
+    else easeTearBack();
+  }
+  try {
+    els.packBody.releasePointerCapture(e.pointerId);
+  } catch {
+    /* already released */
+  }
+}
+
+window.addEventListener("pointerup", endTear);
+window.addEventListener("pointercancel", endTear);
+
+els.focusCard.addEventListener("click", () => {
+  if (packPhase === "reveal") advanceOpen();
+});
+
+els.focusPrev.addEventListener("click", goPrevCard);
+els.focusNext.addEventListener("click", advanceOpen);
+
+els.stepBtn.addEventListener("click", () => {
+  if (packPhase === "ready") completeTear();
+  else if (packPhase === "reveal") advanceOpen();
+});
+
+els.skipBtn.addEventListener("click", revealAllCards);
+els.skipHitsBtn.addEventListener("click", skipToHits);
+
+els.spread.addEventListener("click", (e) => inspectFromEl(e.target));
+
+els.thumbs.addEventListener("click", (e) => {
+  const thumb = e.target.closest("[data-focus]");
+  if (!thumb || packPhase !== "reveal") return;
+  showPullAt(Number(thumb.dataset.focus));
+});
+
+// One delegated pointer handler lights whichever card face is under the cursor.
+let litCard = null;
+let glareRaf = 0;
+let glarePointer = null;
+
+function clearGlare() {
+  if (!litCard) return;
+  litCard.classList.remove("lit");
+  ["--mx", "--my", "--px", "--py", "--hyp", "--tilt-x", "--tilt-y"].forEach((p) =>
+    litCard.style.removeProperty(p)
+  );
+  litCard = null;
+}
+
+function tcgFromEvent(e) {
+  const direct = e.target?.closest?.(".tcg");
+  if (direct) return direct;
+  const focus = e.target?.closest?.(".focus-card");
+  if (!focus) return null;
+  return focus.classList.contains("flipped")
+    ? focus.querySelector(".face-back .tcg")
+    : focus.querySelector(".face-front .tcg");
+}
+
+function paintGlare() {
+  glareRaf = 0;
+  const e = glarePointer;
+  if (!e) return;
+  const face = tcgFromEvent(e);
+  if (face !== litCard) {
+    clearGlare();
+    litCard = face;
+    if (litCard) litCard.classList.add("lit");
+  }
+  if (!litCard) return;
+  const r = litCard.getBoundingClientRect();
+  if (!r.width || !r.height) return;
+  const px = clamp((e.clientX - r.left) / r.width, 0, 1);
+  const py = clamp((e.clientY - r.top) / r.height, 0, 1);
+  const hyp = Math.min(1, Math.hypot(px - 0.5, py - 0.5) * 2);
+  litCard.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+  litCard.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+  litCard.style.setProperty("--px", px.toFixed(3));
+  litCard.style.setProperty("--py", py.toFixed(3));
+  litCard.style.setProperty("--hyp", hyp.toFixed(3));
+  litCard.style.setProperty("--tilt-y", `${((px - 0.5) * 13).toFixed(2)}deg`);
+  litCard.style.setProperty("--tilt-x", `${((0.5 - py) * 13).toFixed(2)}deg`);
+}
+
+document.addEventListener(
+  "pointermove",
+  (e) => {
+    glarePointer = e;
+    if (!glareRaf) glareRaf = requestAnimationFrame(paintGlare);
+  },
+  { passive: true }
+);
+
+document.addEventListener("pointerleave", clearGlare);
+
+els.doneBtn.addEventListener("click", finishRip);
+
+els.dexGrid.addEventListener("click", (e) => {
+  const sellBtn = e.target.closest("[data-sell]");
+  if (sellBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const card = byId[sellBtn.dataset.sell];
+    if (card && sellOne(state, card.id, sellValue(card))) {
+      toast(`Sold extra ${card.name} for ${sellValue(card)} coins`);
+      renderHeader();
+      renderShop();
+      renderCollection();
+    }
+    return;
+  }
+  inspectFromEl(e.target);
+});
+
+els.inspectClose.addEventListener("click", () => closeDialog(els.inspect));
+els.inspect.addEventListener("click", (e) => {
+  if (e.target === els.inspect) closeDialog(els.inspect);
+});
+
+/*
+ * Typing rebuilt the entire binder grid on every keystroke. Selects still
+ * apply instantly; only free text waits for a pause in typing.
+ */
+let searchTimer = 0;
+els.search.addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(renderCollection, 150);
+});
+[els.rarityFilter, els.ownedFilter].forEach((el) => {
+  el.addEventListener("change", renderCollection);
+});
+
+/*
+ * Card art is hotlinked from image CDNs we do not control. If one fails,
+ * leave a readable placeholder frame rather than a broken image icon.
+ */
+document.addEventListener(
+  "error",
+  (e) => {
+    const img = e.target;
+    if (!(img instanceof HTMLImageElement)) return;
+    const face = img.closest(".tcg");
+    if (!face || face.classList.contains("art-missing")) return;
+    face.classList.add("art-missing");
+    img.removeAttribute("src");
+    img.alt = img.alt ? `${img.alt} (art unavailable)` : "Card art unavailable";
+  },
+  true
+);
+
+els.catalogEras.addEventListener(
+  "error",
+  (e) => {
+    const img = e.target;
+    if (!(img instanceof HTMLImageElement)) return;
+    if (img.classList.contains("catalog-logo")) {
+      img.closest(".catalog-art")?.classList.add("no-logo");
+    } else if (img.classList.contains("catalog-symbol")) {
+      img.remove();
+    }
+  },
+  true
+);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (!els.inspect.classList.contains("hidden")) {
+      closeDialog(els.inspect);
+      return;
+    }
+    if (packPhase === "spread") finishRip();
+  }
+  if (e.key === " " && packPhase === "reveal") {
+    e.preventDefault();
+    advanceOpen();
+  }
+  if (e.key === "ArrowLeft" && packPhase === "reveal") {
+    e.preventDefault();
+    goPrevCard();
+  }
+  if (e.key === "ArrowRight" && packPhase === "reveal") {
+    e.preventDefault();
+    advanceOpen();
+  }
+  if ((e.key === "r" || e.key === "R") && (packPhase === "ready" || packPhase === "reveal")) {
+    e.preventDefault();
+    revealAllCards();
+  }
+  if ((e.key === "h" || e.key === "H") && packPhase === "reveal") {
+    e.preventDefault();
+    skipToHits();
+  }
+});
+
+async function boot() {
+  await activateSet(state.activeSetId || DEFAULT_SET_ID);
+  applySettings();
+  renderRarityKey();
+  scheduleDailyTick();
+  const back = new Image();
+  back.src = liveSet.cardBack;
+}
+
+boot().catch(() => toast(`Couldn't load ${liveSet.name} data.`));
+
+/*
+ * The header only changes on its own when the daily unlocks, so schedule a
+ * single tick for the next meaningful change instead of rewriting the DOM
+ * four times a second for the whole session.
+ */
+let dailyTimer = 0;
+function scheduleDailyTick() {
+  clearTimeout(dailyTimer);
+  const wait = msUntilDaily(state);
+  if (wait <= 0) return;
+  // Tick every second in the last minute, otherwise on the next whole minute.
+  const next = wait <= 60_000 ? Math.min(wait, 1000) : Math.min(wait - 60_000, 60_000);
+  dailyTimer = setTimeout(() => {
+    renderHeader();
+    scheduleDailyTick();
+  }, Math.max(next, 250));
+}
+
+// A tab left open overnight should notice the daily is ready again.
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    renderHeader();
+    scheduleDailyTick();
+  }
+});

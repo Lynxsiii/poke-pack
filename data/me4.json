@@ -1,0 +1,3820 @@
+[
+  {
+    "id": "me4-1",
+    "name": "Weedle",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "sowsow",
+    "image": "https://images.scrydex.com/pokemon/me4-1/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-1/small",
+    "attacks": [
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ]
+  },
+  {
+    "id": "me4-2",
+    "name": "Kakuna",
+    "number": "2",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Mugi Hamada",
+    "evolvesFrom": "Weedle",
+    "image": "https://images.scrydex.com/pokemon/me4-2/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-2/small",
+    "attacks": [
+      {
+        "name": "Hang Down",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Exoskeleton",
+        "text": "This Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-3",
+    "name": "Beedrill ex",
+    "number": "3",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "310",
+    "artist": "toriyufu",
+    "evolvesFrom": "Kakuna",
+    "image": "https://images.scrydex.com/pokemon/me4-3/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-3/small",
+    "attacks": [
+      {
+        "name": "Rumbling Bees",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "110×",
+        "text": "This attack does 110 damage for each of your Beedrill and Beedrill ex in play."
+      }
+    ]
+  },
+  {
+    "id": "me4-4",
+    "name": "Carnivine",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Heisuke Kitazawa",
+    "image": "https://images.scrydex.com/pokemon/me4-4/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-4/small",
+    "attacks": [
+      {
+        "name": "Chomp Whole",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If your opponent's Active Pokémon has no Retreat Cost, this attack does 80 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me4-5",
+    "name": "Chespin",
+    "number": "5",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "HACCAN",
+    "image": "https://images.scrydex.com/pokemon/me4-5/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-5/small",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Spike Sting",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-6",
+    "name": "Quilladin",
+    "number": "6",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Hideki Ishikawa",
+    "evolvesFrom": "Chespin",
+    "image": "https://images.scrydex.com/pokemon/me4-6/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-6/small",
+    "attacks": [
+      {
+        "name": "Leafy Charge",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Search your deck for a Basic [Grass] Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-7",
+    "name": "Chesnaught",
+    "number": "7",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "Uta",
+    "evolvesFrom": "Quilladin",
+    "image": "https://images.scrydex.com/pokemon/me4-7/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-7/small",
+    "attacks": [
+      {
+        "name": "Impound",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Needly Armor",
+        "text": "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), place 3 damage counters on the Attacking Pokémon for each [Grass] Energy attached to this Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-8",
+    "name": "Vulpix",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Yoshimoto Yoshimon",
+    "image": "https://images.scrydex.com/pokemon/me4-8/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-8/small",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ]
+  },
+  {
+    "id": "me4-9",
+    "name": "Ninetales",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Ryuta Fuse",
+    "evolvesFrom": "Vulpix",
+    "image": "https://images.scrydex.com/pokemon/me4-9/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-9/small",
+    "attacks": [
+      {
+        "name": "Nine-Tailed Transfer",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Move all damage counters from 1 of your Benched Pokémon to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Will-O-Wisp",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-10",
+    "name": "Ho-Oh",
+    "number": "10",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Takumi Wada",
+    "image": "https://images.scrydex.com/pokemon/me4-10/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-10/small",
+    "attacks": [
+      {
+        "name": "Flames of Revival",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Basic Pokémon from your discard pile onto your Bench."
+      },
+      {
+        "name": "Bright Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "130",
+        "text": "Discard a [Fire] Energy from this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-11",
+    "name": "Fennekin",
+    "number": "11",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "saino misaki",
+    "image": "https://images.scrydex.com/pokemon/me4-11/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-11/small",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Steady Firebreathing",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-12",
+    "name": "Braixen",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "Taiga Kasai",
+    "evolvesFrom": "Fennekin",
+    "image": "https://images.scrydex.com/pokemon/me4-12/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-12/small",
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-13",
+    "name": "Delphox",
+    "number": "13",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "160",
+    "artist": "Gemi",
+    "evolvesFrom": "Braixen",
+    "image": "https://images.scrydex.com/pokemon/me4-13/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-13/small",
+    "attacks": [
+      {
+        "name": "Energized Storm",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy attached to all Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flaring Magic",
+        "text": "Once during your turn, you may discard a Basic [Fire] Energy card from your hand in order to use this Ability. Draw cards until you have 7 cards in your hand.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-14",
+    "name": "Litleo",
+    "number": "14",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Mina Nakai",
+    "image": "https://images.scrydex.com/pokemon/me4-14/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-14/small",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-15",
+    "name": "Mega Pyroar ex",
+    "number": "15",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "340",
+    "artist": "Keisuke Azuma",
+    "evolvesFrom": "Litleo",
+    "image": "https://images.scrydex.com/pokemon/me4-15/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-15/small",
+    "attacks": [
+      {
+        "name": "Ferocious Bellow",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, attacks used by the Defending Pokémon do 50 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Fiery Big Bang 290-",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 10 less damage for each damage counter on this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-16",
+    "name": "Remoraid",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Mori Yuu",
+    "image": "https://images.scrydex.com/pokemon/me4-16/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-16/small",
+    "attacks": [
+      {
+        "name": "Sharp Fin",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-17",
+    "name": "Octillery",
+    "number": "17",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "matazo",
+    "evolvesFrom": "Remoraid",
+    "image": "https://images.scrydex.com/pokemon/me4-17/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-17/small",
+    "attacks": [
+      {
+        "name": "Jet of Ink",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, if the Defending Pokémon tries to use an attack, your opponent flips 2 coins. If either of them is tails, that attack doesn't happen."
+      },
+      {
+        "name": "Tantrum",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon is now Confused."
+      }
+    ]
+  },
+  {
+    "id": "me4-18",
+    "name": "Delibird",
+    "number": "18",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Saboteri",
+    "image": "https://images.scrydex.com/pokemon/me4-18/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-18/small",
+    "attacks": [
+      {
+        "name": "Pleasing Present",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Each player may attach up to 3 Basic Energy cards from their hand to their Pokémon in any way they like. Your opponent does this first."
+      },
+      {
+        "name": "Flap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-19",
+    "name": "Keldeo",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Mitsuhiro Arita",
+    "image": "https://images.scrydex.com/pokemon/me4-19/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-19/small",
+    "attacks": [
+      {
+        "name": "Shoot Through",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Reflect Energy",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "70",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-20",
+    "name": "Froakie",
+    "number": "20",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kariya",
+    "image": "https://images.scrydex.com/pokemon/me4-20/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-20/small",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-21",
+    "name": "Frogadier",
+    "number": "21",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Nelnal",
+    "evolvesFrom": "Froakie",
+    "image": "https://images.scrydex.com/pokemon/me4-21/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-21/small",
+    "attacks": [
+      {
+        "name": "Summoning Jutsu",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-22",
+    "name": "Mega Greninja ex",
+    "number": "22",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "350",
+    "artist": "takuyoa",
+    "evolvesFrom": "Frogadier",
+    "image": "https://images.scrydex.com/pokemon/me4-22/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-22/small",
+    "attacks": [
+      {
+        "name": "Ninja Spinner",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "120+",
+        "text": "You may put a [Water] Energy attached to this Pokémon into your hand and have this attack do 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mortal Shuriken",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may discard a Basic [Water] Energy card from your hand in order to use this Ability. Place 6 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-23",
+    "name": "Bergmite",
+    "number": "23",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Anesaki Dynamic",
+    "image": "https://images.scrydex.com/pokemon/me4-23/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-23/small",
+    "attacks": [
+      {
+        "name": "Chilly",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Frost Breath",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-24",
+    "name": "Avalugg",
+    "number": "24",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "Tomoki Sone",
+    "evolvesFrom": "Bergmite",
+    "image": "https://images.scrydex.com/pokemon/me4-24/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-24/small",
+    "attacks": [
+      {
+        "name": "Iceberg Breaker",
+        "cost": [
+          "Water"
+        ],
+        "damage": "60×",
+        "text": "Discard the top 6 cards of your deck, and this attack does 60 damage for each Basic [Water] Energy card you discarded in this way."
+      },
+      {
+        "name": "Frost Stamp",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-25",
+    "name": "Wimpod",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "0313",
+    "image": "https://images.scrydex.com/pokemon/me4-25/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-25/small",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-26",
+    "name": "Golisopod",
+    "number": "26",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Takeshi Nakamura",
+    "evolvesFrom": "Wimpod",
+    "image": "https://images.scrydex.com/pokemon/me4-26/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-26/small",
+    "attacks": [
+      {
+        "name": "Critical Slash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "If your opponent's Pokémon is Knocked Out by damage from this attack, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      },
+      {
+        "name": "Boundless Power",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ]
+  },
+  {
+    "id": "me4-27",
+    "name": "Mareep",
+    "number": "27",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "UKUMO uiti",
+    "image": "https://images.scrydex.com/pokemon/me4-27/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-27/small",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ]
+  },
+  {
+    "id": "me4-28",
+    "name": "Flaaffy",
+    "number": "28",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "miki kudo",
+    "evolvesFrom": "Mareep",
+    "image": "https://images.scrydex.com/pokemon/me4-28/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-28/small",
+    "attacks": [
+      {
+        "name": "Disconnect",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "During your opponent's next turn, they can't play any Item cards from their hand."
+      }
+    ]
+  },
+  {
+    "id": "me4-29",
+    "name": "Ampharos",
+    "number": "29",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "CHORISO",
+    "evolvesFrom": "Flaaffy",
+    "image": "https://images.scrydex.com/pokemon/me4-29/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-29/small",
+    "attacks": [
+      {
+        "name": "Flashing Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "During your next turn, this Pokémon can't use Flashing Bolt."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Synchro Pulse",
+        "text": "If you have the same number of cards in your hand as your opponent, attacks used by this Pokémon do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-30",
+    "name": "Emolga",
+    "number": "30",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Kazumasa Yasukuni",
+    "image": "https://images.scrydex.com/pokemon/me4-30/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-30/small",
+    "attacks": [
+      {
+        "name": "Minor Errand-Running",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Sky Return",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Put this Pokémon and all attached cards into your hand."
+      }
+    ]
+  },
+  {
+    "id": "me4-31",
+    "name": "Deoxys",
+    "number": "31",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Shiburingaru",
+    "image": "https://images.scrydex.com/pokemon/me4-31/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-31/small",
+    "attacks": [
+      {
+        "name": "Genome Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic [Psychic] Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "This attack does 20 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-32",
+    "name": "Deoxys",
+    "number": "32",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "nagimiso",
+    "image": "https://images.scrydex.com/pokemon/me4-32/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-32/small",
+    "attacks": [
+      {
+        "name": "Psyspear",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "120",
+        "text": "If this Pokémon has at least 2 extra Energy attached (in addition to this attack's cost), this attack also does 120 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ]
+  },
+  {
+    "id": "me4-33",
+    "name": "Deoxys",
+    "number": "33",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "GOSSAN",
+    "image": "https://images.scrydex.com/pokemon/me4-33/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-33/small",
+    "attacks": [
+      {
+        "name": "Psy Protection",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability."
+      }
+    ]
+  },
+  {
+    "id": "me4-34",
+    "name": "Deoxys",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "hncl",
+    "image": "https://images.scrydex.com/pokemon/me4-34/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-34/small",
+    "attacks": [
+      {
+        "name": "Psyspeed",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "You may draw cards until you have 5 cards in your hand."
+      }
+    ]
+  },
+  {
+    "id": "me4-35",
+    "name": "Mega Floette ex",
+    "number": "35",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "250",
+    "artist": "aky CG Works",
+    "image": "https://images.scrydex.com/pokemon/me4-35/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-35/small",
+    "attacks": [
+      {
+        "name": "Gentle Light",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from each Pokémon (both yours and your opponent's)."
+      },
+      {
+        "name": "Eternity Bloom",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "200",
+        "text": "Search your deck for up to 4 Basic [Psychic] Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck."
+      }
+    ]
+  },
+  {
+    "id": "me4-36",
+    "name": "Espurr",
+    "number": "36",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "sowsow",
+    "image": "https://images.scrydex.com/pokemon/me4-36/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-36/small",
+    "attacks": [
+      {
+        "name": "Buddy Attack",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10+",
+        "text": "If you played Emma from your hand during this turn, this attack does 60 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me4-37",
+    "name": "Meowstic",
+    "number": "37",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "mingo",
+    "evolvesFrom": "Espurr",
+    "image": "https://images.scrydex.com/pokemon/me4-37/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-37/small",
+    "attacks": [
+      {
+        "name": "Tricky Steps",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "You may move an Energy from your opponent's Active Pokémon to 1 of their Benched Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-38",
+    "name": "Phantump",
+    "number": "38",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Taiga Kasai",
+    "image": "https://images.scrydex.com/pokemon/me4-38/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-38/small",
+    "attacks": [
+      {
+        "name": "Mumble",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spiteful Evolution",
+        "text": "Once during your turn, you may use this Ability. Choose a card in your hand that evolves from this Pokémon and put it onto this Pokémon to evolve it. If you do, place 2 damage counters on the Pokémon you evolved in this way. You can't use this Ability during your first turn.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-39",
+    "name": "Trevenant",
+    "number": "39",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Uninori",
+    "evolvesFrom": "Phantump",
+    "image": "https://images.scrydex.com/pokemon/me4-39/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-39/small",
+    "attacks": [
+      {
+        "name": "Cursed Roots",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, Energy can't be attached from your opponent's hand to the Defending Pokémon."
+      },
+      {
+        "name": "Overwhelming Pain",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "60+",
+        "text": "This attack does 10 more damage for each damage counter on all of your opponent's Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-40",
+    "name": "Pumpkaboo",
+    "number": "40",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Jerky",
+    "image": "https://images.scrydex.com/pokemon/me4-40/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-40/small",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-41",
+    "name": "Gourgeist ex",
+    "number": "41",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "270",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Pumpkaboo",
+    "image": "https://images.scrydex.com/pokemon/me4-41/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-41/small",
+    "attacks": [
+      {
+        "name": "Horrifying Rondo",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30+",
+        "text": "This attack does 50 more damage for each of your Benched Pokémon that has any damage counters on it."
+      },
+      {
+        "name": "Ghostly Touch",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "140",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ]
+  },
+  {
+    "id": "me4-42",
+    "name": "Xerneas",
+    "number": "42",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "KEIICHIRO ITO",
+    "image": "https://images.scrydex.com/pokemon/me4-42/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-42/small",
+    "attacks": [
+      {
+        "name": "Geo Storm",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each [Psychic] Energy attached to all of your Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-43",
+    "name": "Sudowoodo",
+    "number": "43",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "GOTO minori",
+    "image": "https://images.scrydex.com/pokemon/me4-43/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-43/small",
+    "attacks": [
+      {
+        "name": "Trials and Trip-ulations",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Transformation Tome cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Rock Hurl",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ]
+  },
+  {
+    "id": "me4-44",
+    "name": "Phanpy",
+    "number": "44",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Akino Fukuji",
+    "image": "https://images.scrydex.com/pokemon/me4-44/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-44/small",
+    "attacks": [
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-45",
+    "name": "Donphan",
+    "number": "45",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Julie Hang",
+    "evolvesFrom": "Phanpy",
+    "image": "https://images.scrydex.com/pokemon/me4-45/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-45/small",
+    "attacks": [
+      {
+        "name": "No Reprieve",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": "During your next turn, attacks used by this Pokémon do 120 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Smashing Headbutt",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-46",
+    "name": "Baltoy",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Tomomi Ozaki",
+    "image": "https://images.scrydex.com/pokemon/me4-46/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-46/small",
+    "attacks": [
+      {
+        "name": "Continuous Spin",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage for each heads."
+      }
+    ]
+  },
+  {
+    "id": "me4-47",
+    "name": "Claydol",
+    "number": "47",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Oswaldo KATO",
+    "evolvesFrom": "Baltoy",
+    "image": "https://images.scrydex.com/pokemon/me4-47/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-47/small",
+    "attacks": [
+      {
+        "name": "Devolution Ray",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "50",
+        "text": "If your opponent's Active Pokémon is an evolved Pokémon, devolve it by putting the highest Stage Evolution card on it into your opponent's hand."
+      }
+    ]
+  },
+  {
+    "id": "me4-48",
+    "name": "Mega Gallade ex",
+    "number": "48",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "350",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Kirlia",
+    "image": "https://images.scrydex.com/pokemon/me4-48/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-48/small",
+    "attacks": [
+      {
+        "name": "Gale Slash",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "50+",
+        "text": "If this Pokémon has no damage counters on it, this attack does 150 more damage."
+      },
+      {
+        "name": "Marvelous Edge",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-49",
+    "name": "Zubat",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "40",
+    "artist": "Mékayu",
+    "image": "https://images.scrydex.com/pokemon/me4-49/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-49/small",
+    "attacks": [
+      {
+        "name": "Supersonic",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ]
+  },
+  {
+    "id": "me4-50",
+    "name": "Golbat",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Mousho",
+    "evolvesFrom": "Zubat",
+    "image": "https://images.scrydex.com/pokemon/me4-50/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-50/small",
+    "attacks": [
+      {
+        "name": "Covert Flight",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-51",
+    "name": "Crobat",
+    "number": "51",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "IKEDA Saki",
+    "evolvesFrom": "Golbat",
+    "image": "https://images.scrydex.com/pokemon/me4-51/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-51/small",
+    "attacks": [
+      {
+        "name": "Poison Sound Wave",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "80",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Nighttime Maneuvers",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Search your deck for a card. Shuffle your deck, then put that card on top of it.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-52",
+    "name": "Qwilfish",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "nisimono",
+    "image": "https://images.scrydex.com/pokemon/me4-52/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-52/small",
+    "attacks": [
+      {
+        "name": "Venoshock",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30+",
+        "text": "If your opponent's Active Pokémon is Poisoned, this attack does 50 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Poison Point",
+        "text": "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), the Attacking Pokémon is now Poisoned.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-53",
+    "name": "Stunky",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Nobuhiro Imagawa",
+    "image": "https://images.scrydex.com/pokemon/me4-53/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-53/small",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-54",
+    "name": "Skuntank",
+    "number": "54",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "Yuriko Akase",
+    "evolvesFrom": "Stunky",
+    "image": "https://images.scrydex.com/pokemon/me4-54/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-54/small",
+    "attacks": [
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Smash Turn",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-55",
+    "name": "Krookodile ex",
+    "number": "55",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Krokorok",
+    "image": "https://images.scrydex.com/pokemon/me4-55/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-55/small",
+    "attacks": [
+      {
+        "name": "Corner",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Strong Bite",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "140+",
+        "text": "If this Pokémon has a Pokémon Tool attached, this attack does 140 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me4-56",
+    "name": "Trubbish",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Souichirou Gunjima",
+    "image": "https://images.scrydex.com/pokemon/me4-56/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-56/small",
+    "attacks": [
+      {
+        "name": "Acid Spray",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-57",
+    "name": "Garbodor",
+    "number": "57",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "140",
+    "artist": "HYOGONOSUKE",
+    "evolvesFrom": "Trubbish",
+    "image": "https://images.scrydex.com/pokemon/me4-57/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-57/small",
+    "attacks": [
+      {
+        "name": "Sludge Bomb",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Gloomy Garbage",
+        "text": "Attacks used by your opponent's Active Pokémon that has a Pokémon Tool attached do 20 less damage (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-58",
+    "name": "Skrelp",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Shimaris Yukichi",
+    "image": "https://images.scrydex.com/pokemon/me4-58/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-58/small",
+    "attacks": [
+      {
+        "name": "Hook",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-59",
+    "name": "Beldum",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "toi8",
+    "image": "https://images.scrydex.com/pokemon/me4-59/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-59/small",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Beam",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-60",
+    "name": "Metang",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Kazumasa Yasukuni",
+    "evolvesFrom": "Beldum",
+    "image": "https://images.scrydex.com/pokemon/me4-60/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-60/small",
+    "attacks": [
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ]
+  },
+  {
+    "id": "me4-61",
+    "name": "Metagross",
+    "number": "61",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "180",
+    "artist": "Bun Toujo",
+    "evolvesFrom": "Metang",
+    "image": "https://images.scrydex.com/pokemon/me4-61/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-61/small",
+    "attacks": [
+      {
+        "name": "Bounce Back",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "60",
+        "text": "Switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)"
+      },
+      {
+        "name": "Metallic Hammer",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "150+",
+        "text": "You may discard 3 [Metal] Energy from this Pokémon and have this attack do 150 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me4-62",
+    "name": "Ferroseed",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "OKUBO",
+    "image": "https://images.scrydex.com/pokemon/me4-62/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-62/small",
+    "attacks": [
+      {
+        "name": "Rolling Tackle",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-63",
+    "name": "Ferrothorn",
+    "number": "63",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Haru Akasaka",
+    "evolvesFrom": "Ferroseed",
+    "image": "https://images.scrydex.com/pokemon/me4-63/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-63/small",
+    "attacks": [
+      {
+        "name": "Special Whip",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "70+",
+        "text": "If this Pokémon has any Special Energy attached, this attack does 70 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Startling Drop",
+        "text": "During your opponent's turn, if this Pokémon is discarded from your deck by an effect of an attack or Ability from your opponent's Pokémon, or by an effect of your opponent's Item or Supporter cards, discard the top 8 cards of your opponent's deck.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-64",
+    "name": "Cobalion ex",
+    "number": "64",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "https://images.scrydex.com/pokemon/me4-64/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-64/small",
+    "attacks": [
+      {
+        "name": "Power Tackle",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metal Road",
+        "text": "Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may use this Ability. Move any amount of [Metal] Energy from your other Pokémon to this Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-65",
+    "name": "Mega Dragalge ex",
+    "number": "65",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Skrelp",
+    "image": "https://images.scrydex.com/pokemon/me4-65/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-65/small",
+    "attacks": [
+      {
+        "name": "Corrosive Liquid",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Pokémon Tools and Special Energy from all of your opponent's Pokémon."
+      },
+      {
+        "name": "Pernicious Poison",
+        "cost": [
+          "Water",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, place 16 damage counters on that Pokémon instead of 1."
+      }
+    ]
+  },
+  {
+    "id": "me4-66",
+    "name": "Goomy",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "60",
+    "artist": "Anesaki Dynamic",
+    "image": "https://images.scrydex.com/pokemon/me4-66/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-66/small",
+    "attacks": [
+      {
+        "name": "Absorb",
+        "cost": [
+          "Water",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-67",
+    "name": "Sliggoo",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "90",
+    "artist": "Yoriyuki Ikegami",
+    "evolvesFrom": "Goomy",
+    "image": "https://images.scrydex.com/pokemon/me4-67/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-67/small",
+    "attacks": [
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Water",
+          "Psychic"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-68",
+    "name": "Goodra",
+    "number": "68",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "160",
+    "artist": "Tonji Matsuno",
+    "evolvesFrom": "Sliggoo",
+    "image": "https://images.scrydex.com/pokemon/me4-68/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-68/small",
+    "attacks": [
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Water",
+          "Psychic"
+        ],
+        "damage": "160",
+        "text": "Discard the top card of your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Slimy Sliding",
+        "text": "When your opponent's Active Pokémon retreats, your opponent flips a coin. If tails, Energy for its Retreat Cost is not discarded, and they don't switch Pokémon. The effect of Slimy Sliding doesn't stack.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-69",
+    "name": "Tauros",
+    "number": "69",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Satoshi Ito",
+    "image": "https://images.scrydex.com/pokemon/me4-69/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-69/small",
+    "attacks": [
+      {
+        "name": "Target Together",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon and flip a coin for each of your Pokémon in play that has \"Tauros\" in its name. This attack does 50 damage to the chosen Pokémon for each heads. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ]
+  },
+  {
+    "id": "me4-70",
+    "name": "Patrat",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Souichirou Gunjima",
+    "image": "https://images.scrydex.com/pokemon/me4-70/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-70/small",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Watchful Eye",
+        "text": "Damage counters on each Pokémon (both yours and your opponent's) can't be moved to other Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-71",
+    "name": "Watchog",
+    "number": "71",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kouki Saitou",
+    "evolvesFrom": "Patrat",
+    "image": "https://images.scrydex.com/pokemon/me4-71/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-71/small",
+    "attacks": [
+      {
+        "name": "Snap Inspection",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 3 coins. If any of them are heads, your opponent reveals their hand. For each heads, choose a card you find there and shuffle it into your opponent's deck."
+      },
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-72",
+    "name": "Minccino",
+    "number": "72",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "ryoma uratsuka",
+    "image": "https://images.scrydex.com/pokemon/me4-72/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-72/small",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ]
+  },
+  {
+    "id": "me4-73",
+    "name": "Cinccino ex",
+    "number": "73",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Minccino",
+    "image": "https://images.scrydex.com/pokemon/me4-73/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-73/small",
+    "attacks": [
+      {
+        "name": "Energized Slap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage for each Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Smooth Coat",
+        "text": "If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-74",
+    "name": "Adversity Policy",
+    "number": "74",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Tool"
+    ],
+    "artist": "Ayaka Yoshida",
+    "image": "https://images.scrydex.com/pokemon/me4-74/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-74/small",
+    "attacks": [
+      {
+        "name": "Tool",
+        "cost": [],
+        "damage": "",
+        "text": "If the Pokémon this card is attached to has Weakness to your opponent's Active Pokémon's type, is in the Active Spot, and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), draw 3 cards."
+      }
+    ]
+  },
+  {
+    "id": "me4-75",
+    "name": "Ange Floette",
+    "number": "75",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "MARINA Chikazawa",
+    "image": "https://images.scrydex.com/pokemon/me4-75/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-75/small",
+    "attacks": [
+      {
+        "name": "Stadium",
+        "cost": [],
+        "damage": "",
+        "text": "You can put this card into play only if you discard a Prism Tower in play, and you can put this card into play during the same turn you play Prism Tower. Each Mega Floette ex in play (both yours and your opponent's) gets +150 HP."
+      }
+    ]
+  },
+  {
+    "id": "me4-76",
+    "name": "AZ's Tranquility",
+    "number": "76",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GIDORA",
+    "image": "https://images.scrydex.com/pokemon/me4-76/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-76/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "Switch your Active Pokémon with 1 of your Benched Pokémon. If you moved a Pokémon ex to your Bench in this way, heal 80 damage from that Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-77",
+    "name": "Emma",
+    "number": "77",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Akira Komayama",
+    "image": "https://images.scrydex.com/pokemon/me4-77/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-77/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "Your opponent reveals their hand, and you draw a card for each Pokémon you find there."
+      }
+    ]
+  },
+  {
+    "id": "me4-78",
+    "name": "Great Haul Net",
+    "number": "78",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "https://images.scrydex.com/pokemon/me4-78/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-78/small",
+    "attacks": [
+      {
+        "name": "Item",
+        "cost": [],
+        "damage": "",
+        "text": "Choose 1 or both: • Shuffle up to 3 [Water] Pokémon from your discard pile into your deck. • Shuffle up to 3 Basic [Water] Energy cards from your discard pile into your deck."
+      }
+    ]
+  },
+  {
+    "id": "me4-79",
+    "name": "Philippe",
+    "number": "79",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Souichirou Gunjima",
+    "image": "https://images.scrydex.com/pokemon/me4-79/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-79/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "Attach up to 2 Basic [Metal] Energy cards from your discard pile to 1 of your [Metal] Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-80",
+    "name": "Prism Tower",
+    "number": "80",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "MARINA Chikazawa",
+    "image": "https://images.scrydex.com/pokemon/me4-80/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-80/small",
+    "attacks": [
+      {
+        "name": "Stadium",
+        "cost": [],
+        "damage": "",
+        "text": "Once during each player's turn, that player may discard 2 cards from their hand in order to draw a card."
+      }
+    ]
+  },
+  {
+    "id": "me4-81",
+    "name": "Roxie's Performance",
+    "number": "81",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Nobusawa/Mochipuyo",
+    "image": "https://images.scrydex.com/pokemon/me4-81/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-81/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "During your opponent's next turn, their Poisoned Pokémon can't retreat. (This includes newly Poisoned Pokémon.)"
+      }
+    ]
+  },
+  {
+    "id": "me4-82",
+    "name": "Special Red Card",
+    "number": "82",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "https://images.scrydex.com/pokemon/me4-82/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-82/small",
+    "attacks": [
+      {
+        "name": "Item",
+        "cost": [],
+        "damage": "",
+        "text": "You can use this card only if your opponent has 3 or fewer Prize cards remaining. Your opponent shuffles their hand and puts it on the bottom of their deck. If they put any cards on the bottom of their deck in this way, they draw 3 cards."
+      }
+    ]
+  },
+  {
+    "id": "me4-83",
+    "name": "Transformation Tome",
+    "number": "83",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "https://images.scrydex.com/pokemon/me4-83/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-83/small",
+    "attacks": [
+      {
+        "name": "Item",
+        "cost": [],
+        "damage": "",
+        "text": "You must play 2 Transformation Tome cards at once. (This effect works one time for 2 cards.) Choose a Basic Pokémon in your discard pile and switch it with 1 of your Basic Pokémon in play. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-84",
+    "name": "Bubbly Water Energy",
+    "number": "84",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me4-84/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-84/small",
+    "attacks": [
+      {
+        "name": "Special Energy",
+        "cost": [],
+        "damage": "",
+        "text": "As long as this card is attached to a Pokémon, it provides [Water] Energy. The [Water] Pokémon this card is attached to recovers from all Special Conditions and can't be affected by any Special Conditions."
+      }
+    ]
+  },
+  {
+    "id": "me4-85",
+    "name": "Magnetic Metal Energy",
+    "number": "85",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me4-85/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-85/small",
+    "attacks": [
+      {
+        "name": "Special Energy",
+        "cost": [],
+        "damage": "",
+        "text": "As long as this card is attached to a Pokémon, it provides [Metal] Energy. The [Metal] Pokémon this card is attached to has no Retreat Cost."
+      }
+    ]
+  },
+  {
+    "id": "me4-86",
+    "name": "Nitro Fire Energy",
+    "number": "86",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me4-86/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-86/small",
+    "attacks": [
+      {
+        "name": "Special Energy",
+        "cost": [],
+        "damage": "",
+        "text": "As long as this card is attached to a Pokémon, it provides [Fire] Energy. If this card is discarded by an effect of an attack used by the [Fire] Pokémon this card is attached to, put this card into your hand after attack damage and effects."
+      }
+    ]
+  },
+  {
+    "id": "me4-87",
+    "name": "Chespin",
+    "number": "87",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Atsushi Furusawa",
+    "image": "https://images.scrydex.com/pokemon/me4-87/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-87/small",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Spike Sting",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-88",
+    "name": "Froakie",
+    "number": "88",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Susumu Maeya",
+    "image": "https://images.scrydex.com/pokemon/me4-88/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-88/small",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-89",
+    "name": "Frogadier",
+    "number": "89",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Susumu Maeya",
+    "evolvesFrom": "Froakie",
+    "image": "https://images.scrydex.com/pokemon/me4-89/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-89/small",
+    "attacks": [
+      {
+        "name": "Summoning Jutsu",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-90",
+    "name": "Ampharos",
+    "number": "90",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "saino misaki",
+    "evolvesFrom": "Flaaffy",
+    "image": "https://images.scrydex.com/pokemon/me4-90/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-90/small",
+    "attacks": [
+      {
+        "name": "Flashing Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "During your next turn, this Pokémon can't use Flashing Bolt."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Synchro Pulse",
+        "text": "If you have the same number of cards in your hand as your opponent, attacks used by this Pokémon do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-91",
+    "name": "Xerneas",
+    "number": "91",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "YASHIRO Nanaco",
+    "image": "https://images.scrydex.com/pokemon/me4-91/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-91/small",
+    "attacks": [
+      {
+        "name": "Geo Storm",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each [Psychic] Energy attached to all of your Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-92",
+    "name": "Claydol",
+    "number": "92",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "matazo",
+    "evolvesFrom": "Baltoy",
+    "image": "https://images.scrydex.com/pokemon/me4-92/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-92/small",
+    "attacks": [
+      {
+        "name": "Devolution Ray",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "50",
+        "text": "If your opponent's Active Pokémon is an evolved Pokémon, devolve it by putting the highest Stage Evolution card on it into your opponent's hand."
+      }
+    ]
+  },
+  {
+    "id": "me4-93",
+    "name": "Crobat",
+    "number": "93",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Kazuhisa Uragami",
+    "evolvesFrom": "Golbat",
+    "image": "https://images.scrydex.com/pokemon/me4-93/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-93/small",
+    "attacks": [
+      {
+        "name": "Poison Sound Wave",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "80",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Nighttime Maneuvers",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Search your deck for a card. Shuffle your deck, then put that card on top of it.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-94",
+    "name": "Metang",
+    "number": "94",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Kurata So",
+    "evolvesFrom": "Beldum",
+    "image": "https://images.scrydex.com/pokemon/me4-94/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-94/small",
+    "attacks": [
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ]
+  },
+  {
+    "id": "me4-95",
+    "name": "Sliggoo",
+    "number": "95",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "90",
+    "artist": "aspara",
+    "evolvesFrom": "Goomy",
+    "image": "https://images.scrydex.com/pokemon/me4-95/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-95/small",
+    "attacks": [
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Water",
+          "Psychic"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-96",
+    "name": "Tauros",
+    "number": "96",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Tsuyoshi Nagano",
+    "image": "https://images.scrydex.com/pokemon/me4-96/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-96/small",
+    "attacks": [
+      {
+        "name": "Target Together",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon and flip a coin for each of your Pokémon in play that has \"Tauros\" in its name. This attack does 50 damage to the chosen Pokémon for each heads. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ]
+  },
+  {
+    "id": "me4-97",
+    "name": "Watchog",
+    "number": "97",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "MARINA Chikazawa",
+    "evolvesFrom": "Patrat",
+    "image": "https://images.scrydex.com/pokemon/me4-97/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-97/small",
+    "attacks": [
+      {
+        "name": "Snap Inspection",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 3 coins. If any of them are heads, your opponent reveals their hand. For each heads, choose a card you find there and shuffle it into your opponent's deck."
+      },
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me4-98",
+    "name": "Beedrill ex",
+    "number": "98",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "310",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Kakuna",
+    "image": "https://images.scrydex.com/pokemon/me4-98/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-98/small",
+    "attacks": [
+      {
+        "name": "Rumbling Bees",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "110×",
+        "text": "This attack does 110 damage for each of your Beedrill and Beedrill ex in play."
+      }
+    ]
+  },
+  {
+    "id": "me4-99",
+    "name": "Mega Pyroar ex",
+    "number": "99",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "340",
+    "artist": "Keisuke Azuma",
+    "evolvesFrom": "Litleo",
+    "image": "https://images.scrydex.com/pokemon/me4-99/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-99/small",
+    "attacks": [
+      {
+        "name": "Ferocious Bellow",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, attacks used by the Defending Pokémon do 50 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Fiery Big Bang 290-",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 10 less damage for each damage counter on this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-100",
+    "name": "Mega Greninja ex",
+    "number": "100",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "350",
+    "artist": "takuyoa",
+    "evolvesFrom": "Frogadier",
+    "image": "https://images.scrydex.com/pokemon/me4-100/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-100/small",
+    "attacks": [
+      {
+        "name": "Ninja Spinner",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "120+",
+        "text": "You may put a [Water] Energy attached to this Pokémon into your hand and have this attack do 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mortal Shuriken",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may discard a Basic [Water] Energy card from your hand in order to use this Ability. Place 6 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-101",
+    "name": "Mega Floette ex",
+    "number": "101",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "250",
+    "artist": "aky CG Works",
+    "image": "https://images.scrydex.com/pokemon/me4-101/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-101/small",
+    "attacks": [
+      {
+        "name": "Gentle Light",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from each Pokémon (both yours and your opponent's)."
+      },
+      {
+        "name": "Eternity Bloom",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "200",
+        "text": "Search your deck for up to 4 Basic [Psychic] Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck."
+      }
+    ]
+  },
+  {
+    "id": "me4-102",
+    "name": "Gourgeist ex",
+    "number": "102",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "270",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Pumpkaboo",
+    "image": "https://images.scrydex.com/pokemon/me4-102/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-102/small",
+    "attacks": [
+      {
+        "name": "Horrifying Rondo",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30+",
+        "text": "This attack does 50 more damage for each of your Benched Pokémon that has any damage counters on it."
+      },
+      {
+        "name": "Ghostly Touch",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "140",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ]
+  },
+  {
+    "id": "me4-103",
+    "name": "Cobalion ex",
+    "number": "103",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "https://images.scrydex.com/pokemon/me4-103/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-103/small",
+    "attacks": [
+      {
+        "name": "Power Tackle",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metal Road",
+        "text": "Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may use this Ability. Move any amount of [Metal] Energy from your other Pokémon to this Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-104",
+    "name": "Mega Dragalge ex",
+    "number": "104",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Skrelp",
+    "image": "https://images.scrydex.com/pokemon/me4-104/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-104/small",
+    "attacks": [
+      {
+        "name": "Corrosive Liquid",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Pokémon Tools and Special Energy from all of your opponent's Pokémon."
+      },
+      {
+        "name": "Pernicious Poison",
+        "cost": [
+          "Water",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, place 16 damage counters on that Pokémon instead of 1."
+      }
+    ]
+  },
+  {
+    "id": "me4-105",
+    "name": "Cinccino ex",
+    "number": "105",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Minccino",
+    "image": "https://images.scrydex.com/pokemon/me4-105/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-105/small",
+    "attacks": [
+      {
+        "name": "Energized Slap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage for each Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Smooth Coat",
+        "text": "If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-106",
+    "name": "AZ's Tranquility",
+    "number": "106",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GIDORA",
+    "image": "https://images.scrydex.com/pokemon/me4-106/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-106/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "Switch your Active Pokémon with 1 of your Benched Pokémon. If you moved a Pokémon ex to your Bench in this way, heal 80 damage from that Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-107",
+    "name": "Emma",
+    "number": "107",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Akira Komayama",
+    "image": "https://images.scrydex.com/pokemon/me4-107/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-107/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "Your opponent reveals their hand, and you draw a card for each Pokémon you find there."
+      }
+    ]
+  },
+  {
+    "id": "me4-108",
+    "name": "Energy Retrieval",
+    "number": "108",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "https://images.scrydex.com/pokemon/me4-108/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-108/small",
+    "attacks": [
+      {
+        "name": "Item",
+        "cost": [],
+        "damage": "",
+        "text": "Put up to 2 Basic Energy cards from your discard pile into your hand."
+      }
+    ]
+  },
+  {
+    "id": "me4-109",
+    "name": "Jumbo Ice Cream",
+    "number": "109",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "AYUMI ODASHIMA",
+    "image": "https://images.scrydex.com/pokemon/me4-109/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-109/small",
+    "attacks": [
+      {
+        "name": "Item",
+        "cost": [],
+        "damage": "",
+        "text": "Heal 80 damage from your Active Pokémon that has 3 or more Energy attached."
+      }
+    ]
+  },
+  {
+    "id": "me4-110",
+    "name": "Philippe",
+    "number": "110",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Souichirou Gunjima",
+    "image": "https://images.scrydex.com/pokemon/me4-110/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-110/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "Attach up to 2 Basic [Metal] Energy cards from your discard pile to 1 of your [Metal] Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-111",
+    "name": "Prism Tower",
+    "number": "111",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "MARINA Chikazawa",
+    "image": "https://images.scrydex.com/pokemon/me4-111/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-111/small",
+    "attacks": [
+      {
+        "name": "Stadium",
+        "cost": [],
+        "damage": "",
+        "text": "Once during each player's turn, that player may discard 2 cards from their hand in order to draw a card."
+      }
+    ]
+  },
+  {
+    "id": "me4-112",
+    "name": "Roxie's Performance",
+    "number": "112",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Nobusawa/Mochipuyo",
+    "image": "https://images.scrydex.com/pokemon/me4-112/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-112/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "During your opponent's next turn, their Poisoned Pokémon can't retreat. (This includes newly Poisoned Pokémon.)"
+      }
+    ]
+  },
+  {
+    "id": "me4-113",
+    "name": "Special Red Card",
+    "number": "113",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "https://images.scrydex.com/pokemon/me4-113/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-113/small",
+    "attacks": [
+      {
+        "name": "Item",
+        "cost": [],
+        "damage": "",
+        "text": "You can use this card only if your opponent has 3 or fewer Prize cards remaining. Your opponent shuffles their hand and puts it on the bottom of their deck. If they put any cards on the bottom of their deck in this way, they draw 3 cards."
+      }
+    ]
+  },
+  {
+    "id": "me4-114",
+    "name": "Surfing Beach",
+    "number": "114",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "AYUMI ODASHIMA",
+    "image": "https://images.scrydex.com/pokemon/me4-114/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-114/small",
+    "attacks": [
+      {
+        "name": "Stadium",
+        "cost": [],
+        "damage": "",
+        "text": "Once during each player's turn, that player may switch their Active [Water] Pokémon with 1 of their Benched [Water] Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-115",
+    "name": "Tool Scrapper",
+    "number": "115",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "https://images.scrydex.com/pokemon/me4-115/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-115/small",
+    "attacks": [
+      {
+        "name": "Item",
+        "cost": [],
+        "damage": "",
+        "text": "Choose up to 2 Pokémon Tool cards attached to Pokémon in play (yours or your opponent's) and discard them."
+      }
+    ]
+  },
+  {
+    "id": "me4-116",
+    "name": "Mega Greninja ex",
+    "number": "116",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "350",
+    "artist": "Susumu Maeya",
+    "evolvesFrom": "Frogadier",
+    "image": "https://images.scrydex.com/pokemon/me4-116/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-116/small",
+    "attacks": [
+      {
+        "name": "Ninja Spinner",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "120+",
+        "text": "You may put a [Water] Energy attached to this Pokémon into your hand and have this attack do 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mortal Shuriken",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may discard a Basic [Water] Energy card from your hand in order to use this Ability. Place 6 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-117",
+    "name": "Mega Floette ex",
+    "number": "117",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "250",
+    "artist": "Teeziro",
+    "image": "https://images.scrydex.com/pokemon/me4-117/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-117/small",
+    "attacks": [
+      {
+        "name": "Gentle Light",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from each Pokémon (both yours and your opponent's)."
+      },
+      {
+        "name": "Eternity Bloom",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "200",
+        "text": "Search your deck for up to 4 Basic [Psychic] Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck."
+      }
+    ]
+  },
+  {
+    "id": "me4-118",
+    "name": "Mega Dragalge ex",
+    "number": "118",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "330",
+    "artist": "Kazumasa Yasukuni",
+    "evolvesFrom": "Skrelp",
+    "image": "https://images.scrydex.com/pokemon/me4-118/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-118/small",
+    "attacks": [
+      {
+        "name": "Corrosive Liquid",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Pokémon Tools and Special Energy from all of your opponent's Pokémon."
+      },
+      {
+        "name": "Pernicious Poison",
+        "cost": [
+          "Water",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, place 16 damage counters on that Pokémon instead of 1."
+      }
+    ]
+  },
+  {
+    "id": "me4-119",
+    "name": "Cinccino ex",
+    "number": "119",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "240",
+    "artist": "Keisin",
+    "evolvesFrom": "Minccino",
+    "image": "https://images.scrydex.com/pokemon/me4-119/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-119/small",
+    "attacks": [
+      {
+        "name": "Energized Slap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage for each Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Smooth Coat",
+        "text": "If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me4-120",
+    "name": "AZ's Tranquility",
+    "number": "120",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "OKACHEKE",
+    "image": "https://images.scrydex.com/pokemon/me4-120/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-120/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "Switch your Active Pokémon with 1 of your Benched Pokémon. If you moved a Pokémon ex to your Bench in this way, heal 80 damage from that Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me4-121",
+    "name": "Roxie's Performance",
+    "number": "121",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Tomowaka",
+    "image": "https://images.scrydex.com/pokemon/me4-121/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-121/small",
+    "attacks": [
+      {
+        "name": "Supporter",
+        "cost": [],
+        "damage": "",
+        "text": "During your opponent's next turn, their Poisoned Pokémon can't retreat. (This includes newly Poisoned Pokémon.)"
+      }
+    ]
+  },
+  {
+    "id": "me4-122",
+    "name": "Mega Greninja ex",
+    "number": "122",
+    "rarity": "Mega Hyper Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "350",
+    "artist": "takuyoa",
+    "evolvesFrom": "Frogadier",
+    "image": "https://images.scrydex.com/pokemon/me4-122/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me4-122/small",
+    "attacks": [
+      {
+        "name": "Ninja Spinner",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "120+",
+        "text": "You may put a [Water] Energy attached to this Pokémon into your hand and have this attack do 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mortal Shuriken",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may discard a Basic [Water] Energy card from your hand in order to use this Ability. Place 6 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  }
+]

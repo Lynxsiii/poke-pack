@@ -1,0 +1,3656 @@
+[
+  {
+    "id": "me5-1",
+    "name": "Tropius",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Akino Fukuji",
+    "flavorText": "Delicious fruits grew out from around its neck because it always ate the same kind of fruit.",
+    "image": "https://images.scrydex.com/pokemon/me5-1/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-1/small",
+    "attacks": [
+      {
+        "name": "Fruity Aroma",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 6 cards of your deck, and you may reveal any number of Pokémon you find there and put them into your hand. Shuffle the other cards back into your deck."
+      },
+      {
+        "name": "Solar Beam",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-2",
+    "name": "Grubbin",
+    "number": "2",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Mina Nakai",
+    "flavorText": "It spits sticky threads and winds them around branches, then swings nimbly from tree to tree in a pendulum-like motion.",
+    "image": "https://images.scrydex.com/pokemon/me5-2/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-2/small",
+    "attacks": [
+      {
+        "name": "String Shot",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ]
+  },
+  {
+    "id": "me5-3",
+    "name": "Fomantis",
+    "number": "3",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "nisimono",
+    "flavorText": "Many Trainers give their Fomantis their own flowerpots so they can sunbathe in peace and quiet.",
+    "image": "https://images.scrydex.com/pokemon/me5-3/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-3/small",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ]
+  },
+  {
+    "id": "me5-4",
+    "name": "Lurantis ex",
+    "number": "4",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Fomantis",
+    "image": "https://images.scrydex.com/pokemon/me5-4/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-4/small",
+    "attacks": [
+      {
+        "name": "Lively Cutter",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "60+",
+        "text": "If this Pokémon was healed during this turn, this attack does 200 more damage."
+      },
+      {
+        "name": "Leaf Guard",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "During your opponent's next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ]
+  },
+  {
+    "id": "me5-5",
+    "name": "Poltchageist",
+    "number": "5",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "30",
+    "artist": "Mousho",
+    "flavorText": "Poltchageist looks like a regional form of Sinistea, but it was recently discovered that the two Pokémon are entirely unrelated.",
+    "image": "https://images.scrydex.com/pokemon/me5-5/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-5/small",
+    "attacks": [
+      {
+        "name": "Furtive Drop",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Place 1 damage counter on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hide 'n' Sneak",
+        "text": "Prevent all effects of your opponent's Pokémon's attacks and Abilities done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-6",
+    "name": "Sinistcha",
+    "number": "6",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "mingo",
+    "flavorText": "It prefers cool, dark places, such as the back of a shelf or the space beneath a home's floorboards. It wanders in search of prey after sunset.",
+    "evolvesFrom": "Poltchageist",
+    "image": "https://images.scrydex.com/pokemon/me5-6/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-6/small",
+    "attacks": [
+      {
+        "name": "Matcha Spin",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If you have 6 or more Pokémon that have the Hide 'n' Sneak Ability in your discard pile, place 4 damage counters on each of your opponent's Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hide 'n' Sneak",
+        "text": "Prevent all effects of your opponent's Pokémon's attacks and Abilities done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-7",
+    "name": "Heatran",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Takeshi Nakamura",
+    "flavorText": "It dwells in volcanic caves. It digs in with its cross- shaped feet to crawl on ceilings and walls.",
+    "image": "https://images.scrydex.com/pokemon/me5-7/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-7/small",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Lava Wall",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Burned Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-8",
+    "name": "Mega Delphox ex",
+    "number": "8",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "350",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Braixen",
+    "image": "https://images.scrydex.com/pokemon/me5-8/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-8/small",
+    "attacks": [
+      {
+        "name": "Trick Portal",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Look at the top 9 cards of your deck, and you may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck."
+      },
+      {
+        "name": "Eerie Glow",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Your opponent's Active Pokémon is now Burned and Confused."
+      }
+    ]
+  },
+  {
+    "id": "me5-9",
+    "name": "Sizzlipede",
+    "number": "9",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Yuya Oka",
+    "flavorText": "It stores flammable gas in its body and uses it to generate heat. The yellow sections on its belly get particularly hot.",
+    "image": "https://images.scrydex.com/pokemon/me5-9/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-9/small",
+    "attacks": [
+      {
+        "name": "Controlled Burn",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Bug Out",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Reveal the bottom 7 cards of your deck, and this attack does 50 damage for each Pokémon you find there that has the Bug Out attack. Then, shuffle any revealed Pokémon back into your deck. Discard the other cards."
+      }
+    ]
+  },
+  {
+    "id": "me5-10",
+    "name": "Centiskorch",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Kouki Saitou",
+    "flavorText": "When it heats up, its body temperature reaches about 1,500 degrees Fahrenheit. It lashes its body like a whip and launches itself at enemies.",
+    "evolvesFrom": "Sizzlipede",
+    "image": "https://images.scrydex.com/pokemon/me5-10/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-10/small",
+    "attacks": [
+      {
+        "name": "Controlled Burn",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard the top 2 cards of your opponent's deck."
+      },
+      {
+        "name": "Heat Tackle",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ]
+  },
+  {
+    "id": "me5-11",
+    "name": "Charcadet",
+    "number": "11",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Ryuta Fuse",
+    "flavorText": "Its firepower increases when it fights, reaching over 1,800 degrees Fahrenheit. It likes berries that are rich in fat.",
+    "image": "https://images.scrydex.com/pokemon/me5-11/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-11/small",
+    "attacks": [
+      {
+        "name": "Best Punch",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ]
+  },
+  {
+    "id": "me5-12",
+    "name": "Armarouge",
+    "number": "12",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Jiro Sasumo",
+    "flavorText": "This Pokémon clads itself in armor that has been fortified by psychic and fire energy, and it shoots blazing fireballs.",
+    "evolvesFrom": "Charcadet",
+    "image": "https://images.scrydex.com/pokemon/me5-12/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-12/small",
+    "attacks": [
+      {
+        "name": "Flame Legion",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each of your Benched Pokémon that has any Fire Energy attached."
+      }
+    ]
+  },
+  {
+    "id": "me5-13",
+    "name": "Goldeen",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Shibuzoh.",
+    "flavorText": "Its dorsal, pectoral, and tail fins wave elegantly in water. That is why it is known as the Water Dancer.",
+    "image": "https://images.scrydex.com/pokemon/me5-13/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-13/small",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-14",
+    "name": "Seaking",
+    "number": "14",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "OKUBO",
+    "flavorText": "In autumn, its body becomes more fatty in preparing to propose to a mate. It takes on beautiful colors.",
+    "evolvesFrom": "Goldeen",
+    "image": "https://images.scrydex.com/pokemon/me5-14/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-14/small",
+    "attacks": [
+      {
+        "name": "Hydro Jet",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon for each Water Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ]
+  },
+  {
+    "id": "me5-15",
+    "name": "Wailmer",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Asako Ito",
+    "flavorText": "It shows off by spraying jets of seawater from the nostrils above its eyes. It eats a solid ton of Wishiwashi every day.",
+    "image": "https://images.scrydex.com/pokemon/me5-15/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-15/small",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-16",
+    "name": "Wailord ex",
+    "number": "16",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "380",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Wailmer",
+    "image": "https://images.scrydex.com/pokemon/me5-16/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-16/small",
+    "attacks": [
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Falling Down",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "270",
+        "text": "This Pokémon is now Asleep."
+      }
+    ]
+  },
+  {
+    "id": "me5-17",
+    "name": "Relicanth",
+    "number": "17",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Naoyo Kimura",
+    "flavorText": "Rock-hard scales and oil-filled swim bladders allow this Pokémon to survive the intense water pressure of the deep sea.",
+    "image": "https://images.scrydex.com/pokemon/me5-17/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-17/small",
+    "attacks": [
+      {
+        "name": "Fossil Beatdown",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 30 more damage for each of your Benched Pokémon that has \"Antique\" in its name."
+      }
+    ]
+  },
+  {
+    "id": "me5-18",
+    "name": "Popplio",
+    "number": "18",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Oswaldo KATO",
+    "flavorText": "The balloons it inflates with its nose grow larger and larger as it practices day by day.",
+    "image": "https://images.scrydex.com/pokemon/me5-18/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-18/small",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-19",
+    "name": "Brionne",
+    "number": "19",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "MINAMINAMI Take",
+    "flavorText": "It cares deeply for its companions. When its Trainer is feeling down, it performs a cheery dance to try to help.",
+    "evolvesFrom": "Popplio",
+    "image": "https://images.scrydex.com/pokemon/me5-19/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-19/small",
+    "attacks": [
+      {
+        "name": "Hyper Voice",
+        "cost": [
+          "Water"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-20",
+    "name": "Primarina",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Taira Akitsu",
+    "flavorText": "Also known as a songstress, it is a sight to behold on moonlit nights when it sings in front of the colony it leads.",
+    "evolvesFrom": "Brionne",
+    "image": "https://images.scrydex.com/pokemon/me5-20/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-20/small",
+    "attacks": [
+      {
+        "name": "Aqua Return",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Shuffle this Pokémon and all attached cards into your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Enriching Melody",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. Heal all damage from 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-21",
+    "name": "Finizen",
+    "number": "21",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Yukiko Baba",
+    "flavorText": "Its water ring is made from seawater mixed with a sticky fluid that Finizen secretes from its blowhole.",
+    "image": "https://images.scrydex.com/pokemon/me5-21/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-21/small",
+    "attacks": [
+      {
+        "name": "Draining Fin",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-22",
+    "name": "Palafin",
+    "number": "22",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "satoma",
+    "flavorText": "This hero of the ocean swims at a speed of 50 knots and saves drowning people and Pokémon.",
+    "evolvesFrom": "Finizen",
+    "image": "https://images.scrydex.com/pokemon/me5-22/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-22/small",
+    "attacks": [
+      {
+        "name": "Knuckle Justice",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "80+",
+        "text": "If your opponent has exactly 1 Prize card remaining, this attack does 200 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me5-23",
+    "name": "Electrike",
+    "number": "23",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Dsuke",
+    "flavorText": "It stores static electricity in its fur for discharging. This Pokémon's whole body gives off sparks if a storm approaches.",
+    "image": "https://images.scrydex.com/pokemon/me5-23/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-23/small",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-24",
+    "name": "Manectric",
+    "number": "24",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Uninori",
+    "flavorText": "It discharges electricity from its mane. The Pokémon creates a thundercloud overhead from which to drop lightning bolts.",
+    "evolvesFrom": "Electrike",
+    "image": "https://images.scrydex.com/pokemon/me5-24/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-24/small",
+    "attacks": [
+      {
+        "name": "Flashing Barrier",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Evolution Pokémon."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-25",
+    "name": "Charjabug",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Kazuhisa Uragami",
+    "flavorText": "As it digests fallen leaves, it generates and stores electricity, which it can discharge from the tips of its jaws.",
+    "evolvesFrom": "Grubbin",
+    "image": "https://images.scrydex.com/pokemon/me5-25/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-25/small",
+    "attacks": [
+      {
+        "name": "Vise Grip",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Ram",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-26",
+    "name": "Vikavolt",
+    "number": "26",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "KEIICHIRO ITO",
+    "flavorText": "When carrying a Charjabug, Vikavolt can receive electricity from it and then rapidly fire powerful electromagnetic beams from its large jaws.",
+    "evolvesFrom": "Charjabug",
+    "image": "https://images.scrydex.com/pokemon/me5-26/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-26/small",
+    "attacks": [
+      {
+        "name": "Quick Dive",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Giga Railgun",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "260",
+        "text": "If this Pokémon has no Voltaic Lightning Energy attached, this attack does nothing."
+      }
+    ]
+  },
+  {
+    "id": "me5-27",
+    "name": "Mega Zeraora ex",
+    "number": "27",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "270",
+    "artist": "5ban Graphics",
+    "image": "https://images.scrydex.com/pokemon/me5-27/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-27/small",
+    "attacks": [
+      {
+        "name": "Thunderous Fist",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Lightning Energy attached to this Pokémon."
+      },
+      {
+        "name": "Zepto Turn",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "150",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-28",
+    "name": "Miraidon",
+    "number": "28",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "mashu",
+    "flavorText": "This seems to be the Iron Serpent mentioned in an old book. The Iron Serpent is said to have turned the land to ash with its lightning.",
+    "image": "https://images.scrydex.com/pokemon/me5-28/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-28/small",
+    "attacks": [
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "90",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Photon Cord",
+        "text": "If this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent's Pokémon, move up to 2 Basic Lightning Energy cards from this Pokémon to 1 of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-29",
+    "name": "Slowpoke",
+    "number": "29",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Nelnal",
+    "flavorText": "It lazes vacantly near water. If something bites its tail, it won't even notice for a whole day.",
+    "image": "https://images.scrydex.com/pokemon/me5-29/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-29/small",
+    "attacks": [
+      {
+        "name": "All-You-Can-Yeet",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "You may discard any number of cards from your hand."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-30",
+    "name": "Slowbro",
+    "number": "30",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "CHORISO",
+    "flavorText": "An attached Shellder won't let go because of the tasty flavor that oozes out of Slowbro's tail.",
+    "evolvesFrom": "Slowpoke",
+    "image": "https://images.scrydex.com/pokemon/me5-30/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-30/small",
+    "attacks": [
+      {
+        "name": "All Out",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "50+",
+        "text": "If you have no cards in your hand, this attack does 160 more damage."
+      },
+      {
+        "name": "Zen Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-31",
+    "name": "Mega Slowbro ex",
+    "number": "31",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Slowpoke",
+    "image": "https://images.scrydex.com/pokemon/me5-31/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-31/small",
+    "attacks": [
+      {
+        "name": "Shellnado Spin",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, if this Pokémon is damaged by an attack (even if this Pokémon is Knocked Out), place 12 damage counters on the Attacking Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-32",
+    "name": "Jynx",
+    "number": "32",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Yoshimoto Yoshimon",
+    "flavorText": "Its strange cries sound like human language. There are some musicians who compose songs for Jynx to sing.",
+    "image": "https://images.scrydex.com/pokemon/me5-32/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-32/small",
+    "attacks": [
+      {
+        "name": "Intense Kiss",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "At the end of your opponent's next turn, discard the Defending Pokémon and all attached cards."
+      },
+      {
+        "name": "Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ]
+  },
+  {
+    "id": "me5-33",
+    "name": "Shuppet",
+    "number": "33",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Bun Toujo",
+    "flavorText": "It uses its horn to feed on envy and malice-or so it's said. It's very active at night.",
+    "image": "https://images.scrydex.com/pokemon/me5-33/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-33/small",
+    "attacks": [
+      {
+        "name": "Hang Down",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hide 'n' Sneak",
+        "text": "Prevent all effects of your opponent's Pokémon's attacks and Abilities done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-34",
+    "name": "Banette",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Mugi Hamada",
+    "flavorText": "A doll bore a grudge over being junked, and it became a Pokémon. It seeks the child that disowned it.",
+    "evolvesFrom": "Shuppet",
+    "image": "https://images.scrydex.com/pokemon/me5-34/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-34/small",
+    "attacks": [
+      {
+        "name": "Puppet Pull",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "80",
+        "text": "You may search your deck for a card and put it into your hand. Then, shuffle your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hide 'n' Sneak",
+        "text": "Prevent all effects of your opponent's Pokémon's attacks and Abilities done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-35",
+    "name": "Spiritomb",
+    "number": "35",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "danciao",
+    "flavorText": "It was formed by uniting 108 spirits. It has been bound to the Odd Keystone to keep it from doing any mischief.",
+    "image": "https://images.scrydex.com/pokemon/me5-35/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-35/small",
+    "attacks": [
+      {
+        "name": "Spiritual End",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "If you have 13 or more Pokémon that have the Hide 'n' Sneak Ability in your discard pile, choose 2 of your opponent's Pokémon and quadruple the number of damage counters on each of them."
+      }
+    ]
+  },
+  {
+    "id": "me5-36",
+    "name": "Litwick",
+    "number": "36",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "Litwick shines a light that absorbs the life energy of people and Pokémon, which becomes the fuel that it burns.",
+    "image": "https://images.scrydex.com/pokemon/me5-36/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-36/small",
+    "attacks": [
+      {
+        "name": "Will-O-Wisp",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-37",
+    "name": "Lampent",
+    "number": "37",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "sowsow",
+    "flavorText": "Lampent appears at the moment of death and promptly absorbs the spirit as it leaves the body.",
+    "evolvesFrom": "Litwick",
+    "image": "https://images.scrydex.com/pokemon/me5-37/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-37/small",
+    "attacks": [
+      {
+        "name": "Spreading Light",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Lampent and put them onto your Bench. Then, shuffle your deck."
+      }
+    ]
+  },
+  {
+    "id": "me5-38",
+    "name": "Mega Chandelure ex",
+    "number": "38",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "350",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Lampent",
+    "image": "https://images.scrydex.com/pokemon/me5-38/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-38/small",
+    "attacks": [
+      {
+        "name": "Phantom Maze",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130+",
+        "text": "This attack does 50 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Binding Flame",
+        "text": "Your opponent's Active Pokémon's Retreat Cost is Colorless more.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-39",
+    "name": "Dhelmise",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Oku",
+    "flavorText": "After a piece of seaweed merged with debris from a sunken ship, it was reborn as this ghost Pokémon.",
+    "image": "https://images.scrydex.com/pokemon/me5-39/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-39/small",
+    "attacks": [
+      {
+        "name": "Vengeful Anchor",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30+",
+        "text": "If you have 4 or more Pokémon that have the Hide 'n' Sneak Ability in your discard pile, this attack does 140 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me5-40",
+    "name": "Marshadow",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Nakamura Ippan",
+    "flavorText": "By slipping into the shadow of a martial arts master and copying their movements, this Pokémon learned the ultimate techniques.",
+    "image": "https://images.scrydex.com/pokemon/me5-40/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-40/small",
+    "attacks": [
+      {
+        "name": "Shadowy Knot",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ]
+  },
+  {
+    "id": "me5-41",
+    "name": "Annihilape",
+    "number": "41",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "150",
+    "artist": "Haru Akasaka",
+    "flavorText": "It imbues its fists with the power of the rage that it kept hidden in its heart. Opponents struck by these imbued fists will be shattered to their core.",
+    "evolvesFrom": "Primeape",
+    "image": "https://images.scrydex.com/pokemon/me5-41/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-41/small",
+    "attacks": [
+      {
+        "name": "Ghostly Blow",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "100",
+        "text": "Place 5 damage counters on 1 of your opponent's Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Durable Body",
+        "text": "If this Pokémon would be Knocked Out by damage from an attack, flip a coin. If heads, this Pokémon is not Knocked Out, and its remaining HP becomes 10.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-42",
+    "name": "Mankey",
+    "number": "42",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "image": "https://images.scrydex.com/pokemon/me5-42/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-42/small",
+    "attacks": [
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-43",
+    "name": "Primeape",
+    "number": "43",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "GOSSAN",
+    "flavorText": "Some researchers theorize that Primeape remains angry even when inside a Poké Ball.",
+    "evolvesFrom": "Mankey",
+    "image": "https://images.scrydex.com/pokemon/me5-43/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-43/small",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-44",
+    "name": "Cranidos",
+    "number": "44",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Hideki Ishikawa",
+    "flavorText": "Cranidos toughen up their already sturdy heads by headbutting one another.",
+    "evolvesFrom": "Antique Skull Fossil",
+    "image": "https://images.scrydex.com/pokemon/me5-44/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-44/small",
+    "attacks": [
+      {
+        "name": "Push Down",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "70",
+        "text": "Switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)"
+      }
+    ]
+  },
+  {
+    "id": "me5-45",
+    "name": "Rampardos ex",
+    "number": "45",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "330",
+    "artist": "hncl",
+    "evolvesFrom": "Cranidos",
+    "image": "https://images.scrydex.com/pokemon/me5-45/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-45/small",
+    "attacks": [
+      {
+        "name": "Rowdy Hammer",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "150",
+        "text": "During your next turn, attacks used by this Pokémon do 150 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Destructive Headbutting",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-46",
+    "name": "Drilbur",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "image": "https://images.scrydex.com/pokemon/me5-46/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-46/small",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-47",
+    "name": "Koraidon",
+    "number": "47",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "image": "https://images.scrydex.com/pokemon/me5-47/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-47/small",
+    "attacks": [
+      {
+        "name": "Battle Claw",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30+",
+        "text": "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 30 more damage."
+      },
+      {
+        "name": "Gaia Impact",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-48",
+    "name": "Mega Darkrai ex",
+    "number": "48",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "image": "https://images.scrydex.com/pokemon/me5-48/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-48/small",
+    "attacks": [
+      {
+        "name": "Dusk Raid",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "110+",
+        "text": "If your Benched Pokémon have any damage counters on them, this attack does 110 more damage."
+      },
+      {
+        "name": "Abyss Eye",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "If your opponent's Active Pokémon is affected by a Special Condition, it is Knocked Out."
+      }
+    ]
+  },
+  {
+    "id": "me5-49",
+    "name": "Vullaby",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Shiburingaru",
+    "flavorText": "Its healthy appetite leads to visible growth spurts. It often has to replace the bones it wears as its size increases.",
+    "image": "https://images.scrydex.com/pokemon/me5-49/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-49/small",
+    "attacks": [
+      {
+        "name": "Flap",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Gust",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-50",
+    "name": "Mandibuzz",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Nisota Niso",
+    "flavorText": "Watching from the sky, they attack weakened prey on the ground. They have a habit of decorating themselves with bones.",
+    "evolvesFrom": "Vullaby",
+    "image": "https://images.scrydex.com/pokemon/me5-50/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-50/small",
+    "attacks": [
+      {
+        "name": "Bone Sniper",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "This attack does 70 damage to 1 of your opponent's Pokémon that has any Special Energy attached. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Blasting Wind",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-51",
+    "name": "Inkay",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Yuriko Akase",
+    "flavorText": "It drains foes' will to fight by flashing light at them. It then takes the opportunity to hide itself away.",
+    "image": "https://images.scrydex.com/pokemon/me5-51/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-51/small",
+    "attacks": [
+      {
+        "name": "Procurement",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Search your deck for an Item card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Spinning Attack",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-52",
+    "name": "Malamar",
+    "number": "52",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Naoki Saito",
+    "flavorText": "It wields the most compelling hypnotic powers of any Pokémon, and it forces others to do whatever it wants.",
+    "evolvesFrom": "Inkay",
+    "image": "https://images.scrydex.com/pokemon/me5-52/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-52/small",
+    "attacks": [
+      {
+        "name": "Perplex",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Brain Crush",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "130",
+        "text": "If your opponent's Active Pokémon isn't Confused, this attack does nothing."
+      }
+    ]
+  },
+  {
+    "id": "me5-53",
+    "name": "Nickit",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Krgc",
+    "flavorText": "Aided by the soft pads on its feet, it silently raids the food stores of other Pokemon. It survives off its ill-gotten gains.",
+    "image": "https://images.scrydex.com/pokemon/me5-53/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-53/small",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-54",
+    "name": "Thievul",
+    "number": "54",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "GOTO minori",
+    "flavorText": "It secretly marks potential targets with a scent. By following the scent, it stalks its targets and steals from them when they least expect it.",
+    "evolvesFrom": "Nickit",
+    "image": "https://images.scrydex.com/pokemon/me5-54/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-54/small",
+    "attacks": [
+      {
+        "name": "Skill Thief",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If you have no cards in your hand, choose an attack from 1 of your opponent's Pokémon in play and use it as this attack."
+      },
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-55",
+    "name": "Morpeko ex",
+    "number": "55",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "aky GG Works",
+    "image": "https://images.scrydex.com/pokemon/me5-55/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-55/small",
+    "attacks": [
+      {
+        "name": "Wheely Draw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw 6 cards."
+      },
+      {
+        "name": "Hangry Blaster",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each damage counter on this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-56",
+    "name": "Zarude",
+    "number": "56",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "matazo",
+    "flavorText": "Within dense forests, this Pokemon lives in a pack with others of its kind. It's incredibly aggressive, and the other Pokemon of the forest fear it.",
+    "image": "https://images.scrydex.com/pokemon/me5-56/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-56/small",
+    "attacks": [
+      {
+        "name": "Overhead Throw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "This attack also does 30 damage to 1 of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Shadowy Whip",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "100+",
+        "text": "If your Benched Pokémon have any Shadowy Darkness Energy attached, this attack does 70 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me5-57",
+    "name": "Maschiff",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "ryoma uratsuka",
+    "flavorText": "Its well-developed jaw and fangs are strong enough to crunch through boulders, and its thick fat makes for an excellent defense.",
+    "image": "https://images.scrydex.com/pokemon/me5-57/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-57/small",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-58",
+    "name": "Mabosstiff",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "140",
+    "artist": "kawayoo",
+    "flavorText": "Mabosstiff loves playing with children. Though usually gentle, it takes on an intimidating look when protecting its family.",
+    "evolvesFrom": "Maschiff",
+    "image": "https://images.scrydex.com/pokemon/me5-58/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-58/small",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Plunging Headbutt",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "210",
+        "text": "During your opponent's next turn, this Pokémon takes 100 more damage from attacks (after applying Weakness and Resistance)."
+      }
+    ]
+  },
+  {
+    "id": "me5-59",
+    "name": "Chi-Yu",
+    "number": "59",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "IKEDA Saki",
+    "flavorText": "The envy accumulated within curved beads that sparked multiple conflicts has clad itself in fire and become a Pokémon.",
+    "image": "https://images.scrydex.com/pokemon/me5-59/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-59/small",
+    "attacks": [
+      {
+        "name": "Whirling Envy",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon has 2 or more damage counters on it, this attack does 90 more damage. This attack's damage isn't affected by Weakness."
+      }
+    ]
+  },
+  {
+    "id": "me5-60",
+    "name": "Skarmory",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "120",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "Because it nests in bramble bushes, the feathers of its chicks grow hard from being scratched by thorns.",
+    "image": "https://images.scrydex.com/pokemon/me5-60/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-60/small",
+    "attacks": [
+      {
+        "name": "Steel Cutter",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "40×",
+        "text": "Discard up to 2 Basic Metal Energy cards from your hand, and this attack does 40 damage for each card you discarded in this way."
+      }
+    ]
+  },
+  {
+    "id": "me5-61",
+    "name": "Shieldon",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Kurata So",
+    "flavorText": "This Pokémon lived in primeval jungles. It's thought that Shieldon had few enemies thanks to its sturdy face.",
+    "evolvesFrom": "Antique Armor Fossil",
+    "image": "https://images.scrydex.com/pokemon/me5-61/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-61/small",
+    "attacks": [
+      {
+        "name": "Smithereen Smash",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-62",
+    "name": "Bastiodon",
+    "number": "62",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "Kinu Nishimura",
+    "flavorText": "Bastiodon live in herds. When assaulted by enemies, they line up side by side and use their hard faces to block attacks.",
+    "evolvesFrom": "Shieldon",
+    "image": "https://images.scrydex.com/pokemon/me5-62/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-62/small",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ancient Bulwark",
+        "text": "As long as this Pokémon is on your Bench, prevent all damage done to each of your Pokémon by attacks from your opponent's Pokémon that have 2 or less Energy attached.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-63",
+    "name": "Bronzor",
+    "number": "63",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Saboteri",
+    "flavorText": "They are found in ancient tombs. The patterns on their backs are said to be imbued with mysterious power.",
+    "image": "https://images.scrydex.com/pokemon/me5-63/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-63/small",
+    "attacks": [
+      {
+        "name": "Mirror Attack",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10+",
+        "text": "If your opponent's Active Pokémon is a Metal Pokémon, this attack does 30 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me5-64",
+    "name": "Bronzong",
+    "number": "64",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Uta",
+    "flavorText": "It brought rains by opening portals to another world. It was revered as a bringer of plentiful harvests.",
+    "evolvesFrom": "Bronzor",
+    "image": "https://images.scrydex.com/pokemon/me5-64/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-64/small",
+    "attacks": [
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Metal Block",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your opponent's next turn, this Pokémon takes 100 less damage from attacks from Evolution Pokémon (after applying Weakness and Resistance)."
+      }
+    ]
+  },
+  {
+    "id": "me5-65",
+    "name": "Mega Excadrill ex",
+    "number": "65",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "340",
+    "artist": "Keisuke Azuma",
+    "evolvesFrom": "Drilbur",
+    "image": "https://images.scrydex.com/pokemon/me5-65/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-65/small",
+    "attacks": [
+      {
+        "name": "Undermine",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "90",
+        "text": "Discard the top 2 cards of your opponent's deck."
+      },
+      {
+        "name": "Maximum Drilling",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "200+",
+        "text": "If this Pokémon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me5-66",
+    "name": "Pikipek",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Koji Nakata",
+    "flavorText": "Pikipek has strong muscles in its neck, so it won't hurt itself even if it violently shakes its head.",
+    "image": "https://images.scrydex.com/pokemon/me5-66/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-66/small",
+    "attacks": [
+      {
+        "name": "Double Stab",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage for each heads."
+      }
+    ]
+  },
+  {
+    "id": "me5-67",
+    "name": "Trumbeak",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "evolvesFrom": "Pikipek",
+    "image": "https://images.scrydex.com/pokemon/me5-67/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-67/small",
+    "attacks": [
+      {
+        "name": "Fly",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-68",
+    "name": "Toucannon",
+    "number": "68",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "Masako Tomii",
+    "flavorText": "Pairs of Toucannon are considered symbols of companionship, as these Pokémon will raise the temperature of their beaks to warm each other.",
+    "evolvesFrom": "Trumbeak",
+    "image": "https://images.scrydex.com/pokemon/me5-68/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-68/small",
+    "attacks": [
+      {
+        "name": "Feather Rondo",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage for each Benched Pokémon (both yours and your opponent's)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Aerial Draw",
+        "text": "Once during your turn, you may use this Ability. Draw a card.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-69",
+    "name": "Type: Null",
+    "number": "69",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Ligton",
+    "flavorText": "It was modeled after a mighty Pokémon of myth. The mask placed upon it limits its power in order to keep it under control.",
+    "image": "https://images.scrydex.com/pokemon/me5-69/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-69/small",
+    "attacks": [
+      {
+        "name": "Power Edge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-70",
+    "name": "Silvally",
+    "number": "70",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "140",
+    "artist": "Takumi Wada",
+    "flavorText": "The final factor needed to release this Pokémon's true power was a strong bond with a Trainer it trusts.",
+    "evolvesFrom": "Type: Null",
+    "image": "https://images.scrydex.com/pokemon/me5-70/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-70/small",
+    "attacks": [
+      {
+        "name": "Air Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Call a Buddy",
+        "text": "Once during your turn, if you have no cards in your hand, you may use this Ability. Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-71",
+    "name": "Bombirdier",
+    "number": "71",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Wintr Wandr",
+    "flavorText": "Bombirdier uses the apron on its chest to bundle up food, which it carries back to its nest. It enjoys dropping things that make loud noises.",
+    "image": "https://images.scrydex.com/pokemon/me5-71/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-71/small",
+    "attacks": [
+      {
+        "name": "Challenging Delivery",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 2 coins. If both of them are heads, search your deck for a Pokémon and put it onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Speed Wing",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-72",
+    "name": "Antique Armor Fossil",
+    "number": "72",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "hp": "60",
+    "artist": "AYUMI ODASHIMA",
+    "image": "https://images.scrydex.com/pokemon/me5-72/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-72/small",
+    "abilities": [
+      {
+        "name": "Protective Armor",
+        "text": "As long as this Pokémon is in the Active Spot, all of your Pokémon take 10 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-73",
+    "name": "Antique Skull Fossil",
+    "number": "73",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "hp": "60",
+    "artist": "AYUMI ODASHIMA",
+    "image": "https://images.scrydex.com/pokemon/me5-73/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-73/small",
+    "abilities": [
+      {
+        "name": "Spiny Skull",
+        "text": "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), place 3 damage counters on the Attacking Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-74",
+    "name": "Backtrack Badge",
+    "number": "74",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "https://images.scrydex.com/pokemon/me5-74/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-74/small"
+  },
+  {
+    "id": "me5-75",
+    "name": "Dark Bell",
+    "number": "75",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "https://images.scrydex.com/pokemon/me5-75/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-75/small"
+  },
+  {
+    "id": "me5-76",
+    "name": "Fossil Quarry",
+    "number": "76",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Oswaldo KATO",
+    "image": "https://images.scrydex.com/pokemon/me5-76/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-76/small"
+  },
+  {
+    "id": "me5-77",
+    "name": "Gladion's Final Battle",
+    "number": "77",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "akagi",
+    "image": "https://images.scrydex.com/pokemon/me5-77/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-77/small"
+  },
+  {
+    "id": "me5-78",
+    "name": "Gwynn",
+    "number": "78",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "nagimiso",
+    "image": "https://images.scrydex.com/pokemon/me5-78/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-78/small"
+  },
+  {
+    "id": "me5-79",
+    "name": "Jett",
+    "number": "79",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GIDORA",
+    "image": "https://images.scrydex.com/pokemon/me5-79/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-79/small"
+  },
+  {
+    "id": "me5-80",
+    "name": "Misty's Vitality",
+    "number": "80",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "En Morikura",
+    "image": "https://images.scrydex.com/pokemon/me5-80/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-80/small"
+  },
+  {
+    "id": "me5-81",
+    "name": "Rust Syndicate Grunt",
+    "number": "81",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Teeziro",
+    "image": "https://images.scrydex.com/pokemon/me5-81/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-81/small"
+  },
+  {
+    "id": "me5-82",
+    "name": "Tremendous Bomb",
+    "number": "82",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "inose yukie",
+    "image": "https://images.scrydex.com/pokemon/me5-82/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-82/small"
+  },
+  {
+    "id": "me5-83",
+    "name": "Shadowy Darkness Energy",
+    "number": "83",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me5-83/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-83/small"
+  },
+  {
+    "id": "me5-84",
+    "name": "Voltaic Lightning Energy",
+    "number": "84",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me5-84/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-84/small"
+  },
+  {
+    "id": "me5-85",
+    "name": "Fomantis",
+    "number": "85",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Jiro Sasumo",
+    "flavorText": "Many Trainers give their Fomantis their own flowerpots so they can sunbathe in peace and quiet.",
+    "image": "https://images.scrydex.com/pokemon/me5-85/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-85/small",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ]
+  },
+  {
+    "id": "me5-86",
+    "name": "Armarouge",
+    "number": "86",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Iwamoto05",
+    "flavorText": "This Pokémon clads itself in armor that has been fortified by psychic and fire energy, and it shoots blazing fireballs.",
+    "evolvesFrom": "Charcadet",
+    "image": "https://images.scrydex.com/pokemon/me5-86/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-86/small",
+    "attacks": [
+      {
+        "name": "Flame Legion",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each of your Benched Pokémon that has any Fire Energy attached."
+      }
+    ]
+  },
+  {
+    "id": "me5-87",
+    "name": "Goldeen",
+    "number": "87",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Gemi",
+    "flavorText": "Its dorsal, pectoral, and tail fins wave elegantly in water. That is why it is known as the Water Dancer.",
+    "image": "https://images.scrydex.com/pokemon/me5-87/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-87/small",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-88",
+    "name": "Primarina",
+    "number": "88",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "satoma",
+    "flavorText": "Also known as a songstress, it is a sight to behold on moonlit nights when it sings in front of the colony it leads.",
+    "evolvesFrom": "Brionne",
+    "image": "https://images.scrydex.com/pokemon/me5-88/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-88/small",
+    "attacks": [
+      {
+        "name": "Aqua Return",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Shuffle this Pokémon and all attached cards into your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Enriching Melody",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. Heal all damage from 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-89",
+    "name": "Manectric",
+    "number": "89",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "HICO KIM",
+    "flavorText": ".It discharges electricity from its mane. The Pokémon creates a thundercloud overhead from which to drop lightning bolts.",
+    "evolvesFrom": "Electrike",
+    "image": "https://images.scrydex.com/pokemon/me5-89/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-89/small",
+    "attacks": [
+      {
+        "name": "Flashing Barrier",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Evolution Pokémon."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-90",
+    "name": "Slowbro",
+    "number": "90",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Mékayu",
+    "flavorText": "An attached Shellder won't let go because of the tasty flavor that oozes out of Slowbro's tail.",
+    "evolvesFrom": "Slowpoke",
+    "image": "https://images.scrydex.com/pokemon/me5-90/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-90/small",
+    "attacks": [
+      {
+        "name": "All Out",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "50+",
+        "text": "If you have no cards in your hand, this attack does 160 more damage."
+      },
+      {
+        "name": "Zen Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-91",
+    "name": "Dhelmise",
+    "number": "91",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Nakamura Ippan",
+    "flavorText": "After a piece of seaweed merged with debris from a \"sunken ship, it was reborn as this ghost Pokémon.",
+    "image": "https://images.scrydex.com/pokemon/me5-91/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-91/small",
+    "attacks": [
+      {
+        "name": "Vengeful Anchor",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30+",
+        "text": "If you have 4 or more Pokémon that have the Hide 'n' Sneak Ability in your discard pile, this attack does 140 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me5-92",
+    "name": "Thievul",
+    "number": "92",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Jerky",
+    "flavorText": "It secretly marks potential targets with a scent. By following the scent, it stalks its targets and steals from them when they least expect it.",
+    "evolvesFrom": "Nickit",
+    "image": "https://images.scrydex.com/pokemon/me5-92/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-92/small",
+    "attacks": [
+      {
+        "name": "Skill Thief",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If you have no cards in your hand, choose an attack from 1 of your opponent's Pokémon in play and use it as this attack."
+      },
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "me5-93",
+    "name": "Bastiodon",
+    "number": "93",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "Yoriyuki Ikegami",
+    "flavorText": "Bastiodon live in herds. When assaulted by enemies, they line up side by side and use their hard faces to block attacks.",
+    "evolvesFrom": "Shieldon",
+    "image": "https://images.scrydex.com/pokemon/me5-93/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-93/small",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ancient Bulwark",
+        "text": "As long as this Pokémon is on your Bench, prevent all damage done to each of your Pokémon by attacks from your opponent's Pokémon that have 2 or less Energy attached.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-94",
+    "name": "Toucannon",
+    "number": "94",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "miki kudo",
+    "flavorText": "Pairs of Toucannon are considered symbols of companionship, as these Pokémon will raise the temperature of their beaks to warm each other.",
+    "evolvesFrom": "Trumbeak",
+    "image": "https://images.scrydex.com/pokemon/me5-94/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-94/small",
+    "attacks": [
+      {
+        "name": "Feather Rondo",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage for each Benched Pokémon (both yours and your opponent's)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Aerial Draw",
+        "text": "Once during your turn, you may use this Ability. Draw a card.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-95",
+    "name": "Silvally",
+    "number": "95",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "140",
+    "artist": "DOM",
+    "flavorText": "The final factor needed to release this Pokémon's true power was a strong bond with a Trainer it trusts.",
+    "evolvesFrom": "Type: Null",
+    "image": "https://images.scrydex.com/pokemon/me5-95/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-95/small",
+    "attacks": [
+      {
+        "name": "Air Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Call a Buddy",
+        "text": "Once during your turn, if you have no cards in your hand, you may use this Ability. Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-96",
+    "name": "Lurantis ex",
+    "number": "96",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Fomantis",
+    "image": "https://images.scrydex.com/pokemon/me5-96/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-96/small",
+    "attacks": [
+      {
+        "name": "Lively Cutter",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "60+",
+        "text": "If this Pokémon was healed during this turn, this attack does 200 more damage."
+      },
+      {
+        "name": "Leaf Guard",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "During your opponent's next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ]
+  },
+  {
+    "id": "me5-97",
+    "name": "Wailord ex",
+    "number": "97",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "380",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Wailmer",
+    "image": "https://images.scrydex.com/pokemon/me5-97/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-97/small",
+    "attacks": [
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Falling Down",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "270",
+        "text": "This Pokémon is now Asleep."
+      }
+    ]
+  },
+  {
+    "id": "me5-98",
+    "name": "Mega Zeraora ex",
+    "number": "98",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "270",
+    "artist": "5ban Graphics",
+    "image": "https://images.scrydex.com/pokemon/me5-98/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-98/small",
+    "attacks": [
+      {
+        "name": "Thunderous Fist",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Lightning Energy attached to this Pokémon."
+      },
+      {
+        "name": "Zepto Turn",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "150",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-99",
+    "name": "Mega Chandelure ex",
+    "number": "99",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "350",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Lampent",
+    "image": "https://images.scrydex.com/pokemon/me5-99/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-99/small",
+    "attacks": [
+      {
+        "name": "Phantom Maze",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130+",
+        "text": "This attack does 50 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Binding Flame",
+        "text": "Your opponent's Active Pokémon's Retreat Cost is Colorless more.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-100",
+    "name": "Rampardos ex",
+    "number": "100",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Cranidos",
+    "image": "https://images.scrydex.com/pokemon/me5-100/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-100/small",
+    "attacks": [
+      {
+        "name": "Rowdy Hammer",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "150",
+        "text": "During your next turn, attacks used by this Pokémon do 150 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Destructive Headbutting",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-101",
+    "name": "Mega Darkrai ex",
+    "number": "101",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "image": "https://images.scrydex.com/pokemon/me5-101/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-101/small",
+    "attacks": [
+      {
+        "name": "Dusk Raid",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "110+",
+        "text": "If your Benched Pokémon have any damage counters on them, this attack does 110 more damage."
+      },
+      {
+        "name": "Abyss Eye",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "If your opponent's Active Pokémon is affected by a Special Condition, it is Knocked Out."
+      }
+    ]
+  },
+  {
+    "id": "me5-102",
+    "name": "Morpeko ex",
+    "number": "102",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "https://images.scrydex.com/pokemon/me5-102/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-102/small",
+    "attacks": [
+      {
+        "name": "Wheely Draw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw 6 cards."
+      },
+      {
+        "name": "Hangry Blaster",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each damage counter on this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-103",
+    "name": "Mega Excadrill ex",
+    "number": "103",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "340",
+    "artist": "Keisuke Azuma",
+    "evolvesFrom": "Drilbur",
+    "image": "https://images.scrydex.com/pokemon/me5-103/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-103/small",
+    "attacks": [
+      {
+        "name": "Undermine",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "90",
+        "text": "Discard the top 2 cards of your opponent's deck."
+      },
+      {
+        "name": "Maximum Drilling",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "200+",
+        "text": "If this Pokémon has at least 2 extra Energy attached (in addition to this attack's cost), this attack does 130 more damage."
+      }
+    ]
+  },
+  {
+    "id": "me5-104",
+    "name": "Brave Bangle",
+    "number": "104",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "https://images.scrydex.com/pokemon/me5-104/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-104/small"
+  },
+  {
+    "id": "me5-105",
+    "name": "Crushing Hammer",
+    "number": "105",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ayaka Yoshida",
+    "image": "https://images.scrydex.com/pokemon/me5-105/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-105/small"
+  },
+  {
+    "id": "me5-106",
+    "name": "Dark Bell",
+    "number": "106",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me5-106/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-106/small"
+  },
+  {
+    "id": "me5-107",
+    "name": "Energy Switch",
+    "number": "107",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me5-107/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-107/small"
+  },
+  {
+    "id": "me5-108",
+    "name": "Gladion's Final Battle",
+    "number": "108",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "akagi",
+    "image": "https://images.scrydex.com/pokemon/me5-108/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-108/small"
+  },
+  {
+    "id": "me5-109",
+    "name": "Gwynn",
+    "number": "109",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "nagimiso",
+    "image": "https://images.scrydex.com/pokemon/me5-109/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-109/small"
+  },
+  {
+    "id": "me5-110",
+    "name": "Iron Defender",
+    "number": "110",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "https://images.scrydex.com/pokemon/me5-110/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-110/small"
+  },
+  {
+    "id": "me5-111",
+    "name": "Misty's Vitality",
+    "number": "111",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "En Morikura",
+    "image": "https://images.scrydex.com/pokemon/me5-111/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-111/small"
+  },
+  {
+    "id": "me5-112",
+    "name": "Rust Syndicate Grunt",
+    "number": "112",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Teeziro",
+    "image": "https://images.scrydex.com/pokemon/me5-112/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-112/small"
+  },
+  {
+    "id": "me5-113",
+    "name": "Tremendous Bomb",
+    "number": "113",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "inose yukie",
+    "image": "https://images.scrydex.com/pokemon/me5-113/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-113/small"
+  },
+  {
+    "id": "me5-114",
+    "name": "Mega Zeraora ex",
+    "number": "114",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "270",
+    "artist": "GIDORA",
+    "image": "https://images.scrydex.com/pokemon/me5-114/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-114/small",
+    "attacks": [
+      {
+        "name": "Thunderous Fist",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Lightning Energy attached to this Pokémon."
+      },
+      {
+        "name": "Zepto Turn",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "150",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-115",
+    "name": "Mega Chandelure ex",
+    "number": "115",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "350",
+    "evolvesFrom": "Lampent",
+    "image": "https://images.scrydex.com/pokemon/me5-115/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-115/small",
+    "attacks": [
+      {
+        "name": "Phantom Maze",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130+",
+        "text": "This attack does 50 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Binding Flame",
+        "text": "Your opponent's Active Pokémon's Retreat Cost is Colorless more.",
+        "type": "Ability"
+      }
+    ]
+  },
+  {
+    "id": "me5-116",
+    "name": "Mega Darkrai ex",
+    "number": "116",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "280",
+    "artist": "AKIRA EGAWA",
+    "image": "https://images.scrydex.com/pokemon/me5-116/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-116/small",
+    "attacks": [
+      {
+        "name": "Dusk Raid",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "110+",
+        "text": "If your Benched Pokémon have any damage counters on them, this attack does 110 more damage."
+      },
+      {
+        "name": "Abyss Eye",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "If your opponent's Active Pokémon is affected by a Special Condition, it is Knocked Out."
+      }
+    ]
+  },
+  {
+    "id": "me5-117",
+    "name": "Morpeko ex",
+    "number": "117",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "NG Empire",
+    "image": "https://images.scrydex.com/pokemon/me5-117/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-117/small",
+    "attacks": [
+      {
+        "name": "Wheely Draw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw 6 cards."
+      },
+      {
+        "name": "Hangry Blaster",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each damage counter on this Pokémon."
+      }
+    ]
+  },
+  {
+    "id": "me5-118",
+    "name": "Gladion's Final Battle",
+    "number": "118",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "DOM",
+    "image": "https://images.scrydex.com/pokemon/me5-118/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-118/small"
+  },
+  {
+    "id": "me5-119",
+    "name": "Gwynn",
+    "number": "119",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "https://images.scrydex.com/pokemon/me5-119/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-119/small"
+  },
+  {
+    "id": "me5-120",
+    "name": "Mega Darkrai ex",
+    "number": "120",
+    "rarity": "Mega Hyper Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "MEGA",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "image": "https://images.scrydex.com/pokemon/me5-120/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me5-120/small",
+    "attacks": [
+      {
+        "name": "Dusk Raid",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "110+",
+        "text": "If your Benched Pokémon have any damage counters on them, this attack does 110 more damage."
+      },
+      {
+        "name": "Abyss Eye",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "If your opponent's Active Pokémon is affected by a Special Condition, it is Knocked Out."
+      }
+    ]
+  }
+]
