@@ -5,8 +5,8 @@ const LEGACY_KEYS = ["poke-pack-rip-v2", "poke-pack-rip-v1"];
 // Coins are dollars: a card sells for its real market price, and a pack costs
 // what that pack costs online. Both figures are on that same scale.
 const STARTING_COINS = 25;
-const DAILY_BONUS = 10;
-const DAILY_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+const DAILY_BONUS = 100;
+const DAILY_COOLDOWN_MS = 60 * 60 * 1000;
 
 export const DEFAULT_SETTINGS = {
   // Card look
@@ -41,7 +41,7 @@ function blank() {
     activeSetId: "me5",
     economyScale: ECONOMY_SCALE,
     settingsRev: SETTINGS_REV,
-    // Money handed to the player (start + every daily claimed). Net worth
+    // Money handed to the player (start + every hourly claim). Net worth
     // minus this is profit or loss, which is the only honest way to say
     // whether ripping has gained or lost value.
     granted: STARTING_COINS,

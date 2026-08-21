@@ -587,13 +587,14 @@ function fillRarityFilter() {
   ].join("");
 }
 
-/** "Ready in 5h 12m" — coarse when far off, to the second in the last minute. */
+/** "Ready in 47m" — coarse until the last minute, then to the second. */
 function waitLabel(ms) {
   const total = Math.ceil(ms / 1000);
   const h = Math.floor(total / 3600);
   const m = Math.floor((total % 3600) / 60);
   const sec = total % 60;
-  if (h) return `Ready in ${h}h ${m}m`;
+  if (h && m) return `Ready in ${h}h ${m}m`;
+  if (h) return `Ready in ${h}h`;
   if (m) return `Ready in ${m}m`;
   return `Ready in ${sec}s`;
 }
@@ -1578,14 +1579,14 @@ function renderHome() {
       <div class="home-block-head">
         <div>
           <h2>How it works</h2>
-          <p>No checkout. Coins live in this browser, odds come from the printed set.</p>
+          <p>No checkout. Coins live on your account, odds come from the printed set.</p>
         </div>
       </div>
       <div class="home-steps">
         <article class="home-step">
           <b>01</b>
           <h3>Claim coins</h3>
-          <p>Daily stack in the header. Packs cost what they cost in a real shop — nothing costs real money.</p>
+          <p>✦ 100 every hour in the header. Packs cost what they cost in a real shop — nothing costs real money.</p>
         </article>
         <article class="home-step">
           <b>02</b>
@@ -1677,7 +1678,7 @@ function achievements() {
     { id: "unique-10", name: "Getting started", note: "Collect 10 unique cards", ok: unique >= 10 },
     { id: "half-set", name: "Halfway", note: "Reach 50% on any live set", ok: sets.some((row) => row.pct >= 50) },
     { id: "master", name: "Master set", note: "Complete any live set", ok: sets.some((row) => row.pct >= 100) },
-    { id: "daily", name: "Daily trainer", note: "Claim a daily bonus", ok: Boolean(state.lastDaily) },
+    { id: "daily", name: "Hourly trainer", note: "Claim an hourly bonus", ok: Boolean(state.lastDaily) },
     { id: "bank", name: "Loaded", note: "Hold 250 coins", ok: state.coins >= 250 },
     { id: "signed", name: "Named trainer", note: "Create an account", ok: Boolean(trainer) },
   ];
@@ -1825,7 +1826,7 @@ function renderAuth() {
         </p>
         <ul class="auth-points">
           <li>Handle + password. No email required.</li>
-          <li>Opening a pack, claiming daily coins, selling, and the binder need an account.</li>
+          <li>Opening a pack, claiming hourly coins, selling, and the binder need an account.</li>
           <li>If this browser already has a local collection, you can claim it once when you sign up.</li>
         </ul>
       </div>
@@ -1878,7 +1879,7 @@ function renderAccount() {
           <div>
             <p class="account-title">Signed out</p>
             <h3>Need an account to rip</h3>
-            <p>Browse the site freely. Packs, daily coins, sales, and the binder wait until you sign in.</p>
+            <p>Browse the site freely. Packs, hourly coins, sales, and the binder wait until you sign in.</p>
           </div>
         </div>
         <div class="account-hero-actions">
@@ -3732,7 +3733,7 @@ els.dailyBtn.addEventListener("click", async () => {
     renderShop();
     if (view === "home") renderHome();
     if (view === "account") renderAccount();
-    toast(`Daily bonus: +${coin(data.amount)} coins`);
+    toast(`Hourly stack: +${coin(data.amount)} coins`);
   } catch (err) {
     toast(err.message || "Wait a second, then claim again.");
     renderHeader();
@@ -4234,9 +4235,9 @@ boot().catch((err) => {
 initRadio();
 
 /*
- * The header only changes on its own when the daily unlocks, so schedule a
- * single tick for the next meaningful change instead of rewriting the DOM
- * four times a second for the whole session.
+ * The header only changes on its own when the hourly stack unlocks, so
+ * schedule a single tick for the next meaningful change instead of rewriting
+ * the DOM four times a second for the whole session.
  */
 let dailyTimer = 0;
 function scheduleDailyTick() {
@@ -4251,7 +4252,7 @@ function scheduleDailyTick() {
   }, Math.max(next, 250));
 }
 
-// A tab left open overnight should notice the daily is ready again.
+// A tab left sitting should notice the hourly stack is ready again.
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") {
     renderHeader();

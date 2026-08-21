@@ -9,8 +9,8 @@ const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
 const COOKIE = "pp_sid";
 const STARTING_COINS = 25;
-const DAILY_BONUS = 10;
-const DAILY_COOLDOWN_MS = 24 * 60 * 60 * 1000;
+const DAILY_BONUS = 100;
+const DAILY_COOLDOWN_MS = 60 * 60 * 1000;
 const PBKDF2_ITERS = 12_000;
 const COLORS = new Set(["gold", "violet", "rose", "aqua", "lime", "ember"]);
 const BINDER_PAGE = 9;
@@ -415,7 +415,7 @@ async function daily(request, env) {
     .bind(DAILY_BONUS, DAILY_BONUS, now, auth.user.id, cutoff)
     .run();
   if (!updated.meta?.changes) {
-    return json({ error: "Daily bonus is not ready yet." }, 400);
+    return json({ error: "Hourly bonus is not ready yet." }, 400);
   }
   const save = await loadSave(env, auth.user.id);
   return json({ save, amount: DAILY_BONUS });
