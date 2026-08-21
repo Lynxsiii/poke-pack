@@ -14,7 +14,7 @@
 
 * { box-sizing: border-box; }
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -3744,44 +3744,50 @@ html.dialog-open body {
 @media (max-width: 860px) {
   .hero, .pack-grid, .inspect-grid, .home-hero, .home-sets, .home-steps,
   .home-market, .home-pulls { grid-template-columns: 1fr; }
-  .hero-art { height: 240px; }
+  .hero-art { display: none; }
   .site-header { flex-wrap: wrap; }
-  .float-card { width: 120px; }
-  .home-stage, .home-fan { min-height: 280px; height: 280px; }
-  .home-hero { min-height: 0; margin-bottom: 28px; }
+  .home-stage { display: none; }
+  .home-hero { min-height: 0; margin-bottom: 24px; }
   .home-copy h1,
-  h1 { font-size: clamp(32px, 11vw, 48px); line-height: 0.95; }
-  .home-float { width: 112px; }
-  .home-float:nth-child(2) { width: 128px; }
-  .home-float:nth-child(3),
-  .home-float:nth-child(4) { width: 100px; }
-  .home-pack-float,
-  .home-pack-float img { height: 150px; }
+  h1 { font-size: clamp(28px, 8vw, 40px); line-height: 1.05; }
   .home-set { grid-template-columns: 1fr; }
-  .home-set-fan { height: 160px; }
-  .home-set-pack img { height: 148px; }
+  .home-set-fan { height: 132px; overflow: hidden; }
+  .home-set-pack img { height: 120px; }
   .home-odds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .home-proof { gap: 8px 18px; }
-  .home-worth { padding: 18px; }
+  .home-worth { padding: 16px; }
   .auth-page { grid-template-columns: 1fr; }
   .account-id { flex-wrap: wrap; }
   .account-actions { margin-left: 0; }
-  .focus-stage {
-    grid-template-columns: 36px minmax(0, 1fr) 36px;
-    min-height: 0;
-  }
-  .focus-card { width: min(240px, calc(100vw - 104px)); }
-  .focus-nav { width: 36px; height: 36px; font-size: 24px; }
-  .thumbs { gap: 5px; padding: 8px; }
-  .thumb, .thumb.empty { width: 40px; }
   .ghost, .solid { min-width: 0; padding: 10px 12px; }
-  .inspect-info h2 { font-size: 28px; }
+  .inspect-info h2 { font-size: 24px; }
+  .shop-layout .pack-grid,
+  .pack-grid { grid-template-columns: 1fr; }
 }
-@media (max-width: 620px) {
-  .site-header { padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top)); gap: 10px; }
-  /* Full-width scroll strip: every tab stays reachable on a phone. */
+@media (max-width: 720px) {
+  .site-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand tools"
+      "nav nav";
+    align-items: center;
+    gap: 8px 10px;
+    padding: 8px 12px;
+    padding-top: max(8px, env(safe-area-inset-top));
+  }
+  .brand { grid-area: brand; min-width: 0; }
+  .mark { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; }
+  .brand-name { font-size: 15px; }
+  .brand-sub { display: none; }
+  .header-right {
+    grid-area: tools;
+    gap: 6px;
+    min-width: 0;
+  }
   .nav {
-    order: 3;
+    grid-area: nav;
+    order: unset;
     width: 100%;
     justify-content: flex-start;
     overflow-x: auto;
@@ -3790,39 +3796,58 @@ html.dialog-open body {
     -webkit-overflow-scrolling: touch;
   }
   .nav::-webkit-scrollbar { display: none; }
-  .nav-btn { flex: 0 0 auto; }
+  .nav-btn { flex: 0 0 auto; padding: 7px 11px; font-size: 12px; }
   .nav-sep { flex: 0 0 1px; }
-  .brand-sub { display: none; }
-  .header-right { gap: 8px; }
-  .claim { font-size: 13px; padding: 8px 12px; }
-  .auth-entry { padding: 8px 12px; }
+  .pill { padding: 6px 9px; font-size: 12px; }
+  .claim { font-size: 12px; padding: 6px 10px; }
+  .auth-entry { padding: 6px 10px; font-size: 12px; }
   .trainer-chip-copy small { display: none; }
-  .trainer-chip { max-width: 148px; }
-  .wrap { width: calc(100% - 24px); padding: 20px 0 72px; }
+  .trainer-chip { max-width: 132px; }
+  .wrap,
   body.on-home .wrap,
   body.on-shop .wrap,
-  body.on-collection .wrap { width: calc(100% - 24px); }
-  .site-footer { padding: 18px 16px max(28px, env(safe-area-inset-bottom)); }
+  body.on-collection .wrap {
+    width: calc(100% - 20px);
+    padding: 16px 0 88px;
+  }
+  .site-footer { padding: 16px 12px max(24px, env(safe-area-inset-bottom)); }
   .collection-tools,
   .bulk-toolbar { gap: 8px; }
   .search { min-width: 0; flex: 1 1 100%; font-size: 16px; }
   input, select, textarea { font-size: 16px; }
   .filter { flex: 1 1 calc(50% - 4px); }
-  .bulk-head { grid-template-columns: 1fr; gap: 16px; }
+  .bulk-head { grid-template-columns: 1fr; gap: 12px; }
+  .bulk-copy h1 { font-size: clamp(26px, 8vw, 34px); }
   .bulk-seg { margin-left: 0; flex: 1 1 100%; justify-content: space-between; }
   .bulk-seg .seg-btn { flex: 1; text-align: center; }
   .bulk-era-sets { grid-template-columns: 1fr; }
-  .bulk-era { min-width: 132px; }
-  /* Keep the floating wrappers inside the viewport instead of bleeding out. */
+  .bulk-era { min-width: 120px; }
+  .shop-wrapper { padding: 8px 0 0; }
+  .shop-wrapper img {
+    height: auto;
+    max-height: 200px;
+    width: auto;
+    max-width: 100%;
+  }
+  .pack-card { padding: 14px; }
+  .pack-card h3 { font-size: 18px; margin: 10px 0 6px; }
+  .blurb { font-size: 13px; margin: 0 0 12px; }
+  .stat { min-width: 0; flex: 1 1 30%; padding: 10px; }
+  .stat b { font-size: 18px; }
+  .binder-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(42vw, 140px), 1fr));
+    gap: 10px;
+  }
+  .home-film .mini-card { width: 80px; }
+  .home-cta { margin-top: 18px; }
+  .inspect-art { max-width: 220px; margin: 0 auto; }
+  .inspect-grid { gap: 16px; }
+  .radio { right: 10px; bottom: 10px; }
+}
+
+@media (max-width: 620px) {
   .home-pack-float:nth-child(1) { left: 0; }
   .home-pack-float:nth-child(2) { right: 0; }
-  .home-pack-float,
-  .home-pack-float img { height: 120px; }
-  .home-stage { overflow: hidden; }
-  .booster { width: min(240px, 78vw); }
-  .overlay-actions { gap: 8px; }
-  .overlay-actions .ghost,
-  .overlay-actions .solid { flex: 1 1 120px; }
 }
 
 /*
@@ -4148,133 +4173,126 @@ body:has(#inspect:not(.hidden)) .radio {
 .notes-empty { color: var(--muted); }
 
 /*
- * Phone pack-open: the card gets leftover viewport height. Chrome (leave,
- * title, thumbs, actions) shrinks, and prev/next sit on the card instead of
- * stealing a column from it.
+ * Phone pack-open is a normal scrolling column. Stretch-to-viewport and
+ * absolutely pinned chrome clipped the card, Done, and the spread.
  */
-@media (max-width: 860px) {
-  #overlay {
-    justify-content: stretch;
-    align-items: stretch;
-    padding: max(8px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+@media (max-width: 720px) {
+  #overlay,
+  #inspect {
+    display: block;
+    justify-content: unset;
+    align-items: unset;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: max(10px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom));
   }
   #overlay .rip-stage,
-  #overlay.dealing .rip-stage {
-    flex: 1 1 auto;
-    width: 100%;
-    min-height: 0;
-    margin: 0;
+  #overlay.dealing .rip-stage,
+  #inspect .inspect-stage {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: stretch;
-  }
-  #overlay:not(.dealing) .rip-stage {
-    justify-content: center;
+    justify-content: flex-start;
+    flex: none;
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    margin: 0;
+    gap: 10px;
   }
   #overlay .overlay-leave {
-    position: absolute;
-    top: max(8px, env(safe-area-inset-top));
-    right: 10px;
+    position: static;
+    align-self: flex-end;
     margin: 0;
-    z-index: 12;
-    padding: 7px 12px;
+    padding: 8px 12px;
     font-size: 13px;
   }
   #overlay .rip-hint {
     min-height: 0;
-    margin: 0 88px 10px 0;
+    margin: 0;
     font-size: 13px;
-    line-height: 1.35;
+    line-height: 1.4;
+    text-align: center;
   }
   #overlay .booster {
-    width: min(300px, 72vw);
-    margin: 8px auto 12px;
+    width: min(188px, 52vw);
+    margin: 4px auto 8px;
   }
   #overlay .focus-wrap {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 0;
+    flex: none;
+    display: block;
     width: 100%;
   }
   #overlay .focus-meta {
     min-height: 0;
-    margin: 0 76px 8px 0;
+    margin: 0 0 8px;
   }
-  #overlay .focus-title {
-    font-size: clamp(18px, 5.4vw, 28px);
-  }
+  #overlay .focus-title { font-size: clamp(18px, 5.2vw, 26px); }
   #overlay .focus-stage {
-    flex: 1 1 auto;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
     min-height: 0;
     width: 100%;
+    gap: 4px;
   }
   #overlay .focus-aura,
-  #overlay .hit-fx,
-  #overlay .focus-card,
-  #overlay .focus-nav.prev,
-  #overlay .focus-nav.next {
-    grid-column: 1;
+  #overlay .hit-fx {
+    grid-column: 1 / -1;
     grid-row: 1;
   }
+  #overlay .focus-nav.prev { grid-column: 1; grid-row: 1; }
+  #overlay .focus-card { grid-column: 2; grid-row: 1; }
+  #overlay .focus-nav.next { grid-column: 3; grid-row: 1; }
   #overlay .focus-card {
-    width: min(86vw, 340px, calc((100svh - 12.5rem) * 63 / 88));
-    max-height: calc(100svh - 12.5rem);
+    width: min(210px, 58vw);
+    max-height: none;
     height: auto;
     justify-self: center;
     align-self: center;
   }
   #overlay .focus-nav {
-    position: relative;
-    z-index: 5;
-    width: 40px;
-    height: 40px;
-    font-size: 26px;
-    background: rgba(9, 7, 13, 0.72);
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
     align-self: center;
+    justify-self: center;
   }
-  #overlay .focus-nav.prev { justify-self: start; margin-left: 2px; }
-  #overlay .focus-nav.next { justify-self: end; margin-right: 2px; }
   #overlay .thumbs {
     flex: none;
     min-height: 0;
-    margin-top: 8px;
+    margin: 0;
     padding: 6px 8px;
     gap: 4px;
     max-width: none;
     width: 100%;
   }
   #overlay .thumb,
-  #overlay .thumb.empty { width: 34px; }
+  #overlay .thumb.empty { width: 36px; }
   #overlay .overlay-actions {
     position: static;
     flex: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     width: 100%;
     gap: 8px;
-    margin-top: 8px;
-    padding: 8px 0 0;
+    margin: 0;
+    padding: 4px 0 8px;
     background: none;
   }
   #overlay .overlay-actions.hidden { display: none !important; }
-  #overlay .overlay-actions .solid { grid-column: 1 / -1; }
   #overlay .overlay-actions .ghost,
   #overlay .overlay-actions .solid {
-    flex: none;
+    flex: 1 1 calc(50% - 8px);
+    width: auto;
     min-width: 0;
-    width: 100%;
+    grid-column: auto;
   }
-}
-
-@media (max-width: 620px) {
-  #overlay .focus-card {
-    width: min(90vw, calc((100svh - 11.25rem) * 63 / 88));
-    max-height: calc(100svh - 11.25rem);
+  #overlay .spread { margin: 0; }
+  #overlay .spread-card { width: 92px; }
+  #overlay .spread-card.hit { width: 104px; }
+  .spread-card .tcg.lit,
+  .focus-card.flipped .face-back .tcg.lit {
+    transform: perspective(760px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.02);
   }
-  #overlay .booster { width: min(280px, 78vw); }
 }

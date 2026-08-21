@@ -1,5 +1,15 @@
 [
   {
+    "id": "2026-08-21-mobile-pass",
+    "date": "2026-08-21",
+    "title": "Phone layout, take two",
+    "items": [
+      "Header, packs, and bulk are laid out for a phone instead of a squeezed desktop page.",
+      "Floating home/shop cards that were clipping off the screen are gone on small widths.",
+      "Pack opening scrolls as a normal column so Leave, the card, and Done stay on screen instead of overlapping."
+    ]
+  },
+  {
     "id": "2026-08-21-pack-open",
     "date": "2026-08-21",
     "title": "Bigger pack reveals on phones",
