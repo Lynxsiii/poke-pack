@@ -1,0 +1,15 @@
+.git/
+.claude/
+.wrangler/
+node_modules/
+scripts/
+*.py
+__pycache__/
+.venv/
+venv/
+server.log
+server.err.log
+REVIEW.md
+.gitignore
+.DS_Store
+Thumbs.db

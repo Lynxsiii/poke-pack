@@ -1,0 +1,9 @@
+# Static site for Cloudflare Workers (Git deploy).
+# No Worker script — Wrangler just uploads HTML/CSS/JS/assets.
+
+name = "poke-pack"
+compatibility_date = "2026-08-21"
+
+[assets]
+directory = "."
+html_handling = "auto-trailing-slash"
