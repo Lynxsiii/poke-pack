@@ -3575,7 +3575,21 @@ html.dialog-open body {
   gap: 10px;
   flex-wrap: wrap;
   padding: 12px 0 max(8px, env(safe-area-inset-bottom));
-  background: linear-gradient(180deg, transparent, rgba(6, 4, 10, 0.94) 28%);
+  background: none;
+}
+#overlay .overlay-actions .ghost,
+#overlay .overlay-actions .solid {
+  background: none;
+  border: 1px solid var(--line);
+  color: inherit;
+  box-shadow: none;
+}
+#overlay .overlay-actions .ghost.accent {
+  border-color: rgba(240, 193, 75, 0.42);
+  color: var(--gold-2);
+}
+#overlay .overlay-actions .solid {
+  color: var(--gold-2);
 }
 .ghost, .solid { border-radius: 12px; padding: 10px 16px; font-weight: 700; min-width: 128px; }
 .ghost { background: transparent; border: 1px solid var(--line); }

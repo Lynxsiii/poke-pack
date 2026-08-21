@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-08-21-pack-chrome",
+    "date": "2026-08-21",
+    "title": "Pack buttons and bulk toast",
+    "items": [
+      "Next / Reveal / Done on desktop are outlined with no fill so the card glow isn’t boxed off.",
+      "After a pack, the toast says the cards went to bulk — they aren’t slid into the showcase binder."
+    ]
+  },
+  {
     "id": "2026-08-21-hourly-coins",
     "date": "2026-08-21",
     "title": "Hourly coins",

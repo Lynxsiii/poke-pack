@@ -3263,7 +3263,7 @@ function finishRip() {
   renderHeader();
   renderShop();
   if (view === "collection") renderCollection();
-  toast("Slid into the binder.");
+  toast("Added to bulk.");
 }
 
 function inspectFromEl(el) {
