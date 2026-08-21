@@ -18,62 +18,72 @@ const MAX_PENDING = 40;
 
 let schemaReady = false;
 
+async function runDdl(env, sql) {
+  const text = `${String(sql).trim().replace(/;+$/, "")};`;
+  await env.DB.exec(text);
+}
+
+function missingSchema(err) {
+  const msg = String(err?.message || err).toLowerCase();
+  return msg.includes("no such table") || msg.includes("no such column") || msg.includes("has no column");
+}
+
 export async function ensureSocialSchema(env) {
   if (schemaReady) return;
-  const cols = await env.DB.prepare("PRAGMA table_info(users)").all();
-  const have = new Set((cols.results || []).map((row) => row.name));
-  if (!have.has("avatar")) {
-    await env.DB.exec("ALTER TABLE users ADD COLUMN avatar TEXT NOT NULL DEFAULT '25'");
+  try {
+    const info = await env.DB.prepare("PRAGMA table_info(users)").all();
+    const have = new Set((info.results || []).map((row) => row.name));
+    const alters = [
+      ["avatar", "ALTER TABLE users ADD COLUMN avatar TEXT NOT NULL DEFAULT '25'"],
+      ["banner", "ALTER TABLE users ADD COLUMN banner TEXT NOT NULL DEFAULT 'me5:darkrai'"],
+      ["showcase", "ALTER TABLE users ADD COLUMN showcase TEXT"],
+      ["shown_stats", "ALTER TABLE users ADD COLUMN shown_stats TEXT"],
+    ];
+    for (const [name, sql] of alters) {
+      if (have.has(name)) continue;
+      try {
+        await runDdl(env, sql);
+      } catch (err) {
+        if (!String(err?.message || err).toLowerCase().includes("duplicate")) throw err;
+      }
+    }
+    const stmts = [
+      "CREATE TABLE IF NOT EXISTS friends (from_id TEXT NOT NULL, to_id TEXT NOT NULL, status TEXT NOT NULL, created_at INTEGER NOT NULL, PRIMARY KEY (from_id, to_id))",
+      "CREATE TABLE IF NOT EXISTS profile_comments (id INTEGER PRIMARY KEY AUTOINCREMENT, profile_id TEXT NOT NULL, author_id TEXT NOT NULL, body TEXT NOT NULL, created_at INTEGER NOT NULL)",
+      "CREATE TABLE IF NOT EXISTS chat_messages (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT NOT NULL, body TEXT NOT NULL, created_at INTEGER NOT NULL)",
+      "CREATE TABLE IF NOT EXISTS presence (user_id TEXT PRIMARY KEY, seen_at INTEGER NOT NULL, last_chat_at INTEGER NOT NULL DEFAULT 0, last_comment_at INTEGER NOT NULL DEFAULT 0)",
+      "CREATE INDEX IF NOT EXISTS idx_friends_to ON friends(to_id, status)",
+      "CREATE INDEX IF NOT EXISTS idx_friends_from ON friends(from_id, status)",
+      "CREATE INDEX IF NOT EXISTS idx_comments_profile ON profile_comments(profile_id, created_at)",
+      "CREATE INDEX IF NOT EXISTS idx_chat_created ON chat_messages(created_at)",
+      "CREATE INDEX IF NOT EXISTS idx_presence_seen ON presence(seen_at)",
+    ];
+    for (const sql of stmts) await runDdl(env, sql);
+    schemaReady = true;
+  } catch (err) {
+    console.error("ensureSocialSchema", err);
   }
-  if (!have.has("banner")) {
-    await env.DB.exec("ALTER TABLE users ADD COLUMN banner TEXT NOT NULL DEFAULT 'me5:darkrai'");
+}
+
+async function queryAll(env, sql, ...binds) {
+  try {
+    const stmt = env.DB.prepare(sql);
+    const result = binds.length ? await stmt.bind(...binds).all() : await stmt.all();
+    return result.results || [];
+  } catch (err) {
+    if (missingSchema(err)) return [];
+    throw err;
   }
-  if (!have.has("showcase")) {
-    await env.DB.exec("ALTER TABLE users ADD COLUMN showcase TEXT");
+}
+
+async function queryFirst(env, sql, ...binds) {
+  try {
+    const stmt = env.DB.prepare(sql);
+    return binds.length ? await stmt.bind(...binds).first() : await stmt.first();
+  } catch (err) {
+    if (missingSchema(err)) return null;
+    throw err;
   }
-  if (!have.has("shown_stats")) {
-    await env.DB.exec("ALTER TABLE users ADD COLUMN shown_stats TEXT");
-  }
-  await env.DB.exec(`
-    CREATE TABLE IF NOT EXISTS friends (
-      from_id TEXT NOT NULL,
-      to_id TEXT NOT NULL,
-      status TEXT NOT NULL,
-      created_at INTEGER NOT NULL,
-      PRIMARY KEY (from_id, to_id),
-      FOREIGN KEY (from_id) REFERENCES users(id) ON DELETE CASCADE,
-      FOREIGN KEY (to_id) REFERENCES users(id) ON DELETE CASCADE
-    );
-    CREATE TABLE IF NOT EXISTS profile_comments (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      profile_id TEXT NOT NULL,
-      author_id TEXT NOT NULL,
-      body TEXT NOT NULL,
-      created_at INTEGER NOT NULL,
-      FOREIGN KEY (profile_id) REFERENCES users(id) ON DELETE CASCADE,
-      FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
-    );
-    CREATE TABLE IF NOT EXISTS chat_messages (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id TEXT NOT NULL,
-      body TEXT NOT NULL,
-      created_at INTEGER NOT NULL,
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    );
-    CREATE TABLE IF NOT EXISTS presence (
-      user_id TEXT PRIMARY KEY,
-      seen_at INTEGER NOT NULL,
-      last_chat_at INTEGER NOT NULL DEFAULT 0,
-      last_comment_at INTEGER NOT NULL DEFAULT 0,
-      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    );
-    CREATE INDEX IF NOT EXISTS idx_friends_to ON friends(to_id, status);
-    CREATE INDEX IF NOT EXISTS idx_friends_from ON friends(from_id, status);
-    CREATE INDEX IF NOT EXISTS idx_comments_profile ON profile_comments(profile_id, created_at DESC);
-    CREATE INDEX IF NOT EXISTS idx_chat_created ON chat_messages(created_at DESC);
-    CREATE INDEX IF NOT EXISTS idx_presence_seen ON presence(seen_at DESC);
-  `);
-  schemaReady = true;
 }
 
 export async function handleSocial(path, method, request, env, helpers) {
@@ -152,23 +162,27 @@ function cleanText(value, max) {
 
 async function touchPresence(env, userId, extra = {}) {
   const now = Date.now();
-  await env.DB.prepare(
-    `INSERT INTO presence (user_id, seen_at, last_chat_at, last_comment_at)
-     VALUES (?, ?, ?, ?)
-     ON CONFLICT(user_id) DO UPDATE SET
-       seen_at = excluded.seen_at,
-       last_chat_at = CASE WHEN ? > 0 THEN excluded.last_chat_at ELSE presence.last_chat_at END,
-       last_comment_at = CASE WHEN ? > 0 THEN excluded.last_comment_at ELSE presence.last_comment_at END`
-  )
-    .bind(
-      userId,
-      now,
-      extra.chat ? now : 0,
-      extra.comment ? now : 0,
-      extra.chat ? 1 : 0,
-      extra.comment ? 1 : 0
+  try {
+    await env.DB.prepare(
+      `INSERT INTO presence (user_id, seen_at, last_chat_at, last_comment_at)
+       VALUES (?, ?, ?, ?)
+       ON CONFLICT(user_id) DO UPDATE SET
+         seen_at = excluded.seen_at,
+         last_chat_at = CASE WHEN ? > 0 THEN excluded.last_chat_at ELSE presence.last_chat_at END,
+         last_comment_at = CASE WHEN ? > 0 THEN excluded.last_comment_at ELSE presence.last_comment_at END`
     )
-    .run();
+      .bind(
+        userId,
+        now,
+        extra.chat ? now : 0,
+        extra.comment ? now : 0,
+        extra.chat ? 1 : 0,
+        extra.comment ? 1 : 0
+      )
+      .run();
+  } catch (err) {
+    if (!missingSchema(err)) throw err;
+  }
   return now;
 }
 
@@ -177,37 +191,34 @@ async function lounge(request, env, { json, requireUser, publicUser, normalizeHa
   if (auth.user) await touchPresence(env, auth.user.id);
 
   const cutoff = Date.now() - ONLINE_MS;
-  const onlineRows =
-    (
-      await env.DB.prepare(
-        `SELECT users.* FROM presence
-         JOIN users ON users.id = presence.user_id
-         WHERE presence.seen_at >= ?
-         ORDER BY presence.seen_at DESC
-         LIMIT ?`
-      )
-        .bind(cutoff, ONLINE_LIMIT)
-        .all()
-    ).results || [];
+  const onlineRows = await queryAll(
+    env,
+    `SELECT users.* FROM presence
+     JOIN users ON users.id = presence.user_id
+     WHERE presence.seen_at >= ?
+     ORDER BY presence.seen_at DESC
+     LIMIT ?`,
+    cutoff,
+    ONLINE_LIMIT
+  );
 
-  const chatRows =
-    (
-      await env.DB.prepare(
-        `SELECT chat_messages.id, chat_messages.body, chat_messages.created_at AS at,
-                users.id AS user_id, users.name, users.handle, users.color, users.title, users.avatar
-         FROM chat_messages
-         JOIN users ON users.id = chat_messages.user_id
-         ORDER BY chat_messages.id DESC
-         LIMIT ?`
-      )
-        .bind(CHAT_LIMIT)
-        .all()
-    ).results || [];
+  const chatRows = (
+    await queryAll(
+      env,
+      `SELECT chat_messages.id, chat_messages.body, chat_messages.created_at AS at,
+              users.id AS user_id, users.name, users.handle, users.color, users.title
+       FROM chat_messages
+       JOIN users ON users.id = chat_messages.user_id
+       ORDER BY chat_messages.id DESC
+       LIMIT ?`,
+      CHAT_LIMIT
+    )
+  ).reverse();
 
   return json({
     me: auth.user ? publicUser(auth.user) : null,
     online: onlineRows.map((row) => slimUser(row, publicUser)),
-    chat: chatRows.reverse().map((row) => ({
+    chat: chatRows.map((row) => ({
       id: row.id,
       body: row.body,
       at: row.at,
@@ -268,14 +279,12 @@ async function publicProfile(request, env, helpers, rawHandle) {
   )
     .bind(user.id)
     .first();
-  const friendCount = await env.DB.prepare(
-    "SELECT COUNT(*) AS n FROM friends WHERE from_id = ? AND status = 'accepted'"
-  )
-    .bind(user.id)
-    .first();
-  const seen = await env.DB.prepare("SELECT seen_at FROM presence WHERE user_id = ?")
-    .bind(user.id)
-    .first();
+  const friendCount = await queryFirst(
+    env,
+    "SELECT COUNT(*) AS n FROM friends WHERE from_id = ? AND status = 'accepted'",
+    user.id
+  );
+  const seen = await queryFirst(env, "SELECT seen_at FROM presence WHERE user_id = ?", user.id);
 
   const shown = normalizeStats(parseJson(user.shown_stats, null));
   const stats = {};
@@ -286,31 +295,33 @@ async function publicProfile(request, env, helpers, rawHandle) {
 
   const showcase = [];
   for (const slot of parseShowcase(user.showcase)) {
-    const card = await findCatalogCard(env, request, slot.id);
-    if (!card) continue;
-    showcase.push({
-      id: card.id,
-      name: card.name,
-      rarity: card.rarity,
-      image: card.imageSmall || card.image,
-      reverse: slot.reverse,
-    });
+    try {
+      const card = await findCatalogCard(env, request, slot.id);
+      if (!card) continue;
+      showcase.push({
+        id: card.id,
+        name: card.name,
+        rarity: card.rarity,
+        image: card.imageSmall || card.image,
+        reverse: slot.reverse,
+      });
+    } catch {
+      /* skip a card whose set data is missing */
+    }
   }
 
-  const comments =
-    (
-      await env.DB.prepare(
-        `SELECT profile_comments.id, profile_comments.body, profile_comments.created_at AS at,
-                users.id AS user_id, users.name, users.handle, users.color, users.title, users.avatar
-         FROM profile_comments
-         JOIN users ON users.id = profile_comments.author_id
-         WHERE profile_comments.profile_id = ?
-         ORDER BY profile_comments.id DESC
-         LIMIT ?`
-      )
-        .bind(user.id, COMMENT_LIMIT)
-        .all()
-    ).results || [];
+  const comments = await queryAll(
+    env,
+    `SELECT profile_comments.id, profile_comments.body, profile_comments.created_at AS at,
+            users.id AS user_id, users.name, users.handle, users.color, users.title
+     FROM profile_comments
+     JOIN users ON users.id = profile_comments.author_id
+     WHERE profile_comments.profile_id = ?
+     ORDER BY profile_comments.id DESC
+     LIMIT ?`,
+    user.id,
+    COMMENT_LIMIT
+  );
 
   return json({
     user: { ...publicUser(user), ...socialUserFields(user) },
@@ -529,14 +540,10 @@ async function acceptPair(env, fromId, toId) {
 async function relation(env, meId, themId) {
   if (!meId) return "anon";
   if (meId === themId) return "self";
-  const out = await env.DB.prepare("SELECT status FROM friends WHERE from_id = ? AND to_id = ?")
-    .bind(meId, themId)
-    .first();
+  const out = await queryFirst(env, "SELECT status FROM friends WHERE from_id = ? AND to_id = ?", meId, themId);
   if (out?.status === "accepted") return "friends";
   if (out?.status === "pending") return "pending-out";
-  const inn = await env.DB.prepare("SELECT status FROM friends WHERE from_id = ? AND to_id = ?")
-    .bind(themId, meId)
-    .first();
+  const inn = await queryFirst(env, "SELECT status FROM friends WHERE from_id = ? AND to_id = ?", themId, meId);
   if (inn?.status === "pending") return "pending-in";
   if (inn?.status === "accepted") return "friends";
   return "none";

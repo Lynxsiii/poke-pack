@@ -53,8 +53,6 @@ async function handleApi(request, env, url) {
     return json({ ok: true });
   }
 
-  await ensureSocialSchema(env);
-
   if (path === "/api/auth/signup" && method === "POST") {
     return signup(request, env);
   }
@@ -71,6 +69,7 @@ async function handleApi(request, env, url) {
     return me(request, env);
   }
   if (path === "/api/me" && method === "PATCH") {
+    await ensureSocialSchema(env);
     return patchMe(request, env);
   }
   if (path === "/api/me/reset" && method === "POST") {
@@ -89,6 +88,7 @@ async function handleApi(request, env, url) {
     return putBinder(request, env);
   }
 
+  await ensureSocialSchema(env);
   const social = await handleSocial(path, method, request, env, {
     json,
     requireUser,
