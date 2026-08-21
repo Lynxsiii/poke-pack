@@ -31,6 +31,20 @@ body.on-home {
     radial-gradient(700px 480px at -10% 110%, rgba(20, 8, 40, 0.45), transparent 50%),
     var(--bg);
 }
+body.on-auth {
+  background:
+    radial-gradient(980px 560px at 12% -8%, rgba(155, 109, 255, 0.18), transparent 54%),
+    radial-gradient(820px 480px at 92% 8%, rgba(240, 193, 75, 0.12), transparent 50%),
+    radial-gradient(700px 480px at -10% 110%, rgba(20, 8, 40, 0.45), transparent 50%),
+    var(--bg);
+}
+body.on-collection {
+  background:
+    radial-gradient(980px 540px at 92% -12%, rgba(240, 193, 75, 0.11), transparent 52%),
+    radial-gradient(760px 480px at 6% 18%, rgba(118, 64, 255, 0.16), transparent 56%),
+    radial-gradient(700px 480px at -10% 110%, rgba(20, 8, 40, 0.45), transparent 50%),
+    var(--bg);
+}
 
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
@@ -115,50 +129,229 @@ img { max-width: 100%; display: block; }
 .pill.gold { border-color: rgba(240,193,75,0.35); color: var(--gold-2); }
 .claim { border: 0; background: linear-gradient(180deg, #ffe08a, var(--gold)); color: #1a1408; font-weight: 700; padding: 8px 14px; border-radius: 999px; }
 .claim:disabled { opacity: 0.45; cursor: default; }
+.auth-entry {
+  min-width: 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+.trainer-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 220px;
+  padding: 4px 10px 4px 4px;
+  border: 1px solid rgba(240, 193, 75, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+}
+.trainer-chip:hover { background: rgba(255, 255, 255, 0.08); }
+.trainer-avatar {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--avatar, var(--gold));
+  color: #1a1408;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 700;
+}
+.trainer-chip-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  text-align: left;
+  line-height: 1.15;
+}
+.trainer-chip-copy b {
+  font-size: 12px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.trainer-chip-copy small {
+  color: var(--muted);
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 36px 0 80px; }
 body.on-home .wrap { width: min(1240px, calc(100% - 40px)); }
+body.on-shop .wrap { width: min(1280px, calc(100% - 40px)); }
+body.on-collection .wrap { width: min(1240px, calc(100% - 40px)); }
 
+.shop-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 28px;
+  align-items: start;
+}
+.shop-layout .pack-grid { grid-template-columns: repeat(2, 1fr); }
+.shop-rail {
+  position: sticky;
+  top: 88px;
+  max-height: calc(100vh - 112px);
+  overflow: auto;
+  padding: 16px 14px 14px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+    rgba(14, 11, 20, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244, 239, 228, 0.18) transparent;
+}
+.shop-rail-head { margin: 0 0 12px; padding: 0 4px; }
+.shop-rail-head h2 {
+  margin: 0 0 4px;
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0.03em;
+}
+.shop-rail-head p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.shop-rail-head .kicker { margin-bottom: 6px; }
 .set-switcher {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 28px;
-}
-.set-tab {
-  display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 10px 16px;
+  gap: 8px;
+}
+.rail-era {
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(9, 7, 13, 0.45);
+  overflow: hidden;
+}
+.rail-era[open] { background: rgba(9, 7, 13, 0.72); }
+.rail-era summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 12px;
+  cursor: pointer;
+  list-style: none;
+}
+.rail-era summary::-webkit-details-marker { display: none; }
+.rail-era summary::marker { content: ""; }
+.rail-era-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.rail-era-title b {
+  font-family: var(--display);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+.rail-era-title small {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.rail-era-count {
+  flex: none;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.rail-era summary::after {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin-left: 2px;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
+  rotate: 45deg;
+  translate: 0 -2px;
+  transition: rotate 0.16s ease, translate 0.16s ease;
+}
+.rail-era[open] > summary::after {
+  rotate: 225deg;
+  translate: 0 2px;
+}
+.rail-sets {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 8px 8px;
+}
+.rail-set {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
   color: var(--muted);
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
 }
-.set-tab b {
-  font-family: var(--display);
-  font-size: 15px;
-  letter-spacing: 0.02em;
+.rail-set:hover { border-color: rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.05); }
+.rail-set.active {
+  border-color: rgba(240, 193, 75, 0.5);
+  background: linear-gradient(180deg, rgba(240, 193, 75, 0.14), rgba(255, 255, 255, 0.02));
+}
+.rail-set.active b { color: var(--gold); }
+.rail-set.is-queued { cursor: default; opacity: 0.72; }
+.rail-set.is-queued:hover { border-color: var(--line); background: rgba(255, 255, 255, 0.03); }
+.rail-set:disabled { opacity: 0.45; cursor: default; }
+.rail-symbol {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+.rail-set-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+.rail-set-copy b {
+  font-size: 13px;
+  font-weight: 600;
   color: var(--ink);
-  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.set-tab span {
+.rail-set-copy small {
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--muted);
 }
-.set-tab:hover { border-color: rgba(255, 255, 255, 0.18); background: rgba(255, 255, 255, 0.06); }
-.set-tab.active {
-  border-color: rgba(240, 193, 75, 0.5);
-  background: linear-gradient(180deg, rgba(240, 193, 75, 0.12), rgba(255, 255, 255, 0.02));
+.rail-set .live-tag,
+.rail-set .soon {
+  flex: none;
+  padding: 3px 6px;
 }
-.set-tab.active b { color: var(--gold); }
-.set-tab:disabled { opacity: 0.45; cursor: default; }
 
 .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 36px; align-items: center; margin-bottom: 42px; }
 .kicker { color: var(--gold); letter-spacing: 0.22em; text-transform: uppercase; font-size: 11px; font-weight: 700; margin: 0 0 12px; }
@@ -264,13 +457,28 @@ h1 em { font-style: normal; color: var(--gold); }
   /* Art window in 63×88 space, measured off unpadded SV / Mega Evolution
      scans (733×1024). Name-bar seam ≈ image y=97 → SVG y=82; Pokédex bar
      ≈ image y=484 → SVG y=416. Left edge sits on the inner art line
-     (x=50), not the type-colored frame — that leftover vertical made
-     a bright clip beside the Stage 1/2 badge. Punch the whole badge
-     (center ≈ 70,112, r=60) so the rect corner can't peek out at the
-     silver ring. Full-card transparent rect keeps the SVG's intrinsic
-     size equal to the card. */
-  --win-holo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='630' height='880' viewBox='0 0 630 880' preserveAspectRatio='none'%3E%3Crect width='630' height='880' fill='white' fill-opacity='0'/%3E%3Crect x='50' y='82' width='534' height='334' fill='white'/%3E%3C/svg%3E");
-  --win-holo-evo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='630' height='880' viewBox='0 0 630 880' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cmask id='holoEvo'%3E%3Crect width='630' height='880' fill='black'/%3E%3Crect x='50' y='82' width='534' height='334' fill='white'/%3E%3Ccircle cx='70' cy='112' r='60' fill='black'/%3E%3C/mask%3E%3C/defs%3E%3Crect width='630' height='880' fill='%23fff' mask='url(%23holoEvo)'/%3E%3C/svg%3E");
+     (x=50), not the type-colored frame. */
+  /* Foil textures — generated by scripts/make_foil_textures.py, all seamless. */
+  --foil-grain: url("../assets/foil/grain.png");
+  --foil-glitter: url("../assets/foil/glitter.png");
+  --foil-cosmos: url("../assets/foil/cosmos.png");
+  --foil-weave: url("../assets/foil/weave.png");
+  --foil-metal: url("../assets/foil/metal.png");
+  --foil-facet: url("../assets/foil/facet.png");
+  --foil-prism: url("../assets/foil/prism.png");
+  --win-holo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='630' height='880' viewBox='0 0 630 880' preserveAspectRatio='xMidYMid meet'%3E%3Crect width='630' height='880' fill='white' fill-opacity='0'/%3E%3Crect x='50' y='82' width='534' height='334' fill='white'/%3E%3C/svg%3E");
+  --win-evo: url("../assets/masks/win-evo.png");
+  /* Same windows as the .foil-holo.foil-energy / .foil-holo.foil-trainer
+     clip-paths below, as SVG masks for the reverse-holo subtract path. */
+  --win-holo-energy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='630' height='880' viewBox='0 0 630 880' preserveAspectRatio='xMidYMid meet'%3E%3Crect width='630' height='880' fill='white' fill-opacity='0'/%3E%3Crect x='24' y='120' width='580' height='445' rx='8' fill='white'/%3E%3C/svg%3E");
+  --win-holo-trainer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='630' height='880' viewBox='0 0 630 880' preserveAspectRatio='xMidYMid meet'%3E%3Crect width='630' height='880' fill='white' fill-opacity='0'/%3E%3Crect x='49' y='124' width='538' height='337' rx='8' fill='white'/%3E%3C/svg%3E");
+}
+.tcg img,
+.tcg .foil,
+.tcg .glare {
+  /* Printed card radius (2.5 mm / 63×88 mm). Clips square scans and the
+     black corner matte some mirrors baked in. Foil pattern is unchanged. */
+  border-radius: 3.97% / 2.84%;
 }
 .tcg img {
   width: 100%;
@@ -301,6 +509,28 @@ h1 em { font-style: normal; color: var(--gold); }
 .pip.tone-white { color: #ffffff; }
 .pip.tone-ace { color: #ff3d8b; text-shadow: 0 0 6px rgba(255, 61, 139, 0.45); }
 .pip.tone-shiny { color: #9fd8ff; text-shadow: 0 0 6px rgba(159, 216, 255, 0.45); }
+
+.rarity-ico {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: #ece5d7;
+}
+.rarity-ico svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.rarity-ico.tone-gold { color: #f4c752; filter: drop-shadow(0 0 4px rgba(244, 199, 82, 0.55)); }
+.rarity-ico.tone-silver { color: #d3daea; filter: drop-shadow(0 0 3px rgba(211, 218, 234, 0.35)); }
+.rarity-ico.tone-future { color: #d06bff; filter: drop-shadow(0 0 4px rgba(180, 100, 255, 0.5)); }
+.rarity-ico.tone-mega { color: #ff5fa2; filter: drop-shadow(0 0 4px rgba(255, 95, 162, 0.45)); }
+.rarity-ico.tone-megaAlt { color: #66e08a; }
+.rarity-ico.tone-black { color: #14131a; filter: drop-shadow(0 0 0 0.7px #fff); }
+.rarity-ico.tone-white { color: #ffffff; }
+.rarity-ico.tone-ace { color: #ff3d8b; filter: drop-shadow(0 0 4px rgba(255, 61, 139, 0.45)); }
+.rarity-ico.tone-shiny { color: #9fd8ff; filter: drop-shadow(0 0 4px rgba(159, 216, 255, 0.45)); }
 
 .rarity-stamp {
   position: absolute;
@@ -361,73 +591,103 @@ h1 em { font-style: normal; color: var(--gold); }
 .tcg.lit .glare { opacity: 0.32; }
 .tcg.lit.foil-sir .glare,
 .tcg.lit.foil-gold .glare,
+.tcg.lit.foil-ultra .glare,
 .tcg.lit.foil-ex .glare { opacity: 0.4; }
 /* ---- Foil ----------------------------------------------------------------
    Pointer-driven holofoil: color-dodge rainbow + grain, same family of tricks
    as a real card under a lamp. Each rarity gets its own pattern. */
 .tcg .foil {
   z-index: 3;
-  opacity: 0.28;
+  opacity: calc(0.28 * var(--foil-strength, 1));
   transition: opacity 0.2s ease, filter 0.2s ease;
   mix-blend-mode: color-dodge;
   filter: brightness(0.72) contrast(1.2) saturate(0.45);
 }
 .tcg.lit .foil {
-  opacity: 0.46;
+  opacity: calc(0.46 * var(--foil-strength, 1));
   filter: brightness(0.78) contrast(1.28) saturate(0.55);
 }
 .tcg.foil-none .foil { display: none; }
 
-/* Sparkle grain. Position crawls with the pointer so the texture feels physical. */
+/* Sparkle grain: a real tiled noise texture (assets/foil/grain.png, generated
+   by scripts/make_foil_textures.py) crawling with the pointer, with the old
+   procedural specks kept underneath so the sparkle has two scales. */
 .tcg .foil::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   mix-blend-mode: overlay;
-  opacity: 0.35;
+  opacity: 0.4;
   background-image:
+    var(--foil-grain),
     radial-gradient(circle at 18% 22%, #fff 0 0.55px, transparent 1px),
     radial-gradient(circle at 72% 48%, #fff 0 0.45px, transparent 0.9px),
     radial-gradient(circle at 44% 78%, #ffe9b8 0 0.5px, transparent 0.95px),
-    radial-gradient(circle at 86% 16%, #c8f4ff 0 0.4px, transparent 0.8px),
-    radial-gradient(circle at 12% 62%, #fff 0 0.35px, transparent 0.75px),
-    radial-gradient(circle at 58% 8%, #ffd0f0 0 0.4px, transparent 0.8px);
-  background-size: 17px 17px, 25px 21px, 13px 15px, 21px 27px, 9px 11px, 29px 19px;
+    radial-gradient(circle at 86% 16%, #c8f4ff 0 0.4px, transparent 0.8px);
+  background-size: 128px 128px, 17px 17px, 25px 21px, 13px 15px, 21px 27px;
   background-position:
+    calc(var(--px) * 34px) calc(var(--py) * 26px),
     calc(var(--px) * 28px) calc(var(--py) * 20px),
     calc(var(--px) * -18px) calc(var(--py) * 24px),
     calc(var(--px) * 14px) calc(var(--py) * -16px),
-    calc(var(--px) * -22px) calc(var(--py) * 10px),
-    calc(var(--px) * 8px) calc(var(--py) * -12px),
-    calc(var(--px) * -10px) calc(var(--py) * 18px);
+    calc(var(--px) * -22px) calc(var(--py) * 10px);
 }
 
-/* Hard specular bar that rides the lamp angle. */
+/*
+ * Specular bars. Two banded gradients rather than one, tracked at different
+ * rates and in opposite directions, then blended together with `screen`. Real
+ * foil is two reflective layers at slightly different depths, and it is that
+ * parallax between them — not the bars themselves — that reads as depth when
+ * the card moves.
+ */
 .tcg .foil::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  mix-blend-mode: overlay;
-  background: linear-gradient(
-    105deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.28) 50%,
-    transparent 58%
-  );
-  background-size: 220% 100%;
-  background-position: calc(140% - var(--px) * 220%) 0;
+  mix-blend-mode: hard-light;
+  opacity: 0.55;
+  --bar: 3%;
+  --bar-lit: rgba(255, 255, 255, 0.5);
+  --bar-off: rgba(0, 0, 0, 0);
+  background-image:
+    repeating-linear-gradient(
+      98deg,
+      var(--bar-off) calc(var(--bar) * 2),
+      var(--bar-lit) calc(var(--bar) * 3),
+      var(--bar-off) calc(var(--bar) * 3.6),
+      var(--bar-lit) calc(var(--bar) * 4),
+      var(--bar-off) calc(var(--bar) * 5),
+      var(--bar-off) calc(var(--bar) * 13)
+    ),
+    repeating-linear-gradient(
+      82deg,
+      var(--bar-off) calc(var(--bar) * 2),
+      var(--bar-lit) calc(var(--bar) * 3),
+      var(--bar-off) calc(var(--bar) * 3.4),
+      var(--bar-lit) calc(var(--bar) * 4),
+      var(--bar-off) calc(var(--bar) * 5),
+      var(--bar-off) calc(var(--bar) * 9)
+    );
+  background-size: 200% 200%, 200% 200%;
+  /* Opposite signs and different multipliers — this is the whole trick. */
+  background-position:
+    calc(50% - var(--px) * 165%) calc(50% + var(--py) * 60%),
+    calc(50% + var(--px) * 90%) calc(50% - var(--py) * 75%);
+  background-blend-mode: screen;
 }
 
 /* Idle life when you're not touching the card. */
 .tcg:not(.foil-none):not(.lit) .foil::after {
   animation: foilGlint 5.6s ease-in-out infinite;
 }
+/* The two bar layers drift apart and back, so the idle card still shows the
+   parallax rather than one flat sweep. */
 @keyframes foilGlint {
-  0% { background-position: 160% 0; }
-  40% { background-position: -70% 0; }
-  100% { background-position: -70% 0; }
+  0% { background-position: 150% 40%, -50% 60%; }
+  40% { background-position: -60% 60%, 160% 40%; }
+  100% { background-position: -60% 60%, 160% 40%; }
 }
 
 /* Regular holo / rare: rainbow bars in the illustration window only. */
@@ -443,45 +703,109 @@ h1 em { font-style: normal; color: var(--gold); }
       hsl(308 85% 68%) 35%,
       hsl(2 92% 68%) 42%
     ),
+    /* 1px scanlines: at 8px the banding read as stripes rather than foil. */
     repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.22) 0 1px,
-      transparent 1px 3px
+      90deg,
+      rgba(0, 0, 0, 0.55) 0 1px,
+      rgba(255, 255, 255, 0.5) 1px 2px
     ),
     radial-gradient(
       farthest-corner circle at var(--mx, 50%) var(--my, 50%),
       rgba(255, 255, 255, 0.28) 0%,
       transparent 42%
     );
-  background-size: 240% 100%, 100% 8px, 140% 140%;
+  background-size: 240% 100%, 2px 100%, 140% 140%;
   background-position:
     calc(var(--px) * 100%) 0,
-    0 calc(var(--py) * -24px),
+    0 0,
     var(--mx, 50%) var(--my, 50%);
+  /* Blend the scanlines into the rainbow in a single paint rather than
+     stacking another element over it — the interference between the two is
+     what gives the rainbow its metallic grain. */
+  background-blend-mode: overlay, normal, normal;
 }
 .foil-holo .foil,
 .foil-holo .glare {
-  -webkit-mask-image: var(--art), var(--win-holo);
-  -webkit-mask-size: contain, 100% 100%;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  /* Illustration inner frame (63×88): top 82, right 46, bottom 464, left 50. */
+  -webkit-clip-path: inset(9.318% 7.302% 52.727% 7.937%);
+  clip-path: inset(9.318% 7.302% 52.727% 7.937%);
+}
+/* Stage 1/2: bitmap window with the evo badge punched out (same 733×1024
+   as the scans). clip-path inset is off — percentages on the clipped box
+   moved the hole into the art. */
+.foil-holo.foil-evo .foil,
+.foil-holo.foil-evo .glare {
+  -webkit-clip-path: none;
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--win-evo);
+  -webkit-mask-size: contain, contain;
   -webkit-mask-position: center, center;
   -webkit-mask-repeat: no-repeat, no-repeat;
   -webkit-mask-composite: source-in;
-  mask-image: var(--art), var(--win-holo);
+  mask-image: var(--art), var(--win-evo);
   mask-mode: alpha, alpha;
-  mask-size: contain, 100% 100%;
+  mask-size: contain, contain;
   mask-position: center, center;
   mask-repeat: no-repeat, no-repeat;
   mask-composite: intersect;
 }
-.foil-holo.foil-evo .foil,
-.foil-holo.foil-evo .glare {
-  -webkit-mask-image: var(--art), var(--win-holo-evo);
-  mask-image: var(--art), var(--win-holo-evo);
+/* "Trainer's Pokemon": an owner portrait sits over the bottom-right of the
+   illustration, and the foil stops at the character's outline. Every owner
+   draws a different one — N's hair spikes up, Iono's sweeps left, Ethan wears
+   a cap, Team Rocket adds an "R" — so the window is cut per portrait by
+   scripts/make_owner_masks.py and named on the card by --win-owner. The
+   evolution badge is punched into the same file, so this replaces --win-evo
+   rather than stacking with it. */
+.foil-holo.foil-owner .foil,
+.foil-holo.foil-owner .glare {
+  -webkit-clip-path: none;
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--win-owner);
+  -webkit-mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-image: var(--art), var(--win-owner);
+  mask-mode: alpha, alpha;
+  mask-size: contain, contain;
+  mask-position: center, center;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: intersect;
 }
-
-/* Pokémon ex: illustration is the whole face, so skip the window cutout. */
+/* Special Energy: art window runs nearly edge to edge, much wider than the
+   Pokémon one. Measured off me5-83 / me5-84 (733×1024): 28,139 → 703,657,
+   i.e. 24,120 → 604,565 here. */
+.foil-holo.foil-energy .foil,
+.foil-holo.foil-energy .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-clip-path: inset(13.636% 4.127% 35.795% 3.810%);
+  clip-path: inset(13.636% 4.127% 35.795% 3.810%);
+}
+/* Trainer: Supporter, Item, Stadium and Tool all share one window — checked
+   against me5-78, me5-72 and me5-76 (733×1024): 57,144 → 683,537, i.e.
+   49,124 → 587,461 here. Horizontally it lines up with the Pokémon window. */
+.foil-holo.foil-trainer .foil,
+.foil-holo.foil-trainer .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-clip-path: inset(14.091% 6.825% 47.614% 7.778%);
+  clip-path: inset(14.091% 6.825% 47.614% 7.778%);
+}
+/* Pokémon ex: illustration is the whole face, so skip the window cutout.
+   Crystal facets over the rainbow give the full-art foil its angular break-up
+   instead of a smooth sweep. */
 .foil-ex .foil {
   background-image:
+    var(--foil-facet),
     repeating-linear-gradient(
       90deg,
       hsl(2 92% 68%) 0 3%,
@@ -493,92 +817,125 @@ h1 em { font-style: normal; color: var(--gold); }
       hsl(2 92% 68%) 42%
     ),
     repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.16) 0 1px,
-      transparent 1px 4px
+      90deg,
+      rgba(0, 0, 0, 0.5) 0 1px,
+      rgba(255, 255, 255, 0.45) 1px 2px
     ),
     radial-gradient(
       farthest-corner circle at var(--mx, 50%) var(--my, 50%),
       rgba(255, 255, 255, 0.22) 0%,
       transparent 42%
     );
-  background-size: 240% 100%, 100% 8px, 140% 140%;
+  background-size: 150px 150px, 240% 100%, 2px 100%, 140% 140%;
   background-position:
+    calc(var(--px) * 26px) calc(var(--py) * 20px),
     calc(var(--px) * 100%) 0,
-    0 calc(var(--py) * -24px),
+    0 0,
     var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: overlay, overlay, normal, normal;
 }
 
-/* Reverse: cosmos holofoil on the frame/text, photo stays matte. */
+/* Reverse: cosmos holofoil on the frame/text, photo stays matte. The real
+   cosmos flake texture carries the pattern now; the gradients under it supply
+   the colour it reflects. */
 .foil-reverse .foil {
-  opacity: 0.34;
+  opacity: 0.4;
   background-image:
+    var(--foil-cosmos),
     radial-gradient(circle at 20% 30%, #fff 0 0.7px, transparent 1.1px),
     radial-gradient(circle at 70% 60%, #d4f0ff 0 0.6px, transparent 1px),
     radial-gradient(circle at 45% 80%, #ffd6f2 0 0.55px, transparent 0.95px),
-    radial-gradient(circle at 85% 20%, #fff 0 0.45px, transparent 0.85px),
-    repeating-linear-gradient(
-      125deg,
-      rgba(180, 230, 255, 0.12) 0 2px,
-      transparent 2px 6px
-    ),
     linear-gradient(
       115deg,
-      hsl(200 90% 70% / 0.22),
-      hsl(280 80% 72% / 0.22),
-      hsl(40 90% 68% / 0.18),
-      hsl(160 80% 68% / 0.22)
+      hsl(200 90% 70% / 0.3),
+      hsl(280 80% 72% / 0.3),
+      hsl(40 90% 68% / 0.24),
+      hsl(160 80% 68% / 0.3)
     );
   background-size:
-    14px 14px, 22px 18px, 11px 13px, 19px 24px,
-    100% 100%, 220% 220%;
+    192px 192px, 14px 14px, 22px 18px, 11px 13px, 220% 220%;
   background-position:
+    calc(var(--px) * 26px) calc(var(--py) * 22px),
     calc(var(--px) * 16px) calc(var(--py) * 14px),
     calc(var(--px) * -12px) calc(var(--py) * 18px),
     calc(var(--px) * 10px) calc(var(--py) * -10px),
-    calc(var(--px) * -18px) calc(var(--py) * 8px),
-    0 0,
     calc(var(--px) * 80%) calc(var(--py) * 80%);
+  /* Flakes take their colour from the gradient beneath instead of sitting on
+     top of it as a grey film. */
+  background-blend-mode: overlay, normal, normal, normal, normal;
 }
-.tcg.lit.foil-reverse .foil { opacity: 0.5; }
+.tcg.lit.foil-reverse .foil { opacity: calc(0.5 * var(--foil-strength, 1)); }
 .foil-reverse .foil {
   -webkit-mask-image: var(--art), var(--win-holo);
-  -webkit-mask-size: contain, 100% 100%;
+  -webkit-mask-size: contain, contain;
   -webkit-mask-position: center, center;
   -webkit-mask-repeat: no-repeat, no-repeat;
   -webkit-mask-composite: source-out;
   mask-image: var(--art), var(--win-holo);
   mask-mode: alpha, alpha;
-  mask-size: contain, 100% 100%;
+  mask-size: contain, contain;
   mask-position: center, center;
   mask-repeat: no-repeat, no-repeat;
   mask-composite: subtract;
 }
+/* Stage 1/2: the window's top-left corner cuts through the evo badge, so with
+   the plain rect the foil stopped halfway across it and left a seam. --win-evo
+   takes the badge back out of the subtracted region, so the badge is foiled
+   edge to edge — which is also how a real reverse holo prints it, the badge
+   being part of the foiled frame layer rather than the illustration. */
 .foil-reverse.foil-evo .foil {
-  -webkit-mask-image: var(--art), var(--win-holo-evo);
-  mask-image: var(--art), var(--win-holo-evo);
+  -webkit-mask-image: var(--art), var(--win-evo);
+  mask-image: var(--art), var(--win-evo);
+}
+/* Reverse holo takes the same file the other way round: subtracting a window
+   that already has the portrait cut out of it leaves the portrait foiled,
+   which is how a real reverse prints it — the badge belongs to the foiled
+   frame layer, not to the matte illustration. */
+.foil-reverse.foil-owner .foil {
+  -webkit-mask-image: var(--art), var(--win-owner);
+  mask-image: var(--art), var(--win-owner);
+}
+.foil-reverse.foil-energy .foil {
+  -webkit-mask-image: var(--art), var(--win-holo-energy);
+  mask-image: var(--art), var(--win-holo-energy);
+}
+.foil-reverse.foil-trainer .foil {
+  -webkit-mask-image: var(--art), var(--win-holo-trainer);
+  mask-image: var(--art), var(--win-holo-trainer);
 }
 .foil-reverse .glare {
   -webkit-mask-image: var(--art), var(--win-holo);
-  -webkit-mask-size: contain, 100% 100%;
+  -webkit-mask-size: contain, contain;
   -webkit-mask-position: center, center;
   -webkit-mask-repeat: no-repeat, no-repeat;
   -webkit-mask-composite: source-in;
   mask-image: var(--art), var(--win-holo);
   mask-mode: alpha, alpha;
-  mask-size: contain, 100% 100%;
+  mask-size: contain, contain;
   mask-position: center, center;
   mask-repeat: no-repeat, no-repeat;
   mask-composite: intersect;
 }
 .foil-reverse.foil-evo .glare {
-  -webkit-mask-image: var(--art), var(--win-holo-evo);
-  mask-image: var(--art), var(--win-holo-evo);
+  -webkit-mask-image: var(--art), var(--win-evo);
+  mask-image: var(--art), var(--win-evo);
 }
-
+.foil-reverse.foil-owner .glare {
+  -webkit-mask-image: var(--art), var(--win-owner);
+  mask-image: var(--art), var(--win-owner);
+}
+.foil-reverse.foil-energy .glare {
+  -webkit-mask-image: var(--art), var(--win-holo-energy);
+  mask-image: var(--art), var(--win-holo-energy);
+}
+.foil-reverse.foil-trainer .glare {
+  -webkit-mask-image: var(--art), var(--win-holo-trainer);
+  mask-image: var(--art), var(--win-holo-trainer);
+}
 /* Illustration Rare: full-art glitter, shinier than a window holo. */
 .foil-ir .foil {
   background-image:
+    var(--foil-glitter),
     radial-gradient(circle at 24% 28%, #fff 0 0.7px, transparent 1.2px),
     radial-gradient(circle at 66% 54%, #fff6c8 0 0.6px, transparent 1.1px),
     radial-gradient(circle at 48% 84%, #c8f0ff 0 0.5px, transparent 1px),
@@ -593,10 +950,12 @@ h1 em { font-style: normal; color: var(--gold); }
       hsl(270 85% 70% / 0.45)
     );
   background-size:
+    170px 170px,
     15px 15px, 23px 19px, 11px 14px,
     100% 100%, 100% 100%,
     260% 260%;
   background-position:
+    calc(var(--px) * 30px) calc(var(--py) * 24px),
     calc(var(--px) * 20px) calc(var(--py) * 16px),
     calc(var(--px) * -16px) calc(var(--py) * 20px),
     calc(var(--px) * 12px) calc(var(--py) * -14px),
@@ -611,123 +970,174 @@ h1 em { font-style: normal; color: var(--gold); }
 
 /* Special Illustration Rare: stamped/etched texture like Pokumon “Textured”
    holofoil — grain and crosshatch catch the lamp, rainbow rides the ridges. */
+/*
+ * Premium foils.
+ *
+ * These used to inherit `mix-blend-mode: color-dodge` from `.tcg .foil` with a
+ * flat brightness around 0.8, which blew out to near-white over bright card
+ * art. Two changes fix that, both borrowed as technique from how the
+ * pokemon-cards-css project handles its fancier rarities:
+ *
+ *  1. Brightness is driven by pointer distance rather than fixed — dim at rest
+ *     (the card is not catching a lamp), brightening as you move toward the
+ *     edges. `--hyp` is already the 0..1 distance from card centre.
+ *  2. Each rarity gets its own blend mode instead of everything colour-dodging.
+ *     Only the gold keeps colour-dodge, which is what suits metal.
+ */
+
+/* Special Illustration Rare: etched crosshatch, deep colour rather than glare. */
 .foil-sir {
-  --tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='e'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23e)'/%3E%3C/svg%3E");
+  --tex: var(--foil-weave);
 }
 .foil-sir .foil {
-  opacity: 0.42;
+  /* Lower opacity than the plain holos: the etched sheen should sit over the
+     illustration, not replace it. */
+  opacity: 0.34;
+  /* screen only ever lightens. hard-light was multiplying the texture's dark
+     areas into the art, which is what made these read as muddy. */
+  mix-blend-mode: screen;
   background-image:
     var(--tex),
-    repeating-linear-gradient(31deg, rgba(255, 255, 255, 0.28) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(-47deg, rgba(18, 10, 6, 0.28) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(31deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 5px),
     repeating-linear-gradient(
       108deg,
-      hsl(325 90% 68% / 0.55) 0 3%,
-      hsl(38 95% 64% / 0.5) 8%,
-      hsl(128 78% 60% / 0.48) 16%,
-      hsl(192 90% 64% / 0.52) 24%,
-      hsl(258 85% 68% / 0.55) 32%,
-      hsl(325 90% 68% / 0.55) 40%
-    ),
-    linear-gradient(
-      108deg,
-      hsl(325 90% 70% / 0.42),
-      hsl(38 95% 66% / 0.4),
-      hsl(128 78% 62% / 0.38),
-      hsl(192 90% 66% / 0.4),
-      hsl(258 85% 70% / 0.42),
-      hsl(325 90% 70% / 0.42)
+      hsl(325 90% 70% / 0.55) 0 4%,
+      hsl(38 95% 66% / 0.5) 10%,
+      hsl(150 80% 62% / 0.46) 18%,
+      hsl(196 92% 66% / 0.52) 26%,
+      hsl(262 88% 72% / 0.55) 34%,
+      hsl(325 90% 70% / 0.55) 42%
     );
-  background-size:
-    92px 92px,
-    6px 6px,
-    9px 9px,
-    260% 100%,
-    250% 250%;
+  background-size: 84px 84px, 7px 7px, 240% 100%;
   background-position:
-    calc(var(--px) * 36px) calc(var(--py) * 28px),
+    calc(var(--px) * 34px) calc(var(--py) * 26px),
     calc(var(--px) * 10px) calc(var(--py) * -8px),
-    calc(var(--px) * -12px) calc(var(--py) * 10px),
-    calc(var(--px) * 100%) 0,
-    calc(var(--px) * 90%) calc(var(--py) * 70%);
-  background-blend-mode: overlay, overlay, multiply, overlay, overlay;
-  filter: brightness(0.8) contrast(1.32) saturate(0.58);
+    calc(var(--px) * 100%) 0;
+  background-blend-mode: soft-light, overlay, normal;
+  filter: brightness(calc(0.62 + var(--hyp, 0.12) * 0.4)) contrast(1.25) saturate(1.45);
 }
 .tcg.lit.foil-sir .foil {
-  opacity: 0.62;
-  filter: brightness(0.86) contrast(1.4) saturate(0.68);
+  opacity: 0.46;
+  /* Must repeat the filter: `.tcg.lit .foil` is three classes and would
+     otherwise win over `.foil-sir .foil` and restore the blown-out look. */
+  filter: brightness(calc(0.62 + var(--hyp, 0.12) * 0.4)) contrast(1.25) saturate(1.45);
 }
 .foil-sir .foil::before {
-  opacity: 0.55;
+  opacity: 0.4;
   mix-blend-mode: overlay;
   background-image:
     var(--tex),
-    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.2) 0 1px, transparent 1px 5px);
-  background-size: 70px 70px, 8px 8px;
+    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 6px);
+  background-size: 64px 64px, 9px 9px;
   background-position:
     calc(var(--px) * -24px) calc(var(--py) * 20px),
     calc(var(--px) * 8px) calc(var(--py) * -6px);
 }
 .foil-sir .foil::after {
+  opacity: 0.4;
   background: linear-gradient(
     100deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.28) 50%,
-    transparent 60%
+    transparent 42%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 58%
   );
 }
 
-/* Mega Hyper Rare: brushed gold metal, not rainbow. */
+/* Ultra Rare: oil-slick diffraction. Its own material — these are ex full arts
+   and used to share the plain facet foil with Double Rares. */
+.foil-ultra .foil {
+  opacity: 0.32;
+  mix-blend-mode: screen;
+  background-image:
+    var(--foil-prism),
+    repeating-linear-gradient(
+      74deg,
+      hsl(190 92% 68% / 0.45) 0 5%,
+      hsl(268 88% 70% / 0.45) 12%,
+      hsl(320 88% 68% / 0.4) 20%,
+      hsl(150 76% 60% / 0.4) 28%,
+      hsl(190 92% 68% / 0.45) 36%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.26) 0%,
+      transparent 48%
+    );
+  background-size: 132px 132px, 230% 100%, 150% 150%;
+  background-position:
+    calc(var(--px) * 40px) calc(var(--py) * 32px),
+    calc(var(--px) * 100%) 0,
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: soft-light, normal, overlay;
+  filter: brightness(calc(0.64 + var(--hyp, 0.12) * 0.4)) contrast(1.2) saturate(1.45);
+}
+.tcg.lit.foil-ultra .foil {
+  opacity: 0.44;
+  filter: brightness(calc(0.64 + var(--hyp, 0.12) * 0.4)) contrast(1.2) saturate(1.45);
+}
+.foil-ultra .foil::after {
+  opacity: 0.45;
+  background: linear-gradient(
+    98deg,
+    transparent 42%,
+    rgba(200, 235, 255, 0.3) 50%,
+    transparent 58%
+  );
+}
+
+/* Mega Hyper Rare: brushed gold metal. Colour-dodge suits metal, but it needs a
+   much darker base than the other foils or the gold reads as white. */
 .foil-gold {
-  --tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='e'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23e)'/%3E%3C/svg%3E");
+  --tex: var(--foil-metal);
 }
 .foil-gold .foil {
+  opacity: 0.4;
   background-image:
     var(--tex),
-    radial-gradient(circle at 22% 26%, #fff8d6 0 0.7px, transparent 1.2px),
-    radial-gradient(circle at 70% 58%, #ffe08a 0 0.6px, transparent 1.1px),
-    radial-gradient(circle at 48% 84%, #fff 0 0.45px, transparent 0.9px),
+    radial-gradient(circle at 22% 26%, #fff8d6 0 0.7px, transparent 1.3px),
+    radial-gradient(circle at 70% 58%, #ffe08a 0 0.6px, transparent 1.2px),
     repeating-linear-gradient(
       122deg,
-      rgba(255, 214, 120, 0.28) 0 1px,
-      transparent 1px 3px,
-      rgba(120, 80, 20, 0.18) 3px 4px
+      rgba(255, 214, 120, 0.22) 0 1px,
+      transparent 1px 4px,
+      rgba(90, 60, 12, 0.3) 4px 5px
     ),
     linear-gradient(
       118deg,
-      #8a5a12,
-      #f4d484,
-      #c4922a,
-      #fff1b8,
-      #9a6820,
-      #ffe29a
+      #6b4409,
+      #d8b055,
+      #8c6412,
+      #ffe9a8,
+      #6f4b0d,
+      #e8c374
     );
   background-size:
-    88px 88px,
-    14px 14px, 21px 18px, 10px 12px,
+    /* Brushed metal reads as direction, so stretch it across the card. */
+    170% 100%,
+    14px 14px, 21px 18px,
     100% 100%,
     240% 240%;
   background-position:
-    calc(var(--px) * 22px) calc(var(--py) * 16px),
+    calc(var(--px) * 60%) calc(var(--py) * 30%),
     calc(var(--px) * 18px) calc(var(--py) * 14px),
     calc(var(--px) * -14px) calc(var(--py) * 20px),
-    calc(var(--px) * 10px) calc(var(--py) * -12px),
     0 0,
     calc(var(--px) * 90%) calc(var(--py) * 70%);
-  background-blend-mode: overlay, overlay, overlay, overlay, multiply, overlay;
-  filter: brightness(0.82) contrast(1.2) saturate(0.7);
+  background-blend-mode: soft-light, overlay, overlay, multiply, normal;
+  filter: brightness(calc(0.42 + var(--hyp, 0.12) * 0.32)) contrast(1.12) saturate(2.1);
   mix-blend-mode: color-dodge;
 }
 .tcg.lit.foil-gold .foil {
   opacity: 0.5;
-  filter: brightness(0.88) contrast(1.28) saturate(0.8);
+  filter: brightness(calc(0.42 + var(--hyp, 0.12) * 0.32)) contrast(1.12) saturate(2.1);
 }
 .foil-gold .foil::after {
+  opacity: 0.5;
   background: linear-gradient(
     102deg,
-    transparent 40%,
-    rgba(255, 236, 180, 0.35) 50%,
-    transparent 60%
+    transparent 42%,
+    rgba(255, 226, 150, 0.3) 50%,
+    transparent 58%
   );
 }
 
@@ -782,7 +1192,14 @@ h1 em { font-style: normal; color: var(--gold); }
   object-fit: contain;
 }
 
-.collection-tools { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.collection-tools,
+.bulk-toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12px;
+}
 .search, .filter {
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--line);
@@ -807,17 +1224,42 @@ select.filter option {
 .dex-bar { height: 8px; border-radius: 99px; background: #1c1822; overflow: hidden; margin: 0 0 22px; }
 .dex-bar span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--rip)); transition: width 0.4s ease; }
 
-.binder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.binder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--binder-min, 150px), 1fr)); gap: 14px; }
 .binder-slot {
-  border: 1px solid var(--line); border-radius: 16px; padding: 8px; background: #100e15;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 8px;
+  background: #100e15;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.18s ease, transform 0.18s ease;
 }
+.binder-slot:hover { border-color: rgba(240, 193, 75, 0.32); }
 .slot-face {
   display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer;
 }
-.slot-meta { margin-top: 8px; }
-.slot-meta b { display: block; font-size: 13px; }
+.slot-meta { margin-top: 8px; min-height: 38px; }
+.slot-meta b { display: block; font-size: 13px; line-height: 1.25; }
 .slot-meta span { color: var(--muted); font-size: 11px; }
+.slot-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+.slot-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-2);
+  letter-spacing: 0.01em;
+}
+.slot-miss {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
 .count-badge, .new-badge {
   position: absolute; z-index: 3;
   font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 999px;
@@ -829,11 +1271,22 @@ select.filter option {
   background: var(--gold); color: #1a1408;
 }
 .sell-btn {
-  position: relative; z-index: 4; margin-top: 8px; width: 100%;
+  position: relative; z-index: 4; margin-top: 0; width: auto;
   border: 1px solid var(--line); background: transparent; border-radius: 8px;
-  padding: 6px; font-size: 11px; color: var(--muted);
+  padding: 5px 10px; font-size: 11px; color: var(--muted);
 }
 .sell-btn:hover { color: var(--gold); border-color: rgba(240,193,75,0.4); }
+.bulk-card.missing .tcg {
+  opacity: 0.4;
+  filter: grayscale(0.5) brightness(0.82);
+  transition: opacity 0.18s ease, filter 0.18s ease;
+}
+.bulk-card.missing .foil,
+.bulk-card.missing .glare { display: none; }
+.bulk-card.missing:hover .tcg {
+  opacity: 0.78;
+  filter: grayscale(0.12) brightness(0.95);
+}
 
 /* ---- Catalog -------------------------------------------------------------
    Set symbol and status badge live in their own header row. Previously they
@@ -1261,6 +1714,225 @@ select.filter option {
 }
 .home-step p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
 
+/* ---- Hero proof points ---------------------------------------------------- */
+.home-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.home-proof li { position: relative; padding-left: 15px; }
+.home-proof li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(240, 193, 75, 0.7);
+}
+.home-proof b { display: block; font-size: 13px; }
+.home-proof span { color: var(--muted); font-size: 12px; }
+
+/* ---- Market board ---------------------------------------------------------
+   Binder worth on the left, the set's priciest cards on the right. */
+.home-market {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 16px;
+  align-items: stretch;
+}
+.home-worth,
+.home-board {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.home-worth {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 22px 22px;
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(240, 193, 75, 0.12), transparent 60%),
+    rgba(255, 255, 255, 0.03);
+}
+.home-worth-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.home-worth b {
+  font-family: var(--display);
+  font-size: clamp(30px, 4.4vw, 42px);
+  line-height: 1.05;
+  color: var(--gold-2);
+}
+.home-worth p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.home-pnl { display: flex; align-items: center; gap: 6px; font-weight: 600; }
+.home-pnl.up { color: #6ee7a0; }
+.home-pnl.down { color: #ff8898; }
+.home-worth-chart { margin: 12px -4px 0; }
+.home-worth-note {
+  margin: 10px 0 0 !important;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.home-worth-cta { margin-top: auto; padding-top: 16px; }
+.home-worth-cta .solid { width: 100%; }
+
+/* Compact net-worth sparkline. */
+.pc-spark { height: 96px; cursor: default; }
+.pc-spark.flat { --pc-key: var(--gold); }
+.pc-base {
+  stroke: rgba(244, 239, 228, 0.28);
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+  vector-effect: non-scaling-stroke;
+}
+.pc-empty-sm { font-size: 12.5px; padding: 18px 0 6px; }
+
+/* ---- Your pulls -----------------------------------------------------------
+   One block: the best pull featured, the rest as a strip. A lone card in a
+   plain flex row read as a broken layout. */
+.home-pulls {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 16px;
+  align-items: stretch;
+}
+.home-hit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid rgba(240, 193, 75, 0.28);
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 120% at 100% 0%, rgba(240, 193, 75, 0.14), transparent 60%),
+    rgba(255, 255, 255, 0.03);
+}
+.home-hit-art {
+  flex: none;
+  width: 104px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+.home-hit-art:hover { transform: translateY(-4px) scale(1.02); }
+.home-hit-art:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 8px; }
+.home-hit-copy { min-width: 0; }
+.home-hit-label {
+  display: block;
+  color: var(--gold-2);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.home-hit-copy h3 {
+  margin: 6px 0 4px;
+  font-family: var(--display);
+  font-size: 19px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.home-hit-copy p { margin: 0; color: var(--muted); font-size: 12.5px; }
+.home-hit-value {
+  margin-top: 10px;
+  font-family: var(--display);
+  font-size: 22px;
+  color: var(--gold-2);
+}
+
+.home-strip {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px 4px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  min-width: 0;
+}
+.home-strip-label {
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.home-strip .home-film { margin-top: 4px; }
+
+.home-board { padding: 16px 18px 10px; }
+.home-board-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.home-board-note { color: rgba(240, 193, 75, 0.75); letter-spacing: 0.08em; }
+.home-board-list { margin: 0; padding: 0; list-style: none; }
+.home-board-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 6px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  border-radius: 10px;
+  transition: background 0.16s ease;
+}
+.home-board-list li:first-child .home-board-row { border-top: 0; }
+.home-board-row:hover { background: rgba(255, 255, 255, 0.05); }
+.home-board-row:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.home-board-rank {
+  flex: none;
+  width: 20px;
+  font-family: var(--display);
+  font-size: 13px;
+  color: rgba(244, 239, 228, 0.35);
+}
+.home-board-name { flex: 1; min-width: 0; }
+.home-board-name b {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.home-board-name small { color: var(--muted); font-size: 11.5px; }
+.home-board-price {
+  flex: none;
+  font-family: var(--display);
+  font-size: 15px;
+  color: var(--gold-2);
+  white-space: nowrap;
+}
+
 .home-odds {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1390,6 +2062,211 @@ select.filter option {
 .mark.lg { width: 52px; height: 52px; border-radius: 14px; font-size: 24px; }
 .soon-list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.9; }
 
+.trainer-mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: var(--avatar, var(--gold));
+  color: #1a1408;
+  font-family: var(--display);
+  font-size: 28px;
+  box-shadow: 0 0 28px rgba(240, 193, 75, 0.28);
+}
+.account-id .trainer-mark { flex: none; }
+.account-title {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(240, 193, 75, 0.35);
+  color: var(--gold-2);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.account-handle { color: var(--gold); font-weight: 600; }
+.account-bio {
+  margin: 8px 0 0;
+  max-width: 52ch;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.account-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ach-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 120px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.ach-chip.on {
+  border-color: rgba(240, 193, 75, 0.4);
+  background: rgba(240, 193, 75, 0.08);
+}
+.ach-chip.off { opacity: 0.45; }
+.ach-chip b { font-size: 13px; }
+.ach-chip span { color: var(--muted); font-size: 11px; line-height: 1.4; }
+.set-progress { display: flex; flex-direction: column; gap: 14px; }
+.set-progress-row .progress-head { margin-bottom: 6px; }
+.activity-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.activity-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.activity-list li:first-child { border-top: 0; padding-top: 0; }
+.activity-list span { color: var(--muted); font-size: 12px; }
+.activity-list time {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field span { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.field input,
+.field textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: var(--ink);
+}
+.field textarea { min-height: 84px; resize: vertical; }
+.field .hint { text-transform: none; letter-spacing: 0; font-weight: 500; opacity: 0.85; }
+.color-picks { display: flex; flex-wrap: wrap; gap: 8px; }
+.color-pick {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+}
+.color-pick.on { border-color: var(--ink); }
+.form-error {
+  min-height: 1.2em;
+  margin: 0 0 12px;
+  color: #ff9d9d;
+  font-size: 13px;
+}
+.trainer-picks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.trainer-pick {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  text-align: left;
+  color: inherit;
+}
+.trainer-pick.on {
+  border-color: rgba(240, 193, 75, 0.45);
+  background: rgba(240, 193, 75, 0.08);
+}
+.trainer-pick .trainer-avatar { width: 36px; height: 36px; font-size: 15px; }
+.trainer-pick b { display: block; font-size: 14px; }
+.trainer-pick small { color: var(--muted); font-size: 12px; }
+.auth-page {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(280px, 1.08fr);
+  gap: 28px 48px;
+  align-items: start;
+}
+.auth-copy h1 {
+  margin: 8px 0 14px;
+  font-size: clamp(36px, 5vw, 56px);
+}
+.auth-copy .lede { max-width: 46ch; }
+.auth-points {
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.auth-points li { padding-left: 18px; position: relative; }
+.auth-points li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 11px;
+  top: 4px;
+}
+.auth-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px;
+  background: rgba(12, 10, 18, 0.72);
+  box-shadow: var(--shadow);
+}
+.auth-card .solid { width: 100%; min-width: 0; }
+.field em { font-style: normal; font-weight: 500; color: var(--muted); }
+.auth-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.auth-tab {
+  flex: 1;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  padding: 8px 12px;
+  font-weight: 700;
+  font-size: 13px;
+}
+.auth-tab.on { background: var(--ink); color: #111; }
+.auth-guest {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px 0 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.check-row input { margin-top: 3px; accent-color: var(--gold); }
+.account-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+
 .toggle-list { display: flex; flex-direction: column; }
 .toggle-row {
   display: flex;
@@ -1433,6 +2310,479 @@ select.filter option {
 .toggle-row input:checked ~ .switch::after { transform: translateX(18px); background: var(--gold); }
 .toggle-row input:focus-visible ~ .switch { outline: 2px solid var(--gold); outline-offset: 2px; }
 
+/* ---- Bulk / Binder ---------------------------------------------------------
+   Bulk is the inventory grid; the binder is the curated showcase, laid out as
+   a facing spread of nine-pocket pages like a real one. */
+.view-intro {
+  margin: -4px 0 18px;
+  max-width: 72ch;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.bulk-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: 28px;
+  align-items: end;
+  margin: 0 0 26px;
+}
+.bulk-copy h1 {
+  font-family: var(--display);
+  font-size: clamp(34px, 5vw, 54px);
+  letter-spacing: 0.03em;
+  line-height: 0.95;
+  margin: 0 0 12px;
+}
+.bulk-copy .lede {
+  margin: 0;
+  max-width: 52ch;
+  color: #cbbfae;
+}
+.bulk-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.bulk-pulse {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.bulk-browse {
+  margin: 0 0 18px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+    rgba(14, 11, 20, 0.55);
+}
+.bulk-eras {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 0 0 12px;
+  margin: 0 0 12px;
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244, 239, 228, 0.18) transparent;
+}
+.bulk-era {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(9, 7, 13, 0.35);
+  text-align: left;
+  min-width: 148px;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+.bulk-era b {
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  color: var(--ink);
+}
+.bulk-era small {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.bulk-era:hover { border-color: rgba(255, 255, 255, 0.18); }
+.bulk-era.on {
+  border-color: rgba(240, 193, 75, 0.5);
+  background: linear-gradient(180deg, rgba(240, 193, 75, 0.14), rgba(255, 255, 255, 0.02));
+}
+.bulk-era.on b { color: var(--gold); }
+.bulk-era-sets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 8px;
+}
+.bulk-set-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(9, 7, 13, 0.4);
+  color: var(--ink);
+  text-align: left;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+.bulk-set-card:hover { border-color: rgba(255, 255, 255, 0.16); background: rgba(255, 255, 255, 0.04); }
+.bulk-set-card.active {
+  border-color: rgba(240, 193, 75, 0.5);
+  background: linear-gradient(180deg, rgba(240, 193, 75, 0.14), rgba(255, 255, 255, 0.02));
+}
+.bulk-set-card.active b { color: var(--gold); }
+.bulk-set-card.is-queued { cursor: default; opacity: 0.78; }
+.bulk-set-card.is-queued:hover { border-color: var(--line); background: rgba(9, 7, 13, 0.4); }
+.bulk-set-card:disabled { opacity: 0.45; cursor: default; }
+.bulk-set-card .rail-symbol {
+  width: 28px;
+  height: 28px;
+}
+.bulk-set-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.bulk-set-copy b {
+  font-size: 13.5px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bulk-set-copy small {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.bulk-set-card .live-tag,
+.bulk-set-card .soon {
+  flex: none;
+  padding: 3px 7px;
+}
+.bulk-era-empty {
+  margin: 0;
+  padding: 8px 2px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.bulk-rarities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.rarity-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+.rarity-chip:hover {
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.rarity-chip.on {
+  border-color: rgba(240, 193, 75, 0.5);
+  background: linear-gradient(180deg, rgba(240, 193, 75, 0.16), rgba(255, 255, 255, 0.03));
+  color: var(--gold-2);
+}
+.rarity-marks {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+}
+.bulk-seg { margin-left: auto; }
+.bulk-result,
+.binder-note {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.bulk-empty {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 6px;
+  place-items: start;
+  padding: 28px 20px;
+  border: 1px dashed var(--line);
+  border-radius: 16px;
+  color: var(--muted);
+}
+.bulk-empty b { color: var(--ink); font-size: 15px; }
+
+.link-btn {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--gold-2);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.link-btn:hover { color: var(--gold); }
+
+.binder-actions { display: flex; gap: 8px; }
+.binder-spread {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+.binder-page {
+  position: relative;
+  padding: 18px 18px 26px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  /* A page lifts off the ring: lighter at the spine edge, shadowed away. */
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02) 22%),
+    rgba(255, 255, 255, 0.025);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.binder-spread .binder-page:last-child {
+  background:
+    linear-gradient(270deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02) 22%),
+    rgba(255, 255, 255, 0.025);
+}
+.binder-pockets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.binder-page-no {
+  position: absolute;
+  bottom: 8px;
+  right: 14px;
+  color: rgba(244, 239, 228, 0.3);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pocket {
+  position: relative;
+  aspect-ratio: 63 / 88;
+  border-radius: 10px;
+}
+.pocket.empty {
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(244, 239, 228, 0.16);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(244, 239, 228, 0.28);
+  font-size: 22px;
+  cursor: pointer;
+  transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+}
+.pocket.empty:hover {
+  border-color: rgba(240, 193, 75, 0.5);
+  color: var(--gold);
+  background: rgba(240, 193, 75, 0.06);
+}
+.pocket.empty:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.pocket.filled { border: 0; }
+.pocket-card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.16s ease;
+}
+.pocket-card:hover { transform: translateY(-3px); }
+.pocket-clear {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(12, 10, 16, 0.92);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.16s ease, color 0.16s ease;
+}
+.pocket.filled:hover .pocket-clear,
+.pocket-clear:focus-visible { opacity: 1; }
+.pocket-clear:hover { color: #ff9d9d; border-color: rgba(255, 110, 110, 0.5); }
+
+.binder-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.binder-nav button:disabled { opacity: 0.35; cursor: default; }
+
+/* Card picker */
+.picker-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(5, 4, 8, 0.72);
+  backdrop-filter: blur(3px);
+}
+.picker {
+  position: fixed;
+  z-index: 61;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(880px, calc(100% - 32px));
+  max-height: min(76vh, 720px);
+  overflow: auto;
+  padding: 20px 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(12, 10, 16, 0.98);
+  box-shadow: var(--shadow);
+}
+.picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.picker-head h3 { margin: 0; font-family: var(--display); font-size: 18px; }
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+  gap: 12px;
+}
+.picker-card {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.16s ease;
+}
+.picker-card:hover { transform: translateY(-4px); }
+.picker-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 8px; }
+.picker-name {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.picker-meta { display: block; color: var(--muted); font-size: 11px; }
+
+@media (max-width: 860px) {
+  .binder-spread { grid-template-columns: 1fr; }
+  .binder-page { padding: 14px 14px 24px; }
+}
+
+/* ---- Settings page --------------------------------------------------------
+   Panels sit in a responsive grid; each row is copy on the left and its control
+   on the right, collapsing to stacked on narrow screens. */
+.set-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.set-bar p { margin: 0; color: var(--muted); font-size: 13px; }
+.set-bar button:disabled { opacity: 0.4; cursor: default; }
+.set-bar button:disabled:hover { background: transparent; }
+
+.set-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.set-panel { padding: 20px 22px 8px; }
+.set-panel-head { margin-bottom: 4px; }
+.set-panel-head h3 { margin: 0 0 4px; }
+.set-panel-head p { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+.set-list { display: flex; flex-direction: column; }
+.set-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.set-list .set-row:first-child { border-top: 0; padding-top: 0; }
+.set-row:last-child { padding-bottom: 18px; }
+.set-copy { display: block; flex: 1; min-width: 0; }
+.set-copy b { display: block; font-size: 14px; font-weight: 600; }
+.set-copy small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+/* Segmented control for the pick-one settings. */
+.seg {
+  display: inline-flex;
+  flex: none;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.seg-btn {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.seg-btn:hover { color: var(--ink); }
+.seg-btn.on {
+  background: rgba(240, 193, 75, 0.16);
+  color: var(--gold-2);
+  box-shadow: inset 0 0 0 1px rgba(240, 193, 75, 0.45);
+}
+.seg-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.set-danger { margin-top: 16px; padding-bottom: 20px; }
+.set-danger .set-panel-head p { max-width: 62ch; }
+
+@media (max-width: 620px) {
+  .set-groups { grid-template-columns: 1fr; }
+  .set-row { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .set-row.toggle-row { flex-direction: row; align-items: center; }
+  .seg { width: 100%; }
+  .seg-btn { flex: 1; text-align: center; }
+}
+
 /* Settings kill-switches. */
 body.no-shine .tcg .glare,
 body.no-shine .tcg .foil { display: none; }
@@ -1461,6 +2811,12 @@ body.no-motion .overlay.dealing::after,
 body.no-motion .overlay.dealing.rainbow::before { transition: none; }
 body.no-motion .home-float,
 body.no-motion .home-pack-float { animation: none; }
+
+/* Hit effects are separate from idle motion: the spark burst and the screen
+   shake are the flashy part, and some people want the shimmer without them. */
+body.no-flash .hit-spark { display: none; }
+body.no-flash .overlay.hit-shake .rip-stage { animation: none; }
+body.no-flash .overlay.hit-flash::after { opacity: 0; }
 
 .overlay {
   position: fixed; inset: 0; z-index: 40;
@@ -2127,52 +3483,6 @@ body.no-motion .home-pack-float { animation: none; }
   to { opacity: 1; transform: none; }
 }
 
-.rarity-key {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #0f0d14;
-  margin: 0 0 18px;
-}
-.rarity-key summary {
-  cursor: pointer;
-  padding: 12px 14px;
-  font-weight: 700;
-  font-size: 13px;
-}
-.rarity-key-body { padding: 2px 14px 14px; display: grid; gap: 12px; }
-.key-row { display: grid; grid-template-columns: 140px 1fr; gap: 12px; align-items: start; }
-.key-era {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding-top: 5px;
-}
-.key-era b {
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 1px 5px;
-  margin-left: 3px;
-}
-.key-era i { font-style: normal; letter-spacing: 0; text-transform: none; }
-.key-items { display: flex; flex-wrap: wrap; gap: 8px; }
-.key-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 12px;
-  color: var(--muted);
-}
-.key-item.in-set { border-color: rgba(240, 193, 75, 0.35); color: var(--ink); }
-.key-item b { font-weight: 600; }
-@media (max-width: 620px) {
-  .key-row { grid-template-columns: 1fr; gap: 6px; }
-}
-
 .overlay-actions { margin-top: 16px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 .ghost, .solid { border-radius: 12px; padding: 10px 16px; font-weight: 700; min-width: 128px; }
 .ghost { background: transparent; border: 1px solid var(--line); }
@@ -2191,6 +3501,161 @@ body.no-motion .home-pack-float { animation: none; }
 .flavor { font-style: italic; }
 .artist { color: var(--muted) !important; font-size: 13px; }
 
+/* ---- Price history chart --------------------------------------------------
+   Lives in the card inspector. Up/down recolour the whole chart via --pc-key
+   so line, fill and delta always agree. */
+.price-card {
+  --pc-key: var(--gold);
+  margin: 18px 0 14px;
+  padding: 16px 16px 10px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.price-card .pc-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.pc-now { display: flex; flex-direction: column; gap: 2px; }
+.pc-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.pc-now b {
+  font-family: var(--display);
+  font-size: 30px;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.pc-delta { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.pc-delta.up { color: #6ee7a0; }
+.pc-delta.down { color: #ff8898; }
+
+.pc-ranges {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.pc-range {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  padding: 5px 11px;
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.pc-range:hover { color: var(--ink); }
+.pc-range.on { background: rgba(240, 193, 75, 0.16); color: var(--gold-2); }
+.pc-range:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.pc-figure { position: relative; margin: 0; touch-action: pan-y; }
+.pc-svg {
+  display: block;
+  width: 100%;
+  height: 190px;
+  overflow: visible;
+  cursor: crosshair;
+}
+.pc-svg.up { --pc-key: #6ee7a0; }
+.pc-svg.down { --pc-key: #ff8898; }
+.pc-line {
+  fill: none;
+  stroke: var(--pc-key);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* preserveAspectRatio="none" stretches the viewBox, which would smear the
+     stroke; this keeps it an even width at any card size. */
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--pc-key) 45%, transparent));
+}
+.pc-stop-a { stop-color: var(--pc-key); stop-opacity: 0.28; }
+.pc-stop-b { stop-color: var(--pc-key); stop-opacity: 0; }
+.pc-cross {
+  stroke: rgba(244, 239, 228, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  vector-effect: non-scaling-stroke;
+  transition: opacity 0.12s ease;
+}
+.pc-marker {
+  fill: var(--pc-key);
+  stroke: #0b0910;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  transition: opacity 0.12s ease;
+}
+.pc-tip {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  padding: 6px 9px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(10, 8, 14, 0.95);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  white-space: nowrap;
+  text-align: center;
+  z-index: 2;
+}
+.pc-tip b { display: block; font-size: 14px; }
+.pc-tip span { color: var(--muted); font-size: 11px; }
+
+.pc-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.pc-band { color: rgba(244, 239, 228, 0.5); }
+
+.pc-empty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.pc-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(240, 193, 75, 0.7);
+}
+
+.pc-sell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+.pc-own { color: var(--muted); font-size: 13px; }
+.pc-sell-btn { padding: 9px 16px; font-size: 13px; }
+
+@media (max-width: 620px) {
+  .pc-now b { font-size: 25px; }
+  .pc-svg { height: 150px; }
+}
+
 .toast {
   position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
   background: #17141d; border: 1px solid var(--line); padding: 10px 16px; border-radius: 12px;
@@ -2205,10 +3670,19 @@ body.no-motion .home-pack-float { animation: none; }
 
 @media (max-width: 1100px) {
   .pack-grid { grid-template-columns: repeat(2, 1fr); }
+  .shop-layout { grid-template-columns: minmax(0, 1fr) 260px; gap: 20px; }
   .home-odds { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+@media (max-width: 960px) {
+  .shop-layout { grid-template-columns: 1fr; }
+  .shop-rail {
+    position: static;
+    max-height: none;
+  }
+}
 @media (max-width: 860px) {
-  .hero, .pack-grid, .inspect-grid, .home-hero, .home-sets, .home-steps { grid-template-columns: 1fr; }
+  .hero, .pack-grid, .inspect-grid, .home-hero, .home-sets, .home-steps,
+  .home-market, .home-pulls { grid-template-columns: 1fr; }
   .hero-art { height: 240px; }
   .site-header { flex-wrap: wrap; }
   .float-card { width: 120px; }
@@ -2223,6 +3697,11 @@ body.no-motion .home-pack-float { animation: none; }
   .home-set-fan { height: 160px; }
   .home-set-pack img { height: 148px; }
   .home-odds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-proof { gap: 8px 18px; }
+  .home-worth { padding: 18px; }
+  .auth-page { grid-template-columns: 1fr; }
+  .account-id { flex-wrap: wrap; }
+  .account-actions { margin-left: 0; }
   .focus-stage {
     grid-template-columns: 36px minmax(0, 1fr) 36px;
     min-height: 380px;
@@ -2251,11 +3730,20 @@ body.no-motion .home-pack-float { animation: none; }
   .brand-sub { display: none; }
   .header-right { gap: 8px; }
   .claim { font-size: 13px; padding: 8px 12px; }
+  .auth-entry { padding: 8px 12px; }
+  .trainer-chip-copy small { display: none; }
+  .trainer-chip { max-width: 148px; }
   .wrap { padding-left: 16px; padding-right: 16px; }
   .site-footer { padding: 18px 16px 28px; }
-  .collection-tools { gap: 8px; }
+  .collection-tools,
+  .bulk-toolbar { gap: 8px; }
   .search { min-width: 0; flex: 1 1 100%; }
   .filter { flex: 1 1 calc(50% - 4px); }
+  .bulk-head { grid-template-columns: 1fr; gap: 16px; }
+  .bulk-seg { margin-left: 0; flex: 1 1 100%; justify-content: space-between; }
+  .bulk-seg .seg-btn { flex: 1; text-align: center; }
+  .bulk-era-sets { grid-template-columns: 1fr; }
+  .bulk-era { min-width: 132px; }
   /* Keep the floating wrappers inside the viewport instead of bleeding out. */
   .home-pack-float:nth-child(1) { left: 0; }
   .home-pack-float:nth-child(2) { right: 0; }
@@ -2319,10 +3807,247 @@ body.no-motion .home-pack-float { animation: none; }
 .tcg.art-missing .foil,
 .tcg.art-missing .glare { display: none; }
 
-.binder-note {
-  margin: 0 0 14px;
+.save-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---- Radio ----------------------------------------------------------------
+   Fixed mini player. z-index stays under .overlay (40) so pack ripping and
+   the inspector never fight it. :has() hides the widget while a dialog is
+   up so it does not ghost through the 95% overlay. */
+.radio {
+  position: fixed;
+  right: 16px;
+  bottom: 18px;
+  z-index: 22;
+  width: 56px;
+  pointer-events: none;
+}
+.radio > * { pointer-events: auto; }
+.radio-peek {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 1px solid rgba(240, 193, 75, 0.35);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #141018;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+.radio-peek-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.radio-peek-eq {
+  display: none;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  padding: 3px 4px;
+  border-radius: 4px;
+  background: rgba(9, 7, 13, 0.72);
+}
+.radio.is-playing .radio-peek-eq { display: flex; }
+.radio-peek-eq i {
+  display: block;
+  width: 2px;
+  height: 4px;
+  background: var(--gold);
+  animation: radio-eq 0.7s ease-in-out infinite;
+}
+.radio-peek-eq i:nth-child(2) { animation-delay: -0.2s; height: 8px; }
+.radio-peek-eq i:nth-child(3) { animation-delay: -0.45s; }
+@keyframes radio-eq {
+  0%, 100% { transform: scaleY(0.45); }
+  50% { transform: scaleY(1); }
+}
+body.no-motion .radio-peek-eq i { animation: none; transform: none; }
+
+.radio-panel {
+  display: none;
+  width: 292px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(14, 11, 20, 0.94);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px);
+}
+.radio.is-open {
+  width: 292px;
+}
+.radio.is-open .radio-peek { display: none; }
+.radio.is-open .radio-panel { display: block; }
+
+.radio-now {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 28px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.radio-cover {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #111;
+}
+.radio-copy { min-width: 0; }
+.radio-kicker {
+  margin: 0 0 2px;
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.radio-copy b {
+  display: block;
+  font-size: 14px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.radio-copy small {
+  display: block;
+  margin-top: 2px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 11px;
+}
+.radio-hide {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+}
+.radio-hide:hover { color: var(--ink); border-color: rgba(255, 255, 255, 0.2); }
+
+.radio-progress {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 34px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.radio-seek,
+.radio-vol input {
+  width: 100%;
+  height: 4px;
+  margin: 0;
+  accent-color: var(--gold);
+  cursor: pointer;
 }
 
-.save-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.radio-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.radio-controls button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1;
+}
+.radio-controls .radio-play {
+  width: 42px;
+  background: var(--gold);
+  border-color: transparent;
+  color: #1a1408;
+  font-size: 14px;
+}
+.radio-vol {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  margin-left: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.radio-vol input { flex: 1; }
+
+.radio-list {
+  max-height: 196px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244, 239, 228, 0.18) transparent;
+}
+.radio-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+.radio-track img {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex: none;
+}
+.radio-track span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.radio-track b {
+  font-size: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.radio-track small { color: var(--muted); font-size: 10px; }
+.radio-track:hover { background: rgba(255, 255, 255, 0.05); }
+.radio-track.on {
+  border-color: rgba(240, 193, 75, 0.4);
+  background: linear-gradient(180deg, rgba(240, 193, 75, 0.12), rgba(255, 255, 255, 0.02));
+}
+.radio-track.on b { color: var(--gold); }
+
+body:has(#overlay:not(.hidden)) .radio,
+body:has(#inspect:not(.hidden)) .radio {
+  display: none;
+}
+
+@media (min-width: 961px) {
+  body.on-shop .shop-rail { padding-bottom: 72px; }
+}
+@media (max-width: 620px) {
+  .radio { right: 12px; bottom: 12px; }
+  .radio.is-open { width: min(292px, calc(100vw - 24px)); }
+  .radio-panel { width: min(292px, calc(100vw - 24px)); }
+}

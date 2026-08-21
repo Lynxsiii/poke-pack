@@ -6,7 +6,7 @@
     <title>poke-pack.rip — rip packs, fill the binder</title>
     <meta
       name="description"
-      content="Rip Pokémon TCG booster packs with the real printed pull rates and real card scans. Free, fan-made, no real money — start on the newest English set and work back to Base Set."
+      content="Rip Pokémon TCG booster packs with real printed pull rates, real card scans, and real market prices. Free, fan-made, no real money."
     />
     <meta name="theme-color" content="#09070d" />
     <link rel="canonical" href="https://poke-pack.rip/" />
@@ -17,25 +17,24 @@
     <meta property="og:title" content="poke-pack.rip — rip packs, fill the binder" />
     <meta
       property="og:description"
-      content="Real booster odds. Real card scans. No real money."
+      content="Real booster odds. Real card scans. Real market prices. No real money."
     />
-    <meta property="og:image" content="https://poke-pack.rip/assets/og.png" />
+    <meta property="og:image" content="https://poke-pack.rip/assets/og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="poke-pack.rip — rip packs, fill the binder" />
-    <meta name="twitter:description" content="Real booster odds. Real card scans. No real money." />
-    <meta name="twitter:image" content="https://poke-pack.rip/assets/og.png" />
+    <meta name="twitter:description" content="Real booster odds. Real card scans. Real market prices. No real money." />
+    <meta name="twitter:image" content="https://poke-pack.rip/assets/og.jpg" />
+    <meta name="twitter:image:alt" content="Five Pokémon TCG chase cards fanned out under the poke-pack.rip wordmark" />
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>" />
     <link rel="apple-touch-icon" href="assets/icon-180.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://images.scrydex.com" />
-    <link rel="preconnect" href="https://images.pokemontcg.io" />
-    <link rel="preconnect" href="https://s3.limitlesstcg.com" />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/app.css?v=18" />
   </head>
   <body class="on-home">
     <div class="noise"></div>
@@ -50,7 +49,8 @@
       <nav class="nav" aria-label="Sections">
         <button class="nav-btn active" data-view="home">Home</button>
         <button class="nav-btn" data-view="shop">Packs</button>
-        <button class="nav-btn" data-view="collection">Binder</button>
+        <button class="nav-btn" data-view="collection">Bulk</button>
+        <button class="nav-btn" data-view="binder">Binder</button>
         <button class="nav-btn" data-view="catalog">Catalog</button>
         <span class="nav-sep"></span>
         <button class="nav-btn" data-view="account">Account</button>
@@ -59,6 +59,14 @@
       <div class="header-right">
         <div class="pill gold">✦ <span id="coin-count">0</span></div>
         <button class="claim" id="daily-btn">Claim daily</button>
+        <button class="ghost auth-entry" id="auth-entry" type="button">Sign in</button>
+        <button class="trainer-chip hidden" id="trainer-chip" type="button" aria-label="Open account">
+          <span class="trainer-avatar" id="trainer-avatar">T</span>
+          <span class="trainer-chip-copy">
+            <b id="trainer-chip-name">Trainer</b>
+            <small id="trainer-chip-handle">@guest</small>
+          </span>
+        </button>
       </div>
     </header>
 
@@ -77,13 +85,19 @@
             <p class="kicker" id="home-kicker">Fan-made pack simulator</p>
             <h1>Rip packs.<br /><em>Fill the binder.</em></h1>
             <p class="lede">
-              Real booster odds. Real card scans. No real money. Start on the
-              newest English set and work backwards toward Base Set.
+              Real booster odds. Real card scans. Real market prices — a pack
+              costs what it costs in a shop, and every card is worth what it is
+              worth today. No real money, ever.
             </p>
             <div class="home-cta">
               <button class="solid" type="button" data-goto="shop">Rip a pack</button>
               <button class="ghost" type="button" data-goto="collection">Open binder</button>
             </div>
+            <ul class="home-proof">
+              <li><b>Printed odds</b><span>straight off the set's pull rates</span></li>
+              <li><b>Live prices</b><span>refreshed from the real market</span></li>
+              <li><b>Free forever</b><span>fan-made, no checkout</span></li>
+            </ul>
             <div class="home-pulse" id="home-pulse"></div>
           </div>
           <div class="home-stage" id="home-stage"></div>
@@ -92,60 +106,92 @@
       </section>
 
       <section id="view-shop" class="hidden">
-        <div class="set-switcher" id="set-switcher"></div>
-        <div class="hero">
-          <div>
-            <p class="kicker" id="shop-kicker">Mega Evolution · July 2026</p>
-            <h1 id="shop-title">Pitch Black.</h1>
-            <p class="lede" id="shop-lede">
-              Real booster math. Real card scans. Ten cards plus a basic Energy —
-              reverse, a rare slot, and an art slot.
-            </p>
-            <div class="stats">
-              <div class="stat"><b id="stat-owned">0</b><span id="stat-owned-label">Pitch Black cards</span></div>
-              <div class="stat"><b id="stat-packs">0</b><span>Packs ripped</span></div>
-              <div class="stat"><b id="stat-pulls">0</b><span>Cards pulled</span></div>
+        <div class="shop-layout">
+          <div class="shop-main">
+            <div class="hero">
+              <div>
+                <p class="kicker" id="shop-kicker">Mega Evolution · July 2026</p>
+                <h1 id="shop-title">Pitch Black.</h1>
+                <p class="lede" id="shop-lede">
+                  Real booster math. Real card scans. Ten cards plus a basic Energy —
+                  reverse, a rare slot, and an art slot.
+                </p>
+                <div class="stats">
+                  <div class="stat"><b id="stat-owned">0</b><span id="stat-owned-label">Pitch Black cards</span></div>
+                  <div class="stat"><b id="stat-packs">0</b><span>Packs ripped</span></div>
+                  <div class="stat"><b id="stat-pulls">0</b><span>Cards pulled</span></div>
+                </div>
+              </div>
+              <div class="hero-art" id="hero-art"></div>
             </div>
-          </div>
-          <div class="hero-art" id="hero-art"></div>
-        </div>
 
-        <div class="section-head">
-          <div>
-            <h2 id="shop-pack-title">Pitch Black boosters</h2>
-            <p id="shop-pack-sub">Same 11-card pack. Four wrappers from the July 2026 print.</p>
+            <div class="section-head">
+              <div>
+                <h2 id="shop-pack-title">Pitch Black boosters</h2>
+                <p id="shop-pack-sub">Same 11-card pack. Four wrappers from the July 2026 print.</p>
+              </div>
+              <p class="pack-odds" id="shop-odds">DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081</p>
+            </div>
+            <div class="pack-grid" id="pack-grid"></div>
           </div>
-          <p class="pack-odds" id="shop-odds">DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081</p>
+          <aside class="shop-rail" aria-label="All expansions">
+            <div class="shop-rail-head">
+              <p class="kicker">All prints</p>
+              <h2>Expansions</h2>
+              <p>Open an era, then pick a set.</p>
+            </div>
+            <div class="set-switcher" id="set-switcher"></div>
+          </aside>
         </div>
-        <div class="pack-grid" id="pack-grid"></div>
       </section>
 
-      <section id="view-collection" class="hidden">
-        <div class="section-head">
-          <div>
-            <h2 id="binder-title">Pitch Black binder</h2>
-            <p id="dex-label">0 / 120</p>
+      <section id="view-collection" class="hidden bulk-page">
+        <div class="bulk-head">
+          <div class="bulk-copy">
+            <p class="kicker" id="bulk-kicker">Bulk</p>
+            <h1 id="binder-title">Pitch Black</h1>
+            <p class="lede" id="bulk-lede">
+              Everything you pull from this set. Sell extras at live market
+              price, or send keepers to your binder.
+            </p>
+            <div class="bulk-cta">
+              <button class="solid" type="button" data-goto="shop">Rip a pack</button>
+              <button class="ghost" type="button" data-goto="binder">Open binder</button>
+            </div>
+          </div>
+          <div class="bulk-pulse" id="bulk-pulse"></div>
+        </div>
+        <div class="bulk-browse" id="bulk-sets" aria-label="Expansions"></div>
+        <div class="bulk-toolbar">
+          <input class="search" id="search" placeholder="Search name, number, or artist" />
+          <div class="seg bulk-seg" id="owned-filter" role="group" aria-label="Show">
+            <button type="button" class="seg-btn on" data-owned="all">All</button>
+            <button type="button" class="seg-btn" data-owned="owned">Owned</button>
+            <button type="button" class="seg-btn" data-owned="missing">Missing</button>
+            <button type="button" class="seg-btn" data-owned="dupes">Spares</button>
           </div>
         </div>
-        <div class="dex-bar"><span id="dex-fill"></span></div>
-        <p class="binder-note" id="binder-note"></p>
-        <div class="collection-tools">
-          <input class="search" id="search" placeholder="Search name, number, or artist" />
-          <select class="filter" id="rarity-filter">
-            <option value="all">All rarities</option>
-          </select>
-          <select class="filter" id="owned-filter">
-            <option value="all">Owned & missing</option>
-            <option value="owned">Owned only</option>
-            <option value="missing">Missing only</option>
-            <option value="dupes">Duplicates</option>
-          </select>
-        </div>
-        <details class="rarity-key" id="rarity-key">
-          <summary>Rarity symbols</summary>
-          <div class="rarity-key-body" id="rarity-key-body"></div>
-        </details>
+        <div class="bulk-rarities" id="rarity-filter" role="group" aria-label="Rarity"></div>
+        <p class="bulk-result" id="binder-note"></p>
         <div class="binder-grid" id="dex-grid"></div>
+      </section>
+
+      <section id="view-binder" class="hidden">
+        <div class="section-head">
+          <div>
+            <h2>Your binder</h2>
+            <p id="binder-count">0 cards on show</p>
+          </div>
+          <div class="binder-actions">
+            <button class="ghost" type="button" id="binder-add-page">Add page</button>
+          </div>
+        </div>
+        <p class="view-intro">
+          Nine pockets a page, like the real thing. Put your grails on show —
+          a card here still belongs to you, it's just set aside from the
+          <button type="button" class="link-btn" data-goto="collection">bulk</button>.
+        </p>
+        <div id="binder-body"></div>
       </section>
 
       <section id="view-catalog" class="hidden">
@@ -159,13 +205,11 @@
       </section>
 
       <section id="view-account" class="hidden">
-        <div class="section-head">
-          <div>
-            <h2>Account</h2>
-            <p>Everything lives in this browser for now. Sign-in and cloud saves are next.</p>
-          </div>
-        </div>
         <div id="account-body"></div>
+      </section>
+
+      <section id="view-auth" class="hidden">
+        <div id="auth-body"></div>
       </section>
 
       <section id="view-settings" class="hidden">
@@ -229,6 +273,6 @@
       <span>poke-pack.rip is a fan-made pack simulator. Not affiliated with Nintendo, Game Freak, Wizards of the Coast, or The Pokémon Company.</span>
       <span>Card names, numbers, artists, and scans match the public Pokémon TCG card database (the same catalog as pokemon.com/us/pokemon-tcg/pokemon-cards).</span>
     </footer>
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/app.js?v=18"></script>
   </body>
 </html>

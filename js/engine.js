@@ -36,6 +36,9 @@ export function poolsFrom(cards) {
     ir: pokemonOrTrainer.filter((c) => c.rarity === "Illustration Rare"),
     sir: pokemonOrTrainer.filter((c) => c.rarity === "Special Illustration Rare"),
     hyper: pokemonOrTrainer.filter((c) => c.rarity === "Mega Hyper Rare"),
+    // Ascended Heroes only: Mega Attack Rares share the Ultra Rare slot, which
+    // is why that set's UR rate drops from ~1/12 to 1/21.
+    megaAttack: pokemonOrTrainer.filter((c) => c.rarity === "Mega Attack Rare"),
     reversePool: pokemonOrTrainer.filter((c) =>
       ["Common", "Uncommon", "Rare"].includes(c.rarity)
     ),

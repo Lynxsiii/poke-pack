@@ -5,6 +5,9 @@ server.err.log
 # scraped page cache used by the data builders in scripts/
 scripts/.cache/
 
+# --debug contact sheets from the mask builders
+scripts/_debug/
+
 # python
 __pycache__/
 *.py[cod]

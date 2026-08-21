@@ -68,57 +68,67 @@ export const RARITY_GROUPS = [
   { id: "expanded", label: "Expanded only", era: "G", note: "and earlier" },
 ];
 
+/**
+ * Fallback sell price in USD for a card with no `market` value — basic Energy,
+ * or a set that hasn't been through scripts/fetch_prices.py yet. Figures are
+ * the median real price per rarity across the three priced Mega Evolution
+ * sets, so an unpriced set still lands in the right ballpark.
+ */
 export const SELL_VALUE = {
-  Energy: 4,
-  Common: 8,
-  Uncommon: 20,
-  Rare: 55,
-  "Double Rare": 90,
-  "ACE SPEC Rare": 150,
-  "Ultra Rare": 180,
-  "Illustration Rare": 160,
-  "Futuristic Rare": 240,
-  "Shiny Rare": 120,
-  "Shiny Ultra Rare": 260,
-  "Mega Attack Rare": 300,
-  "Black White Rare": 340,
-  "Hyper Rare": 480,
-  "Special Illustration Rare": 420,
-  "Mega Hyper Rare": 900,
-};
-
-export const CHASE_SELL = {
-  "me5-116": 650, // Mega Darkrai ex SIR
-  "me5-120": 1100, // Mega Darkrai ex Mega Hyper Rare
-  "me4-116": 650, // Mega Greninja ex SIR
-  "me4-122": 1100, // Mega Greninja ex Mega Hyper Rare
+  Energy: 0.05,
+  Common: 0.08,
+  Uncommon: 0.08,
+  Rare: 0.18,
+  "Double Rare": 0.61,
+  "ACE SPEC Rare": 1.5,
+  "Ultra Rare": 3.44,
+  "Illustration Rare": 3.2,
+  "Futuristic Rare": 4,
+  "Shiny Rare": 2,
+  "Shiny Ultra Rare": 5,
+  "Mega Attack Rare": 6,
+  "Black White Rare": 8,
+  "Hyper Rare": 20,
+  "Special Illustration Rare": 49.11,
+  "Mega Hyper Rare": 169.54,
 };
 
 /**
- * Coins per USD of real market value. When a card in data/*.json carries a
- * `market` price (e.g. loaded from a price guide), that drives its sell value
- * and the rarity table below is only the fallback for cards without one.
+ * Coins per USD of real market value. One coin is one dollar, so a card that
+ * books at $0.74 sells for 0.74 and a $217 chase sells for 217 — prices come
+ * from `scripts/fetch_prices.py` and land on each card as `market`.
+ *
+ * SELL_VALUE above is only the fallback for a card with no market price yet
+ * (a set that hasn't been priced, or basic Energy), on the same dollar scale.
  */
-export const COINS_PER_USD = 100;
+export const COINS_PER_USD = 1;
+
+/** Coins carry cents, so round every money result to avoid float drift. */
+export function money(n) {
+  return Math.round((Number(n) || 0) * 100) / 100;
+}
 
 export function sellValue(card) {
   if (typeof card.market === "number" && card.market > 0) {
-    return Math.max(1, Math.round(card.market * COINS_PER_USD));
+    return Math.max(0.01, money(card.market * COINS_PER_USD));
   }
-  return CHASE_SELL[card.id] || SELL_VALUE[card.rarity] || 8;
+  return SELL_VALUE[card.rarity] || 0.1;
 }
 
-/** Generic basic Energy — one per modern pack, not part of the 120-card set. */
+/**
+ * Generic basic Energy — one per modern pack, not part of the 120-card set.
+ * Faces are mirrored locally by scripts/mirror_images.py, same as the cards.
+ */
 export const BASIC_ENERGY = [
-  ["grass", "Grass", "https://images.pokemontcg.io/sve/1"],
-  ["fire", "Fire", "https://images.pokemontcg.io/sve/2"],
-  ["water", "Water", "https://images.pokemontcg.io/sve/3"],
-  ["lightning", "Lightning", "https://images.pokemontcg.io/sve/4"],
-  ["psychic", "Psychic", "https://images.pokemontcg.io/sve/5"],
-  ["fighting", "Fighting", "https://images.pokemontcg.io/sve/6"],
-  ["darkness", "Darkness", "https://images.pokemontcg.io/sve/7"],
-  ["metal", "Metal", "https://images.pokemontcg.io/sve/8"],
-].map(([id, name, base]) => ({
+  ["grass", "Grass"],
+  ["fire", "Fire"],
+  ["water", "Water"],
+  ["lightning", "Lightning"],
+  ["psychic", "Psychic"],
+  ["fighting", "Fighting"],
+  ["darkness", "Darkness"],
+  ["metal", "Metal"],
+].map(([id, name]) => ({
   id: `energy-${id}`,
   name: `${name} Energy`,
   number: "—",
@@ -128,21 +138,52 @@ export const BASIC_ENERGY = [
   subtypes: ["Basic"],
   types: [name],
   artist: "Pokémon",
-  image: `${base}_hires.png`,
-  imageSmall: `${base}.png`,
+  image: `assets/cards/shared/energy-${id}.webp`,
+  imageSmall: `assets/cards/shared/energy-${id}-sm.webp`,
 }));
 
 /**
- * Pitch Black pull rates (TCGplayer Authentication Center, ~4000 packs):
- * Double Rare 21.02% (1/5), Ultra Rare 8.30% (1/12),
- * Illustration Rare 11.01% (1/9), SIR 1.25% (1/80), Mega Hyper Rare 0.09% (1/1081).
- * Rare slot leftover is a regular Rare. Art-slot leftover is a reverse holo.
+ * Mega Evolution era pack: 4 commons + 3 uncommons + a reverse + a rare slot +
+ * an art slot + a basic Energy. Rare-slot leftover is a regular Rare; art-slot
+ * leftover is a reverse holo.
+ *
+ * Rates are per set, not shared. They used to come from one block of constants
+ * reused by every set, which quietly published Pitch Black's odds on Perfect
+ * Order and Chaos Rising — their real SIR rates are 1/75 and 1/100, not 1/80.
+ * Figures come from scripts/fetch_pullrates.py (pullrates.gg), whose Pitch
+ * Black numbers match the TCGplayer 4,000-pack study exactly.
+ *
+ * `megaAttack` is Ascended Heroes only: those cards share the Ultra Rare slot,
+ * which is why that set's UR rate falls to 1/21.
  */
-const DR = 0.2102;
-const UR = 0.083;
-const IR = 0.1101;
-const SIR = 0.0125;
-const MHR = 1 / 1081;
+function megaSlots({ double, ultra, ir, sir, hyper, megaAttack = 0 }) {
+  return [
+    { pool: "energy", count: 1 },
+    { pool: "common", count: 4 },
+    { pool: "uncommon", count: 3 },
+    { pool: "reverse", count: 1 },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 1 - double - ultra - megaAttack],
+        ["double", double],
+        ["ultra", ultra],
+        ...(megaAttack ? [["megaAttack", megaAttack]] : []),
+      ],
+    },
+    {
+      pool: "art-slot",
+      count: 1,
+      table: [
+        ["reverse", 1 - ir - sir - hyper],
+        ["ir", ir],
+        ["sir", sir],
+        ["hyper", hyper],
+      ],
+    },
+  ];
+}
 
 export const PITCH_BLACK = {
   id: "me5",
@@ -155,38 +196,14 @@ export const PITCH_BLACK = {
   printedTotal: 84,
   totalCount: 120,
   packSize: 11,
-  cost: 250,
+  cost: 6.0,
   dataFile: "data/me5.json",
-  cardBack: "https://images.pokemontcg.io/card-back.png",
+  cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, July 2026. Ten cards plus a basic Energy. Same odds on every wrapper.",
-  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081",
+  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1075",
   lede: "Real booster math. Real card scans. Ten cards plus a basic Energy — reverse, a rare slot, and an art slot.",
-  slots: [
-    { pool: "energy", count: 1 },
-    { pool: "common", count: 4 },
-    { pool: "uncommon", count: 3 },
-    { pool: "reverse", count: 1 },
-    {
-      pool: "rare-slot",
-      count: 1,
-      table: [
-        ["rare", 1 - DR - UR],
-        ["double", DR],
-        ["ultra", UR],
-      ],
-    },
-    {
-      pool: "art-slot",
-      count: 1,
-      table: [
-        ["reverse", 1 - IR - SIR - MHR],
-        ["ir", IR],
-        ["sir", SIR],
-        ["hyper", MHR],
-      ],
-    },
-  ],
-  heroIds: ["me5-48", "me5-38", "me5-27", "me5-65"],
+  slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0125, hyper: 0.00093 }),
+  heroIds: ["me5-116", "me5-115", "me5-114", "me5-117"],
   wrappers: [
     {
       id: "darkrai",
@@ -234,14 +251,14 @@ export const CHAOS_RISING = {
   printedTotal: 86,
   totalCount: 122,
   packSize: 11,
-  cost: 250,
+  cost: 5.64,
   dataFile: "data/me4.json",
-  cardBack: "https://images.pokemontcg.io/card-back.png",
+  cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Mega Evolution, May 2026. Ten cards plus a basic Energy. Same 11-card math as Pitch Black.",
-  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081",
+  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/100 · gold 1/1000",
   lede: "Kalos in chaos. Mega Greninja ex headlines four wrappers — same reverse, rare slot, and art slot as the rest of the Mega Evolution block.",
-  slots: PITCH_BLACK.slots,
-  heroIds: ["me4-22", "me4-35", "me4-65", "me4-15"],
+  slots: megaSlots({ double: 0.2, ultra: 0.08, ir: 0.11, sir: 0.01, hyper: 0.001 }),
+  heroIds: ["me4-116", "me4-117", "me4-118", "me4-119"],
   wrappers: [
     {
       id: "greninja",
@@ -278,7 +295,213 @@ export const CHAOS_RISING = {
   ],
 };
 
-export const PLAYABLE_SETS = [PITCH_BLACK, CHAOS_RISING];
+export const PERFECT_ORDER = {
+  id: "me3",
+  tcgId: "me3",
+  name: "Perfect Order",
+  edition: "Mega Evolution",
+  era: "Mega Evolution",
+  released: "March 27, 2026",
+  live: true,
+  printedTotal: 88,
+  totalCount: 124,
+  packSize: 11,
+  cost: 5.53,
+  dataFile: "data/me3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Mega Evolution, March 2026. Ten cards plus a basic Energy. Same 11-card math as Pitch Black.",
+  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/75 · gold 1/1786",
+  lede: "Lumiose in lockstep. Mega Zygarde ex headlines four wrappers — same reverse, rare slot, and art slot as the rest of the Mega Evolution block.",
+  slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0133, hyper: 0.00056 }),
+  heroIds: ["me3-120", "me3-119", "me3-118", "me3-121"],
+  wrappers: [
+    {
+      id: "zygarde",
+      name: "Zygarde",
+      cardId: "me3-47",
+      tag: "The chase",
+      art: "assets/packs/me3/zygarde.avif",
+      artFallback: "assets/packs/me3/zygarde.png",
+    },
+    {
+      id: "clefable",
+      name: "Clefable",
+      cardId: "me3-31",
+      tag: "Moonlight",
+      art: "assets/packs/me3/clefable.avif",
+      artFallback: "assets/packs/me3/clefable.png",
+    },
+    {
+      id: "starmie",
+      name: "Starmie",
+      cardId: "me3-21",
+      tag: "Nebula",
+      art: "assets/packs/me3/starmie.avif",
+      artFallback: "assets/packs/me3/starmie.png",
+    },
+    {
+      id: "meowth",
+      name: "Meowth",
+      cardId: "me3-62",
+      tag: "Street cat",
+      art: "assets/packs/me3/meowth.avif",
+      artFallback: "assets/packs/me3/meowth.png",
+    },
+  ],
+};
+
+
+export const ASCENDED_HEROES = {
+  id: "me2pt5",
+  tcgId: "me2pt5",
+  name: "Ascended Heroes",
+  edition: "Mega Evolution",
+  era: "Mega Evolution",
+  released: "January 30, 2026",
+  live: true,
+  printedTotal: 217,
+  totalCount: 295,
+  packSize: 11,
+  cost: 5.0,
+  dataFile: "data/me2pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Mega Evolution, January 2026. A special set — one wrapper, and the deepest chase pool in the block.",
+  oddsLine: "DR 1/5 · UR 1/21 · IR 1/9 · SIR 1/71 · gold 1/541",
+  lede: "295 cards and 22 special arts. Mega Attack Rares share the Ultra Rare slot here, so URs come slower but the gold lands twice as often.",
+  // Special set: sold in ETBs and bundles rather than booster boxes, and its
+  // Mega Attack Rares displace the UR slot (TCGplayer 2,000+ pack study).
+  slots: megaSlots({ double: 0.2, ultra: 0.048, ir: 0.111, sir: 0.014, hyper: 0.00185, megaAttack: 0.035 }),
+  heroIds: ["me2pt5-272", "me2pt5-276", "me2pt5-273", "me2pt5-274"],
+  wrappers: [
+    {
+      id: "meganium",
+      name: "Meganium",
+      cardId: "me2pt5-272",
+      tag: "The chase",
+      art: "assets/packs/me2pt5/pack-0.avif",
+      artFallback: "assets/packs/me2pt5/pack-0.png",
+    },
+  ],
+};
+
+export const PHANTASMAL_FLAMES = {
+  id: "me2",
+  tcgId: "me2",
+  name: "Phantasmal Flames",
+  edition: "Mega Evolution",
+  era: "Mega Evolution",
+  released: "November 14, 2025",
+  live: true,
+  printedTotal: 94,
+  totalCount: 130,
+  packSize: 11,
+  cost: 5.4,
+  dataFile: "data/me2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Mega Evolution, November 2025. Ten cards plus a basic Energy, four wrappers.",
+  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1259",
+  lede: "Mega Charizard X headlines the second Mega Evolution set — the same 11-card math, with the era's longest gold odds.",
+  slots: megaSlots({ double: 0.2, ultra: 0.083, ir: 0.111, sir: 0.0125, hyper: 0.000794 }),
+  heroIds: ["me2-125", "me2-127", "me2-128", "me2-126"],
+  wrappers: [
+    {
+      id: "charizard",
+      name: "Charizard X",
+      cardId: "me2-125",
+      tag: "The chase",
+      art: "assets/packs/me2/pack-0.avif",
+      artFallback: "assets/packs/me2/pack-0.png",
+    },
+    {
+      id: "sharpedo",
+      name: "Sharpedo",
+      cardId: "me2-127",
+      tag: "Deep water",
+      art: "assets/packs/me2/pack-1.avif",
+      artFallback: "assets/packs/me2/pack-1.png",
+    },
+    {
+      id: "lopunny",
+      name: "Lopunny",
+      cardId: "me2-128",
+      tag: "Quick step",
+      art: "assets/packs/me2/pack-2.avif",
+      artFallback: "assets/packs/me2/pack-2.png",
+    },
+    {
+      id: "rotom",
+      name: "Rotom",
+      cardId: "me2-126",
+      tag: "Short circuit",
+      art: "assets/packs/me2/pack-3.avif",
+      artFallback: "assets/packs/me2/pack-3.png",
+    },
+  ],
+};
+
+export const MEGA_EVOLUTION = {
+  id: "me1",
+  tcgId: "me1",
+  name: "Mega Evolution",
+  edition: "Mega Evolution",
+  era: "Mega Evolution",
+  released: "September 26, 2025",
+  live: true,
+  printedTotal: 132,
+  totalCount: 188,
+  packSize: 11,
+  cost: 5.2,
+  dataFile: "data/me1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Mega Evolution, September 2025. The set that started the block — four wrappers, 11 cards a pack.",
+  oddsLine: "DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/101 · gold 1/1259",
+  lede: "Where the block begins. Mega Venusaur, Gardevoir and Lucario head a 188-card set with the era's toughest special-art pull.",
+  slots: megaSlots({ double: 0.2091, ultra: 0.0823, ir: 0.1089, sir: 0.0099, hyper: 0.000794 }),
+  heroIds: ["me1-177", "me1-178", "me1-179", "me1-180"],
+  wrappers: [
+    {
+      id: "venusaur",
+      name: "Venusaur",
+      cardId: "me1-177",
+      tag: "The chase",
+      art: "assets/packs/me1/pack-0.avif",
+      artFallback: "assets/packs/me1/pack-0.png",
+    },
+    {
+      id: "gardevoir",
+      name: "Gardevoir",
+      cardId: "me1-178",
+      tag: "Moonblast",
+      art: "assets/packs/me1/pack-1.avif",
+      artFallback: "assets/packs/me1/pack-1.png",
+    },
+    {
+      id: "lucario",
+      name: "Lucario",
+      cardId: "me1-179",
+      tag: "Aura sphere",
+      art: "assets/packs/me1/pack-2.avif",
+      artFallback: "assets/packs/me1/pack-2.png",
+    },
+    {
+      id: "absol",
+      name: "Absol",
+      cardId: "me1-180",
+      tag: "Dark omen",
+      art: "assets/packs/me1/pack-3.avif",
+      artFallback: "assets/packs/me1/pack-3.png",
+    },
+  ],
+};
+
+export const PLAYABLE_SETS = [
+  PITCH_BLACK,
+  CHAOS_RISING,
+  PERFECT_ORDER,
+  ASCENDED_HEROES,
+  PHANTASMAL_FLAMES,
+  MEGA_EVOLUTION,
+];
 export const SET_BY_ID = Object.fromEntries(PLAYABLE_SETS.map((set) => [set.id, set]));
 export const DEFAULT_SET_ID = PITCH_BLACK.id;
 export const LIVE_SET = PITCH_BLACK;
@@ -287,15 +510,34 @@ export function getSet(id) {
   return SET_BY_ID[id] || SET_BY_ID[DEFAULT_SET_ID];
 }
 
+/**
+ * Playable sets folded into their ROADMAP era, then the queued remainder.
+ * Catalog and the Packs rail both use this so a live Scarlet & Violet set
+ * lands under that heading instead of always on Mega Evolution.
+ */
+export function erasWithSets() {
+  const liveByEra = new Map();
+  for (const set of PLAYABLE_SETS) {
+    const key = set.era || set.edition;
+    if (!liveByEra.has(key)) liveByEra.set(key, []);
+    liveByEra.get(key).push(set);
+  }
+  const blocks = ROADMAP.map((block) => {
+    const live = liveByEra.get(block.era) || [];
+    liveByEra.delete(block.era);
+    return { era: block.era, live, queued: block.sets, sets: [...live, ...block.sets] };
+  });
+  for (const [era, live] of liveByEra) {
+    blocks.unshift({ era, live, queued: [], sets: live });
+  }
+  return blocks.filter((block) => block.sets.length);
+}
+
 /** Newest English sets first, then back toward Base Set. Playable sets omitted. */
 export const ROADMAP = [
   {
     era: "Mega Evolution",
     sets: [
-      { id: "me3", name: "Perfect Order", released: "Mar 2026", cards: 124 },
-      { id: "me2pt5", name: "Ascended Heroes", released: "Jan 2026", cards: 295 },
-      { id: "me2", name: "Phantasmal Flames", released: "Nov 2025", cards: "—" },
-      { id: "me1", name: "Mega Evolution", released: "Sep 2025", cards: "—" },
     ],
   },
   {
@@ -389,20 +631,19 @@ export function tcgSetId(set) {
   return set.tcgId || TCG_ID_ALIAS[set.id] || set.id;
 }
 
-/** Set logo + symbol URLs for catalog identity art (not booster wrappers). */
+/**
+ * Set logo + symbol for catalog identity art (not booster wrappers).
+ *
+ * Served from our own assets — scripts/mirror_images.py downloads these and
+ * reads SCRYDEX_LOGO / LIMITLESS_SYMBOL above to know where each one comes
+ * from, so those maps stay here as the source of truth for re-fetching.
+ */
 export function setIdentity(set) {
   const id = tcgSetId(set);
-  if (SCRYDEX_LOGO.has(id)) {
-    return {
-      id,
-      logo: `https://images.scrydex.com/pokemon/${id}-logo/logo`,
-      symbol: `https://s3.limitlesstcg.com/sets/en/${LIMITLESS_SYMBOL[id]}_SM.png`,
-    };
-  }
   return {
     id,
-    logo: `https://images.pokemontcg.io/${id}/logo.png`,
-    symbol: `https://images.pokemontcg.io/${id}/symbol.png`,
+    logo: `assets/cards/sets/${id}-logo.webp`,
+    symbol: `assets/cards/sets/${id}-symbol.webp`,
   };
 }
 

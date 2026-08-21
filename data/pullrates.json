@@ -1,0 +1,86 @@
+{
+  "me1": {
+    "name": "Mega Evolution",
+    "printedTotal": 132,
+    "released": "2025-09-26",
+    "updated": "2026-05-10",
+    "source": "Source: TCGPlayer Authentication Center — 5,000+ packs physically opened (September 2025). Rates corroborated by PokeBeach, Screen Rant, Game Rant, RubyGator.nl, and Cardrake. Precise figures from UltimaSupply citing TCGPlayer raw data: DR 20.91% ±1.12%, UR 8.23% ±0.76%, IR 10.89% ±0.86%, SIR 0.99% ±0.27%, MHR ~0.0794% (1 in 1,260). EU single booster pack price €5.00 based on Cardmarket live listings (May 2026). Sample size exceeds 5,000 packs — data considered reliable.",
+    "rates": {
+      "double": 0.2091,
+      "ir": 0.1089,
+      "ultra": 0.0823,
+      "sir": 0.0099,
+      "hyper": 0.000794
+    }
+  },
+  "me2": {
+    "name": "Phantasmal Flames",
+    "printedTotal": 94,
+    "released": "2025-11-14",
+    "updated": "2026-05-05",
+    "source": "Pull rates sourced from TCGPlayer's official 5,000-pack study (reported by PokeBeach, Nov 2025) and corroborated by a 10,000+ pack community aggregate (tcgprotectors.com, Jan 2026) combining YouTube mass openings, Reddit r/PokeInvesting tallies, and X/Twitter live pulls. DR: 1/5 packs, IR: 1/9 packs, UR: 1/12 packs, SIR: 1/80 packs, MHR: 1/1260 packs. EUR pack price is estimated standard EU retail MSRP; secondary market prices are higher. Sample size exceeds 10,000 packs — data confidence is high.",
+    "rates": {
+      "double": 0.2,
+      "ir": 0.111,
+      "ultra": 0.083,
+      "sir": 0.0125,
+      "hyper": 0.000794
+    }
+  },
+  "me2pt5": {
+    "name": "Ascended Heroes",
+    "printedTotal": 217,
+    "released": "2026-01-30",
+    "updated": "2026-05-10",
+    "source": "Rates sourced from TCGPlayer's study of 2,000+ packs (god packs excluded), published Feb 24–26 2026, corroborated by PokeBeach, EternaCards, Cardrake, and Card Codex. DR: 1 in 5 packs; IR: 1 in 9 packs; UR: 1 in 21 packs (reduced from ~1 in 12 in prior sets because Mega Attack Rares displace the UR slot); SIR: 1 in 70 packs (22 SIRs in pool); MHR: 1 in 540 packs. Pack price EUR estimated at €5.00 — Ascended Heroes is a special set (no booster boxes), sold only in ETBs, Bundles and Collection products; individual pack EUR SRP aligns with standard Mega Evolution era pricing. Sample size is solid (2,000+ packs), confidence level: HIGH.",
+    "rates": {
+      "double": 0.2,
+      "ir": 0.111,
+      "ultra": 0.048,
+      "sir": 0.014,
+      "hyper": 0.00185
+    }
+  },
+  "me3": {
+    "name": "Perfect Order",
+    "printedTotal": 88,
+    "released": "2026-03-27",
+    "updated": "2026-05-05",
+    "source": "Community-sourced rates. DR (1 in 5) and IR (1 in 9) from obsidia-tcg.store (3,500+ packs) and riporfliptcg.com (500+ packs, citing Pokebeach data) — sample size is sufficient. UR (1 in 12 per obsidia / 1 in 18 per comicbook 55-pack sample) — averaged to ~1 in 12 from the larger dataset. SIR (1 in 72–81 across multiple sources with 381–3,500+ packs). MHR (1 in 1,786 per obsidia 3,500+ pack dataset; 1 in 1,250 per riporfliptcg 500-pack sample) — high variance, treat as estimate only. EU pack price estimated at €4.50 based on European booster box retail of €130–€160 / 36 packs (tcgradar.eu). No Limitless TCG pull-rate page found for this set. TCGPlayer article exists but requires JS to render.",
+    "rates": {
+      "double": 0.2,
+      "ir": 0.111,
+      "ultra": 0.083,
+      "sir": 0.0133,
+      "hyper": 0.00056
+    }
+  },
+  "me4": {
+    "name": "Chaos Rising",
+    "printedTotal": 86,
+    "released": "2026-05-22",
+    "updated": "2026-06-11",
+    "source": "Primary source: TCGplayer Authentication Center (8,500+ packs opened, published ~June 4 2026). DR ~20% (rare slot), UR ~8% (rare slot), IR ~11% (reverse holo slot), SIR ~1% (reverse holo slot, ~1 per 100 packs), MHR ~0.1% (~1 per 1,000 packs). Corroborated by @switchstock on X (5,000+ packs) and josephwriteranderson.com (5,000+ pack dataset). TCGtalk sample of 268 packs aligns on IR/UR but SIR/MHR estimates less reliable at that size. EU pack price estimated at €4.50 based on Mega Evolution series MSRP parity with Phantasmal Flames and Perfect Order; Cardmarket live pricing was unavailable at time of query.",
+    "rates": {
+      "double": 0.2,
+      "ir": 0.11,
+      "ultra": 0.08,
+      "sir": 0.01,
+      "hyper": 0.001
+    }
+  },
+  "me5": {
+    "name": "Pitch Black",
+    "printedTotal": 84,
+    "released": "2026-07-17",
+    "updated": "2026-08-09",
+    "source": "Primary source: obsidia-tcg.store (4,000+ packs, cross-confirmed by TCGPlayer 4,000-pack sample via cardrake.com). Secondary: tcgtalk.com (753 packs, 21 boxes). DR ~1 in 5 packs (20.0%); IR ~1 in 9 packs (11.1%); UR ~1 in 12 packs (8.3%); any SIR ~1 in 80 packs (1.25%); MHR ~1 in 1,081 packs (0.093%). EUR pack price is the current tracked market low per pokecompare.com (6.95 EUR); no official EU MSRP single-pack price was published. Limitlesstcg.com did not carry pull rate data for this set at time of query.",
+    "rates": {
+      "double": 0.2,
+      "ir": 0.111,
+      "ultra": 0.083,
+      "sir": 0.0125,
+      "hyper": 0.00093
+    }
+  }
+}

@@ -2,20 +2,25 @@ import {
   PLAYABLE_SETS,
   DEFAULT_SET_ID,
   getSet,
+  erasWithSets,
   ROADMAP,
   RARITY_ORDER,
   RARITY_LABEL,
   RARITY_MARK,
-  RARITY_GROUPS,
   BASIC_ENERGY,
   sellValue,
+  money,
   rarityKey,
   setIdentity,
 } from "./catalog.js";
 import { ripPack, HIT_RARITIES } from "./engine.js";
+import { initRadio } from "./radio.js";
+import { startLivePrices, applyCachedPrices } from "./liveprices.js";
+import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
   loadState,
   saveState,
+  setAfterSave,
   canClaimDaily,
   claimDaily,
   ownedCount,
@@ -24,16 +29,50 @@ import {
   resetProgress,
   importState,
   msUntilDaily,
+  logWorth,
+  BINDER_PAGE,
+  binderHeld,
+  spareFor,
+  placeInBinder,
+  clearBinderSlot,
+  addBinderPage,
+  reconcileBinder,
   DAILY_BONUS,
+  STARTING_COINS,
+  DEFAULT_SETTINGS,
 } from "./state.js";
+import {
+  AVATAR_COLORS,
+  trainerList,
+  activeTrainer,
+  avatarColor,
+  trainerInitial,
+  trainerCode,
+  createTrainer,
+  signInTrainer,
+  signOutTrainer,
+  updateTrainer,
+  setTrainerPassword,
+  deleteTrainer,
+  mirrorSave,
+} from "./accounts.js";
 
 const state = loadState();
+setAfterSave(mirrorSave);
 const setCache = {};
+let priceTicker = null;
 let liveSet = getSet(state.activeSetId);
+/** Sealed market prices (pack, box, ETB…) per set id, from data/sealed.json. */
+let sealedPrices = {};
 let cards = [];
 let setCards = [];
 let byId = {};
 let view = "home";
+let ownedMode = "all";
+let rarityMode = "all";
+let authTab = "signup";
+let authSelectedId = "";
+let signupColor = "gold";
 let currentPulls = [];
 let packPhase = "idle";
 let focusIndex = 0;
@@ -65,6 +104,10 @@ const els = {
   shopPackSub: document.getElementById("shop-pack-sub"),
   shopOdds: document.getElementById("shop-odds"),
   binderTitle: document.getElementById("binder-title"),
+  bulkKicker: document.getElementById("bulk-kicker"),
+  bulkLede: document.getElementById("bulk-lede"),
+  bulkPulse: document.getElementById("bulk-pulse"),
+  bulkSets: document.getElementById("bulk-sets"),
   statOwned: document.getElementById("stat-owned"),
   statOwnedLabel: document.getElementById("stat-owned-label"),
   statPacks: document.getElementById("stat-packs"),
@@ -72,22 +115,30 @@ const els = {
   viewHome: document.getElementById("view-home"),
   viewShop: document.getElementById("view-shop"),
   viewCollection: document.getElementById("view-collection"),
+  viewBinder: document.getElementById("view-binder"),
+  binderBody: document.getElementById("binder-body"),
+  binderCount: document.getElementById("binder-count"),
+  binderAddPage: document.getElementById("binder-add-page"),
   viewCatalog: document.getElementById("view-catalog"),
   viewAccount: document.getElementById("view-account"),
+  viewAuth: document.getElementById("view-auth"),
   viewSettings: document.getElementById("view-settings"),
   homeKicker: document.getElementById("home-kicker"),
   homePulse: document.getElementById("home-pulse"),
   homeStage: document.getElementById("home-stage"),
   homeBody: document.getElementById("home-body"),
   accountBody: document.getElementById("account-body"),
+  authBody: document.getElementById("auth-body"),
   settingsBody: document.getElementById("settings-body"),
+  authEntry: document.getElementById("auth-entry"),
+  trainerChip: document.getElementById("trainer-chip"),
+  trainerAvatar: document.getElementById("trainer-avatar"),
+  trainerChipName: document.getElementById("trainer-chip-name"),
+  trainerChipHandle: document.getElementById("trainer-chip-handle"),
   dexGrid: document.getElementById("dex-grid"),
   binderNote: document.getElementById("binder-note"),
-  dexFill: document.getElementById("dex-fill"),
-  dexLabel: document.getElementById("dex-label"),
   search: document.getElementById("search"),
   rarityFilter: document.getElementById("rarity-filter"),
-  rarityKeyBody: document.getElementById("rarity-key-body"),
   ownedFilter: document.getElementById("owned-filter"),
   catalogEras: document.getElementById("catalog-eras"),
   overlay: document.getElementById("overlay"),
@@ -232,13 +283,40 @@ function foilClass(card) {
  * picture matte. Regular holos do the opposite: rainbow on the art window.
  * Pokémon ex, IRs, and chases keep a whole-card treatment.
  */
+/*
+ * "Trainer's Pokemon" cards print an owner portrait over the bottom-right of
+ * the illustration window — N's Reshiram, Larry's Staraptor, Hop's Cramorant.
+ * The foil has to stop at the character's outline, and every owner draws a
+ * different one, so each portrait gets its own window cut out by
+ * scripts/make_owner_masks.py. `ownerMask` names the one this card takes; it
+ * is stamped into data/<set>.json by that script.
+ */
+function ownerWindow(card) {
+  if (!card?.ownerMask) return "";
+  // The evolution badge is punched into the same file, so pick the variant
+  // rather than layering a second mask on top of it.
+  const variant = hasEvoCircle(card) ? "-evo" : "";
+  return assetUrl(`assets/masks/owner/${card.ownerMask}${variant}.png`);
+}
+
+function foilLayout(card) {
+  if (card.energy || card.supertype === "Energy") return "foil-energy";
+  if (card.supertype === "Trainer") return "foil-trainer";
+  if (card.ownerMask) return "foil-owner";
+  return hasEvoCircle(card) ? "foil-evo" : "";
+}
+
 function foilPattern(card) {
   if (!card) return "foil-none";
   if (card.reverse) return "foil-reverse";
   if (card.rarity === "Mega Hyper Rare") return "foil-gold";
   if (card.rarity === "Special Illustration Rare") return "foil-sir";
   if (card.rarity === "Illustration Rare") return "foil-ir";
+  // Before the ex check: Ultra Rares are ex cards too, so they'd otherwise
+  // share the plain full-art foil instead of getting their own.
+  if (card.rarity === "Ultra Rare") return "foil-ultra";
   if (isExCard(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) return "foil-ex";
+  if (card.supertype === "Trainer" && HIT_RARITIES.has(card.rarity)) return "foil-ex";
   if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "foil-holo";
   return "foil-none";
 }
@@ -248,6 +326,41 @@ function rarityPips(rarity) {
   if (!mark) return "";
   return mark.pips
     .map(([glyph, tone]) => `<i class="pip tone-${tone}">${glyph}</i>`)
+    .join("");
+}
+
+const RARITY_SHAPE = {
+  "●": "circle",
+  "◆": "diamond",
+  "★": "star",
+  "☆": "star-line",
+  "◈": "gem",
+};
+
+function rarityShapeSvg(shape) {
+  if (shape === "circle") {
+    return `<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.2" fill="currentColor"/></svg>`;
+  }
+  if (shape === "diamond") {
+    return `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>`;
+  }
+  if (shape === "gem") {
+    return `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 1.2 14.8 8 8 14.8 1.2 8Z M8 4.2 11.8 8 8 11.8 4.2 8Z"/></svg>`;
+  }
+  if (shape === "star-line") {
+    return `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" d="M8 1.6 9.9 6l4.7.4-3.6 3.2.9 4.6L8 11.8l-3.9 2.4.9-4.6L1.4 6.4 6.1 6Z"/></svg>`;
+  }
+  return `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.35 9.95 6.1l5.05.42-3.85 3.37.96 4.95L8 12.2l-4.11 2.64.96-4.95L1 6.52l5.05-.42Z"/></svg>`;
+}
+
+function rarityIcons(rarity) {
+  const mark = RARITY_MARK[rarity];
+  if (!mark) return "";
+  return mark.pips
+    .map(
+      ([glyph, tone]) =>
+        `<span class="rarity-ico tone-${tone}">${rarityShapeSvg(RARITY_SHAPE[glyph] || "star")}</span>`
+    )
     .join("");
 }
 
@@ -271,14 +384,36 @@ function rarityStamp(card, extraClass = "") {
   return `<span class="rarity-stamp${rev}${extraClass}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
 }
 
+/**
+ * Absolute URL for a card face.
+ *
+ * `--art` feeds mask-image inside css/app.css, and a relative url() in a custom
+ * property gets resolved against the stylesheet rather than the document — so
+ * "assets/cards/…" was being fetched as "css/assets/cards/…" and every foil and
+ * glare mask 404'd silently while the plain <img> still loaded. Absolute URLs
+ * sidestep it, and keep working if the site is ever served from a subpath.
+ */
+function assetUrl(src) {
+  try {
+    return new URL(src, document.baseURI).href;
+  } catch {
+    return src;
+  }
+}
+
 function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   if (!card) return cardBack();
   const src = small ? card.imageSmall : card.image;
   const reverse = card.reverse ? "reverse" : "";
-  const evo = hasEvoCircle(card) ? "foil-evo" : "";
+  const evo = foilLayout(card);
+  const pattern = foilPattern(card);
+  // Only the window foils read --win-owner. The whole-card patterns (ex, ultra,
+  // IR, SIR, gold) print shiny edge to edge, portrait included, so they take no
+  // layout mask at all.
+  const owner = evo === "foil-owner" ? ownerWindow(card) : "";
   const load = lazy ? ` loading="lazy" decoding="async"` : ` decoding="async"`;
-  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${foilPattern(card)} ${reverse} ${evo}"
-    style="--art:url('${esc(src)}')">
+  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo}"
+    style="--art:url('${esc(assetUrl(src))}')${owner ? `;--win-owner:url('${esc(owner)}')` : ""}">
     <img src="${esc(src)}" alt="${esc(card.name)}"${load} />
     <span class="foil" aria-hidden="true"></span>
     <span class="glare" aria-hidden="true"></span>
@@ -309,39 +444,20 @@ function rarityLine(card) {
 }
 
 function fillRarityFilter() {
-  const current = els.rarityFilter.value || "all";
+  if (!els.rarityFilter) return;
   const present = new Set(cards.map((card) => card.rarity));
-  const inSet = RARITY_ORDER.filter((r) => present.has(r));
+  const inSet = RARITY_ORDER.filter((r) => present.has(r) && r !== "Energy");
+  if (rarityMode !== "all" && !present.has(rarityMode)) rarityMode = "all";
+  const chip = (value, label, marks = "") =>
+    `<button type="button" class="rarity-chip${rarityMode === value ? " on" : ""}" data-rarity="${esc(
+      value
+    )}">${marks}<span>${esc(label)}</span></button>`;
   els.rarityFilter.innerHTML = [
-    `<option value="all">All rarities</option>`,
-    ...inSet.map((r) => `<option value="${esc(r)}">${esc(RARITY_LABEL[r] || r)}</option>`),
+    chip("all", "All"),
+    ...inSet.map((r) =>
+      chip(r, RARITY_LABEL[r] || r, `<span class="rarity-marks">${rarityIcons(r)}</span>`)
+    ),
   ].join("");
-  els.rarityFilter.value = [...els.rarityFilter.options].some((o) => o.value === current)
-    ? current
-    : "all";
-}
-
-function renderRarityKey() {
-  if (!els.rarityKeyBody) return;
-  const present = new Set(cards.map((card) => card.rarity));
-  els.rarityKeyBody.innerHTML = RARITY_GROUPS.map((group) => {
-    const rows = RARITY_ORDER.filter(
-      (r) => RARITY_MARK[r]?.group === group.id && r !== "Energy"
-    );
-    if (!rows.length) return "";
-    const items = rows
-      .map((r) => {
-        const here = present.has(r) ? "in-set" : "";
-        return `<span class="key-item ${here}">${rarityPips(r)}<b>${esc(RARITY_LABEL[r] || r)}</b></span>`;
-      })
-      .join("");
-    return `<div class="key-row">
-      <span class="key-era">${esc(group.label)} <b>${esc(group.era)}</b>${
-        group.note ? ` <i>${esc(group.note)}</i>` : ""
-      }</span>
-      <div class="key-items">${items}</div>
-    </div>`;
-  }).join("");
 }
 
 /** "Ready in 5h 12m" — coarse when far off, to the second in the last minute. */
@@ -357,13 +473,23 @@ function waitLabel(ms) {
 
 function renderHeader() {
   const wait = msUntilDaily(state);
-  els.coinCount.textContent = state.coins.toLocaleString();
+  els.coinCount.textContent = coin(state.coins);
   els.dailyBtn.disabled = wait > 0;
   els.dailyBtn.textContent = wait > 0 ? waitLabel(wait) : `Claim +${DAILY_BONUS}`;
   els.statOwned.textContent = `${setOwned()}/${liveSet.totalCount}`;
   if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
   els.statPacks.textContent = state.packsOpened;
   els.statPulls.textContent = state.pulls;
+  const trainer = activeTrainer();
+  els.authEntry?.classList.toggle("hidden", Boolean(trainer));
+  els.trainerChip?.classList.toggle("hidden", !trainer);
+  if (trainer && els.trainerChip) {
+    const color = avatarColor(trainer.color);
+    els.trainerChip.style.setProperty("--avatar", color.hex);
+    els.trainerAvatar.textContent = trainerInitial(trainer);
+    els.trainerChipName.textContent = trainer.name;
+    els.trainerChipHandle.textContent = `@${trainer.handle}`;
+  }
 }
 
 function renderSetChrome() {
@@ -379,22 +505,96 @@ function renderSetChrome() {
     } from the ${month} print.`;
   }
   if (els.shopOdds) els.shopOdds.textContent = liveSet.oddsLine;
-  if (els.binderTitle) els.binderTitle.textContent = `${liveSet.name} binder`;
+  if (els.binderTitle) els.binderTitle.textContent = liveSet.name;
+  if (els.bulkKicker) {
+    els.bulkKicker.textContent = `Bulk · ${liveSet.edition} · ${month}`;
+  }
+  if (els.bulkLede) {
+    els.bulkLede.textContent = `Everything you pull from ${liveSet.name} lands here. Sell extras at live market, or send keepers to the binder.`;
+  }
   document.title = `poke-pack.rip — ${liveSet.name}`;
+}
+
+function eraYears(sets) {
+  const years = sets
+    .map((set) => String(set.released).match(/\d{4}/)?.[0])
+    .filter(Boolean);
+  if (!years.length) return "";
+  const newest = years[0];
+  const oldest = years[years.length - 1];
+  return newest === oldest ? newest : `${oldest}–${newest}`;
+}
+
+function shortReleased(set) {
+  const raw = String(set.released || "");
+  const monthYear = raw.match(/^([A-Za-z]+)\s+\d+,\s+(\d{4})$/);
+  if (monthYear) return `${monthYear[1].slice(0, 3)} ${monthYear[2]}`;
+  return raw.replace(/ \d+,/, "") || "TBA";
+}
+
+const openEras = new Set();
+let bulkEra = "";
+
+function eraSwitcherHtml({ withOwned = false } = {}) {
+  const ripping = packPhase !== "idle";
+  const homeEra = liveSet.era || liveSet.edition;
+  if (homeEra) openEras.add(homeEra);
+
+  return erasWithSets()
+    .map((block) => {
+      const liveCount = block.live.length;
+      const open = openEras.has(block.era) ? "open" : "";
+      const rows = block.sets
+        .map((set) => {
+          const live = Boolean(set.live && set.dataFile);
+          const on = live && set.id === liveSet.id ? "active" : "";
+          const { symbol } = setIdentity(set);
+          if (!live) {
+            return `<button type="button" class="rail-set is-queued" data-soon="${esc(set.name)}">
+              <img class="rail-symbol" src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
+              <span class="rail-set-copy">
+                <b>${esc(set.name)}</b>
+                <small>${esc(shortReleased(set))}</small>
+              </span>
+              <span class="soon">Queued</span>
+            </button>`;
+          }
+          const owned = withOwned ? `${ownedInSet(set)}/${set.totalCount}` : shortReleased(set);
+          return `<button type="button" class="rail-set ${on}" data-set="${esc(set.id)}" ${
+            ripping ? "disabled" : ""
+          }>
+            <img class="rail-symbol" src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
+            <span class="rail-set-copy">
+              <b>${esc(set.name)}</b>
+              <small>${esc(owned)}</small>
+            </span>
+            <span class="live-tag">Live</span>
+          </button>`;
+        })
+        .join("");
+      return `<details class="rail-era" data-era="${esc(block.era)}" ${open}>
+        <summary>
+          <span class="rail-era-title">
+            <b>${esc(block.era)}</b>
+            <small>${esc(eraYears(block.sets))}</small>
+          </span>
+          <span class="rail-era-count">${
+            liveCount && liveCount !== block.sets.length
+              ? `${liveCount} live · ${block.sets.length}`
+              : liveCount
+                ? `${liveCount} live`
+                : `${block.sets.length} sets`
+          }</span>
+        </summary>
+        <div class="rail-sets">${rows}</div>
+      </details>`;
+    })
+    .join("");
 }
 
 function renderSwitcher() {
   if (!els.setSwitcher) return;
-  const ripping = packPhase !== "idle";
-  els.setSwitcher.innerHTML = PLAYABLE_SETS.map((set) => {
-    const on = set.id === liveSet.id ? "active" : "";
-    return `<button type="button" class="set-tab ${on}" data-set="${esc(set.id)}" ${
-      ripping ? "disabled" : ""
-    }>
-      <b>${esc(set.name)}</b>
-      <span>${esc(set.edition)}</span>
-    </button>`;
-  }).join("");
+  els.setSwitcher.innerHTML = eraSwitcherHtml();
 }
 
 function renderHero() {
@@ -420,7 +620,7 @@ function renderShop() {
         <h3>${wrap.name} pack</h3>
         <p class="blurb">${liveSet.blurb}</p>
         <div class="pack-meta">
-          <span class="cost">✦ ${liveSet.cost}</span>
+          <span class="cost">✦ ${coin(liveSet.cost)}</span>
           <button class="buy" ${affordable ? "" : "disabled"}>
             ${affordable ? "Rip pack" : "Need coins"}
           </button>
@@ -430,20 +630,21 @@ function renderShop() {
     .join("");
 }
 
-async function activateSet(id) {
+async function activateSet(id, force = false) {
   if (packPhase !== "idle") {
     toast("Finish this pack first.");
     return;
   }
   const next = getSet(id);
-  if (next.id === liveSet.id && setCards.length) return;
+  if (next.id === liveSet.id && setCards.length && !force) return;
   try {
     if (!setCache[next.id]) {
-      setCache[next.id] = await fetch(next.dataFile).then((r) => {
+      setCache[next.id] = await fetch(next.dataFile, { cache: "no-cache" }).then((r) => {
         if (!r.ok) throw new Error(r.status);
         return r.json();
       });
     }
+    applyCachedPrices(setCache[next.id], next.id);
   } catch {
     toast(`Couldn't load ${next.name}.`);
     return;
@@ -451,6 +652,7 @@ async function activateSet(id) {
   liveSet = next;
   state.activeSetId = next.id;
   saveState(state);
+  bulkEra = liveSet.era || liveSet.edition || bulkEra;
   setCards = setCache[next.id];
   cards = [...setCards, ...BASIC_ENERGY];
   byId = Object.fromEntries(cards.map((c) => [c.id, c]));
@@ -465,13 +667,97 @@ async function activateSet(id) {
   if (view === "account") renderAccount();
 }
 
-function renderCollection() {
-  const q = els.search.value.trim().toLowerCase();
-  const rarity = els.rarityFilter.value;
-  const ownedMode = els.ownedFilter.value;
-  const owned = setOwned();
-  els.dexLabel.textContent = `${owned} / ${liveSet.totalCount} ${liveSet.name}`;
-  els.dexFill.style.width = `${(owned / liveSet.totalCount) * 100}%`;
+function spareCopies(set = liveSet) {
+  const prefix = `${set.id}-`;
+  let n = 0;
+  for (const [id, count] of Object.entries(state.collection || {})) {
+    if (id.startsWith(prefix) && count > 1) n += count - 1;
+  }
+  return n;
+}
+
+function eraCountLabel(block) {
+  const liveCount = block.live.length;
+  if (liveCount && liveCount !== block.sets.length) return `${liveCount} live · ${block.sets.length}`;
+  if (liveCount) return `${liveCount} live`;
+  return `${block.sets.length} set${block.sets.length === 1 ? "" : "s"}`;
+}
+
+function renderBulkSets() {
+  if (!els.bulkSets) return;
+  const ripping = packPhase !== "idle";
+  const eras = erasWithSets();
+  if (!eras.some((block) => block.era === bulkEra)) {
+    bulkEra = liveSet.era || liveSet.edition || eras[0]?.era || "";
+  }
+  const active = eras.find((block) => block.era === bulkEra) || eras[0];
+  const eraTabs = eras
+    .map((block) => {
+      const on = block.era === bulkEra ? "on" : "";
+      return `<button type="button" class="bulk-era ${on}" data-era="${esc(block.era)}">
+        <b>${esc(block.era)}</b>
+        <small>${esc(eraYears(block.sets) || eraCountLabel(block))}</small>
+      </button>`;
+    })
+    .join("");
+  const setBtns = (active?.sets || [])
+    .map((set) => {
+      const live = Boolean(set.live && set.dataFile);
+      const { symbol } = setIdentity(set);
+      if (!live) {
+        return `<button type="button" class="bulk-set-card is-queued" data-soon="${esc(set.name)}">
+          <img class="rail-symbol" src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
+          <span class="bulk-set-copy">
+            <b>${esc(set.name)}</b>
+            <small>${esc(shortReleased(set))}</small>
+          </span>
+          <span class="soon">Queued</span>
+        </button>`;
+      }
+      const on = set.id === liveSet.id ? "active" : "";
+      return `<button type="button" class="bulk-set-card ${on}" data-set="${esc(set.id)}" ${
+        ripping ? "disabled" : ""
+      }>
+        <img class="rail-symbol" src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
+        <span class="bulk-set-copy">
+          <b>${esc(set.name)}</b>
+          <small>${ownedInSet(set)}/${set.totalCount}</small>
+        </span>
+        <span class="live-tag">Live</span>
+      </button>`;
+    })
+    .join("");
+  els.bulkSets.innerHTML = `
+    <div class="bulk-eras" role="tablist" aria-label="Eras">${eraTabs}</div>
+    <div class="bulk-era-sets">${setBtns || `<p class="bulk-era-empty">No sets in this era yet.</p>`}</div>`;
+}
+
+function renderCollection({ refreshSets = true } = {}) {
+  const q = (els.search?.value || "").trim().toLowerCase();
+  const rarity = rarityMode;
+  const { owned, total, pct } = completion();
+  const purse = binderValue(liveSet);
+  const missingN = Math.max(0, total - owned);
+  const spares = spareCopies();
+
+  if (els.bulkPulse) {
+    els.bulkPulse.innerHTML = `
+      <div class="home-ring" style="--pct:${pct}" title="${esc(liveSet.name)} completion">
+        <span><b>${pct}%</b><small>set</small></span>
+      </div>
+      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>Owned</span></div>
+      <div class="home-pulse-stat"><b>${missingN}</b><span>Missing</span></div>
+      <div class="home-pulse-stat"><b>✦ ${coin(purse.value)}</b><span>This set</span></div>
+      <div class="home-pulse-stat"><b>${spares}</b><span>Spares</span></div>`;
+  }
+
+  els.ownedFilter?.querySelectorAll("[data-owned]").forEach((btn) => {
+    btn.classList.toggle("on", btn.dataset.owned === ownedMode);
+  });
+  els.rarityFilter?.querySelectorAll("[data-rarity]").forEach((btn) => {
+    btn.classList.toggle("on", btn.dataset.rarity === rarityMode);
+  });
+  if (refreshSets) renderBulkSets();
 
   const list = cards.filter((card) => {
     const count = state.collection[card.id] || 0;
@@ -492,29 +778,46 @@ function renderCollection() {
   });
 
   if (els.binderNote) {
-    els.binderNote.textContent =
-      "Spare copies can be sold for coins — the last copy of a card always stays in the binder.";
+    const shown = list.length;
+    const filterHint =
+      ownedMode === "all" && rarity === "all" && !q
+        ? `Sell any copy at live market, including your last.`
+        : `Filtered from ${total} in the set.`;
+    els.binderNote.textContent = `${shown} card${shown === 1 ? "" : "s"} · ${filterHint}`;
+  }
+
+  if (!list.length) {
+    els.dexGrid.innerHTML = `<div class="bulk-empty">
+      <b>Nothing in this view.</b>
+      <span>Try another filter, or rip a pack to fill the set.</span>
+    </div>`;
+    return;
   }
 
   els.dexGrid.innerHTML = list
     .map((card) => {
       const count = state.collection[card.id] || 0;
       const missing = count < 1;
-      const face = missing ? null : withOwnedFoil(card);
+      const face = missing ? card : withOwnedFoil(card);
       const sell =
-        count > 1
-          ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell extra · +${sellValue(card)}</button>`
-          : "";
-      return `<article class="binder-slot ${missing ? "missing" : ""}">
+        count > 0
+          ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell${
+              count > 1 ? " extra" : ""
+            }</button>`
+          : `<span class="slot-miss">Unpulled</span>`;
+      return `<article class="binder-slot bulk-card ${missing ? "missing" : ""}">
         ${count > 1 ? `<span class="count-badge">×${count}</span>` : ""}
-        <button type="button" class="slot-face" ${face ? inspectAttrs(face) : `data-inspect="${esc(card.id)}"`}>
-          ${missing ? cardBack() : tcgFace(face, { small: true, lazy: true })}
+        <button type="button" class="slot-face" ${inspectAttrs(face)} aria-label="${esc(card.name)}">
+          ${tcgFace(face, { small: true, lazy: true })}
         </button>
         <div class="slot-meta">
-          <b>${missing ? "Unpulled" : esc(card.name)}</b>
-          <span>${esc(numberLine(card))} · ${rarityPips(card.rarity)} ${esc(rarityLine(face || card))}</span>
+          <b>${esc(card.name)}</b>
+          <span>${esc(numberLine(card))} · ${rarityPips(card.rarity)} ${esc(rarityLine(face))}</span>
         </div>
-        ${sell}
+        <div class="slot-foot">
+          <span class="slot-price">✦ ${coin(sellValue(card))}</span>
+          ${sell}
+        </div>
       </article>`;
     })
     .join("");
@@ -548,48 +851,159 @@ function catalogCard(set, { live = false } = {}) {
   </article>`;
 }
 
-/** Newest-first list, so the last entry holds the earliest year. */
-function eraYears(sets) {
-  const years = sets
-    .map((set) => String(set.released).match(/\d{4}/)?.[0])
-    .filter(Boolean);
-  if (!years.length) return "";
-  const newest = years[0];
-  const oldest = years[years.length - 1];
-  return newest === oldest ? newest : `${oldest}–${newest}`;
+/* ---- Binder: the showcase --------------------------------------------------
+   Bulk is the inventory; this is what you choose to display. Slots are pages of
+   nine, drawn as a facing spread so it reads like an open binder. */
+
+let binderSpread = 0;   // index of the left-hand page in the current spread
+let binderPicking = null; // slot index awaiting a card, or null
+
+function binderPageCount() {
+  return Math.max(2, Math.ceil((state.binder?.length || 0) / BINDER_PAGE));
+}
+
+function binderPocket(index) {
+  const slot = state.binder?.[index] || null;
+  if (!slot) {
+    return `<button type="button" class="pocket empty" data-pocket="${index}"
+      aria-label="Empty pocket ${index + 1}"><span>+</span></button>`;
+  }
+  const base = findCard(slot.id);
+  if (!base) {
+    return `<button type="button" class="pocket empty" data-pocket="${index}"
+      aria-label="Empty pocket ${index + 1}"><span>+</span></button>`;
+  }
+  const card = slot.reverse ? { ...base, reverse: true } : base;
+  return `<div class="pocket filled">
+    <button type="button" class="pocket-card" ${inspectAttrs(card)} title="${esc(card.name)}">
+      ${tcgFace(card, { small: true, stamp: false })}
+    </button>
+    <button type="button" class="pocket-clear" data-unpocket="${index}"
+      title="Take ${esc(card.name)} out" aria-label="Take ${esc(card.name)} out of the binder">×</button>
+  </div>`;
+}
+
+function binderPageHtml(page) {
+  const start = page * BINDER_PAGE;
+  const pockets = Array.from({ length: BINDER_PAGE }, (_, i) => binderPocket(start + i)).join("");
+  return `<div class="binder-page">
+    <div class="binder-pockets">${pockets}</div>
+    <span class="binder-page-no">${page + 1}</span>
+  </div>`;
+}
+
+/** Owned copies not already on show, newest sets first. */
+function binderCandidates() {
+  const out = [];
+  for (const [id, count] of Object.entries(state.collection || {})) {
+    if (!count) continue;
+    const card = findCard(id);
+    if (!card) continue;
+    const spare = spareFor(state, id);
+    if (spare > 0) out.push({ card, spare });
+  }
+  return out.sort((a, b) => sellValue(b.card) - sellValue(a.card));
+}
+
+function binderPickerHtml() {
+  if (binderPicking == null) return "";
+  const options = binderCandidates();
+  const body = options.length
+    ? `<div class="picker-grid">${options
+        .map(
+          ({ card, spare }) => `<button type="button" class="picker-card" data-pick="${esc(card.id)}"
+            title="${esc(card.name)}">
+            ${tcgFace(card, { small: true, stamp: false })}
+            <span class="picker-name">${esc(card.name)}</span>
+            <span class="picker-meta">✦ ${coin(sellValue(card))}${spare > 1 ? ` · ${spare} spare` : ""}</span>
+          </button>`
+        )
+        .join("")}</div>`
+    : `<p class="panel-empty">Nothing spare to show yet — rip a pack, or take a card
+       out of another pocket first.</p>`;
+  return `<div class="picker-backdrop" data-picker-close></div>
+    <div class="picker" role="dialog" aria-modal="true" aria-label="Choose a card">
+      <div class="picker-head">
+        <h3>Choose a card</h3>
+        <button type="button" class="ghost" data-picker-close>Cancel</button>
+      </div>
+      ${body}
+    </div>`;
+}
+
+function renderBinder() {
+  if (!els.binderBody) return;
+  if (reconcileBinder(state)) saveState(state);
+
+  const pages = binderPageCount();
+  binderSpread = Math.min(binderSpread, Math.max(0, pages - 2));
+  const left = binderSpread;
+  const right = binderSpread + 1;
+  const shown = (state.binder || []).filter(Boolean).length;
+
+  if (els.binderCount) {
+    const worth = money(
+      (state.binder || []).reduce((sum, slot) => {
+        const card = slot && findCard(slot.id);
+        return card ? sum + sellValue(card) : sum;
+      }, 0)
+    );
+    els.binderCount.textContent = shown
+      ? `${shown} card${shown === 1 ? "" : "s"} on show · ✦ ${coin(worth)}`
+      : "No cards on show yet";
+  }
+
+  els.binderBody.innerHTML = `
+    <div class="binder-spread">
+      ${binderPageHtml(left)}
+      ${right < pages ? binderPageHtml(right) : ""}
+    </div>
+    <div class="binder-nav">
+      <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>‹ Back</button>
+      <span>Pages ${left + 1}–${Math.min(right + 1, pages)} of ${pages}</span>
+      <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next ›</button>
+    </div>
+    ${binderPickerHtml()}`;
 }
 
 function renderCatalog() {
-  const queued = ROADMAP.reduce((total, era) => total + era.sets.length, 0);
+  const eras = erasWithSets();
+  const queued = eras.reduce((total, block) => total + block.queued.length, 0);
   const summary = `<div class="catalog-summary">
     <span class="now"><b>${PLAYABLE_SETS.length}</b> playable now</span>
     <span><b>${queued}</b> sets queued</span>
-    <span><b>${ROADMAP.length}</b> eras</span>
+    <span><b>${eras.length}</b> eras</span>
   </div>`;
 
-  const eras = ROADMAP.map((era, index) => {
-    const live = index === 0
-      ? PLAYABLE_SETS.map((set) => catalogCard(set, { live: true })).join("")
-      : "";
-    const rest = era.sets.map((set) => catalogCard(set)).join("");
-    const count = era.sets.length + (index === 0 ? PLAYABLE_SETS.length : 0);
-    return `<section class="era-block">
+  const blocks = eras
+    .map((block) => {
+      const live = block.live.map((set) => catalogCard(set, { live: true })).join("");
+      const rest = block.queued.map((set) => catalogCard(set)).join("");
+      const count = block.sets.length;
+      return `<section class="era-block">
       <div class="era-head">
-        <h3>${esc(era.era)}</h3>
-        <span class="era-span">${eraYears(era.sets)}</span>
+        <h3>${esc(block.era)}</h3>
+        <span class="era-span">${eraYears(block.sets)}</span>
         <span class="era-rule"></span>
         <span class="era-count">${count} set${count === 1 ? "" : "s"}</span>
       </div>
       <div class="catalog-grid">${live}${rest}</div>
     </section>`;
-  }).join("");
+    })
+    .join("");
 
-  els.catalogEras.innerHTML = summary + eras;
+  els.catalogEras.innerHTML = summary + blocks;
 }
 
 /* ---- Home / Account / Settings ------------------------------------------ */
 
 const num = (n) => Number(n || 0).toLocaleString();
+/* Coins are dollars, so they always read with cents. */
+const coin = (n) =>
+  Number(n || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
 function completion() {
   const total = setCards.length || liveSet.totalCount || 0;
@@ -651,13 +1065,107 @@ function ownedInSet(set) {
   );
 }
 
-const HOME_ODDS = [
-  ["Double rare", "1/5"],
-  ["Ultra rare", "1/12"],
-  ["Illustration", "1/9"],
-  ["Special art", "1/80"],
-  ["Gold", "1/1081"],
-];
+/** Pull-table key → short label for the odds strip. */
+const ODDS_LABELS = {
+  double: "Double rare",
+  ultra: "Ultra rare",
+  ir: "Illustration",
+  sir: "Special art",
+  hyper: "Gold",
+};
+
+/**
+ * Odds read straight off the set's own slot tables, so a set with different
+ * pull rates shows its own numbers instead of the live set's. These used to be
+ * a hardcoded list, which quietly showed Pitch Black's rates for every set.
+ */
+function packOdds(set) {
+  const out = [];
+  for (const slot of set.slots || []) {
+    for (const [key, weight] of slot.table || []) {
+      const label = ODDS_LABELS[key];
+      if (!label || !weight) continue;
+      out.push([label, `1/${Math.round(1 / weight)}`, weight]);
+    }
+  }
+  return out.sort((a, b) => b[2] - a[2]);
+}
+
+/** Real market value of everything owned from one set, plus its best card. */
+function binderValue(set) {
+  const prefix = `${set.id}-`;
+  let value = 0;
+  let copies = 0;
+  let best = null;
+  for (const [id, count] of Object.entries(state.collection || {})) {
+    if (!count || !id.startsWith(prefix)) continue;
+    const card = findCard(id);
+    if (!card) continue;
+    const each = sellValue(card);
+    value += each * count;
+    copies += count;
+    if (!best || each > best.each) best = { card, each };
+  }
+  return { value: money(value), copies, best };
+}
+
+/**
+ * Market value of the whole collection, across every set whose data is loaded.
+ * `loadAllSets()` pulls the rest in after first paint so this is a true total
+ * rather than just the set you happen to be looking at.
+ */
+function totalBinderValue() {
+  let value = 0;
+  for (const [id, count] of Object.entries(state.collection || {})) {
+    if (!count) continue;
+    const card = findCard(id);
+    if (card) value += sellValue(card) * count;
+  }
+  return money(value);
+}
+
+function netWorth() {
+  return money(state.coins + totalBinderValue());
+}
+
+/**
+ * Sample net worth into the save. Called after anything that moves money:
+ * ripping, selling, claiming. A save from before this existed has no `granted`
+ * baseline, so it starts at break-even here instead of inventing a past.
+ */
+function trackWorth() {
+  if (!allSetsLoaded) return;
+  const worth = netWorth();
+  if (state.granted == null) state.granted = worth;
+  logWorth(state, worth);
+  saveState(state);
+}
+
+/**
+ * The most valuable card in the pull history, for the home feature slot.
+ * Value beats rarity here — a cheap Special Illustration Rare shouldn't outrank
+ * an expensive Ultra Rare when the whole site runs on real prices.
+ * (Distinct from bestPull(), which ranks the current pack by rarity.)
+ */
+function bestHistoryPull() {
+  let best = null;
+  for (const entry of state.history || []) {
+    const found = findCard(entry.id);
+    if (!found) continue;
+    const card = entry.reverse ? { ...found, reverse: true } : found;
+    const worth = sellValue(card);
+    if (!best || worth > best.worth) best = { card, entry, worth };
+  }
+  return best;
+}
+
+/** The priciest cards in the loaded set, for the market board. */
+function topByValue(limit = 5) {
+  return [...setCards]
+    .filter((card) => !card.energy && typeof card.market === "number")
+    .sort((a, b) => sellValue(b) - sellValue(a))
+    .slice(0, limit);
+}
 
 function renderHome() {
   const { owned, total, pct } = completion();
@@ -667,22 +1175,30 @@ function renderHome() {
   );
   const recent = historyCards(state.history, 8);
   const chase = liveSet.heroIds.map((id) => byId[id]).filter(Boolean);
-  const queued = ROADMAP.reduce((n, era) => n + era.sets.length, 0);
-  const upcoming = ROADMAP[0]?.sets.slice(0, 4) || [];
+  const eras = erasWithSets();
+  const queued = eras.reduce((n, era) => n + era.queued.length, 0);
+  const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
   const origin = ROADMAP.at(-1)?.sets.at(-1);
 
   if (els.homeKicker) {
     els.homeKicker.textContent = `Fan-made · ${liveSet.edition} · ${liveSet.released}`;
   }
 
+  const purse = binderValue(liveSet);
+  const movers = topByValue(5);
+  const odds = packOdds(liveSet);
+  const worth = netWorth();
+  const pnl = state.granted == null ? null : money(worth - state.granted);
+  const pnlDir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
+
   if (els.homePulse) {
     els.homePulse.innerHTML = `
       <div class="home-ring" style="--pct:${pct}" title="${esc(liveSet.name)} binder">
         <span><b>${pct}%</b><small>set</small></span>
       </div>
-      <div class="home-pulse-stat"><b>✦ ${num(state.coins)}</b><span>Coins</span></div>
-      <div class="home-pulse-stat"><b>${num(state.packsOpened)}</b><span>Packs ripped</span></div>
-      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>${esc(liveSet.name)}</span></div>`;
+      <div class="home-pulse-stat"><b>✦ ${coin(state.coins)}</b><span>Coins</span></div>
+      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>${esc(liveSet.name)}</span></div>
+      <div class="home-pulse-stat"><b>✦ ${coin(purse.value)}</b><span>Binder value</span></div>`;
   }
 
   if (els.homeStage) {
@@ -723,26 +1239,41 @@ function renderHome() {
     </button>`;
   }).join("");
 
-  const pullsBlock = hits.length || recent.length
-    ? `${hits.length ? `<div class="home-block">
-          <div class="home-block-head">
-            <div>
-              <h2>Best pulls</h2>
-              <p>Hits from packs you’ve already torn.</p>
-            </div>
-            <button type="button" class="text-btn" data-goto="collection">Binder →</button>
+  /*
+   * One block instead of two near-identical filmstrips. The best pull is
+   * promoted to a feature card with its rarity and what it is actually worth —
+   * a single card sitting alone in a wide flex row just read as a layout bug,
+   * and neither row said why any pull mattered.
+   */
+  const best = bestHistoryPull();
+  const pullsBlock = best
+    ? `<div class="home-block">
+        <div class="home-block-head">
+          <div>
+            <h2>Your pulls</h2>
+            <p>${num(state.pulls)} card${state.pulls === 1 ? "" : "s"} pulled from ${num(state.packsOpened)} pack${state.packsOpened === 1 ? "" : "s"}.</p>
           </div>
-          ${miniCardRow(hits, "", "home-film")}
-        </div>` : ""}
-        ${recent.length ? `<div class="home-block">
-          <div class="home-block-head">
-            <div>
-              <h2>Just pulled</h2>
-              <p>Newest cards first.</p>
+          <button type="button" class="text-btn" data-goto="collection">Binder →</button>
+        </div>
+        <div class="home-pulls">
+          <article class="home-hit">
+            <button type="button" class="home-hit-art" ${inspectAttrs(best.card)}
+              aria-label="${esc(best.card.name)}">${tcgFace(best.card, { small: true, stamp: false })}</button>
+            <div class="home-hit-copy">
+              <span class="home-hit-label">Best pull</span>
+              <h3>${esc(best.card.name)}</h3>
+              <p>${rarityPips(best.card.rarity)} ${esc(rarityLine(best.card))}${
+                best.entry?.at ? ` · ${esc(formatWhen(best.entry.at))}` : ""
+              }</p>
+              <div class="home-hit-value">✦ ${coin(sellValue(best.card))}</div>
             </div>
+          </article>
+          <div class="home-strip">
+            <span class="home-strip-label">Just pulled</span>
+            ${miniCardRow(recent, "", "home-film")}
           </div>
-          ${miniCardRow(recent, "", "home-film")}
-        </div>` : ""}`
+        </div>
+      </div>`
     : `<div class="home-block">
         <div class="home-block-head">
           <div>
@@ -775,15 +1306,72 @@ function renderHome() {
     <div class="home-block">
       <div class="home-block-head">
         <div>
+          <h2>The market</h2>
+          <p>Every card is worth its real market price. One coin is one dollar.</p>
+        </div>
+        <button type="button" class="text-btn" data-goto="collection">Binder →</button>
+      </div>
+      <div class="home-market">
+        <article class="home-worth">
+          <span class="home-worth-label">Net worth</span>
+          <b>✦ ${coin(worth)}</b>
+          <p class="home-pnl ${pnlDir}">
+            ${pnl == null
+              ? `Coins plus every card you hold.`
+              : `${pnlDir === "down" ? "▼" : pnlDir === "up" ? "▲" : "■"}
+                 ✦ ${coin(Math.abs(pnl))} ${pnlDir === "down" ? "down" : pnlDir === "up" ? "up" : "even"}
+                 since tracking began at ✦ ${coin(state.granted)}`}
+          </p>
+          <div class="home-worth-chart" id="home-worth-chart"></div>
+          <p class="home-worth-note">${
+            purse.copies
+              ? `✦ ${coin(purse.value)} of it is ${esc(liveSet.name)}${
+                  purse.best ? ` · best is ${esc(purse.best.card.name)} at ✦ ${coin(purse.best.each)}` : ""
+                }`
+              : `Nothing in this binder yet. A pack costs ✦ ${coin(liveSet.cost)}.`
+          }</p>
+          <div class="home-worth-cta">
+            <button type="button" class="solid" data-goto="shop">Rip a pack · ✦ ${coin(liveSet.cost)}</button>
+          </div>
+        </article>
+        <article class="home-board">
+          <div class="home-board-head">
+            <span>Most valuable in ${esc(liveSet.name)}</span>
+            <span class="home-board-note">live prices</span>
+          </div>
+          <ol class="home-board-list">
+            ${movers
+              .map(
+                (card, i) => `<li>
+                  <button type="button" class="home-board-row" ${inspectAttrs(card)}
+                    aria-label="${esc(card.name)}, ✦ ${coin(sellValue(card))}">
+                    <span class="home-board-rank">${i + 1}</span>
+                    <span class="home-board-name">
+                      <b>${esc(card.name)}</b>
+                      <small>${esc(rarityLine(card))}</small>
+                    </span>
+                    <span class="home-board-price">✦ ${coin(sellValue(card))}</span>
+                  </button>
+                </li>`
+              )
+              .join("")}
+          </ol>
+        </article>
+      </div>
+    </div>
+
+    <div class="home-block">
+      <div class="home-block-head">
+        <div>
           <h2>How it works</h2>
-          <p>No checkout. Coins in this browser, odds from the printed set.</p>
+          <p>No checkout. Coins live in this browser, odds come from the printed set.</p>
         </div>
       </div>
       <div class="home-steps">
         <article class="home-step">
           <b>01</b>
           <h3>Claim coins</h3>
-          <p>Daily stack in the header. Spend them on boosters — nothing costs real money.</p>
+          <p>Daily stack in the header. Packs cost what they cost in a real shop — nothing costs real money.</p>
         </article>
         <article class="home-step">
           <b>02</b>
@@ -793,7 +1381,7 @@ function renderHome() {
         <article class="home-step">
           <b>03</b>
           <h3>Stamp the binder</h3>
-          <p>Every pull lands in the set binder. Sell extras for coins and keep hunting the art.</p>
+          <p>Every pull lands in the set binder. Sell any card back at its market price and keep hunting the art.</p>
         </article>
       </div>
     </div>
@@ -807,7 +1395,7 @@ function renderHome() {
           <p>${esc(liveSet.oddsLine)}</p>
         </div>
       </div>
-      <div class="home-odds">${HOME_ODDS.map(
+      <div class="home-odds">${odds.map(
         ([label, rate]) => `<div class="home-odd"><b>${rate}</b><span>${esc(label)}</span></div>`
       ).join("")}</div>
     </div>
@@ -822,115 +1410,604 @@ function renderHome() {
       </div>
       <div class="home-road">${upcomingChips}${originChip}</div>
     </div>`;
+
+  const worthChart = els.homeBody.querySelector("#home-worth-chart");
+  if (worthChart) renderWorthChart(worthChart, state.worthLog, state.granted);
+}
+
+function formatWhen(ts) {
+  const t = Number(ts) || 0;
+  if (!t) return "—";
+  const diff = Date.now() - t;
+  if (diff < 60_000) return "just now";
+  if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
+  if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
+  return new Date(t).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+}
+
+function uniqueOwned() {
+  return Object.values(state.collection || {}).filter((n) => n > 0).length;
+}
+
+function reverseOwned() {
+  return Object.values(state.reverses || {}).reduce((n, count) => n + (count > 0 ? count : 0), 0);
+}
+
+function guestHasProgress() {
+  return (
+    state.packsOpened > 0 ||
+    uniqueOwned() > 0 ||
+    state.coins !== STARTING_COINS ||
+    Boolean(state.lastDaily)
+  );
+}
+
+function setCompletionRows() {
+  return PLAYABLE_SETS.map((set) => {
+    const owned = ownedInSet(set);
+    const total = set.totalCount || 1;
+    return { set, owned, total, pct: Math.round((owned / total) * 100) };
+  });
+}
+
+function ownedRarities() {
+  const counts = {};
+  for (const [id, n] of Object.entries(state.collection || {})) {
+    if (!n) continue;
+    const card = findCard(id);
+    if (!card) continue;
+    counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+  }
+  return counts;
+}
+
+function achievements() {
+  const unique = uniqueOwned();
+  const rarities = ownedRarities();
+  const sets = setCompletionRows();
+  const trainer = activeTrainer();
+  return [
+    { id: "first-pack", name: "First rip", note: "Open your first booster", ok: state.packsOpened >= 1 },
+    { id: "ten-packs", name: "Warming up", note: "Rip 10 packs", ok: state.packsOpened >= 10 },
+    { id: "hundred", name: "Century", note: "Rip 100 packs", ok: state.packsOpened >= 100 },
+    { id: "first-hit", name: "Hit", note: "Pull a hit rarity", ok: Object.keys(rarities).some((r) => HIT_RARITIES.has(r)) },
+    { id: "sir", name: "Special art", note: "Own a Special Illustration Rare", ok: (rarities["Special Illustration Rare"] || 0) > 0 },
+    { id: "gold", name: "Gold chase", note: "Own a Mega Hyper Rare", ok: (rarities["Mega Hyper Rare"] || 0) > 0 },
+    { id: "reverse", name: "Shiny back", note: "Pull a reverse holo", ok: reverseOwned() > 0 },
+    { id: "unique-10", name: "Getting started", note: "Collect 10 unique cards", ok: unique >= 10 },
+    { id: "half-set", name: "Halfway", note: "Reach 50% on any live set", ok: sets.some((row) => row.pct >= 50) },
+    { id: "master", name: "Master set", note: "Complete any live set", ok: sets.some((row) => row.pct >= 100) },
+    { id: "daily", name: "Daily trainer", note: "Claim a daily bonus", ok: Boolean(state.lastDaily) },
+    { id: "bank", name: "Loaded", note: "Hold 250 coins", ok: state.coins >= 250 },
+    { id: "signed", name: "Named trainer", note: "Create a trainer on this device", ok: Boolean(trainer) },
+  ];
+}
+
+function careerTitle(list) {
+  const has = (id) => list.find((item) => item.id === id)?.ok;
+  if (has("master") && has("hundred")) return "Champion";
+  if (has("master")) return "Gym Leader";
+  if (has("sir") || has("gold")) return "Hit hunter";
+  if (has("hundred")) return "Ripper";
+  if (has("half-set") || has("unique-10")) return "Collector";
+  if (has("ten-packs")) return "Ripper";
+  if (has("first-pack")) return "Trainer";
+  return "Rookie";
+}
+
+function colorPicks(selected, attr = "data-color") {
+  return `<div class="color-picks" role="radiogroup" aria-label="Avatar color">${AVATAR_COLORS.map(
+    (c) => `<button type="button" class="color-pick${c.id === selected ? " on" : ""}" ${attr}="${esc(c.id)}" style="--swatch:${esc(c.hex)}" title="${esc(c.label)}" aria-label="${esc(c.label)}"></button>`
+  ).join("")}</div>`;
+}
+
+function avatarMark(trainer, extraClass = "trainer-mark") {
+  const color = avatarColor(trainer?.color);
+  return `<div class="${extraClass}" style="--avatar:${esc(color.hex)}">${esc(trainerInitial(trainer))}</div>`;
+}
+
+function saveTools() {
+  return `<div class="panel">
+    <h3>Your save</h3>
+    <p class="panel-note">
+      Trainers and binders live in this browser only — not the cloud.
+      Clearing site data wipes them. Download a copy to be safe.
+    </p>
+    <div class="save-actions">
+      <button class="ghost" id="export-save" type="button">Download save file</button>
+      <button class="ghost" id="import-save" type="button">Load save file</button>
+      <input type="file" id="import-file" accept="application/json,.json" hidden />
+    </div>
+  </div>`;
+}
+
+function statsBlock() {
+  const { pct } = completion();
+  return `<div class="panel-stats wide">
+    <div><b>✦ ${coin(state.coins)}</b><span>Coins</span></div>
+    <div><b>${num(state.packsOpened)}</b><span>Packs ripped</span></div>
+    <div><b>${num(state.pulls)}</b><span>Cards pulled</span></div>
+    <div><b>${num(uniqueOwned())}</b><span>Unique cards</span></div>
+    <div><b>${num(reverseOwned())}</b><span>Reverse holos</span></div>
+    <div><b>${pct}%</b><span>${esc(liveSet.name)} complete</span></div>
+  </div>`;
+}
+
+function busyPack() {
+  if (packPhase !== "idle") {
+    toast("Finish this pack first.");
+    return true;
+  }
+  return false;
+}
+
+function openAuth(tab) {
+  if (busyPack()) return;
+  const trainers = trainerList();
+  authTab = tab || (trainers.length ? "signin" : "signup");
+  if (!authSelectedId && trainers[0]) authSelectedId = trainers[0].id;
+  setView("auth");
+}
+
+async function hydrateAfterAccountChange() {
+  applySettings();
+  await activateSet(state.activeSetId || DEFAULT_SET_ID, true);
+  renderHeader();
+  scheduleDailyTick();
+  if (view === "home") renderHome();
+  if (view === "account") renderAccount();
+  if (view === "auth") renderAuth();
+  if (view === "settings") renderSettings();
+}
+
+function renderAuth() {
+  const trainers = trainerList();
+  const signed = activeTrainer();
+  if (!authSelectedId || !trainers.some((t) => t.id === authSelectedId)) {
+    authSelectedId = trainers[0]?.id || "";
+  }
+  const keepDefault = !signed && guestHasProgress();
+  const signupForm = `
+    <form id="signup-form" autocomplete="on">
+      <label class="field">
+        <span>Trainer name</span>
+        <input name="name" maxlength="24" required placeholder="Ash Ketchum" />
+      </label>
+      <label class="field">
+        <span>Handle</span>
+        <input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" />
+        <span class="hint">3–16 letters, numbers, or underscores. Unique on this device.</span>
+      </label>
+      <label class="field">
+        <span>Password <em>(optional)</em></span>
+        <input name="password" type="password" maxlength="64" placeholder="PIN or password" autocomplete="new-password" />
+        <span class="hint">Stays on this device. Leave blank if nobody else uses this browser.</span>
+      </label>
+      <div class="field">
+        <span>Avatar color</span>
+        ${colorPicks(signupColor, "data-signup-color")}
+      </div>
+      ${
+        signed
+          ? `<p class="panel-note">This starts a fresh binder. Your current trainer stays on this device.</p>`
+          : keepDefault
+            ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Keep the packs and cards I already ripped</label>`
+            : ""
+      }
+      <p class="form-error" id="auth-error"></p>
+      <button class="solid" type="submit">${signed ? "Add trainer" : "Create trainer"}</button>
+    </form>`;
+
+  const selected = trainers.find((t) => t.id === authSelectedId);
+  const signinForm = trainers.length
+    ? `<form id="signin-form">
+        <div class="trainer-picks">${trainers
+          .map(
+            (t) => `<button type="button" class="trainer-pick${t.id === authSelectedId ? " on" : ""}" data-pick-trainer="${esc(t.id)}">
+              ${avatarMark(t, "trainer-avatar")}
+              <span><b>${esc(t.name)}</b><small>@${esc(t.handle)} · ${esc(formatWhen(t.lastPlayed))}</small></span>
+            </button>`
+          )
+          .join("")}</div>
+        ${
+          selected?.pinHash
+            ? `<label class="field"><span>Password</span><input name="password" type="password" maxlength="64" autocomplete="current-password" /></label>`
+            : `<p class="panel-note">No password on this trainer.</p>`
+        }
+        <p class="form-error" id="auth-error"></p>
+        <button class="solid" type="submit">Sign in</button>
+      </form>`
+    : `<p class="panel-note">No trainers on this device yet. Create one and this binder can travel with the name.</p>
+       <button class="solid" type="button" data-auth-tab="signup">Create a trainer</button>`;
+
+  els.authBody.innerHTML = `
+    <div class="auth-page">
+      <div class="auth-copy">
+        <p class="kicker">${signed ? "Another binder" : "Trainer accounts"}</p>
+        <h1>${authTab === "signin" ? "Welcome back." : "Make it yours."}</h1>
+        <p class="lede">
+          Accounts live in this browser, not the cloud. Create a trainer to name your
+          binder, lock it with an optional PIN, and keep more than one collection on a shared machine.
+        </p>
+        <ul class="auth-points">
+          <li>Guest play still works — sign up when you want a name on the binder.</li>
+          <li>Each trainer has its own coins, packs, and cards.</li>
+          <li>Export a save file if you ever switch computers.</li>
+        </ul>
+      </div>
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab${authTab === "signup" ? " on" : ""}" data-auth-tab="signup">Create</button>
+          <button type="button" class="auth-tab${authTab === "signin" ? " on" : ""}" data-auth-tab="signin">Sign in</button>
+        </div>
+        ${authTab === "signin" ? signinForm : signupForm}
+        ${
+          signed
+            ? `<button class="ghost auth-guest" type="button" data-goto="account">Back to account</button>`
+            : `<button class="ghost auth-guest" type="button" data-continue-guest>Continue as guest</button>`
+        }
+      </div>
+    </div>`;
 }
 
 function renderAccount() {
-  const { pct } = completion();
+  const trainer = activeTrainer();
   const since = new Date(state.createdAt || Date.now()).toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
-  const unique = Object.values(state.collection).filter((n) => n > 0).length;
+  const list = achievements();
+  const title = careerTitle(list);
+  if (trainer && trainer.title !== title) updateTrainer({ title });
+  const unlocked = list.filter((a) => a.ok).length;
+  const sets = setCompletionRows();
+  const history = state.history || [];
+  const trainers = trainerList();
+  const others = trainers.filter((t) => t.id !== trainer?.id);
+
+  const hero = trainer
+    ? `<div class="account-card">
+        <div class="account-id">
+          ${avatarMark(trainer)}
+          <div>
+            <p class="account-title">${esc(title)}</p>
+            <h3>${esc(trainer.name)}</h3>
+            <p><span class="account-handle">@${esc(trainer.handle)}</span> · ${esc(trainerCode(trainer.id))} · since ${esc(formatWhen(trainer.createdAt))}</p>
+            ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
+          </div>
+          <div class="account-actions">
+            <button class="ghost" type="button" id="sign-out">Sign out</button>
+          </div>
+        </div>
+        ${statsBlock()}
+      </div>`
+    : `<div class="account-card">
+        <div class="account-id">
+          <div class="mark lg">P</div>
+          <div>
+            <p class="account-title">Guest</p>
+            <h3>Local player</h3>
+            <p>Playing since ${esc(since)} · saved in this browser only</p>
+          </div>
+        </div>
+        ${statsBlock()}
+        <div class="account-hero-actions">
+          <button class="solid" type="button" data-open-auth="signup">Create a trainer</button>
+          ${
+            trainers.length
+              ? `<button class="ghost" type="button" data-open-auth="signin">Sign in</button>`
+              : ""
+          }
+        </div>
+      </div>`;
+
+  const profile = trainer
+    ? `<div class="panel">
+        <h3>Profile</h3>
+        <form id="profile-form">
+          <label class="field"><span>Trainer name</span><input name="name" maxlength="24" value="${esc(trainer.name)}" required /></label>
+          <label class="field"><span>Handle</span><input name="handle" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" /></label>
+          <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
+          <div class="field"><span>Avatar color</span>${colorPicks(trainer.color, "data-profile-color")}</div>
+          <p class="form-error" id="profile-error"></p>
+          <button class="solid" type="submit">Save profile</button>
+        </form>
+      </div>`
+    : "";
+
+  const password = trainer
+    ? `<div class="panel">
+        <h3>Password</h3>
+        <p class="panel-note">Optional PIN for this trainer on this device. It never leaves the browser.</p>
+        <form id="password-form">
+          ${
+            trainer.pinHash
+              ? `<label class="field"><span>Current password</span><input name="current" type="password" maxlength="64" autocomplete="current-password" /></label>`
+              : ""
+          }
+          <label class="field"><span>${trainer.pinHash ? "New password" : "Set a password"}</span><input name="password" type="password" maxlength="64" autocomplete="new-password" />
+          ${trainer.pinHash ? `<span class="hint">Leave blank to remove the password.</span>` : ""}</label>
+          <p class="form-error" id="password-error"></p>
+          <button class="ghost" type="submit">${trainer.pinHash ? "Update password" : "Add password"}</button>
+        </form>
+      </div>`
+    : "";
+
+  const switcher = others.length
+    ? `<div class="panel">
+        <h3>Switch trainer</h3>
+        <p class="panel-note">Your current binder is saved before you jump.</p>
+        <div class="trainer-picks">${others
+          .map(
+            (t) => `<button type="button" class="trainer-pick" data-switch-trainer="${esc(t.id)}">
+              ${avatarMark(t, "trainer-avatar")}
+              <span><b>${esc(t.name)}</b><small>@${esc(t.handle)} · ${esc(formatWhen(t.lastPlayed))}</small></span>
+            </button>`
+          )
+          .join("")}</div>
+      </div>`
+    : "";
+
+  const danger = trainer
+    ? `<div class="panel danger">
+        <h3>Delete trainer</h3>
+        <p class="panel-note">Removes @${esc(trainer.handle)} and this binder from the device. Export a save first if you might want it back.</p>
+        <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
+      </div>`
+    : "";
 
   els.accountBody.innerHTML = `
-    <div class="account-card">
-      <div class="account-id">
-        <div class="mark lg">P</div>
-        <div>
-          <h3>Local player</h3>
-          <p>Playing since ${esc(since)} · saved in this browser</p>
-        </div>
-        <span class="soon">Guest</span>
+    <div class="section-head">
+      <div>
+        <h2>${trainer ? "Trainer" : "Account"}</h2>
+        <p>${
+          trainer
+            ? "Career stats, set completion, and this device’s trainer list."
+            : "Play as a guest, or create a trainer to name the binder and keep more than one save on this device."
+        }</p>
       </div>
-      <div class="panel-stats wide">
-        <div><b>✦ ${num(state.coins)}</b><span>Coins</span></div>
-        <div><b>${num(state.packsOpened)}</b><span>Packs ripped</span></div>
-        <div><b>${num(state.pulls)}</b><span>Cards pulled</span></div>
-        <div><b>${num(unique)}</b><span>Unique cards</span></div>
-        <div><b>${pct}%</b><span>${esc(liveSet.name)} complete</span></div>
-      </div>
+      ${
+        trainer
+          ? `<button class="ghost" type="button" data-open-auth="signup">Add another trainer</button>`
+          : ""
+      }
     </div>
-
+    ${hero}
     <div class="panel-grid two">
       <div class="panel">
-        <h3>Your save</h3>
-        <p class="panel-note">
-          Progress lives in this browser only, so clearing site data wipes it.
-          Download a copy to be safe.
-        </p>
-        <div class="save-actions">
-          <button class="ghost" id="export-save">Download save file</button>
-          <button class="ghost" id="import-save">Load save file</button>
-          <input type="file" id="import-file" accept="application/json,.json" hidden />
-        </div>
+        <h3>Achievements · ${unlocked}/${list.length}</h3>
+        <div class="badge-row">${list
+          .map(
+            (a) => `<div class="ach-chip ${a.ok ? "on" : "off"}"><b>${esc(a.name)}</b><span>${esc(a.note)}</span></div>`
+          )
+          .join("")}</div>
       </div>
       <div class="panel">
-        <h3>Coming soon</h3>
-        <ul class="soon-list">
-          <li>Sign in and sync across devices</li>
-          <li>Public binder pages to show off pulls</li>
-          <li>Trading with other collectors</li>
-        </ul>
+        <h3>Set completion</h3>
+        <div class="set-progress">${sets
+          .map(
+            (row) => `<div class="set-progress-row">
+              <div class="progress-head"><span>${esc(row.set.name)}</span><b>${row.owned}/${row.total}</b></div>
+              <div class="dex-bar"><span style="width:${row.pct}%"></span></div>
+            </div>`
+          )
+          .join("")}</div>
       </div>
-    </div>`;
+      <div class="panel">
+        <h3>Recent pulls</h3>
+        ${
+          history.length
+            ? `<ul class="activity-list">${history
+                .slice(0, 8)
+                .map(
+                  (entry) => `<li>
+                    <b>${esc(entry.name)}</b>
+                    <time>${esc(formatWhen(entry.at))}</time>
+                    <span>${entry.reverse ? "Reverse holo" : esc(entry.rarity || "")}${entry.wasNew ? " · new" : ""}</span>
+                  </li>`
+                )
+                .join("")}</ul>`
+            : `<p class="panel-empty">Rip a pack and the hits will land here.</p>`
+        }
+      </div>
+      ${saveTools()}
+      ${profile}
+      ${password}
+      ${switcher}
+    </div>
+    ${danger}`;
 }
 
-const SETTING_ROWS = [
-  ["shine", "Card shine", "Gloss highlight that follows your cursor across a card."],
-  ["tilt", "Card tilt", "Cards lean toward the cursor in 3D on hover."],
-  ["stamps", "Rarity stamps", "Show the rarity symbol in the corner of every card."],
-  ["motion", "Idle animation", "Slow shimmer on foiled cards when you're not touching them."],
+/*
+ * Settings are grouped for the page, and each row declares its own control so
+ * renderSettings stays a dumb loop. `type` is "toggle" (boolean) or "choice"
+ * (segmented control backed by `options`).
+ */
+const SETTING_GROUPS = [
+  {
+    title: "Cards",
+    note: "How cards look in the binder, the spread, and the inspector.",
+    rows: [
+      { key: "shine", type: "toggle", label: "Card shine", note: "Gloss highlight that follows your cursor across a card." },
+      { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward the cursor in 3D on hover." },
+      { key: "stamps", type: "toggle", label: "Rarity stamps", note: "Show the rarity symbol in the corner of every card." },
+      { key: "motion", type: "toggle", label: "Idle shimmer", note: "Slow shimmer on foiled cards when you're not touching them." },
+      {
+        key: "foil",
+        type: "choice",
+        label: "Foil strength",
+        note: "How hard the holo pattern reads on foiled cards.",
+        options: [
+          ["subtle", "Subtle"],
+          ["normal", "Normal"],
+          ["intense", "Intense"],
+        ],
+      },
+    ],
+  },
+  {
+    title: "Opening packs",
+    note: "The tear, the reveal, and what happens when a hit lands.",
+    rows: [
+      { key: "flash", type: "toggle", label: "Hit effects", note: "Spark burst and screen shake when you pull a rare." },
+      { key: "haptics", type: "toggle", label: "Vibration", note: "Short buzz when the wrapper tears and when a hit lands. Phones and tablets only." },
+    ],
+  },
+  {
+    title: "Binder",
+    note: "Your collection view.",
+    rows: [
+      {
+        key: "binder",
+        type: "choice",
+        label: "Card size",
+        note: "How many cards fit across the binder grid.",
+        options: [
+          ["compact", "Compact"],
+          ["cosy", "Cosy"],
+          ["large", "Large"],
+        ],
+      },
+      { key: "confirmSell", type: "toggle", label: "Confirm before selling", note: "Ask first when you sell a duplicate, so a stray tap can't cost you a card." },
+    ],
+  },
+  {
+    title: "Start-up",
+    note: "Where the site drops you when you open it.",
+    rows: [
+      {
+        key: "startView",
+        type: "choice",
+        label: "Opening view",
+        note: "Which page loads first.",
+        options: [
+          ["home", "Home"],
+          ["shop", "Packs"],
+          ["collection", "Binder"],
+        ],
+      },
+    ],
+  },
 ];
 
-function renderSettings() {
-  const rows = SETTING_ROWS.map(
-    ([key, label, note]) => `<label class="toggle-row">
-      <span>
-        <b>${esc(label)}</b>
-        <small>${esc(note)}</small>
+const FOIL_STRENGTH = { subtle: 0.55, normal: 1, intense: 1.5 };
+const BINDER_MIN = { compact: "116px", cosy: "150px", large: "196px" };
+
+function settingRow(row) {
+  const value = state.settings[row.key];
+  if (row.type === "choice") {
+    const opts = row.options
+      .map(
+        ([val, label]) => `<button type="button" class="seg-btn${value === val ? " on" : ""}"
+          data-choice="${row.key}" data-value="${esc(val)}"
+          aria-pressed="${value === val}">${esc(label)}</button>`
+      )
+      .join("");
+    return `<div class="set-row">
+      <span class="set-copy">
+        <b>${esc(row.label)}</b>
+        <small>${esc(row.note)}</small>
       </span>
-      <input type="checkbox" data-setting="${key}" ${state.settings[key] ? "checked" : ""} />
-      <i class="switch" aria-hidden="true"></i>
-    </label>`
+      <span class="seg" role="group" aria-label="${esc(row.label)}">${opts}</span>
+    </div>`;
+  }
+  return `<label class="set-row toggle-row">
+    <span class="set-copy">
+      <b>${esc(row.label)}</b>
+      <small>${esc(row.note)}</small>
+    </span>
+    <input type="checkbox" data-setting="${row.key}" ${value ? "checked" : ""} />
+    <i class="switch" aria-hidden="true"></i>
+  </label>`;
+}
+
+function changedSettingCount() {
+  return Object.keys(DEFAULT_SETTINGS).filter(
+    (key) => state.settings[key] !== DEFAULT_SETTINGS[key]
+  ).length;
+}
+
+function settingsSummaryText(changed) {
+  if (!changed) return "Everything is on its default.";
+  return `${changed} setting${changed === 1 ? "" : "s"} changed from the default.`;
+}
+
+function updateSettingsSummary() {
+  const changed = changedSettingCount();
+  const line = els.settingsBody.querySelector(".set-bar p");
+  const reset = els.settingsBody.querySelector("#reset-settings");
+  if (line) line.textContent = settingsSummaryText(changed);
+  if (reset) reset.disabled = !changed;
+}
+
+function renderSettings() {
+  const changed = changedSettingCount();
+
+  const groups = SETTING_GROUPS.map(
+    (group) => `<section class="panel set-panel">
+      <div class="set-panel-head">
+        <h3>${esc(group.title)}</h3>
+        <p>${esc(group.note)}</p>
+      </div>
+      <div class="set-list">${group.rows.map(settingRow).join("")}</div>
+    </section>`
   ).join("");
 
   els.settingsBody.innerHTML = `
-    <div class="panel">
-      <h3>Cards</h3>
-      <div class="toggle-list">${rows}</div>
+    <div class="set-bar">
+      <p>${esc(settingsSummaryText(changed))}</p>
+      <button class="ghost" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
-    <div class="panel danger">
-      <h3>Reset progress</h3>
-      <p class="panel-note">
-        Clears coins, binder, and history. Your settings stay. This cannot be undone.
-      </p>
-      <button class="ghost danger-btn" id="reset-progress">Reset everything</button>
-    </div>`;
+    <div class="set-groups">${groups}</div>
+    <section class="panel danger set-danger">
+      <div class="set-panel-head">
+        <h3>Reset progress</h3>
+        <p>Clears coins, binder, and history. Your settings and trainers stay. This cannot be undone.</p>
+      </div>
+      <button class="ghost danger-btn" id="reset-progress" type="button">Reset everything</button>
+    </section>`;
 }
 
 function applySettings() {
-  const { shine, tilt, stamps, motion } = state.settings;
+  const { shine, tilt, stamps, motion, flash, foil, binder } = state.settings;
   document.body.classList.toggle("no-shine", !shine);
   document.body.classList.toggle("no-tilt", !tilt);
   document.body.classList.toggle("no-stamps", !stamps);
   document.body.classList.toggle("no-motion", !motion);
+  document.body.classList.toggle("no-flash", !flash);
+  document.body.style.setProperty("--foil-strength", FOIL_STRENGTH[foil] ?? 1);
+  document.body.style.setProperty("--binder-min", BINDER_MIN[binder] ?? BINDER_MIN.cosy);
+}
+
+/** Short buzz on the tear and on a hit, when the setting is on and supported. */
+function buzz(pattern) {
+  if (!state.settings.haptics) return;
+  try {
+    navigator.vibrate?.(pattern);
+  } catch {
+    /* unsupported */
+  }
 }
 
 const VIEW_SECTIONS = {
   home: "viewHome",
   shop: "viewShop",
   collection: "viewCollection",
+  binder: "viewBinder",
   catalog: "viewCatalog",
   account: "viewAccount",
+  auth: "viewAuth",
   settings: "viewSettings",
 };
 
 const VIEW_RENDER = {
   home: () => renderHome(),
   collection: () => renderCollection(),
+  binder: () => renderBinder(),
   catalog: () => renderCatalog(),
   account: () => renderAccount(),
+  auth: () => renderAuth(),
   settings: () => renderSettings(),
 };
 
@@ -939,14 +2016,18 @@ function setView(next) {
   for (const [name, key] of Object.entries(VIEW_SECTIONS)) {
     els[key]?.classList.toggle("hidden", view !== name);
   }
+  const navView = view === "auth" ? "account" : view;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
-    const on = btn.dataset.view === view;
+    const on = btn.dataset.view === navView;
     btn.classList.toggle("active", on);
     if (on) btn.setAttribute("aria-current", "page");
     else btn.removeAttribute("aria-current");
   });
   VIEW_RENDER[view]?.();
   document.body.classList.toggle("on-home", view === "home");
+  document.body.classList.toggle("on-shop", view === "shop");
+  document.body.classList.toggle("on-collection", view === "collection");
+  document.body.classList.toggle("on-auth", view === "auth");
 }
 
 function remainingBacks() {
@@ -1211,7 +2292,9 @@ function clearHitFx() {
 function playHitFx(card) {
   const tier = hitTier(card);
   clearHitFx();
-  if (!tier || !motionOk()) return;
+  if (!tier) return;
+  buzz(tier >= 3 ? [24, 40, 60] : tier === 2 ? [18, 30, 30] : 18);
+  if (!motionOk() || !state.settings.flash) return;
   const count = tier === 3 ? 28 : tier === 2 ? 18 : 10;
   for (let i = 0; i < count; i += 1) {
     const spark = document.createElement("span");
@@ -1301,7 +2384,7 @@ function showSpread() {
   els.thumbs.innerHTML = "";
   els.spread.classList.remove("hidden");
 
-  const worth = currentPulls.reduce((sum, card) => sum + sellValue(card), 0);
+  const worth = money(currentPulls.reduce((sum, card) => sum + sellValue(card), 0));
   const fresh = currentPulls.filter((card) => card.wasNew).length;
   const best = bestPull();
 
@@ -1326,7 +2409,7 @@ function showSpread() {
       <div class="spread-stats">
         <span><b>${currentPulls.length}</b> cards</span>
         <span><b>${fresh}</b> new</span>
-        <span><b>✦ ${worth.toLocaleString()}</b> value</span>
+        <span><b>✦ ${coin(worth)}</b> value</span>
         ${best ? `<span class="best">${rarityPips(best.rarity)} <b>${esc(best.name)}</b></span>` : ""}
       </div>
     </div>
@@ -1679,7 +2762,7 @@ function startRip(wrapper) {
     return;
   }
   activeWrapper = wrapper;
-  state.coins -= liveSet.cost;
+  state.coins = money(state.coins - liveSet.cost);
   state.packsOpened += 1;
   const seen = new Set(Object.keys(state.collection).filter((id) => state.collection[id] > 0));
   currentPulls = ripPack(liveSet, cards).map((card) => {
@@ -1689,6 +2772,7 @@ function startRip(wrapper) {
   });
   currentPulls.forEach((card) => addPull(state, card, wrapper.id));
   saveState(state);
+  trackWorth();
   renderHeader();
   renderShop();
 
@@ -1763,6 +2847,7 @@ function completeTear() {
   els.packBody.classList.add("tearing", "torn");
   els.packBody.classList.remove("dragging");
   els.ripHint.textContent = "Wrapper coming off";
+  buzz([12, 18, 26]);
   const startCut = tearCut;
   const startLift = tearLift;
   const endPose = flyOffPose();
@@ -1872,40 +2957,119 @@ function inspectFromEl(el) {
   openInspect(slot.dataset.inspect, slot.dataset.reverse === "1");
 }
 
+/** The card the inspector is currently showing, for the chart's range buttons. */
+let inspectCard = null;
+let inspectRange = "30d";
+
+function inspectSellRow(card) {
+  const count = state.collection[card.id] || 0;
+  const value = sellValue(card);
+  if (count < 1) {
+    return `<div class="pc-sell">
+      <span class="pc-own">Unpulled — still hunting this one</span>
+    </div>`;
+  }
+  return `<div class="pc-sell">
+    <span class="pc-own">You own ×${count}</span>
+    <button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
+      Sell one · +${coin(value)}
+    </button>
+  </div>`;
+}
+
+function paintInspect(card) {
+  const chart = els.inspectInfo.querySelector("#inspect-chart");
+  if (chart) renderPriceChart(chart, card, inspectRange);
+  const sell = els.inspectInfo.querySelector("#inspect-sell");
+  if (sell) sell.innerHTML = inspectSellRow(card);
+}
+
 function openInspect(id, reverse = false) {
   const base = findCard(id);
   if (!base) return;
   const card = reverse || ownedReverse(id) ? { ...base, reverse: true } : base;
-  const count = state.collection[id] || 0;
-  const body = (text) => esc(text || "").replace(/\n/g, "<br>");
-  const attacks = (card.attacks || [])
-    .map(
-      (a) => `<div class="atk"><b>${esc(a.name)}</b> <span>${esc(a.damage || "")}</span><p>${body(a.text)}</p></div>`
-    )
-    .join("");
-  const powers = (card.abilities || [])
-    .map((a) => `<div class="atk"><b>${esc(a.name)}</b> <em>${esc(a.type || "")}</em><p>${body(a.text)}</p></div>`)
-    .join("");
-  const ownedLine = count > 0 ? `You own ×${count}` : "Unpulled — still hunting this one";
+  inspectCard = card;
+  inspectRange = "30d";
   els.inspectArt.innerHTML = tcgFace(card);
   els.inspectInfo.innerHTML = `
     <p class="kicker">${esc(numberLine(card))} · <span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span> · ${esc(card.supertype)}</p>
     <h2>${esc(card.name)}</h2>
     <p>${esc(card.subtypes?.join(" · ") || "")}${card.hp ? ` · ${esc(card.hp)} HP` : ""}${card.evolvesFrom ? ` · Evolves from ${esc(card.evolvesFrom)}` : ""}</p>
-    ${powers}${attacks}
-    ${card.flavorText ? `<p class="flavor">“${esc(card.flavorText)}”</p>` : ""}
-    <p class="artist">Illus. ${esc(card.artist || "Unknown")} · ${ownedLine}</p>`;
+    <div class="price-card" id="inspect-chart"></div>
+    <div id="inspect-sell"></div>
+    <p class="artist">Illus. ${esc(card.artist || "Unknown")}</p>`;
+  paintInspect(card);
   openDialog(els.inspect, els.inspectClose);
 }
+
+els.inspectInfo.addEventListener("click", (e) => {
+  const range = e.target.closest("[data-range]");
+  if (range && inspectCard) {
+    inspectRange = range.dataset.range;
+    renderPriceChart(els.inspectInfo.querySelector("#inspect-chart"), inspectCard, inspectRange);
+    return;
+  }
+  const sell = e.target.closest("[data-inspect-sell]");
+  if (!sell || !inspectCard) return;
+  const card = findCard(sell.dataset.inspectSell);
+  if (!card) return;
+  const value = sellValue(card);
+  const last = (state.collection[card.id] || 0) <= 1;
+  if (
+    (state.settings.confirmSell || last) &&
+    !confirm(
+      last
+        ? `Sell your only ${card.name} for ${coin(value)} coins? It leaves the binder.`
+        : `Sell a spare ${card.name} for ${coin(value)} coins?`
+    )
+  ) {
+    return;
+  }
+  if (!sellOne(state, card.id, value)) return;
+  trackWorth();
+  toast(`Sold ${card.name} for ${coin(value)} coins`);
+  renderHeader();
+  renderShop();
+  renderCollection();
+  paintInspect(inspectCard);
+});
 
 document.querySelectorAll(".nav-btn").forEach((btn) => {
   btn.addEventListener("click", () => setView(btn.dataset.view));
 });
 
 els.setSwitcher.addEventListener("click", (e) => {
+  const soon = e.target.closest("[data-soon]");
+  if (soon) {
+    toast(`${soon.dataset.soon} is queued.`);
+    return;
+  }
   const tab = e.target.closest("[data-set]");
   if (tab) activateSet(tab.dataset.set);
 });
+els.bulkSets?.addEventListener("click", (e) => {
+  const era = e.target.closest("[data-era]");
+  if (era) {
+    bulkEra = era.dataset.era;
+    renderBulkSets();
+    return;
+  }
+  const soon = e.target.closest("[data-soon]");
+  if (soon) {
+    toast(`${soon.dataset.soon} is queued.`);
+    return;
+  }
+  const tab = e.target.closest("[data-set]");
+  if (tab) activateSet(tab.dataset.set);
+});
+els.setSwitcher.addEventListener("toggle", onEraToggle);
+
+function onEraToggle(e) {
+  const era = e.target.closest("details.rail-era");
+  if (!era || e.target !== era) return;
+  if (era.open) openEras.add(era.dataset.era);
+  else openEras.delete(era.dataset.era);
+}
 
 document.addEventListener("click", (e) => {
   const jump = e.target.closest("[data-goto]");
@@ -1931,15 +3095,41 @@ document.querySelector(".brand")?.addEventListener("click", (e) => {
   setView("home");
 });
 
+els.authEntry?.addEventListener("click", () => openAuth(trainerList().length ? "signin" : "signup"));
+els.trainerChip?.addEventListener("click", () => setView("account"));
+
 els.settingsBody.addEventListener("change", (e) => {
   const toggle = e.target.closest("[data-setting]");
   if (!toggle) return;
   state.settings[toggle.dataset.setting] = toggle.checked;
   saveState(state);
   applySettings();
+  // Only the summary line changes, so patch it rather than rebuilding the page
+  // out from under the switch the pointer is still on.
+  updateSettingsSummary();
 });
 
 els.settingsBody.addEventListener("click", (e) => {
+  const choice = e.target.closest("[data-choice]");
+  if (choice) {
+    state.settings[choice.dataset.choice] = choice.dataset.value;
+    saveState(state);
+    applySettings();
+    renderSettings();
+    if (choice.dataset.choice === "binder") renderCollection();
+    return;
+  }
+
+  if (e.target.closest("#reset-settings")) {
+    Object.assign(state.settings, DEFAULT_SETTINGS);
+    saveState(state);
+    applySettings();
+    renderSettings();
+    renderCollection();
+    toast("Settings back to default.");
+    return;
+  }
+
   if (!e.target.closest("#reset-progress")) return;
   if (!confirm("Reset coins, binder, and history? This cannot be undone.")) return;
   resetProgress(state);
@@ -1950,20 +3140,118 @@ els.settingsBody.addEventListener("click", (e) => {
   toast("Progress reset.");
 });
 
-els.accountBody.addEventListener("click", (e) => {
+els.accountBody.addEventListener("click", async (e) => {
+  inspectFromEl(e.target);
+  const open = e.target.closest("[data-open-auth]");
+  if (open) {
+    openAuth(open.dataset.openAuth);
+    return;
+  }
+  const switchTo = e.target.closest("[data-switch-trainer]");
+  if (switchTo) {
+    if (busyPack()) return;
+    authTab = "signin";
+    authSelectedId = switchTo.dataset.switchTrainer;
+    const target = trainerList().find((t) => t.id === authSelectedId);
+    if (target && !target.pinHash) {
+      const result = await signInTrainer(state, authSelectedId, "");
+      if (!result.ok) {
+        toast(result.error);
+        return;
+      }
+      await hydrateAfterAccountChange();
+      setView("account");
+      toast(`Signed in as ${result.trainer.name}.`);
+      return;
+    }
+    setView("auth");
+    return;
+  }
+  if (e.target.closest("#sign-out")) {
+    if (busyPack()) return;
+    signOutTrainer(state);
+    await hydrateAfterAccountChange();
+    setView("account");
+    toast("Signed out. Guest binder is back.");
+    return;
+  }
+  if (e.target.closest("#delete-trainer")) {
+    const trainer = activeTrainer();
+    if (!trainer || busyPack()) return;
+    if (!confirm(`Delete ${trainer.name} (@${trainer.handle}) and this binder from this device?`)) return;
+    const result = deleteTrainer(state, trainer.id);
+    if (!result.ok) {
+      toast(result.error);
+      return;
+    }
+    await hydrateAfterAccountChange();
+    setView("account");
+    toast("Trainer deleted.");
+    return;
+  }
+  const color = e.target.closest("[data-profile-color]");
+  if (color) {
+    const next = updateTrainer({ color: color.dataset.profileColor });
+    if (next) {
+      renderHeader();
+      const hex = avatarColor(next.color).hex;
+      els.accountBody.querySelectorAll("[data-profile-color]").forEach((btn) => {
+        btn.classList.toggle("on", btn.dataset.profileColor === next.color);
+      });
+      const mark = els.accountBody.querySelector(".trainer-mark");
+      if (mark) mark.style.setProperty("--avatar", hex);
+    }
+    return;
+  }
   if (e.target.closest("#import-save")) {
     els.accountBody.querySelector("#import-file")?.click();
     return;
   }
   if (!e.target.closest("#export-save")) return;
+  const trainer = activeTrainer();
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "poke-pack-rip-save.json";
+  link.download = `poke-pack-rip-${trainer?.handle || "guest"}-save.json`;
   link.click();
   URL.revokeObjectURL(url);
   toast("Save downloaded.");
+});
+
+els.accountBody.addEventListener("submit", async (e) => {
+  const profile = e.target.closest("#profile-form");
+  if (profile) {
+    e.preventDefault();
+    const data = new FormData(profile);
+    const next = updateTrainer({
+      name: String(data.get("name") || ""),
+      handle: String(data.get("handle") || ""),
+      bio: String(data.get("bio") || ""),
+    });
+    const err = els.accountBody.querySelector("#profile-error");
+    if (!next) {
+      if (err) err.textContent = "Name needs 2+ letters, and the handle must be 3–16 unique characters.";
+      return;
+    }
+    renderHeader();
+    renderAccount();
+    toast("Profile saved.");
+    return;
+  }
+  const pw = e.target.closest("#password-form");
+  if (!pw) return;
+  e.preventDefault();
+  const data = new FormData(pw);
+  const result = await setTrainerPassword(String(data.get("password") || ""), String(data.get("current") || ""));
+  const err = els.accountBody.querySelector("#password-error");
+  if (!result.ok) {
+    if (err) err.textContent = result.error;
+    toast(result.error);
+    return;
+  }
+  renderAccount();
+  toast(String(data.get("password") || "") ? "Password updated." : "Password cleared.");
 });
 
 els.accountBody.addEventListener("change", async (e) => {
@@ -1986,11 +3274,84 @@ els.accountBody.addEventListener("change", async (e) => {
     return;
   }
   applySettings();
-  await activateSet(state.activeSetId || DEFAULT_SET_ID);
+  await activateSet(state.activeSetId || DEFAULT_SET_ID, true);
   renderHeader();
   scheduleDailyTick();
   renderAccount();
   toast("Save loaded.");
+});
+
+els.authBody?.addEventListener("click", (e) => {
+  const tab = e.target.closest("[data-auth-tab]");
+  if (tab) {
+    authTab = tab.dataset.authTab === "signin" ? "signin" : "signup";
+    renderAuth();
+    return;
+  }
+  const pick = e.target.closest("[data-pick-trainer]");
+  if (pick) {
+    authSelectedId = pick.dataset.pickTrainer;
+    renderAuth();
+    return;
+  }
+  const swatch = e.target.closest("[data-signup-color]");
+  if (swatch) {
+    signupColor = swatch.dataset.signupColor;
+    els.authBody.querySelectorAll("[data-signup-color]").forEach((btn) => {
+      btn.classList.toggle("on", btn.dataset.signupColor === signupColor);
+    });
+    return;
+  }
+  if (e.target.closest("[data-continue-guest]")) {
+    setView("home");
+  }
+});
+
+els.authBody?.addEventListener("submit", async (e) => {
+  const signup = e.target.closest("#signup-form");
+  if (signup) {
+    e.preventDefault();
+    if (busyPack()) return;
+    const data = new FormData(signup);
+    const signed = Boolean(activeTrainer());
+    const keep = signed ? false : data.has("keep") || !guestHasProgress();
+    const result = await createTrainer(state, {
+      name: String(data.get("name") || ""),
+      handle: String(data.get("handle") || ""),
+      password: String(data.get("password") || ""),
+      color: signupColor,
+      keepProgress: keep,
+    });
+    const err = els.authBody.querySelector("#auth-error");
+    if (!result.ok) {
+      if (err) err.textContent = result.error;
+      toast(result.error);
+      return;
+    }
+    await hydrateAfterAccountChange();
+    setView("account");
+    toast(keep ? `Welcome, ${result.trainer.name}. This binder is yours.` : `Trainer ${result.trainer.name} is ready.`);
+    return;
+  }
+  const signin = e.target.closest("#signin-form");
+  if (!signin) return;
+  e.preventDefault();
+  if (busyPack()) return;
+  if (!authSelectedId) {
+    toast("Pick a trainer first.");
+    return;
+  }
+  const data = new FormData(signin);
+  const result = await signInTrainer(state, authSelectedId, String(data.get("password") || ""));
+  const err = els.authBody.querySelector("#auth-error");
+  if (!result.ok) {
+    if (err) err.textContent = result.error;
+    toast(result.error);
+    return;
+  }
+  await hydrateAfterAccountChange();
+  setView("account");
+  toast(`Signed in as ${result.trainer.name}.`);
 });
 
 els.dailyBtn.addEventListener("click", () => {
@@ -1999,10 +3360,13 @@ els.dailyBtn.addEventListener("click", () => {
     toast("Wait a second, then claim again.");
     return;
   }
+  trackWorth();
   renderHeader();
   scheduleDailyTick();
   renderShop();
-  toast(`Daily bonus: +${amount} coins`);
+  if (view === "home") renderHome();
+  if (view === "account") renderAccount();
+  toast(`Daily bonus: +${coin(amount)} coins`);
 });
 
 els.packGrid.addEventListener("click", (e) => {
@@ -2189,14 +3553,66 @@ document.addEventListener("pointerleave", clearGlare);
 
 els.doneBtn.addEventListener("click", finishRip);
 
+els.binderBody?.addEventListener("click", (e) => {
+  const flip = e.target.closest("[data-flip]");
+  if (flip) {
+    binderSpread = Math.max(0, binderSpread + Number(flip.dataset.flip) * 2);
+    renderBinder();
+    return;
+  }
+  if (e.target.closest("[data-picker-close]")) {
+    binderPicking = null;
+    renderBinder();
+    return;
+  }
+  const pick = e.target.closest("[data-pick]");
+  if (pick && binderPicking != null) {
+    const id = pick.dataset.pick;
+    if (placeInBinder(state, binderPicking, id, ownedReverse(id))) {
+      binderPicking = null;
+      renderBinder();
+    }
+    return;
+  }
+  const pocket = e.target.closest("[data-pocket]");
+  if (pocket) {
+    binderPicking = Number(pocket.dataset.pocket);
+    renderBinder();
+    return;
+  }
+  const out = e.target.closest("[data-unpocket]");
+  if (out) {
+    clearBinderSlot(state, Number(out.dataset.unpocket));
+    renderBinder();
+    return;
+  }
+  // anything else in a filled pocket opens the inspector
+  inspectFromEl(e.target);
+});
+
+els.binderAddPage?.addEventListener("click", () => {
+  addBinderPage(state);
+  binderSpread = Math.max(0, binderPageCount() - 2);
+  renderBinder();
+  toast("Page added.");
+});
+
 els.dexGrid.addEventListener("click", (e) => {
   const sellBtn = e.target.closest("[data-sell]");
   if (sellBtn) {
     e.preventDefault();
     e.stopPropagation();
     const card = byId[sellBtn.dataset.sell];
+    if (
+      card &&
+      state.settings.confirmSell &&
+      !confirm(`Sell a spare ${card.name} for ${coin(sellValue(card))} coins?`)
+    ) {
+      return;
+    }
     if (card && sellOne(state, card.id, sellValue(card))) {
-      toast(`Sold extra ${card.name} for ${sellValue(card)} coins`);
+      trackWorth();
+      toast(`Sold extra ${card.name} for ${coin(sellValue(card))} coins`);
       renderHeader();
       renderShop();
       renderCollection();
@@ -2216,12 +3632,21 @@ els.inspect.addEventListener("click", (e) => {
  * apply instantly; only free text waits for a pause in typing.
  */
 let searchTimer = 0;
-els.search.addEventListener("input", () => {
+els.search?.addEventListener("input", () => {
   clearTimeout(searchTimer);
-  searchTimer = setTimeout(renderCollection, 150);
+  searchTimer = setTimeout(() => renderCollection({ refreshSets: false }), 150);
 });
-[els.rarityFilter, els.ownedFilter].forEach((el) => {
-  el.addEventListener("change", renderCollection);
+els.rarityFilter?.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-rarity]");
+  if (!btn) return;
+  rarityMode = btn.dataset.rarity;
+  renderCollection({ refreshSets: false });
+});
+els.ownedFilter?.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-owned]");
+  if (!btn) return;
+  ownedMode = btn.dataset.owned;
+  renderCollection({ refreshSets: false });
 });
 
 /*
@@ -2242,19 +3667,18 @@ document.addEventListener(
   true
 );
 
-els.catalogEras.addEventListener(
-  "error",
-  (e) => {
-    const img = e.target;
-    if (!(img instanceof HTMLImageElement)) return;
-    if (img.classList.contains("catalog-logo")) {
-      img.closest(".catalog-art")?.classList.add("no-logo");
-    } else if (img.classList.contains("catalog-symbol")) {
-      img.remove();
-    }
-  },
-  true
-);
+function hideBrokenSetArt(e) {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement)) return;
+  if (img.classList.contains("catalog-logo")) {
+    img.closest(".catalog-art")?.classList.add("no-logo");
+  } else if (img.classList.contains("catalog-symbol") || img.classList.contains("rail-symbol")) {
+    img.remove();
+  }
+}
+els.catalogEras.addEventListener("error", hideBrokenSetArt, true);
+els.setSwitcher.addEventListener("error", hideBrokenSetArt, true);
+els.bulkSets?.addEventListener("error", hideBrokenSetArt, true);
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
@@ -2286,16 +3710,103 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+/*
+ * Sealed prices live in data/sealed.json so `scripts/fetch_prices.py` can
+ * refresh them without touching code. Each set's pack cost is the real market
+ * price of that booster pack; if the file is missing or a set isn't in it, the
+ * cost baked into catalog.js stands.
+ */
+async function loadSealedPrices() {
+  try {
+    const prices = await fetch("data/sealed.json", { cache: "no-cache" }).then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+    sealedPrices = prices;
+    PLAYABLE_SETS.forEach((set) => {
+      const pack = prices[set.id]?.boosterPack;
+      if (typeof pack === "number" && pack > 0) set.cost = money(pack);
+    });
+  } catch {
+    /* keep the costs from catalog.js */
+  }
+}
+
+let allSetsLoaded = false;
+
+/**
+ * Pull in the sets the player isn't looking at, so net worth counts their whole
+ * collection. Runs after first paint — it is ~100KB per set and nothing on
+ * screen needs it immediately.
+ */
+async function loadAllSets() {
+  await Promise.all(
+    PLAYABLE_SETS.map(async (set) => {
+      if (setCache[set.id]) return;
+      try {
+        setCache[set.id] = await fetch(set.dataFile, { cache: "no-cache" }).then((r) => {
+          if (!r.ok) throw new Error(r.status);
+          return r.json();
+        });
+        applyCachedPrices(setCache[set.id], set.id);
+      } catch {
+        /* a missing set just doesn't count toward the total */
+      }
+    })
+  );
+  allSetsLoaded = true;
+  trackWorth();
+  if (view === "home") renderHome();
+  priceTicker?.tick?.();
+}
+
 async function boot() {
+  await Promise.all([loadSealedPrices(), loadPriceHistory()]);
   await activateSet(state.activeSetId || DEFAULT_SET_ID);
   applySettings();
-  renderRarityKey();
+  renderHeader();
   scheduleDailyTick();
   const back = new Image();
   back.src = liveSet.cardBack;
+  const hash = (location.hash || "").replace("#", "").toLowerCase();
+  if (hash === "signup" || hash === "register") {
+    history.replaceState(null, "", location.pathname + location.search);
+    openAuth("signup");
+  } else if (hash === "signin" || hash === "login") {
+    history.replaceState(null, "", location.pathname + location.search);
+    openAuth("signin");
+  } else {
+    const start = state.settings.startView;
+    if (start && start !== "home" && VIEW_SECTIONS[start]) setView(start);
+  }
+
+  // Not awaited: the page is usable without it, and it refreshes home when done.
+  loadAllSets();
+  priceTicker = startLivePrices({
+    sets: () =>
+      PLAYABLE_SETS.map((set) => ({
+        id: set.id,
+        cards: setCache[set.id] || [],
+      })),
+    activeId: () => liveSet.id,
+    refreshSealed: loadSealedPrices,
+    onUpdate: () => {
+      renderHeader();
+      if (packPhase !== "idle") return;
+      if (view === "home") renderHome();
+      if (view === "shop") renderShop();
+      if (view === "collection") renderCollection();
+      if (view === "binder") renderBinder();
+      if (view === "account") renderAccount();
+      if (inspectCard && els.inspect && !els.inspect.classList.contains("hidden")) {
+        paintInspect(inspectCard);
+      }
+    },
+  });
 }
 
 boot().catch(() => toast(`Couldn't load ${liveSet.name} data.`));
+initRadio();
 
 /*
  * The header only changes on its own when the daily unlocks, so schedule a

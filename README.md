@@ -38,6 +38,11 @@ scripts/              python builders that generate data/ and crop wrapper art
 3. Drop wrapper art into `assets/packs/<id>/` and register it in
    `assets/packs/sources.json`.
 4. Remove the set from `ROADMAP` so it does not appear twice in the catalog.
+5. Run `py scripts/make_owner_masks.py` if the set has "Trainer's Pokemon"
+   cards. It recovers each owner portrait from the scans and writes its foil
+   window into `assets/masks/owner/`, stamping `ownerMask` onto the cards that
+   use it. `--debug` drops a contact sheet in `scripts/_debug/` to check the
+   cuts by eye.
 
 ## Pull rates
 

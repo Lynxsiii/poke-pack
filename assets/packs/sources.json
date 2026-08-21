@@ -23,6 +23,16 @@
         { "id": "pyroar", "remote": "chaos-rising-pack-3.avif", "file": "me4/pyroar.avif" }
       ]
     },
+    "me3": {
+      "name": "Perfect Order",
+      "slug": "perfect-order",
+      "packs": [
+        { "id": "clefable", "remote": "perfect-order-pack-0.avif", "file": "me3/clefable.avif" },
+        { "id": "starmie", "remote": "perfect-order-pack-1.avif", "file": "me3/starmie.avif" },
+        { "id": "zygarde", "remote": "perfect-order-pack-2.avif", "file": "me3/zygarde.avif" },
+        { "id": "meowth", "remote": "perfect-order-pack-3.avif", "file": "me3/meowth.avif" }
+      ]
+    },
     "base1": {
       "name": "Base",
       "slug": "base-set",

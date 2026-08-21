@@ -1,0 +1,231 @@
+"""Refresh real market prices for every playable set.
+
+Two sources, both read straight off the pages' own structured data rather than
+scraped markup, so a cosmetic redesign on either site won't silently break us:
+
+  * singles  — pkmn.gg set page, ``__NEXT_DATA__`` → ``props.pageProps.cardData``
+  * sealed   — pittpokeresearch.com set page, JSON-LD ``Product`` offers
+
+Singles are written back into ``data/<set>.json`` as a ``market`` field on each
+card (USD). Sealed prices land in ``data/sealed.json``, keyed by set id, which
+is what the shop reads for pack cost.
+
+Cards are matched by collector number, and the run aborts for a set if the
+names don't line up — a silent mismatch would mis-price the whole binder.
+
+Usage:
+    py scripts/fetch_prices.py            # all sets
+    py scripts/fetch_prices.py me5 me4    # just these
+"""
+from __future__ import annotations
+
+import json
+import re
+import sys
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA = ROOT / "data"
+SEALED_OUT = DATA / "sealed.json"
+HISTORY_OUT = DATA / "price-history.json"
+
+# Keep roughly a year of daily points per card.
+HISTORY_LIMIT = 400
+
+UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) poke-pack.rip price refresh"
+
+# set id -> (pkmn.gg slug, pittpokeresearch slug)
+SETS = {
+    "me5": ("pitch-black", "Pitch-Black"),
+    "me4": ("chaos-rising", "Chaos-Rising"),
+    "me3": ("perfect-order", "Perfect-Order"),
+    "me2pt5": ("ascended-heroes", "Ascended-Heroes"),
+    "me2": ("phantasmal-flames", "Phantasmal-Flames"),
+    "me1": ("mega-evolution", "Mega-Evolution"),
+}
+
+PKMNGG = "https://www.pkmn.gg/series/mega-evolution/{slug}"
+PITT = "https://www.pittpokeresearch.com/pokemon-set/{slug}"
+
+# Sealed product name suffix -> key we store it under.
+SEALED_KEYS = [
+    ("Pokémon Center Elite Trainer Box", "pcEliteTrainerBox"),
+    ("Elite Trainer Box", "eliteTrainerBox"),
+    ("Booster Box", "boosterBox"),
+    ("Booster Bundle", "boosterBundle"),
+    ("Build & Battle Box", "buildBattleBox"),
+    ("Booster Pack", "boosterPack"),
+]
+
+
+def fetch(url: str) -> str:
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=45) as resp:
+        return resp.read().decode("utf-8", "replace")
+
+
+def singles(slug: str) -> dict[str, float]:
+    """Collector number -> USD market price for the pack-pulled printing."""
+    html = fetch(PKMNGG.format(slug=slug))
+    blob = re.search(
+        r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
+        html,
+        re.S,
+    )
+    if not blob:
+        raise RuntimeError(f"no __NEXT_DATA__ on pkmn.gg/{slug} — page shape changed")
+    cards = json.loads(blob.group(1))["props"]["pageProps"]["cardData"]
+    out: dict[str, dict] = {}
+    for card in cards:
+        number = str(card.get("number", "")).strip()
+        price = card.get("sortPrice")
+        if not number or not isinstance(price, (int, float)):
+            continue
+        out[number] = {"price": float(price), "name": card.get("name", "")}
+    return out
+
+
+def sealed(slug: str) -> dict[str, float]:
+    """Sealed product key -> USD, from the page's JSON-LD Product offers."""
+    html = fetch(PITT.format(slug=slug))
+    found: dict[str, float] = {}
+
+    def walk(node):
+        if isinstance(node, dict):
+            if node.get("@type") == "Product":
+                name = str(node.get("name", ""))
+                offer = node.get("offers") or {}
+                price = offer.get("price")
+                if price is not None:
+                    for suffix, key in SEALED_KEYS:
+                        # Most specific suffix wins; PC ETB also ends in "Elite
+                        # Trainer Box", so order in SEALED_KEYS matters.
+                        if name.endswith(suffix) and key not in found:
+                            found[key] = round(float(price), 2)
+                            break
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    for block in re.findall(
+        r'<script[^>]*application/ld\+json[^>]*>(.*?)</script>', html, re.S
+    ):
+        try:
+            walk(json.loads(block))
+        except json.JSONDecodeError:
+            continue
+    return found
+
+
+def apply_singles(set_id: str, priced: dict[str, dict]) -> tuple[int, int]:
+    path = DATA / f"{set_id}.json"
+    cards = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(cards, list):
+        raise RuntimeError(f"{path.name}: expected a list of cards")
+
+    mismatched = [
+        (c["number"], c["name"], priced[str(c["number"])]["name"])
+        for c in cards
+        if str(c["number"]) in priced
+        and c["name"].lower() != priced[str(c["number"])]["name"].lower()
+    ]
+    if mismatched:
+        for number, ours, theirs in mismatched[:5]:
+            print(f"    #{number}: ours {ours!r} vs theirs {theirs!r}")
+        raise RuntimeError(
+            f"{set_id}: {len(mismatched)} name mismatch(es) — refusing to price "
+            "a set whose numbering has drifted"
+        )
+
+    hit = 0
+    for card in cards:
+        entry = priced.get(str(card["number"]))
+        if not entry:
+            continue
+        card["market"] = round(entry["price"], 2)
+        hit += 1
+
+    path.write_text(json.dumps(cards, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return hit, len(cards)
+
+
+def record_history(set_id: str, priced: dict[str, dict], today: str) -> int:
+    """Append today's price for each card to data/price-history.json.
+
+    No public source publishes a back catalogue of prices without a paid or
+    key-gated API, so the chart in the app is fed by these snapshots: one point
+    per card per day the script runs. Re-running on the same day overwrites
+    that day rather than stacking duplicates.
+    """
+    store = {}
+    if HISTORY_OUT.exists():
+        store = json.loads(HISTORY_OUT.read_text(encoding="utf-8"))
+    series = store.setdefault("cards", {})
+
+    written = 0
+    for number, entry in priced.items():
+        card_id = f"{set_id}-{number}"
+        points = series.setdefault(card_id, [])
+        price = round(float(entry["price"]), 2)
+        if points and points[-1][0] == today:
+            points[-1] = [today, price]
+        else:
+            points.append([today, price])
+        del points[:-HISTORY_LIMIT]
+        written += 1
+
+    store["updated"] = today
+    HISTORY_OUT.write_text(json.dumps(store, separators=(",", ":")) + "\n", encoding="utf-8")
+    return written
+
+
+def main(argv: list[str]) -> int:
+    wanted = argv or list(SETS)
+    unknown = [s for s in wanted if s not in SETS]
+    if unknown:
+        print(f"unknown set(s): {', '.join(unknown)}", file=sys.stderr)
+        return 2
+
+    today = time.strftime("%Y-%m-%d")
+    store = {}
+    if SEALED_OUT.exists():
+        store = json.loads(SEALED_OUT.read_text(encoding="utf-8"))
+
+    failed = []
+    for set_id in wanted:
+        gg_slug, pitt_slug = SETS[set_id]
+        print(f"{set_id}:")
+        try:
+            priced = singles(gg_slug)
+            hit, total = apply_singles(set_id, priced)
+            logged = record_history(set_id, priced, today)
+            print(f"  singles  {hit}/{total} priced, {logged} history points logged")
+        except (urllib.error.URLError, RuntimeError, KeyError) as exc:
+            print(f"  singles  FAILED — {exc}")
+            failed.append(set_id)
+        time.sleep(1)
+        try:
+            products = sealed(pitt_slug)
+            if not products:
+                raise RuntimeError("no Product offers in JSON-LD")
+            store[set_id] = products
+            listed = ", ".join(f"{k} ${v:.2f}" for k, v in sorted(products.items()))
+            print(f"  sealed   {listed}")
+        except (urllib.error.URLError, RuntimeError) as exc:
+            print(f"  sealed   FAILED — {exc}")
+            failed.append(set_id)
+        time.sleep(1)
+
+    store["_fetchedAt"] = today
+    SEALED_OUT.write_text(json.dumps(store, indent=2) + "\n", encoding="utf-8")
+    print(f"\nwrote {SEALED_OUT.relative_to(ROOT)}")
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))
