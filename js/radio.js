@@ -19,16 +19,16 @@ const TRACKS = [
 function loadPrefs() {
   try {
     const raw = JSON.parse(localStorage.getItem(STORAGE) || "null");
-    if (!raw || typeof raw !== "object") return { i: 0, vol: 0.42, open: false };
+    if (!raw || typeof raw !== "object") return { i: 0, vol: 0.16, open: false };
     const i = Number(raw.i);
     const vol = Number(raw.vol);
     return {
       i: Number.isInteger(i) && i >= 0 && i < TRACKS.length ? i : 0,
-      vol: vol >= 0 && vol <= 1 ? vol : 0.42,
+      vol: vol >= 0 && vol <= 1 ? vol : 0.16,
       open: Boolean(raw.open),
     };
   } catch {
-    return { i: 0, vol: 0.42, open: false };
+    return { i: 0, vol: 0.16, open: false };
   }
 }
 
@@ -124,7 +124,12 @@ function mountRadio() {
   const art = root.querySelector("#radio-art");
   const artPeek = root.querySelector("#radio-art-peek");
 
-  audio.volume = prefs.vol;
+  audio.volume = Math.min(prefs.vol, 0.18);
+  vol.value = String(Math.round(audio.volume * 100));
+
+  function unlockPlay() {
+    audio.play().catch(() => {});
+  }
 
   list.innerHTML = TRACKS.map(
     (track, i) => `<button type="button" class="radio-track" data-track="${i}">
@@ -210,6 +215,38 @@ function mountRadio() {
     audio.volume = Number(vol.value) / 100;
     persist();
   });
+  vol.addEventListener("change", () => {
+    audio.volume = Number(vol.value) / 100;
+    persist();
+  });
+  const setVolFromPoint = (e) => {
+    const box = vol.getBoundingClientRect();
+    if (!box.width) return;
+    const point = e.touches?.[0] || e.changedTouches?.[0] || e;
+    const pct = Math.min(1, Math.max(0, (point.clientX - box.left) / box.width));
+    vol.value = String(Math.round(pct * 100));
+    audio.volume = pct;
+    persist();
+  };
+  vol.addEventListener("pointerdown", (e) => {
+    try {
+      vol.setPointerCapture(e.pointerId);
+    } catch {
+      /* iOS */
+    }
+    setVolFromPoint(e);
+  });
+  vol.addEventListener("pointermove", (e) => {
+    if (e.buttons) setVolFromPoint(e);
+  });
+  vol.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    setVolFromPoint(e);
+  }, { passive: false });
+  vol.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    setVolFromPoint(e);
+  }, { passive: false });
 
   seek.addEventListener("pointerdown", () => {
     seeking = true;
@@ -248,5 +285,9 @@ function mountRadio() {
     }
   });
 
-  load(index, false);
+  window.addEventListener("pointerdown", unlockPlay, { once: true });
+  window.addEventListener("keydown", unlockPlay, { once: true });
+  window.addEventListener("touchstart", unlockPlay, { once: true, passive: true });
+
+  load(index, true);
 }

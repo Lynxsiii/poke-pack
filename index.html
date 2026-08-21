@@ -38,7 +38,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/app.css?v=37" />
+    <link rel="stylesheet" href="css/app.css?v=38" />
   </head>
   <body class="on-home is-booting">
     <div class="boot-veil" aria-hidden="true"></div>
@@ -57,6 +57,7 @@
         <a class="nav-btn" href="/bulk" data-view="collection">Bulk</a>
         <a class="nav-btn" href="/binder" data-view="binder">Binder</a>
         <a class="nav-btn" href="/catalog" data-view="catalog">Catalog</a>
+        <a class="nav-btn" href="/social" data-view="social">Social</a>
         <span class="nav-sep"></span>
         <a class="nav-btn" href="/notes" data-view="notes">Notes</a>
         <a class="nav-btn" href="/account" data-view="account">Account</a>
@@ -238,6 +239,10 @@
         <div id="profile-body"></div>
       </section>
 
+      <section id="view-social" class="hidden">
+        <div id="social-body"></div>
+      </section>
+
       <section id="view-auth" class="hidden">
         <div id="auth-body"></div>
       </section>
@@ -315,6 +320,6 @@
       <span>Card names, numbers, artists, and scans match the public Pokémon TCG card database (the same catalog as pokemon.com/us/pokemon-tcg/pokemon-cards).</span>
       <a href="/notes">Patch notes</a>
     </footer>
-    <script type="module" src="js/app.js?v=37"></script>
+    <script type="module" src="js/app.js?v=38"></script>
   </body>
 </html>

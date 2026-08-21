@@ -3,19 +3,13 @@
  * so you can keep more than one binder on a shared machine.
  */
 import { cloneSave, emptySave, importState, saveState } from "./state.js";
+import { AVATAR_COLORS, avatarColor } from "./palette.js";
+
+export { AVATAR_COLORS, avatarColor };
 
 const REGISTRY_KEY = "poke-pack-rip-trainers-v1";
 const SAVE_PREFIX = "poke-pack-rip-save-";
 const GUEST_ID = "guest";
-
-export const AVATAR_COLORS = [
-  { id: "gold", hex: "#f0c14b", label: "Gold" },
-  { id: "violet", hex: "#9b6dff", label: "Violet" },
-  { id: "rose", hex: "#ff5fa2", label: "Rose" },
-  { id: "aqua", hex: "#5fd4ff", label: "Aqua" },
-  { id: "lime", hex: "#66e08a", label: "Lime" },
-  { id: "ember", hex: "#ff7a3d", label: "Ember" },
-];
 
 function blankRegistry() {
   return { activeId: null, trainers: {} };
@@ -64,10 +58,6 @@ export function activeTrainer() {
   const reg = readRegistry();
   if (!reg.activeId) return null;
   return reg.trainers[reg.activeId] || null;
-}
-
-export function avatarColor(id) {
-  return AVATAR_COLORS.find((c) => c.id === id) || AVATAR_COLORS[0];
 }
 
 export function trainerInitial(trainer) {

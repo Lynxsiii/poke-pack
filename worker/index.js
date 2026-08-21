@@ -5,6 +5,8 @@
 import { BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
 import { HIT_RARITIES, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
+import { COLOR_IDS } from "../js/palette.js";
+import { isTitleUnlocked, titleContext } from "../js/titles.js";
 
 const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
@@ -13,7 +15,6 @@ const STARTING_COINS = 25;
 const DAILY_BONUS = 100;
 const DAILY_COOLDOWN_MS = 60 * 60 * 1000;
 const PBKDF2_ITERS = 12_000;
-const COLORS = new Set(["gold", "violet", "rose", "aqua", "lime", "ember"]);
 const BINDER_PAGE = 9;
 const BINDER_MAX_SLOTS = BINDER_PAGE * 40;
 const MAX_CLAIM_CARDS = 8000;
@@ -110,7 +111,7 @@ async function signup(request, env) {
   const name = String(body.name || "").trim().slice(0, 24);
   const handle = normalizeHandle(body.handle);
   const password = String(body.password || "");
-  const color = COLORS.has(body.color) ? body.color : "gold";
+  const color = COLOR_IDS.has(body.color) ? body.color : "gold";
   if (name.length < 2) return json({ error: "Pick a trainer name (at least 2 letters)." }, 400);
   if (handle.length < 3) {
     return json({ error: "Handle needs 3–16 letters, numbers, or underscores." }, 400);
@@ -254,10 +255,22 @@ async function patchMe(request, env) {
   }
   if (body.bio != null) bio = String(body.bio || "").slice(0, 160);
   if (body.color != null) {
-    if (!COLORS.has(body.color)) return json({ error: "Pick an avatar color." }, 400);
+    if (!COLOR_IDS.has(body.color)) return json({ error: "Pick an avatar color." }, 400);
     color = body.color;
   }
-  if (body.title != null) title = String(body.title || "").slice(0, 32);
+  if (body.title != null) {
+    const nextTitle = String(body.title || "").slice(0, 32);
+    const save = await loadSave(env, user.id);
+    const rarities = {};
+    for (const [id, n] of Object.entries(save.collection || {})) {
+      if (!n) continue;
+      const card = await findCatalogCard(env, request, id);
+      if (card?.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
+    }
+    const ctx = titleContext(save, { signed: true, rarities });
+    if (!isTitleUnlocked(nextTitle, ctx)) return json({ error: "That title is locked." }, 400);
+    title = nextTitle;
+  }
   if (body.password != null && String(body.password).length) {
     const next = String(body.password);
     if (next.length < 6 || next.length > 64) {
@@ -276,7 +289,7 @@ async function patchMe(request, env) {
 
   await env.DB.prepare(
     `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?,
-       avatar = ?, banner = ?, showcase = ?, shown_stats = ?
+       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?
      WHERE id = ?`
   )
     .bind(
@@ -288,6 +301,7 @@ async function patchMe(request, env) {
       passwordHash,
       Date.now(),
       social.avatar,
+      social.avatarStyle,
       social.banner,
       JSON.stringify(social.showcase),
       JSON.stringify(social.shownStats),

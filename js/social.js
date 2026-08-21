@@ -4,13 +4,15 @@
  */
 import { api } from "./api.js";
 import { avatarColor } from "./accounts.js";
-import { avatarArt, avatarIcon, bannerSrc } from "./cosmetics.js";
+import { avatarSrc, avatarStyle, bannerVars } from "./cosmetics.js";
 
 let hooks = {
   getUser: () => null,
   toast: () => {},
   openProfile: () => {},
   openAuth: () => {},
+  openDm: () => {},
+  onTick: () => {},
 };
 
 let friendsState = { friends: [], incoming: [], outgoing: [], onlineNow: 0 };
@@ -32,8 +34,9 @@ export function notifySignedIn() {
 
 export function faceHtml(user, size = "md") {
   const color = avatarColor(user?.color).hex;
-  const src = size === "sm" || size === "xs" ? avatarIcon(user?.avatar) : avatarArt(user?.avatar);
-  const cls = `user-face ${size}${user?.online ? " on" : ""}`;
+  const src = avatarSrc(user?.avatar, user?.avatarStyle);
+  const pixel = avatarStyle(user?.avatarStyle) === "pixel" ? " pixel" : "";
+  const cls = `user-face ${size}${user?.online ? " on" : ""}${pixel}`;
   return `<span class="${cls}" style="--avatar:${esc(color)}"><img src="${esc(src)}" alt="" /></span>`;
 }
 
@@ -52,6 +55,7 @@ async function tickSocial(force = false) {
   try {
     if (signed) await refreshFriends();
     if (home || force) await refreshLounge();
+    hooks.onTick?.();
   } catch {
     /* lounge is optional chrome */
   }
@@ -71,7 +75,7 @@ function mountFriends() {
     <div class="friends-panel" id="friends-panel" role="region" aria-label="Friends">
       <div class="friends-now">
         <div>
-          <p class="friends-kicker">Party</p>
+          <p class="friends-kicker">Friends</p>
           <b id="friends-title">Friends</b>
           <small id="friends-sub">Sign in to add trainers</small>
         </div>
@@ -82,7 +86,7 @@ function mountFriends() {
         <button class="solid" type="submit">Add</button>
       </form>
       <div class="friends-tabs">
-        <button type="button" class="on" data-friends-tab="party">Party</button>
+        <button type="button" class="on" data-friends-tab="list">List</button>
         <button type="button" data-friends-tab="inbox">Inbox</button>
       </div>
       <div class="friends-list" id="friends-list"></div>
@@ -100,7 +104,7 @@ function mountFriends() {
   peek.addEventListener("click", () => toggle(!root.classList.contains("is-open")));
   hide.addEventListener("click", () => toggle(false));
 
-  let tab = "party";
+  let tab = "list";
   root.querySelector(".friends-tabs").addEventListener("click", (e) => {
     const btn = e.target.closest("[data-friends-tab]");
     if (!btn) return;
@@ -136,6 +140,12 @@ function mountFriends() {
 }
 
 async function onFriendsClick(e) {
+  const dm = e.target.closest("[data-open-dm]");
+  if (dm) {
+    e.preventDefault();
+    hooks.openDm(dm.dataset.openDm);
+    return;
+  }
   const accept = e.target.closest("[data-friend-accept]");
   const deny = e.target.closest("[data-friend-deny]");
   const remove = e.target.closest("[data-friend-remove]");
@@ -165,7 +175,7 @@ async function refreshFriends() {
   if (!root) return;
   if (!signed) {
     friendsState = { friends: [], incoming: [], outgoing: [], onlineNow: 0 };
-    paintFriends(root.querySelector("[data-friends-tab].on")?.dataset.friendsTab || "party");
+    paintFriends(root.querySelector("[data-friends-tab].on")?.dataset.friendsTab || "list");
     return;
   }
   const data = await api("/api/friends");
@@ -175,7 +185,7 @@ async function refreshFriends() {
     outgoing: data.outgoing || [],
     onlineNow: data.onlineNow || 0,
   };
-  paintFriends(root.querySelector("[data-friends-tab].on")?.dataset.friendsTab || "party");
+    paintFriends(root.querySelector("[data-friends-tab].on")?.dataset.friendsTab || "list");
 }
 
 function paintFriends(tab) {
@@ -193,7 +203,7 @@ function paintFriends(tab) {
   peekCount.hidden = badge < 1;
   peekCount.textContent = String(badge);
 
-  root.querySelector("#friends-title").textContent = signed ? "Friends" : "Party";
+  root.querySelector("#friends-title").textContent = "Friends";
   root.querySelector("#friends-sub").textContent = signed
     ? `${friendsState.friends.length} friends · ${online.length} online`
     : "Sign in to add trainers";
@@ -203,7 +213,7 @@ function paintFriends(tab) {
 
   const list = root.querySelector("#friends-list");
   if (!signed) {
-    list.innerHTML = `<p class="friends-empty">Sign in to keep a party, see who's around, and comment on profiles.</p>
+    list.innerHTML = `<p class="friends-empty">Sign in to keep a friends list, send DMs, and comment on profiles.</p>
       <button type="button" class="solid" data-friends-signin>Sign in</button>`;
     list.querySelector("[data-friends-signin]")?.addEventListener("click", () => hooks.openAuth("signin"));
     return;
@@ -236,13 +246,14 @@ function paintFriends(tab) {
   }
 
   if (!friendsState.friends.length) {
-    list.innerHTML = `<p class="friends-empty">No friends yet. Drop a handle above — trading comes later.</p>`;
+    list.innerHTML = `<p class="friends-empty">No friends yet. Drop a handle above.</p>`;
     return;
   }
   list.innerHTML = friendsState.friends
     .map(
       (row) => `<div class="friends-row">
         <a href="/u/${esc(row.handle)}">${faceHtml({ ...row, online: row.online }, "sm")}<span><b>${esc(row.name)}</b><small>${row.online ? "online" : `@${esc(row.handle)}`}</small></span></a>
+        <button type="button" class="ghost tiny" data-open-dm="${esc(row.handle)}" aria-label="Message @${esc(row.handle)}">DM</button>
         <button type="button" class="ghost tiny" data-friend-remove="${esc(row.handle)}" aria-label="Remove @${esc(row.handle)}">×</button>
       </div>`
     )
@@ -325,6 +336,13 @@ function mountTip() {
       hooks.openProfile(go.dataset.openProfile);
       return;
     }
+    const dm = e.target.closest("[data-open-dm]");
+    if (dm) {
+      e.preventDefault();
+      closeTip();
+      hooks.openDm(dm.dataset.openDm);
+      return;
+    }
     const add = e.target.closest("[data-tip-add]");
     if (add) {
       e.preventDefault();
@@ -358,14 +376,15 @@ async function openTip(handle, anchor) {
         : mine
           ? ``
           : data.relation === "friends"
-            ? `<span class="tip-status">Friends</span>`
+            ? `<button type="button" class="solid" data-open-dm="${esc(user.handle)}">Message</button>`
             : data.relation === "pending-out"
               ? `<span class="tip-status">Request sent</span>`
               : data.relation === "pending-in"
                 ? `<button type="button" class="solid" data-friend-accept="${esc(user.handle)}">Accept</button>`
                 : `<button type="button" class="solid" data-tip-add="${esc(user.handle)}">Add friend</button>`;
+    const banner = bannerVars(user.banner);
     tip.innerHTML = `
-      <div class="tip-banner" style="background-image:url('${esc(bannerSrc(user.banner))}')"></div>
+      <div class="tip-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
       <div class="tip-id">
         ${faceHtml({ ...user, online: data.online }, "md")}
         <div>

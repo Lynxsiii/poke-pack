@@ -1,5 +1,6 @@
 import {
   avatarId,
+  avatarStyle,
   bannerId,
   normalizeStats,
   SHOWCASE_MAX,
@@ -38,6 +39,7 @@ export async function ensureSocialSchema(env) {
       ["banner", "ALTER TABLE users ADD COLUMN banner TEXT NOT NULL DEFAULT 'me5:darkrai'"],
       ["showcase", "ALTER TABLE users ADD COLUMN showcase TEXT"],
       ["shown_stats", "ALTER TABLE users ADD COLUMN shown_stats TEXT"],
+      ["avatar_style", "ALTER TABLE users ADD COLUMN avatar_style TEXT NOT NULL DEFAULT 'art'"],
     ];
     for (const [name, sql] of alters) {
       if (have.has(name)) continue;
@@ -56,7 +58,8 @@ export async function ensureSocialSchema(env) {
       "CREATE INDEX IF NOT EXISTS idx_friends_from ON friends(from_id, status)",
       "CREATE INDEX IF NOT EXISTS idx_comments_profile ON profile_comments(profile_id, created_at)",
       "CREATE INDEX IF NOT EXISTS idx_chat_created ON chat_messages(created_at)",
-      "CREATE INDEX IF NOT EXISTS idx_presence_seen ON presence(seen_at)",
+      "CREATE TABLE IF NOT EXISTS dms (id INTEGER PRIMARY KEY AUTOINCREMENT, from_id TEXT NOT NULL, to_id TEXT NOT NULL, body TEXT NOT NULL, created_at INTEGER NOT NULL)",
+      "CREATE INDEX IF NOT EXISTS idx_dms_thread ON dms(from_id, to_id, created_at)",
     ];
     for (const sql of stmts) await runDdl(env, sql);
     schemaReady = true;
@@ -107,6 +110,16 @@ export async function handleSocial(path, method, request, env, helpers) {
   if (path === "/api/friends/remove" && method === "POST") {
     return removeFriend(request, env, helpers);
   }
+  if (path === "/api/dms" && method === "GET") {
+    return listDms(request, env, helpers);
+  }
+  if (path === "/api/dms" && method === "POST") {
+    return postDm(request, env, helpers);
+  }
+  const dmMatch = path.match(/^\/api\/dms\/([a-z0-9_]{3,16})$/i);
+  if (dmMatch && method === "GET") {
+    return threadDms(request, env, helpers, dmMatch[1]);
+  }
 
   const userMatch = path.match(/^\/api\/u\/([a-z0-9_]{3,16})$/i);
   if (userMatch && method === "GET") {
@@ -123,6 +136,7 @@ export async function handleSocial(path, method, request, env, helpers) {
 export function socialUserFields(row) {
   return {
     avatar: avatarId(row.avatar || DEFAULT_AVATAR),
+    avatarStyle: avatarStyle(row.avatar_style || row.avatarStyle),
     banner: bannerId(row.banner || DEFAULT_BANNER),
     showcase: parseShowcase(row.showcase),
     shownStats: normalizeStats(parseJson(row.shown_stats, null)),
@@ -537,6 +551,112 @@ async function acceptPair(env, fromId, toId) {
   ]);
 }
 
+async function areFriends(env, a, b) {
+  const row = await queryFirst(
+    env,
+    "SELECT status FROM friends WHERE from_id = ? AND to_id = ? AND status = 'accepted'",
+    a,
+    b
+  );
+  return Boolean(row);
+}
+
+async function listDms(request, env, { json, requireUser, publicUser }) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const friends =
+    (
+      await env.DB.prepare(
+        `SELECT users.*
+         FROM friends
+         JOIN users ON users.id = friends.to_id
+         WHERE friends.from_id = ? AND friends.status = 'accepted'
+         ORDER BY users.name`
+      )
+        .bind(auth.user.id)
+        .all()
+    ).results || [];
+  const threads = [];
+  for (const friend of friends) {
+    const last = await queryFirst(
+      env,
+      `SELECT body, created_at AS at, from_id FROM dms
+       WHERE (from_id = ? AND to_id = ?) OR (from_id = ? AND to_id = ?)
+       ORDER BY id DESC LIMIT 1`,
+      auth.user.id,
+      friend.id,
+      friend.id,
+      auth.user.id
+    );
+    threads.push({
+      user: slimUser(friend, publicUser),
+      last: last ? { body: last.body, at: last.at, mine: last.from_id === auth.user.id } : null,
+    });
+  }
+  return json({ threads });
+}
+
+async function threadDms(request, env, { json, requireUser, publicUser, normalizeHandle }, rawHandle) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const handle = normalizeHandle(rawHandle);
+  const other = await env.DB.prepare("SELECT * FROM users WHERE handle = ?").bind(handle).first();
+  if (!other) return json({ error: "Trainer not found." }, 404);
+  if (other.id === auth.user.id) return json({ error: "That's you." }, 400);
+  if (!(await areFriends(env, auth.user.id, other.id))) {
+    return json({ error: "Friends only." }, 403);
+  }
+  const rows = await queryAll(
+    env,
+    `SELECT dms.id, dms.body, dms.created_at AS at, dms.from_id
+     FROM dms
+     WHERE (from_id = ? AND to_id = ?) OR (from_id = ? AND to_id = ?)
+     ORDER BY dms.id DESC
+     LIMIT 80`,
+    auth.user.id,
+    other.id,
+    other.id,
+    auth.user.id
+  );
+  return json({
+    user: publicUser(other),
+    messages: rows.reverse().map((row) => ({
+      id: row.id,
+      body: row.body,
+      at: row.at,
+      mine: row.from_id === auth.user.id,
+    })),
+  });
+}
+
+async function postDm(request, env, { json, requireUser, publicUser, normalizeHandle, readJson }) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const body = await readJson(request);
+  const handle = normalizeHandle(body?.handle);
+  const text = cleanText(body?.body, 220);
+  if (text.length < 1) return json({ error: "Type a message." }, 400);
+  const other = await env.DB.prepare("SELECT * FROM users WHERE handle = ?").bind(handle).first();
+  if (!other) return json({ error: "Trainer not found." }, 404);
+  if (other.id === auth.user.id) return json({ error: "That's you." }, 400);
+  if (!(await areFriends(env, auth.user.id, other.id))) {
+    return json({ error: "Friends only." }, 403);
+  }
+  const last = await queryFirst(
+    env,
+    "SELECT created_at AS at FROM dms WHERE from_id = ? ORDER BY id DESC LIMIT 1",
+    auth.user.id
+  );
+  if (last && Date.now() - Number(last.at || 0) < CHAT_GAP_MS) {
+    return json({ error: "Slow down a second." }, 429);
+  }
+  const now = Date.now();
+  await env.DB.prepare("INSERT INTO dms (from_id, to_id, body, created_at) VALUES (?, ?, ?, ?)")
+    .bind(auth.user.id, other.id, text, now)
+    .run();
+  return json({ ok: true, at: now, user: publicUser(other), body: text });
+}
+
 async function relation(env, meId, themId) {
   if (!meId) return "anon";
   if (meId === themId) return "self";
@@ -561,6 +681,7 @@ function slimUser(row, publicUser, override) {
     created_at: src.created_at || src.createdAt,
     last_played: src.last_played || src.lastPlayed,
     avatar: src.avatar,
+    avatar_style: src.avatar_style || src.avatarStyle,
     banner: src.banner,
     showcase: src.showcase,
     shown_stats: src.shown_stats,
@@ -579,11 +700,13 @@ async function optionalUser(request, env, requireUser) {
 export function patchSocialFields(body, user) {
   const next = {
     avatar: avatarId(user.avatar || DEFAULT_AVATAR),
+    avatarStyle: avatarStyle(user.avatar_style || user.avatarStyle),
     banner: bannerId(user.banner || DEFAULT_BANNER),
     showcase: parseShowcase(user.showcase),
     shownStats: normalizeStats(parseJson(user.shown_stats, null)),
   };
   if (body.avatar != null) next.avatar = avatarId(body.avatar);
+  if (body.avatarStyle != null) next.avatarStyle = avatarStyle(body.avatarStyle);
   if (body.banner != null) next.banner = bannerId(body.banner);
   if (body.shownStats != null) next.shownStats = normalizeStats(body.shownStats);
   if (Array.isArray(body.showcase)) {

@@ -3,14 +3,15 @@
  * Art is loaded from the public PokeAPI sprite repo (same scans-as-reference
  * idea as the TCG catalog). We do not hotlink Serebii.
  */
-import { PLAYABLE_SETS } from "./catalog.js";
+import { avatarColor, COLOR_IDS } from "./palette.js";
 
 export const AVATAR_MAX = 1025;
 export const SHOWCASE_MAX = 6;
 export const STAT_KEYS = ["packs", "pulls", "unique", "coins"];
 export const DEFAULT_STATS = ["packs", "pulls", "unique"];
 export const DEFAULT_AVATAR = "25";
-export const DEFAULT_BANNER = "me5:darkrai";
+export const DEFAULT_STYLE = "art";
+export const DEFAULT_BANNER = "aurora:gold+violet";
 
 const SPRITE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon";
 
@@ -72,7 +73,16 @@ export const AVATARS = [
   [908, "Meowscarada"], [911, "Skeledirge"], [914, "Quaquaval"], [1002, "Chien-Pao"],
 ];
 
+export const BANNER_MOTIONS = [
+  { id: "aurora", name: "Aurora" },
+  { id: "drift", name: "Drift" },
+  { id: "pulse", name: "Pulse" },
+  { id: "beam", name: "Beam" },
+  { id: "mist", name: "Mist" },
+];
+
 const AVATAR_MAP = new Map(AVATARS.map(([id, name]) => [String(id), name]));
+const MOTION_IDS = new Set(BANNER_MOTIONS.map((row) => row.id));
 
 export function avatarId(value) {
   const n = Number.parseInt(String(value || ""), 10);
@@ -85,6 +95,10 @@ export function avatarName(id) {
   return AVATAR_MAP.get(key) || `#${key}`;
 }
 
+export function avatarStyle(value) {
+  return String(value || "") === "pixel" ? "pixel" : DEFAULT_STYLE;
+}
+
 export function avatarArt(id) {
   return `${SPRITE}/other/official-artwork/${avatarId(id)}.png`;
 }
@@ -93,28 +107,33 @@ export function avatarIcon(id) {
   return `${SPRITE}/${avatarId(id)}.png`;
 }
 
-export function bannerList() {
-  const out = [];
-  for (const set of PLAYABLE_SETS) {
-    for (const wrap of set.wrappers || []) {
-      out.push({
-        id: `${set.id}:${wrap.id}`,
-        name: `${set.name} · ${wrap.name}`,
-        src: wrap.artFallback || wrap.art,
-      });
-    }
-  }
-  return out;
+export function avatarSrc(id, style) {
+  return avatarStyle(style) === "pixel" ? avatarIcon(id) : avatarArt(id);
+}
+
+export function parseBanner(value) {
+  const raw = String(value || DEFAULT_BANNER);
+  const [motionRaw, colorRaw] = raw.split(":");
+  const motion = MOTION_IDS.has(motionRaw) ? motionRaw : "aurora";
+  const colors = String(colorRaw || "gold+violet")
+    .split("+")
+    .map((id) => (COLOR_IDS.has(id) ? id : "gold"))
+    .slice(0, 2);
+  if (colors.length < 1) colors.push("gold");
+  if (colors.length < 2) colors.push(colors[0] === "violet" ? "gold" : "violet");
+  return { motion, colors };
 }
 
 export function bannerId(value) {
-  const id = String(value || "");
-  return bannerList().some((row) => row.id === id) ? id : DEFAULT_BANNER;
+  const { motion, colors } = parseBanner(value);
+  return `${motion}:${colors.join("+")}`;
 }
 
-export function bannerSrc(id) {
-  const hit = bannerList().find((row) => row.id === bannerId(id));
-  return hit?.src || bannerList()[0].src;
+export function bannerVars(value) {
+  const { motion, colors } = parseBanner(value);
+  const a = avatarColor(colors[0]).hex;
+  const b = avatarColor(colors[1]).hex;
+  return { motion, style: `--b1:${a};--b2:${b}` };
 }
 
 export function normalizeStats(list) {

@@ -17,15 +17,18 @@ import { HIT_RARITIES } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge } from "./social.js";
 import {
-  avatarArt,
+  avatarSrc,
+  avatarStyle,
   avatarIcon,
-  bannerList,
-  bannerSrc,
+  bannerVars,
+  parseBanner,
+  BANNER_MOTIONS,
   searchAvatars,
   STAT_KEYS,
   DEFAULT_STATS,
   SHOWCASE_MAX,
 } from "./cosmetics.js";
+import { unlockedTitles, titleContext } from "./titles.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
@@ -57,6 +60,7 @@ import { api, ApiError } from "./api.js";
 const state = loadState();
 let cloudUser = null;
 let profileHandle = "";
+let dmHandle = "";
 let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
@@ -240,6 +244,7 @@ const els = {
   viewCatalog: document.getElementById("view-catalog"),
   viewAccount: document.getElementById("view-account"),
   viewProfile: document.getElementById("view-profile"),
+  viewSocial: document.getElementById("view-social"),
   viewAuth: document.getElementById("view-auth"),
   viewSettings: document.getElementById("view-settings"),
   viewNotes: document.getElementById("view-notes"),
@@ -249,6 +254,7 @@ const els = {
   homeBody: document.getElementById("home-body"),
   accountBody: document.getElementById("account-body"),
   profileBody: document.getElementById("profile-body"),
+  socialBody: document.getElementById("social-body"),
   authBody: document.getElementById("auth-body"),
   settingsBody: document.getElementById("settings-body"),
   notesBody: document.getElementById("notes-body"),
@@ -649,7 +655,8 @@ function renderHeader() {
   if (trainer && els.trainerChip) {
     const color = avatarColor(trainer.color);
     els.trainerChip.style.setProperty("--avatar", color.hex);
-    els.trainerAvatar.innerHTML = `<img src="${esc(avatarArt(trainer.avatar))}" alt="" />`;
+    els.trainerAvatar.innerHTML = `<img src="${esc(avatarSrc(trainer.avatar, trainer.avatarStyle))}" alt="" />`;
+    els.trainerAvatar.classList.toggle("pixel", avatarStyle(trainer.avatarStyle) === "pixel");
     els.trainerChipName.textContent = trainer.name;
     els.trainerChipHandle.textContent = `@${trainer.handle}`;
   }
@@ -1730,7 +1737,8 @@ function colorPicks(selected, attr = "data-color") {
 
 function avatarMark(trainer, extraClass = "trainer-mark") {
   const color = avatarColor(trainer?.color);
-  return `<div class="${extraClass}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarArt(trainer?.avatar))}" alt="" /></div>`;
+  const pixel = avatarStyle(trainer?.avatarStyle) === "pixel" ? " pixel" : "";
+  return `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
 }
 
 function saveTools() {
@@ -1792,6 +1800,7 @@ async function hydrateAfterAccountChange() {
   if (view === "home") renderHome();
   if (view === "account") renderAccount();
   if (view === "profile") renderProfile();
+  if (view === "social") renderSocial();
   if (view === "auth") renderAuth();
   if (view === "settings") renderSettings();
   if (view === "notes") renderNotes();
@@ -1876,11 +1885,7 @@ function renderAuth() {
 function renderAccount() {
   const trainer = activeTrainer();
   const list = achievements();
-  const title = careerTitle(list);
-  if (trainer && trainer.title !== title) {
-    trainer.title = title;
-    api("/api/me", { method: "PATCH", body: JSON.stringify({ title }) }).catch(() => {});
-  }
+  const title = trainer?.title || "Rookie";
   const unlocked = list.filter((a) => a.ok).length;
   const sets = setCompletionRows();
   const history = state.history || [];
@@ -1924,7 +1929,6 @@ function renderAccount() {
           <label class="field"><span>Trainer name</span><input name="name" maxlength="24" value="${esc(trainer.name)}" required /></label>
           <label class="field"><span>Handle</span><input name="handle" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" /></label>
           <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
-          <div class="field"><span>Avatar color</span>${colorPicks(trainer.color, "data-profile-color")}</div>
           <p class="form-error" id="profile-error"></p>
           <button class="solid" type="submit">Save profile</button>
         </form>
@@ -2021,56 +2025,51 @@ function statLabel(key) {
 
 function lookPanel(trainer) {
   const shown = new Set(trainer.shownStats || DEFAULT_STATS);
-  const picked = new Set((trainer.showcase || []).map((slot) => slot.id));
   const avatars = searchAvatars(avatarQuery);
-  const ownedCards = Object.entries(state.collection || {})
-    .filter(([, n]) => n > 0)
-    .map(([id]) => findCard(id))
-    .filter(Boolean)
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .slice(0, 96);
+  const banner = parseBanner(trainer.banner);
+  const style = avatarStyle(trainer.avatarStyle);
+  const titles = unlockedTitles(titleContext(state, { signed: true, findCard, rarities: ownedRarities() }));
 
   return `<div class="panel">
         <h3>Look</h3>
-        <p class="panel-note">Pick a Pokémon still and a set banner. Custom pictures and GIFs stay exclusive for premium later.</p>
+        <p class="panel-note">Pick a Pokémon still, a ring color, and a moving banner. Custom pictures and GIFs stay exclusive for premium later.</p>
+        <div class="field"><span>Avatar color</span>${colorPicks(trainer.color, "data-profile-color")}</div>
+        <div class="field"><span>Picture</span>
+          <div class="style-picks">
+            <button type="button" class="pick-chip${style === "art" ? " on" : ""}" data-set-style="art">High quality</button>
+            <button type="button" class="pick-chip${style === "pixel" ? " on" : ""}" data-set-style="pixel">Pixel</button>
+          </div>
+        </div>
         <label class="field"><span>Search a Pokémon</span>
           <input id="avatar-search" value="${esc(avatarQuery)}" placeholder="Pikachu, 25, Darkrai" />
         </label>
         <div class="avatar-grid">${avatars
           .map(
             ([id, name]) => `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
-            <img src="${esc(avatarIcon(id))}" alt="${esc(name)}" loading="lazy" />
+            <img class="${style === "pixel" ? "pixel" : ""}" src="${esc(style === "pixel" ? avatarIcon(id) : avatarSrc(id, "art"))}" alt="${esc(name)}" loading="lazy" />
             <small>${esc(name)}</small>
           </button>`
           )
           .join("")}</div>
         <h3>Banner</h3>
-        <div class="banner-grid">${bannerList()
+        <p class="panel-note">No photos — pick a motion and two colors.</p>
+        <div class="style-picks">${BANNER_MOTIONS.map(
+          (row) => `<button type="button" class="pick-chip${banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}">${esc(row.name)}</button>`
+        ).join("")}</div>
+        <div class="banner-preview banner-wash" data-motion="${esc(banner.motion)}" style="${esc(bannerVars(trainer.banner).style)}"></div>
+        <div class="field"><span>Color A</span>${colorPicks(banner.colors[0], "data-banner-a")}</div>
+        <div class="field"><span>Color B</span>${colorPicks(banner.colors[1], "data-banner-b")}</div>
+        <h3>Title</h3>
+        <p class="panel-note">Unlock more by ripping, collecting, and pulling rares.</p>
+        <div class="title-picks">${titles
           .map(
-            (row) => `<button type="button" class="pick${trainer.banner === row.id ? " on" : ""}" data-set-banner="${esc(row.id)}">
-            <img src="${esc(row.src)}" alt="${esc(row.name)}" loading="lazy" />
-            <small>${esc(row.name)}</small>
-          </button>`
+            (row) => `<button type="button" class="pick-chip${trainer.title === row.name ? " on" : ""}" data-set-title="${esc(row.name)}" title="${esc(row.note)}">${esc(row.name)}</button>`
           )
           .join("")}</div>
         <h3>Show on profile</h3>
         <div class="stat-toggles">${STAT_KEYS.map(
           (key) => `<label><input type="checkbox" data-stat-toggle="${key}" ${shown.has(key) ? "checked" : ""} /> ${esc(statLabel(key))}</label>`
         ).join("")}</div>
-        <h3>Showcase · ${picked.size}/${SHOWCASE_MAX}</h3>
-        <p class="panel-note">Up to six cards you own. They sit on your public profile.</p>
-        <div class="showcase-picks">${
-          ownedCards.length
-            ? ownedCards
-                .map(
-                  (card) => `<button type="button" class="pick${picked.has(card.id) ? " on" : ""}" data-toggle-showcase="${esc(card.id)}" title="${esc(card.name)}">
-              <img src="${esc(card.imageSmall || card.image)}" alt="${esc(card.name)}" loading="lazy" />
-              <small>${esc(card.name)}</small>
-            </button>`
-                )
-                .join("")
-            : `<p class="panel-empty">Rip a pack to put something here.</p>`
-        }</div>
       </div>`;
 }
 
@@ -2095,7 +2094,7 @@ async function renderProfile() {
         : mine
           ? `<a class="ghost" href="/account">Edit profile</a>`
           : data.relation === "friends"
-            ? `<button class="ghost" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
+            ? `<button class="ghost" type="button" data-open-dm="${esc(user.handle)}">Message</button><button class="ghost" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
             : data.relation === "pending-out"
               ? `<button class="ghost" type="button" disabled>Request sent</button>`
               : data.relation === "pending-in"
@@ -2125,16 +2124,17 @@ async function renderProfile() {
       )
       .join("");
 
+    const banner = bannerVars(user.banner);
     els.profileBody.innerHTML = `
       <div class="profile-page">
         <div class="profile-hero">
-          <div class="profile-banner" style="background-image:url('${esc(bannerSrc(user.banner))}')"></div>
+          <div class="profile-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
           <div class="profile-id">
             ${faceHtml({ ...user, online: data.online }, "lg")}
             <div class="profile-copy">
               <p class="account-title">${esc(user.title || "Rookie")}${data.online ? " · online" : ""}</p>
               <h1>${esc(user.name)}</h1>
-              <p>@${esc(user.handle)} · ${esc(user.title || "Rookie")} · ${num(data.friends || 0)} friends</p>
+              <p>@${esc(user.handle)} · ${num(data.friends || 0)} friends</p>
               ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
             </div>
             <div class="profile-actions">${friendBtn}</div>
@@ -2167,6 +2167,101 @@ async function renderProfile() {
       </div>`;
   } catch (err) {
     els.profileBody.innerHTML = `<div class="panel"><p class="panel-empty">${esc(err.message || "Trainer not found.")}</p></div>`;
+  }
+}
+
+async function renderSocial() {
+  const body = els.socialBody;
+  if (!body) return;
+  const trainer = activeTrainer();
+  if (!trainer) {
+    body.innerHTML = `<div class="panel">
+      <h3>Social</h3>
+      <p class="panel-note">Sign in to DM friends. Trading lands here next.</p>
+      <button class="solid" type="button" data-open-auth="signin">Sign in</button>
+    </div>`;
+    return;
+  }
+  const draft = body.querySelector("#dm-form [name=body]")?.value || "";
+  try {
+    const inbox = await api("/api/dms");
+    const threads = inbox.threads || [];
+    let thread = null;
+    if (dmHandle) {
+      try {
+        thread = await api(`/api/dms/${encodeURIComponent(dmHandle)}`);
+      } catch (err) {
+        thread = { error: err.message || "Couldn't open that thread." };
+      }
+    }
+    const list = threads
+      .map((row) => {
+        const on = dmHandle === row.user.handle;
+        const preview = row.last ? esc(row.last.body) : "No messages yet";
+        return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}">
+          ${faceHtml(row.user, "sm")}
+          <span><b>${esc(row.user.name)}</b><small>${preview}</small></span>
+        </a>`;
+      })
+      .join("");
+    const pane = thread?.error
+      ? `<p class="panel-empty">${esc(thread.error)}</p>`
+      : thread
+        ? `<div class="dm-head">
+            <a href="/u/${esc(thread.user.handle)}">${faceHtml(thread.user, "sm")}</a>
+            <div>
+              <b>${esc(thread.user.name)}</b>
+              <small>@${esc(thread.user.handle)}</small>
+            </div>
+          </div>
+          <div class="dm-log" id="dm-log">${
+            (thread.messages || [])
+              .map(
+                (msg) => `<div class="dm-line${msg.mine ? " mine" : ""}"><span>${esc(msg.body)}</span><time>${esc(formatWhen(msg.at))}</time></div>`
+              )
+              .join("") || `<p class="lounge-empty">Say hi.</p>`
+          }</div>
+          <form class="dm-form" id="dm-form">
+            <input name="body" maxlength="220" placeholder="Message @${esc(thread.user.handle)}" autocomplete="off" />
+            <button class="solid" type="submit">Send</button>
+          </form>`
+        : `<p class="panel-empty">Pick a friend to start a DM. Trading will live on this tab next.</p>`;
+    body.innerHTML = `
+      <div class="section-head">
+        <div>
+          <h2>Social</h2>
+          <p>Friends, DMs, and soon trading — all in one tab.</p>
+        </div>
+      </div>
+      <div class="social-grid">
+        <div class="panel">
+          <h3>Friends</h3>
+          <div class="dm-threads">${list || `<p class="panel-empty">Add friends from the list on the left.</p>`}</div>
+        </div>
+        <div class="panel dm-pane">${pane}</div>
+      </div>
+      <div class="panel">
+        <h3>Trading</h3>
+        <p class="panel-note">Card-for-card trades land here after DMs feel solid. Friends first.</p>
+      </div>`;
+    const log = body.querySelector("#dm-log");
+    if (log) log.scrollTop = log.scrollHeight;
+    const form = body.querySelector("#dm-form");
+    const input = form?.querySelector("[name=body]");
+    if (input && draft) input.value = draft;
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = String(new FormData(form).get("body") || "").trim();
+      if (!text || !dmHandle) return;
+      try {
+        await api("/api/dms", { method: "POST", body: JSON.stringify({ handle: dmHandle, body: text }) });
+        renderSocial();
+      } catch (err) {
+        toast(err.message || "Couldn't send.");
+      }
+    });
+  } catch (err) {
+    body.innerHTML = `<div class="panel"><p class="panel-empty">${esc(err.message || "Couldn't load social.")}</p></div>`;
   }
 }
 
@@ -2377,6 +2472,7 @@ const VIEW_SECTIONS = {
   auth: "viewAuth",
   settings: "viewSettings",
   notes: "viewNotes",
+  social: "viewSocial",
 };
 
 const VIEW_PATHS = {
@@ -2390,6 +2486,7 @@ const VIEW_PATHS = {
   auth: "/signin",
   settings: "/settings",
   notes: "/notes",
+  social: "/social",
 };
 
 const PATH_VIEWS = {
@@ -2410,6 +2507,7 @@ const PATH_VIEWS = {
   "/settings": "settings",
   "/notes": "notes",
   "/patch-notes": "notes",
+  "/social": "social",
 };
 
 const VIEW_TITLES = {
@@ -2423,6 +2521,7 @@ const VIEW_TITLES = {
   auth: "Sign in — poke-pack.rip",
   settings: "Settings — poke-pack.rip",
   notes: "Patch notes — poke-pack.rip",
+  social: "Social — poke-pack.rip",
 };
 
 const VIEW_RENDER = {
@@ -2438,6 +2537,7 @@ const VIEW_RENDER = {
   auth: () => renderAuth(),
   settings: () => renderSettings(),
   notes: () => renderNotes(),
+  social: () => renderSocial(),
 };
 
 function normalizePath(pathname) {
@@ -2447,17 +2547,26 @@ function normalizePath(pathname) {
 
 function viewFromPath(pathname) {
   const path = normalizePath(pathname);
-  if (PATH_VIEWS[path]) return PATH_VIEWS[path];
+  if (PATH_VIEWS[path]) {
+    if (PATH_VIEWS[path] === "social") dmHandle = "";
+    return PATH_VIEWS[path];
+  }
   const profile = path.match(/^\/u\/([a-z0-9_]{3,16})$/i);
   if (profile) {
     profileHandle = profile[1].toLowerCase();
     return "profile";
+  }
+  const social = path.match(/^\/social\/([a-z0-9_]{3,16})$/i);
+  if (social) {
+    dmHandle = social[1].toLowerCase();
+    return "social";
   }
   return null;
 }
 
 function pathForView(name) {
   if (name === "profile") return `/u/${profileHandle || "trainer"}`;
+  if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
   return VIEW_PATHS[name] || "/home";
 }
 
@@ -2486,10 +2595,13 @@ function applyView(next, hist) {
   document.body.classList.toggle("on-shop", view === "shop");
   document.body.classList.toggle("on-collection", view === "collection");
   document.body.classList.toggle("on-auth", view === "auth");
+  document.body.classList.toggle("on-social", view === "social");
   document.title =
     view === "profile" && profileHandle
       ? `@${profileHandle} — poke-pack.rip`
-      : VIEW_TITLES[view] || VIEW_TITLES.home;
+      : view === "social" && dmHandle
+        ? `DM @${dmHandle} — poke-pack.rip`
+        : VIEW_TITLES[view] || VIEW_TITLES.home;
   if (!document.body.classList.contains("is-booting")) {
     window.scrollTo(0, 0);
   }
@@ -2505,9 +2617,15 @@ function applyView(next, hist) {
 
 function setView(next, { history: hist = "push", handle } = {}) {
   if (!VIEW_SECTIONS[next]) return;
+  if (next === "social" && handle != null) {
+    dmHandle = String(handle || "").replace(/^@/, "").toLowerCase();
+  }
   const nextHandle =
     next === "profile" ? String(handle || profileHandle || "").replace(/^@/, "").toLowerCase() : profileHandle;
-  const same = view === next && (next !== "profile" || nextHandle === profileHandle);
+  const same =
+    view === next &&
+    (next !== "profile" || nextHandle === profileHandle) &&
+    (next !== "social" || !handle || String(handle).replace(/^@/, "").toLowerCase() === dmHandle);
   if (next === "profile") profileHandle = nextHandle;
   paintNav(next);
   const wrap = document.querySelector(".wrap");
@@ -3544,7 +3662,17 @@ function inspectSellRow(card) {
     <button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
       Sell one · +${coin(value)}
     </button>
+    ${inspectShowcaseBtn(card)}
   </div>`;
+}
+
+function inspectShowcaseBtn(card) {
+  const trainer = activeTrainer();
+  if (!trainer) return "";
+  const on = (trainer.showcase || []).some((slot) => slot.id === card.id);
+  return `<button type="button" class="ghost pc-showcase-btn" data-inspect-showcase="${esc(card.id)}">${
+    on ? "Remove from showcase" : "Add to showcase"
+  }</button>`;
 }
 
 async function sellOwnedCard(card, { extra = false } = {}) {
@@ -3620,9 +3748,14 @@ els.inspectInfo.addEventListener("click", (e) => {
     return;
   }
   const sell = e.target.closest("[data-inspect-sell]");
-  if (!sell || !inspectCard) return;
-  const card = findCard(sell.dataset.inspectSell);
-  sellOwnedCard(card);
+  if (sell && inspectCard) {
+    const card = findCard(sell.dataset.inspectSell);
+    sellOwnedCard(card);
+    return;
+  }
+  const pin = e.target.closest("[data-inspect-showcase]");
+  if (!pin || !inspectCard) return;
+  toggleShowcase(pin.dataset.inspectShowcase);
 });
 
 document.querySelectorAll(".nav-btn").forEach((btn) => {
@@ -3840,31 +3973,59 @@ els.accountBody.addEventListener("click", async (e) => {
     }
     return;
   }
-  const setBanner = e.target.closest("[data-set-banner]");
-  if (setBanner) {
+  const setStyle = e.target.closest("[data-set-style]");
+  if (setStyle) {
     try {
-      await patchLook({ banner: setBanner.dataset.setBanner });
+      await patchLook({ avatarStyle: setStyle.dataset.setStyle });
+    } catch (err) {
+      toast(err.message || "Couldn't update picture style.");
+    }
+    return;
+  }
+  const setMotion = e.target.closest("[data-set-motion]");
+  if (setMotion) {
+    const trainer = activeTrainer();
+    if (!trainer) return;
+    const banner = parseBanner(trainer.banner);
+    try {
+      await patchLook({ banner: `${setMotion.dataset.setMotion}:${banner.colors.join("+")}` });
     } catch (err) {
       toast(err.message || "Couldn't update banner.");
     }
     return;
   }
-  const pin = e.target.closest("[data-toggle-showcase]");
-  if (pin) {
+  const bannerA = e.target.closest("[data-banner-a]");
+  if (bannerA) {
     const trainer = activeTrainer();
     if (!trainer) return;
-    const id = pin.dataset.toggleShowcase;
-    const showcase = [...(trainer.showcase || [])];
-    const at = showcase.findIndex((slot) => slot.id === id);
-    if (at >= 0) showcase.splice(at, 1);
-    else if (showcase.length >= SHOWCASE_MAX) {
-      toast("Showcase holds six cards.");
-      return;
-    } else showcase.push({ id, reverse: ownedReverse(id) });
+    const banner = parseBanner(trainer.banner);
+    banner.colors[0] = bannerA.dataset.bannerA;
     try {
-      await patchLook({ showcase });
+      await patchLook({ banner: `${banner.motion}:${banner.colors.join("+")}` });
     } catch (err) {
-      toast(err.message || "Couldn't update showcase.");
+      toast(err.message || "Couldn't update banner.");
+    }
+    return;
+  }
+  const bannerB = e.target.closest("[data-banner-b]");
+  if (bannerB) {
+    const trainer = activeTrainer();
+    if (!trainer) return;
+    const banner = parseBanner(trainer.banner);
+    banner.colors[1] = bannerB.dataset.bannerB;
+    try {
+      await patchLook({ banner: `${banner.motion}:${banner.colors.join("+")}` });
+    } catch (err) {
+      toast(err.message || "Couldn't update banner.");
+    }
+    return;
+  }
+  const setTitle = e.target.closest("[data-set-title]");
+  if (setTitle) {
+    try {
+      await patchLook({ title: setTitle.dataset.setTitle });
+    } catch (err) {
+      toast(err.message || "That title is locked.");
     }
     return;
   }
@@ -3887,12 +4048,14 @@ els.accountBody.addEventListener("input", (e) => {
   const grid = els.accountBody.querySelector(".avatar-grid");
   if (!trainer || !grid) return;
   grid.innerHTML = searchAvatars(avatarQuery)
-    .map(
-      ([id, name]) => `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
-      <img src="${esc(avatarIcon(id))}" alt="${esc(name)}" loading="lazy" />
+    .map(([id, name]) => {
+      const style = avatarStyle(trainer.avatarStyle);
+      const src = style === "pixel" ? avatarIcon(id) : avatarSrc(id, "art");
+      return `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
+      <img class="${style === "pixel" ? "pixel" : ""}" src="${esc(src)}" alt="${esc(name)}" loading="lazy" />
       <small>${esc(name)}</small>
-    </button>`
-    )
+    </button>`;
+    })
     .join("");
 });
 
@@ -3920,8 +4083,38 @@ async function patchLook(body) {
   renderAccount();
 }
 
+async function toggleShowcase(id) {
+  const trainer = activeTrainer();
+  if (!trainer) {
+    toast("Sign in to pin a showcase.");
+    openAuth("signin");
+    return;
+  }
+  const showcase = [...(trainer.showcase || [])];
+  const at = showcase.findIndex((slot) => slot.id === id);
+  if (at >= 0) showcase.splice(at, 1);
+  else if (showcase.length >= SHOWCASE_MAX) {
+    toast("Showcase holds six cards.");
+    return;
+  } else showcase.push({ id, reverse: ownedReverse(id) });
+  try {
+    const data = await api("/api/me", { method: "PATCH", body: JSON.stringify({ showcase }) });
+    cloudUser = data.user;
+    if (inspectCard) paintInspect(inspectCard);
+    if (view === "profile") renderProfile();
+    toast(at >= 0 ? "Removed from showcase." : "Pinned to showcase.");
+  } catch (err) {
+    toast(err.message || "Couldn't update showcase.");
+  }
+}
+
 els.profileBody?.addEventListener("click", async (e) => {
   inspectFromEl(e.target);
+  const dm = e.target.closest("[data-open-dm]");
+  if (dm) {
+    setView("social", { handle: dm.dataset.openDm });
+    return;
+  }
   const add = e.target.closest("[data-friend-add]");
   const accept = e.target.closest("[data-friend-accept]");
   const remove = e.target.closest("[data-friend-remove]");
@@ -4640,6 +4833,12 @@ initSocial({
   toast,
   openProfile: (handle) => setView("profile", { handle }),
   openAuth,
+  openDm: (handle) => setView("social", { handle }),
+  onTick: () => {
+    if (view !== "social") return;
+    if (document.activeElement?.closest("#dm-form, .dm-threads")) return;
+    renderSocial();
+  },
 });
 
 /*
