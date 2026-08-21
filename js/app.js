@@ -1855,7 +1855,7 @@ const SETTING_GROUPS = [
     rows: [
       { key: "shine", type: "toggle", label: "Card shine", note: "Gloss highlight that follows your cursor across a card." },
       { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward your finger or cursor in 3D." },
-      { key: "stamps", type: "toggle", label: "Rarity stamps", note: "Show the rarity symbol in the corner of every card." },
+      { key: "stamps", type: "toggle", label: "Rarity stamps", note: "Off by default. Small rarity mark in the corner of each card." },
       { key: "motion", type: "toggle", label: "Idle shimmer", note: "Slow shimmer on foiled cards when you're not touching them." },
       {
         key: "foil",

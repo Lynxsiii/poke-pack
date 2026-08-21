@@ -12,7 +12,7 @@ export const DEFAULT_SETTINGS = {
   // Card look
   shine: true,
   tilt: true,
-  stamps: true,
+  stamps: false,
   motion: true,
   foil: "normal", // subtle | normal | intense
   // Opening a pack
@@ -40,6 +40,7 @@ function blank() {
     createdAt: Date.now(),
     activeSetId: "me5",
     economyScale: ECONOMY_SCALE,
+    settingsRev: SETTINGS_REV,
     // Money handed to the player (start + every daily claimed). Net worth
     // minus this is profit or loss, which is the only honest way to say
     // whether ripping has gained or lost value.
@@ -59,8 +60,19 @@ function blank() {
  * too big, so divide it once and stamp the save so it only ever happens once.
  */
 const ECONOMY_SCALE = 2;
+const SETTINGS_REV = 1;
 
 const WORTH_LOG_LIMIT = 160;
+
+function migrateSettings(save) {
+  const rev = Number(save.settingsRev) || 0;
+  if (rev < 1) {
+    if (!save.settings) save.settings = { ...DEFAULT_SETTINGS };
+    save.settings.stamps = false;
+    save.settingsRev = 1;
+  }
+  return save;
+}
 
 function migrateEconomy(save) {
   if (save.economyScale === ECONOMY_SCALE) return save;
@@ -94,7 +106,7 @@ export function loadState() {
       const saved = JSON.parse(raw);
       // Merge settings separately so saves from before a new toggle existed
       // still pick up its default instead of dropping it.
-      return migrateEconomy({
+      const next = migrateSettings(migrateEconomy({
         ...blank(),
         ...saved,
         settings: { ...DEFAULT_SETTINGS, ...(saved.settings || {}) },
@@ -103,7 +115,12 @@ export function loadState() {
         // blank() stamps the current scale, so an untagged save has to be
         // treated as old here or the migration would skip it.
         economyScale: saved.economyScale ?? 1,
-      });
+        settingsRev: saved.settingsRev || 0,
+      }));
+      if ((saved.settingsRev || 0) < 1) {
+        localStorage.setItem(KEY, JSON.stringify(next));
+      }
+      return next;
     }
     for (const legacyKey of LEGACY_KEYS) {
       const legacy = localStorage.getItem(legacyKey);
@@ -294,8 +311,10 @@ export function importState(state, raw) {
     history: Array.isArray(raw.history) ? raw.history.slice(0, 24) : [],
     // A save exported before coins became dollars still needs converting.
     economyScale: raw.economyScale ?? 1,
+    settingsRev: raw.settingsRev || 0,
   });
   migrateEconomy(state);
+  migrateSettings(state);
   saveState(state);
   return true;
 }
@@ -316,6 +335,7 @@ export function cloneSave(state) {
     createdAt: state.createdAt,
     activeSetId: state.activeSetId || "me5",
     economyScale: state.economyScale ?? ECONOMY_SCALE,
+    settingsRev: state.settingsRev || SETTINGS_REV,
     granted: state.granted,
     worthLog: Array.isArray(state.worthLog) ? state.worthLog.slice(-WORTH_LOG_LIMIT) : [],
     binder: Array.isArray(state.binder) ? state.binder.slice() : [],

@@ -4146,3 +4146,135 @@ body:has(#inspect:not(.hidden)) .radio {
 .notes-entry ul { margin: 0; padding: 0 0 0 18px; color: #cbbfae; font-size: 14px; line-height: 1.55; }
 .notes-entry li { margin: 0 0 6px; }
 .notes-empty { color: var(--muted); }
+
+/*
+ * Phone pack-open: the card gets leftover viewport height. Chrome (leave,
+ * title, thumbs, actions) shrinks, and prev/next sit on the card instead of
+ * stealing a column from it.
+ */
+@media (max-width: 860px) {
+  #overlay {
+    justify-content: stretch;
+    align-items: stretch;
+    padding: max(8px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+  }
+  #overlay .rip-stage,
+  #overlay.dealing .rip-stage {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+  #overlay:not(.dealing) .rip-stage {
+    justify-content: center;
+  }
+  #overlay .overlay-leave {
+    position: absolute;
+    top: max(8px, env(safe-area-inset-top));
+    right: 10px;
+    margin: 0;
+    z-index: 12;
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+  #overlay .rip-hint {
+    min-height: 0;
+    margin: 0 88px 10px 0;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  #overlay .booster {
+    width: min(300px, 72vw);
+    margin: 8px auto 12px;
+  }
+  #overlay .focus-wrap {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    width: 100%;
+  }
+  #overlay .focus-meta {
+    min-height: 0;
+    margin: 0 76px 8px 0;
+  }
+  #overlay .focus-title {
+    font-size: clamp(18px, 5.4vw, 28px);
+  }
+  #overlay .focus-stage {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 0;
+    width: 100%;
+  }
+  #overlay .focus-aura,
+  #overlay .hit-fx,
+  #overlay .focus-card,
+  #overlay .focus-nav.prev,
+  #overlay .focus-nav.next {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #overlay .focus-card {
+    width: min(86vw, 340px, calc((100svh - 12.5rem) * 63 / 88));
+    max-height: calc(100svh - 12.5rem);
+    height: auto;
+    justify-self: center;
+    align-self: center;
+  }
+  #overlay .focus-nav {
+    position: relative;
+    z-index: 5;
+    width: 40px;
+    height: 40px;
+    font-size: 26px;
+    background: rgba(9, 7, 13, 0.72);
+    align-self: center;
+  }
+  #overlay .focus-nav.prev { justify-self: start; margin-left: 2px; }
+  #overlay .focus-nav.next { justify-self: end; margin-right: 2px; }
+  #overlay .thumbs {
+    flex: none;
+    min-height: 0;
+    margin-top: 8px;
+    padding: 6px 8px;
+    gap: 4px;
+    max-width: none;
+    width: 100%;
+  }
+  #overlay .thumb,
+  #overlay .thumb.empty { width: 34px; }
+  #overlay .overlay-actions {
+    position: static;
+    flex: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 8px 0 0;
+    background: none;
+  }
+  #overlay .overlay-actions.hidden { display: none !important; }
+  #overlay .overlay-actions .solid { grid-column: 1 / -1; }
+  #overlay .overlay-actions .ghost,
+  #overlay .overlay-actions .solid {
+    flex: none;
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  #overlay .focus-card {
+    width: min(90vw, calc((100svh - 11.25rem) * 63 / 88));
+    max-height: calc(100svh - 11.25rem);
+  }
+  #overlay .booster { width: min(280px, 78vw); }
+}
