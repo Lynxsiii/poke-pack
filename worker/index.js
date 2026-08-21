@@ -348,10 +348,10 @@ async function rip(request, env) {
   const deducted = await env.DB.prepare(
     `UPDATE profiles SET coins = coins - ?, packs_opened = packs_opened + 1, pulls = pulls + ?,
       packs_since_hit = CASE WHEN ? > 0 THEN 0 ELSE packs_since_hit + 1 END,
-      active_set_id = ?, last_played = ?
+      active_set_id = ?
      WHERE user_id = ? AND coins >= ?`
   )
-    .bind(cost, cards.length, hits, live.id, now, auth.user.id, cost)
+    .bind(cost, cards.length, hits, live.id, auth.user.id, cost)
     .run();
   if (!deducted.meta?.changes) {
     return json({ error: "Not enough coins." }, 400);
