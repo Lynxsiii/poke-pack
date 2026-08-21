@@ -4,7 +4,7 @@
  */
 import { BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
 import { HIT_RARITIES, ripPack } from "../js/engine.js";
-import { handleSocial, socialUserFields, patchSocialFields } from "./social.js";
+import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
 
 const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
@@ -52,6 +52,8 @@ async function handleApi(request, env, url) {
   if (path === "/api/health" && method === "GET") {
     return json({ ok: true });
   }
+
+  await ensureSocialSchema(env);
 
   if (path === "/api/auth/signup" && method === "POST") {
     return signup(request, env);

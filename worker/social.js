@@ -16,6 +16,66 @@ const ONLINE_LIMIT = 32;
 const MAX_FRIENDS = 200;
 const MAX_PENDING = 40;
 
+let schemaReady = false;
+
+export async function ensureSocialSchema(env) {
+  if (schemaReady) return;
+  const cols = await env.DB.prepare("PRAGMA table_info(users)").all();
+  const have = new Set((cols.results || []).map((row) => row.name));
+  if (!have.has("avatar")) {
+    await env.DB.exec("ALTER TABLE users ADD COLUMN avatar TEXT NOT NULL DEFAULT '25'");
+  }
+  if (!have.has("banner")) {
+    await env.DB.exec("ALTER TABLE users ADD COLUMN banner TEXT NOT NULL DEFAULT 'me5:darkrai'");
+  }
+  if (!have.has("showcase")) {
+    await env.DB.exec("ALTER TABLE users ADD COLUMN showcase TEXT");
+  }
+  if (!have.has("shown_stats")) {
+    await env.DB.exec("ALTER TABLE users ADD COLUMN shown_stats TEXT");
+  }
+  await env.DB.exec(`
+    CREATE TABLE IF NOT EXISTS friends (
+      from_id TEXT NOT NULL,
+      to_id TEXT NOT NULL,
+      status TEXT NOT NULL,
+      created_at INTEGER NOT NULL,
+      PRIMARY KEY (from_id, to_id),
+      FOREIGN KEY (from_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (to_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+    CREATE TABLE IF NOT EXISTS profile_comments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      profile_id TEXT NOT NULL,
+      author_id TEXT NOT NULL,
+      body TEXT NOT NULL,
+      created_at INTEGER NOT NULL,
+      FOREIGN KEY (profile_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+    CREATE TABLE IF NOT EXISTS chat_messages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id TEXT NOT NULL,
+      body TEXT NOT NULL,
+      created_at INTEGER NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+    CREATE TABLE IF NOT EXISTS presence (
+      user_id TEXT PRIMARY KEY,
+      seen_at INTEGER NOT NULL,
+      last_chat_at INTEGER NOT NULL DEFAULT 0,
+      last_comment_at INTEGER NOT NULL DEFAULT 0,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+    CREATE INDEX IF NOT EXISTS idx_friends_to ON friends(to_id, status);
+    CREATE INDEX IF NOT EXISTS idx_friends_from ON friends(from_id, status);
+    CREATE INDEX IF NOT EXISTS idx_comments_profile ON profile_comments(profile_id, created_at DESC);
+    CREATE INDEX IF NOT EXISTS idx_chat_created ON chat_messages(created_at DESC);
+    CREATE INDEX IF NOT EXISTS idx_presence_seen ON presence(seen_at DESC);
+  `);
+  schemaReady = true;
+}
+
 export async function handleSocial(path, method, request, env, helpers) {
   const { json } = helpers;
 
@@ -323,7 +383,7 @@ async function listFriends(request, env, { json, requireUser, publicUser }) {
          JOIN users ON users.id = friends.to_id
          LEFT JOIN presence ON presence.user_id = users.id
          WHERE friends.from_id = ? AND friends.status = 'accepted'
-         ORDER BY users.name COLLATE NOCASE`
+         ORDER BY users.name`
       )
         .bind(auth.user.id)
         .all()
