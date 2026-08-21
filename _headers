@@ -28,6 +28,10 @@
   Cache-Control: no-cache
 /account
   Cache-Control: no-cache
+/u
+  Cache-Control: no-cache
+/u/*
+  Cache-Control: no-cache
 /signin
   Cache-Control: no-cache
 /settings

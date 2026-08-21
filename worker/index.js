@@ -4,6 +4,7 @@
  */
 import { BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
 import { HIT_RARITIES, ripPack } from "../js/engine.js";
+import { handleSocial, socialUserFields, patchSocialFields } from "./social.js";
 
 const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
@@ -85,6 +86,17 @@ async function handleApi(request, env, url) {
   if (path === "/api/binder" && method === "PUT") {
     return putBinder(request, env);
   }
+
+  const social = await handleSocial(path, method, request, env, {
+    json,
+    requireUser,
+    publicUser,
+    normalizeHandle,
+    findCatalogCard,
+    money,
+    readJson,
+  });
+  if (social) return social;
 
   return json({ error: "Not found." }, 404);
 }
@@ -220,6 +232,7 @@ async function patchMe(request, env) {
   let color = user.color;
   let title = user.title;
   let passwordHash = user.password_hash;
+  const social = patchSocialFields(body, user);
 
   if (body.name != null) {
     name = String(body.name || "").trim().slice(0, 24);
@@ -254,11 +267,30 @@ async function patchMe(request, env) {
     passwordHash = await hashPassword(next);
   }
 
+  if (Array.isArray(body.showcase)) {
+    const { collection } = await inventoryMap(env, user.id);
+    social.showcase = social.showcase.filter((slot) => (collection[slot.id] || 0) > 0);
+  }
+
   await env.DB.prepare(
-    `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?
+    `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?,
+       avatar = ?, banner = ?, showcase = ?, shown_stats = ?
      WHERE id = ?`
   )
-    .bind(name, handle, bio, color, title, passwordHash, Date.now(), user.id)
+    .bind(
+      name,
+      handle,
+      bio,
+      color,
+      title,
+      passwordHash,
+      Date.now(),
+      social.avatar,
+      social.banner,
+      JSON.stringify(social.showcase),
+      JSON.stringify(social.shownStats),
+      user.id
+    )
     .run();
 
   if (Array.isArray(body.worthLog)) {
@@ -740,6 +772,7 @@ function publicUser(row) {
     title: row.title || "Rookie",
     createdAt: row.created_at,
     lastPlayed: row.last_played,
+    ...socialUserFields(row),
   };
 }
 

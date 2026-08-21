@@ -15,6 +15,17 @@ import {
 } from "./catalog.js";
 import { HIT_RARITIES } from "./engine.js";
 import { initRadio } from "./radio.js";
+import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge } from "./social.js";
+import {
+  avatarArt,
+  avatarIcon,
+  bannerList,
+  bannerSrc,
+  searchAvatars,
+  STAT_KEYS,
+  DEFAULT_STATS,
+  SHOWCASE_MAX,
+} from "./cosmetics.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
@@ -39,13 +50,14 @@ import {
 import {
   AVATAR_COLORS,
   avatarColor,
-  trainerInitial,
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 
 const state = loadState();
 let cloudUser = null;
+let profileHandle = "";
+let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
 let ripLock = false;
@@ -227,6 +239,7 @@ const els = {
   binderAddPage: document.getElementById("binder-add-page"),
   viewCatalog: document.getElementById("view-catalog"),
   viewAccount: document.getElementById("view-account"),
+  viewProfile: document.getElementById("view-profile"),
   viewAuth: document.getElementById("view-auth"),
   viewSettings: document.getElementById("view-settings"),
   viewNotes: document.getElementById("view-notes"),
@@ -235,6 +248,7 @@ const els = {
   homeStage: document.getElementById("home-stage"),
   homeBody: document.getElementById("home-body"),
   accountBody: document.getElementById("account-body"),
+  profileBody: document.getElementById("profile-body"),
   authBody: document.getElementById("auth-body"),
   settingsBody: document.getElementById("settings-body"),
   notesBody: document.getElementById("notes-body"),
@@ -635,7 +649,7 @@ function renderHeader() {
   if (trainer && els.trainerChip) {
     const color = avatarColor(trainer.color);
     els.trainerChip.style.setProperty("--avatar", color.hex);
-    els.trainerAvatar.textContent = trainerInitial(trainer);
+    els.trainerAvatar.innerHTML = `<img src="${esc(avatarArt(trainer.avatar))}" alt="" />`;
     els.trainerChipName.textContent = trainer.name;
     els.trainerChipHandle.textContent = `@${trainer.handle}`;
   }
@@ -1716,7 +1730,7 @@ function colorPicks(selected, attr = "data-color") {
 
 function avatarMark(trainer, extraClass = "trainer-mark") {
   const color = avatarColor(trainer?.color);
-  return `<div class="${extraClass}" style="--avatar:${esc(color.hex)}">${esc(trainerInitial(trainer))}</div>`;
+  return `<div class="${extraClass}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarArt(trainer?.avatar))}" alt="" /></div>`;
 }
 
 function saveTools() {
@@ -1777,9 +1791,11 @@ async function hydrateAfterAccountChange() {
   renderBinder();
   if (view === "home") renderHome();
   if (view === "account") renderAccount();
+  if (view === "profile") renderProfile();
   if (view === "auth") renderAuth();
   if (view === "settings") renderSettings();
   if (view === "notes") renderNotes();
+  notifySignedIn();
 }
 
 function renderAuth() {
@@ -1879,7 +1895,8 @@ function renderAccount() {
             <p><span class="account-handle">@${esc(trainer.handle)}</span> · ${esc(trainerCode(trainer.id))} · since ${esc(formatWhen(trainer.createdAt))}</p>
             ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
           </div>
-          <div class="account-actions">
+            <div class="account-actions">
+            <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
             <button class="ghost" type="button" id="sign-out">Sign out</button>
           </div>
         </div>
@@ -1913,6 +1930,8 @@ function renderAccount() {
         </form>
       </div>`
     : "";
+
+  const look = trainer ? lookPanel(trainer) : "";
 
   const password = trainer
     ? `<div class="panel">
@@ -1988,11 +2007,167 @@ function renderAccount() {
       </div>
       ${saveTools()}
       ${profile}
+      ${look}
       ${password}
     </div>
     ${danger}`
         : ""
     }`;
+}
+
+function statLabel(key) {
+  return { packs: "Packs ripped", pulls: "Cards pulled", unique: "Unique cards", coins: "Coins" }[key] || key;
+}
+
+function lookPanel(trainer) {
+  const shown = new Set(trainer.shownStats || DEFAULT_STATS);
+  const picked = new Set((trainer.showcase || []).map((slot) => slot.id));
+  const avatars = searchAvatars(avatarQuery);
+  const ownedCards = Object.entries(state.collection || {})
+    .filter(([, n]) => n > 0)
+    .map(([id]) => findCard(id))
+    .filter(Boolean)
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .slice(0, 96);
+
+  return `<div class="panel">
+        <h3>Look</h3>
+        <p class="panel-note">Pick a Pokémon still and a set banner. Custom pictures and GIFs stay exclusive for premium later.</p>
+        <label class="field"><span>Search a Pokémon</span>
+          <input id="avatar-search" value="${esc(avatarQuery)}" placeholder="Pikachu, 25, Darkrai" />
+        </label>
+        <div class="avatar-grid">${avatars
+          .map(
+            ([id, name]) => `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
+            <img src="${esc(avatarIcon(id))}" alt="${esc(name)}" loading="lazy" />
+            <small>${esc(name)}</small>
+          </button>`
+          )
+          .join("")}</div>
+        <h3>Banner</h3>
+        <div class="banner-grid">${bannerList()
+          .map(
+            (row) => `<button type="button" class="pick${trainer.banner === row.id ? " on" : ""}" data-set-banner="${esc(row.id)}">
+            <img src="${esc(row.src)}" alt="${esc(row.name)}" loading="lazy" />
+            <small>${esc(row.name)}</small>
+          </button>`
+          )
+          .join("")}</div>
+        <h3>Show on profile</h3>
+        <div class="stat-toggles">${STAT_KEYS.map(
+          (key) => `<label><input type="checkbox" data-stat-toggle="${key}" ${shown.has(key) ? "checked" : ""} /> ${esc(statLabel(key))}</label>`
+        ).join("")}</div>
+        <h3>Showcase · ${picked.size}/${SHOWCASE_MAX}</h3>
+        <p class="panel-note">Up to six cards you own. They sit on your public profile.</p>
+        <div class="showcase-picks">${
+          ownedCards.length
+            ? ownedCards
+                .map(
+                  (card) => `<button type="button" class="pick${picked.has(card.id) ? " on" : ""}" data-toggle-showcase="${esc(card.id)}" title="${esc(card.name)}">
+              <img src="${esc(card.imageSmall || card.image)}" alt="${esc(card.name)}" loading="lazy" />
+              <small>${esc(card.name)}</small>
+            </button>`
+                )
+                .join("")
+            : `<p class="panel-empty">Rip a pack to put something here.</p>`
+        }</div>
+      </div>`;
+}
+
+async function renderProfile() {
+  const handle = profileHandle;
+  if (!els.profileBody) return;
+  if (!handle) {
+    els.profileBody.innerHTML = `<div class="panel"><p class="panel-empty">No trainer here.</p></div>`;
+    return;
+  }
+  els.profileBody.innerHTML = `<div class="panel"><p class="panel-empty">Loading @${esc(handle)}…</p></div>`;
+  try {
+    const data = await api(`/api/u/${encodeURIComponent(handle)}`);
+    if (profileHandle !== handle) return;
+    const user = data.user;
+    const mine = data.relation === "self";
+    const signed = Boolean(activeTrainer());
+    const stats = data.stats || {};
+    const friendBtn =
+      !signed
+        ? `<button class="ghost" type="button" data-open-auth="signin">Sign in to add</button>`
+        : mine
+          ? `<a class="ghost" href="/account">Edit profile</a>`
+          : data.relation === "friends"
+            ? `<button class="ghost" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
+            : data.relation === "pending-out"
+              ? `<button class="ghost" type="button" disabled>Request sent</button>`
+              : data.relation === "pending-in"
+                ? `<button class="solid" type="button" data-friend-accept="${esc(user.handle)}">Accept friend</button>`
+                : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`;
+
+    const showcase = (data.showcase || [])
+      .map((slot) => {
+        const card = findCard(slot.id) || slot;
+        const face = findCard(slot.id)
+          ? tcgFace({ ...findCard(slot.id), reverse: slot.reverse }, { small: true, stamp: false, lazy: true })
+          : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" />`;
+        return `<button type="button" class="mini-card" ${findCard(slot.id) ? inspectAttrs(findCard(slot.id)) : ""} aria-label="${esc(slot.name)}">${face}</button>`;
+      })
+      .join("");
+
+    const comments = (data.comments || [])
+      .map(
+        (row) => `<div class="comment-item">
+          <a href="/u/${esc(row.user.handle)}">${faceHtml(row.user, "sm")}</a>
+          <div>
+            <a href="/u/${esc(row.user.handle)}"><b>${esc(row.user.name)}</b></a>
+            <time>${esc(formatWhen(row.at))}</time>
+            <p>${esc(row.body)}</p>
+          </div>
+        </div>`
+      )
+      .join("");
+
+    els.profileBody.innerHTML = `
+      <div class="profile-page">
+        <div class="profile-hero">
+          <div class="profile-banner" style="background-image:url('${esc(bannerSrc(user.banner))}')"></div>
+          <div class="profile-id">
+            ${faceHtml({ ...user, online: data.online }, "lg")}
+            <div class="profile-copy">
+              <p class="account-title">${esc(user.title || "Rookie")}${data.online ? " · online" : ""}</p>
+              <h1>${esc(user.name)}</h1>
+              <p>@${esc(user.handle)} · ${esc(user.title || "Rookie")} · ${num(data.friends || 0)} friends</p>
+              ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
+            </div>
+            <div class="profile-actions">${friendBtn}</div>
+          </div>
+          <div class="profile-stats">
+            ${stats.packs != null ? `<div><b>${num(stats.packs)}</b><span>Packs ripped</span></div>` : ""}
+            ${stats.pulls != null ? `<div><b>${num(stats.pulls)}</b><span>Cards pulled</span></div>` : ""}
+            ${stats.unique != null ? `<div><b>${num(stats.unique)}</b><span>Unique cards</span></div>` : ""}
+            ${stats.coins != null ? `<div><b>✦ ${coin(stats.coins)}</b><span>Coins</span></div>` : ""}
+          </div>
+        </div>
+        <div class="profile-grid">
+          <div class="panel">
+            <h3>Showcase</h3>
+            ${showcase ? `<div class="showcase-row">${showcase}</div>` : `<p class="panel-empty">Nothing pinned yet.</p>`}
+          </div>
+          <div class="panel">
+            <h3>Wall</h3>
+            <div class="comment-list">${comments || `<p class="panel-empty">No comments yet.</p>`}</div>
+            ${
+              signed
+                ? `<form class="comment-form" id="comment-form">
+                    <textarea name="body" maxlength="220" placeholder="Leave a note"></textarea>
+                    <button class="solid" type="submit">Comment</button>
+                  </form>`
+                : `<p class="panel-note">Sign in to comment.</p>`
+            }
+          </div>
+        </div>
+      </div>`;
+  } catch (err) {
+    els.profileBody.innerHTML = `<div class="panel"><p class="panel-empty">${esc(err.message || "Trainer not found.")}</p></div>`;
+  }
 }
 
 /*
@@ -2198,6 +2373,7 @@ const VIEW_SECTIONS = {
   binder: "viewBinder",
   catalog: "viewCatalog",
   account: "viewAccount",
+  profile: "viewProfile",
   auth: "viewAuth",
   settings: "viewSettings",
   notes: "viewNotes",
@@ -2210,6 +2386,7 @@ const VIEW_PATHS = {
   binder: "/binder",
   catalog: "/catalog",
   account: "/account",
+  profile: "/u",
   auth: "/signin",
   settings: "/settings",
   notes: "/notes",
@@ -2242,17 +2419,22 @@ const VIEW_TITLES = {
   binder: "Binder — poke-pack.rip",
   catalog: "Catalog — poke-pack.rip",
   account: "Account — poke-pack.rip",
+  profile: "Trainer — poke-pack.rip",
   auth: "Sign in — poke-pack.rip",
   settings: "Settings — poke-pack.rip",
   notes: "Patch notes — poke-pack.rip",
 };
 
 const VIEW_RENDER = {
-  home: () => renderHome(),
+  home: () => {
+    renderHome();
+    refreshLounge();
+  },
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
   account: () => renderAccount(),
+  profile: () => renderProfile(),
   auth: () => renderAuth(),
   settings: () => renderSettings(),
   notes: () => renderNotes(),
@@ -2264,10 +2446,18 @@ function normalizePath(pathname) {
 }
 
 function viewFromPath(pathname) {
-  return PATH_VIEWS[normalizePath(pathname)] || null;
+  const path = normalizePath(pathname);
+  if (PATH_VIEWS[path]) return PATH_VIEWS[path];
+  const profile = path.match(/^\/u\/([a-z0-9_]{3,16})$/i);
+  if (profile) {
+    profileHandle = profile[1].toLowerCase();
+    return "profile";
+  }
+  return null;
 }
 
 function pathForView(name) {
+  if (name === "profile") return `/u/${profileHandle || "trainer"}`;
   return VIEW_PATHS[name] || "/home";
 }
 
@@ -2276,7 +2466,7 @@ function reduceMotion() {
 }
 
 function paintNav(current) {
-  const navView = current === "auth" ? "account" : current;
+  const navView = current === "auth" || current === "profile" ? "account" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     const on = btn.dataset.view === navView;
     btn.classList.toggle("active", on);
@@ -2296,7 +2486,10 @@ function applyView(next, hist) {
   document.body.classList.toggle("on-shop", view === "shop");
   document.body.classList.toggle("on-collection", view === "collection");
   document.body.classList.toggle("on-auth", view === "auth");
-  document.title = VIEW_TITLES[view] || VIEW_TITLES.home;
+  document.title =
+    view === "profile" && profileHandle
+      ? `@${profileHandle} — poke-pack.rip`
+      : VIEW_TITLES[view] || VIEW_TITLES.home;
   if (!document.body.classList.contains("is-booting")) {
     window.scrollTo(0, 0);
   }
@@ -2310,14 +2503,18 @@ function applyView(next, hist) {
   else history.pushState({ view }, "", url);
 }
 
-function setView(next, { history: hist = "push" } = {}) {
+function setView(next, { history: hist = "push", handle } = {}) {
   if (!VIEW_SECTIONS[next]) return;
+  const nextHandle =
+    next === "profile" ? String(handle || profileHandle || "").replace(/^@/, "").toLowerCase() : profileHandle;
+  const same = view === next && (next !== "profile" || nextHandle === profileHandle);
+  if (next === "profile") profileHandle = nextHandle;
   paintNav(next);
   const wrap = document.querySelector(".wrap");
   const skipFade =
     document.body.classList.contains("is-booting") ||
     reduceMotion() ||
-    view === next;
+    same;
 
   if (skipFade) {
     viewFadeGen += 1;
@@ -3634,6 +3831,43 @@ els.accountBody.addEventListener("click", async (e) => {
     }
     return;
   }
+  const setAvatar = e.target.closest("[data-set-avatar]");
+  if (setAvatar) {
+    try {
+      await patchLook({ avatar: setAvatar.dataset.setAvatar });
+    } catch (err) {
+      toast(err.message || "Couldn't update avatar.");
+    }
+    return;
+  }
+  const setBanner = e.target.closest("[data-set-banner]");
+  if (setBanner) {
+    try {
+      await patchLook({ banner: setBanner.dataset.setBanner });
+    } catch (err) {
+      toast(err.message || "Couldn't update banner.");
+    }
+    return;
+  }
+  const pin = e.target.closest("[data-toggle-showcase]");
+  if (pin) {
+    const trainer = activeTrainer();
+    if (!trainer) return;
+    const id = pin.dataset.toggleShowcase;
+    const showcase = [...(trainer.showcase || [])];
+    const at = showcase.findIndex((slot) => slot.id === id);
+    if (at >= 0) showcase.splice(at, 1);
+    else if (showcase.length >= SHOWCASE_MAX) {
+      toast("Showcase holds six cards.");
+      return;
+    } else showcase.push({ id, reverse: ownedReverse(id) });
+    try {
+      await patchLook({ showcase });
+    } catch (err) {
+      toast(err.message || "Couldn't update showcase.");
+    }
+    return;
+  }
   if (!e.target.closest("#export-save")) return;
   const trainer = activeTrainer();
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
@@ -3644,6 +3878,106 @@ els.accountBody.addEventListener("click", async (e) => {
   link.click();
   URL.revokeObjectURL(url);
   toast("Save downloaded.");
+});
+
+els.accountBody.addEventListener("input", (e) => {
+  if (e.target.id !== "avatar-search") return;
+  avatarQuery = e.target.value;
+  const trainer = activeTrainer();
+  const grid = els.accountBody.querySelector(".avatar-grid");
+  if (!trainer || !grid) return;
+  grid.innerHTML = searchAvatars(avatarQuery)
+    .map(
+      ([id, name]) => `<button type="button" class="pick${String(trainer.avatar) === String(id) ? " on" : ""}" data-set-avatar="${id}" title="${esc(name)}">
+      <img src="${esc(avatarIcon(id))}" alt="${esc(name)}" loading="lazy" />
+      <small>${esc(name)}</small>
+    </button>`
+    )
+    .join("");
+});
+
+els.accountBody.addEventListener("change", async (e) => {
+  const box = e.target.closest("[data-stat-toggle]");
+  if (!box) return;
+  const trainer = activeTrainer();
+  if (!trainer) return;
+  const shown = new Set(trainer.shownStats || DEFAULT_STATS);
+  if (box.checked) shown.add(box.dataset.statToggle);
+  else shown.delete(box.dataset.statToggle);
+  if (!shown.size) shown.add("packs");
+  try {
+    await patchLook({ shownStats: [...shown] });
+  } catch (err) {
+    toast(err.message || "Couldn't update stats.");
+    renderAccount();
+  }
+});
+
+async function patchLook(body) {
+  const data = await api("/api/me", { method: "PATCH", body: JSON.stringify(body) });
+  cloudUser = data.user;
+  renderHeader();
+  renderAccount();
+}
+
+els.profileBody?.addEventListener("click", async (e) => {
+  inspectFromEl(e.target);
+  const add = e.target.closest("[data-friend-add]");
+  const accept = e.target.closest("[data-friend-accept]");
+  const remove = e.target.closest("[data-friend-remove]");
+  const handle = add?.dataset.friendAdd || accept?.dataset.friendAccept || remove?.dataset.friendRemove;
+  if (!handle) return;
+  try {
+    if (add) {
+      const data = await api("/api/friends/request", { method: "POST", body: JSON.stringify({ handle }) });
+      toast(data.status === "accepted" ? `You and @${handle} are friends.` : `Request sent to @${handle}.`);
+    } else if (accept) {
+      await api("/api/friends/respond", { method: "POST", body: JSON.stringify({ handle, accept: true }) });
+      toast(`You and @${handle} are friends.`);
+    } else {
+      await api("/api/friends/remove", { method: "POST", body: JSON.stringify({ handle }) });
+      toast(`Removed @${handle}.`);
+    }
+    renderProfile();
+    notifySignedIn();
+  } catch (err) {
+    toast(err.message || "Couldn't update friends.");
+  }
+});
+
+els.profileBody?.addEventListener("submit", async (e) => {
+  const form = e.target.closest("#comment-form");
+  if (!form) return;
+  e.preventDefault();
+  const body = String(new FormData(form).get("body") || "").trim();
+  if (!body) return;
+  try {
+    await api(`/api/u/${encodeURIComponent(profileHandle)}/comments`, {
+      method: "POST",
+      body: JSON.stringify({ body }),
+    });
+    renderProfile();
+    toast("Posted.");
+  } catch (err) {
+    toast(err.message || "Couldn't comment.");
+  }
+});
+
+document.getElementById("home-chat-form")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!activeTrainer()) {
+    openAuth("signin");
+    return;
+  }
+  const input = e.target.body;
+  const text = String(input?.value || "").trim();
+  if (!text) return;
+  try {
+    await sendChat(text);
+    input.value = "";
+  } catch (err) {
+    toast(err.message || "Couldn't send.");
+  }
 });
 
 els.accountBody.addEventListener("submit", async (e) => {
@@ -4301,6 +4635,12 @@ boot().catch((err) => {
   toast(err?.message || `Couldn't load ${liveSet.name} data.`);
 });
 initRadio();
+initSocial({
+  getUser: () => cloudUser,
+  toast,
+  openProfile: (handle) => setView("profile", { handle }),
+  openAuth,
+});
 
 /*
  * The header only changes on its own when the hourly stack unlocks, so

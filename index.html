@@ -38,7 +38,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/app.css?v=36" />
+    <link rel="stylesheet" href="css/app.css?v=37" />
   </head>
   <body class="on-home is-booting">
     <div class="boot-veil" aria-hidden="true"></div>
@@ -109,6 +109,26 @@
           <div class="home-stage" id="home-stage"></div>
         </div>
         <div id="home-body"></div>
+        <div class="home-lounge" id="home-lounge">
+          <div class="lounge-panel">
+            <div class="lounge-head">
+              <h2>On the floor</h2>
+              <span><b id="home-online-count">0</b> online</span>
+            </div>
+            <div class="online-list" id="home-online-list"></div>
+          </div>
+          <div class="lounge-panel">
+            <div class="lounge-head">
+              <h2>Global chat</h2>
+              <span>the whole site</span>
+            </div>
+            <div class="chat-log" id="home-chat-log"></div>
+            <form class="chat-form" id="home-chat-form">
+              <input name="body" maxlength="180" placeholder="Say something" autocomplete="off" />
+              <button class="solid" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
       </section>
 
       <section id="view-shop" class="hidden">
@@ -214,6 +234,10 @@
         <div id="account-body"></div>
       </section>
 
+      <section id="view-profile" class="hidden">
+        <div id="profile-body"></div>
+      </section>
+
       <section id="view-auth" class="hidden">
         <div id="auth-body"></div>
       </section>
@@ -291,6 +315,6 @@
       <span>Card names, numbers, artists, and scans match the public Pokémon TCG card database (the same catalog as pokemon.com/us/pokemon-tcg/pokemon-cards).</span>
       <a href="/notes">Patch notes</a>
     </footer>
-    <script type="module" src="js/app.js?v=36"></script>
+    <script type="module" src="js/app.js?v=37"></script>
   </body>
 </html>
