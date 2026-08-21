@@ -1161,12 +1161,16 @@ h1 em { font-style: normal; color: var(--gold); }
 .spread-card .tcg.lit,
 .slot-face .tcg.lit,
 .inspect-art .tcg.lit,
-.focus-card.flipped .face-back .tcg.lit,
+.focus-card.flipped:not(.flipping) .face-back .tcg.lit,
 .home-float .tcg.lit,
 .home-film .tcg.lit {
   transform: perspective(760px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.05);
 }
-.focus-card.flipping .face-back .tcg.lit { transform: none; }
+.focus-card.flipping .tcg,
+.focus-card.flipping .tcg.lit {
+  transform: none !important;
+  transition: none;
+}
 
 .tcg.holo img {
   filter:
@@ -3340,18 +3344,13 @@ html.dialog-open body {
 .pull-lift {
   width: 100%;
   height: 100%;
+  perspective: 1400px;
+  perspective-origin: 50% 42%;
   transform-style: preserve-3d;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  -webkit-transform-style: preserve-3d;
 }
-.focus-card.flipping .pull-lift {
-  transform: translateY(-12px) scale(1.04);
-}
-.focus-card.t2.flipping .pull-lift,
-.focus-card.t3.flipping .pull-lift {
-  transform: translateY(-18px) scale(1.08);
-}
-.focus-card.t2.flipped.settled .pull-lift,
-.focus-card.t3.flipped.settled .pull-lift {
+.focus-card.t2.flipped.settled:not(.flipping) .pull-lift,
+.focus-card.t3.flipped.settled:not(.flipping) .pull-lift {
   animation: rarePulse 2.6s ease-in-out infinite;
 }
 @keyframes rarePulse {
@@ -3365,10 +3364,12 @@ html.dialog-open body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform var(--flip-ms) cubic-bezier(0.33, 0.09, 0.15, 1);
+  -webkit-transform-style: preserve-3d;
+  transform: translateZ(0);
+  transition: transform var(--flip-ms) cubic-bezier(0.4, 0.12, 0.2, 1);
   will-change: transform;
 }
-.focus-card.flipped .pull-inner { transform: rotateY(180deg); }
+.focus-card.flipped .pull-inner { transform: rotateY(180deg) translateZ(0); }
 .face-front, .face-back {
   position: absolute;
   inset: 0;
@@ -3379,8 +3380,8 @@ html.dialog-open body {
 }
 .focus-card:not(.flipped) .face-front,
 .focus-card.flipped .face-back { pointer-events: auto; }
-.face-front { transform: rotateY(0deg) translateZ(1px); }
-.face-back { transform: rotateY(180deg) translateZ(1px); }
+.face-front { transform: rotateY(0deg); }
+.face-back { transform: rotateY(180deg); }
 .face-front .tcg, .face-back .tcg { width: 100%; height: 100%; }
 .inspect-art .tcg { width: 100%; }
 .focus-card .tcg,
@@ -3744,15 +3745,38 @@ html.dialog-open body {
 @media (max-width: 860px) {
   .hero, .pack-grid, .inspect-grid, .home-hero, .home-sets, .home-steps,
   .home-market, .home-pulls { grid-template-columns: 1fr; }
-  .hero-art { display: none; }
   .site-header { flex-wrap: wrap; }
-  .home-stage { display: none; }
   .home-hero { min-height: 0; margin-bottom: 24px; }
   .home-copy h1,
   h1 { font-size: clamp(28px, 8vw, 40px); line-height: 1.05; }
+  .home-stage {
+    height: 280px;
+    min-height: 280px;
+    margin: 4px -8px 8px;
+    overflow: hidden;
+  }
+  .home-fan { height: 280px; }
+  .home-float { width: 118px; }
+  .home-float:nth-child(1) { left: 4%; top: 14%; }
+  .home-float:nth-child(2) { left: 30%; top: 2%; width: 138px; }
+  .home-float:nth-child(3) { right: 2%; top: 18%; width: 108px; }
+  .home-float:nth-child(4) { left: 20%; bottom: 2%; width: 100px; }
+  .home-pack-float,
+  .home-pack-float img { height: 160px; }
+  .hero-art {
+    display: block;
+    height: 250px;
+    max-width: 360px;
+    margin: 4px auto 0;
+  }
+  .float-card { width: 112px; }
+  .float-card:nth-child(1) { left: 12px; top: 10px; }
+  .float-card:nth-child(2) { right: 16px; top: 32px; }
+  .float-card:nth-child(3) { left: 78px; bottom: 4px; width: 96px; }
+  .float-card:nth-child(4) { right: 8px; bottom: 14px; width: 88px; }
   .home-set { grid-template-columns: 1fr; }
-  .home-set-fan { height: 132px; overflow: hidden; }
-  .home-set-pack img { height: 120px; }
+  .home-set-fan { height: 160px; overflow: visible; }
+  .home-set-pack img { height: 140px; }
   .home-odds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .home-proof { gap: 8px 18px; }
   .home-worth { padding: 16px; }
@@ -3840,8 +3864,9 @@ html.dialog-open body {
   }
   .home-film .mini-card { width: 80px; }
   .home-cta { margin-top: 18px; }
-  .inspect-art { max-width: 220px; margin: 0 auto; }
-  .inspect-grid { gap: 16px; }
+  .inspect-art { max-width: min(340px, 88vw); width: 100%; margin: 0 auto; }
+  .inspect-grid { gap: 16px; justify-items: center; }
+  .inspect-info { text-align: left; width: 100%; }
   .radio { right: 10px; bottom: 10px; }
 }
 
@@ -4177,8 +4202,7 @@ body:has(#inspect:not(.hidden)) .radio {
  * absolutely pinned chrome clipped the card, Done, and the spread.
  */
 @media (max-width: 720px) {
-  #overlay,
-  #inspect {
+  #overlay {
     display: block;
     justify-content: unset;
     align-items: unset;
@@ -4186,9 +4210,17 @@ body:has(#inspect:not(.hidden)) .radio {
     overflow-y: auto;
     padding: max(10px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom));
   }
+  #inspect {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: max(10px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom));
+  }
   #overlay .rip-stage,
-  #overlay.dealing .rip-stage,
-  #inspect .inspect-stage {
+  #overlay.dealing .rip-stage {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -4199,6 +4231,26 @@ body:has(#inspect:not(.hidden)) .radio {
     height: auto;
     margin: 0;
     gap: 10px;
+  }
+  #inspect .inspect-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex: none;
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    margin: 0;
+    gap: 12px;
+  }
+  #inspect .inspect-close {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    align-self: flex-start;
+    margin: 0 0 8px;
+    background: rgba(9, 7, 13, 0.86);
   }
   #overlay .overlay-leave {
     position: static;
@@ -4358,7 +4410,7 @@ body:has(#inspect:not(.hidden)) .radio {
   #overlay .spread-card { width: 92px; }
   #overlay .spread-card.hit { width: 104px; }
   .spread-card .tcg.lit,
-  .focus-card.flipped .face-back .tcg.lit {
+  .focus-card.flipped:not(.flipping) .face-back .tcg.lit {
     transform: perspective(760px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.02);
   }
 }

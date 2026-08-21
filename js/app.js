@@ -2574,6 +2574,7 @@ function flipCurrent() {
   flipBusy = true;
   pull.revealed = true;
   const tier = hitTier(pull);
+  clearGlare();
   els.focusCard.classList.add("flipping");
   void els.focusCard.offsetWidth;
   els.focusCard.classList.add("flipped");
@@ -3079,6 +3080,7 @@ function inspectFromEl(el) {
 /** The card the inspector is currently showing, for the chart's range buttons. */
 let inspectCard = null;
 let inspectRange = "30d";
+let inspectOpenedAt = 0;
 
 function inspectSellRow(card) {
   const count = state.collection[card.id] || 0;
@@ -3109,6 +3111,7 @@ function openInspect(id, reverse = false) {
   const card = reverse || ownedReverse(id) ? { ...base, reverse: true } : base;
   inspectCard = card;
   inspectRange = "30d";
+  inspectOpenedAt = Date.now();
   els.inspectArt.innerHTML = tcgFace(card);
   els.inspectInfo.innerHTML = `
     <p class="kicker">${esc(numberLine(card))} · <span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span> · ${esc(card.supertype)}</p>
@@ -3663,6 +3666,10 @@ function paintGlare() {
   glareRaf = 0;
   const e = glarePointer;
   if (!e) return;
+  if (flipBusy || els.focusCard?.classList.contains("flipping")) {
+    clearGlare();
+    return;
+  }
   if (!state.settings.shine && !state.settings.tilt) {
     clearGlare();
     return;
@@ -3696,6 +3703,7 @@ function queueGlare(e) {
 }
 
 document.addEventListener("pointerdown", (e) => {
+  if (flipBusy || els.focusCard?.classList.contains("flipping")) return;
   if (!tcgFromEvent(e)) return;
   queueGlare(e);
 });
@@ -3786,7 +3794,9 @@ els.dexGrid.addEventListener("click", (e) => {
 
 els.inspectClose.addEventListener("click", () => closeDialog(els.inspect));
 els.inspect.addEventListener("click", (e) => {
-  if (e.target === els.inspect) closeDialog(els.inspect);
+  if (e.target !== els.inspect) return;
+  if (Date.now() - inspectOpenedAt < 500) return;
+  closeDialog(els.inspect);
 });
 
 /*
