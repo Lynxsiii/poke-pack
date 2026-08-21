@@ -58,6 +58,21 @@ button { cursor: pointer; touch-action: manipulation; }
 img { max-width: 100%; display: block; }
 .hidden { display: none !important; }
 
+.boot-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--bg);
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+body.is-ready .boot-veil {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .noise {
   pointer-events: none;
   position: fixed;
@@ -214,7 +229,13 @@ img { max-width: 100%; display: block; }
   white-space: nowrap;
 }
 
-.wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 36px 0 80px; }
+.wrap {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 36px 0 80px;
+  transition: opacity 0.2s ease;
+}
+.wrap.is-switching { opacity: 0; }
 body.on-home .wrap { width: min(1240px, calc(100% - 40px)); }
 body.on-shop .wrap { width: min(1280px, calc(100% - 40px)); }
 body.on-collection .wrap { width: min(1240px, calc(100% - 40px)); }
@@ -4009,6 +4030,10 @@ html.dialog-open body {
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
+  .boot-veil,
+  .wrap {
+    transition: none !important;
+  }
 }
 
 /* --- added in review pass ------------------------------------------------ */

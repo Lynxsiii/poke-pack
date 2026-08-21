@@ -32,12 +32,16 @@
 
     <link rel="icon" href="assets/icon-32.png?v=35" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="assets/icon-180.png?v=35" />
+    <noscript>
+      <style>.boot-veil { display: none !important; }</style>
+    </noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/app.css?v=35" />
+    <link rel="stylesheet" href="css/app.css?v=36" />
   </head>
-  <body class="on-home">
+  <body class="on-home is-booting">
+    <div class="boot-veil" aria-hidden="true"></div>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/home">
@@ -287,6 +291,6 @@
       <span>Card names, numbers, artists, and scans match the public Pokémon TCG card database (the same catalog as pokemon.com/us/pokemon-tcg/pokemon-cards).</span>
       <a href="/notes">Patch notes</a>
     </footer>
-    <script type="module" src="js/app.js?v=35"></script>
+    <script type="module" src="js/app.js?v=36"></script>
   </body>
 </html>

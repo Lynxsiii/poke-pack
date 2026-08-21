@@ -1,5 +1,14 @@
 [
   {
+    "id": "2026-08-21-page-fade",
+    "date": "2026-08-21",
+    "title": "Smoother loads",
+    "items": [
+      "Refreshing no longer flashes empty layout — the page fades in after the first paint.",
+      "Switching Home / Packs / Bulk / Binder fades the main column instead of snapping."
+    ]
+  },
+  {
     "id": "2026-08-21-logo",
     "date": "2026-08-21",
     "title": "New mark",

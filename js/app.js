@@ -170,6 +170,7 @@ let cards = [];
 let setCards = [];
 let byId = {};
 let view = "home";
+let viewFadeGen = 0;
 let patchNotes = [];
 let ownedMode = "all";
 let rarityMode = "all";
@@ -2270,25 +2271,35 @@ function pathForView(name) {
   return VIEW_PATHS[name] || "/home";
 }
 
-function setView(next, { history: hist = "push" } = {}) {
-  if (!VIEW_SECTIONS[next]) return;
-  view = next;
-  for (const [name, key] of Object.entries(VIEW_SECTIONS)) {
-    els[key]?.classList.toggle("hidden", view !== name);
-  }
-  const navView = view === "auth" ? "account" : view;
+function reduceMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function paintNav(current) {
+  const navView = current === "auth" ? "account" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     const on = btn.dataset.view === navView;
     btn.classList.toggle("active", on);
     if (on) btn.setAttribute("aria-current", "page");
     else btn.removeAttribute("aria-current");
   });
+}
+
+function applyView(next, hist) {
+  view = next;
+  for (const [name, key] of Object.entries(VIEW_SECTIONS)) {
+    els[key]?.classList.toggle("hidden", view !== name);
+  }
+  paintNav(view);
   VIEW_RENDER[view]?.();
   document.body.classList.toggle("on-home", view === "home");
   document.body.classList.toggle("on-shop", view === "shop");
   document.body.classList.toggle("on-collection", view === "collection");
   document.body.classList.toggle("on-auth", view === "auth");
   document.title = VIEW_TITLES[view] || VIEW_TITLES.home;
+  if (!document.body.classList.contains("is-booting")) {
+    window.scrollTo(0, 0);
+  }
   if (hist === "none") return;
   const want = pathForView(view);
   const have = normalizePath(location.pathname);
@@ -2297,6 +2308,36 @@ function setView(next, { history: hist = "push" } = {}) {
   const url = want + location.search;
   if (hist === "replace") history.replaceState({ view }, "", url);
   else history.pushState({ view }, "", url);
+}
+
+function setView(next, { history: hist = "push" } = {}) {
+  if (!VIEW_SECTIONS[next]) return;
+  paintNav(next);
+  const wrap = document.querySelector(".wrap");
+  const skipFade =
+    document.body.classList.contains("is-booting") ||
+    reduceMotion() ||
+    view === next;
+
+  if (skipFade) {
+    viewFadeGen += 1;
+    applyView(next, hist);
+    wrap?.classList.remove("is-switching");
+    return;
+  }
+
+  const gen = ++viewFadeGen;
+  wrap?.classList.add("is-switching");
+  window.setTimeout(() => {
+    if (gen !== viewFadeGen) return;
+    applyView(next, hist);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (gen !== viewFadeGen) return;
+        wrap?.classList.remove("is-switching");
+      });
+    });
+  }, 180);
 }
 
 function remainingBacks() {
@@ -4204,39 +4245,55 @@ function routeFromLocation() {
 }
 
 async function boot() {
-  await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
-  await refreshSession();
-  await activateSet(state.activeSetId || DEFAULT_SET_ID);
-  applySettings();
-  renderHeader();
-  scheduleDailyTick();
-  const back = new Image();
-  back.src = liveSet.cardBack;
-  routeFromLocation();
+  try {
+    await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
+    await refreshSession();
+    await activateSet(state.activeSetId || DEFAULT_SET_ID);
+    applySettings();
+    renderHeader();
+    scheduleDailyTick();
+    const back = new Image();
+    back.src = liveSet.cardBack;
+    routeFromLocation();
 
-  // Not awaited: the page is usable without it, and it refreshes home when done.
-  loadAllSets();
-  priceTicker = startLivePrices({
-    sets: () =>
-      PLAYABLE_SETS.map((set) => ({
-        id: set.id,
-        cards: setCache[set.id] || [],
-      })),
-    activeId: () => liveSet.id,
-    refreshSealed: loadSealedPrices,
-    onUpdate: () => {
-      renderHeader();
-      if (packPhase !== "idle") return;
-      if (view === "home") renderHome();
-      if (view === "shop") renderShop();
-      if (view === "collection") renderCollection();
-      if (view === "binder") renderBinder();
-      if (view === "account") renderAccount();
-      if (inspectCard && els.inspect && !els.inspect.classList.contains("hidden")) {
-        paintInspect(inspectCard);
-      }
-    },
-  });
+    // Not awaited: the page is usable without it, and it refreshes home when done.
+    loadAllSets();
+    priceTicker = startLivePrices({
+      sets: () =>
+        PLAYABLE_SETS.map((set) => ({
+          id: set.id,
+          cards: setCache[set.id] || [],
+        })),
+      activeId: () => liveSet.id,
+      refreshSealed: loadSealedPrices,
+      onUpdate: () => {
+        renderHeader();
+        if (packPhase !== "idle") return;
+        if (view === "home") renderHome();
+        if (view === "shop") renderShop();
+        if (view === "collection") renderCollection();
+        if (view === "binder") renderBinder();
+        if (view === "account") renderAccount();
+        if (inspectCard && els.inspect && !els.inspect.classList.contains("hidden")) {
+          paintInspect(inspectCard);
+        }
+      },
+    });
+  } finally {
+    revealSite();
+  }
+}
+
+function revealSite() {
+  const go = () => {
+    document.body.classList.add("is-ready");
+    document.body.classList.remove("is-booting");
+  };
+  if (reduceMotion()) {
+    go();
+    return;
+  }
+  requestAnimationFrame(() => requestAnimationFrame(go));
 }
 
 boot().catch((err) => {
