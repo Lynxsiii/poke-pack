@@ -494,7 +494,6 @@ h1 em { font-style: normal; color: var(--gold); }
   height: 100%;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.42));
 }
 
 /* Printed rarity mark, bottom-right like the real cards. */
@@ -1173,28 +1172,21 @@ h1 em { font-style: normal; color: var(--gold); }
 }
 
 .tcg.holo img {
-  filter:
-    drop-shadow(0 0 14px rgba(255, 186, 70, 0.48))
-    drop-shadow(0 10px 16px rgba(0, 0, 0, 0.42));
+  filter: drop-shadow(0 0 14px rgba(255, 186, 70, 0.48));
 }
 /* With the foil patterns gone, the edge glow is what marks a card as foiled,
    so holo and reverse get distinct colours rather than sharing one. */
 .tcg.rare-glow img {
-  filter:
-    drop-shadow(0 0 11px rgba(150, 195, 255, 0.38))
-    drop-shadow(0 10px 16px rgba(0, 0, 0, 0.42));
+  filter: drop-shadow(0 0 11px rgba(150, 195, 255, 0.38));
 }
 .tcg.reverse img {
   filter:
     drop-shadow(0 0 3px rgba(190, 240, 255, 0.5))
-    drop-shadow(0 0 15px rgba(120, 215, 255, 0.42))
-    drop-shadow(0 10px 16px rgba(0, 0, 0, 0.42));
+    drop-shadow(0 0 15px rgba(120, 215, 255, 0.42));
 }
 .tcg.special-illustration-rare img,
 .tcg.mega-hyper-rare img {
-  filter:
-    drop-shadow(0 0 18px rgba(255, 214, 120, 0.55))
-    drop-shadow(0 10px 16px rgba(0, 0, 0, 0.42));
+  filter: drop-shadow(0 0 18px rgba(255, 214, 120, 0.55));
 }
 /* Hit rarities glint a touch faster and brighter than commons. */
 .tcg.holo:not(.lit) .foil::after {
@@ -2864,6 +2856,8 @@ html.dialog-open body {
   overflow-x: hidden;
   overflow-y: auto;
   background: rgba(6, 4, 10, 0.97);
+  box-shadow: inset 0 0 160px transparent;
+  transition: box-shadow 1.8s ease;
 }
 .overlay.dealing::after {
   content: "";
@@ -2871,7 +2865,7 @@ html.dialog-open body {
   inset: 0;
   background: radial-gradient(ellipse 70% 55% at 50% 38%, var(--aura, transparent), transparent 58%);
   opacity: 0;
-  transition: opacity 0.42s ease;
+  transition: opacity 1.1s ease;
   pointer-events: none;
   z-index: 0;
 }
@@ -2895,17 +2889,18 @@ html.dialog-open body {
   animation: rainbowWash 7s linear infinite;
   pointer-events: none;
   z-index: 0;
-  transition: opacity 0.42s ease;
+  transition: opacity 1.25s ease;
 }
 .overlay.dealing.rainbow.glow-on::before { opacity: 1; }
 @keyframes rainbowWash {
   to { transform: rotate(360deg); }
 }
-.overlay.hit-flash {
-  box-shadow: inset 0 0 180px rgba(255, 255, 255, 0.1);
-}
+.overlay.hit-flash,
 .overlay.dealing.rainbow.hit-flash {
-  box-shadow: inset 0 0 180px rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 0 140px rgba(255, 255, 255, 0.16),
+    inset 0 0 280px var(--aura, rgba(255, 214, 140, 0.24));
+  transition: box-shadow 0.16s ease-out;
 }
 .overlay.aura-snap,
 .overlay.aura-snap::before,
@@ -3386,6 +3381,10 @@ html.dialog-open body {
 .face-front { transform: rotateY(0deg); }
 .face-back { transform: rotateY(180deg); }
 .face-front .tcg, .face-back .tcg { width: 100%; height: 100%; }
+.inspect-art,
+.inspect-art .tcg {
+  background: transparent;
+}
 .inspect-art .tcg { width: 100%; }
 .focus-card .tcg,
 .inspect-art .tcg,
@@ -3512,8 +3511,7 @@ html.dialog-open body {
   filter:
     drop-shadow(0 0 2px rgba(255, 226, 150, 0.95))
     drop-shadow(0 0 5px rgba(244, 199, 82, 0.8))
-    drop-shadow(0 0 20px rgba(244, 199, 82, 0.55))
-    drop-shadow(0 10px 16px rgba(0, 0, 0, 0.42));
+    drop-shadow(0 0 20px rgba(244, 199, 82, 0.55));
 }
 .chip {
   position: absolute;

@@ -2432,9 +2432,10 @@ function playHitFx(card) {
   if (tier >= 3) els.overlay.classList.add("hit-shake");
   clearTimeout(playHitFx._t);
   playHitFx._t = setTimeout(() => {
-    els.overlay.classList.remove("hit-flash", "hit-shake");
+    els.overlay.classList.remove("hit-shake");
+    els.overlay.classList.remove("hit-flash");
     els.hitFx.replaceChildren();
-  }, tier === 3 ? 1600 : 980);
+  }, tier === 3 ? 2800 : tier === 2 ? 2000 : 1400);
 }
 
 function bumpCardMotion() {
