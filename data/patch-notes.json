@@ -7,7 +7,8 @@
       "Header, packs, and bulk are laid out for a phone instead of a squeezed desktop page.",
       "Floating home/shop cards that were clipping off the screen are gone on small widths.",
       "Pack opening scrolls as a normal column so Leave, the card, and Done stay on screen instead of overlapping.",
-      "Revealing a card no longer shoves the Flip / Done row around — the name has reserved space and the buttons stay put."
+      "Revealing a card no longer shoves the Flip / Done row around — the name has reserved space and the buttons stay put.",
+      "Next card / Reveal all on phones are outlined with no fill so the card glow isn’t cut off behind them."
     ]
   },
   {

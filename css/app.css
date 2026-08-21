@@ -4279,6 +4279,8 @@ body:has(#inspect:not(.hidden)) .radio {
     gap: 4px;
     max-width: none;
     width: 100%;
+    background: none;
+    border-color: transparent;
   }
   #overlay .thumbs.hidden {
     display: flex !important;
@@ -4302,7 +4304,7 @@ body:has(#inspect:not(.hidden)) .radio {
     margin: 16px 0 0;
     padding: 14px 0 max(14px, env(safe-area-inset-bottom));
     min-height: 6.5rem;
-    background: linear-gradient(180deg, transparent, rgba(6, 4, 10, 0.97) 36%);
+    background: none;
   }
   #overlay .overlay-actions.hidden { display: none !important; }
   #overlay .overlay-actions .ghost,
@@ -4311,6 +4313,17 @@ body:has(#inspect:not(.hidden)) .radio {
     width: auto;
     min-width: 0;
     grid-column: auto;
+    background: none;
+    border: 1px solid var(--line);
+    color: inherit;
+    box-shadow: none;
+  }
+  #overlay .overlay-actions .ghost.accent {
+    border-color: rgba(240, 193, 75, 0.42);
+    color: var(--gold-2);
+  }
+  #overlay .overlay-actions .solid {
+    color: var(--gold-2);
   }
   #overlay .spread { margin: 0; }
   #overlay .spread-card { width: 92px; }
