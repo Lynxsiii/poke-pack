@@ -1,9 +1,12 @@
 # Static site for Cloudflare Workers (Git deploy).
-# No Worker script — Wrangler just uploads HTML/CSS/JS/assets.
+# Build copies public files into dist/ so .git is never uploaded.
 
 name = "poke-pack"
 compatibility_date = "2026-08-21"
 
+[build]
+command = "node scripts/prepare-cf-assets.mjs"
+
 [assets]
-directory = "."
+directory = "./dist"
 html_handling = "auto-trailing-slash"

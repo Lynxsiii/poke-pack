@@ -1,4 +1,5 @@
 .git/
+**/.git/
 .claude/
 .wrangler/
 node_modules/
@@ -13,3 +14,6 @@ REVIEW.md
 .gitignore
 .DS_Store
 Thumbs.db
+wrangler.toml
+wrangler.jsonc
+package-lock.json
