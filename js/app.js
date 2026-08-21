@@ -68,6 +68,7 @@ let cards = [];
 let setCards = [];
 let byId = {};
 let view = "home";
+let patchNotes = [];
 let ownedMode = "all";
 let rarityMode = "all";
 let authTab = "signup";
@@ -123,6 +124,7 @@ const els = {
   viewAccount: document.getElementById("view-account"),
   viewAuth: document.getElementById("view-auth"),
   viewSettings: document.getElementById("view-settings"),
+  viewNotes: document.getElementById("view-notes"),
   homeKicker: document.getElementById("home-kicker"),
   homePulse: document.getElementById("home-pulse"),
   homeStage: document.getElementById("home-stage"),
@@ -130,6 +132,7 @@ const els = {
   accountBody: document.getElementById("account-body"),
   authBody: document.getElementById("auth-body"),
   settingsBody: document.getElementById("settings-body"),
+  notesBody: document.getElementById("notes-body"),
   authEntry: document.getElementById("auth-entry"),
   trainerChip: document.getElementById("trainer-chip"),
   trainerAvatar: document.getElementById("trainer-avatar"),
@@ -162,6 +165,7 @@ const els = {
   thumbs: document.getElementById("thumbs"),
   ripHint: document.getElementById("rip-hint"),
   overlayActions: document.getElementById("overlay-actions"),
+  leavePack: document.getElementById("leave-pack"),
   stepBtn: document.getElementById("step-btn"),
   skipHitsBtn: document.getElementById("skip-hits-btn"),
   skipBtn: document.getElementById("skip-btn"),
@@ -179,18 +183,36 @@ const els = {
  * and focus returns to whatever opened the dialog when it closes.
  */
 const dialogStack = [];
+let scrollLockY = 0;
 
 function backdropNodes() {
   return [document.querySelector(".site-header"), document.querySelector(".wrap"), document.querySelector(".site-footer")];
 }
 
+function lockPageScroll() {
+  if (document.documentElement.classList.contains("dialog-open")) return;
+  scrollLockY = window.scrollY;
+  document.documentElement.classList.add("dialog-open");
+  document.body.style.top = `-${scrollLockY}px`;
+}
+
+function unlockPageScroll() {
+  if (dialogStack.length) return;
+  document.documentElement.classList.remove("dialog-open");
+  document.body.style.top = "";
+  window.scrollTo(0, scrollLockY);
+}
+
 function openDialog(el, firstFocus) {
   if (dialogStack.some((entry) => entry.el === el)) return;
   const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-  if (!dialogStack.length) backdropNodes().forEach((n) => n && (n.inert = true));
-  else dialogStack.at(-1).el.inert = true;
+  if (!dialogStack.length) {
+    lockPageScroll();
+    backdropNodes().forEach((n) => n && (n.inert = true));
+  } else dialogStack.at(-1).el.inert = true;
   dialogStack.push({ el, opener });
   el.classList.remove("hidden");
+  el.scrollTop = 0;
   const visible = (n) => n instanceof HTMLElement && n.offsetParent !== null && !n.disabled;
   const target =
     (visible(firstFocus) && firstFocus) ||
@@ -207,6 +229,7 @@ function closeDialog(el) {
   const [entry] = dialogStack.splice(index, 1);
   if (!dialogStack.length) backdropNodes().forEach((n) => n && (n.inert = false));
   else dialogStack.at(-1).el.inert = false;
+  unlockPageScroll();
   const opener = entry.opener;
   const back =
     opener && opener.isConnected && opener.offsetParent !== null
@@ -1558,6 +1581,7 @@ async function hydrateAfterAccountChange() {
   if (view === "account") renderAccount();
   if (view === "auth") renderAuth();
   if (view === "settings") renderSettings();
+  if (view === "notes") renderNotes();
 }
 
 function renderAuth() {
@@ -1830,7 +1854,7 @@ const SETTING_GROUPS = [
     note: "How cards look in the binder, the spread, and the inspector.",
     rows: [
       { key: "shine", type: "toggle", label: "Card shine", note: "Gloss highlight that follows your cursor across a card." },
-      { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward the cursor in 3D on hover." },
+      { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward your finger or cursor in 3D." },
       { key: "stamps", type: "toggle", label: "Rarity stamps", note: "Show the rarity symbol in the corner of every card." },
       { key: "motion", type: "toggle", label: "Idle shimmer", note: "Slow shimmer on foiled cards when you're not touching them." },
       {
@@ -1884,7 +1908,7 @@ const SETTING_GROUPS = [
         options: [
           ["home", "Home"],
           ["shop", "Packs"],
-          ["collection", "Binder"],
+          ["collection", "Bulk"],
         ],
       },
     ],
@@ -1980,6 +2004,31 @@ function applySettings() {
   document.body.style.setProperty("--binder-min", BINDER_MIN[binder] ?? BINDER_MIN.cosy);
 }
 
+function formatNoteDate(value) {
+  const at = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(at.getTime())) return value;
+  return at.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+}
+
+function renderNotes() {
+  if (!els.notesBody) return;
+  if (!patchNotes.length) {
+    els.notesBody.innerHTML = `<p class="notes-empty">No notes yet. The next site push will land here.</p>`;
+    return;
+  }
+  els.notesBody.innerHTML = `<div class="notes-list">${patchNotes
+    .map(
+      (note) => `<article class="notes-entry">
+        <header>
+          <h3>${esc(note.title)}</h3>
+          <time datetime="${esc(note.date)}">${esc(formatNoteDate(note.date))}</time>
+        </header>
+        <ul>${(note.items || []).map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+      </article>`
+    )
+    .join("")}</div>`;
+}
+
 /** Short buzz on the tear and on a hit, when the setting is on and supported. */
 function buzz(pattern) {
   if (!state.settings.haptics) return;
@@ -1999,6 +2048,51 @@ const VIEW_SECTIONS = {
   account: "viewAccount",
   auth: "viewAuth",
   settings: "viewSettings",
+  notes: "viewNotes",
+};
+
+const VIEW_PATHS = {
+  home: "/home",
+  shop: "/packs",
+  collection: "/bulk",
+  binder: "/binder",
+  catalog: "/catalog",
+  account: "/account",
+  auth: "/signin",
+  settings: "/settings",
+  notes: "/notes",
+};
+
+const PATH_VIEWS = {
+  "/": "home",
+  "/home": "home",
+  "/index.html": "home",
+  "/packs": "shop",
+  "/shop": "shop",
+  "/bulk": "collection",
+  "/collection": "collection",
+  "/binder": "binder",
+  "/catalog": "catalog",
+  "/account": "account",
+  "/signin": "auth",
+  "/login": "auth",
+  "/signup": "auth",
+  "/auth": "auth",
+  "/settings": "settings",
+  "/notes": "notes",
+  "/patch-notes": "notes",
+};
+
+const VIEW_TITLES = {
+  home: "poke-pack.rip — rip packs, fill the binder",
+  shop: "Packs — poke-pack.rip",
+  collection: "Bulk — poke-pack.rip",
+  binder: "Binder — poke-pack.rip",
+  catalog: "Catalog — poke-pack.rip",
+  account: "Account — poke-pack.rip",
+  auth: "Sign in — poke-pack.rip",
+  settings: "Settings — poke-pack.rip",
+  notes: "Patch notes — poke-pack.rip",
 };
 
 const VIEW_RENDER = {
@@ -2009,9 +2103,24 @@ const VIEW_RENDER = {
   account: () => renderAccount(),
   auth: () => renderAuth(),
   settings: () => renderSettings(),
+  notes: () => renderNotes(),
 };
 
-function setView(next) {
+function normalizePath(pathname) {
+  const path = (pathname || "/").replace(/\/+$/, "");
+  return path || "/";
+}
+
+function viewFromPath(pathname) {
+  return PATH_VIEWS[normalizePath(pathname)] || null;
+}
+
+function pathForView(name) {
+  return VIEW_PATHS[name] || "/home";
+}
+
+function setView(next, { history: hist = "push" } = {}) {
+  if (!VIEW_SECTIONS[next]) return;
   view = next;
   for (const [name, key] of Object.entries(VIEW_SECTIONS)) {
     els[key]?.classList.toggle("hidden", view !== name);
@@ -2028,6 +2137,15 @@ function setView(next) {
   document.body.classList.toggle("on-shop", view === "shop");
   document.body.classList.toggle("on-collection", view === "collection");
   document.body.classList.toggle("on-auth", view === "auth");
+  document.title = VIEW_TITLES[view] || VIEW_TITLES.home;
+  if (hist === "none") return;
+  const want = pathForView(view);
+  const have = normalizePath(location.pathname);
+  if (have === want) return;
+  if (view === "home" && have === "/") return;
+  const url = want + location.search;
+  if (hist === "replace") history.replaceState({ view }, "", url);
+  else history.pushState({ view }, "", url);
 }
 
 function remainingBacks() {
@@ -3035,7 +3153,11 @@ els.inspectInfo.addEventListener("click", (e) => {
 });
 
 document.querySelectorAll(".nav-btn").forEach((btn) => {
-  btn.addEventListener("click", () => setView(btn.dataset.view));
+  btn.addEventListener("click", (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    e.preventDefault();
+    setView(btn.dataset.view);
+  });
 });
 
 els.setSwitcher.addEventListener("click", (e) => {
@@ -3073,7 +3195,28 @@ function onEraToggle(e) {
 
 document.addEventListener("click", (e) => {
   const jump = e.target.closest("[data-goto]");
-  if (jump) setView(jump.dataset.goto);
+  if (jump) {
+    setView(jump.dataset.goto);
+    return;
+  }
+  const link = e.target.closest("a[href]");
+  if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+  let url;
+  try {
+    url = new URL(link.getAttribute("href"), location.origin);
+  } catch {
+    return;
+  }
+  if (url.origin !== location.origin) return;
+  const next = viewFromPath(url.pathname);
+  if (!next) return;
+  e.preventDefault();
+  if (next === "auth") openAuth();
+  else setView(next);
+});
+
+window.addEventListener("popstate", () => {
+  routeFromLocation();
 });
 
 els.viewHome.addEventListener("click", (e) => {
@@ -3519,6 +3662,10 @@ function paintGlare() {
   glareRaf = 0;
   const e = glarePointer;
   if (!e) return;
+  if (!state.settings.shine && !state.settings.tilt) {
+    clearGlare();
+    return;
+  }
   const face = tcgFromEvent(e);
   if (face !== litCard) {
     clearGlare();
@@ -3536,22 +3683,36 @@ function paintGlare() {
   litCard.style.setProperty("--px", px.toFixed(3));
   litCard.style.setProperty("--py", py.toFixed(3));
   litCard.style.setProperty("--hyp", hyp.toFixed(3));
-  litCard.style.setProperty("--tilt-y", `${((px - 0.5) * 13).toFixed(2)}deg`);
-  litCard.style.setProperty("--tilt-x", `${((0.5 - py) * 13).toFixed(2)}deg`);
+  if (state.settings.tilt) {
+    litCard.style.setProperty("--tilt-y", `${((px - 0.5) * 16).toFixed(2)}deg`);
+    litCard.style.setProperty("--tilt-x", `${((0.5 - py) * 16).toFixed(2)}deg`);
+  }
 }
+
+function queueGlare(e) {
+  glarePointer = e;
+  if (!glareRaf) glareRaf = requestAnimationFrame(paintGlare);
+}
+
+document.addEventListener("pointerdown", (e) => {
+  if (!tcgFromEvent(e)) return;
+  queueGlare(e);
+});
 
 document.addEventListener(
   "pointermove",
   (e) => {
-    glarePointer = e;
-    if (!glareRaf) glareRaf = requestAnimationFrame(paintGlare);
+    queueGlare(e);
   },
   { passive: true }
 );
 
-document.addEventListener("pointerleave", clearGlare);
+document.addEventListener("pointerleave", (e) => {
+  if (e.target === document.documentElement || e.pointerType === "mouse") clearGlare();
+});
 
 els.doneBtn.addEventListener("click", finishRip);
+els.leavePack?.addEventListener("click", finishRip);
 
 els.binderBody?.addEventListener("click", (e) => {
   const flip = e.target.closest("[data-flip]");
@@ -3686,7 +3847,7 @@ document.addEventListener("keydown", (e) => {
       closeDialog(els.inspect);
       return;
     }
-    if (packPhase === "spread") finishRip();
+    if (packPhase !== "idle") finishRip();
   }
   if (e.key === " " && packPhase === "reveal") {
     e.preventDefault();
@@ -3760,25 +3921,58 @@ async function loadAllSets() {
   priceTicker?.tick?.();
 }
 
+async function loadPatchNotes() {
+  try {
+    const notes = await fetch("data/patch-notes.json", { cache: "no-cache" }).then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+    patchNotes = Array.isArray(notes) ? notes : [];
+  } catch {
+    patchNotes = [];
+  }
+}
+
+function routeFromLocation() {
+  const hash = (location.hash || "").replace("#", "").toLowerCase();
+  const path = normalizePath(location.pathname);
+  if (hash === "signup" || hash === "register" || path === "/signup") {
+    history.replaceState({ view: "auth" }, "", pathForView("auth") + location.search);
+    openAuth("signup");
+    return;
+  }
+  if (hash === "signin" || hash === "login") {
+    history.replaceState({ view: "auth" }, "", pathForView("auth") + location.search);
+    openAuth("signin");
+    return;
+  }
+  if (viewFromPath(path) === "auth") {
+    openAuth("signin");
+    return;
+  }
+  const atRoot = path === "/" || path === "/index.html";
+  const pathView = viewFromPath(path);
+  if (pathView && !atRoot) {
+    setView(pathView, { history: "none" });
+    return;
+  }
+  const start = state.settings.startView;
+  if (start && start !== "home" && VIEW_SECTIONS[start]) {
+    setView(start, { history: atRoot ? "replace" : "none" });
+    return;
+  }
+  setView("home", { history: "none" });
+}
+
 async function boot() {
-  await Promise.all([loadSealedPrices(), loadPriceHistory()]);
+  await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
   await activateSet(state.activeSetId || DEFAULT_SET_ID);
   applySettings();
   renderHeader();
   scheduleDailyTick();
   const back = new Image();
   back.src = liveSet.cardBack;
-  const hash = (location.hash || "").replace("#", "").toLowerCase();
-  if (hash === "signup" || hash === "register") {
-    history.replaceState(null, "", location.pathname + location.search);
-    openAuth("signup");
-  } else if (hash === "signin" || hash === "login") {
-    history.replaceState(null, "", location.pathname + location.search);
-    openAuth("signin");
-  } else {
-    const start = state.settings.startView;
-    if (start && start !== "home" && VIEW_SECTIONS[start]) setView(start);
-  }
+  routeFromLocation();
 
   // Not awaited: the page is usable without it, and it refreshes home when done.
   loadAllSets();

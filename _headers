@@ -16,6 +16,24 @@
   Cache-Control: no-cache
 /index.html
   Cache-Control: no-cache
+/home
+  Cache-Control: no-cache
+/packs
+  Cache-Control: no-cache
+/bulk
+  Cache-Control: no-cache
+/binder
+  Cache-Control: no-cache
+/catalog
+  Cache-Control: no-cache
+/account
+  Cache-Control: no-cache
+/signin
+  Cache-Control: no-cache
+/settings
+  Cache-Control: no-cache
+/notes
+  Cache-Control: no-cache
 
 # Card scans, foil textures and pack art are content-stable: a card's art never
 # changes under the same filename, so these can be cached hard.

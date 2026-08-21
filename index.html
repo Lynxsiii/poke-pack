@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <base href="/" />
     <title>poke-pack.rip — rip packs, fill the binder</title>
     <meta
       name="description"
@@ -34,12 +35,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/app.css?v=18" />
+    <link rel="stylesheet" href="css/app.css?v=19" />
   </head>
   <body class="on-home">
     <div class="noise"></div>
     <header class="site-header">
-      <a class="brand" href="#">
+      <a class="brand" href="/home">
         <div class="mark">P</div>
         <div>
           <div class="brand-name">poke-pack<span>.rip</span></div>
@@ -47,14 +48,15 @@
         </div>
       </a>
       <nav class="nav" aria-label="Sections">
-        <button class="nav-btn active" data-view="home">Home</button>
-        <button class="nav-btn" data-view="shop">Packs</button>
-        <button class="nav-btn" data-view="collection">Bulk</button>
-        <button class="nav-btn" data-view="binder">Binder</button>
-        <button class="nav-btn" data-view="catalog">Catalog</button>
+        <a class="nav-btn active" href="/home" data-view="home">Home</a>
+        <a class="nav-btn" href="/packs" data-view="shop">Packs</a>
+        <a class="nav-btn" href="/bulk" data-view="collection">Bulk</a>
+        <a class="nav-btn" href="/binder" data-view="binder">Binder</a>
+        <a class="nav-btn" href="/catalog" data-view="catalog">Catalog</a>
         <span class="nav-sep"></span>
-        <button class="nav-btn" data-view="account">Account</button>
-        <button class="nav-btn" data-view="settings">Settings</button>
+        <a class="nav-btn" href="/notes" data-view="notes">Notes</a>
+        <a class="nav-btn" href="/account" data-view="account">Account</a>
+        <a class="nav-btn" href="/settings" data-view="settings">Settings</a>
       </nav>
       <div class="header-right">
         <div class="pill gold">✦ <span id="coin-count">0</span></div>
@@ -212,6 +214,16 @@
         <div id="auth-body"></div>
       </section>
 
+      <section id="view-notes" class="hidden">
+        <div class="section-head">
+          <div>
+            <h2>Patch notes</h2>
+            <p>What changed on poke-pack.rip, newest first. Each update we ship lands here.</p>
+          </div>
+        </div>
+        <div id="notes-body"></div>
+      </section>
+
       <section id="view-settings" class="hidden">
         <div class="section-head">
           <div>
@@ -225,6 +237,7 @@
 
     <div class="overlay hidden" id="overlay" role="dialog" aria-modal="true" aria-label="Opening a booster pack">
       <div class="rip-stage">
+        <button class="ghost overlay-leave" id="leave-pack" type="button">Leave pack</button>
         <p class="rip-hint" id="rip-hint">Grab the top and drag across to rip it open</p>
         <div class="booster" id="pack-body">
           <div class="pack-rest" id="pack-rest"><div class="pack-art" id="pack-rest-art"></div></div>
@@ -272,7 +285,8 @@
     <footer class="site-footer">
       <span>poke-pack.rip is a fan-made pack simulator. Not affiliated with Nintendo, Game Freak, Wizards of the Coast, or The Pokémon Company.</span>
       <span>Card names, numbers, artists, and scans match the public Pokémon TCG card database (the same catalog as pokemon.com/us/pokemon-tcg/pokemon-cards).</span>
+      <a href="/notes">Patch notes</a>
     </footer>
-    <script type="module" src="js/app.js?v=18"></script>
+    <script type="module" src="js/app.js?v=19"></script>
   </body>
 </html>

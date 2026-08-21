@@ -14,6 +14,7 @@ import sys
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -29,6 +30,14 @@ class DevHandler(SimpleHTTPRequestHandler):
         elif path.startswith(NO_CACHE_PREFIXES) or path.endswith((".html", "/")):
             self.send_header("Cache-Control", "no-cache, must-revalidate")
         super().end_headers()
+
+    def send_head(self):
+        parsed = urlparse(self.path)
+        name = Path(parsed.path).name
+        mapped = Path(self.translate_path(self.path))
+        if not mapped.is_file() and name and "." not in name:
+            self.path = "/index.html"
+        return super().send_head()
 
     def log_message(self, fmt, *args):  # quieter than the default
         if "404" in (fmt % args):
