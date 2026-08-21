@@ -88,6 +88,9 @@ let tearAnim = 0;
 let tearPose = { dx: 0, dy: 0, rot: 0 };
 let lastCrumbCut = 0;
 let flipBusy = false;
+let flipTimer = 0;
+let flipGen = 0;
+let pendingAdvance = false;
 let handoffTimer = 0;
 let packExiting = false;
 let showStrip = false;
@@ -2434,11 +2437,36 @@ function playHitFx(card) {
   }, tier === 3 ? 1600 : 980);
 }
 
+function bumpCardMotion() {
+  flipGen += 1;
+  clearTimeout(flipTimer);
+  flipTimer = 0;
+  return flipGen;
+}
+
+function unlockCard(gen) {
+  if (gen !== flipGen) return;
+  flipBusy = false;
+  syncActions();
+  if (!pendingAdvance || packPhase !== "reveal") return;
+  pendingAdvance = false;
+  requestAnimationFrame(() => {
+    if (!flipBusy && packPhase === "reveal") advanceOpen();
+  });
+}
+
+function flipDurationMs() {
+  const sec = parseFloat(getComputedStyle(els.focusCard).getPropertyValue("--flip-ms"));
+  return Number.isFinite(sec) ? Math.round(sec * 1000) : 620;
+}
+
 function mountFocus(pull, opts = {}) {
   const faceUp = opts.faceUp ?? pull.revealed;
   const deal = opts.deal ?? !faceUp;
   const foil = HIT_RARITIES.has(pull.rarity) ? "hit" : pull.reverse ? "reverse" : "";
   const tier = hitTier(pull);
+  const gen = bumpCardMotion();
+  clearGlare();
   els.focusCard.style.transform = "";
   els.focusCard.style.setProperty("--flip-ms", tier >= 2 ? "0.92s" : tier === 1 ? "0.72s" : "0.62s");
   els.focusCard.className = `focus-card ${rarityKey(pull.rarity)} ${foil} t${tier}`;
@@ -2455,9 +2483,19 @@ function mountFocus(pull, opts = {}) {
     void els.focusCard.offsetWidth;
     els.focusCard.classList.remove("no-anim");
   } else if (deal) {
+    flipBusy = true;
     if (opts.fromPack) els.focusCard.classList.add("from-pack");
     void els.focusCard.offsetWidth;
     els.focusCard.classList.add("deal");
+    const finishDeal = (event) => {
+      if (event && event.target !== els.focusCard) return;
+      if (gen !== flipGen) return;
+      els.focusCard.removeEventListener("animationend", finishDeal);
+      els.focusCard.classList.remove("deal", "from-pack");
+      unlockCard(gen);
+    };
+    els.focusCard.addEventListener("animationend", finishDeal);
+    flipTimer = setTimeout(() => finishDeal(), opts.fromPack ? 720 : 500);
   }
   renderFocusMeta(pull);
   if (faceUp) els.focusMeta.classList.add("in");
@@ -2493,7 +2531,9 @@ function bestPull() {
 }
 
 function showSpread() {
+  bumpCardMotion();
   flipBusy = false;
+  pendingAdvance = false;
   packPhase = "spread";
   clearHitFx();
   clearHandoff();
@@ -2554,9 +2594,8 @@ function drawNext(opts = {}) {
   mountFocus(next, { faceUp: false, deal: true, fromPack: opts.fromPack });
 }
 
-function afterFlip() {
-  if (!flipBusy) return;
-  flipBusy = false;
+function afterFlip(gen) {
+  if (gen !== flipGen) return;
   els.focusCard.classList.remove("flipping");
   els.focusCard.classList.add("settled");
   const pull = currentPulls[focusIndex];
@@ -2565,12 +2604,13 @@ function afterFlip() {
     renderFocusMeta(pull);
     requestAnimationFrame(() => els.focusMeta.classList.add("in"));
   }
-  syncActions();
+  unlockCard(gen);
 }
 
 function flipCurrent() {
   const pull = currentPulls[focusIndex];
   if (!pull || pull.revealed || flipBusy) return;
+  const gen = bumpCardMotion();
   flipBusy = true;
   pull.revealed = true;
   const tier = hitTier(pull);
@@ -2584,14 +2624,17 @@ function flipCurrent() {
   const inner = els.focusCard.querySelector(".pull-inner");
   let settled = false;
   const settle = (event) => {
-    if (event && event.propertyName && event.propertyName !== "transform") return;
-    if (settled) return;
+    if (event) {
+      if (event.target !== inner) return;
+      if (event.propertyName && event.propertyName !== "transform") return;
+    }
+    if (gen !== flipGen || settled) return;
     settled = true;
     inner?.removeEventListener("transitionend", settle);
-    afterFlip();
+    afterFlip(gen);
   };
   inner?.addEventListener("transitionend", settle);
-  setTimeout(settle, tier >= 2 ? 1080 : tier === 1 ? 840 : 760);
+  flipTimer = setTimeout(settle, flipDurationMs() + 72);
 }
 
 function goPrevCard() {
@@ -2605,7 +2648,11 @@ function goPrevCard() {
 }
 
 function advanceOpen() {
-  if (packPhase !== "reveal" || flipBusy) return;
+  if (packPhase !== "reveal") return;
+  if (flipBusy) {
+    pendingAdvance = true;
+    return;
+  }
   const pull = currentPulls[focusIndex];
   if (!pull) return;
   if (pull.drawn && !pull.revealed) {
@@ -2898,7 +2945,9 @@ function startRip(wrapper) {
 
   packPhase = "ready";
   focusIndex = 0;
+  bumpCardMotion();
   flipBusy = false;
+  pendingAdvance = false;
   packExiting = false;
   showStrip = false;
   buildTearPath();
@@ -2933,20 +2982,6 @@ function hidePackThenDeal() {
   els.ripHint.textContent = "";
   showStrip = true;
   drawNext({ fromPack: true });
-  const finish = () => {
-    if (!els.focusCard.classList.contains("from-pack")) return;
-    els.focusCard.classList.remove("deal", "from-pack");
-    renderThumbs();
-    syncActions();
-  };
-  const onEnd = (event) => {
-    if (event.target !== els.focusCard) return;
-    els.focusCard.removeEventListener("animationend", onEnd);
-    finish();
-  };
-  els.focusCard.addEventListener("animationend", onEnd);
-  clearTimeout(handoffTimer);
-  handoffTimer = setTimeout(finish, 720);
 }
 
 function flyOffPose() {
@@ -3048,7 +3083,9 @@ function easeTearBack() {
 function finishRip() {
   currentPulls = [];
   packPhase = "idle";
+  bumpCardMotion();
   flipBusy = false;
+  pendingAdvance = false;
   packExiting = false;
   showStrip = false;
   resetTear();

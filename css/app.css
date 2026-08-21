@@ -3331,6 +3331,9 @@ html.dialog-open body {
 .focus-card.deal {
   animation: dealIn 0.42s cubic-bezier(0.22, 1, 0.32, 1) both;
 }
+.focus-card.flipping {
+  animation: none !important;
+}
 @keyframes dealIn {
   from {
     opacity: 0;
