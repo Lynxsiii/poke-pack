@@ -4866,6 +4866,7 @@ body:has(#inspect:not(.hidden)) .radio {
 .player-tip {
   position: fixed;
   z-index: 40;
+  isolation: isolate;
   width: 300px;
   overflow: hidden;
   border: 1px solid rgba(240, 193, 75, 0.35);
@@ -4875,11 +4876,17 @@ body:has(#inspect:not(.hidden)) .radio {
 }
 .player-tip.hidden { display: none; }
 .tip-banner {
+  position: relative;
+  z-index: 0;
   height: 72px;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
+  pointer-events: none;
 }
 .tip-id {
+  position: relative;
+  z-index: 1;
   display: flex;
   gap: 10px;
   align-items: center;
@@ -4888,8 +4895,16 @@ body:has(#inspect:not(.hidden)) .radio {
 }
 .tip-id b { display: block; }
 .tip-id small { color: var(--muted); font-size: 12px; }
-.tip-bio, .tip-stats { margin: 8px 14px 0; color: var(--muted); font-size: 13px; }
+.tip-bio, .tip-stats {
+  position: relative;
+  z-index: 1;
+  margin: 8px 14px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
 .tip-actions {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
