@@ -2357,6 +2357,7 @@ function syncActions() {
   const spread = packPhase === "spread";
   const pull = currentPulls[focusIndex];
   els.overlayActions.classList.toggle("hidden", packPhase === "idle");
+  els.overlay.classList.toggle("is-spread", spread);
   els.stepBtn.classList.toggle("hidden", spread);
   els.skipBtn.classList.toggle("hidden", !(ready || reveal));
   els.skipHitsBtn.classList.toggle("hidden", !canSkipToHits());
@@ -3057,7 +3058,7 @@ function finishRip() {
   clearTimeout(auraTimer);
   auraTimer = 0;
   auraGen += 1;
-  els.overlay.classList.remove("dealing", "hit-flash", "hit-shake", "rainbow", "glow-on", "aura-snap");
+  els.overlay.classList.remove("dealing", "hit-flash", "hit-shake", "rainbow", "glow-on", "aura-snap", "is-spread");
   els.overlay.style.removeProperty("--aura");
   els.focusWrap.classList.remove("rainbow", "revealed", "is-hit", "is-legend", "is-reverse", "aura-snap");
   els.focusWrap.style.removeProperty("--aura");

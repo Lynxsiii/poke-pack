@@ -4326,6 +4326,35 @@ body:has(#inspect:not(.hidden)) .radio {
     color: var(--gold-2);
   }
   #overlay .spread { margin: 0; }
+  #overlay.is-spread .thumbs,
+  #overlay.is-spread .thumbs.hidden {
+    display: none !important;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+  }
+  #overlay.is-spread .spread {
+    display: flex;
+    flex-direction: column;
+  }
+  #overlay.is-spread .spread-grid { order: 1; }
+  #overlay.is-spread .spread-head {
+    order: 2;
+    margin: 18px 0 8px;
+  }
+  #overlay.is-spread .spread-head h2 {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+  #overlay.is-spread .spread-tip {
+    order: 3;
+    margin: 4px 0 0;
+  }
+  #overlay.is-spread .overlay-actions {
+    position: static;
+    min-height: 0;
+    margin-top: 12px;
+    padding-top: 4px;
+  }
   #overlay .spread-card { width: 92px; }
   #overlay .spread-card.hit { width: 104px; }
   .spread-card .tcg.lit,
