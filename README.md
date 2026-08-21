@@ -30,6 +30,21 @@ assets/packs/<set>/   booster wrapper art (avif with png fallback)
 scripts/              python builders that generate data/ and crop wrapper art
 ```
 
+## Brand assets
+
+`py scripts/make_avatar.py` renders the square profile icon into
+`assets/avatar.png` (plus a pre-rounded `assets/avatar-round.png`). The card
+trio and tagline for each look live in `VARIANTS` at the top of the script;
+`--variant neon|classic|warm` picks one and `--all` writes every look to
+`scripts/_debug/` to compare. Everything is laid out inside the inscribed
+circle, because avatars get cropped round.
+
+`--mark` renders the same trio without the wordmark into `assets/mark.png`,
+`icon-180.png` and `icon-32.png` — the tile the header, the account card, the
+favicon and the home-screen icon use. The lockup is for places that show it
+large; anywhere under about 64px takes the mark, because type that small is
+mush and the header says the name in real text beside it anyway.
+
 ## Adding a set
 
 1. Build `data/<id>.json` with the scripts in `scripts/`.

@@ -102,23 +102,20 @@ img { max-width: 100%; display: block; }
   text-decoration: none;
   color: inherit;
 }
+/* The mark is assets/mark.png — the card fan on its own, no wordmark. The
+   header already says the name in type next to it, and a full lockup shrunk to
+   44px is unreadable mush that says it twice. Fixed square rather than
+   height + auto width, so no amount of flex pressure can squash it. */
 .brand-logo {
   display: block;
-  height: 52px;
-  width: auto;
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  flex: 0 0 auto;
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(240, 193, 75, 0.28);
 }
 .brand-copy { min-width: 0; }
-.mark {
-  width: 36px; height: 36px; display: grid; place-items: center;
-  border-radius: 10px; background: linear-gradient(160deg, var(--gold), #c4891a);
-  color: #1a1408; font-family: var(--display); font-size: 18px;
-  box-shadow: 0 0 24px rgba(240, 193, 75, 0.35);
-}
 .brand-name {
   display: block;
   font-family: var(--display);
@@ -2109,8 +2106,7 @@ select.filter option {
 .account-id h3 { margin: 0 0 4px; font-family: var(--display); font-size: 20px; }
 .account-id p { margin: 0; color: var(--muted); font-size: 13px; }
 .account-id .soon { margin-left: auto; }
-.mark.lg { width: 52px; height: 52px; border-radius: 14px; font-size: 24px; }
-.brand-logo.lg { height: 64px; max-width: 64px; border-radius: 14px; }
+.brand-logo.lg { width: 60px; height: 60px; flex-basis: 60px; border-radius: 16px; }
 .soon-list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.9; }
 
 .trainer-mark {
@@ -3878,21 +3874,21 @@ html.dialog-open body {
       "nav nav";
     align-items: center;
     gap: 8px 10px;
-    padding: 8px 12px;
+    padding: 8px 10px;
     padding-top: max(8px, env(safe-area-inset-top));
   }
-  .brand { grid-area: brand; min-width: 0; }
+  .brand { grid-area: brand; min-width: 0; gap: 9px; }
   .brand-logo {
-    height: 40px;
-    width: auto;
-    max-width: 40px;
-    flex: 0 0 40px;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    border-radius: 10px;
   }
   .brand-name { font-size: 15px; }
   .brand-sub { display: none; }
   .header-right {
     grid-area: tools;
-    gap: 6px;
+    gap: 5px;
     min-width: 0;
   }
   .nav {
@@ -3911,8 +3907,13 @@ html.dialog-open body {
   .pill { padding: 6px 9px; font-size: 12px; }
   .claim { font-size: 12px; padding: 6px 10px; }
   .auth-entry { padding: 6px 10px; font-size: 12px; }
-  .trainer-chip-copy small { display: none; }
-  .trainer-chip { max-width: 132px; }
+  /* 375px of top bar does not fit the brand, the coins, a worded button and a
+     named account chip. Drop the wording — "Claim +100" becomes "+100",
+     "Ready in 2h" becomes "2h", the chip becomes its avatar — and the brand
+     gets to stay whole instead of being ellipsised down to "poke-pa…". */
+  .btn-word { display: none; }
+  .trainer-chip-copy { display: none; }
+  .trainer-chip { max-width: none; padding: 3px; gap: 0; }
   .wrap,
   body.on-home .wrap,
   body.on-shop .wrap,
@@ -3954,6 +3955,24 @@ html.dialog-open body {
   .inspect-grid { gap: 16px; justify-items: center; }
   .inspect-info { text-align: left; width: 100%; }
   .radio { right: 10px; bottom: 10px; }
+}
+
+/* 360px phones. The top bar has to carry the brand, the coin count, the claim
+   button and the account chip on one line; a point off the wordmark is what
+   keeps it whole down here instead of ellipsised. */
+@media (max-width: 389px) {
+  .brand { gap: 8px; }
+  .brand-name { font-size: 14px; }
+  .header-right { gap: 4px; }
+  .pill { padding: 6px 8px; }
+  .claim { padding: 6px 9px; }
+  .auth-entry { padding: 6px 9px; }
+}
+/* Below this there is no honest way to fit the wordmark beside the coin count
+   and the account chip. The mark carries the brand on its own — that is what a
+   mark is for — rather than showing a clipped "poke-pa…". */
+@media (max-width: 350px) {
+  .brand-name { display: none; }
 }
 
 @media (max-width: 620px) {

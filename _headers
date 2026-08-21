@@ -41,3 +41,19 @@
 # changes under the same filename, so these can be cached hard.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+# ...except the brand art, which is the one thing that does get redrawn under
+# the same name. Listed after the wildcard so it wins. The ?v= on the tags in
+# index.html is what frees anyone already holding a year-long copy.
+/assets/mark.png
+  Cache-Control: no-cache
+/assets/icon-32.png
+  Cache-Control: no-cache
+/assets/icon-180.png
+  Cache-Control: no-cache
+/assets/avatar.png
+  Cache-Control: no-cache
+/assets/avatar-round.png
+  Cache-Control: no-cache
+/assets/og.jpg
+  Cache-Control: no-cache

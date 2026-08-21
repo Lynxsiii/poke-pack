@@ -593,10 +593,19 @@ function waitLabel(ms) {
   const h = Math.floor(total / 3600);
   const m = Math.floor((total % 3600) / 60);
   const sec = total % 60;
-  if (h && m) return `Ready in ${h}h ${m}m`;
-  if (h) return `Ready in ${h}h`;
-  if (m) return `Ready in ${m}m`;
-  return `Ready in ${sec}s`;
+  if (h && m) return `${h}h ${m}m`;
+  if (h) return `${h}h`;
+  if (m) return `${m}m`;
+  return `${sec}s`;
+}
+
+/**
+ * Header button label, split so a phone can drop the wording and keep the
+ * number. "Claim +100" becomes "+100" and "Ready in 2h" becomes "2h", which is
+ * the difference between the brand fitting in the top bar and being cut off.
+ */
+function shortLabel(lead, value) {
+  return `<span class="btn-word">${esc(lead)} </span>${esc(value)}`;
 }
 
 function renderHeader() {
@@ -604,7 +613,7 @@ function renderHeader() {
   if (!trainer) {
     els.coinCount.textContent = "—";
     els.dailyBtn.disabled = false;
-    els.dailyBtn.textContent = `Claim +${DAILY_BONUS}`;
+    els.dailyBtn.innerHTML = shortLabel("Claim", `+${DAILY_BONUS}`);
     els.statOwned.textContent = `0/${liveSet.totalCount}`;
     els.statPacks.textContent = "0";
     els.statPulls.textContent = "0";
@@ -612,7 +621,9 @@ function renderHeader() {
     const wait = msUntilDaily(state);
     els.coinCount.textContent = coin(state.coins);
     els.dailyBtn.disabled = wait > 0;
-    els.dailyBtn.textContent = wait > 0 ? waitLabel(wait) : `Claim +${DAILY_BONUS}`;
+    els.dailyBtn.innerHTML = wait > 0
+      ? shortLabel("Ready in", waitLabel(wait))
+      : shortLabel("Claim", `+${DAILY_BONUS}`);
     els.statOwned.textContent = `${setOwned()}/${liveSet.totalCount}`;
     els.statPacks.textContent = state.packsOpened;
     els.statPulls.textContent = state.pulls;
@@ -1875,7 +1886,7 @@ function renderAccount() {
       </div>`
     : `<div class="account-card">
         <div class="account-id">
-          <img class="brand-logo lg" src="assets/logo-header.png" width="256" height="256" alt="" />
+          <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
           <div>
             <p class="account-title">Signed out</p>
             <h3>Need an account to rip</h3>
