@@ -22,6 +22,7 @@ import {
   saveState,
   setPersistProgress,
   cloneSave,
+  ownedCount,
   msUntilDaily,
   logWorth,
   BINDER_PAGE,
@@ -602,7 +603,7 @@ function renderHeader() {
   if (!trainer) {
     els.coinCount.textContent = "—";
     els.dailyBtn.disabled = false;
-    els.dailyBtn.textContent = "Sign in";
+    els.dailyBtn.textContent = `Claim +${DAILY_BONUS}`;
     els.statOwned.textContent = `0/${liveSet.totalCount}`;
     els.statPacks.textContent = "0";
     els.statPulls.textContent = "0";
@@ -733,6 +734,7 @@ function renderSwitcher() {
 }
 
 function renderHero() {
+  if (!els.heroArt) return;
   els.heroArt.innerHTML = liveSet.heroIds
     .map((id, i) => {
       const card = byId[id];
@@ -794,14 +796,20 @@ async function activateSet(id, force = false) {
   cards = [...setCards, ...BASIC_ENERGY];
   byId = Object.fromEntries(cards.map((c) => [c.id, c]));
   activeWrapper = liveSet.wrappers[0];
-  fillRarityFilter();
-  renderHero();
-  renderHeader();
-  renderShop();
-  renderCollection();
-  renderCatalog();
-  if (view === "home") renderHome();
-  if (view === "account") renderAccount();
+  try {
+    fillRarityFilter();
+    renderHero();
+    renderHeader();
+    renderShop();
+    renderCollection();
+    renderCatalog();
+    if (view === "home") renderHome();
+    if (view === "account") renderAccount();
+  } catch (err) {
+    console.error(err);
+    toast(err?.message || `Couldn't render ${next.name}.`);
+    throw err;
+  }
 }
 
 function spareCopies(set = liveSet) {
@@ -1181,7 +1189,7 @@ function inspectAttrs(card) {
 }
 
 function historyCards(entries, limit) {
-  return entries
+  return (Array.isArray(entries) ? entries : [])
     .map((entry) => {
       const card = findCard(entry.id);
       if (!card) return null;
@@ -1203,7 +1211,7 @@ function miniCardRow(cards, emptyNote, rowClass = "") {
 
 function ownedInSet(set) {
   const prefix = `${set.id}-`;
-  return Object.entries(state.collection).reduce(
+  return Object.entries(state.collection || {}).reduce(
     (n, [id, count]) => n + (count > 0 && id.startsWith(prefix) ? 1 : 0),
     0
   );
@@ -1367,7 +1375,7 @@ function renderHome() {
   const eras = erasWithSets();
   const queued = eras.reduce((n, era) => n + era.queued.length, 0);
   const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
-  const origin = ROADMAP.at(-1)?.sets.at(-1);
+  const origin = ROADMAP.at(-1)?.sets?.at(-1);
 
   if (els.homeKicker) {
     els.homeKicker.textContent = "Real odds · real prices · no checkout";
@@ -4219,7 +4227,10 @@ async function boot() {
   });
 }
 
-boot().catch(() => toast(`Couldn't load ${liveSet.name} data.`));
+boot().catch((err) => {
+  console.error(err);
+  toast(err?.message || `Couldn't load ${liveSet.name} data.`);
+});
 initRadio();
 
 /*
