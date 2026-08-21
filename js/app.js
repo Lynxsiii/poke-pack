@@ -1875,7 +1875,7 @@ function renderAccount() {
       </div>`
     : `<div class="account-card">
         <div class="account-id">
-          <div class="mark lg">P</div>
+          <img class="brand-logo lg" src="assets/logo-header.png" width="256" height="256" alt="" />
           <div>
             <p class="account-title">Signed out</p>
             <h3>Need an account to rip</h3>

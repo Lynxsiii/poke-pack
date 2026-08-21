@@ -94,14 +94,41 @@ img { max-width: 100%; display: block; }
   background: rgba(9, 7, 13, 0.78);
   backdrop-filter: blur(16px);
 }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+.brand-logo {
+  display: block;
+  height: 52px;
+  width: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  flex: 0 0 auto;
+  border-radius: 10px;
+}
+.brand-copy { min-width: 0; }
 .mark {
   width: 36px; height: 36px; display: grid; place-items: center;
   border-radius: 10px; background: linear-gradient(160deg, var(--gold), #c4891a);
   color: #1a1408; font-family: var(--display); font-size: 18px;
   box-shadow: 0 0 24px rgba(240, 193, 75, 0.35);
 }
-.brand-name { font-family: var(--display); letter-spacing: 0.04em; font-size: 18px; line-height: 1; }
+.brand-name {
+  display: block;
+  font-family: var(--display);
+  letter-spacing: 0.04em;
+  font-size: 18px;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .brand-name span { color: var(--gold); }
 .brand-sub { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
 
@@ -2083,6 +2110,7 @@ select.filter option {
 .account-id p { margin: 0; color: var(--muted); font-size: 13px; }
 .account-id .soon { margin-left: auto; }
 .mark.lg { width: 52px; height: 52px; border-radius: 14px; font-size: 24px; }
+.brand-logo.lg { height: 64px; max-width: 64px; border-radius: 14px; }
 .soon-list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.9; }
 
 .trainer-mark {
@@ -3854,7 +3882,12 @@ html.dialog-open body {
     padding-top: max(8px, env(safe-area-inset-top));
   }
   .brand { grid-area: brand; min-width: 0; }
-  .mark { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; }
+  .brand-logo {
+    height: 40px;
+    width: auto;
+    max-width: 40px;
+    flex: 0 0 40px;
+  }
   .brand-name { font-size: 15px; }
   .brand-sub { display: none; }
   .header-right {
