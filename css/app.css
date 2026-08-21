@@ -2369,6 +2369,20 @@ select.filter option {
   gap: 10px;
   margin-top: 20px;
 }
+.need-account {
+  flex: 1 0 100%;
+  margin: 0 0 8px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.need-account p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
 .bulk-pulse {
   display: flex;
   flex-wrap: wrap;

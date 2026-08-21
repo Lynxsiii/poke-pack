@@ -34,6 +34,8 @@
   Cache-Control: no-cache
 /notes
   Cache-Control: no-cache
+/api/*
+  Cache-Control: no-store
 
 # Card scans, foil textures and pack art are content-stable: a card's art never
 # changes under the same filename, so these can be cached hard.

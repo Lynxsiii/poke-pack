@@ -141,13 +141,35 @@ export function loadState() {
 }
 
 export function saveState(state) {
-  localStorage.setItem(KEY, JSON.stringify(state));
+  if (!persistProgress) {
+    try {
+      const prev = JSON.parse(localStorage.getItem(KEY) || "null") || {};
+      localStorage.setItem(
+        KEY,
+        JSON.stringify({
+          ...prev,
+          settings: { ...DEFAULT_SETTINGS, ...(state.settings || {}) },
+          settingsRev: state.settingsRev || prev.settingsRev,
+          activeSetId: state.activeSetId || prev.activeSetId,
+        })
+      );
+    } catch {
+      /* ignore quota / parse issues */
+    }
+  } else {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  }
   afterSave?.(state);
 }
 
 let afterSave = null;
 export function setAfterSave(fn) {
   afterSave = fn;
+}
+
+let persistProgress = true;
+export function setPersistProgress(on) {
+  persistProgress = Boolean(on);
 }
 
 function lastClaimAt(state) {

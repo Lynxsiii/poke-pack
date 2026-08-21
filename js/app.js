@@ -13,21 +13,15 @@ import {
   rarityKey,
   setIdentity,
 } from "./catalog.js";
-import { ripPack, HIT_RARITIES } from "./engine.js";
+import { HIT_RARITIES } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
   loadState,
   saveState,
-  setAfterSave,
-  canClaimDaily,
-  claimDaily,
-  ownedCount,
-  addPull,
-  sellOne,
-  resetProgress,
-  importState,
+  setPersistProgress,
+  cloneSave,
   msUntilDaily,
   logWorth,
   BINDER_PAGE,
@@ -43,22 +37,129 @@ import {
 } from "./state.js";
 import {
   AVATAR_COLORS,
-  trainerList,
-  activeTrainer,
   avatarColor,
   trainerInitial,
   trainerCode,
-  createTrainer,
-  signInTrainer,
-  signOutTrainer,
-  updateTrainer,
-  setTrainerPassword,
-  deleteTrainer,
-  mirrorSave,
 } from "./accounts.js";
+import { api, ApiError } from "./api.js";
 
 const state = loadState();
-setAfterSave(mirrorSave);
+let cloudUser = null;
+const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
+let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
+let ripLock = false;
+
+function snapshotIfProgress(save) {
+  if (!save) return null;
+  const owned = Object.values(save.collection || {}).some((n) => n > 0);
+  if (save.packsOpened > 0 || owned || save.coins !== STARTING_COINS || Boolean(save.lastDaily)) {
+    return cloneSave(save);
+  }
+  return null;
+}
+
+function activeTrainer() {
+  return cloudUser;
+}
+
+function applyCloudSave(save) {
+  if (!save) return;
+  state.coins = save.coins;
+  state.collection = save.collection || {};
+  state.reverses = save.reverses || {};
+  state.lastDaily = save.lastDaily ?? null;
+  state.packsOpened = save.packsOpened || 0;
+  state.pulls = save.pulls || 0;
+  state.packsSinceHit = save.packsSinceHit || 0;
+  state.packTrick = Boolean(save.packTrick);
+  state.history = Array.isArray(save.history) ? save.history : [];
+  state.granted = save.granted;
+  state.binder = Array.isArray(save.binder) ? save.binder : [];
+  state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
+  if (save.createdAt) state.createdAt = save.createdAt;
+  if (save.activeSetId) state.activeSetId = save.activeSetId;
+  setPersistProgress(true);
+  saveState(state);
+}
+
+function wipeProgressMemory() {
+  state.coins = 0;
+  state.collection = {};
+  state.reverses = {};
+  state.lastDaily = null;
+  state.packsOpened = 0;
+  state.pulls = 0;
+  state.packsSinceHit = 0;
+  state.packTrick = false;
+  state.history = [];
+  state.granted = 0;
+  state.worthLog = [];
+  state.binder = [];
+}
+
+async function refreshSession() {
+  try {
+    const me = await api("/api/me");
+    cloudUser = me.user;
+    pendingClaim = null;
+    localStorage.setItem(CLOUD_SEEN_KEY, "1");
+    applyCloudSave(me.save);
+    return true;
+  } catch (err) {
+    cloudUser = null;
+    if (err instanceof ApiError && err.status === 401) {
+      setPersistProgress(false);
+      wipeProgressMemory();
+    }
+    return false;
+  }
+}
+
+function accountGateHtml(kind) {
+  const copy =
+    kind === "binder"
+      ? "The showcase binder lives on your account so it can follow you — and, later, trade."
+      : "Cards, coins, and sales live on your account, not this browser.";
+  return `<div class="need-account">
+    <p>${copy}</p>
+    <div class="account-hero-actions">
+      <button class="solid" type="button" data-open-auth="signup">Create account</button>
+      <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
+    </div>
+  </div>`;
+}
+
+async function persistWorth() {
+  if (!cloudUser) return;
+  try {
+    await api("/api/me", { method: "PATCH", body: JSON.stringify({ worthLog: state.worthLog }) });
+  } catch {
+    /* chart samples are optional */
+  }
+}
+
+function afterEconomy(save) {
+  applyCloudSave(save);
+  trackWorth();
+  persistWorth();
+}
+
+async function pushBinder() {
+  if (!cloudUser) return false;
+  try {
+    const data = await api("/api/binder", {
+      method: "PUT",
+      body: JSON.stringify({ binder: state.binder }),
+    });
+    applyCloudSave(data.save);
+    return true;
+  } catch (err) {
+    toast(err.message || "Couldn't save the binder.");
+    await refreshSession();
+    return false;
+  }
+}
+
 const setCache = {};
 let priceTicker = null;
 let liveSet = getSet(state.activeSetId);
@@ -72,7 +173,6 @@ let patchNotes = [];
 let ownedMode = "all";
 let rarityMode = "all";
 let authTab = "signup";
-let authSelectedId = "";
 let signupColor = "gold";
 let currentPulls = [];
 let packPhase = "idle";
@@ -498,15 +598,24 @@ function waitLabel(ms) {
 }
 
 function renderHeader() {
-  const wait = msUntilDaily(state);
-  els.coinCount.textContent = coin(state.coins);
-  els.dailyBtn.disabled = wait > 0;
-  els.dailyBtn.textContent = wait > 0 ? waitLabel(wait) : `Claim +${DAILY_BONUS}`;
-  els.statOwned.textContent = `${setOwned()}/${liveSet.totalCount}`;
-  if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
-  els.statPacks.textContent = state.packsOpened;
-  els.statPulls.textContent = state.pulls;
   const trainer = activeTrainer();
+  if (!trainer) {
+    els.coinCount.textContent = "—";
+    els.dailyBtn.disabled = false;
+    els.dailyBtn.textContent = "Sign in";
+    els.statOwned.textContent = `0/${liveSet.totalCount}`;
+    els.statPacks.textContent = "0";
+    els.statPulls.textContent = "0";
+  } else {
+    const wait = msUntilDaily(state);
+    els.coinCount.textContent = coin(state.coins);
+    els.dailyBtn.disabled = wait > 0;
+    els.dailyBtn.textContent = wait > 0 ? waitLabel(wait) : `Claim +${DAILY_BONUS}`;
+    els.statOwned.textContent = `${setOwned()}/${liveSet.totalCount}`;
+    els.statPacks.textContent = state.packsOpened;
+    els.statPulls.textContent = state.pulls;
+  }
+  if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
   if (trainer && els.trainerChip) {
@@ -635,9 +744,11 @@ function renderHero() {
 function renderShop() {
   renderSetChrome();
   renderSwitcher();
+  const signed = Boolean(activeTrainer());
   els.packGrid.innerHTML = liveSet.wrappers
     .map((wrap) => {
-      const affordable = state.coins >= liveSet.cost;
+      const affordable = signed && state.coins >= liveSet.cost;
+      const label = !signed ? "Sign in to rip" : affordable ? "Rip pack" : "Need coins";
       return `<article class="pack-card" data-wrapper="${wrap.id}">
         <div class="pack-tag">${wrap.tag}</div>
         <div class="shop-wrapper">
@@ -647,8 +758,8 @@ function renderShop() {
         <p class="blurb">${liveSet.blurb}</p>
         <div class="pack-meta">
           <span class="cost">✦ ${coin(liveSet.cost)}</span>
-          <button class="buy" ${affordable ? "" : "disabled"}>
-            ${affordable ? "Rip pack" : "Need coins"}
+          <button class="buy" ${signed && !affordable ? "disabled" : ""}>
+            ${label}
           </button>
         </div>
       </article>`;
@@ -768,6 +879,7 @@ function renderCollection({ refreshSets = true } = {}) {
 
   if (els.bulkPulse) {
     els.bulkPulse.innerHTML = `
+      ${activeTrainer() ? "" : accountGateHtml("bulk")}
       <div class="home-ring" style="--pct:${pct}" title="${esc(liveSet.name)} completion">
         <span><b>${pct}%</b><small>set</small></span>
       </div>
@@ -825,12 +937,13 @@ function renderCollection({ refreshSets = true } = {}) {
       const count = state.collection[card.id] || 0;
       const missing = count < 1;
       const face = missing ? card : withOwnedFoil(card);
-      const sell =
-        count > 0
-          ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell${
-              count > 1 ? " extra" : ""
-            }</button>`
-          : `<span class="slot-miss">Unpulled</span>`;
+      const sell = !activeTrainer()
+        ? `<span class="slot-miss">Sign in</span>`
+        : count > 0
+        ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell${
+            count > 1 ? " extra" : ""
+          }</button>`
+        : `<span class="slot-miss">Unpulled</span>`;
       return `<article class="binder-slot bulk-card ${missing ? "missing" : ""}">
         ${count > 1 ? `<span class="count-badge">×${count}</span>` : ""}
         <button type="button" class="slot-face" ${inspectAttrs(face)} aria-label="${esc(card.name)}">
@@ -959,6 +1072,11 @@ function binderPickerHtml() {
 
 function renderBinder() {
   if (!els.binderBody) return;
+  if (!activeTrainer()) {
+    if (els.binderCount) els.binderCount.textContent = "Sign in to keep a binder";
+    els.binderBody.innerHTML = accountGateHtml("binder");
+    return;
+  }
   if (reconcileBinder(state)) saveState(state);
 
   const pages = binderPageCount();
@@ -1510,12 +1628,10 @@ function reverseOwned() {
 }
 
 function guestHasProgress() {
-  return (
-    state.packsOpened > 0 ||
-    uniqueOwned() > 0 ||
-    state.coins !== STARTING_COINS ||
-    Boolean(state.lastDaily)
-  );
+  const save = pendingClaim || (activeTrainer() ? null : state);
+  if (!save) return false;
+  const owned = Object.values(save.collection || {}).some((n) => n > 0);
+  return save.packsOpened > 0 || owned || save.coins !== STARTING_COINS || Boolean(save.lastDaily);
 }
 
 function setCompletionRows() {
@@ -1555,7 +1671,7 @@ function achievements() {
     { id: "master", name: "Master set", note: "Complete any live set", ok: sets.some((row) => row.pct >= 100) },
     { id: "daily", name: "Daily trainer", note: "Claim a daily bonus", ok: Boolean(state.lastDaily) },
     { id: "bank", name: "Loaded", note: "Hold 250 coins", ok: state.coins >= 250 },
-    { id: "signed", name: "Named trainer", note: "Create a trainer on this device", ok: Boolean(trainer) },
+    { id: "signed", name: "Named trainer", note: "Create an account", ok: Boolean(trainer) },
   ];
 }
 
@@ -1583,16 +1699,23 @@ function avatarMark(trainer, extraClass = "trainer-mark") {
 }
 
 function saveTools() {
+  if (!activeTrainer()) {
+    return `<div class="panel">
+      <h3>Your save</h3>
+      <p class="panel-note">
+        Coins and cards live on your poke-pack.rip account, not this browser.
+        Sign in to rip, then you can download a JSON backup from here.
+      </p>
+    </div>`;
+  }
   return `<div class="panel">
     <h3>Your save</h3>
     <p class="panel-note">
-      Trainers and binders live in this browser only — not the cloud.
-      Clearing site data wipes them. Download a copy to be safe.
+      This account holds your coins, bulk, and binder in the cloud.
+      Download a JSON copy if you want a local backup — loading a file over the cloud account is not supported.
     </p>
     <div class="save-actions">
       <button class="ghost" id="export-save" type="button">Download save file</button>
-      <button class="ghost" id="import-save" type="button">Load save file</button>
-      <input type="file" id="import-file" accept="application/json,.json" hidden />
     </div>
   </div>`;
 }
@@ -1619,9 +1742,7 @@ function busyPack() {
 
 function openAuth(tab) {
   if (busyPack()) return;
-  const trainers = trainerList();
-  authTab = tab || (trainers.length ? "signin" : "signup");
-  if (!authSelectedId && trainers[0]) authSelectedId = trainers[0].id;
+  authTab = tab === "signin" ? "signin" : tab === "signup" ? "signup" : "signup";
   setView("auth");
 }
 
@@ -1630,6 +1751,9 @@ async function hydrateAfterAccountChange() {
   await activateSet(state.activeSetId || DEFAULT_SET_ID, true);
   renderHeader();
   scheduleDailyTick();
+  renderShop();
+  renderCollection();
+  renderBinder();
   if (view === "home") renderHome();
   if (view === "account") renderAccount();
   if (view === "auth") renderAuth();
@@ -1638,11 +1762,7 @@ async function hydrateAfterAccountChange() {
 }
 
 function renderAuth() {
-  const trainers = trainerList();
   const signed = activeTrainer();
-  if (!authSelectedId || !trainers.some((t) => t.id === authSelectedId)) {
-    authSelectedId = trainers[0]?.id || "";
-  }
   const keepDefault = !signed && guestHasProgress();
   const signupForm = `
     <form id="signup-form" autocomplete="on">
@@ -1653,63 +1773,52 @@ function renderAuth() {
       <label class="field">
         <span>Handle</span>
         <input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" />
-        <span class="hint">3–16 letters, numbers, or underscores. Unique on this device.</span>
+        <span class="hint">3–16 letters, numbers, or underscores. Unique on the site.</span>
       </label>
       <label class="field">
-        <span>Password <em>(optional)</em></span>
-        <input name="password" type="password" maxlength="64" placeholder="PIN or password" autocomplete="new-password" />
-        <span class="hint">Stays on this device. Leave blank if nobody else uses this browser.</span>
+        <span>Password</span>
+        <input name="password" type="password" minlength="6" maxlength="64" required placeholder="At least 6 characters" autocomplete="new-password" />
+        <span class="hint">Needed to sign in on another device. Trading later uses this account.</span>
       </label>
       <div class="field">
         <span>Avatar color</span>
         ${colorPicks(signupColor, "data-signup-color")}
       </div>
       ${
-        signed
-          ? `<p class="panel-note">This starts a fresh binder. Your current trainer stays on this device.</p>`
-          : keepDefault
-            ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Keep the packs and cards I already ripped</label>`
-            : ""
+        keepDefault
+          ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the packs and cards already on this browser</label>`
+          : ""
       }
       <p class="form-error" id="auth-error"></p>
-      <button class="solid" type="submit">${signed ? "Add trainer" : "Create trainer"}</button>
+      <button class="solid" type="submit">Create account</button>
     </form>`;
 
-  const selected = trainers.find((t) => t.id === authSelectedId);
-  const signinForm = trainers.length
-    ? `<form id="signin-form">
-        <div class="trainer-picks">${trainers
-          .map(
-            (t) => `<button type="button" class="trainer-pick${t.id === authSelectedId ? " on" : ""}" data-pick-trainer="${esc(t.id)}">
-              ${avatarMark(t, "trainer-avatar")}
-              <span><b>${esc(t.name)}</b><small>@${esc(t.handle)} · ${esc(formatWhen(t.lastPlayed))}</small></span>
-            </button>`
-          )
-          .join("")}</div>
-        ${
-          selected?.pinHash
-            ? `<label class="field"><span>Password</span><input name="password" type="password" maxlength="64" autocomplete="current-password" /></label>`
-            : `<p class="panel-note">No password on this trainer.</p>`
-        }
-        <p class="form-error" id="auth-error"></p>
-        <button class="solid" type="submit">Sign in</button>
-      </form>`
-    : `<p class="panel-note">No trainers on this device yet. Create one and this binder can travel with the name.</p>
-       <button class="solid" type="button" data-auth-tab="signup">Create a trainer</button>`;
+  const signinForm = `<form id="signin-form" autocomplete="on">
+      <label class="field">
+        <span>Handle</span>
+        <input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" />
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input name="password" type="password" maxlength="64" required autocomplete="current-password" />
+      </label>
+      <p class="form-error" id="auth-error"></p>
+      <button class="solid" type="submit">Sign in</button>
+    </form>`;
 
   els.authBody.innerHTML = `
     <div class="auth-page">
       <div class="auth-copy">
-        <p class="kicker">${signed ? "Another binder" : "Trainer accounts"}</p>
+        <p class="kicker">Cloud accounts</p>
         <h1>${authTab === "signin" ? "Welcome back." : "Make it yours."}</h1>
         <p class="lede">
-          Accounts live in this browser, not the cloud. Create a trainer to name your
-          binder, lock it with an optional PIN, and keep more than one collection on a shared machine.
+          Rips, coins, and the binder live on your account so they can follow you —
+          and so trading can be honest later. Browse Home, Packs, and Catalog without signing in.
         </p>
         <ul class="auth-points">
-          <li>Guest play still works — sign up when you want a name on the binder.</li>
-          <li>Each trainer has its own coins, packs, and cards.</li>
-          <li>Export a save file if you ever switch computers.</li>
+          <li>Handle + password. No email required.</li>
+          <li>Opening a pack, claiming daily coins, selling, and the binder need an account.</li>
+          <li>If this browser already has a local collection, you can claim it once when you sign up.</li>
         </ul>
       </div>
       <div class="auth-card">
@@ -1721,7 +1830,7 @@ function renderAuth() {
         ${
           signed
             ? `<button class="ghost auth-guest" type="button" data-goto="account">Back to account</button>`
-            : `<button class="ghost auth-guest" type="button" data-continue-guest>Continue as guest</button>`
+            : `<button class="ghost auth-guest" type="button" data-continue-guest>Keep browsing</button>`
         }
       </div>
     </div>`;
@@ -1729,19 +1838,15 @@ function renderAuth() {
 
 function renderAccount() {
   const trainer = activeTrainer();
-  const since = new Date(state.createdAt || Date.now()).toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
   const list = achievements();
   const title = careerTitle(list);
-  if (trainer && trainer.title !== title) updateTrainer({ title });
+  if (trainer && trainer.title !== title) {
+    trainer.title = title;
+    api("/api/me", { method: "PATCH", body: JSON.stringify({ title }) }).catch(() => {});
+  }
   const unlocked = list.filter((a) => a.ok).length;
   const sets = setCompletionRows();
   const history = state.history || [];
-  const trainers = trainerList();
-  const others = trainers.filter((t) => t.id !== trainer?.id);
 
   const hero = trainer
     ? `<div class="account-card">
@@ -1763,19 +1868,14 @@ function renderAccount() {
         <div class="account-id">
           <div class="mark lg">P</div>
           <div>
-            <p class="account-title">Guest</p>
-            <h3>Local player</h3>
-            <p>Playing since ${esc(since)} · saved in this browser only</p>
+            <p class="account-title">Signed out</p>
+            <h3>Need an account to rip</h3>
+            <p>Browse the site freely. Packs, daily coins, sales, and the binder wait until you sign in.</p>
           </div>
         </div>
-        ${statsBlock()}
         <div class="account-hero-actions">
-          <button class="solid" type="button" data-open-auth="signup">Create a trainer</button>
-          ${
-            trainers.length
-              ? `<button class="ghost" type="button" data-open-auth="signin">Sign in</button>`
-              : ""
-          }
+          <button class="solid" type="button" data-open-auth="signup">Create account</button>
+          <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
         </div>
       </div>`;
 
@@ -1796,40 +1896,20 @@ function renderAccount() {
   const password = trainer
     ? `<div class="panel">
         <h3>Password</h3>
-        <p class="panel-note">Optional PIN for this trainer on this device. It never leaves the browser.</p>
+        <p class="panel-note">Change the password for this account. You'll need the current one.</p>
         <form id="password-form">
-          ${
-            trainer.pinHash
-              ? `<label class="field"><span>Current password</span><input name="current" type="password" maxlength="64" autocomplete="current-password" /></label>`
-              : ""
-          }
-          <label class="field"><span>${trainer.pinHash ? "New password" : "Set a password"}</span><input name="password" type="password" maxlength="64" autocomplete="new-password" />
-          ${trainer.pinHash ? `<span class="hint">Leave blank to remove the password.</span>` : ""}</label>
+          <label class="field"><span>Current password</span><input name="current" type="password" maxlength="64" required autocomplete="current-password" /></label>
+          <label class="field"><span>New password</span><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" /></label>
           <p class="form-error" id="password-error"></p>
-          <button class="ghost" type="submit">${trainer.pinHash ? "Update password" : "Add password"}</button>
+          <button class="ghost" type="submit">Update password</button>
         </form>
-      </div>`
-    : "";
-
-  const switcher = others.length
-    ? `<div class="panel">
-        <h3>Switch trainer</h3>
-        <p class="panel-note">Your current binder is saved before you jump.</p>
-        <div class="trainer-picks">${others
-          .map(
-            (t) => `<button type="button" class="trainer-pick" data-switch-trainer="${esc(t.id)}">
-              ${avatarMark(t, "trainer-avatar")}
-              <span><b>${esc(t.name)}</b><small>@${esc(t.handle)} · ${esc(formatWhen(t.lastPlayed))}</small></span>
-            </button>`
-          )
-          .join("")}</div>
       </div>`
     : "";
 
   const danger = trainer
     ? `<div class="panel danger">
-        <h3>Delete trainer</h3>
-        <p class="panel-note">Removes @${esc(trainer.handle)} and this binder from the device. Export a save first if you might want it back.</p>
+        <h3>Delete account</h3>
+        <p class="panel-note">Removes @${esc(trainer.handle)} and every card on this account. Export a save first if you might want it back.</p>
         <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
       </div>`
     : "";
@@ -1837,21 +1917,18 @@ function renderAccount() {
   els.accountBody.innerHTML = `
     <div class="section-head">
       <div>
-        <h2>${trainer ? "Trainer" : "Account"}</h2>
+        <h2>Account</h2>
         <p>${
           trainer
-            ? "Career stats, set completion, and this device’s trainer list."
-            : "Play as a guest, or create a trainer to name the binder and keep more than one save on this device."
+            ? "Career stats, set completion, and this cloud profile."
+            : "Create an account to rip packs. Cards are stored in the cloud, not this browser."
         }</p>
       </div>
-      ${
-        trainer
-          ? `<button class="ghost" type="button" data-open-auth="signup">Add another trainer</button>`
-          : ""
-      }
     </div>
     ${hero}
-    <div class="panel-grid two">
+    ${
+      trainer
+        ? `<div class="panel-grid two">
       <div class="panel">
         <h3>Achievements · ${unlocked}/${list.length}</h3>
         <div class="badge-row">${list
@@ -1891,9 +1968,10 @@ function renderAccount() {
       ${saveTools()}
       ${profile}
       ${password}
-      ${switcher}
     </div>
-    ${danger}`;
+    ${danger}`
+        : ""
+    }`;
 }
 
 /*
@@ -2040,7 +2118,7 @@ function renderSettings() {
     <section class="panel danger set-danger">
       <div class="set-panel-head">
         <h3>Reset progress</h3>
-        <p>Clears coins, binder, and history. Your settings and trainers stay. This cannot be undone.</p>
+        <p>Clears coins, binder, and history on this account. Settings stay. This cannot be undone.</p>
       </div>
       <button class="ghost danger-btn" id="reset-progress" type="button">Reset everything</button>
     </section>`;
@@ -2970,29 +3048,49 @@ function resetTear() {
   );
 }
 
-function startRip(wrapper) {
+async function startRip(wrapper) {
+  if (!activeTrainer()) {
+    toast("Sign in to rip packs. Cards save to your account.");
+    openAuth("signup");
+    return;
+  }
   if (!wrapper) {
     toast("Couldn't open that pack.");
     return;
   }
+  if (ripLock || packPhase !== "idle") return;
   if (state.coins < liveSet.cost) {
     toast("Not enough coins.");
     return;
   }
-  activeWrapper = wrapper;
-  state.coins = money(state.coins - liveSet.cost);
-  state.packsOpened += 1;
-  const seen = new Set(Object.keys(state.collection).filter((id) => state.collection[id] > 0));
-  currentPulls = ripPack(liveSet, cards).map((card) => {
-    const wasNew = !seen.has(card.id);
-    seen.add(card.id);
-    return { ...card, wasNew, revealed: false, drawn: false };
-  });
-  currentPulls.forEach((card) => addPull(state, card, wrapper.id));
-  saveState(state);
-  trackWorth();
-  renderHeader();
-  renderShop();
+  ripLock = true;
+  try {
+    const pack = await api("/api/packs/rip", {
+      method: "POST",
+      body: JSON.stringify({ setId: liveSet.id, wrapperId: wrapper.id }),
+    });
+    activeWrapper = wrapper;
+    afterEconomy(pack.save);
+    currentPulls = (pack.cards || []).map((card) => ({
+      ...card,
+      reverse: Boolean(card.reverse),
+      revealed: false,
+      drawn: false,
+    }));
+    renderHeader();
+    renderShop();
+  } catch (err) {
+    toast(err.message || "Couldn't rip that pack.");
+    renderHeader();
+    renderShop();
+    return;
+  } finally {
+    ripLock = false;
+  }
+  if (!currentPulls.length) {
+    toast("That pack came back empty.");
+    return;
+  }
 
   packPhase = "ready";
   focusIndex = 0;
@@ -3173,6 +3271,11 @@ let inspectOpenedAt = 0;
 function inspectSellRow(card) {
   const count = state.collection[card.id] || 0;
   const value = sellValue(card);
+  if (!activeTrainer()) {
+    return `<div class="pc-sell">
+      <span class="pc-own">Sign in to own and sell cards</span>
+    </div>`;
+  }
   if (count < 1) {
     return `<div class="pc-sell">
       <span class="pc-own">Unpulled — still hunting this one</span>
@@ -3184,6 +3287,45 @@ function inspectSellRow(card) {
       Sell one · +${coin(value)}
     </button>
   </div>`;
+}
+
+async function sellOwnedCard(card, { extra = false } = {}) {
+  if (!activeTrainer()) {
+    toast("Sign in to sell cards.");
+    openAuth("signin");
+    return false;
+  }
+  if (!card) return false;
+  const value = sellValue(card);
+  const last = (state.collection[card.id] || 0) <= 1;
+  if (
+    (state.settings.confirmSell || last) &&
+    !confirm(
+      last
+        ? `Sell your only ${card.name} for ${coin(value)} coins? It leaves the binder.`
+        : `Sell a ${extra ? "spare " : ""}${card.name} for ${coin(value)} coins?`
+    )
+  ) {
+    return false;
+  }
+  try {
+    const data = await api("/api/cards/sell", {
+      method: "POST",
+      body: JSON.stringify({ cardId: card.id }),
+    });
+    afterEconomy(data.save);
+    toast(`Sold ${card.name} for ${coin(data.value ?? value)} coins`);
+    renderHeader();
+    renderShop();
+    renderCollection();
+    if (view === "binder") renderBinder();
+    if (view === "account") renderAccount();
+    if (inspectCard) paintInspect(inspectCard);
+    return true;
+  } catch (err) {
+    toast(err.message || "Couldn't sell that card.");
+    return false;
+  }
 }
 
 function paintInspect(card) {
@@ -3222,26 +3364,7 @@ els.inspectInfo.addEventListener("click", (e) => {
   const sell = e.target.closest("[data-inspect-sell]");
   if (!sell || !inspectCard) return;
   const card = findCard(sell.dataset.inspectSell);
-  if (!card) return;
-  const value = sellValue(card);
-  const last = (state.collection[card.id] || 0) <= 1;
-  if (
-    (state.settings.confirmSell || last) &&
-    !confirm(
-      last
-        ? `Sell your only ${card.name} for ${coin(value)} coins? It leaves the binder.`
-        : `Sell a spare ${card.name} for ${coin(value)} coins?`
-    )
-  ) {
-    return;
-  }
-  if (!sellOne(state, card.id, value)) return;
-  trackWorth();
-  toast(`Sold ${card.name} for ${coin(value)} coins`);
-  renderHeader();
-  renderShop();
-  renderCollection();
-  paintInspect(inspectCard);
+  sellOwnedCard(card);
 });
 
 document.querySelectorAll(".nav-btn").forEach((btn) => {
@@ -3286,6 +3409,11 @@ function onEraToggle(e) {
 }
 
 document.addEventListener("click", (e) => {
+  const open = e.target.closest("[data-open-auth]");
+  if (open) {
+    openAuth(open.dataset.openAuth);
+    return;
+  }
   const jump = e.target.closest("[data-goto]");
   if (jump) {
     setView(jump.dataset.goto);
@@ -3330,7 +3458,7 @@ document.querySelector(".brand")?.addEventListener("click", (e) => {
   setView("home");
 });
 
-els.authEntry?.addEventListener("click", () => openAuth(trainerList().length ? "signin" : "signup"));
+els.authEntry?.addEventListener("click", () => openAuth("signin"));
 els.trainerChip?.addEventListener("click", () => setView("account"));
 
 els.settingsBody.addEventListener("change", (e) => {
@@ -3367,12 +3495,24 @@ els.settingsBody.addEventListener("click", (e) => {
 
   if (!e.target.closest("#reset-progress")) return;
   if (!confirm("Reset coins, binder, and history? This cannot be undone.")) return;
-  resetProgress(state);
-  renderHeader();
-  renderShop();
-  renderCollection();
-  renderSettings();
-  toast("Progress reset.");
+  if (!activeTrainer()) {
+    toast("Sign in first — there is no local binder to reset.");
+    openAuth("signin");
+    return;
+  }
+  api("/api/me/reset", { method: "POST" })
+    .then(async (data) => {
+      applyCloudSave(data.save);
+      renderHeader();
+      renderShop();
+      renderCollection();
+      renderBinder();
+      renderSettings();
+      if (view === "home") renderHome();
+      if (view === "account") renderAccount();
+      toast("Progress reset.");
+    })
+    .catch((err) => toast(err.message || "Couldn't reset progress."));
 });
 
 els.accountBody.addEventListener("click", async (e) => {
@@ -3382,64 +3522,55 @@ els.accountBody.addEventListener("click", async (e) => {
     openAuth(open.dataset.openAuth);
     return;
   }
-  const switchTo = e.target.closest("[data-switch-trainer]");
-  if (switchTo) {
-    if (busyPack()) return;
-    authTab = "signin";
-    authSelectedId = switchTo.dataset.switchTrainer;
-    const target = trainerList().find((t) => t.id === authSelectedId);
-    if (target && !target.pinHash) {
-      const result = await signInTrainer(state, authSelectedId, "");
-      if (!result.ok) {
-        toast(result.error);
-        return;
-      }
-      await hydrateAfterAccountChange();
-      setView("account");
-      toast(`Signed in as ${result.trainer.name}.`);
-      return;
-    }
-    setView("auth");
-    return;
-  }
   if (e.target.closest("#sign-out")) {
     if (busyPack()) return;
-    signOutTrainer(state);
+    try {
+      await api("/api/auth/signout", { method: "POST" });
+    } catch {
+      /* cookie may already be gone */
+    }
+    cloudUser = null;
+    pendingClaim = null;
+    setPersistProgress(false);
+    wipeProgressMemory();
     await hydrateAfterAccountChange();
     setView("account");
-    toast("Signed out. Guest binder is back.");
+    toast("Signed out.");
     return;
   }
   if (e.target.closest("#delete-trainer")) {
     const trainer = activeTrainer();
     if (!trainer || busyPack()) return;
-    if (!confirm(`Delete ${trainer.name} (@${trainer.handle}) and this binder from this device?`)) return;
-    const result = deleteTrainer(state, trainer.id);
-    if (!result.ok) {
-      toast(result.error);
-      return;
+    if (!confirm(`Delete ${trainer.name} (@${trainer.handle}) and every card on this account?`)) return;
+    const password = prompt("Type your password to delete this account.");
+    if (password == null) return;
+    try {
+      await api("/api/auth/delete", { method: "POST", body: JSON.stringify({ password }) });
+      cloudUser = null;
+      pendingClaim = null;
+      setPersistProgress(false);
+      wipeProgressMemory();
+      await hydrateAfterAccountChange();
+      setView("account");
+      toast("Account deleted.");
+    } catch (err) {
+      toast(err.message || "Couldn't delete the account.");
     }
-    await hydrateAfterAccountChange();
-    setView("account");
-    toast("Trainer deleted.");
     return;
   }
   const color = e.target.closest("[data-profile-color]");
   if (color) {
-    const next = updateTrainer({ color: color.dataset.profileColor });
-    if (next) {
-      renderHeader();
-      const hex = avatarColor(next.color).hex;
-      els.accountBody.querySelectorAll("[data-profile-color]").forEach((btn) => {
-        btn.classList.toggle("on", btn.dataset.profileColor === next.color);
+    try {
+      const data = await api("/api/me", {
+        method: "PATCH",
+        body: JSON.stringify({ color: color.dataset.profileColor }),
       });
-      const mark = els.accountBody.querySelector(".trainer-mark");
-      if (mark) mark.style.setProperty("--avatar", hex);
+      cloudUser = data.user;
+      renderHeader();
+      renderAccount();
+    } catch (err) {
+      toast(err.message || "Couldn't update color.");
     }
-    return;
-  }
-  if (e.target.closest("#import-save")) {
-    els.accountBody.querySelector("#import-file")?.click();
     return;
   }
   if (!e.target.closest("#export-save")) return;
@@ -3448,7 +3579,7 @@ els.accountBody.addEventListener("click", async (e) => {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `poke-pack-rip-${trainer?.handle || "guest"}-save.json`;
+  link.download = `poke-pack-rip-${trainer?.handle || "trainer"}-save.json`;
   link.click();
   URL.revokeObjectURL(url);
   toast("Save downloaded.");
@@ -3459,73 +3590,52 @@ els.accountBody.addEventListener("submit", async (e) => {
   if (profile) {
     e.preventDefault();
     const data = new FormData(profile);
-    const next = updateTrainer({
-      name: String(data.get("name") || ""),
-      handle: String(data.get("handle") || ""),
-      bio: String(data.get("bio") || ""),
-    });
     const err = els.accountBody.querySelector("#profile-error");
-    if (!next) {
-      if (err) err.textContent = "Name needs 2+ letters, and the handle must be 3–16 unique characters.";
-      return;
+    try {
+      const next = await api("/api/me", {
+        method: "PATCH",
+        body: JSON.stringify({
+          name: String(data.get("name") || ""),
+          handle: String(data.get("handle") || ""),
+          bio: String(data.get("bio") || ""),
+        }),
+      });
+      cloudUser = next.user;
+      if (next.save) applyCloudSave(next.save);
+      renderHeader();
+      renderAccount();
+      toast("Profile saved.");
+    } catch (error) {
+      if (err) err.textContent = error.message;
+      toast(error.message || "Couldn't save profile.");
     }
-    renderHeader();
-    renderAccount();
-    toast("Profile saved.");
     return;
   }
   const pw = e.target.closest("#password-form");
   if (!pw) return;
   e.preventDefault();
   const data = new FormData(pw);
-  const result = await setTrainerPassword(String(data.get("password") || ""), String(data.get("current") || ""));
   const err = els.accountBody.querySelector("#password-error");
-  if (!result.ok) {
-    if (err) err.textContent = result.error;
-    toast(result.error);
-    return;
-  }
-  renderAccount();
-  toast(String(data.get("password") || "") ? "Password updated." : "Password cleared.");
-});
-
-els.accountBody.addEventListener("change", async (e) => {
-  const input = e.target.closest("#import-file");
-  const file = input?.files?.[0];
-  if (!file) return;
-  input.value = "";
-  if (!confirm("Load this save file? It replaces the coins, binder, and history on this browser.")) {
-    return;
-  }
-  let parsed;
   try {
-    parsed = JSON.parse(await file.text());
-  } catch {
-    toast("That file isn't a valid save.");
-    return;
+    await api("/api/me", {
+      method: "PATCH",
+      body: JSON.stringify({
+        current: String(data.get("current") || ""),
+        password: String(data.get("password") || ""),
+      }),
+    });
+    renderAccount();
+    toast("Password updated.");
+  } catch (error) {
+    if (err) err.textContent = error.message;
+    toast(error.message || "Couldn't update password.");
   }
-  if (!importState(state, parsed)) {
-    toast("That file isn't a poke-pack.rip save.");
-    return;
-  }
-  applySettings();
-  await activateSet(state.activeSetId || DEFAULT_SET_ID, true);
-  renderHeader();
-  scheduleDailyTick();
-  renderAccount();
-  toast("Save loaded.");
 });
 
 els.authBody?.addEventListener("click", (e) => {
   const tab = e.target.closest("[data-auth-tab]");
   if (tab) {
     authTab = tab.dataset.authTab === "signin" ? "signin" : "signup";
-    renderAuth();
-    return;
-  }
-  const pick = e.target.closest("[data-pick-trainer]");
-  if (pick) {
-    authSelectedId = pick.dataset.pickTrainer;
     renderAuth();
     return;
   }
@@ -3548,60 +3658,77 @@ els.authBody?.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (busyPack()) return;
     const data = new FormData(signup);
-    const signed = Boolean(activeTrainer());
-    const keep = signed ? false : data.has("keep") || !guestHasProgress();
-    const result = await createTrainer(state, {
-      name: String(data.get("name") || ""),
-      handle: String(data.get("handle") || ""),
-      password: String(data.get("password") || ""),
-      color: signupColor,
-      keepProgress: keep,
-    });
+    const keep = !activeTrainer() && data.has("keep") && pendingClaim;
     const err = els.authBody.querySelector("#auth-error");
-    if (!result.ok) {
-      if (err) err.textContent = result.error;
-      toast(result.error);
-      return;
+    try {
+      const result = await api("/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          name: String(data.get("name") || ""),
+          handle: String(data.get("handle") || ""),
+          password: String(data.get("password") || ""),
+          color: signupColor,
+          localSave: keep ? pendingClaim : undefined,
+        }),
+      });
+      cloudUser = result.user;
+      pendingClaim = null;
+      localStorage.setItem(CLOUD_SEEN_KEY, "1");
+      applyCloudSave(result.save);
+      await hydrateAfterAccountChange();
+      setView("account");
+      toast(keep ? `Welcome, ${result.user.name}. This binder is yours.` : `Welcome, ${result.user.name}.`);
+    } catch (error) {
+      if (err) err.textContent = error.message;
+      toast(error.message || "Couldn't create that account.");
     }
-    await hydrateAfterAccountChange();
-    setView("account");
-    toast(keep ? `Welcome, ${result.trainer.name}. This binder is yours.` : `Trainer ${result.trainer.name} is ready.`);
     return;
   }
   const signin = e.target.closest("#signin-form");
   if (!signin) return;
   e.preventDefault();
   if (busyPack()) return;
-  if (!authSelectedId) {
-    toast("Pick a trainer first.");
-    return;
-  }
   const data = new FormData(signin);
-  const result = await signInTrainer(state, authSelectedId, String(data.get("password") || ""));
   const err = els.authBody.querySelector("#auth-error");
-  if (!result.ok) {
-    if (err) err.textContent = result.error;
-    toast(result.error);
-    return;
+  try {
+    const result = await api("/api/auth/signin", {
+      method: "POST",
+      body: JSON.stringify({
+        handle: String(data.get("handle") || ""),
+        password: String(data.get("password") || ""),
+      }),
+    });
+    cloudUser = result.user;
+    pendingClaim = null;
+    localStorage.setItem(CLOUD_SEEN_KEY, "1");
+    applyCloudSave(result.save);
+    await hydrateAfterAccountChange();
+    setView("account");
+    toast(`Signed in as ${result.user.name}.`);
+  } catch (error) {
+    if (err) err.textContent = error.message;
+    toast(error.message || "Couldn't sign in.");
   }
-  await hydrateAfterAccountChange();
-  setView("account");
-  toast(`Signed in as ${result.trainer.name}.`);
 });
 
-els.dailyBtn.addEventListener("click", () => {
-  const amount = claimDaily(state);
-  if (!amount) {
-    toast("Wait a second, then claim again.");
+els.dailyBtn.addEventListener("click", async () => {
+  if (!activeTrainer()) {
+    openAuth("signin");
     return;
   }
-  trackWorth();
-  renderHeader();
-  scheduleDailyTick();
-  renderShop();
-  if (view === "home") renderHome();
-  if (view === "account") renderAccount();
-  toast(`Daily bonus: +${coin(amount)} coins`);
+  try {
+    const data = await api("/api/daily", { method: "POST" });
+    afterEconomy(data.save);
+    renderHeader();
+    scheduleDailyTick();
+    renderShop();
+    if (view === "home") renderHome();
+    if (view === "account") renderAccount();
+    toast(`Daily bonus: +${coin(data.amount)} coins`);
+  } catch (err) {
+    toast(err.message || "Wait a second, then claim again.");
+    renderHeader();
+  }
 });
 
 els.packGrid.addEventListener("click", (e) => {
@@ -3811,7 +3938,7 @@ document.addEventListener("pointerleave", (e) => {
 els.doneBtn.addEventListener("click", finishRip);
 els.leavePack?.addEventListener("click", finishRip);
 
-els.binderBody?.addEventListener("click", (e) => {
+els.binderBody?.addEventListener("click", async (e) => {
   const flip = e.target.closest("[data-flip]");
   if (flip) {
     binderSpread = Math.max(0, binderSpread + Number(flip.dataset.flip) * 2);
@@ -3828,6 +3955,7 @@ els.binderBody?.addEventListener("click", (e) => {
     const id = pick.dataset.pick;
     if (placeInBinder(state, binderPicking, id, ownedReverse(id))) {
       binderPicking = null;
+      await pushBinder();
       renderBinder();
     }
     return;
@@ -3841,6 +3969,7 @@ els.binderBody?.addEventListener("click", (e) => {
   const out = e.target.closest("[data-unpocket]");
   if (out) {
     clearBinderSlot(state, Number(out.dataset.unpocket));
+    await pushBinder();
     renderBinder();
     return;
   }
@@ -3848,8 +3977,13 @@ els.binderBody?.addEventListener("click", (e) => {
   inspectFromEl(e.target);
 });
 
-els.binderAddPage?.addEventListener("click", () => {
+els.binderAddPage?.addEventListener("click", async () => {
+  if (!activeTrainer()) {
+    openAuth("signin");
+    return;
+  }
   addBinderPage(state);
+  await pushBinder();
   binderSpread = Math.max(0, binderPageCount() - 2);
   renderBinder();
   toast("Page added.");
@@ -3860,21 +3994,7 @@ els.dexGrid.addEventListener("click", (e) => {
   if (sellBtn) {
     e.preventDefault();
     e.stopPropagation();
-    const card = byId[sellBtn.dataset.sell];
-    if (
-      card &&
-      state.settings.confirmSell &&
-      !confirm(`Sell a spare ${card.name} for ${coin(sellValue(card))} coins?`)
-    ) {
-      return;
-    }
-    if (card && sellOne(state, card.id, sellValue(card))) {
-      trackWorth();
-      toast(`Sold extra ${card.name} for ${coin(sellValue(card))} coins`);
-      renderHeader();
-      renderShop();
-      renderCollection();
-    }
+    sellOwnedCard(byId[sellBtn.dataset.sell], { extra: true });
     return;
   }
   inspectFromEl(e.target);
@@ -4065,6 +4185,7 @@ function routeFromLocation() {
 
 async function boot() {
   await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
+  await refreshSession();
   await activateSet(state.activeSetId || DEFAULT_SET_ID);
   applySettings();
   renderHeader();

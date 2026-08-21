@@ -1,7 +1,8 @@
-# Static site for Cloudflare Workers (Git deploy).
+# Worker + static assets for Cloudflare (Git deploy).
 # Build copies public files into dist/ so .git is never uploaded.
 
 name = "poke-pack"
+main = "worker/index.js"
 compatibility_date = "2026-08-21"
 
 [build]
@@ -9,5 +10,13 @@ command = "node scripts/prepare-cf-assets.mjs"
 
 [assets]
 directory = "./dist"
+binding = "ASSETS"
 html_handling = "auto-trailing-slash"
 not_found_handling = "single-page-application"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "poke-pack"
+database_id = "f8eceab0-2f6b-406a-9341-075920325daa"
+migrations_dir = "worker/migrations"
