@@ -1193,46 +1193,106 @@ function topByValue(limit = 5) {
     .slice(0, limit);
 }
 
-function renderHome() {
-  const { owned, total, pct } = completion();
-  const hits = historyCards(
-    state.history.filter((entry) => HIT_RARITIES.has(entry.rarity)),
-    8
+function setForCardId(id) {
+  if (!id) return null;
+  return (
+    PLAYABLE_SETS.slice()
+      .sort((a, b) => b.id.length - a.id.length)
+      .find((set) => id === set.id || id.startsWith(`${set.id}-`)) || null
   );
+}
+
+function allCatalogCards() {
+  const seen = new Set();
+  const out = [];
+  for (const list of Object.values(setCache)) {
+    if (!Array.isArray(list)) continue;
+    for (const card of list) {
+      if (!card?.id || card.energy || seen.has(card.id)) continue;
+      seen.add(card.id);
+      out.push(card);
+    }
+  }
+  return out;
+}
+
+function topCardsOnSite(limit = 8) {
+  return allCatalogCards()
+    .filter((card) => typeof card.market === "number")
+    .sort((a, b) => sellValue(b) - sellValue(a))
+    .slice(0, limit);
+}
+
+function siteCompletion() {
+  let owned = 0;
+  let total = 0;
+  for (const set of PLAYABLE_SETS) {
+    const list = setCache[set.id];
+    total += list?.length || set.totalCount || 0;
+    owned += ownedInSet(set);
+  }
+  return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
+}
+
+function cheapestPackCost() {
+  const costs = PLAYABLE_SETS.map((set) => Number(set.cost)).filter((n) => n > 0);
+  return costs.length ? Math.min(...costs) : liveSet.cost;
+}
+
+function renderHome() {
+  const { owned, total, pct } = siteCompletion();
   const recent = historyCards(state.history, 8);
-  const chase = liveSet.heroIds.map((id) => byId[id]).filter(Boolean);
+  const stars = topCardsOnSite(4);
+  const chase = stars.length
+    ? topCardsOnSite(8)
+    : liveSet.heroIds.map((id) => byId[id]).filter(Boolean);
   const eras = erasWithSets();
   const queued = eras.reduce((n, era) => n + era.queued.length, 0);
   const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
   const origin = ROADMAP.at(-1)?.sets.at(-1);
 
   if (els.homeKicker) {
-    els.homeKicker.textContent = `Fan-made · ${liveSet.edition} · ${liveSet.released}`;
+    els.homeKicker.textContent = "Real odds · real prices · no checkout";
   }
 
-  const purse = binderValue(liveSet);
-  const movers = topByValue(5);
-  const odds = packOdds(liveSet);
   const worth = netWorth();
+  const binder = totalBinderValue();
+  const movers = topCardsOnSite(8);
+  const topPrice = movers[0] ? sellValue(movers[0]) : 0;
+  const floorCost = cheapestPackCost();
   const pnl = state.granted == null ? null : money(worth - state.granted);
   const pnlDir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
 
   if (els.homePulse) {
     els.homePulse.innerHTML = `
-      <div class="home-ring" style="--pct:${pct}" title="${esc(liveSet.name)} binder">
-        <span><b>${pct}%</b><small>set</small></span>
+      <div class="home-ring" style="--pct:${pct}" title="Cards owned across every set">
+        <span><b>${pct}%</b><small>all sets</small></span>
       </div>
       <div class="home-pulse-stat"><b>✦ ${coin(state.coins)}</b><span>Coins</span></div>
-      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>${esc(liveSet.name)}</span></div>
-      <div class="home-pulse-stat"><b>✦ ${coin(purse.value)}</b><span>Binder value</span></div>`;
+      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>Cards owned</span></div>
+      <div class="home-pulse-stat"><b>✦ ${coin(binder)}</b><span>Binder value</span></div>`;
   }
 
   if (els.homeStage) {
-    const packs = liveSet.wrappers
+    const packSets = [];
+    for (const card of stars) {
+      const set = setForCardId(card.id);
+      if (set && !packSets.some((entry) => entry.id === set.id)) packSets.push(set);
+      if (packSets.length >= 2) break;
+    }
+    for (const set of PLAYABLE_SETS) {
+      if (packSets.length >= 2) break;
+      if (!packSets.some((entry) => entry.id === set.id)) packSets.push(set);
+    }
+    const packs = packSets
       .slice(0, 2)
-      .map((wrap) => `<div class="home-pack-float">${packPicture(wrap)}</div>`)
+      .map((set) => {
+        const wrap = set.wrappers?.[0];
+        return wrap ? `<div class="home-pack-float">${packPicture(wrap, "", set)}</div>` : "";
+      })
       .join("");
-    const fan = chase
+    const fanCards = stars.length ? stars : chase.slice(0, 4);
+    const fan = fanCards
       .map(
         (card, i) =>
           `<button type="button" class="home-float" data-inspect="${esc(card.id)}"
@@ -1304,7 +1364,7 @@ function renderHome() {
         <div class="home-block-head">
           <div>
             <h2>On the hunt</h2>
-            <p>Art from ${esc(liveSet.name)}. Rip a pack to start the binder.</p>
+            <p>The priciest art on the site. Rip a pack to start the binder.</p>
           </div>
         </div>
         ${miniCardRow(chase, "Load a set to see the chase.", "home-film")}
@@ -1343,43 +1403,45 @@ function renderHome() {
           <b>✦ ${coin(worth)}</b>
           <p class="home-pnl ${pnlDir}">
             ${pnl == null
-              ? `Coins plus every card you hold.`
+              ? `Coins plus every card you hold, across every set.`
               : `${pnlDir === "down" ? "▼" : pnlDir === "up" ? "▲" : "■"}
                  ✦ ${coin(Math.abs(pnl))} ${pnlDir === "down" ? "down" : pnlDir === "up" ? "up" : "even"}
                  since tracking began at ✦ ${coin(state.granted)}`}
           </p>
           <div class="home-worth-chart" id="home-worth-chart"></div>
           <p class="home-worth-note">${
-            purse.copies
-              ? `✦ ${coin(purse.value)} of it is ${esc(liveSet.name)}${
-                  purse.best ? ` · best is ${esc(purse.best.card.name)} at ✦ ${coin(purse.best.each)}` : ""
-                }`
-              : `Nothing in this binder yet. A pack costs ✦ ${coin(liveSet.cost)}.`
+            binder
+              ? `✦ ${coin(binder)} sitting in the binder across ${PLAYABLE_SETS.length} live sets.`
+              : `Nothing in the binder yet. Boosters start at ✦ ${coin(floorCost)}.`
           }</p>
           <div class="home-worth-cta">
-            <button type="button" class="solid" data-goto="shop">Rip a pack · ✦ ${coin(liveSet.cost)}</button>
+            <button type="button" class="solid" data-goto="shop">Rip a pack · from ✦ ${coin(floorCost)}</button>
           </div>
         </article>
         <article class="home-board">
           <div class="home-board-head">
-            <span>Most valuable in ${esc(liveSet.name)}</span>
+            <span>Most expensive on the site</span>
             <span class="home-board-note">live prices</span>
           </div>
           <ol class="home-board-list">
             ${movers
-              .map(
-                (card, i) => `<li>
+              .map((card, i) => {
+                const price = sellValue(card);
+                const bar = topPrice ? Math.max(8, Math.round((price / topPrice) * 100)) : 0;
+                const from = setForCardId(card.id);
+                return `<li>
                   <button type="button" class="home-board-row" ${inspectAttrs(card)}
-                    aria-label="${esc(card.name)}, ✦ ${coin(sellValue(card))}">
+                    aria-label="${esc(card.name)}, ✦ ${coin(price)}">
                     <span class="home-board-rank">${i + 1}</span>
                     <span class="home-board-name">
                       <b>${esc(card.name)}</b>
-                      <small>${esc(rarityLine(card))}</small>
+                      <small>${esc(rarityLine(card))}${from ? ` · ${esc(from.name)}` : ""}</small>
+                      <span class="home-board-meter" style="--pct:${bar}%"><span></span></span>
                     </span>
-                    <span class="home-board-price">✦ ${coin(sellValue(card))}</span>
+                    <span class="home-board-price">✦ ${coin(price)}</span>
                   </button>
-                </li>`
-              )
+                </li>`;
+              })
               .join("")}
           </ol>
         </article>
@@ -1413,18 +1475,6 @@ function renderHome() {
     </div>
 
     ${pullsBlock}
-
-    <div class="home-block">
-      <div class="home-block-head">
-        <div>
-          <h2>${esc(liveSet.name)} odds</h2>
-          <p>${esc(liveSet.oddsLine)}</p>
-        </div>
-      </div>
-      <div class="home-odds">${odds.map(
-        ([label, rate]) => `<div class="home-odd"><b>${rate}</b><span>${esc(label)}</span></div>`
-      ).join("")}</div>
-    </div>
 
     <div class="home-block">
       <div class="home-block-head">

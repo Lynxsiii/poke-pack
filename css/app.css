@@ -1579,6 +1579,10 @@ select.filter option {
   0%, 100% { transform: rotate(var(--spin, 0deg)) translateY(0); }
   50% { transform: rotate(var(--spin, 0deg)) translateY(-14px); }
 }
+@keyframes homeFloatPhone {
+  0%, 100% { transform: rotate(var(--spin, 0deg)) translateY(0); }
+  50% { transform: rotate(var(--spin, 0deg)) translateY(-7px); }
+}
 @keyframes homeSway {
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -10px; }
@@ -1744,7 +1748,7 @@ select.filter option {
 .home-proof span { color: var(--muted); font-size: 12px; }
 
 /* ---- Market board ---------------------------------------------------------
-   Binder worth on the left, the set's priciest cards on the right. */
+   Binder worth on the left, the site's priciest cards on the right. */
 .home-market {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
@@ -1930,6 +1934,20 @@ select.filter option {
   white-space: nowrap;
 }
 .home-board-name small { color: var(--muted); font-size: 11.5px; }
+.home-board-meter {
+  display: block;
+  height: 3px;
+  margin-top: 7px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.home-board-meter > span {
+  display: block;
+  height: 100%;
+  width: var(--pct, 0%);
+  background: linear-gradient(90deg, var(--gold), var(--rip));
+}
 .home-board-price {
   flex: none;
   font-family: var(--display);
@@ -3751,19 +3769,25 @@ html.dialog-open body {
   .home-copy h1,
   h1 { font-size: clamp(28px, 8vw, 40px); line-height: 1.05; }
   .home-stage {
-    height: 280px;
-    min-height: 280px;
-    margin: 4px -8px 8px;
+    height: 380px;
+    min-height: 380px;
+    margin: 12px -8px 16px;
+    padding: 36px 4px 18px;
     overflow: hidden;
   }
-  .home-fan { height: 280px; }
-  .home-float { width: 118px; }
-  .home-float:nth-child(1) { left: 4%; top: 14%; }
-  .home-float:nth-child(2) { left: 30%; top: 2%; width: 138px; }
-  .home-float:nth-child(3) { right: 2%; top: 18%; width: 108px; }
-  .home-float:nth-child(4) { left: 20%; bottom: 2%; width: 100px; }
+  .home-fan { height: 326px; }
+  .home-float { width: 124px; }
+  .home-float:nth-child(1) { left: 2%; top: 22%; }
+  .home-float:nth-child(2) { left: 28%; top: 10%; width: 148px; }
+  .home-float:nth-child(3) { right: 1%; top: 24%; width: 114px; }
+  .home-float:nth-child(4) { left: 16%; bottom: 2%; width: 108px; }
   .home-pack-float,
-  .home-pack-float img { height: 160px; }
+  .home-pack-float img { height: 168px; }
+  .home-pack-float:nth-child(1) { left: -8%; top: 28%; }
+  .home-pack-float:nth-child(2) { right: -8%; top: 18%; }
+  .home-float {
+    animation-name: homeFloatPhone;
+  }
   .hero-art {
     display: block;
     height: 250px;
