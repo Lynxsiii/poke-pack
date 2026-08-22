@@ -17,6 +17,7 @@ import { HIT_RARITIES } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge } from "./social.js";
 import {
+  AVATARS,
   avatarSrc,
   avatarStyle,
   avatarIcon,
@@ -28,7 +29,17 @@ import {
   DEFAULT_STATS,
   SHOWCASE_MAX,
 } from "./cosmetics.js";
-import { unlockedTitles, titleContext } from "./titles.js";
+import { unlockedTitles, titleContext, TITLES, isTitleUnlocked } from "./titles.js";
+import {
+  ACHIEVEMENTS,
+  ACH_CATEGORIES,
+  achievementById,
+  achievementContext,
+  achievementProgress,
+  isAchievementDone,
+  readyToClaim,
+  claimTotal,
+} from "./achievements.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
@@ -91,6 +102,7 @@ function applyCloudSave(save) {
   state.packTrick = Boolean(save.packTrick);
   state.history = Array.isArray(save.history) ? save.history : [];
   state.granted = save.granted;
+  state.claimed = Array.isArray(save.claimed) ? save.claimed : [];
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   if (save.createdAt) state.createdAt = save.createdAt;
@@ -110,6 +122,7 @@ function wipeProgressMemory() {
   state.packTrick = false;
   state.history = [];
   state.granted = 0;
+  state.claimed = [];
   state.worthLog = [];
   state.binder = [];
 }
@@ -192,6 +205,11 @@ let ownedMode = "all";
 let rarityMode = "all";
 let authTab = "signup";
 let signupColor = "gold";
+/** Account page: which tab is open, how the badge wall is filtered. */
+let accountTab = "overview";
+let achFilter = "all";
+let historyOpen = false;
+let historyFilter = "all";
 let currentPulls = [];
 let packPhase = "idle";
 let focusIndex = 0;
@@ -1721,38 +1739,35 @@ function ownedRarities() {
   return counts;
 }
 
-function achievements() {
-  const unique = uniqueOwned();
-  const rarities = ownedRarities();
-  const sets = setCompletionRows();
-  const trainer = activeTrainer();
-  return [
-    { id: "first-pack", name: "First rip", note: "Open your first booster", ok: state.packsOpened >= 1 },
-    { id: "ten-packs", name: "Warming up", note: "Rip 10 packs", ok: state.packsOpened >= 10 },
-    { id: "hundred", name: "Century", note: "Rip 100 packs", ok: state.packsOpened >= 100 },
-    { id: "first-hit", name: "Hit", note: "Pull a hit rarity", ok: Object.keys(rarities).some((r) => HIT_RARITIES.has(r)) },
-    { id: "sir", name: "Special art", note: "Own a Special Illustration Rare", ok: (rarities["Special Illustration Rare"] || 0) > 0 },
-    { id: "gold", name: "Gold chase", note: "Own a Mega Hyper Rare", ok: (rarities["Mega Hyper Rare"] || 0) > 0 },
-    { id: "reverse", name: "Shiny back", note: "Pull a reverse holo", ok: reverseOwned() > 0 },
-    { id: "unique-10", name: "Getting started", note: "Collect 10 unique cards", ok: unique >= 10 },
-    { id: "half-set", name: "Halfway", note: "Reach 50% on any live set", ok: sets.some((row) => row.pct >= 50) },
-    { id: "master", name: "Master set", note: "Complete any live set", ok: sets.some((row) => row.pct >= 100) },
-    { id: "daily", name: "Hourly trainer", note: "Claim an hourly bonus", ok: Boolean(state.lastDaily) },
-    { id: "bank", name: "Loaded", note: "Hold 250 coins", ok: state.coins >= 250 },
-    { id: "signed", name: "Named trainer", note: "Create an account", ok: Boolean(trainer) },
-  ];
+/** Progress context shared by the badge wall, the title picker, and the hero. */
+function achieveCtx() {
+  return achievementContext(state, { signed: Boolean(activeTrainer()), rarities: ownedRarities() });
 }
 
-function careerTitle(list) {
-  const has = (id) => list.find((item) => item.id === id)?.ok;
-  if (has("master") && has("hundred")) return "Champion";
-  if (has("master")) return "Gym Leader";
-  if (has("sir") || has("gold")) return "Hit hunter";
-  if (has("hundred")) return "Ripper";
-  if (has("half-set") || has("unique-10")) return "Collector";
-  if (has("ten-packs")) return "Ripper";
-  if (has("first-pack")) return "Trainer";
-  return "Rookie";
+function claimedIds() {
+  return new Set(Array.isArray(state.claimed) ? state.claimed : []);
+}
+
+/**
+ * One pass over the table for everything the account page needs to say about
+ * achievements: what is done, what is banked, and what is sitting unclaimed.
+ */
+function achievementStats() {
+  const ctx = achieveCtx();
+  const claimed = claimedIds();
+  const ready = readyToClaim(ctx, claimed);
+  const done = ACHIEVEMENTS.filter((row) => claimed.has(row.id) || isAchievementDone(row, ctx)).length;
+  const banked = ACHIEVEMENTS.reduce((n, row) => n + (claimed.has(row.id) ? row.coins : 0), 0);
+  return {
+    ctx,
+    claimed,
+    ready,
+    done,
+    banked,
+    waiting: claimTotal(ready),
+    total: ACHIEVEMENTS.length,
+    pct: Math.round((claimed.size / ACHIEVEMENTS.length) * 100),
+  };
 }
 
 function colorPicks(selected, attr = "data-color") {
@@ -1767,38 +1782,26 @@ function avatarMark(trainer, extraClass = "trainer-mark") {
   return `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
 }
 
-function saveTools() {
-  if (!activeTrainer()) {
-    return `<div class="panel">
-      <h3>Your save</h3>
-      <p class="panel-note">
-        Coins and cards live on your poke-pack.rip account, not this browser.
-        Sign in to rip, then you can download a JSON backup from here.
-      </p>
-    </div>`;
-  }
-  return `<div class="panel">
-    <h3>Your save</h3>
-    <p class="panel-note">
-      This account holds your coins, bulk, and binder in the cloud.
-      Download a JSON copy if you want a local backup — loading a file over the cloud account is not supported.
-    </p>
-    <div class="save-actions">
-      <button class="ghost" id="export-save" type="button">Download save file</button>
-    </div>
-  </div>`;
-}
-
-function statsBlock() {
-  const { pct } = completion();
-  return `<div class="panel-stats wide">
-    <div><b>✦ ${coin(state.coins)}</b><span>Coins</span></div>
-    <div><b>${num(state.packsOpened)}</b><span>Packs ripped</span></div>
-    <div><b>${num(state.pulls)}</b><span>Cards pulled</span></div>
-    <div><b>${num(uniqueOwned())}</b><span>Unique cards</span></div>
-    <div><b>${num(reverseOwned())}</b><span>Reverse holos</span></div>
-    <div><b>${pct}%</b><span>${esc(liveSet.name)} complete</span></div>
-  </div>`;
+/** The career ribbon under the hero — the numbers, not the chrome. */
+function careerTiles() {
+  const worth = netWorth();
+  const pnl = state.granted == null ? null : money(worth - state.granted);
+  const dir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
+  const tiles = [
+    ["✦ " + coin(state.coins), "Coins"],
+    ["✦ " + coin(worth), "Net worth"],
+    [num(state.packsOpened), "Packs ripped"],
+    [num(state.pulls), "Cards pulled"],
+    [num(uniqueOwned()), "Unique cards"],
+    [num(reverseOwned()), "Reverse holos"],
+  ];
+  const pnlTile =
+    pnl == null
+      ? ""
+      : `<div class="acct-tile pnl ${dir}"><b>${pnl > 0 ? "+" : pnl < 0 ? "−" : ""}✦ ${coin(Math.abs(pnl))}</b><span>Up or down</span></div>`;
+  return `<div class="acct-tiles">${tiles
+    .map(([value, label]) => `<div class="acct-tile"><b>${esc(value)}</b><span>${esc(label)}</span></div>`)
+    .join("")}${pnlTile}</div>`;
 }
 
 function busyPack() {
@@ -1908,165 +1911,464 @@ function renderAuth() {
     </div>`;
 }
 
+const ACCOUNT_TABS = [
+  { id: "overview", name: "Overview", note: "Career, sets, and what you pulled." },
+  { id: "achievements", name: "Achievements", note: "Badges, rewards, and titles." },
+  { id: "profile", name: "Profile", note: "Name, bio, and what the public sees." },
+  { id: "look", name: "Look", note: "Avatar, banner, and title." },
+  { id: "security", name: "Security", note: "Password and deleting the account." },
+];
+
 function renderAccount() {
   const trainer = activeTrainer();
-  const list = achievements();
-  const title = trainer?.title || "Rookie";
-  const unlocked = list.filter((a) => a.ok).length;
-  const sets = setCompletionRows();
-  const history = state.history || [];
+  if (!trainer) {
+    els.accountBody.innerHTML = signedOutAccount();
+    return;
+  }
+  if (!ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
+  const stats = achievementStats();
+  const body =
+    accountTab === "achievements"
+      ? achievementsTab(stats)
+      : accountTab === "profile"
+        ? profileTab(trainer)
+        : accountTab === "look"
+          ? lookTab(trainer, stats)
+          : accountTab === "security"
+            ? securityTab(trainer)
+            : overviewTab(trainer, stats);
 
-  const hero = trainer
-    ? `<div class="account-card">
-        <div class="account-id">
-          ${avatarMark(trainer)}
-          <div>
-            <p class="account-title">${esc(title)}</p>
-            <h3>${esc(trainer.name)}</h3>
-            <p><span class="account-handle">@${esc(trainer.handle)}</span> · ${esc(trainerCode(trainer.id))} · since ${esc(formatWhen(trainer.createdAt))}</p>
-            ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
-          </div>
-            <div class="account-actions">
-            <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
-            <button class="ghost" type="button" id="sign-out">Sign out</button>
-          </div>
-        </div>
-        ${statsBlock()}
+  els.accountBody.innerHTML = `
+    ${accountHero(trainer, stats)}
+    <div class="acct-tabs" role="tablist" aria-label="Account sections">
+      ${ACCOUNT_TABS.map(
+        (tab) => `<button type="button" role="tab" class="acct-tab${tab.id === accountTab ? " on" : ""}"
+          aria-selected="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
+          ${esc(tab.name)}${tab.id === "achievements" && stats.ready.length ? `<i class="acct-dot">${stats.ready.length}</i>` : ""}
+        </button>`
+      ).join("")}
+    </div>
+    <div class="acct-body">${body}</div>
+    ${historyOpen ? historySheet() : ""}`;
+
+  const chart = els.accountBody.querySelector("#acct-worth-chart");
+  if (chart) renderWorthChart(chart, state.worthLog, state.granted);
+}
+
+function signedOutAccount() {
+  const preview = ACHIEVEMENTS.slice(0, 8)
+    .map(
+      (row) => `<div class="ach-tile t${row.tier} is-locked">
+        <div class="ach-badge" style="--pct:0"><span>${esc(row.mark)}</span></div>
+        <div class="ach-tile-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
+        <div class="ach-reward"><span class="ach-coin">&#10022; ${num(row.coins)}</span></div>
       </div>`
-    : `<div class="account-card">
-        <div class="account-id">
-          <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
-          <div>
-            <p class="account-title">Signed out</p>
-            <h3>Need an account to rip</h3>
-            <p>Browse the site freely. Packs, hourly coins, sales, and the binder wait until you sign in.</p>
-          </div>
+    )
+    .join("");
+  return `
+    <div class="acct-hero signed-out">
+      <div class="acct-banner banner-wash" data-motion="aurora" style="--b1:#f0c14b;--b2:#9b6dff"></div>
+      <div class="acct-hero-body">
+        <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
+        <div class="acct-copy">
+          <p class="account-title">Signed out</p>
+          <h2>Make a trainer</h2>
+          <p class="acct-meta">Coins, cards, badges, and the binder live on your account &mdash; not this browser.</p>
         </div>
-        <div class="account-hero-actions">
+        <div class="acct-hero-actions">
           <button class="solid" type="button" data-open-auth="signup">Create account</button>
           <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
         </div>
-      </div>`;
-
-  const profile = trainer
-    ? `<div class="panel">
-        <h3>Profile</h3>
-        <form id="profile-form">
-          <label class="field"><span>Trainer name</span><input name="name" maxlength="24" value="${esc(trainer.name)}" required /></label>
-          <label class="field"><span>Handle</span><input name="handle" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" /></label>
-          <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
-          <p class="form-error" id="profile-error"></p>
-          <button class="solid" type="submit">Save profile</button>
-        </form>
-      </div>`
-    : "";
-
-  const look = trainer ? lookPanel(trainer) : "";
-
-  const password = trainer
-    ? `<div class="panel">
-        <h3>Password</h3>
-        <p class="panel-note">Change the password for this account. You'll need the current one.</p>
-        <form id="password-form">
-          <label class="field"><span>Current password</span><input name="current" type="password" maxlength="64" required autocomplete="current-password" /></label>
-          <label class="field"><span>New password</span><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" /></label>
-          <p class="form-error" id="password-error"></p>
-          <button class="ghost" type="submit">Update password</button>
-        </form>
-      </div>`
-    : "";
-
-  const danger = trainer
-    ? `<div class="panel danger">
-        <h3>Delete account</h3>
-        <p class="panel-note">Removes @${esc(trainer.handle)} and every card on this account. Export a save first if you might want it back.</p>
-        <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
-      </div>`
-    : "";
-
-  els.accountBody.innerHTML = `
-    <div class="section-head">
-      <div>
-        <h2>Account</h2>
-        <p>${
-          trainer
-            ? "Career stats, set completion, and this cloud profile."
-            : "Create an account to rip packs. Cards are stored in the cloud, not this browser."
-        }</p>
       </div>
     </div>
-    ${hero}
-    ${
-      trainer
-        ? `<div class="panel-grid two">
-      <div class="panel">
-        <h3>Achievements · ${unlocked}/${list.length}</h3>
-        <div class="badge-row">${list
-          .map(
-            (a) => `<div class="ach-chip ${a.ok ? "on" : "off"}"><b>${esc(a.name)}</b><span>${esc(a.note)}</span></div>`
-          )
-          .join("")}</div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3>${ACHIEVEMENTS.length} achievements waiting</h3>
+        <p class="panel-note">Every one pays coins, and thirteen hand over a title nobody can earn any other way.</p>
       </div>
-      <div class="panel">
-        <h3>Set completion</h3>
-        <div class="set-progress">${sets
-          .map(
-            (row) => `<div class="set-progress-row">
-              <div class="progress-head"><span>${esc(row.set.name)}</span><b>${row.owned}/${row.total}</b></div>
-              <div class="dex-bar"><span style="width:${row.pct}%"></span></div>
-            </div>`
-          )
-          .join("")}</div>
-      </div>
-      <div class="panel">
-        <h3>Recent pulls</h3>
-        ${
-          history.length
-            ? `<ul class="activity-list">${history
-                .slice(0, 8)
-                .map(
-                  (entry) => `<li>
-                    <b>${esc(entry.name)}</b>
-                    <time>${esc(formatWhen(entry.at))}</time>
-                    <span>${entry.reverse ? "Reverse holo" : esc(entry.rarity || "")}${entry.wasNew ? " · new" : ""}</span>
-                  </li>`
-                )
-                .join("")}</ul>`
-            : `<p class="panel-empty">Rip a pack and the hits will land here.</p>`
-        }
-      </div>
-      ${saveTools()}
-      ${profile}
-      ${look}
-      ${password}
-    </div>
-    ${danger}`
-        : ""
-    }`;
+      <div class="ach-grid preview">${preview}</div>
+    </div>`;
 }
+
+function accountHero(trainer, stats) {
+  const banner = bannerVars(trainer.banner);
+  const joined = trainer.createdAt ? `joined ${formatWhen(trainer.createdAt)}` : "";
+  return `<div class="acct-hero">
+    <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
+    <div class="acct-hero-body">
+      ${avatarMark(trainer, "trainer-mark acct-face")}
+      <div class="acct-copy">
+        <p class="account-title">${esc(trainer.title || "Rookie")}</p>
+        <h2>${esc(trainer.name)}</h2>
+        <p class="acct-meta">
+          <span class="account-handle">@${esc(trainer.handle)}</span>
+          <span class="acct-code">${esc(trainerCode(trainer.id))}</span>
+          ${joined ? `<span>${esc(joined)}</span>` : ""}
+        </p>
+        ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
+      </div>
+      <div class="acct-hero-actions">
+        <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
+        <button class="ghost" type="button" id="copy-profile-link">Copy link</button>
+        <button class="ghost" type="button" id="sign-out">Sign out</button>
+      </div>
+    </div>
+    ${careerTiles()}
+    <div class="acct-progress">
+      <div class="acct-progress-copy">
+        <b>${stats.claimed.size} / ${stats.total} achievements claimed</b>
+        <span>${
+          stats.ready.length
+            ? `${stats.ready.length} ready to cash in`
+            : stats.done < stats.total
+              ? `${stats.total - stats.done} still locked`
+              : "every badge on the wall"
+        }</span>
+      </div>
+      <div class="dex-bar slim"><span style="width:${stats.pct}%"></span></div>
+      ${
+        stats.ready.length
+          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim &#10022; ${num(stats.waiting)}</button>`
+          : ""
+      }
+    </div>
+  </div>`;
+}
+
+/* ---- Overview ----------------------------------------------------------- */
+
+function setRings() {
+  return `<div class="set-rings">${setCompletionRows()
+    .map((row) => {
+      const { symbol } = setIdentity(row.set);
+      return `<button type="button" class="set-ring${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
+        title="Open ${esc(row.set.name)} bulk">
+        <span class="home-ring" style="--pct:${row.pct}"><span><b>${row.pct}%</b><small>set</small></span></span>
+        <span class="set-ring-copy">
+          <img src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
+          <b>${esc(row.set.name)}</b>
+          <small>${num(row.owned)} / ${num(row.total)} cards</small>
+        </span>
+      </button>`;
+    })
+    .join("")}</div>`;
+}
+
+function overviewTab(trainer, stats) {
+  const history = state.history || [];
+  const recent = historyCards(history, 6);
+  const nextUp = ACHIEVEMENTS.filter((row) => !stats.claimed.has(row.id) && !isAchievementDone(row, stats.ctx))
+    .map((row) => ({ row, p: achievementProgress(row, stats.ctx) }))
+    .sort((a, b) => b.p.pct - a.p.pct)
+    .slice(0, 3);
+
+  return `<div class="acct-grid">
+    <div class="panel span-2">
+      <div class="panel-head">
+        <h3>Net worth</h3>
+        <p class="panel-note">Coins plus every card at today's market, sampled on each rip and sale.</p>
+      </div>
+      <div class="acct-chart" id="acct-worth-chart"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Pull history</h3>
+        <button class="ghost sm" type="button" id="open-history">Open</button>
+      </div>
+      ${miniCardRow(recent, "Rip a pack and the last cards land here.", "tight")}
+      <p class="panel-note tail">${
+        history.length
+          ? `Last ${history.length} card${history.length === 1 ? "" : "s"} off the top of a pack.`
+          : "Nothing pulled yet."
+      }</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Closest badges</h3>
+        <button class="ghost sm" type="button" data-acct-tab="achievements">All ${stats.total}</button>
+      </div>
+      ${
+        nextUp.length
+          ? `<div class="next-list">${nextUp
+              .map(
+                ({ row, p }) => `<div class="next-row">
+                  <div class="next-head"><b>${esc(row.name)}</b><span>${num(p.at)} / ${num(p.goal)}</span></div>
+                  <div class="ach-bar"><span style="width:${p.pct}%"></span></div>
+                  <small>${esc(row.note)} &middot; &#10022; ${num(row.coins)}${row.title ? ` &middot; title ${esc(row.title)}` : ""}</small>
+                </div>`
+              )
+              .join("")}</div>`
+          : `<p class="panel-empty">Every achievement is done. Ridiculous.</p>`
+      }
+    </div>
+    <div class="panel span-full">
+      <div class="panel-head">
+        <h3>Set completion</h3>
+        <p class="panel-note">Click a set to open its bulk.</p>
+      </div>
+      ${setRings()}
+    </div>
+  </div>`;
+}
+
+/* ---- Achievements ------------------------------------------------------- */
+
+const ACH_FILTERS = [
+  { id: "all", name: "All" },
+  { id: "ready", name: "Ready" },
+  { id: "claimed", name: "Claimed" },
+  { id: "locked", name: "Locked" },
+  ...ACH_CATEGORIES.map((cat) => ({ id: cat.id, name: cat.name })),
+];
+
+function achTile(row, ctx, claimed) {
+  const p = achievementProgress(row, ctx);
+  const isClaimed = claimed.has(row.id);
+  const ready = !isClaimed && p.done;
+  const cls = isClaimed ? "is-claimed" : ready ? "is-ready" : "is-locked";
+  const action = isClaimed
+    ? `<span class="ach-done">Claimed</span>`
+    : ready
+      ? `<button class="solid sm" type="button" data-claim="${esc(row.id)}">Claim</button>`
+      : `<span class="ach-progress">${num(p.at)} / ${num(p.goal)}</span>`;
+  return `<article class="ach-tile t${row.tier} ${cls}">
+    <div class="ach-badge" style="--pct:${p.pct}"><span>${esc(row.mark)}</span></div>
+    <div class="ach-tile-copy">
+      <b>${esc(row.name)}</b>
+      <p>${esc(row.note)}</p>
+      ${p.done ? "" : `<div class="ach-bar"><span style="width:${p.pct}%"></span></div>`}
+    </div>
+    <div class="ach-reward">
+      <span class="ach-coin">&#10022; ${num(row.coins)}</span>
+      ${row.title ? `<span class="ach-title-tag">Title &middot; ${esc(row.title)}</span>` : ""}
+      ${action}
+    </div>
+  </article>`;
+}
+
+function titlesFromClaims(claimed) {
+  return ACHIEVEMENTS.filter((row) => row.title && claimed.has(row.id)).length;
+}
+
+function achievementsTab(stats) {
+  const { ctx, claimed } = stats;
+  const rows = ACHIEVEMENTS.filter((row) => {
+    if (achFilter === "all") return true;
+    if (achFilter === "claimed") return claimed.has(row.id);
+    if (achFilter === "ready") return !claimed.has(row.id) && isAchievementDone(row, ctx);
+    if (achFilter === "locked") return !claimed.has(row.id) && !isAchievementDone(row, ctx);
+    return row.cat === achFilter;
+  });
+
+  return `<div class="ach-wall">
+    <div class="ach-head">
+      <div class="ach-summary">
+        <div><b>${stats.claimed.size} / ${stats.total}</b><span>Claimed</span></div>
+        <div><b>&#10022; ${num(stats.banked)}</b><span>Banked so far</span></div>
+        <div class="${stats.waiting ? "hot" : ""}"><b>&#10022; ${num(stats.waiting)}</b><span>Waiting for you</span></div>
+        <div><b>${titlesFromClaims(claimed)}</b><span>Titles won</span></div>
+      </div>
+      <button class="solid" type="button" id="claim-all" ${stats.ready.length ? "" : "disabled"}>
+        ${stats.ready.length ? `Claim all &middot; &#10022; ${num(stats.waiting)}` : "Nothing to claim"}
+      </button>
+    </div>
+    <div class="ach-filters" role="group" aria-label="Filter achievements">
+      ${ACH_FILTERS.map(
+        (f) => `<button type="button" class="pick-chip${f.id === achFilter ? " on" : ""}" data-ach-filter="${esc(f.id)}">${esc(f.name)}</button>`
+      ).join("")}
+    </div>
+    ${
+      rows.length
+        ? `<div class="ach-grid">${rows.map((row) => achTile(row, ctx, claimed)).join("")}</div>`
+        : `<p class="panel-empty">Nothing in that filter yet.</p>`
+    }
+  </div>`;
+}
+
+/* ---- Pull history sheet ------------------------------------------------- */
+
+const HISTORY_FILTERS = [
+  { id: "all", name: "Everything" },
+  { id: "new", name: "First copies" },
+  { id: "hits", name: "Hits" },
+  { id: "reverse", name: "Reverse holos" },
+];
+
+function historySheet() {
+  const all = state.history || [];
+  const rows = all.filter((entry) => {
+    if (historyFilter === "new") return entry.wasNew;
+    if (historyFilter === "reverse") return entry.reverse;
+    if (historyFilter === "hits") return HIT_RARITIES.has(entry.rarity);
+    return true;
+  });
+  const worth = rows.reduce((n, entry) => {
+    const card = findCard(entry.id);
+    return n + (card ? sellValue(card) : 0);
+  }, 0);
+
+  const list = rows.length
+    ? `<div class="pull-list">${rows
+        .map((entry) => {
+          const card = findCard(entry.id);
+          const face = card
+            ? `<button type="button" class="mini-card" ${inspectAttrs(entry.reverse ? { ...card, reverse: true } : card)}
+                aria-label="${esc(entry.name)}">${tcgFace(entry.reverse ? { ...card, reverse: true } : card, { small: true, stamp: false, lazy: true })}</button>`
+            : `<span class="mini-card ghost-card" aria-hidden="true"></span>`;
+          const set = setForCardId(entry.id);
+          return `<div class="pull-row">
+            ${face}
+            <div class="pull-copy">
+              <b>${esc(entry.name)}</b>
+              <span>${esc(RARITY_LABEL[entry.rarity] || entry.rarity || "Card")}${set ? ` &middot; ${esc(set.name)}` : ""}</span>
+            </div>
+            <div class="pull-tags">
+              ${entry.wasNew ? `<span class="tag new">New</span>` : ""}
+              ${entry.reverse ? `<span class="tag rev">Reverse</span>` : ""}
+            </div>
+            <div class="pull-value">${card ? `&#10022; ${coin(sellValue(card))}` : "&mdash;"}</div>
+            <time>${esc(formatWhen(entry.at))}</time>
+          </div>`;
+        })
+        .join("")}</div>`
+    : `<p class="panel-empty">Nothing matches that filter.</p>`;
+
+  return `<div class="sheet-backdrop" data-history-close></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Pull history">
+      <div class="sheet-head">
+        <div>
+          <h3>Pull history</h3>
+          <p>The last ${num(all.length)} cards off the top of a pack, newest first.</p>
+        </div>
+        <button class="ghost" type="button" data-history-close>Close</button>
+      </div>
+      <div class="sheet-filters">
+        ${HISTORY_FILTERS.map(
+          (f) => `<button type="button" class="pick-chip${f.id === historyFilter ? " on" : ""}" data-history-filter="${esc(f.id)}">${esc(f.name)}</button>`
+        ).join("")}
+        <span class="sheet-total">${num(rows.length)} shown &middot; &#10022; ${coin(worth)}</span>
+      </div>
+      <div class="sheet-body">${list}</div>
+    </div>`;
+}
+
+/* ---- Profile ------------------------------------------------------------ */
 
 function statLabel(key) {
   return { packs: "Packs ripped", pulls: "Cards pulled", unique: "Unique cards", coins: "Coins" }[key] || key;
 }
 
-function lookPanel(trainer) {
+function profileTab(trainer) {
   const shown = new Set(trainer.shownStats || DEFAULT_STATS);
+  const showcase = trainer.showcase || [];
+  const pinned = showcase
+    .map((slot) => {
+      const card = findCard(slot.id);
+      if (!card) return "";
+      const face = tcgFace(slot.reverse ? { ...card, reverse: true } : card, { small: true, stamp: false, lazy: true });
+      return `<div class="pin-slot">
+        <button type="button" class="mini-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}">${face}</button>
+        <button type="button" class="pin-drop" data-unpin="${esc(card.id)}">Unpin</button>
+      </div>`;
+    })
+    .join("");
+
+  return `<div class="acct-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Identity</h3>
+        <p class="panel-note">Your name and handle show anywhere you appear &mdash; chat, walls, the friends dock.</p>
+      </div>
+      <form id="profile-form">
+        <label class="field"><span>Trainer name</span><input name="name" maxlength="24" value="${esc(trainer.name)}" required /></label>
+        <label class="field"><span>Handle</span><input name="handle" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" />
+          <span class="hint">Your profile lives at /u/${esc(trainer.handle)}.</span>
+        </label>
+        <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
+        <p class="form-error" id="profile-error"></p>
+        <button class="solid" type="submit">Save profile</button>
+      </form>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3>What the public sees</h3>
+        <p class="panel-note">Tick the numbers you are happy for anyone to read on your profile.</p>
+      </div>
+      <div class="stat-toggles">${STAT_KEYS.map(
+        (key) => `<label><input type="checkbox" data-stat-toggle="${key}" ${shown.has(key) ? "checked" : ""} /> ${esc(statLabel(key))}</label>`
+      ).join("")}</div>
+      <div class="share-row">
+        <code>poke-pack.rip/u/${esc(trainer.handle)}</code>
+        <button class="ghost sm" type="button" id="copy-profile-link-2">Copy</button>
+      </div>
+      <a class="ghost wide" href="/u/${esc(trainer.handle)}">Open my public profile</a>
+    </div>
+    <div class="panel span-full">
+      <div class="panel-head">
+        <h3>Showcase &middot; ${showcase.length}/${SHOWCASE_MAX}</h3>
+        <p class="panel-note">Six pinned cards sit at the top of your public profile. Pin one from any card's inspect view.</p>
+      </div>
+      ${
+        pinned
+          ? `<div class="pin-row">${pinned}</div>`
+          : `<p class="panel-empty">Nothing pinned. Open a card, then use Pin to showcase.</p>`
+      }
+    </div>
+  </div>`;
+}
+
+/* ---- Look --------------------------------------------------------------- */
+
+function lookTab(trainer, stats) {
   const avatars = searchAvatars(avatarQuery);
   const banner = parseBanner(trainer.banner);
   const style = avatarStyle(trainer.avatarStyle);
-  const titles = unlockedTitles(titleContext(state, { signed: true, findCard, rarities: ownedRarities() }));
+  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities() });
+  const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
 
-  return `<div class="panel">
-        <h3>Look</h3>
-        <p class="panel-note">Pick a Pokémon still, a ring color, and a moving banner. Custom pictures and GIFs stay exclusive for premium later.</p>
-        <div class="field"><span>Avatar color</span>${colorPicks(trainer.color, "data-profile-color")}</div>
-        <div class="field"><span>Picture</span>
-          <div class="style-picks">
-            <button type="button" class="pick-chip${style === "art" ? " on" : ""}" data-set-style="art">High quality</button>
-            <button type="button" class="pick-chip${style === "pixel" ? " on" : ""}" data-set-style="pixel">Pixel</button>
-          </div>
+  const titleChips = TITLES.map((row) => {
+    const open = unlocked.has(row.name);
+    const on = trainer.title === row.name;
+    return `<button type="button" class="title-chip${on ? " on" : ""}${open ? "" : " locked"}"
+      ${open ? `data-set-title="${esc(row.name)}"` : "disabled"} title="${esc(row.note)}">
+      <b>${esc(row.name)}</b><small>${esc(row.note)}</small>
+      ${row.award ? `<i class="title-award">reward</i>` : ""}
+    </button>`;
+  }).join("");
+
+  return `<div class="look-layout">
+    <aside class="look-preview">
+      <p class="look-cap">Live preview</p>
+      <div class="look-card">
+        <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(bannerVars(trainer.banner).style)}"></div>
+        <div class="look-id">
+          ${avatarMark(trainer, "trainer-mark look-face")}
+          <p class="account-title">${esc(trainer.title || "Rookie")}</p>
+          <b>${esc(trainer.name)}</b>
+          <small>@${esc(trainer.handle)}</small>
         </div>
-        <label class="field"><span>Search a Pokémon</span>
+      </div>
+      <div class="look-actions">
+        <button class="ghost sm" type="button" id="look-random">Surprise me</button>
+        <button class="ghost sm" type="button" id="look-swap">Swap colours</button>
+      </div>
+      <p class="panel-note">${
+        titlesFromClaims(stats.claimed)
+          ? `${titlesFromClaims(stats.claimed)} of your titles came from achievements.`
+          : "Claim achievements to unlock titles nobody can earn any other way."
+      }</p>
+    </aside>
+    <div class="look-controls">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Picture</h3>
+          <p class="panel-note">A Pokemon still, in full art or as a pixel sprite. Custom pictures and GIFs stay premium for later.</p>
+        </div>
+        <div class="style-picks">
+          <button type="button" class="pick-chip${style === "art" ? " on" : ""}" data-set-style="art">High quality</button>
+          <button type="button" class="pick-chip${style === "pixel" ? " on" : ""}" data-set-style="pixel">Pixel</button>
+        </div>
+        <label class="field"><span>Search a Pokemon</span>
           <input id="avatar-search" value="${esc(avatarQuery)}" placeholder="Pikachu, 25, Darkrai" />
         </label>
         <div class="avatar-grid">${avatars
@@ -2077,26 +2379,54 @@ function lookPanel(trainer) {
           </button>`
           )
           .join("")}</div>
-        <h3>Banner</h3>
-        <p class="panel-note">No photos — pick a motion and two colors.</p>
+        <div class="field"><span>Ring colour</span>${colorPicks(trainer.color, "data-profile-color")}</div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Banner</h3>
+          <p class="panel-note">No photos &mdash; a motion and two colours, mixed live behind your profile.</p>
+        </div>
         <div class="style-picks">${BANNER_MOTIONS.map(
           (row) => `<button type="button" class="pick-chip${banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}">${esc(row.name)}</button>`
         ).join("")}</div>
-        <div class="banner-preview banner-wash" data-motion="${esc(banner.motion)}" style="${esc(bannerVars(trainer.banner).style)}"></div>
-        <div class="field"><span>Color A</span>${colorPicks(banner.colors[0], "data-banner-a")}</div>
-        <div class="field"><span>Color B</span>${colorPicks(banner.colors[1], "data-banner-b")}</div>
-        <h3>Title</h3>
-        <p class="panel-note">Unlock more by ripping, collecting, and pulling rares.</p>
-        <div class="title-picks">${titles
-          .map(
-            (row) => `<button type="button" class="pick-chip${trainer.title === row.name ? " on" : ""}" data-set-title="${esc(row.name)}" title="${esc(row.note)}">${esc(row.name)}</button>`
-          )
-          .join("")}</div>
-        <h3>Show on profile</h3>
-        <div class="stat-toggles">${STAT_KEYS.map(
-          (key) => `<label><input type="checkbox" data-stat-toggle="${key}" ${shown.has(key) ? "checked" : ""} /> ${esc(statLabel(key))}</label>`
-        ).join("")}</div>
-      </div>`;
+        <div class="field"><span>Colour A</span>${colorPicks(banner.colors[0], "data-banner-a")}</div>
+        <div class="field"><span>Colour B</span>${colorPicks(banner.colors[1], "data-banner-b")}</div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Title &middot; ${unlocked.size}/${TITLES.length}</h3>
+          <p class="panel-note">Sits above your name everywhere. Greyed-out ones are still locked.</p>
+        </div>
+        <div class="title-wall">${titleChips}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---- Security ----------------------------------------------------------- */
+
+function securityTab(trainer) {
+  return `<div class="acct-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Password</h3>
+        <p class="panel-note">Change the password for this account. You'll need the current one.</p>
+      </div>
+      <form id="password-form">
+        <label class="field"><span>Current password</span><input name="current" type="password" maxlength="64" required autocomplete="current-password" /></label>
+        <label class="field"><span>New password</span><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" /></label>
+        <p class="form-error" id="password-error"></p>
+        <button class="ghost" type="submit">Update password</button>
+      </form>
+    </div>
+    <div class="panel danger">
+      <div class="panel-head">
+        <h3>Delete account</h3>
+        <p class="panel-note">Removes @${esc(trainer.handle)}, every card, every badge, and the binder. There is no undo.</p>
+      </div>
+      <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
+    </div>
+  </div>`;
 }
 
 async function renderProfile() {
@@ -3862,6 +4192,12 @@ window.addEventListener("popstate", () => {
   routeFromLocation();
 });
 
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape" || !historyOpen) return;
+  historyOpen = false;
+  renderAccount();
+});
+
 els.viewHome.addEventListener("click", (e) => {
   const play = e.target.closest("[data-play-set]");
   if (play) {
@@ -3943,6 +4279,51 @@ els.accountBody.addEventListener("click", async (e) => {
   const open = e.target.closest("[data-open-auth]");
   if (open) {
     openAuth(open.dataset.openAuth);
+    return;
+  }
+  const tab = e.target.closest("[data-acct-tab]");
+  if (tab) {
+    accountTab = tab.dataset.acctTab;
+    renderAccount();
+    els.accountBody.querySelector(".acct-tabs")?.scrollIntoView({ block: "nearest" });
+    return;
+  }
+  const filter = e.target.closest("[data-ach-filter]");
+  if (filter) {
+    achFilter = filter.dataset.achFilter;
+    renderAccount();
+    return;
+  }
+  const claim = e.target.closest("[data-claim]");
+  if (claim) {
+    const row = achievementById(claim.dataset.claim);
+    await claimAchievements({ id: claim.dataset.claim }, row?.name || "Claimed");
+    return;
+  }
+  if (e.target.closest("#claim-all")) {
+    await claimAchievements({ all: true }, "Cleared the wall");
+    return;
+  }
+  if (e.target.closest("#open-history")) {
+    historyOpen = true;
+    renderAccount();
+    return;
+  }
+  if (e.target.closest("[data-history-close]")) {
+    historyOpen = false;
+    renderAccount();
+    return;
+  }
+  const hFilter = e.target.closest("[data-history-filter]");
+  if (hFilter) {
+    historyFilter = hFilter.dataset.historyFilter;
+    renderAccount();
+    return;
+  }
+  const jump = e.target.closest("[data-jump-set]");
+  if (jump) {
+    await activateSet(jump.dataset.jumpSet);
+    setView("collection");
     return;
   }
   if (e.target.closest("#sign-out")) {
@@ -4061,17 +4442,105 @@ els.accountBody.addEventListener("click", async (e) => {
     }
     return;
   }
-  if (!e.target.closest("#export-save")) return;
-  const trainer = activeTrainer();
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `poke-pack-rip-${trainer?.handle || "trainer"}-save.json`;
-  link.click();
-  URL.revokeObjectURL(url);
-  toast("Save downloaded.");
+  const unpin = e.target.closest("[data-unpin]");
+  if (unpin) {
+    await toggleShowcase(unpin.dataset.unpin);
+    return;
+  }
+  if (e.target.closest("#look-random")) {
+    await surpriseLook();
+    return;
+  }
+  if (e.target.closest("#look-swap")) {
+    const trainer = activeTrainer();
+    if (!trainer) return;
+    const banner = parseBanner(trainer.banner);
+    try {
+      await patchLook({ banner: `${banner.motion}:${banner.colors[1]}+${banner.colors[0]}` });
+    } catch (err) {
+      toast(err.message || "Couldn't swap the banner.");
+    }
+    return;
+  }
+  if (e.target.closest("#copy-profile-link") || e.target.closest("#copy-profile-link-2")) {
+    const trainer = activeTrainer();
+    if (!trainer) return;
+    copyText(`${location.origin}/u/${trainer.handle}`, "Profile link copied.");
+  }
 });
+
+/** Clipboard with a toast either way — it fails on http:// and old Safari. */
+function copyText(text, done) {
+  navigator.clipboard
+    ?.writeText(text)
+    .then(() => toast(done))
+    .catch(() => toast(text));
+}
+
+/** One roll of the dice across picture, ring, and banner. */
+async function surpriseLook() {
+  const trainer = activeTrainer();
+  if (!trainer) return;
+  const pick = (list) => list[Math.floor(Math.random() * list.length)];
+  const [a, b] = [pick(AVATAR_COLORS).id, pick(AVATAR_COLORS).id];
+  try {
+    await patchLook({
+      avatar: String(pick(AVATARS)[0]),
+      color: pick(AVATAR_COLORS).id,
+      banner: `${pick(BANNER_MOTIONS).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
+    });
+    toast("New look rolled.");
+  } catch (err) {
+    toast(err.message || "Couldn't roll a new look.");
+  }
+}
+
+/**
+ * Cash in one achievement, or every ready one. The reward comes back from the
+ * worker rather than the table here, so the coins shown are the coins paid.
+ */
+async function claimAchievements(body, label) {
+  if (!activeTrainer()) {
+    openAuth("signin");
+    return;
+  }
+  try {
+    const data = await api("/api/achievements/claim", { method: "POST", body: JSON.stringify(body) });
+    afterEconomy(data.save);
+    renderHeader();
+    renderAccount();
+    rewardFlash(data.rewards || [], data.coins || 0);
+    const titles = data.titles || [];
+    toast(
+      titles.length
+        ? `${label} · +✦ ${num(data.coins)} · title unlocked: ${titles.join(", ")}`
+        : `${label} · +✦ ${num(data.coins)}`
+    );
+  } catch (err) {
+    toast(err.message || "Couldn't claim that.");
+    renderAccount();
+  }
+}
+
+/** The little gold card that flies in when a reward lands. */
+function rewardFlash(rewards, coins) {
+  if (!rewards.length) return;
+  document.querySelector(".reward-flash")?.remove();
+  const titles = rewards.filter((row) => row.title);
+  const el = document.createElement("div");
+  el.className = "reward-flash";
+  el.setAttribute("role", "status");
+  el.innerHTML = `
+    <b>+✦ ${num(coins)}</b>
+    <span>${rewards.length === 1 ? esc(rewards[0].name) : `${rewards.length} achievements claimed`}</span>
+    ${titles.length ? `<i>Title unlocked · ${titles.map((row) => esc(row.title)).join(", ")}</i>` : ""}`;
+  document.body.appendChild(el);
+  requestAnimationFrame(() => el.classList.add("show"));
+  window.setTimeout(() => {
+    el.classList.remove("show");
+    window.setTimeout(() => el.remove(), 400);
+  }, 2800);
+}
 
 els.accountBody.addEventListener("input", (e) => {
   if (e.target.id !== "avatar-search") return;
@@ -4134,6 +4603,7 @@ async function toggleShowcase(id) {
     cloudUser = data.user;
     if (inspectCard) paintInspect(inspectCard);
     if (view === "profile") renderProfile();
+    if (view === "account") renderAccount();
     toast(at >= 0 ? "Removed from showcase." : "Pinned to showcase.");
   } catch (err) {
     toast(err.message || "Couldn't update showcase.");

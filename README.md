@@ -25,6 +25,8 @@ js/app.js             views, rendering, the tear interaction, reveal flow
 js/catalog.js         set definitions, rarity tables, sell values, roadmap
 js/engine.js          pack generation — slot tables and pull odds
 js/state.js           localStorage save, coins, daily bonus, collection
+js/achievements.js    achievement table, progress, and claim rewards
+js/titles.js          titles, including the ones an achievement hands over
 data/<set>.json       card data per set
 assets/packs/<set>/   booster wrapper art (avif with png fallback)
 scripts/              python builders that generate data/ and crop wrapper art
@@ -82,9 +84,16 @@ never contain a duplicate — a deliberate softening of real pack behaviour.
 `data/<set>.json` when one is present, converting at `COINS_PER_USD`. Cards
 without a market price fall back to the flat rarity table.
 
+## Achievements
+
+`js/achievements.js` holds the table: each row has a `goal`, an `at(ctx)` that
+reads progress out of a save, a coin reward, and sometimes a `title`. The worker
+imports the same file, so `POST /api/achievements/claim` recomputes progress
+server-side and pays out from the table — the client only names which row to
+check. Claimed ids live in `profiles.claimed`, and the award titles at the
+bottom of `js/titles.js` unlock by reading that list.
+
 ## Known gaps
 
-- Progress is localStorage only; export/import from the Account panel is the
-  only way to move a save between browsers.
 - Card art is hotlinked from third-party image CDNs.
 - The app is a single route — no deep links to a set or the binder.

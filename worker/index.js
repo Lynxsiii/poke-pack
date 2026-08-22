@@ -7,6 +7,12 @@ import { HIT_RARITIES, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
+import {
+  achievementById,
+  achievementContext,
+  isAchievementDone,
+  readyToClaim,
+} from "../js/achievements.js";
 
 const SESSION_DAYS = 30;
 const SESSION_MS = SESSION_DAYS * 24 * 60 * 60 * 1000;
@@ -67,10 +73,12 @@ async function handleApi(request, env, url) {
     return deleteAccount(request, env);
   }
   if (path === "/api/me" && method === "GET") {
+    await ensureAchievementSchema(env);
     return me(request, env);
   }
   if (path === "/api/me" && method === "PATCH") {
     await ensureSocialSchema(env);
+    await ensureAchievementSchema(env);
     return patchMe(request, env);
   }
   if (path === "/api/me/reset" && method === "POST") {
@@ -81,6 +89,10 @@ async function handleApi(request, env, url) {
   }
   if (path === "/api/daily" && method === "POST") {
     return daily(request, env);
+  }
+  if (path === "/api/achievements/claim" && method === "POST") {
+    await ensureAchievementSchema(env);
+    return claimAchievement(request, env);
   }
   if (path === "/api/cards/sell" && method === "POST") {
     return sell(request, env);
@@ -261,12 +273,7 @@ async function patchMe(request, env) {
   if (body.title != null) {
     const nextTitle = String(body.title || "").slice(0, 32);
     const save = await loadSave(env, user.id);
-    const rarities = {};
-    for (const [id, n] of Object.entries(save.collection || {})) {
-      if (!n) continue;
-      const card = await findCatalogCard(env, request, id);
-      if (card?.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
-    }
+    const rarities = await rarityCountsFor(env, request, save.collection);
     const ctx = titleContext(save, { signed: true, rarities });
     if (!isTitleUnlocked(nextTitle, ctx)) return json({ error: "That title is locked." }, 400);
     title = nextTitle;
@@ -327,6 +334,7 @@ async function patchMe(request, env) {
 async function resetMe(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
+  await ensureAchievementSchema(env);
   const now = Date.now();
   const profile = await env.DB.prepare("SELECT active_set_id FROM profiles WHERE user_id = ?")
     .bind(auth.user.id)
@@ -337,12 +345,13 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare(
       `UPDATE profiles SET coins = ?, last_daily = NULL, packs_opened = 0, pulls = 0,
-        packs_since_hit = 0, pack_trick = 0, granted = ?, binder = ?, worth_log = ?, created_at = ?
+        packs_since_hit = 0, pack_trick = 0, granted = ?, binder = ?, worth_log = ?, claimed = ?, created_at = ?
        WHERE user_id = ?`
     ).bind(
       STARTING_COINS,
       STARTING_COINS,
       JSON.stringify(emptyBinder()),
+      JSON.stringify([]),
       JSON.stringify([]),
       now,
       auth.user.id
@@ -469,6 +478,58 @@ async function daily(request, env) {
   return json({ save, amount: DAILY_BONUS });
 }
 
+/**
+ * Cash in a finished achievement. The reward is read from the shared table and
+ * the progress is recomputed here from the stored save, so a forged request
+ * gets nothing — the body only names which achievement to check.
+ *
+ * `all: true` sweeps every ready one in a single round trip, which is what the
+ * "Claim all" button sends.
+ */
+async function claimAchievement(request, env) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const body = await readJson(request);
+  const save = await loadSave(env, auth.user.id);
+  const claimed = new Set(save.claimed);
+  const rarities = await rarityCountsFor(env, request, save.collection);
+  const ctx = achievementContext(save, { signed: true, rarities });
+
+  let ids;
+  if (body?.all) {
+    ids = readyToClaim(ctx, claimed);
+    if (!ids.length) return json({ error: "Nothing ready to claim." }, 400);
+  } else {
+    const row = achievementById(body?.id);
+    if (!row) return json({ error: "Unknown achievement." }, 400);
+    if (claimed.has(row.id)) return json({ error: "Already claimed." }, 400);
+    if (!isAchievementDone(row, ctx)) return json({ error: "Not unlocked yet." }, 400);
+    ids = [row.id];
+  }
+
+  const rewards = ids.map((id) => achievementById(id)).filter(Boolean);
+  const coins = money(rewards.reduce((n, row) => n + (row.coins || 0), 0));
+  const titles = rewards.map((row) => row.title).filter(Boolean);
+  for (const id of ids) claimed.add(id);
+
+  await env.DB.batch([
+    env.DB.prepare(
+      `UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ?, claimed = ?
+       WHERE user_id = ?`
+    ).bind(coins, MAX_COINS, coins, JSON.stringify([...claimed]), auth.user.id),
+    env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(Date.now(), auth.user.id),
+  ]);
+
+  const next = await loadSave(env, auth.user.id);
+  return json({
+    save: next,
+    coins,
+    titles,
+    claimed: ids,
+    rewards: rewards.map((row) => ({ id: row.id, name: row.name, coins: row.coins, title: row.title || null })),
+  });
+}
+
 async function sell(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
@@ -571,6 +632,50 @@ async function createSession(env, userId, now) {
   return token;
 }
 
+let claimedColumnReady = false;
+
+/**
+ * `profiles.claimed` arrived after the first deploy, so add it on demand the
+ * way ensureSocialSchema does for the users table.
+ */
+async function ensureAchievementSchema(env) {
+  if (claimedColumnReady) return;
+  try {
+    const info = await env.DB.prepare("PRAGMA table_info(profiles)").all();
+    const have = new Set((info.results || []).map((row) => row.name));
+    if (!have.has("claimed")) {
+      await env.DB.exec("ALTER TABLE profiles ADD COLUMN claimed TEXT;");
+    }
+    claimedColumnReady = true;
+  } catch (err) {
+    if (String(err?.message || err).toLowerCase().includes("duplicate")) {
+      claimedColumnReady = true;
+      return;
+    }
+    console.error("ensureAchievementSchema", err);
+  }
+}
+
+/** Only ids that still exist in the table, deduped. */
+function normalizeClaimed(list) {
+  if (!Array.isArray(list)) return [];
+  const out = new Set();
+  for (const id of list) {
+    if (achievementById(id)) out.add(String(id));
+  }
+  return [...out];
+}
+
+async function rarityCountsFor(env, request, collection) {
+  const counts = {};
+  for (const [id, n] of Object.entries(collection || {})) {
+    if (!n) continue;
+    const card = await findCatalogCard(env, request, id);
+    if (card?.rarity) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+  }
+  return counts;
+}
+
 async function loadSave(env, userId) {
   const profile = await env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first();
   if (!profile) fail("Missing profile.", 500);
@@ -603,6 +708,7 @@ async function loadSave(env, userId) {
       at: row.at,
     })),
     granted: money(profile.granted),
+    claimed: normalizeClaimed(parseJson(profile.claimed, [])),
     activeSetId: profile.active_set_id || "me5",
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),

@@ -32,6 +32,37 @@ export const TITLES = [
   { id: "named", name: "Named trainer", note: "Make an account.", test: (c) => c.signed },
 ];
 
+/**
+ * Titles you cannot reach by playing alone — they arrive with an achievement
+ * reward, so the badge and the title are the same act. `ach` is the achievement
+ * id in js/achievements.js; claiming it writes that id into the save, which is
+ * what these tests read.
+ */
+export const AWARD_TITLES = [
+  { id: "box-breaker", name: "Box Breaker", ach: "box-worth" },
+  { id: "case-cracker", name: "Case Cracker", ach: "case-cracker" },
+  { id: "artisan", name: "Artisan", ach: "special-art" },
+  { id: "goldsmith", name: "Goldsmith", ach: "gold-chase" },
+  { id: "monochrome", name: "Monochrome", ach: "monochrome" },
+  { id: "chase-addict", name: "Chase Addict", ach: "hit-stack" },
+  { id: "dex-keeper", name: "Dex Keeper", ach: "unique-150" },
+  { id: "set-master", name: "Set Master", ach: "master-set" },
+  { id: "completionist", name: "Completionist", ach: "double-master" },
+  { id: "curator", name: "Curator", ach: "binder-three" },
+  { id: "high-roller", name: "High Roller", ach: "banked" },
+  { id: "vaulted", name: "Vaulted", ach: "vaulted" },
+  { id: "conveyor", name: "Conveyor", ach: "conveyor" },
+];
+
+for (const row of AWARD_TITLES) {
+  TITLES.push({
+    ...row,
+    award: true,
+    note: "Reward for an achievement.",
+    test: (c) => c.claimed.has(row.ach),
+  });
+}
+
 export function titleContext(save, { signed = true, rarities = null, findCard = null } = {}) {
   const collection = save?.collection || {};
   const reverses = save?.reverses || {};
@@ -41,6 +72,7 @@ export function titleContext(save, { signed = true, rarities = null, findCard = 
   let hits = 0;
   for (const rarity of HIT_RARITIES) hits += counts[rarity] || 0;
   return {
+    claimed: new Set(Array.isArray(save?.claimed) ? save.claimed : []),
     packs: save?.packsOpened || 0,
     pulls: save?.pulls || 0,
     coins: save?.coins || 0,
@@ -66,17 +98,20 @@ function rarityCounts(collection, findCard) {
   return counts;
 }
 
-function bestSetPct(collection) {
-  let best = 0;
-  for (const set of PLAYABLE_SETS) {
+/** Completion percentage of every playable set, in catalog order. */
+export function setPercents(collection) {
+  return PLAYABLE_SETS.map((set) => {
     const total = set.totalCount || 1;
     let owned = 0;
-    for (const [id, n] of Object.entries(collection)) {
+    for (const [id, n] of Object.entries(collection || {})) {
       if (n > 0 && id.startsWith(`${set.id}-`)) owned += 1;
     }
-    best = Math.max(best, Math.round((owned / total) * 100));
-  }
-  return best;
+    return Math.round((owned / total) * 100);
+  });
+}
+
+function bestSetPct(collection) {
+  return setPercents(collection).reduce((best, pct) => Math.max(best, pct), 0);
 }
 
 export function unlockedTitles(ctx) {
