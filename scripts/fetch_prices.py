@@ -37,17 +37,16 @@ HISTORY_LIMIT = 400
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) poke-pack.rip price refresh"
 
-# set id -> (pkmn.gg slug, pittpokeresearch slug)
-SETS = {
-    "me5": ("pitch-black", "Pitch-Black"),
-    "me4": ("chaos-rising", "Chaos-Rising"),
-    "me3": ("perfect-order", "Perfect-Order"),
-    "me2pt5": ("ascended-heroes", "Ascended-Heroes"),
-    "me2": ("phantasmal-flames", "Phantasmal-Flames"),
-    "me1": ("mega-evolution", "Mega-Evolution"),
-}
+def load_set_cfgs() -> dict[str, dict]:
+    """data/sets/<id>.json is the source of truth for series/slug/pitt."""
+    out: dict[str, dict] = {}
+    for path in sorted((DATA / "sets").glob("*.json")):
+        cfg = json.loads(path.read_text(encoding="utf-8"))
+        if cfg.get("id"):
+            out[cfg["id"]] = cfg
+    return out
 
-PKMNGG = "https://www.pkmn.gg/series/mega-evolution/{slug}"
+
 PITT = "https://www.pittpokeresearch.com/pokemon-set/{slug}"
 
 # Sealed product name suffix -> key we store it under.
@@ -67,16 +66,18 @@ def fetch(url: str) -> str:
         return resp.read().decode("utf-8", "replace")
 
 
-def singles(slug: str) -> dict[str, float]:
+def singles(cfg: dict) -> dict[str, dict]:
     """Collector number -> USD market price for the pack-pulled printing."""
-    html = fetch(PKMNGG.format(slug=slug))
+    series = cfg["series"]
+    slug = cfg["slug"]
+    html = fetch(f"https://www.pkmn.gg/series/{series}/{slug}")
     blob = re.search(
         r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>',
         html,
         re.S,
     )
     if not blob:
-        raise RuntimeError(f"no __NEXT_DATA__ on pkmn.gg/{slug} — page shape changed")
+        raise RuntimeError(f"no __NEXT_DATA__ on pkmn.gg/{series}/{slug} — page shape changed")
     cards = json.loads(blob.group(1))["props"]["pageProps"]["cardData"]
     out: dict[str, dict] = {}
     for card in cards:
@@ -84,7 +85,13 @@ def singles(slug: str) -> dict[str, float]:
         price = card.get("sortPrice")
         if not number or not isinstance(price, (int, float)):
             continue
-        out[number] = {"price": float(price), "name": card.get("name", "")}
+        price = float(price)
+        # Prismatic (and 151-style sets) list Poké Ball / Master Ball printings
+        # as extra rows of the same number. Keep the cheapest — that's the
+        # pack-pulled base, not the Master Ball chase.
+        prev = out.get(number)
+        if prev is None or price < prev["price"]:
+            out[number] = {"price": price, "name": card.get("name", "")}
     return out
 
 
@@ -185,8 +192,9 @@ def record_history(set_id: str, priced: dict[str, dict], today: str) -> int:
 
 
 def main(argv: list[str]) -> int:
-    wanted = argv or list(SETS)
-    unknown = [s for s in wanted if s not in SETS]
+    cfgs = load_set_cfgs()
+    wanted = argv or list(cfgs)
+    unknown = [s for s in wanted if s not in cfgs]
     if unknown:
         print(f"unknown set(s): {', '.join(unknown)}", file=sys.stderr)
         return 2
@@ -198,10 +206,11 @@ def main(argv: list[str]) -> int:
 
     failed = []
     for set_id in wanted:
-        gg_slug, pitt_slug = SETS[set_id]
+        cfg = cfgs[set_id]
+        pitt_slug = cfg.get("pittSlug")
         print(f"{set_id}:")
         try:
-            priced = singles(gg_slug)
+            priced = singles(cfg)
             hit, total = apply_singles(set_id, priced)
             logged = record_history(set_id, priced, today)
             print(f"  singles  {hit}/{total} priced, {logged} history points logged")
@@ -209,6 +218,9 @@ def main(argv: list[str]) -> int:
             print(f"  singles  FAILED — {exc}")
             failed.append(set_id)
         time.sleep(1)
+        if not pitt_slug:
+            print("  sealed   skipped (no pittSlug)")
+            continue
         try:
             products = sealed(pitt_slug)
             if not products:

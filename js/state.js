@@ -47,6 +47,8 @@ function blank() {
     granted: STARTING_COINS,
     // [timestamp, netWorth] samples for the home-page chart.
     worthLog: [],
+    // Achievement ids already cashed in, so a reward is paid exactly once.
+    claimed: [],
     // Curated showcase, separate from `collection`. A flat list of slots read
     // BINDER_PAGE at a time, so it pages like a real 9-pocket binder. Entries
     // are { id, reverse } or null for an empty pocket.
@@ -112,6 +114,7 @@ export function loadState() {
         settings: { ...DEFAULT_SETTINGS, ...(saved.settings || {}) },
         activeSetId: saved.activeSetId || "me5",
         reverses: saved.reverses || {},
+        claimed: Array.isArray(saved.claimed) ? saved.claimed : [],
         // blank() stamps the current scale, so an untagged save has to be
         // treated as old here or the migration would skip it.
         economyScale: saved.economyScale ?? 1,
@@ -331,6 +334,7 @@ export function importState(state, raw) {
     settings: { ...DEFAULT_SETTINGS, ...keepSettings, ...(raw.settings || {}) },
     reverses: raw.reverses || {},
     history: Array.isArray(raw.history) ? raw.history.slice(0, 24) : [],
+    claimed: Array.isArray(raw.claimed) ? raw.claimed.slice() : [],
     // A save exported before coins became dollars still needs converting.
     economyScale: raw.economyScale ?? 1,
     settingsRev: raw.settingsRev || 0,
@@ -359,6 +363,7 @@ export function cloneSave(state) {
     economyScale: state.economyScale ?? ECONOMY_SCALE,
     settingsRev: state.settingsRev || SETTINGS_REV,
     granted: state.granted,
+    claimed: Array.isArray(state.claimed) ? state.claimed.slice() : [],
     worthLog: Array.isArray(state.worthLog) ? state.worthLog.slice(-WORTH_LOG_LIMIT) : [],
     binder: Array.isArray(state.binder) ? state.binder.slice() : [],
   };

@@ -41,6 +41,20 @@
         { "id": "venusaur", "remote": "base-set-pack-1.avif", "file": "base1/venusaur.avif" },
         { "id": "blastoise", "remote": "base-set-pack-2.avif", "file": "base1/blastoise.avif" }
       ]
+    },
+    "zsv10pt5": {
+      "name": "Black Bolt",
+      "slug": "black-bolt",
+      "packs": [
+        { "id": "zekrom", "remote": "black-bolt-pack-0.avif", "file": "zsv10pt5/zekrom.avif" }
+      ]
+    },
+    "rsv10pt5": {
+      "name": "White Flare",
+      "slug": "white-flare",
+      "packs": [
+        { "id": "reshiram", "remote": "white-flare-pack-0.avif", "file": "rsv10pt5/reshiram.avif" }
+      ]
     }
   }
 }

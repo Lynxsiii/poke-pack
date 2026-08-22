@@ -7,13 +7,18 @@ after changing a constant to regenerate:
     py scripts/make_foil_textures.py
 
 Outputs (assets/foil/):
-  grain.png    128px  fine sensor-style noise, tiles invisibly
-  glitter.png  256px  sparse bright specks for illustration/secret rares
-  cosmos.png   384px  crystalline cosmos flakes, for reverse holo
-  weave.png    192px  fine crosshatch ridges, for Special Illustration Rares
-  metal.png    256px  brushed directional streaks, for gold Mega Hyper Rares
-  facet.png    256px  angular crystal seams, for Pokemon ex / full-art foils
-  prism.png    256px  oil-slick interference bands, for Ultra Rares
+    grain.png           128px  fine sensor-style noise, tiles invisibly
+    glitter.png         256px  sparse bright specks for illustration/secret rares
+    cosmos.png          384px  crystalline cosmos flakes, for reverse holo
+    weave.png           192px  fine crosshatch ridges (kept for other recipes)
+    metal.png           256px  brushed directional streaks, for gold Mega Hyper Rares
+    facet.png           256px  angular crystal seams, for Pokemon ex / full-art foils
+    prism.png           256px  oil-slick interference bands, for Ultra Rares
+    swirl.png           384px  nebula swirl arms, for SAR / Black White Rare holos
+    pokeball.png        256px  tiled Poké Balls, for 151-style reverse holos
+    pokeball-tiny.png   256px  denser smaller Poké Balls, second reverse layer
+    masterball.png      256px  tiled Master Balls
+    masterball-tiny.png 256px  denser smaller Master Balls
 
 All three are tileable: the noise lattice wraps, and any speck that crosses an
 edge is drawn again on the opposite side.
@@ -323,6 +328,126 @@ def make_prism(size: int = 256) -> Image.Image:
     return img
 
 
+def make_swirl(size: int = 384) -> Image.Image:
+    """Tileable nebula swirls for Special Illustration and Black White Rares.
+
+    Integer-frequency sine arms plus a tiled noise warp. The warp turns the
+    bands into curls instead of stripes; wrapping the noise keeps opposite
+    edges matching so the sheet can pan under the pointer without a seam.
+    """
+    rng = random.Random(SEED + 8)
+    warp = fractal(size, [(4, 1.0), (8, 0.55), (16, 0.32), (32, 0.18)], rng)
+    dust = fractal(size, [(12, 0.7), (24, 0.4), (48, 0.25), (96, 0.15)], rng)
+    img = Image.new("LA", (size, size))
+    px = img.load()
+    tau = math.pi * 2
+    arms = ((3, 5, 1.0), (-5, 2, 0.72), (1, -6, 0.55))
+    for y in range(size):
+        v = y / size
+        wrow = warp[y]
+        drow = dust[y]
+        for x in range(size):
+            u = x / size
+            w = (wrow[x] - 0.5) * 1.35
+            acc = 0.0
+            wt = 0.0
+            for kx, ky, amp in arms:
+                acc += amp * math.sin(tau * (kx * u + ky * v) + w * tau)
+                wt += amp
+            t = (acc / wt + 1) * 0.5
+            ridge = smoothstep(min(1.0, max(0.0, (t - 0.38) / 0.42))) ** 1.15
+            mist = max(0.0, drow[x] - 0.55) * 1.6
+            val = min(1.0, ridge * 0.88 + mist * 0.45)
+            px[x, y] = (255, int(230 * val))
+    for _ in range(int(size * size * 0.0018)):
+        x = rng.randrange(size)
+        y = rng.randrange(size)
+        a = px[x, y][1]
+        if a > 80:
+            px[x, y] = (255, min(255, a + rng.randrange(20, 70)))
+    return img
+
+
+def _put(px, size: int, x: int, y: int, rgb: tuple[int, int, int], a: int) -> None:
+    x %= size
+    y %= size
+    px[x, y] = (rgb[0], rgb[1], rgb[2], a)
+
+
+def _disk(px, size: int, cx: float, cy: float, radius: float, rgb: tuple[int, int, int], a: int = 230) -> None:
+    span = int(math.ceil(radius)) + 1
+    r2 = radius * radius
+    for dy in range(-span, span + 1):
+        for dx in range(-span, span + 1):
+            if dx * dx + dy * dy > r2:
+                continue
+            _put(px, size, round(cx + dx), round(cy + dy), rgb, a)
+
+
+def make_ball_tile(size: int, count: int, master: bool) -> Image.Image:
+    """Seamless grid of Poké Balls or Master Balls.
+
+    Drawn, not sampled — same licence story as the other foil sheets. The tile
+    repeats on the reverse-holo frame; two sizes stacked in CSS give depth.
+    """
+    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    px = img.load()
+    step = size / count
+    radius = step * 0.36
+    if master:
+        top, bottom, band, button, ring = (
+            (118, 62, 196),
+            (246, 228, 255),
+            (22, 14, 36),
+            (236, 92, 186),
+            (18, 12, 28),
+        )
+    else:
+        top, bottom, band, button, ring = (
+            (214, 42, 48),
+            (248, 248, 252),
+            (18, 14, 18),
+            (248, 248, 252),
+            (18, 14, 18),
+        )
+    for gy in range(count):
+        for gx in range(count):
+            cx = (gx + 0.5) * step
+            cy = (gy + 0.5) * step
+            _disk(px, size, cx, cy, radius + 1.4, ring, 235)
+            span = int(math.ceil(radius)) + 1
+            r2 = radius * radius
+            band_h = radius * 0.16
+            for dy in range(-span, span + 1):
+                for dx in range(-span, span + 1):
+                    if dx * dx + dy * dy > r2:
+                        continue
+                    colour = top if dy < 0 else bottom
+                    if abs(dy) <= band_h:
+                        colour = band
+                    _put(px, size, round(cx + dx), round(cy + dy), colour, 230)
+            _disk(px, size, cx, cy, radius * 0.28, ring, 240)
+            _disk(px, size, cx, cy, radius * 0.18, button, 240)
+            _disk(px, size, cx, cy, radius * 0.08, ring, 240)
+    return img
+
+
+def make_pokeball() -> Image.Image:
+    return make_ball_tile(256, 4, False)
+
+
+def make_pokeball_tiny() -> Image.Image:
+    return make_ball_tile(256, 8, False)
+
+
+def make_masterball() -> Image.Image:
+    return make_ball_tile(256, 4, True)
+
+
+def make_masterball_tiny() -> Image.Image:
+    return make_ball_tile(256, 8, True)
+
+
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     jobs = [
@@ -333,6 +458,11 @@ def main() -> int:
         ("metal.png", make_metal),
         ("facet.png", make_facet),
         ("prism.png", make_prism),
+        ("swirl.png", make_swirl),
+        ("pokeball.png", make_pokeball),
+        ("pokeball-tiny.png", make_pokeball_tiny),
+        ("masterball.png", make_masterball),
+        ("masterball-tiny.png", make_masterball_tiny),
     ]
     for name, fn in jobs:
         img = fn()

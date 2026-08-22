@@ -1,0 +1,3308 @@
+[
+  {
+    "id": "sv6pt5-1",
+    "name": "Joltik",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/sv6pt5/1.webp",
+    "imageSmall": "assets/cards/sv6pt5/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Splashing Dodge",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-1/large"
+  },
+  {
+    "id": "sv6pt5-2",
+    "name": "Galvantula",
+    "number": "2",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "mashu",
+    "evolvesFrom": "Joltik",
+    "image": "assets/cards/sv6pt5/2.webp",
+    "imageSmall": "assets/cards/sv6pt5/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Shocking Web",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If this Pokémon has any Lightning Energy attached, this attack does 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Compound Eyes",
+        "text": "Attacks used by this Pokémon do 50 more damage to your opponent's Active Pokémon that has an Ability (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-2/large"
+  },
+  {
+    "id": "sv6pt5-3",
+    "name": "Rowlet",
+    "number": "3",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Yoshimi Miyoshi",
+    "image": "assets/cards/sv6pt5/3.webp",
+    "imageSmall": "assets/cards/sv6pt5/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Add On",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-3/large"
+  },
+  {
+    "id": "sv6pt5-4",
+    "name": "Dartrix",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Tetsu Kayama",
+    "evolvesFrom": "Rowlet",
+    "image": "assets/cards/sv6pt5/4.webp",
+    "imageSmall": "assets/cards/sv6pt5/4-sm.webp",
+    "attacks": [
+      {
+        "name": "United Wings",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the United Wings attack."
+      },
+      {
+        "name": "Cutting Wind",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-4/large"
+  },
+  {
+    "id": "sv6pt5-5",
+    "name": "Decidueye",
+    "number": "5",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "DOM",
+    "evolvesFrom": "Dartrix",
+    "image": "assets/cards/sv6pt5/5.webp",
+    "imageSmall": "assets/cards/sv6pt5/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Stock Up on Feathers",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw cards until you have 7 cards in your hand."
+      },
+      {
+        "name": "Power Shot",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "170",
+        "text": "Discard a Basic Grass Energy card from your hand. If you can't, this attack does nothing."
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-5/large"
+  },
+  {
+    "id": "sv6pt5-6",
+    "name": "Tapu Bulu",
+    "number": "6",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "GOSSAN",
+    "image": "assets/cards/sv6pt5/6.webp",
+    "imageSmall": "assets/cards/sv6pt5/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Wood Hammer",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-6/large"
+  },
+  {
+    "id": "sv6pt5-7",
+    "name": "Houndour",
+    "number": "7",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "REND",
+    "image": "assets/cards/sv6pt5/7.webp",
+    "imageSmall": "assets/cards/sv6pt5/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-7/large"
+  },
+  {
+    "id": "sv6pt5-8",
+    "name": "Houndoom",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "burari",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/sv6pt5/8.webp",
+    "imageSmall": "assets/cards/sv6pt5/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Snarl",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, attacks used by the Defending Pokémon do 100 less damage (before applying Weakness and Resistance)."
+      }
+    ],
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-8/large"
+  },
+  {
+    "id": "sv6pt5-9",
+    "name": "Iron Moth",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Future"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Shinji Kanda",
+    "image": "assets/cards/sv6pt5/9.webp",
+    "imageSmall": "assets/cards/sv6pt5/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Suction",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Anachronism Repulsor",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Ancient Pokémon."
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-9/large"
+  },
+  {
+    "id": "sv6pt5-10",
+    "name": "Horsea",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Shimaris Yukichi",
+    "image": "assets/cards/sv6pt5/10.webp",
+    "imageSmall": "assets/cards/sv6pt5/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Hold Still",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Razor Fin",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-10/large"
+  },
+  {
+    "id": "sv6pt5-11",
+    "name": "Seadra",
+    "number": "11",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Yuya Oka",
+    "evolvesFrom": "Horsea",
+    "image": "assets/cards/sv6pt5/11.webp",
+    "imageSmall": "assets/cards/sv6pt5/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Backup",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Sharp Fin",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-11/large"
+  },
+  {
+    "id": "sv6pt5-12",
+    "name": "Kingdra ex",
+    "number": "12",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "310",
+    "artist": "toriyufu",
+    "evolvesFrom": "Seadra",
+    "image": "assets/cards/sv6pt5/12.webp",
+    "imageSmall": "assets/cards/sv6pt5/12-sm.webp",
+    "attacks": [
+      {
+        "name": "King's Order",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Water Pokémon from your discard pile onto your Bench."
+      },
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 50 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "market": 0.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-12/large"
+  },
+  {
+    "id": "sv6pt5-13",
+    "name": "Sneasel",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Krgc",
+    "image": "assets/cards/sv6pt5/13.webp",
+    "imageSmall": "assets/cards/sv6pt5/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Cut",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Beset",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-13/large"
+  },
+  {
+    "id": "sv6pt5-14",
+    "name": "Weavile",
+    "number": "14",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "aspara",
+    "evolvesFrom": "Sneasel",
+    "image": "assets/cards/sv6pt5/14.webp",
+    "imageSmall": "assets/cards/sv6pt5/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Hail Claw",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "70",
+        "text": "Discard all Energy from this Pokémon. Your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-14/large"
+  },
+  {
+    "id": "sv6pt5-15",
+    "name": "Revavroom ex",
+    "number": "15",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "280",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Varoom",
+    "image": "assets/cards/sv6pt5/15.webp",
+    "imageSmall": "assets/cards/sv6pt5/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Accelerator Flash",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage."
+      },
+      {
+        "name": "Shattering Speed",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "250",
+        "text": "Discard this Pokémon and all attached cards."
+      }
+    ],
+    "market": 0.78,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-15/large"
+  },
+  {
+    "id": "sv6pt5-16",
+    "name": "Drowzee",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "OKUBO",
+    "image": "assets/cards/sv6pt5/16.webp",
+    "imageSmall": "assets/cards/sv6pt5/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Eerie Gaze",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Your opponent reveals their hand."
+      }
+    ],
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-16/large"
+  },
+  {
+    "id": "sv6pt5-17",
+    "name": "Hypno",
+    "number": "17",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Masako Tomii",
+    "evolvesFrom": "Drowzee",
+    "image": "assets/cards/sv6pt5/17.webp",
+    "imageSmall": "assets/cards/sv6pt5/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Daydream",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, if they attach an Energy card from their hand to the Defending Pokémon, their turn ends."
+      }
+    ],
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-17/large"
+  },
+  {
+    "id": "sv6pt5-18",
+    "name": "Duskull",
+    "number": "18",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "IKEDA Saki",
+    "image": "assets/cards/sv6pt5/18.webp",
+    "imageSmall": "assets/cards/sv6pt5/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Come and Get You",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Duskull from your discard pile onto your Bench."
+      },
+      {
+        "name": "Mumble",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-18/large"
+  },
+  {
+    "id": "sv6pt5-19",
+    "name": "Dusclops",
+    "number": "19",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Aya Kusube",
+    "evolvesFrom": "Duskull",
+    "image": "assets/cards/sv6pt5/19.webp",
+    "imageSmall": "assets/cards/sv6pt5/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Will-O-Wisp",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cursed Blast",
+        "text": "Once during your turn, you may put 5 damage counters on 1 of your opponent's Pokémon. If you use this Ability, this Pokémon is Knocked Out.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-19/large"
+  },
+  {
+    "id": "sv6pt5-20",
+    "name": "Dusknoir",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "160",
+    "artist": "danciao",
+    "evolvesFrom": "Dusclops",
+    "image": "assets/cards/sv6pt5/20.webp",
+    "imageSmall": "assets/cards/sv6pt5/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Bind",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cursed Blast",
+        "text": "Once during your turn, you may put 13 damage counters on 1 of your opponent's Pokémon. If you use this Ability, this Pokémon is Knocked Out.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-20/large"
+  },
+  {
+    "id": "sv6pt5-21",
+    "name": "Cresselia",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "matazo",
+    "image": "assets/cards/sv6pt5/21.webp",
+    "imageSmall": "assets/cards/sv6pt5/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Healing Pirouette",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Heal 20 damage from each of your Pokémon."
+      },
+      {
+        "name": "Crescent Purge",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "80+",
+        "text": "You may turn 1 of your face-down Prize cards face up. If you do, this attack does 80 more damage. (That Prize card remains face up for the rest of the game.)"
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-21/large"
+  },
+  {
+    "id": "sv6pt5-22",
+    "name": "Sylveon",
+    "number": "22",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Kuroimori",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sv6pt5/22.webp",
+    "imageSmall": "assets/cards/sv6pt5/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Mystical Return",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, choose 1 of your opponent's Benched Pokémon. Shuffle that Pokémon and all attached cards into their deck."
+      },
+      {
+        "name": "Disarming Voice",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-22/large"
+  },
+  {
+    "id": "sv6pt5-23",
+    "name": "Croagunk",
+    "number": "23",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Aliya Chen",
+    "image": "assets/cards/sv6pt5/23.webp",
+    "imageSmall": "assets/cards/sv6pt5/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Light Punch",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Frog Hop",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-23/large"
+  },
+  {
+    "id": "sv6pt5-24",
+    "name": "Toxicroak",
+    "number": "24",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Anesaki Dynamic",
+    "evolvesFrom": "Croagunk",
+    "image": "assets/cards/sv6pt5/24.webp",
+    "imageSmall": "assets/cards/sv6pt5/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Clean Hit",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 90 more damage."
+      }
+    ],
+    "market": 0.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-24/large"
+  },
+  {
+    "id": "sv6pt5-25",
+    "name": "Bloodmoon Ursaluna",
+    "number": "25",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Souichirou Gunjima",
+    "image": "assets/cards/sv6pt5/25.webp",
+    "imageSmall": "assets/cards/sv6pt5/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Bite",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "This attack does 30 more damage for each damage counter on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Battle-Hardened",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may attach up to 2 Basic Fighting Energy cards from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-25/large"
+  },
+  {
+    "id": "sv6pt5-26",
+    "name": "Slither Wing",
+    "number": "26",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ancient"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "140",
+    "artist": "Shinji Kanda",
+    "image": "assets/cards/sv6pt5/26.webp",
+    "imageSmall": "assets/cards/sv6pt5/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Smasher",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If your opponent has any Future Pokémon in play, this attack does 120 more damage."
+      },
+      {
+        "name": "Smashing Wing",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-26/large"
+  },
+  {
+    "id": "sv6pt5-27",
+    "name": "Zubat",
+    "number": "27",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "50",
+    "artist": "osare",
+    "image": "assets/cards/sv6pt5/27.webp",
+    "imageSmall": "assets/cards/sv6pt5/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Lead",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Darkness Fang",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-27/large"
+  },
+  {
+    "id": "sv6pt5-28",
+    "name": "Golbat",
+    "number": "28",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Teeziro",
+    "evolvesFrom": "Zubat",
+    "image": "assets/cards/sv6pt5/28.webp",
+    "imageSmall": "assets/cards/sv6pt5/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Speed Dive",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Pitch-Black Blade",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-28/large"
+  },
+  {
+    "id": "sv6pt5-29",
+    "name": "Crobat",
+    "number": "29",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Nisota Niso",
+    "evolvesFrom": "Golbat",
+    "image": "assets/cards/sv6pt5/29.webp",
+    "imageSmall": "assets/cards/sv6pt5/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Fang",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, put 2 damage counters on that Pokémon instead of 1."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shadowy Envoy",
+        "text": "Once during your turn, if you played Janine's Secret Art from your hand this turn, you may draw cards until you have 8 cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-29/large"
+  },
+  {
+    "id": "sv6pt5-30",
+    "name": "Absol",
+    "number": "30",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "rika",
+    "image": "assets/cards/sv6pt5/30.webp",
+    "imageSmall": "assets/cards/sv6pt5/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Darkfall",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If you have at least 3 Darkness Energy in play, this attack does 50 more damage."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-30/large"
+  },
+  {
+    "id": "sv6pt5-31",
+    "name": "Zorua",
+    "number": "31",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Yuu Nishida",
+    "image": "assets/cards/sv6pt5/31.webp",
+    "imageSmall": "assets/cards/sv6pt5/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Double Scratch",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage for each heads."
+      }
+    ],
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-31/large"
+  },
+  {
+    "id": "sv6pt5-32",
+    "name": "Zoroark",
+    "number": "32",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "nagimiso",
+    "evolvesFrom": "Zorua",
+    "image": "assets/cards/sv6pt5/32.webp",
+    "imageSmall": "assets/cards/sv6pt5/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Illusory Hijacking",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each of your opponent's Pokémon ex and Pokémon V in play."
+      },
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-32/large"
+  },
+  {
+    "id": "sv6pt5-33",
+    "name": "Inkay",
+    "number": "33",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Mori Yuu",
+    "image": "assets/cards/sv6pt5/33.webp",
+    "imageSmall": "assets/cards/sv6pt5/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Mischievous Tentacles",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top card of your opponent's deck. You may have your opponent shuffle their deck."
+      },
+      {
+        "name": "Peck",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-33/large"
+  },
+  {
+    "id": "sv6pt5-34",
+    "name": "Malamar",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "akagi",
+    "evolvesFrom": "Inkay",
+    "image": "assets/cards/sv6pt5/34.webp",
+    "imageSmall": "assets/cards/sv6pt5/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Colluding Tentacles",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Switch in 1 of your opponent's Benched Pokémon to the Active Spot. If you do, this attack does 120 damage to the new Active Pokémon. If you didn't play Xerosic's Machinations from your hand during this turn, this attack does nothing."
+      },
+      {
+        "name": "Spinning Attack",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "market": 0.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-34/large"
+  },
+  {
+    "id": "sv6pt5-35",
+    "name": "Yveltal",
+    "number": "35",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "SIE NANAHARA",
+    "image": "assets/cards/sv6pt5/35.webp",
+    "imageSmall": "assets/cards/sv6pt5/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Corrosive Winds",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Put 2 damage counters on each of your opponent's Pokémon that has any damage counters on it."
+      },
+      {
+        "name": "Destructive Beam",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "market": 0.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-35/large"
+  },
+  {
+    "id": "sv6pt5-36",
+    "name": "Okidogi ex",
+    "number": "36",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "250",
+    "artist": "takuyoa",
+    "image": "assets/cards/sv6pt5/36.webp",
+    "imageSmall": "assets/cards/sv6pt5/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Poisonous Musculature",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Darkness Energy cards and attach them to this Pokémon. Then, shuffle your deck. If you attached Energy to a Pokémon in this way, this Pokémon is now Poisoned."
+      },
+      {
+        "name": "Chain-Crazed",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "If this Pokémon is Poisoned, this attack does 130 more damage."
+      }
+    ],
+    "market": 0.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-36/large"
+  },
+  {
+    "id": "sv6pt5-37",
+    "name": "Munkidori ex",
+    "number": "37",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "takuyoa",
+    "image": "assets/cards/sv6pt5/37.webp",
+    "imageSmall": "assets/cards/sv6pt5/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Dirty Headbutt",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "During your next turn, this Pokémon can't use Dirty Headbutt."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Oh No You Don't",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, and if you have any Pecharunt ex in play, your opponent takes 1 fewer Prize card.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.78,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-37/large"
+  },
+  {
+    "id": "sv6pt5-38",
+    "name": "Fezandipiti ex",
+    "number": "38",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "takuyoa",
+    "image": "assets/cards/sv6pt5/38.webp",
+    "imageSmall": "assets/cards/sv6pt5/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Cruel Arrow",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flip the Script",
+        "text": "Once during your turn, if any of your Pokémon were Knocked Out during your opponent's last turn, you may draw 3 cards. You can't use more than 1 Flip the Script Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 3.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-38/large"
+  },
+  {
+    "id": "sv6pt5-39",
+    "name": "Pecharunt ex",
+    "number": "39",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "190",
+    "artist": "aky CG Works",
+    "image": "assets/cards/sv6pt5/39.webp",
+    "imageSmall": "assets/cards/sv6pt5/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Irritated Outburst",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Prize card your opponent has taken."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Subjugating Chains",
+        "text": "Once during your turn, you may switch 1 of your Benched Darkness Pokémon, except any Pecharunt ex, with your Active Pokémon. If you do, the new Active Pokémon is now Poisoned. You can't use more than 1 Subjugating Chains Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 5.68,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-39/large"
+  },
+  {
+    "id": "sv6pt5-40",
+    "name": "Genesect",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "110",
+    "artist": "Kazumasa Yasukuni",
+    "image": "assets/cards/sv6pt5/40.webp",
+    "imageSmall": "assets/cards/sv6pt5/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Magnetic Blast",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "ACE Nullifier",
+        "text": "If this Pokémon has a Pokémon Tool attached, your opponent can't play any ACE SPEC cards from their hand.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-40/large"
+  },
+  {
+    "id": "sv6pt5-41",
+    "name": "Cufant",
+    "number": "41",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Shinya Mizuno",
+    "image": "assets/cards/sv6pt5/41.webp",
+    "imageSmall": "assets/cards/sv6pt5/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Confront",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-41/large"
+  },
+  {
+    "id": "sv6pt5-42",
+    "name": "Copperajah",
+    "number": "42",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "200",
+    "artist": "kawayoo",
+    "evolvesFrom": "Cufant",
+    "image": "assets/cards/sv6pt5/42.webp",
+    "imageSmall": "assets/cards/sv6pt5/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Nasal Lariat",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "You may do 100 more damage. If you do, during your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Massive Body",
+        "text": "As long as this Pokémon is in the Active Spot, your opponent can't play any Stadium cards from their hand.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-42/large"
+  },
+  {
+    "id": "sv6pt5-43",
+    "name": "Varoom",
+    "number": "43",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "HAGIYA Kaoru",
+    "image": "assets/cards/sv6pt5/43.webp",
+    "imageSmall": "assets/cards/sv6pt5/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Rigidify",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Headbutt Bounce",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-43/large"
+  },
+  {
+    "id": "sv6pt5-44",
+    "name": "Axew",
+    "number": "44",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "70",
+    "artist": "Orca",
+    "image": "assets/cards/sv6pt5/44.webp",
+    "imageSmall": "assets/cards/sv6pt5/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Fighting",
+          "Metal"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-44/large"
+  },
+  {
+    "id": "sv6pt5-45",
+    "name": "Fraxure",
+    "number": "45",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "Uninori",
+    "evolvesFrom": "Axew",
+    "image": "assets/cards/sv6pt5/45.webp",
+    "imageSmall": "assets/cards/sv6pt5/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Fighting",
+          "Metal"
+        ],
+        "damage": "80",
+        "text": "Discard the top card of your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Unnerve",
+        "text": "Whenever your opponent plays an Item or Supporter card from their hand, prevent all effects of that card done to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-45/large"
+  },
+  {
+    "id": "sv6pt5-46",
+    "name": "Haxorus",
+    "number": "46",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "170",
+    "artist": "Tsuyoshi Nagano",
+    "evolvesFrom": "Fraxure",
+    "image": "assets/cards/sv6pt5/46.webp",
+    "imageSmall": "assets/cards/sv6pt5/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Bring Down the Axe",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "If your opponent's Active Pokémon has any Special Energy attached, it is Knocked Out."
+      },
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Fighting",
+          "Metal"
+        ],
+        "damage": "230",
+        "text": "Discard the top 3 cards of your deck."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-46/large"
+  },
+  {
+    "id": "sv6pt5-47",
+    "name": "Kyurem",
+    "number": "47",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Shiburingaru",
+    "image": "assets/cards/sv6pt5/47.webp",
+    "imageSmall": "assets/cards/sv6pt5/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Trifrost",
+        "cost": [
+          "Water",
+          "Water",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Energy from this Pokémon. This attack does 110 damage to 3 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Plasma Bane",
+        "text": "If your opponent has any cards in their discard pile that have \"Colress\" in the name, this Pokémon can use the Trifrost attack for Colorless.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-47/large"
+  },
+  {
+    "id": "sv6pt5-48",
+    "name": "Meowth",
+    "number": "48",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "sui",
+    "image": "assets/cards/sv6pt5/48.webp",
+    "imageSmall": "assets/cards/sv6pt5/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 3 coins. This attack does 20 damage for each heads."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-48/large"
+  },
+  {
+    "id": "sv6pt5-49",
+    "name": "Persian",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "NC Empire",
+    "evolvesFrom": "Meowth",
+    "image": "assets/cards/sv6pt5/49.webp",
+    "imageSmall": "assets/cards/sv6pt5/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Flip 3 coins. This attack does 50 damage for each heads."
+      },
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-49/large"
+  },
+  {
+    "id": "sv6pt5-50",
+    "name": "Eevee",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Susumu Maeya",
+    "image": "assets/cards/sv6pt5/50.webp",
+    "imageSmall": "assets/cards/sv6pt5/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Colorful Catch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Basic Energy cards of different types, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-50/large"
+  },
+  {
+    "id": "sv6pt5-51",
+    "name": "Furfrou",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Shinya Komatsu",
+    "image": "assets/cards/sv6pt5/51.webp",
+    "imageSmall": "assets/cards/sv6pt5/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Assist",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon."
+      }
+    ],
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-51/large"
+  },
+  {
+    "id": "sv6pt5-52",
+    "name": "Stufful",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "ryoma uratsuka",
+    "image": "assets/cards/sv6pt5/52.webp",
+    "imageSmall": "assets/cards/sv6pt5/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-52/large"
+  },
+  {
+    "id": "sv6pt5-53",
+    "name": "Bewear",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Takeshi Nakamura",
+    "evolvesFrom": "Stufful",
+    "image": "assets/cards/sv6pt5/53.webp",
+    "imageSmall": "assets/cards/sv6pt5/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Charger",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Search your deck for a Basic Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "market": 0.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-53/large"
+  },
+  {
+    "id": "sv6pt5-54",
+    "name": "Academy at Night",
+    "number": "54",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "AYUMI ODASHIMA",
+    "image": "assets/cards/sv6pt5/54.webp",
+    "imageSmall": "assets/cards/sv6pt5/54-sm.webp",
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-54/large"
+  },
+  {
+    "id": "sv6pt5-55",
+    "name": "Binding Mochi",
+    "number": "55",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sv6pt5/55.webp",
+    "imageSmall": "assets/cards/sv6pt5/55-sm.webp",
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-55/large"
+  },
+  {
+    "id": "sv6pt5-56",
+    "name": "Cassiopeia",
+    "number": "56",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Atsushi Furusawa",
+    "image": "assets/cards/sv6pt5/56.webp",
+    "imageSmall": "assets/cards/sv6pt5/56-sm.webp",
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-56/large"
+  },
+  {
+    "id": "sv6pt5-57",
+    "name": "Colress's Tenacity",
+    "number": "57",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "hncl",
+    "image": "assets/cards/sv6pt5/57.webp",
+    "imageSmall": "assets/cards/sv6pt5/57-sm.webp",
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-57/large"
+  },
+  {
+    "id": "sv6pt5-58",
+    "name": "Dangerous Laser",
+    "number": "58",
+    "rarity": "ACE SPEC Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item",
+      "ACE SPEC"
+    ],
+    "artist": "inose yukie",
+    "image": "assets/cards/sv6pt5/58.webp",
+    "imageSmall": "assets/cards/sv6pt5/58-sm.webp",
+    "market": 0.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-58/large"
+  },
+  {
+    "id": "sv6pt5-59",
+    "name": "Janine's Secret Art",
+    "number": "59",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Taira Akitsu",
+    "image": "assets/cards/sv6pt5/59.webp",
+    "imageSmall": "assets/cards/sv6pt5/59-sm.webp",
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-59/large"
+  },
+  {
+    "id": "sv6pt5-60",
+    "name": "Neutralization Zone",
+    "number": "60",
+    "rarity": "ACE SPEC Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium",
+      "ACE SPEC"
+    ],
+    "artist": "imoniii",
+    "image": "assets/cards/sv6pt5/60.webp",
+    "imageSmall": "assets/cards/sv6pt5/60-sm.webp",
+    "market": 0.84,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-60/large"
+  },
+  {
+    "id": "sv6pt5-61",
+    "name": "Night Stretcher",
+    "number": "61",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sv6pt5/61.webp",
+    "imageSmall": "assets/cards/sv6pt5/61-sm.webp",
+    "market": 0.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-61/large"
+  },
+  {
+    "id": "sv6pt5-62",
+    "name": "Poké Vital A",
+    "number": "62",
+    "rarity": "ACE SPEC Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item",
+      "ACE SPEC"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sv6pt5/62.webp",
+    "imageSmall": "assets/cards/sv6pt5/62-sm.webp",
+    "market": 0.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-62/large"
+  },
+  {
+    "id": "sv6pt5-63",
+    "name": "Powerglass",
+    "number": "63",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "assets/cards/sv6pt5/63.webp",
+    "imageSmall": "assets/cards/sv6pt5/63-sm.webp",
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-63/large"
+  },
+  {
+    "id": "sv6pt5-64",
+    "name": "Xerosic's Machinations",
+    "number": "64",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GOSSAN",
+    "image": "assets/cards/sv6pt5/64.webp",
+    "imageSmall": "assets/cards/sv6pt5/64-sm.webp",
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-64/large"
+  },
+  {
+    "id": "sv6pt5-65",
+    "name": "Tapu Bulu",
+    "number": "65",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "IKEDA Saki",
+    "image": "assets/cards/sv6pt5/65.webp",
+    "imageSmall": "assets/cards/sv6pt5/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Wood Hammer",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "market": 12.83,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-65/large"
+  },
+  {
+    "id": "sv6pt5-66",
+    "name": "Houndoom",
+    "number": "66",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Taiga Kasai",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/sv6pt5/66.webp",
+    "imageSmall": "assets/cards/sv6pt5/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Snarl",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, attacks used by the Defending Pokémon do 100 less damage (before applying Weakness and Resistance)."
+      }
+    ],
+    "market": 57.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-66/large"
+  },
+  {
+    "id": "sv6pt5-67",
+    "name": "Horsea",
+    "number": "67",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Shinya Komatsu",
+    "image": "assets/cards/sv6pt5/67.webp",
+    "imageSmall": "assets/cards/sv6pt5/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Hold Still",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Razor Fin",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 49.64,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-67/large"
+  },
+  {
+    "id": "sv6pt5-68",
+    "name": "Duskull",
+    "number": "68",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "James Turner",
+    "image": "assets/cards/sv6pt5/68.webp",
+    "imageSmall": "assets/cards/sv6pt5/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Come and Get You",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Duskull from your discard pile onto your Bench."
+      },
+      {
+        "name": "Mumble",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 54.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-68/large"
+  },
+  {
+    "id": "sv6pt5-69",
+    "name": "Dusclops",
+    "number": "69",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "James Turner",
+    "evolvesFrom": "Duskull",
+    "image": "assets/cards/sv6pt5/69.webp",
+    "imageSmall": "assets/cards/sv6pt5/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Will-O-Wisp",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cursed Blast",
+        "text": "Once during your turn, you may put 5 damage counters on 1 of your opponent's Pokémon. If you use this Ability, this Pokémon is Knocked Out.",
+        "type": "Ability"
+      }
+    ],
+    "market": 33.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-69/large"
+  },
+  {
+    "id": "sv6pt5-70",
+    "name": "Dusknoir",
+    "number": "70",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "160",
+    "artist": "James Turner",
+    "evolvesFrom": "Dusclops",
+    "image": "assets/cards/sv6pt5/70.webp",
+    "imageSmall": "assets/cards/sv6pt5/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Bind",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cursed Blast",
+        "text": "Once during your turn, you may put 13 damage counters on 1 of your opponent's Pokémon. If you use this Ability, this Pokémon is Knocked Out.",
+        "type": "Ability"
+      }
+    ],
+    "market": 31.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-70/large"
+  },
+  {
+    "id": "sv6pt5-71",
+    "name": "Cresselia",
+    "number": "71",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "satoma",
+    "image": "assets/cards/sv6pt5/71.webp",
+    "imageSmall": "assets/cards/sv6pt5/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Healing Pirouette",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Heal 20 damage from each of your Pokémon."
+      },
+      {
+        "name": "Crescent Purge",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "80+",
+        "text": "You may turn 1 of your face-down Prize cards face up. If you do, this attack does 80 more damage. (That Prize card remains face up for the rest of the game.)"
+      }
+    ],
+    "market": 27.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-71/large"
+  },
+  {
+    "id": "sv6pt5-72",
+    "name": "Munkidori",
+    "number": "72",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Teeziro",
+    "image": "assets/cards/sv6pt5/72.webp",
+    "imageSmall": "assets/cards/sv6pt5/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Mind Bend",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Adrena-Brain",
+        "text": "Once during your turn, if this Pokémon has any Darkness Energy attached, you may move up to 3 damage counters from 1 of your Pokémon to 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 31.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-72/large"
+  },
+  {
+    "id": "sv6pt5-73",
+    "name": "Fezandipiti",
+    "number": "73",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "KEIICHIRO ITO",
+    "image": "assets/cards/sv6pt5/73.webp",
+    "imageSmall": "assets/cards/sv6pt5/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Feather",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Adrena-Pheromone",
+        "text": "If this Pokémon has any Darkness Energy attached and is damaged by an attack, flip a coin. If heads, prevent that damage.",
+        "type": "Ability"
+      }
+    ],
+    "market": 13.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-73/large"
+  },
+  {
+    "id": "sv6pt5-74",
+    "name": "Okidogi",
+    "number": "74",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/sv6pt5/74.webp",
+    "imageSmall": "assets/cards/sv6pt5/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Good Punch",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Adrena-Power",
+        "text": "If this Pokémon has any Darkness Energy attached, it gets +100 HP, and the attacks it uses do 100 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 16.66,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-74/large"
+  },
+  {
+    "id": "sv6pt5-75",
+    "name": "Zorua",
+    "number": "75",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "REND",
+    "image": "assets/cards/sv6pt5/75.webp",
+    "imageSmall": "assets/cards/sv6pt5/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Double Scratch",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage for each heads."
+      }
+    ],
+    "market": 29.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-75/large"
+  },
+  {
+    "id": "sv6pt5-76",
+    "name": "Cufant",
+    "number": "76",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Mina Nakai",
+    "image": "assets/cards/sv6pt5/76.webp",
+    "imageSmall": "assets/cards/sv6pt5/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Confront",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 16.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-76/large"
+  },
+  {
+    "id": "sv6pt5-77",
+    "name": "Fraxure",
+    "number": "77",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "MINAMINAMI Take",
+    "evolvesFrom": "Axew",
+    "image": "assets/cards/sv6pt5/77.webp",
+    "imageSmall": "assets/cards/sv6pt5/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Fighting",
+          "Metal"
+        ],
+        "damage": "80",
+        "text": "Discard the top card of your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Unnerve",
+        "text": "Whenever your opponent plays an Item or Supporter card from their hand, prevent all effects of that card done to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 19.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-77/large"
+  },
+  {
+    "id": "sv6pt5-78",
+    "name": "Persian",
+    "number": "78",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Whisker",
+    "evolvesFrom": "Meowth",
+    "image": "assets/cards/sv6pt5/78.webp",
+    "imageSmall": "assets/cards/sv6pt5/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Flip 3 coins. This attack does 50 damage for each heads."
+      },
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "market": 74.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-78/large"
+  },
+  {
+    "id": "sv6pt5-79",
+    "name": "Bewear",
+    "number": "79",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Takeshi Nakamura",
+    "evolvesFrom": "Stufful",
+    "image": "assets/cards/sv6pt5/79.webp",
+    "imageSmall": "assets/cards/sv6pt5/79-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Charger",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Search your deck for a Basic Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "market": 27.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-79/large"
+  },
+  {
+    "id": "sv6pt5-80",
+    "name": "Kingdra ex",
+    "number": "80",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "310",
+    "artist": "PLANETA Igarashi",
+    "evolvesFrom": "Seadra",
+    "image": "assets/cards/sv6pt5/80.webp",
+    "imageSmall": "assets/cards/sv6pt5/80-sm.webp",
+    "attacks": [
+      {
+        "name": "King's Order",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Water Pokémon from your discard pile onto your Bench."
+      },
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 50 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "market": 3.8,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-80/large"
+  },
+  {
+    "id": "sv6pt5-81",
+    "name": "Revavroom ex",
+    "number": "81",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "280",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Varoom",
+    "image": "assets/cards/sv6pt5/81.webp",
+    "imageSmall": "assets/cards/sv6pt5/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Accelerator Flash",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage."
+      },
+      {
+        "name": "Shattering Speed",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "250",
+        "text": "Discard this Pokémon and all attached cards."
+      }
+    ],
+    "market": 2.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-81/large"
+  },
+  {
+    "id": "sv6pt5-82",
+    "name": "Okidogi ex",
+    "number": "82",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sv6pt5/82.webp",
+    "imageSmall": "assets/cards/sv6pt5/82-sm.webp",
+    "attacks": [
+      {
+        "name": "Poisonous Musculature",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Darkness Energy cards and attach them to this Pokémon. Then, shuffle your deck. If you attached Energy to a Pokémon in this way, this Pokémon is now Poisoned."
+      },
+      {
+        "name": "Chain-Crazed",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "If this Pokémon is Poisoned, this attack does 130 more damage."
+      }
+    ],
+    "market": 2.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-82/large"
+  },
+  {
+    "id": "sv6pt5-83",
+    "name": "Munkidori ex",
+    "number": "83",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sv6pt5/83.webp",
+    "imageSmall": "assets/cards/sv6pt5/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Dirty Headbutt",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "During your next turn, this Pokémon can't use Dirty Headbutt."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Oh No You Don't",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, and if you have any Pecharunt ex in play, your opponent takes 1 fewer Prize card.",
+        "type": "Ability"
+      }
+    ],
+    "market": 2.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-83/large"
+  },
+  {
+    "id": "sv6pt5-84",
+    "name": "Fezandipiti ex",
+    "number": "84",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sv6pt5/84.webp",
+    "imageSmall": "assets/cards/sv6pt5/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Cruel Arrow",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flip the Script",
+        "text": "Once during your turn, if any of your Pokémon were Knocked Out during your opponent's last turn, you may draw 3 cards. You can't use more than 1 Flip the Script Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 11.49,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-84/large"
+  },
+  {
+    "id": "sv6pt5-85",
+    "name": "Pecharunt ex",
+    "number": "85",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "190",
+    "artist": "aky CG Works",
+    "image": "assets/cards/sv6pt5/85.webp",
+    "imageSmall": "assets/cards/sv6pt5/85-sm.webp",
+    "attacks": [
+      {
+        "name": "Irritated Outburst",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Prize card your opponent has taken."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Subjugating Chains",
+        "text": "Once during your turn, you may switch 1 of your Benched Darkness Pokémon, except any Pecharunt ex, with your Active Pokémon. If you do, the new Active Pokémon is now Poisoned. You can't use more than 1 Subjugating Chains Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 7.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-85/large"
+  },
+  {
+    "id": "sv6pt5-86",
+    "name": "Cassiopeia",
+    "number": "86",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Atsushi Furusawa",
+    "image": "assets/cards/sv6pt5/86.webp",
+    "imageSmall": "assets/cards/sv6pt5/86-sm.webp",
+    "market": 4.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-86/large"
+  },
+  {
+    "id": "sv6pt5-87",
+    "name": "Colress's Tenacity",
+    "number": "87",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "hncl",
+    "image": "assets/cards/sv6pt5/87.webp",
+    "imageSmall": "assets/cards/sv6pt5/87-sm.webp",
+    "market": 7.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-87/large"
+  },
+  {
+    "id": "sv6pt5-88",
+    "name": "Janine's Secret Art",
+    "number": "88",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Taira Akitsu",
+    "image": "assets/cards/sv6pt5/88.webp",
+    "imageSmall": "assets/cards/sv6pt5/88-sm.webp",
+    "market": 7.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-88/large"
+  },
+  {
+    "id": "sv6pt5-89",
+    "name": "Xerosic's Machinations",
+    "number": "89",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GOSSAN",
+    "image": "assets/cards/sv6pt5/89.webp",
+    "imageSmall": "assets/cards/sv6pt5/89-sm.webp",
+    "market": 7.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-89/large"
+  },
+  {
+    "id": "sv6pt5-90",
+    "name": "Okidogi ex",
+    "number": "90",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "250",
+    "artist": "kantaro",
+    "image": "assets/cards/sv6pt5/90.webp",
+    "imageSmall": "assets/cards/sv6pt5/90-sm.webp",
+    "attacks": [
+      {
+        "name": "Poisonous Musculature",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Darkness Energy cards and attach them to this Pokémon. Then, shuffle your deck. If you attached Energy to a Pokémon in this way, this Pokémon is now Poisoned."
+      },
+      {
+        "name": "Chain-Crazed",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "If this Pokémon is Poisoned, this attack does 130 more damage."
+      }
+    ],
+    "market": 23.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-90/large"
+  },
+  {
+    "id": "sv6pt5-91",
+    "name": "Munkidori ex",
+    "number": "91",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "kantaro",
+    "image": "assets/cards/sv6pt5/91.webp",
+    "imageSmall": "assets/cards/sv6pt5/91-sm.webp",
+    "attacks": [
+      {
+        "name": "Dirty Headbutt",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "During your next turn, this Pokémon can't use Dirty Headbutt."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Oh No You Don't",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, and if you have any Pecharunt ex in play, your opponent takes 1 fewer Prize card.",
+        "type": "Ability"
+      }
+    ],
+    "market": 19.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-91/large"
+  },
+  {
+    "id": "sv6pt5-92",
+    "name": "Fezandipiti ex",
+    "number": "92",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "kantaro",
+    "image": "assets/cards/sv6pt5/92.webp",
+    "imageSmall": "assets/cards/sv6pt5/92-sm.webp",
+    "attacks": [
+      {
+        "name": "Cruel Arrow",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flip the Script",
+        "text": "Once during your turn, if any of your Pokémon were Knocked Out during your opponent's last turn, you may draw 3 cards. You can't use more than 1 Flip the Script Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 39.98,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-92/large"
+  },
+  {
+    "id": "sv6pt5-93",
+    "name": "Pecharunt ex",
+    "number": "93",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "190",
+    "artist": "kantaro",
+    "image": "assets/cards/sv6pt5/93.webp",
+    "imageSmall": "assets/cards/sv6pt5/93-sm.webp",
+    "attacks": [
+      {
+        "name": "Irritated Outburst",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Prize card your opponent has taken."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Subjugating Chains",
+        "text": "Once during your turn, you may switch 1 of your Benched Darkness Pokémon, except any Pecharunt ex, with your Active Pokémon. If you do, the new Active Pokémon is now Poisoned. You can't use more than 1 Subjugating Chains Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 23.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-93/large"
+  },
+  {
+    "id": "sv6pt5-94",
+    "name": "Cassiopeia",
+    "number": "94",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "burari",
+    "image": "assets/cards/sv6pt5/94.webp",
+    "imageSmall": "assets/cards/sv6pt5/94-sm.webp",
+    "market": 43.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-94/large"
+  },
+  {
+    "id": "sv6pt5-95",
+    "name": "Pecharunt ex",
+    "number": "95",
+    "rarity": "Hyper Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "190",
+    "artist": "aky CG Works",
+    "image": "assets/cards/sv6pt5/95.webp",
+    "imageSmall": "assets/cards/sv6pt5/95-sm.webp",
+    "attacks": [
+      {
+        "name": "Irritated Outburst",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Prize card your opponent has taken."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Subjugating Chains",
+        "text": "Once during your turn, you may switch 1 of your Benched Darkness Pokémon, except any Pecharunt ex, with your Active Pokémon. If you do, the new Active Pokémon is now Poisoned. You can't use more than 1 Subjugating Chains Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 22.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-95/large"
+  },
+  {
+    "id": "sv6pt5-96",
+    "name": "Earthen Vessel",
+    "number": "96",
+    "rarity": "Hyper Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item",
+      "Ancient"
+    ],
+    "artist": "AYUMI ODASHIMA",
+    "image": "assets/cards/sv6pt5/96.webp",
+    "imageSmall": "assets/cards/sv6pt5/96-sm.webp",
+    "market": 17.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-96/large"
+  },
+  {
+    "id": "sv6pt5-97",
+    "name": "Powerglass",
+    "number": "97",
+    "rarity": "Hyper Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "assets/cards/sv6pt5/97.webp",
+    "imageSmall": "assets/cards/sv6pt5/97-sm.webp",
+    "market": 21.83,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-97/large"
+  },
+  {
+    "id": "sv6pt5-98",
+    "name": "Basic Darkness Energy",
+    "number": "98",
+    "rarity": "Hyper Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "image": "assets/cards/sv6pt5/98.webp",
+    "imageSmall": "assets/cards/sv6pt5/98-sm.webp",
+    "market": 59.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-98/large"
+  },
+  {
+    "id": "sv6pt5-99",
+    "name": "Basic Metal Energy",
+    "number": "99",
+    "rarity": "Hyper Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "image": "assets/cards/sv6pt5/99.webp",
+    "imageSmall": "assets/cards/sv6pt5/99-sm.webp",
+    "market": 34.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-99/large"
+  }
+]

@@ -145,6 +145,7 @@ export function socialUserFields(row) {
 
 function parseJson(raw, fallback) {
   if (raw == null || raw === "") return fallback;
+  if (typeof raw !== "string") return raw;
   try {
     return JSON.parse(raw);
   } catch {
@@ -153,7 +154,7 @@ function parseJson(raw, fallback) {
 }
 
 function parseShowcase(raw) {
-  const list = parseJson(raw, []);
+  const list = Array.isArray(raw) ? raw : parseJson(raw, []);
   if (!Array.isArray(list)) return [];
   return list
     .map((row) => {

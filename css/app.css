@@ -531,6 +531,11 @@ h1 em { font-style: normal; color: var(--gold); }
   --foil-metal: url("../assets/foil/metal.png");
   --foil-facet: url("../assets/foil/facet.png");
   --foil-prism: url("../assets/foil/prism.png");
+  --foil-swirl: url("../assets/foil/swirl.png");
+  --foil-pokeball: url("../assets/foil/pokeball.png");
+  --foil-pokeball-tiny: url("../assets/foil/pokeball-tiny.png");
+  --foil-masterball: url("../assets/foil/masterball.png");
+  --foil-masterball-tiny: url("../assets/foil/masterball-tiny.png");
   --win-holo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='630' height='880' viewBox='0 0 630 880' preserveAspectRatio='xMidYMid meet'%3E%3Crect width='630' height='880' fill='white' fill-opacity='0'/%3E%3Crect x='50' y='82' width='534' height='334' fill='white'/%3E%3C/svg%3E");
   --win-evo: url("../assets/masks/win-evo.png");
   /* Same windows as the .foil-holo.foil-energy / .foil-holo.foil-trainer
@@ -619,6 +624,14 @@ h1 em { font-style: normal; color: var(--gold); }
   border-color: rgba(150, 225, 255, 0.7);
   box-shadow: 0 0 9px rgba(120, 215, 255, 0.4), 0 2px 7px rgba(0, 0, 0, 0.65);
 }
+.rarity-stamp.rev-pokeball {
+  border-color: rgba(255, 92, 92, 0.78);
+  box-shadow: 0 0 9px rgba(255, 72, 72, 0.42), 0 2px 7px rgba(0, 0, 0, 0.65);
+}
+.rarity-stamp.rev-masterball {
+  border-color: rgba(186, 110, 255, 0.82);
+  box-shadow: 0 0 9px rgba(168, 86, 255, 0.45), 0 2px 7px rgba(0, 0, 0, 0.65);
+}
 
 /* Both overlay layers mask themselves against the card art, so the shine
    covers the entire card and clips exactly at its printed rounded corners
@@ -656,7 +669,9 @@ h1 em { font-style: normal; color: var(--gold); }
 .tcg.lit.foil-sir .glare,
 .tcg.lit.foil-gold .glare,
 .tcg.lit.foil-ultra .glare,
-.tcg.lit.foil-ex .glare { opacity: 0.4; }
+.tcg.lit.foil-ex .glare,
+.tcg.lit.foil-mega-attack .glare,
+.tcg.lit.foil-bwr .glare { opacity: 0.4; }
 /* ---- Foil ----------------------------------------------------------------
    Pointer-driven holofoil: color-dodge rainbow + grain, same family of tricks
    as a real card under a lamp. Each rarity gets its own pattern. */
@@ -996,6 +1011,56 @@ h1 em { font-style: normal; color: var(--gold); }
   -webkit-mask-image: var(--art), var(--win-holo-trainer);
   mask-image: var(--art), var(--win-holo-trainer);
 }
+
+/* Poké Ball / Master Ball reverse: same window cut as cosmos reverse, but the
+   frame is tiled balls instead of flakes. Black Bolt, White Flare, and later
+   151 use these; cosmos stays the Mega Evolution default. */
+.foil-rev-pokeball .foil {
+  background-image:
+    var(--foil-pokeball),
+    var(--foil-pokeball-tiny),
+    linear-gradient(
+      118deg,
+      hsl(2 88% 62% / 0.55),
+      hsl(48 90% 62% / 0.4),
+      hsl(200 85% 64% / 0.45),
+      hsl(2 88% 62% / 0.55)
+    );
+  background-size: 118px 118px, 64px 64px, 230% 230%;
+  background-position:
+    calc(var(--px) * 36px) calc(var(--py) * 28px),
+    calc(var(--px) * -22px) calc(var(--py) * 18px),
+    calc(var(--px) * 80%) calc(var(--py) * 70%);
+  background-blend-mode: overlay, overlay, normal;
+  filter: brightness(0.82) contrast(1.18) saturate(1.15);
+}
+.tcg.lit.foil-rev-pokeball .foil {
+  opacity: calc(0.56 * var(--foil-strength, 1));
+  filter: brightness(0.9) contrast(1.22) saturate(1.22);
+}
+.foil-rev-masterball .foil {
+  background-image:
+    var(--foil-masterball),
+    var(--foil-masterball-tiny),
+    linear-gradient(
+      118deg,
+      hsl(278 72% 62% / 0.55),
+      hsl(320 78% 64% / 0.5),
+      hsl(210 70% 66% / 0.4),
+      hsl(278 72% 62% / 0.55)
+    );
+  background-size: 118px 118px, 64px 64px, 230% 230%;
+  background-position:
+    calc(var(--px) * 36px) calc(var(--py) * 28px),
+    calc(var(--px) * -22px) calc(var(--py) * 18px),
+    calc(var(--px) * 80%) calc(var(--py) * 70%);
+  background-blend-mode: overlay, overlay, normal;
+  filter: brightness(0.84) contrast(1.2) saturate(1.2);
+}
+.tcg.lit.foil-rev-masterball .foil {
+  opacity: calc(0.58 * var(--foil-strength, 1));
+  filter: brightness(0.92) contrast(1.24) saturate(1.28);
+}
 /* Illustration Rare: full-art glitter, shinier than a window holo. */
 .foil-ir .foil {
   background-image:
@@ -1032,8 +1097,6 @@ h1 em { font-style: normal; color: var(--gold); }
   filter: brightness(0.82) contrast(1.3) saturate(0.6);
 }
 
-/* Special Illustration Rare: stamped/etched texture like Pokumon “Textured”
-   holofoil — grain and crosshatch catch the lamp, rainbow rides the ridges. */
 /*
  * Premium foils.
  *
@@ -1046,65 +1109,161 @@ h1 em { font-style: normal; color: var(--gold); }
  *     (the card is not catching a lamp), brightening as you move toward the
  *     edges. `--hyp` is already the 0..1 distance from card centre.
  *  2. Each rarity gets its own blend mode instead of everything colour-dodging.
- *     Only the gold keeps colour-dodge, which is what suits metal.
+ *     Gold keeps colour-dodge at low brightness; SAR and Black White Rare use
+ *     overlay so the illustration stays readable.
  */
 
-/* Special Illustration Rare: etched crosshatch, deep colour rather than glare. */
-.foil-sir {
-  --tex: var(--foil-weave);
-}
+/* Special Illustration Rare: stamped swirl + grain, silver sheen. Overlay
+   (not colour-dodge) so the painting stays visible — texture catches the lamp
+   the way a V alternate-art foil does, without a rainbow sitting on the art. */
 .foil-sir .foil {
-  /* Lower opacity than the plain holos: the etched sheen should sit over the
-     illustration, not replace it. */
-  opacity: 0.34;
-  /* screen only ever lightens. hard-light was multiplying the texture's dark
-     areas into the art, which is what made these read as muddy. */
-  mix-blend-mode: screen;
-  background-image:
-    var(--tex),
-    repeating-linear-gradient(31deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 5px),
-    repeating-linear-gradient(
-      108deg,
-      hsl(325 90% 70% / 0.55) 0 4%,
-      hsl(38 95% 66% / 0.5) 10%,
-      hsl(150 80% 62% / 0.46) 18%,
-      hsl(196 92% 66% / 0.52) 26%,
-      hsl(262 88% 72% / 0.55) 34%,
-      hsl(325 90% 70% / 0.55) 42%
-    );
-  background-size: 84px 84px, 7px 7px, 240% 100%;
-  background-position:
-    calc(var(--px) * 34px) calc(var(--py) * 26px),
-    calc(var(--px) * 10px) calc(var(--py) * -8px),
-    calc(var(--px) * 100%) 0;
-  background-blend-mode: soft-light, overlay, normal;
-  filter: brightness(calc(0.62 + var(--hyp, 0.12) * 0.4)) contrast(1.25) saturate(1.45);
-}
-.tcg.lit.foil-sir .foil {
-  opacity: 0.46;
-  /* Must repeat the filter: `.tcg.lit .foil` is three classes and would
-     otherwise win over `.foil-sir .foil` and restore the blown-out look. */
-  filter: brightness(calc(0.62 + var(--hyp, 0.12) * 0.4)) contrast(1.25) saturate(1.45);
-}
-.foil-sir .foil::before {
-  opacity: 0.4;
+  opacity: 0.26;
   mix-blend-mode: overlay;
   background-image:
-    var(--tex),
-    repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 6px);
-  background-size: 64px 64px, 9px 9px;
+    var(--foil-swirl),
+    var(--foil-weave),
+    var(--foil-cosmos),
+    var(--foil-glitter),
+    var(--foil-grain),
+    repeating-linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0) 0 6%,
+      rgba(255, 255, 255, 0.42) 10%,
+      rgba(255, 255, 255, 0) 16%,
+      rgba(210, 218, 230, 0.22) 22%,
+      rgba(255, 255, 255, 0) 28%
+    ),
+    repeating-linear-gradient(
+      -38deg,
+      rgba(255, 255, 255, 0) 0 8%,
+      rgba(255, 255, 255, 0.28) 12%,
+      rgba(255, 255, 255, 0) 20%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.32) 0%,
+      transparent 44%
+    );
+  background-size:
+    190% 190%,
+    68px 68px,
+    168px 168px,
+    180px 180px,
+    128px 128px,
+    260% 260%,
+    220% 220%,
+    150% 150%;
   background-position:
-    calc(var(--px) * -24px) calc(var(--py) * 20px),
-    calc(var(--px) * 8px) calc(var(--py) * -6px);
+    calc(var(--px) * 45%) calc(var(--py) * 38%),
+    calc(var(--px) * 16px) calc(var(--py) * 12px),
+    calc(var(--px) * -14px) calc(var(--py) * 18px),
+    calc(var(--px) * 20px) calc(var(--py) * -12px),
+    calc(var(--px) * -10px) calc(var(--py) * 14px),
+    calc(50% + var(--px) * 85%) calc(50% - var(--py) * 40%),
+    calc(50% - var(--px) * 90%) calc(50% + var(--py) * 50%),
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: overlay, overlay, overlay, overlay, overlay, soft-light, soft-light, normal;
+  filter: brightness(calc(0.94 + var(--hyp, 0.12) * 0.16)) contrast(1.18) saturate(0.22);
+}
+.tcg.lit.foil-sir .foil {
+  opacity: 0.36;
+  /* Must repeat the filter: `.tcg.lit .foil` is three classes and would
+     otherwise win over `.foil-sir .foil`. */
+  filter: brightness(calc(0.94 + var(--hyp, 0.12) * 0.16)) contrast(1.18) saturate(0.22);
+}
+.foil-sir .foil::before {
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image:
+    var(--foil-swirl),
+    var(--foil-grain);
+  background-size: 160% 160%, 96px 96px;
+  background-position:
+    calc(50% - var(--px) * 40%) calc(50% + var(--py) * 32%),
+    calc(var(--px) * -18px) calc(var(--py) * 14px);
+  background-blend-mode: overlay, overlay;
 }
 .foil-sir .foil::after {
+  opacity: 0.32;
+  mix-blend-mode: soft-light;
+  background-image:
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.28) 0%,
+      transparent 48%
+    );
+  background-size: 150% 150%;
+  background-position: var(--mx, 50%) var(--my, 50%);
+}
+
+/* Per-card etch map: the sheen is masked to the stamp so the painting stays
+   readable. --etch is stamped on .has-etch by js/etch.js. */
+.foil-sir.has-etch .foil,
+.foil-bwr.has-etch .foil {
+  opacity: 0.68;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: var(--etch);
+  mask-image: var(--etch);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-image:
+    repeating-linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0) 0 5%,
+      rgba(255, 255, 255, 0.82) 9%,
+      rgba(255, 255, 255, 0) 14%,
+      rgba(210, 218, 232, 0.42) 20%,
+      rgba(255, 255, 255, 0) 26%
+    ),
+    repeating-linear-gradient(
+      -36deg,
+      rgba(255, 255, 255, 0) 0 7%,
+      rgba(255, 255, 255, 0.52) 11%,
+      rgba(255, 255, 255, 0) 18%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.72) 0%,
+      transparent 46%
+    );
+  background-size: 280% 280%, 240% 240%, 160% 160%;
+  background-position:
+    calc(50% + var(--px) * 90%) calc(50% - var(--py) * 45%),
+    calc(50% - var(--px) * 95%) calc(50% + var(--py) * 55%),
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: soft-light, soft-light, normal;
+  filter: brightness(calc(0.9 + var(--hyp, 0.12) * 0.26)) contrast(1.12) saturate(0.16);
+}
+.tcg.lit.foil-sir.has-etch .foil,
+.tcg.lit.foil-bwr.has-etch .foil {
+  opacity: 0.82;
+  filter: brightness(calc(0.9 + var(--hyp, 0.12) * 0.26)) contrast(1.12) saturate(0.16);
+}
+.foil-sir.has-etch .foil::before,
+.foil-bwr.has-etch .foil::before {
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+  background-image: var(--foil-grain);
+  background-size: 96px 96px;
+  background-position: calc(var(--px) * -16px) calc(var(--py) * 12px);
+  background-blend-mode: overlay;
+}
+.foil-sir.has-etch .foil::after,
+.foil-bwr.has-etch .foil::after {
   opacity: 0.4;
-  background: linear-gradient(
-    100deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.22) 50%,
-    transparent 58%
-  );
+  mix-blend-mode: soft-light;
+  background-image:
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.42) 0%,
+      transparent 48%
+    );
+  background-size: 150% 150%;
+  background-position: var(--mx, 50%) var(--my, 50%);
 }
 
 /* Ultra Rare: oil-slick diffraction. Its own material — these are ex full arts
@@ -1203,6 +1362,133 @@ h1 em { font-style: normal; color: var(--gold); }
     rgba(255, 226, 150, 0.3) 50%,
     transparent 58%
   );
+}
+
+/* Mega Attack Rare: full-card foil, punchier than a Double Rare ex. Magenta
+   and lime follow the two-tone star on the printed rarity mark. */
+.foil-mega-attack .foil {
+  opacity: 0.36;
+  mix-blend-mode: screen;
+  background-image:
+    var(--foil-facet),
+    repeating-linear-gradient(
+      108deg,
+      hsl(332 92% 64% / 0.58) 0 5%,
+      hsl(48 95% 62% / 0.4) 10%,
+      hsl(142 78% 58% / 0.52) 16%,
+      hsl(332 92% 64% / 0.58) 24%
+    ),
+    repeating-linear-gradient(
+      38deg,
+      rgba(255, 255, 255, 0.14) 0 1px,
+      transparent 1px 7px
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 210, 230, 0.28) 0%,
+      transparent 46%
+    );
+  background-size: 140px 140px, 240% 100%, 100% 100%, 150% 150%;
+  background-position:
+    calc(var(--px) * 28px) calc(var(--py) * 22px),
+    calc(var(--px) * 100%) 0,
+    0 0,
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: overlay, normal, overlay, normal;
+  filter: brightness(calc(0.66 + var(--hyp, 0.12) * 0.38)) contrast(1.22) saturate(1.55);
+}
+.tcg.lit.foil-mega-attack .foil {
+  opacity: 0.48;
+  filter: brightness(calc(0.66 + var(--hyp, 0.12) * 0.38)) contrast(1.22) saturate(1.55);
+}
+.foil-mega-attack .foil::after {
+  opacity: 0.5;
+  background: linear-gradient(
+    96deg,
+    transparent 40%,
+    rgba(255, 140, 200, 0.32) 50%,
+    transparent 60%
+  );
+}
+
+/* Black White Rare: same stamped swirl as SARs, kept silver. Overlay so the
+   linework stays readable; metal + swirl catch as white, not a colour wash. */
+.foil-bwr .foil {
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+  background-image:
+    var(--foil-swirl),
+    var(--foil-metal),
+    var(--foil-weave),
+    var(--foil-cosmos),
+    var(--foil-grain),
+    repeating-linear-gradient(
+      128deg,
+      rgba(255, 255, 255, 0) 0 6%,
+      rgba(255, 255, 255, 0.48) 10%,
+      rgba(255, 255, 255, 0) 16%,
+      rgba(200, 208, 220, 0.24) 22%,
+      rgba(255, 255, 255, 0) 28%
+    ),
+    repeating-linear-gradient(
+      -38deg,
+      rgba(255, 255, 255, 0) 0 8%,
+      rgba(255, 255, 255, 0.3) 12%,
+      rgba(255, 255, 255, 0) 20%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.34) 0%,
+      transparent 44%
+    );
+  background-size:
+    190% 190%,
+    170% 100%,
+    68px 68px,
+    168px 168px,
+    128px 128px,
+    260% 260%,
+    220% 220%,
+    150% 150%;
+  background-position:
+    calc(var(--px) * 45%) calc(var(--py) * 38%),
+    calc(var(--px) * 40%) calc(var(--py) * 18%),
+    calc(var(--px) * 16px) calc(var(--py) * 12px),
+    calc(var(--px) * -14px) calc(var(--py) * 18px),
+    calc(var(--px) * -10px) calc(var(--py) * 14px),
+    calc(50% + var(--px) * 85%) calc(50% - var(--py) * 40%),
+    calc(50% - var(--px) * 90%) calc(50% + var(--py) * 50%),
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: overlay, overlay, overlay, overlay, overlay, soft-light, soft-light, normal;
+  filter: brightness(calc(0.96 + var(--hyp, 0.12) * 0.14)) contrast(1.2) saturate(0.08);
+}
+.tcg.lit.foil-bwr .foil {
+  opacity: 0.4;
+  filter: brightness(calc(0.96 + var(--hyp, 0.12) * 0.14)) contrast(1.2) saturate(0.08);
+}
+.foil-bwr .foil::before {
+  opacity: 0.32;
+  mix-blend-mode: overlay;
+  background-image:
+    var(--foil-swirl),
+    var(--foil-grain);
+  background-size: 160% 160%, 96px 96px;
+  background-position:
+    calc(50% - var(--px) * 40%) calc(50% + var(--py) * 32%),
+    calc(var(--px) * -18px) calc(var(--py) * 14px);
+  background-blend-mode: overlay, overlay;
+}
+.foil-bwr .foil::after {
+  opacity: 0.34;
+  mix-blend-mode: soft-light;
+  background-image:
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 48%
+    );
+  background-size: 150% 150%;
+  background-position: var(--mx, 50%) var(--my, 50%);
 }
 
 .spread-card .tcg,
@@ -2098,10 +2384,6 @@ select.filter option {
 .danger-btn { border-color: rgba(255, 110, 110, 0.45); color: #ff9d9d; }
 .danger-btn:hover { background: rgba(255, 110, 110, 0.12); }
 
-.panel-stats { display: flex; flex-wrap: wrap; gap: 20px; }
-.panel-stats.wide { gap: 26px; }
-.panel-stats b { display: block; font-size: 21px; line-height: 1.2; }
-.panel-stats span { color: var(--muted); font-size: 12px; }
 .panel-progress { margin-top: 18px; }
 .progress-head {
   display: flex;
@@ -2127,17 +2409,6 @@ select.filter option {
    swallow the artwork. */
 .mini-card .rarity-stamp { font-size: 9px; padding: 0.26em 0.44em; }
 
-.account-card {
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 22px;
-  margin-bottom: 16px;
-  background: linear-gradient(180deg, rgba(240, 193, 75, 0.06), rgba(255, 255, 255, 0.02));
-}
-.account-id { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
-.account-id h3 { margin: 0 0 4px; font-family: var(--display); font-size: 20px; }
-.account-id p { margin: 0; color: var(--muted); font-size: 13px; }
-.account-id .soon { margin-left: auto; }
 .brand-logo.lg { width: 60px; height: 60px; flex-basis: 60px; border-radius: 16px; }
 .soon-list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.9; }
 
@@ -2159,7 +2430,6 @@ select.filter option {
   height: 118%;
   object-fit: contain;
 }
-.account-id .trainer-mark { flex: none; }
 .account-title {
   display: inline-block;
   margin: 0 0 6px;
@@ -2179,55 +2449,6 @@ select.filter option {
   color: var(--ink);
   font-size: 14px;
   line-height: 1.5;
-}
-.account-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
-.account-actions a { text-decoration: none; }
-.badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.ach-chip {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 120px;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
-}
-.ach-chip.on {
-  border-color: rgba(240, 193, 75, 0.4);
-  background: rgba(240, 193, 75, 0.08);
-}
-.ach-chip.off { opacity: 0.45; }
-.ach-chip b { font-size: 13px; }
-.ach-chip span { color: var(--muted); font-size: 11px; line-height: 1.4; }
-.set-progress { display: flex; flex-direction: column; gap: 14px; }
-.set-progress-row .progress-head { margin-bottom: 6px; }
-.activity-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.activity-list li {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2px 12px;
-  padding: 10px 0;
-  border-top: 1px solid var(--line);
-  font-size: 13px;
-}
-.activity-list li:first-child { border-top: 0; padding-top: 0; }
-.activity-list span { color: var(--muted); font-size: 12px; }
-.activity-list time {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  align-self: center;
-  color: var(--muted);
-  font-size: 11px;
-  white-space: nowrap;
 }
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
 .field span { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -4087,7 +4308,6 @@ a.solid { color: #1a1408; }
 .tcg.art-missing .foil,
 .tcg.art-missing .glare { display: none; }
 
-.save-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
 /* ---- Radio ----------------------------------------------------------------
    Fixed mini player. z-index stays under .overlay (40) so pack ripping and
@@ -4875,6 +5095,10 @@ body:has(#inspect:not(.hidden)) .radio {
   box-shadow: 0 24px 60px rgba(0,0,0,0.55);
 }
 .player-tip.hidden { display: none; }
+/* .banner-wash sets contain: paint, which makes the banner an atomic stacking
+   context — it paints after the in-flow content of its later siblings, so it
+   covered the avatar and title that .tip-id pulls up over it. Layer the rows
+   the way .profile-hero already does. */
 .tip-banner {
   position: relative;
   z-index: 0;
@@ -5049,7 +5273,7 @@ body:has(#inspect:not(.hidden)) .radio {
   font-size: 13px;
 }
 
-.style-picks, .title-picks {
+.style-picks {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -5071,12 +5295,6 @@ body:has(#inspect:not(.hidden)) .radio {
   color: var(--gold-2);
 }
 
-.banner-preview {
-  height: 88px;
-  margin: 0 0 14px;
-  border-radius: 16px;
-  border: 1px solid var(--line);
-}
 .banner-wash {
   contain: paint;
   background:
@@ -5251,4 +5469,602 @@ body:has(#inspect:not(.hidden)) .player-tip {
     min-height: 36px;
   }
   .radio.is-open { width: min(300px, calc(100vw - 24px)); }
+}
+
+
+/* ---- Account -------------------------------------------------------------
+   The hero is a banner wash with the trainer sitting on its fade, then a
+   career ribbon, then a tab bar. Every tab body is a `.acct-grid` of panels so
+   the page keeps one rhythm however wide the window is. */
+
+.acct-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.acct-banner {
+  height: 150px;
+  /* Fades into the panel so the name never fights the wash behind it. */
+  -webkit-mask-image: linear-gradient(180deg, #000 34%, transparent);
+  mask-image: linear-gradient(180deg, #000 34%, transparent);
+}
+.acct-hero-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px;
+  margin-top: -56px;
+  padding: 0 24px 18px;
+}
+.trainer-mark.acct-face {
+  width: 96px;
+  height: 96px;
+  flex: none;
+  border-radius: 26px;
+  box-shadow: 0 0 0 4px #0e0b13, 0 18px 44px rgba(0, 0, 0, 0.5);
+}
+.acct-hero.signed-out .brand-logo.lg { width: 78px; height: 78px; flex-basis: 78px; border-radius: 22px; }
+.acct-copy { flex: 1; min-width: 220px; }
+.acct-copy h2 { margin: 6px 0 6px; font-family: var(--display); font-size: 30px; line-height: 1.05; }
+.acct-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.acct-code {
+  padding: 2px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+}
+.acct-hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.acct-hero-actions .ghost, .acct-hero-actions .solid { min-width: 0; padding: 9px 14px; font-size: 13px; }
+
+.acct-tiles {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+  gap: 10px;
+  padding: 0 24px;
+}
+.acct-tile {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.26);
+}
+.acct-tile b { display: block; font-size: 19px; line-height: 1.2; }
+.acct-tile span { color: var(--muted); font-size: 11px; font-weight: 600; }
+.acct-tile.pnl.up b { color: #3ee08a; }
+.acct-tile.pnl.down b { color: #ff8f8f; }
+
+.acct-progress {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px 20px;
+}
+.acct-progress-copy b { display: block; font-size: 14px; }
+.acct-progress-copy span { color: var(--muted); font-size: 12px; }
+.acct-progress .dex-bar.slim { flex: 1; min-width: 160px; height: 6px; margin: 0; }
+.claim-cta { min-width: 0; padding: 10px 18px; animation: claim-pulse 2.6s ease-in-out infinite; }
+@keyframes claim-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(240, 193, 75, 0.42); }
+  55% { box-shadow: 0 0 0 12px rgba(240, 193, 75, 0); }
+}
+
+.acct-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 18px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.acct-tabs::-webkit-scrollbar { display: none; }
+.acct-tab {
+  position: relative;
+  flex: 1 0 auto;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: color 0.16s ease, background 0.16s ease;
+}
+.acct-tab:hover { color: var(--ink); }
+.acct-tab.on {
+  background: linear-gradient(180deg, rgba(240, 193, 75, 0.22), rgba(240, 193, 75, 0.09));
+  box-shadow: inset 0 0 0 1px rgba(240, 193, 75, 0.34);
+  color: var(--gold-2);
+}
+.acct-dot {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  margin-left: 7px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #1a1408;
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.acct-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.acct-grid .span-2 { grid-column: span 2; }
+.acct-grid .span-full { grid-column: 1 / -1; }
+.acct-chart { min-height: 130px; }
+
+.panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.panel-head h3 { margin: 0; flex: 1; }
+.panel-head .panel-note { flex-basis: 100%; margin: 0; }
+.ghost.sm, .solid.sm { min-width: 0; padding: 7px 13px; font-size: 12px; border-radius: 999px; }
+.ghost.wide { display: block; width: 100%; margin-top: 10px; text-align: center; text-decoration: none; }
+.panel-note.tail { margin: 12px 0 0; }
+.mini-row.tight .mini-card { width: 54px; }
+
+.set-rings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(212px, 1fr));
+  gap: 12px;
+}
+.set-ring {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  text-align: left;
+  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+.set-ring:hover { transform: translateY(-2px); border-color: rgba(240, 193, 75, 0.4); }
+.set-ring.done {
+  border-color: rgba(240, 193, 75, 0.45);
+  background: linear-gradient(120deg, rgba(240, 193, 75, 0.12), rgba(255, 255, 255, 0.02));
+}
+.set-ring .home-ring { width: 58px; height: 58px; }
+.set-ring .home-ring > span { inset: 6px; }
+.set-ring .home-ring b { font-size: 13px; }
+.set-ring .home-ring small { font-size: 8px; }
+.set-ring-copy {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1px 8px;
+  min-width: 0;
+}
+.set-ring-copy img { grid-row: span 2; width: 22px; height: 22px; object-fit: contain; }
+.set-ring-copy b { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.set-ring-copy small { color: var(--muted); font-size: 11px; }
+
+/* ---- The badge wall ------------------------------------------------------
+   Tier sets `--tone`, and everything on the tile — ring, bar, title tag, ready
+   glow — is mixed from it, so a new tier is one colour to add. */
+
+.ach-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+}
+.ach-summary { display: flex; flex-wrap: wrap; gap: 24px; }
+.ach-summary b { display: block; font-size: 20px; line-height: 1.2; }
+.ach-summary span { color: var(--muted); font-size: 11px; font-weight: 600; }
+.ach-summary .hot b { color: var(--gold-2); }
+.ach-head .solid { min-width: 0; }
+.ach-head .solid:disabled { opacity: 0.4; cursor: default; }
+.ach-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.ach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(304px, 1fr));
+  gap: 12px;
+}
+.ach-tile {
+  --tone: #c98f5a;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.025);
+  overflow: hidden;
+}
+.ach-tile.t2 { --tone: #cfd8e3; }
+.ach-tile.t3 { --tone: #f0c14b; }
+.ach-tile.t4 { --tone: #c88bff; }
+.ach-badge {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  flex: none;
+  border-radius: 50%;
+  background: conic-gradient(var(--tone) calc(var(--pct) * 1%), rgba(244, 239, 228, 0.08) 0);
+}
+.ach-badge > span {
+  position: absolute;
+  inset: 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #100d16;
+  color: var(--tone);
+  font-family: var(--display);
+  font-size: 13px;
+}
+.ach-tile-copy b { font-size: 14px; }
+.ach-tile-copy p { margin: 3px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+.ach-bar {
+  height: 5px;
+  margin-top: 9px;
+  border-radius: 99px;
+  background: #1c1822;
+  overflow: hidden;
+}
+.ach-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--tone), var(--gold-2));
+}
+.ach-reward { display: grid; justify-items: end; gap: 6px; text-align: right; }
+.ach-coin { color: var(--gold-2); font-size: 14px; font-weight: 800; white-space: nowrap; }
+.ach-title-tag {
+  padding: 2px 8px;
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
+  border-radius: 999px;
+  color: var(--tone);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ach-done { color: #3ee08a; font-size: 12px; font-weight: 700; }
+.ach-progress { color: var(--muted); font-size: 11px; font-weight: 600; }
+
+.ach-tile.is-locked { opacity: 0.6; }
+.ach-tile.is-locked .ach-badge > span { color: var(--muted); }
+.ach-tile.is-claimed {
+  border-color: color-mix(in srgb, var(--tone) 34%, transparent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--tone) 8%, transparent), rgba(255, 255, 255, 0.02));
+}
+.ach-tile.is-ready {
+  border-color: color-mix(in srgb, var(--tone) 58%, transparent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--tone) 16%, transparent), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 0 30px color-mix(in srgb, var(--tone) 16%, transparent);
+}
+/* A slow sweep across anything waiting to be claimed. */
+.ach-tile.is-ready::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.14) 50%, transparent 62%);
+  background-size: 260% 100%;
+  animation: ach-sweep 3.4s ease-in-out infinite;
+}
+@keyframes ach-sweep {
+  0% { background-position: 130% 0; }
+  60%, 100% { background-position: -30% 0; }
+}
+.ach-grid.preview .ach-tile { opacity: 0.5; }
+
+.next-list { display: grid; gap: 15px; }
+.next-row { --tone: var(--gold); }
+.next-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 13px; }
+.next-head span { color: var(--muted); font-size: 11px; }
+.next-row small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+
+/* ---- Pull history sheet -------------------------------------------------- */
+
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(5, 4, 8, 0.74);
+  backdrop-filter: blur(4px);
+}
+.sheet {
+  position: fixed;
+  z-index: 61;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  width: min(780px, calc(100% - 28px));
+  max-height: min(82vh, 840px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(12, 10, 16, 0.98);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px 14px;
+}
+.sheet-head h3 { margin: 0; font-family: var(--display); font-size: 19px; }
+.sheet-head p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+.sheet-head .ghost { min-width: 0; padding: 8px 14px; font-size: 13px; }
+.sheet-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0 22px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.sheet-total { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 600; }
+.sheet-body { padding: 14px 22px 22px; overflow: auto; }
+.pull-list { display: grid; gap: 8px; }
+.pull-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.pull-row .mini-card { width: 52px; }
+.pull-row .ghost-card { display: block; height: 72px; border-radius: 6px; background: rgba(255, 255, 255, 0.05); }
+.pull-copy b { display: block; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pull-copy span { color: var(--muted); font-size: 11px; }
+.pull-tags { display: flex; gap: 6px; }
+.tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.tag.new { background: rgba(62, 224, 138, 0.14); color: #3ee08a; }
+.tag.rev { background: rgba(155, 109, 255, 0.18); color: #c3a6ff; }
+.pull-value { color: var(--gold-2); font-size: 13px; font-weight: 700; white-space: nowrap; }
+.pull-row time { color: var(--muted); font-size: 11px; white-space: nowrap; }
+
+/* ---- Profile tab --------------------------------------------------------- */
+
+.share-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 8px 8px 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.28);
+}
+.share-row code {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 12px;
+}
+.pin-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.pin-slot { display: grid; gap: 6px; width: 100px; }
+.pin-slot .mini-card { width: 100%; }
+.pin-drop {
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+.pin-drop:hover { border-color: rgba(255, 110, 110, 0.45); color: #ff9d9d; }
+
+/* ---- Look tab ------------------------------------------------------------ */
+
+.look-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 300px) minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+}
+.look-preview {
+  position: sticky;
+  top: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.look-cap {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.look-card {
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #100d14;
+}
+.look-card .acct-banner { position: relative; z-index: 0; pointer-events: none; }
+.look-card .acct-banner { height: 104px; }
+.look-id {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  margin-top: -38px;
+  padding: 0 16px 18px;
+  text-align: center;
+}
+.trainer-mark.look-face {
+  width: 76px;
+  height: 76px;
+  margin-bottom: 8px;
+  border-radius: 22px;
+  box-shadow: 0 0 0 4px #120f16, 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+.look-id b { font-family: var(--display); font-size: 18px; }
+.look-id small { color: var(--muted); font-size: 12px; }
+.look-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 12px; }
+.look-controls { display: grid; gap: 16px; }
+.look-controls .avatar-grid { max-height: 320px; }
+
+.title-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 8px;
+  max-height: 360px;
+  overflow: auto;
+  padding: 2px;
+}
+.title-chip {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  text-align: left;
+}
+.title-chip b { font-size: 13px; }
+.title-chip small { color: var(--muted); font-size: 10px; line-height: 1.45; }
+.title-chip.on { border-color: rgba(240, 193, 75, 0.5); background: rgba(240, 193, 75, 0.1); }
+.title-chip.on b { color: var(--gold-2); }
+.title-chip.locked { opacity: 0.4; cursor: default; }
+.title-award {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  color: #c88bff;
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ---- Reward flash -------------------------------------------------------- */
+
+.reward-flash {
+  position: fixed;
+  z-index: 120;
+  left: 50%;
+  top: 16%;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  padding: 20px 30px;
+  border: 1px solid rgba(240, 193, 75, 0.5);
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(48, 35, 12, 0.96), rgba(14, 11, 18, 0.96));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 60px rgba(240, 193, 75, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -16px) scale(0.92);
+  transition: opacity 0.26s ease, transform 0.34s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.reward-flash.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.reward-flash b { font-family: var(--display); font-size: 30px; color: var(--gold-2); }
+.reward-flash span { color: var(--ink); font-size: 13px; font-weight: 600; }
+.reward-flash i {
+  color: #c88bff;
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1040px) {
+  .acct-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .acct-grid .span-2 { grid-column: 1 / -1; }
+  .look-layout { grid-template-columns: 1fr; }
+  .look-preview { position: static; }
+}
+@media (max-width: 720px) {
+  .acct-grid { grid-template-columns: 1fr; }
+  .acct-banner { height: 118px; }
+  .acct-hero-body { margin-top: -46px; padding: 0 16px 16px; }
+  .trainer-mark.acct-face { width: 78px; height: 78px; border-radius: 22px; }
+  .acct-copy h2 { font-size: 24px; }
+  .acct-hero-actions { margin-left: 0; width: 100%; }
+  .acct-hero-actions .ghost, .acct-hero-actions .solid { flex: 1; }
+  .acct-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 0 16px; }
+  .acct-tile { padding: 9px 10px; }
+  .acct-tile b { font-size: 15px; }
+  .acct-tile span { font-size: 10px; }
+  .acct-progress { padding: 16px; }
+  .acct-progress .claim-cta { width: 100%; }
+  .acct-tab { flex: 0 0 auto; padding: 9px 14px; }
+  .ach-grid { grid-template-columns: 1fr; }
+  .pull-row { grid-template-columns: 46px minmax(0, 1fr) auto; row-gap: 4px; }
+  .pull-row .mini-card { width: 46px; }
+  .pull-tags { grid-column: 2; }
+  .pull-row time { grid-column: 3; }
+  .sheet { width: calc(100% - 16px); max-height: 88vh; }
+  .sheet-head, .sheet-filters, .sheet-body { padding-left: 16px; padding-right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ach-tile.is-ready::after, .claim-cta { animation: none; }
 }

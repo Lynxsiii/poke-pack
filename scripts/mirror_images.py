@@ -38,7 +38,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 CARD_DIR = ROOT / "assets" / "cards"
 
-SETS = ["me5", "me4", "me3", "me2pt5", "me2", "me1"]
+SETS = [p.stem for p in (DATA / "sets").glob("*.json")]
 
 # (suffix, width, quality) — width in px, height follows the 733x1024 scan ratio.
 VARIANTS = [("", 600, 75), ("-sm", 320, 75)]

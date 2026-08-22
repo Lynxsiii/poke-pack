@@ -82,5 +82,124 @@
       "sir": 0.0125,
       "hyper": 0.00093
     }
+  },
+  "sv10": {
+    "name": "Destined Rivals",
+    "printedTotal": 182,
+    "released": "2025-05-30",
+    "updated": "2026-05-05",
+    "source": "Source: TCGPlayer pull rate article (via Game Rant / Cardrake), based on 8,000+ community pack openings. Rates: DR 1/5, IR 1/12, UR 1/16, SIR 1/94, HR 1/149. No ACE SPEC in this set.",
+    "rates": {
+      "double": 0.2,
+      "ir": 0.083,
+      "ultra": 0.0625,
+      "sir": 0.01064,
+      "hyper": 0.00671
+    }
+  },
+  "sv9": {
+    "name": "Journey Together",
+    "printedTotal": 159,
+    "released": "2025-03-28",
+    "updated": "2026-05-05",
+    "source": "Rates sourced from aggregated community data (cardrake.com, TCGPlayer set analytics, and a referenced 1000-pack opening). DR 1/5, IR 1/12, UR 1/15, SIR 1/86, HR 1/137. No ACE SPEC.",
+    "rates": {
+      "double": 0.2,
+      "ir": 0.083,
+      "ultra": 0.067,
+      "sir": 0.0116,
+      "hyper": 0.0073
+    }
+  },
+  "sv8pt5": {
+    "name": "Prismatic Evolutions",
+    "printedTotal": 131,
+    "released": "2025-01-17",
+    "updated": "2026-05-10",
+    "source": "TCGPlayer article (1,200 packs, Jan 2025) as reported by PokeBeach. Poké Ball foil 33.1% (1/3), Master Ball 4.92% (1/20) on the second reverse slot. DR 16.51% (1/6), UR 7.46% (1/13), ACE SPEC 4.68% (1/21), SIR 2.22% (1/45), Hyper Rare 0.56% (1/180). No Illustration Rares. Poké Ball printings exist for every Common, Uncommon, Rare, and Double Rare; Master Ball is C/U/R Pokémon only.",
+    "rates": {
+      "double": 0.1651,
+      "ultra": 0.0746,
+      "ace": 0.0468,
+      "sir": 0.0222,
+      "hyper": 0.0056,
+      "pokeball": 0.331,
+      "masterball": 0.0492
+    }
+  },
+  "sv8": {
+    "name": "Surging Sparks",
+    "printedTotal": 191,
+    "released": "2024-11-08",
+    "updated": "2026-05-05",
+    "source": "TCGPlayer official pull rate study (Nov 2024, ~8,640 packs) via PokeBeach. DR 1/6, ACE SPEC 1/20, IR 1/13, UR 1/15, SIR 1/87, Hyper Rare 1/189.",
+    "rates": {
+      "double": 0.167,
+      "ace": 0.05,
+      "ir": 0.077,
+      "ultra": 0.067,
+      "sir": 0.0115,
+      "hyper": 0.0053
+    }
+  },
+  "sv7": {
+    "name": "Stellar Crown",
+    "printedTotal": 142,
+    "released": "2024-09-13",
+    "updated": "2026-05-05",
+    "source": "TCGPlayer study (~8,000 packs) as reported alongside Twilight Masquerade / Temporal Forces. DR 1/5.9, ACE SPEC 1/20.2, IR 1/12.8, UR 1/14.8, SIR 1/90.1, Hyper Rare 1/137.",
+    "rates": {
+      "double": 0.1695,
+      "ace": 0.0495,
+      "ir": 0.0781,
+      "ultra": 0.0676,
+      "sir": 0.0111,
+      "hyper": 0.0073
+    }
+  },
+  "sv6pt5": {
+    "name": "Shrouded Fable",
+    "printedTotal": 64,
+    "released": "2024-08-02",
+    "updated": "2026-05-05",
+    "source": "Community aggregate (~3,000 packs, riporfliptcg / Dripshop). DR 1/6, IR 1/12, UR 1/15, ACE SPEC 1/20, SIR 1/67, Hyper Rare 1/143.",
+    "rates": {
+      "double": 0.167,
+      "ir": 0.085,
+      "ultra": 0.065,
+      "ace": 0.05,
+      "sir": 0.015,
+      "hyper": 0.007
+    }
+  },
+  "sv6": {
+    "name": "Twilight Masquerade",
+    "printedTotal": 167,
+    "released": "2024-05-24",
+    "updated": "2026-05-05",
+    "source": "TCGPlayer pull rate study (8,000+ packs, May 2024), corroborated by PokeBeach. DR 1/6, ACE SPEC 1/20, IR 1/13, UR 1/15, SIR 1/86, Hyper Rare 1/146.",
+    "rates": {
+      "double": 0.167,
+      "ace": 0.05,
+      "ir": 0.077,
+      "ultra": 0.067,
+      "sir": 0.0116,
+      "hyper": 0.00685
+    }
+  },
+  "sv5": {
+    "name": "Temporal Forces",
+    "printedTotal": 162,
+    "released": "2024-03-22",
+    "updated": "2026-05-05",
+    "source": "TCGPlayer (8,000+ packs, Mar 2024) via PokeBeach. Hardest SIR/gold of the early SV block. DR 1/5.9, ACE SPEC 1/20 (first reverse slot), IR 1/13, UR 1/15, SIR 1/86, Hyper Rare 1/139.",
+    "rates": {
+      "double": 0.1695,
+      "ace": 0.05,
+      "ir": 0.0769,
+      "ultra": 0.0667,
+      "sir": 0.0117,
+      "hyper": 0.0072
+    }
   }
 }

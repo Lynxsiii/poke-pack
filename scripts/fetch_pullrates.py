@@ -40,6 +40,10 @@ POOL = {
     "Illustration Rare": "ir",
     "Special Illustration Rare": "sir",
     "Mega Hyper Rare": "hyper",
+    "Hyper Rare": "hyper",
+    "ACE SPEC Rare": "ace",
+    "Black White Rare": "bwr",
+    "Mega Attack Rare": "megaAttack",
 }
 
 

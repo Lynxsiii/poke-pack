@@ -1,0 +1,5911 @@
+[
+  {
+    "id": "sv7-1",
+    "name": "Venusaur ex",
+    "number": "1",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "340",
+    "artist": "Saki Hayashiro",
+    "evolvesFrom": "Ivysaur",
+    "image": "assets/cards/sv7/1.webp",
+    "imageSmall": "assets/cards/sv7/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Dangerous Toxwhip",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tranquil Flower",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may heal 60 damage from 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.7,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-1/large"
+  },
+  {
+    "id": "sv7-2",
+    "name": "Ledyba",
+    "number": "2",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Whisker",
+    "flavorText": "When the weather turns cold, lots of Ledyba gather from everywhere to cluster and keep each other warm.",
+    "image": "assets/cards/sv7/2.webp",
+    "imageSmall": "assets/cards/sv7/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt Bounce",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-2/large"
+  },
+  {
+    "id": "sv7-3",
+    "name": "Ledian",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Masako Tomii",
+    "flavorText": "When the stars flicker in the night sky, it flutters about, scattering a glowing powder.",
+    "evolvesFrom": "Ledyba",
+    "image": "assets/cards/sv7/3.webp",
+    "imageSmall": "assets/cards/sv7/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Swift",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Glittering Star Pattern",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch in 1 of your opponent's Benched Pokémon that has 90 HP or less remaining to the Active Spot.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-3/large"
+  },
+  {
+    "id": "sv7-4",
+    "name": "Celebi",
+    "number": "4",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "satoma",
+    "flavorText": "This Pokémon has the ability to move through time. Records describing it as a forest deity can be found from many different eras.",
+    "image": "assets/cards/sv7/4.webp",
+    "imageSmall": "assets/cards/sv7/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Leaf Step",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-4/large"
+  },
+  {
+    "id": "sv7-5",
+    "name": "Lileep",
+    "number": "5",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Ounishi",
+    "flavorText": "This Pokémon was restored from a fossil. Lileep once lived in warm seas that existed approximately 100,000,000 years ago.",
+    "evolvesFrom": "Antique Root Fossil",
+    "image": "assets/cards/sv7/5.webp",
+    "imageSmall": "assets/cards/sv7/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Bind Down",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-5/large"
+  },
+  {
+    "id": "sv7-6",
+    "name": "Cradily",
+    "number": "6",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "miki kudo",
+    "flavorText": "It has short legs and can’t walk very fast, but its neck and tentacles can extend to over three times their usual length to nab distant prey.",
+    "evolvesFrom": "Lileep",
+    "image": "assets/cards/sv7/6.webp",
+    "imageSmall": "assets/cards/sv7/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Miasma Wind",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "100×",
+        "text": "This attack does 100 damage for each Special Condition affecting your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Selective Slime",
+        "text": "Once during your turn, you may flip a coin. If heads, choose Burned, Confused, or Poisoned. Your opponent's Active Pokémon is now affected by that Special Condition.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-6/large"
+  },
+  {
+    "id": "sv7-7",
+    "name": "Carnivine",
+    "number": "7",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Mousho",
+    "flavorText": "It attracts prey with its sweet-smelling saliva, then chomps down. It takes a whole day to eat prey.",
+    "image": "assets/cards/sv7/7.webp",
+    "imageSmall": "assets/cards/sv7/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Nosh",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 40 damage from this Pokémon."
+      },
+      {
+        "name": "Loom Over",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130-",
+        "text": "This attack does 10 less damage for each damage counter on this Pokémon."
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-7/large"
+  },
+  {
+    "id": "sv7-8",
+    "name": "Mow Rotom",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Amelicart",
+    "flavorText": "This Rotom has possessed a lawn mower. It will mow down grass and flowers, then swagger around with pride at its accomplishments.",
+    "image": "assets/cards/sv7/8.webp",
+    "imageSmall": "assets/cards/sv7/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Reaping Dash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Before doing damage, discard all Pokémon Tools and Special Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-8/large"
+  },
+  {
+    "id": "sv7-9",
+    "name": "Grubbin",
+    "number": "9",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Jerky",
+    "flavorText": "It spits sticky threads and winds them around branches, then swings nimbly from tree to tree in a pendulum-like motion.",
+    "image": "assets/cards/sv7/9.webp",
+    "imageSmall": "assets/cards/sv7/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Ambush",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-9/large"
+  },
+  {
+    "id": "sv7-10",
+    "name": "Gossifleur",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Heisuke Kitazawa",
+    "flavorText": "It anchors itself in the ground with its single leg, then basks in the sun. After absorbing enough sunlight, its petals spread as it blooms brilliantly.",
+    "image": "assets/cards/sv7/10.webp",
+    "imageSmall": "assets/cards/sv7/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Spin",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-10/large"
+  },
+  {
+    "id": "sv7-11",
+    "name": "Eldegoss",
+    "number": "11",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Yuka Tanaka",
+    "flavorText": "The seeds attached to its cotton fluff are full of nutrients. It spreads them on the wind so that plants and other Pokémon can benefit from them.",
+    "evolvesFrom": "Gossifleur",
+    "image": "assets/cards/sv7/11.webp",
+    "imageSmall": "assets/cards/sv7/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Breezy Gift",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put this Pokémon and all attached cards into your deck. If you do, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-11/large"
+  },
+  {
+    "id": "sv7-12",
+    "name": "Applin",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Yoriyuki Ikegami",
+    "flavorText": "Applin lives inside an apple. When an Applin is separated from its apple, its body loses moisture and the Pokémon grows weak.",
+    "image": "assets/cards/sv7/12.webp",
+    "imageSmall": "assets/cards/sv7/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Spray Fluid",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-12/large"
+  },
+  {
+    "id": "sv7-13",
+    "name": "Dipplin",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "The head sticking out belongs to the fore-wyrm, while the tail belongs to the core-wyrm. The two share one apple and help each other out.",
+    "evolvesFrom": "Applin",
+    "image": "assets/cards/sv7/13.webp",
+    "imageSmall": "assets/cards/sv7/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Coated Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon."
+      }
+    ],
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-13/large"
+  },
+  {
+    "id": "sv7-14",
+    "name": "Hydrapple ex",
+    "number": "14",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Dipplin",
+    "image": "assets/cards/sv7/14.webp",
+    "imageSmall": "assets/cards/sv7/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Syrup Storm",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "This attack does 30 more damage for each Grass Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ripening Charge",
+        "text": "Once during your turn, you may attach a Basic Grass Energy card from your hand to 1 of your Pokémon. If you attached Energy to a Pokémon in this way, heal 30 damage from that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-14/large"
+  },
+  {
+    "id": "sv7-15",
+    "name": "Nymble",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "It has its third set of legs folded up. When it’s in a tough spot, this Pokémon jumps over 30 feet using the strength of its legs.",
+    "image": "assets/cards/sv7/15.webp",
+    "imageSmall": "assets/cards/sv7/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-15/large"
+  },
+  {
+    "id": "sv7-16",
+    "name": "Lokix",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "akagi",
+    "flavorText": "When it decides to fight all out, it stands on its previously folded legs to enter Showdown Mode. It neutralizes its enemies in short order.",
+    "evolvesFrom": "Nymble",
+    "image": "assets/cards/sv7/16.webp",
+    "imageSmall": "assets/cards/sv7/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-16/large"
+  },
+  {
+    "id": "sv7-17",
+    "name": "Toedscool",
+    "number": "17",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Tetsu Kayama",
+    "flavorText": "Toedscool lives in muggy forests. The flaps that fall from its body are chewy and very delicious.",
+    "image": "assets/cards/sv7/17.webp",
+    "imageSmall": "assets/cards/sv7/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-17/large"
+  },
+  {
+    "id": "sv7-18",
+    "name": "Toedscruel",
+    "number": "18",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "DOM",
+    "flavorText": "These Pokémon gather into groups and form colonies deep within forests. They absolutely hate it when strangers approach.",
+    "evolvesFrom": "Toedscool",
+    "image": "assets/cards/sv7/18.webp",
+    "imageSmall": "assets/cards/sv7/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Whip Smash",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-18/large"
+  },
+  {
+    "id": "sv7-19",
+    "name": "Ponyta",
+    "number": "19",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Atsushi Furusawa",
+    "flavorText": "Its legs grow strong while it chases after its parent. It runs in fields and mountains all day.",
+    "image": "assets/cards/sv7/19.webp",
+    "imageSmall": "assets/cards/sv7/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Flop",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-19/large"
+  },
+  {
+    "id": "sv7-20",
+    "name": "Rapidash",
+    "number": "20",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "danciao",
+    "flavorText": "It gallops at nearly 150 mph. With its mane blazing ferociously, it races as if it were an arrow.",
+    "evolvesFrom": "Ponyta",
+    "image": "assets/cards/sv7/20.webp",
+    "imageSmall": "assets/cards/sv7/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Burning Run",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 60 more damage."
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-20/large"
+  },
+  {
+    "id": "sv7-21",
+    "name": "Pansear",
+    "number": "21",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "0313",
+    "flavorText": "This Pokémon lives in caves in volcanoes. The fire within the tuft on its head can reach 600 degrees Fahrenheit.",
+    "image": "assets/cards/sv7/21.webp",
+    "imageSmall": "assets/cards/sv7/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-21/large"
+  },
+  {
+    "id": "sv7-22",
+    "name": "Reshiram",
+    "number": "22",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Iwamoto05",
+    "flavorText": "This legendary Pokémon can scorch the world with fire. It helps those who want to build a world of truth.",
+    "image": "assets/cards/sv7/22.webp",
+    "imageSmall": "assets/cards/sv7/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Heat Blast",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-22/large"
+  },
+  {
+    "id": "sv7-23",
+    "name": "Salandit",
+    "number": "23",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Felicia Chen",
+    "flavorText": "Only female Salandit can produce gas laden with pheromones. Males entranced by this gas will do whatever the females tell them.",
+    "image": "assets/cards/sv7/23.webp",
+    "imageSmall": "assets/cards/sv7/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-23/large"
+  },
+  {
+    "id": "sv7-24",
+    "name": "Salazzle",
+    "number": "24",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Taiga Kasai",
+    "flavorText": "When two Salazzle meet, they will use their pheromone gas to fight over the males in each other’s group.",
+    "evolvesFrom": "Salandit",
+    "image": "assets/cards/sv7/24.webp",
+    "imageSmall": "assets/cards/sv7/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Sudden Scorching",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent discards a card from their hand. If this Pokémon evolved from Salandit during this turn, your opponent discards 2 more cards."
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-24/large"
+  },
+  {
+    "id": "sv7-25",
+    "name": "Turtonator",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "Explosive substances coat the shell on its back. Enemies that dare attack it will be blown away by an immense detonation.",
+    "image": "assets/cards/sv7/25.webp",
+    "imageSmall": "assets/cards/sv7/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Ring of Fire",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Your opponent's Active Pokémon is now Burned. During your opponent's next turn, that Pokémon can't retreat."
+      },
+      {
+        "name": "Inferno Onrush",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This Pokémon also does 60 damage to itself."
+      }
+    ],
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-25/large"
+  },
+  {
+    "id": "sv7-26",
+    "name": "Scorbunny",
+    "number": "26",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Cona Nitanda",
+    "flavorText": "Fire energy gathers in the pads of its feet, raising their temperature. Once hot, Scorbunny’s footpads can deal heavy damage to opponents.",
+    "image": "assets/cards/sv7/26.webp",
+    "imageSmall": "assets/cards/sv7/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-26/large"
+  },
+  {
+    "id": "sv7-27",
+    "name": "Raboot",
+    "number": "27",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "aspara",
+    "flavorText": "While it prides itself on its varied kicking moves, it can also deliver powerful headbutts once its flames have heated up its forehead.",
+    "evolvesFrom": "Scorbunny",
+    "image": "assets/cards/sv7/27.webp",
+    "imageSmall": "assets/cards/sv7/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Low Sweep",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-27/large"
+  },
+  {
+    "id": "sv7-28",
+    "name": "Cinderace ex",
+    "number": "28",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Raboot",
+    "image": "assets/cards/sv7/28.webp",
+    "imageSmall": "assets/cards/sv7/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Flare Strike",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "280",
+        "text": "During your next turn, this Pokémon can't use Flare Strike."
+      },
+      {
+        "name": "Garnet Volley",
+        "cost": [
+          "Fire",
+          "Fighting",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "This attack does 180 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 0.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-28/large"
+  },
+  {
+    "id": "sv7-29",
+    "name": "Charcadet",
+    "number": "29",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Krgc",
+    "flavorText": "Burnt charcoal came to life and became a Pokémon. Possessing a fiery fighting spirit, Charcadet will battle even tough opponents.",
+    "image": "assets/cards/sv7/29.webp",
+    "imageSmall": "assets/cards/sv7/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-29/large"
+  },
+  {
+    "id": "sv7-30",
+    "name": "Blastoise ex",
+    "number": "30",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "330",
+    "artist": "PLANETA Igarashi",
+    "evolvesFrom": "Wartortle",
+    "image": "assets/cards/sv7/30.webp",
+    "imageSmall": "assets/cards/sv7/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Twin Cannons",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "140×",
+        "text": "Discard up to 2 Basic Water Energy cards from your hand. This attack does 140 damage for each card you discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Solid Shell",
+        "text": "This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 2.88,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-30/large"
+  },
+  {
+    "id": "sv7-31",
+    "name": "Lapras",
+    "number": "31",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "rika",
+    "flavorText": "It loves crossing the sea with people and Pokémon on its back. It understands human speech.",
+    "image": "assets/cards/sv7/31.webp",
+    "imageSmall": "assets/cards/sv7/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-31/large"
+  },
+  {
+    "id": "sv7-32",
+    "name": "Lapras ex",
+    "number": "32",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sv7/32.webp",
+    "imageSmall": "assets/cards/sv7/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage for each Energy attached to this Pokémon."
+      },
+      {
+        "name": "Larimar Rain",
+        "cost": [
+          "Water",
+          "Psychic",
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Look at the top 20 cards of your deck and attach any number of Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck."
+      }
+    ],
+    "market": 1.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-32/large"
+  },
+  {
+    "id": "sv7-33",
+    "name": "Marill",
+    "number": "33",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "MARINA Chikazawa",
+    "flavorText": "The oil-filled end of its tail floats on water. It keeps Marill from drowning even in a strong current.",
+    "image": "assets/cards/sv7/33.webp",
+    "imageSmall": "assets/cards/sv7/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-33/large"
+  },
+  {
+    "id": "sv7-34",
+    "name": "Azumarill",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Jerky",
+    "flavorText": "Its long ears are superb sensors. It can distinguish the movements of living things on riverbeds.",
+    "evolvesFrom": "Marill",
+    "image": "assets/cards/sv7/34.webp",
+    "imageSmall": "assets/cards/sv7/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble Beam",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-34/large"
+  },
+  {
+    "id": "sv7-35",
+    "name": "Finneon",
+    "number": "35",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Yukiko Baba",
+    "flavorText": "It absorbs sunlight with the pink areas of its skin, which then shine. This appears to be a form of camouflage.",
+    "image": "assets/cards/sv7/35.webp",
+    "imageSmall": "assets/cards/sv7/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Sprinkle Water",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-35/large"
+  },
+  {
+    "id": "sv7-36",
+    "name": "Lumineon",
+    "number": "36",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Shigenori Negishi",
+    "flavorText": "Lumineon swimming in the darkness of the deep sea look like stars shining in the night sky.",
+    "evolvesFrom": "Finneon",
+    "image": "assets/cards/sv7/36.webp",
+    "imageSmall": "assets/cards/sv7/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Return",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "You may draw cards until you have 6 cards in your hand."
+      },
+      {
+        "name": "Razor Fin",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-36/large"
+  },
+  {
+    "id": "sv7-37",
+    "name": "Tirtouga",
+    "number": "37",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "takashi shiraishi",
+    "flavorText": "This Pokémon inhabited ancient seas. Although it can only crawl, it still comes up onto land in search of prey.",
+    "evolvesFrom": "Antique Cover Fossil",
+    "image": "assets/cards/sv7/37.webp",
+    "imageSmall": "assets/cards/sv7/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Splashing Turn",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "70",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-37/large"
+  },
+  {
+    "id": "sv7-38",
+    "name": "Carracosta",
+    "number": "38",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "LINNE",
+    "flavorText": "Carracosta completely devours its prey—bones, shells, and all. Because of this, Carracosta’s own shell grows thick and sturdy.",
+    "evolvesFrom": "Tirtouga",
+    "image": "assets/cards/sv7/38.webp",
+    "imageSmall": "assets/cards/sv7/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Tidal Wave",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "150",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Primal Knowledge",
+        "text": "Attacks used by your Pokémon do 30 more damage to your opponent's Active Evolution Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-38/large"
+  },
+  {
+    "id": "sv7-39",
+    "name": "Froakie",
+    "number": "39",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "MINAMINAMI Take",
+    "flavorText": "It secretes flexible bubbles from its chest and back. The bubbles reduce the damage it would otherwise take when attacked.",
+    "image": "assets/cards/sv7/39.webp",
+    "imageSmall": "assets/cards/sv7/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-39/large"
+  },
+  {
+    "id": "sv7-40",
+    "name": "Frogadier",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Ryuta Fuse",
+    "flavorText": "It can throw bubble-covered pebbles with precise control, hitting empty cans up to a hundred feet away.",
+    "evolvesFrom": "Froakie",
+    "image": "assets/cards/sv7/40.webp",
+    "imageSmall": "assets/cards/sv7/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-40/large"
+  },
+  {
+    "id": "sv7-41",
+    "name": "Greninja ex",
+    "number": "41",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/sv7/41.webp",
+    "imageSmall": "assets/cards/sv7/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Shifting Shuriken",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "Flip a coin. If heads, this attack does 100 more damage."
+      }
+    ],
+    "market": 1.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-41/large"
+  },
+  {
+    "id": "sv7-42",
+    "name": "Crabominable",
+    "number": "42",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "nagimiso",
+    "flavorText": "Though its punches are powerful, this Pokémon’s movements are sluggish. It blows icy bubbles from its mouth to immobilize its opponents.",
+    "evolvesFrom": "Crabrawler",
+    "image": "assets/cards/sv7/42.webp",
+    "imageSmall": "assets/cards/sv7/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Haymaker",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can't use Haymaker."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Food Prep",
+        "text": "Attacks used by this Pokémon cost Colorless less for each Kofu card in your discard pile.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-42/large"
+  },
+  {
+    "id": "sv7-43",
+    "name": "Chewtle",
+    "number": "43",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Yuka Morii",
+    "flavorText": "A popular game among children is to lift up sticks that Chewtle have bitten onto to see whose Chewtle can hang on the longest.",
+    "image": "assets/cards/sv7/43.webp",
+    "imageSmall": "assets/cards/sv7/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-43/large"
+  },
+  {
+    "id": "sv7-44",
+    "name": "Drednaw",
+    "number": "44",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Dsuke",
+    "flavorText": "Drednaw lurks along the shoreline. When prey come to drink water, Drednaw stretches its neck out and chomps down on them.",
+    "evolvesFrom": "Chewtle",
+    "image": "assets/cards/sv7/44.webp",
+    "imageSmall": "assets/cards/sv7/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Hard Crunch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Impervious Shell",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon if that damage is 200 or more.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-44/large"
+  },
+  {
+    "id": "sv7-45",
+    "name": "Veluza",
+    "number": "45",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "GOTO minori",
+    "flavorText": "Veluza has excellent regenerative capabilities. It sheds spare flesh from its body to boost its agility, then charges at its prey.",
+    "image": "assets/cards/sv7/45.webp",
+    "imageSmall": "assets/cards/sv7/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Food Prep",
+        "text": "Attacks used by this Pokémon cost Colorless less for each Kofu card in your discard pile.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-45/large"
+  },
+  {
+    "id": "sv7-46",
+    "name": "Electabuzz",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Oswaldo KATO",
+    "flavorText": "Research is progressing on storing lightning in Electabuzz so this energy can be used at any time.",
+    "image": "assets/cards/sv7/46.webp",
+    "imageSmall": "assets/cards/sv7/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Magnum Punch",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-46/large"
+  },
+  {
+    "id": "sv7-47",
+    "name": "Electivire",
+    "number": "47",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "150",
+    "artist": "chibi",
+    "flavorText": "This Pokémon presses the tips of its tails onto an opponent and instantly sends over 20,000 volts of high-voltage electricity through them.",
+    "evolvesFrom": "Electabuzz",
+    "image": "assets/cards/sv7/47.webp",
+    "imageSmall": "assets/cards/sv7/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Electroslug",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Unleash Lightning",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "220",
+        "text": "During your next turn, your Pokémon can't attack. (This includes new Pokémon that come into play.)"
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-47/large"
+  },
+  {
+    "id": "sv7-48",
+    "name": "Chinchou",
+    "number": "48",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "It shoots positively and negatively charged electricity from the tips of its two antennae and stuns its opponents.",
+    "image": "assets/cards/sv7/48.webp",
+    "imageSmall": "assets/cards/sv7/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Voltage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage for each heads."
+      }
+    ],
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-48/large"
+  },
+  {
+    "id": "sv7-49",
+    "name": "Lanturn",
+    "number": "49",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Akira Komayama",
+    "flavorText": "It blinds prey with an intense burst of light. With the prey incapacitated, the Pokémon swallows it in a single gulp.",
+    "evolvesFrom": "Chinchou",
+    "image": "assets/cards/sv7/49.webp",
+    "imageSmall": "assets/cards/sv7/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Disorienting Flash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused. Put 8 damage counters instead of 3 on that Pokémon for this Special Condition."
+      },
+      {
+        "name": "Thunderous Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-49/large"
+  },
+  {
+    "id": "sv7-50",
+    "name": "Joltik",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "30",
+    "artist": "Nisota Niso",
+    "flavorText": "Since it can’t generate its own electricity, it sticks onto large-bodied Pokémon and absorbs static electricity.",
+    "image": "assets/cards/sv7/50.webp",
+    "imageSmall": "assets/cards/sv7/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Jolting Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Grass Energy cards and up to 2 Basic Lightning Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck."
+      }
+    ],
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-50/large"
+  },
+  {
+    "id": "sv7-51",
+    "name": "Galvantula ex",
+    "number": "51",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Joltik",
+    "image": "assets/cards/sv7/51.webp",
+    "imageSmall": "assets/cards/sv7/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Charged Web",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "110+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex or Pokémon V, this attack does 110 more damage."
+      },
+      {
+        "name": "Fulgurite",
+        "cost": [
+          "Grass",
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "180",
+        "text": "Discard all Energy from this Pokémon. During your opponent's next turn, they can't play any Item cards from their hand."
+      }
+    ],
+    "market": 0.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-51/large"
+  },
+  {
+    "id": "sv7-52",
+    "name": "Charjabug",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Makura Tami",
+    "flavorText": "As it digests fallen leaves, it generates and stores electricity, which it can discharge from the tips of its jaws.",
+    "evolvesFrom": "Grubbin",
+    "image": "assets/cards/sv7/52.webp",
+    "imageSmall": "assets/cards/sv7/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Parallel Placement",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Charjabug and put them onto your Bench. Then, shuffle your deck."
+      }
+    ],
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-52/large"
+  },
+  {
+    "id": "sv7-53",
+    "name": "Vikavolt",
+    "number": "53",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "Shiburingaru",
+    "flavorText": "When carrying a Charjabug, Vikavolt can receive electricity from it and then rapidly fire powerful electromagnetic beams from its large jaws.",
+    "evolvesFrom": "Charjabug",
+    "image": "assets/cards/sv7/53.webp",
+    "imageSmall": "assets/cards/sv7/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Volt Switch",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "90",
+        "text": "Switch this Pokémon with 1 of your Benched Lightning Pokémon."
+      },
+      {
+        "name": "Sparking Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": ""
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-53/large"
+  },
+  {
+    "id": "sv7-54",
+    "name": "Togedemaru",
+    "number": "54",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Rianti Hidayat",
+    "flavorText": "With the long hairs on its back, this Pokémon takes in electricity from other electric Pokémon. It stores what it absorbs in an electric sac.",
+    "image": "assets/cards/sv7/54.webp",
+    "imageSmall": "assets/cards/sv7/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Electrifying Chance",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "If you have exactly 1 Prize card remaining, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-54/large"
+  },
+  {
+    "id": "sv7-55",
+    "name": "Zeraora",
+    "number": "55",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "It runs as fast as lightning strikes, shredding its opponents with its high-voltage claws.",
+    "image": "assets/cards/sv7/55.webp",
+    "imageSmall": "assets/cards/sv7/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Combat Thunder",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each of your opponent's Benched Pokémon."
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-55/large"
+  },
+  {
+    "id": "sv7-56",
+    "name": "Pawmi",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Natsumi Yoshida",
+    "flavorText": "The pads of its paws are electricity-discharging organs. Pawmi fires electricity from its forepaws while standing unsteadily on its hind legs.",
+    "image": "assets/cards/sv7/56.webp",
+    "imageSmall": "assets/cards/sv7/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Targeted Spark",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-56/large"
+  },
+  {
+    "id": "sv7-57",
+    "name": "Slowpoke",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Teeziro",
+    "flavorText": "It is always vacantly lost in thought, but no one knows what it is thinking about. It is good at fishing with its tail.",
+    "image": "assets/cards/sv7/57.webp",
+    "imageSmall": "assets/cards/sv7/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Dangle Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put a Pokémon from your discard pile into your hand."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 2.97,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-57/large"
+  },
+  {
+    "id": "sv7-58",
+    "name": "Slowking",
+    "number": "58",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Tetsu Kayama",
+    "flavorText": "It has incredible intellect and intuition. Whatever the situation, it remains calm and collected.",
+    "evolvesFrom": "Slowpoke",
+    "image": "assets/cards/sv7/58.webp",
+    "imageSmall": "assets/cards/sv7/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Seek Inspiration",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard the top card of your deck, and if that card is a Pokémon that doesn't have a Rule Box, choose 1 of its attacks and use it as this attack. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)"
+      },
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-58/large"
+  },
+  {
+    "id": "sv7-59",
+    "name": "Mewtwo",
+    "number": "59",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "kantaro",
+    "flavorText": "A Pokémon created by recombining Mew’s genes. It’s said to have the most savage heart among Pokémon.",
+    "image": "assets/cards/sv7/59.webp",
+    "imageSmall": "assets/cards/sv7/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "market": 0.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-59/large"
+  },
+  {
+    "id": "sv7-60",
+    "name": "Drifloon",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Miki Tanaka",
+    "flavorText": "Because of the way it floats aimlessly, an old folktale calls it a “signpost for wandering spirits.”",
+    "image": "assets/cards/sv7/60.webp",
+    "imageSmall": "assets/cards/sv7/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Expand",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "During your opponent's next turn, this Pokémon takes 10 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-60/large"
+  },
+  {
+    "id": "sv7-61",
+    "name": "Drifblim",
+    "number": "61",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "sowsow",
+    "flavorText": "They carry people and Pokémon, but the wind can catch them, so there can’t be a fixed destination.",
+    "evolvesFrom": "Drifloon",
+    "image": "assets/cards/sv7/61.webp",
+    "imageSmall": "assets/cards/sv7/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Everyone Explode Now",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each of your Drifloon and Drifblim in play. This attack also does 30 damage to each of your Drifloon and Drifblim. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-61/large"
+  },
+  {
+    "id": "sv7-62",
+    "name": "Yamask",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "aoki",
+    "flavorText": "The spirit of a person from a bygone age became this Pokémon. It rambles through ruins, searching for someone who knows its face.",
+    "image": "assets/cards/sv7/62.webp",
+    "imageSmall": "assets/cards/sv7/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Ominous Eyes",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 3 damage counters on 1 of your opponent's Pokémon."
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-62/large"
+  },
+  {
+    "id": "sv7-63",
+    "name": "Comfey",
+    "number": "63",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "saino misaki",
+    "flavorText": "It prefers areas with lots of flowers. A Comfey adorned with flowers is a happy Comfey, and the flowers gain healing effects.",
+    "image": "assets/cards/sv7/63.webp",
+    "imageSmall": "assets/cards/sv7/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Flower Shower",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Each player draws 3 cards."
+      },
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-63/large"
+  },
+  {
+    "id": "sv7-64",
+    "name": "Milcery",
+    "number": "64",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "OKACHEKE",
+    "flavorText": "When attacked, it tackles its foe and covers them in cream. With its foe either blinded or astonished by deliciousness, Milcery flees.",
+    "image": "assets/cards/sv7/64.webp",
+    "imageSmall": "assets/cards/sv7/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Mumble",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-64/large"
+  },
+  {
+    "id": "sv7-65",
+    "name": "Alcremie",
+    "number": "65",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Natsumi Yoshida",
+    "flavorText": "Alcremie that have been cherished produce exquisite cream, so Trainers always raise them lovingly.",
+    "evolvesFrom": "Milcery",
+    "image": "assets/cards/sv7/65.webp",
+    "imageSmall": "assets/cards/sv7/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Colorful Confection",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 5 Pokémon that are the same type as any Basic Energy attached to this Pokémon, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-65/large"
+  },
+  {
+    "id": "sv7-66",
+    "name": "Fidough",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Narumi Sato",
+    "flavorText": "The yeast in Fidough’s breath is useful for cooking, so this Pokémon has been protected by people since long ago.",
+    "image": "assets/cards/sv7/66.webp",
+    "imageSmall": "assets/cards/sv7/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Pleasant Aroma",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Stampede",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-66/large"
+  },
+  {
+    "id": "sv7-67",
+    "name": "Dachsbun ex",
+    "number": "67",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "250",
+    "artist": "You Iribi",
+    "evolvesFrom": "Fidough",
+    "image": "assets/cards/sv7/67.webp",
+    "imageSmall": "assets/cards/sv7/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Wonder Shine",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Time to Chow Down",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may heal all damage from each of your Evolution Pokémon. If you healed any damage in this way, discard all Energy from those Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-67/large"
+  },
+  {
+    "id": "sv7-68",
+    "name": "Flittle",
+    "number": "68",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Yuu Nishida",
+    "flavorText": "Flittle’s toes levitate about half an inch above the ground because of the psychic power emitted from the frills on the Pokémon’s belly.",
+    "image": "assets/cards/sv7/68.webp",
+    "imageSmall": "assets/cards/sv7/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-68/large"
+  },
+  {
+    "id": "sv7-69",
+    "name": "Espathra",
+    "number": "69",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Ryota Murayama",
+    "flavorText": "It immobilizes opponents by bathing them in psychic power from its large eyes. Despite its appearance, it has a vicious temperament.",
+    "evolvesFrom": "Flittle",
+    "image": "assets/cards/sv7/69.webp",
+    "imageSmall": "assets/cards/sv7/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Flash",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-69/large"
+  },
+  {
+    "id": "sv7-70",
+    "name": "Greavard",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Miki Tanaka",
+    "flavorText": "It is said that a dog Pokémon that died in the wild without ever interacting with a human was reborn as this Pokémon.",
+    "image": "assets/cards/sv7/70.webp",
+    "imageSmall": "assets/cards/sv7/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Paw Shake Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-70/large"
+  },
+  {
+    "id": "sv7-71",
+    "name": "Iron Boulder",
+    "number": "71",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Future"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "GIDORA",
+    "flavorText": "It was named after a mysterious object recorded in an old book. Its body seems to be metallic.",
+    "image": "assets/cards/sv7/71.webp",
+    "imageSmall": "assets/cards/sv7/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Adjusted Horn",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "If you don't have the same number of cards in your hand as your opponent, this attack does nothing."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-71/large"
+  },
+  {
+    "id": "sv7-72",
+    "name": "Cubone",
+    "number": "72",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "svlt",
+    "flavorText": "When the memory of its departed mother brings it to tears, its cries echo mournfully within the skull it wears on its head.",
+    "image": "assets/cards/sv7/72.webp",
+    "imageSmall": "assets/cards/sv7/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-72/large"
+  },
+  {
+    "id": "sv7-73",
+    "name": "Marowak",
+    "number": "73",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "cochi8i",
+    "flavorText": "This Pokémon overcame its sorrow to evolve a sturdy new body. Marowak faces its opponents bravely, using a bone as a weapon.",
+    "evolvesFrom": "Cubone",
+    "image": "assets/cards/sv7/73.webp",
+    "imageSmall": "assets/cards/sv7/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, attacks used by the Defending Pokémon do 40 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Bone Vengeance",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If any of your Benched Cubone have any damage counters on them, this attack does 120 more damage."
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-73/large"
+  },
+  {
+    "id": "sv7-74",
+    "name": "Rhyhorn",
+    "number": "74",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "kodama",
+    "flavorText": "Once it starts running, it won’t stop—even if it crashes through boulders. This disposition is what’s caused its habitat to expand.",
+    "image": "assets/cards/sv7/74.webp",
+    "imageSmall": "assets/cards/sv7/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Horn Attack",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-74/large"
+  },
+  {
+    "id": "sv7-75",
+    "name": "Rhydon",
+    "number": "75",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "140",
+    "artist": "Ryuta Fuse",
+    "flavorText": "It evolved to walk using only its hind legs, which has allowed it to expand its habitat even onto steep mountains.",
+    "evolvesFrom": "Rhyhorn",
+    "image": "assets/cards/sv7/75.webp",
+    "imageSmall": "assets/cards/sv7/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Destructive Horn",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-75/large"
+  },
+  {
+    "id": "sv7-76",
+    "name": "Rhyperior",
+    "number": "76",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "200",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A Rhyperior’s brain is smaller than a Rhydon’s, but the Rhyperior is stronger because it spends more energy on battling and less on brainpower.",
+    "evolvesFrom": "Rhydon",
+    "image": "assets/cards/sv7/76.webp",
+    "imageSmall": "assets/cards/sv7/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Drill Run",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wide Wall",
+        "text": "As long as this Pokémon is in the Active Spot, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to all of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-76/large"
+  },
+  {
+    "id": "sv7-77",
+    "name": "Meditite",
+    "number": "77",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "GOTO minori",
+    "flavorText": "It never skips its daily yoga training. It heightens its inner strength through meditation.",
+    "image": "assets/cards/sv7/77.webp",
+    "imageSmall": "assets/cards/sv7/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-77/large"
+  },
+  {
+    "id": "sv7-78",
+    "name": "Meditite",
+    "number": "78",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Yuu Nishida",
+    "flavorText": "It meditates to heighten its inner energy and to float in the air. It eats one berry a day.",
+    "image": "assets/cards/sv7/78.webp",
+    "imageSmall": "assets/cards/sv7/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Calm Mind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Chop",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-78/large"
+  },
+  {
+    "id": "sv7-79",
+    "name": "Medicham",
+    "number": "79",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Fujimoto Gold",
+    "flavorText": "It elegantly avoids attacks with dance-like steps, then launches a devastating blow in the same motion.",
+    "evolvesFrom": "Meditite",
+    "image": "assets/cards/sv7/79.webp",
+    "imageSmall": "assets/cards/sv7/79-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Smash",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage for each heads."
+      }
+    ],
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-79/large"
+  },
+  {
+    "id": "sv7-80",
+    "name": "Medicham ex",
+    "number": "80",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "260",
+    "artist": "PLANETA Yamashita",
+    "evolvesFrom": "Meditite",
+    "image": "assets/cards/sv7/80.webp",
+    "imageSmall": "assets/cards/sv7/80-sm.webp",
+    "attacks": [
+      {
+        "name": "Chi-Atsu",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 50."
+      },
+      {
+        "name": "Yoga Kick",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "market": 0.63,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-80/large"
+  },
+  {
+    "id": "sv7-81",
+    "name": "Riolu",
+    "number": "81",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "It has the peculiar power of being able to see emotions, such as joy and rage, in the form of waves.",
+    "image": "assets/cards/sv7/81.webp",
+    "imageSmall": "assets/cards/sv7/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Punch",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-81/large"
+  },
+  {
+    "id": "sv7-82",
+    "name": "Lucario ex",
+    "number": "82",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "250",
+    "artist": "PLANETA Igarashi",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/sv7/82.webp",
+    "imageSmall": "assets/cards/sv7/82-sm.webp",
+    "attacks": [
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Aura Knuckle",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "market": 0.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-82/large"
+  },
+  {
+    "id": "sv7-83",
+    "name": "Mienfoo",
+    "number": "83",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Kariya",
+    "flavorText": "They seclude themselves in the mountains and devote themselves to training. The form of their kicks and chops differs from pack to pack.",
+    "image": "assets/cards/sv7/83.webp",
+    "imageSmall": "assets/cards/sv7/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Off",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-83/large"
+  },
+  {
+    "id": "sv7-84",
+    "name": "Mienshao",
+    "number": "84",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "MINAMINAMI Take",
+    "flavorText": "Using the long fur on its arms like whips, it launches into combo attacks that, once started, no one can stop.",
+    "evolvesFrom": "Mienfoo",
+    "image": "assets/cards/sv7/84.webp",
+    "imageSmall": "assets/cards/sv7/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Gale Roundhouse",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30+",
+        "text": "If your opponent has 5 or fewer cards in their hand, this attack does 60 more damage."
+      }
+    ],
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-84/large"
+  },
+  {
+    "id": "sv7-85",
+    "name": "Pancham",
+    "number": "85",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Tomomi Ozaki",
+    "flavorText": "It chooses a Pangoro as its master and then imitates its master’s actions. This is how it learns to battle and hunt for prey.",
+    "image": "assets/cards/sv7/85.webp",
+    "imageSmall": "assets/cards/sv7/85-sm.webp",
+    "attacks": [
+      {
+        "name": "Leer",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-85/large"
+  },
+  {
+    "id": "sv7-86",
+    "name": "Diancie",
+    "number": "86",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Jiro Sasumo",
+    "flavorText": "A sudden transformation of Carbink, its pink, glimmering body is said to be the loveliest sight in the whole world.",
+    "image": "assets/cards/sv7/86.webp",
+    "imageSmall": "assets/cards/sv7/86-sm.webp",
+    "attacks": [
+      {
+        "name": "Diffuse Reflection",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage for each Special Energy attached to all of your opponent's Pokémon."
+      },
+      {
+        "name": "Power Gem",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-86/large"
+  },
+  {
+    "id": "sv7-87",
+    "name": "Crabrawler",
+    "number": "87",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Scav",
+    "flavorText": "If it loses its pincers, they’ll quickly regrow. The pincers are popular ingredients in paella since their shells produce a tasty soup stock.",
+    "image": "assets/cards/sv7/87.webp",
+    "imageSmall": "assets/cards/sv7/87-sm.webp",
+    "attacks": [
+      {
+        "name": "Vise Grip",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Crabhammer",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-87/large"
+  },
+  {
+    "id": "sv7-88",
+    "name": "Falinks",
+    "number": "88",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Gapao",
+    "flavorText": "The leader, known as the brass, uses its extendible horn to issue orders to the others when it’s time to change formation.",
+    "image": "assets/cards/sv7/88.webp",
+    "imageSmall": "assets/cards/sv7/88-sm.webp",
+    "attacks": [
+      {
+        "name": "Form Ranks",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "All-Out Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If this Pokémon used Form Ranks during your last turn, this attack does 90 more damage."
+      }
+    ],
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-88/large"
+  },
+  {
+    "id": "sv7-89",
+    "name": "Garganacl ex",
+    "number": "89",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Naclstack",
+    "image": "assets/cards/sv7/89.webp",
+    "imageSmall": "assets/cards/sv7/89-sm.webp",
+    "attacks": [
+      {
+        "name": "Block Hammer",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "During your opponent's next turn, this Pokémon takes 60 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Salty Body",
+        "text": "This Pokémon can't be affected by any Special Conditions.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.7,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-89/large"
+  },
+  {
+    "id": "sv7-90",
+    "name": "Koraidon",
+    "number": "90",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "kawayoo",
+    "flavorText": "This seems to be the Winged King mentioned in an old expedition journal. It was said to have split the land with its bare fists.",
+    "image": "assets/cards/sv7/90.webp",
+    "imageSmall": "assets/cards/sv7/90-sm.webp",
+    "attacks": [
+      {
+        "name": "Resolute Fang",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "50+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex, this attack does 70 more damage."
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-90/large"
+  },
+  {
+    "id": "sv7-91",
+    "name": "Gulpin",
+    "number": "91",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Shimaris Yukichi",
+    "flavorText": "It has a small heart and brain. Its stomach comprises most of its body, with enzymes to dissolve anything.",
+    "image": "assets/cards/sv7/91.webp",
+    "imageSmall": "assets/cards/sv7/91-sm.webp",
+    "attacks": [
+      {
+        "name": "Drool",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Super Poison Breath",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-91/large"
+  },
+  {
+    "id": "sv7-92",
+    "name": "Swalot",
+    "number": "92",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "OKACHEKE",
+    "flavorText": "It can swallow a tire whole in one gulp. It secretes a horribly toxic fluid from the pores on its body.",
+    "evolvesFrom": "Gulpin",
+    "image": "assets/cards/sv7/92.webp",
+    "imageSmall": "assets/cards/sv7/92-sm.webp",
+    "attacks": [
+      {
+        "name": "Devouring Mouth",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10+",
+        "text": "If this Pokémon has more Energy attached than your opponent's Active Pokémon, this attack does 160 more damage."
+      },
+      {
+        "name": "Venomous Hit",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-92/large"
+  },
+  {
+    "id": "sv7-93",
+    "name": "Pangoro",
+    "number": "93",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "140",
+    "artist": "KEIICHIRO ITO",
+    "flavorText": "This Pokémon is quick to anger, and it has no problem using its prodigious strength to get its way. It lives for duels against Obstagoon.",
+    "evolvesFrom": "Pancham",
+    "image": "assets/cards/sv7/93.webp",
+    "imageSmall": "assets/cards/sv7/93-sm.webp",
+    "attacks": [
+      {
+        "name": "Pull",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Switch in 1 of your opponent's Benched Pokémon to the Active Spot."
+      },
+      {
+        "name": "Tantrum",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This Pokémon is now Confused."
+      }
+    ],
+    "market": 0.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-93/large"
+  },
+  {
+    "id": "sv7-94",
+    "name": "Impidimp",
+    "number": "94",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "They live in groups, pestering and playing pranks on each other to polish their troublemaking skills.",
+    "image": "assets/cards/sv7/94.webp",
+    "imageSmall": "assets/cards/sv7/94-sm.webp",
+    "attacks": [
+      {
+        "name": "Smack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-94/large"
+  },
+  {
+    "id": "sv7-95",
+    "name": "Morgrem",
+    "number": "95",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Mékayu",
+    "flavorText": "This Pokémon absorbs negative emotions and turns them into energy. It’s popular with people who tend to think gloomy thoughts.",
+    "evolvesFrom": "Impidimp",
+    "image": "assets/cards/sv7/95.webp",
+    "imageSmall": "assets/cards/sv7/95-sm.webp",
+    "attacks": [
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Darkness Fang",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-95/large"
+  },
+  {
+    "id": "sv7-96",
+    "name": "Grimmsnarl",
+    "number": "96",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "Kazumasa Yasukuni",
+    "flavorText": "It lives deep within the forest. Even after evolving into this splendid form, it hasn’t given up on its petty misdeeds and pranks.",
+    "evolvesFrom": "Morgrem",
+    "image": "assets/cards/sv7/96.webp",
+    "imageSmall": "assets/cards/sv7/96-sm.webp",
+    "attacks": [
+      {
+        "name": "Goad 'n' Grab",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.) If you do, this attack does 160 damage to the new Active Pokémon."
+      },
+      {
+        "name": "Knuckle Sandwich",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-96/large"
+  },
+  {
+    "id": "sv7-97",
+    "name": "Bombirdier",
+    "number": "97",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Aya Kusube",
+    "flavorText": "Bombirdier uses the apron on its chest to bundle up food, which it carries back to its nest. It enjoys dropping things that make loud noises.",
+    "image": "assets/cards/sv7/97.webp",
+    "imageSmall": "assets/cards/sv7/97-sm.webp",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This Pokémon also does 20 damage to itself."
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-97/large"
+  },
+  {
+    "id": "sv7-98",
+    "name": "Jirachi",
+    "number": "98",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Kuroimori",
+    "flavorText": "It is said to have the ability to grant any wish for just one week every thousand years.",
+    "image": "assets/cards/sv7/98.webp",
+    "imageSmall": "assets/cards/sv7/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Swelling Wish",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Slap",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-98/large"
+  },
+  {
+    "id": "sv7-99",
+    "name": "Klink",
+    "number": "99",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "osare",
+    "flavorText": "The two minigears that compose this Pokémon are closer than twins. They mesh well only with each other.",
+    "image": "assets/cards/sv7/99.webp",
+    "imageSmall": "assets/cards/sv7/99-sm.webp",
+    "attacks": [
+      {
+        "name": "Allure",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Beam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-99/large"
+  },
+  {
+    "id": "sv7-100",
+    "name": "Klang",
+    "number": "100",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Mina Nakai",
+    "flavorText": "When Klang goes all out, the minigear links up perfectly with the outer part of the big gear, and this Pokémon’s rotation speed increases sharply.",
+    "evolvesFrom": "Klink",
+    "image": "assets/cards/sv7/100.webp",
+    "imageSmall": "assets/cards/sv7/100-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This Pokémon also does 20 damage to itself."
+      }
+    ],
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-100/large"
+  },
+  {
+    "id": "sv7-101",
+    "name": "Klinklang",
+    "number": "101",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "140",
+    "artist": "Tonji Matsuno",
+    "flavorText": "From its spikes, it launches powerful blasts of electricity. Its red core contains an enormous amount of energy.",
+    "evolvesFrom": "Klang",
+    "image": "assets/cards/sv7/101.webp",
+    "imageSmall": "assets/cards/sv7/101-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Ray",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Emergency Rotation",
+        "text": "Once during your turn, if this Pokémon is in your hand and your opponent has any Stage 2 Pokémon in play, you may put this Pokémon onto your Bench.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-101/large"
+  },
+  {
+    "id": "sv7-102",
+    "name": "Meltan",
+    "number": "102",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Yuka Morii",
+    "flavorText": "It dissolves and eats metal. Circulating liquid metal within its body is how it generates energy.",
+    "image": "assets/cards/sv7/102.webp",
+    "imageSmall": "assets/cards/sv7/102-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Beam",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-102/large"
+  },
+  {
+    "id": "sv7-103",
+    "name": "Meltan",
+    "number": "103",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "Apios",
+    "flavorText": "It dissolves and eats metal. Circulating liquid metal within its body is how it generates energy.",
+    "image": "assets/cards/sv7/103.webp",
+    "imageSmall": "assets/cards/sv7/103-sm.webp",
+    "attacks": [
+      {
+        "name": "Knickknack Carrying",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Pokémon Tool card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Ram",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-103/large"
+  },
+  {
+    "id": "sv7-104",
+    "name": "Melmetal",
+    "number": "104",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "Takumi Wada",
+    "flavorText": "At the end of its life-span, Melmetal will rust and fall apart. The small shards left behind will eventually be reborn as Meltan.",
+    "evolvesFrom": "Meltan",
+    "image": "assets/cards/sv7/104.webp",
+    "imageSmall": "assets/cards/sv7/104-sm.webp",
+    "attacks": [
+      {
+        "name": "Wrack Down",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Reforged Axe",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "Before doing damage, discard all Pokémon Tools from this Pokémon. If you can't discard any, this attack does nothing."
+      }
+    ],
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-104/large"
+  },
+  {
+    "id": "sv7-105",
+    "name": "Melmetal ex",
+    "number": "105",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "280",
+    "artist": "takuyoa",
+    "evolvesFrom": "Meltan",
+    "image": "assets/cards/sv7/105.webp",
+    "imageSmall": "assets/cards/sv7/105-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Swing",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100×",
+        "text": "Flip 2 coins. This attack does 100 damage for each heads."
+      }
+    ],
+    "market": 0.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-105/large"
+  },
+  {
+    "id": "sv7-106",
+    "name": "Duraludon",
+    "number": "106",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Takeshi Nakamura",
+    "flavorText": "Its metal body is durable but prone to retaining heat. It vents this heat from the slits in its tail.",
+    "image": "assets/cards/sv7/106.webp",
+    "imageSmall": "assets/cards/sv7/106-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Raging Hammer",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-106/large"
+  },
+  {
+    "id": "sv7-107",
+    "name": "Archaludon",
+    "number": "107",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "180",
+    "artist": "Oswaldo KATO",
+    "flavorText": "It digs holes on mountains, searching for food. It’s so durable that being caught in a cave-in won’t faze it.",
+    "evolvesFrom": "Duraludon",
+    "image": "assets/cards/sv7/107.webp",
+    "imageSmall": "assets/cards/sv7/107-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Blaster",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metal Bridge",
+        "text": "All of your Pokémon that have Metal Energy attached have no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-107/large"
+  },
+  {
+    "id": "sv7-108",
+    "name": "Varoom",
+    "number": "108",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Shiburingaru",
+    "flavorText": "The steel section is Varoom’s actual body. This Pokémon clings to rocks and converts the minerals within into energy to fuel its activities.",
+    "image": "assets/cards/sv7/108.webp",
+    "imageSmall": "assets/cards/sv7/108-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-108/large"
+  },
+  {
+    "id": "sv7-109",
+    "name": "Revavroom",
+    "number": "109",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "150",
+    "artist": "GOSSAN",
+    "flavorText": "It creates a gas out of poison and minerals from rocks. It then detonates the gas in its cylinders— now numbering eight—to generate energy.",
+    "evolvesFrom": "Varoom",
+    "image": "assets/cards/sv7/109.webp",
+    "imageSmall": "assets/cards/sv7/109-sm.webp",
+    "attacks": [
+      {
+        "name": "Outta-Control Dash",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-109/large"
+  },
+  {
+    "id": "sv7-110",
+    "name": "Orthworm ex",
+    "number": "110",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "PLANETA Yamashita",
+    "image": "assets/cards/sv7/110.webp",
+    "imageSmall": "assets/cards/sv7/110-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Tomb",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pummeling Payback",
+        "text": "If this Pokémon is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each Metal Energy attached to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-110/large"
+  },
+  {
+    "id": "sv7-111",
+    "name": "Raging Bolt",
+    "number": "111",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ancient"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "kodama",
+    "flavorText": "It’s said to incinerate everything around it with lightning launched from its fur. Very little is known about this creature.",
+    "image": "assets/cards/sv7/111.webp",
+    "imageSmall": "assets/cards/sv7/111-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderburst Storm",
+        "cost": [
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon for each Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Dragon Headbutt",
+        "cost": [
+          "Lightning",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-111/large"
+  },
+  {
+    "id": "sv7-112",
+    "name": "Tauros",
+    "number": "112",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Uninori",
+    "flavorText": "A rowdy Pokémon with a lot of stamina. Once running, it won’t stop until it hits something.",
+    "image": "assets/cards/sv7/112.webp",
+    "imageSmall": "assets/cards/sv7/112-sm.webp",
+    "attacks": [
+      {
+        "name": "Destructive Horn",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-112/large"
+  },
+  {
+    "id": "sv7-113",
+    "name": "Eevee",
+    "number": "113",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Mina Nakai",
+    "flavorText": "It can evolve into a variety of forms. Eevee’s genes are the key to solving the mysteries of Pokémon evolution.",
+    "image": "assets/cards/sv7/113.webp",
+    "imageSmall": "assets/cards/sv7/113-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-113/large"
+  },
+  {
+    "id": "sv7-114",
+    "name": "Hoothoot",
+    "number": "114",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Yukihiro Tada",
+    "flavorText": "Since it tells time precisely, some countries consider it to be a deity of wisdom, versed in the ways of the world.",
+    "image": "assets/cards/sv7/114.webp",
+    "imageSmall": "assets/cards/sv7/114-sm.webp",
+    "attacks": [
+      {
+        "name": "Triple Stab",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-114/large"
+  },
+  {
+    "id": "sv7-115",
+    "name": "Noctowl",
+    "number": "115",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "matazo",
+    "flavorText": "Its extremely soft wings make no sound in flight. It silently sneaks up on prey without being detected.",
+    "evolvesFrom": "Hoothoot",
+    "image": "assets/cards/sv7/115.webp",
+    "imageSmall": "assets/cards/sv7/115-sm.webp",
+    "attacks": [
+      {
+        "name": "Speed Wing",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Jewel Seeker",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, if you have any Tera Pokémon in play, you may search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-115/large"
+  },
+  {
+    "id": "sv7-116",
+    "name": "Glameow",
+    "number": "116",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Yuriko Akase",
+    "flavorText": "It claws if displeased and purrs when affectionate. Its fickleness is very popular among some.",
+    "image": "assets/cards/sv7/116.webp",
+    "imageSmall": "assets/cards/sv7/116-sm.webp",
+    "attacks": [
+      {
+        "name": "Hook",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-116/large"
+  },
+  {
+    "id": "sv7-117",
+    "name": "Purugly",
+    "number": "117",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Saboteri",
+    "flavorText": "It would claim another Pokémon’s nest as its own if it finds a nest sufficiently comfortable.",
+    "evolvesFrom": "Glameow",
+    "image": "assets/cards/sv7/117.webp",
+    "imageSmall": "assets/cards/sv7/117-sm.webp",
+    "attacks": [
+      {
+        "name": "Nyan Roll",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      }
+    ],
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-117/large"
+  },
+  {
+    "id": "sv7-118",
+    "name": "Fan Rotom",
+    "number": "118",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Toshinao Aoki",
+    "flavorText": "There are several appliances that Rotom can inspirit, but the first one to be developed was the electric fan.",
+    "image": "assets/cards/sv7/118.webp",
+    "imageSmall": "assets/cards/sv7/118-sm.webp",
+    "attacks": [
+      {
+        "name": "Assault Landing",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "If there is no Stadium in play, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fan Call",
+        "text": "Once during your first turn, you may search your deck for up to 3 Colorless Pokémon with 100 HP or less, reveal them, and put them into your hand. Then, shuffle your deck. You can't use more than 1 Fan Call Ability during your turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-118/large"
+  },
+  {
+    "id": "sv7-119",
+    "name": "Bouffalant",
+    "number": "119",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "GOSSAN",
+    "flavorText": "These Pokémon can crush a car with no more than a headbutt. Bouffalant with more hair on their heads hold higher positions within the herd.",
+    "image": "assets/cards/sv7/119.webp",
+    "imageSmall": "assets/cards/sv7/119-sm.webp",
+    "attacks": [
+      {
+        "name": "Boundless Power",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Curly Wall",
+        "text": "As long as you have at least 1 other Bouffalant in play, all of your Basic Colorless Pokémon take 60 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance). The effect of Curly Wall doesn't stack.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-119/large"
+  },
+  {
+    "id": "sv7-120",
+    "name": "Tornadus",
+    "number": "120",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Uninori",
+    "flavorText": "The lower half of its body is wrapped in a cloud of energy. It zooms through the sky at 200 mph.",
+    "image": "assets/cards/sv7/120.webp",
+    "imageSmall": "assets/cards/sv7/120-sm.webp",
+    "attacks": [
+      {
+        "name": "Knuckle Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Storm Barrier",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-120/large"
+  },
+  {
+    "id": "sv7-121",
+    "name": "Fletchling",
+    "number": "121",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Teeziro",
+    "flavorText": "Fletchling can be found in both rural and urban areas. They once had a huge territorial dispute with Squawkabilly. Fights broke out all over town.",
+    "image": "assets/cards/sv7/121.webp",
+    "imageSmall": "assets/cards/sv7/121-sm.webp",
+    "attacks": [
+      {
+        "name": "Send Back",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)"
+      }
+    ],
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-121/large"
+  },
+  {
+    "id": "sv7-122",
+    "name": "Fletchinder",
+    "number": "122",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Julie Hang",
+    "flavorText": "Its territory has a radius of just over a mile. If any bird Pokémon should enter, it will show them no mercy.",
+    "evolvesFrom": "Fletchling",
+    "image": "assets/cards/sv7/122.webp",
+    "imageSmall": "assets/cards/sv7/122-sm.webp",
+    "attacks": [
+      {
+        "name": "Speed Dive",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-122/large"
+  },
+  {
+    "id": "sv7-123",
+    "name": "Talonflame",
+    "number": "123",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "140",
+    "artist": "Nurikabe",
+    "flavorText": "When it gets excited, it vents sparks from the gaps between its feathers. These unburnable feathers are used as a fireproof material.",
+    "evolvesFrom": "Fletchinder",
+    "image": "assets/cards/sv7/123.webp",
+    "imageSmall": "assets/cards/sv7/123-sm.webp",
+    "attacks": [
+      {
+        "name": "Aero Chase",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110+",
+        "text": "If the Retreat Cost of your opponent's Active Pokémon is ColorlessColorless or more, this attack does 110 more damage."
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-123/large"
+  },
+  {
+    "id": "sv7-124",
+    "name": "Wooloo",
+    "number": "124",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Wintr Wandr",
+    "flavorText": "Its curly fleece is such an effective cushion that this Pokémon could fall off a cliff and stand right back up at the bottom, unharmed.",
+    "image": "assets/cards/sv7/124.webp",
+    "imageSmall": "assets/cards/sv7/124-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Over",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "You may discard a Stadium in play."
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-124/large"
+  },
+  {
+    "id": "sv7-125",
+    "name": "Dubwool",
+    "number": "125",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "Weave a carpet from its springy wool, and you end up with something closer to a trampoline. You’ll start to bounce the moment you set foot on it.",
+    "evolvesFrom": "Wooloo",
+    "image": "assets/cards/sv7/125.webp",
+    "imageSmall": "assets/cards/sv7/125-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Over",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "You may discard a Stadium in play."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Soft Wool",
+        "text": "This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-125/large"
+  },
+  {
+    "id": "sv7-126",
+    "name": "Lechonk",
+    "number": "126",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "REND",
+    "flavorText": "It searches for food all day. It possesses a keen sense of smell but doesn’t use it for anything other than foraging.",
+    "image": "assets/cards/sv7/126.webp",
+    "imageSmall": "assets/cards/sv7/126-sm.webp",
+    "attacks": [
+      {
+        "name": "Rear Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-126/large"
+  },
+  {
+    "id": "sv7-127",
+    "name": "Cyclizar",
+    "number": "127",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Nurikabe",
+    "flavorText": "It can sprint at over 70 mph while carrying a human. The rider’s body heat warms Cyclizar’s back and lifts the Pokémon’s spirit.",
+    "image": "assets/cards/sv7/127.webp",
+    "imageSmall": "assets/cards/sv7/127-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Snap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Speed Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-127/large"
+  },
+  {
+    "id": "sv7-128",
+    "name": "Terapagos ex",
+    "number": "128",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sv7/128.webp",
+    "imageSmall": "assets/cards/sv7/128-sm.webp",
+    "attacks": [
+      {
+        "name": "Unified Beatdown",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "If you go second, you can't use this attack during your first turn. This attack does 30 damage for each of your Benched Pokémon."
+      },
+      {
+        "name": "Crown Opal",
+        "cost": [
+          "Grass",
+          "Water",
+          "Lightning"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic non-Colorless Pokémon."
+      }
+    ],
+    "market": 0.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-128/large"
+  },
+  {
+    "id": "sv7-129",
+    "name": "Antique Cover Fossil",
+    "number": "129",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "hp": "60",
+    "artist": "AYUMI ODASHIMA",
+    "image": "assets/cards/sv7/129.webp",
+    "imageSmall": "assets/cards/sv7/129-sm.webp",
+    "abilities": [
+      {
+        "name": "Protective Cover",
+        "text": "Prevent all effects of attacks used by your opponent's Pokémon done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-129/large"
+  },
+  {
+    "id": "sv7-130",
+    "name": "Antique Root Fossil",
+    "number": "130",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "hp": "60",
+    "artist": "AYUMI ODASHIMA",
+    "image": "assets/cards/sv7/130.webp",
+    "imageSmall": "assets/cards/sv7/130-sm.webp",
+    "abilities": [
+      {
+        "name": "Primal Root",
+        "text": "As long as this Pokémon is in the Active Spot, attacks used by your opponent's Basic Pokémon cost Colorless more.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-130/large"
+  },
+  {
+    "id": "sv7-131",
+    "name": "Area Zero Underdepths",
+    "number": "131",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "MARINA Chikazawa",
+    "image": "assets/cards/sv7/131.webp",
+    "imageSmall": "assets/cards/sv7/131-sm.webp",
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-131/large"
+  },
+  {
+    "id": "sv7-132",
+    "name": "Briar",
+    "number": "132",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/sv7/132.webp",
+    "imageSmall": "assets/cards/sv7/132-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-132/large"
+  },
+  {
+    "id": "sv7-133",
+    "name": "Crispin",
+    "number": "133",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GIDORA",
+    "image": "assets/cards/sv7/133.webp",
+    "imageSmall": "assets/cards/sv7/133-sm.webp",
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-133/large"
+  },
+  {
+    "id": "sv7-134",
+    "name": "Deluxe Bomb",
+    "number": "134",
+    "rarity": "ACE SPEC Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool",
+      "ACE SPEC"
+    ],
+    "artist": "inose yukie",
+    "image": "assets/cards/sv7/134.webp",
+    "imageSmall": "assets/cards/sv7/134-sm.webp",
+    "market": 0.32,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-134/large"
+  },
+  {
+    "id": "sv7-135",
+    "name": "Glass Trumpet",
+    "number": "135",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sv7/135.webp",
+    "imageSmall": "assets/cards/sv7/135-sm.webp",
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-135/large"
+  },
+  {
+    "id": "sv7-136",
+    "name": "Grand Tree",
+    "number": "136",
+    "rarity": "ACE SPEC Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium",
+      "ACE SPEC"
+    ],
+    "artist": "AYUMI ODASHIMA",
+    "image": "assets/cards/sv7/136.webp",
+    "imageSmall": "assets/cards/sv7/136-sm.webp",
+    "market": 0.48,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-136/large"
+  },
+  {
+    "id": "sv7-137",
+    "name": "Gravity Gemstone",
+    "number": "137",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sv7/137.webp",
+    "imageSmall": "assets/cards/sv7/137-sm.webp",
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-137/large"
+  },
+  {
+    "id": "sv7-138",
+    "name": "Kofu",
+    "number": "138",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/sv7/138.webp",
+    "imageSmall": "assets/cards/sv7/138-sm.webp",
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-138/large"
+  },
+  {
+    "id": "sv7-139",
+    "name": "Lacey",
+    "number": "139",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Sanosuke Sakuma",
+    "image": "assets/cards/sv7/139.webp",
+    "imageSmall": "assets/cards/sv7/139-sm.webp",
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-139/large"
+  },
+  {
+    "id": "sv7-140",
+    "name": "Occa Berry",
+    "number": "140",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "assets/cards/sv7/140.webp",
+    "imageSmall": "assets/cards/sv7/140-sm.webp",
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-140/large"
+  },
+  {
+    "id": "sv7-141",
+    "name": "Payapa Berry",
+    "number": "141",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "assets/cards/sv7/141.webp",
+    "imageSmall": "assets/cards/sv7/141-sm.webp",
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-141/large"
+  },
+  {
+    "id": "sv7-142",
+    "name": "Sparkling Crystal",
+    "number": "142",
+    "rarity": "ACE SPEC Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool",
+      "ACE SPEC"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sv7/142.webp",
+    "imageSmall": "assets/cards/sv7/142-sm.webp",
+    "market": 0.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-142/large"
+  },
+  {
+    "id": "sv7-143",
+    "name": "Bulbasaur",
+    "number": "143",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Orca",
+    "flavorText": "While it is young, it uses the nutrients that are stored in the seed on its back in order to grow.",
+    "image": "assets/cards/sv7/143.webp",
+    "imageSmall": "assets/cards/sv7/143-sm.webp",
+    "attacks": [
+      {
+        "name": "Leech Seed",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      }
+    ],
+    "market": 101.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-143/large"
+  },
+  {
+    "id": "sv7-144",
+    "name": "Ledian",
+    "number": "144",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "When the stars flicker in the night sky, it flutters about, scattering a glowing powder.",
+    "evolvesFrom": "Ledyba",
+    "image": "assets/cards/sv7/144.webp",
+    "imageSmall": "assets/cards/sv7/144-sm.webp",
+    "attacks": [
+      {
+        "name": "Swift",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Glittering Star Pattern",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch in 1 of your opponent's Benched Pokémon that has 90 HP or less remaining to the Active Spot.",
+        "type": "Ability"
+      }
+    ],
+    "market": 6.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-144/large"
+  },
+  {
+    "id": "sv7-145",
+    "name": "Lileep",
+    "number": "145",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Mori Yuu",
+    "flavorText": "This Pokémon was restored from a fossil. Lileep once lived in warm seas that existed approximately 100,000,000 years ago.",
+    "evolvesFrom": "Antique Root Fossil",
+    "image": "assets/cards/sv7/145.webp",
+    "imageSmall": "assets/cards/sv7/145-sm.webp",
+    "attacks": [
+      {
+        "name": "Bind Down",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "market": 9.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-145/large"
+  },
+  {
+    "id": "sv7-146",
+    "name": "Turtonator",
+    "number": "146",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Yukihiro Tada",
+    "flavorText": "Explosive substances coat the shell on its back. Enemies that dare attack it will be blown away by an immense detonation.",
+    "image": "assets/cards/sv7/146.webp",
+    "imageSmall": "assets/cards/sv7/146-sm.webp",
+    "attacks": [
+      {
+        "name": "Ring of Fire",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Your opponent's Active Pokémon is now Burned. During your opponent's next turn, that Pokémon can't retreat."
+      },
+      {
+        "name": "Inferno Onrush",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This Pokémon also does 60 damage to itself."
+      }
+    ],
+    "market": 4.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-146/large"
+  },
+  {
+    "id": "sv7-147",
+    "name": "Raboot",
+    "number": "147",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "rika",
+    "flavorText": "While it prides itself on its varied kicking moves, it can also deliver powerful headbutts once its flames have heated up its forehead.",
+    "evolvesFrom": "Scorbunny",
+    "image": "assets/cards/sv7/147.webp",
+    "imageSmall": "assets/cards/sv7/147-sm.webp",
+    "attacks": [
+      {
+        "name": "Low Sweep",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 7.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-147/large"
+  },
+  {
+    "id": "sv7-148",
+    "name": "Squirtle",
+    "number": "148",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Saboteri",
+    "flavorText": "When it feels threatened, it draws its limbs inside its shell and sprays water from its mouth.",
+    "image": "assets/cards/sv7/148.webp",
+    "imageSmall": "assets/cards/sv7/148-sm.webp",
+    "attacks": [
+      {
+        "name": "Withdraw",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage done to this Pokémon by attacks."
+      },
+      {
+        "name": "Skull Bash",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 116.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-148/large"
+  },
+  {
+    "id": "sv7-149",
+    "name": "Crabominable",
+    "number": "149",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Though its punches are powerful, this Pokémon’s movements are sluggish. It blows icy bubbles from its mouth to immobilize its opponents.",
+    "evolvesFrom": "Crabrawler",
+    "image": "assets/cards/sv7/149.webp",
+    "imageSmall": "assets/cards/sv7/149-sm.webp",
+    "attacks": [
+      {
+        "name": "Haymaker",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can't use Haymaker."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Food Prep",
+        "text": "Attacks used by this Pokémon cost Colorless less for each Kofu card in your discard pile.",
+        "type": "Ability"
+      }
+    ],
+    "market": 3.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-149/large"
+  },
+  {
+    "id": "sv7-150",
+    "name": "Joltik",
+    "number": "150",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "30",
+    "artist": "MARINA Chikazawa",
+    "flavorText": "Since it can’t generate its own electricity, it sticks onto large-bodied Pokémon and absorbs static electricity.",
+    "image": "assets/cards/sv7/150.webp",
+    "imageSmall": "assets/cards/sv7/150-sm.webp",
+    "attacks": [
+      {
+        "name": "Jolting Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Grass Energy cards and up to 2 Basic Lightning Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck."
+      }
+    ],
+    "market": 8.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-150/large"
+  },
+  {
+    "id": "sv7-151",
+    "name": "Zeraora",
+    "number": "151",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Kazumasa Yasukuni",
+    "flavorText": "It runs as fast as lightning strikes, shredding its opponents with its high-voltage claws.",
+    "image": "assets/cards/sv7/151.webp",
+    "imageSmall": "assets/cards/sv7/151-sm.webp",
+    "attacks": [
+      {
+        "name": "Combat Thunder",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each of your opponent's Benched Pokémon."
+      }
+    ],
+    "market": 14.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-151/large"
+  },
+  {
+    "id": "sv7-152",
+    "name": "Milcery",
+    "number": "152",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Dsuke",
+    "flavorText": "When attacked, it tackles its foe and covers them in cream. With its foe either blinded or astonished by deliciousness, Milcery flees.",
+    "image": "assets/cards/sv7/152.webp",
+    "imageSmall": "assets/cards/sv7/152-sm.webp",
+    "attacks": [
+      {
+        "name": "Mumble",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 18.91,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-152/large"
+  },
+  {
+    "id": "sv7-153",
+    "name": "Meditite",
+    "number": "153",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Yuriko Akase",
+    "flavorText": "It meditates to heighten its inner energy and to float in the air. It eats one berry a day.",
+    "image": "assets/cards/sv7/153.webp",
+    "imageSmall": "assets/cards/sv7/153-sm.webp",
+    "attacks": [
+      {
+        "name": "Calm Mind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Chop",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 8.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-153/large"
+  },
+  {
+    "id": "sv7-154",
+    "name": "Gulpin",
+    "number": "154",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Jerky",
+    "flavorText": "It has a small heart and brain. Its stomach comprises most of its body, with enzymes to dissolve anything.",
+    "image": "assets/cards/sv7/154.webp",
+    "imageSmall": "assets/cards/sv7/154-sm.webp",
+    "attacks": [
+      {
+        "name": "Drool",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Super Poison Breath",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "market": 13.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-154/large"
+  },
+  {
+    "id": "sv7-155",
+    "name": "Archaludon",
+    "number": "155",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "180",
+    "artist": "Toshinao Aoki",
+    "flavorText": "It digs holes on mountains, searching for food. It’s so durable that being caught in a cave-in won’t faze it.",
+    "evolvesFrom": "Duraludon",
+    "image": "assets/cards/sv7/155.webp",
+    "imageSmall": "assets/cards/sv7/155-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Blaster",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metal Bridge",
+        "text": "All of your Pokémon that have Metal Energy attached have no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "market": 3.84,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-155/large"
+  },
+  {
+    "id": "sv7-156",
+    "name": "Hydrapple ex",
+    "number": "156",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Dipplin",
+    "image": "assets/cards/sv7/156.webp",
+    "imageSmall": "assets/cards/sv7/156-sm.webp",
+    "attacks": [
+      {
+        "name": "Syrup Storm",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "This attack does 30 more damage for each Grass Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ripening Charge",
+        "text": "Once during your turn, you may attach a Basic Grass Energy card from your hand to 1 of your Pokémon. If you attached Energy to a Pokémon in this way, heal 30 damage from that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 3.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-156/large"
+  },
+  {
+    "id": "sv7-157",
+    "name": "Cinderace ex",
+    "number": "157",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Raboot",
+    "image": "assets/cards/sv7/157.webp",
+    "imageSmall": "assets/cards/sv7/157-sm.webp",
+    "attacks": [
+      {
+        "name": "Flare Strike",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "280",
+        "text": "During your next turn, this Pokémon can't use Flare Strike."
+      },
+      {
+        "name": "Garnet Volley",
+        "cost": [
+          "Fire",
+          "Fighting",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "This attack does 180 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 3.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-157/large"
+  },
+  {
+    "id": "sv7-158",
+    "name": "Lapras ex",
+    "number": "158",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sv7/158.webp",
+    "imageSmall": "assets/cards/sv7/158-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage for each Energy attached to this Pokémon."
+      },
+      {
+        "name": "Larimar Rain",
+        "cost": [
+          "Water",
+          "Psychic",
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Look at the top 20 cards of your deck and attach any number of Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck."
+      }
+    ],
+    "market": 7.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-158/large"
+  },
+  {
+    "id": "sv7-159",
+    "name": "Galvantula ex",
+    "number": "159",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Joltik",
+    "image": "assets/cards/sv7/159.webp",
+    "imageSmall": "assets/cards/sv7/159-sm.webp",
+    "attacks": [
+      {
+        "name": "Charged Web",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "110+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex or Pokémon V, this attack does 110 more damage."
+      },
+      {
+        "name": "Fulgurite",
+        "cost": [
+          "Grass",
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "180",
+        "text": "Discard all Energy from this Pokémon. During your opponent's next turn, they can't play any Item cards from their hand."
+      }
+    ],
+    "market": 2.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-159/large"
+  },
+  {
+    "id": "sv7-160",
+    "name": "Dachsbun ex",
+    "number": "160",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "250",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Fidough",
+    "image": "assets/cards/sv7/160.webp",
+    "imageSmall": "assets/cards/sv7/160-sm.webp",
+    "attacks": [
+      {
+        "name": "Wonder Shine",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Time to Chow Down",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may heal all damage from each of your Evolution Pokémon. If you healed any damage in this way, discard all Energy from those Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 4.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-160/large"
+  },
+  {
+    "id": "sv7-161",
+    "name": "Medicham ex",
+    "number": "161",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "260",
+    "artist": "PLANETA Yamashita",
+    "evolvesFrom": "Meditite",
+    "image": "assets/cards/sv7/161.webp",
+    "imageSmall": "assets/cards/sv7/161-sm.webp",
+    "attacks": [
+      {
+        "name": "Chi-Atsu",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 50."
+      },
+      {
+        "name": "Yoga Kick",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "market": 1.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-161/large"
+  },
+  {
+    "id": "sv7-162",
+    "name": "Orthworm ex",
+    "number": "162",
+    "rarity": "Ultra Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/sv7/162.webp",
+    "imageSmall": "assets/cards/sv7/162-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Tomb",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pummeling Payback",
+        "text": "If this Pokémon is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each Metal Energy attached to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-162/large"
+  },
+  {
+    "id": "sv7-163",
+    "name": "Briar",
+    "number": "163",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/sv7/163.webp",
+    "imageSmall": "assets/cards/sv7/163-sm.webp",
+    "market": 1.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-163/large"
+  },
+  {
+    "id": "sv7-164",
+    "name": "Crispin",
+    "number": "164",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "GIDORA",
+    "image": "assets/cards/sv7/164.webp",
+    "imageSmall": "assets/cards/sv7/164-sm.webp",
+    "market": 6.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-164/large"
+  },
+  {
+    "id": "sv7-165",
+    "name": "Kofu",
+    "number": "165",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/sv7/165.webp",
+    "imageSmall": "assets/cards/sv7/165-sm.webp",
+    "market": 1.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-165/large"
+  },
+  {
+    "id": "sv7-166",
+    "name": "Lacey",
+    "number": "166",
+    "rarity": "Ultra Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Sanosuke Sakuma",
+    "image": "assets/cards/sv7/166.webp",
+    "imageSmall": "assets/cards/sv7/166-sm.webp",
+    "market": 3.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-166/large"
+  },
+  {
+    "id": "sv7-167",
+    "name": "Hydrapple ex",
+    "number": "167",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "330",
+    "artist": "Teeziro",
+    "evolvesFrom": "Dipplin",
+    "image": "assets/cards/sv7/167.webp",
+    "imageSmall": "assets/cards/sv7/167-sm.webp",
+    "attacks": [
+      {
+        "name": "Syrup Storm",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "This attack does 30 more damage for each Grass Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ripening Charge",
+        "text": "Once during your turn, you may attach a Basic Grass Energy card from your hand to 1 of your Pokémon. If you attached Energy to a Pokémon in this way, heal 30 damage from that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 38.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-167/large"
+  },
+  {
+    "id": "sv7-168",
+    "name": "Galvantula ex",
+    "number": "168",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "260",
+    "artist": "MARINA Chikazawa",
+    "evolvesFrom": "Joltik",
+    "image": "assets/cards/sv7/168.webp",
+    "imageSmall": "assets/cards/sv7/168-sm.webp",
+    "attacks": [
+      {
+        "name": "Charged Web",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "110+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex or Pokémon V, this attack does 110 more damage."
+      },
+      {
+        "name": "Fulgurite",
+        "cost": [
+          "Grass",
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "180",
+        "text": "Discard all Energy from this Pokémon. During your opponent's next turn, they can't play any Item cards from their hand."
+      }
+    ],
+    "market": 18.86,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-168/large"
+  },
+  {
+    "id": "sv7-169",
+    "name": "Dachsbun ex",
+    "number": "169",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "250",
+    "artist": "Yuu Nishida",
+    "evolvesFrom": "Fidough",
+    "image": "assets/cards/sv7/169.webp",
+    "imageSmall": "assets/cards/sv7/169-sm.webp",
+    "attacks": [
+      {
+        "name": "Wonder Shine",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Time to Chow Down",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may heal all damage from each of your Evolution Pokémon. If you healed any damage in this way, discard all Energy from those Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 66.97,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-169/large"
+  },
+  {
+    "id": "sv7-170",
+    "name": "Terapagos ex",
+    "number": "170",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "230",
+    "artist": "Saboteri",
+    "image": "assets/cards/sv7/170.webp",
+    "imageSmall": "assets/cards/sv7/170-sm.webp",
+    "attacks": [
+      {
+        "name": "Unified Beatdown",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "If you go second, you can't use this attack during your first turn. This attack does 30 damage for each of your Benched Pokémon."
+      },
+      {
+        "name": "Crown Opal",
+        "cost": [
+          "Grass",
+          "Water",
+          "Lightning"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic non-Colorless Pokémon."
+      }
+    ],
+    "market": 38.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-170/large"
+  },
+  {
+    "id": "sv7-171",
+    "name": "Briar",
+    "number": "171",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "DOM",
+    "image": "assets/cards/sv7/171.webp",
+    "imageSmall": "assets/cards/sv7/171-sm.webp",
+    "market": 12.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-171/large"
+  },
+  {
+    "id": "sv7-172",
+    "name": "Lacey",
+    "number": "172",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Souichirou Gunjima",
+    "image": "assets/cards/sv7/172.webp",
+    "imageSmall": "assets/cards/sv7/172-sm.webp",
+    "market": 17.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-172/large"
+  },
+  {
+    "id": "sv7-173",
+    "name": "Terapagos ex",
+    "number": "173",
+    "rarity": "Hyper Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Tera",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sv7/173.webp",
+    "imageSmall": "assets/cards/sv7/173-sm.webp",
+    "attacks": [
+      {
+        "name": "Unified Beatdown",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "If you go second, you can't use this attack during your first turn. This attack does 30 damage for each of your Benched Pokémon."
+      },
+      {
+        "name": "Crown Opal",
+        "cost": [
+          "Grass",
+          "Water",
+          "Lightning"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic non-Colorless Pokémon."
+      }
+    ],
+    "market": 11.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-173/large"
+  },
+  {
+    "id": "sv7-174",
+    "name": "Area Zero Underdepths",
+    "number": "174",
+    "rarity": "Hyper Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "MARINA Chikazawa",
+    "image": "assets/cards/sv7/174.webp",
+    "imageSmall": "assets/cards/sv7/174-sm.webp",
+    "market": 10.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-174/large"
+  },
+  {
+    "id": "sv7-175",
+    "name": "Bravery Charm",
+    "number": "175",
+    "rarity": "Hyper Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sv7/175.webp",
+    "imageSmall": "assets/cards/sv7/175-sm.webp",
+    "market": 4.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-175/large"
+  }
+]
