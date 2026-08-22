@@ -5086,6 +5086,7 @@ body:has(#inspect:not(.hidden)) .radio {
 .player-tip {
   position: fixed;
   z-index: 40;
+  isolation: isolate;
   width: 300px;
   overflow: hidden;
   border: 1px solid rgba(240, 193, 75, 0.35);
@@ -5094,12 +5095,22 @@ body:has(#inspect:not(.hidden)) .radio {
   box-shadow: 0 24px 60px rgba(0,0,0,0.55);
 }
 .player-tip.hidden { display: none; }
+/* .banner-wash sets contain: paint, which makes the banner an atomic stacking
+   context — it paints after the in-flow content of its later siblings, so it
+   covered the avatar and title that .tip-id pulls up over it. Layer the rows
+   the way .profile-hero already does. */
 .tip-banner {
+  position: relative;
+  z-index: 0;
   height: 72px;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
+  pointer-events: none;
 }
 .tip-id {
+  position: relative;
+  z-index: 1;
   display: flex;
   gap: 10px;
   align-items: center;
@@ -5108,8 +5119,16 @@ body:has(#inspect:not(.hidden)) .radio {
 }
 .tip-id b { display: block; }
 .tip-id small { color: var(--muted); font-size: 12px; }
-.tip-bio, .tip-stats { margin: 8px 14px 0; color: var(--muted); font-size: 13px; }
+.tip-bio, .tip-stats {
+  position: relative;
+  z-index: 1;
+  margin: 8px 14px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
 .tip-actions {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -5918,13 +5937,17 @@ body:has(#inspect:not(.hidden)) .player-tip {
   text-transform: uppercase;
 }
 .look-card {
+  isolation: isolate;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: #100d14;
 }
+.look-card .acct-banner { position: relative; z-index: 0; pointer-events: none; }
 .look-card .acct-banner { height: 104px; }
 .look-id {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
   gap: 2px;
