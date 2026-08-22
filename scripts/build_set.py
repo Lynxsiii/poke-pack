@@ -288,10 +288,12 @@ def build(set_id: str, refresh: bool) -> int:
         existing = {c["id"]: c for c in json.loads(out_path.read_text(encoding="utf-8"))}
 
     cards = []
+    seen = set()
     for index, row in enumerate(listing, start=1):
         number = str(row.get("number", "")).strip()
-        if not number:
+        if not number or number in seen:
             continue
+        seen.add(number)
         detail = page_data(fetch(f"{base}/{number}", f"{set_id}-{number}", refresh))
         if isinstance(detail, list):  # a listing page came back; skip rather than guess
             print(f"    #{number}: unexpected page shape, skipped")
@@ -307,6 +309,9 @@ def build(set_id: str, refresh: bool) -> int:
     )
     kept = sum(1 for c in cards if "market" in c)
     print(f"  wrote data/{set_id}.json — {len(cards)} cards, {kept} keeping prices")
+    wrappers = pack_art(cfg)
+    if wrappers:
+        print(f"  pack art: {wrappers} wrapper(s)")
     return 0
 
 

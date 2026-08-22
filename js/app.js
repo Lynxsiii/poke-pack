@@ -447,6 +447,17 @@ function ownerWindow(card) {
   return assetUrl(`assets/masks/owner/${card.ownerMask}${variant}.png`);
 }
 
+function setForCard(card) {
+  const id = card?.id || "";
+  return PLAYABLE_SETS.find((set) => id.startsWith(`${set.id}-`)) || liveSet;
+}
+
+function reverseKindOf(card) {
+  if (!card?.reverse) return "";
+  if (card.reverseKind) return card.reverseKind === "cosmos" ? "" : card.reverseKind;
+  return setForCard(card)?.reverseFoil || "";
+}
+
 function foilLayout(card) {
   if (card.energy || card.supertype === "Energy") return "foil-energy";
   if (card.supertype === "Trainer") return "foil-trainer";
@@ -456,13 +467,20 @@ function foilLayout(card) {
 
 function foilPattern(card) {
   if (!card) return "foil-none";
-  if (card.reverse) return "foil-reverse";
+  if (card.reverse) {
+    const kind = reverseKindOf(card);
+    if (kind === "pokeball") return "foil-reverse foil-rev-pokeball";
+    if (kind === "masterball") return "foil-reverse foil-rev-masterball";
+    return "foil-reverse";
+  }
   if (card.rarity === "Mega Hyper Rare") return "foil-gold";
   if (card.rarity === "Special Illustration Rare") return "foil-sir";
   if (card.rarity === "Illustration Rare") return "foil-ir";
   // Before the ex check: Ultra Rares are ex cards too, so they'd otherwise
   // share the plain full-art foil instead of getting their own.
   if (card.rarity === "Ultra Rare") return "foil-ultra";
+  if (card.rarity === "Mega Attack Rare") return "foil-mega-attack";
+  if (card.rarity === "Black White Rare") return "foil-bwr";
   if (isExCard(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) return "foil-ex";
   if (card.supertype === "Trainer" && HIT_RARITIES.has(card.rarity)) return "foil-ex";
   if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "foil-holo";
@@ -515,20 +533,19 @@ function rarityIcons(rarity) {
 function rarityMark(card) {
   const pips = rarityPips(card.rarity);
   if (!pips) return "";
-  const label = card.reverse
-    ? `Reverse holo · ${RARITY_LABEL[card.rarity] || card.rarity}`
-    : RARITY_LABEL[card.rarity] || card.rarity;
-  return `<span class="focus-mark${card.reverse ? " rev" : ""}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
+  const label = rarityLine(card);
+  const kind = reverseKindOf(card);
+  const rev = card.reverse ? ` rev${kind ? ` rev-${kind}` : ""}` : "";
+  return `<span class="focus-mark${rev}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
 }
 
 /** Printed rarity mark, bottom-right of the card so it reads at a glance. */
 function rarityStamp(card, extraClass = "") {
   const pips = rarityPips(card.rarity);
   if (!pips) return "";
-  const label = card.reverse
-    ? `Reverse holo · ${RARITY_LABEL[card.rarity] || card.rarity}`
-    : RARITY_LABEL[card.rarity] || card.rarity;
-  const rev = card.reverse ? " rev" : "";
+  const label = rarityLine(card);
+  const kind = reverseKindOf(card);
+  const rev = card.reverse ? ` rev${kind ? ` rev-${kind}` : ""}` : "";
   return `<span class="rarity-stamp${rev}${extraClass}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
 }
 
@@ -588,7 +605,14 @@ function numberLine(card) {
 
 function rarityLine(card) {
   const label = RARITY_LABEL[card.rarity] || card.rarity;
-  return card.reverse ? `Reverse · ${label}` : label;
+  if (!card.reverse) return label;
+  if (card.reverseKind === "pokeball" || reverseKindOf(card) === "pokeball") {
+    return `Poké Ball reverse · ${label}`;
+  }
+  if (card.reverseKind === "masterball" || reverseKindOf(card) === "masterball") {
+    return `Master Ball reverse · ${label}`;
+  }
+  return `Reverse · ${label}`;
 }
 
 function fillRarityFilter() {
@@ -1213,8 +1237,10 @@ function ownedReverse(id) {
 /** Binder / inspect copies: reverse foil if this print was pulled as a reverse. */
 function withOwnedFoil(card) {
   if (!card) return card;
-  if (card.reverse || ownedReverse(card.id)) return { ...card, reverse: true };
-  return card;
+  if (card.reverse) return card;
+  if (!ownedReverse(card.id)) return card;
+  const kind = setForCard(card)?.reverseFoil;
+  return kind ? { ...card, reverse: true, reverseKind: kind } : { ...card, reverse: true };
 }
 
 function inspectAttrs(card) {
@@ -2665,7 +2691,13 @@ function motionOk() {
 
 function hitTier(card) {
   if (!card) return 0;
-  if (card.rarity === "Mega Hyper Rare" || card.rarity === "Special Illustration Rare") return 3;
+  if (
+    card.rarity === "Mega Hyper Rare" ||
+    card.rarity === "Special Illustration Rare" ||
+    card.rarity === "Black White Rare"
+  ) {
+    return 3;
+  }
   if (HIT_RARITIES.has(card.rarity)) return 2;
   if (card.rarity === "Rare" || card.reverse) return 1;
   return 0;

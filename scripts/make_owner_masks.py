@@ -85,6 +85,13 @@ FULL_ART = {
     "Special Illustration Rare",
     "Hyper Rare",
     "Ultra Rare",
+    "Mega Hyper Rare",
+    "Mega Attack Rare",
+    "Black White Rare",
+    "Shiny Rare",
+    "Shiny Ultra Rare",
+    "Futuristic Rare",
+    "ACE SPEC Rare",
 }
 
 
@@ -98,15 +105,22 @@ def card_sort_key(card):
     return (card["set"], int(digits), str(card["number"]))
 
 
+DATA_SKIP = {"sealed", "pullrates", "price-history", "patch-notes"}
+
+
 def collect():
     """Every windowed owner card, plus the loaded data files to stamp later."""
     files = {}
     cards = []
-    for path in sorted((ROOT / "data").glob("me*.json")):
+    for path in sorted((ROOT / "data").glob("*.json")):
+        if path.stem in DATA_SKIP:
+            continue
         before = path.read_text(encoding="utf-8")
         raw = json.loads(before)
         files[path.stem] = (path, raw, before)
         records = raw["cards"] if isinstance(raw, dict) and "cards" in raw else raw
+        if not isinstance(records, list):
+            continue
         for record in records:
             subtypes = [str(s) for s in record.get("subtypes") or []]
             if record.get("supertype") != "Pokémon":

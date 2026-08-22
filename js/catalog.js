@@ -185,6 +185,51 @@ function megaSlots({ double, ultra, ir, sir, hyper, megaAttack = 0 }) {
   ];
 }
 
+/**
+ * Black Bolt / White Flare (and later 151-style special sets): same 11-card
+ * skeleton, but the reverse slot rolls Poké Ball / Master Ball / cosmos, and
+ * Black White Rares sit in the art slot where Mega sets put gold.
+ *
+ * English rates from the PokeBeach set guide (community openings, Jul 2025):
+ * DR 1/5, UR 1/16, Poké Ball reverse 1/3, Master Ball 1/15, IR 1/6, SIR 1/76.
+ * BWR ~1/496 from the same community tables (TCGPlayer could not pin it).
+ */
+function svSpecialSlots({ double, ultra, ir, sir, bwr, pokeball, masterball }) {
+  return [
+    { pool: "energy", count: 1 },
+    { pool: "common", count: 4 },
+    { pool: "uncommon", count: 3 },
+    {
+      pool: "reverse",
+      count: 1,
+      kinds: [
+        ["pokeball", pokeball],
+        ["masterball", masterball],
+        ["cosmos", 1 - pokeball - masterball],
+      ],
+    },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 1 - double - ultra],
+        ["double", double],
+        ["ultra", ultra],
+      ],
+    },
+    {
+      pool: "art-slot",
+      count: 1,
+      table: [
+        ["reverse", 1 - ir - sir - bwr],
+        ["ir", ir],
+        ["sir", sir],
+        ["bwr", bwr],
+      ],
+    },
+  ];
+}
+
 export const PITCH_BLACK = {
   id: "me5",
   tcgId: "me5",
@@ -494,6 +539,86 @@ export const MEGA_EVOLUTION = {
   ],
 };
 
+export const BLACK_BOLT = {
+  id: "zsv10pt5",
+  tcgId: "zsv10pt5",
+  name: "Black Bolt",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "July 18, 2025",
+  live: true,
+  printedTotal: 86,
+  totalCount: 172,
+  packSize: 11,
+  cost: 14.69,
+  dataFile: "data/zsv10pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseFoil: "pokeball",
+  blurb: "Scarlet & Violet, July 2025. Unova's black half — one wrapper, Poké Ball reverses, and the Black White Rare chase.",
+  oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
+  lede: "Every Unova Pokémon here is an Illustration Rare or better in the secret slot. Zekrom's Black White Rare is the one people hunt.",
+  slots: svSpecialSlots({
+    double: 0.2,
+    ultra: 0.0625,
+    ir: 0.1667,
+    sir: 0.01316,
+    bwr: 0.00202,
+    pokeball: 0.3333,
+    masterball: 0.0667,
+  }),
+  heroIds: ["zsv10pt5-172", "zsv10pt5-166", "zsv10pt5-171", "zsv10pt5-164"],
+  wrappers: [
+    {
+      id: "zekrom",
+      name: "Zekrom",
+      cardId: "zsv10pt5-166",
+      tag: "The chase",
+      art: "assets/packs/zsv10pt5/zekrom.avif",
+      artFallback: "assets/packs/zsv10pt5/zekrom.png",
+    },
+  ],
+};
+
+export const WHITE_FLARE = {
+  id: "rsv10pt5",
+  tcgId: "rsv10pt5",
+  name: "White Flare",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "July 18, 2025",
+  live: true,
+  printedTotal: 86,
+  totalCount: 173,
+  packSize: 11,
+  cost: 13.43,
+  dataFile: "data/rsv10pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseFoil: "pokeball",
+  blurb: "Scarlet & Violet, July 2025. Unova's white half — one wrapper, Poké Ball reverses, Reshiram on the front.",
+  oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
+  lede: "The other half of the Unova split. Reshiram's Black White Rare sits at the top of a 173-card list with a Poké Ball reverse in every third pack.",
+  slots: svSpecialSlots({
+    double: 0.2,
+    ultra: 0.0625,
+    ir: 0.1667,
+    sir: 0.01316,
+    bwr: 0.00202,
+    pokeball: 0.3333,
+    masterball: 0.0667,
+  }),
+  heroIds: ["rsv10pt5-173", "rsv10pt5-166", "rsv10pt5-172", "rsv10pt5-167"],
+  wrappers: [
+    {
+      id: "reshiram",
+      name: "Reshiram",
+      cardId: "rsv10pt5-166",
+      tag: "The chase",
+      art: "assets/packs/rsv10pt5/reshiram.avif",
+      artFallback: "assets/packs/rsv10pt5/reshiram.png",
+    },
+  ],
+};
+
 export const PLAYABLE_SETS = [
   PITCH_BLACK,
   CHAOS_RISING,
@@ -501,6 +626,8 @@ export const PLAYABLE_SETS = [
   ASCENDED_HEROES,
   PHANTASMAL_FLAMES,
   MEGA_EVOLUTION,
+  BLACK_BOLT,
+  WHITE_FLARE,
 ];
 export const SET_BY_ID = Object.fromEntries(PLAYABLE_SETS.map((set) => [set.id, set]));
 export const DEFAULT_SET_ID = PITCH_BLACK.id;
@@ -543,8 +670,6 @@ export const ROADMAP = [
   {
     era: "Scarlet & Violet",
     sets: [
-      { id: "zsv10pt5", name: "Black Bolt", released: "Jul 2025", cards: "—" },
-      { id: "rsv10pt5", name: "White Flare", released: "Jul 2025", cards: "—" },
       { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
       { id: "sv9", name: "Journey Together", released: "Mar 2025", cards: "—" },
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },

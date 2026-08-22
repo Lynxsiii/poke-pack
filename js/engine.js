@@ -22,6 +22,8 @@ export const HIT_RARITIES = new Set([
   "Illustration Rare",
   "Special Illustration Rare",
   "Mega Hyper Rare",
+  "Mega Attack Rare",
+  "Black White Rare",
 ]);
 
 export function poolsFrom(cards) {
@@ -39,14 +41,19 @@ export function poolsFrom(cards) {
     // Ascended Heroes only: Mega Attack Rares share the Ultra Rare slot, which
     // is why that set's UR rate drops from ~1/12 to 1/21.
     megaAttack: pokemonOrTrainer.filter((c) => c.rarity === "Mega Attack Rare"),
+    bwr: pokemonOrTrainer.filter((c) => c.rarity === "Black White Rare"),
     reversePool: pokemonOrTrainer.filter((c) =>
       ["Common", "Uncommon", "Rare"].includes(c.rarity)
     ),
   };
 }
 
-function asReverse(card) {
-  return { ...card, reverse: true };
+function asReverse(card, kind) {
+  return { ...card, reverse: true, reverseKind: kind || "cosmos" };
+}
+
+function reverseKind(slot) {
+  return slot.kinds ? rollTable(slot.kinds) : "cosmos";
 }
 
 /** Pitch Black: 4C + 3U + reverse + rare slot + art slot + energy. No pity. */
@@ -61,10 +68,10 @@ export function ripPack(set, cards) {
         pulls.push(pick(pools[rollTable(slot.table)], used));
       } else if (slot.pool === "art-slot") {
         const key = rollTable(slot.table);
-        if (key === "reverse") pulls.push(asReverse(pick(pools.reversePool, used)));
+        if (key === "reverse") pulls.push(asReverse(pick(pools.reversePool, used), reverseKind(slot)));
         else pulls.push(pick(pools[key], used));
       } else if (slot.pool === "reverse") {
-        pulls.push(asReverse(pick(pools.reversePool, used)));
+        pulls.push(asReverse(pick(pools.reversePool, used), reverseKind(slot)));
       } else {
         pulls.push(pick(pools[slot.pool], used));
       }

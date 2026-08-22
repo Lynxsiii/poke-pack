@@ -531,6 +531,10 @@ h1 em { font-style: normal; color: var(--gold); }
   --foil-metal: url("../assets/foil/metal.png");
   --foil-facet: url("../assets/foil/facet.png");
   --foil-prism: url("../assets/foil/prism.png");
+  --foil-pokeball: url("../assets/foil/pokeball.png");
+  --foil-pokeball-tiny: url("../assets/foil/pokeball-tiny.png");
+  --foil-masterball: url("../assets/foil/masterball.png");
+  --foil-masterball-tiny: url("../assets/foil/masterball-tiny.png");
   --win-holo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='630' height='880' viewBox='0 0 630 880' preserveAspectRatio='xMidYMid meet'%3E%3Crect width='630' height='880' fill='white' fill-opacity='0'/%3E%3Crect x='50' y='82' width='534' height='334' fill='white'/%3E%3C/svg%3E");
   --win-evo: url("../assets/masks/win-evo.png");
   /* Same windows as the .foil-holo.foil-energy / .foil-holo.foil-trainer
@@ -619,6 +623,14 @@ h1 em { font-style: normal; color: var(--gold); }
   border-color: rgba(150, 225, 255, 0.7);
   box-shadow: 0 0 9px rgba(120, 215, 255, 0.4), 0 2px 7px rgba(0, 0, 0, 0.65);
 }
+.rarity-stamp.rev-pokeball {
+  border-color: rgba(255, 92, 92, 0.78);
+  box-shadow: 0 0 9px rgba(255, 72, 72, 0.42), 0 2px 7px rgba(0, 0, 0, 0.65);
+}
+.rarity-stamp.rev-masterball {
+  border-color: rgba(186, 110, 255, 0.82);
+  box-shadow: 0 0 9px rgba(168, 86, 255, 0.45), 0 2px 7px rgba(0, 0, 0, 0.65);
+}
 
 /* Both overlay layers mask themselves against the card art, so the shine
    covers the entire card and clips exactly at its printed rounded corners
@@ -656,7 +668,9 @@ h1 em { font-style: normal; color: var(--gold); }
 .tcg.lit.foil-sir .glare,
 .tcg.lit.foil-gold .glare,
 .tcg.lit.foil-ultra .glare,
-.tcg.lit.foil-ex .glare { opacity: 0.4; }
+.tcg.lit.foil-ex .glare,
+.tcg.lit.foil-mega-attack .glare,
+.tcg.lit.foil-bwr .glare { opacity: 0.4; }
 /* ---- Foil ----------------------------------------------------------------
    Pointer-driven holofoil: color-dodge rainbow + grain, same family of tricks
    as a real card under a lamp. Each rarity gets its own pattern. */
@@ -996,6 +1010,56 @@ h1 em { font-style: normal; color: var(--gold); }
   -webkit-mask-image: var(--art), var(--win-holo-trainer);
   mask-image: var(--art), var(--win-holo-trainer);
 }
+
+/* Poké Ball / Master Ball reverse: same window cut as cosmos reverse, but the
+   frame is tiled balls instead of flakes. Black Bolt, White Flare, and later
+   151 use these; cosmos stays the Mega Evolution default. */
+.foil-rev-pokeball .foil {
+  background-image:
+    var(--foil-pokeball),
+    var(--foil-pokeball-tiny),
+    linear-gradient(
+      118deg,
+      hsl(2 88% 62% / 0.55),
+      hsl(48 90% 62% / 0.4),
+      hsl(200 85% 64% / 0.45),
+      hsl(2 88% 62% / 0.55)
+    );
+  background-size: 118px 118px, 64px 64px, 230% 230%;
+  background-position:
+    calc(var(--px) * 36px) calc(var(--py) * 28px),
+    calc(var(--px) * -22px) calc(var(--py) * 18px),
+    calc(var(--px) * 80%) calc(var(--py) * 70%);
+  background-blend-mode: overlay, overlay, normal;
+  filter: brightness(0.82) contrast(1.18) saturate(1.15);
+}
+.tcg.lit.foil-rev-pokeball .foil {
+  opacity: calc(0.56 * var(--foil-strength, 1));
+  filter: brightness(0.9) contrast(1.22) saturate(1.22);
+}
+.foil-rev-masterball .foil {
+  background-image:
+    var(--foil-masterball),
+    var(--foil-masterball-tiny),
+    linear-gradient(
+      118deg,
+      hsl(278 72% 62% / 0.55),
+      hsl(320 78% 64% / 0.5),
+      hsl(210 70% 66% / 0.4),
+      hsl(278 72% 62% / 0.55)
+    );
+  background-size: 118px 118px, 64px 64px, 230% 230%;
+  background-position:
+    calc(var(--px) * 36px) calc(var(--py) * 28px),
+    calc(var(--px) * -22px) calc(var(--py) * 18px),
+    calc(var(--px) * 80%) calc(var(--py) * 70%);
+  background-blend-mode: overlay, overlay, normal;
+  filter: brightness(0.84) contrast(1.2) saturate(1.2);
+}
+.tcg.lit.foil-rev-masterball .foil {
+  opacity: calc(0.58 * var(--foil-strength, 1));
+  filter: brightness(0.92) contrast(1.24) saturate(1.28);
+}
 /* Illustration Rare: full-art glitter, shinier than a window holo. */
 .foil-ir .foil {
   background-image:
@@ -1201,6 +1265,98 @@ h1 em { font-style: normal; color: var(--gold); }
     102deg,
     transparent 42%,
     rgba(255, 226, 150, 0.3) 50%,
+    transparent 58%
+  );
+}
+
+/* Mega Attack Rare: full-card foil, punchier than a Double Rare ex. Magenta
+   and lime follow the two-tone star on the printed rarity mark. */
+.foil-mega-attack .foil {
+  opacity: 0.36;
+  mix-blend-mode: screen;
+  background-image:
+    var(--foil-facet),
+    repeating-linear-gradient(
+      108deg,
+      hsl(332 92% 64% / 0.58) 0 5%,
+      hsl(48 95% 62% / 0.4) 10%,
+      hsl(142 78% 58% / 0.52) 16%,
+      hsl(332 92% 64% / 0.58) 24%
+    ),
+    repeating-linear-gradient(
+      38deg,
+      rgba(255, 255, 255, 0.14) 0 1px,
+      transparent 1px 7px
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 210, 230, 0.28) 0%,
+      transparent 46%
+    );
+  background-size: 140px 140px, 240% 100%, 100% 100%, 150% 150%;
+  background-position:
+    calc(var(--px) * 28px) calc(var(--py) * 22px),
+    calc(var(--px) * 100%) 0,
+    0 0,
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: overlay, normal, overlay, normal;
+  filter: brightness(calc(0.66 + var(--hyp, 0.12) * 0.38)) contrast(1.22) saturate(1.55);
+}
+.tcg.lit.foil-mega-attack .foil {
+  opacity: 0.48;
+  filter: brightness(calc(0.66 + var(--hyp, 0.12) * 0.38)) contrast(1.22) saturate(1.55);
+}
+.foil-mega-attack .foil::after {
+  opacity: 0.5;
+  background: linear-gradient(
+    96deg,
+    transparent 40%,
+    rgba(255, 140, 200, 0.32) 50%,
+    transparent 60%
+  );
+}
+
+/* Black White Rare: monochrome metal, no rainbow. The printed cards are
+   black-or-white linework with a heavy holofoil — treat them like silver
+   plate rather than another rainbow chase. */
+.foil-bwr .foil {
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image:
+    var(--foil-metal),
+    var(--foil-facet),
+    repeating-linear-gradient(
+      112deg,
+      rgba(255, 255, 255, 0.42) 0 4%,
+      rgba(40, 42, 48, 0.35) 10%,
+      rgba(220, 224, 232, 0.4) 18%,
+      rgba(18, 16, 22, 0.38) 26%,
+      rgba(255, 255, 255, 0.42) 34%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 48%
+    );
+  background-size: 180% 100%, 132px 132px, 240% 100%, 150% 150%;
+  background-position:
+    calc(var(--px) * 50%) calc(var(--py) * 20%),
+    calc(var(--px) * 24px) calc(var(--py) * 18px),
+    calc(var(--px) * 100%) 0,
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: overlay, overlay, normal, normal;
+  filter: brightness(calc(0.58 + var(--hyp, 0.12) * 0.4)) contrast(1.28) saturate(0.15);
+}
+.tcg.lit.foil-bwr .foil {
+  opacity: 0.52;
+  filter: brightness(calc(0.58 + var(--hyp, 0.12) * 0.4)) contrast(1.28) saturate(0.15);
+}
+.foil-bwr .foil::after {
+  opacity: 0.48;
+  background: linear-gradient(
+    100deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.34) 50%,
     transparent 58%
   );
 }

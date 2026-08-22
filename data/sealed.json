@@ -23,7 +23,7 @@
     "buildBattleBox": 38.07,
     "boosterPack": 5.53
   },
-  "_fetchedAt": "2026-08-20",
+  "_fetchedAt": "2026-08-22",
   "me2pt5": {
     "eliteTrainerBox": 165.7,
     "pcEliteTrainerBox": 421.0,
@@ -45,5 +45,17 @@
     "boosterBundle": 63.48,
     "buildBattleBox": 60.29,
     "boosterPack": 8.31
+  },
+  "zsv10pt5": {
+    "eliteTrainerBox": 164.9,
+    "pcEliteTrainerBox": 278.82,
+    "boosterBundle": 98.23,
+    "boosterPack": 14.69
+  },
+  "rsv10pt5": {
+    "eliteTrainerBox": 151.96,
+    "pcEliteTrainerBox": 251.53,
+    "boosterBundle": 86.12,
+    "boosterPack": 13.43
   }
 }
