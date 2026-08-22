@@ -1097,8 +1097,6 @@ h1 em { font-style: normal; color: var(--gold); }
   filter: brightness(0.82) contrast(1.3) saturate(0.6);
 }
 
-/* Special Illustration Rare: stamped/etched texture like Pokumon “Textured”
-   holofoil — grain and crosshatch catch the lamp, rainbow rides the ridges. */
 /*
  * Premium foils.
  *
@@ -1111,95 +1109,91 @@ h1 em { font-style: normal; color: var(--gold); }
  *     (the card is not catching a lamp), brightening as you move toward the
  *     edges. `--hyp` is already the 0..1 distance from card centre.
  *  2. Each rarity gets its own blend mode instead of everything colour-dodging.
- *     Gold, SAR, and Black White Rare keep colour-dodge at low brightness;
- *     the rest pick screen or overlay so they do not blow out.
+ *     Gold keeps colour-dodge at low brightness; SAR and Black White Rare use
+ *     overlay so the illustration stays readable.
  */
 
-/* Special Illustration Rare: nebula swirls plus flake/grain, rainbow catching
-   in the ridges. Color-dodge on the main sheet, color-burn on an opposite-
-   panning swirl so the recesses stay dark instead of blowing out. */
+/* Special Illustration Rare: stamped swirl + grain, silver sheen. Overlay
+   (not colour-dodge) so the painting stays visible — texture catches the lamp
+   the way a V alternate-art foil does, without a rainbow sitting on the art. */
 .foil-sir .foil {
-  opacity: 0.38;
-  mix-blend-mode: color-dodge;
+  opacity: 0.26;
+  mix-blend-mode: overlay;
   background-image:
     var(--foil-swirl),
+    var(--foil-weave),
     var(--foil-cosmos),
+    var(--foil-glitter),
     var(--foil-grain),
     repeating-linear-gradient(
-      115deg,
-      hsl(325 90% 70% / 0.7) 0 6%,
-      hsl(38 95% 66% / 0.62) 12%,
-      hsl(150 80% 62% / 0.58) 20%,
-      hsl(196 92% 66% / 0.64) 28%,
-      hsl(262 88% 72% / 0.7) 36%,
-      hsl(325 90% 70% / 0.7) 44%
+      128deg,
+      rgba(255, 255, 255, 0) 0 6%,
+      rgba(255, 255, 255, 0.42) 10%,
+      rgba(255, 255, 255, 0) 16%,
+      rgba(210, 218, 230, 0.22) 22%,
+      rgba(255, 255, 255, 0) 28%
     ),
-    conic-gradient(
-      from calc(var(--px) * 240deg) at var(--mx, 50%) var(--my, 50%),
-      hsl(325 90% 72% / 0.32),
-      hsl(38 95% 68% / 0.24),
-      hsl(150 80% 64% / 0.28),
-      hsl(196 92% 68% / 0.3),
-      hsl(262 88% 74% / 0.32),
-      hsl(325 90% 72% / 0.32)
+    repeating-linear-gradient(
+      -38deg,
+      rgba(255, 255, 255, 0) 0 8%,
+      rgba(255, 255, 255, 0.28) 12%,
+      rgba(255, 255, 255, 0) 20%
     ),
     radial-gradient(
       farthest-corner circle at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 255, 255, 0.26) 0%,
-      transparent 48%
+      rgba(255, 255, 255, 0.32) 0%,
+      transparent 44%
     );
   background-size:
-    220% 220%,
+    190% 190%,
+    68px 68px,
     168px 168px,
+    180px 180px,
     128px 128px,
-    240% 100%,
-    170% 170%,
+    260% 260%,
+    220% 220%,
     150% 150%;
   background-position:
-    calc(var(--px) * 70%) calc(var(--py) * 55%),
-    calc(var(--px) * 28px) calc(var(--py) * 22px),
-    calc(var(--px) * -18px) calc(var(--py) * 16px),
-    calc(var(--px) * 100%) 0,
-    var(--mx, 50%) var(--my, 50%),
+    calc(var(--px) * 45%) calc(var(--py) * 38%),
+    calc(var(--px) * 16px) calc(var(--py) * 12px),
+    calc(var(--px) * -14px) calc(var(--py) * 18px),
+    calc(var(--px) * 20px) calc(var(--py) * -12px),
+    calc(var(--px) * -10px) calc(var(--py) * 14px),
+    calc(50% + var(--px) * 85%) calc(50% - var(--py) * 40%),
+    calc(50% - var(--px) * 90%) calc(50% + var(--py) * 50%),
     var(--mx, 50%) var(--my, 50%);
-  background-blend-mode: overlay, overlay, overlay, normal, overlay, normal;
-  filter: brightness(calc(0.44 + var(--hyp, 0.12) * 0.34)) contrast(1.18) saturate(1.55);
+  background-blend-mode: overlay, overlay, overlay, overlay, overlay, soft-light, soft-light, normal;
+  filter: brightness(calc(0.94 + var(--hyp, 0.12) * 0.16)) contrast(1.18) saturate(0.22);
 }
 .tcg.lit.foil-sir .foil {
-  opacity: 0.5;
+  opacity: 0.36;
   /* Must repeat the filter: `.tcg.lit .foil` is three classes and would
-     otherwise win over `.foil-sir .foil` and restore the blown-out look. */
-  filter: brightness(calc(0.44 + var(--hyp, 0.12) * 0.34)) contrast(1.18) saturate(1.55);
+     otherwise win over `.foil-sir .foil`. */
+  filter: brightness(calc(0.94 + var(--hyp, 0.12) * 0.16)) contrast(1.18) saturate(0.22);
 }
 .foil-sir .foil::before {
-  opacity: 0.52;
-  mix-blend-mode: color-burn;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
   background-image:
     var(--foil-swirl),
     var(--foil-grain);
-  background-size: 180% 180%, 96px 96px;
+  background-size: 160% 160%, 96px 96px;
   background-position:
-    calc(50% - var(--px) * 55%) calc(50% + var(--py) * 40%),
-    calc(var(--px) * -22px) calc(var(--py) * 18px);
+    calc(50% - var(--px) * 40%) calc(50% + var(--py) * 32%),
+    calc(var(--px) * -18px) calc(var(--py) * 14px);
   background-blend-mode: overlay, overlay;
 }
 .foil-sir .foil::after {
-  opacity: 0.42;
-  mix-blend-mode: hard-light;
+  opacity: 0.32;
+  mix-blend-mode: soft-light;
   background-image:
     radial-gradient(
       farthest-corner circle at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 255, 255, 0.22) 0%,
-      transparent 46%
-    ),
-    linear-gradient(
-      100deg,
-      transparent 42%,
-      rgba(255, 255, 255, 0.2) 50%,
-      transparent 58%
+      rgba(255, 255, 255, 0.28) 0%,
+      transparent 48%
     );
-  background-size: 150% 150%, 100% 100%;
-  background-position: var(--mx, 50%) var(--my, 50%), 0 0;
+  background-size: 150% 150%;
+  background-position: var(--mx, 50%) var(--my, 50%);
 }
 
 /* Ultra Rare: oil-slick diffraction. Its own material — these are ex full arts
@@ -1347,91 +1341,84 @@ h1 em { font-style: normal; color: var(--gold); }
   );
 }
 
-/* Black White Rare: same swirl-and-texture stack as SARs, kept silver. The
-   printed cards are black-or-white linework with a heavy holofoil — no
-   rainbow, just the nebula catching as white metal. */
+/* Black White Rare: same stamped swirl as SARs, kept silver. Overlay so the
+   linework stays readable; metal + swirl catch as white, not a colour wash. */
 .foil-bwr .foil {
-  opacity: 0.4;
-  mix-blend-mode: color-dodge;
+  opacity: 0.28;
+  mix-blend-mode: overlay;
   background-image:
     var(--foil-swirl),
     var(--foil-metal),
+    var(--foil-weave),
     var(--foil-cosmos),
     var(--foil-grain),
     repeating-linear-gradient(
-      112deg,
-      rgba(255, 255, 255, 0.55) 0 5%,
-      rgba(180, 190, 210, 0.4) 11%,
-      rgba(40, 44, 54, 0.45) 18%,
-      rgba(220, 226, 236, 0.5) 26%,
-      rgba(18, 16, 22, 0.42) 34%,
-      rgba(255, 255, 255, 0.55) 42%
+      128deg,
+      rgba(255, 255, 255, 0) 0 6%,
+      rgba(255, 255, 255, 0.48) 10%,
+      rgba(255, 255, 255, 0) 16%,
+      rgba(200, 208, 220, 0.24) 22%,
+      rgba(255, 255, 255, 0) 28%
     ),
-    conic-gradient(
-      from calc(var(--px) * 220deg) at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 255, 255, 0.32),
-      rgba(180, 190, 210, 0.2),
-      rgba(40, 44, 54, 0.26),
-      rgba(230, 236, 245, 0.3),
-      rgba(255, 255, 255, 0.32)
+    repeating-linear-gradient(
+      -38deg,
+      rgba(255, 255, 255, 0) 0 8%,
+      rgba(255, 255, 255, 0.3) 12%,
+      rgba(255, 255, 255, 0) 20%
     ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.34) 0%,
+      transparent 44%
+    );
+  background-size:
+    190% 190%,
+    170% 100%,
+    68px 68px,
+    168px 168px,
+    128px 128px,
+    260% 260%,
+    220% 220%,
+    150% 150%;
+  background-position:
+    calc(var(--px) * 45%) calc(var(--py) * 38%),
+    calc(var(--px) * 40%) calc(var(--py) * 18%),
+    calc(var(--px) * 16px) calc(var(--py) * 12px),
+    calc(var(--px) * -14px) calc(var(--py) * 18px),
+    calc(var(--px) * -10px) calc(var(--py) * 14px),
+    calc(50% + var(--px) * 85%) calc(50% - var(--py) * 40%),
+    calc(50% - var(--px) * 90%) calc(50% + var(--py) * 50%),
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: overlay, overlay, overlay, overlay, overlay, soft-light, soft-light, normal;
+  filter: brightness(calc(0.96 + var(--hyp, 0.12) * 0.14)) contrast(1.2) saturate(0.08);
+}
+.tcg.lit.foil-bwr .foil {
+  opacity: 0.4;
+  filter: brightness(calc(0.96 + var(--hyp, 0.12) * 0.14)) contrast(1.2) saturate(0.08);
+}
+.foil-bwr .foil::before {
+  opacity: 0.32;
+  mix-blend-mode: overlay;
+  background-image:
+    var(--foil-swirl),
+    var(--foil-grain);
+  background-size: 160% 160%, 96px 96px;
+  background-position:
+    calc(50% - var(--px) * 40%) calc(50% + var(--py) * 32%),
+    calc(var(--px) * -18px) calc(var(--py) * 14px);
+  background-blend-mode: overlay, overlay;
+}
+.foil-bwr .foil::after {
+  opacity: 0.34;
+  mix-blend-mode: soft-light;
+  background-image:
     radial-gradient(
       farthest-corner circle at var(--mx, 50%) var(--my, 50%),
       rgba(255, 255, 255, 0.3) 0%,
       transparent 48%
     );
-  background-size:
-    220% 220%,
-    180% 100%,
-    168px 168px,
-    128px 128px,
-    240% 100%,
-    170% 170%,
-    150% 150%;
-  background-position:
-    calc(var(--px) * 70%) calc(var(--py) * 55%),
-    calc(var(--px) * 50%) calc(var(--py) * 20%),
-    calc(var(--px) * 24px) calc(var(--py) * 18px),
-    calc(var(--px) * -16px) calc(var(--py) * 14px),
-    calc(var(--px) * 100%) 0,
-    var(--mx, 50%) var(--my, 50%),
-    var(--mx, 50%) var(--my, 50%);
-  background-blend-mode: overlay, overlay, overlay, overlay, normal, overlay, normal;
-  filter: brightness(calc(0.46 + var(--hyp, 0.12) * 0.32)) contrast(1.22) saturate(0.12);
-}
-.tcg.lit.foil-bwr .foil {
-  opacity: 0.54;
-  filter: brightness(calc(0.46 + var(--hyp, 0.12) * 0.32)) contrast(1.22) saturate(0.12);
-}
-.foil-bwr .foil::before {
-  opacity: 0.5;
-  mix-blend-mode: color-burn;
-  background-image:
-    var(--foil-swirl),
-    var(--foil-grain);
-  background-size: 180% 180%, 96px 96px;
-  background-position:
-    calc(50% - var(--px) * 55%) calc(50% + var(--py) * 40%),
-    calc(var(--px) * -22px) calc(var(--py) * 18px);
-  background-blend-mode: overlay, overlay;
-}
-.foil-bwr .foil::after {
-  opacity: 0.46;
-  mix-blend-mode: hard-light;
-  background-image:
-    radial-gradient(
-      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 255, 255, 0.28) 0%,
-      transparent 46%
-    ),
-    linear-gradient(
-      100deg,
-      transparent 42%,
-      rgba(255, 255, 255, 0.3) 50%,
-      transparent 58%
-    );
-  background-size: 150% 150%, 100% 100%;
-  background-position: var(--mx, 50%) var(--my, 50%), 0 0;
+  background-size: 150% 150%;
+  background-position: var(--mx, 50%) var(--my, 50%);
 }
 
 .spread-card .tcg,
