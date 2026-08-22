@@ -416,12 +416,18 @@ function esc(value) {
     .replaceAll("'", "&#39;");
 }
 
+/* Wrapper art sits under the year-long immutable /assets cache, so a recut
+   wrapper only reaches someone still holding the old copy under a new URL.
+   Bump this when the art under an existing filename changes. */
+const PACK_ART_VERSION = 2;
+const packArt = (path) => `${path}?v=${PACK_ART_VERSION}`;
+
 function packPicture(wrap, extraAlt = "", set = liveSet) {
   const alt = extraAlt || `${wrap.name} ${set.name} booster pack`;
   const fallback = wrap.artFallback || wrap.art;
   return `<picture>
-    <source srcset="${esc(wrap.art)}" type="image/avif" />
-    <img src="${esc(fallback)}" alt="${esc(alt)}" draggable="false" />
+    <source srcset="${esc(packArt(wrap.art))}" type="image/avif" />
+    <img src="${esc(packArt(fallback))}" alt="${esc(alt)}" draggable="false" />
   </picture>`;
 }
 

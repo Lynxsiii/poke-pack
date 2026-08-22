@@ -227,6 +227,16 @@ def pack_art(cfg: dict) -> int:
             print(f"    {stem}: no png fallback ({type(exc).__name__})")
         found += 1
         time.sleep(0.2)
+    # Older sets come back as a flat photo on a white backdrop rather than an
+    # isolated wrapper. On the dark site that reads as a pack in a white box,
+    # so cut it out before it ships. A wrapper that already has alpha is
+    # left alone.
+    try:
+        from cut_pack_art import run as cut_pack_art
+
+        cut_pack_art(cfg["id"])
+    except Exception as exc:  # noqa: BLE001 - the art is downloaded either way
+        print(f"    pack art not cut out ({type(exc).__name__}: {exc})")
     return found
 
 

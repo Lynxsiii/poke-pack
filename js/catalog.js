@@ -1035,7 +1035,7 @@ export const ROADMAP = [
       { id: "teamrocket", name: "Team Rocket", released: "Apr 2000", cards: 83 },
       { id: "fossil", name: "Fossil", released: "Oct 1999", cards: 62 },
       { id: "jungle", name: "Jungle", released: "Jun 1999", cards: 64 },
-      { id: "base1", name: "Base Set", released: "Jan 1999", cards: 102, note: "Queued — vintage pack photos need work" },
+      { id: "base1", name: "Base Set", released: "Jan 1999", cards: 102, note: "Queued — the 1999 scans still need mirroring" },
     ],
   },
 ];

@@ -1,60 +1,141 @@
 {
   "source": "https://pokesymbols.com/tcg/booster-pack-art",
   "urlPattern": "https://pokesymbols.com/images/tcg/sets/booster-pack-art/{set-slug}-pack-{n}.avif",
-  "note": "Newer sets are isolated AVIFs with real alpha. Vintage Base Set files from the same folder are tight pack photos without alpha.",
+  "note": "Sets from Journey Together up are isolated AVIFs with real alpha. Prismatic Evolutions and older come back as flat photos on a white studio backdrop, and the vintage Base Set files are tight pack photos on grey — both are cut out here by scripts/cut_pack_art.py before they ship, so the wrapper carries its own alpha.",
   "sets": {
-      "me5": {
+    "me5": {
       "name": "Pitch Black",
       "slug": "pitch-black",
       "packs": [
-        { "id": "chandelure", "remote": "pitch-black-pack-0.avif", "file": "me5/chandelure.avif" },
-        { "id": "darkrai", "remote": "pitch-black-pack-1.avif", "file": "me5/darkrai.avif" },
-        { "id": "excadrill", "remote": "pitch-black-pack-2.avif", "file": "me5/excadrill.avif" },
-        { "id": "zeraora", "remote": "pitch-black-pack-3.avif", "file": "me5/zeraora.avif" }
+        {
+          "id": "chandelure",
+          "remote": "pitch-black-pack-0.avif",
+          "file": "me5/chandelure.avif"
+        },
+        {
+          "id": "darkrai",
+          "remote": "pitch-black-pack-1.avif",
+          "file": "me5/darkrai.avif"
+        },
+        {
+          "id": "excadrill",
+          "remote": "pitch-black-pack-2.avif",
+          "file": "me5/excadrill.avif"
+        },
+        {
+          "id": "zeraora",
+          "remote": "pitch-black-pack-3.avif",
+          "file": "me5/zeraora.avif"
+        }
       ]
     },
     "me4": {
       "name": "Chaos Rising",
       "slug": "chaos-rising",
       "packs": [
-        { "id": "dragalge", "remote": "chaos-rising-pack-0.avif", "file": "me4/dragalge.avif" },
-        { "id": "floette", "remote": "chaos-rising-pack-1.avif", "file": "me4/floette.avif" },
-        { "id": "greninja", "remote": "chaos-rising-pack-2.avif", "file": "me4/greninja.avif" },
-        { "id": "pyroar", "remote": "chaos-rising-pack-3.avif", "file": "me4/pyroar.avif" }
+        {
+          "id": "dragalge",
+          "remote": "chaos-rising-pack-0.avif",
+          "file": "me4/dragalge.avif"
+        },
+        {
+          "id": "floette",
+          "remote": "chaos-rising-pack-1.avif",
+          "file": "me4/floette.avif"
+        },
+        {
+          "id": "greninja",
+          "remote": "chaos-rising-pack-2.avif",
+          "file": "me4/greninja.avif"
+        },
+        {
+          "id": "pyroar",
+          "remote": "chaos-rising-pack-3.avif",
+          "file": "me4/pyroar.avif"
+        }
       ]
     },
     "me3": {
       "name": "Perfect Order",
       "slug": "perfect-order",
       "packs": [
-        { "id": "clefable", "remote": "perfect-order-pack-0.avif", "file": "me3/clefable.avif" },
-        { "id": "starmie", "remote": "perfect-order-pack-1.avif", "file": "me3/starmie.avif" },
-        { "id": "zygarde", "remote": "perfect-order-pack-2.avif", "file": "me3/zygarde.avif" },
-        { "id": "meowth", "remote": "perfect-order-pack-3.avif", "file": "me3/meowth.avif" }
+        {
+          "id": "clefable",
+          "remote": "perfect-order-pack-0.avif",
+          "file": "me3/clefable.avif"
+        },
+        {
+          "id": "starmie",
+          "remote": "perfect-order-pack-1.avif",
+          "file": "me3/starmie.avif"
+        },
+        {
+          "id": "zygarde",
+          "remote": "perfect-order-pack-2.avif",
+          "file": "me3/zygarde.avif"
+        },
+        {
+          "id": "meowth",
+          "remote": "perfect-order-pack-3.avif",
+          "file": "me3/meowth.avif"
+        }
       ]
     },
     "base1": {
       "name": "Base",
       "slug": "base-set",
       "packs": [
-        { "id": "charizard", "remote": "base-set-pack-0.avif", "file": "base1/charizard.avif" },
-        { "id": "venusaur", "remote": "base-set-pack-1.avif", "file": "base1/venusaur.avif" },
-        { "id": "blastoise", "remote": "base-set-pack-2.avif", "file": "base1/blastoise.avif" }
+        {
+          "id": "charizard",
+          "remote": "base-set-pack-0.avif",
+          "file": "base1/charizard.avif"
+        },
+        {
+          "id": "venusaur",
+          "remote": "base-set-pack-1.avif",
+          "file": "base1/venusaur.avif"
+        },
+        {
+          "id": "blastoise",
+          "remote": "base-set-pack-2.avif",
+          "file": "base1/blastoise.avif"
+        }
       ]
     },
     "zsv10pt5": {
       "name": "Black Bolt",
       "slug": "black-bolt",
       "packs": [
-        { "id": "zekrom", "remote": "black-bolt-pack-0.avif", "file": "zsv10pt5/zekrom.avif" }
+        {
+          "id": "zekrom",
+          "remote": "black-bolt-pack-0.avif",
+          "file": "zsv10pt5/zekrom.avif"
+        }
       ]
     },
     "rsv10pt5": {
       "name": "White Flare",
       "slug": "white-flare",
       "packs": [
-        { "id": "reshiram", "remote": "white-flare-pack-0.avif", "file": "rsv10pt5/reshiram.avif" }
+        {
+          "id": "reshiram",
+          "remote": "white-flare-pack-0.avif",
+          "file": "rsv10pt5/reshiram.avif"
+        }
       ]
     }
+  },
+  "cutOut": {
+    "script": "scripts/cut_pack_art.py",
+    "sets": [
+      "sv8pt5",
+      "sv8",
+      "sv7",
+      "sv6pt5",
+      "sv6",
+      "sv5",
+      "base1"
+    ],
+    "note": "Re-running is safe: art that already has alpha is left alone."
   }
 }
