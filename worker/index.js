@@ -3,7 +3,7 @@
  * the ASSETS binding; only /api/* is handled here.
  */
 import { BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
-import { HIT_RARITIES, ripPack } from "../js/engine.js";
+import { isHit, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
@@ -398,7 +398,7 @@ async function rip(request, env) {
     const wasNew = !(qty[card.id] > 0);
     qty[card.id] = (qty[card.id] || 0) + 1;
     if (card.reverse) reverseQty[card.id] = (reverseQty[card.id] || 0) + 1;
-    if (HIT_RARITIES.has(card.rarity)) hits += 1;
+    if (isHit(card)) hits += 1;
     cards.push({ ...card, reverse: Boolean(card.reverse), wasNew });
   }
 

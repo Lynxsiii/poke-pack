@@ -85,7 +85,13 @@ def singles(cfg: dict) -> dict[str, dict]:
         price = card.get("sortPrice")
         if not number or not isinstance(price, (int, float)):
             continue
-        out[number] = {"price": float(price), "name": card.get("name", "")}
+        price = float(price)
+        # Prismatic (and 151-style sets) list Poké Ball / Master Ball printings
+        # as extra rows of the same number. Keep the cheapest — that's the
+        # pack-pulled base, not the Master Ball chase.
+        prev = out.get(number)
+        if prev is None or price < prev["price"]:
+            out[number] = {"price": price, "name": card.get("name", "")}
     return out
 
 

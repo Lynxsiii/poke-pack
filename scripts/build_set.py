@@ -110,6 +110,14 @@ def clean_attacks(raw) -> list[dict]:
     return out
 
 
+# Twilight Masquerade (and a few older dumps) still label one Regular Rare as
+# "Rare Holo". The engine's rare pool is the "Rare" string, so collapse it.
+RARITY_ALIASES = {
+    "Rare Holo": "Rare",
+    "Rare Holofoil": "Rare",
+    "Holo Rare": "Rare",
+}
+
 # pkmn.gg writes energy symbols as single letters ("[G] Energy"); the existing
 # corpus spells them out, which reads far better. Normalise to the long form.
 ENERGY_LETTER = {
@@ -146,7 +154,7 @@ def card_record(cfg: dict, detail: dict) -> dict:
         "id": f"{set_id}-{number}",
         "name": detail.get("name", ""),
         "number": number,
-        "rarity": detail.get("rarity", ""),
+        "rarity": RARITY_ALIASES.get(detail.get("rarity", ""), detail.get("rarity", "")),
         "supertype": detail.get("superType", ""),
     }
     subtypes = detail.get("subtypes") or []
@@ -170,6 +178,10 @@ def card_record(cfg: dict, detail: dict) -> dict:
     abilities = clean_abilities(detail.get("abilities"))
     if abilities:
         card["abilities"] = abilities
+    # Special Energy is printed as an Uncommon, not a basic Energy slot card.
+    subtypes = {str(s).lower() for s in (card.get("subtypes") or [])}
+    if card["rarity"] == "Energy" and "special" in subtypes:
+        card["rarity"] = "Uncommon"
     return card
 
 

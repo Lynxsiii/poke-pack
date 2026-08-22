@@ -230,6 +230,90 @@ function svSpecialSlots({ double, ultra, ir, sir, bwr, pokeball, masterball }) {
   ];
 }
 
+/**
+ * Scarlet & Violet main-set pack: 4C + 3U + reverse + rare slot + art slot +
+ * energy. ACE SPEC (when the set has it) replaces the reverse — that's the
+ * first reverse-holo slot, not the rare slot. Rare leftover is a regular Rare;
+ * art leftover is a second reverse. Prismatic has no Illustration Rares and
+ * is handled separately so Poké Ball / Master Ball can share that art slot.
+ */
+function svSlots({ double, ultra, ir = 0, sir, hyper, ace = 0 }) {
+  return [
+    { pool: "energy", count: 1 },
+    { pool: "common", count: 4 },
+    { pool: "uncommon", count: 3 },
+    ace
+      ? { pool: "reverse", count: 1, table: [["reverse", 1 - ace], ["ace", ace]] }
+      : { pool: "reverse", count: 1 },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 1 - double - ultra],
+        ["double", double],
+        ["ultra", ultra],
+      ],
+    },
+    {
+      pool: "art-slot",
+      count: 1,
+      table: [
+        ["reverse", 1 - ir - sir - hyper],
+        ...(ir ? [["ir", ir]] : []),
+        ["sir", sir],
+        ["hyper", hyper],
+      ],
+    },
+  ];
+}
+
+/**
+ * Prismatic Evolutions. Every Common / Uncommon / Rare / Double Rare has a
+ * Poké Ball patterned printing of itself; C/U/R Pokémon also have Master Ball.
+ * Those are extra finishes of the same number (Holofoil, Reverse Holofoil,
+ * Poké Ball, Master Ball) — not extra checklist cards. They land in the
+ * second reverse slot. ACE SPEC still replaces the first reverse.
+ */
+function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }) {
+  return [
+    { pool: "energy", count: 1 },
+    { pool: "common", count: 4 },
+    { pool: "uncommon", count: 3 },
+    { pool: "reverse", count: 1, table: [["reverse", 1 - ace], ["ace", ace]] },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 1 - double - ultra],
+        ["double", double],
+        ["ultra", ultra],
+      ],
+    },
+    {
+      pool: "art-slot",
+      count: 1,
+      table: [
+        ["reverse", 1 - pokeball - masterball - sir - hyper],
+        ["pokeball", pokeball],
+        ["masterball", masterball],
+        ["sir", sir],
+        ["hyper", hyper],
+      ],
+    },
+  ];
+}
+
+function boosterWrappers(setId, faces) {
+  return faces.map((face, i) => ({
+    id: face.id,
+    name: face.name,
+    cardId: face.cardId,
+    tag: face.tag,
+    art: `assets/packs/${setId}/pack-${i}.avif`,
+    artFallback: `assets/packs/${setId}/pack-${i}.png`,
+  }));
+}
+
 export const PITCH_BLACK = {
   id: "me5",
   tcgId: "me5",
@@ -619,6 +703,231 @@ export const WHITE_FLARE = {
   ],
 };
 
+export const DESTINED_RIVALS = {
+  id: "sv10",
+  tcgId: "sv10",
+  name: "Destined Rivals",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "May 30, 2025",
+  live: true,
+  printedTotal: 182,
+  totalCount: 244,
+  packSize: 11,
+  cost: 9.39,
+  dataFile: "data/sv10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, May 2025. Team Rocket vs the old champions — Gym Hero holos, four wrappers.",
+  oddsLine: "DR 1/5 · UR 1/16 · IR 1/12 · SIR 1/94 · gold 1/149",
+  lede: "Cynthia, Ethan, and Team Rocket share a set. Trainer’s Pokémon use the same owner-portrait windows as Ascended Heroes.",
+  slots: svSlots({ double: 0.2, ultra: 0.0625, ir: 0.083, sir: 0.01064, hyper: 0.00671 }),
+  heroIds: ["sv10-231", "sv10-232", "sv10-230", "sv10-238"],
+  wrappers: boosterWrappers("sv10", [
+    { id: "garchomp", name: "Garchomp", cardId: "sv10-232", tag: "Cynthia" },
+    { id: "ho-oh", name: "Ho-Oh", cardId: "sv10-230", tag: "Ethan" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "sv10-231", tag: "The chase" },
+    { id: "rocket", name: "Team Rocket", cardId: "sv10-237", tag: "Rocket" },
+  ]),
+};
+
+export const JOURNEY_TOGETHER = {
+  id: "sv9",
+  tcgId: "sv9",
+  name: "Journey Together",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "March 28, 2025",
+  live: true,
+  printedTotal: 159,
+  totalCount: 190,
+  packSize: 11,
+  cost: 6.43,
+  dataFile: "data/sv9.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono, and Hop — more Trainer’s Pokémon, four wrappers.",
+  oddsLine: "DR 1/5 · UR 1/15 · IR 1/12 · SIR 1/86 · gold 1/137",
+  lede: "The companions set. N’s Zoroark and Lillie’s Clefairy head a 190-card list with Gym Hero holos on the windowed cards.",
+  slots: svSlots({ double: 0.2, ultra: 0.067, ir: 0.083, sir: 0.0116, hyper: 0.0073 }),
+  heroIds: ["sv9-185", "sv9-184", "sv9-183", "sv9-186"],
+  wrappers: boosterWrappers("sv9", [
+    { id: "zacian", name: "Zacian", cardId: "sv9-186", tag: "Hop" },
+    { id: "bellibolt", name: "Bellibolt", cardId: "sv9-183", tag: "Iono" },
+    { id: "clefairy", name: "Clefairy", cardId: "sv9-184", tag: "Lillie" },
+    { id: "zoroark", name: "Zoroark", cardId: "sv9-185", tag: "The chase" },
+  ]),
+};
+
+export const PRISMATIC_EVOLUTIONS = {
+  id: "sv8pt5",
+  tcgId: "sv8pt5",
+  name: "Prismatic Evolutions",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "January 17, 2025",
+  live: true,
+  printedTotal: 131,
+  totalCount: 180,
+  packSize: 11,
+  cost: 15.09,
+  dataFile: "data/sv8pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  pokeballRarities: ["Common", "Uncommon", "Rare", "Double Rare"],
+  blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and a Poké Ball printing of every base card.",
+  oddsLine: "DR 1/6 · UR 1/13 · ACE 1/21 · SIR 1/45 · gold 1/180 · Poké Ball 1/3 · Master Ball 1/20",
+  lede: "Every Common, Uncommon, Rare, and Double Rare has a Poké Ball version of itself. Master Ball is C/U/R Pokémon only. Same number, extra finish — not a second checklist.",
+  slots: prismaticSlots({
+    double: 0.1651,
+    ultra: 0.0746,
+    ace: 0.0468,
+    sir: 0.0222,
+    hyper: 0.0056,
+    pokeball: 0.331,
+    masterball: 0.0492,
+  }),
+  heroIds: ["sv8pt5-161", "sv8pt5-155", "sv8pt5-167", "sv8pt5-156"],
+  wrappers: boosterWrappers("sv8pt5", [
+    { id: "jolteon", name: "Jolteon", cardId: "sv8pt5-153", tag: "Spark" },
+    { id: "eevee", name: "Eevee", cardId: "sv8pt5-167", tag: "The chase" },
+    { id: "umbreon", name: "Umbreon", cardId: "sv8pt5-161", tag: "Moon" },
+    { id: "glaceon", name: "Glaceon", cardId: "sv8pt5-150", tag: "Ice" },
+  ]),
+};
+
+export const SURGING_SPARKS = {
+  id: "sv8",
+  tcgId: "sv8",
+  name: "Surging Sparks",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "November 8, 2024",
+  live: true,
+  printedTotal: 191,
+  totalCount: 252,
+  packSize: 11,
+  cost: 7.78,
+  dataFile: "data/sv8.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, November 2024. Paldea’s lightning set — Pikachu, ACE SPEC, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/189",
+  lede: "The last big Paldea wave before Prismatic. ACE SPEC sits in the reverse slot; gold is a Hyper Rare, not a Mega.",
+  slots: svSlots({ double: 0.167, ultra: 0.067, ir: 0.077, sir: 0.0115, hyper: 0.0053, ace: 0.05 }),
+  heroIds: ["sv8-238", "sv8-239", "sv8-241", "sv8-242"],
+  wrappers: boosterWrappers("sv8", [
+    { id: "pikachu", name: "Pikachu", cardId: "sv8-238", tag: "The chase" },
+    { id: "latias", name: "Latias", cardId: "sv8-239", tag: "Eon" },
+    { id: "archaludon", name: "Archaludon", cardId: "sv8-241", tag: "Bridge" },
+    { id: "exeggutor", name: "Exeggutor", cardId: "sv8-242", tag: "Alola" },
+  ]),
+};
+
+export const STELLAR_CROWN = {
+  id: "sv7",
+  tcgId: "sv7",
+  name: "Stellar Crown",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "September 13, 2024",
+  live: true,
+  printedTotal: 142,
+  totalCount: 175,
+  packSize: 11,
+  cost: 10.58,
+  dataFile: "data/sv7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, September 2024. Terapagos and the Stellar Tera types, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/90 · gold 1/137",
+  lede: "Terapagos crowns the Tera era. Same reverse / rare / art skeleton as the rest of the block, gold at 1/137.",
+  slots: svSlots({ double: 0.1695, ultra: 0.0676, ir: 0.0781, sir: 0.0111, hyper: 0.0073, ace: 0.0495 }),
+  heroIds: ["sv7-170", "sv7-167", "sv7-173", "sv7-168"],
+  wrappers: boosterWrappers("sv7", [
+    { id: "terapagos", name: "Terapagos", cardId: "sv7-170", tag: "The chase" },
+    { id: "lapras", name: "Lapras", cardId: "sv7-31", tag: "Ferry" },
+    { id: "terapagos-stellar", name: "Terapagos", cardId: "sv7-173", tag: "Stellar" },
+    { id: "cinderace", name: "Cinderace", cardId: "sv7-28", tag: "Pyro ball" },
+  ]),
+};
+
+export const SHROUDED_FABLE = {
+  id: "sv6pt5",
+  tcgId: "sv6pt5",
+  name: "Shrouded Fable",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "August 2, 2024",
+  live: true,
+  printedTotal: 64,
+  totalCount: 99,
+  packSize: 11,
+  cost: 14.79,
+  dataFile: "data/sv6pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, August 2024. Pecharunt and the Loyal Three — a 99-card special set, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/12 · SIR 1/67 · gold 1/143",
+  lede: "Kitakami’s Loyal Three plus Pecharunt. Same 11-card math as a main set, shorter checklist.",
+  slots: svSlots({ double: 0.167, ultra: 0.065, ir: 0.085, sir: 0.015, hyper: 0.007, ace: 0.05 }),
+  heroIds: ["sv6pt5-93", "sv6pt5-92", "sv6pt5-91", "sv6pt5-90"],
+  wrappers: boosterWrappers("sv6pt5", [
+    { id: "okidogi", name: "Okidogi", cardId: "sv6pt5-90", tag: "Loyal" },
+    { id: "munkidori", name: "Munkidori", cardId: "sv6pt5-91", tag: "Three" },
+    { id: "fezandipiti", name: "Fezandipiti", cardId: "sv6pt5-92", tag: "Toxic chain" },
+    { id: "pecharunt", name: "Pecharunt", cardId: "sv6pt5-93", tag: "The chase" },
+  ]),
+};
+
+export const TWILIGHT_MASQUERADE = {
+  id: "sv6",
+  tcgId: "sv6",
+  name: "Twilight Masquerade",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "May 24, 2024",
+  live: true,
+  printedTotal: 167,
+  totalCount: 226,
+  packSize: 11,
+  cost: 8.85,
+  dataFile: "data/sv6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, May 2024. Ogerpon’s masks and Kitakami — four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/86 · gold 1/146",
+  lede: "Ogerpon and Bloodmoon Ursaluna. ACE SPEC in the reverse slot, gold Hyper Rares in the art slot.",
+  slots: svSlots({ double: 0.167, ultra: 0.067, ir: 0.077, sir: 0.0116, hyper: 0.00685, ace: 0.05 }),
+  heroIds: ["sv6-214", "sv6-211", "sv6-216", "sv6-210"],
+  wrappers: boosterWrappers("sv6", [
+    { id: "sinistcha", name: "Sinistcha", cardId: "sv6-210", tag: "Matcha" },
+    { id: "ogerpon", name: "Ogerpon", cardId: "sv6-211", tag: "The chase" },
+    { id: "ogerpon-tera", name: "Ogerpon", cardId: "sv6-215", tag: "Teal mask" },
+    { id: "ursaluna", name: "Ursaluna", cardId: "sv6-216", tag: "Bloodmoon" },
+  ]),
+};
+
+export const TEMPORAL_FORCES = {
+  id: "sv5",
+  tcgId: "sv5",
+  name: "Temporal Forces",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "March 22, 2024",
+  live: true,
+  printedTotal: 162,
+  totalCount: 218,
+  packSize: 11,
+  cost: 11.37,
+  dataFile: "data/sv5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, March 2024. Walking Wake, Iron Leaves, and the first ACE SPEC cards.",
+  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/86 · gold 1/139",
+  lede: "Where ACE SPEC starts. The art slot is the hardest of the block — SIR at 1/86, gold at 1/139.",
+  slots: svSlots({ double: 0.1695, ultra: 0.0667, ir: 0.0769, sir: 0.0117, hyper: 0.0072, ace: 0.05 }),
+  heroIds: ["sv5-205", "sv5-208", "sv5-203", "sv5-206"],
+  wrappers: boosterWrappers("sv5", [
+    { id: "walking-wake", name: "Walking Wake", cardId: "sv5-205", tag: "The chase" },
+    { id: "raging-bolt", name: "Raging Bolt", cardId: "sv5-208", tag: "Ancient" },
+    { id: "iron-leaves", name: "Iron Leaves", cardId: "sv5-203", tag: "Future" },
+    { id: "iron-crown", name: "Iron Crown", cardId: "sv5-206", tag: "Paradox" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   PITCH_BLACK,
   CHAOS_RISING,
@@ -628,6 +937,14 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  DESTINED_RIVALS,
+  JOURNEY_TOGETHER,
+  PRISMATIC_EVOLUTIONS,
+  SURGING_SPARKS,
+  STELLAR_CROWN,
+  SHROUDED_FABLE,
+  TWILIGHT_MASQUERADE,
+  TEMPORAL_FORCES,
 ];
 export const SET_BY_ID = Object.fromEntries(PLAYABLE_SETS.map((set) => [set.id, set]));
 export const DEFAULT_SET_ID = PITCH_BLACK.id;
@@ -670,14 +987,6 @@ export const ROADMAP = [
   {
     era: "Scarlet & Violet",
     sets: [
-      { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
-      { id: "sv9", name: "Journey Together", released: "Mar 2025", cards: "—" },
-      { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
-      { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
-      { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
-      { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
-      { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },
-      { id: "sv5", name: "Temporal Forces", released: "Mar 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },

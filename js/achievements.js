@@ -34,7 +34,7 @@ export const ACHIEVEMENTS = [
   { id: "special-art", cat: "chase", tier: 3, mark: "☆☆", name: "Special art", note: "Own a Special Illustration Rare.", goal: 1, at: (c) => c.count("Special Illustration Rare"), coins: 260, title: "Artisan" },
   { id: "hit-stack", cat: "chase", tier: 3, mark: "25", name: "Hit stack", note: "Own 25 cards at hit rarity.", goal: 25, at: (c) => c.hits, coins: 450, title: "Chase Addict" },
   { id: "monochrome", cat: "chase", tier: 4, mark: "★☆", name: "Black and white", note: "Own a Black White Rare.", goal: 1, at: (c) => c.count("Black White Rare"), coins: 400, title: "Monochrome" },
-  { id: "gold-chase", cat: "chase", tier: 4, mark: "◈", name: "Gold chase", note: "Own a Mega Hyper Rare.", goal: 1, at: (c) => c.count("Mega Hyper Rare"), coins: 500, title: "Goldsmith" },
+  { id: "gold-chase", cat: "chase", tier: 4, mark: "◈", name: "Gold chase", note: "Own a gold Hyper Rare.", goal: 1, at: (c) => c.count("Mega Hyper Rare") + c.count("Hyper Rare"), coins: 500, title: "Goldsmith" },
 
   // Collecting
   { id: "unique-10", cat: "collect", tier: 1, mark: "10", name: "Getting started", note: "Own ten different cards.", goal: 10, at: (c) => c.unique, coins: 30 },

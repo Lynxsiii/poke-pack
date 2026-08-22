@@ -13,7 +13,7 @@ import {
   rarityKey,
   setIdentity,
 } from "./catalog.js";
-import { HIT_RARITIES } from "./engine.js";
+import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge } from "./social.js";
 import {
@@ -478,6 +478,7 @@ function reverseKindOf(card) {
 
 function foilLayout(card) {
   if (card.energy || card.supertype === "Energy") return "foil-energy";
+  if (card.rarity === "ACE SPEC Rare") return "";
   if (card.supertype === "Trainer") return "foil-trainer";
   if (card.ownerMask) return "foil-owner";
   return hasEvoCircle(card) ? "foil-evo" : "";
@@ -491,7 +492,7 @@ function foilPattern(card) {
     if (kind === "masterball") return "foil-reverse foil-rev-masterball";
     return "foil-reverse";
   }
-  if (card.rarity === "Mega Hyper Rare") return "foil-gold";
+  if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "foil-gold";
   if (card.rarity === "Special Illustration Rare") return "foil-sir";
   if (card.rarity === "Illustration Rare") return "foil-ir";
   // Before the ex check: Ultra Rares are ex cards too, so they'd otherwise
@@ -499,6 +500,7 @@ function foilPattern(card) {
   if (card.rarity === "Ultra Rare") return "foil-ultra";
   if (card.rarity === "Mega Attack Rare") return "foil-mega-attack";
   if (card.rarity === "Black White Rare") return "foil-bwr";
+  if (card.rarity === "ACE SPEC Rare") return "foil-holo";
   if (isExCard(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) return "foil-ex";
   if (card.supertype === "Trainer" && HIT_RARITIES.has(card.rarity)) return "foil-ex";
   if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "foil-holo";
@@ -2199,7 +2201,7 @@ function historySheet() {
   const rows = all.filter((entry) => {
     if (historyFilter === "new") return entry.wasNew;
     if (historyFilter === "reverse") return entry.reverse;
-    if (historyFilter === "hits") return HIT_RARITIES.has(entry.rarity);
+    if (historyFilter === "hits") return isHit(entry);
     return true;
   });
   const worth = rows.reduce((n, entry) => {
@@ -3021,15 +3023,17 @@ function motionOk() {
 
 function hitTier(card) {
   if (!card) return 0;
+  if (card.reverse) return card.reverseKind === "masterball" ? 2 : 1;
   if (
     card.rarity === "Mega Hyper Rare" ||
+    card.rarity === "Hyper Rare" ||
     card.rarity === "Special Illustration Rare" ||
     card.rarity === "Black White Rare"
   ) {
     return 3;
   }
   if (HIT_RARITIES.has(card.rarity)) return 2;
-  if (card.rarity === "Rare" || card.reverse) return 1;
+  if (card.rarity === "Rare") return 1;
   return 0;
 }
 
@@ -3059,7 +3063,11 @@ function cardType(card) {
 }
 
 function isRainbowAura(card) {
-  return card?.rarity === "Special Illustration Rare" || card?.rarity === "Mega Hyper Rare";
+  return (
+    card?.rarity === "Special Illustration Rare" ||
+    card?.rarity === "Mega Hyper Rare" ||
+    card?.rarity === "Hyper Rare"
+  );
 }
 
 function typeAura(card) {
@@ -3330,7 +3338,7 @@ function flipDurationMs() {
 function mountFocus(pull, opts = {}) {
   const faceUp = opts.faceUp ?? pull.revealed;
   const deal = opts.deal ?? !faceUp;
-  const foil = HIT_RARITIES.has(pull.rarity) ? "hit" : pull.reverse ? "reverse" : "";
+  const foil = isHit(pull) ? "hit" : pull.reverse ? "reverse" : "";
   const tier = hitTier(pull);
   const gen = bumpCardMotion();
   clearGlare();
@@ -3383,8 +3391,9 @@ function showPullAt(index, { deal = false } = {}) {
 }
 
 function packHitLine() {
-  const hits = currentPulls.filter((card) => HIT_RARITIES.has(card.rarity));
+  const hits = currentPulls.filter((card) => isHit(card));
   if (hits.some((c) => c.rarity === "Mega Hyper Rare")) return "Gold Mega Hyper Rare. That’s the one.";
+  if (hits.some((c) => c.rarity === "Hyper Rare")) return "Gold Hyper Rare. That’s the one.";
   if (hits.some((c) => c.rarity === "Special Illustration Rare")) return "Special Illustration Rare in the pack.";
   if (hits.length) return `${hits.map((c) => RARITY_LABEL[c.rarity]).join(" · ")} pulled.`;
   return "Pack ripped.";
@@ -3416,7 +3425,7 @@ function showSpread() {
 
   const cardsHtml = currentPulls
     .map((card, i) => {
-      const hit = HIT_RARITIES.has(card.rarity) ? "hit" : "";
+      const hit = isHit(card) ? "hit" : "";
       const top = best && card.id === best.id ? "top-pull" : "";
       return `<button type="button" class="spread-card ${hit} ${top}"
           style="animation-delay:${i * 45}ms"

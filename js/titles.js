@@ -16,7 +16,7 @@ export const TITLES = [
   { id: "ultra", name: "Ultra", note: "Own an Ultra Rare.", test: (c) => c.count("Ultra Rare") >= 1 },
   { id: "illustration", name: "Illustration", note: "Own an Illustration Rare.", test: (c) => c.count("Illustration Rare") >= 1 },
   { id: "special-artist", name: "Special artist", note: "Own a Special Illustration Rare.", test: (c) => c.count("Special Illustration Rare") >= 1 },
-  { id: "gold-chaser", name: "Gold chaser", note: "Own a Mega Hyper Rare.", test: (c) => c.count("Mega Hyper Rare") >= 1 },
+  { id: "gold-chaser", name: "Gold chaser", note: "Own a gold Hyper Rare.", test: (c) => c.count("Mega Hyper Rare") >= 1 || c.count("Hyper Rare") >= 1 },
   { id: "black-white", name: "Black & White", note: "Own a Black White Rare.", test: (c) => c.count("Black White Rare") >= 1 },
   { id: "mega-striker", name: "Mega striker", note: "Own a Mega Attack Rare.", test: (c) => c.count("Mega Attack Rare") >= 1 },
   { id: "ace-spec", name: "ACE SPEC", note: "Own an ACE SPEC Rare.", test: (c) => c.count("ACE SPEC Rare") >= 1 },
