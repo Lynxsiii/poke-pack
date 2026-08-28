@@ -2,7 +2,7 @@
  * Cloud accounts, inventory, and pack rips. Static pages still come from
  * the ASSETS binding; only /api/* is handled here.
  */
-import { BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
+import { ALL_SETS, BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
 import { isHit, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
 import { tickBots } from "./bots.js";
@@ -816,7 +816,9 @@ async function findCatalogCard(env, request, cardId) {
   if (cardId.startsWith("energy-")) {
     return BASIC_ENERGY.find((card) => card.id === cardId) || null;
   }
-  const match = PLAYABLE_SETS.find((set) => cardId.startsWith(`${set.id}-`));
+  // ALL_SETS, not PLAYABLE_SETS — a card from a retired set is still owned,
+  // still worth coins, and still has to price when its owner sells it.
+  const match = ALL_SETS.find((set) => cardId.startsWith(`${set.id}-`));
   const set = match || getSet(cardId.split("-")[0]);
   const cards = await loadSetCards(env, request, set);
   return cards.find((card) => card.id === cardId) || null;

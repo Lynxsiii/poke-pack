@@ -1,4 +1,5 @@
 import {
+  ALL_SETS,
   PLAYABLE_SETS,
   DEFAULT_SET_ID,
   getSet,
@@ -467,7 +468,9 @@ function ownerWindow(card) {
 
 function setForCard(card) {
   const id = card?.id || "";
-  return PLAYABLE_SETS.find((set) => id.startsWith(`${set.id}-`)) || liveSet;
+  // Retired sets included: a binder page or a pull history still has to draw
+  // cards from a set that is no longer openable.
+  return ALL_SETS.find((set) => id.startsWith(`${set.id}-`)) || liveSet;
 }
 
 function reverseKindOf(card) {

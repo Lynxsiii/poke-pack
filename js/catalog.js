@@ -937,6 +937,16 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+];
+
+/**
+ * Live once, not any more. Their definitions stay reachable through SET_BY_ID
+ * so cards people already pulled still name, price, sell, and render — they
+ * simply cannot be opened and do not appear in the catalog. Scarlet & Violet
+ * sits here until its scans and checklists are rebuilt; moving a set back is
+ * a matter of returning it to PLAYABLE_SETS and dropping its ROADMAP row.
+ */
+export const RETIRED_SETS = [
   DESTINED_RIVALS,
   JOURNEY_TOGETHER,
   PRISMATIC_EVOLUTIONS,
@@ -946,7 +956,9 @@ export const PLAYABLE_SETS = [
   TWILIGHT_MASQUERADE,
   TEMPORAL_FORCES,
 ];
-export const SET_BY_ID = Object.fromEntries(PLAYABLE_SETS.map((set) => [set.id, set]));
+
+export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
+export const SET_BY_ID = Object.fromEntries(ALL_SETS.map((set) => [set.id, set]));
 export const DEFAULT_SET_ID = PITCH_BLACK.id;
 export const LIVE_SET = PITCH_BLACK;
 
@@ -987,6 +999,14 @@ export const ROADMAP = [
   {
     era: "Scarlet & Violet",
     sets: [
+      { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
+      { id: "sv9", name: "Journey Together", released: "Mar 2025", cards: "—" },
+      { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
+      { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
+      { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
+      { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
+      { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },
+      { id: "sv5", name: "Temporal Forces", released: "Mar 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
