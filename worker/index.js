@@ -58,7 +58,9 @@ export default {
   },
 
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(tickBots(env, (path, opts) => callApi(env, path, opts)));
+    // hashPassword is handed over rather than imported the other way, because
+    // bots.js is imported from here and a cycle back would be fragile.
+    ctx.waitUntil(tickBots(env, (path, opts) => callApi(env, path, opts), { hashPassword }));
   },
 };
 

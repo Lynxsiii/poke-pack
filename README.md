@@ -110,8 +110,11 @@ wrangler secret put BOT_SECRET     # production
 echo BOT_SECRET=anything > .dev.vars   # local, gitignored
 ```
 
-Passwords are HMAC'd from that secret and never stored, so rotating it orphans
-the roster. `users.bot` marks them and never reaches `publicUser()`.
+Passwords are HMAC'd from that secret and never stored. Rotating it is safe:
+`reclaim()` re-stamps the new hash onto the roster's own rows, so the accounts
+and everything they have collected survive. It only ever touches rows flagged
+`users.bot`, which never reaches `publicUser()` — a handle collision with a
+real trainer leaves that persona offline rather than taking the account over.
 
 Two rules the roster is built around:
 

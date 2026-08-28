@@ -229,18 +229,54 @@ async function botPassword(env, handle) {
     .slice(0, 32);
 }
 
-async function signIn(env, call, persona) {
+/**
+ * Re-stamp a roster account's password after BOT_SECRET has changed.
+ *
+ * Without this a rotated secret strands the roster for good: the derived
+ * password no longer matches, so signin 401s, signup 409s on a handle that is
+ * already taken, and ensureAccounts retries the same pair every tick forever.
+ * These are our own rows, so the fix is to write the new hash directly —
+ * keeping the account and everything it has collected.
+ *
+ * The `bot = 1` guard is the whole safety of this: it must never be able to
+ * overwrite a real trainer's password, so a handle collision with a human is
+ * left alone and that persona simply stays offline.
+ */
+async function reclaim(env, helpers, persona, password) {
+  if (typeof helpers?.hashPassword !== "function") return false;
+  try {
+    const row = await env.DB.prepare("SELECT id FROM users WHERE handle = ? AND bot = 1")
+      .bind(persona.handle)
+      .first();
+    if (!row) return false;
+    await env.DB.prepare("UPDATE users SET password_hash = ? WHERE id = ?")
+      .bind(await helpers.hashPassword(password), row.id)
+      .run();
+    return true;
+  } catch (err) {
+    if (!missingSchema(err)) console.error("bot reclaim", persona.handle, err);
+    return false;
+  }
+}
+
+async function signIn(env, call, persona, helpers) {
   const password = await botPassword(env, persona.handle);
-  let res = await call("/api/auth/signin", {
-    method: "POST",
-    body: { handle: persona.handle, password },
-  });
+  const credentials = { handle: persona.handle, password };
+  let res = await call("/api/auth/signin", { method: "POST", body: credentials });
+
+  if (res.status === 401 && (await reclaim(env, helpers, persona, password))) {
+    res = await call("/api/auth/signin", { method: "POST", body: credentials });
+  }
+
   if (res.status === 401) {
     res = await call("/api/auth/signup", {
       method: "POST",
       body: { name: persona.name, handle: persona.handle, password, color: persona.color },
     });
-    if (res.cookie) {
+    if (res.cookie && res.body?.user) {
+      // Flag it here rather than back in ensureAccounts: if the tick died in
+      // between, the row would be unflagged and reclaim() could never rescue it.
+      await env.DB.prepare("UPDATE users SET bot = 1 WHERE id = ?").bind(res.body.user.id).run();
       await call("/api/me", {
         method: "PATCH",
         cookie: res.cookie,
@@ -262,13 +298,13 @@ async function signIn(env, call, persona) {
  * roster filling in over ten minutes reads better than two dozen trainers all
  * registering in the same second anyway.
  */
-async function ensureAccounts(env, call, now) {
+async function ensureAccounts(env, call, now, helpers) {
   const rows = (await env.DB.prepare("SELECT handle FROM bots").all()).results || [];
   const have = new Set(rows.map((row) => row.handle));
   const missing = ROSTER.filter((persona) => !have.has(persona.handle)).slice(0, MAX_NEW_PER_TICK);
   for (const persona of missing) {
     try {
-      const next = await signIn(env, call, persona);
+      const next = await signIn(env, call, persona, helpers);
       if (!next) continue;
       await env.DB.prepare(
         `INSERT INTO bots (user_id, handle, cookie, online_until, next_wake, last_chat_at)
@@ -277,16 +313,15 @@ async function ensureAccounts(env, call, now) {
       )
         .bind(next.userId, persona.handle, next.cookie, now + rand(0, 90 * MINUTE))
         .run();
-      await env.DB.prepare("UPDATE users SET bot = 1 WHERE id = ?").bind(next.userId).run();
     } catch (err) {
       if (!missingSchema(err)) console.error("bot signup", persona.handle, err);
     }
   }
 }
 
-async function session(env, call, row, persona) {
+async function session(env, call, row, persona, helpers) {
   if (row.cookie) return row.cookie;
-  const next = await signIn(env, call, persona);
+  const next = await signIn(env, call, persona, helpers);
   if (!next) return null;
   await env.DB.prepare("UPDATE bots SET cookie = ?, user_id = ? WHERE handle = ?")
     .bind(next.cookie, next.userId, persona.handle)
@@ -364,8 +399,8 @@ async function openOrSell(env, call, row, persona, cookie, save, quiet, now) {
  * One thing per minute at most. Reading the lounge is what marks a bot online
  * in the first place — everything after it is optional.
  */
-async function act(env, call, row, persona, now) {
-  const cookie = await session(env, call, row, persona);
+async function act(env, call, row, persona, now, helpers) {
+  const cookie = await session(env, call, row, persona, helpers);
   if (!cookie) return;
 
   const seen = await call("/api/lounge", { cookie });
@@ -415,9 +450,9 @@ async function act(env, call, row, persona, now) {
   }
 }
 
-async function step(env, call, row, persona, now, ctx) {
+async function step(env, call, row, persona, now, ctx, helpers) {
   if (Number(row.online_until) > now) {
-    await act(env, call, row, persona, now);
+    await act(env, call, row, persona, now, helpers);
     return;
   }
   if (Number(row.next_wake) > now) return;
@@ -435,27 +470,27 @@ async function step(env, call, row, persona, now, ctx) {
     .bind(until, until + rand(AWAY_MIN_MS, AWAY_MAX_MS), row.user_id)
     .run();
   row.online_until = until;
-  await act(env, call, row, persona, now);
+  await act(env, call, row, persona, now, helpers);
 }
 
 /**
  * Called once a minute by the scheduled handler. `call` is the in-process API
  * caller from worker/index.js, so a tick costs no outbound requests.
  */
-export async function tickBots(env, call) {
+export async function tickBots(env, call, helpers = {}) {
   if (!env.BOT_SECRET) return;
   await ensureBotSchema(env);
   const now = Date.now();
 
   try {
-    await ensureAccounts(env, call, now);
+    await ensureAccounts(env, call, now, helpers);
     const rows = (await env.DB.prepare("SELECT * FROM bots").all()).results || [];
     const ctx = { online: rows.filter((row) => Number(row.online_until) > now).length };
     for (const row of rows) {
       const persona = ROSTER.find((item) => item.handle === row.handle);
       if (!persona) continue;
       try {
-        await step(env, call, row, persona, now, ctx);
+        await step(env, call, row, persona, now, ctx, helpers);
       } catch (err) {
         console.error("bot step", row.handle, err);
       }
