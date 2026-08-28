@@ -5,6 +5,7 @@
 import { BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
 import { isHit, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
+import { tickBots } from "./bots.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
 import {
@@ -50,9 +51,55 @@ export default {
       return json({ error: status >= 500 ? "Server error." : message }, status);
     }
   },
+
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(tickBots(env, (path, opts) => callApi(env, path, opts)));
+  },
 };
 
-async function handleApi(request, env, url) {
+/**
+ * Run one API call in-process, the way an incoming request would. The bot
+ * driver uses this so its accounts go through every check a browser hits
+ * without costing a subrequest, and so nothing can reach the database by a
+ * path the public API would not allow.
+ *
+ * `SITE_ORIGIN` only has to be a valid absolute URL — asset reads go through
+ * the ASSETS binding, not the network — but keeping it the real hostname
+ * makes anything logged during a tick readable.
+ */
+async function callApi(env, path, { method = "GET", body = null, cookie = "" } = {}) {
+  const url = new URL(path, env.SITE_ORIGIN || "https://poke-pack.rip");
+  const headers = {};
+  if (body) headers["content-type"] = "application/json";
+  if (cookie) headers.cookie = `${COOKIE}=${cookie}`;
+  const request = new Request(url, {
+    method,
+    headers,
+    body: body == null ? undefined : JSON.stringify(body),
+  });
+
+  let res;
+  try {
+    res = await handleApi(request, env, url);
+  } catch (err) {
+    return { status: err?.status || 500, body: null, cookie: "" };
+  }
+
+  const text = await res.text();
+  let data = null;
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = null;
+    }
+  }
+  const setCookie = res.headers.get("set-cookie") || "";
+  const match = setCookie.match(new RegExp(`${COOKIE}=([^;]+)`));
+  return { status: res.status, body: data, cookie: match ? match[1] : "" };
+}
+
+export async function handleApi(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   const method = request.method.toUpperCase();
 

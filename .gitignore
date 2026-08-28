@@ -26,3 +26,6 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# local worker secrets (BOT_SECRET etc)
+.dev.vars

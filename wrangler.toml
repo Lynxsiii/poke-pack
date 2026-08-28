@@ -15,6 +15,15 @@ html_handling = "auto-trailing-slash"
 not_found_handling = "single-page-application"
 run_worker_first = true
 
+# Ambient population. The tick is a no-op unless BOT_SECRET is set, so put it
+# in only where you actually want bots:
+#   wrangler secret put BOT_SECRET
+[triggers]
+crons = ["* * * * *"]
+
+[vars]
+SITE_ORIGIN = "https://poke-pack.rip"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "poke-pack"

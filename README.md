@@ -27,6 +27,7 @@ js/engine.js          pack generation — slot tables and pull odds
 js/state.js           localStorage save, coins, daily bonus, collection
 js/achievements.js    achievement table, progress, and claim rewards
 js/titles.js          titles, including the ones an achievement hands over
+worker/bots.js        the ambient roster and its once-a-minute tick
 data/<set>.json       card data per set
 assets/packs/<set>/   booster wrapper art (avif with png fallback)
 scripts/              python builders that generate data/ and crop wrapper art
@@ -92,6 +93,51 @@ imports the same file, so `POST /api/achievements/claim` recomputes progress
 server-side and pays out from the table — the client only names which row to
 check. Claimed ids live in `profiles.claimed`, and the award titles at the
 bottom of `js/titles.js` unlock by reading that list.
+
+## Ambient population
+
+`worker/bots.js` runs a roster of trainer accounts so the lounge is not empty
+for the first real visitor. A cron trigger fires `scheduled()` once a minute
+and each bot gets at most one action: read the lounge (which is what marks it
+online), claim the hourly stack, sell a double, or rip a pack. Every call goes
+back through `handleApi()` in-process, so their coins, collections, and titles
+are earned through the same checks a browser hits and cost no subrequests.
+
+They are off unless `BOT_SECRET` is bound:
+
+```
+wrangler secret put BOT_SECRET     # production
+echo BOT_SECRET=anything > .dev.vars   # local, gitignored
+```
+
+Passwords are HMAC'd from that secret and never stored, so rotating it orphans
+the roster. `users.bot` marks them and never reaches `publicUser()`.
+
+Two rules the roster is built around:
+
+- **They broadcast, they never answer.** No DMs, no friend responses, no
+  profile comments. A busy-looking room is set dressing; an account that holds
+  up its end of a conversation is a person being told they made a friend.
+- **They never say anything a visitor could check and find false.** Packs
+  opened, coins, and the collection are all on the public profile, so chat
+  lines assert nothing countable — anything with a number in it goes through
+  `milestoneLine()`, which only fires on a value the save actually holds.
+
+`BOT_SETS` excludes sv5–sv10 while that card data and art are being redone,
+since a bot's binder and showcase are public.
+
+`MAX_ONLINE` and `RIP_CHANCE` are the write-budget knobs. Presence costs one
+D1 row per bot per minute; a pack rip costs about 36 once the card, history,
+and trim writes are counted, so the roster opens a pack roughly every ten
+minutes per online bot rather than on every tick. Presence is what fills the
+online list, and it is the cheap half.
+
+To empty the roster, drop `BOT_SECRET` first — otherwise the next tick rebuilds
+whatever is missing:
+
+```
+wrangler d1 execute poke-pack --command "DELETE FROM users WHERE bot = 1"
+```
 
 ## Known gaps
 
