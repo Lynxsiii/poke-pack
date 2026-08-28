@@ -45,7 +45,14 @@ const RIP_FLOOR = 0.15;
 const RIP_CEIL = 0.75;
 const RIP_PER_PACK = 0.05;
 const TITLE_CHANCE = 0.02;
-const CHAT_GAP_MS = 24 * MINUTE;
+const REACT_GAP_MS = 8 * MINUTE;
+const REACT_WINDOW_MS = 5 * MINUTE;
+// Reactions are garnish. Left high they crowd out everything a persona
+// actually has to say, and the lounge turns into "same" / "real" / "agreed".
+const REACT_CHANCE = 0.22;
+// Worth answering unprompted; anything else needs the second roll below.
+const REACT_EAGER = new Set(["hit", "milestone"]);
+const RECENT_LINES = 10;
 const LOW_COINS = 20;
 const MAX_ONLINE = 6;
 const MAX_NEW_PER_TICK = 2;
@@ -65,30 +72,30 @@ const BOT_SETS = ["me5", "me4", "me3", "me2pt5", "me2", "me1", "zsv10pt5", "rsv1
  * wear as they unlock, best first.
  */
 const ROSTER = [
-  { name: "Riley", handle: "rileyxo", color: "aqua", avatar: "134", banner: "drift:aqua+ocean", bio: "eeveelutions or nothing", hours: [22, 7], sets: ["me5", "me3"], titles: ["Gym Leader", "Binder rat", "Ripper"] },
-  { name: "Marcus", handle: "mrcs_tcg", color: "ember", avatar: "6", banner: "beam:ember+flame", bio: "opening until the charizard shows up", hours: [13, 23], sets: ["me2", "me1"], titles: ["Century", "Hit hunter", "Trainer"] },
-  { name: "Tess", handle: "tessellate", color: "violet", avatar: "150", banner: "pulse:violet+ghost", bio: "", hours: [16, 2], sets: ["me4", "me5"], titles: ["Living dex", "Collector"] },
-  { name: "Dez", handle: "dezzy", color: "lime", avatar: "1", banner: "mist:lime+forest", bio: "grass types deserve better", hours: [11, 20], sets: ["me1", "me3"], titles: ["Ripper", "Trainer"] },
-  { name: "Nori", handle: "norinori", color: "rose", avatar: "700", banner: "aurora:rose+fairy", bio: "sylveon collector, will trade nothing", hours: [23, 8], sets: ["me5", "me2pt5"], titles: ["Special artist", "Binder rat"] },
-  { name: "Quinn", handle: "quinnwaves", color: "ocean", avatar: "658", banner: "drift:ocean+ice", bio: "", hours: [14, 1], sets: ["me3", "me4"], titles: ["Marathon", "Century"] },
-  { name: "Sable", handle: "sablewing", color: "night", avatar: "197", banner: "mist:night+ghost", bio: "night shift ripper", hours: [1, 10], sets: ["me5", "me4"], titles: ["Gold chaser", "Hit hunter"] },
-  { name: "Ike", handle: "ike_ttv", color: "thunder", avatar: "135", banner: "beam:thunder+gold", bio: "one more pack. always one more", hours: [17, 4], sets: ["me2", "me5"], titles: ["Pull machine", "Marathon"] },
-  { name: "Wren", handle: "wrenbird", color: "ice", avatar: "144", banner: "aurora:ice+aqua", bio: "", hours: [9, 18], sets: ["rsv10pt5", "me1"], titles: ["Collector", "Trainer"] },
-  { name: "Otto", handle: "ottoman", color: "steel", avatar: "376", banner: "pulse:steel+dragon", bio: "metagross apologist", hours: [12, 21], sets: ["me3", "me2"], titles: ["Binder rat", "Ripper"] },
-  { name: "Juno", handle: "junobean", color: "fairy", avatar: "35", banner: "aurora:fairy+rose", bio: "just here for the art", hours: [15, 0], sets: ["me4", "me2pt5"], titles: ["Illustration", "Collector"] },
-  { name: "Cass", handle: "cassidy_r", color: "flame", avatar: "257", banner: "beam:flame+ember", bio: "", hours: [10, 19], sets: ["me1", "me5"], titles: ["Double rare", "Trainer"] },
-  { name: "Ravi", handle: "ravioli", color: "poison", avatar: "34", banner: "drift:poison+violet", bio: "chasing the gold", hours: [18, 5], sets: ["zsv10pt5", "me5"], titles: ["Gold chaser", "Century"] },
-  { name: "Bex", handle: "bexlyn", color: "gold", avatar: "25", banner: "pulse:gold+thunder", bio: "", hours: [8, 17], sets: ["me2pt5", "me3"], titles: ["Hourly", "Ripper"] },
-  { name: "Milo", handle: "milohaze", color: "forest", avatar: "254", banner: "mist:forest+lime", bio: "sceptile or bust", hours: [20, 6], sets: ["me1", "me4"], titles: ["Marathon", "Ripper"] },
-  { name: "Sena", handle: "senaaa", color: "ghost", avatar: "94", banner: "pulse:ghost+night", bio: "gengar hoarder", hours: [21, 7], sets: ["me5", "me2"], titles: ["Ultra", "Hit hunter"] },
-  { name: "Hollis", handle: "hollisj", color: "earth", avatar: "383", banner: "beam:earth+rock", bio: "", hours: [13, 22], sets: ["rsv10pt5", "me3"], titles: ["Loaded", "Trainer"] },
-  { name: "Piper", handle: "piperpip", color: "rock", avatar: "95", banner: "drift:rock+earth", bio: "onix enthusiast, no notes", hours: [11, 21], sets: ["me2", "me1"], titles: ["Collector", "Trainer"] },
-  { name: "Ada", handle: "adawrites", color: "dragon", avatar: "149", banner: "aurora:dragon+ocean", bio: "", hours: [16, 3], sets: ["me4", "zsv10pt5"], titles: ["Banked", "Loaded"] },
-  { name: "Toby", handle: "tobes", color: "bug", avatar: "123", banner: "mist:bug+lime", bio: "scyther supremacy", hours: [9, 19], sets: ["me3", "me1"], titles: ["Ripper", "Trainer"] },
-  { name: "Vic", handle: "vicvic", color: "violet", avatar: "282", banner: "pulse:violet+fairy", bio: "gardevoir. that is the whole bio", hours: [19, 5], sets: ["me5", "me2pt5"], titles: ["Illustration", "Binder rat"] },
-  { name: "Noa", handle: "noaquartz", color: "thunder", avatar: "26", banner: "beam:thunder+ember", bio: "", hours: [14, 23], sets: ["me2", "me4"], titles: ["Century", "Hit hunter"] },
-  { name: "Ren", handle: "renfield", color: "night", avatar: "359", banner: "mist:night+poison", bio: "absol truther", hours: [0, 9], sets: ["me1", "me5"], titles: ["Hit hunter", "Ripper"] },
-  { name: "Suki", handle: "sukisuki", color: "aqua", avatar: "131", banner: "drift:aqua+ice", bio: "", hours: [12, 20], sets: ["me3", "rsv10pt5"], titles: ["Collector", "Trainer"] },
+  { name: "Riley", handle: "rileyxo", color: "aqua", avatar: "134", banner: "drift:aqua+ocean", bio: "eeveelutions or nothing", hours: [22, 7], sets: ["me5", "me3"], titles: ["Gym Leader", "Binder rat", "Ripper"], voice: ["one day an umbreon. not today", "eeveelution or i'm not interested", "vaporeon art in this set is unreal", "i only need the one card. always the one card", "late night rips hit different", "the eeveelutions are a scam and i keep paying", "who decided sylveon should be that expensive", "staying up for one more. famous last words"] },
+  { name: "Marcus", handle: "mrcs_tcg", color: "ember", avatar: "6", banner: "beam:ember+flame", bio: "opening until the charizard shows up", hours: [13, 23], sets: ["me2", "me1"], titles: ["Century", "Hit hunter", "Trainer"], voice: ["still no charizard", "every set has a charizard except the ones i open", "i will find it eventually", "charizard tax is real and i keep paying it", "opened another one. no lizard", "my whole binder is fire types and none of them are him", "this is fine. everything is fine", "one of these has to be it"] },
+  { name: "Tess", handle: "tessellate", color: "violet", avatar: "150", banner: "pulse:violet+ghost", bio: "", hours: [16, 2], sets: ["me4", "me5"], titles: ["Living dex", "Collector"], voice: ["psychic types carry this game", "the pull rates are a personality test", "statistically i'm due. statistically", "numbers say keep going", "this set's curve is strange", "i keep track of these. i shouldn't", "mewtwo or bust honestly", "running the odds again like it'll change"] },
+  { name: "Dez", handle: "dezzy", color: "lime", avatar: "1", banner: "mist:lime+forest", bio: "grass types deserve better", hours: [11, 20], sets: ["me1", "me3"], titles: ["Ripper", "Trainer"], voice: ["grass types deserve better", "nobody chases the starters and it shows", "bulbasaur line is criminally underrated", "give me one good grass pull", "the art on the leaf types is so clean", "still building the grass page", "green binder page or nothing", "venusaur when"] },
+  { name: "Nori", handle: "norinori", color: "rose", avatar: "700", banner: "aurora:rose+fairy", bio: "sylveon collector, will trade nothing", hours: [23, 8], sets: ["me5", "me2pt5"], titles: ["Special artist", "Binder rat"], voice: ["not trading. ever. don't ask", "sylveon page is nearly full", "pink cards only, i don't make the rules", "the fairy art in this era is so good", "one more for the eeveelution page", "i will pay coins i do not have for this", "my binder is aggressively pink", "collecting is cheaper than therapy. barely"] },
+  { name: "Quinn", handle: "quinnwaves", color: "ocean", avatar: "658", banner: "drift:ocean+ice", bio: "", hours: [14, 1], sets: ["me3", "me4"], titles: ["Marathon", "Century"], voice: ["water types and nothing else", "greninja pull would fix me", "this set runs cold for me", "the blues in this art are gorgeous", "rip, sell, repeat", "just vibing and opening", "ocean page filling up nicely", "frogs. that's the whole strategy"] },
+  { name: "Sable", handle: "sablewing", color: "night", avatar: "197", banner: "mist:night+ghost", bio: "night shift ripper", hours: [1, 10], sets: ["me5", "me4"], titles: ["Gold chaser", "Hit hunter"], voice: ["night shift. as always", "dark types after midnight, it's a whole thing", "umbreon is the correct answer", "quiet hours are the best hours to rip", "nobody's awake so the odds are mine", "3am pack odds are better. don't fact check me", "moonlight page coming together", "one more before bed. lying obviously"] },
+  { name: "Ike", handle: "ike_ttv", color: "thunder", avatar: "135", banner: "beam:thunder+gold", bio: "one more pack. always one more", hours: [17, 4], sets: ["me2", "me5"], titles: ["Pull machine", "Marathon"], voice: ["one more pack. always one more", "i said i'd stop at ten. i'm at forty", "electric types or nothing", "this is genuinely a problem", "my coins evaporate instantly", "jolteon supremacy", "should be sleeping, am opening", "the hourly stack lasts me four minutes"] },
+  { name: "Wren", handle: "wrenbird", color: "ice", avatar: "144", banner: "aurora:ice+aqua", bio: "", hours: [9, 18], sets: ["rsv10pt5", "me1"], titles: ["Collector", "Trainer"], voice: ["birds are underrated in this game", "articuno art is untouchable", "just here quietly opening", "cold types, cold pulls", "the blues in this set are lovely", "slow and steady binder building", "not chasing anything. just looking", "flying types get no respect"] },
+  { name: "Otto", handle: "ottoman", color: "steel", avatar: "376", banner: "pulse:steel+dragon", bio: "metagross apologist", hours: [12, 21], sets: ["me3", "me2"], titles: ["Binder rat", "Ripper"], voice: ["metagross apologist, as always", "steel types are the most underrated", "give me one good metal pull", "the holo pattern on steel cards is so good", "my binder is entirely grey and i love it", "nobody chases these and that's fine by me", "steel page nearly done", "clean art beats loud art"] },
+  { name: "Juno", handle: "junobean", color: "fairy", avatar: "35", banner: "aurora:fairy+rose", bio: "just here for the art", hours: [15, 0], sets: ["me4", "me2pt5"], titles: ["Illustration", "Collector"], voice: ["just here for the art honestly", "don't care about value, care about illustration", "the illustration rares carry this whole hobby", "clefairy art is criminally good", "some of these belong in a gallery", "i'd frame half these cards", "chasing art not money", "this artist did something special"] },
+  { name: "Cass", handle: "cassidy_r", color: "flame", avatar: "257", banner: "beam:flame+ember", bio: "", hours: [10, 19], sets: ["me1", "me5"], titles: ["Double rare", "Trainer"], voice: ["fire types run this", "blaziken or nothing", "hot streak. relatively speaking", "that art is genuinely so good", "opening on a whim and regretting it", "red binder page is looking good", "still chasing the one", "the flame art in this set goes hard"] },
+  { name: "Ravi", handle: "ravioli", color: "poison", avatar: "34", banner: "drift:poison+violet", bio: "chasing the gold", hours: [18, 5], sets: ["zsv10pt5", "me5"], titles: ["Gold chaser", "Century"], voice: ["chasing the gold", "hyper rares or nothing", "poison types are underrated", "i want the shiny gold one specifically", "gold chase continues", "one gold card. that's all i ask", "this set's gold is beautiful", "still nothing gold. still going"] },
+  { name: "Bex", handle: "bexlyn", color: "gold", avatar: "25", banner: "pulse:gold+thunder", bio: "", hours: [8, 17], sets: ["me2pt5", "me3"], titles: ["Hourly", "Ripper"], voice: ["hourly stack is carrying me", "pikachu will always be the one", "classic types only", "spending it the second i get it", "this is a healthy hobby", "yellow page coming along", "free coins go straight back in", "never learned to save. clearly"] },
+  { name: "Milo", handle: "milohaze", color: "forest", avatar: "254", banner: "mist:forest+lime", bio: "sceptile or bust", hours: [20, 6], sets: ["me1", "me4"], titles: ["Marathon", "Ripper"], voice: ["sceptile or bust", "grass starters are the best starters", "still nothing green worth pinning", "the hoenn art in this era is great", "one good pull and i'm done for the night", "forest page is my favourite page", "chasing a card nobody else wants", "gen 3 supremacy"] },
+  { name: "Sena", handle: "senaaa", color: "ghost", avatar: "94", banner: "pulse:ghost+night", bio: "gengar hoarder", hours: [21, 7], sets: ["me5", "me2"], titles: ["Ultra", "Hit hunter"], voice: ["gengar hoarder, no apologies", "ghost types after dark obviously", "spooky page is coming together", "purple cards only please", "i own too many gengars and want more", "the ghost art in this set is unreal", "not stopping until the page is full", "one more ghost. always one more"] },
+  { name: "Hollis", handle: "hollisj", color: "earth", avatar: "383", banner: "beam:earth+rock", bio: "", hours: [13, 22], sets: ["rsv10pt5", "me3"], titles: ["Loaded", "Trainer"], voice: ["ground types are underrated", "groudon art is incredible", "slow build, good binder", "not chasing value, chasing the set", "earth tones page nearly full", "completion over chase, always", "master setting this one", "one card closer"] },
+  { name: "Piper", handle: "piperpip", color: "rock", avatar: "95", banner: "drift:rock+earth", bio: "onix enthusiast, no notes", hours: [11, 21], sets: ["me2", "me1"], titles: ["Collector", "Trainer"], voice: ["onix enthusiast, no notes", "rock types deserve more love", "nobody chases these, more for me", "the grey page is my pride", "still building slowly", "rock solid pulls today. sorry", "completing this set out of spite", "underrated types only"] },
+  { name: "Ada", handle: "adawrites", color: "dragon", avatar: "149", banner: "aurora:dragon+ocean", bio: "", hours: [16, 3], sets: ["me4", "zsv10pt5"], titles: ["Banked", "Loaded"], voice: ["dragons or nothing", "dragonite art is perfect and i won't argue", "saving up for a proper run", "the dragon page is my favourite", "slowly getting there", "big pulls come to those who wait", "banking coins for once", "this set's dragons are gorgeous"] },
+  { name: "Toby", handle: "tobes", color: "bug", avatar: "123", banner: "mist:bug+lime", bio: "scyther supremacy", hours: [9, 19], sets: ["me3", "me1"], titles: ["Ripper", "Trainer"], voice: ["scyther supremacy", "bug types are genuinely good, fight me", "the bug art in this era is so clean", "nobody rates bugs and it's their loss", "green page slowly filling", "one good bug pull, that's all", "underrated as always", "scyther or nothing"] },
+  { name: "Vic", handle: "vicvic", color: "violet", avatar: "282", banner: "pulse:violet+fairy", bio: "gardevoir. that is the whole bio", hours: [19, 5], sets: ["me5", "me2pt5"], titles: ["Illustration", "Binder rat"], voice: ["gardevoir. that is the whole bio", "psychic art is unmatched", "the illustration rares are the whole point", "chasing one card forever", "fairy psychic supremacy", "this artist understood the assignment", "my binder is one pokemon repeated", "still chasing her"] },
+  { name: "Noa", handle: "noaquartz", color: "thunder", avatar: "26", banner: "beam:thunder+ember", bio: "", hours: [14, 23], sets: ["me2", "me4"], titles: ["Century", "Hit hunter"], voice: ["electric types and good art", "raichu deserves more chase cards", "steady pulls, no complaints", "the yellow page is filling up", "opening between other things", "not chasing, just collecting", "this set treats me well", "good art beats good odds"] },
+  { name: "Ren", handle: "renfield", color: "night", avatar: "359", banner: "mist:night+poison", bio: "absol truther", hours: [0, 9], sets: ["me1", "me5"], titles: ["Hit hunter", "Ripper"], voice: ["absol truther", "dark types are the best designed", "nobody appreciates absol enough", "late nights and dark types", "the black border art is so good", "chasing one specific card as usual", "moody cards only", "still nothing. still going"] },
+  { name: "Suki", handle: "sukisuki", color: "aqua", avatar: "131", banner: "drift:aqua+ice", bio: "", hours: [12, 20], sets: ["me3", "rsv10pt5"], titles: ["Collector", "Trainer"], voice: ["water types forever", "lapras art is so calming", "just opening quietly", "blue page is my favourite", "slow collector, no rush", "not chasing anything expensive", "this set is gentle on the eyes", "one more then i'm done"] },
 ];
 
 /**
@@ -118,6 +125,61 @@ const IDLE_LINES = [
   "my luck is unbelievable and not in a good way",
 ];
 
+/**
+ * Replies to another bot, chosen by what that bot had just said.
+ *
+ * These only ever fire at a handle on the roster. A bot answering a real
+ * person would be the most obvious tell there is — an account that cannot
+ * actually hold the conversation it just started.
+ */
+const REACTIONS = {
+  hit: [
+    "lucky",
+    "ok i'm jealous",
+    "no way, congrats",
+    "meanwhile i get nothing",
+    "that's the exact one i want",
+    "sick pull",
+    "ok that's not fair",
+    "i've opened forty and nothing",
+    "please share the luck",
+    "genuinely happy for you. genuinely",
+  ],
+  milestone: [
+    "congrats",
+    "ok that's dedication",
+    "how do you have the coins",
+    "respect",
+    "that's a lot of packs",
+    "nice one",
+  ],
+  sell: [
+    "the dupe pile always wins",
+    "bulk pays the bills",
+    "same, half my binder is gone",
+    "selling doubles is the real economy",
+    "had to do the same earlier",
+  ],
+  broke: [
+    "felt",
+    "same honestly",
+    "we've all been there",
+    "waiting on the hourly too",
+    "rough",
+    "the coins never last",
+  ],
+  idle: [
+    "real",
+    "same",
+    "lol",
+    "this is the life",
+    "agreed",
+    "you're not wrong",
+    "every time",
+    "it do be like that",
+  ],
+};
+
 const SELL_LINES = [
   "dumped some dupes, back in business",
   "selling doubles to fund the next one",
@@ -138,6 +200,10 @@ function milestoneLine(packs) {
     `${packs} packs deep`,
     `just hit ${packs} packs`,
     `${packs} packs and still chasing`,
+    `${packs} packs. i should probably stop`,
+    `that's ${packs} packs opened. no regrets`,
+    `${packs} in. the binder is filling up`,
+    `somehow at ${packs} packs already`,
   ]);
 }
 
@@ -147,6 +213,17 @@ const HIT_LINES = [
   (name) => `${name.toLowerCase()} finally`,
   (name) => `ok that pack was worth it. ${name.toLowerCase()}`,
   (name) => `been chasing ${name.toLowerCase()} forever`,
+  (name) => `${name.toLowerCase()}!!`,
+  (name) => `got the ${name.toLowerCase()}. i can rest now`,
+  (name) => `${name.toLowerCase()} on the last card of the pack`,
+  (name) => `i did not expect ${name.toLowerCase()} today`,
+  (name) => `${name.toLowerCase()} is going straight in the binder`,
+  (name) => `okay ${name.toLowerCase()} was worth every coin`,
+  (name) => `hands are shaking. ${name.toLowerCase()}`,
+  (name) => `${name.toLowerCase()}. finally. after all that`,
+  (name) => `well that's my week made. ${name.toLowerCase()}`,
+  (name) => `pulled ${name.toLowerCase()} and immediately screamed`,
+  (name) => `${name.toLowerCase()} pinned, obviously`,
 ];
 
 /**
@@ -210,6 +287,15 @@ async function ensureBotSchema(env) {
     }
     if (!cols.has("showcase")) {
       await runDdl(env, "ALTER TABLE bots ADD COLUMN showcase TEXT");
+    }
+    if (!cols.has("last_chat_kind")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN last_chat_kind TEXT");
+    }
+    if (!cols.has("recent_lines")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN recent_lines TEXT");
+    }
+    if (!cols.has("last_react_id")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN last_react_id INTEGER NOT NULL DEFAULT 0");
     }
     schemaReady = true;
   } catch (err) {
@@ -367,13 +453,94 @@ async function clearSession(env, row) {
   await env.DB.prepare("UPDATE bots SET cookie = NULL WHERE user_id = ?").bind(row.user_id).run();
 }
 
-async function say(env, call, row, cookie, text, now) {
+/**
+ * Post a line and remember it.
+ *
+ * `kind` is what another bot reads to decide how to answer — congratulating a
+ * pull reads very differently from agreeing with a complaint. The recent list
+ * is what stops a bot cycling the same four lines all evening, which is the
+ * kind of pattern a regular would notice long before anything else.
+ */
+async function say(env, call, row, cookie, text, now, kind = "idle") {
   const res = await call("/api/chat", { method: "POST", cookie, body: { body: text } });
   if (res.status !== 200) return;
-  await env.DB.prepare("UPDATE bots SET last_chat_at = ? WHERE user_id = ?")
-    .bind(now, row.user_id)
-    .run();
+
+  const recent = [text, ...readRecent(row.recent_lines)].slice(0, RECENT_LINES);
   row.last_chat_at = now;
+  row.last_chat_kind = kind;
+  row.recent_lines = JSON.stringify(recent);
+  await env.DB.prepare(
+    "UPDATE bots SET last_chat_at = ?, last_chat_kind = ?, recent_lines = ? WHERE user_id = ?"
+  )
+    .bind(now, kind, row.recent_lines, row.user_id)
+    .run();
+}
+
+function readRecent(raw) {
+  if (!raw) return [];
+  try {
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list.filter((x) => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Prefer something this bot has not said lately; fall back once the pool runs dry. */
+function pickFresh(pool, row) {
+  const list = Array.isArray(pool) && pool.length ? pool : IDLE_LINES;
+  const recent = new Set(readRecent(row.recent_lines));
+  const unsaid = list.filter((line) => !recent.has(line));
+  return pick(unsaid.length ? unsaid : list);
+}
+
+/**
+ * Every bot talking on the same clock is a tell, so the gap is spread 14-34
+ * minutes by handle — stable per persona, different between them.
+ */
+function chatGapFor(persona) {
+  let h = 0;
+  for (const ch of persona.handle) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return (14 + (h % 21)) * MINUTE;
+}
+
+/**
+ * Answer the last thing another bot said.
+ *
+ * Hard requirement: the speaker must be on the roster. Reacting to whatever
+ * happens to be last would eventually mean replying to a real person, and an
+ * account that cannot hold up its end is exactly what gives the game away.
+ */
+async function react(env, call, row, persona, cookie, chat, now) {
+  const last = Array.isArray(chat) && chat.length ? chat[chat.length - 1] : null;
+  if (!last?.user?.handle) return false;
+
+  const speaker = ROSTER.find((item) => item.handle === last.user.handle);
+  if (!speaker || speaker.handle === persona.handle) return false;
+  if (Number(last.id) === Number(row.last_react_id || 0)) return false;
+  if (now - Number(last.at || 0) > REACT_WINDOW_MS) return false;
+  if (now - Number(row.last_chat_at || 0) < REACT_GAP_MS) return false;
+  if (Math.random() > REACT_CHANCE) return false;
+
+  const theirs = await env.DB.prepare("SELECT last_chat_kind FROM bots WHERE handle = ?")
+    .bind(speaker.handle)
+    .first();
+  const kind = theirs?.last_chat_kind || "idle";
+
+  // Never answer an answer. Without this each reaction becomes the next thing
+  // to react to and the room collapses into "same" / "real" / "agreed".
+  if (kind === "react") return false;
+  // A pull or a milestone is worth speaking up for. Everything else only
+  // sometimes, so the personas still get to say their own lines.
+  if (!REACT_EAGER.has(kind) && Math.random() > 0.3) return false;
+
+  await env.DB.prepare("UPDATE bots SET last_react_id = ? WHERE user_id = ?")
+    .bind(Number(last.id) || 0, row.user_id)
+    .run();
+  row.last_react_id = Number(last.id) || 0;
+
+  await say(env, call, row, cookie, pickFresh(REACTIONS[kind] || REACTIONS.idle, row), now, "react");
+  return true;
 }
 
 /**
@@ -487,7 +654,7 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
       });
       if (sold.body?.save) await remember(env, row, sold.body.save);
       if (sold.status === 200 && quiet && Math.random() < CHAT_CHANCE) {
-        await say(env, call, row, cookie, pick(SELL_LINES), now);
+        await say(env, call, row, cookie, pickFresh(SELL_LINES, row), now, "sell");
       }
       return;
     }
@@ -501,7 +668,7 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
     row.coins = 0;
     await env.DB.prepare("UPDATE bots SET coins = 0 WHERE user_id = ?").bind(row.user_id).run();
     if (quiet && Math.random() < CHAT_CHANCE) {
-      await say(env, call, row, cookie, pick(BROKE_LINES), now);
+      await say(env, call, row, cookie, pickFresh(BROKE_LINES, row), now, "broke");
     }
     return;
   }
@@ -511,7 +678,7 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
 
   const packs = Number(ripped.body?.save?.packsOpened || 0);
   if (quiet && MILESTONE_PACKS.includes(packs)) {
-    await say(env, call, row, cookie, milestoneLine(packs), now);
+    await say(env, call, row, cookie, milestoneLine(packs), now, "milestone");
     return;
   }
 
@@ -519,7 +686,7 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
     (card) => !card.reverse && CHAT_WORTHY.has(card.rarity)
   );
   if (hit && quiet && Math.random() < HIT_CHAT_CHANCE) {
-    await say(env, call, row, cookie, pick(HIT_LINES)(hit.name), now);
+    await say(env, call, row, cookie, pick(HIT_LINES)(hit.name), now, "hit");
   }
 }
 
@@ -537,7 +704,11 @@ async function act(env, call, row, persona, now, helpers) {
     return;
   }
 
-  const quiet = now - Number(row.last_chat_at || 0) >= CHAT_GAP_MS;
+  const quiet = now - Number(row.last_chat_at || 0) >= chatGapFor(persona);
+
+  // Answering another bot comes first: it is the only thing here that depends
+  // on a message still being recent.
+  if (await react(env, call, row, persona, cookie, seen.body?.chat, now)) return;
 
   if (Number(row.coins) < 0) {
     const mine = await call("/api/me", { cookie });
@@ -570,7 +741,7 @@ async function act(env, call, row, persona, now, helpers) {
   }
 
   if (quiet && Math.random() < CHAT_CHANCE) {
-    await say(env, call, row, cookie, pick(IDLE_LINES), now);
+    await say(env, call, row, cookie, pickFresh(persona.voice, row), now, "idle");
     return;
   }
   if (Math.random() < TITLE_CHANCE) {
