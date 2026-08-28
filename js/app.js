@@ -1710,6 +1710,13 @@ function formatWhen(ts) {
   return new Date(t).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
 }
 
+/** Month and year a trainer signed up — a stat tile has no room for a full date. */
+function joinedOn(ts) {
+  const t = Number(ts) || 0;
+  if (!t) return "—";
+  return new Date(t).toLocaleDateString(undefined, { month: "short", year: "numeric" });
+}
+
 function uniqueOwned() {
   return Object.values(state.collection || {}).filter((n) => n > 0).length;
 }
@@ -2462,13 +2469,21 @@ async function renderProfile() {
                 ? `<button class="solid" type="button" data-friend-accept="${esc(user.handle)}">Accept friend</button>`
                 : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`;
 
-    const showcase = (data.showcase || [])
-      .map((slot) => {
-        const card = findCard(slot.id) || slot;
-        const face = findCard(slot.id)
-          ? tcgFace({ ...findCard(slot.id), reverse: slot.reverse }, { small: true, stamp: false, lazy: true })
+    // Best card first, so the eye lands on the reason the row exists.
+    const pinned = (data.showcase || [])
+      .slice()
+      .sort((a, b) => (Number(b.value) || 0) - (Number(a.value) || 0));
+    const showcase = pinned
+      .map((slot, i) => {
+        const known = findCard(slot.id);
+        const face = known
+          ? tcgFace({ ...known, reverse: slot.reverse }, { small: true, stamp: false, lazy: true })
           : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" />`;
-        return `<button type="button" class="mini-card" ${findCard(slot.id) ? inspectAttrs(findCard(slot.id)) : ""} aria-label="${esc(slot.name)}">${face}</button>`;
+        const worth = Number(slot.value) > 0 ? `<span>✦ ${coin(slot.value)}</span>` : "";
+        return `<figure class="showcase-slot${i === 0 ? " best" : ""}">
+          <button type="button" class="mini-card" ${known ? inspectAttrs(known) : ""} aria-label="${esc(slot.name)}">${face}</button>
+          <figcaption><b>${esc(slot.name)}</b>${worth}</figcaption>
+        </figure>`;
       })
       .join("");
 
@@ -2505,13 +2520,18 @@ async function renderProfile() {
             ${stats.pulls != null ? `<div><b>${num(stats.pulls)}</b><span>Cards pulled</span></div>` : ""}
             ${stats.unique != null ? `<div><b>${num(stats.unique)}</b><span>Unique cards</span></div>` : ""}
             ${stats.coins != null ? `<div><b>✦ ${coin(stats.coins)}</b><span>Coins</span></div>` : ""}
+            ${user.createdAt ? `<div><b>${esc(joinedOn(user.createdAt))}</b><span>Collecting since</span></div>` : ""}
           </div>
         </div>
+        <div class="panel profile-showcase">
+          <h3>Showcase${pinned.length ? ` <small>${pinned.length} pinned</small>` : ""}</h3>
+          ${
+            showcase
+              ? `<div class="showcase-row">${showcase}</div>`
+              : `<p class="panel-empty">${mine ? "Pin your best pulls from the binder." : "No cards pinned yet."}</p>`
+          }
+        </div>
         <div class="profile-grid">
-          <div class="panel">
-            <h3>Showcase</h3>
-            ${showcase ? `<div class="showcase-row">${showcase}</div>` : `<p class="panel-empty">Nothing pinned yet.</p>`}
-          </div>
           <div class="panel">
             <h3>Wall</h3>
             <div class="comment-list">${comments || `<p class="panel-empty">No comments yet.</p>`}</div>
