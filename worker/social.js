@@ -7,6 +7,7 @@ import {
   DEFAULT_AVATAR,
   DEFAULT_BANNER,
 } from "../js/cosmetics.js";
+import { sellValue } from "../js/catalog.js";
 
 const ONLINE_MS = 90_000;
 const PRESENCE_WRITE_MS = 45_000;
@@ -236,7 +237,8 @@ async function lounge(request, env, { json, requireUser, publicUser, normalizeHa
     await queryAll(
       env,
       `SELECT chat_messages.id, chat_messages.body, chat_messages.created_at AS at,
-              users.id AS user_id, users.name, users.handle, users.color, users.title
+              users.id AS user_id, users.name, users.handle, users.color, users.title,
+              users.avatar, users.avatar_style
        FROM chat_messages
        JOIN users ON users.id = chat_messages.user_id
        ORDER BY chat_messages.id DESC
@@ -259,6 +261,7 @@ async function lounge(request, env, { json, requireUser, publicUser, normalizeHa
         color: row.color,
         title: row.title,
         avatar: row.avatar,
+        avatar_style: row.avatar_style,
       }),
     })),
   });
@@ -334,6 +337,8 @@ async function publicProfile(request, env, helpers, rawHandle) {
         rarity: card.rarity,
         image: card.imageSmall || card.image,
         reverse: slot.reverse,
+        // What the card is worth, so the profile can say why it is pinned.
+        value: sellValue(card),
       });
     } catch {
       /* skip a card whose set data is missing */
@@ -343,7 +348,8 @@ async function publicProfile(request, env, helpers, rawHandle) {
   const comments = await queryAll(
     env,
     `SELECT profile_comments.id, profile_comments.body, profile_comments.created_at AS at,
-            users.id AS user_id, users.name, users.handle, users.color, users.title
+            users.id AS user_id, users.name, users.handle, users.color, users.title,
+            users.avatar, users.avatar_style
      FROM profile_comments
      JOIN users ON users.id = profile_comments.author_id
      WHERE profile_comments.profile_id = ?
@@ -372,6 +378,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
         color: row.color,
         title: row.title,
         avatar: row.avatar,
+        avatar_style: row.avatar_style,
       }),
     })),
   });
