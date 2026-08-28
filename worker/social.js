@@ -9,6 +9,7 @@ import {
 } from "../js/cosmetics.js";
 
 const ONLINE_MS = 90_000;
+const PRESENCE_WRITE_MS = 45_000;
 const CHAT_GAP_MS = 2000;
 const COMMENT_GAP_MS = 8000;
 const CHAT_LIMIT = 40;
@@ -175,9 +176,23 @@ function cleanText(value, max) {
     .slice(0, max);
 }
 
+/**
+ * The client heartbeats every 5s and both /api/friends and /api/lounge land
+ * here, so a signed-in trainer sitting on the home page was writing 24 rows a
+ * minute to stay in the online list. ONLINE_MS is 90s, so refreshing seen_at
+ * at most every 45s keeps everyone shown online for a fraction of the writes —
+ * D1 bills rows written far more dearly than rows read, and this trades one
+ * cheap read for most of them. A chat or comment stamp always writes.
+ */
 async function touchPresence(env, userId, extra = {}) {
   const now = Date.now();
   try {
+    if (!extra.chat && !extra.comment) {
+      const row = await env.DB.prepare("SELECT seen_at FROM presence WHERE user_id = ?")
+        .bind(userId)
+        .first();
+      if (row && now - Number(row.seen_at || 0) < PRESENCE_WRITE_MS) return now;
+    }
     await env.DB.prepare(
       `INSERT INTO presence (user_id, seen_at, last_chat_at, last_comment_at)
        VALUES (?, ?, ?, ?)
