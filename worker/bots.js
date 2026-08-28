@@ -14,7 +14,9 @@
  * Off entirely unless `BOT_SECRET` is bound, so dev and preview environments
  * never quietly grow a population.
  */
-import { PLAYABLE_SETS } from "../js/catalog.js";
+import { PLAYABLE_SETS, sellValue } from "../js/catalog.js";
+import { isHit } from "../js/engine.js";
+import { SHOWCASE_MAX } from "../js/cosmetics.js";
 
 const MINUTE = 60 * 1000;
 const HOUR = 60 * MINUTE;
@@ -147,7 +149,12 @@ const HIT_LINES = [
   (name) => `been chasing ${name.toLowerCase()} forever`,
 ];
 
-const HIT_RARITIES = new Set([
+/**
+ * Worth breaking silence over. Deliberately narrower than engine.js's isHit,
+ * which counts Double Rares — those land in one pack in five and nobody
+ * announces them.
+ */
+const CHAT_WORTHY = new Set([
   "Ultra Rare",
   "Illustration Rare",
   "Special Illustration Rare",
@@ -200,6 +207,9 @@ async function ensureBotSchema(env) {
     }
     if (!cols.has("last_daily")) {
       await runDdl(env, "ALTER TABLE bots ADD COLUMN last_daily INTEGER NOT NULL DEFAULT 0");
+    }
+    if (!cols.has("showcase")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN showcase TEXT");
     }
     schemaReady = true;
   } catch (err) {
@@ -404,6 +414,58 @@ function costOf(setId) {
   return Number(set?.cost) || 0;
 }
 
+function readShowcase(raw) {
+  if (!raw) return [];
+  try {
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list.filter((slot) => slot && slot.id) : [];
+  } catch {
+    return [];
+  }
+}
+
+const slotKey = (list) => list.map((s) => `${s.id}:${s.reverse ? 1 : 0}`).join(",");
+
+/**
+ * Put the best pulls on the profile.
+ *
+ * A player who lands a chase card sets it as their showcase; a bot whose six
+ * slots stay empty while its binder fills is showing you exactly what it is.
+ * Ranked by sell value rather than rarity, so the slots hold what is actually
+ * worth something — a Double Rare worth pennies never displaces an
+ * illustration rare.
+ *
+ * The cached copy is what keeps this cheap: it only PATCHes when a pull
+ * genuinely beats what is already up, which after the first few packs is rare.
+ */
+async function showcaseBest(env, call, row, cookie, cards) {
+  const held = readShowcase(row.showcase);
+  const merged = held.slice();
+
+  for (const card of cards) {
+    if (!isHit(card)) continue;
+    if (merged.some((slot) => slot.id === card.id)) continue;
+    merged.push({ id: card.id, reverse: Boolean(card.reverse), value: Number(sellValue(card)) || 0 });
+  }
+  if (merged.length === held.length) return;
+
+  merged.sort((a, b) => (Number(b.value) || 0) - (Number(a.value) || 0));
+  const next = merged.slice(0, SHOWCASE_MAX);
+  if (slotKey(next) === slotKey(held)) return;
+
+  const res = await call("/api/me", {
+    method: "PATCH",
+    cookie,
+    body: { showcase: next.map((slot) => ({ id: slot.id, reverse: slot.reverse })) },
+  });
+  if (res.status !== 200) return;
+
+  row.showcase = JSON.stringify(next);
+  await env.DB.prepare("UPDATE bots SET showcase = ? WHERE user_id = ?")
+    .bind(row.showcase, row.user_id)
+    .run();
+}
+
 /**
  * Sell a double if the coins ran low, otherwise open a pack — what a player
  * does with the same balance, and what keeps a bot solvent between hourly
@@ -445,6 +507,7 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
   }
 
   await remember(env, row, ripped.body?.save);
+  await showcaseBest(env, call, row, cookie, ripped.body?.cards || []);
 
   const packs = Number(ripped.body?.save?.packsOpened || 0);
   if (quiet && MILESTONE_PACKS.includes(packs)) {
@@ -453,7 +516,7 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
   }
 
   const hit = (ripped.body?.cards || []).find(
-    (card) => !card.reverse && HIT_RARITIES.has(card.rarity)
+    (card) => !card.reverse && CHAT_WORTHY.has(card.rarity)
   );
   if (hit && quiet && Math.random() < HIT_CHAT_CHANCE) {
     await say(env, call, row, cookie, pick(HIT_LINES)(hit.name), now);
