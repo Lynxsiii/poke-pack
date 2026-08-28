@@ -129,11 +129,23 @@ Two rules the roster is built around:
 `BOT_SETS` excludes sv5–sv10 while that card data and art are being redone,
 since a bot's binder and showcase are public.
 
-`MAX_ONLINE` and `RIP_CHANCE` are the write-budget knobs. Presence costs one
-D1 row per bot per minute; a pack rip costs about 36 once the card, history,
-and trim writes are counted, so the roster opens a pack roughly every ten
-minutes per online bot rather than on every tick. Presence is what fills the
-online list, and it is the cheap half.
+Bots spend their hourly stack the way a player does. `ripChance()` scales the
+odds with how many packs the balance covers, so one fresh off the bonus opens
+most minutes and one down to its last coins slows to a trickle — about sixteen
+packs out of a 100-coin stack. Left flat they earned far more than they spent,
+and a public profile showing a big balance beside a low packs-opened count is
+the sort of mismatch that reads as fake.
+
+Balance and the hourly stamp are cached on the `bots` row, because `/api/me`
+returns the whole save — every card the bot owns — and that read only gets
+more expensive as a collection grows. Responses that already carry a save
+refresh the cache instead.
+
+`MAX_ONLINE`, `RIP_CEIL`, and the session timings are the write-budget knobs.
+Presence costs one D1 row per bot per minute; a pack rip costs about 36 once
+the card, history, and trim writes are counted, which puts the roster near
+50k rows a day. Presence is what fills the online list, and it is the cheap
+half.
 
 To empty the roster, drop `BOT_SECRET` first — otherwise the next tick rebuilds
 whatever is missing:

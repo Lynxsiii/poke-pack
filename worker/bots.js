@@ -33,11 +33,15 @@ const RETRY_MS = 5 * MINUTE;
 // when someone turning it on is looking at it.
 const FIRST_WAKE_MS = 12 * MINUTE;
 
-const ACT_CHANCE = 0.5;
 const WAKE_CHANCE = 0.35;
 const CHAT_CHANCE = 0.12;
 const HIT_CHAT_CHANCE = 0.45;
-const RIP_CHANCE = 0.2;
+// Rip odds scale with the balance: RIP_FLOOR once a bot can afford one pack,
+// climbing RIP_PER_PACK for every further pack it could cover, capped at
+// RIP_CEIL. A full hourly stack lands at the cap.
+const RIP_FLOOR = 0.15;
+const RIP_CEIL = 0.75;
+const RIP_PER_PACK = 0.05;
 const TITLE_CHANCE = 0.02;
 const CHAT_GAP_MS = 24 * MINUTE;
 const LOW_COINS = 20;
@@ -188,6 +192,15 @@ async function ensureBotSchema(env) {
       )`
     );
     await runDdl(env, "CREATE INDEX IF NOT EXISTS idx_users_bot ON users(bot)");
+    const bots = await env.DB.prepare("PRAGMA table_info(bots)").all();
+    const cols = new Set((bots.results || []).map((row) => row.name));
+    // coins = -1 means "never read", which is what forces the first sync.
+    if (!cols.has("coins")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN coins REAL NOT NULL DEFAULT -1");
+    }
+    if (!cols.has("last_daily")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN last_daily INTEGER NOT NULL DEFAULT 0");
+    }
     schemaReady = true;
   } catch (err) {
     console.error("ensureBotSchema", err);
@@ -354,20 +367,63 @@ async function say(env, call, row, cookie, text, now) {
 }
 
 /**
+ * Cache the balance and the hourly stamp on the bots row.
+ *
+ * /api/me returns the whole save, which means reading every card the bot owns
+ * — cheap on a new account, hundreds of rows once it has collected for a week.
+ * Every response that already carries a save updates this instead, so a tick
+ * decides what to do from a row it has in hand.
+ */
+async function remember(env, row, save) {
+  const coins = Number(save?.coins);
+  row.coins = Number.isFinite(coins) ? coins : -1;
+  row.last_daily = save?.lastDaily == null ? 0 : Number(save.lastDaily);
+  await env.DB.prepare("UPDATE bots SET coins = ?, last_daily = ? WHERE user_id = ?")
+    .bind(row.coins, row.last_daily, row.user_id)
+    .run();
+}
+
+/**
+ * A player who logs in to an hourly stack spends it. Odds climb with how many
+ * packs the balance actually covers, so a bot fresh off the bonus opens most
+ * minutes and one down to its last coins slows to a trickle. Held flat, a bot
+ * earned 100 coins an hour and opened about six packs with it, and the balance
+ * — public on its profile, next to a packs-opened count that stayed low — grew
+ * into a number no real trainer would sit on.
+ *
+ * The catalog cost is close enough to pace against; the worker prices the pack
+ * off sealed.json when it actually charges for it.
+ */
+function ripChance(coins, cost) {
+  if (!(cost > 0) || coins < cost) return 0;
+  return Math.min(RIP_CEIL, RIP_FLOOR + (coins / cost) * RIP_PER_PACK);
+}
+
+function costOf(setId) {
+  const set = PLAYABLE_SETS.find((item) => item.id === setId);
+  return Number(set?.cost) || 0;
+}
+
+/**
  * Sell a double if the coins ran low, otherwise open a pack — what a player
  * does with the same balance, and what keeps a bot solvent between hourly
  * stacks. Anything said here is said because it just happened.
  */
-async function openOrSell(env, call, row, persona, cookie, save, quiet, now) {
-  const collection = save.collection || {};
-  if (Number(save.coins) < LOW_COINS) {
+async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
+  if (Number(row.coins) < LOW_COINS) {
+    // The collection is only pulled on this branch, which is rare — it is the
+    // one decision the cached balance alone cannot answer.
+    const mine = await call("/api/me", { cookie });
+    const collection = mine.body?.save?.collection || {};
     const dupes = Object.keys(collection).filter((id) => collection[id] > 1);
+    if (mine.body?.save) await remember(env, row, mine.body.save);
     if (dupes.length) {
       const sold = await call("/api/cards/sell", {
         method: "POST",
         cookie,
         body: { cardId: pick(dupes) },
       });
+      if (sold.body?.save) await remember(env, row, sold.body.save);
       if (sold.status === 200 && quiet && Math.random() < CHAT_CHANCE) {
         await say(env, call, row, cookie, pick(SELL_LINES), now);
       }
@@ -375,19 +431,20 @@ async function openOrSell(env, call, row, persona, cookie, save, quiet, now) {
     }
   }
 
-  const ripped = await call("/api/packs/rip", {
-    method: "POST",
-    cookie,
-    body: { setId: pick(playableSets(persona)) },
-  });
+  const ripped = await call("/api/packs/rip", { method: "POST", cookie, body: { setId } });
 
   if (ripped.status !== 200) {
-    // Broke with nothing left to sell. Idle until the hourly stack is ready.
+    // Refused, so the cached balance was optimistic. Zero it so the next tick
+    // goes looking for doubles to sell instead of asking again.
+    row.coins = 0;
+    await env.DB.prepare("UPDATE bots SET coins = 0 WHERE user_id = ?").bind(row.user_id).run();
     if (quiet && Math.random() < CHAT_CHANCE) {
       await say(env, call, row, cookie, pick(BROKE_LINES), now);
     }
     return;
   }
+
+  await remember(env, row, ripped.body?.save);
 
   const packs = Number(ripped.body?.save?.packsOpened || 0);
   if (quiet && MILESTONE_PACKS.includes(packs)) {
@@ -416,31 +473,36 @@ async function act(env, call, row, persona, now, helpers) {
     await clearSession(env, row);
     return;
   }
-  if (Math.random() > ACT_CHANCE) return;
-
-  const mine = await call("/api/me", { cookie });
-  if (mine.status === 401) {
-    await clearSession(env, row);
-    return;
-  }
-  const save = mine.body?.save;
-  if (!save) return;
 
   const quiet = now - Number(row.last_chat_at || 0) >= CHAT_GAP_MS;
 
-  if (save.lastDaily == null || now - Number(save.lastDaily) >= HOUR) {
-    await call("/api/daily", { method: "POST", cookie });
+  if (Number(row.coins) < 0) {
+    const mine = await call("/api/me", { cookie });
+    if (mine.status === 401) {
+      await clearSession(env, row);
+      return;
+    }
+    if (!mine.body?.save) return;
+    await remember(env, row, mine.body.save);
+  }
+
+  if (now - Number(row.last_daily || 0) >= HOUR) {
+    const paid = await call("/api/daily", { method: "POST", cookie });
+    if (paid.body?.save) {
+      await remember(env, row, paid.body.save);
+    } else {
+      // Refused, so the stamp we hold has drifted. Resync once rather than ask
+      // again every tick for the rest of the hour.
+      const mine = await call("/api/me", { cookie });
+      if (mine.body?.save) await remember(env, row, mine.body.save);
+    }
     return;
   }
 
-  // Opening a pack is the expensive part of a tick — around 36 D1 rows once
-  // the card, history, and trim writes are counted, against one for simply
-  // being present. Presence is what fills the online list, so most ticks stop
-  // short of this. ACT_CHANCE and RIP_CHANCE compound to about a tenth of an
-  // online bot's ticks, or a pack every ten minutes or so, which still builds
-  // a lived-in profile over a day without the roster eating the write budget.
-  if (Math.random() < RIP_CHANCE) {
-    await openOrSell(env, call, row, persona, cookie, save, quiet, now);
+  const setId = pick(playableSets(persona));
+  const broke = Number(row.coins) >= 0 && Number(row.coins) < LOW_COINS;
+  if (Math.random() < ripChance(Number(row.coins), costOf(setId)) || (broke && Math.random() < 0.25)) {
+    await openOrSell(env, call, row, persona, cookie, setId, quiet, now);
     return;
   }
 
