@@ -26,6 +26,11 @@ const BINDER_PAGE = 9;
 const BINDER_MAX_SLOTS = BINDER_PAGE * 40;
 const MAX_CLAIM_CARDS = 8000;
 const MAX_COINS = 1_000_000;
+// Ceilings for an unverifiable guest save handed to signup — see sanitizeClaim.
+const CLAIM_MAX_COINS = 250_000;
+const CLAIM_PACK_YIELD = 60;
+const CLAIM_CARDS_PER_PACK = 20;
+const CLAIM_MAX_AGE_MS = 3 * 365 * 24 * 60 * 60 * 1000;
 const MAX_QTY = 999;
 
 const jsonHeaders = {
@@ -870,16 +875,38 @@ function historyInserts(env, userId, history) {
     );
 }
 
+/**
+ * A guest save lives in localStorage, so nothing in it can be verified — but
+ * it can be held to what a guest could plausibly have reached. The claim is
+ * capped by hourly bonuses since the save was made plus a generous per-pack
+ * sell yield, and the collection by what that many packs could have contained.
+ * Real guests clear these by a wide margin; without them a single
+ * unauthenticated signup mints a maxed account.
+ */
 function sanitizeClaim(raw) {
   if (!raw || typeof raw !== "object") return null;
   if (typeof raw.coins !== "number" || !raw.collection || typeof raw.collection !== "object") return null;
+
+  const now = Date.now();
+  const createdAt =
+    typeof raw.createdAt === "number"
+      ? Math.min(now, Math.max(now - CLAIM_MAX_AGE_MS, raw.createdAt))
+      : now;
+  const packsOpened = clampInt(raw.packsOpened, 0, 1_000_000);
+  const hours = Math.max(0, (now - createdAt) / (60 * 60 * 1000));
+  const coinCap = Math.min(
+    CLAIM_MAX_COINS,
+    STARTING_COINS + hours * DAILY_BONUS + packsOpened * CLAIM_PACK_YIELD
+  );
+  const cardCap = Math.min(MAX_CLAIM_CARDS, BINDER_PAGE + packsOpened * CLAIM_CARDS_PER_PACK);
+
   const collection = {};
   let n = 0;
   for (const [id, qty] of Object.entries(raw.collection)) {
     if (!safeCardId(id)) continue;
     collection[id] = clampInt(qty, 0, MAX_QTY);
     n += 1;
-    if (n > MAX_CLAIM_CARDS) break;
+    if (n >= cardCap) break;
   }
   const reverses = {};
   if (raw.reverses && typeof raw.reverses === "object") {
@@ -889,17 +916,17 @@ function sanitizeClaim(raw) {
     }
   }
   return {
-    coins: Math.min(MAX_COINS, Math.max(0, money(raw.coins))),
+    coins: Math.min(coinCap, Math.max(0, money(raw.coins))),
     collection,
     reverses,
-    lastDaily: typeof raw.lastDaily === "number" ? raw.lastDaily : null,
-    packsOpened: clampInt(raw.packsOpened, 0, 1_000_000),
-    pulls: clampInt(raw.pulls, 0, 10_000_000),
-    packsSinceHit: clampInt(raw.packsSinceHit, 0, 1_000_000),
+    lastDaily: typeof raw.lastDaily === "number" ? Math.min(now, raw.lastDaily) : null,
+    packsOpened,
+    pulls: clampInt(raw.pulls, 0, packsOpened * CLAIM_CARDS_PER_PACK),
+    packsSinceHit: clampInt(raw.packsSinceHit, 0, packsOpened),
     packTrick: Boolean(raw.packTrick),
-    granted: Math.min(MAX_COINS, Math.max(0, money(raw.granted ?? raw.coins))),
+    granted: Math.min(coinCap, Math.max(0, money(raw.granted ?? raw.coins))),
     activeSetId: PLAYABLE_SETS.some((set) => set.id === raw.activeSetId) ? raw.activeSetId : "me5",
-    createdAt: typeof raw.createdAt === "number" ? raw.createdAt : Date.now(),
+    createdAt,
     binder: normalizeBinder(raw.binder),
     worthLog: Array.isArray(raw.worthLog) ? raw.worthLog.slice(-200) : [],
     history: Array.isArray(raw.history) ? raw.history.slice(0, 24) : [],
