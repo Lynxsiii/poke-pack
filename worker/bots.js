@@ -23,7 +23,15 @@ const SESSION_MIN_MS = 8 * MINUTE;
 const SESSION_MAX_MS = 52 * MINUTE;
 const AWAY_MIN_MS = 40 * MINUTE;
 const AWAY_MAX_MS = 7 * HOUR;
-const RETRY_MS = 12 * MINUTE;
+// How long a bot waits after deciding not to come online. Short enough that
+// the roster fills within an evening rather than trickling in over a day; the
+// stagger that keeps them from arriving in a clump comes from AWAY_MIN/MAX
+// once they have had a first session.
+const RETRY_MS = 5 * MINUTE;
+// First wake after signup. This used to spread over 90 minutes, which meant a
+// freshly seeded roster left the lounge empty for most of an hour — exactly
+// when someone turning it on is looking at it.
+const FIRST_WAKE_MS = 12 * MINUTE;
 
 const ACT_CHANCE = 0.5;
 const WAKE_CHANCE = 0.35;
@@ -311,7 +319,7 @@ async function ensureAccounts(env, call, now, helpers) {
          VALUES (?, ?, ?, 0, ?, 0)
          ON CONFLICT(user_id) DO UPDATE SET cookie = excluded.cookie`
       )
-        .bind(next.userId, persona.handle, next.cookie, now + rand(0, 90 * MINUTE))
+        .bind(next.userId, persona.handle, next.cookie, now + rand(0, FIRST_WAKE_MS))
         .run();
     } catch (err) {
       if (!missingSchema(err)) console.error("bot signup", persona.handle, err);
