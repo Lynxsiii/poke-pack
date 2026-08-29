@@ -110,6 +110,11 @@ wrangler secret put BOT_SECRET     # production
 echo BOT_SECRET=anything > .dev.vars   # local, gitignored
 ```
 
+Editing a persona's avatar, banner, or bio in `ROSTER` reaches accounts that
+already exist: `syncLook()` compares a stamp on the `bots` row and re-PATCHes
+the profile once when they differ, so a face is not frozen at whatever it was
+on the day that bot signed up.
+
 Passwords are HMAC'd from that secret and never stored. Rotating it is safe:
 `reclaim()` re-stamps the new hash onto the roster's own rows, so the accounts
 and everything they have collected survive. It only ever touches rows flagged
@@ -118,34 +123,74 @@ real trainer leaves that persona offline rather than taking the account over.
 
 Two rules the roster is built around:
 
-- **They broadcast, they never answer.** No DMs, no friend responses, no
-  profile comments. A busy-looking room is set dressing; an account that holds
-  up its end of a conversation is a person being told they made a friend.
+- **They only ever answer each other.** No DMs, no friend responses, no
+  profile comments, and a bot will not reply to a handle that is not on the
+  roster. A busy-looking room is set dressing; an account that holds up its
+  end of a conversation is a person being told they made a friend.
 - **They never say anything a visitor could check and find false.** Packs
   opened, coins, and the collection are all on the public profile, so chat
   lines assert nothing countable — anything with a number in it goes through
-  `milestoneLine()`, which only fires on a value the save actually holds.
+  `MILESTONE_LINES`, which only fire on a value the save actually holds.
 
 `BOT_SETS` excludes sv5–sv10 while that card data and art are being redone,
 since a bot's binder and showcase are public.
 
-Bots spend their hourly stack the way a player does. `ripChance()` scales the
-odds with how many packs the balance covers, so one fresh off the bonus opens
-most minutes and one down to its last coins slows to a trickle — about sixteen
-packs out of a 100-coin stack. Left flat they earned far more than they spent,
-and a public profile showing a big balance beside a low packs-opened count is
-the sort of mismatch that reads as fake.
+### Everyone is somebody
+
+Each persona hunts one specific line — Otto is after Metagross, Vic after
+Gardevoir — and `chase.sets` names the sets that line is actually printed in,
+checked against `data/`, so nobody is chasing a card that cannot drop. That one
+field drives most of what a bot does:
+
+- **What it opens.** `pickSet()` reaches for a chase set `CHASE_SET_BIAS` of the
+  time, and the choice is made once when a session starts, because someone who
+  switches set every minute for an hour is not someone.
+- **What it keeps.** Chase card ids are recorded on the `bots` row, and the
+  sell branch will not touch them or anything currently on the profile. It
+  dumps off the deepest dupe stacks instead, the way anyone clears bulk.
+- **What it shows.** `CHASE_SLOTS` of the six showcase slots are held for the
+  line it collects; the rest rank by sell value. A Metagross collector leading
+  with a Wailord is not a collector.
+- **What it says.** `CHASE_LINES` render against the persona's own chase, so
+  twelve templates give every bot twelve lines no other bot has. Landing one is
+  the only thing it will interrupt itself to talk about, and hearing someone
+  else name it is the only thing it will nearly always answer.
+
+`mood` picks which register a bot answers the room in — warm, salty, dry,
+hyped, or calm read the same pull very differently — while `chatty` scales how
+often it speaks and `stamina` how long it stays.
+
+### No line twice on one screen
+
+The old rule was per-bot: don't repeat yourself within ten lines. That still let
+two dozen accounts take turns posting "same" down a single screen, which is the
+repetition a regular actually notices. So the rule is now the room's, not the
+bot's: `pickFresh()` refuses any line already visible in the lounge, whoever
+said it, and returns nothing when the pool is exhausted — a persona with
+nothing fresh stays quiet rather than echoing. Over five simulated days and 455
+messages the board never repeats a line inside its own window.
+
+### Coins
+
+Bots spend their hourly stack the way a player does, and `TEMPERS` decides
+which kind of player. `ripChance()` scales the odds with how many packs the
+balance covers, from a floor and toward a ceiling that temper sets, and a saver
+refuses to open at all until it is holding a buffer. So a spender's profile is
+a big packs-opened count next to nothing in the bank, a saver's is the reverse,
+and a flipper churns the dupe pile to fund the chase. Held flat, every bot
+earned 100 coins an hour, opened about six packs with it, and grew a balance no
+real trainer would sit on — and every profile looked identical doing it.
 
 Balance and the hourly stamp are cached on the `bots` row, because `/api/me`
 returns the whole save — every card the bot owns — and that read only gets
 more expensive as a collection grows. Responses that already carry a save
 refresh the cache instead.
 
-`MAX_ONLINE`, `RIP_CEIL`, and the session timings are the write-budget knobs.
-Presence costs one D1 row per bot per minute; a pack rip costs about 36 once
-the card, history, and trim writes are counted, which puts the roster near
-50k rows a day. Presence is what fills the online list, and it is the cheap
-half.
+`MAX_ONLINE`, the `TEMPERS` ceilings, and the session timings are the
+write-budget knobs. Presence costs one D1 row per bot per minute; a pack rip
+costs about 36 once the card, history, and trim writes are counted, which puts
+the roster near 50k rows a day. Presence is what fills the online list, and it
+is the cheap half.
 
 To empty the roster, drop `BOT_SECRET` first — otherwise the next tick rebuilds
 whatever is missing:
