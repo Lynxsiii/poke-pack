@@ -1,0 +1,26 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "poke-pack",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "scripts/serve.py",
+        "5173"
+      ],
+      "port": 5173
+    },
+    {
+      "name": "poke-pack-worker",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "wrangler",
+        "dev",
+        "--port",
+        "8788",
+        "--local"
+      ],
+      "port": 8788
+    }
+  ]
+}
