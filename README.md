@@ -116,11 +116,24 @@ and everything they have collected survive. It only ever touches rows flagged
 `users.bot`, which never reaches `publicUser()` — a handle collision with a
 real trainer leaves that persona offline rather than taking the account over.
 
+Each persona carries its own pool of idle lines — 192 across the roster, none
+shared — and a recent list on the `bots` row keeps a bot off anything it said
+lately. Hit and milestone lines are tracked by template rather than by text,
+since they interpolate a card name and would otherwise repeat their shape.
+Bots answer each other, picked by the `kind` the other bot last posted, and
+they befriend each other so profiles do not all read "0 friends".
+
+`say()` waits a random moment before posting: the cron fires on the same
+second every minute, so without it every message in the lounge landed in the
+same six-second band while real trainers scatter across the minute.
+
 Two rules the roster is built around:
 
-- **They broadcast, they never answer.** No DMs, no friend responses, no
-  profile comments. A busy-looking room is set dressing; an account that holds
-  up its end of a conversation is a person being told they made a friend.
+- **They only ever answer each other.** Reactions and friend accepts are both
+  restricted to roster handles, and a request or a message from a real person
+  is left for a human. A busy-looking room is set dressing; an account that
+  answers *you* is a person being told they made a friend who cannot write
+  back. Still no DMs and no profile comments.
 - **They never say anything a visitor could check and find false.** Packs
   opened, coins, and the collection are all on the public profile, so chat
   lines assert nothing countable — anything with a number in it goes through

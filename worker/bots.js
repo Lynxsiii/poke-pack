@@ -53,6 +53,13 @@ const REACT_CHANCE = 0.22;
 // Worth answering unprompted; anything else needs the second roll below.
 const REACT_EAGER = new Set(["hit", "milestone"]);
 const RECENT_LINES = 10;
+const FRIEND_CHANCE = 0.05;
+// Every message landed in the same six seconds of every minute, because that
+// is when the cron fires. Real trainers post at whatever second they happen
+// to hit send. Capped well under the tick interval so a slow post cannot run
+// into the next invocation — cron fires once a minute and a tick posts at
+// most a message or two, so the wall-clock cost stays far inside the window.
+const CHAT_JITTER_MS = 11_000;
 const LOW_COINS = 20;
 const MAX_ONLINE = 6;
 const MAX_NEW_PER_TICK = 2;
@@ -79,23 +86,23 @@ const ROSTER = [
   { name: "Nori", handle: "norinori", color: "rose", avatar: "700", banner: "aurora:rose+fairy", bio: "sylveon collector, will trade nothing", hours: [23, 8], sets: ["me5", "me2pt5"], titles: ["Special artist", "Binder rat"], voice: ["not trading. ever. don't ask", "sylveon page is nearly full", "pink cards only, i don't make the rules", "the fairy art in this era is so good", "one more for the eeveelution page", "i will pay coins i do not have for this", "my binder is aggressively pink", "collecting is cheaper than therapy. barely"] },
   { name: "Quinn", handle: "quinnwaves", color: "ocean", avatar: "658", banner: "drift:ocean+ice", bio: "", hours: [14, 1], sets: ["me3", "me4"], titles: ["Marathon", "Century"], voice: ["water types and nothing else", "greninja pull would fix me", "this set runs cold for me", "the blues in this art are gorgeous", "rip, sell, repeat", "just vibing and opening", "ocean page filling up nicely", "frogs. that's the whole strategy"] },
   { name: "Sable", handle: "sablewing", color: "night", avatar: "197", banner: "mist:night+ghost", bio: "night shift ripper", hours: [1, 10], sets: ["me5", "me4"], titles: ["Gold chaser", "Hit hunter"], voice: ["night shift. as always", "dark types after midnight, it's a whole thing", "umbreon is the correct answer", "quiet hours are the best hours to rip", "nobody's awake so the odds are mine", "3am pack odds are better. don't fact check me", "moonlight page coming together", "one more before bed. lying obviously"] },
-  { name: "Ike", handle: "ike_ttv", color: "thunder", avatar: "135", banner: "beam:thunder+gold", bio: "one more pack. always one more", hours: [17, 4], sets: ["me2", "me5"], titles: ["Pull machine", "Marathon"], voice: ["one more pack. always one more", "i said i'd stop at ten. i'm at forty", "electric types or nothing", "this is genuinely a problem", "my coins evaporate instantly", "jolteon supremacy", "should be sleeping, am opening", "the hourly stack lasts me four minutes"] },
+  { name: "Ike", handle: "ike_ttv", style: "pixel", color: "thunder", avatar: "135", banner: "beam:thunder+gold", bio: "one more pack. always one more", hours: [17, 4], sets: ["me2", "me5"], titles: ["Pull machine", "Marathon"], voice: ["one more pack. always one more", "i said i'd stop at ten. i'm at forty", "electric types or nothing", "this is genuinely a problem", "my coins evaporate instantly", "jolteon supremacy", "should be sleeping, am opening", "the hourly stack lasts me four minutes"] },
   { name: "Wren", handle: "wrenbird", color: "ice", avatar: "144", banner: "aurora:ice+aqua", bio: "", hours: [9, 18], sets: ["rsv10pt5", "me1"], titles: ["Collector", "Trainer"], voice: ["birds are underrated in this game", "articuno art is untouchable", "just here quietly opening", "cold types, cold pulls", "the blues in this set are lovely", "slow and steady binder building", "not chasing anything. just looking", "flying types get no respect"] },
   { name: "Otto", handle: "ottoman", color: "steel", avatar: "376", banner: "pulse:steel+dragon", bio: "metagross apologist", hours: [12, 21], sets: ["me3", "me2"], titles: ["Binder rat", "Ripper"], voice: ["metagross apologist, as always", "steel types are the most underrated", "give me one good metal pull", "the holo pattern on steel cards is so good", "my binder is entirely grey and i love it", "nobody chases these and that's fine by me", "steel page nearly done", "clean art beats loud art"] },
   { name: "Juno", handle: "junobean", color: "fairy", avatar: "35", banner: "aurora:fairy+rose", bio: "just here for the art", hours: [15, 0], sets: ["me4", "me2pt5"], titles: ["Illustration", "Collector"], voice: ["just here for the art honestly", "don't care about value, care about illustration", "the illustration rares carry this whole hobby", "clefairy art is criminally good", "some of these belong in a gallery", "i'd frame half these cards", "chasing art not money", "this artist did something special"] },
   { name: "Cass", handle: "cassidy_r", color: "flame", avatar: "257", banner: "beam:flame+ember", bio: "", hours: [10, 19], sets: ["me1", "me5"], titles: ["Double rare", "Trainer"], voice: ["fire types run this", "blaziken or nothing", "hot streak. relatively speaking", "that art is genuinely so good", "opening on a whim and regretting it", "red binder page is looking good", "still chasing the one", "the flame art in this set goes hard"] },
   { name: "Ravi", handle: "ravioli", color: "poison", avatar: "34", banner: "drift:poison+violet", bio: "chasing the gold", hours: [18, 5], sets: ["zsv10pt5", "me5"], titles: ["Gold chaser", "Century"], voice: ["chasing the gold", "hyper rares or nothing", "poison types are underrated", "i want the shiny gold one specifically", "gold chase continues", "one gold card. that's all i ask", "this set's gold is beautiful", "still nothing gold. still going"] },
-  { name: "Bex", handle: "bexlyn", color: "gold", avatar: "25", banner: "pulse:gold+thunder", bio: "", hours: [8, 17], sets: ["me2pt5", "me3"], titles: ["Hourly", "Ripper"], voice: ["hourly stack is carrying me", "pikachu will always be the one", "classic types only", "spending it the second i get it", "this is a healthy hobby", "yellow page coming along", "free coins go straight back in", "never learned to save. clearly"] },
+  { name: "Bex", handle: "bexlyn", style: "pixel", color: "gold", avatar: "25", banner: "pulse:gold+thunder", bio: "", hours: [8, 17], sets: ["me2pt5", "me3"], titles: ["Hourly", "Ripper"], voice: ["hourly stack is carrying me", "pikachu will always be the one", "classic types only", "spending it the second i get it", "this is a healthy hobby", "yellow page coming along", "free coins go straight back in", "never learned to save. clearly"] },
   { name: "Milo", handle: "milohaze", color: "forest", avatar: "254", banner: "mist:forest+lime", bio: "sceptile or bust", hours: [20, 6], sets: ["me1", "me4"], titles: ["Marathon", "Ripper"], voice: ["sceptile or bust", "grass starters are the best starters", "still nothing green worth pinning", "the hoenn art in this era is great", "one good pull and i'm done for the night", "forest page is my favourite page", "chasing a card nobody else wants", "gen 3 supremacy"] },
   { name: "Sena", handle: "senaaa", color: "ghost", avatar: "94", banner: "pulse:ghost+night", bio: "gengar hoarder", hours: [21, 7], sets: ["me5", "me2"], titles: ["Ultra", "Hit hunter"], voice: ["gengar hoarder, no apologies", "ghost types after dark obviously", "spooky page is coming together", "purple cards only please", "i own too many gengars and want more", "the ghost art in this set is unreal", "not stopping until the page is full", "one more ghost. always one more"] },
   { name: "Hollis", handle: "hollisj", color: "earth", avatar: "383", banner: "beam:earth+rock", bio: "", hours: [13, 22], sets: ["rsv10pt5", "me3"], titles: ["Loaded", "Trainer"], voice: ["ground types are underrated", "groudon art is incredible", "slow build, good binder", "not chasing value, chasing the set", "earth tones page nearly full", "completion over chase, always", "master setting this one", "one card closer"] },
-  { name: "Piper", handle: "piperpip", color: "rock", avatar: "95", banner: "drift:rock+earth", bio: "onix enthusiast, no notes", hours: [11, 21], sets: ["me2", "me1"], titles: ["Collector", "Trainer"], voice: ["onix enthusiast, no notes", "rock types deserve more love", "nobody chases these, more for me", "the grey page is my pride", "still building slowly", "rock solid pulls today. sorry", "completing this set out of spite", "underrated types only"] },
+  { name: "Piper", handle: "piperpip", style: "pixel", color: "rock", avatar: "95", banner: "drift:rock+earth", bio: "onix enthusiast, no notes", hours: [11, 21], sets: ["me2", "me1"], titles: ["Collector", "Trainer"], voice: ["onix enthusiast, no notes", "rock types deserve more love", "nobody chases these, more for me", "the grey page is my pride", "still building slowly", "rock solid pulls today. sorry", "completing this set out of spite", "underrated types only"] },
   { name: "Ada", handle: "adawrites", color: "dragon", avatar: "149", banner: "aurora:dragon+ocean", bio: "", hours: [16, 3], sets: ["me4", "zsv10pt5"], titles: ["Banked", "Loaded"], voice: ["dragons or nothing", "dragonite art is perfect and i won't argue", "saving up for a proper run", "the dragon page is my favourite", "slowly getting there", "big pulls come to those who wait", "banking coins for once", "this set's dragons are gorgeous"] },
-  { name: "Toby", handle: "tobes", color: "bug", avatar: "123", banner: "mist:bug+lime", bio: "scyther supremacy", hours: [9, 19], sets: ["me3", "me1"], titles: ["Ripper", "Trainer"], voice: ["scyther supremacy", "bug types are genuinely good, fight me", "the bug art in this era is so clean", "nobody rates bugs and it's their loss", "green page slowly filling", "one good bug pull, that's all", "underrated as always", "scyther or nothing"] },
+  { name: "Toby", handle: "tobes", style: "pixel", color: "bug", avatar: "123", banner: "mist:bug+lime", bio: "scyther supremacy", hours: [9, 19], sets: ["me3", "me1"], titles: ["Ripper", "Trainer"], voice: ["scyther supremacy", "bug types are genuinely good, fight me", "the bug art in this era is so clean", "nobody rates bugs and it's their loss", "green page slowly filling", "one good bug pull, that's all", "underrated as always", "scyther or nothing"] },
   { name: "Vic", handle: "vicvic", color: "violet", avatar: "282", banner: "pulse:violet+fairy", bio: "gardevoir. that is the whole bio", hours: [19, 5], sets: ["me5", "me2pt5"], titles: ["Illustration", "Binder rat"], voice: ["gardevoir. that is the whole bio", "psychic art is unmatched", "the illustration rares are the whole point", "chasing one card forever", "fairy psychic supremacy", "this artist understood the assignment", "my binder is one pokemon repeated", "still chasing her"] },
   { name: "Noa", handle: "noaquartz", color: "thunder", avatar: "26", banner: "beam:thunder+ember", bio: "", hours: [14, 23], sets: ["me2", "me4"], titles: ["Century", "Hit hunter"], voice: ["electric types and good art", "raichu deserves more chase cards", "steady pulls, no complaints", "the yellow page is filling up", "opening between other things", "not chasing, just collecting", "this set treats me well", "good art beats good odds"] },
   { name: "Ren", handle: "renfield", color: "night", avatar: "359", banner: "mist:night+poison", bio: "absol truther", hours: [0, 9], sets: ["me1", "me5"], titles: ["Hit hunter", "Ripper"], voice: ["absol truther", "dark types are the best designed", "nobody appreciates absol enough", "late nights and dark types", "the black border art is so good", "chasing one specific card as usual", "moody cards only", "still nothing. still going"] },
-  { name: "Suki", handle: "sukisuki", color: "aqua", avatar: "131", banner: "drift:aqua+ice", bio: "", hours: [12, 20], sets: ["me3", "rsv10pt5"], titles: ["Collector", "Trainer"], voice: ["water types forever", "lapras art is so calming", "just opening quietly", "blue page is my favourite", "slow collector, no rush", "not chasing anything expensive", "this set is gentle on the eyes", "one more then i'm done"] },
+  { name: "Suki", handle: "sukisuki", style: "pixel", color: "aqua", avatar: "131", banner: "drift:aqua+ice", bio: "", hours: [12, 20], sets: ["me3", "rsv10pt5"], titles: ["Collector", "Trainer"], voice: ["water types forever", "lapras art is so calming", "just opening quietly", "blue page is my favourite", "slow collector, no rush", "not chasing anything expensive", "this set is gentle on the eyes", "one more then i'm done"] },
 ];
 
 /**
@@ -105,7 +112,7 @@ const ROSTER = [
  * opened, coins, and collection are all on its public profile, so a line like
  * "finally cracked 100 packs" from an account showing nine is the thing that
  * gives the whole roster away. Anything countable goes through
- * milestoneLine(), which only fires on a number the save actually holds.
+ * MILESTONE_LINES, which only fire on a number the save actually holds.
  */
 const IDLE_LINES = [
   "back to the mines",
@@ -195,17 +202,15 @@ const BROKE_LINES = [
 /** Only ever said on a number the profile actually shows. */
 const MILESTONE_PACKS = [25, 50, 100, 250, 500, 1000];
 
-function milestoneLine(packs) {
-  return pick([
-    `${packs} packs deep`,
-    `just hit ${packs} packs`,
-    `${packs} packs and still chasing`,
-    `${packs} packs. i should probably stop`,
-    `that's ${packs} packs opened. no regrets`,
-    `${packs} in. the binder is filling up`,
-    `somehow at ${packs} packs already`,
-  ]);
-}
+const MILESTONE_LINES = [
+  (n) => `${n} packs deep`,
+  (n) => `just hit ${n} packs`,
+  (n) => `${n} packs and still chasing`,
+  (n) => `${n} packs. i should probably stop`,
+  (n) => `that's ${n} packs opened. no regrets`,
+  (n) => `${n} in. the binder is filling up`,
+  (n) => `somehow at ${n} packs already`,
+];
 
 const HIT_LINES = [
   (name) => `${name.toLowerCase()} out of nowhere`,
@@ -399,7 +404,7 @@ async function signIn(env, call, persona, helpers) {
         cookie: res.cookie,
         body: {
           avatar: persona.avatar,
-          avatarStyle: "art",
+          avatarStyle: persona.style || "art",
           banner: persona.banner,
           bio: persona.bio || "",
         },
@@ -461,11 +466,13 @@ async function clearSession(env, row) {
  * is what stops a bot cycling the same four lines all evening, which is the
  * kind of pattern a regular would notice long before anything else.
  */
-async function say(env, call, row, cookie, text, now, kind = "idle") {
+async function say(env, call, row, cookie, text, now, kind = "idle", tag = text) {
+  // Spread the post across the minute instead of landing on the cron edge.
+  await sleep(rand(0, CHAT_JITTER_MS));
   const res = await call("/api/chat", { method: "POST", cookie, body: { body: text } });
   if (res.status !== 200) return;
 
-  const recent = [text, ...readRecent(row.recent_lines)].slice(0, RECENT_LINES);
+  const recent = [tag, ...readRecent(row.recent_lines)].slice(0, RECENT_LINES);
   row.last_chat_at = now;
   row.last_chat_kind = kind;
   row.recent_lines = JSON.stringify(recent);
@@ -486,6 +493,23 @@ function readRecent(raw) {
   }
 }
 
+const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
+
+/**
+ * Pick a template this bot has not reached for lately.
+ *
+ * Hit and milestone lines interpolate a card name or a count, so the finished
+ * text is almost never an exact repeat even when the shape is — which is how
+ * "ok that pack was worth it" turned up twice in ten messages. Tracking the
+ * template by index catches the shape, which is the part a reader notices.
+ */
+function pickTemplate(list, row, prefix) {
+  const tagged = list.map((make, i) => ({ tag: `${prefix}#${i}`, make }));
+  const recent = new Set(readRecent(row.recent_lines));
+  const fresh = tagged.filter((item) => !recent.has(item.tag));
+  return pick(fresh.length ? fresh : tagged);
+}
+
 /** Prefer something this bot has not said lately; fall back once the pool runs dry. */
 function pickFresh(pool, row) {
   const list = Array.isArray(pool) && pool.length ? pool : IDLE_LINES;
@@ -502,6 +526,47 @@ function chatGapFor(persona) {
   let h = 0;
   for (const ch of persona.handle) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
   return (14 + (h % 21)) * MINUTE;
+}
+
+/**
+ * Bots befriend bots.
+ *
+ * Twenty-four accounts on a social site with nothing connecting them is its
+ * own tell: every profile reading "0 friends" says nobody here knows anyone.
+ *
+ * Both halves are restricted to roster handles. A request from a real person
+ * is deliberately left sitting for a human to answer — accepting it would
+ * tell someone they made a friend who can never write back, which is the same
+ * line the reactions hold.
+ */
+async function mingle(env, call, row, persona, cookie) {
+  const list = await call("/api/friends", { cookie });
+  if (list.status !== 200) return false;
+  const onRoster = (u) => ROSTER.some((item) => item.handle === u?.handle);
+
+  const waiting = (list.body?.incoming || []).filter(onRoster);
+  if (waiting.length) {
+    await call("/api/friends/respond", {
+      method: "POST",
+      cookie,
+      body: { handle: pick(waiting).handle, accept: true },
+    });
+    return true;
+  }
+
+  const known = new Set([
+    persona.handle,
+    ...(list.body?.friends || []).map((u) => u.handle),
+    ...(list.body?.outgoing || []).map((u) => u.handle),
+  ]);
+  const strangers = ROSTER.filter((item) => !known.has(item.handle));
+  if (!strangers.length) return false;
+  await call("/api/friends/request", {
+    method: "POST",
+    cookie,
+    body: { handle: pick(strangers).handle },
+  });
+  return true;
 }
 
 /**
@@ -678,7 +743,8 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
 
   const packs = Number(ripped.body?.save?.packsOpened || 0);
   if (quiet && MILESTONE_PACKS.includes(packs)) {
-    await say(env, call, row, cookie, milestoneLine(packs), now, "milestone");
+    const shape = pickTemplate(MILESTONE_LINES, row, "milestone");
+    await say(env, call, row, cookie, shape.make(packs), now, "milestone", shape.tag);
     return;
   }
 
@@ -686,7 +752,8 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
     (card) => !card.reverse && CHAT_WORTHY.has(card.rarity)
   );
   if (hit && quiet && Math.random() < HIT_CHAT_CHANCE) {
-    await say(env, call, row, cookie, pick(HIT_LINES)(hit.name), now, "hit");
+    const shape = pickTemplate(HIT_LINES, row, "hit");
+    await say(env, call, row, cookie, shape.make(hit.name), now, "hit", shape.tag);
   }
 }
 
@@ -744,6 +811,7 @@ async function act(env, call, row, persona, now, helpers) {
     await say(env, call, row, cookie, pickFresh(persona.voice, row), now, "idle");
     return;
   }
+  if (Math.random() < FRIEND_CHANCE && (await mingle(env, call, row, persona, cookie))) return;
   if (Math.random() < TITLE_CHANCE) {
     // The API rejects a locked title, so walking the list best-first and
     // ignoring the 400 lands them on whatever they have actually earned.
