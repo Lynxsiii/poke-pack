@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { IDENTITIES, affinity } from '../worker/personalities.js';
 import { llmReady, replyLine, voiceLines, statFacts } from '../worker/llm.js';
 const persona = { name: 'Test', handle: 'tester' };
 assert.equal(llmReady({}), false);
@@ -33,11 +34,11 @@ assert.doesNotMatch(requests.at(-1).messages[0].content, /packs opened: 100/);
 const source = readFileSync(new URL('../worker/bots.js', import.meta.url), 'utf8');
 const start = source.indexOf('async function answerHuman(');
 const end = source.indexOf('\nasync function react(', start);
-let generated = null, posted = true, stamps = 0;
+let generated = null, posted = true, stamps = 0, replyOptions;
 const answer = vm.runInNewContext(source.slice(start, end) + '\nanswerHuman', {
   llmReady: () => true, MAX_HUMAN_CALLS_PER_TICK: 3, HUMAN_REPLY_GAP_MS: 0,
-  HUMAN_REPLY_WINDOW_MS: 60000, HUMAN_REPLY_CHANCE: 1, ROSTER: [],
-  claimHumanCall: () => true, replyLine: async () => generated,
+  HUMAN_REPLY_WINDOW_MS: 60000, HUMAN_REPLY_CHANCE: 1, ROSTER: [{name:'Ada',handle:'adawrites'}, {name:'Riley',handle:'rileyxo'}],
+  claimHumanCall: () => true, replyLine: async (...args) => { replyOptions = args.at(-1); return generated; },
   readRecent: () => [], factsFor: () => [], stale: () => false,
   say: async () => posted, Date, Math, Set,
 });
@@ -56,3 +57,42 @@ assert.equal(await answer(dbEnv, null, row, persona, '', chat, now, ctx), true);
 assert.equal(stamps, 1);
 assert.equal(await answer(dbEnv, null, {}, persona, '', chat, now, ctx), false);
 console.log('Bot checks passed: missing key, cleanup, fallback, bad key, invented counts, deduplication, stat labels, failed-post retry, shared acknowledgement.');
+
+responses = [[200, 'noted']];
+assert.equal(await replyLine(env, persona, 'visitor', 'what packs do you like?', {human:true}), null);
+responses = [[200, 'dragonite artwork is my favourite. which set are you opening?']];
+assert.ok(await replyLine(env, {...persona,...IDENTITIES.adawrites}, 'visitor', 'ada, sorry', {human:true, context:[{speaker:'visitor',body:'which pokemon do you collect?'}]}));
+assert.match(requests.at(-1).messages[1].content, /which pokemon do you collect/);
+assert.match(requests.at(-1).messages[0].content, /Dragonite/);
+assert.equal(Object.keys(IDENTITIES).length,24);
+assert.equal(affinity(IDENTITIES.adawrites,{name:'Mega Dragonite ex',types:['Dragon']}),3);
+assert.equal(affinity(IDENTITIES.adawrites,{name:'Dratini',types:['Dragon']}),2);
+assert.equal(affinity(IDENTITIES.adawrites,{name:'Charizard ex',types:['Fire']}),0);
+const question = [{id:10,at:now,body:'Ada, which pokemon do you collect?',user:{handle:'visitor'}}, {id:11,at:now,body:'sorry typo',user:{handle:'visitor'}}];
+const fresh = {humanCalls:0,deadline:now+60000,answered:new Set(),said:new Set()};
+assert.equal(await answer(dbEnv,null,{}, {name:'Riley',handle:'rileyxo'},'',question,now,fresh),false);
+assert.equal(await answer(dbEnv,null,{}, {name:'Ada',handle:'adawrites'},'',question,now,fresh),true);
+assert.equal(replyOptions.context.length,2);
+assert.match(replyOptions.context[0].body,/which pokemon/);
+console.log('Identity, empty-reply rejection, conversation context and named-recipient checks passed.');
+// Verify existing profiles are rebuilt from owned cards, with favourites first.
+const identityStart = source.indexOf('let identityCatalog;');
+const identityEnd = source.indexOf('async function showcaseBest(', identityStart);
+const sync = vm.runInNewContext(source.slice(identityStart, identityEnd) + '\nsyncIdentity', {
+  BOT_SETS:['test'], Request, Map, Number, JSON, affinity, SHOWCASE_MAX:6,
+  sellValue:card=>card.price || 0,
+});
+let profilePatch;
+const identityEnv = {...dbEnv, ASSETS:{fetch:async()=>new Response(JSON.stringify([
+  {id:'owned-favourite',name:'Dratini',types:['Dragon'],price:0.1},
+  {id:'owned-hit',name:'Charizard ex',types:['Fire'],price:200},
+  {id:'unowned',name:'Dragonite',types:['Dragon'],price:100},
+]))}};
+const identityCall = async (_,opts) => opts.method === 'PATCH'
+  ? (profilePatch=opts.body,{status:200})
+  : {status:200,body:{save:{collection:{'owned-favourite':1,'owned-hit':1}}}};
+await sync(identityEnv,identityCall,{}, {...IDENTITIES.adawrites,avatar:'149',color:'dragon',banner:'aurora:dragon+ocean'},'',{});
+assert.equal(profilePatch.showcase[0].id,'owned-favourite');
+assert.equal(profilePatch.showcase.length,2);
+assert.match(profilePatch.bio,/dragonite/);
+console.log('Existing-profile migration preserves ownership and prioritizes favourite-family commons.');

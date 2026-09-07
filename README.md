@@ -244,3 +244,9 @@ wrangler d1 execute poke-pack --command "DELETE FROM users WHERE bot = 1"
 
 - Card art is hotlinked from third-party image CDNs.
 - The app is a single route — no deep links to a set or the binder.
+
+### Collector identities and responsiveness
+
+The roster targets six online collectors (up to twelve), with 45–100 minute sessions and shorter breaks. Visitor chat and DMs run in a first pass before ambient activity. Replies receive recent conversation context; named questions stay with the named collector and empty acknowledgements are rejected. Scheduled replies normally arrive on the next minute tick, subject to model availability.
+
+`worker/personalities.js` defines each favourite Pokémon, evolution family, voice and profile bio. Pack choices use sets containing that family. A versioned profile refresh rebuilds showcases from owned cards, preferring favourites and family members over market value; it never grants cards. Ambient chat is capped at two messages and pack opening at one pack per tick to contain noise and database writes.

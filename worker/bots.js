@@ -31,6 +31,7 @@
  * Off entirely unless `BOT_SECRET` is bound, so dev and preview environments
  * never quietly grow a population.
  */
+import { IDENTITIES, affinity } from "./personalities.js";
 import { PLAYABLE_SETS, sellValue } from "../js/catalog.js";
 import { isHit } from "../js/engine.js";
 import { SHOWCASE_MAX } from "../js/cosmetics.js";
@@ -47,10 +48,10 @@ import {
 const MINUTE = 60 * 1000;
 const HOUR = 60 * MINUTE;
 
-const SESSION_MIN_MS = 8 * MINUTE;
-const SESSION_MAX_MS = 52 * MINUTE;
-const AWAY_MIN_MS = 40 * MINUTE;
-const AWAY_MAX_MS = 7 * HOUR;
+const SESSION_MIN_MS = 45 * MINUTE;
+const SESSION_MAX_MS = 100 * MINUTE;
+const AWAY_MIN_MS = 10 * MINUTE;
+const AWAY_MAX_MS = 45 * MINUTE;
 // How long a bot waits after deciding not to come online. Short enough that
 // the roster fills within an evening rather than trickling in over a day; the
 // stagger that keeps them from arriving in a clump comes from AWAY_MIN/MAX
@@ -61,14 +62,14 @@ const RETRY_MS = 5 * MINUTE;
 // when someone turning it on is looking at it.
 const FIRST_WAKE_MS = 12 * MINUTE;
 
-const WAKE_CHANCE = 0.55;
-const CHAT_CHANCE = 0.3;
+const WAKE_CHANCE = 0.85;
+const CHAT_CHANCE = 0.65;
 const HIT_CHAT_CHANCE = 0.6;
 // Rip odds scale with the balance: RIP_FLOOR once a bot can afford one pack,
 // climbing RIP_PER_PACK for every further pack it could cover, capped at
 // RIP_CEIL. A full hourly stack lands at the cap.
 const RIP_FLOOR = 0.15;
-const RIP_CEIL = 0.75;
+const RIP_CEIL = 0.4;
 const RIP_PER_PACK = 0.05;
 const TITLE_CHANCE = 0.02;
 const REACT_GAP_MS = 3 * MINUTE;
@@ -90,19 +91,19 @@ const FRIEND_CHANCE = 0.12;
  * the first bot online that has not just spoken, ignoring the chat gap and
  * the reaction cooldown that pace the bots talking among themselves.
  */
-const HUMAN_REPLY_CHANCE = 0.85;
+const HUMAN_REPLY_CHANCE = 1;
 const HUMAN_REPLY_WINDOW_MS = 12 * MINUTE;
 // One answer per message. Without this every bot online piles onto the same
 // line and the newcomer gets six replies to "hi".
-const HUMAN_REPLY_GAP_MS = 45 * 1000;
-const DM_CHANCE = 0.8;
+const HUMAN_REPLY_GAP_MS = 15 * 1000;
+const DM_CHANCE = 1;
 const DM_WINDOW_MS = 24 * HOUR;
 // Every message landed in the same six seconds of every minute, because that
 // is when the cron fires. Real trainers post at whatever second they happen
 // to hit send. Capped well under the tick interval so a slow post cannot run
 // into the next invocation — cron fires once a minute and a tick posts at
 // most a message or two, so the wall-clock cost stays far inside the window.
-const CHAT_JITTER_MS = 11_000;
+const CHAT_JITTER_MS = 2_000;
 /**
  * Total jitter a tick may sleep, across every bot that speaks.
  *
@@ -114,9 +115,9 @@ const CHAT_JITTER_MS = 11_000;
  * of messages sharing a second looks like two people typing at once, which is
  * a far smaller tell than the roster falling behind its own clock.
  */
-const JITTER_BUDGET_MS = 18_000;
+const JITTER_BUDGET_MS = 4_000;
 const LOW_COINS = 20;
-const MAX_ONLINE = 10;
+const MAX_ONLINE = 12;
 const MAX_NEW_PER_TICK = 3;
 
 // ---- Written voice (worker/llm.js) ---------------------------------------
@@ -208,7 +209,7 @@ const ROSTER = [
   { name: "Noa", handle: "noaquartz", color: "thunder", avatar: "26", banner: "beam:thunder+ember", bio: "", hours: [14, 23], sets: ["me2", "me4"], titles: ["Century", "Hit hunter"], voice: ["electric types and good art", "raichu deserves more chase cards", "steady pulls, no complaints", "the yellow page is filling up", "opening between other things", "not chasing, just collecting", "this set treats me well", "good art beats good odds"] },
   { name: "Ren", handle: "renfield", color: "night", avatar: "359", banner: "mist:night+poison", bio: "absol truther", hours: [0, 9], sets: ["me1", "me5"], titles: ["Hit hunter", "Ripper"], voice: ["absol truther", "dark types are the best designed", "nobody appreciates absol enough", "late nights and dark types", "the black border art is so good", "chasing one specific card as usual", "moody cards only", "still nothing. still going"] },
   { name: "Suki", handle: "sukisuki", style: "pixel", color: "aqua", avatar: "131", banner: "drift:aqua+ice", bio: "", hours: [12, 20], sets: ["me3", "rsv10pt5"], titles: ["Collector", "Trainer"], voice: ["water types forever", "lapras art is so calming", "just opening quietly", "blue page is my favourite", "slow collector, no rush", "not chasing anything expensive", "this set is gentle on the eyes", "one more then i'm done"] },
-];
+].map(persona => ({ ...persona, ...IDENTITIES[persona.handle] }));
 
 /**
  * Broadcast only: nothing here addresses anyone or invites a reply.
@@ -433,6 +434,9 @@ async function ensureBotSchema(env) {
     if (!cols.has("last_dm_at")) {
       await runDdl(env, "ALTER TABLE bots ADD COLUMN last_dm_at INTEGER NOT NULL DEFAULT 0");
     }
+    if (!cols.has("profile_version")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN profile_version INTEGER NOT NULL DEFAULT 0");
+    }
     schemaReady = true;
   } catch (err) {
     console.error("ensureBotSchema", err);
@@ -607,7 +611,8 @@ async function say(env, call, row, cookie, text, now, kind = "idle", tag = text,
   // staleness check, both sleep, and both post the same sentence, which is
   // exactly what happened — twice, word for word, to a newcomer's question.
   if (ctx) {
-    if (stale(text, ctx)) return false;
+    if (kind !== "human" && (ctx.ambientMessages || 0) >= 2) return false;
+    if (kind !== "human" && stale(text, ctx)) return false;
     ctx.said.add(text.trim().toLowerCase());
     ctx.said.add(opening(text));
     const words = contentWords(text);
@@ -630,6 +635,7 @@ async function say(env, call, row, cookie, text, now, kind = "idle", tag = text,
   const res = await call("/api/chat", { method: "POST", cookie, body: { body: text } });
   if (res.status !== 200) return false;
 
+  if (ctx && kind !== "human") ctx.ambientMessages = (ctx.ambientMessages || 0) + 1;
   const recent = [tag, ...readRecent(row.recent_lines)].slice(0, RECENT_LINES);
   row.last_chat_at = now;
   row.last_chat_kind = kind;
@@ -910,7 +916,7 @@ async function refreshBio(env, call, row, persona, cookie, now, ctx) {
 function chatGapFor(persona) {
   let h = 0;
   for (const ch of persona.handle) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  return (14 + (h % 21)) * MINUTE;
+  return (3 + (h % 5)) * MINUTE;
 }
 
 /**
@@ -993,6 +999,13 @@ async function answerHuman(env, call, row, persona, cookie, chat, now, ctx) {
         !ctx.answered.has(Number(msg.id))
     );
   if (!target) return false;
+  // A named regular gets their own question. Include nearby messages so a
+  // correction such as "ada, sorry" does not erase the original question.
+  const conversation = chat.filter(msg => now - Number(msg.at || 0) <= HUMAN_REPLY_WINDOW_MS);
+  const visitorLines = conversation.filter(msg => msg.user?.handle === target.user.handle).slice(-4);
+  const named = [...visitorLines].reverse().map(msg => ROSTER.find(bot =>
+    new RegExp(`\\b${bot.name}\\b`, "i").test(String(msg.body || "")))).find(Boolean);
+  if (named && named.handle !== persona.handle) return false;
   if (Math.random() > HUMAN_REPLY_CHANCE) return false;
 
   ctx.answered.add(Number(target.id));
@@ -1010,12 +1023,13 @@ async function answerHuman(env, call, row, persona, cookie, chat, now, ctx) {
     avoid: [...readRecent(row.recent_lines), ...ctx.said],
     facts: factsFor(row),
     human: true,
+    context: conversation.slice(-12).map(msg => ({ speaker: msg.user?.name || msg.user?.handle || "visitor", body: String(msg.body || "") })),
   });
   // No fallback on purpose. The written pools are all "same" and "lol", and
   // answering a person with those is worse than letting another bot take it
   // on the next tick. A line that opens like something already on screen is
   // dropped for the same reason.
-  if (!line || stale(line, ctx)) {
+  if (!line) {
     ctx.answered.delete(Number(target.id));
     return false;
   }
@@ -1218,18 +1232,56 @@ const slotKey = (list) => list.map((s) => `${s.id}:${s.reverse ? 1 : 0}`).join("
  * The cached copy is what keeps this cheap: it only PATCHes when a pull
  * genuinely beats what is already up, which after the first few packs is rare.
  */
-async function showcaseBest(env, call, row, cookie, cards) {
+// Load only public card metadata; reused across identity migrations in an isolate.
+let identityCatalog;
+async function syncIdentity(env, call, row, persona, cookie, ctx) {
+  if (Number(row.profile_version) >= 1 || (ctx.profileUpdates || 0) >= 3) return;
+  ctx.profileUpdates = (ctx.profileUpdates || 0) + 1;
+  if (!identityCatalog) {
+    const cards = [];
+    for (const id of BOT_SETS) {
+      const res = await env.ASSETS.fetch(new Request(`https://assets.local/data/${id}.json`));
+      if (!res.ok) throw new Error(`Identity catalog unavailable: ${id}`);
+      cards.push(...await res.json());
+    }
+    identityCatalog = new Map(cards.map(card => [card.id, card]));
+  }
+  const mine = await call("/api/me", { cookie });
+  if (mine.status !== 200 || !mine.body?.save) return;
+  const collection = mine.body.save.collection || {};
+  const cards = Object.keys(collection).filter(id => collection[id] > 0)
+    .map(id => identityCatalog.get(id)).filter(Boolean);
+  // Rebuild from cards actually owned, including beloved commons.
+  const next = cards.map(card => ({ id: card.id, reverse: false,
+    affinity: affinity(persona, card), value: Number(sellValue(card)) || 0 }))
+    .sort((a,b) => b.affinity - a.affinity || b.value - a.value).slice(0, SHOWCASE_MAX);
+  const res = await call("/api/me", { method: "PATCH", cookie, body: {
+    bio: persona.bio, avatar: persona.avatar, avatarStyle: persona.style || "art",
+    color: persona.color, banner: persona.banner,
+    showcase: next.map(({id, reverse}) => ({id, reverse})),
+  }});
+  if (res.status !== 200) return;
+  row.showcase = JSON.stringify(next);
+  row.profile_version = 1;
+  // Discard the old generic idle pool when the collecting identity changes.
+  row.line_pool = null;
+  row.pool_at = 0;
+  await env.DB.prepare("UPDATE bots SET profile_version = 1, showcase = ?, line_pool = NULL, pool_at = 0 WHERE user_id = ?")
+    .bind(row.showcase, row.user_id).run();
+}
+
+async function showcaseBest(env, call, row, cookie, cards, persona) {
   const held = readShowcase(row.showcase);
   const merged = held.slice();
 
   for (const card of cards) {
-    if (!isHit(card)) continue;
+    if (!isHit(card) && !affinity(persona, card)) continue;
     if (merged.some((slot) => slot.id === card.id)) continue;
-    merged.push({ id: card.id, reverse: Boolean(card.reverse), value: Number(sellValue(card)) || 0 });
+    merged.push({ id: card.id, reverse: Boolean(card.reverse), value: Number(sellValue(card)) || 0, affinity: affinity(persona, card) });
   }
   if (merged.length === held.length) return;
 
-  merged.sort((a, b) => (Number(b.value) || 0) - (Number(a.value) || 0));
+  merged.sort((a, b) => (b.affinity || 0) - (a.affinity || 0) || (Number(b.value) || 0) - (Number(a.value) || 0));
   const next = merged.slice(0, SHOWCASE_MAX);
   if (slotKey(next) === slotKey(held)) return;
 
@@ -1274,6 +1326,9 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now, ct
     }
   }
 
+  // More presence should not multiply pack writes beyond the daily D1 budget.
+  if ((ctx.rips || 0) >= 1) return;
+  ctx.rips = (ctx.rips || 0) + 1;
   const ripped = await call("/api/packs/rip", { method: "POST", cookie, body: { setId } });
 
   if (ripped.status !== 200) {
@@ -1289,7 +1344,7 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now, ct
   }
 
   await remember(env, row, ripped.body?.save);
-  await showcaseBest(env, call, row, cookie, ripped.body?.cards || []);
+  await showcaseBest(env, call, row, cookie, ripped.body?.cards || [], persona);
 
   const packs = Number(ripped.body?.save?.packsOpened || 0);
   if (quiet && MILESTONE_PACKS.includes(packs)) {
@@ -1343,13 +1398,16 @@ async function act(env, call, row, persona, now, ctx, helpers) {
 
   // A person waiting on an answer outranks everything else this bot could be
   // doing with its minute, including opening a pack.
-  if (await answerHuman(env, call, row, persona, cookie, seen.body?.chat, now, ctx)) return;
+  if (ctx.priorityOnly && await answerHuman(env, call, row, persona, cookie, seen.body?.chat, now, ctx)) return;
   // A pending friend request is also someone waiting, and it is what unlocks
   // DMs, so it goes above the roster's own business too.
-  if (ctx.humanCalls < MAX_HUMAN_CALLS_PER_TICK && (await answerDm(env, call, row, persona, cookie, now, ctx)))
+  if (ctx.priorityOnly && ctx.humanCalls < MAX_HUMAN_CALLS_PER_TICK && (await answerDm(env, call, row, persona, cookie, now, ctx)))
     return;
   // Answering another bot depends on a message still being recent, so it
   // comes before the things that can happen on any tick.
+  if (ctx.priorityOnly) return;
+  await syncIdentity(env, call, row, persona, cookie, ctx);
+  if (await mingle(env, call, row, persona, cookie)) return;
   if (await react(env, call, row, persona, cookie, seen.body?.chat, now, ctx)) return;
 
   if (Number(row.coins) < 0) {
@@ -1377,7 +1435,7 @@ async function act(env, call, row, persona, now, ctx, helpers) {
 
   const setId = pick(playableSets(persona));
   const broke = Number(row.coins) >= 0 && Number(row.coins) < LOW_COINS;
-  if (Math.random() < ripChance(Number(row.coins), costOf(setId)) || (broke && Math.random() < 0.25)) {
+  if ((ctx.rips || 0) < 1 && (Math.random() < ripChance(Number(row.coins), costOf(setId)) || (broke && Math.random() < 0.25))) {
     await openOrSell(env, call, row, persona, cookie, setId, quiet, now, ctx);
     return;
   }
@@ -1387,7 +1445,7 @@ async function act(env, call, row, persona, now, ctx, helpers) {
     await say(env, call, row, cookie, line, now, "idle", line, ctx);
     return;
   }
-  if (Math.random() < BIO_CHANCE && (await refreshBio(env, call, row, persona, cookie, now, ctx)))
+  if (!persona.favorite && Math.random() < BIO_CHANCE && (await refreshBio(env, call, row, persona, cookie, now, ctx)))
     return;
   // Accepts are checked every tick rather than on the FRIEND_CHANCE roll: a
   // real person's request sitting unanswered for hours is what this is here
@@ -1409,9 +1467,9 @@ async function step(env, call, row, persona, now, ctx, helpers) {
     await act(env, call, row, persona, now, ctx, helpers);
     return;
   }
-  if (Number(row.next_wake) > now) return;
+  if (Number(row.next_wake) > now && ctx.online >= 6) return;
 
-  if (ctx.online >= MAX_ONLINE || !awake(persona, now) || Math.random() > WAKE_CHANCE) {
+  if (ctx.online >= MAX_ONLINE || (ctx.online >= 6 && (!awake(persona, now) || Math.random() > WAKE_CHANCE))) {
     await env.DB.prepare("UPDATE bots SET next_wake = ? WHERE user_id = ?")
       .bind(now + rand(RETRY_MS, RETRY_MS * 3), row.user_id)
       .run();
@@ -1471,13 +1529,19 @@ export async function tickBots(env, call, helpers = {}) {
       const last = readRecent(row.recent_lines)[0];
       if (last) ctx.tags.add(last);
     }
-    for (const row of rows) {
-      const persona = ROSTER.find((item) => item.handle === row.handle);
-      if (!persona) continue;
-      try {
-        await step(env, call, row, persona, now, ctx, helpers);
-      } catch (err) {
-        console.error("bot step", row.handle, err);
+    for (const priorityOnly of [true, false]) {
+      ctx.priorityOnly = priorityOnly;
+      const ordered = [...rows].sort((a, b) => Number(a.last_chat_at || 0) - Number(b.last_chat_at || 0));
+      for (const row of ordered) {
+        if (!priorityOnly && Number(row.online_until) <= now) continue;
+        const persona = ROSTER.find((item) => item.handle === row.handle);
+        if (!persona) continue;
+        try {
+          if (priorityOnly) await step(env, call, row, persona, now, ctx, helpers);
+          else await act(env, call, row, persona, now, ctx, helpers);
+        } catch (err) {
+          console.error("bot step", row.handle, err);
+        }
       }
     }
   } catch (err) {

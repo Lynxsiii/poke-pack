@@ -11,12 +11,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil {
     repeating-linear-gradient(135deg, #151b2a 0%, #879da8 8%, #e8eeed 11%,
       #879da8 14%, #151b2a 24%),
     radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #aaa 0%, #555 50%, #171923 100%);
-  background-size: 45% 45%, 280% 280%, 320% 320%, cover;
+  background-size: 32% 32%, 280% 280%, 320% 320%, cover;
+  opacity: calc((0.32 + var(--card-opacity) * 0.48) * var(--foil-strength, 1));
   background-position: center, var(--background-x) var(--background-y),
     calc(100% - var(--background-x)) calc(100% - var(--background-y)), center;
   background-blend-mode: soft-light, color, luminosity;
   mix-blend-mode: color-dodge;
-  filter: brightness(0.7) contrast(1.7) saturate(1.15);
+  filter: brightness(0.95) contrast(1.25) saturate(1.5);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::before {
   background: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #fff 0%, #777 32%, #000 78%);
@@ -122,3 +123,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare::after,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare::after,
 body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .glare::after,
 body.fx-holo.fx-holo.fx-holo .tcg[data-finish="pearl"] .glare::after { background: none; }
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex:not(.lit):not(.settling) .foil {
+  opacity: calc(0.32 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare {
+  background: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),
+    rgba(255,255,255,.4), rgba(200,228,255,.1) 36%, transparent 68%);
+  mix-blend-mode: screen;
+}
