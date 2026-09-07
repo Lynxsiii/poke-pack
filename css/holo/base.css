@@ -1,0 +1,274 @@
+/*
+ * Holofoil base — adapted from pokemon-cards-css by Simon Goellner
+ * (@simeydotme), https://github.com/simeydotme/pokemon-cards-css, GPL-3.0.
+ * poke-pack.rip is GPL-3 because of this file and its siblings. See NOTICE.md.
+ *
+ * Changes from the original:
+ *
+ * - Selectors are remapped onto this project's DOM. Upstream nests
+ *   `.card__translater > .card__rotator > .card__front + .card__shine +
+ *   .card__glare`; here a card is the flat `.tcg > img + .foil + .glare` that
+ *   the rest of the site already renders, so `.card__shine` became `.foil` and
+ *   `.card__glare` became `.glare`.
+ * - Rarity keys are remapped. Upstream keys off `data-rarity="rare holo v"`
+ *   and friends from the Sword & Shield era; this site deals in Scarlet &
+ *   Violet and Mega Evolution rarities and already resolves them to
+ *   `foil-*` classes in foilClass(), so those are the hooks. See rarities.css.
+ * - Upstream clips the holo window with `clip-path: var(--clip)` polygons
+ *   measured off one card layout. This project already masks with per-card
+ *   bitmaps (`--art`, `--win-*`, `--etch`) which follow the actual printed
+ *   window, so that masking is kept and the clip-paths are dropped.
+ * - The 3D rotator and its shadow are folded onto `.tcg` itself, since there
+ *   is no wrapper element to put them on.
+ *
+ * Everything here is scoped to `body.fx-holo`. Settings → Card effects
+ * switches to `body.fx-classic`, which leaves the original system in
+ * css/app.css untouched and painting instead.
+ *
+ * Legacy paint rules in app.css are scoped to body.fx-classic. Printed-window
+ * geometry is shared through windows.css; generated etch maps are not used.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg {
+  --sunpillar-1: hsl(2, 100%, 73%);
+  --sunpillar-2: hsl(53, 100%, 69%);
+  --sunpillar-3: hsl(93, 100%, 69%);
+  --sunpillar-4: hsl(176, 100%, 76%);
+  --sunpillar-5: hsl(228, 100%, 74%);
+  --sunpillar-6: hsl(283, 100%, 73%);
+
+  --sunpillar-clr-1: var(--sunpillar-1);
+  --sunpillar-clr-2: var(--sunpillar-2);
+  --sunpillar-clr-3: var(--sunpillar-3);
+  --sunpillar-clr-4: var(--sunpillar-4);
+  --sunpillar-clr-5: var(--sunpillar-5);
+  --sunpillar-clr-6: var(--sunpillar-6);
+
+  --red: #f80e35;
+  --yellow: #eedf10;
+  --green: #21e985;
+  --blue: #0dbde9;
+  --violet: #c929f1;
+
+  --space: 5%;
+  --angle: 133deg;
+  --glittersize: 25%;
+
+  /*
+   * The textures, re-declared here with root-relative paths rather than
+   * reusing app.css's `--foil-*`.
+   *
+   * app.css writes them as `url("../assets/foil/x.png")`, which is correct
+   * from `css/`. A relative url() inside a custom property is resolved
+   * against the sheet that *consumes* it, though — so reading `--foil-glitter`
+   * from `css/holo/` resolved to `css/assets/foil/glitter.png` and 404'd
+   * silently, leaving every rarity below running on bare gradients with no
+   * texture at all. Same trap assetUrl() in js/app.js exists to dodge for
+   * `--art`. Root-relative sidesteps it entirely.
+   */
+  --holo-grain: url("/assets/foil/grain.png");
+  --win-evo: url("/assets/masks/win-evo.png");
+  --holo-glitter: url("/assets/foil/reference/glitter.png");
+  --holo-embossed: url("/assets/foil/reference/vmaxbg.jpg");
+  --holo-cosmos: url("/assets/foil/cosmos.png");
+  --holo-weave: url("/assets/foil/weave.png");
+  --holo-metal: url("/assets/foil/metal.png");
+  --holo-facet: url("/assets/foil/facet.png");
+  --holo-prism: url("/assets/foil/prism.png");
+  --holo-swirl: url("/assets/foil/swirl.png");
+  --holo-pokeball: url("/assets/foil/pokeball.png");
+  --holo-masterball: url("/assets/foil/masterball.png");
+
+  /* Rest values, so an untouched card still has a defined foil rather than
+     falling back to 0% and stacking every gradient in one corner. */
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --pointer-from-center: 0;
+  --pointer-from-top: 0.5;
+  --pointer-from-left: 0.5;
+  --background-x: 50%;
+  --background-y: 50%;
+  --card-opacity: 0;
+  --card-scale: 1;
+  --rotate-x: 0deg;
+  --rotate-y: 0deg;
+
+  --card-edge: hsl(47, 100%, 78%);
+  --card-glow: hsl(175, 100%, 90%);
+}
+
+/* ---- The card body -------------------------------------------------------
+   Upstream splits translate and rotate across two wrappers so a card can pop
+   towards the viewer while it turns. There is one element here, so both live
+   on it — and the perspective has to be inside the transform rather than on a
+   parent, because .tcg's parents are grid and flex containers all over the
+   site and none of them are reliably a 3D context. */
+body.fx-holo.fx-holo.fx-holo .tcg {
+  transform: perspective(600px) rotateY(var(--rotate-x)) rotateX(var(--rotate-y))
+    scale(var(--card-scale));
+  /* Composite the print and its coatings on one plane before tilting it. */
+  transform-style: flat;
+}
+
+/* Only while the pointer is actually on it. The springs in app.js keep
+   writing after the pointer leaves, so this transition is just the safety net
+   for a card that never got a frame — a duration here would fight the spring
+   and make the release mushy. */
+body.fx-holo.fx-holo.fx-holo .tcg:not(.lit) {
+  transition: box-shadow 0.4s ease;
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg img {
+  transform: none;
+}
+
+/* The lift. A card the pointer is on sits above the grid and casts a real
+   shadow; without it the tilt reads as a picture skewing rather than an
+   object turning. */
+body.fx-holo.fx-holo.fx-holo .tcg.lit,
+body.fx-holo.fx-holo.fx-holo .tcg.settling {
+  z-index: 20;
+  will-change: transform;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.lit img {
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* ---- Shine ---------------------------------------------------------------
+   The three stacked layers every rarity fills in. `color-dodge` on a heavily
+   crushed source is what turns a soft gradient into something that reads as
+   light rather than paint: contrast 2.75 pushes most of the layer to black —
+   which dodges to nothing — and leaves only the brightest bands showing. */
+/* Deliberately sets no `display`. Upstream uses `display: grid` so its shine
+   pseudo-elements can share one `grid-area`; here they stack with absolute
+   positioning instead, the way app.css already does it. That matters because
+   app.css hides the foil outright on cards you do not own
+   (`.bulk-card.missing .foil`), and a `display` here would out-specify it and
+   light up every unowned card in the bulk grid. */
+body.fx-holo.fx-holo.fx-holo .tcg .foil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+  background: transparent;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.85) contrast(2.75) saturate(0.65);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+  transition: none;
+}
+
+/* An untouched card still glints, so a binder page is not a wall of matte
+   rectangles. Kept low — this is ambient, the pointer is the event. */
+body.fx-holo.fx-holo.fx-holo .tcg:not(.foil-none):not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-none .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-none .glare {
+  display: none;
+}
+
+/*
+ * Rotated colour ramps per layer.
+ *
+ * Both pseudo-elements draw the same sunpillar ramp but start it at a
+ * different colour, so where they overlap the hues are always out of step.
+ * That mismatch is what produces the oil-slick shift as the card turns —
+ * one ramp alone just slides a rainbow across.
+ */
+body.fx-holo.fx-holo.fx-holo .tcg .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg .foil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: none;
+  border-radius: inherit;
+  /* Reset what css/app.css puts here for the classic engine. */
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+  animation: none;
+
+  --sunpillar-clr-1: var(--sunpillar-5);
+  --sunpillar-clr-2: var(--sunpillar-6);
+  --sunpillar-clr-3: var(--sunpillar-1);
+  --sunpillar-clr-4: var(--sunpillar-2);
+  --sunpillar-clr-5: var(--sunpillar-3);
+  --sunpillar-clr-6: var(--sunpillar-4);
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg .foil::after {
+  transform: none;
+
+  --sunpillar-clr-1: var(--sunpillar-6);
+  --sunpillar-clr-2: var(--sunpillar-1);
+  --sunpillar-clr-3: var(--sunpillar-2);
+  --sunpillar-clr-4: var(--sunpillar-3);
+  --sunpillar-clr-5: var(--sunpillar-4);
+  --sunpillar-clr-6: var(--sunpillar-5);
+}
+
+/* ---- Glare ---------------------------------------------------------------
+   The clear varnish over the print. This is the layer the classic engine
+   under-plays: a soft white radial at low opacity reads as haze on the glass.
+   Crushing it with contrast on the rarity layers instead gives a small hard
+   hotspot with a fast falloff, which is what a gloss coat under a lamp
+   actually does. */
+body.fx-holo.fx-holo.fx-holo .tcg .glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  overflow: hidden;
+  transform: none;
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%,
+    hsla(0, 0%, 100%, 0.65) 20%,
+    hsla(0, 0%, 0%, 0.5) 90%
+  );
+  opacity: var(--card-opacity);
+  mix-blend-mode: overlay;
+  transition: none;
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg .glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: none;
+}
+
+/* Non-foil cards keep a plain varnish and nothing else. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-none .glare {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 10%,
+    hsla(0, 0%, 100%, 0.2) 25%,
+    hsla(0, 0%, 0%, 0.3) 80%
+  );
+}
+
+/* Respect the site's motion and shine kill-switches the same way the classic
+   engine does — these are accessibility settings, not decoration. */
+body.fx-holo.fx-holo.fx-holo.no-shine .tcg .foil,
+body.fx-holo.fx-holo.fx-holo.no-shine .tcg .glare {
+  display: none;
+}
+body.fx-holo.fx-holo.fx-holo.no-tilt .tcg {
+  transform: scale(var(--card-scale));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.fx-holo.fx-holo.fx-holo .tcg {
+    transition: none;
+    transform: none;
+  }
+}

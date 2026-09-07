@@ -1,0 +1,140 @@
+/* Shared printed-window geometry extracted from the original renderer.
+   No gradients, sparkle, engraving, animation, or legacy color filters. */
+body.fx-holo .tcg .foil,
+body.fx-holo .tcg .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+body.fx-holo .foil-holo .foil,
+body.fx-holo .foil-holo .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: inset(9.318% 7.302% 52.727% 7.937%);
+}
+
+body.fx-holo .foil-holo.foil-evo .foil,
+body.fx-holo .foil-holo.foil-evo .glare {
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--win-evo);
+  -webkit-mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-image: var(--art), var(--win-evo);
+  mask-mode: alpha, alpha;
+  mask-size: contain, contain;
+  mask-position: center, center;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: intersect;
+}
+
+body.fx-holo .foil-holo.foil-owner .foil,
+body.fx-holo .foil-holo.foil-owner .glare {
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--win-owner);
+  -webkit-mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-image: var(--art), var(--win-owner);
+  mask-mode: alpha, alpha;
+  mask-size: contain, contain;
+  mask-position: center, center;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: intersect;
+}
+
+body.fx-holo .foil-holo.foil-energy .foil,
+body.fx-holo .foil-holo.foil-energy .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  clip-path: inset(13.636% 4.127% 35.795% 3.810%);
+}
+
+body.fx-holo .foil-holo.foil-trainer .foil,
+body.fx-holo .foil-holo.foil-trainer .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  clip-path: inset(14.091% 6.825% 47.614% 7.778%);
+}
+
+body.fx-holo .foil-reverse .foil {
+  -webkit-mask-image: var(--art), var(--win-holo);
+  -webkit-mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-out;
+  mask-image: var(--art), var(--win-holo);
+  mask-mode: alpha, alpha;
+  mask-size: contain, contain;
+  mask-position: center, center;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: subtract;
+}
+
+body.fx-holo .foil-reverse.foil-evo .foil {
+  -webkit-mask-image: var(--art), var(--win-evo);
+  mask-image: var(--art), var(--win-evo);
+}
+
+body.fx-holo .foil-reverse.foil-owner .foil {
+  -webkit-mask-image: var(--art), var(--win-owner);
+  mask-image: var(--art), var(--win-owner);
+}
+
+body.fx-holo .foil-reverse.foil-energy .foil {
+  -webkit-mask-image: var(--art), var(--win-holo-energy);
+  mask-image: var(--art), var(--win-holo-energy);
+}
+
+body.fx-holo .foil-reverse.foil-trainer .foil {
+  -webkit-mask-image: var(--art), var(--win-holo-trainer);
+  mask-image: var(--art), var(--win-holo-trainer);
+}
+
+body.fx-holo .foil-reverse .glare {
+  -webkit-mask-image: var(--art), var(--win-holo);
+  -webkit-mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-image: var(--art), var(--win-holo);
+  mask-mode: alpha, alpha;
+  mask-size: contain, contain;
+  mask-position: center, center;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: intersect;
+}
+
+body.fx-holo .foil-reverse.foil-evo .glare {
+  -webkit-mask-image: var(--art), var(--win-evo);
+  mask-image: var(--art), var(--win-evo);
+}
+
+body.fx-holo .foil-reverse.foil-owner .glare {
+  -webkit-mask-image: var(--art), var(--win-owner);
+  mask-image: var(--art), var(--win-owner);
+}
+
+body.fx-holo .foil-reverse.foil-energy .glare {
+  -webkit-mask-image: var(--art), var(--win-holo-energy);
+  mask-image: var(--art), var(--win-holo-energy);
+}
+
+body.fx-holo .foil-reverse.foil-trainer .glare {
+  -webkit-mask-image: var(--art), var(--win-holo-trainer);
+  mask-image: var(--art), var(--win-holo-trainer);
+}

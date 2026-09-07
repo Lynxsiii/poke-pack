@@ -20,7 +20,8 @@ python -m http.server 5173
 
 ```
 index.html            markup for every view; views are sections toggled by .hidden
-css/app.css           all styling, including the foil/glare and pack-tear visuals
+css/app.css           all styling, including the classic foil and pack-tear visuals
+css/holo/             the holofoil engine, derived from pokemon-cards-css
 js/app.js             views, rendering, the tear interaction, reveal flow
 js/catalog.js         set definitions, rarity tables, sell values, roadmap
 js/engine.js          pack generation — slot tables and pull odds
@@ -28,6 +29,7 @@ js/state.js           localStorage save, coins, daily bonus, collection
 js/achievements.js    achievement table, progress, and claim rewards
 js/titles.js          titles, including the ones an achievement hands over
 worker/bots.js        the ambient roster and its once-a-minute tick
+worker/llm.js         the roster's written voice, via NVIDIA NIM
 data/<set>.json       card data per set
 assets/packs/<set>/   booster wrapper art (avif with png fallback)
 scripts/              python builders that generate data/ and crop wrapper art
@@ -61,6 +63,42 @@ mush and the header says the name in real text beside it anyway.
    window into `assets/masks/owner/`, stamping `ownerMask` onto the cards that
    use it. `--debug` drops a contact sheet in `scripts/_debug/` to check the
    cuts by eye.
+
+## Card effects
+
+Two foil engines ship, switched in Settings → Card effects and by a body
+class:
+
+- **Holo** (`body.fx-holo`, `css/holo/`) is derived from
+  [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css). This
+  is why the project is GPL-3 — see [NOTICE.md](NOTICE.md).
+- **Classic** (`body.fx-classic`, the `.tcg` rules in `css/app.css`) is the
+  original per-rarity system. Untouched, and kept because it reads the printed
+  holo windows more literally.
+
+Holo uses the upstream glitter and VMAX surface textures from
+`assets/foil/reference/`. Double Rares use the star foil in `ex-stars.svg`;
+Reshiram and Victini have pearl and red-metal finishes in `finishes.css`.
+The older gradients and generated etch maps are restricted to Classic mode.
+Holo gets only printed-window geometry from `windows.css`, so the old radial
+engraving and glint animation cannot paint over the new materials.
+Touch release clears the interaction; reduced-motion mode keeps the light
+but removes tilt and spring animation.
+
+The difference that matters is not in the gradients — both use the same family
+of counter-tracked bars under `color-dodge`. It is that Holo runs the pointer
+through a **damped spring** (`Spring` in `js/app.js`, stiffness 0.066, damping
+0.25, matching svelte/motion's integrator) before it reaches the CSS
+variables. Reading the pointer straight, which is what Classic does and what
+this file used to do everywhere, pins the highlight to the cursor exactly, and
+a highlight that cannot lag or overshoot reads as a texture sliding under
+glass rather than light moving on foil. The release uses a looser spring
+(0.01 / 0.06) so a card drifts home instead of snapping. The overshoot is the
+point; it is not a bug to damp out.
+
+Rarity mapping is in the header of `css/holo/rarities.css`. Upstream is built
+for Sword & Shield rarity names, so each effect is matched to the printing it
+most resembles rather than to a name.
 
 ## Pull rates
 
@@ -129,11 +167,7 @@ same six-second band while real trainers scatter across the minute.
 
 Two rules the roster is built around:
 
-- **They only ever answer each other.** Reactions and friend accepts are both
-  restricted to roster handles, and a request or a message from a real person
-  is left for a human. A busy-looking room is set dressing; an account that
-  answers *you* is a person being told they made a friend who cannot write
-  back. Still no DMs and no profile comments.
+- **They can answer visitors.** Online bots can reply in the lounge, accept incoming friend requests, and answer friends-only DMs. Outgoing friend requests stay within the roster. AI replies are bounded and omitted if generation fails.
 - **They never say anything a visitor could check and find false.** Packs
   opened, coins, and the collection are all on the public profile, so chat
   lines assert nothing countable — anything with a number in it goes through
@@ -141,6 +175,45 @@ Two rules the roster is built around:
 
 `BOT_SETS` excludes sv5–sv10 while that card data and art are being redone,
 since a bot's binder and showcase are public.
+
+### Written voice
+
+`worker/llm.js` writes the lines, via NVIDIA NIM's OpenAI-compatible endpoint.
+It is off unless `NVIDIA_API_KEY` is bound, and every function in it returns
+null on a bad key, a timeout, or a refusal — the pools in `bots.js` are the
+fallback, so the lounge never goes quiet because a third party had a bad
+minute. Keys are free from build.nvidia.com and start with `nvapi-`.
+
+```
+wrangler secret put NVIDIA_API_KEY          # production
+echo NVIDIA_API_KEY=nvapi-... >> .dev.vars  # local, gitignored
+```
+
+`NVIDIA_MODEL` overrides the default (`nvidia/nemotron-3-ultra-550b-a55b`). `NVIDIA_FALLBACK_MODEL` overrides the retry model (`nvidia/nemotron-3-super-120b-a12b`).
+
+Idle chatter is **batched**: one call writes a dozen lines for a persona into
+`bots.line_pool`, and each message shifts one off, so the common case costs no
+request. Pulls and replies are generated live, because they are the only two
+with a real subject — a bot naming the card it just opened is most of why the
+room reads as people. Bios are rewritten every few days.
+
+Three budgets keep a tick inside its minute: `MAX_LIVE_PER_TICK` caps
+completions across the whole roster, `MAX_REFILL_PER_TICK` allows one batch,
+and an eleven-second timeout bounds each request. Transient failures retry once on the fallback model; the tick stops starting AI work after its twenty-second budget.
+
+Generated lines are cleaned of preambles and speaker labels, checked for length, and checked against cached stats for numeric claims. The prompt supplies site facts to visitor replies. These checks reduce bad output but do not guarantee every generated statement is correct.
+
+Run `node scripts/test-bot-voice.mjs` for mocked service-failure, output-cleaning, stats, and visitor-reply regression checks.
+
+Repetition is tracked room-wide, not just per bot. A tick carries a `said` set
+of lines and a `tags` set of template shapes; every bot reads both before
+picking and writes to them after posting. Without it the per-bot list only
+stopped an account repeating *itself*, and twenty-four accounts drawing on
+sixteen hit templates still landed "selling doubles to fund the next one"
+three times in forty messages. Shapes are seeded from the last `ROOM_VOICES`
+speakers rather than every row's whole history — seed it from everything and
+the set covers all sixteen shapes at once, and the filter silently stops
+filtering.
 
 Bots spend their hourly stack the way a player does. `ripChance()` scales the
 odds with how many packs the balance covers, so one fresh off the bonus opens

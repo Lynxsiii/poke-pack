@@ -19,6 +19,7 @@ function etchUrlFromArt(art) {
 }
 
 function apply(el) {
+  if (!document.body.classList.contains("fx-classic")) return;
   if (!(el instanceof HTMLElement) || !isEtched(el) || el.dataset.etchReady) return;
   const art = el.style.getPropertyValue("--art") || getComputedStyle(el).getPropertyValue("--art");
   const rel = etchUrlFromArt(art);
@@ -47,3 +48,18 @@ const observer = new MutationObserver((records) => {
 });
 observer.observe(document.documentElement, { childList: true, subtree: true });
 scan(document.documentElement);
+
+// Generated ridge maps belong to Classic only. Changing renderer must also
+// remove their inline variables from cards already mounted in the page.
+let classic = document.body.classList.contains("fx-classic");
+new MutationObserver(() => {
+  const next = document.body.classList.contains("fx-classic");
+  if (next === classic) return;
+  classic = next;
+  if (classic) scan(document.documentElement);
+  else document.querySelectorAll(".tcg.has-etch").forEach((el) => {
+    el.classList.remove("has-etch");
+    el.style.removeProperty("--etch");
+    delete el.dataset.etchReady;
+  });
+}).observe(document.body, { attributes: true, attributeFilter: ["class"] });

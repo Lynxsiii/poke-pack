@@ -1,0 +1,124 @@
+/* Material refinements for SV / Mega Evolution printings. The diffraction
+   stack follows pokemon-cards-css (Simon Goellner, GPL-3.0; see NOTICE.md).
+   Texture stays registered to the card; only the illumination moves. */
+
+/* Double Rare: fine stars over a satin rainbow, rather than full-art weave. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil {
+  background-image:
+    url("/assets/foil/ex-stars.svg"),
+    repeating-linear-gradient(112deg, #e8a5c8 0%, #c6a0eb 12%, #91b9e8 24%,
+      #a8e0cf 36%, #eee3ac 48%, #e8a5c8 60%),
+    repeating-linear-gradient(135deg, #151b2a 0%, #879da8 8%, #e8eeed 11%,
+      #879da8 14%, #151b2a 24%),
+    radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #aaa 0%, #555 50%, #171923 100%);
+  background-size: 45% 45%, 280% 280%, 320% 320%, cover;
+  background-position: center, var(--background-x) var(--background-y),
+    calc(100% - var(--background-x)) calc(100% - var(--background-y)), center;
+  background-blend-mode: soft-light, color, luminosity;
+  mix-blend-mode: color-dodge;
+  filter: brightness(0.7) contrast(1.7) saturate(1.15);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::before {
+  background: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #fff 0%, #777 32%, #000 78%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: 0.7;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::after {
+  background-image: url("/assets/foil/ex-stars.svg"),
+    radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #fff 0%, #222 55%, #000 85%);
+  background-size: 45% 45%, cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  mix-blend-mode: screen;
+  filter: contrast(2.8) brightness(0.85);
+  opacity: 0.7;
+}
+
+/* SIR: directional diffraction and fine surface grain. A dark trough between
+   light bands preserves the painting's contrast instead of bleaching it. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .foil {
+  background-image: var(--holo-embossed),
+    repeating-linear-gradient(105deg, #ed879a 0%, #ecd693 12%, #88d6bc 24%,
+      #83b4e7 36%, #be92df 48%, #ed879a 60%),
+    repeating-linear-gradient(135deg, #101422 0%, #809795 9%, #dae9e4 12%,
+      #809795 15%, #101422 26%),
+    radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #bbb 0%, #666 38%, #171b27 95%);
+  background-size: 65% 35%, 300% 300%, 350% 350%, cover;
+  background-position: center, var(--background-x) var(--background-y),
+    calc(100% - var(--background-x)) calc(100% - var(--background-y)), center;
+  background-blend-mode: soft-light, color, luminosity;
+  filter: brightness(0.65) contrast(1.7) saturate(1.3);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .foil::before {
+  background-image: var(--holo-glitter),
+    radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #ddd, #000 70%);
+  background-size: 35% 35%, cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  mix-blend-mode: screen;
+  filter: contrast(2.5) brightness(0.7);
+  opacity: 0.35;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .foil::after {
+  background-image: linear-gradient(125deg, #000 15%, #799cb1 40%, #dad4ec 48%, #7299a4 56%, #000 80%);
+  background-size: 300% 300%;
+  background-position: calc(100% - var(--background-x)) calc(100% - var(--background-y));
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: 0.3;
+}
+
+/* Pearl and red lacquer need both light AND shadow. Brightening-only blend
+   modes disappear on Reshiram's nearly white scan. */
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="pearl"] .foil,
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .foil {
+  background-image: var(--holo-metal),
+    linear-gradient(120deg, #303746 0%, #829092 27%, #dce0dc 40%,
+      #fff 48%, #b9b9c4 55%, #788389 66%, #303746 100%);
+  background-size: 35% 35%, 300% 300%;
+  background-position: center, var(--background-x) var(--background-y);
+  background-blend-mode: soft-light;
+  mix-blend-mode: multiply;
+  filter: contrast(1.15) brightness(1.15);
+  opacity: calc((0.1 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="pearl"] .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .foil::before {
+  background: linear-gradient(125deg, #9fa7b9, #e6d7ed, #c7e9e6, #e8dfcc, #a6b3c1);
+  background-size: 250% 250%;
+  background-position: calc(100% - var(--background-x)) var(--background-y);
+  mix-blend-mode: color;
+  filter: none;
+  opacity: 0.35;
+}
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="pearl"] .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .foil::after { background: none; }
+
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .foil {
+  mix-blend-mode: soft-light;
+  filter: contrast(1.65) brightness(0.9);
+  opacity: calc((0.14 + var(--card-opacity) * 0.72) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .foil::before {
+  background-image: linear-gradient(125deg, #59152b, #e03d24, #ffb85c, #f55631, #571325);
+  mix-blend-mode: color;
+  opacity: 0.45;
+}
+
+/* Smaller specular highlight; the rest of the card retains its printed ink. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare,
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .glare,
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="pearl"] .glare {
+  background: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),
+    #fff 0%, rgba(230,240,255,.65) 10%, rgba(180,200,225,.15) 30%, transparent 58%);
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: calc(var(--card-opacity) * (0.18 + var(--pointer-from-center) * 0.2));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg[data-finish="pearl"] .glare::after { background: none; }

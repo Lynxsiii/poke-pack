@@ -15,6 +15,10 @@ export const DEFAULT_SETTINGS = {
   stamps: false,
   motion: true,
   foil: "normal", // subtle | normal | intense
+  // Which holofoil renderer draws a card. "holo" is the pokemon-cards-css
+  // derived system in css/holo/; "classic" is the original per-rarity one in
+  // css/app.css, kept because it reads the printed windows more literally.
+  fx: "holo", // holo | classic
   // Opening a pack
   flash: true,
   haptics: true,

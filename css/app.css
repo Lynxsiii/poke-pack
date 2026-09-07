@@ -545,6 +545,7 @@ h1 em { font-style: normal; color: var(--gold); }
 }
 .tcg img,
 .tcg .foil,
+
 .tcg .glare {
   /* Printed card radius (2.5 mm / 63×88 mm). Clips square scans and the
      black corner matte some mirrors baked in. Foil pattern is unchanged. */
@@ -637,8 +638,8 @@ h1 em { font-style: normal; color: var(--gold); }
    covers the entire card and clips exactly at its printed rounded corners
    rather than at a guessed rectangle. mask-size:contain mirrors the img's
    object-fit:contain so the geometry lines up at any card size. */
-.tcg .foil,
-.tcg .glare {
+body.fx-classic .tcg .foil,
+body.fx-classic .tcg .glare {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -653,7 +654,7 @@ h1 em { font-style: normal; color: var(--gold); }
 }
 
 /* Clear varnish gloss every card has, tracking the cursor. */
-.tcg .glare {
+body.fx-classic .tcg .glare {
   z-index: 4;
   opacity: 0;
   transition: opacity 0.18s ease;
@@ -665,33 +666,33 @@ h1 em { font-style: normal; color: var(--gold); }
     transparent 58%
   );
 }
-.tcg.lit .glare { opacity: 0.32; }
-.tcg.lit.foil-sir .glare,
-.tcg.lit.foil-gold .glare,
-.tcg.lit.foil-ultra .glare,
-.tcg.lit.foil-ex .glare,
-.tcg.lit.foil-mega-attack .glare,
-.tcg.lit.foil-bwr .glare { opacity: 0.4; }
+body.fx-classic .tcg.lit .glare { opacity: 0.32; }
+body.fx-classic .tcg.lit.foil-sir .glare,
+body.fx-classic .tcg.lit.foil-gold .glare,
+body.fx-classic .tcg.lit.foil-ultra .glare,
+body.fx-classic .tcg.lit.foil-ex .glare,
+body.fx-classic .tcg.lit.foil-mega-attack .glare,
+body.fx-classic .tcg.lit.foil-bwr .glare { opacity: 0.4; }
 /* ---- Foil ----------------------------------------------------------------
    Pointer-driven holofoil: color-dodge rainbow + grain, same family of tricks
    as a real card under a lamp. Each rarity gets its own pattern. */
-.tcg .foil {
+body.fx-classic .tcg .foil {
   z-index: 3;
   opacity: calc(0.28 * var(--foil-strength, 1));
   transition: opacity 0.2s ease, filter 0.2s ease;
   mix-blend-mode: color-dodge;
   filter: brightness(0.72) contrast(1.2) saturate(0.45);
 }
-.tcg.lit .foil {
+body.fx-classic .tcg.lit .foil {
   opacity: calc(0.46 * var(--foil-strength, 1));
   filter: brightness(0.78) contrast(1.28) saturate(0.55);
 }
-.tcg.foil-none .foil { display: none; }
+body.fx-classic .tcg.foil-none .foil { display: none; }
 
 /* Sparkle grain: a real tiled noise texture (assets/foil/grain.png, generated
    by scripts/make_foil_textures.py) crawling with the pointer, with the old
    procedural specks kept underneath so the sparkle has two scales. */
-.tcg .foil::before {
+body.fx-classic .tcg .foil::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -720,7 +721,7 @@ h1 em { font-style: normal; color: var(--gold); }
  * parallax between them — not the bars themselves — that reads as depth when
  * the card moves.
  */
-.tcg .foil::after {
+body.fx-classic .tcg .foil::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -758,7 +759,7 @@ h1 em { font-style: normal; color: var(--gold); }
 }
 
 /* Idle life when you're not touching the card. */
-.tcg:not(.foil-none):not(.lit) .foil::after {
+body.fx-classic .tcg:not(.foil-none):not(.lit) .foil::after {
   animation: foilGlint 5.6s ease-in-out infinite;
 }
 /* The two bar layers drift apart and back, so the idle card still shows the
@@ -770,7 +771,7 @@ h1 em { font-style: normal; color: var(--gold); }
 }
 
 /* Regular holo / rare: rainbow bars in the illustration window only. */
-.foil-holo .foil {
+body.fx-classic .foil-holo .foil {
   background-image:
     repeating-linear-gradient(
       90deg,
@@ -803,8 +804,8 @@ h1 em { font-style: normal; color: var(--gold); }
      what gives the rainbow its metallic grain. */
   background-blend-mode: overlay, normal, normal;
 }
-.foil-holo .foil,
-.foil-holo .glare {
+body.fx-classic .foil-holo .foil,
+body.fx-classic .foil-holo .glare {
   -webkit-mask-image: var(--art);
   mask-image: var(--art);
   -webkit-mask-size: contain;
@@ -820,8 +821,8 @@ h1 em { font-style: normal; color: var(--gold); }
 /* Stage 1/2: bitmap window with the evo badge punched out (same 733×1024
    as the scans). clip-path inset is off — percentages on the clipped box
    moved the hole into the art. */
-.foil-holo.foil-evo .foil,
-.foil-holo.foil-evo .glare {
+body.fx-classic .foil-holo.foil-evo .foil,
+body.fx-classic .foil-holo.foil-evo .glare {
   -webkit-clip-path: none;
   clip-path: none;
   -webkit-mask-image: var(--art), var(--win-evo);
@@ -843,8 +844,8 @@ h1 em { font-style: normal; color: var(--gold); }
    scripts/make_owner_masks.py and named on the card by --win-owner. The
    evolution badge is punched into the same file, so this replaces --win-evo
    rather than stacking with it. */
-.foil-holo.foil-owner .foil,
-.foil-holo.foil-owner .glare {
+body.fx-classic .foil-holo.foil-owner .foil,
+body.fx-classic .foil-holo.foil-owner .glare {
   -webkit-clip-path: none;
   clip-path: none;
   -webkit-mask-image: var(--art), var(--win-owner);
@@ -862,8 +863,8 @@ h1 em { font-style: normal; color: var(--gold); }
 /* Special Energy: art window runs nearly edge to edge, much wider than the
    Pokémon one. Measured off me5-83 / me5-84 (733×1024): 28,139 → 703,657,
    i.e. 24,120 → 604,565 here. */
-.foil-holo.foil-energy .foil,
-.foil-holo.foil-energy .glare {
+body.fx-classic .foil-holo.foil-energy .foil,
+body.fx-classic .foil-holo.foil-energy .glare {
   -webkit-mask-image: var(--art);
   mask-image: var(--art);
   -webkit-clip-path: inset(13.636% 4.127% 35.795% 3.810%);
@@ -872,8 +873,8 @@ h1 em { font-style: normal; color: var(--gold); }
 /* Trainer: Supporter, Item, Stadium and Tool all share one window — checked
    against me5-78, me5-72 and me5-76 (733×1024): 57,144 → 683,537, i.e.
    49,124 → 587,461 here. Horizontally it lines up with the Pokémon window. */
-.foil-holo.foil-trainer .foil,
-.foil-holo.foil-trainer .glare {
+body.fx-classic .foil-holo.foil-trainer .foil,
+body.fx-classic .foil-holo.foil-trainer .glare {
   -webkit-mask-image: var(--art);
   mask-image: var(--art);
   -webkit-clip-path: inset(14.091% 6.825% 47.614% 7.778%);
@@ -882,7 +883,7 @@ h1 em { font-style: normal; color: var(--gold); }
 /* Pokémon ex: illustration is the whole face, so skip the window cutout.
    Crystal facets over the rainbow give the full-art foil its angular break-up
    instead of a smooth sweep. */
-.foil-ex .foil {
+body.fx-classic .foil-ex .foil {
   background-image:
     var(--foil-facet),
     repeating-linear-gradient(
@@ -917,7 +918,7 @@ h1 em { font-style: normal; color: var(--gold); }
 /* Reverse: cosmos holofoil on the frame/text, photo stays matte. The real
    cosmos flake texture carries the pattern now; the gradients under it supply
    the colour it reflects. */
-.foil-reverse .foil {
+body.fx-classic .foil-reverse .foil {
   opacity: 0.4;
   background-image:
     var(--foil-cosmos),
@@ -943,8 +944,8 @@ h1 em { font-style: normal; color: var(--gold); }
      top of it as a grey film. */
   background-blend-mode: overlay, normal, normal, normal, normal;
 }
-.tcg.lit.foil-reverse .foil { opacity: calc(0.5 * var(--foil-strength, 1)); }
-.foil-reverse .foil {
+body.fx-classic .tcg.lit.foil-reverse .foil { opacity: calc(0.5 * var(--foil-strength, 1)); }
+body.fx-classic .foil-reverse .foil {
   -webkit-mask-image: var(--art), var(--win-holo);
   -webkit-mask-size: contain, contain;
   -webkit-mask-position: center, center;
@@ -962,7 +963,7 @@ h1 em { font-style: normal; color: var(--gold); }
    takes the badge back out of the subtracted region, so the badge is foiled
    edge to edge — which is also how a real reverse holo prints it, the badge
    being part of the foiled frame layer rather than the illustration. */
-.foil-reverse.foil-evo .foil {
+body.fx-classic .foil-reverse.foil-evo .foil {
   -webkit-mask-image: var(--art), var(--win-evo);
   mask-image: var(--art), var(--win-evo);
 }
@@ -970,19 +971,19 @@ h1 em { font-style: normal; color: var(--gold); }
    that already has the portrait cut out of it leaves the portrait foiled,
    which is how a real reverse prints it — the badge belongs to the foiled
    frame layer, not to the matte illustration. */
-.foil-reverse.foil-owner .foil {
+body.fx-classic .foil-reverse.foil-owner .foil {
   -webkit-mask-image: var(--art), var(--win-owner);
   mask-image: var(--art), var(--win-owner);
 }
-.foil-reverse.foil-energy .foil {
+body.fx-classic .foil-reverse.foil-energy .foil {
   -webkit-mask-image: var(--art), var(--win-holo-energy);
   mask-image: var(--art), var(--win-holo-energy);
 }
-.foil-reverse.foil-trainer .foil {
+body.fx-classic .foil-reverse.foil-trainer .foil {
   -webkit-mask-image: var(--art), var(--win-holo-trainer);
   mask-image: var(--art), var(--win-holo-trainer);
 }
-.foil-reverse .glare {
+body.fx-classic .foil-reverse .glare {
   -webkit-mask-image: var(--art), var(--win-holo);
   -webkit-mask-size: contain, contain;
   -webkit-mask-position: center, center;
@@ -995,19 +996,19 @@ h1 em { font-style: normal; color: var(--gold); }
   mask-repeat: no-repeat, no-repeat;
   mask-composite: intersect;
 }
-.foil-reverse.foil-evo .glare {
+body.fx-classic .foil-reverse.foil-evo .glare {
   -webkit-mask-image: var(--art), var(--win-evo);
   mask-image: var(--art), var(--win-evo);
 }
-.foil-reverse.foil-owner .glare {
+body.fx-classic .foil-reverse.foil-owner .glare {
   -webkit-mask-image: var(--art), var(--win-owner);
   mask-image: var(--art), var(--win-owner);
 }
-.foil-reverse.foil-energy .glare {
+body.fx-classic .foil-reverse.foil-energy .glare {
   -webkit-mask-image: var(--art), var(--win-holo-energy);
   mask-image: var(--art), var(--win-holo-energy);
 }
-.foil-reverse.foil-trainer .glare {
+body.fx-classic .foil-reverse.foil-trainer .glare {
   -webkit-mask-image: var(--art), var(--win-holo-trainer);
   mask-image: var(--art), var(--win-holo-trainer);
 }
@@ -1015,7 +1016,7 @@ h1 em { font-style: normal; color: var(--gold); }
 /* Poké Ball / Master Ball reverse: same window cut as cosmos reverse, but the
    frame is tiled balls instead of flakes. Black Bolt, White Flare, and later
    151 use these; cosmos stays the Mega Evolution default. */
-.foil-rev-pokeball .foil {
+body.fx-classic .foil-rev-pokeball .foil {
   background-image:
     var(--foil-pokeball),
     var(--foil-pokeball-tiny),
@@ -1034,11 +1035,11 @@ h1 em { font-style: normal; color: var(--gold); }
   background-blend-mode: overlay, overlay, normal;
   filter: brightness(0.82) contrast(1.18) saturate(1.15);
 }
-.tcg.lit.foil-rev-pokeball .foil {
+body.fx-classic .tcg.lit.foil-rev-pokeball .foil {
   opacity: calc(0.56 * var(--foil-strength, 1));
   filter: brightness(0.9) contrast(1.22) saturate(1.22);
 }
-.foil-rev-masterball .foil {
+body.fx-classic .foil-rev-masterball .foil {
   background-image:
     var(--foil-masterball),
     var(--foil-masterball-tiny),
@@ -1057,12 +1058,12 @@ h1 em { font-style: normal; color: var(--gold); }
   background-blend-mode: overlay, overlay, normal;
   filter: brightness(0.84) contrast(1.2) saturate(1.2);
 }
-.tcg.lit.foil-rev-masterball .foil {
+body.fx-classic .tcg.lit.foil-rev-masterball .foil {
   opacity: calc(0.58 * var(--foil-strength, 1));
   filter: brightness(0.92) contrast(1.24) saturate(1.28);
 }
 /* Illustration Rare: full-art glitter, shinier than a window holo. */
-.foil-ir .foil {
+body.fx-classic .foil-ir .foil {
   background-image:
     var(--foil-glitter),
     radial-gradient(circle at 24% 28%, #fff 0 0.7px, transparent 1.2px),
@@ -1092,7 +1093,7 @@ h1 em { font-style: normal; color: var(--gold); }
     calc(var(--px) * 90%) calc(var(--py) * 70%);
   filter: brightness(0.78) contrast(1.22) saturate(0.5);
 }
-.tcg.lit.foil-ir .foil {
+body.fx-classic .tcg.lit.foil-ir .foil {
   opacity: 0.52;
   filter: brightness(0.82) contrast(1.3) saturate(0.6);
 }
@@ -1116,7 +1117,7 @@ h1 em { font-style: normal; color: var(--gold); }
 /* Special Illustration Rare: stamped swirl + grain, silver sheen. Overlay
    (not colour-dodge) so the painting stays visible — texture catches the lamp
    the way a V alternate-art foil does, without a rainbow sitting on the art. */
-.foil-sir .foil {
+body.fx-classic .foil-sir .foil {
   opacity: 0.26;
   mix-blend-mode: overlay;
   background-image:
@@ -1165,13 +1166,13 @@ h1 em { font-style: normal; color: var(--gold); }
   background-blend-mode: overlay, overlay, overlay, overlay, overlay, soft-light, soft-light, normal;
   filter: brightness(calc(0.94 + var(--hyp, 0.12) * 0.16)) contrast(1.18) saturate(0.22);
 }
-.tcg.lit.foil-sir .foil {
+body.fx-classic .tcg.lit.foil-sir .foil {
   opacity: 0.36;
   /* Must repeat the filter: `.tcg.lit .foil` is three classes and would
      otherwise win over `.foil-sir .foil`. */
   filter: brightness(calc(0.94 + var(--hyp, 0.12) * 0.16)) contrast(1.18) saturate(0.22);
 }
-.foil-sir .foil::before {
+body.fx-classic .foil-sir .foil::before {
   opacity: 0.35;
   mix-blend-mode: overlay;
   background-image:
@@ -1183,7 +1184,7 @@ h1 em { font-style: normal; color: var(--gold); }
     calc(var(--px) * -18px) calc(var(--py) * 14px);
   background-blend-mode: overlay, overlay;
 }
-.foil-sir .foil::after {
+body.fx-classic .foil-sir .foil::after {
   opacity: 0.32;
   mix-blend-mode: soft-light;
   background-image:
@@ -1198,8 +1199,8 @@ h1 em { font-style: normal; color: var(--gold); }
 
 /* Per-card etch map: the sheen is masked to the stamp so the painting stays
    readable. --etch is stamped on .has-etch by js/etch.js. */
-.foil-sir.has-etch .foil,
-.foil-bwr.has-etch .foil {
+body.fx-classic .foil-sir.has-etch .foil,
+body.fx-classic .foil-bwr.has-etch .foil {
   opacity: 0.68;
   mix-blend-mode: overlay;
   -webkit-mask-image: var(--etch);
@@ -1238,13 +1239,13 @@ h1 em { font-style: normal; color: var(--gold); }
   background-blend-mode: soft-light, soft-light, normal;
   filter: brightness(calc(0.9 + var(--hyp, 0.12) * 0.26)) contrast(1.12) saturate(0.16);
 }
-.tcg.lit.foil-sir.has-etch .foil,
-.tcg.lit.foil-bwr.has-etch .foil {
+body.fx-classic .tcg.lit.foil-sir.has-etch .foil,
+body.fx-classic .tcg.lit.foil-bwr.has-etch .foil {
   opacity: 0.82;
   filter: brightness(calc(0.9 + var(--hyp, 0.12) * 0.26)) contrast(1.12) saturate(0.16);
 }
-.foil-sir.has-etch .foil::before,
-.foil-bwr.has-etch .foil::before {
+body.fx-classic .foil-sir.has-etch .foil::before,
+body.fx-classic .foil-bwr.has-etch .foil::before {
   opacity: 0.28;
   mix-blend-mode: overlay;
   background-image: var(--foil-grain);
@@ -1252,8 +1253,8 @@ h1 em { font-style: normal; color: var(--gold); }
   background-position: calc(var(--px) * -16px) calc(var(--py) * 12px);
   background-blend-mode: overlay;
 }
-.foil-sir.has-etch .foil::after,
-.foil-bwr.has-etch .foil::after {
+body.fx-classic .foil-sir.has-etch .foil::after,
+body.fx-classic .foil-bwr.has-etch .foil::after {
   opacity: 0.4;
   mix-blend-mode: soft-light;
   background-image:
@@ -1268,7 +1269,7 @@ h1 em { font-style: normal; color: var(--gold); }
 
 /* Ultra Rare: oil-slick diffraction. Its own material — these are ex full arts
    and used to share the plain facet foil with Double Rares. */
-.foil-ultra .foil {
+body.fx-classic .foil-ultra .foil {
   opacity: 0.32;
   mix-blend-mode: screen;
   background-image:
@@ -1294,11 +1295,11 @@ h1 em { font-style: normal; color: var(--gold); }
   background-blend-mode: soft-light, normal, overlay;
   filter: brightness(calc(0.64 + var(--hyp, 0.12) * 0.4)) contrast(1.2) saturate(1.45);
 }
-.tcg.lit.foil-ultra .foil {
+body.fx-classic .tcg.lit.foil-ultra .foil {
   opacity: 0.44;
   filter: brightness(calc(0.64 + var(--hyp, 0.12) * 0.4)) contrast(1.2) saturate(1.45);
 }
-.foil-ultra .foil::after {
+body.fx-classic .foil-ultra .foil::after {
   opacity: 0.45;
   background: linear-gradient(
     98deg,
@@ -1310,10 +1311,10 @@ h1 em { font-style: normal; color: var(--gold); }
 
 /* Mega Hyper Rare: brushed gold metal. Colour-dodge suits metal, but it needs a
    much darker base than the other foils or the gold reads as white. */
-.foil-gold {
+body.fx-classic .foil-gold {
   --tex: var(--foil-metal);
 }
-.foil-gold .foil {
+body.fx-classic .foil-gold .foil {
   opacity: 0.4;
   background-image:
     var(--tex),
@@ -1350,11 +1351,11 @@ h1 em { font-style: normal; color: var(--gold); }
   filter: brightness(calc(0.42 + var(--hyp, 0.12) * 0.32)) contrast(1.12) saturate(2.1);
   mix-blend-mode: color-dodge;
 }
-.tcg.lit.foil-gold .foil {
+body.fx-classic .tcg.lit.foil-gold .foil {
   opacity: 0.5;
   filter: brightness(calc(0.42 + var(--hyp, 0.12) * 0.32)) contrast(1.12) saturate(2.1);
 }
-.foil-gold .foil::after {
+body.fx-classic .foil-gold .foil::after {
   opacity: 0.5;
   background: linear-gradient(
     102deg,
@@ -1366,7 +1367,7 @@ h1 em { font-style: normal; color: var(--gold); }
 
 /* Mega Attack Rare: full-card foil, punchier than a Double Rare ex. Magenta
    and lime follow the two-tone star on the printed rarity mark. */
-.foil-mega-attack .foil {
+body.fx-classic .foil-mega-attack .foil {
   opacity: 0.36;
   mix-blend-mode: screen;
   background-image:
@@ -1397,11 +1398,11 @@ h1 em { font-style: normal; color: var(--gold); }
   background-blend-mode: overlay, normal, overlay, normal;
   filter: brightness(calc(0.66 + var(--hyp, 0.12) * 0.38)) contrast(1.22) saturate(1.55);
 }
-.tcg.lit.foil-mega-attack .foil {
+body.fx-classic .tcg.lit.foil-mega-attack .foil {
   opacity: 0.48;
   filter: brightness(calc(0.66 + var(--hyp, 0.12) * 0.38)) contrast(1.22) saturate(1.55);
 }
-.foil-mega-attack .foil::after {
+body.fx-classic .foil-mega-attack .foil::after {
   opacity: 0.5;
   background: linear-gradient(
     96deg,
@@ -1413,7 +1414,7 @@ h1 em { font-style: normal; color: var(--gold); }
 
 /* Black White Rare: same stamped swirl as SARs, kept silver. Overlay so the
    linework stays readable; metal + swirl catch as white, not a colour wash. */
-.foil-bwr .foil {
+body.fx-classic .foil-bwr .foil {
   opacity: 0.28;
   mix-blend-mode: overlay;
   background-image:
@@ -1462,11 +1463,11 @@ h1 em { font-style: normal; color: var(--gold); }
   background-blend-mode: overlay, overlay, overlay, overlay, overlay, soft-light, soft-light, normal;
   filter: brightness(calc(0.96 + var(--hyp, 0.12) * 0.14)) contrast(1.2) saturate(0.08);
 }
-.tcg.lit.foil-bwr .foil {
+body.fx-classic .tcg.lit.foil-bwr .foil {
   opacity: 0.4;
   filter: brightness(calc(0.96 + var(--hyp, 0.12) * 0.14)) contrast(1.2) saturate(0.08);
 }
-.foil-bwr .foil::before {
+body.fx-classic .foil-bwr .foil::before {
   opacity: 0.32;
   mix-blend-mode: overlay;
   background-image:
@@ -1478,7 +1479,7 @@ h1 em { font-style: normal; color: var(--gold); }
     calc(var(--px) * -18px) calc(var(--py) * 14px);
   background-blend-mode: overlay, overlay;
 }
-.foil-bwr .foil::after {
+body.fx-classic .foil-bwr .foil::after {
   opacity: 0.34;
   mix-blend-mode: soft-light;
   background-image:
@@ -1490,48 +1491,46 @@ h1 em { font-style: normal; color: var(--gold); }
   background-size: 150% 150%;
   background-position: var(--mx, 50%) var(--my, 50%);
 }
-
-.spread-card .tcg,
-.slot-face .tcg,
-.inspect-art .tcg,
-.focus-card.flipped .face-back .tcg,
-.home-float .tcg,
-.home-film .tcg {
+body.fx-classic .spread-card .tcg,
+body.fx-classic .slot-face .tcg,
+body.fx-classic .inspect-art .tcg,
+body.fx-classic .focus-card.flipped .face-back .tcg,
+body.fx-classic .home-float .tcg,
+body.fx-classic .home-film .tcg {
   transition: transform 0.18s ease;
 }
-.spread-card .tcg.lit,
-.slot-face .tcg.lit,
-.inspect-art .tcg.lit,
-.focus-card.flipped:not(.flipping) .face-back .tcg.lit,
-.home-float .tcg.lit,
-.home-film .tcg.lit {
+body.fx-classic .spread-card .tcg.lit,
+body.fx-classic .slot-face .tcg.lit,
+body.fx-classic .inspect-art .tcg.lit,
+body.fx-classic .focus-card.flipped:not(.flipping) .face-back .tcg.lit,
+body.fx-classic .home-float .tcg.lit,
+body.fx-classic .home-film .tcg.lit {
   transform: perspective(760px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.05);
 }
-.focus-card.flipping .tcg,
-.focus-card.flipping .tcg.lit {
+body.fx-classic .focus-card.flipping .tcg,
+body.fx-classic .focus-card.flipping .tcg.lit {
   transform: none !important;
   transition: none;
 }
-
-.tcg.holo img {
+body.fx-classic .tcg.holo img {
   filter: drop-shadow(0 0 14px rgba(255, 186, 70, 0.48));
 }
 /* With the foil patterns gone, the edge glow is what marks a card as foiled,
    so holo and reverse get distinct colours rather than sharing one. */
-.tcg.rare-glow img {
+body.fx-classic .tcg.rare-glow img {
   filter: drop-shadow(0 0 11px rgba(150, 195, 255, 0.38));
 }
-.tcg.reverse img {
+body.fx-classic .tcg.reverse img {
   filter:
     drop-shadow(0 0 3px rgba(190, 240, 255, 0.5))
     drop-shadow(0 0 15px rgba(120, 215, 255, 0.42));
 }
-.tcg.special-illustration-rare img,
-.tcg.mega-hyper-rare img {
+body.fx-classic .tcg.special-illustration-rare img,
+body.fx-classic .tcg.mega-hyper-rare img {
   filter: drop-shadow(0 0 18px rgba(255, 214, 120, 0.55));
 }
 /* Hit rarities glint a touch faster and brighter than commons. */
-.tcg.holo:not(.lit) .foil::after {
+body.fx-classic .tcg.holo:not(.lit) .foil::after {
   animation-duration: 4.4s;
 }
 

@@ -1,0 +1,37 @@
+# Licensing and attribution
+
+poke-pack.rip is licensed under the **GNU General Public License v3.0**. The
+full text is in [LICENSE](LICENSE).
+
+It is GPL-3 because the card holofoil effects are derived from
+[pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) by Simon
+Goellner (@simeydotme), which is GPL-3. Serving that CSS to a browser conveys
+it, so the combined work carries the same licence. That is a deliberate
+choice, not an accident — the effects were worth it.
+
+## Third-party work
+
+| What | Who | Licence |
+|---|---|---|
+| Holofoil CSS in `css/holo/` — the shine and glare layer maths, the pointer variable model, and the spring-damped interaction | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
+| `assets/foil/reference/vmaxbg.jpg` and `glitter.png`, copied from the upstream `public/img/` directory | [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css/tree/main/public/img) | GPL-3.0 repository; upstream also credits Vecteezy for some backgrounds |
+| Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
+
+`css/holo/` is adapted rather than copied verbatim: the selectors are remapped
+from simey's `.card__translater / .card__rotator / .card__shine / .card__glare`
+structure onto this project's flatter `.tcg > img + .foil + .glare`, and the
+rarity keys are remapped from the Sword & Shield era names his demo uses to
+the Scarlet & Violet and Mega Evolution rarities this site actually deals in.
+Changes are noted at the top of each file.
+
+The original per-rarity effect system this project shipped before is still
+here, in `css/app.css`, and is selectable in Settings as **Classic**. It is
+original work and not derived from pokemon-cards-css.
+
+## Not third-party, but not ours either
+
+Card names, numbers, artists and scans match the public Pokémon TCG card
+database. poke-pack.rip is a fan-made simulator and is not affiliated with
+Nintendo, Game Freak, Wizards of the Coast, or The Pokémon Company. The GPL
+covers this project's own code; it makes no claim over Pokémon trademarks or
+card artwork.

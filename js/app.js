@@ -595,12 +595,17 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   const reverse = card.reverse ? "reverse" : "";
   const evo = foilLayout(card);
   const pattern = foilPattern(card);
+  // These monochrome printings need different light response: color-dodge
+  // cannot reveal relief on white stock and bleaches Victini's red lacquer.
+  const finish = card.rarity === "Black White Rare"
+    ? (card.name === "Reshiram ex" ? "pearl" : card.name === "Victini" ? "ruby" : "silver")
+    : "";
   // Only the window foils read --win-owner. The whole-card patterns (ex, ultra,
   // IR, SIR, gold) print shiny edge to edge, portrait included, so they take no
   // layout mask at all.
   const owner = evo === "foil-owner" ? ownerWindow(card) : "";
   const load = lazy ? ` loading="lazy" decoding="async"` : ` decoding="async"`;
-  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo}"
+  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo}" data-finish="${finish}"
     style="--art:url('${esc(assetUrl(src))}')${owner ? `;--win-owner:url('${esc(owner)}')` : ""}">
     <img src="${esc(src)}" alt="${esc(card.name)}"${load} />
     <span class="foil" aria-hidden="true"></span>
@@ -621,7 +626,7 @@ function setOwned() {
 
 function numberLine(card) {
   if (card.energy || card.number === "—") return "Energy";
-  const total = String(liveSet.printedTotal);
+  const total = String(setForCard(card).printedTotal);
   const width = Math.max(3, total.length);
   return `${String(card.number).padStart(width, "0")}/${total.padStart(width, "0")}`;
 }
@@ -2656,6 +2661,16 @@ const SETTING_GROUPS = [
     title: "Cards",
     note: "How cards look in the binder, the spread, and the inspector.",
     rows: [
+      {
+        key: "fx",
+        type: "choice",
+        label: "Card effects",
+        note: "Holo is the newer foil engine — springier, glossier, closer to a card under a lamp. Classic is the original, which reads the printed holo windows more literally.",
+        options: [
+          ["holo", "Holo"],
+          ["classic", "Classic"],
+        ],
+      },
       { key: "shine", type: "toggle", label: "Card shine", note: "Gloss highlight that follows your cursor across a card." },
       { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward your finger or cursor in 3D." },
       { key: "stamps", type: "toggle", label: "Rarity stamps", note: "Off by default. Small rarity mark in the corner of each card." },
@@ -2797,7 +2812,11 @@ function renderSettings() {
 }
 
 function applySettings() {
-  const { shine, tilt, stamps, motion, flash, foil, binder } = state.settings;
+  const { shine, tilt, stamps, motion, flash, foil, binder, fx } = state.settings;
+  // Exactly one foil engine paints at a time; css/holo/ and the .tcg foil
+  // rules in app.css both target the same two layers, so they cannot overlap.
+  document.body.classList.toggle("fx-holo", fx !== "classic");
+  document.body.classList.toggle("fx-classic", fx === "classic");
   document.body.classList.toggle("no-shine", !shine);
   document.body.classList.toggle("no-tilt", !tilt);
   document.body.classList.toggle("no-stamps", !stamps);
@@ -4980,13 +4999,200 @@ let litCard = null;
 let glareRaf = 0;
 let glarePointer = null;
 
+const SPRING_VARS = ["--mx", "--my", "--px", "--py", "--hyp", "--tilt-x", "--tilt-y"];
+const HOLO_VARS = [
+  "--pointer-x",
+  "--pointer-y",
+  "--pointer-from-center",
+  "--pointer-from-top",
+  "--pointer-from-left",
+  "--card-opacity",
+  "--rotate-x",
+  "--rotate-y",
+  "--background-x",
+  "--background-y",
+  "--card-scale",
+];
+
 function clearGlare() {
+  if (springRaf) cancelAnimationFrame(springRaf);
+  springRaf = 0;
+  springLast = 0;
   if (!litCard) return;
-  litCard.classList.remove("lit");
-  ["--mx", "--my", "--px", "--py", "--hyp", "--tilt-x", "--tilt-y"].forEach((p) =>
-    litCard.style.removeProperty(p)
-  );
+  litCard.classList.remove("lit", "settling");
+  [...SPRING_VARS, ...HOLO_VARS].forEach((p) => litCard.style.removeProperty(p));
   litCard = null;
+  springs = null;
+}
+
+/**
+ * A damped spring, one scalar per instance.
+ *
+ * This is svelte/motion's `spring` integrator, which is what pokemon-cards-css
+ * drives its pointer variables through. It matters more than any single
+ * gradient in the stylesheets: reading the pointer straight into the CSS
+ * variables — which is what this file used to do — pins the foil to the cursor
+ * exactly, and a highlight that cannot lag or overshoot reads as a texture
+ * sliding under glass rather than light moving on foil. Under-damped is the
+ * whole point; do not "fix" the overshoot.
+ *
+ * dt is normalised to 60fps steps so the motion is frame-rate independent.
+ */
+class Spring {
+  constructor(value, stiffness, damping) {
+    this.value = value;
+    this.target = value;
+    this.last = value;
+    this.stiffness = stiffness;
+    this.damping = damping;
+    this.settled = true;
+  }
+
+  set(target) {
+    if (target !== this.target) this.settled = false;
+    this.target = target;
+  }
+
+  /** Snap straight there — used when a card is first picked up. */
+  jump(target) {
+    this.value = target;
+    this.last = target;
+    this.target = target;
+    this.settled = true;
+  }
+
+  step(dt) {
+    if (this.settled) return this.value;
+    const delta = this.target - this.value;
+    const velocity = (this.value - this.last) / (dt || 1);
+    const accel = this.stiffness * delta - this.damping * velocity;
+    const move = (velocity + accel) * dt;
+    this.last = this.value;
+    // 0.01 is svelte's default precision. Below it the motion is invisible and
+    // holding the frame loop open costs a wake-up per card per frame.
+    if (Math.abs(move) < 0.01 && Math.abs(delta) < 0.01) {
+      this.value = this.target;
+      this.settled = true;
+      return this.value;
+    }
+    this.value += move;
+    return this.value;
+  }
+}
+
+// Live while the pointer is on a card, and for the settle after it leaves.
+const TRACK = { stiffness: 0.066, damping: 0.25 };
+// Letting go is slower and looser than tracking, so the card drifts back
+// rather than snapping — the release is half of what sells the material.
+const SNAP = { stiffness: 0.01, damping: 0.06 };
+
+let springs = null;
+let springRaf = 0;
+let springLast = 0;
+
+function makeSprings() {
+  const { stiffness: s, damping: d } = TRACK;
+  return {
+    rotX: new Spring(0, s, d),
+    rotY: new Spring(0, s, d),
+    glareX: new Spring(50, s, d),
+    glareY: new Spring(50, s, d),
+    glareO: new Spring(0, s, d),
+    bgX: new Spring(50, s, d),
+    bgY: new Spring(50, s, d),
+    scale: new Spring(1, s, d),
+  };
+}
+
+function springMode(mode) {
+  if (!springs) return;
+  for (const spring of Object.values(springs)) {
+    spring.stiffness = mode.stiffness;
+    spring.damping = mode.damping;
+    spring.settled = false;
+  }
+}
+
+/** Linear remap, the same compression simey applies to the background layers. */
+function adjust(value, fromMin, fromMax, toMin, toMax) {
+  return toMin + ((toMax - toMin) * (value - fromMin)) / (fromMax - fromMin);
+}
+
+/**
+ * Integrate every spring and write the frame.
+ *
+ * Runs on its own loop rather than off pointermove: the settle after the
+ * pointer leaves has no events behind it, and that trailing motion is exactly
+ * what a card is missing when it just stops dead where you left it.
+ */
+function stepSprings(now) {
+  springRaf = 0;
+  if (!springs || !litCard) return;
+  const dt = Math.min(3, springLast ? ((now - springLast) / 1000) * 60 : 1);
+  springLast = now;
+
+  let moving = false;
+  for (const spring of Object.values(springs)) {
+    spring.step(dt);
+    if (!spring.settled) moving = true;
+  }
+
+  const el = litCard;
+  const px = springs.glareX.value / 100;
+  const py = springs.glareY.value / 100;
+  el.style.setProperty("--pointer-x", `${springs.glareX.value.toFixed(2)}%`);
+  el.style.setProperty("--pointer-y", `${springs.glareY.value.toFixed(2)}%`);
+  el.style.setProperty("--pointer-from-left", px.toFixed(3));
+  el.style.setProperty("--pointer-from-top", py.toFixed(3));
+  el.style.setProperty(
+    "--pointer-from-center",
+    Math.min(1, Math.hypot(px - 0.5, py - 0.5) / 0.5).toFixed(3)
+  );
+  el.style.setProperty("--card-opacity", springs.glareO.value.toFixed(3));
+  el.style.setProperty("--background-x", `${springs.bgX.value.toFixed(2)}%`);
+  el.style.setProperty("--background-y", `${springs.bgY.value.toFixed(2)}%`);
+  el.style.setProperty("--card-scale", springs.scale.value.toFixed(4));
+  if (state.settings.tilt) {
+    el.style.setProperty("--rotate-x", `${springs.rotX.value.toFixed(2)}deg`);
+    el.style.setProperty("--rotate-y", `${springs.rotY.value.toFixed(2)}deg`);
+  }
+
+  if (moving) springRaf = requestAnimationFrame(stepSprings);
+  // Fully settled at rest means the pointer has gone and the card is home.
+  else if (springs.glareO.target === 0) clearGlare();
+}
+
+function runSprings() {
+  if (!springRaf) {
+    springLast = 0;
+    springRaf = requestAnimationFrame(stepSprings);
+  }
+}
+
+/**
+ * Send the card home on the loose spring and let it coast.
+ *
+ * `.lit` comes off immediately so the CSS opacity transitions start now, but
+ * the element keeps its variables until the springs actually arrive —
+ * stepSprings() calls clearGlare() once everything has settled at rest.
+ */
+function releaseGlare() {
+  if (!litCard || !springs || reduceMotion()) {
+    clearGlare();
+    return;
+  }
+  litCard.classList.remove("lit");
+  litCard.classList.add("settling");
+  springMode(SNAP);
+  springs.glareX.set(50);
+  springs.glareY.set(50);
+  springs.glareO.set(0);
+  springs.bgX.set(50);
+  springs.bgY.set(50);
+  springs.rotX.set(0);
+  springs.rotY.set(0);
+  springs.scale.set(1);
+  runSprings();
 }
 
 function tcgFromEvent(e) {
@@ -5012,17 +5218,34 @@ function paintGlare() {
     return;
   }
   const face = tcgFromEvent(e);
+  // Pointer left every card: let this one drift home rather than cutting it,
+  // which is the half of the motion that reads as weight.
+  if (!face && litCard) {
+    releaseGlare();
+    return;
+  }
   if (face !== litCard) {
     clearGlare();
     litCard = face;
-    if (litCard) litCard.classList.add("lit");
+    if (litCard) {
+      litCard.classList.add("lit");
+      springs = makeSprings();
+    }
   }
   if (!litCard) return;
+  // releaseGlare() drops .lit but keeps the element while its springs coast
+  // home. Coming back to the same card during that settle takes the branch
+  // above as a no-op, so the class has to be put back here or the card keeps
+  // its variables and loses every rule that keys off .lit.
+  litCard.classList.add("lit");
+  litCard.classList.remove("settling");
   const r = litCard.getBoundingClientRect();
   if (!r.width || !r.height) return;
   const px = clamp((e.clientX - r.left) / r.width, 0, 1);
   const py = clamp((e.clientY - r.top) / r.height, 0, 1);
   const hyp = Math.min(1, Math.hypot(px - 0.5, py - 0.5) * 2);
+
+  // The classic engine reads the pointer straight, exactly as it always has.
   litCard.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
   litCard.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
   litCard.style.setProperty("--px", px.toFixed(3));
@@ -5032,6 +5255,27 @@ function paintGlare() {
     litCard.style.setProperty("--tilt-y", `${((px - 0.5) * 16).toFixed(2)}deg`);
     litCard.style.setProperty("--tilt-x", `${((0.5 - py) * 16).toFixed(2)}deg`);
   }
+
+  // The holo engine gets the same pointer through springs. Targets only —
+  // stepSprings() owns the writing, so the settle keeps running after the
+  // pointer has gone and there are no more events to hang it off.
+  if (!springs) return;
+  springMode(TRACK);
+  const pct = { x: px * 100, y: py * 100 };
+  const center = { x: pct.x - 50, y: pct.y - 50 };
+  springs.glareX.set(pct.x);
+  springs.glareY.set(pct.y);
+  springs.glareO.set(1);
+  // Compressed well inside 0-100: at full range the banded gradients sweep
+  // right off the card at the edges and the foil reads as empty there.
+  springs.bgX.set(adjust(pct.x, 0, 100, 37, 63));
+  springs.bgY.set(adjust(pct.y, 0, 100, 33, 67));
+  const reduced = reduceMotion();
+  springs.rotX.set(state.settings.tilt && !reduced ? -(center.x / 3.5) : 0);
+  springs.rotY.set(state.settings.tilt && !reduced ? center.y / 3.5 : 0);
+  springs.scale.set(reduced ? 1 : 1.02);
+  if (reduced) Object.values(springs).forEach((spring) => spring.jump(spring.target));
+  runSprings();
 }
 
 function queueGlare(e) {
@@ -5054,8 +5298,14 @@ document.addEventListener(
 );
 
 document.addEventListener("pointerleave", (e) => {
-  if (e.target === document.documentElement || e.pointerType === "mouse") clearGlare();
+  if (e.target === document.documentElement || e.pointerType === "mouse") releaseGlare();
 });
+
+// Touch has no hover-out event: release the coating after a tap or cancelled drag.
+document.addEventListener("pointerup", (e) => {
+  if (e.pointerType !== "mouse") releaseGlare();
+});
+document.addEventListener("pointercancel", releaseGlare);
 
 els.doneBtn.addEventListener("click", finishRip);
 els.leavePack?.addEventListener("click", finishRip);

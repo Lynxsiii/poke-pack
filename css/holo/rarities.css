@@ -1,0 +1,547 @@
+/*
+ * Per-rarity holofoil — adapted from pokemon-cards-css by Simon Goellner
+ * (@simeydotme), https://github.com/simeydotme/pokemon-cards-css, GPL-3.0.
+ * See NOTICE.md and css/holo/base.css.
+ *
+ * The mapping problem this file solves: upstream is built for the Sword &
+ * Shield era and keys off `data-rarity="rare holo v"`, `"rare secret"` and so
+ * on. This site plays Scarlet & Violet and Mega Evolution, whose rarities do
+ * not line up one to one, and foilClass() in js/app.js has already resolved
+ * every card to a `foil-*` class. So each effect is matched to the printing it
+ * most resembles rather than to a name:
+ *
+ *   foil-holo          window holo            <- regular holo
+ *   foil-reverse       cosmos reverse         <- reverse holo
+ *   foil-ex            ex full art            <- v full art
+ *   foil-ir            illustration rare      <- rainbow holo, glitter-led
+ *   foil-sir           special illustration   <- textured diffraction
+ *   foil-ultra         ultra rare             <- vmax
+ *   foil-gold          hyper / mega hyper     <- secret rare (gold)
+ *   foil-mega-attack   mega attack rare       <- rainbow holo
+ *   foil-bwr           black white rare       <- secret rare, kept silver
+ *
+ * Full-art texture and glitter use the upstream reference assets. Window
+ * masks come from windows.css. Generated ridge maps are Classic-only.
+ */
+
+/* ---- Window holo ---------------------------------------------------------
+   Rare, ACE SPEC, and anything else that prints shiny only inside the
+   illustration window. The scanline layer is the signature: 1px bands under
+   `overlay` are what stop the rainbow reading as a flat gradient. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo .foil {
+  --scanline-space: 1px;
+  --bars: 3%;
+  --bar-color: hsla(0, 0%, 70%, 1);
+  --bar-bg: hsla(0, 0%, 0%, 1);
+
+  background-image:
+    repeating-linear-gradient(
+      110deg,
+      var(--violet), var(--blue), var(--green), var(--yellow), var(--red),
+      var(--violet), var(--blue), var(--green), var(--yellow), var(--red),
+      var(--violet), var(--blue), var(--green), var(--yellow), var(--red)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      #000 calc(var(--scanline-space) * 0),
+      #000 calc(var(--scanline-space) * 2),
+      #666 calc(var(--scanline-space) * 2),
+      #666 calc(var(--scanline-space) * 4)
+    );
+  background-position:
+    calc(((50% - var(--background-x)) * 2.6) + 50%)
+      calc(((50% - var(--background-y)) * 3.5) + 50%),
+    center center;
+  background-size: 400% 400%, cover;
+  background-blend-mode: overlay;
+  filter: brightness(1.1) contrast(1.1) saturate(1.2);
+  mix-blend-mode: color-dodge;
+}
+
+/* The twin bar layers, counter-tracked. Two of them at different rates is the
+   parallax that reads as two reflective plies at slightly different depths —
+   one bar layer alone is a sweep, not a material. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo .foil::before {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      var(--bar-bg) calc(var(--bars) * 2),
+      var(--bar-color) calc(var(--bars) * 3),
+      var(--bar-bg) calc(var(--bars) * 3.5),
+      var(--bar-color) calc(var(--bars) * 4),
+      var(--bar-bg) calc(var(--bars) * 5),
+      var(--bar-bg) calc(var(--bars) * 14)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      var(--bar-bg) calc(var(--bars) * 2),
+      var(--bar-color) calc(var(--bars) * 3),
+      var(--bar-bg) calc(var(--bars) * 3.5),
+      var(--bar-color) calc(var(--bars) * 4),
+      var(--bar-bg) calc(var(--bars) * 5),
+      var(--bar-bg) calc(var(--bars) * 10)
+    );
+  background-position:
+    calc((((50% - var(--background-x)) * 1.65) + 50%) + (var(--background-y) * 0.5))
+      var(--background-x),
+    calc((((50% - var(--background-x)) * -0.9) + 50%) - (var(--background-y) * 0.75))
+      var(--background-y);
+  background-size: 200% 200%, 200% 200%;
+  background-blend-mode: screen;
+  filter: brightness(1.15) contrast(1.1);
+  mix-blend-mode: hard-light;
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo .foil::after {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 90%, 0.8) 0%,
+    hsla(0, 0%, 78%, 0.1) 25%,
+    hsl(0, 0%, 0%) 90%
+  );
+  background-size: cover;
+  mix-blend-mode: luminosity;
+  filter: brightness(0.6) contrast(4);
+}
+
+/* ---- Reverse holo --------------------------------------------------------
+   Frame and text shine, the photo stays matte — the masking for that is
+   already in app.css. Opacity falls off with distance from the pointer, so
+   the shine is a moving patch rather than the whole frame lighting at once. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse .foil {
+  --foil-tex: var(--holo-cosmos);
+  background-image:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y), #fff 5%, #000 50%, #fff 80%),
+    linear-gradient(-45deg, #000 15%, #fff, #000 85%),
+    var(--foil-tex);
+  background-blend-mode: soft-light, difference;
+  background-size: 120% 120%, 200% 200%, 180px 180px;
+  background-position:
+    center center,
+    calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top)),
+    center center;
+  filter: brightness(0.55) contrast(1.5) saturate(1);
+  mix-blend-mode: color-dodge;
+  opacity: calc(
+    ((1.5 * var(--card-opacity)) - var(--pointer-from-center)) * var(--foil-strength, 1)
+  );
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse .foil::after {
+  background-image: none;
+}
+/* The two stamped reverses swap the texture and keep everything else. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-pokeball .foil {
+  --foil-tex: var(--holo-pokeball);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-masterball .foil {
+  --foil-tex: var(--holo-masterball);
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse .glare {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%,
+    hsla(0, 0%, 100%, 0.5) 20%,
+    hsla(0, 0%, 0%, 0.75) 90%
+  );
+  filter: brightness(0.7) contrast(1.5);
+}
+
+/* ---- Full-art foils ------------------------------------------------------
+   ex and Ultra Rare print shiny edge to edge over the illustration. The four
+   stacked layers — texture, vertical sunpillar ramp, a steep tinsel ramp, and
+   a pointer-centred darkener — blended soft-light / hue / hard-light are what
+   give the oil-slick colour shift instead of a rainbow sliding past. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .foil {
+  --space: 5%;
+  --angle: 133deg;
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::after {
+  --foil-tex: var(--holo-weave);
+  background-image:
+    var(--foil-tex),
+    repeating-linear-gradient(
+      0deg,
+      var(--sunpillar-clr-1) calc(var(--space) * 1),
+      var(--sunpillar-clr-2) calc(var(--space) * 2),
+      var(--sunpillar-clr-3) calc(var(--space) * 3),
+      var(--sunpillar-clr-4) calc(var(--space) * 4),
+      var(--sunpillar-clr-5) calc(var(--space) * 5),
+      var(--sunpillar-clr-6) calc(var(--space) * 6),
+      var(--sunpillar-clr-1) calc(var(--space) * 7)
+    ),
+    repeating-linear-gradient(
+      var(--angle),
+      #0e152e 0%,
+      hsl(180, 10%, 60%) 3.8%,
+      hsl(180, 29%, 66%) 4.5%,
+      hsl(180, 10%, 60%) 5.2%,
+      #0e152e 10%,
+      #0e152e 12%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 0%, 0.1) 12%,
+      hsla(0, 0%, 0%, 0.15) 20%,
+      hsla(0, 0%, 0%, 0.25) 120%
+    );
+  background-position:
+    center center,
+    0% var(--background-y),
+    calc(var(--background-x) + (var(--background-y) * 0.2)) var(--background-y),
+    var(--background-x) var(--background-y);
+  background-blend-mode: soft-light, hue, hard-light;
+  background-size: 220px 220px, 200% 700%, 300% 100%, 200% 100%;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.4)) contrast(1.4)
+    saturate(2.25);
+}
+
+/* The counter-tracked twin, mirrored on both axes and blended `exclusion`.
+   Mirroring is the point: the two layers cross rather than travel together,
+   and the crossing is where the colour flips. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::after {
+  background-position:
+    center center,
+    0% var(--background-y),
+    calc((var(--background-x) + (var(--background-y) * 0.2)) * -1)
+      calc(var(--background-y) * -1),
+    var(--background-x) var(--background-y);
+  background-size: 220px 220px, 200% 400%, 195% 100%, 200% 100%;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.8)) contrast(1.5)
+    saturate(1.25);
+  mix-blend-mode: exclusion;
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::before {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%,
+    hsla(0, 0%, 0%, 0.9) 60%
+  );
+  background-size: cover;
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.4);
+}
+
+/* ---- Ultra Rare ----------------------------------------------------------
+   Same family as ex but heavier: a steeper -33deg ramp under `difference`
+   makes the colour invert through the sweep rather than cycle, which is what
+   the textured ex full arts do under a light. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .foil {
+  --space: 6%;
+  --foil-tex: var(--holo-embossed);
+  background-image:
+    var(--foil-tex),
+    repeating-linear-gradient(
+      -33deg,
+      hsl(2, 70%, 47%) calc(var(--space) * 1),
+      hsl(228, 60%, 64%) calc(var(--space) * 2),
+      hsl(176, 55%, 39%) calc(var(--space) * 3),
+      hsl(123, 68%, 35%) calc(var(--space) * 4),
+      hsl(283, 75%, 57%) calc(var(--space) * 5),
+      hsl(2, 70%, 47%) calc(var(--space) * 6)
+    ),
+    repeating-linear-gradient(
+      var(--angle),
+      hsla(227, 53%, 12%, 0.5) 0%,
+      hsl(180, 10%, 50%) 2.5%,
+      hsl(83, 50%, 35%) 5%,
+      hsl(180, 10%, 50%) 7.5%,
+      hsla(227, 53%, 12%, 0.5) 10%,
+      hsla(227, 53%, 12%, 0.5) 15%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(189, 76%, 77%, 0.6) 0%,
+      hsla(147, 59%, 77%, 0.6) 25%,
+      hsla(271, 55%, 69%, 0.6) 50%,
+      hsla(355, 56%, 72%, 0.6) 75%
+    );
+  background-blend-mode: difference, luminosity, soft-light;
+  background-size: 60% 30%, 1100% 1100%, 600% 600%, 200% 200%;
+  background-position:
+    center,
+    var(--background-x) var(--background-y),
+    var(--background-x) var(--background-y),
+    var(--background-x) var(--background-y);
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.4)) contrast(2) saturate(1);
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .foil::after {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      var(--sunpillar-clr-1) calc(var(--space) * 1),
+      var(--sunpillar-clr-2) calc(var(--space) * 2),
+      var(--sunpillar-clr-3) calc(var(--space) * 3),
+      var(--sunpillar-clr-4) calc(var(--space) * 4),
+      var(--sunpillar-clr-5) calc(var(--space) * 5),
+      var(--sunpillar-clr-6) calc(var(--space) * 6),
+      var(--sunpillar-clr-1) calc(var(--space) * 7)
+    ),
+    repeating-linear-gradient(
+      var(--angle),
+      #0e152e 0%,
+      hsl(180, 10%, 60%) 3.8%,
+      hsl(180, 29%, 66%) 4.5%,
+      hsl(180, 10%, 60%) 5.2%,
+      #0e152e 10%,
+      #0e152e 12%
+    );
+  background-blend-mode: hue, hard-light;
+  background-size: 200% 700%, 300% 100%, 200% 100%;
+  background-position:
+    0% var(--background-y),
+    var(--background-x) var(--background-y),
+    var(--background-x) var(--background-y);
+  mix-blend-mode: lighten;
+  opacity: calc(
+    (0.3 * var(--card-opacity)) + var(--card-opacity) * var(--pointer-from-center) * 0.5
+  );
+  filter: saturate(1.5);
+}
+
+/* ---- Illustration Rare ---------------------------------------------------
+   Glitter-led rather than banded. IRs are painted full arts with a fine
+   sparkle rather than a directional sheen, so the moving part is the glitter
+   tile shifting a pixel or two against a slow colour wash. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack .foil {
+  --r-clr-1: hsl(0, 57%, 37%);
+  --r-clr-2: hsl(40, 53%, 39%);
+  --r-clr-3: hsl(90, 60%, 35%);
+  --r-clr-4: hsl(180, 60%, 35%);
+  --r-clr-5: hsl(180, 60%, 35%);
+  --r-clr-6: hsl(210, 57%, 39%);
+  --r-clr-7: hsl(280, 55%, 31%);
+
+  background-image:
+    linear-gradient(-45deg, var(--r-clr-1), var(--r-clr-5)),
+    var(--holo-glitter),
+    linear-gradient(
+      -30deg,
+      var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4),
+      var(--r-clr-5), var(--r-clr-6), var(--r-clr-7),
+      var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4),
+      var(--r-clr-5), var(--r-clr-6), var(--r-clr-7),
+      var(--r-clr-1)
+    );
+  background-blend-mode: luminosity, soft-light;
+  background-size: 200% 200%, 140px 140px, 400% 400%;
+  background-position:
+    calc(25% + (50% * var(--pointer-from-left))) calc(25% + (50% * var(--pointer-from-top))),
+    center center,
+    calc(25% + (var(--pointer-x) / 2)) calc(25% + (var(--pointer-y) / 2));
+  filter: brightness(calc((var(--pointer-from-center) * 0.25) + 0.6)) contrast(2.2)
+    saturate(0.75);
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack .foil::after {
+  background-image:
+    var(--holo-glitter),
+    linear-gradient(
+      -60deg,
+      var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4),
+      var(--r-clr-5), var(--r-clr-6), var(--r-clr-7),
+      var(--r-clr-1), var(--r-clr-2), var(--r-clr-3), var(--r-clr-4),
+      var(--r-clr-5), var(--r-clr-6), var(--r-clr-7),
+      var(--r-clr-1)
+    );
+  background-blend-mode: soft-light;
+  background-size: 140px 140px, 400% 400%;
+  background-position: center center, var(--pointer-x) var(--pointer-y);
+  filter: brightness(calc((var(--pointer-from-center) * 0.3) + 0.55)) contrast(2) saturate(1);
+  mix-blend-mode: color-dodge;
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack .foil::before {
+  background-image: var(--holo-facet);
+  background-size: 200px 200px;
+  background-position: center center;
+  filter: brightness(2.5) contrast(1);
+  opacity: calc((var(--pointer-from-center) + 0.4) * 0.6);
+  background-blend-mode: difference;
+  mix-blend-mode: darken;
+}
+
+/* Mega Attack Rare runs the same glitter engine hotter and pushed magenta,
+   so it does not read as an Illustration Rare sitting next to one. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack .foil {
+  --r-clr-1: hsl(330, 62%, 42%);
+  --r-clr-3: hsl(280, 60%, 40%);
+  --r-clr-6: hsl(200, 62%, 44%);
+  filter: brightness(calc((var(--pointer-from-center) * 0.3) + 0.68)) contrast(2.3)
+    saturate(1.1);
+}
+
+/* ---- Gold ----------------------------------------------------------------
+   Metal, not rainbow. A conic ramp through only the warm half of the
+   sunpillars, two offset glitter tiles for the milled grain, and a hard gold
+   linear underneath — `lighten` over the top keeps it reading as metal
+   catching light rather than a gold-tinted holo. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .foil {
+  --shift: 1px;
+  background-image:
+    var(--holo-glitter),
+    var(--holo-glitter),
+    conic-gradient(
+      var(--sunpillar-clr-4),
+      var(--sunpillar-clr-5),
+      var(--sunpillar-clr-6),
+      var(--sunpillar-clr-1),
+      var(--sunpillar-clr-4)
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(150, 0%, 0%, 0.98) 10%,
+      hsla(0, 0%, 95%, 0.15) 90%
+    );
+  background-size: 140px 140px, 140px 140px, cover, cover;
+  background-position: 45% 45%, 55% 55%, center center, center center;
+  background-blend-mode: soft-light, hard-light, overlay;
+  mix-blend-mode: color-dodge;
+  filter: brightness(calc(0.4 + (var(--pointer-from-center) * 0.2))) contrast(1) saturate(2.7);
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .foil::before {
+  background-image:
+    var(--holo-metal),
+    linear-gradient(45deg, hsl(46, 95%, 50%), hsl(52, 100%, 69%)),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(10, 20%, 90%, 0.95) 10%,
+      hsl(0, 0%, 0%) 70%
+    );
+  background-size: 200px 200px, cover, cover;
+  background-position: center center, center center, center center;
+  background-blend-mode: hard-light, multiply;
+  mix-blend-mode: lighten;
+  filter: brightness(1.25) contrast(1.25) saturate(0.35);
+  opacity: 0.8;
+}
+
+/* The grain shifts a pixel against the pointer. Tiny on purpose — this is the
+   difference between milled metal and a gradient. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .foil::after {
+  background-image: var(--holo-glitter);
+  background-size: 140px 140px;
+  background-position:
+    calc(50% - ((var(--shift) * 2) * var(--pointer-from-left)) + var(--shift))
+      calc(50% - ((var(--shift) * 2) * var(--pointer-from-top)) + var(--shift));
+  filter: brightness(calc((var(--pointer-from-center) * 0.6) + 0.6)) contrast(1.5);
+  mix-blend-mode: overlay;
+}
+
+/* ---- Black White Rare ----------------------------------------------------
+   The gold engine with the colour taken out. These print as a silver stamped
+   swirl, so saturation goes to almost nothing and the linear underneath goes
+   neutral. Etch-masked like the SIRs when a map exists. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .foil {
+  --shift: 1px;
+  background-image:
+    var(--holo-glitter),
+    var(--holo-glitter),
+    conic-gradient(
+      hsl(220, 12%, 72%),
+      hsl(200, 16%, 86%),
+      hsl(250, 12%, 66%),
+      hsl(210, 14%, 80%),
+      hsl(220, 12%, 72%)
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 0%, 0.98) 10%,
+      hsla(0, 0%, 95%, 0.15) 90%
+    );
+  background-size: 140px 140px, 140px 140px, cover, cover;
+  background-position: 45% 45%, 55% 55%, center center, center center;
+  background-blend-mode: soft-light, hard-light, overlay;
+  mix-blend-mode: color-dodge;
+  filter: brightness(calc(0.5 + (var(--pointer-from-center) * 0.22))) contrast(1.15)
+    saturate(0.35);
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .foil::before {
+  background-image:
+    var(--holo-swirl),
+    linear-gradient(45deg, hsl(215, 10%, 62%), hsl(205, 14%, 84%)),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(210, 12%, 92%, 0.95) 10%,
+      hsl(0, 0%, 0%) 70%
+    );
+  background-size: 220px 220px, cover, cover;
+  background-position: center center, center center, center center;
+  background-blend-mode: hard-light, multiply;
+  mix-blend-mode: lighten;
+  filter: brightness(1.2) contrast(1.3) saturate(0.1);
+  opacity: 0.8;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .foil::after {
+  background-image: var(--holo-glitter);
+  background-size: 140px 140px;
+  background-position:
+    calc(50% - ((var(--shift) * 2) * var(--pointer-from-left)) + var(--shift))
+      calc(50% - ((var(--shift) * 2) * var(--pointer-from-top)) + var(--shift));
+  filter: brightness(calc((var(--pointer-from-center) * 0.6) + 0.6)) contrast(1.5)
+    saturate(0.2);
+  mix-blend-mode: overlay;
+}
+
+/* ---- Glare per family ----------------------------------------------------
+   The full arts get a second, harder glare pass on top. Crushing a white
+   radial with `contrast(3)` collapses the soft falloff into a small hotspot,
+   which is the difference between a gloss coat and a fog. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack .glare {
+  opacity: calc(var(--card-opacity) * 0.8);
+  filter: brightness(0.8) contrast(1.5);
+}
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-holo .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .glare::after {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%,
+    hsla(0, 0%, 39%, 0.25) 55%,
+    hsla(0, 0%, 0%, 0.36) 110%
+  );
+  mix-blend-mode: overlay;
+  filter: brightness(0.6) contrast(3);
+}
+
+/* Match the reference's angle-dependent clear coat on textured full arts. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.75) 0%, black 120%);
+  mix-blend-mode: hard-light;
+  filter: none;
+  opacity: calc(var(--card-opacity) * (0.2 + var(--pointer-from-center) * 0.55));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare::after { background: none; }
+
+

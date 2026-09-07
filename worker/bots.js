@@ -7,9 +7,26 @@
  * a browser takes — so their coins, collections, and titles are earned the
  * way a player's are. Nothing here can mint state the API would refuse.
  *
- * Deliberately one-way: they broadcast, they never answer. No DMs, no friend
- * responses, no profile comments. A room that looks busy is set dressing; an
- * account that answers a person who thinks they made a friend is not.
+ * They answer people. This used to be the opposite — broadcast only, never a
+ * reply to a real visitor — on the reasoning that an account which answers you
+ * and then cannot hold the conversation is worse than one that ignores you.
+ * With worker/llm.js behind them they can hold it, and the old rule had the
+ * bigger cost: someone typing into a room showing six people online and
+ * getting nothing back has learned the room is fake. So bots now answer chat,
+ * accept friend requests, and reply to DMs, and answering a person jumps every
+ * rate limit that paces them talking among each other.
+ *
+ * What has not moved: they still never claim a number their public profile
+ * cannot back up. That is not a politeness rule, it is the one thing a visitor
+ * can actually check — packs opened, coins and the collection are all on the
+ * profile. Rather than banning numbers outright, statFacts() now hands the
+ * model the save's real figures and clean() drops any line using a number that
+ * is not one of them.
+ *
+ * They also cannot do things the site cannot do. There is no trading, so a bot
+ * must never agree to one; the DM brief in llm.js carries those limits, and
+ * every action still goes through handleApi() so nothing here can mint state
+ * the public API would refuse.
  *
  * Off entirely unless `BOT_SECRET` is bound, so dev and preview environments
  * never quietly grow a population.
@@ -17,6 +34,15 @@
 import { PLAYABLE_SETS, sellValue } from "../js/catalog.js";
 import { isHit } from "../js/engine.js";
 import { SHOWCASE_MAX } from "../js/cosmetics.js";
+import {
+  llmReady,
+  voiceLines,
+  hitLine,
+  replyLine,
+  dmLine,
+  bioLine,
+  statFacts,
+} from "./llm.js";
 
 const MINUTE = 60 * 1000;
 const HOUR = 60 * MINUTE;
@@ -35,9 +61,9 @@ const RETRY_MS = 5 * MINUTE;
 // when someone turning it on is looking at it.
 const FIRST_WAKE_MS = 12 * MINUTE;
 
-const WAKE_CHANCE = 0.35;
-const CHAT_CHANCE = 0.12;
-const HIT_CHAT_CHANCE = 0.45;
+const WAKE_CHANCE = 0.55;
+const CHAT_CHANCE = 0.3;
+const HIT_CHAT_CHANCE = 0.6;
 // Rip odds scale with the balance: RIP_FLOOR once a bot can afford one pack,
 // climbing RIP_PER_PACK for every further pack it could cover, capped at
 // RIP_CEIL. A full hourly stack lands at the cap.
@@ -45,24 +71,103 @@ const RIP_FLOOR = 0.15;
 const RIP_CEIL = 0.75;
 const RIP_PER_PACK = 0.05;
 const TITLE_CHANCE = 0.02;
-const REACT_GAP_MS = 8 * MINUTE;
-const REACT_WINDOW_MS = 5 * MINUTE;
-// Reactions are garnish. Left high they crowd out everything a persona
-// actually has to say, and the lounge turns into "same" / "real" / "agreed".
-const REACT_CHANCE = 0.22;
+const REACT_GAP_MS = 3 * MINUTE;
+const REACT_WINDOW_MS = 6 * MINUTE;
+// Reactions between bots are garnish. Left high they crowd out everything a
+// persona actually has to say and the lounge turns into "same" / "real".
+const REACT_CHANCE = 0.4;
 // Worth answering unprompted; anything else needs the second roll below.
 const REACT_EAGER = new Set(["hit", "milestone"]);
 const RECENT_LINES = 10;
-const FRIEND_CHANCE = 0.05;
+const FRIEND_CHANCE = 0.12;
+
+/**
+ * Answering a real person is the exception to every rate limit here.
+ *
+ * Someone types into a room showing six people online. If nothing comes back,
+ * they have learned the room is fake — and that is a worse outcome than any
+ * amount of bot-to-bot noise. So a human message gets answered on sight, by
+ * the first bot online that has not just spoken, ignoring the chat gap and
+ * the reaction cooldown that pace the bots talking among themselves.
+ */
+const HUMAN_REPLY_CHANCE = 0.85;
+const HUMAN_REPLY_WINDOW_MS = 12 * MINUTE;
+// One answer per message. Without this every bot online piles onto the same
+// line and the newcomer gets six replies to "hi".
+const HUMAN_REPLY_GAP_MS = 45 * 1000;
+const DM_CHANCE = 0.8;
+const DM_WINDOW_MS = 24 * HOUR;
 // Every message landed in the same six seconds of every minute, because that
 // is when the cron fires. Real trainers post at whatever second they happen
 // to hit send. Capped well under the tick interval so a slow post cannot run
 // into the next invocation — cron fires once a minute and a tick posts at
 // most a message or two, so the wall-clock cost stays far inside the window.
 const CHAT_JITTER_MS = 11_000;
+/**
+ * Total jitter a tick may sleep, across every bot that speaks.
+ *
+ * The per-post sleep is serial — bots are walked in a loop — so it multiplies.
+ * At the old chat rates two or three spoke per tick and eleven seconds each
+ * was invisible. Turned up for liveliness, ten of them talking put a tick at
+ * two minutes, which overruns the once-a-minute cron and starts stacking
+ * invocations. Past this budget the remaining posts land unjittered; a couple
+ * of messages sharing a second looks like two people typing at once, which is
+ * a far smaller tell than the roster falling behind its own clock.
+ */
+const JITTER_BUDGET_MS = 18_000;
 const LOW_COINS = 20;
-const MAX_ONLINE = 6;
-const MAX_NEW_PER_TICK = 2;
+const MAX_ONLINE = 10;
+const MAX_NEW_PER_TICK = 3;
+
+// ---- Written voice (worker/llm.js) ---------------------------------------
+// Idle chatter is batched: one call refills a persona's pool and the next
+// dozen messages come off it, so the common case costs no request at all.
+const POOL_SIZE = 12;
+const POOL_MIN = 3;
+// Never refill more than one bot per tick. A cron invocation runs the whole
+// roster in sequence, and six bots each waiting on a completion would push the
+// tick towards the next one.
+const MAX_REFILL_PER_TICK = 1;
+const POOL_RETRY_MS = 20 * MINUTE;
+// Bios are public and change rarely; a few days apart reads as someone
+// editing their profile now and then rather than a feed.
+const BIO_MIN_MS = 3 * 24 * HOUR;
+const BIO_MAX_MS = 9 * 24 * HOUR;
+const BIO_CHANCE = 0.04;
+/**
+ * How much of the lounge a bot reads before speaking. The per-bot recent list
+ * stops one account repeating itself; this is what stops the roster as a whole
+ * saying "selling doubles to fund the next one" three times in forty messages,
+ * which is the repetition a reader actually notices.
+ */
+const GLOBAL_RECENT = 30;
+/**
+ * How many of the last speakers a bot checks shapes against. Has to stay well
+ * under the smallest template list (HIT_LINES, 16) or every shape is excluded
+ * at once and the filter falls through to its own fallback every time.
+ */
+const ROOM_VOICES = 8;
+/**
+ * Live completions per tick, across the whole roster. Each one can sit on the
+ * six-second timeout, and the cron fires again in sixty — six bots each
+ * waiting on a hit line would put a tick into the next one's window.
+ */
+const MAX_LIVE_PER_TICK = 5;
+/**
+ * Wall-clock a tick may spend waiting on the model, across every bot.
+ *
+ * The count caps above are not enough on their own: a call can take seven
+ * seconds, retry, and take seven more, so nine of them could run a tick past
+ * the next cron. This is the real backstop — once it passes, everything falls
+ * back to written lines for the rest of the tick and the roster keeps moving.
+ */
+const LLM_BUDGET_MS = 20 * 1000;
+/**
+ * Answering people is exempt from that budget. It is the one call whose whole
+ * value is that it happens now, and a tick that spends its allowance on bots
+ * talking to each other and then cannot answer a visitor has it backwards.
+ */
+const MAX_HUMAN_CALLS_PER_TICK = 3;
 
 /**
  * The sets bots are allowed to open. Scarlet & Violet (sv5 through sv10) is
@@ -302,6 +407,32 @@ async function ensureBotSchema(env) {
     if (!cols.has("last_react_id")) {
       await runDdl(env, "ALTER TABLE bots ADD COLUMN last_react_id INTEGER NOT NULL DEFAULT 0");
     }
+    // Written lines waiting to be said, and the stamps that pace the two
+    // calls that produce them. All three are inert without NVIDIA_API_KEY.
+    if (!cols.has("line_pool")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN line_pool TEXT");
+    }
+    if (!cols.has("pool_at")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN pool_at INTEGER NOT NULL DEFAULT 0");
+    }
+    if (!cols.has("bio_at")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN bio_at INTEGER NOT NULL DEFAULT 0");
+    }
+    // Cached alongside coins so a tick can brief the model on what this bot
+    // can honestly say without reading the whole save back.
+    if (!cols.has("packs")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN packs INTEGER NOT NULL DEFAULT 0");
+    }
+    if (!cols.has("cards")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN cards INTEGER NOT NULL DEFAULT 0");
+    }
+    // Last chat message answered for a real person, and the last DM answered.
+    if (!cols.has("last_human_id")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN last_human_id INTEGER NOT NULL DEFAULT 0");
+    }
+    if (!cols.has("last_dm_at")) {
+      await runDdl(env, "ALTER TABLE bots ADD COLUMN last_dm_at INTEGER NOT NULL DEFAULT 0");
+    }
     schemaReady = true;
   } catch (err) {
     console.error("ensureBotSchema", err);
@@ -466,11 +597,38 @@ async function clearSession(env, row) {
  * is what stops a bot cycling the same four lines all evening, which is the
  * kind of pattern a regular would notice long before anything else.
  */
-async function say(env, call, row, cookie, text, now, kind = "idle", tag = text) {
-  // Spread the post across the minute instead of landing on the cron edge.
-  await sleep(rand(0, CHAT_JITTER_MS));
+async function say(env, call, row, cookie, text, now, kind = "idle", tag = text, ctx = null) {
+  // Claim the line before the jitter sleep, not after the post — and refuse
+  // outright if the room already has it.
+  //
+  // This is the choke point every path goes through, which is why the check
+  // lives here as well as at each generation site. Claiming afterwards left a
+  // window the whole length of the jitter: two bots could each pass their own
+  // staleness check, both sleep, and both post the same sentence, which is
+  // exactly what happened — twice, word for word, to a newcomer's question.
+  if (ctx) {
+    if (stale(text, ctx)) return false;
+    ctx.said.add(text.trim().toLowerCase());
+    ctx.said.add(opening(text));
+    const words = contentWords(text);
+    if (words.size >= 2) ctx.recent.push(words);
+    ctx.tags.add(tag);
+  }
+
+  // Spread the post across the minute instead of landing on the cron edge,
+  // while the tick can still afford it.
+  if (ctx) {
+    const left = JITTER_BUDGET_MS - ctx.slept;
+    if (left > 0) {
+      const wait = rand(0, Math.min(CHAT_JITTER_MS, left));
+      ctx.slept += wait;
+      await sleep(wait);
+    }
+  } else {
+    await sleep(rand(0, CHAT_JITTER_MS));
+  }
   const res = await call("/api/chat", { method: "POST", cookie, body: { body: text } });
-  if (res.status !== 200) return;
+  if (res.status !== 200) return false;
 
   const recent = [tag, ...readRecent(row.recent_lines)].slice(0, RECENT_LINES);
   row.last_chat_at = now;
@@ -481,6 +639,7 @@ async function say(env, call, row, cookie, text, now, kind = "idle", tag = text)
   )
     .bind(now, kind, row.recent_lines, row.user_id)
     .run();
+  return true;
 }
 
 function readRecent(raw) {
@@ -503,19 +662,245 @@ const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
  * "ok that pack was worth it" turned up twice in ten messages. Tracking the
  * template by index catches the shape, which is the part a reader notices.
  */
-function pickTemplate(list, row, prefix) {
+function pickTemplate(list, row, prefix, used = EMPTY_SET) {
   const tagged = list.map((make, i) => ({ tag: `${prefix}#${i}`, make }));
   const recent = new Set(readRecent(row.recent_lines));
-  const fresh = tagged.filter((item) => !recent.has(item.tag));
-  return pick(fresh.length ? fresh : tagged);
+  // A shape is what carries across accounts: "salazzle finally" and "exeggutor
+  // finally" are different strings, so the room's text check never sees them
+  // as a repeat, while a reader clocks the third one immediately.
+  const fresh = tagged.filter((item) => !recent.has(item.tag) && !used.has(item.tag));
+  if (fresh.length) return pick(fresh);
+  const mine = tagged.filter((item) => !recent.has(item.tag));
+  return pick(mine.length ? mine : tagged);
 }
 
-/** Prefer something this bot has not said lately; fall back once the pool runs dry. */
-function pickFresh(pool, row) {
+/**
+ * Prefer something neither this bot nor the room has said lately; fall back
+ * once the pool runs dry.
+ *
+ * `taken` is what the lounge is already showing. Without it the per-bot list
+ * only stops an account repeating *itself*, and twenty-four accounts drawing
+ * from the same sixteen templates still land the same line three times a page
+ * — which is exactly how the roster read before.
+ */
+const EMPTY_SET = new Set();
+
+function pickFresh(pool, row, taken = EMPTY_SET) {
   const list = Array.isArray(pool) && pool.length ? pool : IDLE_LINES;
   const recent = new Set(readRecent(row.recent_lines));
-  const unsaid = list.filter((line) => !recent.has(line));
-  return pick(unsaid.length ? unsaid : list);
+  const unsaid = list.filter(
+    (line) => !recent.has(line) && !taken.has(line.toLowerCase()) && !taken.has(opening(line))
+  );
+  if (unsaid.length) return pick(unsaid);
+  // Room-wide collision only: still better to avoid the room than the pool.
+  const mine = list.filter((line) => !recent.has(line));
+  return pick(mine.length ? mine : list);
+}
+
+/**
+ * The first few words, normalised.
+ *
+ * Exact-string matching missed the way a model actually repeats itself: three
+ * bots answered the same question with "fake coins, spend real time though",
+ * "fake coins, real bad pulls" and "fake coins, real time wasted". Different
+ * strings, obviously the same line. Comparing openings catches those.
+ */
+function opening(text) {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 3)
+    .join(" ");
+}
+
+/** Words worth comparing — the ones that carry what a line is about. */
+const FILLER = new Set([
+  "the","a","an","and","or","but","so","is","it","its","im","i","you","your","my",
+  "me","to","of","in","on","at","for","with","just","some","any","all","this",
+  "that","then","than","get","got","from","not","no","yes","up","out","if","as",
+  "be","are","was","will","would","do","does","did","have","has","too","very",
+  "still","again","one","like","about","though","honestly","actually","really",
+]);
+
+function contentWords(text) {
+  return new Set(
+    String(text || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ")
+      .split(/\s+/)
+      .filter((w) => w.length > 2 && !FILLER.has(w))
+  );
+}
+
+/**
+ * Is this line saying what something in the room already said?
+ *
+ * Openings alone were not enough. A newcomer asking how to start got four
+ * answers — "just open packs, coins come from dupes", "open packs, hoard
+ * coins, repeat", "open packs, dupes turn into coins" — which share almost
+ * every meaningful word and none of the first three. The model mirrors what
+ * it sees in context, so the check has to be about content, not word order.
+ *
+ * Half the significant words in common is the threshold: high enough that two
+ * bots can both mention charizard, low enough to catch a paraphrase.
+ */
+function tooSimilar(text, ctx) {
+  if (!ctx?.recent?.length) return false;
+  const words = contentWords(text);
+  if (words.size < 2) return false;
+  for (const prior of ctx.recent) {
+    let shared = 0;
+    for (const word of words) if (prior.has(word)) shared += 1;
+    if (shared / Math.min(words.size, prior.size) >= 0.5) return true;
+  }
+  return false;
+}
+
+/** Everything a bot checks a candidate line against before saying it. */
+function stale(text, ctx) {
+  return ctx.said.has(String(text).trim().toLowerCase()) ||
+    ctx.said.has(opening(text)) ||
+    tooSimilar(text, ctx);
+}
+
+/** What the lounge is currently showing, lowercased for comparison. */
+function roomRecent(chat) {
+  if (!Array.isArray(chat)) return EMPTY_SET;
+  const out = new Set();
+  for (const msg of chat.slice(-GLOBAL_RECENT)) {
+    const body = typeof msg?.body === "string" ? msg.body.trim().toLowerCase() : "";
+    if (!body) continue;
+    out.add(body);
+    out.add(opening(body));
+  }
+  return out;
+}
+
+/** The word sets tooSimilar() compares against, from what the room shows. */
+function roomWords(chat) {
+  if (!Array.isArray(chat)) return [];
+  return chat
+    .slice(-GLOBAL_RECENT)
+    .map((msg) => contentWords(msg?.body))
+    .filter((set) => set.size >= 2);
+}
+
+function readPool(raw) {
+  if (!raw) return [];
+  try {
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list.filter((x) => typeof x === "string" && x) : [];
+  } catch {
+    return [];
+  }
+}
+
+async function savePool(env, row, list) {
+  row.line_pool = JSON.stringify(list);
+  await env.DB.prepare("UPDATE bots SET line_pool = ? WHERE user_id = ?")
+    .bind(row.line_pool, row.user_id)
+    .run();
+}
+
+/**
+ * Claim one of the tick's live completions, or refuse.
+ *
+ * Everything that calls the model on the hot path goes through here, so the
+ * worst case for a tick is MAX_LIVE_PER_TICK timeouts rather than one per
+ * bot online. A refusal is not an error — the caller falls back to a written
+ * line, which is what it would have said before any of this existed.
+ */
+function claimCall(env, ctx) {
+  if (!llmReady(env)) return false;
+  if (Date.now() > ctx.deadline) return false;
+  if (ctx.calls >= MAX_LIVE_PER_TICK) return false;
+  ctx.calls += 1;
+  return true;
+}
+
+/**
+ * The same claim for a message aimed at a person. Kept separate so bots
+ * chattering among themselves can never eat the allowance that answers a
+ * visitor — it has its own count, and only the wall-clock budget is shared.
+ */
+function claimHumanCall(env, ctx) {
+  if (!llmReady(env)) return false;
+  if (Date.now() > ctx.deadline) return false;
+  if (ctx.humanCalls >= MAX_HUMAN_CALLS_PER_TICK) return false;
+  ctx.humanCalls += 1;
+  return true;
+}
+
+/**
+ * Top a persona's pool back up from the model.
+ *
+ * `ctx.refills` caps this to one bot per tick — see MAX_REFILL_PER_TICK. The
+ * stamp moves whether or not the call succeeded, so a dead key costs one
+ * request every twenty minutes rather than one per bot per minute.
+ */
+async function refillPool(env, row, persona, now, ctx, taken) {
+  if (ctx.refills >= MAX_REFILL_PER_TICK) return [];
+  if (now - Number(row.pool_at || 0) < POOL_RETRY_MS) return [];
+  if (!claimCall(env, ctx)) return [];
+
+  ctx.refills += 1;
+  row.pool_at = now;
+  await env.DB.prepare("UPDATE bots SET pool_at = ? WHERE user_id = ?").bind(now, row.user_id).run();
+
+  const avoid = [...readRecent(row.recent_lines), ...taken];
+  const lines = await voiceLines(env, persona, { count: POOL_SIZE, avoid, facts: factsFor(row) });
+  if (!lines.length) return [];
+  await savePool(env, row, lines);
+  return lines;
+}
+
+/**
+ * The next thing this bot says when nothing in particular has happened.
+ *
+ * Written lines come off the pool first and are consumed as they are used, so
+ * a line is never said twice by the account that generated it. An empty pool
+ * with no key behind it drops silently through to the persona's own voice.
+ */
+async function idleLine(env, row, persona, now, ctx, taken) {
+  let pool = readPool(row.line_pool);
+  if (pool.length < POOL_MIN) {
+    const fresh = await refillPool(env, row, persona, now, ctx, taken);
+    if (fresh.length) pool = fresh;
+  }
+  const usable = pool.filter((line) => !stale(line, ctx));
+  if (usable.length) {
+    const line = pick(usable);
+    await savePool(env, row, pool.filter((item) => item !== line));
+    return line;
+  }
+  return pickFresh(persona.voice, row, taken);
+}
+
+/**
+ * Rewrite the bio now and then.
+ *
+ * Goes through PATCH /api/me like everything else, so it is subject to the
+ * same 160-character trim a person's bio is. A refusal or a failed generation
+ * leaves the seeded bio in place, which is why every persona still ships one.
+ */
+async function refreshBio(env, call, row, persona, cookie, now, ctx) {
+  const due = Number(row.bio_at || 0);
+  if (due && now < due) return false;
+  if (!claimCall(env, ctx)) return false;
+
+  // Stamp first: a model that keeps refusing this persona should not be asked
+  // again on the next tick.
+  row.bio_at = now + rand(BIO_MIN_MS, BIO_MAX_MS);
+  await env.DB.prepare("UPDATE bots SET bio_at = ? WHERE user_id = ?")
+    .bind(row.bio_at, row.user_id)
+    .run();
+
+  const bio = await bioLine(env, persona);
+  if (!bio) return false;
+  const res = await call("/api/me", { method: "PATCH", cookie, body: { bio } });
+  return res.status === 200;
 }
 
 /**
@@ -534,25 +919,32 @@ function chatGapFor(persona) {
  * Twenty-four accounts on a social site with nothing connecting them is its
  * own tell: every profile reading "0 friends" says nobody here knows anyone.
  *
- * Both halves are restricted to roster handles. A request from a real person
- * is deliberately left sitting for a human to answer — accepting it would
- * tell someone they made a friend who can never write back, which is the same
- * line the reactions hold.
+ * Incoming requests are accepted from anyone now, real people included —
+ * that is what opens the DM route, since the API is friends-only. Outgoing
+ * requests stay roster-only: a bot cold-adding a stranger is a different and
+ * much odder thing than one accepting.
  */
-async function mingle(env, call, row, persona, cookie) {
+async function mingle(env, call, row, persona, cookie, { reachOut = false } = {}) {
   const list = await call("/api/friends", { cookie });
   if (list.status !== 200) return false;
   const onRoster = (u) => ROSTER.some((item) => item.handle === u?.handle);
 
-  const waiting = (list.body?.incoming || []).filter(onRoster);
+  // People first — someone waiting on an accept is waiting on a person.
+  const incoming = list.body?.incoming || [];
+  const waiting = incoming.filter((u) => !onRoster(u)).concat(incoming.filter(onRoster));
   if (waiting.length) {
     await call("/api/friends/respond", {
       method: "POST",
       cookie,
-      body: { handle: pick(waiting).handle, accept: true },
+      body: { handle: waiting[0].handle, accept: true },
     });
     return true;
   }
+
+  // Accepting is checked every tick because someone is waiting on it. Sending
+  // is not: on every tick a bot would fire a request at the whole roster
+  // within the hour, and the requests are the cheap half of nothing.
+  if (!reachOut) return false;
 
   const known = new Set([
     persona.handle,
@@ -570,13 +962,85 @@ async function mingle(env, call, row, persona, cookie) {
 }
 
 /**
+ * Answer a real person in the lounge.
+ *
+ * Tried before anything else a bot might do, and past every gap that paces
+ * the roster talking to itself. The whole point of the population is that
+ * someone who says something gets an answer.
+ *
+ * One bot per message: `ctx.answered` claims the message id for the tick and
+ * `last_human_id` holds it across ticks, so a newcomer saying "hi" gets one
+ * reply and not six. Handled entirely by whoever is already online — nobody
+ * wakes up to answer, because an account that appears the instant you speak
+ * and says something is stranger than silence.
+ */
+async function answerHuman(env, call, row, persona, cookie, chat, now, ctx) {
+  if (!llmReady(env)) return false;
+  if (!Array.isArray(chat) || !chat.length) return false;
+  if (ctx.humanCalls >= MAX_HUMAN_CALLS_PER_TICK || Date.now() > ctx.deadline) return false;
+  if (now - Number(row.last_chat_at || 0) < HUMAN_REPLY_GAP_MS) return false;
+
+  // Newest first: answer what was just said, not the backlog.
+  const handles = new Set(ROSTER.map((item) => item.handle));
+  const target = [...chat]
+    .reverse()
+    .find(
+      (msg) =>
+        msg?.user?.handle &&
+        !handles.has(msg.user.handle) &&
+        now - Number(msg.at || 0) <= HUMAN_REPLY_WINDOW_MS &&
+        Number(msg.id) > Math.max(Number(row.last_human_id || 0), ctx.lastHumanId || 0) &&
+        !ctx.answered.has(Number(msg.id))
+    );
+  if (!target) return false;
+  if (Math.random() > HUMAN_REPLY_CHANCE) return false;
+
+  ctx.answered.add(Number(target.id));
+  if (!claimHumanCall(env, ctx)) {
+    ctx.answered.delete(Number(target.id));
+    return false;
+  }
+  // Stamped on every row, not just this one. `last_human_id` is the roster's
+  // high-water mark rather than each bot's own — held per bot, every account
+  // answers the same message once on its own next tick, and one question gets
+  // six replies spread over five minutes.
+  const id = Number(target.id) || 0;
+
+  const line = await replyLine(env, persona, target.user.name || "someone", String(target.body || ""), {
+    avoid: [...readRecent(row.recent_lines), ...ctx.said],
+    facts: factsFor(row),
+    human: true,
+  });
+  // No fallback on purpose. The written pools are all "same" and "lol", and
+  // answering a person with those is worse than letting another bot take it
+  // on the next tick. A line that opens like something already on screen is
+  // dropped for the same reason.
+  if (!line || stale(line, ctx)) {
+    ctx.answered.delete(Number(target.id));
+    return false;
+  }
+  if (!(await say(env, call, row, cookie, line, now, "human", line, ctx))) {
+    ctx.answered.delete(id);
+    return false;
+  }
+  // Only acknowledge a message after the reply was actually posted. Keep
+  // the in-memory roster in sync with the database high-water mark too.
+  ctx.lastHumanId = id;
+  await env.DB.prepare("UPDATE bots SET last_human_id = ? WHERE last_human_id < ?")
+    .bind(id, id)
+    .run();
+  row.last_human_id = id;
+  return true;
+}
+
+/**
  * Answer the last thing another bot said.
  *
- * Hard requirement: the speaker must be on the roster. Reacting to whatever
- * happens to be last would eventually mean replying to a real person, and an
- * account that cannot hold up its end is exactly what gives the game away.
+ * Still roster-only, but for a different reason than it used to be: a real
+ * person's message is handled by answerHuman() above, which gives it a proper
+ * reply rather than the throwaway register this one uses.
  */
-async function react(env, call, row, persona, cookie, chat, now) {
+async function react(env, call, row, persona, cookie, chat, now, ctx) {
   const last = Array.isArray(chat) && chat.length ? chat[chat.length - 1] : null;
   if (!last?.user?.handle) return false;
 
@@ -594,18 +1058,78 @@ async function react(env, call, row, persona, cookie, chat, now) {
 
   // Never answer an answer. Without this each reaction becomes the next thing
   // to react to and the room collapses into "same" / "real" / "agreed".
-  if (kind === "react") return false;
+  if (kind === "react" || kind === "human") return false;
   // A pull or a milestone is worth speaking up for. Everything else only
   // sometimes, so the personas still get to say their own lines.
-  if (!REACT_EAGER.has(kind) && Math.random() > 0.3) return false;
+  if (!REACT_EAGER.has(kind) && Math.random() > 0.45) return false;
 
   await env.DB.prepare("UPDATE bots SET last_react_id = ? WHERE user_id = ?")
     .bind(Number(last.id) || 0, row.user_id)
     .run();
   row.last_react_id = Number(last.id) || 0;
 
-  await say(env, call, row, cookie, pickFresh(REACTIONS[kind] || REACTIONS.idle, row), now, "react");
+  const written = claimCall(env, ctx)
+    ? await replyLine(env, persona, speaker.name, String(last.body || ""), {
+        avoid: [...readRecent(row.recent_lines), ...ctx.said],
+        facts: factsFor(row),
+      })
+    : null;
+  // A generated reaction gets the same opening check a written one gets from
+  // pickFresh. Without it the model mirrors whatever it is answering: one bot
+  // told a newcomer "click open pack at the top, coins refill every hour" and
+  // four more reacted to that by saying almost exactly the same thing.
+  const usable = written && !stale(written, ctx) ? written : null;
+  const line = usable || pickFresh(REACTIONS[kind] || REACTIONS.idle, row, ctx.said);
+  await say(env, call, row, cookie, line, now, "react", line, ctx);
   return true;
+}
+
+/**
+ * Answer a DM.
+ *
+ * Friends-only at the API, so this only ever fires for someone who sent a
+ * request and had it accepted. The thread goes to the model with the limits
+ * in llm.js attached — no trading, no claims about anyone's account.
+ */
+async function answerDm(env, call, row, persona, cookie, now, ctx) {
+  if (!llmReady(env)) return false;
+  if (ctx.humanCalls >= MAX_HUMAN_CALLS_PER_TICK || Date.now() > ctx.deadline) return false;
+  if (now - Number(row.last_dm_at || 0) < HUMAN_REPLY_GAP_MS) return false;
+
+  const list = await call("/api/dms", { cookie });
+  if (list.status !== 200) return false;
+  const handles = new Set(ROSTER.map((item) => item.handle));
+  const waiting = (list.body?.threads || []).filter(
+    (thread) =>
+      thread?.last &&
+      thread.last.mine === false &&
+      !handles.has(thread.user?.handle) &&
+      now - Number(thread.last.at || 0) <= DM_WINDOW_MS
+  );
+  if (!waiting.length) return false;
+  if (Math.random() > DM_CHANCE) return false;
+
+  const thread = pick(waiting);
+  const full = await call(`/api/dms/${encodeURIComponent(thread.user.handle)}`, { cookie });
+  if (full.status !== 200 || !Array.isArray(full.body?.messages)) return false;
+
+  if (!claimHumanCall(env, ctx)) return false;
+  row.last_dm_at = now;
+  await env.DB.prepare("UPDATE bots SET last_dm_at = ? WHERE user_id = ?")
+    .bind(now, row.user_id)
+    .run();
+
+  const line = await dmLine(env, persona, thread.user.name || "them", full.body.messages, {
+    facts: factsFor(row),
+  });
+  if (!line) return false;
+  await sleep(rand(0, CHAT_JITTER_MS));
+  const sent = await call("/api/dms", {
+    method: "POST",
+    cookie,
+    body: { handle: thread.user.handle, body: line },
+  });
+  return sent.status === 200;
 }
 
 /**
@@ -620,9 +1144,33 @@ async function remember(env, row, save) {
   const coins = Number(save?.coins);
   row.coins = Number.isFinite(coins) ? coins : -1;
   row.last_daily = save?.lastDaily == null ? 0 : Number(save.lastDaily);
-  await env.DB.prepare("UPDATE bots SET coins = ?, last_daily = ? WHERE user_id = ?")
-    .bind(row.coins, row.last_daily, row.user_id)
+  row.packs = Math.max(0, Math.floor(Number(save?.packsOpened) || 0));
+  row.cards = save?.collection
+    ? Object.values(save.collection).reduce((sum, n) => sum + (Number(n) || 0), 0)
+    : Number(row.cards) || 0;
+  await env.DB.prepare(
+    "UPDATE bots SET coins = ?, last_daily = ?, packs = ?, cards = ? WHERE user_id = ?"
+  )
+    .bind(row.coins, row.last_daily, row.packs, row.cards, row.user_id)
     .run();
+}
+
+/**
+ * The numbers this bot is allowed to quote, off the cached row.
+ *
+ * statFacts() wants a save; the row is what a tick has in hand, so this is the
+ * same shape assembled from the three columns remember() keeps current. A
+ * pack-rip response refreshes them, so they are never more than one action
+ * stale — close enough that anything the model says still matches the profile
+ * a visitor would open.
+ */
+function factsFor(row) {
+  return statFacts({
+    packsOpened: Number(row.packs) || 0,
+    coins: Number(row.coins) > 0 ? Number(row.coins) : 0,
+    collection: null,
+    ...(Number(row.cards) > 0 ? { collection: { _: Number(row.cards) } } : {}),
+  });
 }
 
 /**
@@ -703,7 +1251,7 @@ async function showcaseBest(env, call, row, cookie, cards) {
  * does with the same balance, and what keeps a bot solvent between hourly
  * stacks. Anything said here is said because it just happened.
  */
-async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
+async function openOrSell(env, call, row, persona, cookie, setId, quiet, now, ctx) {
   if (Number(row.coins) < LOW_COINS) {
     // The collection is only pulled on this branch, which is rare — it is the
     // one decision the cached balance alone cannot answer.
@@ -719,7 +1267,8 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
       });
       if (sold.body?.save) await remember(env, row, sold.body.save);
       if (sold.status === 200 && quiet && Math.random() < CHAT_CHANCE) {
-        await say(env, call, row, cookie, pickFresh(SELL_LINES, row), now, "sell");
+        const line = pickFresh(SELL_LINES, row, ctx.said);
+        await say(env, call, row, cookie, line, now, "sell", line, ctx);
       }
       return;
     }
@@ -733,7 +1282,8 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
     row.coins = 0;
     await env.DB.prepare("UPDATE bots SET coins = 0 WHERE user_id = ?").bind(row.user_id).run();
     if (quiet && Math.random() < CHAT_CHANCE) {
-      await say(env, call, row, cookie, pickFresh(BROKE_LINES, row), now, "broke");
+      const line = pickFresh(BROKE_LINES, row, ctx.said);
+      await say(env, call, row, cookie, line, now, "broke", line, ctx);
     }
     return;
   }
@@ -743,8 +1293,8 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
 
   const packs = Number(ripped.body?.save?.packsOpened || 0);
   if (quiet && MILESTONE_PACKS.includes(packs)) {
-    const shape = pickTemplate(MILESTONE_LINES, row, "milestone");
-    await say(env, call, row, cookie, shape.make(packs), now, "milestone", shape.tag);
+    const shape = pickTemplate(MILESTONE_LINES, row, "milestone", ctx.tags);
+    await say(env, call, row, cookie, shape.make(packs), now, "milestone", shape.tag, ctx);
     return;
   }
 
@@ -752,8 +1302,21 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
     (card) => !card.reverse && CHAT_WORTHY.has(card.rarity)
   );
   if (hit && quiet && Math.random() < HIT_CHAT_CHANCE) {
-    const shape = pickTemplate(HIT_LINES, row, "hit");
-    await say(env, call, row, cookie, shape.make(hit.name), now, "hit", shape.tag);
+    // Worth a live call: this is the only message with a real subject, and the
+    // written templates are the ones a reader catches first precisely because
+    // they repeat a shape around a swapped-in card name.
+    const written = claimCall(env, ctx)
+      ? await hitLine(env, persona, hit, {
+          avoid: [...readRecent(row.recent_lines), ...ctx.said],
+          facts: factsFor(row),
+        })
+      : null;
+    if (written) {
+      await say(env, call, row, cookie, written, now, "hit", written, ctx);
+      return;
+    }
+    const shape = pickTemplate(HIT_LINES, row, "hit", ctx.tags);
+    await say(env, call, row, cookie, shape.make(hit.name), now, "hit", shape.tag, ctx);
   }
 }
 
@@ -761,7 +1324,7 @@ async function openOrSell(env, call, row, persona, cookie, setId, quiet, now) {
  * One thing per minute at most. Reading the lounge is what marks a bot online
  * in the first place — everything after it is optional.
  */
-async function act(env, call, row, persona, now, helpers) {
+async function act(env, call, row, persona, now, ctx, helpers) {
   const cookie = await session(env, call, row, persona, helpers);
   if (!cookie) return;
 
@@ -772,10 +1335,22 @@ async function act(env, call, row, persona, now, helpers) {
   }
 
   const quiet = now - Number(row.last_chat_at || 0) >= chatGapFor(persona);
+  // Fold what this bot can see into the tick-wide set every picker reads, so
+  // nothing said here repeats what is already on screen or what another bot
+  // has queued up this pass.
+  for (const line of roomRecent(seen.body?.chat)) ctx.said.add(line);
+  if (!ctx.recent.length) ctx.recent = roomWords(seen.body?.chat);
 
-  // Answering another bot comes first: it is the only thing here that depends
-  // on a message still being recent.
-  if (await react(env, call, row, persona, cookie, seen.body?.chat, now)) return;
+  // A person waiting on an answer outranks everything else this bot could be
+  // doing with its minute, including opening a pack.
+  if (await answerHuman(env, call, row, persona, cookie, seen.body?.chat, now, ctx)) return;
+  // A pending friend request is also someone waiting, and it is what unlocks
+  // DMs, so it goes above the roster's own business too.
+  if (ctx.humanCalls < MAX_HUMAN_CALLS_PER_TICK && (await answerDm(env, call, row, persona, cookie, now, ctx)))
+    return;
+  // Answering another bot depends on a message still being recent, so it
+  // comes before the things that can happen on any tick.
+  if (await react(env, call, row, persona, cookie, seen.body?.chat, now, ctx)) return;
 
   if (Number(row.coins) < 0) {
     const mine = await call("/api/me", { cookie });
@@ -803,15 +1378,22 @@ async function act(env, call, row, persona, now, helpers) {
   const setId = pick(playableSets(persona));
   const broke = Number(row.coins) >= 0 && Number(row.coins) < LOW_COINS;
   if (Math.random() < ripChance(Number(row.coins), costOf(setId)) || (broke && Math.random() < 0.25)) {
-    await openOrSell(env, call, row, persona, cookie, setId, quiet, now);
+    await openOrSell(env, call, row, persona, cookie, setId, quiet, now, ctx);
     return;
   }
 
   if (quiet && Math.random() < CHAT_CHANCE) {
-    await say(env, call, row, cookie, pickFresh(persona.voice, row), now, "idle");
+    const line = await idleLine(env, row, persona, now, ctx, ctx.said);
+    await say(env, call, row, cookie, line, now, "idle", line, ctx);
     return;
   }
-  if (Math.random() < FRIEND_CHANCE && (await mingle(env, call, row, persona, cookie))) return;
+  if (Math.random() < BIO_CHANCE && (await refreshBio(env, call, row, persona, cookie, now, ctx)))
+    return;
+  // Accepts are checked every tick rather than on the FRIEND_CHANCE roll: a
+  // real person's request sitting unanswered for hours is what this is here
+  // to fix. Only the outgoing half stays on the dice.
+  if (await mingle(env, call, row, persona, cookie, { reachOut: Math.random() < FRIEND_CHANCE }))
+    return;
   if (Math.random() < TITLE_CHANCE) {
     // The API rejects a locked title, so walking the list best-first and
     // ignoring the 400 lands them on whatever they have actually earned.
@@ -824,7 +1406,7 @@ async function act(env, call, row, persona, now, helpers) {
 
 async function step(env, call, row, persona, now, ctx, helpers) {
   if (Number(row.online_until) > now) {
-    await act(env, call, row, persona, now, helpers);
+    await act(env, call, row, persona, now, ctx, helpers);
     return;
   }
   if (Number(row.next_wake) > now) return;
@@ -842,7 +1424,7 @@ async function step(env, call, row, persona, now, ctx, helpers) {
     .bind(until, until + rand(AWAY_MIN_MS, AWAY_MAX_MS), row.user_id)
     .run();
   row.online_until = until;
-  await act(env, call, row, persona, now, helpers);
+  await act(env, call, row, persona, now, ctx, helpers);
 }
 
 /**
@@ -857,7 +1439,38 @@ export async function tickBots(env, call, helpers = {}) {
   try {
     await ensureAccounts(env, call, now, helpers);
     const rows = (await env.DB.prepare("SELECT * FROM bots").all()).results || [];
-    const ctx = { online: rows.filter((row) => Number(row.online_until) > now).length };
+    // Tick-wide state. `said` and `tags` are what keep the roster from
+    // converging: every bot reads them before it picks and writes to them
+    // after it posts, so a line or a template shape used anywhere on the
+    // roster is off the table for everyone else until it ages out.
+    const ctx = {
+      online: rows.filter((row) => Number(row.online_until) > now).length,
+      refills: 0,
+      calls: 0,
+      humanCalls: 0,
+      said: new Set(),
+      tags: new Set(),
+      // Chat message ids already answered this tick, so one person's message
+      // gets one reply rather than one from every bot online.
+      answered: new Set(),
+      // Content-word sets for tooSimilar(), seeded from the lounge on the
+      // first bot's turn and appended to as the tick posts.
+      recent: [],
+      // Jitter spent so far this tick — see JITTER_BUDGET_MS.
+      slept: 0,
+      // Past this, no more model calls this tick — see LLM_BUDGET_MS.
+      deadline: now + LLM_BUDGET_MS,
+    };
+    // Only the last thing each of the most recent speakers said. Seeding from
+    // every row's full history instead saturates: twenty-four bots holding ten
+    // entries each covers all sixteen hit shapes, `fresh` comes back empty on
+    // every pick, and the filter quietly stops filtering.
+    for (const row of [...rows]
+      .sort((a, b) => Number(b.last_chat_at || 0) - Number(a.last_chat_at || 0))
+      .slice(0, ROOM_VOICES)) {
+      const last = readRecent(row.recent_lines)[0];
+      if (last) ctx.tags.add(last);
+    }
     for (const row of rows) {
       const persona = ROSTER.find((item) => item.handle === row.handle);
       if (!persona) continue;

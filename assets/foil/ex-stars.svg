@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="200" viewBox="0 0 160 200">
+  <defs>
+    <radialGradient id="metal"><stop stop-color="#eeeeee"/><stop offset=".32" stop-color="#929292"/><stop offset="1" stop-color="#252525"/></radialGradient>
+    <path id="star" d="M0-9 2-2 9 0 2 2 0 9-2 2-9 0-2-2Z" fill="url(#metal)"/>
+  </defs>
+  <path fill="#555" d="M0 0H160V200H0z"/>
+  <g><use href="#star" x="18" y="24"/><use href="#star" x="96" y="10"/><use href="#star" x="138" y="80"/><use href="#star" x="65" y="112"/><use href="#star" x="18" y="165"/><use href="#star" x="115" y="172"/></g>
+  <g fill="#a0a0a0"><circle cx="56" cy="43" r="1"/><circle cx="117" cy="49" r=".7"/><circle cx="29" cy="91" r=".8"/><circle cx="91" cy="73" r="1.2"/><circle cx="146" cy="141" r="1"/><circle cx="50" cy="179" r=".8"/><circle cx="88" cy="149" r=".7"/></g>
+</svg>
