@@ -1235,7 +1235,7 @@ const slotKey = (list) => list.map((s) => `${s.id}:${s.reverse ? 1 : 0}`).join("
 // Load only public card metadata; reused across identity migrations in an isolate.
 let identityCatalog;
 async function syncIdentity(env, call, row, persona, cookie, ctx) {
-  if (Number(row.profile_version) >= 1 || (ctx.profileUpdates || 0) >= 3) return;
+  if (Number(row.profile_version) >= 1 || (ctx.profileUpdates || 0) >= 6) return;
   ctx.profileUpdates = (ctx.profileUpdates || 0) + 1;
   if (!identityCatalog) {
     const cards = [];
@@ -1533,12 +1533,15 @@ export async function tickBots(env, call, helpers = {}) {
       ctx.priorityOnly = priorityOnly;
       const ordered = [...rows].sort((a, b) => Number(a.last_chat_at || 0) - Number(b.last_chat_at || 0));
       for (const row of ordered) {
-        if (!priorityOnly && Number(row.online_until) <= now) continue;
         const persona = ROSTER.find((item) => item.handle === row.handle);
         if (!persona) continue;
         try {
           if (priorityOnly) await step(env, call, row, persona, now, ctx, helpers);
-          else await act(env, call, row, persona, now, ctx, helpers);
+          else if (Number(row.online_until) > now) await act(env, call, row, persona, now, ctx, helpers);
+          else if (Number(row.profile_version) < 1 && (ctx.profileUpdates || 0) < 6) {
+            const cookie = await session(env, call, row, persona, helpers);
+            if (cookie) await syncIdentity(env, call, row, persona, cookie, ctx);
+          }
         } catch (err) {
           console.error("bot step", row.handle, err);
         }

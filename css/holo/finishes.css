@@ -16,7 +16,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil {
   background-position: center, var(--background-x) var(--background-y),
     calc(100% - var(--background-x)) calc(100% - var(--background-y)), center;
   background-blend-mode: soft-light, color, luminosity;
-  mix-blend-mode: color-dodge;
+  mix-blend-mode: screen;
   filter: brightness(0.95) contrast(1.25) saturate(1.5);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::before {
@@ -131,4 +131,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare {
   background: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),
     rgba(255,255,255,.4), rgba(200,228,255,.1) 36%, transparent 68%);
   mix-blend-mode: screen;
+}
+
+/* Double Rare is a full-card coating, independent of artwork alpha/windows. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare {
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 4.55% / 3.25%;
 }
