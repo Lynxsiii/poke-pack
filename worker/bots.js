@@ -76,7 +76,7 @@ const REACT_GAP_MS = 3 * MINUTE;
 const REACT_WINDOW_MS = 6 * MINUTE;
 // Reactions between bots are garnish. Left high they crowd out everything a
 // persona actually has to say and the lounge turns into "same" / "real".
-const REACT_CHANCE = 0.4;
+const REACT_CHANCE = 0.15;
 // Worth answering unprompted; anything else needs the second roll below.
 const REACT_EAGER = new Set(["hit", "milestone"]);
 const RECENT_LINES = 10;

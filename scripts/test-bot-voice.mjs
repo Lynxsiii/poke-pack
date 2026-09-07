@@ -96,3 +96,7 @@ assert.equal(profilePatch.showcase[0].id,'owned-favourite');
 assert.equal(profilePatch.showcase.length,2);
 assert.match(profilePatch.bio,/dragonite/);
 console.log('Existing-profile migration preserves ownership and prioritizes favourite-family commons.');
+
+responses = [[200, "traded a duplicate for a missing reverse holo"]];
+assert.equal(await replyLine(env,persona,"visitor","hi"),null);
+console.log("Impossible trade claim rejected.");

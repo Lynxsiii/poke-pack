@@ -155,7 +155,7 @@ async function attempt(env, { system, user, maxTokens = 120, temperature = 1.0 }
       body: JSON.stringify({
         model,
         messages: [
-          { role: "system", content: system },
+          { role: "system", content: `${system}\n\n${SITE_FACTS}` },
           { role: "user", content: user },
         ],
         temperature,
@@ -320,6 +320,8 @@ function clean(raw, { maxLen = MAX_LINE, facts = [], speaker = "" } = {}) {
   if (text.length > maxLen) return null;
   if (/^#|\s#/.test(text)) return null;
   if (/\b(?:as an ai|language model|i'?m an ai|assistant)\b/i.test(text)) return null;
+  // The simulator has no card transfers; never publish invented trades.
+  if (/\b(?:traded|swapped|gifted)\b|\b(?:sent|send) (?:you |them |a |my |the )*(?:card|charizard|pikachu)/i.test(text)) return null;
   if (!numbersHold(text, facts)) return null;
   return text;
 }
@@ -348,7 +350,7 @@ export async function voiceLines(env, persona, { count = 12, avoid = [], facts =
   const system = `${HOUSE}
 
 You are writing for one regular of the site. Stay inside their personality;
-they are a person with one obsession, not a general commentator.
+Keep the subject on their favourite Pokemon, its evolution family, card artwork, or this simulator. Do not claim a recent pull, completed binder page, trade, or other action: no action history is provided. Preferences and collecting goals are fine.
 
 ${brief(persona)}${statBlock(facts)}`;
 
