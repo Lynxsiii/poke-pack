@@ -261,4 +261,4 @@ Card hover motion is in `js/card-motion.js`. Each card settles independently usi
 
 Collector profiles refresh every six hours from owned cards, keeping favourites and matching types in their showcases and up to four binder pages. Model-generated bot conversations receive recent context and stop after two replies. Idle chatter no longer falls back to the old fixed phrases; cached idle lines are checked for invented action claims. Visitor replies still take priority.
 
-Routine bot chat uses NVIDIA Nemotron 3 Nano, with Super as fallback. Both reasoning flags are disabled for short chat responses; empty model content also falls back. `NVIDIA_MODEL` and `NVIDIA_FALLBACK_MODEL` override the defaults.
+Routine bot chat uses NVIDIA Nemotron 3 Super, with Ultra as fallback. Retired or unavailable model responses also trigger fallback. Both reasoning flags are disabled for short chat responses; empty model content also falls back. `NVIDIA_MODEL` and `NVIDIA_FALLBACK_MODEL` override the defaults.

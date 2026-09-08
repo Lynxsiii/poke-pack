@@ -17,18 +17,17 @@
 
 const ENDPOINT = "https://integrate.api.nvidia.com/v1/chat/completions";
 
-// Routine lounge replies need low latency. The previous 550B primary timed
-// out repeatedly in production; Nano avoids making every greeting wait on it.
-// https://docs.api.nvidia.com/nim/reference/nvidia-nemotron-3-nano-30b-a3b
-const DEFAULT_MODEL = "nvidia/nemotron-3-nano-30b-a3b";
+// The 120B model has produced live contextual replies. The previous 550B
+// primary repeatedly timed out; the advertised Nano endpoint is retired.
+const DEFAULT_MODEL = "nvidia/nemotron-3-super-120b-a12b";
 const TIMEOUT_MS = 11000;
 
-const RETRY_STATUS = new Set([429, 500, 502, 503, 504]);
+const RETRY_STATUS = new Set([404, 410, 429, 500, 502, 503, 504]);
 const RETRY_DELAY_MS = 350;
 
 // A separate model is a backup for transient overload. Both remain configurable
 // with NVIDIA_MODEL and NVIDIA_FALLBACK_MODEL.
-const FALLBACK_MODEL = "nvidia/nemotron-3-super-120b-a12b";
+const FALLBACK_MODEL = "nvidia/nemotron-3-ultra-550b-a55b";
 
 const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
 
