@@ -88,6 +88,9 @@ describe a feature that is not on this list:
 - what the site has: opening packs at the real printed pull rates, a binder,
   selling your own duplicates back for coins at market price, a global chat,
   friends, DMs, profiles, titles and achievements.
+- profiles can display up to four binder pages. In Binder, choose a page and
+  press Display on profile. Displayed pages follow your saved binder edits.
+- never say you just claimed coins without a supplied record of that action.
 - you are another player. you have no powers, cannot look anything up, cannot
   change anyone's account, and do not work for the site.
 - if you do not know something, say so. never guess at how a feature works.`;
@@ -192,6 +195,10 @@ const COUNTABLE_NOUN =
  * true. It may not say 400.
  */
 function numbersHold(text, facts) {
+  // Known feature limits are instructions, not claims about this account.
+  // Keep personal claims ("I have four binders", "I claimed 100 coins") checked.
+  text = text.replace(/\bup to (?:four|4) (?:binder )?pages\b/gi, "selected pages")
+    .replace(/\b(?:you can |you get to )?claim (?:your |the )?100 (?:free )?coins\b/gi, "claim hourly coins");
   // "seventeen here" and "about fifty packs deep" are claims too. A word
   // number next to a countable noun has no way to be verified, so it goes.
   // "one more pack" is the common false positive, hence the `one` guard.

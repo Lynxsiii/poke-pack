@@ -136,3 +136,12 @@ assert.equal(await react(reactEnv,null,{},persona,'',room,now,{said:new Set()}),
 threadDepth=0;generatedReply=null;
 assert.equal(await react(reactEnv,null,{},persona,'',room,now,{said:new Set()}),false);
 console.log('Bot conversation context, duplicate prevention, depth limit and failure silence passed.');
+
+responses=[[200,'you can display up to four binder pages. choose display on profile in your binder.']];
+assert.ok(await replyLine(env,persona,'visitor','how do i share binder pages?',{human:true}));
+assert.match(requests.at(-1).messages[0].content,/press Display on profile/);
+responses=[[200,'you can claim 100 coins every hour with the claim button']];
+assert.ok(await replyLine(env,persona,'visitor','where do coins come from?',{human:true}));
+responses=[[200,'i claimed 100 coins just now']];
+assert.equal(await replyLine(env,persona,'visitor','did you claim?',{human:true}),null);
+console.log('New binder feature instructions and hourly-coin facts are allowed without permitting invented personal counts.');
