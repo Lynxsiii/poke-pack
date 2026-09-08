@@ -43,7 +43,11 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 .profile-section-head .eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--gold); margin: 0 0 7px; }
 .profile-section-head h3 { margin: 0; color: var(--ink); }
 .profile-section-head > span { color: var(--muted); font-size: 12px; }
-.profile-binder-pages { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+.profile-binder-pages { max-width: 600px; margin: 0 auto; }
+.profile-page-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; max-width: 600px; margin: 0 auto 18px; }
+.profile-page-nav span { color: var(--muted); font-size: 13px; }
+.profile-page-nav button { min-width: 92px; }
+.profile-page-nav button:disabled { opacity: .35; cursor: default; }
 .profile-binder-page { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 15px;
   background: radial-gradient(ellipse at top left,rgba(240,193,75,.07),transparent 65%),rgba(0,0,0,.23);
   box-shadow: inset 6px 0 12px rgba(0,0,0,.2); }
@@ -56,7 +60,6 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 @media(max-width: 700px) {
   .showcase-row { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px 12px; }
   .profile-showcase, .profile-binder { padding: 18px 14px; }
-  .profile-binder-pages { grid-template-columns: 1fr; }
   .binder-page-toolbar { align-items: flex-start; flex-direction: column; gap: 6px; }
 }
 @media(prefers-reduced-motion: reduce) { .tcg img { transition: none; } }

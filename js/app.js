@@ -74,6 +74,7 @@ import { api, ApiError } from "./api.js";
 const state = loadState();
 let cloudUser = null;
 let profileHandle = "";
+let profileBinderView = {handle:"", pages:[], mine:false, position:0};
 let dmHandle = "";
 let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
@@ -607,7 +608,7 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   // layout mask at all.
   const owner = evo === "foil-owner" ? ownerWindow(card) : "";
   const load = lazy ? ` loading="lazy" decoding="async"` : ` decoding="async"`;
-  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo}" data-finish="${finish}"
+  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo}" data-finish="${finish}" data-ball-layout="${setForCard(card)?.id === "sv8pt5" ? "prismatic" : "repeat"}"
     style="--art:url('${esc(assetUrl(src))}')${owner ? `;--win-owner:url('${esc(owner)}')` : ""}">
     <img src="${esc(src)}" alt="${esc(card.name)}"${load} />
     <span class="foil" aria-hidden="true"></span>
@@ -1282,7 +1283,7 @@ function withOwnedFoil(card) {
 
 function inspectAttrs(card) {
   const rev = card.reverse ? ` data-reverse="1"` : "";
-  return `data-inspect="${esc(card.id)}"${rev}`;
+  return `data-inspect="${esc(card.id)}"${rev}${card.reverseKind ? ` data-reverse-kind="${esc(card.reverseKind)}"` : ""}`;
 }
 
 function historyCards(entries, limit) {
@@ -2468,6 +2469,11 @@ async function renderProfile() {
     if (profileHandle !== handle) return;
     const user = data.user;
     const mine = data.relation === "self";
+    const sameProfile = profileBinderView.handle === handle;
+    const pageId = sameProfile ? profileBinderView.pages[profileBinderView.position]?.index : null;
+    const pages = data.binderPages || [];
+    const preserved = pages.findIndex(page => page.index === pageId);
+    profileBinderView = {handle, pages, mine, position:preserved >= 0 ? preserved : 0};
     const signed = Boolean(activeTrainer());
     const stats = data.stats || {};
     const friendBtn =
@@ -2493,7 +2499,7 @@ async function renderProfile() {
           : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" />`;
         const worth = Number(slot.value) > 0 ? `<span>✦ ${coin(slot.value)}</span>` : "";
         return `<figure class="showcase-slot${i === 0 ? " best" : ""}">
-          <button type="button" class="mini-card" ${known ? inspectAttrs(known) : ""} aria-label="${esc(slot.name)}">${face}</button>
+          <button type="button" class="mini-card" ${known ? inspectAttrs({...known, reverse:slot.reverse}) : ""} aria-label="${esc(slot.name)}">${face}</button>
           <figcaption><b>${esc(slot.name)}</b>${worth}</figcaption>
         </figure>`;
       })
@@ -2543,7 +2549,7 @@ async function renderProfile() {
               : `<p class="panel-empty">${mine ? "Pin your best pulls from the binder." : "No cards pinned yet."}</p>`
           }
         </div>
-        ${profileBinderPagesHtml(data.binderPages || [], mine)}
+        ${profileBinderPagesHtml()}
         <div class="profile-grid">
           <div class="panel">
             <h3>Wall</h3>
@@ -4057,7 +4063,7 @@ function finishRip() {
 function inspectFromEl(el) {
   const slot = el.closest("[data-inspect]");
   if (!slot) return;
-  openInspect(slot.dataset.inspect, slot.dataset.reverse === "1");
+  openInspect(slot.dataset.inspect, slot.dataset.reverse === "1", slot.dataset.reverseKind || "");
 }
 
 /** The card the inspector is currently showing, for the chart's range buttons. */
@@ -4142,10 +4148,10 @@ function paintInspect(card) {
   if (sell) sell.innerHTML = inspectSellRow(card);
 }
 
-function openInspect(id, reverse = false) {
+function openInspect(id, reverse = false, reverseKind = "") {
   const base = findCard(id);
   if (!base) return;
-  const card = reverse || ownedReverse(id) ? { ...base, reverse: true } : base;
+  const card = reverse ? { ...base, reverse: true, ...(reverseKind ? {reverseKind} : {}) } : base;
   inspectCard = card;
   inspectRange = "30d";
   inspectOpenedAt = Date.now();
@@ -4643,15 +4649,36 @@ async function patchLook(body) {
   renderAccount();
 }
 
-function profileBinderPagesHtml(pages, mine) {
+function profileBinderPagesHtml() {
+  const {pages, mine, position} = profileBinderView;
   if (!pages.length) return mine ? `<section class="panel profile-binder"><h3>Binder pages</h3><p class="panel-empty">Display up to four favourite pages from your binder.</p><a class="ghost" href="/binder">Choose a binder page</a></section>` : "";
-  return `<section class="panel profile-binder"><div class="profile-section-head"><div><p class="eyebrow">THE COLLECTION</p><h3>Inside the binder</h3></div><span>${pages.length} / ${PROFILE_PAGE_LIMIT} pages</span></div>
-    <div class="profile-binder-pages">${pages.map(page => `<article class="profile-binder-page"><header><b>Page ${page.index + 1}</b>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove</button>` : ""}</header><div class="binder-pockets">${page.slots.map(slot => {
-      if (!slot) return `<div class="profile-pocket empty" aria-label="Empty pocket"></div>`;
-      const known = findCard(slot.id);
-      const card = known ? {...known, reverse:slot.reverse} : null;
-      return `<div class="profile-pocket"><button type="button" class="mini-card" ${card ? inspectAttrs(card) : ""} aria-label="${esc(slot.name)}">${card ? tcgFace(card, {small:true, stamp:false, lazy:true}) : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" loading="lazy">`}</button></div>`;
-    }).join("")}</div></article>`).join("")}</div></section>`;
+  const page = pages[position];
+  const pockets = page.slots.map(slot => {
+    if (!slot) return `<div class="profile-pocket empty" aria-label="Empty pocket"></div>`;
+    const known = findCard(slot.id);
+    const card = known ? {...known, reverse:slot.reverse} : null;
+    return `<div class="profile-pocket"><button type="button" class="mini-card" ${card ? inspectAttrs(card) : ""} aria-label="${esc(slot.name)}">${card ? tcgFace(card, {small:true, stamp:false, lazy:true}) : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" loading="lazy">`}</button></div>`;
+  }).join("");
+  return `<section class="panel profile-binder"><div class="profile-section-head"><div><p class="eyebrow">THE COLLECTION</p><h3>Inside the binder</h3></div><span>${pages.length} shared ${pages.length === 1 ? "page" : "pages"}</span></div>
+    <nav class="profile-page-nav" aria-label="Shared binder pages">
+      <button type="button" class="ghost" data-profile-page="-1" ${position === 0 ? "disabled" : ""} aria-label="Previous binder page">← Back</button>
+      <span role="status" aria-live="polite">${position + 1} of ${pages.length}</span>
+      <button type="button" class="ghost" data-profile-page="1" ${position === pages.length - 1 ? "disabled" : ""} aria-label="Next binder page">Next →</button>
+    </nav>
+    <div class="profile-binder-pages"><article class="profile-binder-page"><header><b>Binder page ${page.index + 1}</b>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</header><div class="binder-pockets">${pockets}</div></article></div></section>`;
+}
+
+function turnProfilePage(direction) {
+  const next = profileBinderView.position + direction;
+  if (next < 0 || next >= profileBinderView.pages.length) return;
+  profileBinderView.position = next;
+  const section = els.profileBody.querySelector(".profile-binder");
+  if (!section) return;
+  section.outerHTML = profileBinderPagesHtml();
+  // Keep keyboard focus in the pager, including at either end of the binder.
+  const button = els.profileBody.querySelector(`[data-profile-page="${direction}"]:not(:disabled)`)
+    || els.profileBody.querySelector("[data-profile-page]:not(:disabled)");
+  button?.focus({preventScroll:true});
 }
 
 let sharingPage = false;
@@ -4702,6 +4729,8 @@ async function toggleShowcase(id) {
 }
 
 els.profileBody?.addEventListener("click", async (e) => {
+  const pageTurn = e.target.closest("[data-profile-page]");
+  if (pageTurn) { turnProfilePage(Number(pageTurn.dataset.profilePage)); return; }
   const sharedPage = e.target.closest("[data-share-page]");
   if (sharedPage) { await toggleProfilePage(Number(sharedPage.dataset.sharePage)); return; }
   inspectFromEl(e.target);
