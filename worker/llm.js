@@ -4,11 +4,9 @@
  * The endpoint is OpenAI-compatible, so this is a plain fetch to
  * `/v1/chat/completions` with a bearer key — no SDK, nothing to bundle.
  *
- * Off entirely unless `NVIDIA_API_KEY` is bound. Every function here returns
- * null when it is missing, slow, or refuses, and bots.js falls straight back
- * to the hand-written pools. The roster must keep talking when the API does
- * not: a lounge that goes silent because a third party had a bad minute is
- * worse than one repeating itself.
+ * Off entirely unless NVIDIA_API_KEY is bound. Unavailable generation returns
+ * null; contextual replies and idle chatter stay quiet, while real actions
+ * may still use their fact-based announcement templates.
  *
  *   wrangler secret put NVIDIA_API_KEY          # production
  *   echo NVIDIA_API_KEY=nvapi-... >> .dev.vars  # local, gitignored
@@ -19,50 +17,17 @@
 
 const ENDPOINT = "https://integrate.api.nvidia.com/v1/chat/completions";
 
-/**
- * Picked by testing the catalog against these actual prompts, not by
- * reputation. It writes the driest lines of anything the account can reach
- * ("that's a mortgage payment in cardboard form" for a chase pull) and answers
- * a real question correctly, at well under a second most calls.
- *
- * Two things to know before swapping it with NVIDIA_MODEL:
- *
- * - Most of the catalog is unavailable per account. Half the obvious names
- *   404 with "Function ... not found for account". Probe before trusting one.
- * - Models age out. `meta/llama-3.3-70b-instruct` was the default here until
- *   it returned 410 Gone — the API says so plainly in the body, which is why
- *   complete() logs the response text rather than just the status.
- */
-const DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b";
-
-/**
- * Eleven seconds, not the six this started at.
- *
- * The system prompts here are long — house style, site facts, the persona,
- * and the bot's own figures — and a big model takes several seconds just to
- * read one. At six seconds three quarters of the calls were being abandoned
- * mid-flight and logged as timeouts, which read like the API was failing when
- * it was answering fine. Measured: ~1s on a bare prompt, ~4s on these.
- * tickBots() bounds the total separately with LLM_BUDGET_MS.
- */
+// Routine lounge replies need low latency. The previous 550B primary timed
+// out repeatedly in production; Nano avoids making every greeting wait on it.
+// https://docs.api.nvidia.com/nim/reference/nvidia-nemotron-3-nano-30b-a3b
+const DEFAULT_MODEL = "nvidia/nemotron-3-nano-30b-a3b";
 const TIMEOUT_MS = 11000;
 
-/**
- * The big model is popular and sheds load: roughly one call in three comes
- * back 503 "Service temporarily overloaded", and it clears immediately. One
- * retry converts most of those into a line; a second is not worth the tick
- * time, since there is always a written fallback behind this.
- */
 const RETRY_STATUS = new Set([429, 500, 502, 503, 504]);
 const RETRY_DELAY_MS = 350;
 
-/**
- * The retry goes to a different, smaller model rather than back to the same
- * queue that just shed the request. Retrying the 550B model against itself
- * still failed about a third of the time under load; a second model is a
- * different pool, and a slightly plainer line is worth far more than none.
- * Override with NVIDIA_FALLBACK_MODEL.
- */
+// A separate model is a backup for transient overload. Both remain configurable
+// with NVIDIA_MODEL and NVIDIA_FALLBACK_MODEL.
 const FALLBACK_MODEL = "nvidia/nemotron-3-super-120b-a12b";
 
 const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
@@ -162,11 +127,9 @@ async function attempt(env, { system, user, maxTokens = 120, temperature = 1.0 }
         top_p: 0.95,
         max_tokens: maxTokens,
         stream: false,
-        // The nemotron family reasons by default and puts the chain in the
-        // message, so a one-line chat message comes back as "Here's a thinking
-        // process: 1. Analyze the request...". Harmless on models that do not
-        // recognise it.
-        chat_template_kwargs: { thinking: false },
+        // NIM templates differ by backend. Both switches keep the short output
+        // allowance for the actual chat message rather than hidden reasoning.
+        chat_template_kwargs: { thinking: false, enable_thinking: false },
       }),
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
@@ -174,16 +137,18 @@ async function attempt(env, { system, user, maxTokens = 120, temperature = 1.0 }
       // The body is where this API says anything useful — a retired model
       // answers 410 with the retirement date in it, a bad key 401, an
       // unavailable model 404 "not found for account". Worth logging in full.
-      console.error("llm", res.status, (await res.text()).slice(0, 200));
+      console.error("llm", model, res.status, (await res.text()).slice(0, 200));
       return { text: null, retry: RETRY_STATUS.has(res.status) };
     }
     const data = await res.json();
     const text = data?.choices?.[0]?.message?.content;
-    return { text: typeof text === "string" ? text : null, retry: false };
+    return typeof text === "string" && text.trim()
+      ? {text, retry: false}
+      : {text: null, retry: true};
   } catch (err) {
     // A timeout is usually the same overload as a 503, so it retries too.
     const name = err?.name || String(err);
-    console.error("llm", name);
+    console.error("llm", model, name);
     return { text: null, retry: name === "TimeoutError" || name === "AbortError" };
   }
 }

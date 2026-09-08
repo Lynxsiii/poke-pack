@@ -20,6 +20,11 @@ assert.equal(await replyLine(env, persona, 'visitor', 'hi'), 'another pack for t
 responses = [[503, ''], [200, 'still chasing umbreon']];
 assert.equal(await replyLine(env, persona, 'visitor', 'hi'), 'still chasing umbreon');
 assert.notEqual(requests.at(-1).model, requests.at(-2).model);
+assert.equal(requests.at(-2).model, 'nvidia/nemotron-3-nano-30b-a3b');
+assert.deepEqual(requests.at(-2).chat_template_kwargs, {thinking:false,enable_thinking:false});
+responses = [[200, ''], [200, 'which set are you opening?']];
+assert.equal(await replyLine(env, persona, 'visitor', 'hi'), 'which set are you opening?');
+assert.notEqual(requests.at(-1).model, requests.at(-2).model);
 responses = [[401, '']];
 assert.equal(await replyLine(env, persona, 'visitor', 'hi'), null);
 responses = [[200, 'opened 99999 packs']];
