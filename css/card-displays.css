@@ -1,0 +1,73 @@
+/* Card displays leave room for tilt and use one motion layer per card. */
+.showcase-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px 18px;
+  overflow: visible;
+  padding: 22px 8px 12px;
+  align-items: start;
+}
+.showcase-slot, .showcase-slot.best { width: auto; min-width: 0; }
+.showcase-slot .mini-card { display: block; max-width: 200px; margin: auto; }
+.showcase-slot figcaption { padding: 4px 6px; }
+.profile-showcase { padding: 24px; background: linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.015)); }
+.profile-showcase .showcase-slot:first-child figcaption b { color: var(--gold-2); }
+.mini-card:hover { transform: none; }
+.mini-card, .pocket-card, .picker-card { position: relative; overflow: visible; }
+.showcase-slot:has(.lit), .showcase-slot:has(.settling),
+.pocket:has(.lit), .pocket:has(.settling),
+.profile-pocket:has(.lit), .profile-pocket:has(.settling),
+.mini-card:has(.lit), .mini-card:has(.settling),
+.picker-card:has(.lit), .picker-card:has(.settling),
+.pin-slot:has(.lit), .pin-slot:has(.settling) { position: relative; z-index: 5; }
+/* Scrollable strips retain scrolling, with generous room inside the clip. */
+.home-film { padding: 26px 18px 30px; margin-inline: -12px; gap: 20px; }
+.showcase-picks { padding: 18px; gap: 14px; }
+.showcase-picks .pick { overflow: visible; }
+.pin-row { padding: 18px 8px; gap: 20px; overflow: visible; }
+.picker-grid { padding: 18px 6px; gap: 18px; }
+.thumbs { padding-block: 22px; }
+.tcg img { transition: filter .32s ease; }
+body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transition: box-shadow .32s ease; }
+
+.binder-sharing-note, .binder-page-toolbar, .profile-section-head,
+.profile-binder-page header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.binder-sharing-note { margin-bottom: 16px; flex-wrap: wrap; color: var(--gold-2); font-size: 13px; }
+.binder-sharing-note small { color: var(--muted); }
+.binder-page-toolbar { margin: 0 0 18px; font-size: 12px; color: var(--muted); }
+.page-share { font-size: 11px; padding: 7px 9px; }
+.page-share[aria-pressed="true"] { border-color: var(--gold); color: var(--gold-2); }
+.page-share:disabled { opacity: .4; cursor: default; }
+.profile-binder { margin: 24px 0; padding: 24px; }
+.profile-section-head { margin-bottom: 22px; }
+.profile-section-head .eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--gold); margin: 0 0 7px; }
+.profile-section-head h3 { margin: 0; color: var(--ink); }
+.profile-section-head > span { color: var(--muted); font-size: 12px; }
+.profile-binder-pages { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+.profile-binder-page { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 15px;
+  background: radial-gradient(ellipse at top left,rgba(240,193,75,.07),transparent 65%),rgba(0,0,0,.23);
+  box-shadow: inset 6px 0 12px rgba(0,0,0,.2); }
+.profile-binder-page header { margin: 0 0 20px; font-size: 12px; color: var(--muted); }
+.profile-binder-page .binder-pockets { gap: 14px; }
+.profile-pocket { position: relative; aspect-ratio: 63/88; min-width: 0; border-radius: 8px; }
+.profile-pocket .mini-card { width: 100%; display: block; }
+.profile-pocket img { width: 100%; display: block; border-radius: 6px; }
+.profile-pocket.empty { border: 1px dashed rgba(255,255,255,.1); background: rgba(0,0,0,.18); }
+@media(max-width: 700px) {
+  .showcase-row { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px 12px; }
+  .profile-showcase, .profile-binder { padding: 18px 14px; }
+  .profile-binder-pages { grid-template-columns: 1fr; }
+  .binder-page-toolbar { align-items: flex-start; flex-direction: column; gap: 6px; }
+}
+@media(prefers-reduced-motion: reduce) { .tcg img { transition: none; } }
+
+/* Tablet inspectors should not stretch a card to the entire viewport width. */
+.inspect-art { width: 100%; max-width: min(400px, 84vw); margin-inline: auto; }
+@media(max-width: 1100px) {
+  .showcase-row { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+
+@media(max-width: 860px) {
+  .home-stage { overflow: visible; margin-inline: 0; padding-inline: 18px; }
+  .home-stage-packs { overflow: clip; inset-inline: -12px; }
+}

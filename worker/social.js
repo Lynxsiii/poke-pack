@@ -1,3 +1,4 @@
+import { normalizeProfilePages, selectedProfilePages } from "../js/profile-pages.js";
 import {
   avatarId,
   avatarStyle,
@@ -40,6 +41,7 @@ export async function ensureSocialSchema(env) {
       ["avatar", "ALTER TABLE users ADD COLUMN avatar TEXT NOT NULL DEFAULT '25'"],
       ["banner", "ALTER TABLE users ADD COLUMN banner TEXT NOT NULL DEFAULT 'me5:darkrai'"],
       ["showcase", "ALTER TABLE users ADD COLUMN showcase TEXT"],
+      ["binder_pages", "ALTER TABLE users ADD COLUMN binder_pages TEXT"],
       ["shown_stats", "ALTER TABLE users ADD COLUMN shown_stats TEXT"],
       ["avatar_style", "ALTER TABLE users ADD COLUMN avatar_style TEXT NOT NULL DEFAULT 'art'"],
     ];
@@ -141,6 +143,7 @@ export function socialUserFields(row) {
     avatarStyle: avatarStyle(row.avatar_style || row.avatarStyle),
     banner: bannerId(row.banner || DEFAULT_BANNER),
     showcase: parseShowcase(row.showcase),
+    binderPages: normalizeProfilePages(row.binder_pages),
     shownStats: normalizeStats(parseJson(row.shown_stats, null)),
   };
 }
@@ -326,8 +329,11 @@ async function publicProfile(request, env, helpers, rawHandle) {
   if (shown.includes("unique")) stats.unique = uniqueRow?.n || 0;
   if (shown.includes("coins")) stats.coins = money(profile?.coins || 0);
 
+  const ownedRows = await queryAll(env, "SELECT card_id, qty FROM cards WHERE user_id = ? AND qty > 0", user.id);
+  const owned = Object.fromEntries(ownedRows.map(row => [row.card_id, row.qty]));
   const showcase = [];
   for (const slot of parseShowcase(user.showcase)) {
+    if (!(owned[slot.id] > 0)) continue;
     try {
       const card = await findCatalogCard(env, request, slot.id);
       if (!card) continue;
@@ -343,6 +349,19 @@ async function publicProfile(request, env, helpers, rawHandle) {
     } catch {
       /* skip a card whose set data is missing */
     }
+  }
+
+  const binderPages = [];
+  for (const page of selectedProfilePages(user.binder_pages, parseJson(profile?.binder, []), owned)) {
+    const slots = await Promise.all(page.slots.map(async slot => {
+      if (!slot) return null;
+      try {
+        const card = await findCatalogCard(env, request, slot.id);
+        return card ? {id:card.id, name:card.name, rarity:card.rarity,
+          image:card.imageSmall || card.image, reverse:slot.reverse} : null;
+      } catch { return null; }
+    }));
+    binderPages.push({index:page.index, slots});
   }
 
   const comments = await queryAll(
@@ -367,6 +386,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
     online: Boolean(seen && Date.now() - Number(seen.seen_at) < ONLINE_MS),
     relation: await relation(env, auth.user?.id, user.id),
     showcase,
+    binderPages,
     comments: comments.map((row) => ({
       id: row.id,
       body: row.body,
@@ -726,6 +746,7 @@ export function patchSocialFields(body, user) {
     avatarStyle: avatarStyle(user.avatar_style || user.avatarStyle),
     banner: bannerId(user.banner || DEFAULT_BANNER),
     showcase: parseShowcase(user.showcase),
+    binderPages: normalizeProfilePages(user.binder_pages),
     shownStats: normalizeStats(parseJson(user.shown_stats, null)),
   };
   if (body.avatar != null) next.avatar = avatarId(body.avatar);

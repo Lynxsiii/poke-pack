@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { IDENTITIES, affinity } from '../worker/personalities.js';
-import { llmReady, replyLine, voiceLines, statFacts } from '../worker/llm.js';
+import { safeIdleLine, llmReady, replyLine, voiceLines, statFacts } from '../worker/llm.js';
 const persona = { name: 'Test', handle: 'tester' };
 assert.equal(llmReady({}), false);
 assert.equal(await replyLine({}, persona, 'visitor', 'hi'), null);
@@ -79,7 +79,7 @@ console.log('Identity, empty-reply rejection, conversation context and named-rec
 const identityStart = source.indexOf('let identityCatalog;');
 const identityEnd = source.indexOf('async function showcaseBest(', identityStart);
 const sync = vm.runInNewContext(source.slice(identityStart, identityEnd) + '\nsyncIdentity', {
-  BOT_SETS:['test'], Request, Map, Number, JSON, affinity, SHOWCASE_MAX:6,
+  BOT_SETS:['test'], Request, Map, Number, JSON, affinity, SHOWCASE_MAX:6, HOUR:3600000,
   sellValue:card=>card.price || 0,
 });
 let profilePatch;
@@ -93,10 +93,38 @@ const identityCall = async (_,opts) => opts.method === 'PATCH'
   : {status:200,body:{save:{collection:{'owned-favourite':1,'owned-hit':1}}}};
 await sync(identityEnv,identityCall,{}, {...IDENTITIES.adawrites,avatar:'149',color:'dragon',banner:'aurora:dragon+ocean'},'',{});
 assert.equal(profilePatch.showcase[0].id,'owned-favourite');
-assert.equal(profilePatch.showcase.length,2);
+assert.equal(profilePatch.showcase.length,1);
+assert.deepEqual(Array.from(profilePatch.binderPages),[0]);
 assert.match(profilePatch.bio,/dragonite/);
 console.log('Existing-profile migration preserves ownership and prioritizes favourite-family commons.');
 
 responses = [[200, "traded a duplicate for a missing reverse holo"]];
 assert.equal(await replyLine(env,persona,"visitor","hi"),null);
 console.log("Impossible trade claim rejected.");
+
+assert.equal(safeIdleLine("another sylveon vmax alt art and zero umbreons"),false);
+assert.equal(safeIdleLine("i said i opened forty packs"),false);
+assert.equal(safeIdleLine("which eevee evolution has your favourite artwork?"),true);
+responses=[[200,'every time']];
+assert.equal(await replyLine(env,persona,'Riley','which card art do you prefer?'),null);
+console.log('Stock reaction and invented idle-pull checks passed.');
+// Bot conversations may continue for two replies, without fallback catchphrases.
+let threadDepth=0, generatedReply='the umbreon silhouette works better for me. what do you like about sylveon?', sentDepth;
+const reactStart=source.indexOf('async function react(');
+const reactEnd=source.indexOf('\nasync function answerDm(',reactStart);
+const react=vm.runInNewContext(source.slice(reactStart,reactEnd)+'\nreact',{
+  ROSTER:[{name:'Riley',handle:'rileyxo'}],REACT_WINDOW_MS:60000,REACT_GAP_MS:0,REACT_CHANCE:1,
+  claimCall:()=>true,replyLine:async()=>generatedReply,readRecent:()=>[],factsFor:()=>[],
+  say:async(...args)=>{sentDepth=args.at(-1);return true;},Date,Math,Set,
+});
+const reactEnv={DB:{prepare:()=>({bind:()=>({first:async()=>({last_chat_kind:'react',reply_depth:threadDepth}),run:async()=>({})})})}};
+const room=[{id:55,at:now,body:'which eevee artwork is your favourite?',user:{name:'Riley',handle:'rileyxo'}}];
+const conversationCtx={said:new Set()};
+assert.equal(await react(reactEnv,null,{},persona,'',room,now,conversationCtx),true);
+assert.equal(sentDepth,1);
+assert.equal(await react(reactEnv,null,{},persona,'',room,now,conversationCtx),false);
+threadDepth=2;
+assert.equal(await react(reactEnv,null,{},persona,'',room,now,{said:new Set()}),false);
+threadDepth=0;generatedReply=null;
+assert.equal(await react(reactEnv,null,{},persona,'',room,now,{said:new Set()}),false);
+console.log('Bot conversation context, duplicate prevention, depth limit and failure silence passed.');

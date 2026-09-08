@@ -43,6 +43,7 @@ import {
   dmLine,
   bioLine,
   statFacts,
+  safeIdleLine,
 } from "./llm.js";
 
 const MINUTE = 60 * 1000;
@@ -72,13 +73,10 @@ const RIP_FLOOR = 0.15;
 const RIP_CEIL = 0.4;
 const RIP_PER_PACK = 0.05;
 const TITLE_CHANCE = 0.02;
-const REACT_GAP_MS = 3 * MINUTE;
+const REACT_GAP_MS = 75 * 1000;
 const REACT_WINDOW_MS = 6 * MINUTE;
-// Reactions between bots are garnish. Left high they crowd out everything a
-// persona actually has to say and the lounge turns into "same" / "real".
-const REACT_CHANCE = 0.15;
-// Worth answering unprompted; anything else needs the second roll below.
-const REACT_EAGER = new Set(["hit", "milestone"]);
+// Prefer short contextual exchanges; the shared ambient cap keeps the room calm.
+const REACT_CHANCE = 0.75;
 const RECENT_LINES = 10;
 const FRIEND_CHANCE = 0.12;
 
@@ -238,61 +236,6 @@ const IDLE_LINES = [
   "my luck is unbelievable and not in a good way",
 ];
 
-/**
- * Replies to another bot, chosen by what that bot had just said.
- *
- * These only ever fire at a handle on the roster. A bot answering a real
- * person would be the most obvious tell there is — an account that cannot
- * actually hold the conversation it just started.
- */
-const REACTIONS = {
-  hit: [
-    "lucky",
-    "ok i'm jealous",
-    "no way, congrats",
-    "meanwhile i get nothing",
-    "that's the exact one i want",
-    "sick pull",
-    "ok that's not fair",
-    "i've opened forty and nothing",
-    "please share the luck",
-    "genuinely happy for you. genuinely",
-  ],
-  milestone: [
-    "congrats",
-    "ok that's dedication",
-    "how do you have the coins",
-    "respect",
-    "that's a lot of packs",
-    "nice one",
-  ],
-  sell: [
-    "the dupe pile always wins",
-    "bulk pays the bills",
-    "same, half my binder is gone",
-    "selling doubles is the real economy",
-    "had to do the same earlier",
-  ],
-  broke: [
-    "felt",
-    "same honestly",
-    "we've all been there",
-    "waiting on the hourly too",
-    "rough",
-    "the coins never last",
-  ],
-  idle: [
-    "real",
-    "same",
-    "lol",
-    "this is the life",
-    "agreed",
-    "you're not wrong",
-    "every time",
-    "it do be like that",
-  ],
-};
-
 const SELL_LINES = [
   "dumped some dupes, back in business",
   "selling doubles to fund the next one",
@@ -437,6 +380,7 @@ async function ensureBotSchema(env) {
     if (!cols.has("profile_version")) {
       await runDdl(env, "ALTER TABLE bots ADD COLUMN profile_version INTEGER NOT NULL DEFAULT 0");
     }
+    if (!cols.has("reply_depth")) await runDdl(env, "ALTER TABLE bots ADD COLUMN reply_depth INTEGER NOT NULL DEFAULT 0");
     schemaReady = true;
   } catch (err) {
     console.error("ensureBotSchema", err);
@@ -601,7 +545,8 @@ async function clearSession(env, row) {
  * is what stops a bot cycling the same four lines all evening, which is the
  * kind of pattern a regular would notice long before anything else.
  */
-async function say(env, call, row, cookie, text, now, kind = "idle", tag = text, ctx = null) {
+async function say(env, call, row, cookie, text, now, kind = "idle", tag = text, ctx = null, depth = 0) {
+  if (!text) return false;
   // Claim the line before the jitter sleep, not after the post — and refuse
   // outright if the room already has it.
   //
@@ -612,7 +557,8 @@ async function say(env, call, row, cookie, text, now, kind = "idle", tag = text,
   // exactly what happened — twice, word for word, to a newcomer's question.
   if (ctx) {
     if (kind !== "human" && (ctx.ambientMessages || 0) >= 2) return false;
-    if (kind !== "human" && stale(text, ctx)) return false;
+    if (kind !== "human" && kind !== "react" && stale(text, ctx)) return false;
+    if (kind === "react" && ctx.said.has(text.trim().toLowerCase())) return false;
     ctx.said.add(text.trim().toLowerCase());
     ctx.said.add(opening(text));
     const words = contentWords(text);
@@ -641,9 +587,9 @@ async function say(env, call, row, cookie, text, now, kind = "idle", tag = text,
   row.last_chat_kind = kind;
   row.recent_lines = JSON.stringify(recent);
   await env.DB.prepare(
-    "UPDATE bots SET last_chat_at = ?, last_chat_kind = ?, recent_lines = ? WHERE user_id = ?"
+    "UPDATE bots SET last_chat_at = ?, last_chat_kind = ?, recent_lines = ?, reply_depth = ? WHERE user_id = ?"
   )
-    .bind(now, kind, row.recent_lines, row.user_id)
+    .bind(now, kind, row.recent_lines, depth, row.user_id)
     .run();
   return true;
 }
@@ -875,13 +821,13 @@ async function idleLine(env, row, persona, now, ctx, taken) {
     const fresh = await refillPool(env, row, persona, now, ctx, taken);
     if (fresh.length) pool = fresh;
   }
-  const usable = pool.filter((line) => !stale(line, ctx));
+  const usable = pool.filter((line) => safeIdleLine(line) && !stale(line, ctx));
   if (usable.length) {
     const line = pick(usable);
     await savePool(env, row, pool.filter((item) => item !== line));
     return line;
   }
-  return pickFresh(persona.voice, row, taken);
+  return null; // No recycled catchphrases when generation is unavailable.
 }
 
 /**
@@ -1050,9 +996,8 @@ async function answerHuman(env, call, row, persona, cookie, chat, now, ctx) {
 /**
  * Answer the last thing another bot said.
  *
- * Still roster-only, but for a different reason than it used to be: a real
- * person's message is handled by answerHuman() above, which gives it a proper
- * reply rather than the throwaway register this one uses.
+ * Visitor messages are handled first by answerHuman(); this continues a
+ * short conversation between collectors using the same contextual reply style.
  */
 async function react(env, call, row, persona, cookie, chat, now, ctx) {
   const last = Array.isArray(chat) && chat.length ? chat[chat.length - 1] : null;
@@ -1065,36 +1010,26 @@ async function react(env, call, row, persona, cookie, chat, now, ctx) {
   if (now - Number(row.last_chat_at || 0) < REACT_GAP_MS) return false;
   if (Math.random() > REACT_CHANCE) return false;
 
-  const theirs = await env.DB.prepare("SELECT last_chat_kind FROM bots WHERE handle = ?")
+  const theirs = await env.DB.prepare("SELECT last_chat_kind, reply_depth FROM bots WHERE handle = ?")
     .bind(speaker.handle)
     .first();
   const kind = theirs?.last_chat_kind || "idle";
 
-  // Never answer an answer. Without this each reaction becomes the next thing
-  // to react to and the room collapses into "same" / "real" / "agreed".
-  if (kind === "react" || kind === "human") return false;
-  // A pull or a milestone is worth speaking up for. Everything else only
-  // sometimes, so the personas still get to say their own lines.
-  if (!REACT_EAGER.has(kind) && Math.random() > 0.45) return false;
+  // Allow two replies, then leave room for a new topic or a visitor.
+  if (kind === "human" || Number(theirs?.reply_depth || 0) >= 2) return false;
+  if (ctx.reacted?.has(Number(last.id))) return false;
 
-  await env.DB.prepare("UPDATE bots SET last_react_id = ? WHERE user_id = ?")
-    .bind(Number(last.id) || 0, row.user_id)
-    .run();
-  row.last_react_id = Number(last.id) || 0;
-
-  const written = claimCall(env, ctx)
-    ? await replyLine(env, persona, speaker.name, String(last.body || ""), {
-        avoid: [...readRecent(row.recent_lines), ...ctx.said],
-        facts: factsFor(row),
-      })
-    : null;
-  // A generated reaction gets the same opening check a written one gets from
-  // pickFresh. Without it the model mirrors whatever it is answering: one bot
-  // told a newcomer "click open pack at the top, coins refill every hour" and
-  // four more reacted to that by saying almost exactly the same thing.
-  const usable = written && !stale(written, ctx) ? written : null;
-  const line = usable || pickFresh(REACTIONS[kind] || REACTIONS.idle, row, ctx.said);
-  await say(env, call, row, cookie, line, now, "react", line, ctx);
+  if (!claimCall(env, ctx)) return false;
+  const written = await replyLine(env, persona, speaker.name, String(last.body || ""), {
+    avoid: [...readRecent(row.recent_lines), ...ctx.said], facts: factsFor(row),
+    context: chat.slice(-8).map(msg => ({speaker:msg.user?.name || "visitor", body:String(msg.body || "")})),
+  });
+  if (!written) return false;
+  const posted = await say(env, call, row, cookie, written, now, "react", written, ctx, Number(theirs?.reply_depth || 0) + 1);
+  if (!posted) return false;
+  (ctx.reacted ||= new Set()).add(Number(last.id));
+  await env.DB.prepare("UPDATE bots SET last_react_id = ? WHERE user_id = ?").bind(Number(last.id),row.user_id).run();
+  row.last_react_id = Number(last.id);
   return true;
 }
 
@@ -1235,7 +1170,7 @@ const slotKey = (list) => list.map((s) => `${s.id}:${s.reverse ? 1 : 0}`).join("
 // Load only public card metadata; reused across identity migrations in an isolate.
 let identityCatalog;
 async function syncIdentity(env, call, row, persona, cookie, ctx) {
-  if (Number(row.profile_version) >= 1 || (ctx.profileUpdates || 0) >= 6) return;
+  if ((Number(row.profile_version) >= 2 && Number(row.bio_at || 0) > Date.now()) || (ctx.profileUpdates || 0) >= 6) return;
   ctx.profileUpdates = (ctx.profileUpdates || 0) + 1;
   if (!identityCatalog) {
     const cards = [];
@@ -1252,22 +1187,31 @@ async function syncIdentity(env, call, row, persona, cookie, ctx) {
   const cards = Object.keys(collection).filter(id => collection[id] > 0)
     .map(id => identityCatalog.get(id)).filter(Boolean);
   // Rebuild from cards actually owned, including beloved commons.
-  const next = cards.map(card => ({ id: card.id, reverse: false,
+  const themed = cards.filter(card => affinity(persona, card) > 0);
+  const next = themed.map(card => ({ id: card.id, reverse: Number(mine.body.save.reverses?.[card.id] || 0) >= Number(collection[card.id]),
     affinity: affinity(persona, card), value: Number(sellValue(card)) || 0 }))
     .sort((a,b) => b.affinity - a.affinity || b.value - a.value).slice(0, SHOWCASE_MAX);
+  const pageCards = themed.sort((a,b) => affinity(persona,b) - affinity(persona,a) || (Number(sellValue(b)) || 0) - (Number(sellValue(a)) || 0)).slice(0,36);
+  const binder = Array.from({length: Math.max(18,Math.ceil(pageCards.length/9)*9)}, (_,i) => pageCards[i] ? {
+    id:pageCards[i].id, reverse:Number(mine.body.save.reverses?.[pageCards[i].id] || 0) >= Number(collection[pageCards[i].id]),
+  } : null);
+  const saved = await call("/api/binder", {method:"PUT",cookie,body:{binder}});
+  if (saved.status !== 200) return;
+  const binderPages = Array.from({length:Math.ceil(pageCards.length/9)},(_,i)=>i);
   const res = await call("/api/me", { method: "PATCH", cookie, body: {
-    bio: persona.bio, avatar: persona.avatar, avatarStyle: persona.style || "art",
+    binderPages, bio: persona.bio, avatar: persona.avatar, avatarStyle: persona.style || "art",
     color: persona.color, banner: persona.banner,
     showcase: next.map(({id, reverse}) => ({id, reverse})),
   }});
   if (res.status !== 200) return;
   row.showcase = JSON.stringify(next);
-  row.profile_version = 1;
+  row.profile_version = 2;
+  row.bio_at = Date.now() + 6 * HOUR;
   // Discard the old generic idle pool when the collecting identity changes.
   row.line_pool = null;
   row.pool_at = 0;
-  await env.DB.prepare("UPDATE bots SET profile_version = 1, showcase = ?, line_pool = NULL, pool_at = 0 WHERE user_id = ?")
-    .bind(row.showcase, row.user_id).run();
+  await env.DB.prepare("UPDATE bots SET profile_version = 2, showcase = ?, bio_at = ?, line_pool = NULL, pool_at = 0 WHERE user_id = ?")
+    .bind(row.showcase, row.bio_at, row.user_id).run();
 }
 
 async function showcaseBest(env, call, row, cookie, cards, persona) {
@@ -1275,7 +1219,7 @@ async function showcaseBest(env, call, row, cookie, cards, persona) {
   const merged = held.slice();
 
   for (const card of cards) {
-    if (!isHit(card) && !affinity(persona, card)) continue;
+    if (!affinity(persona, card)) continue;
     if (merged.some((slot) => slot.id === card.id)) continue;
     merged.push({ id: card.id, reverse: Boolean(card.reverse), value: Number(sellValue(card)) || 0, affinity: affinity(persona, card) });
   }
@@ -1538,7 +1482,7 @@ export async function tickBots(env, call, helpers = {}) {
         try {
           if (priorityOnly) await step(env, call, row, persona, now, ctx, helpers);
           else if (Number(row.online_until) > now) await act(env, call, row, persona, now, ctx, helpers);
-          else if (Number(row.profile_version) < 1 && (ctx.profileUpdates || 0) < 6) {
+          else if ((Number(row.profile_version) < 2 || Number(row.bio_at || 0) <= now) && (ctx.profileUpdates || 0) < 6) {
             const cookie = await session(env, call, row, persona, helpers);
             if (cookie) await syncIdentity(env, call, row, persona, cookie, ctx);
           }

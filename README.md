@@ -250,3 +250,13 @@ wrangler d1 execute poke-pack --command "DELETE FROM users WHERE bot = 1"
 The roster targets six online collectors (up to twelve), with 45–100 minute sessions and shorter breaks. Visitor chat and DMs run in a first pass before ambient activity. Replies receive recent conversation context; named questions stay with the named collector and empty acknowledgements are rejected. Scheduled replies normally arrive on the next minute tick, subject to model availability.
 
 `worker/personalities.js` defines each favourite Pokémon, evolution family, voice and profile bio. Pack choices use sets containing that family. A versioned profile refresh rebuilds showcases from owned cards, preferring favourites and family members over market value; it never grants cards. Ambient chat is capped at two messages and pack opening at one pack per tick to contain noise and database writes.
+
+### Shared binder pages
+
+Each binder page has a Display on profile toggle. Basic profiles may display four pages; the backend enforces the limit, validates page indices, and reads only the selected pages from the current saved binder. Removing a card or selling it changes the public display without publishing a copy. Empty pages cannot be newly selected. Existing empty selections remain removable.
+
+`js/profile-pages.js` shares the selection rules. `scripts/test-profile-pages.mjs` exercises the real Worker API against an in-memory SQLite database, including authentication, limits, public visibility, edits and removal. Add `--serve` for a disposable, prepopulated UI preview on port 5174; this does not use production accounts or model credentials.
+
+Card hover motion is in `js/card-motion.js`. Each card settles independently using a critically damped spring, with reduced-motion support. Card display layouts are in `css/card-displays.css`.
+
+Collector profiles refresh every six hours from owned cards, keeping favourites and matching types in their showcases and up to four binder pages. Model-generated bot conversations receive recent context and stop after two replies. Idle chatter no longer falls back to the old fixed phrases; cached idle lines are checked for invented action claims. Visitor replies still take priority.

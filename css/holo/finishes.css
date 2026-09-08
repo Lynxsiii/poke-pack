@@ -2,38 +2,36 @@
    stack follows pokemon-cards-css (Simon Goellner, GPL-3.0; see NOTICE.md).
    Texture stays registered to the card; only the illumination moves. */
 
-/* Double Rare: fine stars over a satin rainbow, rather than full-art weave. */
+/* Double Rare: silver stars and narrow spectral reflections across the print. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil {
-  background-image:
-    url("/assets/foil/ex-stars.svg"),
-    repeating-linear-gradient(112deg, #e8a5c8 0%, #c6a0eb 12%, #91b9e8 24%,
-      #a8e0cf 36%, #eee3ac 48%, #e8a5c8 60%),
-    repeating-linear-gradient(135deg, #151b2a 0%, #879da8 8%, #e8eeed 11%,
-      #879da8 14%, #151b2a 24%),
-    radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #aaa 0%, #555 50%, #171923 100%);
-  background-size: 32% 32%, 280% 280%, 320% 320%, cover;
-  opacity: calc((0.32 + var(--card-opacity) * 0.48) * var(--foil-strength, 1));
+  background-image: url("/assets/foil/ex-stars.svg"),
+    repeating-linear-gradient(115deg, #f696ca 0%, #c49cff 10%, #83d9ff 20%,
+      #96f3c6 30%, #ffe5a0 40%, #f696ca 50%),
+    repeating-linear-gradient(132deg, #030712 0%, #101827 8%, #dbe6ec 12%,
+      #445a71 15%, #080b18 22%, #02050b 28%);
+  background-size: 34% 34%, 250% 250%, 290% 290%;
   background-position: center, var(--background-x) var(--background-y),
-    calc(100% - var(--background-x)) calc(100% - var(--background-y)), center;
-  background-blend-mode: soft-light, color, luminosity;
-  mix-blend-mode: screen;
-  filter: brightness(0.95) contrast(1.25) saturate(1.5);
+    calc(100% - var(--background-x)) calc(100% - var(--background-y));
+  background-blend-mode: screen, hue;
+  mix-blend-mode: color-dodge;
+  filter: brightness(.8) contrast(1.55) saturate(1.4);
+  opacity: calc((.24 + var(--card-opacity) * .64) * var(--foil-strength,1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::before {
-  background: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #fff 0%, #777 32%, #000 78%);
-  mix-blend-mode: overlay;
-  filter: none;
-  opacity: 0.7;
+  background: url("/assets/foil/ex-stars.svg") center / 34% 34%;
+  mix-blend-mode: screen;
+  filter: brightness(1.2);
+  opacity: .65;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::after {
-  background-image: url("/assets/foil/ex-stars.svg"),
-    radial-gradient(ellipse at var(--pointer-x) var(--pointer-y), #fff 0%, #222 55%, #000 85%);
-  background-size: 45% 45%, cover;
+  background-image: var(--holo-glitter),
+    radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),#bbb 0%,#333 35%,#000 65%);
+  background-size: 130px 130px, cover;
   background-position: center;
   background-blend-mode: multiply;
   mix-blend-mode: screen;
-  filter: contrast(2.8) brightness(0.85);
-  opacity: 0.7;
+  filter: brightness(1.5) contrast(2);
+  opacity: .5;
 }
 
 /* SIR: directional diffraction and fine surface grain. A dark trough between
@@ -125,15 +123,13 @@ body.fx-holo.fx-holo.fx-holo .tcg[data-finish="ruby"] .glare::after,
 body.fx-holo.fx-holo.fx-holo .tcg[data-finish="pearl"] .glare::after { background: none; }
 
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex:not(.lit):not(.settling) .foil {
-  opacity: calc(0.32 * var(--foil-strength, 1));
+  opacity: calc(.24 * var(--foil-strength,1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare {
   background: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),
-    rgba(255,255,255,.4), rgba(200,228,255,.1) 36%, transparent 68%);
+    rgba(255,255,255,.38),rgba(200,228,255,.08) 28%,transparent 64%);
   mix-blend-mode: screen;
 }
-
-/* Double Rare is a full-card coating, independent of artwork alpha/windows. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare {
   -webkit-mask-image: none;

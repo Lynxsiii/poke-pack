@@ -1,3 +1,5 @@
+import { createCardMotion } from "./card-motion.js";
+import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
   ALL_SETS,
   PLAYABLE_SETS,
@@ -1119,7 +1121,13 @@ function binderPocket(index) {
 function binderPageHtml(page) {
   const start = page * BINDER_PAGE;
   const pockets = Array.from({ length: BINDER_PAGE }, (_, i) => binderPocket(start + i)).join("");
+  const shared = (activeTrainer()?.binderPages || []).includes(page);
+  const empty = !(state.binder || []).slice(start, start + BINDER_PAGE).some(Boolean);
   return `<div class="binder-page">
+    <div class="binder-page-toolbar"><span>Page ${page + 1}</span>
+      <button type="button" class="ghost page-share" data-share-page="${page}" aria-pressed="${shared}" ${empty && !shared ? "disabled" : ""}>
+        ${shared ? "Remove from profile" : "Display on profile"}
+      </button></div>
     <div class="binder-pockets">${pockets}</div>
     <span class="binder-page-no">${page + 1}</span>
   </div>`;
@@ -1192,6 +1200,7 @@ function renderBinder() {
   }
 
   els.binderBody.innerHTML = `
+    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} / ${PROFILE_PAGE_LIMIT} pages on your profile</span><small>Displayed pages update when you change their cards.</small></div>
     <div class="binder-spread">
       ${binderPageHtml(left)}
       ${right < pages ? binderPageHtml(right) : ""}
@@ -2474,10 +2483,8 @@ async function renderProfile() {
                 ? `<button class="solid" type="button" data-friend-accept="${esc(user.handle)}">Accept friend</button>`
                 : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`;
 
-    // Best card first, so the eye lands on the reason the row exists.
-    const pinned = (data.showcase || [])
-      .slice()
-      .sort((a, b) => (Number(b.value) || 0) - (Number(a.value) || 0));
+    // Preserve the collector's chosen order, including favourite commons.
+    const pinned = (data.showcase || []).slice();
     const showcase = pinned
       .map((slot, i) => {
         const known = findCard(slot.id);
@@ -2536,6 +2543,7 @@ async function renderProfile() {
               : `<p class="panel-empty">${mine ? "Pin your best pulls from the binder." : "No cards pinned yet."}</p>`
           }
         </div>
+        ${profileBinderPagesHtml(data.binderPages || [], mine)}
         <div class="profile-grid">
           <div class="panel">
             <h3>Wall</h3>
@@ -4635,6 +4643,38 @@ async function patchLook(body) {
   renderAccount();
 }
 
+function profileBinderPagesHtml(pages, mine) {
+  if (!pages.length) return mine ? `<section class="panel profile-binder"><h3>Binder pages</h3><p class="panel-empty">Display up to four favourite pages from your binder.</p><a class="ghost" href="/binder">Choose a binder page</a></section>` : "";
+  return `<section class="panel profile-binder"><div class="profile-section-head"><div><p class="eyebrow">THE COLLECTION</p><h3>Inside the binder</h3></div><span>${pages.length} / ${PROFILE_PAGE_LIMIT} pages</span></div>
+    <div class="profile-binder-pages">${pages.map(page => `<article class="profile-binder-page"><header><b>Page ${page.index + 1}</b>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove</button>` : ""}</header><div class="binder-pockets">${page.slots.map(slot => {
+      if (!slot) return `<div class="profile-pocket empty" aria-label="Empty pocket"></div>`;
+      const known = findCard(slot.id);
+      const card = known ? {...known, reverse:slot.reverse} : null;
+      return `<div class="profile-pocket"><button type="button" class="mini-card" ${card ? inspectAttrs(card) : ""} aria-label="${esc(slot.name)}">${card ? tcgFace(card, {small:true, stamp:false, lazy:true}) : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" loading="lazy">`}</button></div>`;
+    }).join("")}</div></article>`).join("")}</div></section>`;
+}
+
+let sharingPage = false;
+async function toggleProfilePage(page) {
+  if (sharingPage) return;
+  const trainer = activeTrainer();
+  if (!trainer) { openAuth("signin"); return; }
+  const binderPages = [...(trainer.binderPages || [])];
+  const at = binderPages.indexOf(page);
+  if (at >= 0) binderPages.splice(at, 1);
+  else if (binderPages.length >= PROFILE_PAGE_LIMIT) { toast("You can display up to four binder pages. Remove one to choose another."); return; }
+  else binderPages.push(page);
+  sharingPage = true;
+  try {
+    const data = await api("/api/me", {method:"PATCH", body:JSON.stringify({binderPages})});
+    cloudUser = data.user;
+    renderBinder();
+    if (view === "profile") renderProfile();
+    toast(at >= 0 ? "Page removed from profile." : "Page displayed on your profile.");
+  } catch (err) { toast(err.message || "Couldn't update displayed pages."); }
+  finally { sharingPage = false; }
+}
+
 async function toggleShowcase(id) {
   const trainer = activeTrainer();
   if (!trainer) {
@@ -4662,6 +4702,8 @@ async function toggleShowcase(id) {
 }
 
 els.profileBody?.addEventListener("click", async (e) => {
+  const sharedPage = e.target.closest("[data-share-page]");
+  if (sharedPage) { await toggleProfilePage(Number(sharedPage.dataset.sharePage)); return; }
   inspectFromEl(e.target);
   const dm = e.target.closest("[data-open-dm]");
   if (dm) {
@@ -4994,323 +5036,20 @@ els.thumbs.addEventListener("click", (e) => {
   showPullAt(Number(thumb.dataset.focus));
 });
 
-// One delegated pointer handler lights whichever card face is under the cursor.
-let litCard = null;
-let glareRaf = 0;
-let glarePointer = null;
-
-const SPRING_VARS = ["--mx", "--my", "--px", "--py", "--hyp", "--tilt-x", "--tilt-y"];
-const HOLO_VARS = [
-  "--pointer-x",
-  "--pointer-y",
-  "--pointer-from-center",
-  "--pointer-from-top",
-  "--pointer-from-left",
-  "--card-opacity",
-  "--rotate-x",
-  "--rotate-y",
-  "--background-x",
-  "--background-y",
-  "--card-scale",
-];
-
-function clearGlare() {
-  if (springRaf) cancelAnimationFrame(springRaf);
-  springRaf = 0;
-  springLast = 0;
-  if (!litCard) return;
-  litCard.classList.remove("lit", "settling");
-  [...SPRING_VARS, ...HOLO_VARS].forEach((p) => litCard.style.removeProperty(p));
-  litCard = null;
-  springs = null;
-}
-
-/**
- * A damped spring, one scalar per instance.
- *
- * This is svelte/motion's `spring` integrator, which is what pokemon-cards-css
- * drives its pointer variables through. It matters more than any single
- * gradient in the stylesheets: reading the pointer straight into the CSS
- * variables — which is what this file used to do — pins the foil to the cursor
- * exactly, and a highlight that cannot lag or overshoot reads as a texture
- * sliding under glass rather than light moving on foil. Under-damped is the
- * whole point; do not "fix" the overshoot.
- *
- * dt is normalised to 60fps steps so the motion is frame-rate independent.
- */
-class Spring {
-  constructor(value, stiffness, damping) {
-    this.value = value;
-    this.target = value;
-    this.last = value;
-    this.stiffness = stiffness;
-    this.damping = damping;
-    this.settled = true;
-  }
-
-  set(target) {
-    if (target !== this.target) this.settled = false;
-    this.target = target;
-  }
-
-  /** Snap straight there — used when a card is first picked up. */
-  jump(target) {
-    this.value = target;
-    this.last = target;
-    this.target = target;
-    this.settled = true;
-  }
-
-  step(dt) {
-    if (this.settled) return this.value;
-    const delta = this.target - this.value;
-    const velocity = (this.value - this.last) / (dt || 1);
-    const accel = this.stiffness * delta - this.damping * velocity;
-    const move = (velocity + accel) * dt;
-    this.last = this.value;
-    // 0.01 is svelte's default precision. Below it the motion is invisible and
-    // holding the frame loop open costs a wake-up per card per frame.
-    if (Math.abs(move) < 0.01 && Math.abs(delta) < 0.01) {
-      this.value = this.target;
-      this.settled = true;
-      return this.value;
-    }
-    this.value += move;
-    return this.value;
-  }
-}
-
-// Live while the pointer is on a card, and for the settle after it leaves.
-const TRACK = { stiffness: 0.066, damping: 0.25 };
-// Letting go is slower and looser than tracking, so the card drifts back
-// rather than snapping — the release is half of what sells the material.
-const SNAP = { stiffness: 0.01, damping: 0.06 };
-
-let springs = null;
-let springRaf = 0;
-let springLast = 0;
-
-function makeSprings() {
-  const { stiffness: s, damping: d } = TRACK;
-  return {
-    rotX: new Spring(0, s, d),
-    rotY: new Spring(0, s, d),
-    glareX: new Spring(50, s, d),
-    glareY: new Spring(50, s, d),
-    glareO: new Spring(0, s, d),
-    bgX: new Spring(50, s, d),
-    bgY: new Spring(50, s, d),
-    scale: new Spring(1, s, d),
-  };
-}
-
-function springMode(mode) {
-  if (!springs) return;
-  for (const spring of Object.values(springs)) {
-    spring.stiffness = mode.stiffness;
-    spring.damping = mode.damping;
-    spring.settled = false;
-  }
-}
-
-/** Linear remap, the same compression simey applies to the background layers. */
-function adjust(value, fromMin, fromMax, toMin, toMax) {
-  return toMin + ((toMax - toMin) * (value - fromMin)) / (fromMax - fromMin);
-}
-
-/**
- * Integrate every spring and write the frame.
- *
- * Runs on its own loop rather than off pointermove: the settle after the
- * pointer leaves has no events behind it, and that trailing motion is exactly
- * what a card is missing when it just stops dead where you left it.
- */
-function stepSprings(now) {
-  springRaf = 0;
-  if (!springs || !litCard) return;
-  const dt = Math.min(3, springLast ? ((now - springLast) / 1000) * 60 : 1);
-  springLast = now;
-
-  let moving = false;
-  for (const spring of Object.values(springs)) {
-    spring.step(dt);
-    if (!spring.settled) moving = true;
-  }
-
-  const el = litCard;
-  const px = springs.glareX.value / 100;
-  const py = springs.glareY.value / 100;
-  el.style.setProperty("--pointer-x", `${springs.glareX.value.toFixed(2)}%`);
-  el.style.setProperty("--pointer-y", `${springs.glareY.value.toFixed(2)}%`);
-  el.style.setProperty("--pointer-from-left", px.toFixed(3));
-  el.style.setProperty("--pointer-from-top", py.toFixed(3));
-  el.style.setProperty(
-    "--pointer-from-center",
-    Math.min(1, Math.hypot(px - 0.5, py - 0.5) / 0.5).toFixed(3)
-  );
-  el.style.setProperty("--card-opacity", springs.glareO.value.toFixed(3));
-  el.style.setProperty("--background-x", `${springs.bgX.value.toFixed(2)}%`);
-  el.style.setProperty("--background-y", `${springs.bgY.value.toFixed(2)}%`);
-  el.style.setProperty("--card-scale", springs.scale.value.toFixed(4));
-  if (state.settings.tilt) {
-    el.style.setProperty("--rotate-x", `${springs.rotX.value.toFixed(2)}deg`);
-    el.style.setProperty("--rotate-y", `${springs.rotY.value.toFixed(2)}deg`);
-  }
-
-  if (moving) springRaf = requestAnimationFrame(stepSprings);
-  // Fully settled at rest means the pointer has gone and the card is home.
-  else if (springs.glareO.target === 0) clearGlare();
-}
-
-function runSprings() {
-  if (!springRaf) {
-    springLast = 0;
-    springRaf = requestAnimationFrame(stepSprings);
-  }
-}
-
-/**
- * Send the card home on the loose spring and let it coast.
- *
- * `.lit` comes off immediately so the CSS opacity transitions start now, but
- * the element keeps its variables until the springs actually arrive —
- * stepSprings() calls clearGlare() once everything has settled at rest.
- */
-function releaseGlare() {
-  if (!litCard || !springs || reduceMotion()) {
-    clearGlare();
-    return;
-  }
-  litCard.classList.remove("lit");
-  litCard.classList.add("settling");
-  springMode(SNAP);
-  springs.glareX.set(50);
-  springs.glareY.set(50);
-  springs.glareO.set(0);
-  springs.bgX.set(50);
-  springs.bgY.set(50);
-  springs.rotX.set(0);
-  springs.rotY.set(0);
-  springs.scale.set(1);
-  runSprings();
-}
-
-function tcgFromEvent(e) {
-  const direct = e.target?.closest?.(".tcg");
-  if (direct) return direct;
-  const focus = e.target?.closest?.(".focus-card");
-  if (!focus) return null;
-  return focus.classList.contains("flipped")
-    ? focus.querySelector(".face-back .tcg")
-    : focus.querySelector(".face-front .tcg");
-}
-
-function paintGlare() {
-  glareRaf = 0;
-  const e = glarePointer;
-  if (!e) return;
-  if (flipBusy || els.focusCard?.classList.contains("flipping")) {
-    clearGlare();
-    return;
-  }
-  if (!state.settings.shine && !state.settings.tilt) {
-    clearGlare();
-    return;
-  }
-  const face = tcgFromEvent(e);
-  // Pointer left every card: let this one drift home rather than cutting it,
-  // which is the half of the motion that reads as weight.
-  if (!face && litCard) {
-    releaseGlare();
-    return;
-  }
-  if (face !== litCard) {
-    clearGlare();
-    litCard = face;
-    if (litCard) {
-      litCard.classList.add("lit");
-      springs = makeSprings();
-    }
-  }
-  if (!litCard) return;
-  // releaseGlare() drops .lit but keeps the element while its springs coast
-  // home. Coming back to the same card during that settle takes the branch
-  // above as a no-op, so the class has to be put back here or the card keeps
-  // its variables and loses every rule that keys off .lit.
-  litCard.classList.add("lit");
-  litCard.classList.remove("settling");
-  const r = litCard.getBoundingClientRect();
-  if (!r.width || !r.height) return;
-  const px = clamp((e.clientX - r.left) / r.width, 0, 1);
-  const py = clamp((e.clientY - r.top) / r.height, 0, 1);
-  const hyp = Math.min(1, Math.hypot(px - 0.5, py - 0.5) * 2);
-
-  // The classic engine reads the pointer straight, exactly as it always has.
-  litCard.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
-  litCard.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
-  litCard.style.setProperty("--px", px.toFixed(3));
-  litCard.style.setProperty("--py", py.toFixed(3));
-  litCard.style.setProperty("--hyp", hyp.toFixed(3));
-  if (state.settings.tilt) {
-    litCard.style.setProperty("--tilt-y", `${((px - 0.5) * 16).toFixed(2)}deg`);
-    litCard.style.setProperty("--tilt-x", `${((0.5 - py) * 16).toFixed(2)}deg`);
-  }
-
-  // The holo engine gets the same pointer through springs. Targets only —
-  // stepSprings() owns the writing, so the settle keeps running after the
-  // pointer has gone and there are no more events to hang it off.
-  if (!springs) return;
-  springMode(TRACK);
-  const pct = { x: px * 100, y: py * 100 };
-  const center = { x: pct.x - 50, y: pct.y - 50 };
-  springs.glareX.set(pct.x);
-  springs.glareY.set(pct.y);
-  springs.glareO.set(1);
-  // Compressed well inside 0-100: at full range the banded gradients sweep
-  // right off the card at the edges and the foil reads as empty there.
-  springs.bgX.set(adjust(pct.x, 0, 100, 37, 63));
-  springs.bgY.set(adjust(pct.y, 0, 100, 33, 67));
-  const reduced = reduceMotion();
-  springs.rotX.set(state.settings.tilt && !reduced ? -(center.x / 3.5) : 0);
-  springs.rotY.set(state.settings.tilt && !reduced ? center.y / 3.5 : 0);
-  springs.scale.set(reduced ? 1 : 1.02);
-  if (reduced) Object.values(springs).forEach((spring) => spring.jump(spring.target));
-  runSprings();
-}
-
-function queueGlare(e) {
-  glarePointer = e;
-  if (!glareRaf) glareRaf = requestAnimationFrame(paintGlare);
-}
-
-document.addEventListener("pointerdown", (e) => {
-  if (flipBusy || els.focusCard?.classList.contains("flipping")) return;
-  if (!tcgFromEvent(e)) return;
-  queueGlare(e);
+// Each card keeps its own settling motion when the pointer moves to its neighbour.
+const cardMotion = createCardMotion({
+  settings: () => state.settings,
+  reducedMotion: reduceMotion,
+  blocked: () => flipBusy || els.focusCard?.classList.contains("flipping"),
 });
-
-document.addEventListener(
-  "pointermove",
-  (e) => {
-    queueGlare(e);
-  },
-  { passive: true }
-);
-
-document.addEventListener("pointerleave", (e) => {
-  if (e.target === document.documentElement || e.pointerType === "mouse") releaseGlare();
-});
-
-// Touch has no hover-out event: release the coating after a tap or cancelled drag.
-document.addEventListener("pointerup", (e) => {
-  if (e.pointerType !== "mouse") releaseGlare();
-});
-document.addEventListener("pointercancel", releaseGlare);
+function clearGlare() { cardMotion.clear(); }
 
 els.doneBtn.addEventListener("click", finishRip);
 els.leavePack?.addEventListener("click", finishRip);
 
 els.binderBody?.addEventListener("click", async (e) => {
+  const sharedPage = e.target.closest("[data-share-page]");
+  if (sharedPage) { await toggleProfilePage(Number(sharedPage.dataset.sharePage)); return; }
   const flip = e.target.closest("[data-flip]");
   if (flip) {
     binderSpread = Math.max(0, binderSpread + Number(flip.dataset.flip) * 2);

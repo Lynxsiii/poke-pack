@@ -1,3 +1,4 @@
+import { validateProfilePages } from "../js/profile-pages.js";
 /**
  * Cloud accounts, inventory, and pack rips. Static pages still come from
  * the ASSETS binding; only /api/* is handled here.
@@ -343,6 +344,13 @@ async function patchMe(request, env) {
     passwordHash = await hashPassword(next);
   }
 
+  if (Object.prototype.hasOwnProperty.call(body, "binderPages")) {
+    const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?").bind(user.id).first();
+    const error = validateProfilePages(body.binderPages, parseJson(profile?.binder, []), social.binderPages);
+    if (error) return json({error}, 400);
+    social.binderPages = body.binderPages;
+  }
+
   if (Array.isArray(body.showcase)) {
     const { collection } = await inventoryMap(env, user.id);
     social.showcase = social.showcase.filter((slot) => (collection[slot.id] || 0) > 0);
@@ -350,7 +358,7 @@ async function patchMe(request, env) {
 
   await env.DB.prepare(
     `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?,
-       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?
+       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?
      WHERE id = ?`
   )
     .bind(
@@ -366,6 +374,7 @@ async function patchMe(request, env) {
       social.banner,
       JSON.stringify(social.showcase),
       JSON.stringify(social.shownStats),
+      JSON.stringify(social.binderPages),
       user.id
     )
     .run();
