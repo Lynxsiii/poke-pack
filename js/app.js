@@ -320,6 +320,8 @@ const els = {
   stepBtn: document.getElementById("step-btn"),
   skipHitsBtn: document.getElementById("skip-hits-btn"),
   skipBtn: document.getElementById("skip-btn"),
+  againBtn: document.getElementById("again-btn"),
+  viewPullsBtn: document.getElementById("view-pulls-btn"),
   doneBtn: document.getElementById("done-btn"),
   inspect: document.getElementById("inspect"),
   inspectArt: document.getElementById("inspect-art"),
@@ -736,10 +738,10 @@ function renderSetChrome() {
   if (els.shopOdds) els.shopOdds.textContent = liveSet.oddsLine;
   if (els.binderTitle) els.binderTitle.textContent = liveSet.name;
   if (els.bulkKicker) {
-    els.bulkKicker.textContent = `Bulk · ${liveSet.edition} · ${month}`;
+    els.bulkKicker.textContent = `Collection · ${liveSet.edition} · ${month}`;
   }
   if (els.bulkLede) {
-    els.bulkLede.textContent = `Everything you pull from ${liveSet.name} lands here. Sell extras at live market, or send keepers to the binder.`;
+    els.bulkLede.textContent = `Everything you pull from ${liveSet.name} lands here. Sell extras at their listed value, or send keepers to the binder.`;
   }
   document.title = `poke-pack.rip — ${liveSet.name}`;
 }
@@ -839,6 +841,10 @@ function renderHero() {
 function renderShop() {
   renderSetChrome();
   renderSwitcher();
+  const quickSets = document.getElementById("shop-quick-sets");
+  if (quickSets) quickSets.innerHTML = PLAYABLE_SETS.map((set) => `
+    <button type="button" class="shop-quick-set${set.id === liveSet.id ? " active" : ""}"
+      data-quick-set="${esc(set.id)}" aria-pressed="${set.id === liveSet.id}">${esc(set.name)}</button>`).join("");
   const signed = Boolean(activeTrainer());
   els.packGrid.innerHTML = liveSet.wrappers
     .map((wrap) => {
@@ -1474,7 +1480,7 @@ function cheapestPackCost() {
 }
 
 function renderHome() {
-  const { owned, total, pct } = siteCompletion();
+  const { owned, total } = siteCompletion();
   const recent = historyCards(state.history, 8);
   const stars = topCardsOnSite(4);
   const chase = stars.length
@@ -1484,10 +1490,6 @@ function renderHome() {
   const queued = eras.reduce((n, era) => n + era.queued.length, 0);
   const upcoming = eras.find((era) => era.queued.length)?.queued.slice(0, 4) || [];
   const origin = ROADMAP.at(-1)?.sets?.at(-1);
-
-  if (els.homeKicker) {
-    els.homeKicker.textContent = "Real odds · real prices · no checkout";
-  }
 
   const worth = netWorth();
   const binder = totalBinderValue();
@@ -1499,48 +1501,41 @@ function renderHome() {
 
   if (els.homePulse) {
     els.homePulse.innerHTML = `
-      <div class="home-ring" style="--pct:${pct}" title="Cards owned across every set">
-        <span><b>${pct}%</b><small>all sets</small></span>
-      </div>
-      <div class="home-pulse-stat"><b>✦ ${coin(state.coins)}</b><span>Coins</span></div>
-      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>Cards owned</span></div>
-      <div class="home-pulse-stat"><b>✦ ${coin(binder)}</b><span>Binder value</span></div>`;
+      <div class="home-pulse-stat"><b>✦ ${coin(state.coins)}</b><span>Coins ready</span></div>
+      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>Cards found</span></div>
+      <div class="home-pulse-stat"><b>${num(state.packsOpened)}</b><span>Packs opened</span></div>`;
   }
+
+  const homeSetPicker = document.getElementById("home-set-picker");
+  if (homeSetPicker) {
+    const featuredSets = PLAYABLE_SETS.slice(0, 4);
+    if (!featuredSets.some((set) => set.id === liveSet.id)) featuredSets[3] = liveSet;
+    homeSetPicker.innerHTML = `<span>Featured set</span><div class="home-set-options">${featuredSets
+      .map((set) => `<button type="button" class="home-set-option${set.id === liveSet.id ? " active" : ""}"
+        data-feature-set="${esc(set.id)}" aria-pressed="${set.id === liveSet.id}">${esc(set.name)}</button>`)
+      .join("")}</div>`;
+  }
+  const homeRip = document.getElementById("home-rip");
+  if (homeRip) homeRip.textContent = `Open ${liveSet.name} · ✦ ${coin(liveSet.cost)}`;
 
   if (els.homeStage) {
-    const packSets = [];
-    for (const card of stars) {
-      const set = setForCardId(card.id);
-      if (set && !packSets.some((entry) => entry.id === set.id)) packSets.push(set);
-      if (packSets.length >= 2) break;
-    }
-    for (const set of PLAYABLE_SETS) {
-      if (packSets.length >= 2) break;
-      if (!packSets.some((entry) => entry.id === set.id)) packSets.push(set);
-    }
-    const packs = packSets
-      .slice(0, 2)
-      .map((set) => {
-        const wrap = set.wrappers?.[0];
-        return wrap ? `<div class="home-pack-float">${packPicture(wrap, "", set)}</div>` : "";
-      })
-      .join("");
-    const fanCards = stars.length ? stars : chase.slice(0, 4);
-    const fan = fanCards
-      .map(
-        (card, i) =>
-          `<button type="button" class="home-float" data-inspect="${esc(card.id)}"
-            style="animation-delay:${(-i * 1.35).toFixed(2)}s" aria-label="${esc(card.name)}">
-            ${tcgFace(card, { small: true })}
-          </button>`
-      )
-      .join("");
-    els.homeStage.innerHTML = `<div class="home-stage-glow"></div>
-      <div class="home-stage-packs">${packs}</div>
-      <div class="home-fan">${fan}</div>`;
+    const wrap = liveSet.wrappers?.[0];
+    const featureCard = liveSet.heroIds.map((id) => byId[id]).find(Boolean);
+    els.homeStage.innerHTML = `<div class="home-feature-top">
+        <span>On the press table</span><span>${esc(liveSet.edition)}</span>
+      </div>
+      <div class="home-feature-art">
+        ${featureCard ? `<div class="home-feature-card">${tcgFace(featureCard, { small: true })}</div>` : ""}
+        ${wrap ? `<div class="home-feature-pack">${packPicture(wrap, "", liveSet)}</div>` : ""}
+      </div>
+      <div class="home-feature-bottom">
+        <div><strong>${esc(liveSet.name)}</strong><span>${esc(liveSet.released)} · ${liveSet.totalCount} cards</span></div>
+        <b>✦ ${coin(liveSet.cost)}</b>
+      </div>
+      <p class="home-feature-odds">${esc(liveSet.oddsLine)}</p>`;
   }
 
-  const setTiles = PLAYABLE_SETS.map((set) => {
+  const setTiles = PLAYABLE_SETS.slice(0, 6).map((set) => {
     const have = ownedInSet(set);
     const pctSet = set.totalCount ? Math.round((have / set.totalCount) * 100) : 0;
     const fan = set.wrappers
@@ -1580,8 +1575,8 @@ function renderHome() {
             <button type="button" class="home-hit-art" ${inspectAttrs(best.card)}
               aria-label="${esc(best.card.name)}">${tcgFace(best.card, { small: true, stamp: false })}</button>
             <div class="home-hit-copy">
-              <span class="home-hit-label">Best pull</span>
               <h3>${esc(best.card.name)}</h3>
+              <span class="home-hit-label">Best pull so far</span>
               <p>${rarityPips(best.card.rarity)} ${esc(rarityLine(best.card))}${
                 best.entry?.at ? ` · ${esc(formatWhen(best.entry.at))}` : ""
               }</p>
@@ -1623,18 +1618,20 @@ function renderHome() {
       <div class="home-sets">${setTiles}</div>
     </div>
 
+    ${pullsBlock}
+
     <div class="home-block">
       <div class="home-block-head">
         <div>
           <h2>The market</h2>
-          <p>Every card is worth its real market price. One coin is one dollar.</p>
+          <p>Market-based card values help you decide what to keep or sell.</p>
         </div>
         <button type="button" class="text-btn" data-goto="collection">Binder →</button>
       </div>
       <div class="home-market">
         <article class="home-worth">
-          <span class="home-worth-label">Net worth</span>
           <b>✦ ${coin(worth)}</b>
+          <span class="home-worth-label">Collection value and coins</span>
           <p class="home-pnl ${pnlDir}">
             ${pnl == null
               ? `Coins plus every card you hold, across every set.`
@@ -1655,7 +1652,7 @@ function renderHome() {
         <article class="home-board">
           <div class="home-board-head">
             <span>Most expensive on the site</span>
-            <span class="home-board-note">live prices</span>
+            <span class="home-board-note">market estimates</span>
           </div>
           <ol class="home-board-list">
             ${movers
@@ -1681,34 +1678,6 @@ function renderHome() {
         </article>
       </div>
     </div>
-
-    <div class="home-block">
-      <div class="home-block-head">
-        <div>
-          <h2>How it works</h2>
-          <p>No checkout. Coins live on your account, odds come from the printed set.</p>
-        </div>
-      </div>
-      <div class="home-steps">
-        <article class="home-step">
-          <b>01</b>
-          <h3>Claim coins</h3>
-          <p>✦ 100 every hour in the header. Packs cost what they cost in a real shop — nothing costs real money.</p>
-        </article>
-        <article class="home-step">
-          <b>02</b>
-          <h3>Tear the wrapper</h3>
-          <p>Drag the pack open, then flip cards one by one. Skip to rares if you want the hits first.</p>
-        </article>
-        <article class="home-step">
-          <b>03</b>
-          <h3>Stamp the binder</h3>
-          <p>Every pull lands in the set binder. Sell any card back at its market price and keep hunting the art.</p>
-        </article>
-      </div>
-    </div>
-
-    ${pullsBlock}
 
     <div class="home-block">
       <div class="home-block-head">
@@ -2940,7 +2909,7 @@ const PATH_VIEWS = {
 const VIEW_TITLES = {
   home: "poke-pack.rip — rip packs, fill the binder",
   shop: "Packs — poke-pack.rip",
-  collection: "Bulk — poke-pack.rip",
+  collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
   catalog: "Catalog — poke-pack.rip",
   account: "Account — poke-pack.rip",
@@ -3017,6 +2986,7 @@ function applyView(next, hist) {
     els[key]?.classList.toggle("hidden", view !== name);
   }
   paintNav(view);
+  document.querySelector(".nav-more")?.removeAttribute("open");
   VIEW_RENDER[view]?.();
   document.body.classList.toggle("on-home", view === "home");
   document.body.classList.toggle("on-shop", view === "shop");
@@ -3307,6 +3277,10 @@ function syncActions() {
   els.stepBtn.classList.toggle("hidden", spread);
   els.skipBtn.classList.toggle("hidden", !(ready || reveal));
   els.skipHitsBtn.classList.toggle("hidden", !canSkipToHits());
+  els.againBtn.classList.toggle("hidden", !spread);
+  els.againBtn.disabled = spread && state.coins < liveSet.cost;
+  els.againBtn.title = els.againBtn.disabled ? "Claim coins or sell extras to open another pack" : "";
+  els.viewPullsBtn.classList.toggle("hidden", !spread);
   els.doneBtn.classList.toggle("hidden", !spread);
   els.ripHint.classList.toggle("hidden", reveal || spread);
   els.thumbs.classList.toggle("hidden", !(reveal && showStrip));
@@ -3518,7 +3492,7 @@ function showSpread() {
       </div>
     </div>
     <div class="spread-grid">${cardsHtml}</div>
-    <p class="spread-tip">Click a card to look closer</p>`;
+    <p class="spread-tip">Your pulls are saved. Select a card to inspect it.</p>`;
 
   els.ripHint.textContent = "";
   syncActions();
@@ -4069,8 +4043,9 @@ function finishRip() {
   els.focusAura.classList.remove("rays");
   renderHeader();
   renderShop();
+  if (view === "home") renderHome();
   if (view === "collection") renderCollection();
-  toast("Added to bulk.");
+  toast("Added to collection.");
 }
 
 function inspectFromEl(el) {
@@ -4300,6 +4275,11 @@ function onEraToggle(e) {
 }
 
 document.addEventListener("click", (e) => {
+  const quickSet = e.target.closest("[data-quick-set]");
+  if (quickSet) {
+    activateSet(quickSet.dataset.quickSet);
+    return;
+  }
   const open = e.target.closest("[data-open-auth]");
   if (open) {
     openAuth(open.dataset.openAuth);
@@ -4337,6 +4317,15 @@ document.addEventListener("keydown", (e) => {
 });
 
 els.viewHome.addEventListener("click", (e) => {
+  const feature = e.target.closest("[data-feature-set]");
+  if (feature) {
+    activateSet(feature.dataset.featureSet);
+    return;
+  }
+  if (e.target.closest("#home-rip")) {
+    startRip(liveSet.wrappers?.[0]);
+    return;
+  }
   const play = e.target.closest("[data-play-set]");
   if (play) {
     playSet(play.dataset.playSet);
@@ -5162,6 +5151,15 @@ const cardMotion = createCardMotion({
 function clearGlare() { cardMotion.clear(); }
 
 els.doneBtn.addEventListener("click", finishRip);
+els.againBtn.addEventListener("click", () => {
+  const wrapper = activeWrapper || liveSet.wrappers?.[0];
+  finishRip();
+  startRip(wrapper);
+});
+els.viewPullsBtn.addEventListener("click", () => {
+  finishRip();
+  setView("collection");
+});
 els.leavePack?.addEventListener("click", finishRip);
 
 els.binderBody?.addEventListener("click", async (e) => {

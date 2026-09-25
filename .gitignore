@@ -2,6 +2,7 @@
 dist/
 .wrangler/
 node_modules/
+.impeccable/review/
 
 # local dev server output
 server.log

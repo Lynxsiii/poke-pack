@@ -21,6 +21,7 @@ python -m http.server 5173
 ```
 index.html            markup for every view; views are sections toggled by .hidden
 css/app.css           all styling, including the classic foil and pack-tear visuals
+css/overhaul.css      shared press-table layout and responsive player flow
 css/holo/             the holofoil engine, derived from pokemon-cards-css
 js/app.js             views, rendering, the tear interaction, reveal flow
 js/catalog.js         set definitions, rarity tables, sell values, roadmap
@@ -133,7 +134,15 @@ bottom of `js/titles.js` unlock by reading that list.
 ## Known gaps
 
 - Card art is hotlinked from third-party image CDNs.
-- The app is a single route — no deep links to a set or the binder.
+- There are page URLs, but no deep links to a specific set or binder page.
+
+## Current opening flow
+
+The home page lets a signed-in player switch among featured sets and open the
+selected set's first wrapper directly. `/packs` keeps every playable expansion
+in a compact chooser; the full era list remains in the sidebar. The opening
+overlay offers another pack or a direct path to the collection after the spread.
+Those actions use the existing `/api/packs/rip` endpoint and save model.
 
 ## Shared binder pages
 

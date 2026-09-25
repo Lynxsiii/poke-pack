@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T06:34:54Z",
+  "title": "Design System: poke-pack.rip",
+  "extensions": {
+    "colorMeta": {
+      "press-table": {
+        "role": "primary",
+        "displayName": "Press Table",
+        "canonical": "#101b30",
+        "tonalRamp": [
+          "oklch(15% 0.044 262.4)",
+          "oklch(26% 0.044 262.4)",
+          "oklch(37% 0.044 262.4)",
+          "oklch(48% 0.044 262.4)",
+          "oklch(59% 0.044 262.4)",
+          "oklch(70% 0.044 262.4)",
+          "oklch(82% 0.044 262.4)",
+          "oklch(94% 0.044 262.4)"
+        ]
+      },
+      "press-blue": {
+        "role": "primary",
+        "displayName": "Press Blue",
+        "canonical": "#2755c5",
+        "tonalRamp": [
+          "oklch(15% 0.180 263.9)",
+          "oklch(26% 0.180 263.9)",
+          "oklch(37% 0.180 263.9)",
+          "oklch(48% 0.180 263.9)",
+          "oklch(59% 0.180 263.9)",
+          "oklch(70% 0.180 263.9)",
+          "oklch(82% 0.180 263.9)",
+          "oklch(94% 0.180 263.9)"
+        ]
+      },
+      "press-blue-deep": {
+        "role": "primary",
+        "displayName": "Deep Press Blue",
+        "canonical": "#1d3985",
+        "tonalRamp": [
+          "oklch(15% 0.132 265.2)",
+          "oklch(26% 0.132 265.2)",
+          "oklch(37% 0.132 265.2)",
+          "oklch(48% 0.132 265.2)",
+          "oklch(59% 0.132 265.2)",
+          "oklch(70% 0.132 265.2)",
+          "oklch(82% 0.132 265.2)",
+          "oklch(94% 0.132 265.2)"
+        ]
+      },
+      "press-panel": {
+        "role": "neutral",
+        "displayName": "Press Panel",
+        "canonical": "#192b4b",
+        "tonalRamp": [
+          "oklch(15% 0.063 261.1)",
+          "oklch(26% 0.063 261.1)",
+          "oklch(37% 0.063 261.1)",
+          "oklch(48% 0.063 261.1)",
+          "oklch(59% 0.063 261.1)",
+          "oklch(70% 0.063 261.1)",
+          "oklch(82% 0.063 261.1)",
+          "oklch(94% 0.063 261.1)"
+        ]
+      },
+      "press-panel-hover": {
+        "role": "neutral",
+        "displayName": "Press Panel Hover",
+        "canonical": "#20365c",
+        "tonalRamp": [
+          "oklch(15% 0.073 260.7)",
+          "oklch(26% 0.073 260.7)",
+          "oklch(37% 0.073 260.7)",
+          "oklch(48% 0.073 260.7)",
+          "oklch(59% 0.073 260.7)",
+          "oklch(70% 0.073 260.7)",
+          "oklch(82% 0.073 260.7)",
+          "oklch(94% 0.073 260.7)"
+        ]
+      },
+      "cool-paper": {
+        "role": "neutral",
+        "displayName": "Cool Paper",
+        "canonical": "#e9edf2",
+        "tonalRamp": [
+          "oklch(15% 0.008 253.9)",
+          "oklch(26% 0.008 253.9)",
+          "oklch(37% 0.008 253.9)",
+          "oklch(48% 0.008 253.9)",
+          "oklch(59% 0.008 253.9)",
+          "oklch(70% 0.008 253.9)",
+          "oklch(82% 0.008 253.9)",
+          "oklch(94% 0.008 253.9)"
+        ]
+      },
+      "proof-ink": {
+        "role": "neutral",
+        "displayName": "Proof Ink",
+        "canonical": "#14223d",
+        "tonalRamp": [
+          "oklch(15% 0.055 262.4)",
+          "oklch(26% 0.055 262.4)",
+          "oklch(37% 0.055 262.4)",
+          "oklch(48% 0.055 262.4)",
+          "oklch(59% 0.055 262.4)",
+          "oklch(70% 0.055 262.4)",
+          "oklch(82% 0.055 262.4)",
+          "oklch(94% 0.055 262.4)"
+        ]
+      },
+      "light-ink": {
+        "role": "neutral",
+        "displayName": "Light Ink",
+        "canonical": "#f7f7f0",
+        "tonalRamp": [
+          "oklch(15% 0.009 106.6)",
+          "oklch(26% 0.009 106.6)",
+          "oklch(37% 0.009 106.6)",
+          "oklch(48% 0.009 106.6)",
+          "oklch(59% 0.009 106.6)",
+          "oklch(70% 0.009 106.6)",
+          "oklch(82% 0.009 106.6)",
+          "oklch(94% 0.009 106.6)"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#b9c6da",
+        "tonalRamp": [
+          "oklch(15% 0.032 258.9)",
+          "oklch(26% 0.032 258.9)",
+          "oklch(37% 0.032 258.9)",
+          "oklch(48% 0.032 258.9)",
+          "oklch(59% 0.032 258.9)",
+          "oklch(70% 0.032 258.9)",
+          "oklch(82% 0.032 258.9)",
+          "oklch(94% 0.032 258.9)"
+        ]
+      },
+      "action-coral": {
+        "role": "secondary",
+        "displayName": "Action Coral",
+        "canonical": "#ff7860",
+        "tonalRamp": [
+          "oklch(15% 0.170 31.8)",
+          "oklch(26% 0.170 31.8)",
+          "oklch(37% 0.170 31.8)",
+          "oklch(48% 0.170 31.8)",
+          "oklch(59% 0.170 31.8)",
+          "oklch(70% 0.170 31.8)",
+          "oklch(82% 0.170 31.8)",
+          "oklch(94% 0.170 31.8)"
+        ]
+      },
+      "action-coral-hover": {
+        "role": "secondary",
+        "displayName": "Action Coral Hover",
+        "canonical": "#ff9a80",
+        "tonalRamp": [
+          "oklch(15% 0.127 35.3)",
+          "oklch(26% 0.127 35.3)",
+          "oklch(37% 0.127 35.3)",
+          "oklch(48% 0.127 35.3)",
+          "oklch(59% 0.127 35.3)",
+          "oklch(70% 0.127 35.3)",
+          "oklch(82% 0.127 35.3)",
+          "oklch(94% 0.127 35.3)"
+        ]
+      },
+      "coin-gold": {
+        "role": "tertiary",
+        "displayName": "Coin Gold",
+        "canonical": "#ffd45c",
+        "tonalRamp": [
+          "oklch(15% 0.144 89.3)",
+          "oklch(26% 0.144 89.3)",
+          "oklch(37% 0.144 89.3)",
+          "oklch(48% 0.144 89.3)",
+          "oklch(59% 0.144 89.3)",
+          "oklch(70% 0.144 89.3)",
+          "oklch(82% 0.144 89.3)",
+          "oklch(94% 0.144 89.3)"
+        ]
+      },
+      "coin-gold-light": {
+        "role": "tertiary",
+        "displayName": "Coin Gold Light",
+        "canonical": "#ffe38f",
+        "tonalRamp": [
+          "oklch(15% 0.108 91.6)",
+          "oklch(26% 0.108 91.6)",
+          "oklch(37% 0.108 91.6)",
+          "oklch(48% 0.108 91.6)",
+          "oklch(59% 0.108 91.6)",
+          "oklch(70% 0.108 91.6)",
+          "oklch(82% 0.108 91.6)",
+          "oklch(94% 0.108 91.6)"
+        ]
+      },
+      "proof-line": {
+        "role": "neutral",
+        "displayName": "Proof Line",
+        "canonical": "rgba(226, 237, 255, .18)",
+        "tonalRamp": [
+          "oklch(15% 0.027 260.3)",
+          "oklch(26% 0.027 260.3)",
+          "oklch(37% 0.027 260.3)",
+          "oklch(48% 0.027 260.3)",
+          "oklch(59% 0.027 260.3)",
+          "oklch(70% 0.027 260.3)",
+          "oklch(82% 0.027 260.3)",
+          "oklch(94% 0.027 260.3)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home promise at the opening stage."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Home section headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section and pack headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Short explanatory copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navigation, set tabs, and proof metadata."
+      }
+    },
+    "shadows": [
+      {
+        "name": "stage",
+        "value": "0 28px 50px rgba(3, 12, 35, .38)",
+        "purpose": "Structural depth for the featured pack stage."
+      },
+      {
+        "name": "stage-mobile",
+        "value": "0 18px 34px rgba(3, 12, 35, .38)",
+        "purpose": "Reduced stage depth below 720px."
+      },
+      {
+        "name": "dropdown",
+        "value": "0 22px 54px rgba(4, 11, 28, .34)",
+        "purpose": "Depth for the expanded navigation menu."
+      }
+    ],
+    "motion": [
+      {
+        "name": "nav-state",
+        "value": "color 0.15s ease, background 0.15s ease",
+        "purpose": "Navigation hover transition inherited from the base stylesheet."
+      },
+      {
+        "name": "card-lift",
+        "value": "translateY(-3px)",
+        "purpose": "Hover response on pack and set cards."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media (prefers-reduced-motion: reduce)",
+        "purpose": "Disables smooth scrolling in the active stylesheet."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-header",
+        "value": "1000px"
+      },
+      {
+        "name": "hero-compression",
+        "value": "860px"
+      },
+      {
+        "name": "mobile-layout",
+        "value": "720px"
+      },
+      {
+        "name": "small-pack-grid",
+        "value": "350px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Coral action for opening or buying a pack.",
+      "html": "<button class=\"ds-primary\">Open featured pack</button>",
+      "css": ".ds-primary{background:var(--rip,#ff7860);color:#191e2a;border:0;border-radius:6px;padding:14px 18px;font-family:Sora,system-ui,sans-serif;font-weight:700;cursor:pointer}.ds-primary:hover{background:#ff9a80}.ds-primary:focus-visible{outline:3px solid var(--gold,#ffd45c);outline-offset:3px}.ds-primary:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Bordered secondary action beside a pack-opening control.",
+      "html": "<button class=\"ds-ghost\">Browse all packs</button>",
+      "css": ".ds-ghost{background:transparent;color:var(--ink,#f7f7f0);border:1px solid #6980a6;border-radius:6px;padding:14px 18px;font-family:Sora,system-ui,sans-serif;font-weight:700;cursor:pointer}.ds-ghost:hover{background:#20365c}.ds-ghost:focus-visible{outline:3px solid var(--gold,#ffd45c);outline-offset:3px}"
+    },
+    {
+      "name": "Set Tab",
+      "kind": "chip",
+      "refersTo": "set-tab",
+      "description": "Small edition selector; the paper state marks the selected set.",
+      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab\">Expansion</button><button class=\"ds-tab ds-active\">Current set</button></div>",
+      "css": ".ds-tabs{display:flex;gap:7px}.ds-tab{background:#20365c;color:var(--muted,#b9c6da);border:1px solid #4f6893;border-radius:3px;padding:9px 11px;font-family:Sora,system-ui,sans-serif;font-size:12px;font-weight:700;cursor:pointer}.ds-tab:hover{background:#2c4775;color:#fff}.ds-tab.ds-active{background:var(--paper,#e9edf2);color:#17233d;border-color:var(--paper,#e9edf2)}.ds-tab:focus-visible{outline:3px solid var(--gold,#ffd45c);outline-offset:3px}"
+    },
+    {
+      "name": "Pack Card",
+      "kind": "card",
+      "refersTo": "pack-card",
+      "description": "Paper pack information card with a compact buy action.",
+      "html": "<article class=\"ds-pack\"><div class=\"ds-pack-tag\">Current expansion</div><h3>Featured booster</h3><p>Eleven cards per pack</p><div class=\"ds-pack-foot\"><strong>100 coins</strong><button>Open pack</button></div></article>",
+      "css": ".ds-pack{background:var(--paper,#e9edf2);color:#14223d;border:0;border-radius:6px;padding:20px;font-family:Sora,system-ui,sans-serif;max-width:270px;transition:background .2s ease,transform .2s ease}.ds-pack:hover{background:#f8fafc;transform:translateY(-3px)}.ds-pack-tag{color:#2a4a80;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}.ds-pack h3{font-family:'Archivo Black',Sora,sans-serif;font-size:24px;margin:14px 0 8px}.ds-pack p{color:#465b78;font-size:13px}.ds-pack-foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #b9c9dd;padding-top:14px}.ds-pack-foot strong{color:#162c54}.ds-pack-foot button{background:var(--rip,#ff7860);color:#1c1c24;border:0;border-radius:6px;padding:10px 16px;font-weight:700;cursor:pointer}.ds-pack-foot button:hover{background:#ff9a80}.ds-pack-foot button:focus-visible{outline:3px solid var(--gold,#ffd45c);outline-offset:3px}"
+    },
+    {
+      "name": "Collection Search",
+      "kind": "input",
+      "description": "Search field for card name, number, or artist.",
+      "html": "<input class=\"ds-search\" placeholder=\"Search name, number, or artist\" />",
+      "css": ".ds-search{background:rgba(255,255,255,.04);border:1px solid var(--line,rgba(226,237,255,.18));border-radius:12px;padding:10px 12px;color:var(--ink,#f7f7f0);font-family:Sora,system-ui,sans-serif;min-width:200px}.ds-search:focus-visible{outline:3px solid var(--gold,#ffd45c);outline-offset:3px}"
+    },
+    {
+      "name": "Main Navigation",
+      "kind": "nav",
+      "description": "Compact label navigation with a paper active state.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-item\" href=\"#\">Packs</a><a class=\"ds-nav-item ds-active\" href=\"#\">Home</a><a class=\"ds-nav-item\" href=\"#\">Collection</a></nav>",
+      "css": ".ds-nav{display:flex;gap:2px;background:#0f1c33;padding:4px;font-family:Sora,system-ui,sans-serif}.ds-nav-item{display:inline-flex;align-items:center;min-height:40px;padding:9px 12px;border-radius:5px;color:var(--muted,#b9c6da);font-size:13px;line-height:1.1;font-weight:700;text-decoration:none}.ds-nav-item:hover{color:#fff;background:#24395d}.ds-nav-item.ds-active{color:#102049;background:var(--paper,#e9edf2)}.ds-nav-item:focus-visible{outline:3px solid var(--gold,#ffd45c);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Card Print Proof",
+    "overview": "The interface treats a pack opening like a proof laid out at a press table. Deep blue surrounds real wrapper and card art; a saturated blue stage frames the featured pack, while cool paper panels make sets and collection data easy to read. Coral marks the opening action. Small registration corners, fine trim rules, and compact tabs provide the print-shop character.\n\nThe pace is direct: the wrapper, set choice, and opening action appear together. The same materials continue through pack selection, collection tools, and the reveal overlay. The product keeps its fan-made mark, real card scans, and existing foil effects.",
+    "keyCharacteristics": [
+      "Saturated blue stage around real pack and card imagery.",
+      "Paper panels against a dark press-table field.",
+      "Compact, label-like controls and fine print-rule details.",
+      "Card art remains the focal point during opening and reveal."
+    ],
+    "rules": [
+      {
+        "name": "The Action Color Rule",
+        "body": "Use coral for the primary opening path and gold for coin or reward information.",
+        "section": "colors"
+      },
+      {
+        "name": "The Artwork Leads Rule",
+        "body": "Large display type introduces the action; the wrapper and card scan carry the visual detail.",
+        "section": "typography"
+      },
+      {
+        "name": "The Proof Surface Rule",
+        "body": "Keep ordinary information panels flat; reserve stronger depth for the featured physical objects and overlay layers.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep real wrapper and card artwork prominent inside the press-blue opening stage.",
+      "Do use paper surfaces for dense set and collection information.",
+      "Do carry small trim lines and registration marks where they clarify the proof-sheet structure.",
+      "Do retain the gold keyboard focus outline and reduced-motion behavior."
+    ],
+    "donts": [
+      "Don't turn every card into a floating, glowing tile; flat paper and blue panels are the repeated treatment.",
+      "Don't use gold as the primary pack-opening action color; coral marks that path.",
+      "Don't let decorative press marks compete with card art or printed odds."
+    ]
+  }
+}

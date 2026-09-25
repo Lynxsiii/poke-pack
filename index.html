@@ -7,7 +7,7 @@
     <title>poke-pack.rip — rip packs, fill the binder</title>
     <meta
       name="description"
-      content="Rip Pokémon TCG booster packs with real printed pull rates, real card scans, and real market prices. Free, fan-made, no real money."
+      content="Open Pokémon TCG booster packs with printed pull rates, real card scans, and market-based values. Free, fan-made, no real money."
     />
     <meta name="theme-color" content="#09070d" />
     <link rel="canonical" href="https://poke-pack.rip/" />
@@ -18,7 +18,7 @@
     <meta property="og:title" content="poke-pack.rip — rip packs, fill the binder" />
     <meta
       property="og:description"
-      content="Real booster odds. Real card scans. Real market prices. No real money."
+      content="Printed booster odds. Real card scans. Market-based values. No real money."
     />
     <meta property="og:image" content="https://poke-pack.rip/assets/og.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -26,7 +26,7 @@
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="poke-pack.rip — rip packs, fill the binder" />
-    <meta name="twitter:description" content="Real booster odds. Real card scans. Real market prices. No real money." />
+    <meta name="twitter:description" content="Printed booster odds. Real card scans. Market-based values. No real money." />
     <meta name="twitter:image" content="https://poke-pack.rip/assets/og.jpg" />
     <meta name="twitter:image:alt" content="Five Pokémon TCG chase cards fanned out under the poke-pack.rip wordmark" />
 
@@ -39,6 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/app.css?v=45" />
+    <link rel="stylesheet" href="css/overhaul.css?v=5" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -49,8 +50,8 @@
     <link rel="stylesheet" href="css/holo/finishes.css?v=5" />
   </head>
   <body class="on-home is-booting">
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="boot-veil" aria-hidden="true"></div>
-    <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/home">
         <img class="brand-logo" src="assets/mark.png?v=35" width="256" height="256" alt="" />
@@ -60,16 +61,21 @@
         </span>
       </a>
       <nav class="nav" aria-label="Sections">
-        <a class="nav-btn active" href="/home" data-view="home">Home</a>
         <a class="nav-btn" href="/packs" data-view="shop">Packs</a>
-        <a class="nav-btn" href="/bulk" data-view="collection">Bulk</a>
+        <a class="nav-btn active" href="/home" data-view="home">Home</a>
+        <a class="nav-btn" href="/bulk" data-view="collection">Collection</a>
         <a class="nav-btn" href="/binder" data-view="binder">Binder</a>
-        <a class="nav-btn" href="/catalog" data-view="catalog">Catalog</a>
         <a class="nav-btn" href="/social" data-view="social">Social</a>
-        <span class="nav-sep"></span>
-        <a class="nav-btn" href="/notes" data-view="notes">Notes</a>
-        <a class="nav-btn" href="/account" data-view="account">Account</a>
-        <a class="nav-btn" href="/settings" data-view="settings">Settings</a>
+        <details class="nav-more">
+          <summary>More</summary>
+          <div class="nav-more-list">
+            <a class="nav-btn nav-more-social" href="/social" data-view="social">Social</a>
+            <a class="nav-btn" href="/catalog" data-view="catalog">All sets</a>
+            <a class="nav-btn" href="/notes" data-view="notes">Updates</a>
+            <a class="nav-btn" href="/account" data-view="account">Account</a>
+            <a class="nav-btn" href="/settings" data-view="settings">Settings</a>
+          </div>
+        </details>
       </nav>
       <div class="header-right">
         <div class="pill gold">✦ <span id="coin-count">0</span></div>
@@ -93,26 +99,21 @@
       </div>
     </noscript>
 
-    <main class="wrap">
+    <main class="wrap" id="main-content">
       <section id="view-home" class="home-page">
         <div class="home-hero">
           <div class="home-copy">
-            <p class="kicker" id="home-kicker">Real odds · real prices · no checkout</p>
-            <h1>Rip packs.<br /><em>Fill the binder.</em></h1>
+            <h1>There’s a pull<br />in this pack.</h1>
             <p class="lede">
-              Real booster odds. Real card scans. Real market prices — a pack
-              costs what it costs in a shop, and every card is worth what it is
-              worth today. No real money, ever.
+              Pick a real Pokémon TCG set. Tear open a virtual booster, flip
+              through the cards, and keep what you find. Printed odds, real
+              scans, virtual coins. No checkout.
             </p>
             <div class="home-cta">
-              <button class="solid" type="button" data-goto="shop">Rip a pack</button>
-              <button class="ghost" type="button" data-goto="collection">Open binder</button>
+              <button class="solid" id="home-rip" type="button">Open featured pack</button>
+              <button class="ghost" type="button" data-goto="shop">Browse all packs</button>
             </div>
-            <ul class="home-proof">
-              <li><b>Printed odds</b><span>straight off the set's pull rates</span></li>
-              <li><b>Live prices</b><span>refreshed from the real market</span></li>
-              <li><b>Free forever</b><span>fan-made, no checkout</span></li>
-            </ul>
+            <div class="home-set-picker" id="home-set-picker" aria-label="Featured set"></div>
             <div class="home-pulse" id="home-pulse"></div>
           </div>
           <div class="home-stage" id="home-stage"></div>
@@ -141,11 +142,11 @@
       </section>
 
       <section id="view-shop" class="hidden">
+        <div class="shop-quick-sets" id="shop-quick-sets" aria-label="Choose an expansion"></div>
         <div class="shop-layout">
           <div class="shop-main">
             <div class="hero">
               <div>
-                <p class="kicker" id="shop-kicker">Mega Evolution · July 2026</p>
                 <h1 id="shop-title">Pitch Black.</h1>
                 <p class="lede" id="shop-lede">
                   Real booster math. Real card scans. Ten cards plus a basic Energy —
@@ -171,7 +172,6 @@
           </div>
           <aside class="shop-rail" aria-label="All expansions">
             <div class="shop-rail-head">
-              <p class="kicker">All prints</p>
               <h2>Expansions</h2>
               <p>Open an era, then pick a set.</p>
             </div>
@@ -183,10 +183,9 @@
       <section id="view-collection" class="hidden bulk-page">
         <div class="bulk-head">
           <div class="bulk-copy">
-            <p class="kicker" id="bulk-kicker">Bulk</p>
             <h1 id="binder-title">Pitch Black</h1>
             <p class="lede" id="bulk-lede">
-              Everything you pull from this set. Sell extras at live market
+              Everything you pull from this set. Sell extras at their listed value
               price, or send keepers to your binder.
             </p>
             <div class="bulk-cta">
@@ -308,7 +307,9 @@
           <button class="solid" id="step-btn">Tear pack</button>
           <button class="ghost accent hidden" id="skip-hits-btn" title="Jump to reverse, rare, and art slots">Skip to rares</button>
           <button class="ghost hidden" id="skip-btn">Reveal all</button>
-          <button class="solid hidden" id="done-btn">Done</button>
+          <button class="solid hidden" id="again-btn">Open another</button>
+          <button class="ghost hidden" id="view-pulls-btn">View collection</button>
+          <button class="ghost hidden" id="done-btn">Keep browsing</button>
         </div>
       </div>
     </div>
@@ -330,6 +331,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=48"></script>
+    <script type="module" src="js/app.js?v=52"></script>
   </body>
 </html>
