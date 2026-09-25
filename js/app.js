@@ -2051,7 +2051,7 @@ function setRings() {
     .map((row) => {
       const { symbol } = setIdentity(row.set);
       return `<button type="button" class="set-ring${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
-        title="Open ${esc(row.set.name)} bulk">
+        title="Open ${esc(row.set.name)} collection">
         <span class="home-ring" style="--pct:${row.pct}"><span><b>${row.pct}%</b><small>set</small></span></span>
         <span class="set-ring-copy">
           <img src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
@@ -2113,7 +2113,7 @@ function overviewTab(trainer, stats) {
     <div class="panel span-full">
       <div class="panel-head">
         <h3>Set completion</h3>
-        <p class="panel-note">Click a set to open its bulk.</p>
+        <p class="panel-note">Select a set to open its collection.</p>
       </div>
       ${setRings()}
     </div>
@@ -2722,7 +2722,7 @@ const SETTING_GROUPS = [
         options: [
           ["home", "Home"],
           ["shop", "Packs"],
-          ["collection", "Bulk"],
+          ["collection", "Collection"],
         ],
       },
     ],
