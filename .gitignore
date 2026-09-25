@@ -27,5 +27,5 @@ desktop.ini
 .idea/
 *.swp
 
-# local worker secrets (BOT_SECRET etc)
+# local worker secrets
 .dev.vars

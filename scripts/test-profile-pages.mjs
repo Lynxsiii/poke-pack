@@ -57,6 +57,29 @@ assert.equal((await request('/api/me','PATCH',{binderPages:[1,2,3]})).status,200
 assert.equal((await request('/api/u/pagetester','GET',null,false)).body.binderPages.length,3);
 assert.equal(validateProfilePages([0],Array(9).fill(null)), 'Add a card to the page before displaying it.');
 assert.deepEqual(selectedProfilePages([0],[{id:'unowned'}],{}),[]);
+// Bulk sale keeps one of each card, preserves binder pockets, and cannot be
+// claimed twice or used without a session.
+db.prepare('INSERT INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,?,?)').run('test','me5-2',2,2);
+assert.equal((await request('/api/cards/sell-duplicates','POST',{setId:'me5'},false)).status,401);
+assert.equal((await request('/api/cards/sell-duplicates','POST',{setId:'bogus'})).status,400);
+response=await request('/api/cards/sell-duplicates','POST',{setId:'me5'});
+assert.equal(response.status,200,JSON.stringify(response.body));
+assert.equal(response.body.copies,5);
+assert.ok(response.body.value>0);
+assert.deepEqual(db.prepare('SELECT card_id,qty,reverse_qty FROM cards WHERE user_id=? ORDER BY card_id').all('test').map(row=>[row.card_id,row.qty,row.reverse_qty]),[['me5-1',1,0],['me5-2',1,1]]);
+assert.equal(response.body.save.binder[1].id,'me5-1');
+assert.equal(response.body.save.binder.filter(slot=>slot?.id==='me5-1').length,1);
+assert.equal((await request('/api/cards/sell-duplicates','POST',{setId:'me5'})).status,400);
+assert.equal(response.body.save.quests.progress['daily-spares'],5);
+assert.equal((await request('/api/quests/claim','POST',{id:'daily-rip'})).status,400);
+response=await request('/api/quests/claim','POST',{id:'daily-spares'});
+assert.equal(response.status,200,JSON.stringify(response.body));
+assert.equal(response.body.coins,20);
+assert.equal((await request('/api/quests/claim','POST',{id:'daily-spares'})).status,400);
+response=await request('/api/daily','POST');
+assert.equal(response.status,200,JSON.stringify(response.body));
+assert.equal(response.body.save.quests.progress['daily-bonus'],1);
+assert.equal((await request('/api/quests/claim','POST',{id:'daily-bonus'})).status,200);
 for(const hz of [30,60,120]) {
   const spring=new CardSpring(0);spring.target=1;
   for(let i=0;i<hz;i++){spring.step(1/hz);assert.ok(spring.value>=0 && spring.value<=1);}

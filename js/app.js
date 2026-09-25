@@ -43,6 +43,7 @@ import {
   readyToClaim,
   claimTotal,
 } from "./achievements.js";
+import { QUESTS } from "./quests.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
@@ -107,6 +108,7 @@ function applyCloudSave(save) {
   state.history = Array.isArray(save.history) ? save.history : [];
   state.granted = save.granted;
   state.claimed = Array.isArray(save.claimed) ? save.claimed : [];
+  state.quests = save.quests || null;
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   if (save.createdAt) state.createdAt = save.createdAt;
@@ -127,6 +129,7 @@ function wipeProgressMemory() {
   state.history = [];
   state.granted = 0;
   state.claimed = [];
+  state.quests = null;
   state.worthLog = [];
   state.binder = [];
 }
@@ -252,6 +255,7 @@ const els = {
   bulkLede: document.getElementById("bulk-lede"),
   bulkPulse: document.getElementById("bulk-pulse"),
   bulkSets: document.getElementById("bulk-sets"),
+  sellDuplicates: document.getElementById("sell-duplicates"),
   statOwned: document.getElementById("stat-owned"),
   statOwnedLabel: document.getElementById("stat-owned-label"),
   statPacks: document.getElementById("stat-packs"),
@@ -973,6 +977,12 @@ function renderCollection({ refreshSets = true } = {}) {
   const purse = binderValue(liveSet);
   const missingN = Math.max(0, total - owned);
   const spares = spareCopies();
+  if (els.sellDuplicates) {
+    els.sellDuplicates.disabled = !activeTrainer() || spares < 1;
+    els.sellDuplicates.textContent = spares > 0
+      ? `Sell ${spares} duplicate${spares === 1 ? "" : "s"}`
+      : "No duplicates to sell";
+  }
 
   if (els.bulkPulse) {
     els.bulkPulse.innerHTML = `
@@ -1940,6 +1950,7 @@ function renderAuth() {
 
 const ACCOUNT_TABS = [
   { id: "overview", name: "Overview", note: "Career, sets, and what you pulled." },
+  { id: "quests", name: "Quests", note: "Daily and weekly coin rewards." },
   { id: "achievements", name: "Achievements", note: "Badges, rewards, and titles." },
   { id: "profile", name: "Profile", note: "Name, bio, and what the public sees." },
   { id: "look", name: "Look", note: "Avatar, banner, and title." },
@@ -1955,7 +1966,9 @@ function renderAccount() {
   if (!ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
   const stats = achievementStats();
   const body =
-    accountTab === "achievements"
+    accountTab === "quests"
+      ? questsTab()
+      : accountTab === "achievements"
       ? achievementsTab(stats)
       : accountTab === "profile"
         ? profileTab(trainer)
@@ -4141,6 +4154,66 @@ async function sellOwnedCard(card, { extra = false } = {}) {
   }
 }
 
+function questsTab() {
+  const summary = state.quests;
+  if (!summary || summary.unavailable) return `<p class="panel-empty">Quests are being prepared. Check back shortly.</p>`;
+  const claimed = new Set(summary.claimed || []);
+  const section = (period, title, reset) => `<section class="ach-wall">
+    <div class="ach-head"><div><h2>${title}</h2><p class="panel-note">Resets ${new Date(reset).toLocaleString()} · UTC schedule</p></div></div>
+    <div class="ach-grid">${QUESTS.filter(row => row.period === period).map(row => {
+      const at = Math.min(row.goal, Number(summary.progress?.[row.id] || 0));
+      const done = at >= row.goal;
+      const paid = claimed.has(row.id);
+      return `<article class="ach-tile ${paid ? "is-claimed" : done ? "is-ready" : "is-locked"}">
+        <div class="ach-badge" style="--pct:${Math.round(at / row.goal * 100)}"><span>${period === "daily" ? "D" : "W"}</span></div>
+        <div class="ach-tile-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p>
+          ${done ? "" : `<div class="ach-bar"><span style="width:${Math.round(at / row.goal * 100)}%"></span></div>`}
+        </div>
+        <div class="ach-reward"><span class="ach-coin">&#10022; ${num(row.coins)}</span>
+          ${paid ? `<span class="ach-done">Claimed</span>` : done ? `<button class="solid sm" type="button" data-quest-claim="${esc(row.id)}">Claim</button>` : `<span class="ach-progress">${at} / ${row.goal}</span>`}
+        </div>
+      </article>`;
+    }).join("")}</div>
+  </section>`;
+  return `<div class="ach-wall"><p class="panel-note">Earn extra coins through play. Rewards are checked on your account when you claim them.</p>
+    ${section("daily", "Daily quests", Number(summary.periods.daily) + 86_400_000)}
+    ${section("weekly", "Weekly quests", Number(summary.periods.weekly) + 7 * 86_400_000)}
+  </div>`;
+}
+
+async function sellSetDuplicates() {
+  if (!activeTrainer()) return openAuth("signin");
+  const setId = liveSet.id;
+  const count = spareCopies();
+  if (!count) return;
+  let estimate = 0;
+  for (const [id, qty] of Object.entries(state.collection || {})) {
+    if (!id.startsWith(`${setId}-`) || qty < 2) continue;
+    const card = findCard(id);
+    if (card) estimate += (qty - 1) * sellValue(card);
+  }
+  if (!confirm(`Sell ${count} duplicate${count === 1 ? "" : "s"} from ${liveSet.name} for about ${coin(estimate)} coins? You will keep one copy of every card.`)) return;
+  els.sellDuplicates.disabled = true;
+  try {
+    const data = await api("/api/cards/sell-duplicates", {
+      method: "POST",
+      body: JSON.stringify({ setId }),
+    });
+    afterEconomy(data.save);
+    toast(`Sold ${data.copies} duplicates for ${coin(data.value)} coins. Kept one of each.`);
+    renderHeader();
+    renderShop();
+    renderCollection();
+    if (view === "binder") renderBinder();
+    if (view === "account") renderAccount();
+  } catch (err) {
+    toast(err.message || "Couldn't sell duplicates.");
+    renderCollection();
+  }
+}
+
+els.sellDuplicates?.addEventListener("click", sellSetDuplicates);
+
 function paintInspect(card) {
   const chart = els.inspectInfo.querySelector("#inspect-chart");
   if (chart) renderPriceChart(chart, card, inspectRange);
@@ -4360,6 +4433,21 @@ els.accountBody.addEventListener("click", async (e) => {
     return;
   }
   const claim = e.target.closest("[data-claim]");
+  const questClaim = e.target.closest("[data-quest-claim]");
+  if (questClaim) {
+    questClaim.disabled = true;
+    try {
+      const data = await api("/api/quests/claim", { method: "POST", body: JSON.stringify({ id: questClaim.dataset.questClaim }) });
+      afterEconomy(data.save);
+      renderHeader();
+      renderAccount();
+      toast(`Quest claimed · +${coin(data.coins)} coins`);
+    } catch (err) {
+      toast(err.message || "Couldn't claim quest.");
+      renderAccount();
+    }
+    return;
+  }
   if (claim) {
     const row = achievementById(claim.dataset.claim);
     await claimAchievements({ id: claim.dataset.claim }, row?.name || "Claimed");

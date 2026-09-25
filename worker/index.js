@@ -6,9 +6,9 @@ import { validateProfilePages } from "../js/profile-pages.js";
 import { ALL_SETS, BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
 import { isHit, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
-import { tickBots } from "./bots.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
+import { QUESTS, questPeriods } from "../js/quests.js";
 import {
   achievementById,
   achievementContext,
@@ -57,55 +57,7 @@ export default {
       return json({ error: status >= 500 ? "Server error." : message }, status);
     }
   },
-
-  async scheduled(event, env, ctx) {
-    // hashPassword is handed over rather than imported the other way, because
-    // bots.js is imported from here and a cycle back would be fragile.
-    ctx.waitUntil(tickBots(env, (path, opts) => callApi(env, path, opts), { hashPassword }));
-  },
 };
-
-/**
- * Run one API call in-process, the way an incoming request would. The bot
- * driver uses this so its accounts go through every check a browser hits
- * without costing a subrequest, and so nothing can reach the database by a
- * path the public API would not allow.
- *
- * `SITE_ORIGIN` only has to be a valid absolute URL — asset reads go through
- * the ASSETS binding, not the network — but keeping it the real hostname
- * makes anything logged during a tick readable.
- */
-async function callApi(env, path, { method = "GET", body = null, cookie = "" } = {}) {
-  const url = new URL(path, env.SITE_ORIGIN || "https://poke-pack.rip");
-  const headers = {};
-  if (body) headers["content-type"] = "application/json";
-  if (cookie) headers.cookie = `${COOKIE}=${cookie}`;
-  const request = new Request(url, {
-    method,
-    headers,
-    body: body == null ? undefined : JSON.stringify(body),
-  });
-
-  let res;
-  try {
-    res = await handleApi(request, env, url);
-  } catch (err) {
-    return { status: err?.status || 500, body: null, cookie: "" };
-  }
-
-  const text = await res.text();
-  let data = null;
-  if (text) {
-    try {
-      data = JSON.parse(text);
-    } catch {
-      data = null;
-    }
-  }
-  const setCookie = res.headers.get("set-cookie") || "";
-  const match = setCookie.match(new RegExp(`${COOKIE}=([^;]+)`));
-  return { status: res.status, body: data, cookie: match ? match[1] : "" };
-}
 
 export async function handleApi(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
@@ -149,8 +101,14 @@ export async function handleApi(request, env, url) {
     await ensureAchievementSchema(env);
     return claimAchievement(request, env);
   }
+  if (path === "/api/quests/claim" && method === "POST") {
+    return claimQuest(request, env);
+  }
   if (path === "/api/cards/sell" && method === "POST") {
     return sell(request, env);
+  }
+  if (path === "/api/cards/sell-duplicates" && method === "POST") {
+    return sellDuplicates(request, env);
   }
   if (path === "/api/binder" && method === "PUT") {
     return putBinder(request, env);
@@ -537,6 +495,7 @@ async function daily(request, env) {
   if (!updated.meta?.changes) {
     return json({ error: "Hourly bonus is not ready yet." }, 400);
   }
+  await recordQuestEvent(env, auth.user.id, "bonus", 1, now);
   const save = await loadSave(env, auth.user.id);
   return json({ save, amount: DAILY_BONUS });
 }
@@ -593,6 +552,76 @@ async function claimAchievement(request, env) {
   });
 }
 
+async function claimQuest(request, env) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const body = await readJson(request);
+  const quest = QUESTS.find(row => row.id === body?.id);
+  if (!quest) return json({ error: "Unknown quest." }, 400);
+  const summary = await questSummary(env, auth.user.id);
+  if (summary.unavailable) return json({ error: "Quests are being prepared. Try again shortly." }, 503);
+  if ((summary.progress[quest.id] || 0) < quest.goal) return json({ error: "Quest is not complete yet." }, 400);
+  if (summary.claimed.includes(quest.id)) return json({ error: "Already claimed this period." }, 400);
+  const period = summary.periods[quest.period];
+  const results = await env.DB.batch([
+    env.DB.prepare(
+      "INSERT OR IGNORE INTO quest_claims (user_id, quest_id, period_start, claimed_at) VALUES (?, ?, ?, ?)"
+    ).bind(auth.user.id, quest.id, period, Date.now()),
+    env.DB.prepare(
+      "UPDATE profiles SET coins = coins + ?, granted = granted + ? WHERE user_id = ? AND changes() = 1"
+    ).bind(quest.coins, quest.coins, auth.user.id),
+  ]);
+  try {
+    await env.DB.batch([
+      env.DB.prepare("DELETE FROM quest_events WHERE user_id = ?").bind(auth.user.id),
+      env.DB.prepare("DELETE FROM quest_claims WHERE user_id = ?").bind(auth.user.id),
+    ]);
+  } catch (err) {
+    if (!String(err?.message || err).includes("no such table")) throw err;
+  }
+  if (!results[0]?.meta?.changes) return json({ error: "Already claimed this period." }, 400);
+  return json({ save: await loadSave(env, auth.user.id), coins: quest.coins, name: quest.name });
+}
+
+async function recordQuestEvent(env, userId, kind, amount, at = Date.now()) {
+  if (!amount) return;
+  // During rollout the Worker may deploy before migrations are applied.
+  try {
+    await env.DB.prepare(
+      "INSERT INTO quest_events (user_id, kind, amount, at) VALUES (?, ?, ?, ?)"
+    ).bind(userId, kind, amount, at).run();
+  } catch (err) {
+    if (!String(err?.message || err).includes("no such table")) throw err;
+  }
+}
+
+async function questSummary(env, userId) {
+  const periods = questPeriods();
+  try {
+    const packs = await env.DB.prepare(
+      "SELECT COUNT(*) AS weekly, SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS daily FROM pack_log WHERE user_id = ? AND at >= ?"
+    ).bind(periods.daily, userId, periods.weekly).first();
+    const events = (await env.DB.prepare(
+      "SELECT kind, SUM(amount) AS weekly, SUM(CASE WHEN at >= ? THEN amount ELSE 0 END) AS daily FROM quest_events WHERE user_id = ? AND at >= ? GROUP BY kind"
+    ).bind(periods.daily, userId, periods.weekly).all()).results || [];
+    const claims = (await env.DB.prepare(
+      "SELECT quest_id, period_start FROM quest_claims WHERE user_id = ? AND period_start IN (?, ?)"
+    ).bind(userId, periods.daily, periods.weekly).all()).results || [];
+    const counts = { packs: { daily: packs?.daily || 0, weekly: packs?.weekly || 0 } };
+    for (const row of events) counts[row.kind] = { daily: row.daily || 0, weekly: row.weekly || 0 };
+    return {
+      periods,
+      progress: Object.fromEntries(QUESTS.map(row => [row.id, counts[row.kind]?.[row.period] || 0])),
+      claimed: claims.filter(row => QUESTS.some(quest => quest.id === row.quest_id && periods[quest.period] === row.period_start)).map(row => row.quest_id),
+    };
+  } catch (err) {
+    if (String(err?.message || err).includes("no such table")) {
+      return { periods, progress: {}, claimed: [], unavailable: true };
+    }
+    throw err;
+  }
+}
+
 async function sell(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
@@ -639,8 +668,51 @@ async function sell(request, env) {
   }
   await env.DB.batch(stmts);
 
+  if (owned.qty > 1) await recordQuestEvent(env, auth.user.id, "sold", 1);
   const save = await loadSave(env, auth.user.id);
   return json({ save, value });
+}
+
+async function sellDuplicates(request, env) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const body = await readJson(request);
+  const setId = String(body?.setId || "");
+  const set = ALL_SETS.find(row => row.id === setId);
+  if (!set) return json({ error: "Unknown set." }, 400);
+
+  const owned = (await env.DB.prepare(
+    "SELECT card_id, qty FROM cards WHERE user_id = ? AND card_id LIKE ? AND qty > 1"
+  ).bind(auth.user.id, `${setId}-%`).all()).results || [];
+  if (!owned.length) return json({ error: "No duplicates to sell in this set." }, 400);
+
+  const catalog = new Map((await loadSetCards(env, request, set)).map(card => [card.id, card]));
+  const rows = owned.filter(row => catalog.has(row.card_id));
+  if (!rows.length) return json({ error: "No priced duplicates to sell." }, 400);
+  const value = money(rows.reduce((sum, row) => sum + (row.qty - 1) * sellValue(catalog.get(row.card_id)), 0));
+  const copies = rows.reduce((sum, row) => sum + row.qty - 1, 0);
+  const ids = rows.map(row => row.card_id);
+  const marks = ids.map(() => "?").join(",");
+  const collection = (await inventoryMap(env, auth.user.id)).collection;
+  for (const id of ids) collection[id] = 1;
+  const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?")
+    .bind(auth.user.id).first();
+  const binder = reconcileBinder(parseJson(profile?.binder, emptyBinder()), collection);
+  // The profile update checks the inventory snapshot so a second concurrent
+  // request cannot receive the same coins. Both statements run in one D1 batch.
+  const results = await env.DB.batch([
+    env.DB.prepare(
+      `UPDATE profiles SET coins = coins + ?, binder = ? WHERE user_id = ?
+       AND (SELECT SUM(qty - 1) FROM cards WHERE user_id = ? AND card_id IN (${marks}) AND qty > 1) = ?`
+    ).bind(value, JSON.stringify(binder), auth.user.id, auth.user.id, ...ids, copies),
+    env.DB.prepare(
+      `UPDATE cards SET qty = 1, reverse_qty = MIN(reverse_qty, 1)
+       WHERE user_id = ? AND card_id IN (${marks}) AND qty > 1 AND changes() = 1`
+    ).bind(auth.user.id, ...ids),
+  ]);
+  if (!results[0]?.meta?.changes) return json({ error: "Collection changed. Try again." }, 409);
+  await recordQuestEvent(env, auth.user.id, "sold", copies);
+  return json({ save: await loadSave(env, auth.user.id), copies, value });
 }
 
 async function putBinder(request, env) {
@@ -772,6 +844,7 @@ async function loadSave(env, userId) {
     })),
     granted: money(profile.granted),
     claimed: normalizeClaimed(parseJson(profile.claimed, [])),
+    quests: await questSummary(env, userId),
     activeSetId: profile.active_set_id || "me5",
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),
