@@ -325,6 +325,7 @@ const els = {
   focusPrev: document.getElementById("focus-prev"),
   focusNext: document.getElementById("focus-next"),
   hitFx: document.getElementById("hit-fx"),
+  opMotes: document.getElementById("op-motes"),
   hitBanner: document.getElementById("hit-banner"),
   spread: document.getElementById("spread"),
   thumbs: document.getElementById("thumbs"),
@@ -3154,6 +3155,178 @@ function motionOk() {
   return !document.body.classList.contains("no-motion");
 }
 
+/** Decorative opening motion: off for the no-motion setting and for reduced motion. */
+function fxOk() {
+  return motionOk() && !reduceMotion();
+}
+
+/** The flashy part of a hit (build-up, flash, shake) also needs the hit-effects setting. */
+function hitFxOk() {
+  return fxOk() && Boolean(state.settings.flash);
+}
+
+const PACK_GLOW_DEFAULT = "150 176 232";
+const packGlowCache = new Map();
+
+/** The wrapper's dominant colour as an "r g b" triplet, sampled once from a 16px copy. */
+function packGlow(wrap) {
+  const sources = [wrap?.art, wrap?.artFallback].filter(Boolean);
+  if (!sources.length) return Promise.resolve(null);
+  const key = sources[0];
+  if (packGlowCache.has(key)) return packGlowCache.get(key);
+  const sample = (src) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.decoding = "async";
+      img.onload = () => {
+        try {
+          const size = 16;
+          const canvas = document.createElement("canvas");
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          // The middle of the wrapper: the logo band and the foot are the same on every pack.
+          const iw = img.naturalWidth || img.width;
+          const ih = img.naturalHeight || img.height;
+          ctx.drawImage(img, 0, ih * 0.28, iw, ih * 0.5, 0, 0, size, size);
+          const px = ctx.getImageData(0, 0, size, size).data;
+          // Bucket by hue so a pink-and-green wrapper glows pink or green, not a
+          // muddy average of both. Saturated, bright pixels carry the vote.
+          const bins = Array.from({ length: 12 }, () => ({ r: 0, g: 0, b: 0, w: 0 }));
+          for (let i = 0; i < px.length; i += 4) {
+            if (px[i + 3] < 128) continue;
+            const [pr, pg, pb] = [px[i], px[i + 1], px[i + 2]];
+            const max = Math.max(pr, pg, pb);
+            const min = Math.min(pr, pg, pb);
+            const chroma = max - min;
+            if (!max || chroma < 24) continue;
+            let hue;
+            if (max === pr) hue = ((pg - pb) / chroma + 6) % 6;
+            else if (max === pg) hue = (pb - pr) / chroma + 2;
+            else hue = (pr - pg) / chroma + 4;
+            const sat = chroma / max;
+            const w = sat * sat * (max / 255);
+            const bin = bins[Math.floor(hue * 2) % 12];
+            bin.r += pr * w;
+            bin.g += pg * w;
+            bin.b += pb * w;
+            bin.w += w;
+          }
+          const best = bins.reduce((a, c) => (c.w > a.w ? c : a));
+          if (!best.w) return resolve(null);
+          const rgb = [best.r, best.g, best.b].map((c) => c / best.w);
+          const k = 235 / (Math.max(...rgb) || 1);
+          resolve(rgb.map((c) => Math.round(c * k)).join(" "));
+        } catch {
+          resolve(null);
+        }
+      };
+      img.onerror = () => resolve(null);
+      img.src = src;
+    });
+  const job = sample(sources[0]).then((rgb) => rgb || (sources[1] ? sample(sources[1]) : null));
+  packGlowCache.set(key, job);
+  return job;
+}
+
+function absUrl(path) {
+  try {
+    return new URL(path, document.baseURI).href;
+  } catch {
+    return path;
+  }
+}
+
+/** Light and dust for the opening stage, tinted by the wrapper being opened. */
+function paintOpeningStage(wrap) {
+  const overlay = els.overlay;
+  if (!packGlowCache.has(wrap?.art)) overlay.style.setProperty("--pack-glow", PACK_GLOW_DEFAULT);
+  if (wrap?.art) overlay.style.setProperty("--pack-mask", `url("${absUrl(wrap.art)}")`);
+  if (liveSet.cardBack) overlay.style.setProperty("--card-back", `url("${absUrl(liveSet.cardBack)}")`);
+  packGlow(wrap).then((rgb) => {
+    if (activeWrapper === wrap) overlay.style.setProperty("--pack-glow", rgb || PACK_GLOW_DEFAULT);
+  });
+  if (els.opMotes && !els.opMotes.childElementCount) {
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 18; i += 1) {
+      const mote = document.createElement("i");
+      const dur = 10 + Math.random() * 10;
+      mote.style.setProperty("--x", `${(Math.random() * 100).toFixed(1)}%`);
+      mote.style.setProperty("--dx", `${((Math.random() - 0.5) * 120).toFixed(0)}px`);
+      mote.style.setProperty("--s", `${(1.5 + Math.random() * 2.5).toFixed(1)}px`);
+      mote.style.setProperty("--dur", `${dur.toFixed(1)}s`);
+      mote.style.setProperty("--dl", `${(-Math.random() * dur).toFixed(1)}s`);
+      mote.style.setProperty("--o", (0.3 + Math.random() * 0.5).toFixed(2));
+      frag.appendChild(mote);
+    }
+    els.opMotes.appendChild(frag);
+  }
+}
+
+/** Restart a one-shot CSS class on an element and drop it again after `ms`. */
+function replayClass(el, cls, ms) {
+  el.classList.remove(cls);
+  void el.offsetWidth;
+  el.classList.add(cls);
+  el._replay = el._replay || {};
+  clearTimeout(el._replay[cls]);
+  el._replay[cls] = setTimeout(() => el.classList.remove(cls), ms);
+}
+
+/** Flash and shockwave where the wrapper tore through. */
+function tearBurst() {
+  if (!hitFxOk()) return;
+  const rect = els.packBody.getBoundingClientRect();
+  els.overlay.style.setProperty("--burst-x", `${Math.round(rect.left + rect.width / 2)}px`);
+  els.overlay.style.setProperty("--burst-y", `${Math.round(rect.top + rect.height * 0.07)}px`);
+  replayClass(els.overlay, "tear-burst", 900);
+}
+
+/** Count the summary figures up from zero. Cheap: a few text nodes for under a second. */
+function countUpStats(root) {
+  const nodes = [...root.querySelectorAll("[data-count]")];
+  if (!nodes.length || !fxOk()) return;
+  const targets = nodes.map((node) => Number(node.dataset.count) || 0);
+  const fmt = (node, value) =>
+    (node.dataset.prefix || "") + (node.dataset.fmt === "coin" ? coin(value) : String(Math.round(value)));
+  nodes.forEach((node) => (node.textContent = fmt(node, 0)));
+  const t0 = performance.now() + 380;
+  const dur = 900;
+  const tick = (now) => {
+    if (!root.isConnected || packPhase === "idle") return;
+    const t = clamp((now - t0) / dur, 0, 1);
+    const e = 1 - Math.pow(1 - t, 3);
+    nodes.forEach((node, i) => (node.textContent = fmt(node, targets[i] * e)));
+    if (t < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+/** Deal the summary cards out from the middle of the table, best pull last. */
+function dealSpread() {
+  const grid = els.spread.querySelector(".spread-grid");
+  if (!grid || !fxOk()) return;
+  const cards = [...grid.querySelectorAll(".spread-card")];
+  const box = grid.getBoundingClientRect();
+  const cx = box.left + box.width / 2;
+  const cy = box.top + Math.min(box.height / 2, 200);
+  const step = cards.length > 20 ? 26 : 70;
+  let order = 0;
+  cards.forEach((card) => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty("--dx", `${Math.round(cx - (r.left + r.width / 2))}px`);
+    card.style.setProperty("--dy", `${Math.round(cy - (r.top + r.height / 2))}px`);
+    card.style.setProperty("--rz", `${((Math.random() - 0.5) * 24).toFixed(1)}deg`);
+    if (!card.classList.contains("top-pull")) {
+      card.style.setProperty("--d", `${140 + Math.min(order, 30) * step}ms`);
+      order += 1;
+    }
+  });
+  const top = grid.querySelector(".spread-card.top-pull");
+  if (top) top.style.setProperty("--d", `${360 + Math.min(order, 30) * step}ms`);
+  grid.classList.add("deal");
+}
+
 function hitTier(card) {
   if (!card) return 0;
   if (card.reverse) return card.reverseKind === "masterball" ? 2 : 1;
@@ -3357,8 +3530,9 @@ function renderFocusMeta(pull) {
   els.focusMeta.innerHTML = `
     <p class="focus-kicker">${esc(bits.join(" · "))} ${rarityMark(pull)}</p>
     <h2 class="focus-title">${esc(pull.name)}</h2>`;
-  els.hitBanner.innerHTML = "";
-  els.hitBanner.classList.remove("on");
+  const tier = hitTier(pull);
+  els.hitBanner.innerHTML = tier >= 2 ? `<span class="t${tier}">${esc(rarityLine(pull))}</span>` : "";
+  els.hitBanner.classList.toggle("on", tier >= 2);
 }
 
 function syncActions() {
@@ -3366,6 +3540,7 @@ function syncActions() {
   const reveal = packPhase === "reveal";
   const spread = packPhase === "spread";
   const pull = currentPulls[focusIndex];
+  els.overlay.dataset.phase = packPhase;
   els.overlayActions.classList.toggle("hidden", packPhase === "idle");
   els.overlay.classList.toggle("is-spread", spread || packPhase === "summary");
   els.skipBtn.classList.toggle("hidden", !(ready || reveal));
@@ -3414,6 +3589,8 @@ function syncActions() {
   els.focusNext.classList.toggle("hidden", !reveal);
 }
 
+const thumbsShown = new Set();
+
 function renderThumbs() {
   const hints = slotHints();
   els.thumbs.innerHTML = currentPulls
@@ -3423,7 +3600,10 @@ function renderThumbs() {
         return `<div class="thumb empty ${hint.kind}" title="${esc(hint.label)}">${esc(hint.label)}</div>`;
       }
       const hit = hitTier(card) >= 2 ? "hit" : card.reverse ? "rev" : "";
-      return `<button type="button" class="thumb ${hit} ${i === focusIndex ? "current" : ""}"
+      // Only a card revealed since the last paint pops in; the rest stay put.
+      const pop = thumbsShown.has(i) ? "" : "pop";
+      thumbsShown.add(i);
+      return `<button type="button" class="thumb ${hit} ${pop} ${i === focusIndex ? "current" : ""}"
         data-focus="${i}" title="${esc(card.name)} · ${esc(rarityLine(card))}">
         ${tcgFace(card, { small: true, stamp: false })}
       </button>`;
@@ -3433,9 +3613,19 @@ function renderThumbs() {
 
 function clearHitFx() {
   clearTimeout(playHitFx._t);
+  clearTimeout(playHitFx._b);
   playHitFx._t = 0;
+  playHitFx._b = 0;
   els.hitFx.replaceChildren();
-  els.overlay.classList.remove("hit-flash", "hit-shake");
+  els.overlay.classList.remove("hit-flash", "hit-shake", "hit-shake-sm", "charging", "charge-t2", "charge-t3");
+  els.focusCard.classList.remove("charging");
+}
+
+/** How long a hit builds up before it turns over; commons and rares flip at once. */
+function chargeMs(card) {
+  const tier = hitTier(card);
+  if (tier < 2 || !hitFxOk()) return 0;
+  return tier >= 3 ? 1150 : 620;
 }
 
 function playHitFx(card) {
@@ -3443,23 +3633,42 @@ function playHitFx(card) {
   clearHitFx();
   if (!tier) return;
   buzz(tier >= 3 ? [24, 40, 60] : tier === 2 ? [18, 30, 30] : 18);
-  if (!motionOk() || !state.settings.flash) return;
-  const count = tier === 3 ? 28 : tier === 2 ? 18 : 10;
+  if (!hitFxOk()) return;
+  // The burst lands as the face turns toward the viewer, a little under half-way through the flip.
+  const at = Math.round(flipDurationMs() * 0.42);
+  const frag = document.createDocumentFragment();
+  const count = tier === 3 ? 34 : tier === 2 ? 22 : 10;
   for (let i = 0; i < count; i += 1) {
     const spark = document.createElement("span");
-    spark.className = `hit-spark t${tier}`;
+    spark.className = `hit-spark t${tier}${tier >= 2 && i % 3 === 0 ? " streak" : ""}`;
     const angle = (Math.PI * 2 * i) / count + Math.random() * 0.35;
-    const dist = 70 + Math.random() * (50 + tier * 36);
-    spark.style.setProperty("--sx", `${Math.cos(angle) * dist}px`);
-    spark.style.setProperty("--sy", `${Math.sin(angle) * dist}px`);
-    spark.style.setProperty("--dly", `${Math.random() * 140}ms`);
-    els.hitFx.appendChild(spark);
+    const dist = 80 + Math.random() * (60 + tier * 48);
+    spark.style.setProperty("--sx", `${(Math.cos(angle) * dist).toFixed(1)}px`);
+    spark.style.setProperty("--sy", `${(Math.sin(angle) * dist).toFixed(1)}px`);
+    spark.style.setProperty("--ang", `${((angle * 180) / Math.PI).toFixed(1)}deg`);
+    spark.style.setProperty("--dly", `${Math.round(at + Math.random() * 160)}ms`);
+    frag.appendChild(spark);
   }
-  els.overlay.classList.add("hit-flash");
-  if (tier >= 3) els.overlay.classList.add("hit-shake");
+  const glow = document.createElement("i");
+  glow.className = `hit-glow t${tier}`;
+  glow.style.setProperty("--dly", `${at}ms`);
+  frag.appendChild(glow);
+  for (let i = 0; i < Math.min(tier, 2); i += 1) {
+    const ring = document.createElement("i");
+    ring.className = `hit-ring t${tier}`;
+    ring.style.setProperty("--dly", `${at + i * 170}ms`);
+    frag.appendChild(ring);
+  }
+  els.hitFx.appendChild(frag);
+  clearTimeout(playHitFx._b);
+  playHitFx._b = setTimeout(() => {
+    els.overlay.classList.add("hit-flash");
+    if (tier >= 3) els.overlay.classList.add("hit-shake");
+    else if (tier === 2) els.overlay.classList.add("hit-shake-sm");
+  }, at);
   clearTimeout(playHitFx._t);
   playHitFx._t = setTimeout(() => {
-    els.overlay.classList.remove("hit-shake");
+    els.overlay.classList.remove("hit-shake", "hit-shake-sm");
     els.overlay.classList.remove("hit-flash");
     els.hitFx.replaceChildren();
   }, tier === 3 ? 2800 : tier === 2 ? 2000 : 1400);
@@ -3504,7 +3713,8 @@ function mountFocus(pull, opts = {}) {
         <div class="face-front">${cardBack()}</div>
         <div class="face-back">${tcgFace(pull)}${pull.wasNew ? `<span class="new-badge">NEW</span>` : ""}</div>
       </div>
-    </div>`;
+    </div>
+    <i class="reveal-sweep" aria-hidden="true"></i>`;
   syncFocusChrome(pull, faceUp, { snap: opts.snap });
   if (faceUp) {
     els.focusCard.classList.add("no-anim", "flipped", "settled");
@@ -3581,11 +3791,12 @@ function showSpread() {
       const hit = isHit(card) ? "hit" : "";
       const top = best && card.id === best.id ? "top-pull" : "";
       return `<button type="button" class="spread-card ${hit} ${top}"
-          style="animation-delay:${i * 45}ms"
+          style="--d:${i * 45}ms"
           ${inspectAttrs(card)}
           title="${esc(card.name)} · ${esc(rarityLine(card))}">
         ${tcgFace(card, { small: true })}
         ${card.wasNew ? `<span class="chip new">New</span>` : ""}
+        ${top ? `<span class="best-tag">Best pull</span>` : ""}
       </button>`;
     })
     .join("");
@@ -3599,9 +3810,9 @@ function showSpread() {
       }</p>
       <h2>${esc(packHitLine())}</h2>
       <div class="spread-stats">
-        <span><b>${currentPulls.length}</b> cards</span>
-        <span><b>${fresh}</b> new</span>
-        <span><b>✦ ${coin(worth)}</b> value</span>
+        <span><b data-count="${currentPulls.length}">${currentPulls.length}</b> cards</span>
+        <span><b data-count="${fresh}">${fresh}</b> new</span>
+        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
         ${best ? `<span class="best">${rarityPips(best.rarity)} <b>${esc(best.name)}</b></span>` : ""}
       </div>
     </div>
@@ -3611,6 +3822,8 @@ function showSpread() {
   els.ripHint.textContent = "";
   syncBoxProgress();
   syncActions();
+  dealSpread();
+  countUpStats(els.spread);
 }
 
 function drawNext(opts = {}) {
@@ -3633,6 +3846,7 @@ function afterFlip(gen) {
   els.focusCard.classList.remove("flipping");
   els.focusCard.classList.add("settled");
   const pull = currentPulls[focusIndex];
+  if (pull && hitTier(pull) >= 1 && fxOk()) els.focusCard.classList.add("swept");
   if (pull) {
     syncFocusChrome(pull, true);
     renderFocusMeta(pull);
@@ -3647,6 +3861,27 @@ function flipCurrent() {
   const gen = bumpCardMotion();
   flipBusy = true;
   pull.revealed = true;
+  const charge = chargeMs(pull);
+  if (charge) {
+    // A hit gathers itself first: the room dims and the card trembles, then it turns.
+    const tier = hitTier(pull);
+    clearHitFx();
+    els.focusCard.classList.add("charging");
+    els.overlay.classList.add("charging", `charge-t${tier}`);
+    buzz(tier >= 3 ? [8, 60, 8, 60, 8] : 8);
+    syncActions();
+    flipTimer = setTimeout(() => {
+      if (gen !== flipGen) return;
+      els.focusCard.classList.remove("charging");
+      els.overlay.classList.remove("charging", "charge-t2", "charge-t3");
+      turnCard(pull, gen);
+    }, charge);
+    return;
+  }
+  turnCard(pull, gen);
+}
+
+function turnCard(pull, gen) {
   const tier = hitTier(pull);
   clearGlare();
   els.focusCard.classList.add("flipping");
@@ -3750,8 +3985,15 @@ function syncBoxProgress() {
   if (on) {
     const total = sealedRun.packs.length;
     const done = sealedRun.index;
-    els.boxProgress.innerHTML = `<b>${esc(sealedRun.product.name)}</b> · pack ${done + 1} of ${total}
-      <span class="box-progress-bar"><span style="width:${(done / total) * 100}%"></span></span>`;
+    // One pip per pack when they fit; a plain bar for the biggest products.
+    const meter =
+      total <= 40
+        ? `<span class="box-pips">${Array.from(
+            { length: total },
+            (_, i) => `<i class="${i < done ? "done" : i === done ? "now" : ""}"></i>`
+          ).join("")}</span>`
+        : `<span class="box-progress-bar"><span style="width:${(done / total) * 100}%"></span></span>`;
+    els.boxProgress.innerHTML = `<b>${esc(sealedRun.product.name)}</b> · pack ${done + 1} of ${total} ${meter}`;
   }
 }
 
@@ -3809,20 +4051,21 @@ function showBoxSummary() {
       <p class="spread-kicker">${esc(liveSet.name)} · ${esc(run.product.name)} · ${run.packs.length} packs</p>
       <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : "No hits this time.")}</h2>
       <div class="spread-stats">
-        <span><b>${all.length}</b> cards</span>
-        <span><b>${fresh}</b> new</span>
-        <span><b>✦ ${coin(worth)}</b> value</span>
+        <span><b data-count="${all.length}">${all.length}</b> cards</span>
+        <span><b data-count="${fresh}">${fresh}</b> new</span>
+        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
         <span><b>✦ ${coin(run.cost)}</b> paid</span>
       </div>
       ${tally ? `<p class="box-tally">${esc(tally)}</p>` : ""}
     </div>
     <div class="spread-grid">${shown
       .map((card, i) => `<button type="button" class="spread-card ${isHit(card) ? "hit" : ""} ${i === 0 ? "top-pull" : ""}"
-          style="animation-delay:${Math.min(i, 30) * 30}ms"
+          style="--d:${Math.min(i, 30) * 30}ms"
           ${inspectAttrs(card)}
           title="${esc(card.name)} · ${esc(rarityLine(card))}">
         ${tcgFace(card, { small: true })}
         ${card.wasNew ? `<span class="chip new">New</span>` : ""}
+        ${i === 0 ? `<span class="best-tag">Best pull</span>` : ""}
       </button>`)
       .join("")}</div>
     <p class="spread-tip">${
@@ -3832,6 +4075,8 @@ function showBoxSummary() {
   els.ripHint.textContent = "";
   syncBoxProgress();
   syncActions();
+  dealSpread();
+  countUpStats(els.spread);
   els.viewPullsBtn.focus({ preventScroll: true });
 }
 
@@ -4041,6 +4286,7 @@ function resetTear() {
     "hidden",
     "cutting",
     "pack-exit",
+    "spill",
     "tear-from-left",
     "tear-from-right"
   );
@@ -4147,6 +4393,8 @@ function presentPack(wrapper, pulled) {
   resetTear();
   clearFocusChrome({ snap: true });
   els.packBody.classList.remove("hidden", "emptied", "pack-exit");
+  thumbsShown.clear();
+  paintOpeningStage(wrapper);
   setPackArt(wrapper);
   els.focusWrap.classList.add("hidden");
   els.spread.classList.add("hidden");
@@ -4167,11 +4415,14 @@ function clearHandoff() {
 }
 
 function hidePackThenDeal() {
+  clearTimeout(handoffTimer);
+  handoffTimer = 0;
+  if (packPhase !== "ready") return;
   packExiting = false;
   packPhase = "reveal";
   resetScrapStyle();
   els.packBody.classList.add("hidden", "emptied");
-  els.packBody.classList.remove("torn", "tearing", "dragging", "cutting", "pack-exit");
+  els.packBody.classList.remove("torn", "tearing", "dragging", "cutting", "pack-exit", "spill");
   els.overlay.classList.add("dealing");
   els.ripHint.textContent = "";
   showStrip = true;
@@ -4220,6 +4471,8 @@ function completeTear() {
     if (!ripped && rip >= 1) {
       ripped = true;
       addCrumbs(tearFront(), 10, true);
+      tearBurst();
+      if (fxOk()) els.packBody.classList.add("spill");
     } else if (rip < 1 && tearCut - lastCrumbCut > 0.07) {
       lastCrumbCut = tearCut;
       addCrumbs(tearFront(), 2);
@@ -4230,7 +4483,9 @@ function completeTear() {
       return;
     }
     tearAnim = 0;
-    hidePackThenDeal();
+    // Let the cards clear the wrapper before the first one comes forward.
+    if (els.packBody.classList.contains("spill")) handoffTimer = setTimeout(hidePackThenDeal, 300);
+    else hidePackThenDeal();
   };
   applyTearVisuals();
   tearAnim = requestAnimationFrame(tick);
