@@ -108,6 +108,27 @@ export function money(n) {
   return Math.round((Number(n) || 0) * 100) / 100;
 }
 
+/**
+ * Sealed products a player can open whole. Keys match data/sealed.json, and a
+ * set only offers the products it has a market price for — special sets like
+ * Ascended Heroes never printed a booster box, so they show ETB and bundle only.
+ * Pack counts are the English retail contents; the extras in a real ETB
+ * (sleeves, dice, promo) are not simulated, so an ETB costs more per pack.
+ */
+export const SEALED_PRODUCTS = [
+  { id: "boosterBox", name: "Booster Box", short: "Box", noun: "box", packs: 36 },
+  { id: "eliteTrainerBox", name: "Elite Trainer Box", short: "ETB", noun: "ETB", packs: 9 },
+  { id: "boosterBundle", name: "Booster Bundle", short: "Bundle", noun: "bundle", packs: 6 },
+];
+
+/** Products a set can be opened as, with their prices, from a sealed.json row. */
+export function sealedOffers(prices) {
+  return SEALED_PRODUCTS.flatMap((product) => {
+    const price = prices?.[product.id];
+    return typeof price === "number" && price > 0 ? [{ ...product, price: money(price) }] : [];
+  });
+}
+
 export function sellValue(card) {
   if (typeof card.market === "number" && card.market > 0) {
     return Math.max(0.01, money(card.market * COINS_PER_USD));

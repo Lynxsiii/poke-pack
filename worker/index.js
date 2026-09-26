@@ -3,7 +3,16 @@ import { validateProfilePages } from "../js/profile-pages.js";
  * Cloud accounts, inventory, and pack rips. Static pages still come from
  * the ASSETS binding; only /api/* is handled here.
  */
-import { ALL_SETS, BASIC_ENERGY, getSet, PLAYABLE_SETS, money, sellValue } from "../js/catalog.js";
+import {
+  ALL_SETS,
+  BASIC_ENERGY,
+  getSet,
+  PLAYABLE_SETS,
+  RARITY_ORDER,
+  money,
+  sealedOffers,
+  sellValue,
+} from "../js/catalog.js";
 import { isHit, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
 import { COLOR_IDS } from "../js/palette.js";
@@ -93,6 +102,9 @@ export async function handleApi(request, env, url) {
   }
   if (path === "/api/packs/rip" && method === "POST") {
     return rip(request, env);
+  }
+  if (path === "/api/sealed/open" && method === "POST") {
+    return openSealed(request, env);
   }
   if (path === "/api/daily" && method === "POST") {
     return daily(request, env);
@@ -397,42 +409,99 @@ async function rip(request, env) {
 
   const catalog = await loadSetCards(env, request, live);
   const cost = await packCost(env, request, live);
-  const pulls = ripPack(live, catalog);
-  const now = Date.now();
+  const opened = await openPacks(env, auth.user.id, live, [{ wrapper, pulls: ripPack(live, catalog) }], cost);
+  if (opened.response) return opened.response;
+  return json({ save: opened.save, cards: opened.packs[0].cards, cost });
+}
 
-  const ids = [...new Set(pulls.map((card) => card.id))];
-  const existing = ids.length
-    ? ((
+/**
+ * Buy a sealed product and open every pack in it. The price is the product's
+ * market price from sealed.json, charged once; each pack still lands in
+ * pack_log on its own, so quests and pack counts see a box as 36 packs.
+ * Wrappers are mixed, the way a real box is.
+ */
+async function openSealed(request, env) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const body = await readJson(request);
+  if (!body) return json({ error: "Expected JSON." }, 400);
+
+  const live = PLAYABLE_SETS.find((item) => item.id === String(body.setId || ""));
+  if (!live) return json({ error: "Unknown set." }, 400);
+  const offer = sealedOffers((await loadSealed(env, request))[live.id]).find(
+    (item) => item.id === String(body.product || "")
+  );
+  if (!offer) return json({ error: "That product isn't sold for this set." }, 400);
+  if (!live.wrappers.length) return json({ error: "Unknown pack art." }, 400);
+
+  const catalog = await loadSetCards(env, request, live);
+  const packs = Array.from({ length: offer.packs }, () => ({
+    wrapper: live.wrappers[Math.floor(Math.random() * live.wrappers.length)],
+    pulls: ripPack(live, catalog),
+  }));
+  const opened = await openPacks(env, auth.user.id, live, packs, offer.price);
+  if (opened.response) return opened.response;
+  return json({
+    save: opened.save,
+    product: { id: offer.id, name: offer.name, packs: offer.packs },
+    packs: opened.packs.map((pack) => ({ wrapperId: pack.wrapper.id, cards: pack.cards })),
+    cost: offer.price,
+  });
+}
+
+/**
+ * Charge `cost` once and add every pack's pulls to the account. `wasNew` runs
+ * across the whole purchase, so only the first copy of a card in a box is new.
+ * Returns `{ response }` when the player can't afford it.
+ */
+async function openPacks(env, userId, live, packs, cost) {
+  const now = Date.now();
+  const ids = [...new Set(packs.flatMap((pack) => pack.pulls.map((card) => card.id)))];
+  const existing = [];
+  // D1 caps bound parameters per query at 100.
+  for (let i = 0; i < ids.length; i += 90) {
+    const chunk = ids.slice(i, i + 90);
+    const rows =
+      (
         await env.DB.prepare(
-          `SELECT card_id, qty, reverse_qty FROM cards WHERE user_id = ? AND card_id IN (${ids.map(() => "?").join(",")})`
+          `SELECT card_id, qty, reverse_qty FROM cards WHERE user_id = ? AND card_id IN (${chunk.map(() => "?").join(",")})`
         )
-          .bind(auth.user.id, ...ids)
+          .bind(userId, ...chunk)
           .all()
-      ).results || [])
-    : [];
+      ).results || [];
+    existing.push(...rows);
+  }
   const qty = Object.fromEntries(existing.map((row) => [row.card_id, row.qty]));
   const reverseQty = Object.fromEntries(existing.map((row) => [row.card_id, row.reverse_qty]));
 
-  const cards = [];
-  let hits = 0;
-  for (const card of pulls) {
-    const wasNew = !(qty[card.id] > 0);
-    qty[card.id] = (qty[card.id] || 0) + 1;
-    if (card.reverse) reverseQty[card.id] = (reverseQty[card.id] || 0) + 1;
-    if (isHit(card)) hits += 1;
-    cards.push({ ...card, reverse: Boolean(card.reverse), wasNew });
-  }
+  let pulled = 0;
+  let sinceHit = -1;
+  const opened = packs.map((pack) => {
+    const cards = [];
+    let hits = 0;
+    for (const card of pack.pulls) {
+      const wasNew = !(qty[card.id] > 0);
+      qty[card.id] = (qty[card.id] || 0) + 1;
+      if (card.reverse) reverseQty[card.id] = (reverseQty[card.id] || 0) + 1;
+      if (isHit(card)) hits += 1;
+      cards.push({ ...card, reverse: Boolean(card.reverse), wasNew });
+    }
+    pulled += cards.length;
+    sinceHit = hits > 0 ? 0 : sinceHit < 0 ? sinceHit : sinceHit + 1;
+    return { wrapper: pack.wrapper, cards };
+  });
 
+  // sinceHit is -1 when nothing hit, else the dry packs after the last hit.
   const deducted = await env.DB.prepare(
-    `UPDATE profiles SET coins = coins - ?, packs_opened = packs_opened + 1, pulls = pulls + ?,
-      packs_since_hit = CASE WHEN ? > 0 THEN 0 ELSE packs_since_hit + 1 END,
+    `UPDATE profiles SET coins = coins - ?, packs_opened = packs_opened + ?, pulls = pulls + ?,
+      packs_since_hit = CASE WHEN ? >= 0 THEN ? ELSE packs_since_hit + ? END,
       active_set_id = ?
      WHERE user_id = ? AND coins >= ?`
   )
-    .bind(cost, cards.length, hits, live.id, auth.user.id, cost)
+    .bind(cost, opened.length, pulled, sinceHit, sinceHit, opened.length, live.id, userId, cost)
     .run();
   if (!deducted.meta?.changes) {
-    return json({ error: "Not enough coins." }, 400);
+    return { response: json({ error: "Not enough coins." }, 400) };
   }
 
   const stmts = [];
@@ -441,44 +510,49 @@ async function rip(request, env) {
       env.DB.prepare(
         `INSERT INTO cards (user_id, card_id, qty, reverse_qty) VALUES (?, ?, ?, ?)
          ON CONFLICT(user_id, card_id) DO UPDATE SET qty = excluded.qty, reverse_qty = excluded.reverse_qty`
-      ).bind(auth.user.id, id, qty[id], reverseQty[id] || 0)
+      ).bind(userId, id, qty[id], reverseQty[id] || 0)
     );
   }
-  for (const card of cards) {
+  // History only keeps 24 rows, so a box records its best 24 cards, in pull order.
+  const rank = (card) => RARITY_ORDER.indexOf(card.rarity) + (card.reverse ? 0 : 0.5);
+  const all = opened.flatMap((pack) => pack.cards.map((card) => ({ card, wrapperId: pack.wrapper.id })));
+  const kept = new Set(
+    all
+      .map((entry, i) => i)
+      .sort((a, b) => rank(all[b].card) - rank(all[a].card) || a - b)
+      .slice(0, 24)
+  );
+  const recent = all.filter((entry, i) => kept.has(i));
+  for (const { card, wrapperId } of recent) {
     stmts.push(
       env.DB.prepare(
         `INSERT INTO history (user_id, card_id, name, rarity, reverse, was_new, pack_id, at)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+      ).bind(userId, card.id, card.name, card.rarity, card.reverse ? 1 : 0, card.wasNew ? 1 : 0, wrapperId, now)
+    );
+  }
+  // Split the price across packs in cents, the last pack taking the remainder.
+  const share = Math.floor((cost * 100) / opened.length) / 100;
+  opened.forEach((pack, i) => {
+    const packCostShare = i === opened.length - 1 ? money(cost - share * (opened.length - 1)) : share;
+    stmts.push(
+      env.DB.prepare(
+        `INSERT INTO pack_log (user_id, set_id, wrapper_id, cost, cards, at) VALUES (?, ?, ?, ?, ?, ?)`
       ).bind(
-        auth.user.id,
-        card.id,
-        card.name,
-        card.rarity,
-        card.reverse ? 1 : 0,
-        card.wasNew ? 1 : 0,
-        wrapper.id,
+        userId,
+        live.id,
+        pack.wrapper.id,
+        packCostShare,
+        JSON.stringify(pack.cards.map((card) => ({ id: card.id, reverse: card.reverse, rarity: card.rarity }))),
         now
       )
     );
-  }
-  stmts.push(
-    env.DB.prepare(
-      `INSERT INTO pack_log (user_id, set_id, wrapper_id, cost, cards, at) VALUES (?, ?, ?, ?, ?, ?)`
-    ).bind(
-      auth.user.id,
-      live.id,
-      wrapper.id,
-      cost,
-      JSON.stringify(cards.map((card) => ({ id: card.id, reverse: card.reverse, rarity: card.rarity }))),
-      now
-    )
-  );
-  stmts.push(env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, auth.user.id));
+  });
+  stmts.push(env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, userId));
   await runBatches(env, stmts);
 
-  await trimHistory(env, auth.user.id);
-  const save = await loadSave(env, auth.user.id);
-  return json({ save, cards, cost });
+  await trimHistory(env, userId);
+  return { save: await loadSave(env, userId), packs: opened };
 }
 
 async function daily(request, env) {
@@ -882,17 +956,22 @@ async function loadSetCards(env, request, set) {
   return all;
 }
 
-async function packCost(env, request, set) {
+async function loadSealed(env, request) {
   try {
     if (!sealedCache) {
       const res = await env.ASSETS.fetch(new Request(new URL("/data/sealed.json", request.url), { method: "GET" }));
-      sealedCache = res.ok ? await res.json() : {};
+      if (!res.ok) return {};
+      sealedCache = await res.json();
     }
-    const pack = sealedCache?.[set.id]?.boosterPack;
-    if (typeof pack === "number" && pack > 0) return money(pack);
   } catch {
-    /* catalog cost */
+    return {};
   }
+  return sealedCache || {};
+}
+
+async function packCost(env, request, set) {
+  const pack = (await loadSealed(env, request))?.[set.id]?.boosterPack;
+  if (typeof pack === "number" && pack > 0) return money(pack);
   return money(set.cost);
 }
 

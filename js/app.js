@@ -15,6 +15,7 @@ import {
   money,
   rarityKey,
   setIdentity,
+  sealedOffers,
 } from "./catalog.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
@@ -219,6 +220,14 @@ let historyOpen = false;
 let historyFilter = "all";
 let currentPulls = [];
 let packPhase = "idle";
+/**
+ * A sealed product being opened: `{ product, packs: [{ wrapper, cards }], index, cost }`.
+ * Every pack is already saved when this is set; it only walks the player through them.
+ */
+let sealedRun = null;
+/** Which sealed product's buy button is waiting for its confirming second click. */
+let sealedConfirm = null;
+let sealedConfirmTimer = 0;
 let focusIndex = 0;
 let activeWrapper = liveSet.wrappers[0];
 let tearing = false;
@@ -242,6 +251,8 @@ const els = {
   coinCount: document.getElementById("coin-count"),
   dailyBtn: document.getElementById("daily-btn"),
   packGrid: document.getElementById("pack-grid"),
+  sealedBlock: document.getElementById("sealed-block"),
+  sealedGrid: document.getElementById("sealed-grid"),
   setSwitcher: document.getElementById("set-switcher"),
   heroArt: document.getElementById("hero-art"),
   shopKicker: document.getElementById("shop-kicker"),
@@ -323,6 +334,8 @@ const els = {
   againBtn: document.getElementById("again-btn"),
   viewPullsBtn: document.getElementById("view-pulls-btn"),
   doneBtn: document.getElementById("done-btn"),
+  boxSummaryBtn: document.getElementById("box-summary-btn"),
+  boxProgress: document.getElementById("box-progress"),
   inspect: document.getElementById("inspect"),
   inspectArt: document.getElementById("inspect-art"),
   inspectInfo: document.getElementById("inspect-info"),
@@ -862,6 +875,47 @@ function renderShop() {
           <button class="buy" ${signed && !affordable ? "disabled" : ""}>
             ${label}
           </button>
+        </div>
+      </article>`;
+    })
+    .join("");
+  renderSealed();
+}
+
+/** Booster boxes, ETBs and bundles for the live set, priced from data/sealed.json. */
+function renderSealed() {
+  if (!els.sealedGrid) return;
+  const offers = sealedOffers(sealedPrices[liveSet.id]);
+  els.sealedBlock.classList.toggle("hidden", !offers.length || !liveSet.wrappers.length);
+  const signed = Boolean(activeTrainer());
+  const single = Number(liveSet.cost) || 0;
+  const stack = [0, 1, 2].map((i) => liveSet.wrappers[i % liveSet.wrappers.length]).filter(Boolean);
+  els.sealedGrid.innerHTML = offers
+    .map((offer) => {
+      const affordable = signed && state.coins >= offer.price;
+      const confirming = sealedConfirm === offer.id && affordable;
+      const label = !signed
+        ? "Sign in to open"
+        : !affordable
+          ? "Need coins"
+          : confirming
+            ? `Confirm ✦ ${coin(offer.price)}`
+            : `Open ${offer.short}`;
+      const each = offer.price / offer.packs;
+      const vsSingle = single ? Math.round((1 - each / single) * 100) : 0;
+      const deal =
+        vsSingle >= 1 ? `${vsSingle}% under single packs` : vsSingle <= -1 ? `${-vsSingle}% over single packs` : "Same as single packs";
+      return `<article class="sealed-card" data-sealed="${esc(offer.id)}">
+        <div class="sealed-stack" aria-hidden="true">
+          ${stack.map((wrap) => `<span>${packPicture(wrap, " ")}</span>`).join("")}
+        </div>
+        <div class="sealed-copy">
+          <h3>${esc(offer.name)}</h3>
+          <p>${offer.packs} packs · ✦ ${coin(each)} each · ${esc(deal)}</p>
+        </div>
+        <div class="pack-meta">
+          <span class="cost">✦ ${coin(offer.price)}</span>
+          <button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>
         </div>
       </article>`;
     })
@@ -3273,15 +3327,31 @@ function syncActions() {
   const spread = packPhase === "spread";
   const pull = currentPulls[focusIndex];
   els.overlayActions.classList.toggle("hidden", packPhase === "idle");
-  els.overlay.classList.toggle("is-spread", spread);
-  els.stepBtn.classList.toggle("hidden", spread);
+  els.overlay.classList.toggle("is-spread", spread || packPhase === "summary");
   els.skipBtn.classList.toggle("hidden", !(ready || reveal));
   els.skipHitsBtn.classList.toggle("hidden", !canSkipToHits());
+  const summary = packPhase === "summary";
+  const boxLeft = sealedRun ? sealedRun.packs.length - sealedRun.index - 1 : 0;
   els.againBtn.classList.toggle("hidden", !spread);
-  els.againBtn.disabled = spread && state.coins < liveSet.cost;
-  els.againBtn.title = els.againBtn.disabled ? "Claim coins or sell extras to open another pack" : "";
-  els.viewPullsBtn.classList.toggle("hidden", !spread);
-  els.doneBtn.classList.toggle("hidden", !spread);
+  if (sealedRun) {
+    els.againBtn.disabled = false;
+    els.againBtn.title = "";
+    els.againBtn.textContent = boxLeft
+      ? `Next pack (${sealedRun.index + 2} of ${sealedRun.packs.length})`
+      : `${sealedRun.product.short} summary`;
+  } else {
+    els.againBtn.disabled = spread && state.coins < liveSet.cost;
+    els.againBtn.title = els.againBtn.disabled ? "Claim coins or sell extras to open another pack" : "";
+    els.againBtn.textContent = "Open another";
+  }
+  els.boxSummaryBtn?.classList.toggle("hidden", !(sealedRun && boxLeft > 0 && !summary));
+  if (els.boxSummaryBtn && sealedRun) els.boxSummaryBtn.textContent = `Skip to ${sealedRun.product.noun} summary`;
+  // Mid-box, the way out is the summary, so the remaining packs aren't skipped unseen.
+  const exits = summary || (spread && !boxLeft);
+  els.viewPullsBtn.classList.toggle("hidden", !exits);
+  els.doneBtn.classList.toggle("hidden", !exits);
+  els.stepBtn.classList.toggle("hidden", spread || summary);
+  els.leavePack?.classList.toggle("hidden", summary);
   els.ripHint.classList.toggle("hidden", reveal || spread);
   els.thumbs.classList.toggle("hidden", !(reveal && showStrip));
   els.skipBtn.textContent = ready ? "Skip to pack" : "Reveal all";
@@ -3482,7 +3552,11 @@ function showSpread() {
 
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker">${esc(liveSet.name)} · pack #${state.packsOpened}</p>
+      <p class="spread-kicker">${esc(liveSet.name)} · ${
+        sealedRun
+          ? `${esc(sealedRun.product.name)} · pack ${sealedRun.index + 1} of ${sealedRun.packs.length}`
+          : `pack #${state.packsOpened}`
+      }</p>
       <h2>${esc(packHitLine())}</h2>
       <div class="spread-stats">
         <span><b>${currentPulls.length}</b> cards</span>
@@ -3495,6 +3569,7 @@ function showSpread() {
     <p class="spread-tip">Your pulls are saved. Select a card to inspect it.</p>`;
 
   els.ripHint.textContent = "";
+  syncBoxProgress();
   syncActions();
 }
 
@@ -3625,6 +3700,99 @@ function revealAllCards() {
     card.revealed = true;
   });
   showSpread();
+}
+
+function syncBoxProgress() {
+  if (!els.boxProgress) return;
+  // The spread's own kicker names the pack, so the bar shows while tearing and flipping.
+  const on = Boolean(sealedRun) && (packPhase === "ready" || packPhase === "reveal");
+  els.boxProgress.classList.toggle("hidden", !on);
+  if (on) {
+    const total = sealedRun.packs.length;
+    const done = sealedRun.index;
+    els.boxProgress.innerHTML = `<b>${esc(sealedRun.product.name)}</b> · pack ${done + 1} of ${total}
+      <span class="box-progress-bar"><span style="width:${(done / total) * 100}%"></span></span>`;
+  }
+}
+
+function nextBoxPack() {
+  if (!sealedRun) return;
+  const pack = sealedRun.packs[sealedRun.index + 1];
+  if (!pack) {
+    showBoxSummary();
+    return;
+  }
+  sealedRun.index += 1;
+  finishRip({ keepOpen: true });
+  presentPack(pack.wrapper, pack.cards);
+}
+
+/** Leaving mid-box goes to the summary: the rest of the box is already in the collection. */
+function leavePack() {
+  if (sealedRun && packPhase !== "summary") showBoxSummary();
+  else finishRip();
+}
+
+/** Every hit from the whole product on one sheet, best first. */
+function showBoxSummary() {
+  if (!sealedRun) return;
+  const run = sealedRun;
+  finishRip({ keepOpen: true });
+  sealedRun = run;
+  packPhase = "summary";
+  els.overlay.classList.add("is-spread");
+  els.packBody.classList.add("hidden", "emptied");
+  els.focusWrap.classList.add("hidden");
+  els.thumbs.innerHTML = "";
+  els.spread.classList.remove("hidden");
+
+  const all = run.packs.flatMap((pack) => pack.cards);
+  const worth = money(all.reduce((sum, card) => sum + sellValue(card), 0));
+  const fresh = all.filter((card) => card.wasNew).length;
+  const hits = all.filter((card) => isHit(card));
+  const rank = (card) => RARITY_ORDER.indexOf(card.rarity);
+  const shown = (hits.length ? hits : all.filter((card) => card.rarity !== "Energy"))
+    .map((card, i) => ({ card, i }))
+    .sort((a, b) => rank(b.card) - rank(a.card) || sellValue(b.card) - sellValue(a.card) || a.i - b.i)
+    .slice(0, hits.length ? 60 : 12)
+    .map(({ card }) => card);
+  const counts = {};
+  for (const card of hits) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+  const tally = Object.entries(counts)
+    .sort((a, b) => rank({ rarity: b[0] }) - rank({ rarity: a[0] }))
+    .map(([rarity, n]) => `${n} ${RARITY_LABEL[rarity] || rarity}`)
+    .join(" · ");
+  const unseen = run.packs.length - run.index - 1;
+
+  els.spread.innerHTML = `
+    <div class="spread-head">
+      <p class="spread-kicker">${esc(liveSet.name)} · ${esc(run.product.name)} · ${run.packs.length} packs</p>
+      <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : "No hits this time.")}</h2>
+      <div class="spread-stats">
+        <span><b>${all.length}</b> cards</span>
+        <span><b>${fresh}</b> new</span>
+        <span><b>✦ ${coin(worth)}</b> value</span>
+        <span><b>✦ ${coin(run.cost)}</b> paid</span>
+      </div>
+      ${tally ? `<p class="box-tally">${esc(tally)}</p>` : ""}
+    </div>
+    <div class="spread-grid">${shown
+      .map((card, i) => `<button type="button" class="spread-card ${isHit(card) ? "hit" : ""} ${i === 0 ? "top-pull" : ""}"
+          style="animation-delay:${Math.min(i, 30) * 30}ms"
+          ${inspectAttrs(card)}
+          title="${esc(card.name)} · ${esc(rarityLine(card))}">
+        ${tcgFace(card, { small: true })}
+        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
+      </button>`)
+      .join("")}</div>
+    <p class="spread-tip">${
+      unseen ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection. ` : ""
+    }${hits.length ? "" : "Showing the best cards instead. "}Select a card to inspect it.</p>`;
+
+  els.ripHint.textContent = "";
+  syncBoxProgress();
+  syncActions();
+  els.viewPullsBtn.focus({ preventScroll: true });
 }
 
 function setPackArt(wrap) {
@@ -3859,24 +4027,70 @@ async function startRip(wrapper) {
       method: "POST",
       body: JSON.stringify({ setId: liveSet.id, wrapperId: wrapper.id }),
     });
-    activeWrapper = wrapper;
+    sealedRun = null;
     afterEconomy(pack.save);
-    currentPulls = (pack.cards || []).map((card) => ({
-      ...card,
-      reverse: Boolean(card.reverse),
-      revealed: false,
-      drawn: false,
-    }));
     renderHeader();
     renderShop();
+    presentPack(wrapper, pack.cards);
   } catch (err) {
     toast(err.message || "Couldn't rip that pack.");
     renderHeader();
     renderShop();
-    return;
   } finally {
     ripLock = false;
   }
+}
+
+/** Buy a whole sealed product. The server opens every pack; we deal them one at a time. */
+async function startSealed(productId) {
+  if (!activeTrainer()) {
+    toast("Sign in to open boxes. Cards save to your account.");
+    openAuth("signup");
+    return;
+  }
+  const offer = sealedOffers(sealedPrices[liveSet.id]).find((item) => item.id === productId);
+  if (!offer) {
+    toast("That product isn't sold for this set.");
+    return;
+  }
+  if (ripLock || packPhase !== "idle") return;
+  if (state.coins < offer.price) {
+    toast("Not enough coins.");
+    return;
+  }
+  ripLock = true;
+  try {
+    const data = await api("/api/sealed/open", {
+      method: "POST",
+      body: JSON.stringify({ setId: liveSet.id, product: offer.id }),
+    });
+    afterEconomy(data.save);
+    const packs = (data.packs || []).map((pack) => ({
+      wrapper: liveSet.wrappers.find((w) => w.id === pack.wrapperId) || liveSet.wrappers[0],
+      cards: pack.cards || [],
+    }));
+    sealedRun = { product: { ...offer, ...data.product }, packs, index: 0, cost: data.cost };
+    renderHeader();
+    renderShop();
+    if (packs.length) presentPack(packs[0].wrapper, packs[0].cards);
+  } catch (err) {
+    toast(err.message || "Couldn't open that box.");
+    renderHeader();
+    renderShop();
+  } finally {
+    ripLock = false;
+  }
+}
+
+/** Put a freshly ripped pack on the table, ready to tear. */
+function presentPack(wrapper, pulled) {
+  activeWrapper = wrapper;
+  currentPulls = (pulled || []).map((card) => ({
+    ...card,
+    reverse: Boolean(card.reverse),
+    revealed: false,
+    drawn: false,
+  }));
   if (!currentPulls.length) {
     toast("That pack came back empty.");
     return;
@@ -3899,6 +4113,7 @@ async function startRip(wrapper) {
   els.spread.innerHTML = "";
   els.thumbs.innerHTML = "";
   els.ripHint.textContent = "Grab the top and drag across to rip it open";
+  syncBoxProgress();
   syncActions();
   openDialog(els.overlay, els.stepBtn);
 }
@@ -4019,7 +4234,8 @@ function easeTearBack() {
   tearAnim = requestAnimationFrame(tick);
 }
 
-function finishRip() {
+function finishRip({ keepOpen = false } = {}) {
+  if (!keepOpen) sealedRun = null;
   currentPulls = [];
   packPhase = "idle";
   bumpCardMotion();
@@ -4031,7 +4247,8 @@ function finishRip() {
   clearHitFx();
   clearHandoff();
   els.packBody.classList.add("hidden");
-  closeDialog(els.overlay);
+  if (!keepOpen) closeDialog(els.overlay);
+  syncBoxProgress();
   clearTimeout(auraTimer);
   auraTimer = 0;
   auraGen += 1;
@@ -4045,7 +4262,7 @@ function finishRip() {
   renderShop();
   if (view === "home") renderHome();
   if (view === "collection") renderCollection();
-  toast("Added to collection.");
+  if (!keepOpen) toast("Added to collection.");
 }
 
 function inspectFromEl(el) {
@@ -5027,6 +5244,26 @@ els.packGrid.addEventListener("click", (e) => {
   startRip(wrapper);
 });
 
+// A box costs real coin, so the first click arms the button and the second buys.
+els.sealedGrid?.addEventListener("click", (e) => {
+  const card = e.target.closest("[data-sealed]");
+  if (!card || e.target.closest("button")?.disabled) return;
+  const id = card.dataset.sealed;
+  if (activeTrainer() && sealedConfirm !== id) {
+    sealedConfirm = id;
+    clearTimeout(sealedConfirmTimer);
+    sealedConfirmTimer = setTimeout(() => {
+      sealedConfirm = null;
+      renderSealed();
+    }, 4000);
+    renderSealed();
+    return;
+  }
+  sealedConfirm = null;
+  clearTimeout(sealedConfirmTimer);
+  startSealed(id);
+});
+
 function grabTop(e) {
   if (e.target.closest?.(".tear-handle")) return true;
   const rect = els.packBody.getBoundingClientRect();
@@ -5152,15 +5389,20 @@ function clearGlare() { cardMotion.clear(); }
 
 els.doneBtn.addEventListener("click", finishRip);
 els.againBtn.addEventListener("click", () => {
+  if (sealedRun) {
+    nextBoxPack();
+    return;
+  }
   const wrapper = activeWrapper || liveSet.wrappers?.[0];
   finishRip();
   startRip(wrapper);
 });
+els.boxSummaryBtn?.addEventListener("click", showBoxSummary);
 els.viewPullsBtn.addEventListener("click", () => {
   finishRip();
   setView("collection");
 });
-els.leavePack?.addEventListener("click", finishRip);
+els.leavePack?.addEventListener("click", leavePack);
 
 els.binderBody?.addEventListener("click", async (e) => {
   const sharedPage = e.target.closest("[data-share-page]");
@@ -5292,7 +5534,7 @@ document.addEventListener("keydown", (e) => {
       closeDialog(els.inspect);
       return;
     }
-    if (packPhase !== "idle") finishRip();
+    if (packPhase !== "idle") leavePack();
   }
   if (e.key === " " && packPhase === "reveal") {
     e.preventDefault();
