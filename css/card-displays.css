@@ -52,6 +52,8 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
   background: radial-gradient(ellipse at top left,rgba(240,193,75,.07),transparent 65%),rgba(0,0,0,.23);
   box-shadow: inset 6px 0 12px rgba(0,0,0,.2); }
 .profile-binder-page header { margin: 0 0 20px; font-size: 12px; color: var(--muted); }
+.profile-binder-page header b { white-space: nowrap; }
+.profile-page-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-end; }
 .profile-binder-page .binder-pockets { gap: 14px; }
 .profile-pocket { position: relative; aspect-ratio: 63/88; min-width: 0; border-radius: 8px; }
 .profile-pocket .mini-card { width: 100%; display: block; }
