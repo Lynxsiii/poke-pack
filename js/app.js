@@ -1,4 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
+import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
   ALL_SETS,
@@ -882,6 +883,7 @@ function renderShop() {
       </article>`;
     })
     .join("");
+  tintFrom(els.packGrid.querySelector(".shop-wrapper img"));
   renderSealed();
 }
 
@@ -1591,6 +1593,7 @@ function renderHome() {
         <b>✦ ${coin(liveSet.cost)}</b>
       </div>
       <p class="home-feature-odds">${esc(liveSet.oddsLine)}</p>`;
+    tintFrom(els.homeStage.querySelector(".home-feature-pack img"), els.homeStage.querySelector(".home-feature-pack"));
   }
 
   const setTiles = PLAYABLE_SETS.slice(0, 6).map((set) => {
@@ -5748,6 +5751,7 @@ async function boot() {
 }
 
 function revealSite() {
+  initFx();
   const go = () => {
     document.body.classList.add("is-ready");
     document.body.classList.remove("is-booting");

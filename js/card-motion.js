@@ -99,7 +99,7 @@ export function createCardMotion({settings, reducedMotion, blocked}) {
     const x=Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width));
     const y=Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height));
     const tilt=settings().tilt && !reducedMotion();
-    const targets={x:x*100,y:y*100,light:1,rx:tilt ? (0.5-x)*18 : 0,ry:tilt ? (y-.5)*18 : 0,scale:tilt ? 1.035 : 1};
+    const targets={x:x*100,y:y*100,light:1,rx:tilt ? (0.5-x)*28 : 0,ry:tilt ? (y-.5)*28 : 0,scale:tilt ? 1.05 : 1};
     for (const [key,value] of Object.entries(targets)) {
       const s=entry.springs[key]; s.target=value;
       if (reducedMotion()) {s.value=value;s.velocity=0;}

@@ -341,7 +341,7 @@ h1, h2, h3 { text-wrap: balance; }
 }
 .home-feature-top { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
 .home-feature-art { position: relative; min-height: 300px; }
-.home-feature-art::before, .home-feature-art::after { content: none; }
+.home-feature-art::after { content: none; }
 .home-feature-pack, .home-feature-card { position: absolute; }
 .home-feature-pack {
   z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-4deg);
@@ -599,3 +599,264 @@ h1, h2, h3 { text-wrap: balance; }
 /* Avatars without a picture sit on the surface, not on gold. */
 .user-face { background: var(--avatar, var(--surface-3)); }
 .user-face.empty { background: var(--surface-3); color: var(--ink-2); }
+
+/* ==========================================================================
+   Motion and light. The base theme stays graphite; this layer adds the set's
+   own colour as ambient light, a holographic accent that echoes the foil, and
+   motion that responds to the player. All of it switches off under
+   prefers-reduced-motion and Settings → motion off (body.no-motion).
+   ========================================================================== */
+@property --spin {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+:root {
+  --ambient: 120 110 255;
+  --holo-ring: conic-gradient(from var(--spin),
+    #ff7a8a, #ffcf6b, #8cf3a6, #6fd8ff, #a58bff, #ff7ad9, #ff7a8a);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Ambient light: two slow pools of the featured set's colour behind the page. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20vmax;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38vmax 30vmax at 78% 12%, rgb(var(--ambient) / 0.22), transparent 70%),
+    radial-gradient(34vmax 28vmax at 12% 78%, rgb(var(--ambient) / 0.12), transparent 70%);
+  transition: background 1.2s ease;
+  animation: fx-drift 26s ease-in-out infinite alternate;
+}
+@keyframes fx-drift {
+  from { transform: translate3d(0, 0, 0) rotate(0deg); }
+  to { transform: translate3d(-3vmax, 2vmax, 0) rotate(6deg); }
+}
+
+/* View changes rise into place instead of just fading. */
+.wrap { transition: opacity 0.22s ease, transform 0.35s var(--ease-out); }
+.wrap.is-switching { opacity: 0; transform: translateY(10px); }
+
+/* Nav: the underline grows in. */
+.nav > .nav-btn::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: -11px;
+  height: 2px; background: var(--ink);
+  transform: scaleX(0); transition: transform 0.28s var(--ease-out);
+}
+.nav > .nav-btn.active::after { transform: scaleX(1); }
+.nav > .nav-btn:hover:not(.active)::after { transform: scaleX(0.4); background: var(--faint); }
+
+/* Primary buttons: a light sweep and a warm glow on hover, a press on click. */
+.solid, .buy { position: relative; overflow: hidden; isolation: isolate; }
+.solid::after, .buy::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.solid:hover:not(:disabled)::after, .buy:hover:not(:disabled)::after {
+  transform: translateX(120%); transition: transform 0.7s var(--ease-out);
+}
+.solid:hover:not(:disabled), .buy:hover:not(:disabled) {
+  box-shadow: 0 8px 28px -8px rgba(255, 107, 74, 0.7);
+}
+.solid:active:not(:disabled), .buy:active:not(:disabled), .ghost:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+}
+.home-cta .solid { box-shadow: 0 10px 30px -12px rgba(255, 107, 74, 0.8); }
+
+/* Home hero: headline with a slow holographic sheen on the last line. */
+.home-copy h1 {
+  background: linear-gradient(100deg, var(--ink) 0%, var(--ink) 40%,
+    #ffd2a8 47%, #b8f5ff 52%, #e0c4ff 57%, var(--ink) 64%, var(--ink) 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  animation: fx-sheen 7s ease-in-out infinite;
+}
+@keyframes fx-sheen {
+  0%, 30% { background-position: 100% 0; }
+  70%, 100% { background-position: 0% 0; }
+}
+
+/* The featured stage: a holographic rim, the set's light, and a pack that
+   floats and leans towards the pointer. */
+.home-stage {
+  --sx: 0; --sy: 0;
+  position: relative; isolation: isolate;
+  background:
+    radial-gradient(55% 50% at 55% 45%, rgb(var(--ambient) / 0.48), transparent 72%),
+    radial-gradient(90% 60% at 50% 115%, rgb(var(--ambient) / 0.25), transparent 70%),
+    var(--surface);
+  border-color: transparent;
+}
+.home-stage::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  padding: 1px; border-radius: inherit;
+  background: var(--holo-ring);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0.55;
+  animation: fx-spin 8s linear infinite;
+}
+@keyframes fx-spin { to { --spin: 360deg; } }
+.home-feature-art { perspective: 900px; }
+.home-feature-pack {
+  transform: translate(-50%, -50%)
+    translate(calc(var(--sx) * 18px), calc(var(--sy) * 12px))
+    rotate(-4deg) rotateY(calc(var(--sx) * 16deg)) rotateX(calc(var(--sy) * -10deg));
+  transition: transform 0.5s var(--ease-out);
+}
+.home-feature-pack { animation: fx-float 5.5s ease-in-out infinite; }
+.home-feature-card {
+  transform: translate(calc(var(--sx) * -12px), calc(var(--sy) * -8px)) rotate(11deg);
+  transition: transform 0.6s var(--ease-out);
+}
+.home-feature-card .tcg { animation: fx-float 6.5s ease-in-out -2s infinite; }
+@keyframes fx-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+/* A sweep of light across the wrapper every few seconds. */
+.home-feature-pack::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, 0.5) 48%, transparent 58%);
+  mix-blend-mode: overlay;
+  -webkit-mask: var(--pack-mask, none);
+  mask: var(--pack-mask, none);
+  background-size: 300% 100%;
+  animation: fx-glint 5s ease-in-out 1.5s infinite;
+}
+@keyframes fx-glint {
+  0% { background-position: 110% 0; }
+  45%, 100% { background-position: -60% 0; }
+}
+
+/* Set tiles and pack cards: the art lifts and a holo rim lights on hover. */
+.home-set, .pack-card, .sealed-card { position: relative; isolation: isolate; }
+.home-set::before, .pack-card::before, .sealed-card::before {
+  content: ""; position: absolute; inset: -1px; z-index: -1; pointer-events: none;
+  padding: 1px; border-radius: inherit;
+  background: var(--holo-ring);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.home-set:hover::before, .pack-card:hover::before, .sealed-card:hover::before,
+.home-set:focus-visible::before {
+  opacity: 0.9; animation: fx-spin 4s linear infinite;
+}
+.home-set:hover, .pack-card:hover, .sealed-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px -18px rgb(var(--ambient) / 0.55);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease, background 0.15s ease;
+}
+.shop-wrapper img, .sealed-stack img, .home-set-pack img {
+  transition: transform 0.45s var(--ease-spring), filter 0.3s ease;
+}
+.pack-card:hover .shop-wrapper img {
+  transform: translateY(-10px) rotate(-2deg) scale(1.03);
+  filter: drop-shadow(0 28px 26px rgba(0, 0, 0, 0.7));
+}
+.sealed-card:hover .sealed-stack > span:nth-child(1) img { transform: translate(-8px, -4px) rotate(-4deg); }
+.sealed-card:hover .sealed-stack > span:nth-child(2) img { transform: translateY(-10px); }
+.sealed-card:hover .sealed-stack > span:nth-child(3) img { transform: translate(8px, -4px) rotate(4deg); }
+.home-set:hover .home-set-pack:nth-child(1) { transform: rotate(-18deg) translate(-8px, 10px); }
+.home-set:hover .home-set-pack:nth-child(2) { transform: translateY(-12px); }
+.home-set:hover .home-set-pack:nth-child(3) { transform: rotate(18deg) translate(8px, 10px); }
+
+/* Chips and tabs: a quick settle when chosen. */
+.seg-btn.on, .acct-tab.on, .rarity-chip.on, .home-set-option.active, .shop-quick-set.active {
+  animation: fx-pop 0.3s var(--ease-spring);
+}
+@keyframes fx-pop { from { transform: scale(0.94); } to { transform: scale(1); } }
+
+/* Progress bars fill in rather than appearing full. */
+.dex-bar span, .ach-bar span, .home-board-meter > span {
+  animation: fx-fill 0.9s var(--ease-out) both;
+  transform-origin: left center;
+}
+@keyframes fx-fill { from { transform: scaleX(0); } }
+
+/* Scroll reveals, added by js/fx.js. Content is visible without it. */
+.fx-ready .fx-reveal {
+  opacity: 0; transform: translateY(18px);
+}
+.fx-ready .fx-reveal.fx-in {
+  opacity: 1; transform: none;
+  transition: opacity 0.55s ease var(--fx-delay, 0ms), transform 0.7s var(--ease-out) var(--fx-delay, 0ms);
+}
+
+/* The card inspector opens with a spin, like a card being turned over. */
+#inspect:not(.hidden) .inspect-art {
+  animation: fx-card-in 0.7s var(--ease-out) both;
+  transform-style: preserve-3d;
+}
+#inspect:not(.hidden) .inspect-info { animation: fx-rise 0.5s var(--ease-out) 0.15s both; }
+@keyframes fx-card-in {
+  from { transform: perspective(900px) rotateY(-160deg) scale(0.7); opacity: 0; }
+  60% { opacity: 1; }
+  to { transform: perspective(900px) rotateY(0) scale(1); }
+}
+@keyframes fx-rise { from { opacity: 0; transform: translateY(14px); } }
+
+/* Coins tick when the balance changes (class added by the header renderer if
+   present; harmless otherwise). */
+.pill.gold { transition: box-shadow 0.3s ease; }
+.pill.gold:hover { box-shadow: 0 0 0 1px rgba(233, 185, 73, 0.4), 0 0 18px -4px rgba(233, 185, 73, 0.6); }
+
+@media (hover: none) {
+  .home-set:hover, .pack-card:hover, .sealed-card:hover { transform: none; }
+}
+
+/* Everything above is decoration: off for reduced motion and Settings. */
+@media (prefers-reduced-motion: reduce) {
+  body::before, .home-copy h1, .home-stage::before, .home-feature-pack,
+  .home-feature-card .tcg, .home-feature-pack::after, .dex-bar span, .ach-bar span,
+  .home-board-meter > span, #inspect:not(.hidden) .inspect-art, #inspect:not(.hidden) .inspect-info,
+  .seg-btn.on, .acct-tab.on, .rarity-chip.on, .home-set-option.active, .shop-quick-set.active,
+  .home-set:hover::before, .pack-card:hover::before, .sealed-card:hover::before {
+    animation: none;
+  }
+  .fx-ready .fx-reveal { opacity: 1; transform: none; }
+  .wrap.is-switching { transform: none; }
+}
+body.no-motion::before, body.no-motion .home-copy h1, body.no-motion .home-stage::before,
+body.no-motion .home-feature-pack, body.no-motion .home-feature-card .tcg,
+body.no-motion .home-feature-pack::after, body.no-motion .dex-bar span, body.no-motion .ach-bar span,
+body.no-motion .home-board-meter > span, body.no-motion #inspect:not(.hidden) .inspect-art,
+body.no-motion #inspect:not(.hidden) .inspect-info,
+body.no-motion .home-set:hover::before, body.no-motion .pack-card:hover::before,
+body.no-motion .sealed-card:hover::before {
+  animation: none;
+}
+body.no-motion .fx-reveal { opacity: 1 !important; transform: none !important; }
+
+/* Sparkles drifting up through the stage light. */
+.home-feature-art::before {
+  content: ""; position: absolute; inset: -10% 0; z-index: 0; pointer-events: none;
+  border: 0; width: auto; height: auto;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 80%, #fff, transparent),
+    radial-gradient(1px 1px at 28% 30%, #fff, transparent),
+    radial-gradient(2px 2px at 44% 90%, rgb(var(--ambient)), transparent),
+    radial-gradient(1px 1px at 63% 20%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 78% 65%, rgb(var(--ambient)), transparent),
+    radial-gradient(1px 1px at 90% 40%, #fff, transparent),
+    radial-gradient(2px 2px at 20% 55%, #fff, transparent),
+    radial-gradient(1px 1px at 55% 50%, rgb(var(--ambient)), transparent);
+  background-size: 100% 50%;
+  opacity: 0.8;
+  animation: fx-rise-sparks 14s linear infinite;
+}
+@keyframes fx-rise-sparks {
+  from { background-position: 0 0; }
+  to { background-position: 0 -200%; }
+}
+@media (prefers-reduced-motion: reduce) { .home-feature-art::before { animation: none; } }
+body.no-motion .home-feature-art::before { animation: none; }
