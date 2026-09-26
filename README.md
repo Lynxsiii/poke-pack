@@ -134,7 +134,17 @@ bottom of `js/titles.js` unlock by reading that list.
 ## Known gaps
 
 - Card art is hotlinked from third-party image CDNs.
-- There are page URLs, but no deep links to a specific set or binder page.
+
+## Deep links
+
+`/packs/<set id>` (for example `/packs/me5`) opens the Packs page on that set,
+and the address follows along when the player switches sets there. `/packs` and
+unknown ids settle on the set that is showing. `/u/<handle>/binder/<n>` opens a
+profile scrolled to its shared binder page `n` (the page number the owner sees in
+their binder); turning pages updates the address, each page has a Copy link
+button, and a link to a page that is no longer displayed falls back to
+`/u/<handle>`. Routing lives in `viewFromPath()` and `pathForView()` in
+`js/app.js`.
 
 ## Current opening flow
 
