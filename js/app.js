@@ -76,6 +76,9 @@ const state = loadState();
 let cloudUser = null;
 let profileHandle = "";
 let profileBinderView = {handle:"", pages:[], mine:false, position:0};
+// Binder page index named by a /u/<handle>/binder/<n> link, kept while that page is on screen.
+let profilePageWanted = null;
+let profilePageScroll = false;
 let dmHandle = "";
 let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
@@ -743,7 +746,7 @@ function renderSetChrome() {
   if (els.bulkLede) {
     els.bulkLede.textContent = `Everything you pull from ${liveSet.name} lands here. Sell extras at their listed value, or send keepers to the binder.`;
   }
-  document.title = `poke-pack.rip — ${liveSet.name}`;
+  document.title = viewTitle();
 }
 
 function eraYears(sets) {
@@ -904,6 +907,7 @@ async function activateSet(id, force = false) {
     renderCatalog();
     if (view === "home") renderHome();
     if (view === "account") renderAccount();
+    if (view === "shop") replacePath(pathForView("shop"));
   } catch (err) {
     console.error(err);
     toast(err?.message || `Couldn't render ${next.name}.`);
@@ -2455,7 +2459,14 @@ async function renderProfile() {
     const pageId = sameProfile ? profileBinderView.pages[profileBinderView.position]?.index : null;
     const pages = data.binderPages || [];
     const preserved = pages.findIndex(page => page.index === pageId);
-    profileBinderView = {handle, pages, mine, position:preserved >= 0 ? preserved : 0};
+    const wanted = profilePageWanted == null ? -1 : pages.findIndex(page => page.index === profilePageWanted);
+    // A link to a page that is no longer displayed falls back to the profile itself.
+    if (profilePageWanted != null && wanted < 0) {
+      profilePageWanted = null;
+      profilePageScroll = false;
+      replacePath(profilePath(handle, null));
+    }
+    profileBinderView = {handle, pages, mine, position:wanted >= 0 ? wanted : preserved >= 0 ? preserved : 0};
     const signed = Boolean(activeTrainer());
     const stats = data.stats || {};
     const friendBtn =
@@ -2547,6 +2558,10 @@ async function renderProfile() {
           </div>
         </div>
       </div>`;
+    if (profilePageScroll) {
+      profilePageScroll = false;
+      els.profileBody.querySelector(".profile-binder")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" });
+    }
   } catch (err) {
     els.profileBody.innerHTML = `<div class="panel"><p class="panel-empty">${esc(err.message || "Trainer not found.")}</p></div>`;
   }
@@ -2947,9 +2962,12 @@ function viewFromPath(pathname) {
     if (PATH_VIEWS[path] === "social") dmHandle = "";
     return PATH_VIEWS[path];
   }
-  const profile = path.match(/^\/u\/([a-z0-9_]{3,16})$/i);
+  if (/^\/(packs|shop)\/[a-z0-9]+$/i.test(path)) return "shop";
+  const profile = path.match(/^\/u\/([a-z0-9_]{3,16})(?:\/binder\/([1-9]\d{0,2}))?$/i);
   if (profile) {
     profileHandle = profile[1].toLowerCase();
+    profilePageWanted = profile[2] ? Number(profile[2]) - 1 : null;
+    profilePageScroll = profilePageWanted != null;
     return "profile";
   }
   const social = path.match(/^\/social\/([a-z0-9_]{3,16})$/i);
@@ -2960,8 +2978,32 @@ function viewFromPath(pathname) {
   return null;
 }
 
+/** The playable set a /packs/<id> path names, or "" when it names none. */
+function setIdFromPath(pathname) {
+  const id = normalizePath(pathname).match(/^\/(?:packs|shop)\/([a-z0-9]+)$/i)?.[1].toLowerCase();
+  return id && PLAYABLE_SETS.some((set) => set.id === id) ? id : "";
+}
+
+function profilePath(handle, page) {
+  return `/u/${handle}${page != null ? `/binder/${page + 1}` : ""}`;
+}
+
+/** Keep the address bar on what is shown without adding a history entry. */
+function replacePath(path) {
+  if (normalizePath(location.pathname) === path) return;
+  history.replaceState({ view }, "", path + location.search);
+}
+
+function viewTitle() {
+  if (view === "profile" && profileHandle) return `@${profileHandle} — poke-pack.rip`;
+  if (view === "social" && dmHandle) return `DM @${dmHandle} — poke-pack.rip`;
+  if (view === "shop") return `${liveSet.name} packs — poke-pack.rip`;
+  return VIEW_TITLES[view] || VIEW_TITLES.home;
+}
+
 function pathForView(name) {
-  if (name === "profile") return `/u/${profileHandle || "trainer"}`;
+  if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
+  if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
   return VIEW_PATHS[name] || "/home";
 }
@@ -2993,12 +3035,7 @@ function applyView(next, hist) {
   document.body.classList.toggle("on-collection", view === "collection");
   document.body.classList.toggle("on-auth", view === "auth");
   document.body.classList.toggle("on-social", view === "social");
-  document.title =
-    view === "profile" && profileHandle
-      ? `@${profileHandle} — poke-pack.rip`
-      : view === "social" && dmHandle
-        ? `DM @${dmHandle} — poke-pack.rip`
-        : VIEW_TITLES[view] || VIEW_TITLES.home;
+  document.title = viewTitle();
   if (!document.body.classList.contains("is-booting")) {
     window.scrollTo(0, 0);
   }
@@ -3023,7 +3060,10 @@ function setView(next, { history: hist = "push", handle } = {}) {
     view === next &&
     (next !== "profile" || nextHandle === profileHandle) &&
     (next !== "social" || !handle || String(handle).replace(/^@/, "").toLowerCase() === dmHandle);
-  if (next === "profile") profileHandle = nextHandle;
+  if (next === "profile") {
+    if (handle != null) profilePageWanted = null;
+    profileHandle = nextHandle;
+  }
   paintNav(next);
   const wrap = document.querySelector(".wrap");
   const skipFade =
@@ -4303,6 +4343,7 @@ document.addEventListener("click", (e) => {
   if (!next) return;
   e.preventDefault();
   if (next === "auth") openAuth();
+  else if (setIdFromPath(url.pathname)) playSet(setIdFromPath(url.pathname));
   else setView(next);
 });
 
@@ -4742,13 +4783,15 @@ function profileBinderPagesHtml() {
       <span role="status" aria-live="polite">${position + 1} of ${pages.length}</span>
       <button type="button" class="ghost" data-profile-page="1" ${position === pages.length - 1 ? "disabled" : ""} aria-label="Next binder page">Next →</button>
     </nav>
-    <div class="profile-binder-pages"><article class="profile-binder-page"><header><b>Binder page ${page.index + 1}</b>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</header><div class="binder-pockets">${pockets}</div></article></div></section>`;
+    <div class="profile-binder-pages"><article class="profile-binder-page"><header><b>Binder page ${page.index + 1}</b><span class="profile-page-actions"><button type="button" class="link-btn" data-copy-page-link="${page.index}">Copy link</button>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</span></header><div class="binder-pockets">${pockets}</div></article></div></section>`;
 }
 
 function turnProfilePage(direction) {
   const next = profileBinderView.position + direction;
   if (next < 0 || next >= profileBinderView.pages.length) return;
   profileBinderView.position = next;
+  profilePageWanted = profileBinderView.pages[next].index;
+  replacePath(profilePath(profileBinderView.handle, profilePageWanted));
   const section = els.profileBody.querySelector(".profile-binder");
   if (!section) return;
   section.outerHTML = profileBinderPagesHtml();
@@ -4808,6 +4851,12 @@ async function toggleShowcase(id) {
 els.profileBody?.addEventListener("click", async (e) => {
   const pageTurn = e.target.closest("[data-profile-page]");
   if (pageTurn) { turnProfilePage(Number(pageTurn.dataset.profilePage)); return; }
+  const pageLink = e.target.closest("[data-copy-page-link]");
+  if (pageLink) {
+    const page = Number(pageLink.dataset.copyPageLink);
+    copyText(`${location.origin}${profilePath(profileBinderView.handle, page)}`, "Page link copied.");
+    return;
+  }
   const sharedPage = e.target.closest("[data-share-page]");
   if (sharedPage) { await toggleProfilePage(Number(sharedPage.dataset.sharePage)); return; }
   inspectFromEl(e.target);
@@ -5378,7 +5427,7 @@ async function loadPatchNotes() {
   }
 }
 
-function routeFromLocation() {
+async function routeFromLocation() {
   const hash = (location.hash || "").replace("#", "").toLowerCase();
   const path = normalizePath(location.pathname);
   if (hash === "signup" || hash === "register" || path === "/signup") {
@@ -5397,6 +5446,13 @@ function routeFromLocation() {
   }
   const atRoot = path === "/" || path === "/index.html";
   const pathView = viewFromPath(path);
+  if (pathView === "shop") {
+    const setId = setIdFromPath(path);
+    if (setId) await activateSet(setId);
+    // /packs and unknown sets settle on the address of the set that is showing.
+    setView("shop", { history: "replace" });
+    return;
+  }
   if (pathView && !atRoot) {
     setView(pathView, { history: "none" });
     return;
@@ -5413,13 +5469,13 @@ async function boot() {
   try {
     await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
     await refreshSession();
-    await activateSet(state.activeSetId || DEFAULT_SET_ID);
+    await activateSet(setIdFromPath(location.pathname) || state.activeSetId || DEFAULT_SET_ID);
     applySettings();
     renderHeader();
     scheduleDailyTick();
     const back = new Image();
     back.src = liveSet.cardBack;
-    routeFromLocation();
+    await routeFromLocation();
 
     // Not awaited: the page is usable without it, and it refreshes home when done.
     loadAllSets();
