@@ -38,6 +38,7 @@
     <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="css/app.css?v=46" />
     <link rel="stylesheet" href="css/theme.css?v=2" />
+    <link rel="stylesheet" href="css/opening.css?v=1" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -285,11 +286,19 @@
     </main>
 
     <div class="overlay hidden" id="overlay" role="dialog" aria-modal="true" aria-label="Opening a booster pack">
+      <div class="op-ambient" aria-hidden="true">
+        <i class="op-glow"></i>
+        <i class="op-rays"></i>
+        <div class="op-motes" id="op-motes"></div>
+        <i class="op-dim"></i>
+        <i class="op-flash"></i>
+      </div>
       <div class="rip-stage">
         <button class="ghost overlay-leave" id="leave-pack" type="button">Leave pack</button>
         <p class="box-progress hidden" id="box-progress" aria-live="polite"></p>
         <p class="rip-hint" id="rip-hint">Grab the top and drag across to rip it open</p>
         <div class="booster" id="pack-body">
+          <div class="pack-peek" aria-hidden="true"><i></i><i></i><i></i></div>
           <div class="pack-rest" id="pack-rest"><div class="pack-art" id="pack-rest-art"></div></div>
           <div class="pack-mouth" id="pack-mouth"></div>
           <div class="pack-scrap" id="pack-top"><div class="pack-art" id="pack-top-art"></div></div>
@@ -298,6 +307,7 @@
             <path id="tear-edge" class="tear-edge" fill="none" />
           </svg>
           <div class="tear-crumbs" id="tear-crumbs" aria-hidden="true"></div>
+          <div class="tear-guide" aria-hidden="true"><i></i></div>
         </div>
         <div class="focus-wrap hidden" id="focus-wrap">
           <div class="focus-meta" id="focus-meta"></div>
@@ -341,6 +351,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=56"></script>
+    <script type="module" src="js/app.js?v=57"></script>
   </body>
 </html>

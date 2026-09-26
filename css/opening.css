@@ -1,0 +1,842 @@
+/* poke-pack.rip — pack opening stage.
+   The overlay reads as a dark room with one light: the wrapper's own colour
+   (sampled in JS into --pack-glow) glows behind the pack, dust drifts through
+   it, and every step of the rip has its own beat. Card faces and foil are not
+   touched here; only the containers that hold them move.
+
+   Motion rules: everything decorative stops under body.no-motion and under
+   prefers-reduced-motion, and the flashy hit extras (build-up, flash, shake,
+   ray burst) are only switched on by JS when hit effects are enabled. */
+
+#overlay {
+  --pack-glow: 150 176 232;
+  --op-ease: cubic-bezier(0.2, 0.85, 0.25, 1);
+  --op-spring: cubic-bezier(0.2, 0.9, 0.3, 1.18);
+}
+#overlay .rip-stage { z-index: 1; }
+
+/* ---- Ambient room -------------------------------------------------------- */
+.op-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.op-ambient > * { position: absolute; display: block; }
+.op-glow {
+  inset: -8%;
+  background:
+    radial-gradient(ellipse 30% 30% at 50% 46%, rgb(var(--pack-glow) / 0.34), transparent 72%),
+    radial-gradient(ellipse 70% 55% at 50% 44%, rgb(var(--pack-glow) / 0.12), transparent 76%),
+    radial-gradient(ellipse 110% 85% at 50% 46%, transparent 52%, rgba(0, 0, 0, 0.72) 100%);
+  transition: opacity 0.9s ease, background 0.9s ease;
+  animation: opBreathe 7s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+#overlay[data-phase="reveal"] .op-glow { opacity: 0.55; }
+#overlay[data-phase="spread"] .op-glow,
+#overlay[data-phase="summary"] .op-glow { opacity: 0.7; }
+@keyframes opBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+/* Soft god-rays behind the stage; they turn slowly enough to feel like air. */
+.op-rays {
+  left: 50%;
+  top: 46%;
+  width: 150vmin;
+  height: 150vmin;
+  margin: -75vmin 0 0 -75vmin;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgb(var(--pack-glow) / 0.16) 0deg,
+    rgb(var(--pack-glow) / 0) 6deg,
+    rgb(var(--pack-glow) / 0) 16deg,
+    rgb(var(--pack-glow) / 0.16) 22deg
+  );
+  -webkit-mask: radial-gradient(closest-side, #000 8%, rgba(0, 0, 0, 0.4) 40%, transparent 78%);
+  mask: radial-gradient(closest-side, #000 8%, rgba(0, 0, 0, 0.4) 40%, transparent 78%);
+  opacity: 0.85;
+  transition: opacity 0.8s ease;
+  animation: opSpin 80s linear infinite;
+  will-change: transform;
+}
+#overlay[data-phase="reveal"] .op-rays { opacity: 0.35; }
+#overlay[data-phase="spread"] .op-rays,
+#overlay[data-phase="summary"] .op-rays { opacity: 0.5; }
+@keyframes opSpin { to { transform: rotate(360deg); } }
+
+.op-motes { inset: 0; }
+.op-motes i {
+  position: absolute;
+  left: var(--x, 50%);
+  bottom: -12px;
+  width: var(--s, 2px);
+  height: var(--s, 2px);
+  border-radius: 50%;
+  background: rgb(var(--pack-glow) / 0.95);
+  box-shadow: 0 0 6px rgb(var(--pack-glow) / 0.8);
+  opacity: 0;
+  animation: opMote var(--dur, 14s) linear var(--dl, 0s) infinite;
+  will-change: transform, opacity;
+}
+@keyframes opMote {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  12% { opacity: var(--o, 0.5); }
+  80% { opacity: var(--o, 0.5); }
+  100% { transform: translate3d(var(--dx, 0), -104vh, 0); opacity: 0; }
+}
+
+/* The room darkens while a hit gathers itself. */
+.op-dim {
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+#overlay.charging .op-dim { opacity: 1; transition-duration: 0.5s; }
+
+/* Tear flash: a bloom and a shockwave from the torn edge. */
+.op-flash {
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--burst-x, 50%) var(--burst-y, 30%),
+    rgba(255, 255, 255, 0.85),
+    rgb(var(--pack-glow) / 0.5) 9%,
+    rgb(var(--pack-glow) / 0.12) 24%,
+    transparent 46%
+  );
+}
+.op-flash::after {
+  content: "";
+  position: absolute;
+  left: var(--burst-x, 50%);
+  top: var(--burst-y, 30%);
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 22px rgb(var(--pack-glow) / 0.9), inset 0 0 14px rgb(var(--pack-glow) / 0.6);
+  opacity: 0;
+}
+#overlay.tear-burst .op-flash { animation: opFlash 0.75s ease-out both; }
+#overlay.tear-burst .op-flash::after { animation: opRing 0.8s cubic-bezier(0.1, 0.7, 0.3, 1) both; }
+@keyframes opFlash {
+  0% { opacity: 0; }
+  14% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes opRing {
+  0% { opacity: 1; transform: scale(0.2); }
+  100% { opacity: 0; transform: scale(8); }
+}
+
+/* ---- Chrome: leave, hint, box progress ---------------------------------- */
+#overlay .overlay-leave {
+  min-width: 0;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: rgba(21, 23, 26, 0.72);
+  backdrop-filter: blur(8px);
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+#overlay .overlay-leave:hover { color: var(--ink); background: var(--surface-2); border-color: rgba(255, 255, 255, 0.25); }
+
+#overlay .rip-hint {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  animation: opHint 2.6s ease-in-out infinite;
+}
+@keyframes opHint {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+#overlay .box-progress {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 14px;
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: rgba(21, 23, 26, 0.7);
+  backdrop-filter: blur(8px);
+  animation: opRise 0.45s var(--op-ease) both;
+}
+.box-pips { display: inline-flex; flex-wrap: wrap; gap: 3px; max-width: 160px; }
+.box-pips i {
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.14);
+}
+.box-pips i.done { background: var(--ink-2); }
+.box-pips i.now {
+  background: var(--ink);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  animation: opPip 1.3s ease-in-out infinite;
+}
+@keyframes opPip {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.45); }
+}
+
+/* ---- The sealed pack ----------------------------------------------------- */
+#overlay[data-phase="ready"] .booster {
+  animation:
+    opPackIn 0.8s var(--op-spring) both,
+    opBob 5.2s ease-in-out 0.8s infinite;
+}
+#overlay .booster.tearing,
+#overlay .booster.dragging,
+#overlay .booster.torn { animation-play-state: paused; }
+@keyframes opPackIn {
+  from { opacity: 0; translate: 0 70px; scale: 0.82; }
+  to { opacity: 1; translate: 0 0; scale: 1; }
+}
+@keyframes opBob {
+  0%, 100% { transform: translateY(0) rotate(-0.7deg); }
+  50% { transform: translateY(-10px) rotate(0.7deg); }
+}
+/* Contact shadow on the table; it tightens as the pack lifts. */
+#overlay .booster::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -30px;
+  height: 26px;
+  z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.7), transparent);
+  pointer-events: none;
+}
+#overlay[data-phase="ready"] .booster::after { animation: opShadow 5.2s ease-in-out 0.8s infinite; }
+#overlay .booster.spill::after { opacity: 0; transition: opacity 0.3s ease; }
+@keyframes opShadow {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateY(10px) scale(0.84); opacity: 0.65; }
+}
+
+/* A light sweep across the wrapper, masked to the wrapper's own outline. */
+#pack-rest-art { position: relative; }
+#pack-rest-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask: var(--pack-mask) center / 100% 100% no-repeat;
+  mask: var(--pack-mask) center / 100% 100% no-repeat;
+  background: linear-gradient(
+    105deg,
+    transparent 36%,
+    rgba(255, 255, 255, 0) 42%,
+    rgba(255, 255, 255, 0.34) 50%,
+    rgba(255, 255, 255, 0) 58%,
+    transparent 64%
+  );
+  background-size: 300% 100%;
+  background-position: 120% 0;
+  opacity: 0;
+}
+#overlay[data-phase="ready"] #pack-rest-art::after {
+  opacity: 1;
+  animation: opSheen 5.4s ease-in-out 1s infinite;
+}
+@keyframes opSheen {
+  0% { background-position: 120% 0; }
+  32%, 100% { background-position: -20% 0; }
+}
+
+/* "Tear here": a dashed line along the crimp with a light running across it. */
+.tear-guide {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  top: 6.4%;
+  height: 0;
+  z-index: 8;
+  border-top: 1.5px dashed rgba(255, 255, 255, 0.6);
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.9));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+#overlay[data-phase="ready"] .booster:not(.tearing):not(.torn) .tear-guide {
+  animation: opGuideIn 0.5s ease 1.1s both;
+}
+.tear-guide i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.tear-guide i::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -6px;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.16), 0 0 16px rgb(var(--pack-glow));
+}
+#overlay[data-phase="ready"] .tear-guide i { animation: opGuide 2.6s cubic-bezier(0.5, 0, 0.2, 1) 1.2s infinite; }
+@keyframes opGuideIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes opGuide {
+  0% { transform: translateX(0); opacity: 0; }
+  12% { transform: translateX(0); opacity: 1; }
+  72% { transform: translateX(100%); opacity: 1; }
+  86%, 100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* Card backs inside the wrapper; they rise out once the top is gone. */
+.pack-peek {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 11%;
+  z-index: 0;
+  aspect-ratio: 63 / 88;
+  pointer-events: none;
+}
+.pack-peek i {
+  position: absolute;
+  inset: 0;
+  border-radius: 4.5% / 3.3%;
+  background: #1b1e22 var(--card-back) center / cover no-repeat;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+}
+#overlay .booster.torn .pack-peek i { opacity: 1; }
+#overlay .booster.spill .pack-peek i { animation: opPeek 0.6s var(--op-ease) both; }
+#overlay .booster.spill .pack-peek i:nth-child(1) { --r: -5deg; --x: -6%; animation-delay: 70ms; }
+#overlay .booster.spill .pack-peek i:nth-child(2) { --r: 4deg; --x: 5%; animation-delay: 30ms; }
+#overlay .booster.spill .pack-peek i:nth-child(3) { --r: 0deg; --x: 0%; }
+@keyframes opPeek {
+  from { opacity: 1; transform: translate(0, 4%) rotate(0deg); }
+  to { opacity: 1; transform: translate(var(--x), -40%) rotate(var(--r)); }
+}
+/* The empty wrapper drops away under the rising cards. */
+#overlay .booster.spill .pack-rest,
+#overlay .booster.spill .pack-mouth {
+  animation: opPackDrop 0.55s cubic-bezier(0.55, 0, 0.8, 0.3) 0.12s both;
+}
+@keyframes opPackDrop {
+  from { transform: none; opacity: 1; }
+  to { transform: translateY(42%) rotate(2deg); opacity: 0; }
+}
+
+/* ---- Card reveal --------------------------------------------------------- */
+.focus-card.deal {
+  animation: opDealIn 0.46s var(--op-spring) both;
+}
+.focus-card.deal.from-pack {
+  animation: opFromPack 0.66s var(--op-spring) both;
+}
+@keyframes opDealIn {
+  from { opacity: 0; transform: translate3d(56px, 26px, 0) rotateY(-34deg) rotateZ(6deg) scale(0.84); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes opFromPack {
+  from { opacity: 0; transform: translate3d(0, 120px, 0) rotateX(28deg) scale(0.62); }
+  45% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+/* A face-down card hovers, asking to be turned. */
+#overlay[data-phase="reveal"] .focus-card:not(.flipped):not(.deal):not(.charging) .pull-lift {
+  animation: opCardIdle 3.2s ease-in-out infinite;
+}
+@keyframes opCardIdle {
+  0%, 100% { transform: translateY(0) rotate(-0.4deg); }
+  50% { transform: translateY(-7px) rotate(0.4deg); }
+}
+
+/* Build-up before a hit: the card trembles harder and harder, and light
+   gathers behind it. Only added by JS when hit effects are on. */
+.focus-card.charging .pull-lift { animation: opChargeT2 0.62s ease-in both; }
+#overlay.charge-t3 .focus-card.charging .pull-lift { animation: opChargeT3 1.15s ease-in both; }
+.face-front { border-radius: 4.5% / 3.3%; transition: box-shadow 0.3s ease; }
+.focus-card.charging .face-front {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55), 0 0 26px 4px rgba(255, 255, 255, 0.4), 0 0 70px 10px rgba(255, 225, 170, 0.28);
+  transition-duration: 0.5s;
+}
+#overlay.charge-t3 .focus-card.charging .face-front {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7), 0 0 30px 6px rgba(255, 255, 255, 0.5), 0 0 90px 16px rgba(190, 140, 255, 0.35);
+}
+@keyframes opChargeT2 {
+  0% { transform: none; }
+  20% { transform: translateY(-4px) rotate(-1deg) scale(1.01); }
+  40% { transform: translateY(-5px) rotate(1.2deg) scale(1.02); }
+  60% { transform: translateY(-6px) rotate(-1.6deg) scale(1.03); }
+  80% { transform: translateY(-7px) rotate(2deg) scale(1.04); }
+  100% { transform: translateY(-8px) rotate(0deg) scale(1.05); }
+}
+@keyframes opChargeT3 {
+  0% { transform: none; }
+  10% { transform: translateY(-2px) rotate(-0.6deg); }
+  20% { transform: translateY(-3px) rotate(0.8deg) scale(1.01); }
+  30% { transform: translateY(-4px) rotate(-1deg) scale(1.015); }
+  40% { transform: translateY(-5px) rotate(1.3deg) scale(1.02); }
+  50% { transform: translate(-2px, -6px) rotate(-1.6deg) scale(1.03); }
+  60% { transform: translate(2px, -7px) rotate(1.9deg) scale(1.04); }
+  70% { transform: translate(-3px, -8px) rotate(-2.2deg) scale(1.05); }
+  80% { transform: translate(3px, -9px) rotate(2.5deg) scale(1.06); }
+  90% { transform: translate(-3px, -10px) rotate(-2.8deg) scale(1.07); }
+  100% { transform: translate(0, -10px) rotate(0deg) scale(1.08); }
+}
+
+/* Light behind the card while it charges. */
+#overlay .focus-stage::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  z-index: 1;
+  width: min(820px, 170vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% -50%;
+  scale: 0.35;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.55), rgba(255, 238, 205, 0.26) 40%, rgba(255, 238, 205, 0.08) 58%, transparent 74%);
+  transition: opacity 0.25s ease, scale 0.25s ease;
+}
+#overlay.charging .focus-stage::before {
+  opacity: 1;
+  scale: 1;
+  transition: opacity 0.5s ease-in, scale 0.62s cubic-bezier(0.5, 0, 0.9, 0.5);
+}
+#overlay.charge-t3 .focus-stage::before {
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 255, 255, 0.62),
+    rgba(255, 214, 140, 0.26) 34%,
+    rgba(170, 120, 255, 0.14) 56%,
+    transparent 74%
+  );
+  transition: opacity 0.6s ease-in, scale 1.15s cubic-bezier(0.5, 0, 0.9, 0.5);
+}
+
+/* Rays behind a hit: they burst out as the face turns, then keep turning. */
+#overlay .focus-stage::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  z-index: 1;
+  width: min(900px, 200vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% -50%;
+  opacity: 0;
+  pointer-events: none;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.24) 0deg,
+    rgba(255, 255, 255, 0) 5deg,
+    rgba(255, 255, 255, 0) 13deg,
+    rgba(255, 255, 255, 0.24) 18deg
+  );
+  -webkit-mask: radial-gradient(closest-side, #000 12%, rgba(0, 0, 0, 0.35) 42%, transparent 70%);
+  mask: radial-gradient(closest-side, #000 12%, rgba(0, 0, 0, 0.35) 42%, transparent 70%);
+  transition: opacity 0.5s ease;
+}
+#overlay.charging .focus-stage::after { opacity: 0.35; animation: opSpinRot 5s linear infinite; }
+#overlay.hit-shake-sm .focus-stage::after,
+#overlay.hit-shake .focus-stage::after { animation: opRaysBurst 0.7s cubic-bezier(0.15, 0.8, 0.3, 1) both; }
+#overlay .focus-wrap.revealed.is-hit .focus-stage::after,
+#overlay .focus-wrap.revealed.is-legend .focus-stage::after {
+  opacity: 0.4;
+  animation: opSpinRot 44s linear infinite;
+}
+@keyframes opSpinRot { to { rotate: 360deg; } }
+@keyframes opRaysBurst {
+  0% { opacity: 0; scale: 0.3; rotate: 0deg; }
+  18% { opacity: 1; }
+  100% { opacity: 0.4; scale: 1; rotate: 36deg; }
+}
+
+/* The burst itself, in .hit-fx above the card. Pieces wait out their delay
+   unseen, so nothing sits on the card before the face turns. */
+#overlay .hit-spark { opacity: 0; animation-fill-mode: forwards; }
+.hit-glow {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 420px;
+  height: 420px;
+  margin: -210px 0 0 -210px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.95), rgba(255, 240, 205, 0.5) 34%, rgba(255, 220, 160, 0) 72%);
+  opacity: 0;
+  pointer-events: none;
+  animation: opHitGlow 0.8s ease-out var(--dly, 0ms) forwards;
+  --peak: 0.4;
+}
+.hit-glow.t2 { --peak: 0.7; }
+.hit-glow.t3 { --peak: 0.9; width: 560px; height: 560px; margin: -280px 0 0 -280px; }
+@keyframes opHitGlow {
+  0% { opacity: 0; transform: scale(0.4); }
+  16% { opacity: var(--peak); transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.25); }
+}
+.hit-ring {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 120px;
+  height: 120px;
+  margin: -60px 0 0 -60px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 18px rgba(255, 230, 170, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  animation: opHitRing 0.9s cubic-bezier(0.1, 0.7, 0.3, 1) var(--dly, 0ms) forwards;
+}
+.hit-ring.t1 { border-color: rgba(155, 231, 255, 0.8); box-shadow: 0 0 14px rgba(120, 210, 255, 0.6); }
+.hit-ring.t3 { border-width: 3px; }
+@keyframes opHitRing {
+  0% { opacity: 1; transform: scale(0.5); }
+  100% { opacity: 0; transform: scale(5.5); }
+}
+.hit-spark.streak {
+  width: 3px;
+  height: 18px;
+  margin: -9px -1.5px;
+  border-radius: 2px;
+  animation-name: opStreak;
+}
+/* The rotation sits after the translate so the streak points along its path. */
+@keyframes opStreak {
+  from { opacity: 1; transform: translate(0, 0) rotate(calc(var(--ang, 0deg) + 90deg)) scaleY(1.4); }
+  to { opacity: 0; transform: translate(var(--sx), var(--sy)) rotate(calc(var(--ang, 0deg) + 90deg)) scaleY(0.2); }
+}
+#overlay.hit-shake-sm .rip-stage { animation: opShakeSm 0.38s ease-out; }
+@keyframes opShakeSm {
+  0%, 100% { transform: none; }
+  25% { transform: translate(-3px, 1px); }
+  50% { transform: translate(3px, -1px); }
+  75% { transform: translate(-2px, 0); }
+}
+
+/* Light sweep over a rare or better once it has turned. */
+.reveal-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: 4.5% / 3.3%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateZ(2px);
+  background: linear-gradient(
+    112deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.42) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    transparent 70%
+  );
+  background-size: 260% 100%;
+  background-position: 130% 0;
+}
+.focus-card.swept .reveal-sweep { animation: opSweep 0.95s ease-out both; }
+@keyframes opSweep {
+  0% { opacity: 1; background-position: 130% 0; }
+  85% { opacity: 1; }
+  100% { opacity: 0; background-position: -30% 0; }
+}
+
+/* Title and rarity line. */
+#overlay .focus-meta { transition: opacity 0.42s ease, transform 0.5s var(--op-spring); transform: translateY(14px) scale(0.97); }
+#overlay .focus-meta.in { transform: none; }
+#overlay .focus-sub { display: none; }
+#overlay .focus-sub.on {
+  display: block;
+  margin: 10px 0 0;
+  min-height: 26px;
+}
+.focus-sub.on span {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: opBanner 0.55s var(--op-spring) both;
+}
+.focus-sub.on span.t3 {
+  border-color: rgba(255, 255, 255, 0.45);
+  background:
+    linear-gradient(90deg, rgba(255, 90, 120, 0.22), rgba(255, 200, 80, 0.22), rgba(90, 255, 160, 0.18), rgba(80, 190, 255, 0.22), rgba(170, 110, 255, 0.22), rgba(255, 90, 120, 0.22))
+    0 0 / 200% 100%;
+  animation: opBanner 0.55s var(--op-spring) both, opBannerFlow 5s linear infinite;
+}
+@keyframes opBanner {
+  from { opacity: 0; transform: translateY(8px) scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes opBannerFlow { to { background-position: 200% 0; } }
+
+#overlay .focus-nav {
+  border-color: var(--line-2);
+  background: rgba(21, 23, 26, 0.6);
+  backdrop-filter: blur(6px);
+  transition: background 0.15s ease, opacity 0.2s ease, transform 0.15s ease;
+}
+#overlay .focus-nav:hover:not(:disabled) { background: var(--surface-3); transform: scale(1.06); }
+#overlay.charging .focus-nav,
+#overlay.charging .thumbs,
+#overlay.charging .overlay-actions,
+#overlay.charging .focus-meta { opacity: 0.25; transition: opacity 0.35s ease; }
+
+/* ---- Thumbs strip -------------------------------------------------------- */
+#overlay .thumbs {
+  gap: 6px;
+  padding: 12px 12px 16px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  max-width: 760px;
+  transition: opacity 0.35s ease;
+}
+#overlay .thumb {
+  position: relative;
+  width: 44px;
+  opacity: 0.7;
+  border-radius: var(--r-sm);
+  transition: opacity 0.18s ease, translate 0.22s var(--op-spring);
+}
+#overlay .thumb:hover { opacity: 1; transform: none; translate: 0 -4px; }
+#overlay .thumb.empty {
+  width: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: linear-gradient(160deg, var(--surface-2), var(--surface));
+  color: var(--faint);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 1;
+}
+#overlay .thumb.empty { outline: none; }
+#overlay .thumb.empty.hit { border-color: rgba(255, 255, 255, 0.24); color: var(--ink-2); }
+#overlay .thumb.empty.rev { border-color: rgba(120, 210, 255, 0.3); color: #9be7ff; }
+#overlay .thumb.empty.energy { color: #cbbd97; }
+#overlay .thumb.current {
+  opacity: 1;
+  translate: 0 -5px;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+#overlay .thumb.current::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+#overlay .thumb.hit:not(.empty) { box-shadow: 0 0 14px rgba(255, 228, 170, 0.35); }
+#overlay .thumb.pop { animation: opThumbPop 0.5s var(--op-spring) backwards; }
+@keyframes opThumbPop {
+  from { opacity: 0; transform: translateY(10px) rotateY(90deg) scale(0.5); }
+  60% { opacity: 1; transform: scale(1.12); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- Spread -------------------------------------------------------------- */
+#overlay .spread-card { animation-delay: var(--d, 0ms); }
+#overlay .spread-grid { row-gap: 18px; }
+#overlay .spread-grid.deal .spread-card {
+  animation: opDeal 0.62s var(--op-spring) var(--d, 0ms) both;
+}
+@keyframes opDeal {
+  from { opacity: 0; transform: translate3d(var(--dx, 0), var(--dy, 0), 0) rotate(var(--rz, 0deg)) scale(0.5); }
+  35% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+#overlay .spread-grid.deal .spread-card.top-pull {
+  animation: opDealBest 0.9s var(--op-spring) var(--d, 0ms) both;
+}
+@keyframes opDealBest {
+  from { opacity: 0; transform: translate3d(var(--dx, 0), var(--dy, 0), 0) rotateY(180deg) scale(0.45); }
+  40% { opacity: 1; }
+  65% { transform: scale(1.14); }
+  to { opacity: 1; transform: none; }
+}
+#overlay .spread-card.top-pull { z-index: 2; }
+#overlay .spread-card.top-pull::before {
+  content: "";
+  position: absolute;
+  inset: -26% -40%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 232, 170, 0.34), rgba(255, 232, 170, 0.08) 55%, transparent 75%);
+  pointer-events: none;
+  animation: opBestGlow 3.2s ease-in-out infinite;
+}
+@keyframes opBestGlow {
+  0%, 100% { opacity: 0.7; transform: scale(0.94); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+.best-tag {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  z-index: 6;
+  translate: -50% 0;
+  padding: 3px 7px;
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+#overlay .spread-head > * { animation: opRise 0.5s var(--op-ease) both; }
+#overlay .spread-head > :nth-child(2) { animation: opTitle 0.6s var(--op-spring) 0.08s both; }
+#overlay .spread-head > :nth-child(3) { animation-delay: 0.16s; }
+#overlay .spread-head > :nth-child(4) { animation-delay: 0.24s; }
+#overlay .spread-stats span { animation: opRise 0.45s var(--op-ease) both; }
+#overlay .spread-stats span:nth-child(1) { animation-delay: 0.2s; }
+#overlay .spread-stats span:nth-child(2) { animation-delay: 0.27s; }
+#overlay .spread-stats span:nth-child(3) { animation-delay: 0.34s; }
+#overlay .spread-stats span:nth-child(4) { animation-delay: 0.41s; }
+#overlay .spread-stats .best { border-color: rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.07); }
+#overlay .spread-tip { animation: opRise 0.5s var(--op-ease) 0.6s both; }
+@keyframes opRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes opTitle {
+  from { opacity: 0; transform: translateY(12px) scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- Actions ------------------------------------------------------------- */
+#overlay .overlay-actions > button:not(.hidden) { animation: opRise 0.4s var(--op-ease) both; }
+#overlay .overlay-actions button { transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease, opacity 0.2s ease; }
+#overlay .overlay-actions button:active:not(:disabled) { transform: scale(0.97); }
+#overlay .overlay-actions .ghost:hover { background: var(--surface-2); }
+/* The one call to action in the ready phase carries a slow shine. */
+#overlay[data-phase="ready"] #step-btn { position: relative; overflow: hidden; isolation: isolate; }
+#overlay[data-phase="ready"] #step-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: opBtnShine 3.6s ease-in-out 1.4s infinite;
+}
+@keyframes opBtnShine {
+  0% { transform: translateX(-120%); }
+  35%, 100% { transform: translateX(120%); }
+}
+@media (max-width: 720px) {
+  #overlay .thumb,
+  #overlay .thumb.empty { width: 36px; }
+  #overlay .thumbs { gap: 4px; padding: 10px 8px 14px; }
+  .op-rays { top: 40%; }
+  #overlay .booster::after { bottom: -22px; }
+}
+
+/* ---- Kill-switches ------------------------------------------------------- */
+body.no-motion .op-motes,
+body.no-motion .reveal-sweep { display: none; }
+body.no-motion .op-glow,
+body.no-motion .op-rays,
+body.no-motion #overlay .booster,
+body.no-motion #overlay .booster::after,
+body.no-motion #pack-rest-art::after,
+body.no-motion .tear-guide i,
+body.no-motion #overlay .rip-hint,
+body.no-motion .box-pips i.now,
+body.no-motion #overlay .focus-card .pull-lift,
+body.no-motion #overlay .focus-stage::after,
+body.no-motion #overlay .focus-sub.on span,
+body.no-motion #overlay .thumb.pop,
+body.no-motion #overlay .spread-card,
+body.no-motion #overlay .spread-card.top-pull::before,
+body.no-motion #overlay .spread-head > *,
+body.no-motion #overlay .spread-stats span,
+body.no-motion #overlay .spread-tip,
+body.no-motion #overlay .overlay-actions > button,
+body.no-motion #overlay .box-progress,
+body.no-motion #overlay #step-btn::after,
+body.no-motion .op-flash,
+body.no-motion .op-flash::after { animation: none !important; }
+body.no-motion #overlay[data-phase="ready"] .tear-guide { opacity: 1; }
+body.no-motion #overlay .booster.tearing .tear-guide,
+body.no-motion #overlay .booster.torn .tear-guide { opacity: 0; }
+body.no-motion #overlay .focus-card.deal { animation: none; }
+body.no-motion #overlay .focus-meta { transform: none; }
+body.no-flash .hit-glow,
+body.no-flash .hit-ring { display: none; }
+body.no-flash #overlay.hit-shake-sm .rip-stage { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .op-motes,
+  .reveal-sweep { display: none; }
+  .op-glow,
+  .op-rays,
+  #overlay .booster,
+  #overlay .booster::after,
+  #pack-rest-art::after,
+  .tear-guide i,
+  #overlay .rip-hint,
+  .box-pips i.now,
+  #overlay .focus-card .pull-lift,
+  #overlay .focus-stage::after,
+  #overlay .focus-sub.on span,
+  #overlay .thumb.pop,
+  #overlay .spread-card,
+  #overlay .spread-card.top-pull::before,
+  #overlay .spread-head > *,
+  #overlay .spread-stats span,
+  #overlay .spread-tip,
+  #overlay .overlay-actions > button,
+  #overlay .box-progress,
+  #overlay #step-btn::after,
+  .op-flash,
+  .op-flash::after,
+  .hit-glow,
+  .hit-ring,
+  #overlay.hit-shake-sm .rip-stage { animation: none !important; }
+  #overlay[data-phase="ready"] .tear-guide { opacity: 1; }
+  #overlay .booster.tearing .tear-guide,
+  #overlay .booster.torn .tear-guide { opacity: 0; }
+  #overlay .focus-meta { transform: none; }
+}
