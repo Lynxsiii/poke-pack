@@ -21,7 +21,7 @@ python -m http.server 5173
 ```
 index.html            markup for every view; views are sections toggled by .hidden
 css/app.css           all styling, including the classic foil and pack-tear visuals
-css/overhaul.css      shared press-table layout and responsive player flow
+css/theme.css         design tokens, self-hosted fonts, and the shared component look
 css/holo/             the holofoil engine, derived from pokemon-cards-css
 js/app.js             views, rendering, the tear interaction, reveal flow
 js/catalog.js         set definitions, rarity tables, sell values, roadmap

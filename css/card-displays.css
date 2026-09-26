@@ -10,8 +10,8 @@
 .showcase-slot, .showcase-slot.best { width: auto; min-width: 0; }
 .showcase-slot .mini-card { display: block; max-width: 200px; margin: auto; }
 .showcase-slot figcaption { padding: 4px 6px; }
-.profile-showcase { padding: 24px; background: linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.015)); }
-.profile-showcase .showcase-slot:first-child figcaption b { color: var(--gold-2); }
+.profile-showcase { padding: 24px; background: var(--surface); }
+.profile-showcase .showcase-slot:first-child figcaption b { color: var(--ink); }
 .mini-card:hover { transform: none; }
 .mini-card, .pocket-card, .picker-card { position: relative; overflow: visible; }
 .showcase-slot:has(.lit), .showcase-slot:has(.settling),
@@ -32,15 +32,15 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 
 .binder-sharing-note, .binder-page-toolbar, .profile-section-head,
 .profile-binder-page header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.binder-sharing-note { margin-bottom: 16px; flex-wrap: wrap; color: var(--gold-2); font-size: 13px; }
+.binder-sharing-note { margin-bottom: 16px; flex-wrap: wrap; color: var(--ink-2); font-size: 13px; }
 .binder-sharing-note small { color: var(--muted); }
 .binder-page-toolbar { margin: 0 0 18px; font-size: 12px; color: var(--muted); }
-.page-share { font-size: 11px; padding: 7px 9px; }
-.page-share[aria-pressed="true"] { border-color: var(--gold); color: var(--gold-2); }
+.page-share { font-size: 12px; padding: 6px 10px; min-height: 32px; }
+.page-share[aria-pressed="true"] { border-color: var(--line-2); color: var(--ink); }
 .page-share:disabled { opacity: .4; cursor: default; }
 .profile-binder { margin: 24px 0; padding: 24px; }
 .profile-section-head { margin-bottom: 22px; }
-.profile-section-head .eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--gold); margin: 0 0 7px; }
+.profile-section-head .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 7px; }
 .profile-section-head h3 { margin: 0; color: var(--ink); }
 .profile-section-head > span { color: var(--muted); font-size: 12px; }
 .profile-binder-pages { max-width: 600px; margin: 0 auto; }
@@ -48,14 +48,13 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 .profile-page-nav span { color: var(--muted); font-size: 13px; }
 .profile-page-nav button { min-width: 92px; }
 .profile-page-nav button:disabled { opacity: .35; cursor: default; }
-.profile-binder-page { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 15px;
-  background: radial-gradient(ellipse at top left,rgba(240,193,75,.07),transparent 65%),rgba(0,0,0,.23);
-  box-shadow: inset 6px 0 12px rgba(0,0,0,.2); }
+.profile-binder-page { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: var(--r);
+  background: var(--surface); }
 .profile-binder-page header { margin: 0 0 20px; font-size: 12px; color: var(--muted); }
 .profile-binder-page header b { white-space: nowrap; }
 .profile-page-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-end; }
 .profile-binder-page .binder-pockets { gap: 14px; }
-.profile-pocket { position: relative; aspect-ratio: 63/88; min-width: 0; border-radius: 8px; }
+.profile-pocket { position: relative; aspect-ratio: 63/88; min-width: 0; border-radius: var(--r-sm); }
 .profile-pocket .mini-card { width: 100%; display: block; }
 .profile-pocket img { width: 100%; display: block; border-radius: 6px; }
 .profile-pocket.empty { border: 1px dashed rgba(255,255,255,.1); background: rgba(0,0,0,.18); }

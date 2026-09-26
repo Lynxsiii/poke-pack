@@ -14,8 +14,12 @@ choice, not an accident — the effects were worth it.
 | What | Who | Licence |
 |---|---|---|
 | Holofoil CSS in `css/holo/` — the shine and glare layer maths, the pointer variable model, and the spring-damped interaction | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
-| `assets/foil/reference/vmaxbg.jpg` and `glitter.png`, copied from the upstream `public/img/` directory | [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css/tree/main/public/img) | GPL-3.0 repository; upstream also credits Vecteezy for some backgrounds |
+| `assets/foil/reference/vmaxbg.jpg`, `glitter.png`, `illusion.png` and `illusion2.png`, copied from the upstream `public/img/` directory | [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css/tree/main/public/img) | GPL-3.0 repository; upstream also credits Vecteezy for some backgrounds |
 | Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
+| Archivo font in `assets/fonts/archivo-*.woff2` | Omnibus-Type, via Google Fonts | SIL Open Font License 1.1 |
+| IBM Plex Mono font in `assets/fonts/plex-mono-*.woff2` | IBM, via Google Fonts | SIL Open Font License 1.1 |
+
+`css/holo/realism.css` follows upstream's full-art, rainbow-alt and glare layers most closely.
 
 `css/holo/` is adapted rather than copied verbatim: the selectors are remapped
 from simey's `.card__translater / .card__rotator / .card__shine / .card__glare`
