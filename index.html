@@ -39,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/app.css?v=45" />
-    <link rel="stylesheet" href="css/overhaul.css?v=5" />
+    <link rel="stylesheet" href="css/overhaul.css?v=6" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -169,6 +169,15 @@
               <p class="pack-odds" id="shop-odds">DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081</p>
             </div>
             <div class="pack-grid" id="pack-grid"></div>
+            <div class="sealed-block hidden" id="sealed-block">
+              <div class="section-head">
+                <div>
+                  <h2>Sealed product</h2>
+                  <p>Open a whole box at once. Wrappers come mixed, and every pack lands in your collection as soon as you buy.</p>
+                </div>
+              </div>
+              <div class="sealed-grid" id="sealed-grid"></div>
+            </div>
           </div>
           <aside class="shop-rail" aria-label="All expansions">
             <div class="shop-rail-head">
@@ -279,6 +288,7 @@
     <div class="overlay hidden" id="overlay" role="dialog" aria-modal="true" aria-label="Opening a booster pack">
       <div class="rip-stage">
         <button class="ghost overlay-leave" id="leave-pack" type="button">Leave pack</button>
+        <p class="box-progress hidden" id="box-progress" aria-live="polite"></p>
         <p class="rip-hint" id="rip-hint">Grab the top and drag across to rip it open</p>
         <div class="booster" id="pack-body">
           <div class="pack-rest" id="pack-rest"><div class="pack-art" id="pack-rest-art"></div></div>
@@ -308,6 +318,7 @@
           <button class="ghost accent hidden" id="skip-hits-btn" title="Jump to reverse, rare, and art slots">Skip to rares</button>
           <button class="ghost hidden" id="skip-btn">Reveal all</button>
           <button class="solid hidden" id="again-btn">Open another</button>
+          <button class="ghost hidden" id="box-summary-btn">Skip to box summary</button>
           <button class="ghost hidden" id="view-pulls-btn">View collection</button>
           <button class="ghost hidden" id="done-btn">Keep browsing</button>
         </div>
@@ -331,6 +342,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=54"></script>
+    <script type="module" src="js/app.js?v=55"></script>
   </body>
 </html>

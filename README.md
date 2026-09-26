@@ -154,6 +154,18 @@ in a compact chooser; the full era list remains in the sidebar. The opening
 overlay offers another pack or a direct path to the collection after the spread.
 Those actions use the existing `/api/packs/rip` endpoint and save model.
 
+## Sealed product
+
+Packs also sells Booster Boxes (36 packs), Elite Trainer Boxes (9) and Booster
+Bundles (6). `SEALED_PRODUCTS` in `js/catalog.js` holds the pack counts, and a
+set offers a product only when `data/sealed.json` has a market price for it, so
+special sets with no booster box show only ETB and bundle. The price is charged
+once. `POST /api/sealed/open` opens every pack on the server and saves them
+before responding, then logs each one in `pack_log` with its share of the
+price, so quests count a box as 36 packs. The client deals the packs one at a
+time and can skip to a summary of every hit. `node scripts/test-sealed.mjs`
+runs these rules against the real Worker.
+
 ## Shared binder pages
 
 Each binder page has a Display on profile toggle. Basic profiles may display four pages; the backend enforces the limit, validates page indices, and reads only the selected pages from the current saved binder. Removing a card or selling it changes the public display without publishing a copy. Empty pages cannot be newly selected. Existing empty selections remain removable.
