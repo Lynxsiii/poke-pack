@@ -71,6 +71,21 @@ python3 .claude/skills/card-textures/scripts/fetch_foil_maps.py --set sv7 --key 
 That shipped 78 cards (every non-reverse foil print plus 13 promos), about
 7 MB in `assets/foil/maps/sv7/`.
 
+Surging Sparks found TCG Live maps filed under the wrong card, and its
+thread's `check_foil_maps.py` flags any map whose best-matching scan is
+another card. On sv7 it flagged 17 foil and 6 etch maps; every one was
+checked by eye against its scan and none is a swap. Why they flag:
+
+- **Same art, different print**: 157/158 against the gold UPC promos
+  SVP 163/164, 173 against SVP 165, SVP 141-pc against 141. These even
+  "point back" at each other, which the script calls a likely swap. Look
+  before fixing anything: the maps are identical because the art is.
+- **Flat silhouettes**: a Rare whose map is one black Pokémon shape in a
+  grey window (Alcremie 65, Melmetal 104, Bouffalant 119, the Horsea promo)
+  scores almost nothing against its own busy scan, so any other window-holo
+  map wins. Their own scores were near zero (0.008-0.04), not beaten by a
+  margin.
+
 ## Verify
 
 ```
