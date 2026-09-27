@@ -377,8 +377,10 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     card_prices: dict[str, float] = {}
     listings: dict[str, dict[str, float]] = {}
     groups = [cfg.get("tcgplayerGroup"), *(s.get("tcgplayerGroup") for s in cfg.get("promoSeries", {}).values())]
-    # Product-only prints (blister exclusives) are filed in a group of their own.
+    # Product-only prints (blister exclusives) are filed in a group of their own,
+    # and a promo spec can name another (stamped prints in Miscellaneous, 2374).
     groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES]
+    groups += [s["tcgplayerGroup"] for s in (cfg.get("promoCards") or {}).values() if s.get("tcgplayerGroup")]
     tcg_market: dict[int, dict[int, float]] = {}
 
     def tcg_price(pid: int) -> float | None:
