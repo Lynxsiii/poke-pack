@@ -47,27 +47,51 @@ coat. Tera Double Rares are excluded: their print ids carry no cast and cure.
   vertical ACE SPEC banners full, the art background light, the item itself
   mostly not foil.
 - **Etch**: fingerprint-like line fields over the art background, the item
-  and the banners; the text box is smooth (white in the etch map).
-- **Pattern**: when the finish was revealed (official Japanese pack opening,
-  clipped by PokeBeach, 2024-01-20, "Footage of New ACE SPEC Holofoil
-  Pattern Revealed!"), collectors called it the Radiant or crosshatch
-  pattern. The video frame shows a grid of bright diamonds in the art
-  background and broad diagonal light bands across the pink body.
-- **Recipe**: pokemon-cards-css's `radiant-holo.css`, masked by the map:
-  crossed 45deg grey bars (exclusion, darken, color-dodge over a pointer
-  radial) on `.foil`; its 55deg pastel rainbow through the etch map on
-  `::after`; glitter under a radial on `::before`; a hard-light glare.
-- **Pitfall**: the magenta stock has an empty green channel, so no dodge
-  inside `.foil` can put a rainbow on it. The pastel sweep is repeated in
-  `.glare::after` (masked by the etch, with the white hot spot), where the
-  glare's hard-light lifts it. That is what makes the pink body shimmer.
+  and the banners. The text body is white in the etch map, so anything
+  masked by the etch shows there at full strength.
+- **What the real card does** (Surging Sparks photos, 2026-09-27, in
+  `/mnt/project-files/surging-sparks/texture-refs/ace-spec_*.jpg`, notes in
+  `../texture-notes.md`):
+  - The **magenta body stays saturated hot pink** at every angle. It goes
+    deeper red-magenta away from the light and brighter pink toward it, and
+    never turns silver or pastel.
+  - The **ACE SPEC banners** (the angled logo on the left, the ribbon on the
+    right) are a separate **cyan metal** with prismatic flecks.
+  - The **art window** runs the full rainbow with X and diamond facets
+    (clearest on Scarlet & Violet base's Deluxe Bomb).
+  - **Fine horizontal ridges** cross the whole card, visible even unlit,
+    with a fine sparkle grain on the pink.
+  - When the finish was revealed (PokeBeach, 2024-01-20), collectors called
+    it the Radiant or crosshatch pattern.
+- **Recipe**: every shine is a colour-dodge on `.foil`, masked by the map.
+  - A dodge only lifts the channels the print already has. The magenta
+    stock (empty green channel) just gets hotter pink, the banners (the
+    map's full-strength zone) turn bright cyan, and the art window takes the
+    whole spectrum.
+  - `.foil` stacks the 3px ridges (multiply) over a 115deg rainbow (multiply)
+    over pokemon-cards-css's radiant bars, crossed with `lighten` so the
+    lattice lines are the bright ones. The ridges sit on `.foil`, so they
+    show at rest.
+  - `::after` runs a 55deg rainbow through the etch map (screen, low).
+  - `::before` is glitter lit around the pointer.
+  - The hard-light glare dims away from the light.
+  - `.glare::after` lights only the ridge lines near the pointer, through a
+    1-in-3px mask.
+- **Pitfall** (the first version, fixed 2026-09-27): a white hot spot and a
+  pastel sweep in `.glare::after`, masked by the etch map, bleached the text
+  body and the art window at off-centre poses. The etch map is white over
+  the text body, and the glare's hard-light screens anything lighter than
+  mid-grey. Keep light, opaque colour out of the ACE glare, and let the
+  dodge on `.foil` carry the colour.
 
 ## Verify
 
 ```
 python3 .claude/skills/card-textures/scripts/fetch_foil_maps.py --set sv6pt5 --key sv6-5 --cards 15,81,58,60,62 --ship --write-data
 node .claude/skills/card-textures/scripts/foil_probe.mjs --query "set=sv6pt5&cards=15,81,58,60&poses=rest,50:50,20:15,80:30&proof=off" --out /tmp/tera-ace.png
+node .claude/skills/card-textures/scripts/foil_probe.mjs --query "set=sv5&cards=141,153,157,162&poses=rest,30:25,50:50,75:65&proof=off&w=250" --out /tmp/ace-sv5.png --width 1200
 ```
 
 Shrouded Fable: 15 and 81 are Revavroom ex (Tera DR and UR), 58, 60 and 62
-the three ACE SPECs.
+the three ACE SPECs. In Temporal Forces, 162 Neo Upper Energy and 153 Master
+Ball show the pink holding at 30:25 and 75:65.
