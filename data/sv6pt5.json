@@ -3752,12 +3752,12 @@
         "type": "Ability"
       }
     ],
+    "market": 1.61,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-129/large",
     "printedNumber": "SVP 129",
     "tcgplayerId": 564137,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 1.61,
     "foilMap": "assets/foil/maps/sv6pt5/svp129.webp"
   },
   {
@@ -3775,6 +3775,8 @@
     "hp": "80",
     "artist": "nagimiso",
     "flavorText": "Its peach-shaped shell serves as storage for a potent poison. It makes poisonous mochi and serves them to people and Pokémon.",
+    "image": "assets/cards/sv6pt5/svp129-pc.webp",
+    "imageSmall": "assets/cards/sv6pt5/svp129-pc-sm.webp",
     "attacks": [
       {
         "name": "Poison Chain",
@@ -3793,15 +3795,13 @@
         "type": "Ability"
       }
     ],
+    "market": 20.38,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/573720_in_1000x1000.jpg",
     "printedNumber": "SVP 129",
     "foilAs": "Illustration Rare",
     "promo": true,
     "variant": "Pokémon Center stamp",
     "tcgplayerId": 573720,
-    "image": "assets/cards/sv6pt5/svp129-pc.webp",
-    "imageSmall": "assets/cards/sv6pt5/svp129-pc-sm.webp",
-    "market": 20.38,
     "foilMap": "assets/foil/maps/sv6pt5/svp129-pc.webp"
   },
   {
@@ -3842,12 +3842,12 @@
         "text": ""
       }
     ],
+    "market": 4.14,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-130/large",
     "printedNumber": "SVP 130",
     "tcgplayerId": 562087,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 4.14,
     "foilMap": "assets/foil/maps/sv6pt5/svp130.webp"
   },
   {
@@ -3887,12 +3887,12 @@
         "text": "This attack does 50 more damage for each Water Energy attached to this Pokémon."
       }
     ],
+    "market": 79.51,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-131/large",
     "printedNumber": "SVP 131",
     "tcgplayerId": 562019,
     "foilAs": "Ultra Rare",
     "promo": true,
-    "market": 79.51,
     "foilMap": "assets/foil/maps/sv6pt5/svp131.webp",
     "etchMap": "assets/foil/maps/sv6pt5/svp131-etch.webp"
   },
@@ -3933,12 +3933,12 @@
         "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 120 more damage."
       }
     ],
+    "market": 86.82,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-132/large",
     "printedNumber": "SVP 132",
     "tcgplayerId": 562018,
     "foilAs": "Ultra Rare",
     "promo": true,
-    "market": 86.82,
     "foilMap": "assets/foil/maps/sv6pt5/svp132.webp",
     "etchMap": "assets/foil/maps/sv6pt5/svp132-etch.webp"
   },
@@ -3977,12 +3977,12 @@
         "type": "Ability"
       }
     ],
+    "market": 0.79,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-149/large",
     "printedNumber": "SVP 149",
     "tcgplayerId": 562025,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.79,
     "foilMap": "assets/foil/maps/sv6pt5/svp149.webp"
   }
 ]

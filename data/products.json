@@ -1258,6 +1258,108 @@
       "image": "assets/products/sv5/blister-bellibolt.webp"
     }
   ],
+  "sv6pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv6pt5-svp129"
+      ],
+      "price": 111.94,
+      "tcgplayerId": 552999,
+      "released": "2024-08-23",
+      "image": "assets/products/sv6pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv6pt5-svp129-pc",
+        "sv6pt5-svp129"
+      ],
+      "price": 166.35,
+      "tcgplayerId": 552998,
+      "released": "2024-08-23",
+      "image": "assets/products/sv6pt5/pc-etb.webp"
+    },
+    {
+      "id": "sic-greninja",
+      "name": "Greninja ex Special Illustration Collection",
+      "kind": "premium",
+      "packs": 5,
+      "promos": [
+        "sv6pt5-svp132"
+      ],
+      "price": 212.43,
+      "tcgplayerId": 553002,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/sic-greninja.webp"
+    },
+    {
+      "id": "sic-kingdra",
+      "name": "Kingdra ex Special Illustration Collection",
+      "kind": "premium",
+      "packs": 5,
+      "promos": [
+        "sv6pt5-svp131"
+      ],
+      "price": 182.0,
+      "tcgplayerId": 553001,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/sic-kingdra.webp"
+    },
+    {
+      "id": "kingambit-collection",
+      "name": "Kingambit Illustration Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv6pt5-svp130"
+      ],
+      "price": 53.15,
+      "tcgplayerId": 553000,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/kingambit-collection.webp"
+    },
+    {
+      "id": "blister-pecharunt",
+      "name": "3 Pack Blister: Pecharunt",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv6pt5-svp149"
+      ],
+      "price": 34.67,
+      "tcgplayerId": 553007,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/blister-pecharunt.webp"
+    },
+    {
+      "id": "mini-tin",
+      "name": "Mini Tin",
+      "kind": "tin",
+      "packs": 2,
+      "promos": [],
+      "price": 23.58,
+      "tcgplayerId": 553018,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/mini-tin.webp"
+    },
+    {
+      "id": "mini-tin-display",
+      "name": "Mini Tin Display",
+      "kind": "collection",
+      "packs": 20,
+      "promos": [],
+      "price": 202.1,
+      "tcgplayerId": 553008,
+      "image": "assets/products/sv6pt5/mini-tin-display.webp"
+    }
+  ],
   "sv9": [
     {
       "id": "eliteTrainerBox",
