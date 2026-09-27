@@ -28,6 +28,7 @@ for (const offer of [...promoOffers(products.sv3pt5), ...sealedOffers(sealed.sv3
 }
 assert.deepEqual(findOffer(sealed.sv3pt5, products.sv3pt5, "eliteTrainerBox").promos, ["sv3pt5-svp051"], "the ETB carries its Snorlax");
 assert.ok(["1", "4", "7", "25"].every((n) => byId[`sv3pt5-${n}-costco`].foilAs === "Reverse Cosmos"), "Costco promos are reverse cosmos");
+assert.equal(byId["sv3pt5-205-metal"].foilAs, "Metal", "the Ultra-Premium Collection Mew ex is brass, not a gold foil print");
 
 // A demigod pack: one starter's line in the reverse, rare and art slots.
 const lines = set.godPack.lines;
