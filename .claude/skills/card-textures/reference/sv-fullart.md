@@ -48,6 +48,15 @@ is the SIR's foil under gold ink.
   up; `::before` inherits them, `::after` restates `--fa-pillar` so its ramp
   picks up the rotated sunpillar colours base.css gives `::after`.
   (Custom properties resolve `var()` where they are declared.)
+- **Against real cards** (photos in the project's
+  `scarlet-violet/texture-refs/`, collected by the SV base thread): several
+  parallel, saturated diagonal rainbow bands at once, running over the
+  Pokémon, the text and the frame; the silver frame always has a rainbow
+  edge; the etch reads as fine crosshatch in backgrounds. Upstream's `hue`
+  blend takes its saturation from the grey tinsel bars, so it only tints.
+  Blending the sunpillar ramp with `color` (the ramp's hue and saturation,
+  the bars' luminance), tightening the bars to 200% (130% on the twin) and
+  keeping `saturate(1)` gives the bands.
 - **Glare**: upstream's hard-light radial. Upstream gives Supporters a
   flatter, brighter one; on a pale full art it hazes the face (sv1 238
   Miriam, found by the SV base thread), so every Ultra Rare gets the plain
@@ -67,12 +76,19 @@ is the SIR's foil under gold ink.
   rainbow, two light bars crossing with the tilt (`hard-light`), iridescent
   glitter, a multiply glare, and `glare2`: white masked by the etch, so the
   cut lines light up across the whole card, not just under the pointer.
+- **Against real cards**: warm gold off-angle, washing to pale champagne or
+  silver with a pastel rainbow at the glare angle; a heavy glitter grain over
+  the whole card, the Pokémon included; concentric etched rings behind the
+  subject (the etch); a red-orange-green flare only as a band at a steep
+  angle, never the whole card.
 - **Recipe**: the SIR-with-map port from `celebration.css`, dodged paler,
-  `brightness(.5) contrast(1.5) saturate(.45)` (resting `saturate(.3)`), and
-  a `.glare::after`
+  `brightness(.5) contrast(1.5) saturate(.45)` (resting `saturate(.3)`); two
+  glitter tiles (14% and 23%) screened together and drifting apart for the
+  grain; a hard-light glare (warm 74% grey at the light, 40% away) instead of
+  upstream's multiply, so the card washes pale near the light; and a
+  `.glare::after`
   whose etch-masked white never falls below 0.3 alpha (upstream's glare2).
-  Inside the multiply glare, white means "not dimmed", so the lines read
-  bright against the rest.
+  In the hard-light glare, the white lines lift the gold under them.
 - **Bright gold goes orange.** Upstream dodges the rainbow at
   `brightness(.6) saturate(1)`; its red and magenta slices push the red
   channel to full, and sv1's brighter golds (253 Miraidon ex, 254 Koraidon
