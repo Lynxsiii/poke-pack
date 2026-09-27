@@ -4287,5 +4287,653 @@
     ],
     "market": 295.49,
     "imageRemote": "https://images.scrydex.com/pokemon/me2-130/large"
+  },
+  {
+    "id": "me2-mep014",
+    "name": "Ceruledge",
+    "number": "mep014",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Anesaki Dynamic",
+    "evolvesFrom": "Charcadet",
+    "image": "assets/cards/me2/mep014.webp",
+    "imageSmall": "assets/cards/me2/mep014-sm.webp",
+    "attacks": [
+      {
+        "name": "Infernal Slash",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "220",
+        "text": "Discard 4 Basic Fire Energy cards from your hand. If you can't discard 4 cards in this way, this attack does nothing."
+      }
+    ],
+    "market": 13.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-14/large",
+    "printedNumber": "MEP 014",
+    "tcgplayerId": 663187,
+    "foilAs": "Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep014.webp"
+  },
+  {
+    "id": "me2-mep015",
+    "name": "Zacian",
+    "number": "mep015",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Shiburingaru",
+    "image": "assets/cards/me2/mep015.webp",
+    "imageSmall": "assets/cards/me2/mep015-sm.webp",
+    "attacks": [
+      {
+        "name": "Limit Break",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If your opponent has 3 or fewer Prize cards remaining, this attack does 90 more damage."
+      }
+    ],
+    "market": 10.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-15/large",
+    "printedNumber": "MEP 015",
+    "tcgplayerId": 663189,
+    "foilAs": "Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep015.webp"
+  },
+  {
+    "id": "me2-mep016",
+    "name": "Flygon",
+    "number": "mep016",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Oswaldo KATO",
+    "evolvesFrom": "Vibrava",
+    "image": "assets/cards/me2/mep016.webp",
+    "imageSmall": "assets/cards/me2/mep016-sm.webp",
+    "attacks": [
+      {
+        "name": "Cutting Wind",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sandy Flapping",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. You may also use this Ability if this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent's Pokémon. Discard the top 2 cards of your opponent's deck.",
+        "type": "Ability"
+      }
+    ],
+    "market": 8.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-16/large",
+    "printedNumber": "MEP 016",
+    "tcgplayerId": 663191,
+    "foilAs": "Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep016.webp"
+  },
+  {
+    "id": "me2-mep017",
+    "name": "Toxtricity",
+    "number": "mep017",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "140",
+    "artist": "Krgc",
+    "evolvesFrom": "Toxel",
+    "image": "assets/cards/me2/mep017.webp",
+    "imageSmall": "assets/cards/me2/mep017-sm.webp",
+    "attacks": [
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sinister Surge",
+        "text": "Once during your turn, you may use this Ability. Search your deck for a Basic Darkness Energy card and attach it to 1 of your Benched Darkness Pokémon. Then, shuffle your deck. If you attached Energy to a Pokémon in this way, place 2 damage counters on that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 9.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-17/large",
+    "printedNumber": "MEP 017",
+    "tcgplayerId": 663193,
+    "foilAs": "Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep017.webp"
+  },
+  {
+    "id": "me2-mep018",
+    "name": "Cottonee",
+    "number": "mep018",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Kariya",
+    "image": "assets/cards/me2/mep018.webp",
+    "imageSmall": "assets/cards/me2/mep018-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      }
+    ],
+    "market": 0.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-18/large",
+    "printedNumber": "MEP 018",
+    "tcgplayerId": 664051,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep018.webp"
+  },
+  {
+    "id": "me2-mep019",
+    "name": "Whimsicott",
+    "number": "mep019",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Yuka Tanaka",
+    "evolvesFrom": "Cottonee",
+    "image": "assets/cards/me2/mep019.webp",
+    "imageSmall": "assets/cards/me2/mep019-sm.webp",
+    "attacks": [
+      {
+        "name": "Healing Fluff",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal all damage from 1 of your Benched Pokémon."
+      },
+      {
+        "name": "U-turn",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "50",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "market": 0.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-19/large",
+    "printedNumber": "MEP 019",
+    "tcgplayerId": 664054,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep019.webp"
+  },
+  {
+    "id": "me2-mep020",
+    "name": "Sneasel",
+    "number": "mep020",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Souichirou Gunjima",
+    "image": "assets/cards/me2/mep020.webp",
+    "imageSmall": "assets/cards/me2/mep020-sm.webp",
+    "attacks": [
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-20/large",
+    "printedNumber": "MEP 020",
+    "tcgplayerId": 664055,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep020.webp"
+  },
+  {
+    "id": "me2-mep021",
+    "name": "Weavile",
+    "number": "mep021",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Mousho",
+    "evolvesFrom": "Sneasel",
+    "image": "assets/cards/me2/mep021.webp",
+    "imageSmall": "assets/cards/me2/mep021-sm.webp",
+    "attacks": [
+      {
+        "name": "Retaliatory Claw",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon's remaining HP is 50 or less, this attack does 170 more damage."
+      },
+      {
+        "name": "Cut",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 0.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-21/large",
+    "printedNumber": "MEP 021",
+    "tcgplayerId": 664063,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep021.webp"
+  },
+  {
+    "id": "me2-mep022",
+    "name": "Charcadet",
+    "number": "mep022",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Teeziro",
+    "image": "assets/cards/me2/mep022.webp",
+    "imageSmall": "assets/cards/me2/mep022-sm.webp",
+    "attacks": [
+      {
+        "name": "Gather Strength",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Chop",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 3.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-22/large",
+    "printedNumber": "MEP 022",
+    "tcgplayerId": 664093,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep022.webp"
+  },
+  {
+    "id": "me2-mep022-pc",
+    "name": "Charcadet",
+    "number": "mep022-pc",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Teeziro",
+    "image": "assets/cards/me2/mep022-pc.webp",
+    "imageSmall": "assets/cards/me2/mep022-pc-sm.webp",
+    "attacks": [
+      {
+        "name": "Gather Strength",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Chop",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 41.82,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/665053_in_1000x1000.jpg",
+    "printedNumber": "MEP 022",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "variant": "Pokémon Center stamp",
+    "tcgplayerId": 665053,
+    "foilMap": "assets/foil/maps/me2/mep022-pc.webp"
+  },
+  {
+    "id": "me2-mep023",
+    "name": "Mega Charizard X ex",
+    "number": "mep023",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "360",
+    "artist": "Saboteri",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/me2/mep023.webp",
+    "imageSmall": "assets/cards/me2/mep023-sm.webp",
+    "attacks": [
+      {
+        "name": "Inferno X",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "90×",
+        "text": "Discard any amount of Fire Energy from among your Pokémon, and this attack does 90 damage for each card you discarded in this way."
+      }
+    ],
+    "market": 27.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-23/large",
+    "printedNumber": "MEP 023",
+    "tcgplayerId": 659612,
+    "foilAs": "Ultra Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep023.webp",
+    "etchMap": "assets/foil/maps/me2/mep023-etch.webp"
+  },
+  {
+    "id": "me2-mep024",
+    "name": "Oricorio ex",
+    "number": "mep024",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "190",
+    "artist": "Shinji Kanda",
+    "image": "assets/cards/me2/mep024.webp",
+    "imageSmall": "assets/cards/me2/mep024-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Excited Turbo",
+        "text": "As often as you like during your turn, if you have any Fire Mega Evolution Pokémon ex in play, you may use this Ability. Attach a Basic Fire Energy card from your hand to 1 of your Benched Fire Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 9.46,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-24/large",
+    "printedNumber": "MEP 024",
+    "tcgplayerId": 664010,
+    "foilAs": "Ultra Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep024.webp",
+    "etchMap": "assets/foil/maps/me2/mep024-etch.webp"
+  },
+  {
+    "id": "me2-mep026",
+    "name": "Meloetta",
+    "number": "mep026",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Keisin",
+    "image": "assets/cards/me2/mep026.webp",
+    "imageSmall": "assets/cards/me2/mep026-sm.webp",
+    "attacks": [
+      {
+        "name": "Soothing Melody",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Heal 120 damage from 1 of your Benched Psychic Pokémon."
+      },
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 15.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-26/large",
+    "printedNumber": "MEP 026",
+    "tcgplayerId": 659231,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep026.webp"
+  },
+  {
+    "id": "me2-mep027",
+    "name": "Haunter",
+    "number": "mep027",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Arai Kiriko",
+    "evolvesFrom": "Gastly",
+    "image": "assets/cards/me2/mep027.webp",
+    "imageSmall": "assets/cards/me2/mep027-sm.webp",
+    "attacks": [
+      {
+        "name": "Spooky Shot",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 44.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-27/large",
+    "printedNumber": "MEP 027",
+    "tcgplayerId": 659232,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep027.webp"
+  },
+  {
+    "id": "me2-mep029",
+    "name": "Mega Charizard X ex",
+    "number": "mep029",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex",
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "360",
+    "artist": "takuyoa",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/me2/mep029.webp",
+    "imageSmall": "assets/cards/me2/mep029-sm.webp",
+    "attacks": [
+      {
+        "name": "Inferno X",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "90x",
+        "text": "Discard any amount of Fire Energy from among your Pokémon, and this attack does 90 damage for each card you discarded in this way."
+      }
+    ],
+    "market": 4.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-29/large",
+    "printedNumber": "MEP 029",
+    "tcgplayerId": 680639,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep029.webp",
+    "etchMap": "assets/foil/maps/me2/mep029-etch.webp"
+  },
+  {
+    "id": "me2-mep030",
+    "name": "Mega Charizard Y ex",
+    "number": "mep030",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex",
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "360",
+    "artist": "Ultimateinudog",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/me2/mep030.webp",
+    "imageSmall": "assets/cards/me2/mep030-sm.webp",
+    "attacks": [
+      {
+        "name": "Explosion Y",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard 3 Energy from this Pokémon, and this attack does 280 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 5.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-30/large",
+    "printedNumber": "MEP 030",
+    "tcgplayerId": 680640,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me2/mep030.webp",
+    "etchMap": "assets/foil/maps/me2/mep030-etch.webp"
   }
 ]

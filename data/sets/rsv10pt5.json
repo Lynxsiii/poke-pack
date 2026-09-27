@@ -6,5 +6,59 @@
   "scrydexId": "rsv10pt5",
   "pittSlug": "White-Flare",
   "artSlug": "white-flare",
-  "packs": ["reshiram"]
+  "packs": [
+    "reshiram"
+  ],
+  "tcgplayerGroup": 24326,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp210": {},
+    "svp210-pc": {
+      "like": "svp210",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 644836
+    },
+    "svp211": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 630689,
+      "packs": 9,
+      "promos": [
+        "svp210"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 630688,
+      "packs": 11,
+      "promos": [
+        "svp210-pc",
+        "svp210"
+      ]
+    },
+    {
+      "id": "tech-gothitelle",
+      "name": "Tech Sticker Collection: Gothitelle",
+      "kind": "collection",
+      "tcgplayerId": 630700,
+      "packs": 3,
+      "promos": [
+        "svp211"
+      ]
+    }
+  ]
 }

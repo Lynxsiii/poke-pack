@@ -4198,5 +4198,366 @@
     ],
     "market": 135.02,
     "imageRemote": "https://images.scrydex.com/pokemon/me3-124/large"
+  },
+  {
+    "id": "me3-mep064",
+    "name": "Serperior",
+    "number": "mep064",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "160",
+    "artist": "LINNE",
+    "evolvesFrom": "Servine",
+    "image": "assets/cards/me3/mep064.webp",
+    "imageSmall": "assets/cards/me3/mep064-sm.webp",
+    "attacks": [
+      {
+        "name": "Regal Command",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each of your Pokémon in play."
+      },
+      {
+        "name": "Solar Coiling",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "100+",
+        "text": "If Rosa's Encouragement is in your discard pile, this attack does 150 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-64/large",
+    "printedNumber": "MEP 064",
+    "tcgplayerId": 685494,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 9.49,
+    "foilMap": "assets/foil/maps/me3/mep064.webp"
+  },
+  {
+    "id": "me3-mep065",
+    "name": "Barbaracle",
+    "number": "mep065",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Hasuno",
+    "evolvesFrom": "Binacle",
+    "image": "assets/cards/me3/mep065.webp",
+    "imageSmall": "assets/cards/me3/mep065-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-65/large",
+    "printedNumber": "MEP 065",
+    "tcgplayerId": 685495,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 8.75,
+    "foilMap": "assets/foil/maps/me3/mep065.webp"
+  },
+  {
+    "id": "me3-mep066",
+    "name": "Tyrantrum",
+    "number": "mep066",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "180",
+    "artist": "Nisota Niso",
+    "evolvesFrom": "Tyrunt",
+    "image": "assets/cards/me3/mep066.webp",
+    "imageSmall": "assets/cards/me3/mep066-sm.webp",
+    "attacks": [
+      {
+        "name": "Wreak Havoc",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Flip a coin until you get tails. For each heads, discard the top card of your opponent's deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tyrannically Gusty",
+        "text": "If this Pokémon has any Special Energy attached, it gets +150HP.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-66/large",
+    "printedNumber": "MEP 066",
+    "tcgplayerId": 685496,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 16.02,
+    "foilMap": "assets/foil/maps/me3/mep066.webp"
+  },
+  {
+    "id": "me3-mep067",
+    "name": "Doublade",
+    "number": "mep067",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Yukihiro Tada",
+    "evolvesFrom": "Honedge",
+    "image": "assets/cards/me3/mep067.webp",
+    "imageSmall": "assets/cards/me3/mep067-sm.webp",
+    "attacks": [
+      {
+        "name": "Weaponized Swords",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "Reveal any number of Honedge, Doublade, and Aegislash from your hand, and this attack does 60 damage for each card you revealed in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-67/large",
+    "printedNumber": "MEP 067",
+    "tcgplayerId": 685497,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 9.81,
+    "foilMap": "assets/foil/maps/me3/mep067.webp"
+  },
+  {
+    "id": "me3-mep068",
+    "name": "Makuhita",
+    "number": "mep068",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Takeshi Nakamura",
+    "image": "assets/cards/me3/mep068.webp",
+    "imageSmall": "assets/cards/me3/mep068-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Confront",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-68/large",
+    "printedNumber": "MEP 068",
+    "tcgplayerId": 686275,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 0.23,
+    "foilMap": "assets/foil/maps/me3/mep068.webp"
+  },
+  {
+    "id": "me3-mep069",
+    "name": "Chikorita",
+    "number": "mep069",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Makura Tami",
+    "image": "assets/cards/me3/mep069.webp",
+    "imageSmall": "assets/cards/me3/mep069-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-69/large",
+    "printedNumber": "MEP 069",
+    "tcgplayerId": 686342,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 0.39,
+    "foilMap": "assets/foil/maps/me3/mep069.webp"
+  },
+  {
+    "id": "me3-mep070",
+    "name": "Tyrunt",
+    "number": "mep070",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Shimaris Yukichi",
+    "evolvesFrom": "Antique Jaw Fossil",
+    "image": "assets/cards/me3/mep070.webp",
+    "imageSmall": "assets/cards/me3/mep070-sm.webp",
+    "attacks": [
+      {
+        "name": "Get Angry",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "0×",
+        "text": "This attack does 20 damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-70/large",
+    "printedNumber": "MEP 070",
+    "tcgplayerId": 685562,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 2.22,
+    "foilMap": "assets/foil/maps/me3/mep070.webp"
+  },
+  {
+    "id": "me3-mep070-pc",
+    "name": "Tyrunt",
+    "number": "mep070-pc",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Shimaris Yukichi",
+    "evolvesFrom": "Antique Jaw Fossil",
+    "attacks": [
+      {
+        "name": "Get Angry",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "0×",
+        "text": "This attack does 20 damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/685563_in_1000x1000.jpg",
+    "printedNumber": "MEP 070",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "variant": "Pokémon Center stamp",
+    "tcgplayerId": 685563,
+    "image": "assets/cards/me3/mep070-pc.webp",
+    "imageSmall": "assets/cards/me3/mep070-pc-sm.webp",
+    "market": 29.46,
+    "foilMap": "assets/foil/maps/me3/mep070-pc.webp"
+  },
+  {
+    "id": "me3-mep071",
+    "name": "Mega Zygarde ex",
+    "number": "mep071",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "310",
+    "artist": "takuyoa",
+    "image": "assets/cards/me3/mep071.webp",
+    "imageSmall": "assets/cards/me3/mep071-sm.webp",
+    "attacks": [
+      {
+        "name": "Gaia Wave",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "200",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Nullifying Zero",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "For each of your opponent's Pokémon, flip a coin. If heads, this attack does 150 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-71/large",
+    "printedNumber": "MEP 071",
+    "tcgplayerId": 695311,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.46,
+    "foilMap": "assets/foil/maps/me3/mep071.webp",
+    "etchMap": "assets/foil/maps/me3/mep071-etch.webp"
   }
 ]

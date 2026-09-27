@@ -4063,5 +4063,459 @@
     ],
     "market": 175.02,
     "imageRemote": "https://images.scrydex.com/pokemon/me4-122/large"
+  },
+  {
+    "id": "me4-mep072",
+    "name": "Mega Clefable ex",
+    "number": "mep072",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "320",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Clefairy",
+    "image": "assets/cards/me4/mep072.webp",
+    "imageSmall": "assets/cards/me4/mep072-sm.webp",
+    "attacks": [
+      {
+        "name": "Shooting Moons",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "120+",
+        "text": "You may discard up to 4 Energy cards from your hand, and this attack does 40 more damage for each card you discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Luminous Wing",
+        "text": "Prevent all effects of your opponent's Pokémon's Abilities done to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-72/large",
+    "printedNumber": "MEP 072",
+    "tcgplayerId": 696607,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.65,
+    "foilMap": "assets/foil/maps/me4/mep072.webp",
+    "etchMap": "assets/foil/maps/me4/mep072-etch.webp"
+  },
+  {
+    "id": "me4-mep073",
+    "name": "Mega Gengar ex",
+    "number": "mep073",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "350",
+    "artist": "Ultimateinudog",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/me4/mep073.webp",
+    "imageSmall": "assets/cards/me4/mep073-sm.webp",
+    "attacks": [
+      {
+        "name": "Void Gale",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "230",
+        "text": "Move an Energy from this Pokemon to 1 of your Benched Pokemon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shadowy Concealment",
+        "text": "If 1 of your Darkness Pokemon is Knocked Out by damage from an attack from your opponent's Pokemon ex, that player takes 1 fewer Prize card. The effect of Shadowy Concealment doesn't stack.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-73/large",
+    "printedNumber": "MEP 073",
+    "tcgplayerId": 696608,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 3.64,
+    "foilMap": "assets/foil/maps/me4/mep073.webp",
+    "etchMap": "assets/foil/maps/me4/mep073-etch.webp"
+  },
+  {
+    "id": "me4-mep074",
+    "name": "Delphox",
+    "number": "mep074",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "160",
+    "artist": "Souichirou Gunjima",
+    "evolvesFrom": "Braixen",
+    "image": "assets/cards/me4/mep074.webp",
+    "imageSmall": "assets/cards/me4/mep074-sm.webp",
+    "attacks": [
+      {
+        "name": "Energized Storm",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy attached to all Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flaring Magic",
+        "text": "Once during your turn, you may discard a Basic Fire Energy card from your hand in order to use this Ability. Draw cards until you have 7 cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-74/large",
+    "printedNumber": "MEP 074",
+    "tcgplayerId": 694679,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 11.66,
+    "foilMap": "assets/foil/maps/me4/mep074.webp"
+  },
+  {
+    "id": "me4-mep075",
+    "name": "Ampharos",
+    "number": "mep075",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "Taiga Kasai",
+    "evolvesFrom": "Flaffy",
+    "image": "assets/cards/me4/mep075.webp",
+    "imageSmall": "assets/cards/me4/mep075-sm.webp",
+    "attacks": [
+      {
+        "name": "Flashing Bolt",
+        "cost": [
+          "Colorless",
+          "Lightning"
+        ],
+        "damage": "140",
+        "text": "During your next turn, this Pokémon can't use Flashing Bolt."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Synchro Pulse",
+        "text": "If you have the same number of cards in your hand as your opponent, attacks used by this Pokémon do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-75/large",
+    "printedNumber": "MEP 075",
+    "tcgplayerId": 694681,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 12.05,
+    "foilMap": "assets/foil/maps/me4/mep075.webp"
+  },
+  {
+    "id": "me4-mep076",
+    "name": "Crobat",
+    "number": "mep076",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Apios",
+    "evolvesFrom": "Golbat",
+    "image": "assets/cards/me4/mep076.webp",
+    "imageSmall": "assets/cards/me4/mep076-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Sound Wave",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "80",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-76/large",
+    "printedNumber": "MEP 076",
+    "tcgplayerId": 694686,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 14.32,
+    "foilMap": "assets/foil/maps/me4/mep076.webp"
+  },
+  {
+    "id": "me4-mep077",
+    "name": "Goodra",
+    "number": "mep077",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "160",
+    "artist": "okayamatakatoshi",
+    "evolvesFrom": "Sliggoo",
+    "image": "assets/cards/me4/mep077.webp",
+    "imageSmall": "assets/cards/me4/mep077-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Water",
+          "Psychic"
+        ],
+        "damage": "160",
+        "text": "Discard the top card of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-77/large",
+    "printedNumber": "MEP 077",
+    "tcgplayerId": 694688,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 10.27,
+    "foilMap": "assets/foil/maps/me4/mep077.webp"
+  },
+  {
+    "id": "me4-mep078",
+    "name": "Toxel",
+    "number": "mep078",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Mina Nakai",
+    "image": "assets/cards/me4/mep078.webp",
+    "imageSmall": "assets/cards/me4/mep078-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Playful Kick",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-78/large",
+    "printedNumber": "MEP 078",
+    "tcgplayerId": 694692,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 0.36,
+    "foilMap": "assets/foil/maps/me4/mep078.webp"
+  },
+  {
+    "id": "me4-mep079",
+    "name": "Charmeleon",
+    "number": "mep079",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "Teeziro",
+    "evolvesFrom": "Charmander",
+    "image": "assets/cards/me4/mep079.webp",
+    "imageSmall": "assets/cards/me4/mep079-sm.webp",
+    "attacks": [
+      {
+        "name": "Steady Firebreathing",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-79/large",
+    "printedNumber": "MEP 079",
+    "tcgplayerId": 694693,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 0.64,
+    "foilMap": "assets/foil/maps/me4/mep079.webp"
+  },
+  {
+    "id": "me4-mep080",
+    "name": "Fennekin",
+    "number": "mep080",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "satoma",
+    "image": "assets/cards/me4/mep080.webp",
+    "imageSmall": "assets/cards/me4/mep080-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Steady Firebreathing",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-80/large",
+    "printedNumber": "MEP 080",
+    "tcgplayerId": 694694,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 1.93,
+    "foilMap": "assets/foil/maps/me4/mep080.webp"
+  },
+  {
+    "id": "me4-mep080-pc",
+    "name": "Fennekin",
+    "number": "mep080-pc",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "satoma",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Steady Firebreathing",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/694695_in_1000x1000.jpg",
+    "printedNumber": "MEP 080",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "variant": "Pokémon Center stamp",
+    "tcgplayerId": 694695,
+    "image": "assets/cards/me4/mep080-pc.webp",
+    "imageSmall": "assets/cards/me4/mep080-pc-sm.webp",
+    "market": 32.28,
+    "foilMap": "assets/foil/maps/me4/mep080-pc.webp"
+  },
+  {
+    "id": "me4-mep081",
+    "name": "Mega Greninja ex",
+    "number": "mep081",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "350",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/me4/mep081.webp",
+    "imageSmall": "assets/cards/me4/mep081-sm.webp",
+    "attacks": [
+      {
+        "name": "Ninja Spinner",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "120+",
+        "text": "You may put a Water Energy attached to this Pokémon into your hand and have this attack do 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mortal Shuriken",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may discard a Basic Water Energy card from your hand in order to use this Ability. Place 6 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-81/large",
+    "printedNumber": "MEP 081",
+    "tcgplayerId": 704879,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.78,
+    "foilMap": "assets/foil/maps/me4/mep081.webp",
+    "etchMap": "assets/foil/maps/me4/mep081-etch.webp"
   }
 ]

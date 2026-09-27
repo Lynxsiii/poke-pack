@@ -5,5 +5,175 @@
   "slug": "mega-evolution",
   "scrydexId": "me1",
   "pittSlug": "Mega-Evolution",
-  "artSlug": "mega-evolution"
+  "artSlug": "mega-evolution",
+  "tcgplayerGroup": 24380,
+  "promoSeries": {
+    "mep": {
+      "series": "mega-evolution",
+      "slug": "me-black-star-promos",
+      "scrydex": "mep",
+      "tcgplayerGroup": 24451,
+      "printed": "MEP"
+    }
+  },
+  "promoCards": {
+    "mep001": {},
+    "mep002": {},
+    "mep003": {},
+    "mep004": {},
+    "mep005": {},
+    "mep006": {},
+    "mep007": {},
+    "mep008": {},
+    "mep009": {},
+    "mep010": {},
+    "mep009-pc": {
+      "like": "mep009",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 656261
+    },
+    "mep010-pc": {
+      "like": "mep010",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 656262
+    },
+    "mep011": {},
+    "mep012": {},
+    "mep013": {},
+    "mep025": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 644279,
+      "packs": 9,
+      "promos": [
+        "mep009",
+        "mep010"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "pc-etb-gardevoir",
+      "name": "Pokémon Center Elite Trainer Box: Mega Gardevoir",
+      "kind": "etb",
+      "tcgplayerId": 648415,
+      "packs": 11,
+      "promos": [
+        "mep009-pc",
+        "mep009"
+      ]
+    },
+    {
+      "id": "pc-etb-lucario",
+      "name": "Pokémon Center Elite Trainer Box: Mega Lucario",
+      "kind": "etb",
+      "tcgplayerId": 644282,
+      "packs": 11,
+      "promos": [
+        "mep010-pc",
+        "mep010"
+      ]
+    },
+    {
+      "id": "venusaur-premium",
+      "name": "Mega Venusaur ex Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 654212,
+      "tcgplayerGroup": 2374,
+      "packs": 8,
+      "promos": [
+        "mep013"
+      ]
+    },
+    {
+      "id": "lucario-figure",
+      "name": "Mega Lucario ex Premium Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 656487,
+      "tcgplayerGroup": 2374,
+      "packs": 5,
+      "promos": [
+        "mep012"
+      ]
+    },
+    {
+      "id": "latias-box",
+      "name": "Mega Latias ex Box",
+      "kind": "collection",
+      "tcgplayerId": 654188,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "mep011"
+      ]
+    },
+    {
+      "id": "kangaskhan-box",
+      "name": "Mega Kangaskhan ex Box",
+      "kind": "collection",
+      "tcgplayerId": 654211,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "mep025"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 644363,
+      "packs": 4,
+      "promos": [
+        "mep001",
+        "mep002",
+        "mep003",
+        "mep004"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-psyduck",
+      "name": "3 Pack Blister: Psyduck",
+      "kind": "blister",
+      "tcgplayerId": 644357,
+      "packs": 3,
+      "promos": [
+        "mep007"
+      ]
+    },
+    {
+      "id": "blister3-golduck",
+      "name": "3 Pack Blister: Golduck",
+      "kind": "blister",
+      "tcgplayerId": 644356,
+      "packs": 3,
+      "promos": [
+        "mep008"
+      ]
+    },
+    {
+      "id": "blister-drifloon",
+      "name": "Single Pack Blister: Drifloon",
+      "kind": "blister",
+      "tcgplayerId": 644358,
+      "packs": 1,
+      "promos": [
+        "mep005"
+      ]
+    },
+    {
+      "id": "blister-drifblim",
+      "name": "Single Pack Blister: Drifblim",
+      "kind": "blister",
+      "tcgplayerId": 644359,
+      "packs": 1,
+      "promos": [
+        "mep006"
+      ]
+    }
+  ]
 }

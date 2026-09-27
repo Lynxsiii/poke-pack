@@ -9,11 +9,11 @@ import {
   getSet,
   PLAYABLE_SETS,
   RARITY_ORDER,
+  findOffer,
   money,
-  sealedOffers,
   sellValue,
 } from "../js/catalog.js";
-import { isHit, ripPack } from "../js/engine.js";
+import { drawPromos, isHit, priceOffer, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
@@ -50,6 +50,7 @@ const jsonHeaders = {
 
 const setCache = new Map();
 let sealedCache = null;
+let productsCache = null;
 
 export default {
   async fetch(request, env) {
@@ -416,9 +417,11 @@ async function rip(request, env) {
 
 /**
  * Buy a sealed product and open every pack in it. The price is the product's
- * market price from sealed.json, charged once; each pack still lands in
- * pack_log on its own, so quests and pack counts see a box as 36 packs.
- * Wrappers are mixed, the way a real box is.
+ * market price (sealed.json for boxes, ETBs and bundles; products.json for the
+ * promo products), charged once; each pack still lands in pack_log on its
+ * own, so quests and pack counts see a box as 36 packs. Wrappers are mixed,
+ * the way a real box is. A product's promo cards come with it, and never
+ * count as a pack.
  */
 async function openSealed(request, env) {
   const auth = await requireUser(request, env);
@@ -428,23 +431,39 @@ async function openSealed(request, env) {
 
   const live = PLAYABLE_SETS.find((item) => item.id === String(body.setId || ""));
   if (!live) return json({ error: "Unknown set." }, 400);
-  const offer = sealedOffers((await loadSealed(env, request))[live.id]).find(
-    (item) => item.id === String(body.product || "")
+  const listed = findOffer(
+    (await loadSealed(env, request))[live.id],
+    (await loadProducts(env, request))[live.id],
+    body.product
   );
-  if (!offer) return json({ error: "That product isn't sold for this set." }, 400);
+  if (!listed) return json({ error: "That product isn't sold for this set." }, 400);
   if (!live.wrappers.length) return json({ error: "Unknown pack art." }, 400);
 
   const catalog = await loadSetCards(env, request, live);
+  const offer = priceOffer(listed, live, catalog);
   const packs = Array.from({ length: offer.packs }, () => ({
     wrapper: live.wrappers[Math.floor(Math.random() * live.wrappers.length)],
     pulls: ripPack(live, catalog),
   }));
-  const opened = await openPacks(env, auth.user.id, live, packs, offer.price);
+  for (const [key, count] of Object.entries(offer.special || {})) {
+    const special = live.specialPacks?.[key];
+    if (!special) fail(`Missing special pack ${key}.`, 500);
+    for (let i = 0; i < count; i += 1) {
+      packs.push({ wrapper: special.wrapper, pulls: ripPack({ ...live, slots: special.slots }, catalog) });
+    }
+  }
+  const promos = drawPromos(offer).map((id) => {
+    const card = catalog.find((item) => item.id === id);
+    if (!card) fail(`Missing promo card ${id}.`, 500);
+    return { ...card };
+  });
+  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos);
   if (opened.response) return opened.response;
   return json({
     save: opened.save,
-    product: { id: offer.id, name: offer.name, packs: offer.packs },
+    product: { id: offer.id, name: offer.name, packs: opened.packs.length },
     packs: opened.packs.map((pack) => ({ wrapperId: pack.wrapper.id, cards: pack.cards })),
+    promos: opened.promos,
     cost: offer.price,
   });
 }
@@ -452,11 +471,14 @@ async function openSealed(request, env) {
 /**
  * Charge `cost` once and add every pack's pulls to the account. `wasNew` runs
  * across the whole purchase, so only the first copy of a card in a box is new.
+ * `promos` are the product's promo cards: owned like pulls, but not a pack.
  * Returns `{ response }` when the player can't afford it.
  */
-async function openPacks(env, userId, live, packs, cost) {
+async function openPacks(env, userId, live, packs, cost, promos = []) {
   const now = Date.now();
-  const ids = [...new Set(packs.flatMap((pack) => pack.pulls.map((card) => card.id)))];
+  const ids = [
+    ...new Set([...promos, ...packs.flatMap((pack) => pack.pulls)].map((card) => card.id)),
+  ];
   const existing = [];
   // D1 caps bound parameters per query at 100.
   for (let i = 0; i < ids.length; i += 90) {
@@ -474,7 +496,13 @@ async function openPacks(env, userId, live, packs, cost) {
   const qty = Object.fromEntries(existing.map((row) => [row.card_id, row.qty]));
   const reverseQty = Object.fromEntries(existing.map((row) => [row.card_id, row.reverse_qty]));
 
-  let pulled = 0;
+  // Promos first: they sit on top of the box, so they are the new copy.
+  const promoCards = promos.map((card) => {
+    const wasNew = !(qty[card.id] > 0);
+    qty[card.id] = (qty[card.id] || 0) + 1;
+    return { ...card, reverse: false, wasNew };
+  });
+  let pulled = promoCards.length;
   let sinceHit = -1;
   const opened = packs.map((pack) => {
     const cards = [];
@@ -515,7 +543,10 @@ async function openPacks(env, userId, live, packs, cost) {
   }
   // History only keeps 24 rows, so a box records its best 24 cards, in pull order.
   const rank = (card) => RARITY_ORDER.indexOf(card.rarity) + (card.reverse ? 0 : 0.5);
-  const all = opened.flatMap((pack) => pack.cards.map((card) => ({ card, wrapperId: pack.wrapper.id })));
+  const all = [
+    ...promoCards.map((card) => ({ card, wrapperId: "promo" })),
+    ...opened.flatMap((pack) => pack.cards.map((card) => ({ card, wrapperId: pack.wrapper.id }))),
+  ];
   const kept = new Set(
     all
       .map((entry, i) => i)
@@ -532,7 +563,8 @@ async function openPacks(env, userId, live, packs, cost) {
     );
   }
   // Split the price across packs in cents, the last pack taking the remainder.
-  const share = Math.floor((cost * 100) / opened.length) / 100;
+  // A battle deck has no packs, so nothing goes to pack_log.
+  const share = opened.length ? Math.floor((cost * 100) / opened.length) / 100 : 0;
   opened.forEach((pack, i) => {
     const packCostShare = i === opened.length - 1 ? money(cost - share * (opened.length - 1)) : share;
     stmts.push(
@@ -552,7 +584,7 @@ async function openPacks(env, userId, live, packs, cost) {
   await runBatches(env, stmts);
 
   await trimHistory(env, userId);
-  return { save: await loadSave(env, userId), packs: opened };
+  return { save: await loadSave(env, userId), packs: opened, promos: promoCards };
 }
 
 async function daily(request, env) {
@@ -967,6 +999,19 @@ async function loadSealed(env, request) {
     return {};
   }
   return sealedCache || {};
+}
+
+async function loadProducts(env, request) {
+  try {
+    if (!productsCache) {
+      const res = await env.ASSETS.fetch(new Request(new URL("/data/products.json", request.url), { method: "GET" }));
+      if (!res.ok) return {};
+      productsCache = await res.json();
+    }
+  } catch {
+    return {};
+  }
+  return productsCache || {};
 }
 
 async function packCost(env, request, set) {

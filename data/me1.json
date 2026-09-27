@@ -6179,5 +6179,695 @@
     ],
     "market": 271.03,
     "imageRemote": "https://images.scrydex.com/pokemon/me1-188/large"
+  },
+  {
+    "id": "me1-mep001",
+    "name": "Meganium",
+    "number": "mep001",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "160",
+    "artist": "Uninori",
+    "flavorText": "Anyone who stands beside it becomes refreshed, just as if they were soaking in the soothing atmosphere of a forest.",
+    "evolvesFrom": "Bayleef",
+    "image": "assets/cards/me1/mep001.webp",
+    "imageSmall": "assets/cards/me1/mep001-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Beam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wild Growth",
+        "text": "Each Basic Grass Energy attached to all of your Pokémon provides Grass Grass Energy. The effect of Wild Growth doesn't stack.",
+        "type": "Ability"
+      }
+    ],
+    "market": 29.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-1/large",
+    "printedNumber": "MEP 001",
+    "tcgplayerId": 654594,
+    "foilAs": "Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep001.webp"
+  },
+  {
+    "id": "me1-mep002",
+    "name": "Inteleon",
+    "number": "mep002",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Kazumasa Yasukuni",
+    "flavorText": "It uses special lenses in its eyes to sense things about its opponents—like their body heat—then attacks once it identifies a weak spot.",
+    "evolvesFrom": "Drizzile",
+    "image": "assets/cards/me1/mep002.webp",
+    "imageSmall": "assets/cards/me1/mep002-sm.webp",
+    "attacks": [
+      {
+        "name": "Bring Down",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Choose a Pokémon in play (yours or your opponent's) that has the least HP remaining, except for this Pokémon, and it is Knocked Out."
+      },
+      {
+        "name": "Water Shot",
+        "cost": [
+          "Water"
+        ],
+        "damage": "110",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "market": 12.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-2/large",
+    "printedNumber": "MEP 002",
+    "tcgplayerId": 654596,
+    "foilAs": "Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep002.webp"
+  },
+  {
+    "id": "me1-mep003",
+    "name": "Alakazam",
+    "number": "mep003",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "cochi8i",
+    "flavorText": "Alakazam wields potent psychic powers. It’s said that this Pokémon used these powers to create the spoons it holds.",
+    "evolvesFrom": "Kadabra",
+    "image": "assets/cards/me1/mep003.webp",
+    "imageSmall": "assets/cards/me1/mep003-sm.webp",
+    "attacks": [
+      {
+        "name": "Powerful Hand",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Place 2 damage counters on your opponent's Active Pokémon for each card in your hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Psychic Draw",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. Draw 3 cards.",
+        "type": "Ability"
+      }
+    ],
+    "market": 20.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-3/large",
+    "printedNumber": "MEP 003",
+    "tcgplayerId": 654597,
+    "foilAs": "Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep003.webp"
+  },
+  {
+    "id": "me1-mep004",
+    "name": "Lunatone",
+    "number": "mep004",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Ounishi",
+    "flavorText": "It was discovered at the site of a meteor strike 40 years ago. Its stare can lull its foes to sleep.",
+    "image": "assets/cards/me1/mep004.webp",
+    "imageSmall": "assets/cards/me1/mep004-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Gem",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lunar Cycle",
+        "text": "Once during your turn, if you have Solrock in play, you may discard a Basic Fighting Energy card from your hand in order to use this Ability. Draw 3 cards. You can't use more than 1 Lunar Cycle Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 18.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-4/large",
+    "printedNumber": "MEP 004",
+    "tcgplayerId": 654598,
+    "foilAs": "Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep004.webp"
+  },
+  {
+    "id": "me1-mep005",
+    "name": "Drifloon",
+    "number": "mep005",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Shimaris Yukichi",
+    "flavorText": "It is whispered that any child who mistakes Drifloon for a balloon and holds on to it could wind up missing.",
+    "image": "assets/cards/me1/mep005.webp",
+    "imageSmall": "assets/cards/me1/mep005-sm.webp",
+    "attacks": [
+      {
+        "name": "Pull",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, switch in 1 of your opponent's Benched Pokémon to the Active Spot."
+      }
+    ],
+    "market": 3.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-5/large",
+    "printedNumber": "MEP 005",
+    "tcgplayerId": 656255,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep005.webp"
+  },
+  {
+    "id": "me1-mep006",
+    "name": "Drifblim",
+    "number": "mep006",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Shimaris Yukichi",
+    "flavorText": "It can generate and release gas within its body. That’s how it can control the altitude of its drift.",
+    "evolvesFrom": "Drifloon",
+    "image": "assets/cards/me1/mep006.webp",
+    "imageSmall": "assets/cards/me1/mep006-sm.webp",
+    "attacks": [
+      {
+        "name": "Creepy Wind",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Balloon Return",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "110",
+        "text": "Put this Pokémon and all attached cards into your hand."
+      }
+    ],
+    "market": 1.81,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-6/large",
+    "printedNumber": "MEP 006",
+    "tcgplayerId": 656256,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep006.webp"
+  },
+  {
+    "id": "me1-mep007",
+    "name": "Psyduck",
+    "number": "mep007",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Jiro Sasumo",
+    "flavorText": "It is constantly wracked by a headache. When the headache turns intense, it begins using mysterious powers.",
+    "image": "assets/cards/me1/mep007.webp",
+    "imageSmall": "assets/cards/me1/mep007-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Damp",
+        "text": "Pokémon in play (both yours and your opponent's) lose any Ability that requires the Pokémon using it to Knock Out itself.",
+        "type": "Ability"
+      }
+    ],
+    "market": 8.93,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-7/large",
+    "printedNumber": "MEP 007",
+    "tcgplayerId": 656257,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep007.webp"
+  },
+  {
+    "id": "me1-mep008",
+    "name": "Golduck",
+    "number": "mep008",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Jiro Sasumo",
+    "flavorText": "When it swims at full speed using its long, webbed limbs, its forehead somehow begins to glow.",
+    "evolvesFrom": "Psyduck",
+    "image": "assets/cards/me1/mep008.webp",
+    "imageSmall": "assets/cards/me1/mep008-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Damp",
+        "text": "Pokémon in play (both yours and your opponent's) lose any Ability that requires the Pokémon using it to Knock Out itself.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-8/large",
+    "printedNumber": "MEP 008",
+    "tcgplayerId": 656258,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep008.webp"
+  },
+  {
+    "id": "me1-mep009",
+    "name": "Alakazam",
+    "number": "mep009",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Aya Kusube",
+    "flavorText": "Alakazam wields potent psychic powers. It’s said that this Pokémon used these powers to create the spoons it holds.",
+    "evolvesFrom": "Kadabra",
+    "image": "assets/cards/me1/mep009.webp",
+    "imageSmall": "assets/cards/me1/mep009-sm.webp",
+    "attacks": [
+      {
+        "name": "Powerful Hand",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Place 2 damage counters on your opponent's Active Pokémon for each card in your hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Psychic Draw",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. Draw 3 cards.",
+        "type": "Ability"
+      }
+    ],
+    "market": 7.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-9/large",
+    "printedNumber": "MEP 009",
+    "tcgplayerId": 656259,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep009.webp"
+  },
+  {
+    "id": "me1-mep009-pc",
+    "name": "Alakazam",
+    "number": "mep009-pc",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Aya Kusube",
+    "flavorText": "Alakazam wields potent psychic powers. It’s said that this Pokémon used these powers to create the spoons it holds.",
+    "evolvesFrom": "Kadabra",
+    "image": "assets/cards/me1/mep009-pc.webp",
+    "imageSmall": "assets/cards/me1/mep009-pc-sm.webp",
+    "attacks": [
+      {
+        "name": "Powerful Hand",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Place 2 damage counters on your opponent's Active Pokémon for each card in your hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Psychic Draw",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. Draw 3 cards.",
+        "type": "Ability"
+      }
+    ],
+    "market": 72.46,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/656261_in_1000x1000.jpg",
+    "printedNumber": "MEP 009",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "variant": "Pokémon Center stamp",
+    "tcgplayerId": 656261,
+    "foilMap": "assets/foil/maps/me1/mep009-pc.webp"
+  },
+  {
+    "id": "me1-mep010",
+    "name": "Riolu",
+    "number": "mep010",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "GOSSAN",
+    "flavorText": "They communicate with one another using their auras. They are able to run all through the night.",
+    "image": "assets/cards/me1/mep010.webp",
+    "imageSmall": "assets/cards/me1/mep010-sm.webp",
+    "attacks": [
+      {
+        "name": "Accelerating Stab",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "During your next turn, this Pokémon can't use Accelerating Stab."
+      }
+    ],
+    "market": 8.98,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-10/large",
+    "printedNumber": "MEP 010",
+    "tcgplayerId": 656260,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep010.webp"
+  },
+  {
+    "id": "me1-mep010-pc",
+    "name": "Riolu",
+    "number": "mep010-pc",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "GOSSAN",
+    "flavorText": "They communicate with one another using their auras. They are able to run all through the night.",
+    "image": "assets/cards/me1/mep010-pc.webp",
+    "imageSmall": "assets/cards/me1/mep010-pc-sm.webp",
+    "attacks": [
+      {
+        "name": "Accelerating Stab",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "During your next turn, this Pokémon can't use Accelerating Stab."
+      }
+    ],
+    "market": 64.29,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/656262_in_1000x1000.jpg",
+    "printedNumber": "MEP 010",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "variant": "Pokémon Center stamp",
+    "tcgplayerId": 656262,
+    "foilMap": "assets/foil/maps/me1/mep010-pc.webp"
+  },
+  {
+    "id": "me1-mep011",
+    "name": "Mega Latias ex",
+    "number": "mep011",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me1/mep011.webp",
+    "imageSmall": "assets/cards/me1/mep011-sm.webp",
+    "attacks": [
+      {
+        "name": "Strafe",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Illusory Impulse",
+        "cost": [
+          "Fire",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "market": 0.77,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-11/large",
+    "printedNumber": "MEP 011",
+    "tcgplayerId": 657846,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep011.webp",
+    "etchMap": "assets/foil/maps/me1/mep011-etch.webp"
+  },
+  {
+    "id": "me1-mep012",
+    "name": "Mega Lucario ex",
+    "number": "mep012",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/me1/mep012.webp",
+    "imageSmall": "assets/cards/me1/mep012-sm.webp",
+    "attacks": [
+      {
+        "name": "Aura Jab",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "130",
+        "text": "Attach up to 3 Basic Fighting Energy cards from your discard pile to your Benched Pokémon in any way you like."
+      },
+      {
+        "name": "Mega Brave",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "270",
+        "text": "During your next turn, this Pokémon can't use Mega Brave."
+      }
+    ],
+    "market": 1.66,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-12/large",
+    "printedNumber": "MEP 012",
+    "tcgplayerId": 663177,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep012.webp",
+    "etchMap": "assets/foil/maps/me1/mep012-etch.webp"
+  },
+  {
+    "id": "me1-mep013",
+    "name": "Mega Venusaur ex",
+    "number": "mep013",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "380",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Ivysaur",
+    "image": "assets/cards/me1/mep013.webp",
+    "imageSmall": "assets/cards/me1/mep013-sm.webp",
+    "attacks": [
+      {
+        "name": "Jungle Dump",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "240",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Solar Transfer",
+        "text": "As often as you like during your turn, you may use this Ability. Move a Basic Grass Energy from 1 of your Pokémon to another of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-13/large",
+    "printedNumber": "MEP 013",
+    "tcgplayerId": 666905,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep013.webp",
+    "etchMap": "assets/foil/maps/me1/mep013-etch.webp"
+  },
+  {
+    "id": "me1-mep025",
+    "name": "Mega Kangaskhan ex",
+    "number": "mep025",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "300",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me1/mep025.webp",
+    "imageSmall": "assets/cards/me1/mep025-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid-Fire Combo",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200+",
+        "text": "Flip a coin until you get tails. This attack does 50 more damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Run Errand",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may use this Ability. Draw 2 cards. You can't use more than 1 Run Errand Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-25/large",
+    "printedNumber": "MEP 025",
+    "tcgplayerId": 668509,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me1/mep025.webp",
+    "etchMap": "assets/foil/maps/me1/mep025-etch.webp"
   }
 ]

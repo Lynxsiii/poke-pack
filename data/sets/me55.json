@@ -8,5 +8,247 @@
   "artSlug": "30th-celebration",
   "packs": [
     "pikachu"
+  ],
+  "tcgplayerGroup": 24722,
+  "promoSeries": {
+    "mep": {
+      "series": "mega-evolution",
+      "slug": "me-black-star-promos",
+      "scrydex": "mep",
+      "tcgplayerGroup": 24451,
+      "printed": "MEP"
+    }
+  },
+  "promoCards": {
+    "mep094": {},
+    "mep095": {},
+    "mep096": {},
+    "mep097": {},
+    "mep098": {},
+    "mep099": {},
+    "mep100": {},
+    "mep101": {},
+    "mep101-pc": {
+      "like": "mep101",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 713261
+    },
+    "mep102": {
+      "foilAs": "Illustration Rare"
+    },
+    "mep103": {
+      "foilAs": "Illustration Rare"
+    },
+    "mep104": {
+      "foilAs": "Cosmos"
+    },
+    "mep105": {
+      "foilAs": "Cosmos"
+    },
+    "mep106": {
+      "foilAs": "Illustration Rare"
+    },
+    "mep107": {
+      "foilAs": "Futuristic Rare"
+    },
+    "mep108": {
+      "foilAs": "Special Illustration Rare"
+    },
+    "mep109": {
+      "foilAs": "Futuristic Rare"
+    },
+    "mep110": {
+      "foilAs": "Special Illustration Rare"
+    },
+    "116-blister": {
+      "like": "116",
+      "variant": "Black star frame",
+      "tcgplayerId": 717879,
+      "foilAs": "Frame",
+      "printedNumber": "116/128"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 704143,
+      "packs": 9,
+      "promos": [
+        "mep101"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 704144,
+      "packs": 11,
+      "promos": [
+        "mep101-pc",
+        "mep101"
+      ]
+    },
+    {
+      "id": "upc-day",
+      "name": "Ultra-Premium Collection: Day",
+      "kind": "premium",
+      "tcgplayerId": 704190,
+      "packs": 29,
+      "special": {
+        "classic": 1
+      },
+      "promos": [
+        "mep107",
+        "mep108"
+      ]
+    },
+    {
+      "id": "upc-night",
+      "name": "Ultra-Premium Collection: Night",
+      "kind": "premium",
+      "tcgplayerId": 704191,
+      "packs": 29,
+      "special": {
+        "classic": 1
+      },
+      "promos": [
+        "mep109",
+        "mep110"
+      ]
+    },
+    {
+      "id": "ditto-premium",
+      "name": "Ditto Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 704189,
+      "packs": 8,
+      "promos": [
+        "mep106"
+      ]
+    },
+    {
+      "id": "figure-mew",
+      "name": "Figure Collection: Mew",
+      "kind": "collection",
+      "tcgplayerId": 704193,
+      "packs": 5,
+      "promos": [
+        "mep105"
+      ]
+    },
+    {
+      "id": "figure-mewtwo",
+      "name": "Figure Collection: Mewtwo",
+      "kind": "collection",
+      "tcgplayerId": 704194,
+      "packs": 5,
+      "promos": [
+        "mep104"
+      ]
+    },
+    {
+      "id": "tin-sylveon",
+      "name": "Sylveon ex Tin",
+      "kind": "tin",
+      "tcgplayerId": 718674,
+      "packs": 5,
+      "promos": [
+        "mep100"
+      ]
+    },
+    {
+      "id": "tin-greninja",
+      "name": "Greninja ex Tin",
+      "kind": "tin",
+      "tcgplayerId": 718673,
+      "packs": 5,
+      "promos": [
+        "mep099"
+      ]
+    },
+    {
+      "id": "box-sylveon",
+      "name": "Sylveon ex Box",
+      "kind": "collection",
+      "tcgplayerId": 704155,
+      "packs": 4,
+      "promos": [
+        "mep100"
+      ]
+    },
+    {
+      "id": "box-greninja",
+      "name": "Greninja ex Box",
+      "kind": "collection",
+      "tcgplayerId": 704168,
+      "packs": 4,
+      "promos": [
+        "mep099"
+      ]
+    },
+    {
+      "id": "poster",
+      "name": "Poster Collection",
+      "kind": "collection",
+      "tcgplayerId": 704153,
+      "packs": 3,
+      "promos": [
+        "mep096",
+        "mep097",
+        "mep098"
+      ]
+    },
+    {
+      "id": "tech-exeggutor",
+      "name": "Tech Sticker Collection: Alolan Exeggutor",
+      "kind": "collection",
+      "tcgplayerId": 704145,
+      "packs": 3,
+      "promos": [
+        "mep094"
+      ]
+    },
+    {
+      "id": "tech-lucario",
+      "name": "Tech Sticker Collection: Lucario",
+      "kind": "collection",
+      "tcgplayerId": 704146,
+      "packs": 3,
+      "promos": [
+        "mep095"
+      ]
+    },
+    {
+      "id": "knock-out",
+      "name": "Knock Out Collection",
+      "kind": "collection",
+      "tcgplayerId": 704152,
+      "packs": 2,
+      "promos": [
+        "116-blister"
+      ]
+    },
+    {
+      "id": "deck-espeon",
+      "name": "Battle Deck: Espeon ex",
+      "kind": "deck",
+      "tcgplayerId": 704187,
+      "packs": 0,
+      "promos": [
+        "mep102"
+      ]
+    },
+    {
+      "id": "deck-umbreon",
+      "name": "Battle Deck: Umbreon ex",
+      "kind": "deck",
+      "tcgplayerId": 704188,
+      "packs": 0,
+      "promos": [
+        "mep103"
+      ]
+    }
   ]
 }

@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -71,10 +72,18 @@ def curl(url: str, dest: Path) -> bool:
     return res.returncode == 0
 
 
+# Black star promos sold with a set are filed in it as <prefix><number>, with
+# an optional -suffix for a stamped print of the same card (mep101-pc).
+PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp"}
+
+
 def source(set_id: str, key: str | None, number: str) -> tuple[str, int] | None:
     main, extra = SETS.get(set_id, (None, {}))
     if number in extra:
         return extra[number]
+    promo = re.fullmatch(r"([a-z]+)(\d+)(-[a-z0-9]+)?", number)
+    if promo and promo.group(1) in PROMO_KEYS:
+        return PROMO_KEYS[promo.group(1)], int(promo.group(2))
     if number.isdigit() and (key or main):
         return key or main, int(number)
     return None

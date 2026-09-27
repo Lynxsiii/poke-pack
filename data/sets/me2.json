@@ -5,5 +5,170 @@
   "slug": "phantasmal-flames",
   "scrydexId": "me2",
   "pittSlug": "Phantasmal-Flames",
-  "artSlug": "phantasmal-flames"
+  "artSlug": "phantasmal-flames",
+  "tcgplayerGroup": 24448,
+  "promoSeries": {
+    "mep": {
+      "series": "mega-evolution",
+      "slug": "me-black-star-promos",
+      "scrydex": "mep",
+      "tcgplayerGroup": 24451,
+      "printed": "MEP"
+    }
+  },
+  "promoCards": {
+    "mep014": {},
+    "mep015": {},
+    "mep016": {},
+    "mep017": {},
+    "mep018": {},
+    "mep019": {},
+    "mep020": {},
+    "mep021": {},
+    "mep022": {},
+    "mep022-pc": {
+      "like": "mep022",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 665053
+    },
+    "mep023": {},
+    "mep024": {},
+    "mep026": {},
+    "mep027": {},
+    "mep029": {},
+    "mep030": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 654136,
+      "packs": 9,
+      "promos": [
+        "mep022"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 654135,
+      "packs": 11,
+      "promos": [
+        "mep022-pc",
+        "mep022"
+      ]
+    },
+    {
+      "id": "charizard-upc",
+      "name": "Mega Charizard X ex Ultra-Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 654213,
+      "tcgplayerGroup": 2374,
+      "packs": 18,
+      "promos": [
+        "mep023",
+        "mep024"
+      ]
+    },
+    {
+      "id": "tin-charizard-x",
+      "name": "Mega Charizard X ex Tin",
+      "kind": "tin",
+      "tcgplayerId": 671250,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "mep029"
+      ]
+    },
+    {
+      "id": "tin-charizard-y",
+      "name": "Mega Charizard Y ex Tin",
+      "kind": "tin",
+      "tcgplayerId": 671249,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "mep030"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 662725,
+      "packs": 4,
+      "promos": [
+        "mep014",
+        "mep015",
+        "mep016",
+        "mep017"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "deck-gengar",
+      "name": "Mega Battle Deck: Mega Gengar ex",
+      "kind": "deck",
+      "tcgplayerId": 659192,
+      "tcgplayerGroup": 2374,
+      "packs": 0,
+      "promos": [
+        "mep027"
+      ]
+    },
+    {
+      "id": "deck-diancie",
+      "name": "Mega Battle Deck: Mega Diancie ex",
+      "kind": "deck",
+      "tcgplayerId": 659193,
+      "tcgplayerGroup": 2374,
+      "packs": 0,
+      "promos": [
+        "mep026"
+      ]
+    },
+    {
+      "id": "blister3-sneasel",
+      "name": "3 Pack Blister: Sneasel",
+      "kind": "blister",
+      "tcgplayerId": 654154,
+      "packs": 3,
+      "promos": [
+        "mep020"
+      ]
+    },
+    {
+      "id": "blister3-weavile",
+      "name": "3 Pack Blister: Weavile",
+      "kind": "blister",
+      "tcgplayerId": 654156,
+      "packs": 3,
+      "promos": [
+        "mep021"
+      ]
+    },
+    {
+      "id": "blister-cottonee",
+      "name": "Single Pack Blister: Cottonee",
+      "kind": "blister",
+      "tcgplayerId": 654151,
+      "packs": 1,
+      "promos": [
+        "mep018"
+      ]
+    },
+    {
+      "id": "blister-whimsicott",
+      "name": "Single Pack Blister: Whimsicott",
+      "kind": "blister",
+      "tcgplayerId": 654150,
+      "packs": 1,
+      "promos": [
+        "mep019"
+      ]
+    }
+  ]
 }
