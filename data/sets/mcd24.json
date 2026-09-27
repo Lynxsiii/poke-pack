@@ -1,0 +1,106 @@
+{
+  "id": "mcd24",
+  "name": "McDonald's Dragon Discovery 2024",
+  "side": true,
+  "series": "other",
+  "slug": "mcdonalds-collection-2025",
+  "scrydexId": "mcd24",
+  "printedTotal": 15,
+  "tcgplayerGroup": 24163,
+  "defaults": {
+    "rarity": "Promo"
+  },
+  "sealed": {
+    "boosterPack": 615609
+  },
+  "cards": [
+    {
+      "number": "001",
+      "tcgplayerId": 614370
+    },
+    {
+      "number": "002",
+      "tcgplayerId": 614371,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "svalt/sv3-5_en_025_alt",
+      "border": true
+    },
+    {
+      "number": "003",
+      "tcgplayerId": 614372,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv1/sv1_en_080_std",
+      "border": true
+    },
+    {
+      "number": "004",
+      "tcgplayerId": 614373
+    },
+    {
+      "number": "005",
+      "tcgplayerId": 614374
+    },
+    {
+      "number": "006",
+      "tcgplayerId": 614375
+    },
+    {
+      "number": "007",
+      "tcgplayerId": 614376
+    },
+    {
+      "number": "008",
+      "tcgplayerId": 614377,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv1/sv1_en_124_std",
+      "border": true
+    },
+    {
+      "number": "009",
+      "tcgplayerId": 614378
+    },
+    {
+      "number": "010",
+      "tcgplayerId": 614379,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv2/sv2_en_140_std",
+      "border": true
+    },
+    {
+      "number": "011",
+      "tcgplayerId": 614380,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv5/sv5_en_109_std",
+      "border": true
+    },
+    {
+      "number": "012",
+      "tcgplayerId": 614381,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv3-5/sv3-5_en_149_std",
+      "border": true
+    },
+    {
+      "number": "013",
+      "tcgplayerId": 614382
+    },
+    {
+      "number": "014",
+      "tcgplayerId": 614383
+    },
+    {
+      "number": "015",
+      "tcgplayerId": 614384,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv5/sv5_en_138_std",
+      "border": true
+    }
+  ]
+}

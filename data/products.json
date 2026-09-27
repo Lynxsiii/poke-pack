@@ -4435,5 +4435,39 @@
       "price": 1.03,
       "tcgplayerId": 620107
     }
+  ],
+  "tot23": [
+    {
+      "id": "booster-bundle-50",
+      "name": "Trick or Trade BOOster Bundle (50 packs)",
+      "kind": "bundle",
+      "packs": 50,
+      "promos": [],
+      "price": 83.72,
+      "tcgplayerId": 505942,
+      "image": "assets/products/tot23/booster-bundle-50.webp"
+    }
+  ],
+  "tot24": [
+    {
+      "id": "booster-bundle-35",
+      "name": "Trick or Trade BOOster Bundle (35 packs)",
+      "kind": "bundle",
+      "packs": 35,
+      "promos": [],
+      "price": 66.11,
+      "tcgplayerId": 558713,
+      "image": "assets/products/tot24/booster-bundle-35.webp"
+    },
+    {
+      "id": "booster-bundle-120",
+      "name": "Trick or Trade BOOster Bundle (120 packs)",
+      "kind": "bundle",
+      "packs": 120,
+      "promos": [],
+      "price": 181.32,
+      "tcgplayerId": 591211,
+      "image": "assets/products/tot24/booster-bundle-120.webp"
+    }
   ]
 }

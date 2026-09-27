@@ -1,0 +1,1185 @@
+[
+  {
+    "id": "tot23-1",
+    "name": "Sinistea",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "30",
+    "artist": "Saya Tsuruta",
+    "flavorText": "This Pokémon is said to have been born when a lonely spirit possessed a cold, leftover cup of tea.",
+    "image": "assets/cards/tot23/1.webp",
+    "imageSmall": "assets/cards/tot23/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Teatime",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Each player draws 2 cards."
+      }
+    ],
+    "market": 0.21,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515675_in_1000x1000.jpg",
+    "printedNumber": "089/202",
+    "tcgplayerId": 515675
+  },
+  {
+    "id": "tot23-2",
+    "name": "Polteageist",
+    "number": "2",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Shin Nagasawa",
+    "flavorText": "This species lives in antique teapots. Most pots are forgeries, but on rare occasions, an authentic work is found.",
+    "evolvesFrom": "Sinistea",
+    "image": "assets/cards/tot23/2.webp",
+    "imageSmall": "assets/cards/tot23/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Teatime",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Each player draws 2 cards."
+      },
+      {
+        "name": "Poltergeist",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Your opponent reveals their hand. This attack does 50 damage for each Trainer card you find there."
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515676_in_1000x1000.jpg",
+    "printedNumber": "090/202",
+    "tcgplayerId": 515676,
+    "foilAs": "Common"
+  },
+  {
+    "id": "tot23-3",
+    "name": "Galarian Runerigus",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "TOKIYA",
+    "flavorText": "A powerful curse was woven into an ancient painting. After absorbing the spirit of a Yamask, the painting began to move.",
+    "evolvesFrom": "Galarian Yamask",
+    "image": "assets/cards/tot23/3.webp",
+    "imageSmall": "assets/cards/tot23/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Spreading Spite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "For each damage counter on this Galarian Runerigus, put 2 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Mad Hammer",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "market": 0.21,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515656_in_1000x1000.jpg",
+    "printedNumber": "102/192",
+    "tcgplayerId": 515656,
+    "foilAs": "Common"
+  },
+  {
+    "id": "tot23-4",
+    "name": "Dhelmise",
+    "number": "4",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "After a piece of seaweed merged with debris from a sunken ship, it was reborn as this ghost Pokémon.",
+    "image": "assets/cards/tot23/4.webp",
+    "imageSmall": "assets/cards/tot23/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Hook",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Special Anchor",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If this Pokémon has any Special Energy attached, this attack does 60 more damage."
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515649_in_1000x1000.jpg",
+    "printedNumber": "019/185",
+    "tcgplayerId": 515649
+  },
+  {
+    "id": "tot23-5",
+    "name": "Duskull",
+    "number": "5",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "nagimiso",
+    "flavorText": "If it finds bad children who won't listen to their parents, it will spirit them away—or so it's said.",
+    "image": "assets/cards/tot23/5.webp",
+    "imageSmall": "assets/cards/tot23/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Future Sight",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 4 cards of either player's deck and put them back in any order."
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515662_in_1000x1000.jpg",
+    "printedNumber": "069/185",
+    "tcgplayerId": 515662
+  },
+  {
+    "id": "tot23-6",
+    "name": "Dusclops",
+    "number": "6",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Kazuma Koda",
+    "flavorText": "Its body is entirely hollow. When it opens its mouth, it sucks everything in as if it were a black hole.",
+    "evolvesFrom": "Duskull",
+    "image": "assets/cards/tot23/6.webp",
+    "imageSmall": "assets/cards/tot23/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Psypunch",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515663_in_1000x1000.jpg",
+    "printedNumber": "070/185",
+    "tcgplayerId": 515663
+  },
+  {
+    "id": "tot23-7",
+    "name": "Dusknoir",
+    "number": "7",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "150",
+    "artist": "Shigenori Negishi",
+    "flavorText": "At the bidding of transmissions from the spirit world, it steals people and Pokémon away. No one knows whether it has a will of its own.",
+    "evolvesFrom": "Dusclops",
+    "image": "assets/cards/tot23/7.webp",
+    "imageSmall": "assets/cards/tot23/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Spooky Shot",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spectral Breach",
+        "text": "All Special Energy attached to Pokémon (both yours and your opponent's) provide Colorless Energy and have no other effect.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515664_in_1000x1000.jpg",
+    "printedNumber": "071/185",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515664,
+    "foilMap": "assets/foil/maps/tot23/7.webp"
+  },
+  {
+    "id": "tot23-8",
+    "name": "Lycanroc",
+    "number": "8",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "They live alone without forming packs. They will only listen to orders from Trainers who can draw out their true power.",
+    "evolvesFrom": "Rockruff",
+    "image": "assets/cards/tot23/8.webp",
+    "imageSmall": "assets/cards/tot23/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Throw",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Sharp Mane",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515655_in_1000x1000.jpg",
+    "printedNumber": "095/185",
+    "tcgplayerId": 515655,
+    "foilAs": "Common"
+  },
+  {
+    "id": "tot23-9",
+    "name": "Marshadow",
+    "number": "9",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Yuya Oka",
+    "flavorText": "It sinks into the shadows of people and Pokémon, where it can understand their feelings and copy their capabilities.",
+    "image": "assets/cards/tot23/9.webp",
+    "imageSmall": "assets/cards/tot23/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid Hunt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Rapid Strike cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Shadow Flicker",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "If the Defending Pokémon is Knocked Out during your next turn, take 1 more Prize card."
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515673_in_1000x1000.jpg",
+    "printedNumber": "080/203",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515673,
+    "foilMap": "assets/foil/maps/tot23/9.webp"
+  },
+  {
+    "id": "tot23-10",
+    "name": "Phantump",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "After a lost child perished in the forest, their spirit possessed a tree stump, causing the spirit's rebirth as this Pokémon.",
+    "image": "assets/cards/tot23/10.webp",
+    "imageSmall": "assets/cards/tot23/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Hook",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515647_in_1000x1000.jpg",
+    "printedNumber": "016/196",
+    "tcgplayerId": 515647
+  },
+  {
+    "id": "tot23-11",
+    "name": "Trevenant",
+    "number": "11",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Yuya Oka",
+    "flavorText": "People fear it due to a belief that it devours any who try to cut down trees in its forest, but to the Pokémon it shares its woods with, it's kind.",
+    "evolvesFrom": "Phantump",
+    "image": "assets/cards/tot23/11.webp",
+    "imageSmall": "assets/cards/tot23/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Elder Tree Barrier",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon V, your opponent can't take any Prize cards for it.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.21,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515648_in_1000x1000.jpg",
+    "printedNumber": "017/196",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515648,
+    "foilMap": "assets/foil/maps/tot23/11.webp"
+  },
+  {
+    "id": "tot23-12",
+    "name": "Litwick",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Yuka Morii",
+    "flavorText": "The flame on its head keeps its body slightly warm. This Pokémon takes lost children by the hand to guide them to the spirit world.",
+    "image": "assets/cards/tot23/12.webp",
+    "imageSmall": "assets/cards/tot23/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Kindling Panic",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard the top card of your opponent's deck."
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515651_in_1000x1000.jpg",
+    "printedNumber": "024/196",
+    "tcgplayerId": 515651
+  },
+  {
+    "id": "tot23-13",
+    "name": "Lampent",
+    "number": "13",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "kurumitsu",
+    "flavorText": "This Pokémon appears just before someone passes away, so it's feared as an emissary of death.",
+    "evolvesFrom": "Litwick",
+    "image": "assets/cards/tot23/13.webp",
+    "imageSmall": "assets/cards/tot23/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Flickering Glow",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515652_in_1000x1000.jpg",
+    "printedNumber": "025/196",
+    "tcgplayerId": 515652
+  },
+  {
+    "id": "tot23-14",
+    "name": "Chandelure",
+    "number": "14",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "150",
+    "artist": "sui",
+    "flavorText": "This Pokémon haunts dilapidated mansions. It sways its arms to hypnotize opponents with the ominous dancing of its flames.",
+    "evolvesFrom": "Lampent",
+    "image": "assets/cards/tot23/14.webp",
+    "imageSmall": "assets/cards/tot23/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Heat Blast",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mountain Roasting",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may discard the top 3 cards of your opponent's deck.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515653_in_1000x1000.jpg",
+    "printedNumber": "026/196",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515653,
+    "foilMap": "assets/foil/maps/tot23/14.webp"
+  },
+  {
+    "id": "tot23-15",
+    "name": "Gastly",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Tika Matsuno",
+    "flavorText": "Born from gases, anyone would faint if engulfed by its gaseous body, which contains poison.",
+    "image": "assets/cards/tot23/15.webp",
+    "imageSmall": "assets/cards/tot23/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Furtive Drop",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 1 damage counter on your opponent's Active Pokémon."
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515659_in_1000x1000.jpg",
+    "printedNumber": "064/196",
+    "tcgplayerId": 515659
+  },
+  {
+    "id": "tot23-16",
+    "name": "Haunter",
+    "number": "16",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "This frightful, malevolent spirit can glide through walls, appearing wherever it likes. According to rumor, victims of a Haunter's lick will wither to death day by day.",
+    "evolvesFrom": "Gastly",
+    "image": "assets/cards/tot23/16.webp",
+    "imageSmall": "assets/cards/tot23/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Cursed Drop",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 3 damage counters on your opponent's Pokémon in any way you like."
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515660_in_1000x1000.jpg",
+    "printedNumber": "065/196",
+    "tcgplayerId": 515660
+  },
+  {
+    "id": "tot23-17",
+    "name": "Gengar",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Narumi Sato",
+    "flavorText": "On the night of a full moon, if shadows move on their own and laugh, it must be Gengar's doing.",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/tot23/17.webp",
+    "imageSmall": "assets/cards/tot23/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Screaming Circle",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 2 damage counters on your opponent's Active Pokémon for each of your opponent's Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Netherworld Gate",
+        "text": "Once during your turn, if this Pokémon is in your discard pile, you may put it onto your Bench. If you do, put 3 damage counters on this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.36,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515661_in_1000x1000.jpg",
+    "printedNumber": "066/196",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515661,
+    "foilMap": "assets/foil/maps/tot23/17.webp"
+  },
+  {
+    "id": "tot23-18",
+    "name": "Banette",
+    "number": "18",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Resentment at being cast off made it spring into being. Some say that treating it well will satisfy it, and it will once more become a stuffed toy.",
+    "evolvesFrom": "Shuppet",
+    "image": "assets/cards/tot23/18.webp",
+    "imageSmall": "assets/cards/tot23/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Spooky Shot",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Puppet Offering",
+        "text": "Once during your turn, you may put a Supporter card from your discard pile into your hand. If you do, put this Pokémon in the Lost Zone. (Discard all attached cards.)",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515666_in_1000x1000.jpg",
+    "printedNumber": "073/196",
+    "tcgplayerId": 515666,
+    "foilAs": "Common"
+  },
+  {
+    "id": "tot23-19",
+    "name": "Spectrier",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Narumi Sato",
+    "flavorText": "It probes its surroundings with all its senses save one—it doesn't use its sense of sight. Spectrier's kicks are said to separate soul from body.",
+    "image": "assets/cards/tot23/19.webp",
+    "imageSmall": "assets/cards/tot23/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Night Footsteps",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Choose 2 of your opponent's Pokémon and put 2 damage counters on each of them."
+      },
+      {
+        "name": "Phantom Strike",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your next turn, this Pokémon can't use Phantom Strike."
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515674_in_1000x1000.jpg",
+    "printedNumber": "081/196",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515674,
+    "foilMap": "assets/foil/maps/tot23/19.webp"
+  },
+  {
+    "id": "tot23-20",
+    "name": "Zubat",
+    "number": "20",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "40",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It emits ultrasonic waves from its mouth to check its surroundings. Even in tight caves, Zubat flies around with skill.",
+    "image": "assets/cards/tot23/20.webp",
+    "imageSmall": "assets/cards/tot23/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515679_in_1000x1000.jpg",
+    "printedNumber": "103/195",
+    "tcgplayerId": 515679
+  },
+  {
+    "id": "tot23-21",
+    "name": "Houndoom",
+    "number": "21",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "hncl",
+    "flavorText": "Upon hearing its eerie howls, other Pokémon get the shivers and head straight back to their nests.",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/tot23/21.webp",
+    "imageSmall": "assets/cards/tot23/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Fire Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515650_in_1000x1000.jpg",
+    "printedNumber": "034/198",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515650,
+    "foilMap": "assets/foil/maps/tot23/21.webp"
+  },
+  {
+    "id": "tot23-22",
+    "name": "Shuppet",
+    "number": "22",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Jerky",
+    "flavorText": "It feeds on the dark emotions of sadness and hatred, which make it grow steadily stronger.",
+    "image": "assets/cards/tot23/22.webp",
+    "imageSmall": "assets/cards/tot23/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Enveloping Shadow",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, during your opponent's next turn, they can't play any Item cards from their hand."
+      }
+    ],
+    "market": 0.1,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515665_in_1000x1000.jpg",
+    "printedNumber": "087/198",
+    "tcgplayerId": 515665
+  },
+  {
+    "id": "tot23-23",
+    "name": "Drifloon",
+    "number": "23",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Taira Akitsu",
+    "flavorText": "It is whispered that any child who mistakes Drifloon for a balloon and holds on to it could wind up missing.",
+    "image": "assets/cards/tot23/23.webp",
+    "imageSmall": "assets/cards/tot23/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Balloon Blast",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each damage counter on this Pokémon."
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515670_in_1000x1000.jpg",
+    "printedNumber": "089/198",
+    "tcgplayerId": 515670
+  },
+  {
+    "id": "tot23-24",
+    "name": "Drifblim",
+    "number": "24",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Yuu Nishida",
+    "flavorText": "It can generate and release gas within its body. That’s how it can control the altitude of its drift.",
+    "evolvesFrom": "Drifloon",
+    "image": "assets/cards/tot23/24.webp",
+    "imageSmall": "assets/cards/tot23/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Curse Spreading",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 8 damage counters on your opponent's Pokémon in any way you like."
+      }
+    ],
+    "market": 0.09,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515671_in_1000x1000.jpg",
+    "printedNumber": "090/198",
+    "tcgplayerId": 515671
+  },
+  {
+    "id": "tot23-25",
+    "name": "Greavard",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "yuu",
+    "flavorText": "This friendly Pokémon doesn’t like being alone. Pay it even the slightest bit of attention, and it will follow you forever.",
+    "image": "assets/cards/tot23/25.webp",
+    "imageSmall": "assets/cards/tot23/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Graveyard Gamboling",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10×",
+        "text": "This attack does 10 damage for each Psychic Pokémon in your discard pile."
+      }
+    ],
+    "market": 0.11,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515677_in_1000x1000.jpg",
+    "printedNumber": "104/198",
+    "tcgplayerId": 515677
+  },
+  {
+    "id": "tot23-26",
+    "name": "Houndstone",
+    "number": "26",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Kouki Saitou",
+    "flavorText": "A lovingly mourned Pokémon was reborn as Houndstone. It doesn’t like anyone touching the protuberance atop its head.",
+    "evolvesFrom": "Greavard",
+    "image": "assets/cards/tot23/26.webp",
+    "imageSmall": "assets/cards/tot23/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Last Respects",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "80+",
+        "text": "This attack does 10 more damage for each Psychic Pokémon in your discard pile."
+      }
+    ],
+    "market": 0.17,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515678_in_1000x1000.jpg",
+    "printedNumber": "106/198",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515678,
+    "foilMap": "assets/foil/maps/tot23/26.webp"
+  },
+  {
+    "id": "tot23-27",
+    "name": "Pikachu",
+    "number": "27",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "OKACHEKE",
+    "flavorText": "When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/tot23/27.webp",
+    "imageSmall": "assets/cards/tot23/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 20 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Pika Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.46,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515654_in_1000x1000.jpg",
+    "printedNumber": "062/193",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515654,
+    "foilMap": "assets/foil/maps/tot23/27.webp"
+  },
+  {
+    "id": "tot23-28",
+    "name": "Mismagius",
+    "number": "28",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Atsushi Furusawa",
+    "flavorText": "Its cry sounds like an incantation. It is said the cry may rarely be imbued with happiness-giving power.",
+    "evolvesFrom": "Misdreavus",
+    "image": "assets/cards/tot23/28.webp",
+    "imageSmall": "assets/cards/tot23/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Sphere",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magical Flick",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may move an Energy from your opponent's Active Pokémon to 1 of their Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.11,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515668_in_1000x1000.jpg",
+    "printedNumber": "088/193",
+    "tcgplayerId": 515668
+  },
+  {
+    "id": "tot23-29",
+    "name": "Mimikyu",
+    "number": "29",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "This Pokémon lives in dark places untouched by sunlight. When it appears before humans, it hides itself under a cloth that resembles a Pikachu.",
+    "image": "assets/cards/tot23/29.webp",
+    "imageSmall": "assets/cards/tot23/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Ghost Eye",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 7 damage counters on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Safeguard",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon ex and Pokémon V.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.35,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515672_in_1000x1000.jpg",
+    "printedNumber": "097/193",
+    "holo": true,
+    "foilAs": "Rare",
+    "tcgplayerId": 515672,
+    "foilMap": "assets/foil/maps/tot23/29.webp"
+  },
+  {
+    "id": "tot23-30",
+    "name": "Murkrow",
+    "number": "30",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Teeziro",
+    "flavorText": "Feared and loathed by many, it is believed to bring misfortune to all those who see it at night.",
+    "image": "assets/cards/tot23/30.webp",
+    "imageSmall": "assets/cards/tot23/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Spin Turn",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "United Wings",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the United Wings attack."
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515680_in_1000x1000.jpg",
+    "printedNumber": "131/193",
+    "tcgplayerId": 515680
+  }
+]

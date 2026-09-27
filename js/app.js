@@ -515,7 +515,7 @@ function isAllFoil(card) {
 function foilClass(card) {
   if (!card) return "";
   if (card.reverse || card.pattern) return "rare-glow";
-  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Pikachu Rare", "Cosmos", "Metal"].includes(card.rarity)) return "holo";
+  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
 }
@@ -608,6 +608,8 @@ function foilPattern(card) {
   if (card.rarity === "Cosmos") return "foil-holo foil-cosmos";
   // Brass cards like 151's Ultra-Premium Collection Mew ex (css/holo/sv151.css).
   if (card.rarity === "Metal") return "foil-metal";
+  // McDonald's Happy Meal holos (css/holo/side-sets.css).
+  if (card.rarity === "Confetti") return "foil-holo foil-confetti";
   if (card.rarity === "ACE SPEC Rare") return card.foilMap ? "foil-holo foil-acespec" : "foil-holo";
   // TCG Live's SUN_PILLAR and SV_HOLO recipes need the card's foil map to keep
   // off the Pokémon, so they only replace the older recipes where one ships.
@@ -713,10 +715,11 @@ function assetUrl(src) {
  * collection-box promos (and 151's holo basic Energies) use; "Frame" foils only
  * the card frame, like a reverse, and "Reverse Cosmos" puts the galaxy there.
  * "Metal" is a brass card: one broad reflection, no rainbow. "Poke Ball" is a
- * Poké Ball pattern reverse.
+ * Poké Ball pattern reverse. Holo prints in Trick or Trade and McDonald's
+ * packs carry `foilAs` the same way, so it applies to any card, not only promos.
  */
 function foilLook(card) {
-  if (!(card?.promo || card?.energy) || !card.foilAs || card.reverse) return card;
+  if (!card?.foilAs || card.reverse) return card;
   if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
   if (card.foilAs === "Reverse Cosmos") return { ...card, rarity: "Common", reverse: true, reverseKind: "galaxy" };
   // A Poké Ball pattern print, like Black Bolt's reverses (the Victini
