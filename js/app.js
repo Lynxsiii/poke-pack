@@ -465,12 +465,21 @@ function hasEvoCircle(card) {
   return subs.includes("Stage 1") || subs.includes("Stage 2") || Boolean(card?.evolvesFrom);
 }
 
+/** Sets like 30th Celebration print every card in the pack as a holo. */
+function isAllFoil(card) {
+  return Boolean(setForCard(card)?.allFoil) && !card.energy && card.supertype !== "Energy";
+}
+
 function foilClass(card) {
   if (!card) return "";
   if (card.reverse) return "rare-glow";
-  if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "holo";
+  if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare" || card.rarity === "Pikachu Rare") return "holo";
+  if (isAllFoil(card)) return "holo";
   return "";
 }
+
+/** Classic Collection reprints: the rule-box cards got full-card foil originally. */
+const CLASSIC_FULL_FOIL = /(-?EX|-?GX|\bV|VMAX|VSTAR|LV\.X|BREAK|LEGEND)$/i;
 
 /**
  * Reverse holos foil the card body (name, attacks, frame) and leave the
@@ -530,10 +539,17 @@ function foilPattern(card) {
   if (card.rarity === "Ultra Rare") return "foil-ultra";
   if (card.rarity === "Mega Attack Rare") return "foil-mega-attack";
   if (card.rarity === "Black White Rare") return "foil-bwr";
+  // Chrome on pearl stock; the three RGB Mews share it, tinted per card.
+  if (card.rarity === "Futuristic Rare" || card.rarity === "RGB Rare") return "foil-future";
+  if (card.rarity === "Classic Collection") {
+    return CLASSIC_FULL_FOIL.test(card.name || "") ? "foil-ultra" : "foil-holo";
+  }
+  if (card.rarity === "Pikachu Rare") return "foil-holo";
   if (card.rarity === "ACE SPEC Rare") return "foil-holo";
   if (isExCard(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) return "foil-ex";
   if (card.supertype === "Trainer" && HIT_RARITIES.has(card.rarity)) return "foil-ex";
   if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "foil-holo";
+  if (isAllFoil(card)) return "foil-holo";
   return "foil-none";
 }
 
@@ -626,7 +642,9 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   // cannot reveal relief on white stock and bleaches Victini's red lacquer.
   const finish = card.rarity === "Black White Rare"
     ? (card.name === "Reshiram ex" ? "pearl" : card.name === "Victini" ? "ruby" : "silver")
-    : "";
+    : card.rarity === "RGB Rare"
+      ? ({ R: "red", G: "green", B: "blue" }[card.number] || "")
+      : "";
   // Only the window foils read --win-owner. The whole-card patterns (ex, ultra,
   // IR, SIR, gold) print shiny edge to edge, portrait included, so they take no
   // layout mask at all.
@@ -653,6 +671,8 @@ function setOwned() {
 
 function numberLine(card) {
   if (card.energy || card.number === "—") return "Energy";
+  // Classic Collection reprints keep their original number; RGB Mews print a letter.
+  if (card.printedNumber) return card.printedNumber;
   const total = String(setForCard(card).printedTotal);
   const width = Math.max(3, total.length);
   return `${String(card.number).padStart(width, "0")}/${total.padStart(width, "0")}`;
@@ -3338,7 +3358,9 @@ function hitTier(card) {
     card.rarity === "Mega Hyper Rare" ||
     card.rarity === "Hyper Rare" ||
     card.rarity === "Special Illustration Rare" ||
-    card.rarity === "Black White Rare"
+    card.rarity === "Black White Rare" ||
+    card.rarity === "Futuristic Rare" ||
+    card.rarity === "RGB Rare"
   ) {
     return 3;
   }

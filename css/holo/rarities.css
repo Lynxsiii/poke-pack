@@ -19,6 +19,7 @@
  *   foil-gold          hyper / mega hyper     <- secret rare (gold)
  *   foil-mega-attack   mega attack rare       <- rainbow holo
  *   foil-bwr           black white rare       <- secret rare, kept silver
+ *   foil-future        futuristic / RGB rare  <- cosmos chrome on pearl
  *
  * Full-art texture and glitter use the upstream reference assets. Window
  * masks come from windows.css. Generated ridge maps are Classic-only.
@@ -159,6 +160,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ir .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .foil {
   --space: 5%;
   --angle: 133deg;
@@ -501,6 +503,75 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .foil::after {
   mix-blend-mode: overlay;
 }
 
+/* ---- Futuristic Rare -----------------------------------------------------
+   30th Celebration's new rarity: chrome, iridescent digital art on a
+   pearl-white field. Two layers do it. The base is a pale pearl wash with a
+   tight spectral chrome band that sweeps with the pointer, so the card reads
+   white at rest and oil-slick under the light. The glitter on ::after is the
+   pearl grain. The RGB Mews reuse it with the band pushed toward one hue. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future .foil {
+  --fb-1: hsl(190, 90%, 62%);
+  --fb-2: hsl(280, 80%, 66%);
+  --fb-3: hsl(330, 85%, 68%);
+  --fb-4: hsl(50, 90%, 64%);
+  --fb-5: hsl(150, 75%, 58%);
+  background-image:
+    var(--holo-glitter),
+    repeating-linear-gradient(
+      var(--angle),
+      var(--fb-1) calc(var(--space) * 0),
+      var(--fb-2) calc(var(--space) * 1),
+      var(--fb-3) calc(var(--space) * 2),
+      var(--fb-4) calc(var(--space) * 3),
+      var(--fb-5) calc(var(--space) * 4),
+      var(--fb-1) calc(var(--space) * 5)
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.7) 0%,
+      hsla(0, 0%, 0%, 0.85) 70%
+    );
+  background-size: 140px 140px, 400% 400%, cover;
+  background-position:
+    center,
+    var(--background-x) var(--background-y),
+    center;
+  background-blend-mode: soft-light, multiply;
+  mix-blend-mode: color-dodge;
+  filter: brightness(calc(0.4 + var(--pointer-from-center) * 0.38)) contrast(1.4) saturate(1.45);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future .foil::after {
+  /* The pearl: a soft white sheen crossing the band, plus fine grain. */
+  background-image:
+    var(--holo-glitter),
+    linear-gradient(
+      calc(var(--angle) + 90deg),
+      transparent 40%,
+      hsla(0, 0%, 100%, 0.55) 50%,
+      transparent 60%
+    );
+  background-size: 140px 140px, 300% 300%;
+  background-position:
+    calc(50% - ((var(--shift, 1px) * 2) * var(--pointer-from-left)) + var(--shift, 1px))
+      calc(50% - ((var(--shift, 1px) * 2) * var(--pointer-from-top)) + var(--shift, 1px)),
+    var(--background-x) var(--background-y);
+  mix-blend-mode: soft-light;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.8)) contrast(1.2) saturate(0.3);
+}
+/* RGB Mews: one colour each, so the band stays inside that hue. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future[data-finish="red"] .foil {
+  --fb-1: hsl(355, 85%, 55%); --fb-2: hsl(10, 90%, 62%); --fb-3: hsl(340, 80%, 66%);
+  --fb-4: hsl(20, 90%, 60%); --fb-5: hsl(0, 70%, 72%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future[data-finish="green"] .foil {
+  --fb-1: hsl(140, 70%, 48%); --fb-2: hsl(160, 75%, 56%); --fb-3: hsl(120, 60%, 62%);
+  --fb-4: hsl(90, 70%, 56%); --fb-5: hsl(150, 50%, 70%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future[data-finish="blue"] .foil {
+  --fb-1: hsl(220, 85%, 58%); --fb-2: hsl(200, 90%, 62%); --fb-3: hsl(240, 75%, 68%);
+  --fb-4: hsl(190, 85%, 60%); --fb-5: hsl(230, 60%, 74%);
+}
+
 /* ---- Glare per family ----------------------------------------------------
    The full arts get a second, harder glare pass on top. Crushing a white
    radial with `contrast(3)` collapses the soft falloff into a small hotspot,
@@ -510,6 +581,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .glare,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .glare,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future .glare,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ir .glare,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack .glare {
   opacity: calc(var(--card-opacity) * 0.8);
@@ -521,7 +593,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .glare::after,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra .glare::after,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .glare::after,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold .glare::after,
-body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .glare::after {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-bwr .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future .glare::after {
   background-image: radial-gradient(
     farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsl(180, 100%, 95%) 5%,

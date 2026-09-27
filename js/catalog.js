@@ -3,18 +3,21 @@ export const RARITY_ORDER = [
   "Common",
   "Uncommon",
   "Rare",
+  "Pikachu Rare",
   "Double Rare",
   "ACE SPEC Rare",
   "Ultra Rare",
   "Illustration Rare",
-  "Futuristic Rare",
+  "Classic Collection",
   "Shiny Rare",
   "Shiny Ultra Rare",
   "Mega Attack Rare",
   "Black White Rare",
   "Hyper Rare",
   "Special Illustration Rare",
+  "Futuristic Rare",
   "Mega Hyper Rare",
+  "RGB Rare",
 ];
 
 export const RARITY_LABEL = {
@@ -22,11 +25,14 @@ export const RARITY_LABEL = {
   Common: "Common",
   Uncommon: "Uncommon",
   Rare: "Rare",
+  "Pikachu Rare": "Pikachu rare",
   "Double Rare": "Double rare",
   "ACE SPEC Rare": "ACE SPEC rare",
   "Ultra Rare": "Ultra rare",
   "Illustration Rare": "Illustration rare",
   "Futuristic Rare": "Futuristic rare",
+  "Classic Collection": "Classic Collection",
+  "RGB Rare": "RGB rare",
   "Shiny Rare": "Shiny rare",
   "Shiny Ultra Rare": "Shiny ultra rare",
   "Mega Attack Rare": "Mega attack rare",
@@ -51,6 +57,9 @@ export const RARITY_MARK = {
   "Illustration Rare": { pips: [["☆", "gold"]], group: "current" },
   "Ultra Rare": { pips: [["☆", "silver"], ["☆", "silver"]], group: "current" },
   "Futuristic Rare": { pips: [["★", "future"]], group: "current" },
+  "Pikachu Rare": { pips: [["★", "pika"]], group: "current" },
+  "Classic Collection": { pips: [["◈", "gold"]], group: "current" },
+  "RGB Rare": { pips: [["★", "rgbR"], ["★", "rgbG"], ["★", "rgbB"]], group: "current" },
   "Special Illustration Rare": { pips: [["☆", "gold"], ["☆", "gold"]], group: "current" },
   "Mega Hyper Rare": { pips: [["◈", "gold"]], group: "current" },
   "Mega Attack Rare": { pips: [["★", "mega"], ["☆", "megaAlt"]], group: "untilI" },
@@ -83,7 +92,10 @@ export const SELL_VALUE = {
   "ACE SPEC Rare": 1.5,
   "Ultra Rare": 3.44,
   "Illustration Rare": 3.2,
-  "Futuristic Rare": 4,
+  "Futuristic Rare": 150,
+  "Pikachu Rare": 0.5,
+  "Classic Collection": 12,
+  "RGB Rare": 4000,
   "Shiny Rare": 2,
   "Shiny Ultra Rare": 5,
   "Mega Attack Rare": 6,
@@ -324,6 +336,37 @@ function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }
   ];
 }
 
+/**
+ * 30th Celebration: six cards, all foil. A Pikachu Rare (one of 30) in every
+ * pack, three main-set foils, one hit slot, and a basic Energy. There are no
+ * reverse holos and no Uncommons in this set.
+ *
+ * The hit slot's leftover is a regular Rare. Rates are per pack, from
+ * TCGplayer's 3,000-pack study (IR 1/5, Classic 1/10, SIR 1/21, Futuristic
+ * 1/120) plus @switchstock's 6,500-pack tally for the two it could not pin
+ * (ex 1/4, RGB Mew 1/3,200). Sources and dates are in data/pullrates.json.
+ */
+function celebrationSlots({ double, ir, classic, sir, futuristic, rgb }) {
+  return [
+    { pool: "energy", count: 1 },
+    { pool: "pikachu", count: 1 },
+    { pool: "common", count: 3 },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 1 - double - ir - classic - sir - futuristic - rgb],
+        ["double", double],
+        ["ir", ir],
+        ["classic", classic],
+        ["sir", sir],
+        ["futuristic", futuristic],
+        ["rgb", rgb],
+      ],
+    },
+  ];
+}
+
 function boosterWrappers(setId, faces) {
   return faces.map((face, i) => ({
     id: face.id,
@@ -334,6 +377,45 @@ function boosterWrappers(setId, faces) {
     artFallback: `assets/packs/${setId}/pack-${i}.png`,
   }));
 }
+
+export const CELEBRATION_30TH = {
+  id: "me55",
+  tcgId: "me55",
+  name: "30th Celebration",
+  edition: "Mega Evolution",
+  era: "Mega Evolution",
+  released: "September 16, 2026",
+  live: true,
+  printedTotal: 128,
+  totalCount: 191,
+  packSize: 6,
+  cost: 16.41,
+  allFoil: true,
+  dataFile: "data/me55.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Mega Evolution, September 2026. Six foils a pack, a Pikachu in every one, and the first Futuristic Rares.",
+  oddsLine: "ex 1/4 · IR 1/5 · Classic 1/10 · SIR 1/21 · Futuristic 1/120",
+  lede: "Thirty years of Pokémon in one set. Every card is foil, every pack has one of 30 Pikachu, and the chrome Futuristic Mew ex and Mewtwo ex are the chase.",
+  slots: celebrationSlots({
+    double: 0.25,
+    ir: 0.2,
+    classic: 0.1,
+    sir: 1 / 21,
+    futuristic: 1 / 120,
+    rgb: 1 / 3200,
+  }),
+  heroIds: ["me55-158", "me55-157", "me55-152", "me55-149"],
+  wrappers: [
+    {
+      id: "pikachu",
+      name: "Pikachu",
+      cardId: "me55-23",
+      tag: "30 years",
+      art: "assets/packs/me55/pikachu.avif",
+      artFallback: "assets/packs/me55/pikachu.png",
+    },
+  ],
+};
 
 export const PITCH_BLACK = {
   id: "me5",
@@ -950,6 +1032,7 @@ export const TEMPORAL_FORCES = {
 };
 
 export const PLAYABLE_SETS = [
+  CELEBRATION_30TH,
   PITCH_BLACK,
   CHAOS_RISING,
   PERFECT_ORDER,
@@ -1093,7 +1176,7 @@ const TCG_ID_ALIAS = {
 };
 
 /** Logos not on images.pokemontcg.io yet — scrydex hotlinks from the public set catalog. */
-const SCRYDEX_LOGO = new Set(["me2pt5", "me3", "me4", "me5"]);
+const SCRYDEX_LOGO = new Set(["me2pt5", "me3", "me4", "me5", "me55"]);
 
 const LIMITLESS_SYMBOL = {
   me2pt5: "ASC",
