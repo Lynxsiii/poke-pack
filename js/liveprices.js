@@ -221,6 +221,8 @@ async function singlesForSet(setId, cards) {
   // market price. So do set Energy cards (Shrouded Fable's reverse holo
   // Energy), which have no collector number in the set.
   const numbers = (cards || []).filter((c) => !c.promo && !c.energy).map((c) => c.number).filter((n) => n != null);
+  // A promo set (SV Black Star Promos) has nothing else, so nothing to ask for.
+  if (!numbers.length) throw new Error("no singles");
   if (ptcgioOk) {
     try {
       return await singlesFromPtcgio(setId);

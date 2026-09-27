@@ -2707,5 +2707,940 @@
       "tcgplayerId": 587747,
       "image": "assets/products/sv3pt5/tins-costco-magneton.webp"
     }
+  ],
+  "svp": [
+    {
+      "id": "charizard-ex-premium",
+      "name": "Charizard ex Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "sv1": 2,
+        "sv2": 2,
+        "sv3": 2
+      },
+      "promos": [
+        "svp-svp056"
+      ],
+      "price": 110.91,
+      "tcgplayerId": 516576,
+      "image": "assets/products/svp/charizard-ex-premium.webp"
+    },
+    {
+      "id": "paldea-adventure-chest",
+      "name": "Paldea Adventure Chest",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "sv4": 2,
+        "sv3": 2,
+        "sv2": 1,
+        "sv1": 1
+      },
+      "promos": [
+        "svp-svp087",
+        "svp-svp088"
+      ],
+      "price": 113.1,
+      "tcgplayerId": 532025,
+      "image": "assets/products/svp/paldea-adventure-chest.webp"
+    },
+    {
+      "id": "iono-ptc",
+      "name": "Iono Premium Tournament Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "sv5": 2,
+        "sv4": 1,
+        "sv3": 1,
+        "sv1": 2
+      },
+      "note": "The real box held 1 Lost Origin pack from Sword & Shield, which isn't on the site yet, so it opens as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp124"
+      ],
+      "price": 100.27,
+      "tcgplayerId": 545403,
+      "image": "assets/products/svp/iono-ptc.webp"
+    },
+    {
+      "id": "armarouge-ex-premium",
+      "name": "Armarouge ex Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "sv5": 2,
+        "sv4": 2,
+        "sv3": 2
+      },
+      "promos": [
+        "svp-svp125"
+      ],
+      "price": 59.99,
+      "tcgplayerId": 539305,
+      "released": "2024-04-19",
+      "image": "assets/products/svp/armarouge-ex-premium.webp"
+    },
+    {
+      "id": "charizard-ex-spc",
+      "name": "Charizard ex Super-Premium Collection",
+      "kind": "premium",
+      "packs": 10,
+      "from": {
+        "sv7": 2,
+        "sv6": 2,
+        "sv5": 2,
+        "sv4": 2,
+        "sv3": 2
+      },
+      "promos": [
+        "svp-svp161"
+      ],
+      "price": 129.56,
+      "tcgplayerId": 560625,
+      "released": "2024-10-04",
+      "image": "assets/products/svp/charizard-ex-spc.webp"
+    },
+    {
+      "id": "ogerpon-ex-premium",
+      "name": "Ogerpon ex Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "sv8": 2,
+        "sv7": 2,
+        "sv6": 1,
+        "sv4": 1
+      },
+      "promos": [
+        "svp-svp166"
+      ],
+      "price": 60.4,
+      "tcgplayerId": 576482,
+      "released": "2024-11-15",
+      "image": "assets/products/svp/ogerpon-ex-premium.webp"
+    },
+    {
+      "id": "charizard-ex-special",
+      "name": "Charizard ex Special Collection",
+      "kind": "premium",
+      "packs": 5,
+      "from": {
+        "sv8": 2,
+        "sv9": 2,
+        "sv4": 1
+      },
+      "promos": [
+        "svp-svp196"
+      ],
+      "price": 60.81,
+      "tcgplayerId": 616305,
+      "image": "assets/products/svp/charizard-ex-special.webp"
+    },
+    {
+      "id": "grand-adventure",
+      "name": "Grand Adventure Collection",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "sv8": 2,
+        "sv3": 1,
+        "sv7": 1
+      },
+      "promos": [
+        "svp-svp191",
+        "svp-svp192"
+      ],
+      "price": 45.19,
+      "tcgplayerId": 594896,
+      "image": "assets/products/svp/grand-adventure.webp"
+    },
+    {
+      "id": "paldea-collection-sprigatito",
+      "name": "Paldea Collection: Sprigatito",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "sv1": 4
+      },
+      "note": "The real box held 2 Silver Tempest and 2 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp001"
+      ],
+      "price": 77.58,
+      "tcgplayerId": 451118,
+      "released": "2023-01-06",
+      "image": "assets/products/svp/paldea-collection-sprigatito.webp"
+    },
+    {
+      "id": "paldea-collection-fuecoco",
+      "name": "Paldea Collection: Fuecoco",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "sv1": 4
+      },
+      "note": "The real box held 2 Silver Tempest and 2 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp002"
+      ],
+      "price": 61.8,
+      "tcgplayerId": 451119,
+      "released": "2023-01-06",
+      "image": "assets/products/svp/paldea-collection-fuecoco.webp"
+    },
+    {
+      "id": "paldea-collection-quaxly",
+      "name": "Paldea Collection: Quaxly",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "sv1": 4
+      },
+      "note": "The real box held 2 Silver Tempest and 2 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp003"
+      ],
+      "price": 58.89,
+      "tcgplayerId": 451120,
+      "released": "2023-01-06",
+      "image": "assets/products/svp/paldea-collection-quaxly.webp"
+    },
+    {
+      "id": "trainers-toolkit-2024",
+      "name": "Trainer's Toolkit (2024)",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "sv7": 2,
+        "sv6": 1,
+        "sv5": 1
+      },
+      "promos": [
+        "svp-svp160",
+        "svp-svp160"
+      ],
+      "price": 39.62,
+      "tcgplayerId": 564274,
+      "released": "2024-10-18",
+      "image": "assets/products/svp/trainers-toolkit-2024.webp"
+    },
+    {
+      "id": "trainers-toolkit-2025",
+      "name": "Trainer's Toolkit (2025)",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "sv10": 2,
+        "me1": 2
+      },
+      "promos": [
+        "svp-svp219",
+        "svp-svp220",
+        "svp-svp221",
+        "svp-svp222",
+        "svp-svp223"
+      ],
+      "price": 40.84,
+      "tcgplayerId": 653203,
+      "released": "2025-10-24",
+      "image": "assets/products/svp/trainers-toolkit-2025.webp"
+    },
+    {
+      "id": "mimikyu-ex-box",
+      "name": "Mimikyu ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "sv1": 4
+      },
+      "note": "The real box held 2 Silver Tempest, 1 Brilliant Stars and 1 Fusion Strike packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp004"
+      ],
+      "price": 94.56,
+      "tcgplayerId": 475802,
+      "released": "2023-03-03",
+      "image": "assets/products/svp/mimikyu-ex-box.webp"
+    },
+    {
+      "id": "cyclizar-ex-box",
+      "name": "Cyclizar ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "sv1": 4
+      },
+      "note": "The real box held 1 Silver Tempest and 1 Lost Origin packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp018"
+      ],
+      "price": 45.69,
+      "tcgplayerId": 484372,
+      "released": "2023-05-05",
+      "image": "assets/products/svp/cyclizar-ex-box.webp"
+    },
+    {
+      "id": "annihilape-ex-box",
+      "name": "Annihilape ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "sv2": 2,
+        "sv1": 2
+      },
+      "note": "The real box held 1 Lost Origin pack from Sword & Shield, which isn't on the site yet, so it opens as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp032"
+      ],
+      "price": 51.87,
+      "tcgplayerId": 497177,
+      "released": "2023-07-14",
+      "image": "assets/products/svp/annihilape-ex-box.webp"
+    },
+    {
+      "id": "mabosstiff-ex-box",
+      "name": "Mabosstiff ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "sv4": 2,
+        "sv3": 1,
+        "sv1": 1
+      },
+      "promos": [
+        "svp-svp086"
+      ],
+      "price": 38.99,
+      "tcgplayerId": 531572,
+      "released": "2024-02-23",
+      "image": "assets/products/svp/mabosstiff-ex-box.webp"
+    },
+    {
+      "id": "grafaiai-ex-box",
+      "name": "Grafaiai ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "sv5": 2,
+        "sv4": 1,
+        "sv1": 1
+      },
+      "promos": [
+        "svp-svp099",
+        "svp-svp100"
+      ],
+      "price": 44.72,
+      "tcgplayerId": 546458,
+      "image": "assets/products/svp/grafaiai-ex-box.webp"
+    },
+    {
+      "id": "palafin-ex-box",
+      "name": "Palafin ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "sv6": 2,
+        "sv5": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp126"
+      ],
+      "price": 41.04,
+      "tcgplayerId": 547129,
+      "released": "2024-06-21",
+      "image": "assets/products/svp/palafin-ex-box.webp"
+    },
+    {
+      "id": "houndstone-ex-box",
+      "name": "Houndstone ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "sv7": 2,
+        "sv6": 2
+      },
+      "promos": [
+        "svp-svp162"
+      ],
+      "price": 43.9,
+      "tcgplayerId": 561521,
+      "released": "2024-10-04",
+      "image": "assets/products/svp/houndstone-ex-box.webp"
+    },
+    {
+      "id": "bloodmoon-ursaluna-ex-box",
+      "name": "Bloodmoon Ursaluna ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "sv8": 2,
+        "sv7": 1,
+        "sv1": 1
+      },
+      "promos": [
+        "svp-svp177"
+      ],
+      "price": 38.58,
+      "tcgplayerId": 575897,
+      "released": "2024-11-15",
+      "image": "assets/products/svp/bloodmoon-ursaluna-ex-box.webp"
+    },
+    {
+      "id": "paldea-legends-miraidon",
+      "name": "Paldea Legends Tin: Miraidon ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv2": 2,
+        "sv1": 3
+      },
+      "note": "The real box held 1 Silver Tempest and 1 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp028"
+      ],
+      "price": 38.71,
+      "tcgplayerId": 497389,
+      "image": "assets/products/svp/paldea-legends-miraidon.webp"
+    },
+    {
+      "id": "paldea-legends-koraidon",
+      "name": "Paldea Legends Tin: Koraidon ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv2": 2,
+        "sv1": 3
+      },
+      "note": "The real box held 1 Silver Tempest and 1 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp029"
+      ],
+      "price": 40.17,
+      "tcgplayerId": 497390,
+      "image": "assets/products/svp/paldea-legends-koraidon.webp"
+    },
+    {
+      "id": "paldea-partners-meowscarada",
+      "name": "Paldea Partners Tin: Meowscarada ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv3": 2,
+        "sv1": 3
+      },
+      "note": "The real box held 1 Silver Tempest and 1 Astral Radiance packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp033"
+      ],
+      "price": 49.28,
+      "tcgplayerId": 504330,
+      "image": "assets/products/svp/paldea-partners-meowscarada.webp"
+    },
+    {
+      "id": "paldea-partners-skeledirge",
+      "name": "Paldea Partners Tin: Skeledirge ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv3": 2,
+        "sv1": 3
+      },
+      "note": "The real box held 1 Silver Tempest and 1 Astral Radiance packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp034"
+      ],
+      "price": 47.39,
+      "tcgplayerId": 504431,
+      "image": "assets/products/svp/paldea-partners-skeledirge.webp"
+    },
+    {
+      "id": "paldea-partners-quaquaval",
+      "name": "Paldea Partners Tin: Quaquaval ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv3": 2,
+        "sv1": 3
+      },
+      "note": "The real box held 1 Silver Tempest and 1 Astral Radiance packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
+      "promos": [
+        "svp-svp035"
+      ],
+      "price": 41.05,
+      "tcgplayerId": 504438,
+      "image": "assets/products/svp/paldea-partners-quaquaval.webp"
+    },
+    {
+      "id": "paradox-destinies-gouging-fire",
+      "name": "Paradox Destinies Tin: Gouging Fire ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv6": 2,
+        "sv5": 1,
+        "sv4": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp144"
+      ],
+      "price": 40.33,
+      "tcgplayerId": 562358,
+      "released": "2024-09-06",
+      "image": "assets/products/svp/paradox-destinies-gouging-fire.webp"
+    },
+    {
+      "id": "paradox-destinies-raging-bolt",
+      "name": "Paradox Destinies Tin: Raging Bolt ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv6": 2,
+        "sv5": 1,
+        "sv4": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp145"
+      ],
+      "price": 39.95,
+      "tcgplayerId": 562357,
+      "released": "2024-09-06",
+      "image": "assets/products/svp/paradox-destinies-raging-bolt.webp"
+    },
+    {
+      "id": "paradox-destinies-iron-crown",
+      "name": "Paradox Destinies Tin: Iron Crown ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv6": 2,
+        "sv5": 1,
+        "sv4": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp146"
+      ],
+      "price": 38.14,
+      "tcgplayerId": 562354,
+      "released": "2024-09-06",
+      "image": "assets/products/svp/paradox-destinies-iron-crown.webp"
+    },
+    {
+      "id": "paradox-destinies-iron-boulder",
+      "name": "Paradox Destinies Tin: Iron Boulder ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv6": 2,
+        "sv5": 1,
+        "sv4": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp147"
+      ],
+      "price": 36.99,
+      "tcgplayerId": 562356,
+      "released": "2024-09-06",
+      "image": "assets/products/svp/paradox-destinies-iron-boulder.webp"
+    },
+    {
+      "id": "azure-legends-kyogre",
+      "name": "Azure Legends Tin: Kyogre ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv8": 2,
+        "sv7": 1,
+        "sv5": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp178"
+      ],
+      "price": 46.37,
+      "tcgplayerId": 616292,
+      "released": "2025-02-21",
+      "image": "assets/products/svp/azure-legends-kyogre.webp"
+    },
+    {
+      "id": "azure-legends-xerneas",
+      "name": "Azure Legends Tin: Xerneas ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv8": 2,
+        "sv7": 1,
+        "sv5": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp179"
+      ],
+      "price": 38.82,
+      "tcgplayerId": 616293,
+      "released": "2025-02-21",
+      "image": "assets/products/svp/azure-legends-xerneas.webp"
+    },
+    {
+      "id": "azure-legends-dialga",
+      "name": "Azure Legends Tin: Dialga ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv8": 2,
+        "sv7": 1,
+        "sv5": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp180"
+      ],
+      "price": 39.13,
+      "tcgplayerId": 616291,
+      "released": "2025-02-21",
+      "image": "assets/products/svp/azure-legends-dialga.webp"
+    },
+    {
+      "id": "slashing-legends-koraidon",
+      "name": "Slashing Legends Tin: Koraidon ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv9": 2,
+        "sv8": 1,
+        "sv4": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp197"
+      ],
+      "price": 35.93,
+      "tcgplayerId": 623647,
+      "image": "assets/products/svp/slashing-legends-koraidon.webp"
+    },
+    {
+      "id": "slashing-legends-zacian",
+      "name": "Slashing Legends Tin: Zacian ex",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "sv9": 2,
+        "sv8": 1,
+        "sv4": 1,
+        "sv3": 1
+      },
+      "promos": [
+        "svp-svp198"
+      ],
+      "price": 36.14,
+      "tcgplayerId": 623648,
+      "image": "assets/products/svp/slashing-legends-zacian.webp"
+    },
+    {
+      "id": "battle-deck-ampharos",
+      "name": "ex Battle Deck: Ampharos ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp016",
+        "svp-svp015"
+      ],
+      "price": 17.99,
+      "tcgplayerId": 484380,
+      "released": "2023-05-05",
+      "image": "assets/products/svp/battle-deck-ampharos.webp"
+    },
+    {
+      "id": "battle-deck-lucario",
+      "name": "ex Battle Deck: Lucario ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp017"
+      ],
+      "price": 23.09,
+      "tcgplayerId": 484382,
+      "released": "2023-05-05",
+      "image": "assets/products/svp/battle-deck-lucario.webp"
+    },
+    {
+      "id": "battle-decks-chien-pao-tinkaton",
+      "name": "ex Battle Decks: Chien-Pao ex & Tinkaton ex",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Both decks, sold as a pair.",
+      "promos": [
+        "svp-svp030",
+        "svp-svp031"
+      ],
+      "price": 44.3,
+      "tcgplayerId": 497967,
+      "released": "2023-07-14",
+      "image": "assets/products/svp/battle-decks-chien-pao-tinkaton.webp"
+    },
+    {
+      "id": "battle-deck-greninja",
+      "name": "ex Battle Deck: Greninja ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp054"
+      ],
+      "price": 22.44,
+      "tcgplayerId": 527671,
+      "image": "assets/products/svp/battle-deck-greninja.webp"
+    },
+    {
+      "id": "battle-deck-kangaskhan",
+      "name": "ex Battle Deck: Kangaskhan ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp055"
+      ],
+      "price": 15.45,
+      "tcgplayerId": 527674,
+      "image": "assets/products/svp/battle-deck-kangaskhan.webp"
+    },
+    {
+      "id": "battle-deck-houndoom",
+      "name": "ex Battle Deck: Houndoom ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp103"
+      ],
+      "price": 23.58,
+      "tcgplayerId": 531574,
+      "released": "2024-02-23",
+      "image": "assets/products/svp/battle-deck-houndoom.webp"
+    },
+    {
+      "id": "battle-deck-melmetal",
+      "name": "ex Battle Deck: Melmetal ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp104"
+      ],
+      "price": 18.63,
+      "tcgplayerId": 531573,
+      "released": "2024-02-23",
+      "image": "assets/products/svp/battle-deck-melmetal.webp"
+    },
+    {
+      "id": "battle-deck-victini",
+      "name": "ex Battle Deck: Victini ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp142"
+      ],
+      "price": 17.27,
+      "tcgplayerId": 557326,
+      "released": "2024-07-12",
+      "image": "assets/products/svp/battle-deck-victini.webp"
+    },
+    {
+      "id": "battle-deck-miraidon",
+      "name": "ex Battle Deck: Miraidon ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp143"
+      ],
+      "price": 15.66,
+      "tcgplayerId": 557327,
+      "released": "2024-07-12",
+      "image": "assets/products/svp/battle-deck-miraidon.webp"
+    },
+    {
+      "id": "rival-deck-marnie",
+      "name": "Rival Battle Deck: Marnie",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp206"
+      ],
+      "price": 60.79,
+      "tcgplayerId": 623014,
+      "released": "2025-05-16",
+      "image": "assets/products/svp/rival-deck-marnie.webp"
+    },
+    {
+      "id": "rival-deck-steven",
+      "name": "Rival Battle Deck: Steven",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "svp-svp207"
+      ],
+      "price": 34.36,
+      "tcgplayerId": 623015,
+      "released": "2025-05-16",
+      "image": "assets/products/svp/rival-deck-steven.webp"
+    },
+    {
+      "id": "battle-academy-2024",
+      "name": "Battle Academy 2024",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Three 60-card decks (Pikachu ex, Armarouge ex, Darkrai ex) and a game board.",
+      "promos": [
+        "svp-svp106",
+        "svp-svp105",
+        "svp-svp110",
+        "svp-svp107",
+        "svp-svp108",
+        "svp-svp109",
+        "svp-svp148",
+        "svp-svp111",
+        "svp-svp112",
+        "svp-svp113",
+        "svp-svp114"
+      ],
+      "price": 70.11,
+      "tcgplayerId": 551930,
+      "released": "2024-06-21",
+      "image": "assets/products/svp/battle-academy-2024.webp"
+    },
+    {
+      "id": "event-svp085",
+      "name": "Pikachu with Grey Felt Hat",
+      "kind": "event",
+      "packs": 0,
+      "note": "Van Gogh Museum giveaway, 2023.",
+      "promos": [
+        "svp-svp085"
+      ],
+      "price": 1048.43,
+      "tcgplayerId": 518861
+    },
+    {
+      "id": "event-svp045",
+      "name": "Paradise Resort · Worlds 2023",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed to players at the 2023 World Championships.",
+      "promos": [
+        "svp-svp045"
+      ],
+      "price": 499.26,
+      "tcgplayerId": 518863
+    },
+    {
+      "id": "event-svp150",
+      "name": "Paradise Resort · Worlds 2024",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed to players at the 2024 World Championships.",
+      "promos": [
+        "svp-svp150"
+      ],
+      "price": 597.66,
+      "tcgplayerId": 578146
+    },
+    {
+      "id": "event-svp224",
+      "name": "Paradise Resort · Worlds 2025",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed to players at the 2025 World Championships.",
+      "promos": [
+        "svp-svp224"
+      ],
+      "price": 295.61,
+      "tcgplayerId": 649232
+    },
+    {
+      "id": "event-svp101",
+      "name": "Pikachu · Play! Pokémon",
+      "kind": "event",
+      "packs": 0,
+      "note": "Play! Pokémon league promo, 2023.",
+      "promos": [
+        "svp-svp101"
+      ],
+      "price": 39.58,
+      "tcgplayerId": 528365
+    },
+    {
+      "id": "event-svp102",
+      "name": "Oddish · Paradox Rift",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out at local game stores for Paradox Rift, 2023.",
+      "promos": [
+        "svp-svp102"
+      ],
+      "price": 6.66,
+      "tcgplayerId": 525293
+    },
+    {
+      "id": "event-svp190",
+      "name": "Pikachu · Pokémon Center",
+      "kind": "event",
+      "packs": 0,
+      "note": "Pokémon Center and GameStop giveaway, 2024.",
+      "promos": [
+        "svp-svp190"
+      ],
+      "price": 10.25,
+      "tcgplayerId": 562088
+    },
+    {
+      "id": "event-svp225",
+      "name": "Pikachu · Worlds 2025",
+      "kind": "event",
+      "packs": 0,
+      "note": "Worlds 2025 celebration giveaway at Pokémon Center and GameStop.",
+      "promos": [
+        "svp-svp225"
+      ],
+      "price": 7.2,
+      "tcgplayerId": 648631
+    },
+    {
+      "id": "event-svp213",
+      "name": "Feraligatr · Illustration Contest",
+      "kind": "event",
+      "packs": 0,
+      "note": "Illustration Contest 2024 winner, 2025.",
+      "promos": [
+        "svp-svp213"
+      ],
+      "price": 3.88,
+      "tcgplayerId": 620104
+    },
+    {
+      "id": "event-svp214",
+      "name": "Pikachu · Illustration Contest",
+      "kind": "event",
+      "packs": 0,
+      "note": "Illustration Contest 2024 winner, 2025.",
+      "promos": [
+        "svp-svp214"
+      ],
+      "price": 18.33,
+      "tcgplayerId": 620106
+    },
+    {
+      "id": "event-svp215",
+      "name": "Toxtricity ex · Illustration Contest",
+      "kind": "event",
+      "packs": 0,
+      "note": "Illustration Contest 2024 winner, 2025.",
+      "promos": [
+        "svp-svp215"
+      ],
+      "price": 1.03,
+      "tcgplayerId": 620107
+    }
   ]
 }

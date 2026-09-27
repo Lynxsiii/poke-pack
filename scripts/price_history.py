@@ -14,12 +14,14 @@ catalogue's history never has to be downloaded at once.
 scripts/backfill_prices.py fills a year of history from TCGplayer and records
 the daily point; fetch_prices.py and build_products.py record today's price
 through record() as well.
+
+Every write is additive: a date that already has a point keeps it, and no point
+is ever dropped for its age. The files grow by one point per series per day.
 """
 from __future__ import annotations
 
 import json
 import time
-from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,9 +29,6 @@ DATA = ROOT / "data"
 HISTORY_DIR = DATA / "prices"
 # The single file every set shared before history was split per set.
 LEGACY = DATA / "price-history.json"
-
-# Points older than this, counted back from a series' newest point, are dropped.
-KEEP_DAYS = 400
 SECTIONS = ("cards", "sealed")
 
 
@@ -52,21 +51,18 @@ def load(set_id: str) -> dict:
     return store
 
 
-def _day_number(day: str) -> int:
-    return date.fromisoformat(day).toordinal()
-
-
-def trim(points: list) -> list:
-    """Sort by date, one point per date (the later write wins), keep KEEP_DAYS."""
+def tidy(points: list) -> list:
+    """Sort by date with one point per date. The first point for a date wins, so
+    a price already on file is never replaced by a later write."""
     by_day: dict[str, float] = {}
     for day, price in points:
-        if isinstance(price, (int, float)) and price > 0:
+        if isinstance(price, (int, float)) and price > 0 and day not in by_day:
             by_day[day] = round(float(price), 2)
-    days = sorted(by_day)
-    if not days:
-        return []
-    floor = _day_number(days[-1]) - KEEP_DAYS
-    return [[d, by_day[d]] for d in days if _day_number(d) >= floor]
+    return [[d, by_day[d]] for d in sorted(by_day)]
+
+
+def has_day(points: list, day: str) -> bool:
+    return any(p[0] == day for p in points)
 
 
 def save(store: dict) -> Path:
@@ -76,7 +72,7 @@ def save(store: dict) -> Path:
     head = {k: v for k, v in store.items() if k not in SECTIONS}
     lines = ["{" + json.dumps(head, ensure_ascii=False, separators=(",", ":"))[1:-1] + ","]
     for i, section in enumerate(SECTIONS):
-        series = {k: trim(v) for k, v in store[section].items()}
+        series = {k: tidy(v) for k, v in store[section].items()}
         series = {k: v for k, v in series.items() if v}
         lines.append(f'"{section}":{{')
         rows = [
@@ -99,7 +95,10 @@ def _sort_key(key: str):
 
 
 def record(set_id: str, section: str, prices: dict[str, float], day: str | None = None) -> int:
-    """Set `day`'s point (today by default) for each key, replacing a same-day point."""
+    """Add `day`'s point (today by default) for each key that has none yet.
+
+    A key that already has a point for that day keeps it: the first price
+    recorded for a date stands."""
     if not prices:
         return 0
     day = day or time.strftime("%Y-%m-%d")
@@ -109,9 +108,10 @@ def record(set_id: str, section: str, prices: dict[str, float], day: str | None 
     for key, price in prices.items():
         if not isinstance(price, (int, float)) or price <= 0:
             continue
-        points = [p for p in series.get(key, []) if p[0] != day]
+        points = series.setdefault(key, [])
+        if has_day(points, day):
+            continue
         points.append([day, round(float(price), 2)])
-        series[key] = trim(points)
         written += 1
     store["updated"] = max(store.get("updated") or day, day)
     save(store)
@@ -136,7 +136,7 @@ def fold_legacy() -> list[str]:
             # Points already in the per-set file win over the old snapshots.
             have = {p[0] for p in store["cards"].get(card_id, [])}
             extra = [p for p in points if p[0] not in have]
-            store["cards"][card_id] = trim(extra + store["cards"].get(card_id, []))
+            store["cards"][card_id] = tidy(store["cards"].get(card_id, []) + extra)
         save(store)
     LEGACY.unlink()
     return sorted(by_set)
