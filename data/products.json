@@ -1020,6 +1020,204 @@
       "image": "assets/products/rsv10pt5/tech-gothitelle.webp"
     }
   ],
+  "sv5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv5-svp098"
+      ],
+      "price": 123.82,
+      "tcgplayerId": 532848,
+      "image": "assets/products/sv5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "etb-walking-wake",
+      "name": "Elite Trainer Box: Walking Wake",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv5-svp097"
+      ],
+      "price": 140.0,
+      "tcgplayerId": 532845,
+      "released": "2024-03-22",
+      "image": "assets/products/sv5/etb-walking-wake.webp"
+    },
+    {
+      "id": "pc-etb-iron-leaves",
+      "name": "Pokémon Center Elite Trainer Box: Iron Leaves",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv5-svp098-pc",
+        "sv5-svp098"
+      ],
+      "price": 196.67,
+      "tcgplayerId": 532853,
+      "image": "assets/products/sv5/pc-etb-iron-leaves.webp"
+    },
+    {
+      "id": "pc-etb-walking-wake",
+      "name": "Pokémon Center Elite Trainer Box: Walking Wake",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv5-svp097-pc",
+        "sv5-svp097"
+      ],
+      "price": 200.9,
+      "tcgplayerId": 538775,
+      "image": "assets/products/sv5/pc-etb-walking-wake.webp"
+    },
+    {
+      "id": "tin-walking-wake",
+      "name": "Paradox Clash Tin: Walking Wake ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv5-svp127"
+      ],
+      "price": 37.62,
+      "tcgplayerId": 544239,
+      "image": "assets/products/sv5/tin-walking-wake.webp"
+    },
+    {
+      "id": "tin-iron-leaves",
+      "name": "Paradox Clash Tin: Iron Leaves ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv5-svp128"
+      ],
+      "price": 37.19,
+      "tcgplayerId": 544241,
+      "image": "assets/products/sv5/tin-iron-leaves.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv5-svp089",
+        "sv5-svp090",
+        "sv5-svp091",
+        "sv5-svp092"
+      ],
+      "pick": 1,
+      "price": 43.46,
+      "tcgplayerId": 537411,
+      "image": "assets/products/sv5/build-battle.webp"
+    },
+    {
+      "id": "blister3-cyclizar",
+      "name": "3 Pack Blister: Cyclizar",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv5-svp096"
+      ],
+      "price": 31.02,
+      "tcgplayerId": 536227,
+      "image": "assets/products/sv5/blister3-cyclizar.webp"
+    },
+    {
+      "id": "blister3-cleffa",
+      "name": "3 Pack Blister: Cleffa",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv5-svp095"
+      ],
+      "price": 30.34,
+      "tcgplayerId": 536229,
+      "image": "assets/products/sv5/blister3-cleffa.webp"
+    },
+    {
+      "id": "blister-carvanha",
+      "name": "Single Pack Blister: Carvanha",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv5-svp093"
+      ],
+      "price": 10.81,
+      "tcgplayerId": 536284,
+      "released": "2024-03-22",
+      "image": "assets/products/sv5/blister-carvanha.webp"
+    },
+    {
+      "id": "blister-bellibolt",
+      "name": "Single Pack Blister: Bellibolt",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv5-svp094"
+      ],
+      "price": 11.03,
+      "tcgplayerId": 536594,
+      "released": "2024-03-22",
+      "image": "assets/products/sv5/blister-bellibolt.webp"
+    }
+  ],
+  "zsv10pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "zsv10pt5-svp209"
+      ],
+      "price": 161.95,
+      "tcgplayerId": 630686,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "zsv10pt5-svp209-pc",
+        "zsv10pt5-svp209"
+      ],
+      "price": 272.56,
+      "tcgplayerId": 630687,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/pc-etb.webp"
+    },
+    {
+      "id": "victini-collection",
+      "name": "Unova Victini Illustration Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "zsv10pt5-svp208"
+      ],
+      "price": 71.86,
+      "tcgplayerId": 630615,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/victini-collection.webp"
+    },
+    {
+      "id": "tech-reuniclus",
+      "name": "Tech Sticker Collection: Reuniclus",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "zsv10pt5-svp212"
+      ],
+      "price": 50.44,
+      "tcgplayerId": 630614,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
+    }
+  ],
   "sv8": [
     {
       "id": "eliteTrainerBox",
@@ -1111,61 +1309,6 @@
       "price": 11.87,
       "tcgplayerId": 565637,
       "image": "assets/products/sv8/blister-pachirisu.webp"
-    }
-  ],
-  "zsv10pt5": [
-    {
-      "id": "eliteTrainerBox",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 9,
-      "promos": [
-        "zsv10pt5-svp209"
-      ],
-      "price": 161.95,
-      "tcgplayerId": 630686,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
-    },
-    {
-      "id": "pc-etb",
-      "name": "Pokémon Center Elite Trainer Box",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "zsv10pt5-svp209-pc",
-        "zsv10pt5-svp209"
-      ],
-      "price": 272.56,
-      "tcgplayerId": 630687,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/pc-etb.webp"
-    },
-    {
-      "id": "victini-collection",
-      "name": "Unova Victini Illustration Collection",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "zsv10pt5-svp208"
-      ],
-      "price": 71.86,
-      "tcgplayerId": 630615,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/victini-collection.webp"
-    },
-    {
-      "id": "tech-reuniclus",
-      "name": "Tech Sticker Collection: Reuniclus",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "zsv10pt5-svp212"
-      ],
-      "price": 50.44,
-      "tcgplayerId": 630614,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
     }
   ]
 }
