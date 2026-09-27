@@ -54,6 +54,14 @@ and get their `svbsp` maps too (the `svp` prefix is already in
 foil maps (64 set cards, 10 promos) and 27 etch maps (every `SV_ULTRA`
 print), 6.6 MB.
 
+`check_foil_maps.py --set sv3` (the swap check from the Surging Sparks
+thread) flagged 11 foil and 5 etch maps as near ties. None pointed back at
+each other, and overlaying each flagged map on its own scan showed it
+fitting its own card (the Pokémon cut-outs, Mawile's set stamp, the etch
+following the painting), so OBF needs no `FOIL_SWAPS` row. The ties are
+same-art prints (Charizard UR and gold, SVP 044 and its stamped copy) and
+cards with a similar layout.
+
 ## What the maps show
 
 - **Holo Rares and the prerelease promos foil the silver border.** The
