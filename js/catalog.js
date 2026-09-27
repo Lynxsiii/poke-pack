@@ -4,9 +4,12 @@ export const RARITY_ORDER = [
   "Uncommon",
   "Rare",
   "Pikachu Rare",
+  // Prismatic Evolutions' pattern prints of its Commons, Uncommons and Rares.
+  "Poké Ball",
   "Double Rare",
   "Shiny Rare",
   "ACE SPEC Rare",
+  "Master Ball",
   "Ultra Rare",
   "Shiny Ultra Rare",
   "Illustration Rare",
@@ -29,6 +32,8 @@ export const RARITY_LABEL = {
   Uncommon: "Uncommon",
   Rare: "Rare",
   "Pikachu Rare": "Pikachu rare",
+  "Poké Ball": "Poké Ball pattern",
+  "Master Ball": "Master Ball pattern",
   "Double Rare": "Double rare",
   "ACE SPEC Rare": "ACE SPEC rare",
   "Ultra Rare": "Ultra rare",
@@ -70,6 +75,10 @@ export const RARITY_MARK = {
   "Black White Rare": { pips: [["★", "black"], ["☆", "white"]], group: "untilI" },
   "Hyper Rare": { pips: [["☆", "gold"], ["☆", "gold"]], group: "untilI" },
   "ACE SPEC Rare": { pips: [["★", "ace"]], group: "untilH" },
+  // Not printed marks: the card carries its base rarity's symbol
+  // (`printedRarity`), and the ball stands for the pattern in filters.
+  "Poké Ball": { pips: [["◓", "pokeball"]], group: "untilI" },
+  "Master Ball": { pips: [["◓", "masterball"]], group: "untilI" },
   "Shiny Rare": { pips: [["☆", "shiny"]], group: "expanded" },
   "Shiny Ultra Rare": { pips: [["☆", "shiny"], ["☆", "shiny"]], group: "expanded" },
   Promo: { pips: [["★", "black"]], group: "current" },
@@ -99,6 +108,8 @@ export const SELL_VALUE = {
   "Illustration Rare": 3.2,
   "Futuristic Rare": 150,
   "Pikachu Rare": 0.5,
+  "Poké Ball": 1.2,
+  "Master Ball": 8,
   "Classic Collection": 12,
   "RGB Rare": 4000,
   "Shiny Rare": 2,
@@ -402,18 +413,24 @@ function chainSlots(rates, reverseEnergy) {
 }
 
 /**
- * Prismatic Evolutions. Every Common / Uncommon / Rare / Double Rare has a
- * Poké Ball patterned printing of itself; C/U/R Pokémon also have Master Ball.
- * Those are extra finishes of the same number (Holofoil, Reverse Holofoil,
- * Poké Ball, Master Ball) — not extra checklist cards. They land in the
- * second reverse slot. ACE SPEC still replaces the first reverse.
+ * Prismatic Evolutions. Every Common, Uncommon and Rare has a Poké Ball
+ * pattern print, and the Pokémon among them a Master Ball one too; each is a
+ * card of its own here (scripts/build_patterns.py) with its own price. Both
+ * come out of the reverse slots: the first holds a Poké Ball print or an
+ * ACE SPEC instead of its reverse, the second a Master Ball print, a Special
+ * Illustration Rare or a gold Hyper Rare. Odds are TCGplayer's 1,200-pack
+ * study (data/pullrates.json).
  */
 function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }) {
   return [
     { pool: "energy", count: 1 },
     { pool: "common", count: 4 },
     { pool: "uncommon", count: 3 },
-    { pool: "reverse", count: 1, table: [["reverse", 1 - ace], ["ace", ace]] },
+    {
+      pool: "reverse",
+      count: 1,
+      table: [["reverse", 1 - pokeball - ace], ["pokeball", pokeball], ["ace", ace]],
+    },
     {
       pool: "rare-slot",
       count: 1,
@@ -427,8 +444,7 @@ function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }
       pool: "art-slot",
       count: 1,
       table: [
-        ["reverse", 1 - pokeball - masterball - sir - hyper],
-        ["pokeball", pokeball],
+        ["reverse", 1 - masterball - sir - hyper],
         ["masterball", masterball],
         ["sir", sir],
         ["hyper", hyper],
@@ -970,6 +986,67 @@ export const WHITE_FLARE = {
   ],
 };
 
+/**
+ * 151. A main-set pack with no ACE SPEC: Double and Ultra Rares share the rare
+ * slot, and Illustration, Special Illustration and gold Hyper Rares take the
+ * second reverse. The basic Energy is a Cosmos holo one (data/sv3pt5.json)
+ * about one pack in four.
+ *
+ * Rates are TCGplayer's study of 1,500+ English packs (Sep 2023): DR 1/8,
+ * UR 1/16, IR 1/12, SIR 1/32, gold 1/51, Cosmos Energy 1/4. English 151 also
+ * has "demigod" packs: a starter's IR, IR and SIR ex filling both reverses
+ * and the rare slot. Nobody has measured how rare they are, so 1 in 1,300 is
+ * the community estimate. Sources in data/pullrates.json.
+ */
+export const SV_151 = {
+  id: "sv3pt5",
+  tcgId: "sv3pt5",
+  name: "151",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "September 22, 2023",
+  live: true,
+  printedTotal: 165,
+  totalCount: 236,
+  packSize: 11,
+  cost: 29.71,
+  dataFile: "data/sv3pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, September 2023. The original 151, one Mew wrapper, and a Cosmos holo Energy in every fourth pack.",
+  oddsLine: "DR 1/8 · UR 1/16 · IR 1/12 · SIR 1/32 · gold 1/51",
+  lede: "Kanto again, card for card. Charizard ex heads seven Special Illustration Rares, and a rare demigod pack holds a starter's whole line in illustration art.",
+  slots: [
+    {
+      pool: "energy",
+      count: 1,
+      table: [
+        ["energy", 1 - 0.2483],
+        ["foilEnergy", 0.2483],
+      ],
+    },
+    ...svSlots({ double: 0.1328, ultra: 0.0644, ir: 0.085, sir: 0.0311, hyper: 0.0194 }).slice(1),
+  ],
+  godPack: {
+    rate: 1 / 1300,
+    lines: [
+      ["sv3pt5-166", "sv3pt5-167", "sv3pt5-198"],
+      ["sv3pt5-168", "sv3pt5-169", "sv3pt5-199"],
+      ["sv3pt5-170", "sv3pt5-171", "sv3pt5-200"],
+    ],
+  },
+  heroIds: ["sv3pt5-199", "sv3pt5-205", "sv3pt5-200", "sv3pt5-198"],
+  wrappers: [
+    {
+      id: "mew",
+      name: "Mew",
+      cardId: "sv3pt5-151",
+      tag: "The original 151",
+      art: "assets/packs/sv3pt5/mew.avif",
+      artFallback: "assets/packs/sv3pt5/mew.png",
+    },
+  ],
+};
+
 export const DESTINED_RIVALS = {
   id: "sv10",
   tcgId: "sv10",
@@ -1043,15 +1120,15 @@ export const PRISMATIC_EVOLUTIONS = {
   released: "January 17, 2025",
   live: true,
   printedTotal: 131,
-  totalCount: 180,
+  // 180 numbered cards, 167 Poké Ball and Master Ball prints, 23 box promos.
+  totalCount: 370,
   packSize: 11,
-  cost: 15.09,
+  cost: 14.3,
   dataFile: "data/sv8pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  pokeballRarities: ["Common", "Uncommon", "Rare", "Double Rare"],
-  blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and a Poké Ball printing of every base card.",
-  oddsLine: "DR 1/6 · UR 1/13 · ACE 1/21 · SIR 1/45 · gold 1/180 · Poké Ball 1/3 · Master Ball 1/20",
-  lede: "Every Common, Uncommon, Rare, and Double Rare has a Poké Ball version of itself. Master Ball is C/U/R Pokémon only. Same number, extra finish — not a second checklist.",
+  blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and Poké Ball and Master Ball prints of the base cards.",
+  oddsLine: "Poké Ball 1/3 · DR 1/6 · UR 1/13 · Master Ball 1/20 · ACE 1/21 · SIR 1/45 · gold 1/179",
+  lede: "Every Common, Uncommon and Rare comes in a Poké Ball pattern, and every Pokémon among them in a Master Ball one. Each print is its own card with its own price.",
   slots: prismaticSlots({
     double: 0.1651,
     ultra: 0.0746,
@@ -1063,10 +1140,11 @@ export const PRISMATIC_EVOLUTIONS = {
   }),
   heroIds: ["sv8pt5-161", "sv8pt5-155", "sv8pt5-167", "sv8pt5-156"],
   wrappers: boosterWrappers("sv8pt5", [
-    { id: "jolteon", name: "Jolteon", cardId: "sv8pt5-153", tag: "Spark" },
-    { id: "eevee", name: "Eevee", cardId: "sv8pt5-167", tag: "The chase" },
-    { id: "umbreon", name: "Umbreon", cardId: "sv8pt5-161", tag: "Moon" },
-    { id: "glaceon", name: "Glaceon", cardId: "sv8pt5-150", tag: "Ice" },
+    { id: "jolteon", name: "Jolteon", cardId: "sv8pt5-153", tag: "Kanto trio" },
+    { id: "eevee", name: "Eevee", cardId: "sv8pt5-167", tag: "Sylveon" },
+    // Umbreon ex's Special Illustration Rare is the set's chase card.
+    { id: "umbreon", name: "Umbreon", cardId: "sv8pt5-161", tag: "The chase" },
+    { id: "glaceon", name: "Glaceon", cardId: "sv8pt5-150", tag: "Leafeon" },
   ]),
 };
 
@@ -1079,15 +1157,16 @@ export const SURGING_SPARKS = {
   released: "November 8, 2024",
   live: true,
   printedTotal: 191,
-  totalCount: 252,
+  totalCount: 262,
   packSize: 11,
-  cost: 7.78,
+  cost: 8.42,
   dataFile: "data/sv8.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, November 2024. Paldea’s lightning set — Pikachu, ACE SPEC, four wrappers.",
-  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/189",
-  lede: "The last big Paldea wave before Prismatic. ACE SPEC sits in the reverse slot; gold is a Hyper Rare, not a Mega.",
-  slots: svSlots({ double: 0.167, ultra: 0.067, ir: 0.077, sir: 0.0115, hyper: 0.0053, ace: 0.05 }),
+  blurb: "Scarlet & Violet, November 2024. Stellar Tera Pikachu ex, crystal Tera foils and ACE SPECs, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/188",
+  lede: "Pikachu ex went Stellar Tera and became the chase. ACE SPEC takes the first reverse slot, and IR, SIR and gold share the second.",
+  // TCGplayer's study of 8,000+ English packs (sources in data/pullrates.json).
+  slots: svSlots({ double: 0.1694, ultra: 0.0674, ir: 0.0767, sir: 0.0115, hyper: 0.0053, ace: 0.0503 }),
   heroIds: ["sv8-238", "sv8-239", "sv8-241", "sv8-242"],
   wrappers: boosterWrappers("sv8", [
     { id: "pikachu", name: "Pikachu", cardId: "sv8-238", tag: "The chase" },
@@ -1399,6 +1478,7 @@ export const PLAYABLE_SETS = [
   WHITE_FLARE,
   DESTINED_RIVALS,
   JOURNEY_TOGETHER,
+  SURGING_SPARKS,
   TWILIGHT_MASQUERADE,
   TEMPORAL_FORCES,
   PALDEAN_FATES,
@@ -1407,6 +1487,8 @@ export const PLAYABLE_SETS = [
   PALDEA_EVOLVED,
   SHROUDED_FABLE,
   SCARLET_VIOLET,
+  PRISMATIC_EVOLUTIONS,
+  SV_151,
 ];
 
 /**
@@ -1417,8 +1499,6 @@ export const PLAYABLE_SETS = [
  * a matter of returning it to PLAYABLE_SETS and dropping its ROADMAP row.
  */
 export const RETIRED_SETS = [
-  PRISMATIC_EVOLUTIONS,
-  SURGING_SPARKS,
 ];
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
@@ -1463,10 +1543,7 @@ export const ROADMAP = [
   {
     era: "Scarlet & Violet",
     sets: [
-      { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
-      { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
-      { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
     ],
   },
   {

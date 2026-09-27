@@ -87,16 +87,14 @@ layer plan in this site's DOM (`.foil`, `.foil::before`, `.foil::after`,
 
 ### Scarlet & Violet and Mega Evolution
 
-**Rare holo (`SV_HOLO`)**. The art window's background is a fine rainbow holo
-with soft vertical light bars; the Pokémon is not foil. Start from
-`sv151/regular-holo.css`: `--holo` rainbow at 10deg on `.foil`
-(overlay-blended, `contrast(3)`), two sets of bars on `::before` whose angle
-follows `--rotate-x` (multiply), and a luminosity radial on `::after`. The
-site's `foil-holo` still uses the Sword & Shield recipe (`swsh/regular-holo.css`
-with 1px scanlines), which reads as an older card; the port ships as
-`foil-svholo` (celebration.css) on cards with a foil map, where its
-`contrast(2.6)` lands on the background only. Give other sets' Rares the
-same class once they have maps.
+**Rare holo (`SV_HOLO`)**. The art window's background and the silver
+border are foil; the Pokémon is not. Real cards show one broad, saturated
+rainbow band sweeping across the background, with a fine silver sandpaper
+glitter over all of the foil. `foil-svholo` (celebration.css) draws that on
+cards with a foil map; it replaced a port of `sv151/regular-holo.css` that
+read too dark next to photos. Recipe, photos and pitfalls:
+[sv-rare-holo.md](sv-rare-holo.md). Cards without a map keep the site's older
+`foil-holo`, the Sword & Shield recipe with 1px scanlines.
 
 **Reverse holo (`FLAT_SILVER`)**. Flat mirror foil everywhere but the art
 window; a broad sheen and a diagonal dark band cross it. `sv151/reverse-holo.css`
