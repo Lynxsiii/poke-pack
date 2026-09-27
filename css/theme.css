@@ -440,6 +440,48 @@ h1, h2, h3 { text-wrap: balance; }
 .sealed-copy p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
 .sealed-card .pack-meta { margin-top: auto; }
 .sealed-card .buy.confirming { background: var(--rip-hover); color: var(--on-rip); }
+
+/* Promo products: the box photo, its promo cards fanned in front of it. */
+.promo-block { margin-top: 40px; }
+.promo-stage { position: relative; height: 196px; }
+.promo-box {
+  position: absolute; left: 0; top: 50%; width: 72%; height: 88%;
+  object-fit: contain; object-position: left center; transform: translateY(-50%);
+  filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.55));
+  transition: transform 0.45s var(--ease-spring);
+}
+.promo-fan { position: absolute; right: 0; bottom: 0; display: flex; align-items: flex-end; }
+.promo-face {
+  display: block; width: 88px; padding: 0; border: 0; background: none; cursor: zoom-in;
+  transform-origin: bottom center; transition: transform 0.35s var(--ease-spring);
+}
+.promo-face .tcg img { filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.6)); }
+.promo-fan.count-1 .promo-face { width: 104px; transform: rotate(5deg); }
+.promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-5deg) translateX(18px); }
+.promo-fan.count-2 .promo-face:nth-child(2) { transform: rotate(6deg); z-index: 1; }
+.promo-fan.count-3 .promo-face { width: 76px; }
+.promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(34px, 4px); }
+.promo-fan.count-3 .promo-face:nth-child(2) { transform: translateX(16px); z-index: 1; }
+.promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(8deg) translateY(4px); z-index: 2; }
+.promo-face:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: var(--r-sm); }
+.promo-note {
+  position: absolute; left: 0; top: 0; padding: 3px 7px; border: 1px solid var(--line-2);
+  border-radius: var(--r-sm); background: var(--surface); color: var(--ink-2);
+  font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.promo-product .sealed-copy .promo-worth { margin-top: 2px; font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--gold-2); }
+.promo-product .sealed-copy .promo-market { margin-top: 2px; font-size: 12px; }
+.promo-product:hover .promo-box { transform: translateY(-50%) translateY(-6px); }
+.promo-product:hover .promo-fan.count-1 .promo-face { transform: rotate(2deg) translateY(-8px); }
+.promo-product:hover .promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(12px, -6px); }
+.promo-product:hover .promo-fan.count-2 .promo-face:nth-child(2) { transform: rotate(8deg) translateY(-8px); }
+.promo-product:hover .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-11deg) translate(28px, -2px); }
+.promo-product:hover .promo-fan.count-3 .promo-face:nth-child(2) { transform: translate(16px, -8px); }
+.promo-product:hover .promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(11deg) translateY(-2px); }
+/* In the opening, the promos are dealt big: they are what the box was bought for. */
+#overlay .spread-grid.promo-spread { justify-content: center; gap: 22px; }
+#overlay .spread-grid.promo-spread .spread-card { width: min(220px, 40vw); }
+.chip.promo { top: auto; bottom: 3%; right: auto; left: 4%; background: var(--ink); color: var(--bg); }
 .box-progress {
   display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
   margin: 0 0 10px; font-size: 13px; color: var(--ink-2);
@@ -520,6 +562,14 @@ h1, h2, h3 { text-wrap: balance; }
   .sealed-stack { width: 120px; height: 100px; grid-row: span 2; }
   .sealed-stack > span { width: 50px; margin: 0 -9px; }
   .sealed-card .pack-meta { grid-column: 2; margin-top: 0; }
+  .promo-product { grid-template-columns: 148px 1fr; }
+  .promo-stage { width: 148px; height: 150px; grid-row: span 2; }
+  .promo-box { width: 84%; height: 80%; }
+  .promo-face, .promo-fan.count-1 .promo-face { width: 64px; }
+  .promo-fan.count-3 .promo-face { width: 52px; }
+  .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(24px, 4px); }
+  .promo-fan.count-3 .promo-face:nth-child(2) { transform: translateX(12px); }
+  .promo-note { font-size: 10px; padding: 2px 5px; }
 }
 @media (max-width: 720px) {
   .site-header {
@@ -825,6 +875,7 @@ body::before {
   }
   .fx-ready .fx-reveal { opacity: 1; transform: none; }
   .wrap.is-switching { transform: none; }
+  .promo-box, .promo-face { transition: none; }
 }
 body.no-motion::before, body.no-motion .home-copy h1, body.no-motion .home-stage::before,
 body.no-motion .home-feature-pack, body.no-motion .home-feature-card .tcg,
@@ -836,6 +887,7 @@ body.no-motion .sealed-card:hover::before {
   animation: none;
 }
 body.no-motion .fx-reveal { opacity: 1 !important; transform: none !important; }
+body.no-motion .promo-box, body.no-motion .promo-face { transition: none; }
 
 /* Sparkles drifting up through the stage light. The field is twice the
    window's height and slides up by half of it, so the motion is a transform

@@ -37,7 +37,7 @@
     </noscript>
     <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="css/app.css?v=47" />
-    <link rel="stylesheet" href="css/theme.css?v=3" />
+    <link rel="stylesheet" href="css/theme.css?v=4" />
     <link rel="stylesheet" href="css/opening.css?v=1" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="css/holo/realism.css?v=2" />
     <link rel="stylesheet" href="css/holo/maps.css?v=1" />
     <link rel="stylesheet" href="css/holo/celebration.css?v=2" />
+    <link rel="stylesheet" href="css/holo/promos.css?v=1" />
   </head>
   <body class="on-home is-booting">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -179,6 +180,15 @@
                 </div>
               </div>
               <div class="sealed-grid" id="sealed-grid"></div>
+            </div>
+            <div class="sealed-block promo-block hidden" id="promo-block">
+              <div class="section-head">
+                <div>
+                  <h2>Collections and promos</h2>
+                  <p>Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.</p>
+                </div>
+              </div>
+              <div class="sealed-grid promo-grid" id="promo-grid"></div>
             </div>
           </div>
           <aside class="shop-rail" aria-label="All expansions">
@@ -353,6 +363,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=60"></script>
+    <script type="module" src="js/app.js?v=61"></script>
   </body>
 </html>

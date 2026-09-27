@@ -6088,102 +6088,6 @@
     "stampSize": "22.33% auto"
   },
   {
-    "id": "me55-mep107",
-    "name": "Pikachu ex",
-    "number": "mep107",
-    "rarity": "Futuristic Rare",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "ex"
-    ],
-    "types": [
-      "Lightning"
-    ],
-    "hp": "190",
-    "artist": "YOSHIROTTEN",
-    "printedNumber": "MEP 107",
-    "promo": true,
-    "image": "assets/cards/me55/mep107.webp",
-    "imageSmall": "assets/cards/me55/mep107-sm.webp",
-    "attacks": [
-      {
-        "name": "Pika-Pika Parade",
-        "cost": [
-          "Colorless"
-        ],
-        "damage": "",
-        "text": "Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
-      },
-      {
-        "name": "Thunderbolt",
-        "cost": [
-          "Lightning",
-          "Lightning",
-          "Colorless"
-        ],
-        "damage": "200",
-        "text": "Discard all Energy from this Pokémon."
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/mep-107/large",
-    "market": 492.48,
-    "foilMap": "assets/foil/maps/me55/mep107.webp",
-    "etchMap": "assets/foil/maps/me55/mep107-etch.webp",
-    "etchMapH": "assets/foil/maps/me55/mep107-etch-h.webp",
-    "etchMapV": "assets/foil/maps/me55/mep107-etch-v.webp",
-    "stampPos": "98.07% 48.44%",
-    "stampSize": "22.33% auto"
-  },
-  {
-    "id": "me55-mep109",
-    "name": "Pikachu ex",
-    "number": "mep109",
-    "rarity": "Futuristic Rare",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "ex"
-    ],
-    "types": [
-      "Lightning"
-    ],
-    "hp": "190",
-    "artist": "YOSHIROTTEN",
-    "printedNumber": "MEP 109",
-    "promo": true,
-    "image": "assets/cards/me55/mep109.webp",
-    "imageSmall": "assets/cards/me55/mep109-sm.webp",
-    "attacks": [
-      {
-        "name": "Zip-Zap Frenzy",
-        "cost": [
-          "Lightning"
-        ],
-        "damage": "",
-        "text": "You may attach any number of Basic Energy cards from your hand to your Pokémon in any way you like."
-      },
-      {
-        "name": "Thunder",
-        "cost": [
-          "Lightning",
-          "Lightning",
-          "Colorless"
-        ],
-        "damage": "200",
-        "text": "This Pokémon also does 30 damage to itself."
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/mep-109/large",
-    "market": 299.99,
-    "foilMap": "assets/foil/maps/me55/mep109.webp",
-    "etchMap": "assets/foil/maps/me55/mep109-etch.webp",
-    "etchMapH": "assets/foil/maps/me55/mep109-etch-h.webp",
-    "etchMapV": "assets/foil/maps/me55/mep109-etch-v.webp",
-    "stampPos": "98.07% 48.44%",
-    "stampSize": "22.33% auto"
-  },
-  {
     "id": "me55-cc4",
     "name": "Charizard",
     "number": "cc4",
@@ -6655,5 +6559,779 @@
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-106p/large",
     "stampPos": "99.56% 43.54%",
     "stampSize": "24.83% auto"
+  },
+  {
+    "id": "me55-116-blister",
+    "name": "Eevee",
+    "number": "116-blister",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Wintr Wandr",
+    "image": "assets/cards/me55/116-blister.webp",
+    "imageSmall": "assets/cards/me55/116-blister-sm.webp",
+    "attacks": [
+      {
+        "name": "Fetch and Hide",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals their hand, and you put an Item card you find there on the bottom of your opponent's deck."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.56,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/717879_in_1000x1000.jpg",
+    "printedNumber": "116/128",
+    "promo": true,
+    "foilAs": "Frame",
+    "variant": "Black star frame",
+    "tcgplayerId": 717879
+  },
+  {
+    "id": "me55-mep094",
+    "name": "Alolan Exeggutor",
+    "number": "mep094",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "yuu",
+    "evolvesFrom": "Exeggcute",
+    "image": "assets/cards/me55/mep094.webp",
+    "imageSmall": "assets/cards/me55/mep094-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Heal 50 damage from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Scale Up",
+        "text": "If this Pokémon has 6 or more Grass Energy attached, it gets +250 HP.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-94/large",
+    "printedNumber": "MEP 094",
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me55/mep094.webp"
+  },
+  {
+    "id": "me55-mep095",
+    "name": "Lucario",
+    "number": "mep095",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Taiga Kasai",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/me55/mep095.webp",
+    "imageSmall": "assets/cards/me55/mep095-sm.webp",
+    "attacks": [
+      {
+        "name": "Auro Sphere",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack also does 60 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-95/large",
+    "printedNumber": "MEP 095",
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me55/mep095.webp"
+  },
+  {
+    "id": "me55-mep096",
+    "name": "Moltres",
+    "number": "mep096",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Krgc",
+    "image": "assets/cards/me55/mep096.webp",
+    "imageSmall": "assets/cards/me55/mep096-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fiery Flapping",
+        "text": "Once during your turn, if you have Articuno and Zapdos in play, you may use this Ability. Attach a Basic Fire Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-96/large",
+    "printedNumber": "MEP 096",
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me55/mep096.webp"
+  },
+  {
+    "id": "me55-mep097",
+    "name": "Articuno",
+    "number": "mep097",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Taira Akitsu",
+    "image": "assets/cards/me55/mep097.webp",
+    "imageSmall": "assets/cards/me55/mep097-sm.webp",
+    "attacks": [
+      {
+        "name": "Hail",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frosty Flapping",
+        "text": "Once during your turn, if you have Moltres and Zapdos in play, you may use this Ability. Attach a Basic Water Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-97/large",
+    "printedNumber": "MEP 097",
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me55/mep097.webp"
+  },
+  {
+    "id": "me55-mep098",
+    "name": "Zapdos",
+    "number": "mep098",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "SIE NANAHARA",
+    "image": "assets/cards/me55/mep098.webp",
+    "imageSmall": "assets/cards/me55/mep098-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundering Lightning",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "This Pokémon also does 60 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flash-Pop Flapping",
+        "text": "Once during your turn, if you have Moltres and Articuno in play, you may use this Ability. Attach a Basic Lightning Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-98/large",
+    "printedNumber": "MEP 098",
+    "foilAs": "Cosmos",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me55/mep098.webp"
+  },
+  {
+    "id": "me55-mep099",
+    "name": "Greninja ex",
+    "number": "mep099",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/me55/mep099.webp",
+    "imageSmall": "assets/cards/me55/mep099-sm.webp",
+    "attacks": [
+      {
+        "name": "Stealthy Slash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon for each damage counter on that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "market": 0.66,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-99/large",
+    "printedNumber": "MEP 099",
+    "foilAs": "Double Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me55/mep099.webp"
+  },
+  {
+    "id": "me55-mep100",
+    "name": "Sylveon ex",
+    "number": "mep100",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "270",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/mep100.webp",
+    "imageSmall": "assets/cards/me55/mep100-sm.webp",
+    "attacks": [
+      {
+        "name": "Colorful Harmony",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each type of Basic Energy attached to all of your Pokémon."
+      }
+    ],
+    "market": 1.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-100/large",
+    "printedNumber": "MEP 100",
+    "foilAs": "Double Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me55/mep100.webp"
+  },
+  {
+    "id": "me55-mep101",
+    "name": "Nidorina",
+    "number": "mep101",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Taiga Kasai",
+    "evolvesFrom": "Nidoran",
+    "image": "assets/cards/me55/mep101.webp",
+    "imageSmall": "assets/cards/me55/mep101-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Share Happiness",
+        "text": "Once during your turn, you may use this Ability. Heal 30 damage from 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 2.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-101/large",
+    "printedNumber": "MEP 101",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "foilMap": "assets/foil/maps/me55/mep101.webp"
+  },
+  {
+    "id": "me55-mep101-pc",
+    "name": "Nidorina",
+    "number": "mep101-pc",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Taiga Kasai",
+    "evolvesFrom": "Nidoran",
+    "image": "assets/cards/me55/mep101-pc.webp",
+    "imageSmall": "assets/cards/me55/mep101-pc-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Share Happiness",
+        "text": "Once during your turn, you may use this Ability. Heal 30 damage from 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 59.18,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/713261_in_1000x1000.jpg",
+    "printedNumber": "MEP 101",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "variant": "Pokémon Center stamp",
+    "tcgplayerId": 713261,
+    "foilMap": "assets/foil/maps/me55/mep101-pc.webp"
+  },
+  {
+    "id": "me55-mep102",
+    "name": "Victini",
+    "number": "mep102",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "satoma",
+    "image": "assets/cards/me55/mep102.webp",
+    "imageSmall": "assets/cards/me55/mep102-sm.webp",
+    "attacks": [
+      {
+        "name": "Call For Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "V-Flame",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 96.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-102/large",
+    "printedNumber": "MEP 102",
+    "promo": true,
+    "foilAs": "Illustration Rare"
+  },
+  {
+    "id": "me55-mep103",
+    "name": "Zeraora",
+    "number": "mep103",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "HACCAN",
+    "image": "assets/cards/me55/mep103.webp",
+    "imageSmall": "assets/cards/me55/mep103-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Electrobullet",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 98.48,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-103/large",
+    "printedNumber": "MEP 103",
+    "promo": true,
+    "foilAs": "Illustration Rare"
+  },
+  {
+    "id": "me55-mep104",
+    "name": "Mewtwo",
+    "number": "mep104",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Nisota Niso",
+    "image": "assets/cards/me55/mep104.webp",
+    "imageSmall": "assets/cards/me55/mep104-sm.webp",
+    "attacks": [
+      {
+        "name": "Empower",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Basic Energy cards from your discard pile to 1 of your Pokémon."
+      },
+      {
+        "name": "Psydrive",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "market": 9.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-104/large",
+    "printedNumber": "MEP 104",
+    "promo": true,
+    "foilAs": "Cosmos"
+  },
+  {
+    "id": "me55-mep105",
+    "name": "Mew",
+    "number": "mep105",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Cona Nitanda",
+    "image": "assets/cards/me55/mep105.webp",
+    "imageSmall": "assets/cards/me55/mep105-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "10+",
+        "text": "This attack does 40 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "market": 24.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-105/large",
+    "printedNumber": "MEP 105",
+    "promo": true,
+    "foilAs": "Cosmos"
+  },
+  {
+    "id": "me55-mep106",
+    "name": "Ditto",
+    "number": "mep106",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Ounishi",
+    "image": "assets/cards/me55/mep106.webp",
+    "imageSmall": "assets/cards/me55/mep106-sm.webp",
+    "attacks": [
+      {
+        "name": "Surprisingly Transform",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for a Pokémon and switch it with this Pokémon. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon. If you switched a Pokémon in this way, put this card into your deck. Then, shuffle your deck."
+      }
+    ],
+    "market": 29.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-106/large",
+    "printedNumber": "MEP 106",
+    "promo": true,
+    "foilAs": "Illustration Rare"
+  },
+  {
+    "id": "me55-mep107",
+    "name": "Pikachu ex",
+    "number": "mep107",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "YOSHIROTTEN",
+    "image": "assets/cards/me55/mep107.webp",
+    "imageSmall": "assets/cards/me55/mep107-sm.webp",
+    "attacks": [
+      {
+        "name": "Pika-Pika Parade",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "market": 492.48,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-107/large",
+    "printedNumber": "MEP 107",
+    "promo": true,
+    "foilAs": "Futuristic Rare",
+    "foilMap": "assets/foil/maps/me55/mep107.webp",
+    "etchMap": "assets/foil/maps/me55/mep107-etch.webp",
+    "etchMapH": "assets/foil/maps/me55/mep107-etch-h.webp",
+    "etchMapV": "assets/foil/maps/me55/mep107-etch-v.webp",
+    "stampPos": "98.07% 48.44%",
+    "stampSize": "22.33% auto"
+  },
+  {
+    "id": "me55-mep108",
+    "name": "Espeon ex",
+    "number": "mep108",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "260",
+    "artist": "REND",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/mep108.webp",
+    "imageSmall": "assets/cards/me55/mep108-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Beatdown",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each of your Pokémon in play."
+      }
+    ],
+    "market": 450.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-108/large",
+    "printedNumber": "MEP 108",
+    "promo": true,
+    "foilAs": "Special Illustration Rare"
+  },
+  {
+    "id": "me55-mep109",
+    "name": "Pikachu ex",
+    "number": "mep109",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "YOSHIROTTEN",
+    "image": "assets/cards/me55/mep109.webp",
+    "imageSmall": "assets/cards/me55/mep109-sm.webp",
+    "attacks": [
+      {
+        "name": "Zip-Zip Frenzy",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "You may attach any number of Basic Energy cards from your hand to your Pokémon in any way you like."
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "market": 299.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-109/large",
+    "printedNumber": "MEP 109",
+    "promo": true,
+    "foilAs": "Futuristic Rare",
+    "foilMap": "assets/foil/maps/me55/mep109.webp",
+    "etchMap": "assets/foil/maps/me55/mep109-etch.webp",
+    "etchMapH": "assets/foil/maps/me55/mep109-etch-h.webp",
+    "etchMapV": "assets/foil/maps/me55/mep109-etch-v.webp",
+    "stampPos": "98.07% 48.44%",
+    "stampSize": "22.33% auto"
+  },
+  {
+    "id": "me55-mep110",
+    "name": "Umbreon ex",
+    "number": "mep110",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "ex",
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "270",
+    "artist": "REND",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/mep110.webp",
+    "imageSmall": "assets/cards/me55/mep110-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunatic Claw",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 140 damage."
+      }
+    ],
+    "market": 450.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-110/large",
+    "printedNumber": "MEP 110",
+    "promo": true,
+    "foilAs": "Special Illustration Rare"
   }
 ]

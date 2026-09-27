@@ -16,6 +16,7 @@ choice, not an accident — the effects were worth it.
 | Holofoil CSS in `css/holo/` — the shine and glare layer maths, the pointer variable model, and the spring-damped interaction | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
 | `assets/foil/reference/vmaxbg.jpg`, `glitter.png`, `illusion.png` and `illusion2.png`, copied from the upstream `public/img/` directory | [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css/tree/main/public/img) | GPL-3.0 repository; upstream also credits Vecteezy for some backgrounds |
 | Layer recipes in `css/holo/celebration.css` (the 30th Celebration finishes), following the regular-holo, illustration-rare and special-illustration-rare cards | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
+| The cosmos holo in `css/holo/promos.css` and its three galaxy layers, `assets/foil/promo/cosmos-bottom.webp`, `cosmos-middle-trans.webp` and `cosmos-top-trans.webp`, copied from upstream's `public/img/` | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
 | Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
 | Archivo font in `assets/fonts/archivo-*.woff2` | Omnibus-Type, via Google Fonts | SIL Open Font License 1.1 |
 | IBM Plex Mono font in `assets/fonts/plex-mono-*.woff2` | IBM, via Google Fonts | SIL Open Font License 1.1 |
@@ -45,7 +46,10 @@ Pokémon TCG Live's own, as published through [malie.io](https://malie.io)'s
 TCG Live exports; they say where each printed card is foil, which is what
 lets the shine stop at the Pokémon and the 30th Celebration stamp. The
 maps for the two Pikachu ex promos (`mep107*`, `mep109*`) are not TCG
-Live's: we drew them from the card scans in the same layout. poke-pack.rip is a fan-made simulator and is not affiliated with
+Live's: we drew them from the card scans in the same layout. Product photos
+in `assets/products/` are TCGplayer's catalogue images, cut out of their
+white backgrounds by `scripts/build_products.py`; product prices are
+TCGplayer market prices, read through [tcgcsv.com](https://tcgcsv.com). poke-pack.rip is a fan-made simulator and is not affiliated with
 Nintendo, Game Freak, Wizards of the Coast, or The Pokémon Company. The GPL
 covers this project's own code; it makes no claim over Pokémon trademarks or
 card artwork.

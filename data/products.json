@@ -1,0 +1,234 @@
+{
+  "_fetchedAt": "2026-09-27",
+  "me55": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "me55-mep101"
+      ],
+      "price": 171.08,
+      "tcgplayerId": 704143,
+      "released": "2026-09-16",
+      "image": "assets/products/me55/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me55-mep101-pc",
+        "me55-mep101"
+      ],
+      "price": 298.44,
+      "tcgplayerId": 704144,
+      "released": "2026-09-16",
+      "image": "assets/products/me55/pc-etb.webp"
+    },
+    {
+      "id": "upc-day",
+      "name": "Ultra-Premium Collection: Day",
+      "kind": "premium",
+      "packs": 29,
+      "special": {
+        "classic": 1
+      },
+      "promos": [
+        "me55-mep107",
+        "me55-mep108"
+      ],
+      "price": 566.26,
+      "tcgplayerId": 704190,
+      "released": "2026-11-06",
+      "image": "assets/products/me55/upc-day.webp"
+    },
+    {
+      "id": "upc-night",
+      "name": "Ultra-Premium Collection: Night",
+      "kind": "premium",
+      "packs": 29,
+      "special": {
+        "classic": 1
+      },
+      "promos": [
+        "me55-mep109",
+        "me55-mep110"
+      ],
+      "price": 723.49,
+      "tcgplayerId": 704191,
+      "released": "2026-11-06",
+      "image": "assets/products/me55/upc-night.webp"
+    },
+    {
+      "id": "ditto-premium",
+      "name": "Ditto Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "me55-mep106"
+      ],
+      "price": 193.93,
+      "tcgplayerId": 704189,
+      "released": "2026-11-06",
+      "image": "assets/products/me55/ditto-premium.webp"
+    },
+    {
+      "id": "figure-mew",
+      "name": "Figure Collection: Mew",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "me55-mep105"
+      ],
+      "price": 124.84,
+      "tcgplayerId": 704193,
+      "released": "2026-11-06",
+      "image": "assets/products/me55/figure-mew.webp"
+    },
+    {
+      "id": "figure-mewtwo",
+      "name": "Figure Collection: Mewtwo",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "me55-mep104"
+      ],
+      "price": 109.41,
+      "tcgplayerId": 704194,
+      "released": "2026-11-06",
+      "image": "assets/products/me55/figure-mewtwo.webp"
+    },
+    {
+      "id": "tin-sylveon",
+      "name": "Sylveon ex Tin",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "me55-mep100"
+      ],
+      "price": 70.22,
+      "tcgplayerId": 718674,
+      "image": "assets/products/me55/tin-sylveon.webp"
+    },
+    {
+      "id": "tin-greninja",
+      "name": "Greninja ex Tin",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "me55-mep099"
+      ],
+      "price": 70.53,
+      "tcgplayerId": 718673,
+      "image": "assets/products/me55/tin-greninja.webp"
+    },
+    {
+      "id": "box-sylveon",
+      "name": "Sylveon ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "me55-mep100"
+      ],
+      "price": 67.55,
+      "tcgplayerId": 704155,
+      "released": "2026-09-16",
+      "image": "assets/products/me55/box-sylveon.webp"
+    },
+    {
+      "id": "box-greninja",
+      "name": "Greninja ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "me55-mep099"
+      ],
+      "price": 65.56,
+      "tcgplayerId": 704168,
+      "released": "2026-09-16",
+      "image": "assets/products/me55/box-greninja.webp"
+    },
+    {
+      "id": "poster",
+      "name": "Poster Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "me55-mep096",
+        "me55-mep097",
+        "me55-mep098"
+      ],
+      "price": 44.43,
+      "tcgplayerId": 704153,
+      "released": "2026-09-16",
+      "image": "assets/products/me55/poster.webp"
+    },
+    {
+      "id": "tech-exeggutor",
+      "name": "Tech Sticker Collection: Alolan Exeggutor",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "me55-mep094"
+      ],
+      "price": 42.23,
+      "tcgplayerId": 704145,
+      "released": "2026-09-16",
+      "image": "assets/products/me55/tech-exeggutor.webp"
+    },
+    {
+      "id": "tech-lucario",
+      "name": "Tech Sticker Collection: Lucario",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "me55-mep095"
+      ],
+      "price": 41.88,
+      "tcgplayerId": 704146,
+      "released": "2026-09-16",
+      "image": "assets/products/me55/tech-lucario.webp"
+    },
+    {
+      "id": "knock-out",
+      "name": "Knock Out Collection",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "me55-116-blister"
+      ],
+      "price": 30.1,
+      "tcgplayerId": 704152,
+      "image": "assets/products/me55/knock-out.webp"
+    },
+    {
+      "id": "deck-espeon",
+      "name": "Battle Deck: Espeon ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "me55-mep102"
+      ],
+      "price": 37.39,
+      "tcgplayerId": 704187,
+      "released": "2026-10-30",
+      "image": "assets/products/me55/deck-espeon.webp"
+    },
+    {
+      "id": "deck-umbreon",
+      "name": "Battle Deck: Umbreon ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "me55-mep103"
+      ],
+      "price": 64.37,
+      "tcgplayerId": 704188,
+      "released": "2026-10-30",
+      "image": "assets/products/me55/deck-umbreon.webp"
+    }
+  ]
+}

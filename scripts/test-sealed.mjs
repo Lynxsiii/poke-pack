@@ -88,4 +88,40 @@ response=await request('/api/packs/rip','POST',{setId:'me5'});
 assert.equal(response.status,200,JSON.stringify(response.body));
 assert.equal(response.body.cost,sealed.me5.boosterPack);
 assert.equal(profile().packs_opened,36+9+1);
-console.log('Sealed product checks passed: offers per set, authentication, retired and unsold products, refusal without coins, one charge per box, per-pack logging, ownership, new flags, quests and single packs.');
+
+// Promo products: the promos come with the packs, are owned, and are not packs.
+const products=JSON.parse(readFileSync(new URL('../data/products.json',import.meta.url),'utf8'));
+const upc=products.me55.find(item=>item.id==='upc-night');
+db.prepare('UPDATE profiles SET coins=? WHERE user_id=?').run(5000,'test');
+let packsBefore=profile().packs_opened;
+response=await request('/api/sealed/open','POST',{setId:'me55',product:'upc-night'});
+assert.equal(response.status,200,JSON.stringify(response.body));
+assert.deepEqual(response.body.promos.map(card=>card.id),['me55-mep109','me55-mep110']);
+assert.ok(response.body.promos.every(card=>card.wasNew&&card.rarity==='Promo'));
+assert.equal(response.body.packs.length,30,'29 boosters and the Classic Collection pack');
+const classicPack=response.body.packs.find(pack=>pack.wrapperId==='classic');
+assert.ok(classicPack&&classicPack.cards.length===3&&classicPack.cards.every(card=>card.rarity==='Classic Collection'));
+assert.ok(response.body.packs.flatMap(pack=>pack.cards).every(card=>!card.promo),'no promo comes out of a pack');
+// Its promos sell for more than the box's market price, so it costs what's
+// inside on average instead of paying out coins on every open.
+const promoWorth=response.body.promos.reduce((sum,card)=>sum+card.market,0);
+assert.ok(promoWorth>upc.price,'fixture: the Night promos outprice the box');
+assert.ok(response.body.cost>promoWorth,'never cheaper than its promos');
+assert.equal(cents(profile().coins),cents(5000-response.body.cost));
+assert.equal(profile().packs_opened,packsBefore+30);
+assert.equal(db.prepare('SELECT qty FROM cards WHERE user_id=? AND card_id=?').get('test','me55-mep109').qty,1);
+// The ETB comes with its promo, at market; a battle deck is a promo and no packs.
+response=await request('/api/sealed/open','POST',{setId:'me55',product:'eliteTrainerBox'});
+assert.equal(response.status,200,JSON.stringify(response.body));
+assert.equal(response.body.cost,sealed.me55.eliteTrainerBox);
+assert.deepEqual(response.body.promos.map(card=>card.id),['me55-mep101']);
+packsBefore=profile().packs_opened;
+const logBefore=db.prepare('SELECT COUNT(*) AS n FROM pack_log WHERE user_id=?').get('test').n;
+response=await request('/api/sealed/open','POST',{setId:'me55',product:'deck-espeon'});
+assert.equal(response.status,200,JSON.stringify(response.body));
+assert.equal(response.body.packs.length,0);
+assert.deepEqual(response.body.promos.map(card=>card.id),['me55-mep102']);
+assert.equal(profile().packs_opened,packsBefore,'a deck is not a pack');
+assert.equal(db.prepare('SELECT COUNT(*) AS n FROM pack_log WHERE user_id=?').get('test').n,logBefore);
+assert.equal((await request('/api/sealed/open','POST',{setId:'me5',product:'upc-night'})).status,400,'products belong to their set');
+console.log('Sealed product checks passed: offers per set, authentication, retired and unsold products, refusal without coins, one charge per box, per-pack logging, ownership, new flags, quests, single packs, and promo products with their promos and special packs.');

@@ -18,8 +18,11 @@ import {
   rarityKey,
   setIdentity,
   sealedOffers,
+  promoOffers,
+  findOffer,
+  offerPackCount,
 } from "./catalog.js";
-import { HIT_RARITIES, isHit } from "./engine.js";
+import { HIT_RARITIES, isHit, priceOffer } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge } from "./social.js";
 import {
@@ -208,6 +211,8 @@ let priceTicker = null;
 let liveSet = getSet(state.activeSetId);
 /** Sealed market prices (pack, box, ETB…) per set id, from data/sealed.json. */
 let sealedPrices = {};
+/** Promo products (collections, tins, decks) per set id, from data/products.json. */
+let productList = {};
 let cards = [];
 let setCards = [];
 let byId = {};
@@ -226,8 +231,9 @@ let historyFilter = "all";
 let currentPulls = [];
 let packPhase = "idle";
 /**
- * A sealed product being opened: `{ product, packs: [{ wrapper, cards }], index, cost }`.
+ * A sealed product being opened: `{ product, packs: [{ wrapper, cards }], promos, index, cost }`.
  * Every pack is already saved when this is set; it only walks the player through them.
+ * `index` is -1 while a product's promo cards are on the table, before its first pack.
  */
 let sealedRun = null;
 /** Which sealed product's buy button is waiting for its confirming second click. */
@@ -258,6 +264,8 @@ const els = {
   packGrid: document.getElementById("pack-grid"),
   sealedBlock: document.getElementById("sealed-block"),
   sealedGrid: document.getElementById("sealed-grid"),
+  promoBlock: document.getElementById("promo-block"),
+  promoGrid: document.getElementById("promo-grid"),
   setSwitcher: document.getElementById("set-switcher"),
   heroArt: document.getElementById("hero-art"),
   shopKicker: document.getElementById("shop-kicker"),
@@ -474,7 +482,7 @@ function isAllFoil(card) {
 function foilClass(card) {
   if (!card) return "";
   if (card.reverse) return "rare-glow";
-  if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare" || card.rarity === "Pikachu Rare") return "holo";
+  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Pikachu Rare", "Cosmos"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
 }
@@ -548,6 +556,8 @@ function foilPattern(card) {
     return `${CLASSIC_FULL_FOIL.test(card.name || "") ? "foil-ultra" : "foil-holo"} foil-classic`;
   }
   if (card.rarity === "Pikachu Rare") return "foil-holo foil-pikachu";
+  // Collection-box promos (css/holo/promos.css).
+  if (card.rarity === "Cosmos") return "foil-holo foil-cosmos";
   if (card.rarity === "ACE SPEC Rare") return "foil-holo";
   // TCG Live's SUN_PILLAR and SV_HOLO recipes need the card's foil map to keep
   // off the Pokémon, so they only replace the older recipes where one ships.
@@ -640,9 +650,24 @@ function assetUrl(src) {
   }
 }
 
+/**
+ * Promo cards are printed in another rarity's finish: a full-art promo is foiled
+ * like an Illustration Rare, an ex promo like a Double Rare. `foilAs` names that
+ * rarity (scripts/build_products.py reads it from TCG Live's print data), so the
+ * foil engine draws the promo with its recipe. "Cosmos" is the galaxy holo most
+ * collection-box promos use; "Frame" foils only the card frame, like a reverse.
+ */
+function foilLook(card) {
+  if (!card?.promo || !card.foilAs || card.reverse) return card;
+  if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
+  return { ...card, rarity: card.foilAs };
+}
+
 function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   if (!card) return cardBack();
   const src = small ? card.imageSmall : card.image;
+  const shown = card;
+  card = foilLook(card);
   const reverse = card.reverse ? "reverse" : "";
   const evo = foilLayout(card);
   const pattern = foilPattern(card);
@@ -660,13 +685,13 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   // Per-card foil maps, stamp placement and cast-and-cure coats (js/foil-maps.js).
   const extra = foilExtras(card, assetUrl);
   const load = lazy ? ` loading="lazy" decoding="async"` : ` decoding="async"`;
-  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo} ${extra.classes}" data-finish="${finish}" data-ball-layout="${setForCard(card)?.id === "sv8pt5" ? "prismatic" : "repeat"}"
+  return `<div class="tcg ${rarityKey(shown.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo} ${extra.classes}" data-finish="${finish}" data-ball-layout="${setForCard(card)?.id === "sv8pt5" ? "prismatic" : "repeat"}"
     style="--art:url('${esc(assetUrl(src))}')${owner ? `;--win-owner:url('${esc(owner)}')` : ""}${extra.style ? `;${esc(extra.style)}` : ""}">
     <img src="${esc(src)}" alt="${esc(card.name)}"${load} />
     <span class="foil" aria-hidden="true"></span>
     ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
     <span class="glare" aria-hidden="true"></span>
-    ${stamp ? rarityStamp(card) : ""}
+    ${stamp ? rarityStamp(shown) : ""}
   </div>`;
 }
 
@@ -691,6 +716,7 @@ function numberLine(card) {
 
 function rarityLine(card) {
   const label = RARITY_LABEL[card.rarity] || card.rarity;
+  if (card.promo && card.variant) return `${label} · ${card.variant}`;
   if (!card.reverse) return label;
   if (card.reverseKind === "pokeball" || reverseKindOf(card) === "pokeball") {
     return `Poké Ball reverse · ${label}`;
@@ -919,40 +945,127 @@ function renderShop() {
   renderSealed();
 }
 
+/** The buy button's label, shared by the sealed and promo product cards. */
+function productButton(offer) {
+  const signed = Boolean(activeTrainer());
+  const affordable = signed && state.coins >= offer.price;
+  const confirming = sealedConfirm === offer.id && affordable;
+  const label = !signed
+    ? "Sign in to open"
+    : !affordable
+      ? "Need coins"
+      : confirming
+        ? `Confirm ✦ ${coin(offer.price)}`
+        : `Open ${offer.short}`;
+  return `<button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>`;
+}
+
+/** "Nidorina promo" / "Moltres, Articuno and Zapdos promos". */
+function promoNames(ids) {
+  const cards = ids.map((id) => byId[id]).filter(Boolean);
+  if (!cards.length) return "";
+  // The Pokémon Center ETB has the Nidorina promo twice, stamped and not.
+  const counts = new Map();
+  for (const card of cards) counts.set(card.name, (counts.get(card.name) || 0) + 1);
+  const names = [...counts].map(([name, n]) => (n > 1 ? `${n} ${name}` : name));
+  const list = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0];
+  return `${list} promo${cards.length > 1 ? "s" : ""}`;
+}
+
 /** Booster boxes, ETBs and bundles for the live set, priced from data/sealed.json. */
 function renderSealed() {
   if (!els.sealedGrid) return;
-  const offers = sealedOffers(sealedPrices[liveSet.id]);
+  const offers = sealedOffers(sealedPrices[liveSet.id], productList[liveSet.id]).map((offer) =>
+    priceOffer(offer, liveSet, cards)
+  );
   els.sealedBlock.classList.toggle("hidden", !offers.length || !liveSet.wrappers.length);
-  const signed = Boolean(activeTrainer());
   const single = Number(liveSet.cost) || 0;
   const stack = [0, 1, 2].map((i) => liveSet.wrappers[i % liveSet.wrappers.length]).filter(Boolean);
   els.sealedGrid.innerHTML = offers
     .map((offer) => {
-      const affordable = signed && state.coins >= offer.price;
-      const confirming = sealedConfirm === offer.id && affordable;
-      const label = !signed
-        ? "Sign in to open"
-        : !affordable
-          ? "Need coins"
-          : confirming
-            ? `Confirm ✦ ${coin(offer.price)}`
-            : `Open ${offer.short}`;
       const each = offer.price / offer.packs;
       const vsSingle = single ? Math.round((1 - each / single) * 100) : 0;
       const deal =
         vsSingle >= 1 ? `${vsSingle}% under single packs` : vsSingle <= -1 ? `${-vsSingle}% over single packs` : "Same as single packs";
+      const promo = promoNames(offer.promos);
       return `<article class="sealed-card" data-sealed="${esc(offer.id)}">
         <div class="sealed-stack" aria-hidden="true">
           ${stack.map((wrap) => `<span>${packPicture(wrap, " ")}</span>`).join("")}
         </div>
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
-          <p>${offer.packs} packs · ✦ ${coin(each)} each · ${esc(deal)}</p>
+          <p>${offer.packs} packs${promo ? ` + ${esc(promo)}` : ""} · ✦ ${coin(each)} each · ${esc(deal)}</p>
         </div>
         <div class="pack-meta">
           <span class="cost">✦ ${coin(offer.price)}</span>
-          <button class="buy${confirming ? " confirming" : ""}" ${signed && !affordable ? "disabled" : ""}>${label}</button>
+          ${productButton(offer)}
+        </div>
+      </article>`;
+    })
+    .join("");
+  renderPromoProducts();
+}
+
+/** What a promo product holds, in one line: "29 packs + 1 Classic Collection pack". */
+function productContents(offer) {
+  const parts = [];
+  if (offer.packs) parts.push(`${offer.packs} pack${offer.packs === 1 ? "" : "s"}`);
+  for (const [key, n] of Object.entries(offer.special || {})) {
+    const name = liveSet.specialPacks?.[key]?.wrapper?.name || key;
+    parts.push(`${n} ${name} pack${n === 1 ? "" : "s"}`);
+  }
+  if (!parts.length && offer.kind === "deck") parts.push("60-card deck");
+  return parts.join(" + ");
+}
+
+/** "Nov 6" for a product that is still on preorder. */
+function releaseNote(offer) {
+  if (!offer.released) return "";
+  const when = new Date(`${offer.released}T12:00:00Z`);
+  if (Number.isNaN(when.getTime()) || when.getTime() <= Date.now()) return "";
+  return `Out ${when.toLocaleDateString(undefined, { month: "short", day: "numeric" })}`;
+}
+
+/**
+ * Collections, tins, premium collections and battle decks for the live set:
+ * the products that come with promo cards, from data/products.json. The
+ * promo cards sit in front of the box photo, and each one can be inspected.
+ */
+function renderPromoProducts() {
+  if (!els.promoGrid) return;
+  const offers = promoOffers(productList[liveSet.id])
+    .filter((offer) => offer.promos.every((id) => byId[id]))
+    .map((offer) => priceOffer(offer, liveSet, cards));
+  els.promoBlock.classList.toggle("hidden", !offers.length);
+  els.promoGrid.innerHTML = offers
+    .map((offer) => {
+      const promos = offer.promos.map((id) => byId[id]);
+      const note = releaseNote(offer);
+      const worth = promos.reduce((sum, card) => sum + sellValue(card), 0);
+      return `<article class="sealed-card promo-product" data-sealed="${esc(offer.id)}">
+        <div class="promo-stage">
+          ${offer.image ? `<img class="promo-box" src="${esc(offer.image)}" alt="" loading="lazy" decoding="async" />` : ""}
+          <div class="promo-fan count-${Math.min(promos.length, 3)}">
+            ${promos
+              .map(
+                (card) => `<button type="button" class="promo-face" ${inspectAttrs(card)}
+                  title="${esc(card.name)} · ${esc(numberLine(card))}" aria-label="Inspect the ${esc(card.name)} promo">
+                  ${tcgFace(card, { small: true, stamp: false, lazy: true })}
+                </button>`
+              )
+              .join("")}
+          </div>
+          ${note ? `<span class="promo-note">${esc(note)}</span>` : ""}
+        </div>
+        <div class="sealed-copy">
+          <h3>${esc(offer.name)}</h3>
+          <p>${esc(productContents(offer))} · ${esc(promoNames(offer.promos))}</p>
+          <p class="promo-worth">Promo${promos.length === 1 ? "" : "s"} worth ✦ ${coin(worth)}</p>
+          ${offer.market ? `<p class="promo-market">Market ✦ ${coin(offer.market)}, but what's inside is worth more, so it costs that.</p>` : ""}
+        </div>
+        <div class="pack-meta">
+          <span class="cost">✦ ${coin(offer.price)}</span>
+          ${productButton(offer)}
         </div>
       </article>`;
     })
@@ -3588,15 +3701,19 @@ function syncActions() {
   if (sealedRun) {
     els.againBtn.disabled = false;
     els.againBtn.title = "";
-    els.againBtn.textContent = boxLeft
-      ? `Next pack (${sealedRun.index + 2} of ${sealedRun.packs.length})`
-      : `${sealedRun.product.short} summary`;
+    // A battle deck is its promo and nothing else: there is no next pack or summary.
+    els.againBtn.classList.toggle("hidden", !spread || !sealedRun.packs.length);
+    els.againBtn.textContent = sealedRun.index < 0
+      ? `Open pack 1 of ${sealedRun.packs.length}`
+      : boxLeft
+        ? `Next pack (${sealedRun.index + 2} of ${sealedRun.packs.length})`
+        : `${sealedRun.product.short} summary`;
   } else {
     els.againBtn.disabled = spread && state.coins < liveSet.cost;
     els.againBtn.title = els.againBtn.disabled ? "Claim coins or sell extras to open another pack" : "";
     els.againBtn.textContent = "Open another";
   }
-  els.boxSummaryBtn?.classList.toggle("hidden", !(sealedRun && boxLeft > 0 && !summary));
+  els.boxSummaryBtn?.classList.toggle("hidden", !(sealedRun && boxLeft > 0 && !summary && sealedRun.index >= 0));
   if (els.boxSummaryBtn && sealedRun) els.boxSummaryBtn.textContent = `Skip to ${sealedRun.product.noun} summary`;
   // Mid-box, the way out is the summary, so the remaining packs aren't skipped unseen.
   const exits = summary || (spread && !boxLeft);
@@ -4065,16 +4182,21 @@ function showBoxSummary() {
   els.thumbs.innerHTML = "";
   els.spread.classList.remove("hidden");
 
-  const all = run.packs.flatMap((pack) => pack.cards);
+  const promos = run.promos || [];
+  const all = [...promos, ...run.packs.flatMap((pack) => pack.cards)];
   const worth = money(all.reduce((sum, card) => sum + sellValue(card), 0));
   const fresh = all.filter((card) => card.wasNew).length;
   const hits = all.filter((card) => isHit(card));
   const rank = (card) => RARITY_ORDER.indexOf(card.rarity);
-  const shown = (hits.length ? hits : all.filter((card) => card.rarity !== "Energy"))
-    .map((card, i) => ({ card, i }))
-    .sort((a, b) => rank(b.card) - rank(a.card) || sellValue(b.card) - sellValue(a.card) || a.i - b.i)
-    .slice(0, hits.length ? 60 : 12)
-    .map(({ card }) => card);
+  // The promos lead, then the hits (or the best cards, in a box with none).
+  const shown = [
+    ...promos,
+    ...(hits.length ? hits : all.filter((card) => card.rarity !== "Energy" && !card.promo))
+      .map((card, i) => ({ card, i }))
+      .sort((a, b) => rank(b.card) - rank(a.card) || sellValue(b.card) - sellValue(a.card) || a.i - b.i)
+      .slice(0, hits.length ? 60 : 12)
+      .map(({ card }) => card),
+  ];
   const counts = {};
   for (const card of hits) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
   const tally = Object.entries(counts)
@@ -4085,8 +4207,8 @@ function showBoxSummary() {
 
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker">${esc(liveSet.name)} · ${esc(run.product.name)} · ${run.packs.length} packs</p>
-      <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : "No hits this time.")}</h2>
+      <p class="spread-kicker">${esc(liveSet.name)} · ${esc(run.product.name)} · ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</p>
+      <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : promos.length ? "No pack hits, but the promos are yours." : "No hits this time.")}</h2>
       <div class="spread-stats">
         <span><b data-count="${all.length}">${all.length}</b> cards</span>
         <span><b data-count="${fresh}">${fresh}</b> new</span>
@@ -4096,18 +4218,22 @@ function showBoxSummary() {
       ${tally ? `<p class="box-tally">${esc(tally)}</p>` : ""}
     </div>
     <div class="spread-grid">${shown
-      .map((card, i) => `<button type="button" class="spread-card ${isHit(card) ? "hit" : ""} ${i === 0 ? "top-pull" : ""}"
+      .map((card, i) => {
+        const best = i === promos.length && (hits.length || !promos.length);
+        return `<button type="button" class="spread-card ${isHit(card) || card.promo ? "hit" : ""} ${card.promo ? "promo-pull" : ""} ${best ? "top-pull" : ""}"
           style="--d:${Math.min(i, 30) * 30}ms"
           ${inspectAttrs(card)}
           title="${esc(card.name)} · ${esc(rarityLine(card))}">
         ${tcgFace(card, { small: true })}
+        ${card.promo ? `<span class="chip promo">Promo</span>` : ""}
         ${card.wasNew ? `<span class="chip new">New</span>` : ""}
-        ${i === 0 ? `<span class="best-tag">Best pull</span>` : ""}
-      </button>`)
+        ${best ? `<span class="best-tag">Best pull</span>` : ""}
+      </button>`;
+      })
       .join("")}</div>
     <p class="spread-tip">${
-      unseen ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection. ` : ""
-    }${hits.length ? "" : "Showing the best cards instead. "}Select a card to inspect it.</p>`;
+      unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection. ` : ""
+    }${hits.length || !run.packs.length ? "" : "Showing the best cards instead. "}Select a card to inspect it.</p>`;
 
   els.ripHint.textContent = "";
   syncBoxProgress();
@@ -4364,14 +4490,24 @@ async function startRip(wrapper) {
   }
 }
 
-/** Buy a whole sealed product. The server opens every pack; we deal them one at a time. */
+/** Pack art for a pack the server opened: one of the set's wrappers, or a special pack's. */
+function wrapperFor(id) {
+  const special = Object.values(liveSet.specialPacks || {}).find((pack) => pack.wrapper.id === id);
+  return special?.wrapper || liveSet.wrappers.find((w) => w.id === id) || liveSet.wrappers[0];
+}
+
+/**
+ * Buy a whole sealed product. The server opens every pack; we deal them one at
+ * a time. A product with promo cards shows them first, face up, the way they
+ * sit in the window of the real box.
+ */
 async function startSealed(productId) {
   if (!activeTrainer()) {
     toast("Sign in to open boxes. Cards save to your account.");
     openAuth("signup");
     return;
   }
-  const offer = sealedOffers(sealedPrices[liveSet.id]).find((item) => item.id === productId);
+  const offer = priceOffer(findOffer(sealedPrices[liveSet.id], productList[liveSet.id], productId), liveSet, cards);
   if (!offer) {
     toast("That product isn't sold for this set.");
     return;
@@ -4389,13 +4525,21 @@ async function startSealed(productId) {
     });
     afterEconomy(data.save);
     const packs = (data.packs || []).map((pack) => ({
-      wrapper: liveSet.wrappers.find((w) => w.id === pack.wrapperId) || liveSet.wrappers[0],
+      wrapper: wrapperFor(pack.wrapperId),
       cards: pack.cards || [],
     }));
-    sealedRun = { product: { ...offer, ...data.product }, packs, index: 0, cost: data.cost };
+    const promos = (data.promos || []).map((card) => ({ ...card, reverse: false }));
+    sealedRun = {
+      product: { ...offer, ...data.product },
+      packs,
+      promos,
+      index: promos.length ? -1 : 0,
+      cost: data.cost,
+    };
     renderHeader();
     renderShop();
-    if (packs.length) presentPack(packs[0].wrapper, packs[0].cards);
+    if (promos.length) showPromoIntro();
+    else if (packs.length) presentPack(packs[0].wrapper, packs[0].cards);
   } catch (err) {
     toast(err.message || "Couldn't open that box.");
     renderHeader();
@@ -4403,6 +4547,70 @@ async function startSealed(productId) {
   } finally {
     ripLock = false;
   }
+}
+
+/**
+ * The product's promo cards on the table before its first pack: they are the
+ * reason to buy the box, so they get a spread of their own.
+ */
+function showPromoIntro() {
+  const run = sealedRun;
+  if (!run) return;
+  bumpCardMotion();
+  flipBusy = false;
+  pendingAdvance = false;
+  packPhase = "spread";
+  clearHitFx();
+  clearHandoff();
+  clearFocusChrome({ snap: true });
+  paintOpeningStage(run.packs[0]?.wrapper || liveSet.wrappers[0]);
+  els.overlay.classList.add("is-spread");
+  els.packBody.classList.add("hidden", "emptied");
+  els.focusWrap.classList.add("hidden");
+  els.thumbs.innerHTML = "";
+  els.spread.classList.remove("hidden");
+
+  const promos = run.promos;
+  const worth = money(promos.reduce((sum, card) => sum + sellValue(card), 0));
+  const fresh = promos.filter((card) => card.wasNew).length;
+  const packs = run.packs.length;
+  const head =
+    promos.length === 1
+      ? `${promos[0].name}, ${numberLine(promos[0])}.`
+      : `${promos.length} promos in the ${run.product.noun}.`;
+  els.spread.innerHTML = `
+    <div class="spread-head">
+      <p class="spread-kicker">${esc(liveSet.name)} · ${esc(run.product.name)}</p>
+      <h2>${esc(head)}</h2>
+      <div class="spread-stats">
+        <span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>
+        <span><b data-count="${fresh}">${fresh}</b> new</span>
+        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
+        ${packs ? `<span><b>${packs}</b> pack${packs === 1 ? "" : "s"} to open</span>` : ""}
+      </div>
+    </div>
+    <div class="spread-grid promo-spread">${promos
+      .map(
+        (card, i) => `<button type="button" class="spread-card promo-pull ${i === 0 ? "top-pull" : ""}"
+          style="--d:${i * 90}ms"
+          ${inspectAttrs(card)}
+          title="${esc(card.name)} · ${esc(rarityLine(card))}">
+        ${tcgFace(card)}
+        <span class="chip promo">Promo</span>
+        ${card.wasNew ? `<span class="chip new">New</span>` : ""}
+      </button>`
+      )
+      .join("")}</div>
+    <p class="spread-tip">${
+      packs ? "Your promos are saved. The packs come next." : "Your promo is saved. The deck's other cards aren't simulated."
+    } Select a card to inspect it.</p>`;
+
+  els.ripHint.textContent = "";
+  syncBoxProgress();
+  syncActions();
+  openDialog(els.overlay, packs ? els.againBtn : els.doneBtn);
+  dealSpread();
+  countUpStats(els.spread);
 }
 
 /** Put a freshly ripped pack on the table, ready to tear. */
@@ -5586,7 +5794,12 @@ els.packGrid.addEventListener("click", (e) => {
 });
 
 // A box costs real coin, so the first click arms the button and the second buys.
-els.sealedGrid?.addEventListener("click", (e) => {
+function onProductClick(e) {
+  const face = e.target.closest("[data-inspect]");
+  if (face) {
+    inspectFromEl(face);
+    return;
+  }
   const card = e.target.closest("[data-sealed]");
   if (!card || e.target.closest("button")?.disabled) return;
   const id = card.dataset.sealed;
@@ -5603,7 +5816,9 @@ els.sealedGrid?.addEventListener("click", (e) => {
   sealedConfirm = null;
   clearTimeout(sealedConfirmTimer);
   startSealed(id);
-});
+}
+els.sealedGrid?.addEventListener("click", onProductClick);
+els.promoGrid?.addEventListener("click", onProductClick);
 
 function grabTop(e) {
   if (e.target.closest?.(".tear-handle")) return true;
@@ -5906,6 +6121,14 @@ document.addEventListener("keydown", (e) => {
  * cost baked into catalog.js stands.
  */
 async function loadSealedPrices() {
+  try {
+    productList = await fetch("data/products.json", { cache: "no-cache" }).then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+  } catch {
+    productList = {};
+  }
   try {
     const prices = await fetch("data/sealed.json", { cache: "no-cache" }).then((r) => {
       if (!r.ok) throw new Error(r.status);

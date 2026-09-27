@@ -33,7 +33,7 @@ Tally across every SV and ME set in the export (checked 2026-09-27):
 | `ULTRA_GOLD_RAINBOW` / `COLD_FOIL_ETCHED` | 8 | Mega Hyper Rare | `foil-gold` |
 | `RAINBOW` / `ETCHED` | 171 | Prismatic Evolutions commons to rares, Black White Rare | `foil-bwr` and others |
 | `RAINBOW` / `HOLO` | 76 | 30th Celebration commons, some energies | `foil-holo foil-rainbow` (me55 commons) |
-| `COSMOS` / `HOLO` | 204 | Promos, some rares | none yet |
+| `COSMOS` / `HOLO` | 204 | Promos, some rares | `foil-holo foil-cosmos` (`css/holo/promos.css`, promos with `foilAs: "Cosmos"`) |
 | `COSMOS` / `REVERSE` | 9 | Some energies and alt prints | none yet |
 | `CRACKED_ICE` / `REVERSE` | 8 | Alt-print energies | none yet |
 | `TINSEL` / `HOLO`, `REVERSE` | 31 | White Flare (rsv10pt5) holo rares, some energies | `foil-holo` |
@@ -228,7 +228,7 @@ stay at mid brightness or they turn white.
 |---|---|
 | Regular holo (scanlines + bars) | `regular-holo.css` |
 | Reverse holo | `reverse-holo.css` |
-| Cosmos holo | `cosmos-holo.css` |
+| Cosmos holo | `cosmos-holo.css` (ported for promos as `foil-cosmos` in `css/holo/promos.css`, textures in `assets/foil/promo/`) |
 | V (holo) | `v-regular.css` |
 | V full art, trainer full art | `v-full-art.css`, `trainer-full-art.css` |
 | VMAX | `v-max.css` (vmaxbg.jpg texture) |

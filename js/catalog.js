@@ -18,6 +18,9 @@ export const RARITY_ORDER = [
   "Futuristic Rare",
   "Mega Hyper Rare",
   "RGB Rare",
+  // Black star promos come in collection boxes, never packs. Last, so a
+  // binder lists them after the set, the way a master set is filed.
+  "Promo",
 ];
 
 export const RARITY_LABEL = {
@@ -40,6 +43,7 @@ export const RARITY_LABEL = {
   "Hyper Rare": "Hyper rare",
   "Special Illustration Rare": "Special illustration rare",
   "Mega Hyper Rare": "Mega hyper rare",
+  Promo: "Promo",
 };
 
 /**
@@ -68,6 +72,7 @@ export const RARITY_MARK = {
   "ACE SPEC Rare": { pips: [["★", "ace"]], group: "untilH" },
   "Shiny Rare": { pips: [["☆", "shiny"]], group: "expanded" },
   "Shiny Ultra Rare": { pips: [["☆", "shiny"], ["☆", "shiny"]], group: "expanded" },
+  Promo: { pips: [["★", "black"]], group: "current" },
 };
 
 export const RARITY_GROUPS = [
@@ -103,6 +108,7 @@ export const SELL_VALUE = {
   "Hyper Rare": 20,
   "Special Illustration Rare": 49.11,
   "Mega Hyper Rare": 169.54,
+  Promo: 1,
 };
 
 /**
@@ -124,8 +130,8 @@ export function money(n) {
  * Sealed products a player can open whole. Keys match data/sealed.json, and a
  * set only offers the products it has a market price for — special sets like
  * Ascended Heroes never printed a booster box, so they show ETB and bundle only.
- * Pack counts are the English retail contents; the extras in a real ETB
- * (sleeves, dice, promo) are not simulated, so an ETB costs more per pack.
+ * Pack counts are the English retail contents. An ETB's promo card comes from
+ * data/products.json; its sleeves and dice are not simulated.
  */
 export const SEALED_PRODUCTS = [
   { id: "boosterBox", name: "Booster Box", short: "Box", noun: "box", packs: 36 },
@@ -133,12 +139,74 @@ export const SEALED_PRODUCTS = [
   { id: "boosterBundle", name: "Booster Bundle", short: "Bundle", noun: "bundle", packs: 6 },
 ];
 
-/** Products a set can be opened as, with their prices, from a sealed.json row. */
-export function sealedOffers(prices) {
+/** How the shop and the opening name each kind of promo product. */
+const PRODUCT_KINDS = {
+  etb: { short: "ETB", noun: "ETB" },
+  premium: { short: "Collection", noun: "collection" },
+  collection: { short: "Box", noun: "box" },
+  tin: { short: "Tin", noun: "tin" },
+  blister: { short: "Blister", noun: "blister" },
+  deck: { short: "Deck", noun: "deck" },
+};
+
+/**
+ * Products a set can be opened as, with their prices, from a sealed.json row.
+ * `products` is the set's list from data/products.json: an entry with a
+ * standard product's id (the ETB) adds its promo cards to that product.
+ */
+export function sealedOffers(prices, products = []) {
+  const extra = Object.fromEntries((products || []).map((item) => [item.id, item]));
   return SEALED_PRODUCTS.flatMap((product) => {
     const price = prices?.[product.id];
-    return typeof price === "number" && price > 0 ? [{ ...product, price: money(price) }] : [];
+    if (!(typeof price === "number" && price > 0)) return [];
+    return [{ ...product, price: money(price), promos: extra[product.id]?.promos || [], special: {} }];
   });
+}
+
+/**
+ * Collection boxes, tins, premium collections and battle decks: the products
+ * that come with promo cards no pack carries. Built by
+ * scripts/build_products.py into data/products.json, priced at TCGplayer
+ * market. `packs` are the set's boosters, `special` any extra packs from the
+ * set's `specialPacks`, `promos` the card ids that come in the box.
+ */
+export function promoOffers(products = []) {
+  const standard = new Set(SEALED_PRODUCTS.map((product) => product.id));
+  return (products || []).flatMap((item) => {
+    if (standard.has(item.id) || !(typeof item.price === "number" && item.price > 0)) return [];
+    const promos = Array.isArray(item.promos) ? item.promos : [];
+    const packs = Math.max(0, Math.floor(Number(item.packs) || 0));
+    if (!packs && !promos.length) return [];
+    const words = PRODUCT_KINDS[item.kind] || PRODUCT_KINDS.collection;
+    return [{
+      id: String(item.id),
+      name: String(item.name),
+      kind: item.kind || "collection",
+      ...words,
+      packs,
+      special: item.special && typeof item.special === "object" ? item.special : {},
+      promos,
+      price: money(item.price),
+      image: item.image || "",
+      released: item.released || "",
+    }];
+  });
+}
+
+/** Any product a set sells, standard or promo, by id. */
+export function findOffer(prices, products, id) {
+  const key = String(id || "");
+  return (
+    sealedOffers(prices, products).find((item) => item.id === key) ||
+    promoOffers(products).find((item) => item.id === key) ||
+    null
+  );
+}
+
+/** Booster packs in an offer, special packs included. */
+export function offerPackCount(offer) {
+  const special = Object.values(offer?.special || {}).reduce((sum, n) => sum + (Number(n) || 0), 0);
+  return (Number(offer?.packs) || 0) + special;
 }
 
 export function sellValue(card) {
@@ -346,11 +414,10 @@ function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }
  * 1/120) plus @switchstock's 6,500-pack tally for the two it could not pin
  * (ex 1/4, RGB Mew 1/3,200). Sources and dates are in data/pullrates.json.
  *
- * `futuristicPromo` is not a real rate. The Pikachu ex Futuristic promos only
- * come in the Ultra-Premium Collections; Noah chose to let them drop from
- * packs, each as often as Mewtwo ex or Mew ex (1/240 apiece).
+ * The Pikachu ex Futuristic promos are not in packs: they come in the
+ * Ultra-Premium Collections, which data/products.json sells.
  */
-function celebrationSlots({ double, ir, classic, sir, futuristic, futuristicPromo, rgb }) {
+function celebrationSlots({ double, ir, classic, sir, futuristic, rgb }) {
   return [
     { pool: "energy", count: 1 },
     { pool: "pikachu", count: 1 },
@@ -359,13 +426,12 @@ function celebrationSlots({ double, ir, classic, sir, futuristic, futuristicProm
       pool: "rare-slot",
       count: 1,
       table: [
-        ["rare", 1 - double - ir - classic - sir - futuristic - futuristicPromo - rgb],
+        ["rare", 1 - double - ir - classic - sir - futuristic - rgb],
         ["double", double],
         ["ir", ir],
         ["classic", classic],
         ["sir", sir],
         ["futuristic", futuristic],
-        ["futuristicPromo", futuristicPromo],
         ["rgb", rgb],
       ],
     },
@@ -392,7 +458,7 @@ export const CELEBRATION_30TH = {
   released: "September 16, 2026",
   live: true,
   printedTotal: 128,
-  totalCount: 193,
+  totalCount: 210,
   packSize: 6,
   cost: 16.41,
   allFoil: true,
@@ -407,10 +473,25 @@ export const CELEBRATION_30TH = {
     classic: 0.1,
     sir: 1 / 21,
     futuristic: 1 / 120,
-    futuristicPromo: 1 / 120,
     rgb: 1 / 3200,
   }),
   heroIds: ["me55-158", "me55-157", "me55-152", "me55-149"],
+  /**
+   * Packs that only come inside a product. The Ultra-Premium Collections each
+   * add one Classic Collection pack: three etched Classic Collection cards.
+   */
+  specialPacks: {
+    classic: {
+      slots: [{ pool: "classic", count: 3 }],
+      wrapper: {
+        id: "classic",
+        name: "Classic Collection",
+        tag: "3 classics",
+        art: "assets/packs/me55/classic.avif",
+        artFallback: "assets/packs/me55/classic.png",
+      },
+    },
+  },
   wrappers: [
     {
       id: "pikachu",
