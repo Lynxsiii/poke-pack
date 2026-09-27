@@ -76,6 +76,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 CACHE = HERE.parent / "lab" / "cache"
 BASE = "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en"
+FLOOR = 22  # TCG Live's "not foil" luminance
 ETCH_WIDTH = 400
 
 # Site set id -> (TCG Live key for numbered cards, {site number: (key, number)}).
@@ -135,6 +136,9 @@ def alpha_mask(path: Path, width: int | None = None) -> Image.Image:
     """White with alpha = the map's luminance times its own alpha (its corners are transparent)."""
     a = np.asarray(Image.open(path).convert("RGBA")).astype(np.float32)
     lum = (0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]) * a[..., 3] / 255
+    # TCG Live paints "not foil" as 22/255, not black, which leaks a faint
+    # sheen over text boxes and borders; stretch so that floor is 0.
+    lum = (lum - FLOOR) * (255 / (255 - FLOOR))
     lum = lum.clip(0, 255).round().astype(np.uint8)
     white = np.full_like(lum, 255)
     img = Image.fromarray(np.dstack([white, white, white, lum]), "RGBA")

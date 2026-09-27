@@ -70,7 +70,10 @@ cure"). The surface gloss throws a soft highlight.
 - **Selectors** are prefixed `body.fx-holo.fx-holo.fx-holo` to beat the
   Classic engine in `css/app.css`. Sheet order: `holo/windows.css`,
   `base.css`, `rarities.css`, `finishes.css`, `realism.css`, `maps.css`,
-  `celebration.css`. Later sheets win ties, which the map rules rely on.
+  `celebration.css`, `sv-fullart.css`, `promos.css`, `sv-finishes.css`,
+  `sv-rare.css`, `shrouded-fable.css`, `shiny-vault.css`, `prismatic.css`.
+  Later sheets win ties, which the map rules rely on; the lab loads the
+  same list in the same order.
 - **Rest state** (PR 5): a resting card paints only `.foil`;
   `.foil::before`, `.foil::after`, `.cure` and `.glare` are `display: none`
   until `.lit` or `.settling`. The resting sheen lives on `.foil` at about
@@ -100,7 +103,9 @@ cure"). The surface gloss throws a soft highlight.
    the mask from geometry, consensus (`scripts/find_overlay.py` finds any
    printed mark on every card of a set) or the scan (masks.md). A
    Futuristic Rare TCG Live has not published yet gets both maps drawn from
-   its scan by `scripts/make_futuristic_maps.py`.
+   its scan by `scripts/make_futuristic_maps.py`. A stamped print (Pokémon
+   Center, set logo, Prerelease, store stamp) gets its stamp cut out by
+   `scripts/stamp_knockout.py` ([reference/promos.md](reference/promos.md)).
 3. **Pick the upstream recipe** (finish-catalog §3) and read it in
    `upstream/`. Map its layers onto the site's with the table in
    `upstream/README.md`.
@@ -152,16 +157,77 @@ cure"). The surface gloss throws a soft highlight.
 - **Colour-dodge a colour at mid brightness, not full.** A bright tint
   dodges to white; about 0.5-0.85 brightness leaves it coloured (the
   Classic Collection stars).
+- **Silver on a white scan must darken it.** A shiny's art window scans
+  white; `color-dodge`, `screen` and a hard-light group over half leave it
+  white. Multiply a pointer-centred silver ramp onto it (shiny-vault.css).
+- **`.foil`'s opacity multiplies its pseudo layers.** Specks at
+  `opacity: 1` inside a `.foil` at 0.4 show at 0.4. Put translucency in a
+  gradient's alpha and keep `.foil` near 1 while held.
+- **A TCG Live map is not binary.** An inked art background comes out at
+  about half alpha, the bare border at full, and "not foil" is 22/255, not
+  0. Tune for the border and let the map scale the window; the shipped
+  maps have had the floor stretched to 0 since 2026-09-27.
+- **A promo's stamp is not in any map.** TCG Live's map of a stamped promo
+  is the plain print's. `scripts/stamp_knockout.py` cuts the stamp out
+  ([reference/promos.md](reference/promos.md)); name stamped prints
+  `<base id>-<suffix>` so it finds them.
+- **The lab must mirror the site.** It had no `foilLook()` and did not
+  load `promos.css`, so promos looked nothing like the site; a recipe
+  judged there was judged on the wrong render. Check `lab/index.html`'s
+  sheet list against `index.html` when a sheet is added.
 
-## 30th Celebration
+## What has shipped, set by set
 
-Shipped (2026-09-27): all nine of the set's finishes have their own recipe
-in `css/holo/celebration.css`, the 161 cards TCG Live carries are masked by
-its foil maps (`css/holo/maps.css`), and the 30 Classic Collection cards
-cut the Pikachu stamp out of the foil with `has-stamp`. What each finish is,
-and what shipped for it, is in
-[reference/30th-celebration.md](reference/30th-celebration.md); it is also
-the worked example of taking a whole set from research to CSS.
+Each set thread wrote its research and what it shipped in `reference/`.
+Read the set's note before touching its cards; the shared-finish notes
+cover recipes several sets use.
+
+Shared finishes:
+
+- [reference/finish-catalog.md](reference/finish-catalog.md): identify a
+  finish from TCG Live's print id and photos; recipe per finish.
+- [reference/sv-rare-holo.md](reference/sv-rare-holo.md): the Scarlet &
+  Violet holo Rare (`SV_HOLO`, `foil-svholo`, `sv-rare.css`).
+- [reference/sv-fullart.md](reference/sv-fullart.md): full-art Ultra Rare
+  and gold Hyper Rare (`sv-fullart.css`), reverse holos per era, Double
+  Rare tuning.
+- [reference/sv-tera-acespec.md](reference/sv-tera-acespec.md): Tera ex
+  and ACE SPEC (`sv-finishes.css`).
+- [reference/promos.md](reference/promos.md): cosmos (smooth and pixel),
+  shiny promos, stamped prints and `stamp_knockout.py`.
+- [reference/svp-promos.md](reference/svp-promos.md): the SV Black Star
+  Promos set and the products each promo came in.
+- [reference/promos-existing-sets.md](reference/promos-existing-sets.md):
+  promos of the Mega Evolution sets, Black Bolt and White Flare (pixel
+  cosmos, tinsel).
+- [reference/sv-side-sets.md](reference/sv-side-sets.md): Trick or Trade,
+  McDonald's and the basic Energy runs.
+
+Sets, oldest first:
+
+- [reference/scarlet-violet.md](reference/scarlet-violet.md) (sv1)
+- [reference/sv2-paldea-evolved.md](reference/sv2-paldea-evolved.md) (sv2)
+- [reference/obsidian-flames.md](reference/obsidian-flames.md) (sv3)
+- [reference/151.md](reference/151.md) (sv3pt5): Costco reverse cosmos,
+  metal Mew, cosmos Energy (`sv151.css`)
+- [reference/paldean-fates.md](reference/paldean-fates.md) (sv4pt5): the
+  Shiny Vault and Scodix gold (`shiny-vault.css`)
+- [reference/temporal-forces.md](reference/temporal-forces.md) (sv5)
+- [reference/twilight-masquerade.md](reference/twilight-masquerade.md) (sv6)
+- [reference/shrouded-fable.md](reference/shrouded-fable.md) (sv6pt5)
+- [reference/stellar-crown.md](reference/stellar-crown.md) (sv7)
+- [reference/surging-sparks.md](reference/surging-sparks.md) (sv8)
+- [reference/prismatic-evolutions.md](reference/prismatic-evolutions.md)
+  (sv8pt5): Poké Ball and Master Ball prints (`prismatic.css`)
+- [reference/journey-together.md](reference/journey-together.md) (sv9)
+- [reference/destined-rivals.md](reference/destined-rivals.md) (sv10)
+- [reference/30th-celebration.md](reference/30th-celebration.md) (me55):
+  all nine finishes (`celebration.css`), foil maps, the Pikachu stamp
+  knockout; also the worked example of taking a whole set from research to
+  CSS.
+
+Paradox Rift (sv4) has no note yet; its thread's finish work is in
+[reference/sv-fullart.md](reference/sv-fullart.md).
 
 ## Files
 
@@ -171,14 +237,18 @@ the worked example of taking a whole set from research to CSS.
 | `reference/blend-and-mask.md` | Blend modes, filters, masks and textures by job |
 | `reference/finish-catalog.md` | Identify a finish; recipe per finish; primitives |
 | `reference/masks.md` | Mask sources, `find_overlay.py`, mask algebra |
-| `reference/30th-celebration.md` | This set's foil, maps, stamp fix and how to ship it |
 | `reference/verify.md` | Lab, screenshots, performance and settings checks |
+| `reference/promos.md` | Cosmos promos, shiny promos, stamped prints |
+| `reference/<set>.md` | One note per shipped set (the list above) |
 | `lab/` | The foil lab page, proof recipes (`lab.css`), stamp masks |
 | `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost |
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
 | `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets (with RGB channel masks and `--etch-bins`) |
 | `scripts/ship_stamp.py` | Ship a mark found by `find_overlay.py`: mask into `assets/masks/stamp/`, placements into `data/<set>.json` |
 | `scripts/make_futuristic_maps.py` | Draw a Futuristic Rare's foil map, etch and etch bins from its scan when TCG Live has none (hints in `lab/masks/futuristic/`) |
+| `scripts/stamp_knockout.py` | Cut a stamped print's stamp (Pokémon Center, set logo, Prerelease, store) out of its foil map: difference of the two scans, template match, or a box from `scripts/stamp_boxes.json`; draws a window-and-frame map when a window holo's plain print has none (a full-art print needs its TCG Live map fetched first) |
+| `scripts/make_pixel_cosmos.py` | Draws the pixel cosmos texture in `assets/foil/promo/` (seeded) |
+| `scripts/check_foil_maps.py` | Flag foil maps that may be swapped between cards |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
 
 On the site side:
@@ -187,5 +257,7 @@ On the site side:
 |---|---|
 | `js/foil-maps.js` | Per-card map, etch, stamp and cast-and-cure classes and variables for `tcgFace()` (shared with the lab) |
 | `css/holo/maps.css` | Foil maps as the mask, the stamp knockout, the `.cure` layer |
-| `css/holo/celebration.css` | The 30th Celebration finishes |
+| `css/holo/celebration.css` | The 30th Celebration finishes, and the shared SV holo Rare, Double Rare, IR and SIR map recipes |
+| `css/holo/promos.css` | Cosmos, smooth and pixel (`foil-cosmos`, `cosmos-pixel`) |
+| `css/holo/shiny-vault.css` | Shiny Rare, Shiny Ultra Rare and Scodix gold |
 | `scripts/make_celebration_textures.py` | Draws the texture tiles in `assets/foil/celebration/` (seeded, tileable) |

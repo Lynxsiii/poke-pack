@@ -38,7 +38,7 @@ const allFoil = (c) => ALL_FOIL.has(setId) && !c.energy && c.supertype !== "Ener
 
 function foilClass(c) {
   if (c.reverse || c.pattern) return "rare-glow";
-  if (HIT_RARITIES.has(c.rarity) || c.rarity === "Rare" || c.rarity === "Pikachu Rare" || allFoil(c)) return "holo";
+  if (HIT_RARITIES.has(c.rarity) || ["Rare", "Pikachu Rare", "Cosmos"].includes(c.rarity) || allFoil(c)) return "holo";
   return "";
 }
 function foilLayout(c) {
@@ -68,6 +68,7 @@ function foilPattern(c) {
   if (r === "RGB Rare") return "foil-future foil-rgb";
   if (r === "Classic Collection") return `${CLASSIC_FULL_FOIL.test(c.name || "") ? "foil-ultra" : "foil-holo"} foil-classic`;
   if (r === "Pikachu Rare") return "foil-holo foil-pikachu";
+  if (r === "Cosmos") return "foil-holo foil-cosmos";
   if (r === "ACE SPEC Rare") return c.foilMap ? "foil-holo foil-acespec" : "foil-holo";
   if (isEx(c) && (HIT_RARITIES.has(r) || r === "Rare")) return c.foilMap && r === "Double Rare" ? "foil-ex foil-sunpillar" : "foil-ex";
   if (c.supertype === "Trainer" && HIT_RARITIES.has(r)) return "foil-ex";
@@ -107,7 +108,16 @@ async function foilMaps(list) {
 
 const abs = (path) => new URL(path, location.href).href;
 
-function face(c, stamp, maps, withProof) {
+// Promo cards borrow another rarity's finish (foilLook() in js/app.js): the
+// classes come from the borrowed rarity, the caption keeps the card's own.
+function foilLook(c) {
+  if (!c?.promo || !c.foilAs || c.reverse) return c;
+  if (c.foilAs === "Frame") return { ...c, rarity: "Common", reverse: true, reverseKind: "cosmos" };
+  return { ...c, rarity: c.foilAs };
+}
+
+function face(shown, stamp, maps, withProof) {
+  const c = foilLook(shown);
   // The site's own per-card extras (foil maps, stamp, cast-and-cure coat), on
   // both copies. The proof-only extras below are the lab's older experiments.
   const extra = foilExtras(c, (path) => abs(`/${path}`));
@@ -129,7 +139,7 @@ function face(c, stamp, maps, withProof) {
       ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
       <span class="glare" aria-hidden="true"></span>
     </div>
-    <figcaption>${withProof ? (map ? `proof + ${map.lum ? "raw" : "shipped"} foil map` : "proof") : "site"} · ${c.number} ${c.name}<br>${c.rarity}</figcaption>
+    <figcaption>${withProof ? (map ? `proof + ${map.lum ? "raw" : "shipped"} foil map` : "proof") : "site"} · ${c.number} ${c.name}<br>${shown.rarity}${shown.foilAs ? ` as ${shown.foilAs}` : ""}${shown.variant ? ` · ${shown.variant}` : ""}</figcaption>
   </figure>`;
 }
 

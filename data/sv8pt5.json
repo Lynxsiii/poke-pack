@@ -12440,7 +12440,9 @@
     "tcgplayerId": 618090,
     "image": "assets/cards/sv8pt5/14-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/14-stamp-v2-sm.webp",
-    "market": 6.3
+    "market": 6.3,
+    "foilMap": "assets/foil/maps/sv8pt5/14-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/14-etch.webp"
   },
   {
     "id": "sv8pt5-23-stamp",
@@ -12488,7 +12490,9 @@
     "tcgplayerId": 618093,
     "image": "assets/cards/sv8pt5/23-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/23-stamp-v2-sm.webp",
-    "market": 5.88
+    "market": 5.88,
+    "foilMap": "assets/foil/maps/sv8pt5/23-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/23-etch.webp"
   },
   {
     "id": "sv8pt5-26-stamp",
@@ -12536,7 +12540,9 @@
     "tcgplayerId": 618108,
     "image": "assets/cards/sv8pt5/26-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/26-stamp-v2-sm.webp",
-    "market": 6.59
+    "market": 6.59,
+    "foilMap": "assets/foil/maps/sv8pt5/26-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/26-etch.webp"
   },
   {
     "id": "sv8pt5-30-stamp",
@@ -12584,7 +12590,9 @@
     "tcgplayerId": 618095,
     "image": "assets/cards/sv8pt5/30-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/30-stamp-v2-sm.webp",
-    "market": 5.61
+    "market": 5.61,
+    "foilMap": "assets/foil/maps/sv8pt5/30-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/30-etch.webp"
   },
   {
     "id": "sv8pt5-34-stamp",
@@ -12633,7 +12641,9 @@
     "tcgplayerId": 618101,
     "image": "assets/cards/sv8pt5/34-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/34-stamp-v2-sm.webp",
-    "market": 7.66
+    "market": 7.66,
+    "foilMap": "assets/foil/maps/sv8pt5/34-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/34-etch.webp"
   },
   {
     "id": "sv8pt5-41-stamp",
@@ -12682,7 +12692,9 @@
     "tcgplayerId": 618119,
     "image": "assets/cards/sv8pt5/41-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/41-stamp-v2-sm.webp",
-    "market": 7.5
+    "market": 7.5,
+    "foilMap": "assets/foil/maps/sv8pt5/41-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/41-etch.webp"
   },
   {
     "id": "sv8pt5-51-stamp",
@@ -12727,7 +12739,8 @@
     "tcgplayerId": 652715,
     "image": "assets/cards/sv8pt5/51-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/51-stamp-v2-sm.webp",
-    "market": 0.97
+    "market": 0.97,
+    "foilMap": "assets/foil/maps/sv8pt5/51-stamp.webp"
   },
   {
     "id": "sv8pt5-6-stamp",
@@ -12775,7 +12788,9 @@
     "tcgplayerId": 618107,
     "image": "assets/cards/sv8pt5/6-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/6-stamp-v2-sm.webp",
-    "market": 6.3
+    "market": 6.3,
+    "foilMap": "assets/foil/maps/sv8pt5/6-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/6-etch.webp"
   },
   {
     "id": "sv8pt5-60-stamp",
@@ -12824,7 +12839,9 @@
     "tcgplayerId": 618104,
     "image": "assets/cards/sv8pt5/60-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/60-stamp-v2-sm.webp",
-    "market": 20.28
+    "market": 20.28,
+    "foilMap": "assets/foil/maps/sv8pt5/60-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/60-etch.webp"
   },
   {
     "id": "sv8pt5-64-stamp",
@@ -12870,7 +12887,8 @@
     "tcgplayerId": 652713,
     "image": "assets/cards/sv8pt5/64-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/64-stamp-v2-sm.webp",
-    "market": 0.84
+    "market": 0.84,
+    "foilMap": "assets/foil/maps/sv8pt5/64-stamp.webp"
   },
   {
     "id": "sv8pt5-74-pokemon-day",
@@ -12958,7 +12976,9 @@
     "tcgplayerId": 618089,
     "image": "assets/cards/sv8pt5/75-stamp-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/75-stamp-v2-sm.webp",
-    "market": 7.66
+    "market": 7.66,
+    "foilMap": "assets/foil/maps/sv8pt5/75-stamp.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/75-etch.webp"
   },
   {
     "id": "sv8pt5-svp167",
@@ -13003,7 +13023,8 @@
     "tcgplayerId": 611826,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.71
+    "market": 0.71,
+    "foilMap": "assets/foil/maps/sv8pt5/svp167.webp"
   },
   {
     "id": "sv8pt5-svp168",
@@ -13048,7 +13069,8 @@
     "tcgplayerId": 611827,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.78
+    "market": 0.78,
+    "foilMap": "assets/foil/maps/sv8pt5/svp168.webp"
   },
   {
     "id": "sv8pt5-svp169",
@@ -13093,7 +13115,8 @@
     "tcgplayerId": 611828,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.82
+    "market": 0.82,
+    "foilMap": "assets/foil/maps/sv8pt5/svp169.webp"
   },
   {
     "id": "sv8pt5-svp170",
@@ -13137,7 +13160,8 @@
     "tcgplayerId": 611829,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 1.56
+    "market": 1.56,
+    "foilMap": "assets/foil/maps/sv8pt5/svp170.webp"
   },
   {
     "id": "sv8pt5-svp171",
@@ -13181,7 +13205,8 @@
     "tcgplayerId": 611830,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 1.07
+    "market": 1.07,
+    "foilMap": "assets/foil/maps/sv8pt5/svp171.webp"
   },
   {
     "id": "sv8pt5-svp172",
@@ -13226,7 +13251,8 @@
     "tcgplayerId": 611831,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 4.14
+    "market": 4.14,
+    "foilMap": "assets/foil/maps/sv8pt5/svp172.webp"
   },
   {
     "id": "sv8pt5-svp173",
@@ -13268,7 +13294,8 @@
     "tcgplayerId": 610758,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 9.85
+    "market": 9.85,
+    "foilMap": "assets/foil/maps/sv8pt5/svp173.webp"
   },
   {
     "id": "sv8pt5-svp173-pc",
@@ -13311,7 +13338,8 @@
     "tcgplayerId": 610757,
     "image": "assets/cards/sv8pt5/svp173-pc-v2.webp",
     "imageSmall": "assets/cards/sv8pt5/svp173-pc-v2-sm.webp",
-    "market": 82.88
+    "market": 82.88,
+    "foilMap": "assets/foil/maps/sv8pt5/svp173-pc.webp"
   },
   {
     "id": "sv8pt5-svp174",
@@ -13354,7 +13382,10 @@
     "tcgplayerId": 632083,
     "promo": true,
     "foilAs": "Special Illustration Rare",
-    "market": 18.4
+    "market": 18.4,
+    "foilMap": "assets/foil/maps/sv8pt5/svp174.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/svp174-etch.webp",
+    "etchAngle": "assets/foil/maps/sv8pt5/svp174-etch-angle.webp"
   },
   {
     "id": "sv8pt5-svp175",
@@ -13402,7 +13433,10 @@
     "tcgplayerId": 655095,
     "foilAs": "Special Illustration Rare",
     "promo": true,
-    "market": 20.64
+    "market": 20.64,
+    "foilMap": "assets/foil/maps/sv8pt5/svp175.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/svp175-etch.webp",
+    "etchAngle": "assets/foil/maps/sv8pt5/svp175-etch-angle.webp"
   },
   {
     "id": "sv8pt5-svp176",
@@ -13450,6 +13484,9 @@
     "tcgplayerId": 655094,
     "foilAs": "Special Illustration Rare",
     "promo": true,
-    "market": 29.21
+    "market": 29.21,
+    "foilMap": "assets/foil/maps/sv8pt5/svp176.webp",
+    "etchMap": "assets/foil/maps/sv8pt5/svp176-etch.webp",
+    "etchAngle": "assets/foil/maps/sv8pt5/svp176-etch-angle.webp"
   }
 ]

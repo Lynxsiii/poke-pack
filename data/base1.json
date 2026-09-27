@@ -4,7 +4,7 @@
     "name": "Alakazam",
     "number": "1",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
     ],
@@ -18,8 +18,8 @@
     "abilities": [
       {
         "name": "Damage Swap",
-        "text": "As often as you like during your turn (before your attack), you may move 1 damage counter from 1 of your Pok\u00e9mon to another as long as you don't Knock Out that Pok\u00e9mon. This power can't be used if Alakazam is Asleep, Confused, or Paralyzed.",
-        "type": "Pok\u00e9mon Power"
+        "text": "As often as you like during your turn (before your attack), you may move 1 damage counter from 1 of your Pokémon to another as long as you don't Knock Out that Pokémon. This power can't be used if Alakazam is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
       }
     ],
     "attacks": [
@@ -31,7 +31,7 @@
           "Psychic"
         ],
         "damage": "30",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Confused."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/1_hires.png",
@@ -42,7 +42,7 @@
     "name": "Blastoise",
     "number": "2",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
     ],
@@ -51,13 +51,13 @@
     ],
     "hp": "100",
     "artist": "Ken Sugimori",
-    "flavorText": "A brutal Pok\u00e9mon with pressurized water jets on its shell. They are used for high-speed tackles.",
+    "flavorText": "A brutal Pokémon with pressurized water jets on its shell. They are used for high-speed tackles.",
     "evolvesFrom": "Wartortle",
     "abilities": [
       {
         "name": "Rain Dance",
-        "text": "As often as you like during your turn (before your attack), you may attach 1 Water Energy card to 1 of your Water Pok\u00e9mon. (This doesn't use up your 1 Energy card attachment for the turn.) This power can't be used if Blastoise is Asleep, Confused, or Paralyzed.",
-        "type": "Pok\u00e9mon Power"
+        "text": "As often as you like during your turn (before your attack), you may attach 1 Water Energy card to 1 of your Water Pokémon. (This doesn't use up your 1 Energy card attachment for the turn.) This power can't be used if Blastoise is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
       }
     ],
     "attacks": [
@@ -80,7 +80,7 @@
     "name": "Chansey",
     "number": "3",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -89,7 +89,7 @@
     ],
     "hp": "120",
     "artist": "Ken Sugimori",
-    "flavorText": "A rare and elusive Pok\u00e9mon that is said to bring happiness to those who manage to catch it.",
+    "flavorText": "A rare and elusive Pokémon that is said to bring happiness to those who manage to catch it.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -122,7 +122,7 @@
     "name": "Charizard",
     "number": "4",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
     ],
@@ -137,7 +137,7 @@
       {
         "name": "Energy Burn",
         "text": "As often as you like during your turn (before your attack), you may turn all Energy attached to Charizard into Fire Energy for the rest of the turn. This power can't be used if Charizard is Asleep, Confused, or Paralyzed.",
-        "type": "Pok\u00e9mon Power"
+        "type": "Pokémon Power"
       }
     ],
     "attacks": [
@@ -161,7 +161,7 @@
     "name": "Clefairy",
     "number": "5",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -180,7 +180,7 @@
           "Colorless"
         ],
         "damage": "",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Asleep."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
       },
       {
         "name": "Metronome",
@@ -190,7 +190,7 @@
           "Colorless"
         ],
         "damage": "",
-        "text": "Choose 1 of the Defending Pok\u00e9mon's attacks. Metronome copies that attack except for its Energy costs and anything else required in order to use that attack, such as discarding Energy cards. (No matter what type the Defending Pok\u00e9mon is, Clefairy's type is still Colorless.)"
+        "text": "Choose 1 of the Defending Pokémon's attacks. Metronome copies that attack except for its Energy costs and anything else required in order to use that attack, such as discarding Energy cards. (No matter what type the Defending Pokémon is, Clefairy's type is still Colorless.)"
       }
     ],
     "image": "https://images.pokemontcg.io/base1/5_hires.png",
@@ -201,7 +201,7 @@
     "name": "Gyarados",
     "number": "6",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -233,7 +233,7 @@
           "Water"
         ],
         "damage": "40",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/6_hires.png",
@@ -244,7 +244,7 @@
     "name": "Hitmonchan",
     "number": "7",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -284,7 +284,7 @@
     "name": "Machamp",
     "number": "8",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
     ],
@@ -298,8 +298,8 @@
     "abilities": [
       {
         "name": "Strikes Back",
-        "text": "Whenever your opponent's attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pok\u00e9mon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is Asleep, Confused, or Paralyzed when your opponent attacks.",
-        "type": "Pok\u00e9mon Power"
+        "text": "Whenever your opponent's attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pokémon. (Don't apply Weakness and Resistance.) This power can't be used if Machamp is Asleep, Confused, or Paralyzed when your opponent attacks.",
+        "type": "Pokémon Power"
       }
     ],
     "attacks": [
@@ -323,7 +323,7 @@
     "name": "Magneton",
     "number": "9",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -344,7 +344,7 @@
           "Colorless"
         ],
         "damage": "30",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       },
       {
         "name": "Selfdestruct",
@@ -355,7 +355,7 @@
           "Colorless"
         ],
         "damage": "80",
-        "text": "Does 20 damage to each Pok\u00e9mon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pok\u00e9mon.) Magneton does 80 damage to itself."
+        "text": "Does 20 damage to each Pokémon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.) Magneton does 80 damage to itself."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/9_hires.png",
@@ -366,7 +366,7 @@
     "name": "Mewtwo",
     "number": "10",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -375,7 +375,7 @@
     ],
     "hp": "60",
     "artist": "Ken Sugimori",
-    "flavorText": "A scientist created this Pok\u00e9mon after years of horrific gene-splicing and DNA engineering experiments.",
+    "flavorText": "A scientist created this Pokémon after years of horrific gene-splicing and DNA engineering experiments.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -386,7 +386,7 @@
           "Colorless"
         ],
         "damage": "10+",
-        "text": "Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pok\u00e9mon."
+        "text": "Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pokémon."
       },
       {
         "name": "Barrier",
@@ -406,7 +406,7 @@
     "name": "Nidoking",
     "number": "11",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
     ],
@@ -437,7 +437,7 @@
           "Grass"
         ],
         "damage": "20",
-        "text": "The Defending Pok\u00e9mon is now Poisoned. It now takes 20 Poison damage instead of 10 after each player's turn (even if it was already Poisoned)."
+        "text": "The Defending Pokémon is now Poisoned. It now takes 20 Poison damage instead of 10 after each player's turn (even if it was already Poisoned)."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/11_hires.png",
@@ -448,7 +448,7 @@
     "name": "Ninetales",
     "number": "12",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -468,7 +468,7 @@
           "Colorless"
         ],
         "damage": "",
-        "text": "If your opponent has any Benched Pok\u00e9mon, choose 1 of them and switch it with his or her Active Pok\u00e9mon."
+        "text": "If your opponent has any Benched Pokémon, choose 1 of them and switch it with his or her Active Pokémon."
       },
       {
         "name": "Fire Blast",
@@ -490,7 +490,7 @@
     "name": "Poliwrath",
     "number": "13",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
     ],
@@ -522,7 +522,7 @@
           "Colorless"
         ],
         "damage": "40",
-        "text": "If the Defending Pok\u00e9mon has any Energy cards attached to it, choose 1 of them and discard it."
+        "text": "If the Defending Pokémon has any Energy cards attached to it, choose 1 of them and discard it."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/13_hires.png",
@@ -533,7 +533,7 @@
     "name": "Raichu",
     "number": "14",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -576,7 +576,7 @@
     "name": "Venusaur",
     "number": "15",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
     ],
@@ -590,8 +590,8 @@
     "abilities": [
       {
         "name": "Energy Trans",
-        "text": "As often as you like during your turn (before your attack), you may take 1 Grass Energy card attached to 1 of your Pok\u00e9mon and attach it to a different one. This power can't be used if Venusaur is Asleep, Confused, or Paralyzed.",
-        "type": "Pok\u00e9mon Power"
+        "text": "As often as you like during your turn (before your attack), you may take 1 Grass Energy card attached to 1 of your Pokémon and attach it to a different one. This power can't be used if Venusaur is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
       }
     ],
     "attacks": [
@@ -615,7 +615,7 @@
     "name": "Zapdos",
     "number": "16",
     "rarity": "Rare Holo",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -624,7 +624,7 @@
     ],
     "hp": "90",
     "artist": "Ken Sugimori",
-    "flavorText": "A legendary bird Pok\u00e9mon said to appear from clouds while wielding enormous lightning bolts.",
+    "flavorText": "A legendary bird Pokémon said to appear from clouds while wielding enormous lightning bolts.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -659,7 +659,7 @@
     "name": "Beedrill",
     "number": "17",
     "rarity": "Rare",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 2"
     ],
@@ -679,7 +679,7 @@
           "Colorless",
           "Colorless"
         ],
-        "damage": "30\u00d7",
+        "damage": "30×",
         "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
       },
       {
@@ -690,7 +690,7 @@
           "Grass"
         ],
         "damage": "40",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Poisoned."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/17_hires.png",
@@ -701,7 +701,7 @@
     "name": "Dragonair",
     "number": "18",
     "rarity": "Rare",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -710,7 +710,7 @@
     ],
     "hp": "80",
     "artist": "Mitsuhiro Arita",
-    "flavorText": "A mystical Pok\u00e9mon that exudes a gentle aura. Has the ability to change climate conditions.",
+    "flavorText": "A mystical Pokémon that exudes a gentle aura. Has the ability to change climate conditions.",
     "evolvesFrom": "Dratini",
     "abilities": [],
     "attacks": [
@@ -721,7 +721,7 @@
           "Colorless",
           "Colorless"
         ],
-        "damage": "30\u00d7",
+        "damage": "30×",
         "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
       },
       {
@@ -733,7 +733,7 @@
           "Colorless"
         ],
         "damage": "20",
-        "text": "If the Defending Pok\u00e9mon has any Energy cards attached to it, choose 1 of them and discard it."
+        "text": "If the Defending Pokémon has any Energy cards attached to it, choose 1 of them and discard it."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/18_hires.png",
@@ -744,7 +744,7 @@
     "name": "Dugtrio",
     "number": "19",
     "rarity": "Rare",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -776,7 +776,7 @@
           "Fighting"
         ],
         "damage": "70",
-        "text": "Does 10 damage to each of your own Benched Pok\u00e9mon. (Don't apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+        "text": "Does 10 damage to each of your own Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
     "image": "https://images.pokemontcg.io/base1/19_hires.png",
@@ -787,7 +787,7 @@
     "name": "Electabuzz",
     "number": "20",
     "rarity": "Rare",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -806,7 +806,7 @@
           "Lightning"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       },
       {
         "name": "Thunderpunch",
@@ -826,7 +826,7 @@
     "name": "Electrode",
     "number": "21",
     "rarity": "Rare",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -840,8 +840,8 @@
     "abilities": [
       {
         "name": "Buzzap",
-        "text": "At any time during your turn (before your attack), you may Knock Out Electrode and attach it to 1 of your other Pok\u00e9mon. If you do, choose a type of Energy. Electrode is now an Energy card (instead of a Pok\u00e9mon) that provides 2 energy of that type. You can't use this power if Electrode is Asleep, Confused, or Paralyzed.",
-        "type": "Pok\u00e9mon Power"
+        "text": "At any time during your turn (before your attack), you may Knock Out Electrode and attach it to 1 of your other Pokémon. If you do, choose a type of Energy. Electrode is now an Energy card (instead of a Pokémon) that provides 2 energy of that type. You can't use this power if Electrode is Asleep, Confused, or Paralyzed.",
+        "type": "Pokémon Power"
       }
     ],
     "attacks": [
@@ -864,7 +864,7 @@
     "name": "Pidgeotto",
     "number": "22",
     "rarity": "Rare",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -873,7 +873,7 @@
     ],
     "hp": "60",
     "artist": "Ken Sugimori",
-    "flavorText": "Very protective of its sprawling territory, this Pok\u00e9mon will fiercely peck at any intruder.",
+    "flavorText": "Very protective of its sprawling territory, this Pokémon will fiercely peck at any intruder.",
     "evolvesFrom": "Pidgey",
     "abilities": [],
     "attacks": [
@@ -884,7 +884,7 @@
           "Colorless"
         ],
         "damage": "20",
-        "text": "If your opponent has any Benched Pok\u00e9mon, he or she chooses 1 of them and switches it with the Defending Pok\u00e9mon. (Do the damage before switching the Pok\u00e9mon.)"
+        "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon. (Do the damage before switching the Pokémon.)"
       },
       {
         "name": "Mirror Move",
@@ -894,7 +894,7 @@
           "Colorless"
         ],
         "damage": "",
-        "text": "If Pidgeotto was attacked last turn, do the final result of that attack on Pidgeotto to the Defending Pok\u00e9mon."
+        "text": "If Pidgeotto was attacked last turn, do the final result of that attack on Pidgeotto to the Defending Pokémon."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/22_hires.png",
@@ -905,7 +905,7 @@
     "name": "Arcanine",
     "number": "23",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -914,7 +914,7 @@
     ],
     "hp": "100",
     "artist": "Ken Sugimori",
-    "flavorText": "A Pok\u00e9mon that has been long admired for its beauty. It runs gracefully, as if on wings.",
+    "flavorText": "A Pokémon that has been long admired for its beauty. It runs gracefully, as if on wings.",
     "evolvesFrom": "Growlithe",
     "abilities": [],
     "attacks": [
@@ -948,7 +948,7 @@
     "name": "Charmeleon",
     "number": "24",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -990,7 +990,7 @@
     "name": "Dewgong",
     "number": "25",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1022,7 +1022,7 @@
           "Colorless"
         ],
         "damage": "30",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/25_hires.png",
@@ -1033,7 +1033,7 @@
     "name": "Dratini",
     "number": "26",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1042,7 +1042,7 @@
     ],
     "hp": "40",
     "artist": "Ken Sugimori",
-    "flavorText": "Long considered a mythical Pok\u00e9mon until recently, when a small colony was found living underwater.",
+    "flavorText": "Long considered a mythical Pokémon until recently, when a small colony was found living underwater.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -1063,7 +1063,7 @@
     "name": "Farfetch'd",
     "number": "27",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1103,7 +1103,7 @@
     "name": "Growlithe",
     "number": "28",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1134,7 +1134,7 @@
     "name": "Haunter",
     "number": "29",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1153,7 +1153,7 @@
           "Psychic"
         ],
         "damage": "",
-        "text": "The Defending Pok\u00e9mon is now Asleep."
+        "text": "The Defending Pokémon is now Asleep."
       },
       {
         "name": "Dream Eater",
@@ -1162,7 +1162,7 @@
           "Psychic"
         ],
         "damage": "50",
-        "text": "You can't use this attack unless the Defending Pok\u00e9mon is Asleep."
+        "text": "You can't use this attack unless the Defending Pokémon is Asleep."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/29_hires.png",
@@ -1173,7 +1173,7 @@
     "name": "Ivysaur",
     "number": "30",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1182,7 +1182,7 @@
     ],
     "hp": "60",
     "artist": "Ken Sugimori",
-    "flavorText": "When the bulb on its back grows large, the Pok\u00e9mon seems to lose the ability to stand on its hind legs.",
+    "flavorText": "When the bulb on its back grows large, the Pokémon seems to lose the ability to stand on its hind legs.",
     "evolvesFrom": "Bulbasaur",
     "abilities": [],
     "attacks": [
@@ -1204,7 +1204,7 @@
           "Grass"
         ],
         "damage": "20",
-        "text": "The Defending Pok\u00e9mon is now Poisoned."
+        "text": "The Defending Pokémon is now Poisoned."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/30_hires.png",
@@ -1215,7 +1215,7 @@
     "name": "Jynx",
     "number": "31",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1224,7 +1224,7 @@
     ],
     "hp": "70",
     "artist": "Ken Sugimori",
-    "flavorText": "Merely by meditating, the Pok\u00e9mon launches a powerful psychic energy attack.",
+    "flavorText": "Merely by meditating, the Pokémon launches a powerful psychic energy attack.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -1233,7 +1233,7 @@
         "cost": [
           "Psychic"
         ],
-        "damage": "10\u00d7",
+        "damage": "10×",
         "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
       },
       {
@@ -1244,7 +1244,7 @@
           "Colorless"
         ],
         "damage": "20+",
-        "text": "Does 20 damage plus 10 more damage for each damage counter on the Defending Pok\u00e9mon."
+        "text": "Does 20 damage plus 10 more damage for each damage counter on the Defending Pokémon."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/31_hires.png",
@@ -1255,7 +1255,7 @@
     "name": "Kadabra",
     "number": "32",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1296,7 +1296,7 @@
     "name": "Kakuna",
     "number": "33",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1305,7 +1305,7 @@
     ],
     "hp": "80",
     "artist": "Keiji Kinebuchi",
-    "flavorText": "Almost incapable of moving, this Pok\u00e9mon can only harden its shell to protect itself from predators.",
+    "flavorText": "Almost incapable of moving, this Pokémon can only harden its shell to protect itself from predators.",
     "evolvesFrom": "Weedle",
     "abilities": [],
     "attacks": [
@@ -1325,7 +1325,7 @@
           "Grass"
         ],
         "damage": "20",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Poisoned."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/33_hires.png",
@@ -1336,7 +1336,7 @@
     "name": "Machoke",
     "number": "34",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1379,7 +1379,7 @@
     "name": "Magikarp",
     "number": "35",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1405,7 +1405,7 @@
         "cost": [
           "Water"
         ],
-        "damage": "10\u00d7",
+        "damage": "10×",
         "text": "Does 10 damage times the number of damage counters on Magikarp."
       }
     ],
@@ -1417,7 +1417,7 @@
     "name": "Magmar",
     "number": "36",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1458,7 +1458,7 @@
     "name": "Nidorino",
     "number": "37",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1467,8 +1467,8 @@
     ],
     "hp": "60",
     "artist": "Mitsuhiro Arita",
-    "flavorText": "An aggressive Pok\u00e9mon that is quick to attack. The horn on its head secretes a powerful venom.",
-    "evolvesFrom": "Nidoran \u2642",
+    "flavorText": "An aggressive Pokémon that is quick to attack. The horn on its head secretes a powerful venom.",
+    "evolvesFrom": "Nidoran ♂",
     "abilities": [],
     "attacks": [
       {
@@ -1478,7 +1478,7 @@
           "Colorless",
           "Colorless"
         ],
-        "damage": "30\u00d7",
+        "damage": "30×",
         "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
       },
       {
@@ -1501,7 +1501,7 @@
     "name": "Poliwhirl",
     "number": "38",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1521,7 +1521,7 @@
           "Water"
         ],
         "damage": "",
-        "text": "Choose 1 of the Defending Pok\u00e9mon's attacks. That Pok\u00e9mon can't use that attack during your opponent's next turn."
+        "text": "Choose 1 of the Defending Pokémon's attacks. That Pokémon can't use that attack during your opponent's next turn."
       },
       {
         "name": "Doubleslap",
@@ -1530,7 +1530,7 @@
           "Water",
           "Colorless"
         ],
-        "damage": "30\u00d7",
+        "damage": "30×",
         "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
       }
     ],
@@ -1542,7 +1542,7 @@
     "name": "Porygon",
     "number": "39",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1551,7 +1551,7 @@
     ],
     "hp": "30",
     "artist": "Tomoaki Imakuni",
-    "flavorText": "A Pok\u00e9mon that consists entirely of programming code. Capable of moving freely in cyberspace.",
+    "flavorText": "A Pokémon that consists entirely of programming code. Capable of moving freely in cyberspace.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -1561,7 +1561,7 @@
           "Colorless"
         ],
         "damage": "",
-        "text": "If the Defending Pok\u00e9mon has a Weakness, you may change it to a type of your choice other than Colorless."
+        "text": "If the Defending Pokémon has a Weakness, you may change it to a type of your choice other than Colorless."
       },
       {
         "name": "Conversion 2",
@@ -1581,7 +1581,7 @@
     "name": "Raticate",
     "number": "40",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1610,7 +1610,7 @@
           "Colorless"
         ],
         "damage": "?",
-        "text": "Does damage to the Defending Pok\u00e9mon equal to half the Defending Pok\u00e9mon's remaining HP (rounded up to the nearest 10)."
+        "text": "Does damage to the Defending Pokémon equal to half the Defending Pokémon's remaining HP (rounded up to the nearest 10)."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/40_hires.png",
@@ -1621,7 +1621,7 @@
     "name": "Seel",
     "number": "41",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1651,7 +1651,7 @@
     "name": "Wartortle",
     "number": "42",
     "rarity": "Uncommon",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -1692,7 +1692,7 @@
     "name": "Abra",
     "number": "43",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1711,7 +1711,7 @@
           "Psychic"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/43_hires.png",
@@ -1722,7 +1722,7 @@
     "name": "Bulbasaur",
     "number": "44",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1731,7 +1731,7 @@
     ],
     "hp": "40",
     "artist": "Mitsuhiro Arita",
-    "flavorText": "A strange seed was planted on its back at birth. Thus, a plant sprouted and now grows with this Pok\u00e9mon.",
+    "flavorText": "A strange seed was planted on its back at birth. Thus, a plant sprouted and now grows with this Pokémon.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -1753,7 +1753,7 @@
     "name": "Caterpie",
     "number": "45",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1772,7 +1772,7 @@
           "Grass"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/45_hires.png",
@@ -1783,7 +1783,7 @@
     "name": "Charmander",
     "number": "46",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1822,7 +1822,7 @@
     "name": "Diglett",
     "number": "47",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1861,7 +1861,7 @@
     "name": "Doduo",
     "number": "48",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1879,7 +1879,7 @@
         "cost": [
           "Colorless"
         ],
-        "damage": "10\u00d7",
+        "damage": "10×",
         "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
       }
     ],
@@ -1891,7 +1891,7 @@
     "name": "Drowzee",
     "number": "49",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1919,7 +1919,7 @@
           "Psychic"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Confused."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/49_hires.png",
@@ -1930,7 +1930,7 @@
     "name": "Gastly",
     "number": "50",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1939,7 +1939,7 @@
     ],
     "hp": "30",
     "artist": "Keiji Kinebuchi",
-    "flavorText": "Almost invisible, this gaseous Pok\u00e9mon cloaks the target and puts it to sleep without notice.",
+    "flavorText": "Almost invisible, this gaseous Pokémon cloaks the target and puts it to sleep without notice.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -1949,7 +1949,7 @@
           "Psychic"
         ],
         "damage": "",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Asleep."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
       },
       {
         "name": "Destiny Bond",
@@ -1958,7 +1958,7 @@
           "Colorless"
         ],
         "damage": "",
-        "text": "Discard 1 Psychic Energy card attached to Gastly in order to use this attack. If a Pok\u00e9mon Knocks Out Gastly during your opponent's next turn, Knock Out that Pok\u00e9mon."
+        "text": "Discard 1 Psychic Energy card attached to Gastly in order to use this attack. If a Pokémon Knocks Out Gastly during your opponent's next turn, Knock Out that Pokémon."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/50_hires.png",
@@ -1969,7 +1969,7 @@
     "name": "Koffing",
     "number": "51",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -1989,7 +1989,7 @@
           "Grass"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Poisoned; if tails, it is now Confused."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned; if tails, it is now Confused."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/51_hires.png",
@@ -2000,7 +2000,7 @@
     "name": "Machop",
     "number": "52",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2030,7 +2030,7 @@
     "name": "Magnemite",
     "number": "53",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2049,7 +2049,7 @@
           "Lightning"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       },
       {
         "name": "Selfdestruct",
@@ -2058,7 +2058,7 @@
           "Colorless"
         ],
         "damage": "40",
-        "text": "Does 10 damage to each Pok\u00e9mon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pok\u00e9mon.) Magnemite does 40 damage to itself."
+        "text": "Does 10 damage to each Pokémon on each player's Bench. (Don't apply Weakness and Resistance for Benched Pokémon.) Magnemite does 40 damage to itself."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/53_hires.png",
@@ -2069,7 +2069,7 @@
     "name": "Metapod",
     "number": "54",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -2098,7 +2098,7 @@
           "Grass"
         ],
         "damage": "20",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/54_hires.png",
@@ -2106,10 +2106,10 @@
   },
   {
     "id": "base1-55",
-    "name": "Nidoran \u2642",
+    "name": "Nidoran ♂",
     "number": "55",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2139,7 +2139,7 @@
     "name": "Onix",
     "number": "56",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2178,7 +2178,7 @@
     "name": "Pidgey",
     "number": "57",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2198,7 +2198,7 @@
           "Colorless"
         ],
         "damage": "10",
-        "text": "If your opponent has any Benched Pok\u00e9mon, he or she chooses 1 of them and switches it with the Defending Pok\u00e9mon. (Do the damage before switching the Pok\u00e9mon.)"
+        "text": "If your opponent has any Benched Pokémon, he or she chooses 1 of them and switches it with the Defending Pokémon. (Do the damage before switching the Pokémon.)"
       }
     ],
     "image": "https://images.pokemontcg.io/base1/57_hires.png",
@@ -2209,7 +2209,7 @@
     "name": "Pikachu",
     "number": "58",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2218,7 +2218,7 @@
     ],
     "hp": "40",
     "artist": "Mitsuhiro Arita",
-    "flavorText": "When several of these Pok\u00e9mon gather, their electricity can cause lightning storms.",
+    "flavorText": "When several of these Pokémon gather, their electricity can cause lightning storms.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -2248,7 +2248,7 @@
     "name": "Poliwag",
     "number": "59",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2278,7 +2278,7 @@
     "name": "Ponyta",
     "number": "60",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2318,7 +2318,7 @@
     "name": "Rattata",
     "number": "61",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2348,7 +2348,7 @@
     "name": "Sandshrew",
     "number": "62",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2367,7 +2367,7 @@
           "Fighting"
         ],
         "damage": "10",
-        "text": "If the Defending Pok\u00e9mon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/62_hires.png",
@@ -2378,7 +2378,7 @@
     "name": "Squirtle",
     "number": "63",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2397,7 +2397,7 @@
           "Water"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       },
       {
         "name": "Withdraw",
@@ -2417,7 +2417,7 @@
     "name": "Starmie",
     "number": "64",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Stage 1"
     ],
@@ -2447,7 +2447,7 @@
           "Colorless"
         ],
         "damage": "20",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/64_hires.png",
@@ -2458,7 +2458,7 @@
     "name": "Staryu",
     "number": "65",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2467,7 +2467,7 @@
     ],
     "hp": "40",
     "artist": "Keiji Kinebuchi",
-    "flavorText": "An enigmatic Pok\u00e9mon that can effortlessly regenerate any appendage it loses in battle.",
+    "flavorText": "An enigmatic Pokémon that can effortlessly regenerate any appendage it loses in battle.",
     "evolvesFrom": null,
     "abilities": [],
     "attacks": [
@@ -2488,7 +2488,7 @@
     "name": "Tangela",
     "number": "66",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2508,7 +2508,7 @@
           "Colorless"
         ],
         "damage": "20",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
       },
       {
         "name": "Poisonpowder",
@@ -2518,7 +2518,7 @@
           "Grass"
         ],
         "damage": "20",
-        "text": "The Defending Pok\u00e9mon is now Poisoned."
+        "text": "The Defending Pokémon is now Poisoned."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/66_hires.png",
@@ -2529,7 +2529,7 @@
     "name": "Voltorb",
     "number": "67",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2559,7 +2559,7 @@
     "name": "Vulpix",
     "number": "68",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2579,7 +2579,7 @@
           "Fire"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Confused."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/68_hires.png",
@@ -2590,7 +2590,7 @@
     "name": "Weedle",
     "number": "69",
     "rarity": "Common",
-    "supertype": "Pok\u00e9mon",
+    "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
@@ -2609,7 +2609,7 @@
           "Grass"
         ],
         "damage": "10",
-        "text": "Flip a coin. If heads, the Defending Pok\u00e9mon is now Poisoned."
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
       }
     ],
     "image": "https://images.pokemontcg.io/base1/69_hires.png",
@@ -2719,7 +2719,7 @@
   },
   {
     "id": "base1-76",
-    "name": "Pok\u00e9mon Breeder",
+    "name": "Pokémon Breeder",
     "number": "76",
     "rarity": "Rare",
     "supertype": "Trainer",
@@ -2736,7 +2736,7 @@
   },
   {
     "id": "base1-77",
-    "name": "Pok\u00e9mon Trader",
+    "name": "Pokémon Trader",
     "number": "77",
     "rarity": "Rare",
     "supertype": "Trainer",
@@ -2872,7 +2872,7 @@
   },
   {
     "id": "base1-85",
-    "name": "Pok\u00e9mon Center",
+    "name": "Pokémon Center",
     "number": "85",
     "rarity": "Uncommon",
     "supertype": "Trainer",
@@ -2889,7 +2889,7 @@
   },
   {
     "id": "base1-86",
-    "name": "Pok\u00e9mon Flute",
+    "name": "Pokémon Flute",
     "number": "86",
     "rarity": "Uncommon",
     "supertype": "Trainer",
@@ -2906,7 +2906,7 @@
   },
   {
     "id": "base1-87",
-    "name": "Pok\u00e9dex",
+    "name": "Pokédex",
     "number": "87",
     "rarity": "Uncommon",
     "supertype": "Trainer",
