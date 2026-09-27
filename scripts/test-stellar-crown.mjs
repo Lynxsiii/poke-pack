@@ -21,8 +21,11 @@ for (const c of cards.filter((c) => !c.energy)) {
   }
   if (!["Common", "Uncommon"].includes(c.rarity)) assert.ok(c.foilMap, `${c.id} has a foil map`);
 }
-// The four Stellar Tera ex and their full arts are TCG Live's crystal SV_ULTRA print.
-const tera = cards.filter((c) => c.finish === "tera").map((c) => c.number);
+// The four Stellar Tera ex and their full arts are TCG Live's SV_ULTRA etched
+// print, which the shared Tera recipe keys on (Tera subtype, DR or UR).
+const tera = cards
+  .filter((c) => (c.subtypes || []).includes("Tera") && ["Double Rare", "Ultra Rare"].includes(c.rarity))
+  .map((c) => c.number);
 assert.deepEqual(tera, ["28", "32", "51", "128", "157", "158", "159"]);
 
 const sealed = JSON.parse(fs.readFileSync(new URL("data/sealed.json", root)));
