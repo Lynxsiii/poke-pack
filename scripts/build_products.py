@@ -88,7 +88,7 @@ from PIL import Image, ImageDraw, ImageFilter
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import price_history  # noqa: E402
 from build_set import card_record, merge, ordered  # noqa: E402
-from mirror_images import encode  # noqa: E402
+from mirror_images import replace_scan  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -424,9 +424,9 @@ def mirror(set_id: str, record: dict, remote: str | tuple[str, str], refresh: bo
             raise
         print(f"    {record['number']}: no scan at {remote}, showing the card it copies")
         raw, remote = fetch(fallback), fallback
-    encode(raw, ROOT / "assets" / "cards" / set_id, stem, force=True)
-    record["image"] = local
-    record["imageSmall"] = f"assets/cards/{set_id}/{stem}-sm.webp"
+    # A rescan that changes the art lands under a new name (<stem>-v2), since
+    # the old one is cached for a year.
+    replace_scan(raw, set_id, record, stem)
     record["imageRemote"] = remote
 
 

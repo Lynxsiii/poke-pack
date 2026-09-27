@@ -50,6 +50,7 @@ Usage:
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 import time
@@ -62,7 +63,7 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_set import card_record, fetch, ordered, page_data  # noqa: E402
-from mirror_images import encode  # noqa: E402
+from mirror_images import replace_scan  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -207,13 +208,13 @@ def foil_mask(set_id: str, stem: str, spec: dict, evolves: bool, refresh: bool) 
 
 def mirror(set_id: str, record: dict, remote: str, refresh: bool) -> None:
     stem = record["number"]
-    local = f"assets/cards/{set_id}/{stem}.webp"
-    if refresh or not (ROOT / local).exists() or record.get("imageRemote") != remote:
-        out = ROOT / "assets" / "cards" / set_id
-        out.mkdir(parents=True, exist_ok=True)
-        encode(get(remote), out, stem, force=True)
-    record["image"] = local
-    record["imageSmall"] = f"assets/cards/{set_id}/{stem}-sm.webp"
+    have = record.get("image") or ""
+    # mirror_images.py --photos may have moved the scan to <stem>-v2.
+    mine = re.fullmatch(rf"assets/cards/{set_id}/{re.escape(stem)}(-v\d+)?\.webp", have)
+    if refresh or not mine or not (ROOT / have).exists() or record.get("imageRemote") != remote:
+        (ROOT / "assets" / "cards" / set_id).mkdir(parents=True, exist_ok=True)
+        # Changed art lands under a new name, since the old one is cached for a year.
+        replace_scan(get(remote), set_id, record, stem)
     record["imageRemote"] = remote
 
 
