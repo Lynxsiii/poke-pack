@@ -126,7 +126,8 @@ without a market price fall back to the flat rarity table.
 
 The market price chart in the card inspector reads `data/prices/<set id>.json`,
 one file per set, fetched the first time someone inspects one of that set's
-cards. Each file holds a year of TCGplayer market prices for the set's cards
+cards. The shop reads the same file for the live set: each pack and box shows
+its three-month trend, and tapping it opens the full chart. Each file holds a year of TCGplayer market prices for the set's cards
 (`cards`, by card id) and for its pack, boxes and promo products (`sealed`, by
 the shop's product id): weekly points back to a year ago, every 3 days for the
 last quarter and daily for the last month. Cards are the Near Mint pack
@@ -145,10 +146,17 @@ tcgplayer.com product page) and matches cards to TCGplayer products by
 collector number and name through tcgcsv.com. It prints any card it could not
 match rather than guessing, finds a set's TCGplayer group by name when
 `data/sets/<id>.json` has no `tcgplayerGroup`, and caches the day's downloads
-in `scripts/.cache/prices/`. Re-running is safe and only adds: a backfilled
-point fills a date with no point and never replaces one already recorded. `fetch_prices.py` and `build_products.py`
-add today's point through `scripts/price_history.py` too. A new set needs one
+in `scripts/.cache/prices/`. `fetch_prices.py` and `build_products.py` add
+today's point through `scripts/price_history.py` too. A new set needs one
 backfill run after its data files exist.
+
+Every write only adds. A backfilled or daily point fills a date that has no
+point yet and never replaces one already recorded, and no point is dropped for
+its age, so each series grows by one point a day.
+
+A daily routine (a scheduled Claude session) runs `--daily --all` each morning
+UTC, opens a pull request with only `data/prices/` changed, merges it and
+checks that the site picked it up.
 
 `data/price-history.json`, the single file every set used to share, is gone;
 if a branch brings it back, any of the three scripts folds its points into

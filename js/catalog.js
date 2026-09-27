@@ -4,9 +4,12 @@ export const RARITY_ORDER = [
   "Uncommon",
   "Rare",
   "Pikachu Rare",
+  // Prismatic Evolutions' pattern prints of its Commons, Uncommons and Rares.
+  "Poké Ball",
   "Double Rare",
   "Shiny Rare",
   "ACE SPEC Rare",
+  "Master Ball",
   "Ultra Rare",
   "Shiny Ultra Rare",
   "Illustration Rare",
@@ -29,6 +32,8 @@ export const RARITY_LABEL = {
   Uncommon: "Uncommon",
   Rare: "Rare",
   "Pikachu Rare": "Pikachu rare",
+  "Poké Ball": "Poké Ball pattern",
+  "Master Ball": "Master Ball pattern",
   "Double Rare": "Double rare",
   "ACE SPEC Rare": "ACE SPEC rare",
   "Ultra Rare": "Ultra rare",
@@ -70,6 +75,10 @@ export const RARITY_MARK = {
   "Black White Rare": { pips: [["★", "black"], ["☆", "white"]], group: "untilI" },
   "Hyper Rare": { pips: [["☆", "gold"], ["☆", "gold"]], group: "untilI" },
   "ACE SPEC Rare": { pips: [["★", "ace"]], group: "untilH" },
+  // Not printed marks: the card carries its base rarity's symbol
+  // (`printedRarity`), and the ball stands for the pattern in filters.
+  "Poké Ball": { pips: [["◓", "pokeball"]], group: "untilI" },
+  "Master Ball": { pips: [["◓", "masterball"]], group: "untilI" },
   "Shiny Rare": { pips: [["☆", "shiny"]], group: "expanded" },
   "Shiny Ultra Rare": { pips: [["☆", "shiny"], ["☆", "shiny"]], group: "expanded" },
   Promo: { pips: [["★", "black"]], group: "current" },
@@ -99,6 +108,8 @@ export const SELL_VALUE = {
   "Illustration Rare": 3.2,
   "Futuristic Rare": 150,
   "Pikachu Rare": 0.5,
+  "Poké Ball": 1.2,
+  "Master Ball": 8,
   "Classic Collection": 12,
   "RGB Rare": 4000,
   "Shiny Rare": 2,
@@ -148,6 +159,9 @@ const PRODUCT_KINDS = {
   blister: { short: "Blister", noun: "blister" },
   deck: { short: "Deck", noun: "deck" },
   battle: { short: "Box", noun: "box" },
+  // A promo handed out on its own (a tournament reward, a museum or store
+  // giveaway), sold as the card alone at its market price.
+  event: { short: "Promo", noun: "promo" },
 };
 
 /**
@@ -192,7 +206,10 @@ export function promoOffers(products = []) {
   return (products || []).flatMap((item) => {
     if (standard.has(item.id) || !(typeof item.price === "number" && item.price > 0)) return [];
     const promos = Array.isArray(item.promos) ? item.promos : [];
-    const packs = Math.max(0, Math.floor(Number(item.packs) || 0));
+    const from = packsFrom(item);
+    const packs = from
+      ? Object.values(from).reduce((sum, n) => sum + n, 0)
+      : Math.max(0, Math.floor(Number(item.packs) || 0));
     if (!packs && !promos.length) return [];
     const words = PRODUCT_KINDS[item.kind] || PRODUCT_KINDS.collection;
     return [{
@@ -201,6 +218,8 @@ export function promoOffers(products = []) {
       kind: item.kind || "collection",
       ...words,
       packs,
+      ...(from ? { from } : {}),
+      ...(item.note ? { note: String(item.note) } : {}),
       special: item.special && typeof item.special === "object" ? item.special : {},
       promos,
       pick: promoPick(item),
@@ -209,6 +228,40 @@ export function promoOffers(products = []) {
       released: item.released || "",
     }];
   });
+}
+
+/**
+ * `{ setId: packs }` for a product whose boosters come from other sets (the
+ * SV Black Star Promos' tins and ex boxes), or null when they are the selling
+ * set's own.
+ */
+function packsFrom(item) {
+  if (!item?.from || typeof item.from !== "object") return null;
+  const out = {};
+  for (const [setId, n] of Object.entries(item.from)) {
+    const count = Math.max(0, Math.floor(Number(n) || 0));
+    if (count) out[String(setId)] = count;
+  }
+  return Object.keys(out).length ? out : null;
+}
+
+/**
+ * The boosters an offer opens, as `[{ set, count }]`. A product with `from`
+ * opens those sets' packs; any other opens its own set's. Null when a set it
+ * needs is not playable yet, so the shop hides it and the Worker refuses it
+ * until that set goes live.
+ */
+export function offerPackSets(offer, set) {
+  if (offer?.from) {
+    const out = [];
+    for (const [id, count] of Object.entries(offer.from)) {
+      const packSet = PLAYABLE_SETS.find((item) => item.id === id);
+      if (!packSet?.wrappers?.length) return null;
+      out.push({ set: packSet, count });
+    }
+    return out;
+  }
+  return offer?.packs ? [{ set, count: offer.packs }] : [];
 }
 
 /** Any product a set sells, standard or promo, by id. */
@@ -402,18 +455,24 @@ function chainSlots(rates, reverseEnergy) {
 }
 
 /**
- * Prismatic Evolutions. Every Common / Uncommon / Rare / Double Rare has a
- * Poké Ball patterned printing of itself; C/U/R Pokémon also have Master Ball.
- * Those are extra finishes of the same number (Holofoil, Reverse Holofoil,
- * Poké Ball, Master Ball) — not extra checklist cards. They land in the
- * second reverse slot. ACE SPEC still replaces the first reverse.
+ * Prismatic Evolutions. Every Common, Uncommon and Rare has a Poké Ball
+ * pattern print, and the Pokémon among them a Master Ball one too; each is a
+ * card of its own here (scripts/build_patterns.py) with its own price. Both
+ * come out of the reverse slots: the first holds a Poké Ball print or an
+ * ACE SPEC instead of its reverse, the second a Master Ball print, a Special
+ * Illustration Rare or a gold Hyper Rare. Odds are TCGplayer's 1,200-pack
+ * study (data/pullrates.json).
  */
 function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }) {
   return [
     { pool: "energy", count: 1 },
     { pool: "common", count: 4 },
     { pool: "uncommon", count: 3 },
-    { pool: "reverse", count: 1, table: [["reverse", 1 - ace], ["ace", ace]] },
+    {
+      pool: "reverse",
+      count: 1,
+      table: [["reverse", 1 - pokeball - ace], ["pokeball", pokeball], ["ace", ace]],
+    },
     {
       pool: "rare-slot",
       count: 1,
@@ -427,8 +486,7 @@ function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }
       pool: "art-slot",
       count: 1,
       table: [
-        ["reverse", 1 - pokeball - masterball - sir - hyper],
-        ["pokeball", pokeball],
+        ["reverse", 1 - masterball - sir - hyper],
         ["masterball", masterball],
         ["sir", sir],
         ["hyper", hyper],
@@ -970,6 +1028,67 @@ export const WHITE_FLARE = {
   ],
 };
 
+/**
+ * 151. A main-set pack with no ACE SPEC: Double and Ultra Rares share the rare
+ * slot, and Illustration, Special Illustration and gold Hyper Rares take the
+ * second reverse. The basic Energy is a Cosmos holo one (data/sv3pt5.json)
+ * about one pack in four.
+ *
+ * Rates are TCGplayer's study of 1,500+ English packs (Sep 2023): DR 1/8,
+ * UR 1/16, IR 1/12, SIR 1/32, gold 1/51, Cosmos Energy 1/4. English 151 also
+ * has "demigod" packs: a starter's IR, IR and SIR ex filling both reverses
+ * and the rare slot. Nobody has measured how rare they are, so 1 in 1,300 is
+ * the community estimate. Sources in data/pullrates.json.
+ */
+export const SV_151 = {
+  id: "sv3pt5",
+  tcgId: "sv3pt5",
+  name: "151",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "September 22, 2023",
+  live: true,
+  printedTotal: 165,
+  totalCount: 236,
+  packSize: 11,
+  cost: 29.71,
+  dataFile: "data/sv3pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, September 2023. The original 151, one Mew wrapper, and a Cosmos holo Energy in every fourth pack.",
+  oddsLine: "DR 1/8 · UR 1/16 · IR 1/12 · SIR 1/32 · gold 1/51",
+  lede: "Kanto again, card for card. Charizard ex heads seven Special Illustration Rares, and a rare demigod pack holds a starter's whole line in illustration art.",
+  slots: [
+    {
+      pool: "energy",
+      count: 1,
+      table: [
+        ["energy", 1 - 0.2483],
+        ["foilEnergy", 0.2483],
+      ],
+    },
+    ...svSlots({ double: 0.1328, ultra: 0.0644, ir: 0.085, sir: 0.0311, hyper: 0.0194 }).slice(1),
+  ],
+  godPack: {
+    rate: 1 / 1300,
+    lines: [
+      ["sv3pt5-166", "sv3pt5-167", "sv3pt5-198"],
+      ["sv3pt5-168", "sv3pt5-169", "sv3pt5-199"],
+      ["sv3pt5-170", "sv3pt5-171", "sv3pt5-200"],
+    ],
+  },
+  heroIds: ["sv3pt5-199", "sv3pt5-205", "sv3pt5-200", "sv3pt5-198"],
+  wrappers: [
+    {
+      id: "mew",
+      name: "Mew",
+      cardId: "sv3pt5-151",
+      tag: "The original 151",
+      art: "assets/packs/sv3pt5/mew.avif",
+      artFallback: "assets/packs/sv3pt5/mew.png",
+    },
+  ],
+};
+
 export const DESTINED_RIVALS = {
   id: "sv10",
   tcgId: "sv10",
@@ -1043,15 +1162,15 @@ export const PRISMATIC_EVOLUTIONS = {
   released: "January 17, 2025",
   live: true,
   printedTotal: 131,
-  totalCount: 180,
+  // 180 numbered cards, 167 Poké Ball and Master Ball prints, 23 box promos.
+  totalCount: 370,
   packSize: 11,
-  cost: 15.09,
+  cost: 14.3,
   dataFile: "data/sv8pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  pokeballRarities: ["Common", "Uncommon", "Rare", "Double Rare"],
-  blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and a Poké Ball printing of every base card.",
-  oddsLine: "DR 1/6 · UR 1/13 · ACE 1/21 · SIR 1/45 · gold 1/180 · Poké Ball 1/3 · Master Ball 1/20",
-  lede: "Every Common, Uncommon, Rare, and Double Rare has a Poké Ball version of itself. Master Ball is C/U/R Pokémon only. Same number, extra finish — not a second checklist.",
+  blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and Poké Ball and Master Ball prints of the base cards.",
+  oddsLine: "Poké Ball 1/3 · DR 1/6 · UR 1/13 · Master Ball 1/20 · ACE 1/21 · SIR 1/45 · gold 1/179",
+  lede: "Every Common, Uncommon and Rare comes in a Poké Ball pattern, and every Pokémon among them in a Master Ball one. Each print is its own card with its own price.",
   slots: prismaticSlots({
     double: 0.1651,
     ultra: 0.0746,
@@ -1063,10 +1182,11 @@ export const PRISMATIC_EVOLUTIONS = {
   }),
   heroIds: ["sv8pt5-161", "sv8pt5-155", "sv8pt5-167", "sv8pt5-156"],
   wrappers: boosterWrappers("sv8pt5", [
-    { id: "jolteon", name: "Jolteon", cardId: "sv8pt5-153", tag: "Spark" },
-    { id: "eevee", name: "Eevee", cardId: "sv8pt5-167", tag: "The chase" },
-    { id: "umbreon", name: "Umbreon", cardId: "sv8pt5-161", tag: "Moon" },
-    { id: "glaceon", name: "Glaceon", cardId: "sv8pt5-150", tag: "Ice" },
+    { id: "jolteon", name: "Jolteon", cardId: "sv8pt5-153", tag: "Kanto trio" },
+    { id: "eevee", name: "Eevee", cardId: "sv8pt5-167", tag: "Sylveon" },
+    // Umbreon ex's Special Illustration Rare is the set's chase card.
+    { id: "umbreon", name: "Umbreon", cardId: "sv8pt5-161", tag: "The chase" },
+    { id: "glaceon", name: "Glaceon", cardId: "sv8pt5-150", tag: "Leafeon" },
   ]),
 };
 
@@ -1388,6 +1508,36 @@ export const SCARLET_VIOLET = {
   ]),
 };
 
+/**
+ * Scarlet & Violet Black Star Promos. There is no SVP booster: every card
+ * comes in a product that holds other sets' packs (a tin, an ex box, a
+ * premium collection, sold here with `from` naming those sets), in a deck,
+ * or on its own at an event. The promos a set's own boxes carry (its ETB,
+ * Build & Battle Box and blisters) stay filed under that set, and this page
+ * lists them too.
+ */
+export const SV_PROMOS = {
+  id: "svp",
+  tcgId: "svp",
+  name: "SV Black Star Promos",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "January 6, 2023",
+  live: true,
+  promoSet: true,
+  totalCount: 77,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/svp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, 2023 to 2025. The black star promos from tins, ex boxes, battle decks and premium collections.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Scarlet & Violet black star promo that isn't in a set's own boxes: the tins, ex boxes, battle decks and premium collections, each with its real packs, plus the tournament and museum promos on their own.",
+  slots: [],
+  heroIds: ["svp-svp056", "svp-svp124", "svp-svp166", "svp-svp085"],
+  wrappers: [],
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1409,6 +1559,9 @@ export const PLAYABLE_SETS = [
   PALDEA_EVOLVED,
   SHROUDED_FABLE,
   SCARLET_VIOLET,
+  PRISMATIC_EVOLUTIONS,
+  SV_151,
+  SV_PROMOS,
 ];
 
 /**
@@ -1419,7 +1572,6 @@ export const PLAYABLE_SETS = [
  * a matter of returning it to PLAYABLE_SETS and dropping its ROADMAP row.
  */
 export const RETIRED_SETS = [
-  PRISMATIC_EVOLUTIONS,
 ];
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
@@ -1464,9 +1616,7 @@ export const ROADMAP = [
   {
     era: "Scarlet & Violet",
     sets: [
-      { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
-      { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
     ],
   },
   {
