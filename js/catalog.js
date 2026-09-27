@@ -1115,6 +1115,11 @@ export const TWILIGHT_MASQUERADE = {
   ]),
 };
 
+/**
+ * Temporal Forces: odds from TCGplayer's 8,000-pack study (Peter Day, March
+ * 2024, 95% intervals): DR 16.83%, UR 6.67%, ACE SPEC 5.00% (first reverse
+ * slot), IR 7.72%, SIR 1.17%, Hyper Rare 0.72%. Sources in data/pullrates.json.
+ */
 export const TEMPORAL_FORCES = {
   id: "sv5",
   tcgId: "sv5",
@@ -1124,15 +1129,15 @@ export const TEMPORAL_FORCES = {
   released: "March 22, 2024",
   live: true,
   printedTotal: 162,
-  totalCount: 218,
+  totalCount: 232,
   packSize: 11,
-  cost: 11.37,
+  cost: 9.37,
   dataFile: "data/sv5.json",
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Scarlet & Violet, March 2024. Walking Wake, Iron Leaves, and the first ACE SPEC cards.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/86 · gold 1/139",
   lede: "Where ACE SPEC starts. The art slot is the hardest of the block — SIR at 1/86, gold at 1/139.",
-  slots: svSlots({ double: 0.1695, ultra: 0.0667, ir: 0.0769, sir: 0.0117, hyper: 0.0072, ace: 0.05 }),
+  slots: svSlots({ double: 0.1683, ultra: 0.0667, ir: 0.0772, sir: 0.0117, hyper: 0.0072, ace: 0.05 }),
   heroIds: ["sv5-205", "sv5-208", "sv5-203", "sv5-206"],
   wrappers: boosterWrappers("sv5", [
     { id: "walking-wake", name: "Walking Wake", cardId: "sv5-205", tag: "The chase" },
@@ -1153,6 +1158,7 @@ export const PLAYABLE_SETS = [
   BLACK_BOLT,
   WHITE_FLARE,
   TWILIGHT_MASQUERADE,
+  TEMPORAL_FORCES,
 ];
 
 /**
@@ -1169,7 +1175,6 @@ export const RETIRED_SETS = [
   SURGING_SPARKS,
   STELLAR_CROWN,
   SHROUDED_FABLE,
-  TEMPORAL_FORCES,
 ];
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
@@ -1220,7 +1225,6 @@ export const ROADMAP = [
       { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
-      { id: "sv5", name: "Temporal Forces", released: "Mar 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },

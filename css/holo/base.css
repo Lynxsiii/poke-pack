@@ -102,10 +102,16 @@ body.fx-holo.fx-holo.fx-holo .tcg {
    towards the viewer while it turns. There is one element here, so both live
    on it — and the perspective has to be inside the transform rather than on a
    parent, because .tcg's parents are grid and flex containers all over the
-   site and none of them are reliably a 3D context. */
-body.fx-holo.fx-holo.fx-holo .tcg {
+   site and none of them are reliably a 3D context.
+   Only a card in the hand gets it: perspective() is a 3D transform even at
+   0deg, so every resting card became its own GPU layer, and a collection
+   page of 200 of them was enough for a phone to kill the tab. */
+body.fx-holo.fx-holo.fx-holo .tcg.lit,
+body.fx-holo.fx-holo.fx-holo .tcg.settling {
   transform: perspective(600px) rotateY(var(--rotate-x)) rotateX(var(--rotate-y))
     scale(var(--card-scale));
+}
+body.fx-holo.fx-holo.fx-holo .tcg {
   /* Composite the print and its coatings on one plane before tilting it. */
   transform-style: flat;
 }
