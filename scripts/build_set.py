@@ -315,6 +315,14 @@ def build(set_id: str, refresh: bool) -> int:
         if index % 25 == 0:
             print(f"    {index}/{len(listing)}…")
 
+    # Cards the checklist doesn't carry — 30th Celebration's Classic Collection
+    # reprints live in their own Scrydex expansion — were added by hand, so keep
+    # them rather than let a rebuild delete them.
+    fresh_ids = {c["id"] for c in cards}
+    kept_extra = [c for cid, c in existing.items() if cid not in fresh_ids]
+    if kept_extra:
+        print(f"  kept {len(kept_extra)} card(s) not on the checklist")
+    cards.extend(kept_extra)
     cards.sort(key=lambda c: (len(c["number"]), c["number"]))
     out_path.write_text(
         json.dumps(cards, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

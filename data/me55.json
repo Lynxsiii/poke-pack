@@ -1,0 +1,2528 @@
+[
+  {
+    "id": "me55-1",
+    "name": "Exeggcute",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-1/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-1/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-1/large"
+  },
+  {
+    "id": "me55-2",
+    "name": "Alolan Exeggutor",
+    "number": "2",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-2/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-2/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-2/large"
+  },
+  {
+    "id": "me55-3",
+    "name": "Volbeat",
+    "number": "3",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-3/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-3/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-3/large"
+  },
+  {
+    "id": "me55-4",
+    "name": "Illumise",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-4/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-4/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-4/large"
+  },
+  {
+    "id": "me55-5",
+    "name": "Tropius",
+    "number": "5",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-5/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-5/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-5/large"
+  },
+  {
+    "id": "me55-6",
+    "name": "Cherubi",
+    "number": "6",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-6/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-6/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-6/large"
+  },
+  {
+    "id": "me55-7",
+    "name": "Cherrim",
+    "number": "7",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-7/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-7/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-7/large"
+  },
+  {
+    "id": "me55-8",
+    "name": "Vivillon",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-8/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-8/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-8/large"
+  },
+  {
+    "id": "me55-9",
+    "name": "Vulpix",
+    "number": "9",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-9/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-9/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-9/large"
+  },
+  {
+    "id": "me55-10",
+    "name": "Ninetales",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-10/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-10/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-10/large"
+  },
+  {
+    "id": "me55-11",
+    "name": "Moltres",
+    "number": "11",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-11/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-11/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-11/large"
+  },
+  {
+    "id": "me55-12",
+    "name": "Ho-Oh",
+    "number": "12",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-12/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-12/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-12/large"
+  },
+  {
+    "id": "me55-13",
+    "name": "Victini",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-13/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-13/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-13/large"
+  },
+  {
+    "id": "me55-14",
+    "name": "Reshiram",
+    "number": "14",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-14/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-14/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-14/large"
+  },
+  {
+    "id": "me55-15",
+    "name": "Fuecoco ex",
+    "number": "15",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-15/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-15/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-15/large"
+  },
+  {
+    "id": "me55-16",
+    "name": "Slowpoke",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-16/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-16/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-16/large"
+  },
+  {
+    "id": "me55-17",
+    "name": "Lapras",
+    "number": "17",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-17/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-17/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-17/large"
+  },
+  {
+    "id": "me55-18",
+    "name": "Articuno",
+    "number": "18",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-18/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-18/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-18/large"
+  },
+  {
+    "id": "me55-19",
+    "name": "Kyogre",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-19/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-19/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-19/large"
+  },
+  {
+    "id": "me55-20",
+    "name": "Palkia",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-20/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-20/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-20/large"
+  },
+  {
+    "id": "me55-21",
+    "name": "Greninja ex",
+    "number": "21",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-21/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-21/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-21/large"
+  },
+  {
+    "id": "me55-22",
+    "name": "Wishiwashi",
+    "number": "22",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-22/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-22/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-22/large"
+  },
+  {
+    "id": "me55-23",
+    "name": "Pikachu",
+    "number": "23",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-23/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-23/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-23/large"
+  },
+  {
+    "id": "me55-24",
+    "name": "Pikachu",
+    "number": "24",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-24/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-24/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-24/large"
+  },
+  {
+    "id": "me55-25",
+    "name": "Pikachu",
+    "number": "25",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-25/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-25/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-25/large"
+  },
+  {
+    "id": "me55-26",
+    "name": "Pikachu",
+    "number": "26",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-26/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-26/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-26/large"
+  },
+  {
+    "id": "me55-27",
+    "name": "Pikachu",
+    "number": "27",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-27/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-27/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-27/large"
+  },
+  {
+    "id": "me55-28",
+    "name": "Pikachu",
+    "number": "28",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-28/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-28/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-28/large"
+  },
+  {
+    "id": "me55-29",
+    "name": "Pikachu",
+    "number": "29",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-29/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-29/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-29/large"
+  },
+  {
+    "id": "me55-30",
+    "name": "Pikachu",
+    "number": "30",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-30/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-30/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-30/large"
+  },
+  {
+    "id": "me55-31",
+    "name": "Pikachu",
+    "number": "31",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-31/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-31/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-31/large"
+  },
+  {
+    "id": "me55-32",
+    "name": "Pikachu",
+    "number": "32",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-32/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-32/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-32/large"
+  },
+  {
+    "id": "me55-33",
+    "name": "Pikachu",
+    "number": "33",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-33/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-33/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-33/large"
+  },
+  {
+    "id": "me55-34",
+    "name": "Pikachu",
+    "number": "34",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-34/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-34/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-34/large"
+  },
+  {
+    "id": "me55-35",
+    "name": "Pikachu",
+    "number": "35",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-35/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-35/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-35/large"
+  },
+  {
+    "id": "me55-36",
+    "name": "Pikachu",
+    "number": "36",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-36/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-36/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-36/large"
+  },
+  {
+    "id": "me55-37",
+    "name": "Pikachu",
+    "number": "37",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-37/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-37/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-37/large"
+  },
+  {
+    "id": "me55-38",
+    "name": "Pikachu",
+    "number": "38",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-38/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-38/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-38/large"
+  },
+  {
+    "id": "me55-39",
+    "name": "Pikachu",
+    "number": "39",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-39/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-39/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-39/large"
+  },
+  {
+    "id": "me55-40",
+    "name": "Pikachu",
+    "number": "40",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-40/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-40/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-40/large"
+  },
+  {
+    "id": "me55-41",
+    "name": "Pikachu",
+    "number": "41",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-41/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-41/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-41/large"
+  },
+  {
+    "id": "me55-42",
+    "name": "Pikachu",
+    "number": "42",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-42/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-42/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-42/large"
+  },
+  {
+    "id": "me55-43",
+    "name": "Pikachu",
+    "number": "43",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-43/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-43/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-43/large"
+  },
+  {
+    "id": "me55-44",
+    "name": "Pikachu",
+    "number": "44",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-44/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-44/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-44/large"
+  },
+  {
+    "id": "me55-45",
+    "name": "Pikachu",
+    "number": "45",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-45/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-45/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-45/large"
+  },
+  {
+    "id": "me55-46",
+    "name": "Pikachu",
+    "number": "46",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-46/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-46/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-46/large"
+  },
+  {
+    "id": "me55-47",
+    "name": "Pikachu",
+    "number": "47",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-47/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-47/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-47/large"
+  },
+  {
+    "id": "me55-48",
+    "name": "Pikachu",
+    "number": "48",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-48/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-48/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-48/large"
+  },
+  {
+    "id": "me55-49",
+    "name": "Pikachu",
+    "number": "49",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-49/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-49/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-49/large"
+  },
+  {
+    "id": "me55-50",
+    "name": "Pikachu",
+    "number": "50",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-50/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-50/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-50/large"
+  },
+  {
+    "id": "me55-51",
+    "name": "Pikachu",
+    "number": "51",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-51/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-51/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-51/large"
+  },
+  {
+    "id": "me55-52",
+    "name": "Pikachu",
+    "number": "52",
+    "rarity": "Pikachu Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-52/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-52/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-52/large"
+  },
+  {
+    "id": "me55-53",
+    "name": "Pikachu ex",
+    "number": "53",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-53/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-53/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-53/large"
+  },
+  {
+    "id": "me55-54",
+    "name": "Pikachu ex",
+    "number": "54",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-54/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-54/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-54/large"
+  },
+  {
+    "id": "me55-55",
+    "name": "Zapdos",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-55/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-55/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-55/large"
+  },
+  {
+    "id": "me55-56",
+    "name": "Zekrom",
+    "number": "56",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-56/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-56/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-56/large"
+  },
+  {
+    "id": "me55-57",
+    "name": "Zeraora",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-57/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-57/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-57/large"
+  },
+  {
+    "id": "me55-58",
+    "name": "Toxel",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-58/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-58/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-58/large"
+  },
+  {
+    "id": "me55-59",
+    "name": "Toxtricity",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-59/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-59/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-59/large"
+  },
+  {
+    "id": "me55-60",
+    "name": "Toxtricity",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-60/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-60/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-60/large"
+  },
+  {
+    "id": "me55-61",
+    "name": "Morpeko",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-61/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-61/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-61/large"
+  },
+  {
+    "id": "me55-62",
+    "name": "Miraidon",
+    "number": "62",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-62/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-62/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-62/large"
+  },
+  {
+    "id": "me55-63",
+    "name": "Mewtwo",
+    "number": "63",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-63/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-63/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-63/large"
+  },
+  {
+    "id": "me55-64",
+    "name": "Mewtwo ex",
+    "number": "64",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-64/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-64/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-64/large"
+  },
+  {
+    "id": "me55-65",
+    "name": "Mew",
+    "number": "65",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-65/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-65/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-65/large"
+  },
+  {
+    "id": "me55-66",
+    "name": "Mew ex",
+    "number": "66",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-66/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-66/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-66/large"
+  },
+  {
+    "id": "me55-67",
+    "name": "Marill",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-67/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-67/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-67/large"
+  },
+  {
+    "id": "me55-68",
+    "name": "Azumarill",
+    "number": "68",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-68/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-68/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-68/large"
+  },
+  {
+    "id": "me55-69",
+    "name": "Espeon",
+    "number": "69",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-69/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-69/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-69/large"
+  },
+  {
+    "id": "me55-70",
+    "name": "Espeon ex",
+    "number": "70",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-70/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-70/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-70/large"
+  },
+  {
+    "id": "me55-71",
+    "name": "Sylveon ex",
+    "number": "71",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-71/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-71/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-71/large"
+  },
+  {
+    "id": "me55-72",
+    "name": "Unown",
+    "number": "72",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-72/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-72/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-72/large"
+  },
+  {
+    "id": "me55-73",
+    "name": "Drifloon",
+    "number": "73",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-73/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-73/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-73/large"
+  },
+  {
+    "id": "me55-74",
+    "name": "Cresselia",
+    "number": "74",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-74/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-74/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-74/large"
+  },
+  {
+    "id": "me55-75",
+    "name": "Chandelure",
+    "number": "75",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-75/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-75/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-75/large"
+  },
+  {
+    "id": "me55-76",
+    "name": "Xerneas",
+    "number": "76",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-76/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-76/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-76/large"
+  },
+  {
+    "id": "me55-77",
+    "name": "Comfey",
+    "number": "77",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-77/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-77/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-77/large"
+  },
+  {
+    "id": "me55-78",
+    "name": "Cosmog",
+    "number": "78",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-78/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-78/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-78/large"
+  },
+  {
+    "id": "me55-79",
+    "name": "Cosmoem",
+    "number": "79",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-79/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-79/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-79/large"
+  },
+  {
+    "id": "me55-80",
+    "name": "Lunala",
+    "number": "80",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-80/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-80/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-80/large"
+  },
+  {
+    "id": "me55-81",
+    "name": "Gimmighoul",
+    "number": "81",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-81/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-81/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-81/large"
+  },
+  {
+    "id": "me55-82",
+    "name": "Groudon",
+    "number": "82",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-82/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-82/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-82/large"
+  },
+  {
+    "id": "me55-83",
+    "name": "Lucario",
+    "number": "83",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-83/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-83/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-83/large"
+  },
+  {
+    "id": "me55-84",
+    "name": "Seismitoad",
+    "number": "84",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-84/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-84/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-84/large"
+  },
+  {
+    "id": "me55-85",
+    "name": "Lycanroc",
+    "number": "85",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-85/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-85/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-85/large"
+  },
+  {
+    "id": "me55-86",
+    "name": "Koraidon",
+    "number": "86",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-86/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-86/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-86/large"
+  },
+  {
+    "id": "me55-87",
+    "name": "Nidoran ♀",
+    "number": "87",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-87/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-87/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-87/large"
+  },
+  {
+    "id": "me55-88",
+    "name": "Nidorina",
+    "number": "88",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-88/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-88/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-88/large"
+  },
+  {
+    "id": "me55-89",
+    "name": "Alolan Meowth",
+    "number": "89",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-89/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-89/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-89/large"
+  },
+  {
+    "id": "me55-90",
+    "name": "Gengar ex",
+    "number": "90",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-90/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-90/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-90/large"
+  },
+  {
+    "id": "me55-91",
+    "name": "Umbreon",
+    "number": "91",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-91/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-91/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-91/large"
+  },
+  {
+    "id": "me55-92",
+    "name": "Umbreon ex",
+    "number": "92",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-92/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-92/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-92/large"
+  },
+  {
+    "id": "me55-93",
+    "name": "Murkrow",
+    "number": "93",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-93/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-93/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-93/large"
+  },
+  {
+    "id": "me55-94",
+    "name": "Scraggy",
+    "number": "94",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-94/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-94/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-94/large"
+  },
+  {
+    "id": "me55-95",
+    "name": "Zorua",
+    "number": "95",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-95/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-95/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-95/large"
+  },
+  {
+    "id": "me55-96",
+    "name": "Zoroark",
+    "number": "96",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-96/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-96/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-96/large"
+  },
+  {
+    "id": "me55-97",
+    "name": "Deino",
+    "number": "97",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-97/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-97/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-97/large"
+  },
+  {
+    "id": "me55-98",
+    "name": "Zweilous",
+    "number": "98",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-98/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-98/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-98/large"
+  },
+  {
+    "id": "me55-99",
+    "name": "Hydreigon",
+    "number": "99",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-99/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-99/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-99/large"
+  },
+  {
+    "id": "me55-100",
+    "name": "Yveltal",
+    "number": "100",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-100/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-100/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-100/large"
+  },
+  {
+    "id": "me55-101",
+    "name": "Galarian Meowth",
+    "number": "101",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-101/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-101/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-101/large"
+  },
+  {
+    "id": "me55-102",
+    "name": "Jirachi ex",
+    "number": "102",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-102/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-102/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-102/large"
+  },
+  {
+    "id": "me55-103",
+    "name": "Dialga",
+    "number": "103",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-103/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-103/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-103/large"
+  },
+  {
+    "id": "me55-104",
+    "name": "Ferrothorn",
+    "number": "104",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-104/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-104/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-104/large"
+  },
+  {
+    "id": "me55-105",
+    "name": "Solgaleo",
+    "number": "105",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-105/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-105/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-105/large"
+  },
+  {
+    "id": "me55-106",
+    "name": "Zacian",
+    "number": "106",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-106/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-106/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-106/large"
+  },
+  {
+    "id": "me55-107",
+    "name": "Zamazenta",
+    "number": "107",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-107/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-107/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-107/large"
+  },
+  {
+    "id": "me55-108",
+    "name": "Gholdengo",
+    "number": "108",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-108/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-108/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-108/large"
+  },
+  {
+    "id": "me55-109",
+    "name": "Salamence ex",
+    "number": "109",
+    "rarity": "Double Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-109/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-109/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-109/large"
+  },
+  {
+    "id": "me55-110",
+    "name": "Jangmo-o",
+    "number": "110",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-110/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-110/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-110/large"
+  },
+  {
+    "id": "me55-111",
+    "name": "Hakamo-o",
+    "number": "111",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-111/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-111/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-111/large"
+  },
+  {
+    "id": "me55-112",
+    "name": "Kommo-o",
+    "number": "112",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-112/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-112/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-112/large"
+  },
+  {
+    "id": "me55-113",
+    "name": "Meowth",
+    "number": "113",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-113/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-113/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-113/large"
+  },
+  {
+    "id": "me55-114",
+    "name": "Kangaskhan",
+    "number": "114",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-114/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-114/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-114/large"
+  },
+  {
+    "id": "me55-115",
+    "name": "Ditto",
+    "number": "115",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-115/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-115/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-115/large"
+  },
+  {
+    "id": "me55-116",
+    "name": "Eevee",
+    "number": "116",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-116/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-116/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-116/large"
+  },
+  {
+    "id": "me55-117",
+    "name": "Eevee",
+    "number": "117",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-117/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-117/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-117/large"
+  },
+  {
+    "id": "me55-118",
+    "name": "Eevee",
+    "number": "118",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-118/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-118/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-118/large"
+  },
+  {
+    "id": "me55-119",
+    "name": "Snorlax",
+    "number": "119",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-119/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-119/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-119/large"
+  },
+  {
+    "id": "me55-120",
+    "name": "Igglybuff",
+    "number": "120",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-120/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-120/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-120/large"
+  },
+  {
+    "id": "me55-121",
+    "name": "Lugia",
+    "number": "121",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-121/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-121/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-121/large"
+  },
+  {
+    "id": "me55-122",
+    "name": "Hisuian Zorua",
+    "number": "122",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-122/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-122/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-122/large"
+  },
+  {
+    "id": "me55-123",
+    "name": "Hisuian Zoroark",
+    "number": "123",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-123/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-123/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-123/large"
+  },
+  {
+    "id": "me55-124",
+    "name": "Minior",
+    "number": "124",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-124/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-124/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-124/large"
+  },
+  {
+    "id": "me55-125",
+    "name": "Maushold",
+    "number": "125",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-125/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-125/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-125/large"
+  },
+  {
+    "id": "me55-126",
+    "name": "Poké Pad",
+    "number": "126",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "image": "https://images.scrydex.com/pokemon/me55-126/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-126/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-126/large"
+  },
+  {
+    "id": "me55-127",
+    "name": "Switch",
+    "number": "127",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "image": "https://images.scrydex.com/pokemon/me55-127/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-127/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-127/large"
+  },
+  {
+    "id": "me55-128",
+    "name": "Ultra Ball",
+    "number": "128",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "image": "https://images.scrydex.com/pokemon/me55-128/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-128/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-128/large"
+  },
+  {
+    "id": "me55-129",
+    "name": "Alolan Exeggutor",
+    "number": "129",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-129/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-129/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-129/large"
+  },
+  {
+    "id": "me55-130",
+    "name": "Moltres",
+    "number": "130",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-130/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-130/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-130/large"
+  },
+  {
+    "id": "me55-131",
+    "name": "Lapras",
+    "number": "131",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-131/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-131/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-131/large"
+  },
+  {
+    "id": "me55-132",
+    "name": "Articuno",
+    "number": "132",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-132/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-132/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-132/large"
+  },
+  {
+    "id": "me55-133",
+    "name": "Zapdos",
+    "number": "133",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-133/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-133/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-133/large"
+  },
+  {
+    "id": "me55-134",
+    "name": "Toxtricity",
+    "number": "134",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-134/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-134/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-134/large"
+  },
+  {
+    "id": "me55-135",
+    "name": "Morpeko",
+    "number": "135",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-135/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-135/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-135/large"
+  },
+  {
+    "id": "me55-136",
+    "name": "Drifloon",
+    "number": "136",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-136/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-136/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-136/large"
+  },
+  {
+    "id": "me55-137",
+    "name": "Chandelure",
+    "number": "137",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-137/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-137/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-137/large"
+  },
+  {
+    "id": "me55-138",
+    "name": "Lycanroc",
+    "number": "138",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-138/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-138/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-138/large"
+  },
+  {
+    "id": "me55-139",
+    "name": "Alolan Meowth",
+    "number": "139",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-139/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-139/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-139/large"
+  },
+  {
+    "id": "me55-140",
+    "name": "Scraggy",
+    "number": "140",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-140/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-140/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-140/large"
+  },
+  {
+    "id": "me55-141",
+    "name": "Galarian Meowth",
+    "number": "141",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-141/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-141/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-141/large"
+  },
+  {
+    "id": "me55-142",
+    "name": "Gholdengo",
+    "number": "142",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-142/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-142/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-142/large"
+  },
+  {
+    "id": "me55-143",
+    "name": "Kommo-o",
+    "number": "143",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-143/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-143/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-143/large"
+  },
+  {
+    "id": "me55-144",
+    "name": "Meowth",
+    "number": "144",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-144/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-144/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-144/large"
+  },
+  {
+    "id": "me55-145",
+    "name": "Hisuian Zorua",
+    "number": "145",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-145/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-145/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-145/large"
+  },
+  {
+    "id": "me55-146",
+    "name": "Maushold",
+    "number": "146",
+    "rarity": "Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-146/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-146/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-146/large"
+  },
+  {
+    "id": "me55-147",
+    "name": "Fuecoco ex",
+    "number": "147",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-147/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-147/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-147/large"
+  },
+  {
+    "id": "me55-148",
+    "name": "Greninja ex",
+    "number": "148",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-148/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-148/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-148/large"
+  },
+  {
+    "id": "me55-149",
+    "name": "Pikachu ex",
+    "number": "149",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-149/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-149/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-149/large"
+  },
+  {
+    "id": "me55-150",
+    "name": "Pikachu ex",
+    "number": "150",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-150/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-150/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-150/large"
+  },
+  {
+    "id": "me55-151",
+    "name": "Mewtwo ex",
+    "number": "151",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-151/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-151/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-151/large"
+  },
+  {
+    "id": "me55-152",
+    "name": "Mew ex",
+    "number": "152",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-152/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-152/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-152/large"
+  },
+  {
+    "id": "me55-153",
+    "name": "Sylveon ex",
+    "number": "153",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-153/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-153/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-153/large"
+  },
+  {
+    "id": "me55-154",
+    "name": "Gengar ex",
+    "number": "154",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-154/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-154/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-154/large"
+  },
+  {
+    "id": "me55-155",
+    "name": "Jirachi ex",
+    "number": "155",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-155/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-155/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-155/large"
+  },
+  {
+    "id": "me55-156",
+    "name": "Salamence ex",
+    "number": "156",
+    "rarity": "Special Illustration Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-156/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-156/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-156/large"
+  },
+  {
+    "id": "me55-157",
+    "name": "Mewtwo ex",
+    "number": "157",
+    "rarity": "Futuristic Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-157/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-157/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-157/large"
+  },
+  {
+    "id": "me55-158",
+    "name": "Mew ex",
+    "number": "158",
+    "rarity": "Futuristic Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "image": "https://images.scrydex.com/pokemon/me55-158/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-158/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-158/large"
+  },
+  {
+    "id": "me55-R",
+    "name": "Mew",
+    "number": "R",
+    "rarity": "RGB Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "R",
+    "image": "https://images.scrydex.com/pokemon/me55-R/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-R/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-R/large"
+  },
+  {
+    "id": "me55-G",
+    "name": "Mew",
+    "number": "G",
+    "rarity": "RGB Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "G",
+    "image": "https://images.scrydex.com/pokemon/me55-G/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-G/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-G/large"
+  },
+  {
+    "id": "me55-B",
+    "name": "Mew",
+    "number": "B",
+    "rarity": "RGB Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "B",
+    "image": "https://images.scrydex.com/pokemon/me55-B/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55-B/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-B/large"
+  },
+  {
+    "id": "me55-cc58",
+    "name": "Pikachu",
+    "number": "cc58",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 58",
+    "image": "https://images.scrydex.com/pokemon/me55c-58/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-58/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-58/large"
+  },
+  {
+    "id": "me55-cc4",
+    "name": "Charizard",
+    "number": "cc4",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 4",
+    "image": "https://images.scrydex.com/pokemon/me55c-4/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-4/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-4/large"
+  },
+  {
+    "id": "me55-cc18",
+    "name": "Misty",
+    "number": "cc18",
+    "rarity": "Classic Collection",
+    "supertype": "Trainer",
+    "printedNumber": "Classic 18",
+    "image": "https://images.scrydex.com/pokemon/me55c-18/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-18/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-18/large"
+  },
+  {
+    "id": "me55-cc69",
+    "name": "Erika's Jigglypuff",
+    "number": "cc69",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 69",
+    "image": "https://images.scrydex.com/pokemon/me55c-69/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-69/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-69/large"
+  },
+  {
+    "id": "me55-cc25",
+    "name": "Sneasel",
+    "number": "cc25",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 25",
+    "image": "https://images.scrydex.com/pokemon/me55c-25/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-25/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-25/large"
+  },
+  {
+    "id": "me55-cc106",
+    "name": "Shining Celebi",
+    "number": "cc106",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 106",
+    "image": "https://images.scrydex.com/pokemon/me55c-106/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-106/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106/large"
+  },
+  {
+    "id": "me55-cc149",
+    "name": "Lugia",
+    "number": "cc149",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 149",
+    "image": "https://images.scrydex.com/pokemon/me55c-149/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-149/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-149/large"
+  },
+  {
+    "id": "me55-cc5",
+    "name": "Delcatty",
+    "number": "cc5",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 5",
+    "image": "https://images.scrydex.com/pokemon/me55c-5/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-5/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-5/large"
+  },
+  {
+    "id": "me55-cc19",
+    "name": "Dark Tyranitar",
+    "number": "cc19",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 19",
+    "image": "https://images.scrydex.com/pokemon/me55c-19/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-19/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-19/large"
+  },
+  {
+    "id": "me55-cc108",
+    "name": "Scizor ex",
+    "number": "cc108",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "printedNumber": "Classic 108",
+    "image": "https://images.scrydex.com/pokemon/me55c-108/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-108/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-108/large"
+  },
+  {
+    "id": "me55-cc11",
+    "name": "Metagross",
+    "number": "cc11",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 11",
+    "image": "https://images.scrydex.com/pokemon/me55c-11/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-11/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-11/large"
+  },
+  {
+    "id": "me55-cc106p",
+    "name": "Palkia LV.X",
+    "number": "cc106p",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 106",
+    "image": "https://images.scrydex.com/pokemon/me55c-106p/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-106p/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106p/large"
+  },
+  {
+    "id": "me55-cc43",
+    "name": "Uxie",
+    "number": "cc43",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 43",
+    "image": "https://images.scrydex.com/pokemon/me55c-43/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-43/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-43/large"
+  },
+  {
+    "id": "me55-cc47",
+    "name": "Crobat G",
+    "number": "cc47",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 47",
+    "image": "https://images.scrydex.com/pokemon/me55c-47/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-47/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-47/large"
+  },
+  {
+    "id": "me55-cc94",
+    "name": "Gengar",
+    "number": "cc94",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 94",
+    "image": "https://images.scrydex.com/pokemon/me55c-94/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-94/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-94/large"
+  },
+  {
+    "id": "me55-cc99",
+    "name": "Darkrai & Cresselia LEGEND",
+    "number": "cc99",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 99",
+    "image": "https://images.scrydex.com/pokemon/me55c-99/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-99/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-99/large"
+  },
+  {
+    "id": "me55-cc100",
+    "name": "Darkrai & Cresselia LEGEND",
+    "number": "cc100",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 100",
+    "image": "https://images.scrydex.com/pokemon/me55c-100/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-100/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-100/large"
+  },
+  {
+    "id": "me55-cc101",
+    "name": "N",
+    "number": "cc101",
+    "rarity": "Classic Collection",
+    "supertype": "Trainer",
+    "printedNumber": "Classic 101",
+    "image": "https://images.scrydex.com/pokemon/me55c-101/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-101/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-101/large"
+  },
+  {
+    "id": "me55-cc85",
+    "name": "Rayquaza-EX",
+    "number": "cc85",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 85",
+    "image": "https://images.scrydex.com/pokemon/me55c-85/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-85/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-85/large"
+  },
+  {
+    "id": "me55-cc11g",
+    "name": "Genesect-EX",
+    "number": "cc11g",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 11",
+    "image": "https://images.scrydex.com/pokemon/me55c-11g/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-11g/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-11g/large"
+  },
+  {
+    "id": "me55-cc106m",
+    "name": "M Gardevoir-EX",
+    "number": "cc106m",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 106",
+    "image": "https://images.scrydex.com/pokemon/me55c-106m/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-106m/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106m/large"
+  },
+  {
+    "id": "me55-cc41",
+    "name": "Greninja BREAK",
+    "number": "cc41",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 41",
+    "image": "https://images.scrydex.com/pokemon/me55c-41/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-41/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-41/large"
+  },
+  {
+    "id": "me55-cc89",
+    "name": "Solgaleo-GX",
+    "number": "cc89",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 89",
+    "image": "https://images.scrydex.com/pokemon/me55c-89/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-89/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-89/large"
+  },
+  {
+    "id": "me55-cc57",
+    "name": "Buzzwole-GX",
+    "number": "cc57",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 57",
+    "image": "https://images.scrydex.com/pokemon/me55c-57/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-57/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-57/large"
+  },
+  {
+    "id": "me55-cc33",
+    "name": "Pikachu & Zekrom-GX",
+    "number": "cc33",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 33",
+    "image": "https://images.scrydex.com/pokemon/me55c-33/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-33/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-33/large"
+  },
+  {
+    "id": "me55-cc138",
+    "name": "Zacian V",
+    "number": "cc138",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 138",
+    "image": "https://images.scrydex.com/pokemon/me55c-138/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-138/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-138/large"
+  },
+  {
+    "id": "me55-cc50",
+    "name": "Raikou",
+    "number": "cc50",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 50",
+    "image": "https://images.scrydex.com/pokemon/me55c-50/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-50/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-50/large"
+  },
+  {
+    "id": "me55-cc114",
+    "name": "Mew VMAX",
+    "number": "cc114",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 114",
+    "image": "https://images.scrydex.com/pokemon/me55c-114/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-114/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-114/large"
+  },
+  {
+    "id": "me55-cc123",
+    "name": "Arceus VSTAR",
+    "number": "cc123",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 123",
+    "image": "https://images.scrydex.com/pokemon/me55c-123/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-123/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-123/large"
+  },
+  {
+    "id": "me55-cc203",
+    "name": "Magikarp",
+    "number": "cc203",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 203",
+    "image": "https://images.scrydex.com/pokemon/me55c-203/large",
+    "imageSmall": "https://images.scrydex.com/pokemon/me55c-203/small",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-203/large"
+  }
+]
