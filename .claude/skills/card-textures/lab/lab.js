@@ -47,6 +47,9 @@ function foilLayout(c) {
 }
 function foilPattern(c) {
   const r = c.rarity;
+  if (r === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
+  if (r === "Shiny Rare") return "foil-holo foil-shiny";
+  if (c.finish === "scodix") return "foil-gold foil-scodix";
   if (r === "Mega Hyper Rare" || r === "Hyper Rare") return "foil-gold";
   if (c.foilMap && (c.subtypes || []).includes("Tera") && (r === "Double Rare" || r === "Ultra Rare")) {
     return r === "Ultra Rare" ? "foil-ultra foil-tera" : "foil-ex foil-tera";

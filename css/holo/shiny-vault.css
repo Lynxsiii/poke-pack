@@ -1,0 +1,178 @@
+/*
+ * Paldean Fates (set sv4pt5): the Shiny Vault's foil and the set's gold cards.
+ * Drawn from photos of the physical cards and Pokémon TCG Live's name for
+ * each print; the research is in the card-textures skill,
+ * .claude/skills/card-textures/reference/paldean-fates.md.
+ *
+ * - Shiny Rare and Shiny Ultra Rare (TCG Live: SUN_PILLAR / ETCHED). Silver
+ *   mirror foil cut with a fingerprint etch: fine wavy ridges in whorls round
+ *   the Pokémon, a finer hatch on the Pokémon, the stars and sparkles left
+ *   smooth. A Shiny Rare is foil in the art window (Pokémon included) and the
+ *   silver border; a Shiny Ultra Rare is foil edge to edge, text box too. The
+ *   light shows as broad rainbow bands sliding across the silver.
+ * - Hyper Rare (SV_ULTRA_SCODIX / ETCHED). Not plain gold: gold line art on a
+ *   teal ground, the whole card thick with glitter flecks that wink one by
+ *   one, a rainbow band, and the line art raised in a clear Scodix varnish.
+ *
+ * Both need the card's TCG Live maps (js/foil-maps.js): the foil map is the
+ * mask and the etch map is the fingerprint itself, used as an image here.
+ *
+ * Layer ideas follow pokemon-cards-css and pokemon-cards-151 by Simon Goellner
+ * (@simeydotme), GPL-3.0; see NOTICE.md.
+ *
+ * Each finish rides on a second class next to the older pattern class
+ * (`foil-holo foil-shiny`, `foil-ultra foil-shiny`, `foil-gold foil-scodix`),
+ * so the Classic engine is untouched. The doubled class outranks the
+ * three-class rules other sheets add for `.foil-ultra` and `.foil-gold`,
+ * whichever order the sheets load in. Loaded last.
+ *
+ * Rest state (PR 5): a resting card paints `.foil` alone, so the silver, the
+ * fingerprint and a hint of colour all live on `.foil`; the pseudo layers and
+ * `.glare` only exist while a card is held or settling.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.has-foil-map {
+  --pf-spectrum: hsl(2, 100%, 62%), hsl(40, 100%, 58%), hsl(93, 90%, 55%),
+    hsl(176, 95%, 55%), hsl(222, 100%, 62%), hsl(283, 100%, 64%), hsl(2, 100%, 62%);
+  --pf-glitter: url("/assets/foil/paldean/glitter-flecks.webp");
+}
+
+/* Shared shape: the map is the mask (restated from maps.css at this
+   specificity, since the older full-art and gold rules set their own), the
+   shine rises with the light, and the older recipes' layers are cleared. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.has-foil-map .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-repeat: repeat;
+  opacity: calc((0.2 + var(--card-opacity) * 0.8) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.has-foil-map .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.has-foil-map .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.has-foil-map .glare {
+  clip-path: none;
+  border-radius: 0;
+}
+
+/* ---- Shiny Rare and Shiny Ultra Rare: SUN_PILLAR / ETCHED ------------------
+   The whole group hard-lights onto the scan, which is what lets one layer
+   work on both kinds of print under the foil: the pale art windows, which a
+   colour-dodge cannot brighten, go silver-grey wherever the group is under
+   half brightness; the inked Pokémon and border brighten wherever it is
+   over. Bottom up, `.foil` is
+   - a silver ramp, bright under the light and dim away from it;
+   - soft rainbow bands, carried by hue only, so they tint the silver;
+   - the card's etch map, drawn as an image and difference-blended, so every
+     fingerprint ridge flips to the other side of half grey from its
+     neighbours and the whorls show on white and on ink alike. It is part of
+     the print, so it never moves. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map {
+  --pf-band: 6%;
+  --pf-band-angle: 118deg;
+  --pf-color: 0.55;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.foil-shiny.foil-shiny.has-foil-map {
+  --pf-color: 0.8;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil {
+  --pf-a: 0.85;
+  background-image:
+    repeating-linear-gradient(var(--pf-band-angle),
+      transparent 0%, transparent calc(var(--pf-band) * 3),
+      hsla(0, 95%, 62%, var(--pf-a)) calc(var(--pf-band) * 3.6),
+      hsla(42, 100%, 58%, var(--pf-a)) calc(var(--pf-band) * 4.1),
+      hsla(95, 85%, 55%, var(--pf-a)) calc(var(--pf-band) * 4.6),
+      hsla(185, 90%, 55%, var(--pf-a)) calc(var(--pf-band) * 5.1),
+      hsla(228, 95%, 64%, var(--pf-a)) calc(var(--pf-band) * 5.6),
+      hsla(285, 85%, 66%, var(--pf-a)) calc(var(--pf-band) * 6.1),
+      transparent calc(var(--pf-band) * 6.7), transparent calc(var(--pf-band) * 8)),
+    var(--etch-map, linear-gradient(transparent, transparent)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 52%) 0%, hsl(0, 0%, 45%) 30%, hsl(0, 0%, 38%) 90%);
+  background-size: 300% 300%, 100% 100%, 100% 100%;
+  background-position: calc((var(--background-x) - 50%) * 1.8 + 50%)
+      calc((var(--background-y) - 50%) * 1.8 + 50%), center, center;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, difference, normal;
+  filter: saturate(var(--pf-color));
+  mix-blend-mode: hard-light;
+}
+/* Resting: silver and fingerprint, barely any colour. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: saturate(0.3);
+  opacity: calc(0.22 * var(--foil-strength, 1));
+}
+/* A second, fainter set of bands running the other way, so the colours
+   shift rather than slide as the card turns. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil::before {
+  background-image: repeating-linear-gradient(calc(var(--pf-band-angle) - 180deg),
+    hsl(0, 0%, 50%) 0%, hsl(0, 0%, 50%) 10%,
+    hsl(200, 80%, 55%) 13%, hsl(280, 70%, 58%) 16%, hsl(40, 90%, 55%) 19%,
+    hsl(0, 0%, 50%) 22%, hsl(0, 0%, 50%) 30%);
+  background-size: 250% 250%;
+  background-position: calc((var(--background-x) - 50%) * -1.2 + 50%)
+    calc((var(--background-y) - 50%) * -1.2 + 50%);
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--pf-color) * 0.8);
+}
+/* The ridges catching the light: near the pointer the etch itself turns
+   bright, so the fingerprint glints in white where the lamp is. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 85%) 14%, hsla(0, 0%, 60%, 0) 42%);
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.4);
+}
+/* Gloss on the varnish: a soft overlay, since the pale windows bleach under
+   anything stronger. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.7) 8%, hsla(0, 0%, 100%, 0.25) 30%, hsla(0, 0%, 0%, 0.35) 95%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
