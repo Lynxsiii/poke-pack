@@ -123,51 +123,58 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo) .glare {
 }
 
 /* ---- Rare: SV_HOLO / HOLO --------------------------------------------------
-   The standard Scarlet & Violet holo, ported from pokemon-cards-151's
-   regular holo: saturated stacked rainbow bands, two sets of light bars that
-   swing with the tilt, a crinkly grain. Its high contrast is tuned for a
-   background-only mask, which the map now gives it. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo {
-  --bars: 5%;
-  --bar-color: hsla(0, 0%, 70%, 1);
-  --bar-bg: hsla(0, 0%, 0%, 1);
-}
+   The Scarlet & Violet and Mega Evolution holo Rare, drawn from photos of
+   real cards (Surging Sparks' Togekiss, Gastrodon and Tapu Koko, and the SV
+   starter promos): one broad, saturated rainbow band sweeps across the art
+   background as the card tilts, its hue running along its length, over a fine
+   silver sandpaper glitter that covers the whole foil, border included. The
+   Pokemon, frame and text box stay print: the map. Nothing darkens the art
+   between bands. Write-up: .claude/skills/card-textures/reference/sv-rare-holo.md.
+
+   Every layer paints into `.foil`, which hard-lights the result onto the card:
+   the 50% grey around the band is neutral, the band's colours tint the art
+   under it without hiding it, and the glitter only ever lightens. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo .foil {
   background-image:
-    var(--c30-grain),
-    repeating-linear-gradient(10deg,
-      var(--spectrum), var(--spectrum), var(--spectrum), var(--spectrum), var(--spectrum), var(--spectrum));
-  background-size: 90px 90px, 400% 400%;
+    linear-gradient(172deg,
+      #808080 0%, #808080 45.5%, hsla(0, 0%, 50%, 0) 48.5%, hsla(0, 0%, 50%, 0) 51.5%,
+      #808080 54.5%, #808080 100%),
+    linear-gradient(95deg,
+      hsl(0, 95%, 60%), hsl(28, 95%, 58%), hsl(52, 95%, 56%), hsl(100, 85%, 55%),
+      hsl(175, 90%, 55%), hsl(215, 95%, 62%), hsl(270, 90%, 64%), hsl(320, 95%, 62%),
+      hsl(360, 95%, 60%), hsl(28, 95%, 58%), hsl(52, 95%, 56%), hsl(100, 85%, 55%),
+      hsl(175, 90%, 55%));
+  /* The band is about a quarter of the card tall and follows the light down
+     the card, leaving the art near the ends of the tilt; the hue under a
+     point shifts as the card turns sideways. */
+  background-size: 100% 300%, 160% 100%;
   background-position:
-    center,
-    calc((50% - var(--background-x)) + 50%) calc((50% - var(--background-y)) + 50%);
-  background-blend-mode: overlay;
-  filter: brightness(1.2) contrast(2.6) saturate(0.8);
-  mix-blend-mode: overlay;
+    50% calc((0.825 - var(--py, 0.5) * 0.4) * 100%),
+    calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: hard-light;
 }
-/* Bars whose angle follows the tilt: upstream's calc(rotate-x - rotate-delta);
-   there is no popover spin here, so rotate-delta is 0. */
+/* The glitter: sparse white points over a dense field of pale flecks, sized
+   to the card so the grain is as fine on a thumbnail as in the inspector,
+   brightest under the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo .foil::before {
-  background-image:
-    repeating-linear-gradient(calc(var(--rotate-x) * 0.25),
-      var(--bar-bg) calc(var(--bars) * 2.5), var(--bar-color) calc(var(--bars) * 3.25),
-      hsla(0, 0%, 75%, 0.5) calc(var(--bars) * 3.5), var(--bar-color) calc(var(--bars) * 3.75),
-      var(--bar-bg) calc(var(--bars) * 4.5), var(--bar-bg) calc(var(--bars) * 8)),
-    repeating-linear-gradient(calc(var(--rotate-x) * -0.25),
-      var(--bar-bg) calc(var(--bars) * 2.5), var(--bar-color) calc(var(--bars) * 3.25),
-      hsla(0, 0%, 75%, 0.5) calc(var(--bars) * 3.5), var(--bar-color) calc(var(--bars) * 3.75),
-      var(--bar-bg) calc(var(--bars) * 4.5), var(--bar-bg) calc(var(--bars) * 8));
-  background-position: 50% calc(var(--background-y) * 1.2), 50% calc(var(--background-y) * -1.2);
-  background-size: 200% 200%, 200% 200%;
-  background-blend-mode: screen;
-  filter: brightness(1) contrast(2) saturate(0.75);
-  mix-blend-mode: multiply;
+  background-image: url("/assets/foil/glitter.png"), url("/assets/foil/glitter-flecks.webp");
+  background-size: 38% auto, 33% auto;
+  background-position: var(--seed-pos), calc(var(--seed-x, 0.5) * -100%) calc(var(--seed-y, 0.5) * 100%);
+  background-blend-mode: screen, normal;
+  filter: saturate(0.3) brightness(1.45);
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.75) 40%, hsla(0, 0%, 0%, 0.5) 100%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.75) 40%, hsla(0, 0%, 0%, 0.5) 100%);
 }
+/* A soft hot spot under the light, the foil a little duller away from it. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 90%, 0.8) 0%, hsla(0, 0%, 78%, 0.1) 25%, hsl(0, 0%, 35%) 90%);
-  mix-blend-mode: luminosity;
-  filter: brightness(1) contrast(3);
+    hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0) 35%, hsla(0, 0%, 0%, 0.2) 100%);
 }
 
 /* ---- Double Rare: SUN_PILLAR / HOLO ----------------------------------------
