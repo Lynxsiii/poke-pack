@@ -303,8 +303,9 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         if live and not spec.get("foilAs"):
             record["foilAs"] = foil_from_tcgl(live)
 
-    # pkmn.gg pads some names ("Alakazam  ").
-    record["name"] = str(record.get("name", "")).strip()
+    # pkmn.gg pads some names ("Alakazam  ") and curls some apostrophes
+    # ("Iono’s Bellibolt ex"), which the set's own cards spell straight.
+    record["name"] = str(record.get("name", "")).strip().replace("’", "'")
     record["rarity"] = "Promo"
     record["promo"] = True
     for key in ("foilAs", "variant", "tcgplayerId", "printedNumber"):
@@ -378,10 +379,10 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     listings: dict[str, dict[str, float]] = {}
     groups = [cfg.get("tcgplayerGroup"), *(s.get("tcgplayerGroup") for s in cfg.get("promoSeries", {}).values())]
     # Product-only prints (blister exclusives) are filed in a group of their own,
-    # and a collection's stamped or cosmos prints sit with the collection itself
-    # (Miscellaneous Cards & Products).
+    # or beside their product in Miscellaneous Cards & Products (Journey
+    # Together's Cosmos Holo box cards).
     groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES]
-    groups += [g for g in dict.fromkeys(p.get("tcgplayerGroup") for p in products) if g and g not in groups]
+    groups += sorted({p["tcgplayerGroup"] for p in products if p.get("tcgplayerGroup")} - set(groups))
     tcg_market: dict[int, dict[int, float]] = {}
 
     def tcg_price(pid: int) -> float | None:

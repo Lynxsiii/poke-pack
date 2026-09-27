@@ -6,5 +6,202 @@
   "scrydexId": "sv9",
   "pittSlug": "Journey-Together",
   "artSlug": "journey-together",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 24073,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp181": {},
+    "svp182": {},
+    "svp183": {},
+    "svp184": {},
+    "svp185": {},
+    "svp186": {},
+    "svp187": {},
+    "svp188": {},
+    "svp189": {},
+    "svp189-pc": {
+      "like": "svp189",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 625182
+    },
+    "svp193": {},
+    "svp194": {
+      "foilAs": "Ultra Rare"
+    },
+    "svp195": {
+      "foilAs": "Ultra Rare"
+    },
+    "167-stamped": {
+      "like": "167",
+      "variant": "Journey Together stamp",
+      "tcgplayerId": 623594,
+      "foilAs": "Illustration Rare",
+      "printedNumber": "167/159"
+    },
+    "135-cosmos": {
+      "like": "135",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 628292,
+      "foilAs": "Cosmos",
+      "printedNumber": "135/159"
+    },
+    "136-cosmos": {
+      "like": "136",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 628291,
+      "foilAs": "Cosmos",
+      "printedNumber": "136/159"
+    },
+    "52-cosmos": {
+      "like": "52",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 628640,
+      "foilAs": "Cosmos",
+      "printedNumber": "052/159"
+    },
+    "151-cosmos": {
+      "like": "151",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 630150,
+      "foilAs": "Cosmos",
+      "printedNumber": "151/159"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 610930,
+      "packs": 9,
+      "promos": [
+        "svp189"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 610929,
+      "packs": 11,
+      "promos": [
+        "svp189-pc",
+        "svp189"
+      ]
+    },
+    {
+      "id": "enhanced-box",
+      "name": "Enhanced Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 623628,
+      "packs": 36,
+      "promos": [
+        "167-stamped"
+      ]
+    },
+    {
+      "id": "premium-bellibolt",
+      "name": "Iono's Bellibolt ex Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 616304,
+      "tcgplayerGroup": 2374,
+      "packs": 6,
+      "promos": [
+        "svp194",
+        "52-cosmos"
+      ]
+    },
+    {
+      "id": "ptc-lillie",
+      "name": "Lillie Premium Tournament Collection",
+      "kind": "premium",
+      "tcgplayerId": 626605,
+      "tcgplayerGroup": 2374,
+      "packs": 6,
+      "promos": [
+        "svp195",
+        "151-cosmos"
+      ]
+    },
+    {
+      "id": "box-zacian",
+      "name": "Hop's Zacian ex Box",
+      "kind": "collection",
+      "tcgplayerId": 616303,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "svp193",
+        "135-cosmos",
+        "136-cosmos"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 610954,
+      "packs": 4,
+      "promos": [
+        "svp181",
+        "svp182",
+        "svp183",
+        "svp184"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-yanmega",
+      "name": "3 Pack Blister: Yanmega",
+      "kind": "blister",
+      "tcgplayerId": 610940,
+      "packs": 3,
+      "promos": [
+        "svp187"
+      ]
+    },
+    {
+      "id": "blister3-scrafty",
+      "name": "3 Pack Blister: Scrafty",
+      "kind": "blister",
+      "tcgplayerId": 610948,
+      "packs": 3,
+      "promos": [
+        "svp188"
+      ]
+    },
+    {
+      "id": "blister-yanma",
+      "name": "Single Pack Blister: Yanma",
+      "kind": "blister",
+      "tcgplayerId": 610950,
+      "packs": 1,
+      "promos": [
+        "svp185"
+      ]
+    },
+    {
+      "id": "blister-scraggy",
+      "name": "Single Pack Blister: Scraggy",
+      "kind": "blister",
+      "tcgplayerId": 610949,
+      "packs": 1,
+      "promos": [
+        "svp186"
+      ]
+    }
+  ]
 }
