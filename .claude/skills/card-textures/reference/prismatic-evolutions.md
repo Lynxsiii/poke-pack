@@ -22,12 +22,17 @@ TCG Live print ids read `<Name>_sv8-5_<n>_<variant>_<suffix>`.
 | ACE SPEC Rare | 6 | `Ace_AceFoil_Etched` | `foil-holo foil-acespec has-foil-map has-etch-map` | `sv-finishes.css` |
 | Ultra Rare | 12 | `UltraRare_SunPillar_Etched` | `foil-ultra has-foil-map has-etch-map` | `sv-fullart.css` |
 | Special Illustration Rare | 32 | `SpecialIllustrationRare_SvUltra_Etched` | `foil-sir has-foil-map has-etch-map` | `celebration.css` |
-| Hyper Rare (gold) | 5 | `HyperRare_SvUltraScodix_Etched` | `foil-gold has-foil-map has-etch-map` | `sv-fullart.css` |
+| Hyper Rare (gold) | 5 | `HyperRare_SvUltraScodix_Etched` | `foil-gold foil-scodix has-foil-map has-etch-map` (card `finish: "scodix"`) | `shiny-vault.css` |
 
 There are no Illustration Rares. The Master Ball prints are the Pokémon
 only (33 C, 13 U, 21 R); Trainers get a Poké Ball print alone. The gold
-cards say `SvUltraScodix`, not the usual `SvUltra`: Scodix is a raised
-clear coat. The shared gold recipe ignores it for now.
+cards say `SvUltraScodix`, not the usual `SvUltra`, like the Paldean Fates
+gold. Both are Japanese high-class sets. Reviews describe the Prismatic gold
+as "the Pokémon etched out of the gold foil to reveal a sparkly rainbow
+pattern underneath" ([Screen Rant](https://screenrant.com/pokemon-tcg-prismatic-evolutions-review/)),
+so these cards reuse the Paldean Fates Scodix recipe (glitter, a rainbow
+band and a raised etch) through `finish: "scodix"` in `data/sv8pt5.json`.
+See [paldean-fates.md](paldean-fates.md).
 
 ## Pattern prints are cards of their own
 

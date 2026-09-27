@@ -50,6 +50,11 @@ for (const print of [...pokeball, ...masterball]) {
   assert.ok(foilExtras(print, (p) => p).classes.includes("has-foil-map"));
   assert.ok(sellValue(print) === Math.max(0.01, print.market), `${print.id} sells for its own price`);
 }
+// The gold cards print TCG Live's SV_ULTRA_SCODIX: the Paldean Fates gold
+// recipe, glitter and a raised etch (css/holo/shiny-vault.css).
+const gold = base.filter((c) => c.rarity === "Hyper Rare");
+assert.equal(gold.length, 5);
+assert.ok(gold.every((c) => c.finish === "scodix" && c.etchMap), "gold cards are Scodix, with their etch");
 // Umbreon's Master Ball print books at many times the base card.
 assert.ok(byId["sv8pt5-59-mb"].market > 20 * byId["sv8pt5-59"].market, "Master Ball Umbreon outprices Umbreon");
 
