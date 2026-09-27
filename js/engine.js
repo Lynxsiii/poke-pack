@@ -186,12 +186,28 @@ export function packValue(set, cards) {
 }
 
 /**
+ * The promo ids one box of `offer` holds: all of them, or `pick` at random.
+ */
+export function drawPromos(offer) {
+  const promos = [...(offer?.promos || [])];
+  if (!offer?.pick) return promos;
+  for (let i = promos.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [promos[i], promos[j]] = [promos[j], promos[i]];
+  }
+  return promos.slice(0, offer.pick);
+}
+
+/**
  * A sealed product's contents on average: its promos at market plus every
  * pack's mean value, special packs included.
  */
 export function contentsValue(offer, set, cards) {
   const byId = new Map(cards.map((card) => [card.id, card]));
-  let total = (offer.promos || []).reduce((sum, id) => sum + (byId.has(id) ? sellValue(byId.get(id)) : 0), 0);
+  const promos = offer.promos || [];
+  let total = promos.reduce((sum, id) => sum + (byId.has(id) ? sellValue(byId.get(id)) : 0), 0);
+  // A box with `pick` of its promos holds each one pick / promos.length of the time.
+  if (offer.pick && promos.length) total *= offer.pick / promos.length;
   total += (Number(offer.packs) || 0) * packValue(set, cards);
   for (const [key, count] of Object.entries(offer.special || {})) {
     const special = set.specialPacks?.[key];

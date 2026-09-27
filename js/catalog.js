@@ -147,6 +147,7 @@ const PRODUCT_KINDS = {
   tin: { short: "Tin", noun: "tin" },
   blister: { short: "Blister", noun: "blister" },
   deck: { short: "Deck", noun: "deck" },
+  battle: { short: "Box", noun: "box" },
 };
 
 /**
@@ -159,8 +160,23 @@ export function sealedOffers(prices, products = []) {
   return SEALED_PRODUCTS.flatMap((product) => {
     const price = prices?.[product.id];
     if (!(typeof price === "number" && price > 0)) return [];
-    return [{ ...product, price: money(price), promos: extra[product.id]?.promos || [], special: {} }];
+    return [{
+      ...product,
+      price: money(price),
+      promos: extra[product.id]?.promos || [],
+      pick: promoPick(extra[product.id]),
+      special: {},
+    }];
   });
+}
+
+/**
+ * How many of a product's promos come in one box: 0 means all of them. A
+ * Build & Battle Box holds one of its four prerelease promos at random.
+ */
+function promoPick(item) {
+  const pick = Math.floor(Number(item?.pick) || 0);
+  return pick > 0 && pick < (item?.promos?.length || 0) ? pick : 0;
 }
 
 /**
@@ -168,7 +184,8 @@ export function sealedOffers(prices, products = []) {
  * that come with promo cards no pack carries. Built by
  * scripts/build_products.py into data/products.json, priced at TCGplayer
  * market. `packs` are the set's boosters, `special` any extra packs from the
- * set's `specialPacks`, `promos` the card ids that come in the box.
+ * set's `specialPacks`, `promos` the card ids that come in the box, and
+ * `pick` how many of them one box holds when it is not all of them.
  */
 export function promoOffers(products = []) {
   const standard = new Set(SEALED_PRODUCTS.map((product) => product.id));
@@ -186,6 +203,7 @@ export function promoOffers(products = []) {
       packs,
       special: item.special && typeof item.special === "object" ? item.special : {},
       promos,
+      pick: promoPick(item),
       price: money(item.price),
       image: item.image || "",
       released: item.released || "",

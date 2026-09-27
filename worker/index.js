@@ -13,7 +13,7 @@ import {
   money,
   sellValue,
 } from "../js/catalog.js";
-import { isHit, priceOffer, ripPack } from "../js/engine.js";
+import { drawPromos, isHit, priceOffer, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
@@ -452,7 +452,7 @@ async function openSealed(request, env) {
       packs.push({ wrapper: special.wrapper, pulls: ripPack({ ...live, slots: special.slots }, catalog) });
     }
   }
-  const promos = (offer.promos || []).map((id) => {
+  const promos = drawPromos(offer).map((id) => {
     const card = catalog.find((item) => item.id === id);
     if (!card) fail(`Missing promo card ${id}.`, 500);
     return { ...card };

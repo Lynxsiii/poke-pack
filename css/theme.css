@@ -463,6 +463,11 @@ h1, h2, h3 { text-wrap: balance; }
 .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(34px, 4px); }
 .promo-fan.count-3 .promo-face:nth-child(2) { transform: translateX(16px); z-index: 1; }
 .promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(8deg) translateY(4px); z-index: 2; }
+.promo-fan.count-4 .promo-face { width: 68px; }
+.promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-10deg) translate(54px, 8px); }
+.promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-3deg) translate(36px, 2px); z-index: 1; }
+.promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(4deg) translate(18px, 2px); z-index: 2; }
+.promo-fan.count-4 .promo-face:nth-child(4) { transform: rotate(11deg) translateY(8px); z-index: 3; }
 .promo-face:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: var(--r-sm); }
 .promo-note {
   position: absolute; left: 0; top: 0; padding: 3px 7px; border: 1px solid var(--line-2);
@@ -478,6 +483,10 @@ h1, h2, h3 { text-wrap: balance; }
 .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-11deg) translate(28px, -2px); }
 .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(2) { transform: translate(16px, -8px); }
 .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(11deg) translateY(-2px); }
+.promo-product:hover .promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-13deg) translate(50px, 2px); }
+.promo-product:hover .promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-4deg) translate(34px, -6px); }
+.promo-product:hover .promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(5deg) translate(18px, -6px); }
+.promo-product:hover .promo-fan.count-4 .promo-face:nth-child(4) { transform: rotate(14deg) translateY(2px); }
 /* In the opening, the promos are dealt big: they are what the box was bought for. */
 #overlay .spread-grid.promo-spread { justify-content: center; gap: 22px; }
 #overlay .spread-grid.promo-spread .spread-card { width: min(220px, 40vw); }
@@ -569,6 +578,10 @@ h1, h2, h3 { text-wrap: balance; }
   .promo-fan.count-3 .promo-face { width: 52px; }
   .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(24px, 4px); }
   .promo-fan.count-3 .promo-face:nth-child(2) { transform: translateX(12px); }
+  .promo-fan.count-4 .promo-face { width: 46px; }
+  .promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-10deg) translate(36px, 6px); }
+  .promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-3deg) translate(24px, 2px); }
+  .promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(4deg) translate(12px, 2px); }
   .promo-note { font-size: 10px; padding: 2px 5px; }
 }
 @media (max-width: 720px) {

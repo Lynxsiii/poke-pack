@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { contentsValue, packValue, priceOffer, ripPack, isHit } from "../js/engine.js";
-import { BASIC_ENERGY, findOffer, getSet, promoOffers, sealedOffers, sellValue } from "../js/catalog.js";
+import { BASIC_ENERGY, findOffer, getSet, promoOffers, sealedOffers } from "../js/catalog.js";
 
 const root = new URL("../", import.meta.url);
 const set = getSet("me55");
@@ -42,10 +42,8 @@ assert.ok(classic.every((c) => c.rarity === "Classic Collection"), "and all thre
 
 const N = 60000;
 const hits = {};
-let value = 0;
 for (let i = 0; i < N; i += 1) {
   const pack = ripPack(set, cards);
-  value += pack.reduce((sum, c) => sum + sellValue(c), 0);
   assert.equal(pack.length, 6);
   assert.equal(pack.filter((c) => c.rarity === "Pikachu Rare").length, 1, "one Pikachu per pack");
   assert.equal(pack.filter((c) => c.energy).length, 1, "one basic Energy per pack");
@@ -63,7 +61,19 @@ near("Illustration Rare", 0.2, 0.012);
 near("Classic Collection", 0.1, 0.008);
 near("Special Illustration Rare", 1 / 21, 0.006);
 near("Futuristic Rare", 1 / 120, 0.003);
-// The price floor's pack value matches what packs really pay out.
-const mean = value / N;
-assert.ok(Math.abs(mean - packValue(set, cards)) / mean < 0.05, `pack value ${packValue(set, cards).toFixed(2)} vs ${mean.toFixed(2)}`);
+// The price floor's pack value: each slot's odds times its pool's mean card.
+const toy = [
+  { id: "c1", rarity: "Common", market: 0.1 },
+  { id: "c2", rarity: "Common", market: 0.3 },
+  { id: "r1", rarity: "Rare", market: 1 },
+  { id: "d1", rarity: "Double Rare", market: 5 },
+  { id: "e1", rarity: "Energy", energy: true, market: 0.05 },
+];
+const toySlots = [
+  { pool: "common", count: 3 },
+  { pool: "rare-slot", count: 1, table: [["double", 0.25], ["rare", 1]] },
+  { pool: "energy", count: 1 },
+];
+assert.equal(Math.round(packValue({ slots: toySlots }, toy) * 100) / 100, 0.6 + 0.25 * 5 + 0.75 * 1 + 0.05);
+assert.equal(Math.round(contentsValue({ packs: 2, promos: ["d1", "r1"], pick: 1 }, { slots: toySlots }, toy) * 100) / 100, 2 * 2.65 + 3);
 console.log("30th Celebration checks passed: 6-card packs, one Pikachu, one hit slot, no box, promos only in their products, no product below what's inside, odds within tolerance.");

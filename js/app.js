@@ -961,9 +961,13 @@ function productButton(offer) {
 }
 
 /** "Nidorina promo" / "Moltres, Articuno and Zapdos promos". */
-function promoNames(ids) {
+function promoNames(ids, pick = 0) {
   const cards = ids.map((id) => byId[id]).filter(Boolean);
   if (!cards.length) return "";
+  if (pick === 1) {
+    const names = cards.map((card) => card.name);
+    return `one of ${names.length} promos: ${names.slice(0, -1).join(", ")} or ${names.at(-1)}`;
+  }
   // The Pokémon Center ETB has the Nidorina promo twice, stamped and not.
   const counts = new Map();
   for (const card of cards) counts.set(card.name, (counts.get(card.name) || 0) + 1);
@@ -987,7 +991,7 @@ function renderSealed() {
       const vsSingle = single ? Math.round((1 - each / single) * 100) : 0;
       const deal =
         vsSingle >= 1 ? `${vsSingle}% under single packs` : vsSingle <= -1 ? `${-vsSingle}% over single packs` : "Same as single packs";
-      const promo = promoNames(offer.promos);
+      const promo = promoNames(offer.promos, offer.pick);
       return `<article class="sealed-card" data-sealed="${esc(offer.id)}">
         <div class="sealed-stack" aria-hidden="true">
           ${stack.map((wrap) => `<span>${packPicture(wrap, " ")}</span>`).join("")}
@@ -1015,6 +1019,7 @@ function productContents(offer) {
     parts.push(`${n} ${name} pack${n === 1 ? "" : "s"}`);
   }
   if (!parts.length && offer.kind === "deck") parts.push("60-card deck");
+  if (offer.kind === "battle") parts.push("40-card deck");
   return parts.join(" + ");
 }
 
@@ -1041,12 +1046,16 @@ function renderPromoProducts() {
     .map((offer) => {
       const promos = offer.promos.map((id) => byId[id]);
       const note = releaseNote(offer);
-      const worth = promos.reduce((sum, card) => sum + sellValue(card), 0);
+      const values = promos.map((card) => sellValue(card));
+      const worth = offer.pick
+        ? `Promo worth ✦ ${coin(Math.min(...values))} to ✦ ${coin(Math.max(...values))}`
+        : `Promo${promos.length === 1 ? "" : "s"} worth ✦ ${coin(values.reduce((sum, v) => sum + v, 0))}`;
       return `<article class="sealed-card promo-product" data-sealed="${esc(offer.id)}">
         <div class="promo-stage">
           ${offer.image ? `<img class="promo-box" src="${esc(offer.image)}" alt="" loading="lazy" decoding="async" />` : ""}
-          <div class="promo-fan count-${Math.min(promos.length, 3)}">
+          <div class="promo-fan count-${Math.min(promos.length, 4)}">
             ${promos
+              .slice(0, 4)
               .map(
                 (card) => `<button type="button" class="promo-face" ${inspectAttrs(card)}
                   title="${esc(card.name)} · ${esc(numberLine(card))}" aria-label="Inspect the ${esc(card.name)} promo">
@@ -1059,8 +1068,8 @@ function renderPromoProducts() {
         </div>
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
-          <p>${esc(productContents(offer))} · ${esc(promoNames(offer.promos))}</p>
-          <p class="promo-worth">Promo${promos.length === 1 ? "" : "s"} worth ✦ ${coin(worth)}</p>
+          <p>${esc(productContents(offer))} · ${esc(promoNames(offer.promos, offer.pick))}</p>
+          <p class="promo-worth">${worth}</p>
           ${offer.market ? `<p class="promo-market">Market ✦ ${coin(offer.market)}, but what's inside is worth more, so it costs that.</p>` : ""}
         </div>
         <div class="pack-meta">

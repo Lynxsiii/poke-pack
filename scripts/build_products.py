@@ -20,7 +20,10 @@ A set lists the ones worth opening in data/sets/<id>.json:
 
 `packs` counts the set's own booster packs; `special` names extra packs from
 the set's `specialPacks` in js/catalog.js (the Ultra-Premium Collections'
-Classic Collection pack). A product whose id matches one of SEALED_PRODUCTS
+Classic Collection pack). `pick` is how many of `promos` one box holds when it
+is not all of them (a Build & Battle Box holds one of four at random), and
+`tcgplayerGroup` names the TCGplayer group of a product filed outside the
+set's own (Miscellaneous Cards & Products, 2374). A product whose id matches one of SEALED_PRODUCTS
 (eliteTrainerBox) only adds its promos to that product.
 
 This script then:
@@ -398,12 +401,18 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     log_history(card_prices, today)
     print(f"  promo cards: {len(promo_ids)} ({len(card_prices)} priced)")
 
-    # Products: price, photo, contents.
-    market = tcg_prices(cfg["tcgplayerGroup"], refresh=True)
-    meta = tcg_products(cfg["tcgplayerGroup"], refresh)
+    # Products: price, photo, contents. Collections sold across sets are filed
+    # in another TCGplayer group (Miscellaneous Cards & Products), named per product.
+    market_by: dict[int, dict[int, float]] = {}
+    meta_by: dict[int, dict[int, dict]] = {}
     out = []
     for product in products:
         pid = product["tcgplayerId"]
+        group = product.get("tcgplayerGroup") or cfg["tcgplayerGroup"]
+        if group not in market_by:
+            market_by[group] = tcg_prices(group, refresh=True)
+            meta_by[group] = tcg_products(group, refresh)
+        market, meta = market_by[group], meta_by[group]
         price = market.get(pid)
         if price is None:
             print(f"    {product['id']}: no TCGplayer price, left out")
@@ -420,6 +429,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             "packs": int(product.get("packs", 0)),
             **({"special": product["special"]} if product.get("special") else {}),
             "promos": promos,
+            **({"pick": int(product["pick"])} if product.get("pick") else {}),
             "price": price,
             "tcgplayerId": pid,
             **({"released": released[:10]} if released else {}),
