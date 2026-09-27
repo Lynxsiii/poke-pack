@@ -176,7 +176,7 @@ function pose(x, y, { light = 1, tilt = true, root = document } = {}) {
 }
 
 // Per-card properties set in the markup, which a reset must not strip.
-const KEEP = /^--(art|stamp|foil-map|etch-map|etch-angle|seed)/;
+const KEEP = /^--(art|stamp|foil-map|etch-map|etch-angle|seed|rev-pattern)/;
 
 function rest(root = document) {
   for (const el of root.querySelectorAll(".tcg")) {

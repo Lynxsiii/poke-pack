@@ -1,0 +1,54 @@
+/*
+ * Scarlet & Violet Double Rare (TCG Live: SUN_PILLAR / HOLO, with the
+ * SouthernCross star coat). The research is in the card-textures skill,
+ * .claude/skills/card-textures/reference/sv-double-rare.md.
+ *
+ * celebration.css draws SUN_PILLAR for every set with a foil map as broad
+ * pastel bars. Photos of Scarlet & Violet Double Rares (151's Zapdos ex,
+ * Alakazam ex and Charizard ex; SV base's Miraidon ex and Gardevoir ex) show
+ * something else: thin, sharp, saturated rainbow streaks a few millimetres
+ * apart, running lower left to upper right at about 50 degrees, brightest
+ * near the light, with the art between them still fully saturated. The stars
+ * are the cure coat (`.cure.cure-stars`, celebration.css), unchanged here.
+ *
+ * Scoped by `era-sv` (js/foil-maps.js: Scarlet & Violet ids) so Mega
+ * Evolution and 30th Celebration Double Rares keep celebration.css's look.
+ * Loaded after celebration.css; each rule outranks its one by a class.
+ *
+ * Rest state (PR 5): a resting card paints `.foil` alone.
+ */
+
+/* The streaks: each a full spectrum about 2% of the card wide, about a
+   tenth of the card apart, with black between them, which color-dodge leaves alone. They slide with the tilt, a
+   little faster than the card turns, so they sweep across rather than sit. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv .foil {
+  background-image:
+    repeating-linear-gradient(130deg,
+      #000 0%, #000 8%,
+      hsl(0, 100%, 55%) 8.25%, hsl(40, 100%, 52%) 8.45%, hsl(65, 100%, 50%) 8.6%,
+      hsl(130, 100%, 48%) 8.8%, hsl(190, 100%, 52%) 9%, hsl(235, 100%, 62%) 9.2%,
+      hsl(285, 100%, 60%) 9.4%, #000 9.7%);
+  background-size: 200% 200%;
+  background-position:
+    calc(var(--background-x) * 1.5) calc(var(--background-y) * 1.5);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  filter: brightness(calc(1 + var(--pointer-from-center) * 0.3)) contrast(1.15) saturate(1.5);
+  mix-blend-mode: color-dodge;
+}
+/* The light: celebration.css's multiply radial on `::before` already dims
+   the streaks away from the pointer; a steeper fall-off keeps the far side
+   of the card nearly plain, as in the photos. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv .foil::before {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #fff 0%, #bbb 18%, #555 45%, #222 100%);
+  mix-blend-mode: multiply;
+}
+/* One family of streaks: no counter-tracked twin. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv .foil::after {
+  background-image: none;
+}
+/* Resting, a few faint streaks, as a card on a table shows. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv:not(.lit):not(.settling) .foil {
+  filter: brightness(0.7) contrast(1.1) saturate(1);
+}

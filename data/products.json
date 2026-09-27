@@ -2603,6 +2603,138 @@
       "image": "assets/products/sv5/blister-bellibolt.webp"
     }
   ],
+  "sv4": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv4-svp065",
+        "sv4-svp066"
+      ],
+      "pick": 1,
+      "price": 138.96,
+      "tcgplayerId": 512815,
+      "image": "assets/products/sv4/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb-roaring-moon",
+      "name": "Pokémon Center Elite Trainer Box: Roaring Moon",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv4-svp065-pc",
+        "sv4-svp065"
+      ],
+      "price": 222.52,
+      "tcgplayerId": 512809,
+      "image": "assets/products/sv4/pc-etb-roaring-moon.webp"
+    },
+    {
+      "id": "pc-etb-iron-valiant",
+      "name": "Pokémon Center Elite Trainer Box: Iron Valiant",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv4-svp066-pc",
+        "sv4-svp066"
+      ],
+      "price": 191.19,
+      "tcgplayerId": 512801,
+      "image": "assets/products/sv4/pc-etb-iron-valiant.webp"
+    },
+    {
+      "id": "roaring-moon-box",
+      "name": "Roaring Moon ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv4-svp067"
+      ],
+      "price": 46.6,
+      "tcgplayerId": 516577,
+      "released": "2023-11-17",
+      "image": "assets/products/sv4/roaring-moon-box.webp"
+    },
+    {
+      "id": "iron-valiant-box",
+      "name": "Iron Valiant ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv4-svp068"
+      ],
+      "price": 43.73,
+      "tcgplayerId": 516578,
+      "released": "2023-11-17",
+      "image": "assets/products/sv4/iron-valiant-box.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv4-svp057",
+        "sv4-svp058",
+        "sv4-svp059",
+        "sv4-svp060"
+      ],
+      "pick": 1,
+      "price": 43.23,
+      "tcgplayerId": 514068,
+      "image": "assets/products/sv4/build-battle.webp"
+    },
+    {
+      "id": "blister3-arctibax",
+      "name": "3 Pack Blister: Arctibax",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv4-svp064"
+      ],
+      "price": 31.0,
+      "tcgplayerId": 513433,
+      "image": "assets/products/sv4/blister3-arctibax.webp"
+    },
+    {
+      "id": "blister3-cetitan",
+      "name": "3 Pack Blister: Cetitan",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv4-svp063"
+      ],
+      "price": 29.61,
+      "tcgplayerId": 513434,
+      "image": "assets/products/sv4/blister3-cetitan.webp"
+    },
+    {
+      "id": "blister-sinistea",
+      "name": "Single Pack Blister: Sinistea",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv4-svp062"
+      ],
+      "price": 10.91,
+      "tcgplayerId": 514223,
+      "image": "assets/products/sv4/blister-sinistea.webp"
+    },
+    {
+      "id": "blister-pineco",
+      "name": "Single Pack Blister: Pineco",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv4-svp061"
+      ],
+      "price": 11.02,
+      "tcgplayerId": 514224,
+      "image": "assets/products/sv4/blister-pineco.webp"
+    }
+  ],
   "sv6": [
     {
       "id": "eliteTrainerBox",

@@ -20,6 +20,7 @@ Usage:
     py scripts/mirror_images.py               # every set
     py scripts/mirror_images.py me5           # one set
     py scripts/mirror_images.py --fix-local    # re-round/un-matte files already on disk
+    py scripts/mirror_images.py --photos sv10  # re-trim cards scanned from TCGplayer photos
 """
 from __future__ import annotations
 
@@ -32,6 +33,7 @@ import urllib.request
 from io import BytesIO
 from pathlib import Path
 
+import numpy as np
 from PIL import Image, ImageChops, ImageDraw, UnidentifiedImageError
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +48,15 @@ RATIO = 1024 / 733
 # Printed Pokémon card corner: 2.5 mm on a 63 mm short edge.
 CORNER_MM = 2.5
 CARD_WIDTH_MM = 63
+# Photos on white: a pixel whose darkest channel is at least this is paper.
+# Silver borders photograph at about 200-230, so they stay card.
+PAPER = 236
+# Most paper a photo can lose from each side, as a fraction of that side.
+# TCGplayer pads some photos to 800 x 1000, about 4.5% a side.
+MAX_TRIM = 0.08
+# Border shaved off each side of a photo past the paper, as a fraction of
+# the width: 0.3 mm, which takes the pale cut edge and leaves the frame.
+EDGE_INSET = 0.005
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) poke-pack.rip image mirror"
 
@@ -102,13 +113,73 @@ def sample_border(img: Image.Image) -> tuple[int, int, int]:
     return (220, 222, 224)
 
 
-def round_and_unmatte(img: Image.Image) -> Image.Image:
-    """Force the printed card radius and strip the black corner matte."""
+def is_photo(img: Image.Image) -> bool:
+    """True for a flat photo of the card (TCGplayer's listing JPEGs).
+
+    Scans carry the card's outline in their alpha channel. A photo has none:
+    the card sits on white paper, with white in its rounded corners and
+    sometimes a sliver of white down each side.
+    """
+    return "A" not in img.getbands() or img.getchannel("A").getextrema()[0] == 255
+
+
+def trim_photo(img: Image.Image) -> tuple[Image.Image, float]:
+    """Crop a photo to the card's own edge and measure its corner radius.
+
+    Returns the crop and the radius as a fraction of its width. Without this
+    the paper around the card survives the resize as a white rim, and since
+    photographed corners are rounder than the printed 2.5 mm, white wedges
+    survive the rounding too.
+    """
+    rgb = np.asarray(img.convert("RGB"))
+    card = rgb.min(axis=2) < PAPER
+    h, w = card.shape
+    cols = np.nonzero(card.mean(axis=0) > 0.5)[0]
+    rows = np.nonzero(card.mean(axis=1) > 0.5)[0]
+    if not len(cols) or not len(rows):
+        return img, CORNER_MM / CARD_WIDTH_MM
+    left, right = int(cols[0]), int(cols[-1]) + 1
+    top, bottom = int(rows[0]), int(rows[-1]) + 1
+    # A pale silver border could pass for paper. Trust the trim only when
+    # what is left is card-shaped (63 x 88), and never past MAX_TRIM a side.
+    shape = (right - left) / (bottom - top) * RATIO
+    if abs(shape - 1) > 0.035 or max(left, w - right) > w * MAX_TRIM or max(top, h - bottom) > h * MAX_TRIM:
+        left, right, top, bottom = 0, w, 0, h
+    # Then a hair more: the card's cut edge photographs as a pale line a
+    # pixel or two wide, half paper and half border.
+    inset = max(1, round(w * EDGE_INSET))
+    left, right, top, bottom = left + inset, right - inset, top + inset, bottom - inset
+    card = card[top:bottom, left:right]
+    ch, cw = card.shape
+    # Walk the diagonal in from each corner to the first pixel of card. A
+    # circular corner of radius r meets the diagonal r * (1 - 1/sqrt 2) in.
+    limit = round(cw * 2 * CORNER_MM / CARD_WIDTH_MM)
+    radius = CORNER_MM / CARD_WIDTH_MM
+    for x0, y0, dx, dy in ((0, 0, 1, 1), (cw - 1, 0, -1, 1), (0, ch - 1, 1, -1), (cw - 1, ch - 1, -1, -1)):
+        k = 0
+        while k < limit and not card[y0 + dy * k, x0 + dx * k]:
+            k += 1
+        radius = max(radius, k / (1 - 0.5**0.5) / cw)
+    return img.crop((left, top, right, bottom)), min(radius, 2 * CORNER_MM / CARD_WIDTH_MM)
+
+
+def round_and_unmatte(img: Image.Image, radius: float | None = None) -> Image.Image:
+    """Force the printed card radius and strip the black corner matte.
+
+    `radius` (a fraction of the width) widens the corner for photos whose
+    corners are rounder than print. The mask is drawn at 4x and scaled down
+    so the corner is antialiased rather than stair-stepped.
+    """
     img = img.convert("RGBA")
     w, h = img.size
-    radius = max(6, round(w * CORNER_MM / CARD_WIDTH_MM))
-    mask = Image.new("L", (w, h), 0)
-    ImageDraw.Draw(mask).rounded_rectangle((0, 0, w - 1, h - 1), radius=radius, fill=255)
+    px = max(6, round(w * CORNER_MM / CARD_WIDTH_MM))
+    if radius:
+        # A pixel or two extra so the photo's own antialiased edge, which is
+        # half paper, falls outside the mask too.
+        px = max(px, round(w * radius) + max(1, round(w / 300)))
+    big = Image.new("L", (w * 4, h * 4), 0)
+    ImageDraw.Draw(big).rounded_rectangle((0, 0, w * 4 - 1, h * 4 - 1), radius=px * 4, fill=255)
+    mask = big.resize((w, h), Image.LANCZOS)
     alpha = ImageChops.multiply(img.getchannel("A"), mask)
     # Composite onto the frame colour first so transparent pixels keep a
     # matching RGB instead of compressed-to-black.
@@ -140,11 +211,15 @@ def encode(raw: bytes, out_dir: Path, stem: str, force: bool) -> tuple[int, bool
     if not force and all(usable(p) for p, _, _ in targets):
         return sum(p.stat().st_size for p, _, _ in targets), False
 
-    source = Image.open(BytesIO(raw)).convert("RGBA")
+    source = Image.open(BytesIO(raw))
+    radius = None
+    if is_photo(source):
+        source, radius = trim_photo(source)
+    source = source.convert("RGBA")
     written = 0
     for path, width, quality in targets:
         height = round(width * RATIO)
-        face = round_and_unmatte(source.resize((width, height), Image.LANCZOS))
+        face = round_and_unmatte(source.resize((width, height), Image.LANCZOS), radius)
         written += save_webp(face, path, quality)
     return written, True
 
@@ -214,6 +289,79 @@ def fix_local_shared() -> tuple[int, int]:
         total += save_webp(face, dest, quality)
         done += 1
     return done, total
+
+
+def photo_source(url: str) -> bool:
+    """Whether a card's remote is a JPEG photo rather than a cut-out scan."""
+    return url.split("?")[0].lower().endswith((".jpg", ".jpeg"))
+
+
+def replace_scan(raw: bytes, set_id: str, card: dict, stem: str) -> bool:
+    """Encode `raw` as the card's scan, under a new name if the art changed.
+
+    /assets/* is served immutable for a year (see _headers), so new art under
+    an old filename never reaches a browser that already holds the old one.
+    When the card already has a local scan and the new encode differs, it is
+    written as <stem>-v2 (then -v3, ...), the card is repointed and the old
+    files are deleted. Returns whether the art changed.
+    """
+    out_dir = CARD_DIR / set_id
+    have = card.get("image") or ""
+    old = Path(have).stem if have.startswith(f"assets/cards/{set_id}/") else ""
+    # Only this card's own files: `stem` itself or an earlier -vN of it.
+    if not re.fullmatch(rf"{re.escape(stem)}(-v\d+)?", old) or not usable(ROOT / have):
+        old = ""
+    version = re.fullmatch(r".*-v(\d+)", old)
+    name = f"{stem}-v{int(version.group(1)) + 1 if version else 2}" if old else stem
+    encode(raw, out_dir, name, force=True)
+    changed = True
+    if old:
+        pairs = [(out_dir / f"{old}{s}.webp", out_dir / f"{name}{s}.webp") for s, _, _ in VARIANTS]
+        if all(a.exists() and a.read_bytes() == b.read_bytes() for a, b in pairs):
+            for _, b in pairs:
+                b.unlink()
+            name, changed = old, False
+        else:
+            for a, _ in pairs:
+                a.unlink(missing_ok=True)
+    card["image"] = f"assets/cards/{set_id}/{name}.webp"
+    card["imageSmall"] = f"assets/cards/{set_id}/{name}-sm.webp"
+    return changed
+
+
+def photo_source(url: str) -> bool:
+    """Whether a card's remote is a JPEG photo rather than a cut-out scan."""
+    return url.split("?")[0].lower().endswith((".jpg", ".jpeg"))
+
+
+def refetch_photos(set_id: str) -> tuple[int, int]:
+    """Re-encode every card in a set whose scan came from a photo on white.
+
+    Promo prints the scan sites lack (stamps, Cosmos holos, Pokémon Center
+    and prerelease copies) come from TCGplayer's listing photos. Rerun this
+    after the trim in `trim_photo` changes, or when a set arrives with photos
+    encoded before it existed. Changed scans get a new filename.
+    """
+    path = DATA / f"{set_id}.json"
+    if not path.exists():
+        return 0, 0
+    cards = json.loads(path.read_text(encoding="utf-8"))
+    done = failed = 0
+    for card in cards:
+        remote = card.get("imageRemote") or ""
+        local = card.get("image") or ""
+        if not photo_source(remote) or not local.startswith(f"assets/cards/{set_id}/"):
+            continue
+        raw = download(remote)
+        if raw is None:
+            print(f"    {card['id']}: download failed")
+            failed += 1
+            continue
+        stem = re.sub(r"-v\d+$", "", Path(local).stem)
+        done += replace_scan(raw, set_id, card, stem)
+        time.sleep(0.15)
+    path.write_text(json.dumps(cards, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return done, failed
 
 
 def mirror_set(set_id: str, force: bool) -> tuple[int, int, int]:
@@ -383,6 +531,14 @@ def main(argv: list[str]) -> int:
     if unknown:
         print(f"unknown set(s): {', '.join(unknown)}", file=sys.stderr)
         return 2
+
+    if "--photos" in argv:
+        for set_id in wanted:
+            done, failed = refetch_photos(set_id)
+            if done or failed:
+                note = f", {failed} failed" if failed else ""
+                print(f"{set_id}: {done} photos re-encoded under new names{note}")
+        return 0
 
     if fix_local:
         grand = 0
