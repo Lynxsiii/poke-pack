@@ -14,8 +14,9 @@
 //   poses=rest,50:50,...  one row per pose, pinned (x:y in 0-100, or "rest").
 //                         Without it the cards follow the pointer.
 //   maps=1                proof cells use TCG Live's foil map for the card as
-//                         their mask, where scripts/fetch_foil_maps.py has put
-//                         one in ./cache/ (local reference only, never shipped)
+//                         their mask: the site's shipped copy in
+//                         /assets/foil/maps/<set>/ if there is one, else the raw
+//                         map scripts/fetch_foil_maps.py put in ./cache/<set>/
 import { createCardMotion } from "/js/card-motion.js";
 import { HIT_RARITIES } from "/js/engine.js";
 import { rarityKey } from "/js/catalog.js";
@@ -25,8 +26,6 @@ const setId = params.get("set") || "me55";
 const proof = params.get("proof") || "split";
 const width = Number(params.get("w")) || 240;
 const ALL_FOIL = new Set(["me55"]);
-// Site set id -> TCG Live set key, for ./cache/<key>/<n>.foil.png.
-const TCGL = { me55: "me5-5" };
 const CLASSIC_FULL_FOIL = /(-?EX|-?GX|\bV|VMAX|VSTAR|LV\.X|BREAK|LEGEND)$/i;
 
 const isEx = (c) => (c.subtypes || []).some((s) => String(s).toLowerCase() === "ex") || /(^|\s)ex$/i.test(c.name || "");
@@ -76,14 +75,16 @@ async function stamps() {
   }
 }
 
-// TCG Live foil maps already in the local cache, by card id.
+// TCG Live foil maps by card id: { url, lum }. Shipped copies are alpha
+// masks; the raw PNGs in the cache are luminance.
 async function foilMaps(list) {
-  const key = TCGL[setId];
-  if (!params.get("maps") || !key) return {};
-  const found = await Promise.all(list.filter((c) => /^\d+$/.test(c.number)).map(async (c) => {
-    const url = `./cache/${key}/${c.number}.foil.png`;
-    const res = await fetch(url, { method: "HEAD" }).catch(() => null);
-    return res?.ok ? [c.id, url] : null;
+  if (!params.get("maps")) return {};
+  const exists = (url) => fetch(url, { method: "HEAD" }).then((r) => r.ok, () => false);
+  const found = await Promise.all(list.map(async (c) => {
+    const shipped = `/assets/foil/maps/${setId}/${c.number}.webp`;
+    if (await exists(shipped)) return [c.id, { url: shipped, lum: false }];
+    const raw = `./cache/${setId}/${c.number}.foil.png`;
+    return (await exists(raw)) ? [c.id, { url: raw, lum: true }] : null;
   }));
   return Object.fromEntries(found.filter(Boolean));
 }
@@ -98,16 +99,16 @@ function face(c, stamp, maps, withProof) {
     vars.push(`--stamp-mask:url('${abs("./masks/stamp30.png")}')`, `--stamp-pos:${s.position}`, `--stamp-size:${s.size}`);
     if (s.cutout) vars.push(`--stamp-cut:url('${abs(`./masks/${s.cutout}`)}')`);
   }
-  if (map) vars.push(`--foil-map:url('${abs(map)}')`);
+  if (map) vars.push(`--foil-map:url('${abs(map.url)}')`);
   const classes = ["tcg", rarityKey(c.rarity), foilClass(c), foilPattern(c), foilLayout(c),
-    s ? "has-stamp" : "", s?.cutout ? "has-stamp-cut" : "", map ? "has-foil-map" : ""].filter(Boolean).join(" ");
+    s ? "has-stamp" : "", s?.cutout ? "has-stamp-cut" : "", map ? "has-foil-map" : "", map?.lum ? "foil-map-lum" : ""].filter(Boolean).join(" ");
   return `<figure class="lab-cell ${withProof ? "lab-proof" : "lab-site"}" style="--w:${width}px">
     <div class="${classes}" data-finish="${finishOf(c)}" style="${vars.join(";")}">
       <img src="/${c.image}" alt="${c.name}" decoding="async" />
       <span class="foil" aria-hidden="true"></span>
       <span class="glare" aria-hidden="true"></span>
     </div>
-    <figcaption>${withProof ? (map ? "proof + TCG Live map" : "proof") : "site"} · ${c.number} ${c.name}<br>${c.rarity}</figcaption>
+    <figcaption>${withProof ? (map ? `proof + ${map.lum ? "raw" : "shipped"} foil map` : "proof") : "site"} · ${c.number} ${c.name}<br>${c.rarity}</figcaption>
   </figure>`;
 }
 

@@ -67,9 +67,10 @@ illusion pattern itself shimmer.
 only where the real card is foil" is masks.
 
 - **Alpha vs luminance.** The site's masks (`--art`, `win-evo.png`, owner
-  masks, stamp masks) are alpha: white on transparent. TCG Live foil maps and
-  upstream 151's `--mask` are luminance: white on black. Set
-  `mask-mode: luminance` for those, per layer.
+  masks, stamp masks, and the foil maps `fetch_foil_maps.py --ship`
+  writes) are alpha: white on transparent. Raw TCG Live PNGs and upstream
+  151's `--mask` are luminance: white on black. Set `mask-mode: luminance`
+  for those, per layer.
 - **`--art` as a mask.** Masking with the scan's own alpha trims the foil to
   the card's rounded corners and to any transparent padding in the scan.
   Every foil and glare starts from it.
@@ -119,9 +120,10 @@ only where the real card is foil" is masks.
   sub-pixel noise (glitter at `150px`).
 - **Seamless.** Check a texture tiles without seams at the size you use.
   `scripts/make_foil_textures.py` generates the site's own seamless tiles.
-- **Root-relative URLs.** Where a relative `url()` inside a custom property
-  resolves has differed between browsers and spec drafts. Chromium resolves
-  it where the property is declared (checked: `--win-evo:
-  url("../assets/...")` in `css/app.css` loads `/assets/masks/win-evo.png`
-  when `css/holo/windows.css` uses it). Write `url("/assets/foil/...")`
-  and it cannot matter.
+- **Root-relative URLs.** A relative `url()` inside a custom property has
+  resolved against the stylesheet that *uses* it on this site: `assetUrl()`
+  in `js/app.js` records inline `--art` paths being fetched from
+  `css/assets/...`, and `css/holo/base.css` redeclares the window masks
+  root-relative for the same reason. Browsers and spec drafts have
+  disagreed here, so write `url("/assets/foil/...")` (or an absolute URL
+  from `assetUrl()` for inline values) and it cannot matter.

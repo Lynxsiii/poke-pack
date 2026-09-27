@@ -1,4 +1,5 @@
-# TCG Live foil maps fetched by scripts/fetch_foil_maps.py: local reference only, never committed
+# Raw TCG Live maps fetched by scripts/fetch_foil_maps.py; the site's own
+# copies are written to assets/foil/maps/ with --ship
 cache/
 # find_overlay.py --debug output: regenerate to look at it
 masks/*-check.jpg

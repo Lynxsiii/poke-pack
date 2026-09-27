@@ -38,7 +38,8 @@ Pikachu Rare before drawing it.
 
 ## Where the foil is (TCG Live foil maps)
 
-Fetch the maps with `scripts/fetch_foil_maps.py --key me5-5 --all` and look.
+Fetch the maps with `scripts/fetch_foil_maps.py --set me55 --all` and look
+(raw PNGs land in `lab/cache/me55/`).
 What they show:
 
 - **Commons, Rares, Double Rares, Illustration Rares, Trainers**: the art
@@ -101,16 +102,31 @@ python3 .claude/skills/card-textures/scripts/find_overlay.py --set me55 \
   --name stamp30 --out <dir>
 ```
 
-**Shipping it.** `.claude/` is not deployed (`scripts/prepare-cf-assets.mjs`
-copies only `index.html`, `_headers`, `css`, `js`, `data`, `assets`), so
-the masks must move: write them to `assets/masks/stamp/` with `--out`, put
-each card's `position` and `size` (and `cutout`) on its record in
-`data/me55.json` the way `make_owner_masks.py` adds `ownerMask`, and set
-`--stamp-mask`, `--stamp-pos`, `--stamp-size`, `--stamp-cut` and the
-`has-stamp` / `has-stamp-cut` classes in `tcgFace()` in `js/app.js`. Then
-move the section 1 and 2 rules from `lab/lab.css` into `css/holo/windows.css`
-under the site's `body.fx-holo.fx-holo.fx-holo` prefix. Custom property URLs
-must be root-relative (`/assets/masks/stamp/stamp30.png`).
+**Shipping it.** Noah chose on 2026-09-27 to ship TCG Live's foil maps,
+and they settle the stamp for every card that has one: the small stamp is
+black in the map and the Pikachu Rare's big stamp is white, minus its text.
+So:
+
+1. **The 161 cards with maps** (158 numbered plus the RGB Mews): run
+   `fetch_foil_maps.py --set me55 --all --ship --write-data` and wire
+   `foilMap` into `tcgFace()` and `css/holo/windows.css` as
+   [masks.md](masks.md) "Shipping foil maps" shows. No stamp rules needed.
+2. **The 30 Classic Collection cards** have no map (TCG Live's `me5-5c` is
+   empty), so they need the stamp knockout from `stamp30.json`. `.claude/`
+   is not deployed (`scripts/prepare-cf-assets.mjs` copies only
+   `index.html`, `_headers`, `css`, `js`, `data`, `assets`), so rerun
+   `find_overlay.py` with `--out assets/masks/stamp`, put each card's
+   `position` and `size` on its record in `data/me55.json` the way
+   `make_owner_masks.py` adds `ownerMask`, set `--stamp-mask`,
+   `--stamp-pos`, `--stamp-size` and `has-stamp` in `tcgFace()`, and move
+   section 1 of `lab/lab.css` into `css/holo/windows.css` under the site's
+   prefix. Classic cards drawn with `foil-ultra` (EX, GX, V, BREAK, LEGEND)
+   cover the whole card, so theirs is the two-layer "card minus a stamp"
+   from the mask algebra table. Custom property URLs must be root-relative
+   (`/assets/masks/stamp/stamp30.png`).
+
+Section 2 (the Pikachu Rare union mask) is only a fallback now; the maps do
+it better.
 
 ## What the lab showed
 
@@ -121,8 +137,10 @@ must be root-relative (`/assets/masks/stamp/stamp30.png`).
   window: its high contrast is meant to land on the background only. With
   the TCG Live map as the mask (`?maps=1`) the Pokémon stays clean and the
   card reads like the real one. Per-card foil maps matter more than any
-  gradient tuning for this set; without them, soften the port (lower
-  `contrast`, lower `.foil` opacity) rather than ship it at full strength.
+  gradient tuning for this set, which is why they ship. On cards without a
+  map, soften the port (lower `contrast`, lower `.foil` opacity) rather
+  than use it at full strength.
+- Shipped maps (alpha WebP) and raw maps (luminance PNG) render the same.
 
 ## Open for the texture thread
 

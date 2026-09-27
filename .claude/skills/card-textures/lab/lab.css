@@ -18,7 +18,8 @@
  *    Its contrast is tuned for a background-only mask: over the whole window
  *    it blows out the Pokémon. Compare with ?maps=1.
  * 4. With ?maps=1, TCG Live's per-card foil map replaces all of the above as
- *    the mask (lab only; the maps are never committed or shipped).
+ *    the mask. The lab reads the raw PNGs (luminance); the site ships alpha
+ *    WebP copies (scripts/fetch_foil_maps.py --ship).
  */
 
 /* ---- 1. Stamp knockout on window holos ---------------------------------- */
@@ -122,8 +123,8 @@ body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.rare.foil-holo .glare::after {
   filter: brightness(0.6) contrast(3);
 }
 
-/* ---- 4. Per-card foil map (lab only, ?maps=1) ---------------------------
-   TCG Live's map is luminance: white is foil, grey partly foil, black plain.
+/* ---- 4. Per-card foil map (?maps=1) --------------------------------------
+   TCG Live's map: white is foil, grey partly foil, black or clear plain.
    It replaces the window clip, the stamp knockout and the Pokémon cut-out at
    once, the way upstream's `.masked` cards work. The glare then lights the
    whole card, as upstream's does on masked cards. */
@@ -133,13 +134,17 @@ body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.has-foil-map.has-foil-map .foil {
   -webkit-mask-composite: source-in, source-over;
   mask-image: var(--art), var(--foil-map);
   mask-composite: intersect, add;
-  mask-mode: alpha, luminance;
+  mask-mode: alpha;
   -webkit-mask-size: contain, 100% 100%;
   mask-size: contain, 100% 100%;
   -webkit-mask-position: center;
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+/* The raw TCG Live PNG in lab/cache is luminance, not alpha. */
+body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.has-foil-map.foil-map-lum .foil {
+  mask-mode: alpha, luminance;
 }
 body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.has-foil-map.has-foil-map .glare {
   clip-path: none;

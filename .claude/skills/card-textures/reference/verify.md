@@ -27,7 +27,7 @@ Query string (see `lab/lab.js` for the full list):
 | `proof` | `split`, `on`, `off` | both copies, proof only, site only |
 | `poses` | `rest,50:50,20:15,80:30` | one row per pointer pose (x:y, 0-100), pinned |
 | `w` | `320` | card width in px |
-| `maps` | `1` | proof copies use TCG Live's foil map as the mask (fetch first with `scripts/fetch_foil_maps.py`) |
+| `maps` | `1` | proof copies use the card's foil map as the mask: the shipped copy in `assets/foil/maps/` if there is one, else the raw map from `scripts/fetch_foil_maps.py` |
 
 `window.lab.pose(x, y)` and `window.lab.rest()` pose every card from the
 console.

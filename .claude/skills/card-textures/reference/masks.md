@@ -21,13 +21,14 @@ single gradient; a perfect rainbow on the wrong area still looks fake.
 
 1. **A per-card foil map.** TCG Live publishes one for every SV and ME
    print (`https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/<key>/<key>_en_<nnn>_std.foil.png`,
-   367x512, luminance: white is foil, grey is partial, black is none). This
-   is what upstream uses, and it gets the Pokémon cut-out and every stamp
-   exactly right. **This repo has chosen not to ship TCG Live assets**
-   (`scripts/make_etch_maps.py`: "synthesised from our own scans, not
-   third-party TCG Live dumps"). Until Noah says otherwise, use these maps to
-   *measure* where the foil is and to check your own masks, not as files
-   served by the site. If that decision changes, record it here.
+   367x512: white is foil, grey is partial, black is none), plus an
+   `.etch.png` for etched prints. This is what upstream uses, and it gets the
+   Pokémon cut-out and every stamp exactly right. **Noah decided on
+   2026-09-27 that the site ships these maps** (it had avoided TCG Live
+   files before; `scripts/make_etch_maps.py` still says so). Use
+   `../scripts/fetch_foil_maps.py`; see "Shipping foil maps" below.
+   Sets TCG Live does not carry (Sword & Shield and older, the 30th
+   Celebration's Classic Collection) still need the sources below.
 2. **Geometry.** A rectangle, a rounded rect, a circle punch. Exact and
    free. Measure on the 600x838 scans (`assets/cards/<set>/<n>.webp`).
 3. **Consensus across cards.** Anything printed identically on many cards
@@ -43,8 +44,62 @@ single gradient; a perfect rainbow on the wrong area still looks fake.
 
 Separating the Pokémon from its background (which SV holo rares, Double Rares
 and commons need, per the TCG Live maps) cannot be done reliably from the
-scan alone. Without per-card maps, keep the foil across the whole window
+scan alone. Without a per-card map, keep the foil across the whole window
 and say so; do not ship a half-right automatic cut-out.
+
+## Shipping foil maps
+
+```
+python3 .claude/skills/card-textures/scripts/fetch_foil_maps.py --set me55 --all --ship --write-data
+```
+
+This fetches every card's maps (raw PNGs into the gitignored `lab/cache/`),
+writes the site's copies to `assets/foil/maps/<set>/<n>.webp` and
+`<n>-etch.webp`, and adds `foilMap` / `etchMap` paths to each card in
+`data/<set>.json`. The copies are **alpha** masks (white, with the map's
+brightness as alpha), like every other mask on the site, so no `mask-mode`
+is needed. For the 30th Celebration: 161 cards (158 plus the RGB Mews),
+about 6 MB (3.5 MB of foil maps, 2.3 MB of etch maps for the 15 etched
+cards); the 30 Classic Collection cards have no map. Look at a card with
+the lab's `?maps=1`, which prefers the shipped copy.
+
+Wiring it into the site (the texture work does this, not the fetch):
+
+- `tcgFace()` in `js/app.js`: when `card.foilMap` is set, add
+  `--foil-map:url('${assetUrl(card.foilMap)}')` to the inline style and a
+  `has-foil-map` class (`assetUrl()` because inline relative URLs resolve
+  against the stylesheet, see its comment).
+- `css/holo/windows.css`, after the window rules so it wins:
+
+```css
+body.fx-holo.fx-holo.fx-holo .tcg.has-foil-map .foil {
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+```
+
+  The map replaces the window clip, the evolution and owner punches and the
+  stamp knockout at once: all of them are already black in it. Decide per
+  finish whether `.glare` keeps its window (a gloss on the art only) or
+  lights the whole card as upstream's masked cards do (`clip-path: none;
+  mask-image: var(--art)`); the lab's section 4 does the latter.
+- Etched finishes (SIR, Futuristic, RGB) use `etchMap` where upstream uses
+  `--foil` in its etched sheets, masking the texture layers.
+- `NOTICE.md`: add a row crediting the maps to Pokémon TCG Live, via
+  malie.io.
+
+Maps and scans line up: both are the full card, 367x512 and 600x838 are the
+same shape, and the Pokémon silhouettes and stamp holes match when overlaid.
+
 
 ## find_overlay.py
 

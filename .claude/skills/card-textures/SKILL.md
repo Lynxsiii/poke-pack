@@ -70,7 +70,7 @@ cure"). The surface gloss throws a soft highlight.
   (`/assets/masks/...`); browsers have disagreed on what a relative one
   resolves against.
 - **Assets** are self-hosted under `assets/`. Never hotlink upstream's CDN or
-  TCG Live. `.claude/` is not deployed, so nothing the site needs may live
+  TCG Live; ship copies. `.claude/` is not deployed, so nothing the site needs may live
   here.
 - **Licence**: the site is GPL-3 because of upstream; credit anything new in
   `NOTICE.md`.
@@ -82,12 +82,12 @@ cure"). The surface gloss throws a soft highlight.
    the TCG Live export (finish-catalog §1). Then look at photos of the real
    card at an angle and write down where the foil is, the pattern, the
    colour behaviour, the texture, and what stays matte (§2).
-2. **Measure the mask.** `scripts/fetch_foil_maps.py` puts TCG Live's foil
-   map for the card in the lab's gitignored cache; it shows exactly what is
-   foil. Build the site's mask from geometry, consensus
-   (`scripts/find_overlay.py` finds any printed mark on every card of a
-   set) or the scan. TCG Live maps are for measuring only unless Noah
-   decides to ship them (masks.md).
+2. **Get the mask.** For Scarlet & Violet and Mega Evolution cards, ship
+   TCG Live's per-card foil map (Noah's decision, 2026-09-27):
+   `scripts/fetch_foil_maps.py --set <set> --all --ship --write-data`, wired
+   in as masks.md "Shipping foil maps" shows. For cards without one, build
+   the mask from geometry, consensus (`scripts/find_overlay.py` finds any
+   printed mark on every card of a set) or the scan (masks.md).
 3. **Pick the upstream recipe** (finish-catalog §3) and read it in
    `upstream/`. Map its layers onto the site's with the table in
    `upstream/README.md`.
@@ -115,9 +115,10 @@ cure"). The surface gloss throws a soft highlight.
 - **`mask-composite`** lists one operator per layer, top first, and the
   bottom layer composites onto nothing: give it an explicit `add`. The
   `-webkit-` keywords differ (`source-in`, `source-out`, `source-over`).
-- **Luminance vs alpha.** TCG Live maps and upstream's `--mask` are
-  luminance (`mask-mode: luminance`); the scan and the site's window PNGs
-  are alpha. Mixed stacks need `mask-mode` per layer.
+- **Luminance vs alpha.** Raw TCG Live PNGs and upstream's `--mask` are
+  luminance (`mask-mode: luminance`); the scan, the site's window PNGs and
+  the shipped foil maps are alpha. A mixed stack needs `mask-mode` per
+  layer.
 - **High contrast over the whole window** (upstream's `contrast(3)`) is
   tuned for a background-only mask. Over the Pokémon it blows out; soften
   it if the mask cannot exclude the Pokémon.
@@ -132,10 +133,10 @@ cure"). The surface gloss throws a soft highlight.
 The set's finishes, foil maps and the Pikachu stamp are in
 [reference/30th-celebration.md](reference/30th-celebration.md). In short:
 the small stamp is never foil, but the window holo clips through it; the
-Pikachu Rare's big stamp is foil but gets none. `lab/lab.css` sections 1 and
-2 fix both and have been checked in Chromium; the stamp placements are in
-`lab/masks/stamp30.json` (187 cards; the other 4 have no stamp). The
-reference file explains how to move the fix into the site.
+Pikachu Rare's big stamp is foil but gets none. Shipping the foil maps fixes
+both on the 161 cards TCG Live carries; the 30 Classic Collection cards need
+the stamp knockout in `lab/lab.css` section 1, with placements in
+`lab/masks/stamp30.json`. The reference file has the steps.
 
 ## Files
 
@@ -150,5 +151,5 @@ reference file explains how to move the fix into the site.
 | `lab/` | The foil lab page, proof recipes (`lab.css`), stamp masks |
 | `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost |
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
-| `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps into the lab cache |
+| `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |

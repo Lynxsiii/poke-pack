@@ -59,7 +59,10 @@ function serve() {
     try {
       if ((await stat(file)).isDirectory()) file = join(file, "index.html");
     } catch {
-      file = join(ROOT, "index.html"); // the site's own SPA fallback
+      // The app's routes fall back to index.html, as scripts/serve.py does;
+      // a missing file with an extension is a real 404.
+      if (extname(path)) return res.writeHead(404).end();
+      file = join(ROOT, "index.html");
     }
     try {
       const body = await readFile(file);

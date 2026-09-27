@@ -12,8 +12,8 @@ malie.io publishes that data, and it is the most reliable answer to "what
 foil is this card":
 
 - Set index: `https://cdn.malie.io/file/malie-io/tcgl/export/index.json`
-  (keys like `sv3-5` for 151, `me5-5` for 30th Celebration: our set id with
-  `pt` written as `-`).
+  (keys like `sv3-5` for our `sv3pt5`, 151; 30th Celebration is `me5-5`
+  for our `me55`, with its RGB Mews under `me5-5m`).
 - Per set: `https://cdn.malie.io/file/malie-io/tcgl/export/<version>/<key>.en-US.json`,
   path from the index. Each card has `foil.type`, `foil.mask`, and
   `ext.tcgl.longFormID`, whose tail names any cast-and-cure pattern
