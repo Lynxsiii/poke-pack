@@ -1,0 +1,70 @@
+/* Shrouded Fable (sv6pt5) reverse holo: Poké Balls in hexagon "chains".
+
+   Every reverse in the set, and the reverse holo basic Energy its packs can
+   carry, drop the usual cosmos texture for one pattern: Poké Balls inside
+   double-outlined hexagons, staggered so they run in diagonal chains
+   (Pecharunt's hold). The foil itself is smooth mirror silver; the pattern is
+   pressed into it, so it reads as grey lines at rest and shimmers as the card
+   turns. The picture window stays matte, as on any reverse.
+
+   Energy is different: the whole face is foil except the Energy orb.
+
+   Tile: assets/foil/sv6pt5/chain.svg (drawn to match PokeBeach's set guide
+   photos, 2024-07). Class: `foil-rev-chain`, from the set's `reverseFoil`
+   and the reverse kind the pack slots roll (js/catalog.js). Research and
+   pitfalls: .claude/skills/card-textures/reference/shrouded-fable.md. */
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-chain {
+  --chain-etch: url("/assets/foil/sv6pt5/chain.svg");
+  --chain-size: 42% auto;
+}
+
+/* Smooth silver with a pastel sheen that follows the tilt, no cosmos. The
+   pressed pattern is the top layer of .foil itself, not a pseudo layer: a
+   resting card paints only .foil (base.css), and the pattern shows at rest on
+   the real card. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-chain .foil {
+  background-image:
+    var(--chain-etch),
+    radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),
+      rgba(255,255,255,.55), rgba(255,255,255,0) 55%),
+    linear-gradient(125deg, #8fa7bd, #e2c6dc 28%, #c3d8bd 52%, #d9d2ae 70%, #a6c2d6);
+  background-size: var(--chain-size), 100% 100%, 220% 220%;
+  background-position: 0 0, center, var(--background-x) var(--background-y);
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, soft-light, normal;
+  mix-blend-mode: soft-light;
+  filter: brightness(.85) contrast(1.35) saturate(.7);
+  opacity: calc((.42 + var(--card-opacity) * .4) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-chain .foil::before {
+  background-image: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-chain .foil::after {
+  background-image: radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),
+    rgba(255,255,255,.5), rgba(214,236,255,.12) 40%, transparent 78%);
+  background-size: cover;
+  mix-blend-mode: screen;
+  opacity: .6;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-chain:not(.lit):not(.settling) .foil {
+  opacity: calc(.42 * var(--foil-strength, 1));
+}
+
+/* Reverse Energy: foil everywhere but the orb (centre 50.3% / 52.8%, radius
+   24.6% of the width, measured on the SVE scans). */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-chain.foil-energy .foil {
+  --chain-orb: radial-gradient(ellipse 25% 17.9% at 50.3% 52.8%, #000 96%, transparent 100%);
+  -webkit-mask-image: var(--art), var(--chain-orb);
+  mask-image: var(--art), var(--chain-orb);
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  clip-path: none;
+}
+/* Its glare covers the whole face too, not the stock Energy window, whose
+   edge would otherwise cut across the card at 64% of its height. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rev-chain.foil-energy .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  clip-path: none;
+}

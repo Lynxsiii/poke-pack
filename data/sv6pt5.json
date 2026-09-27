@@ -1,5 +1,181 @@
 [
   {
+    "id": "sv6pt5-energy-grass",
+    "name": "Grass Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "reverseKind": "chain",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-grass.webp",
+    "imageSmall": "assets/cards/shared/energy-grass-sm.webp",
+    "variant": "SVE 001 · Shrouded Fable reverse holo",
+    "market": 0.43,
+    "tcgplayerId": 562155
+  },
+  {
+    "id": "sv6pt5-energy-fire",
+    "name": "Fire Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "reverseKind": "chain",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-fire.webp",
+    "imageSmall": "assets/cards/shared/energy-fire-sm.webp",
+    "variant": "SVE 002 · Shrouded Fable reverse holo",
+    "market": 0.39,
+    "tcgplayerId": 562160
+  },
+  {
+    "id": "sv6pt5-energy-water",
+    "name": "Water Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "reverseKind": "chain",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-water.webp",
+    "imageSmall": "assets/cards/shared/energy-water-sm.webp",
+    "variant": "SVE 003 · Shrouded Fable reverse holo",
+    "market": 0.38,
+    "tcgplayerId": 563014
+  },
+  {
+    "id": "sv6pt5-energy-lightning",
+    "name": "Lightning Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "reverseKind": "chain",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-lightning.webp",
+    "imageSmall": "assets/cards/shared/energy-lightning-sm.webp",
+    "variant": "SVE 004 · Shrouded Fable reverse holo",
+    "market": 0.33,
+    "tcgplayerId": 562152
+  },
+  {
+    "id": "sv6pt5-energy-psychic",
+    "name": "Psychic Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "reverseKind": "chain",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-psychic.webp",
+    "imageSmall": "assets/cards/shared/energy-psychic-sm.webp",
+    "variant": "SVE 005 · Shrouded Fable reverse holo",
+    "market": 0.37,
+    "tcgplayerId": 562157
+  },
+  {
+    "id": "sv6pt5-energy-fighting",
+    "name": "Fighting Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "reverseKind": "chain",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-fighting.webp",
+    "imageSmall": "assets/cards/shared/energy-fighting-sm.webp",
+    "variant": "SVE 006 · Shrouded Fable reverse holo",
+    "market": 0.36,
+    "tcgplayerId": 562158
+  },
+  {
+    "id": "sv6pt5-energy-darkness",
+    "name": "Darkness Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "reverseKind": "chain",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-darkness.webp",
+    "imageSmall": "assets/cards/shared/energy-darkness-sm.webp",
+    "variant": "SVE 007 · Shrouded Fable reverse holo",
+    "market": 0.59,
+    "tcgplayerId": 562154
+  },
+  {
+    "id": "sv6pt5-energy-metal",
+    "name": "Metal Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "reverseKind": "chain",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-metal.webp",
+    "imageSmall": "assets/cards/shared/energy-metal-sm.webp",
+    "variant": "SVE 008 · Shrouded Fable reverse holo",
+    "market": 0.37,
+    "tcgplayerId": 562159
+  },
+  {
     "id": "sv6pt5-1",
     "name": "Joltik",
     "number": "1",
@@ -221,7 +397,8 @@
     "market": 0.16,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-6/large",
     "tcgplayerId": 560316,
-    "flavorText": "It pulls large trees up by the roots and swings them around. It causes vegetation to grow, and then it absorbs energy from the growth."
+    "flavorText": "It pulls large trees up by the roots and swings them around. It causes vegetation to grow, and then it absorbs energy from the growth.",
+    "foilMap": "assets/foil/maps/sv6pt5/6.webp"
   },
   {
     "id": "sv6pt5-7",
@@ -783,7 +960,8 @@
     "market": 0.23,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-20/large",
     "tcgplayerId": 560330,
-    "flavorText": "It comes and goes between this world and the afterlife. People fear this Pokémon because it is said to suck in lost spirits and take them along."
+    "flavorText": "It comes and goes between this world and the afterlife. People fear this Pokémon because it is said to suck in lost spirits and take them along.",
+    "foilMap": "assets/foil/maps/sv6pt5/20.webp"
   },
   {
     "id": "sv6pt5-21",
@@ -824,7 +1002,8 @@
     "market": 0.19,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-21/large",
     "tcgplayerId": 560331,
-    "flavorText": "Shiny particles are released from its wings like a veil. It is said to represent the crescent moon."
+    "flavorText": "Shiny particles are released from its wings like a veil. It is said to represent the crescent moon.",
+    "foilMap": "assets/foil/maps/sv6pt5/21.webp"
   },
   {
     "id": "sv6pt5-22",
@@ -989,7 +1168,8 @@
     "market": 0.21,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-25/large",
     "tcgplayerId": 560335,
-    "flavorText": "This special Ursaluna can see in the dark with its left eye and protects itself with mud that is as hard as iron."
+    "flavorText": "This special Ursaluna can see in the dark with its left eye and protects itself with mud that is as hard as iron.",
+    "foilMap": "assets/foil/maps/sv6pt5/25.webp"
   },
   {
     "id": "sv6pt5-26",
@@ -1266,7 +1446,8 @@
     "market": 0.2,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-32/large",
     "tcgplayerId": 560342,
-    "flavorText": "Each has the ability to fool a large group of people simultaneously. They protect their lair with illusory scenery."
+    "flavorText": "Each has the ability to fool a large group of people simultaneously. They protect their lair with illusory scenery.",
+    "foilMap": "assets/foil/maps/sv6pt5/32.webp"
   },
   {
     "id": "sv6pt5-33",
@@ -1429,7 +1610,8 @@
     ],
     "market": 0.78,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-36/large",
-    "tcgplayerId": 560346
+    "tcgplayerId": 560346,
+    "foilMap": "assets/foil/maps/sv6pt5/36.webp"
   },
   {
     "id": "sv6pt5-37",
@@ -1469,7 +1651,8 @@
     ],
     "market": 0.65,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-37/large",
-    "tcgplayerId": 560347
+    "tcgplayerId": 560347,
+    "foilMap": "assets/foil/maps/sv6pt5/37.webp"
   },
   {
     "id": "sv6pt5-38",
@@ -1509,7 +1692,8 @@
     ],
     "market": 4.02,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-38/large",
-    "tcgplayerId": 560348
+    "tcgplayerId": 560348,
+    "foilMap": "assets/foil/maps/sv6pt5/38.webp"
   },
   {
     "id": "sv6pt5-39",
@@ -1548,7 +1732,8 @@
     ],
     "market": 7.81,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-39/large",
-    "tcgplayerId": 560349
+    "tcgplayerId": 560349,
+    "foilMap": "assets/foil/maps/sv6pt5/39.webp"
   },
   {
     "id": "sv6pt5-40",
@@ -1672,7 +1857,8 @@
     "market": 0.04,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-42/large",
     "tcgplayerId": 560352,
-    "flavorText": "Copperajah are prideful, cantankerous Pokémon. Specimens with vibrant green skin command the respect of others of their kind."
+    "flavorText": "Copperajah are prideful, cantankerous Pokémon. Specimens with vibrant green skin command the respect of others of their kind.",
+    "foilMap": "assets/foil/maps/sv6pt5/42.webp"
   },
   {
     "id": "sv6pt5-43",
@@ -1833,7 +2019,8 @@
     "market": 0.18,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-46/large",
     "tcgplayerId": 560356,
-    "flavorText": "It overwhelms enemies with its prized tusks, which are sharp enough to cut through a metal transmission tower in one strike."
+    "flavorText": "It overwhelms enemies with its prized tusks, which are sharp enough to cut through a metal transmission tower in one strike.",
+    "foilMap": "assets/foil/maps/sv6pt5/46.webp"
   },
   {
     "id": "sv6pt5-47",
@@ -2313,7 +2500,8 @@
     "market": 13.04,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-65/large",
     "tcgplayerId": 560376,
-    "flavorText": "It pulls large trees up by the roots and swings them around. It causes vegetation to grow, and then it absorbs energy from the growth."
+    "flavorText": "It pulls large trees up by the roots and swings them around. It causes vegetation to grow, and then it absorbs energy from the growth.",
+    "foilMap": "assets/foil/maps/sv6pt5/65.webp"
   },
   {
     "id": "sv6pt5-66",
@@ -2356,7 +2544,8 @@
     "market": 57.29,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-66/large",
     "tcgplayerId": 560377,
-    "flavorText": "Upon hearing its eerie howls, other Pokémon get the shivers and head straight back to their nests."
+    "flavorText": "Upon hearing its eerie howls, other Pokémon get the shivers and head straight back to their nests.",
+    "foilMap": "assets/foil/maps/sv6pt5/66.webp"
   },
   {
     "id": "sv6pt5-67",
@@ -2396,7 +2585,8 @@
     "market": 53.6,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-67/large",
     "tcgplayerId": 560378,
-    "flavorText": "Horsea makes its home in oceans with gentle currents. If this Pokémon is under attack, it spits out pitch-black ink and escapes."
+    "flavorText": "Horsea makes its home in oceans with gentle currents. If this Pokémon is under attack, it spits out pitch-black ink and escapes.",
+    "foilMap": "assets/foil/maps/sv6pt5/67.webp"
   },
   {
     "id": "sv6pt5-68",
@@ -2436,7 +2626,8 @@
     "market": 47.57,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-68/large",
     "tcgplayerId": 560379,
-    "flavorText": "Duskull’s victims suffer an intense chill as the Pokémon siphons their life-force away, glaring at them with its bright red eye all the while."
+    "flavorText": "Duskull’s victims suffer an intense chill as the Pokémon siphons their life-force away, glaring at them with its bright red eye all the while.",
+    "foilMap": "assets/foil/maps/sv6pt5/68.webp"
   },
   {
     "id": "sv6pt5-69",
@@ -2476,7 +2667,8 @@
     "market": 29.6,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-69/large",
     "tcgplayerId": 560380,
-    "flavorText": "Dusclops’s true form is said to be a bright red eye burning within its body, but no one has ever seen such a thing."
+    "flavorText": "Dusclops’s true form is said to be a bright red eye burning within its body, but no one has ever seen such a thing.",
+    "foilMap": "assets/foil/maps/sv6pt5/69.webp"
   },
   {
     "id": "sv6pt5-70",
@@ -2517,7 +2709,8 @@
     "market": 32.67,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-70/large",
     "tcgplayerId": 560381,
-    "flavorText": "It comes and goes between this world and the afterlife. People fear this Pokémon because it is said to suck in lost spirits and take them along."
+    "flavorText": "It comes and goes between this world and the afterlife. People fear this Pokémon because it is said to suck in lost spirits and take them along.",
+    "foilMap": "assets/foil/maps/sv6pt5/70.webp"
   },
   {
     "id": "sv6pt5-71",
@@ -2558,7 +2751,8 @@
     "market": 26.38,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-71/large",
     "tcgplayerId": 560382,
-    "flavorText": "Shiny particles are released from its wings like a veil. It is said to represent the crescent moon."
+    "flavorText": "Shiny particles are released from its wings like a veil. It is said to represent the crescent moon.",
+    "foilMap": "assets/foil/maps/sv6pt5/71.webp"
   },
   {
     "id": "sv6pt5-72",
@@ -2597,7 +2791,8 @@
     "market": 30.63,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-72/large",
     "tcgplayerId": 560383,
-    "flavorText": "Munkidori keeps itself somewhere safe while it toys with its foes, using psychokinesis to induce intense dizziness."
+    "flavorText": "Munkidori keeps itself somewhere safe while it toys with its foes, using psychokinesis to induce intense dizziness.",
+    "foilMap": "assets/foil/maps/sv6pt5/72.webp"
   },
   {
     "id": "sv6pt5-73",
@@ -2635,7 +2830,8 @@
     "market": 12.95,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-73/large",
     "tcgplayerId": 560384,
-    "flavorText": "Fezandipiti beats its glossy wings to scatter pheromones that captivate people and Pokémon."
+    "flavorText": "Fezandipiti beats its glossy wings to scatter pheromones that captivate people and Pokémon.",
+    "foilMap": "assets/foil/maps/sv6pt5/73.webp"
   },
   {
     "id": "sv6pt5-74",
@@ -2674,7 +2870,8 @@
     "market": 16.33,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-74/large",
     "tcgplayerId": 560385,
-    "flavorText": "Okidogi is a ruffian with a short temper. It can pulverize anything by swinging around the chain on its neck."
+    "flavorText": "Okidogi is a ruffian with a short temper. It can pulverize anything by swinging around the chain on its neck.",
+    "foilMap": "assets/foil/maps/sv6pt5/74.webp"
   },
   {
     "id": "sv6pt5-75",
@@ -2714,7 +2911,8 @@
     "market": 26.35,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-75/large",
     "tcgplayerId": 560386,
-    "flavorText": "To protect themselves from danger, they hide their true identities by transforming into people and Pokémon."
+    "flavorText": "To protect themselves from danger, they hide their true identities by transforming into people and Pokémon.",
+    "foilMap": "assets/foil/maps/sv6pt5/75.webp"
   },
   {
     "id": "sv6pt5-76",
@@ -2756,7 +2954,8 @@
     "market": 16.57,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-76/large",
     "tcgplayerId": 560387,
-    "flavorText": "Cufant can lift loads weighing five tons. In the mornings, it heads into caves with its herd, in search of the ore on which these Pokémon feed."
+    "flavorText": "Cufant can lift loads weighing five tons. In the mornings, it heads into caves with its herd, in search of the ore on which these Pokémon feed.",
+    "foilMap": "assets/foil/maps/sv6pt5/76.webp"
   },
   {
     "id": "sv6pt5-77",
@@ -2796,7 +2995,8 @@
     "market": 17.57,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-77/large",
     "tcgplayerId": 560388,
-    "flavorText": "Fraxure uses its thick tusks to neatly cut prey into two portions—one to eat now and one to save for later."
+    "flavorText": "Fraxure uses its thick tusks to neatly cut prey into two portions—one to eat now and one to save for later.",
+    "foilMap": "assets/foil/maps/sv6pt5/77.webp"
   },
   {
     "id": "sv6pt5-78",
@@ -2839,7 +3039,8 @@
     "market": 74.2,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-78/large",
     "tcgplayerId": 560389,
-    "flavorText": "It has a vicious temperament. Beware if it raises its tail straight up. This is a signal that it is about to pounce and bite."
+    "flavorText": "It has a vicious temperament. Beware if it raises its tail straight up. This is a signal that it is about to pounce and bite.",
+    "foilMap": "assets/foil/maps/sv6pt5/78.webp"
   },
   {
     "id": "sv6pt5-79",
@@ -2881,7 +3082,8 @@
     "market": 26.58,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-79/large",
     "tcgplayerId": 560390,
-    "flavorText": "Once it accepts you as a friend, it tries to show its affection with a hug. Letting it do that is dangerous—it could easily shatter your bones."
+    "flavorText": "Once it accepts you as a friend, it tries to show its affection with a hug. Letting it do that is dangerous—it could easily shatter your bones.",
+    "foilMap": "assets/foil/maps/sv6pt5/79.webp"
   },
   {
     "id": "sv6pt5-80",
@@ -2922,7 +3124,9 @@
     ],
     "market": 3.87,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-80/large",
-    "tcgplayerId": 560391
+    "tcgplayerId": 560391,
+    "foilMap": "assets/foil/maps/sv6pt5/80.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/80-etch.webp"
   },
   {
     "id": "sv6pt5-81",
@@ -3008,7 +3212,9 @@
     ],
     "market": 2.34,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-82/large",
-    "tcgplayerId": 560393
+    "tcgplayerId": 560393,
+    "foilMap": "assets/foil/maps/sv6pt5/82.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/82-etch.webp"
   },
   {
     "id": "sv6pt5-83",
@@ -3048,7 +3254,9 @@
     ],
     "market": 2.4,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-83/large",
-    "tcgplayerId": 560394
+    "tcgplayerId": 560394,
+    "foilMap": "assets/foil/maps/sv6pt5/83.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/83-etch.webp"
   },
   {
     "id": "sv6pt5-84",
@@ -3088,7 +3296,9 @@
     ],
     "market": 11.48,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-84/large",
-    "tcgplayerId": 560395
+    "tcgplayerId": 560395,
+    "foilMap": "assets/foil/maps/sv6pt5/84.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/84-etch.webp"
   },
   {
     "id": "sv6pt5-85",
@@ -3145,7 +3355,9 @@
     "imageSmall": "assets/cards/sv6pt5/86-sm.webp",
     "market": 3.76,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-86/large",
-    "tcgplayerId": 560397
+    "tcgplayerId": 560397,
+    "foilMap": "assets/foil/maps/sv6pt5/86.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/86-etch.webp"
   },
   {
     "id": "sv6pt5-87",
@@ -3161,7 +3373,9 @@
     "imageSmall": "assets/cards/sv6pt5/87-sm.webp",
     "market": 6.82,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-87/large",
-    "tcgplayerId": 560398
+    "tcgplayerId": 560398,
+    "foilMap": "assets/foil/maps/sv6pt5/87.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/87-etch.webp"
   },
   {
     "id": "sv6pt5-88",
@@ -3177,7 +3391,9 @@
     "imageSmall": "assets/cards/sv6pt5/88-sm.webp",
     "market": 5.77,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-88/large",
-    "tcgplayerId": 560399
+    "tcgplayerId": 560399,
+    "foilMap": "assets/foil/maps/sv6pt5/88.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/88-etch.webp"
   },
   {
     "id": "sv6pt5-89",
@@ -3193,7 +3409,9 @@
     "imageSmall": "assets/cards/sv6pt5/89-sm.webp",
     "market": 8.99,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-89/large",
-    "tcgplayerId": 560400
+    "tcgplayerId": 560400,
+    "foilMap": "assets/foil/maps/sv6pt5/89.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/89-etch.webp"
   },
   {
     "id": "sv6pt5-90",
@@ -3234,7 +3452,9 @@
     ],
     "market": 22.32,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-90/large",
-    "tcgplayerId": 560401
+    "tcgplayerId": 560401,
+    "foilMap": "assets/foil/maps/sv6pt5/90.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/90-etch.webp"
   },
   {
     "id": "sv6pt5-91",
@@ -3274,7 +3494,9 @@
     ],
     "market": 18.46,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-91/large",
-    "tcgplayerId": 560402
+    "tcgplayerId": 560402,
+    "foilMap": "assets/foil/maps/sv6pt5/91.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/91-etch.webp"
   },
   {
     "id": "sv6pt5-92",
@@ -3314,7 +3536,9 @@
     ],
     "market": 35.96,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-92/large",
-    "tcgplayerId": 560403
+    "tcgplayerId": 560403,
+    "foilMap": "assets/foil/maps/sv6pt5/92.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/92-etch.webp"
   },
   {
     "id": "sv6pt5-93",
@@ -3353,7 +3577,9 @@
     ],
     "market": 25.6,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-93/large",
-    "tcgplayerId": 560404
+    "tcgplayerId": 560404,
+    "foilMap": "assets/foil/maps/sv6pt5/93.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/93-etch.webp"
   },
   {
     "id": "sv6pt5-94",
@@ -3369,7 +3595,9 @@
     "imageSmall": "assets/cards/sv6pt5/94-sm.webp",
     "market": 41.27,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-94/large",
-    "tcgplayerId": 560405
+    "tcgplayerId": 560405,
+    "foilMap": "assets/foil/maps/sv6pt5/94.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/94-etch.webp"
   },
   {
     "id": "sv6pt5-95",
@@ -3408,7 +3636,9 @@
     ],
     "market": 21.38,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-95/large",
-    "tcgplayerId": 560406
+    "tcgplayerId": 560406,
+    "foilMap": "assets/foil/maps/sv6pt5/95.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/95-etch.webp"
   },
   {
     "id": "sv6pt5-96",
@@ -3425,7 +3655,9 @@
     "imageSmall": "assets/cards/sv6pt5/96-sm.webp",
     "market": 16.55,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-96/large",
-    "tcgplayerId": 560407
+    "tcgplayerId": 560407,
+    "foilMap": "assets/foil/maps/sv6pt5/96.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/96-etch.webp"
   },
   {
     "id": "sv6pt5-97",
@@ -3441,7 +3673,9 @@
     "imageSmall": "assets/cards/sv6pt5/97-sm.webp",
     "market": 19.65,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-97/large",
-    "tcgplayerId": 560408
+    "tcgplayerId": 560408,
+    "foilMap": "assets/foil/maps/sv6pt5/97.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/97-etch.webp"
   },
   {
     "id": "sv6pt5-98",
@@ -3459,7 +3693,9 @@
     "imageSmall": "assets/cards/sv6pt5/98-sm.webp",
     "market": 60.25,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-98/large",
-    "tcgplayerId": 560409
+    "tcgplayerId": 560409,
+    "foilMap": "assets/foil/maps/sv6pt5/98.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/98-etch.webp"
   },
   {
     "id": "sv6pt5-99",
@@ -3477,7 +3713,9 @@
     "imageSmall": "assets/cards/sv6pt5/99-sm.webp",
     "market": 32.06,
     "imageRemote": "https://images.scrydex.com/pokemon/sv6pt5-99/large",
-    "tcgplayerId": 560410
+    "tcgplayerId": 560410,
+    "foilMap": "assets/foil/maps/sv6pt5/99.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/99-etch.webp"
   },
   {
     "id": "sv6pt5-svp129",
@@ -3519,7 +3757,8 @@
     "tcgplayerId": 564137,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 1.61
+    "market": 1.61,
+    "foilMap": "assets/foil/maps/sv6pt5/svp129.webp"
   },
   {
     "id": "sv6pt5-svp129-pc",
@@ -3562,7 +3801,8 @@
     "tcgplayerId": 573720,
     "image": "assets/cards/sv6pt5/svp129-pc.webp",
     "imageSmall": "assets/cards/sv6pt5/svp129-pc-sm.webp",
-    "market": 20.38
+    "market": 20.38,
+    "foilMap": "assets/foil/maps/sv6pt5/svp129-pc.webp"
   },
   {
     "id": "sv6pt5-svp130",
@@ -3607,7 +3847,8 @@
     "tcgplayerId": 562087,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 4.14
+    "market": 4.14,
+    "foilMap": "assets/foil/maps/sv6pt5/svp130.webp"
   },
   {
     "id": "sv6pt5-svp131",
@@ -3651,7 +3892,9 @@
     "tcgplayerId": 562019,
     "foilAs": "Ultra Rare",
     "promo": true,
-    "market": 79.51
+    "market": 79.51,
+    "foilMap": "assets/foil/maps/sv6pt5/svp131.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/svp131-etch.webp"
   },
   {
     "id": "sv6pt5-svp132",
@@ -3695,7 +3938,9 @@
     "tcgplayerId": 562018,
     "foilAs": "Ultra Rare",
     "promo": true,
-    "market": 86.82
+    "market": 86.82,
+    "foilMap": "assets/foil/maps/sv6pt5/svp132.webp",
+    "etchMap": "assets/foil/maps/sv6pt5/svp132-etch.webp"
   },
   {
     "id": "sv6pt5-svp149",
@@ -3737,6 +3982,7 @@
     "tcgplayerId": 562025,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.79
+    "market": 0.79,
+    "foilMap": "assets/foil/maps/sv6pt5/svp149.webp"
   }
 ]

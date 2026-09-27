@@ -387,6 +387,21 @@ function svSlots({ double, ultra, ir = 0, sir, hyper, ace = 0 }) {
 }
 
 /**
+ * Shrouded Fable: the same pack as svSlots, but every reverse holo carries the
+ * set's own Poké Ball chain pattern, and the basic Energy is sometimes a
+ * reverse holo of its own (data/sv6pt5.json's `sv6pt5-energy-*` cards).
+ */
+function chainSlots(rates, reverseEnergy) {
+  return svSlots(rates).map((slot) => {
+    if (slot.pool === "energy") {
+      return { ...slot, table: [["energy", 1 - reverseEnergy], ["reverseEnergy", reverseEnergy]] };
+    }
+    if (slot.pool === "reverse" || slot.pool === "art-slot") return { ...slot, kinds: [["chain", 1]] };
+    return slot;
+  });
+}
+
+/**
  * Prismatic Evolutions. Every Common / Uncommon / Rare / Double Rare has a
  * Poké Ball patterned printing of itself; C/U/R Pokémon also have Master Ball.
  * Those are extra finishes of the same number (Holofoil, Reverse Holofoil,
@@ -1072,15 +1087,19 @@ export const SHROUDED_FABLE = {
   released: "August 2, 2024",
   live: true,
   printedTotal: 64,
-  totalCount: 99,
+  totalCount: 113,
   packSize: 11,
-  cost: 14.79,
+  cost: 14.49,
   dataFile: "data/sv6pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, August 2024. Pecharunt and the Loyal Three — a 99-card special set, four wrappers.",
-  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/12 · SIR 1/67 · gold 1/143",
-  lede: "Kitakami’s Loyal Three plus Pecharunt. Same 11-card math as a main set, shorter checklist.",
-  slots: svSlots({ double: 0.167, ultra: 0.065, ir: 0.085, sir: 0.015, hyper: 0.007, ace: 0.05 }),
+  reverseFoil: "chain",
+  blurb: "Scarlet & Violet, August 2024. Pecharunt and the Loyal Three: a 99-card special set with its own chained Poké Ball reverse holo, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/14 · ACE 1/20 · IR 1/12 · SIR 1/67 · gold 1/128",
+  lede: "Kitakami’s Loyal Three plus Pecharunt. Every reverse holo wears Poké Balls in chains, and the basic Energy can come reverse holo too.",
+  // Rates: data/pullrates.json (Dripshop, Mark van Zee's 2,354 packs and
+  // ThePriceDex; the middle of the three for each). The reverse holo Energy
+  // rate is an estimate, since no study counts it.
+  slots: chainSlots({ double: 0.1667, ultra: 0.0694, ir: 0.0833, sir: 0.0149, hyper: 0.0078, ace: 0.05 }, 0.1667),
   heroIds: ["sv6pt5-93", "sv6pt5-92", "sv6pt5-91", "sv6pt5-90"],
   wrappers: boosterWrappers("sv6pt5", [
     { id: "okidogi", name: "Okidogi", cardId: "sv6pt5-90", tag: "Loyal" },
@@ -1202,6 +1221,7 @@ export const PLAYABLE_SETS = [
   JOURNEY_TOGETHER,
   TEMPORAL_FORCES,
   OBSIDIAN_FLAMES,
+  SHROUDED_FABLE,
 ];
 
 /**
@@ -1216,7 +1236,6 @@ export const RETIRED_SETS = [
   PRISMATIC_EVOLUTIONS,
   SURGING_SPARKS,
   STELLAR_CROWN,
-  SHROUDED_FABLE,
   TWILIGHT_MASQUERADE,
 ];
 
@@ -1266,7 +1285,6 @@ export const ROADMAP = [
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
       { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
-      { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
       { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },

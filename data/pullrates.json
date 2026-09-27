@@ -176,15 +176,16 @@
     "name": "Shrouded Fable",
     "printedTotal": 64,
     "released": "2024-08-02",
-    "updated": "2026-05-05",
-    "source": "Community aggregate (~3,000 packs, riporfliptcg / Dripshop). DR 1/6, IR 1/12, UR 1/15, ACE SPEC 1/20, SIR 1/67, Hyper Rare 1/143.",
+    "updated": "2026-09-27",
+    "source": "Three community counts, taking the middle figure for each rarity. Dripshop (via PokéPatch, https://pokepatch.com/2025/05/24/shrouded-fable-pull-rates-in-pokemon-tcg-set/): DR 1/6, UR 1/15, ACE SPEC 1/20, IR 1/12, SIR 1/67, Hyper Rare 1/144. Mark van Zee, 2,354 packs, Aug 2024 (https://www.skool.com/pokemon/shrouded-fable-pull-rates): IR 1/12, full-art Pokémon 1/24 plus full-art Supporter 1/36 (UR 1/14.4 combined), SIR 1/64, gold 1/118. ThePriceDex (https://www.thepricedex.com/set/sv6pt5/shrouded-fable/pull-rates): DR 1/6, ACE SPEC 1/20, IR 1/13, UR 1/14.3, SIR 1/87, Hyper Rare 1/128. Reverse holo basic Energy: no count published; 1 in 6 is an estimate from TCGplayer prices (a reverse Energy sells for about 1.7x a reverse Common, Sep 2026). No god packs.",
     "rates": {
-      "double": 0.167,
-      "ir": 0.085,
-      "ultra": 0.065,
+      "double": 0.1667,
+      "ir": 0.0833,
+      "ultra": 0.0694,
       "ace": 0.05,
-      "sir": 0.015,
-      "hyper": 0.007
+      "sir": 0.0149,
+      "hyper": 0.0078,
+      "reverseEnergy": 0.1667
     }
   },
   "sv6": {
