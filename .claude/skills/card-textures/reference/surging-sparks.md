@@ -89,6 +89,38 @@ No full-art ex promo, so the Journey Together pitfall (an `UltraRare`
 print `svp159-pc` is `{"like": "svp159", "variant": "Pokémon Center stamp"}`
 in `data/sets/sv8.json` and borrows the unstamped map.
 
+## What the real cards show
+
+54 photos of real English Surging Sparks cards held under light (mostly
+Reddit, a few same-finish cards from other SV sets marked `CROSS-SET`) are in
+`/mnt/project-files/surging-sparks/texture-refs/`, with sources in
+`SOURCES.txt` and a finish-by-finish write-up in `../texture-notes.md`.
+Compared against `foil_probe.mjs` renders on 2026-09-27:
+
+- **Double Rare** (130 Archaludon ex, 068 Kilowattrel ex): diagonal rainbow
+  bars and 4- and 8-point stars cross the whole card, text box included, only
+  dimmer there. TCG Live's map covers the text box too, and the render
+  matches.
+- **Rare holo** (072 Togekiss, 065 Tapu Koko): broad soft rainbow bands on the
+  art background with a fine glitter grain, the Pokémon matte, and a thin
+  glittering silver border. TCG Live's map agrees (art background and border
+  foiled, text box nearly black), but the render's bands are weaker than the
+  photos.
+- **Tera Double Rare** (057 Pikachu ex, 086 Sylveon ex): nothing masked;
+  coloured crystal facets, a wavy fingerprint-like etch visible even unlit,
+  dense glitter, and a bright silver-glitter text box, not a grey one.
+- **ACE SPEC** (182 Megaton Blower, group shot of 162/164/182/183/191):
+  saturated magenta body that never turns silver, cyan ACE SPEC banners, a
+  rainbow art window, and fine horizontal scanline ridges over the whole card.
+  The render's art window washes towards white at an angle instead of going
+  rainbow.
+- **Gold** (247 Pikachu ex): low-poly gold facets with rainbow-flecked
+  glitter, the Pokémon and gems printed in full colour, not recoloured.
+- **Reverse**: not a plain mirror. A type-energy medallion behind the attacks
+  and a tile mosaic across the body; art window and outer border matte. This
+  is the shared SV reverse from the Paradox Rift thread, built from TCG Live's
+  `_ph` maps.
+
 ## Pitfalls
 
 - **Enriching Energy (191) is an ACE SPEC Energy**, so `foilLayout()` gives it
