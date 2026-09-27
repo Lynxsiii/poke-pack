@@ -81,6 +81,21 @@ chart.renderPriceChart(mount, card, "all");
 assert.match(mount.innerHTML, /class="pc-svg/, "no chart drawn");
 assert.match(mount.innerHTML, /\b20\d\d\b/, "a year-long chart should name its years");
 
+// Packs and boxes in the shop read the same file's sealed section.
+const pack = chart.productPointsFor("me1", "boosterPack");
+assert.ok(pack.length > 60, `me1 booster pack has only ${pack.length} points`);
+const trend = chart.productTrend("me1", "boosterPack");
+assert.ok(trend && /class="pt-spark/.test(trend.spark), "no trend sparkline for the me1 booster pack");
+assert.match(trend.change, /^[▲▼■] \d+\.\d%$/, `odd trend label ${trend.change}`);
+assert.equal(chart.productTrend("me1", "noSuchProduct"), null, "a product with no history should have no trend");
+chart.renderProductChart(mount, "me1", "boosterPack");
+assert.match(mount.innerHTML, /class="pc-svg/, "no product chart drawn");
+assert.match(mount.innerHTML, new RegExp(`\\$${pack.at(-1)[1].toFixed(2)}`), "product headline is not its last recorded price");
+const ids = [...mount.innerHTML.matchAll(/linearGradient id="([^"]+)"/g)].map((m) => m[1]);
+chart.renderProductChart(mount, "me1", "boosterPack", "30d");
+const again = [...mount.innerHTML.matchAll(/linearGradient id="([^"]+)"/g)].map((m) => m[1]);
+assert.notEqual(ids[0], again[0], "each chart needs its own gradient id");
+
 // A set with no file settles into the no-history message instead of loading forever.
 const lost = { id: "nosuchset-1", market: 1 };
 await chart.loadPriceHistory("nosuchset");

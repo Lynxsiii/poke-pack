@@ -290,5 +290,21 @@
       "sir": 0.0172,
       "hyper": 0.0161
     }
+  },
+  "sv3pt5": {
+    "name": "151",
+    "printedTotal": 165,
+    "released": "2023-09-22",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, \"Pokémon TCG: Scarlet & Violet—151 Pull Rates\" (1,500+ English packs, published 2023-09-22, updated 2025-02-27; https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Scarlet-Violet%E2%80%94151-Pull-Rates/b237df74-fbb0-40d0-9e13-d69ee6e804d9/). Rare slot: DR 13.28% ±1.57 (1/8), UR 6.44% ±1.13 (1/16), else a holo Rare. Second reverse slot: IR 8.50% ±1.29 (1/12), SIR 3.11% ±0.80 (1/32), gold Hyper Rare 1.94% ±0.64 (1/51), else a reverse. Energy slot: Cosmos holo basic Energy 24.83% ±2.00 (1/4). Cross-checked against DigitalTQ's 700-pack tally (DR 13.3%, UR 6.0%, IR 7.7%, SIR 3.6%, HR 2.9%), inside or overlapping TCGplayer's bands. Demigod packs (a starter's basic IR, Stage 1 IR and ex SIR; Dexerto reported a real Charizard one, 2024-02-23) have no measured rate: 1 in 1,300 is a community guess and the least certain figure here.",
+    "rates": {
+      "double": 0.1328,
+      "ultra": 0.0644,
+      "ir": 0.085,
+      "sir": 0.0311,
+      "hyper": 0.0194,
+      "energyFoil": 0.2483,
+      "demigod": 0.000769
+    }
   }
 }
