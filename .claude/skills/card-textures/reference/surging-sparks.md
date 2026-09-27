@@ -27,15 +27,15 @@ Common, Uncommon and Rare).
 | Rarity (cards) | `longFormID` tail | Site classes | Recipe lives in |
 |---|---|---|---|
 | Common, Uncommon (149) | `NonFoil_None`; reverse `FlatSilver_Reverse` | `foil-reverse` on reverses | `realism.css` (Ancient/Future: Paradox Rift thread) |
-| Rare (16) | `Rare_SvHolo_Holo` | `foil-holo foil-svholo` | `celebration.css` |
+| Rare (16) | `Rare_SvHolo_Holo` | `foil-holo foil-svholo` | `celebration.css` (Ancient/Future text box: `sv-rare.css`, [sv-rare-holo.md](sv-rare-holo.md)) |
 | Double Rare (9) | `DoubleRare_SunPillar_Holo_CastAndCure_SouthernCross` | `foil-ex foil-sunpillar cure-stars` | `celebration.css` |
 | Tera Double Rare (9) | `DoubleRareC_SvUltra_Etched` | `foil-ex foil-tera` | `sv-finishes.css` ([sv-tera-acespec.md](sv-tera-acespec.md)) |
 | ACE SPEC Rare (8) | `Ace_AceFoil_Etched` | `foil-holo foil-acespec` | `sv-finishes.css` |
 | Illustration Rare (23) | `IllustrationRare_SunPillar_Holo` | `foil-ir` | `celebration.css` (map-aware IR: SV base set thread) |
-| Ultra Rare (14) | `UltraRare_SunPillar_Etched` | `foil-ultra` | map-aware full art: Paradox Rift thread |
+| Ultra Rare (14) | `UltraRare_SunPillar_Etched` | `foil-ultra` | `sv-fullart.css` ([sv-fullart.md](sv-fullart.md)) |
 | Tera Ultra Rare (7) | `UltraRareC_SvUltra_Etched` | `foil-ultra foil-tera` | `sv-finishes.css` |
 | Special Illustration Rare (11, 3 of them Tera) | `SpecialIllustrationRare_SvUltra_Etched` | `foil-sir` | `celebration.css` (`.foil-sir.has-foil-map`) |
-| Hyper Rare (6, 2 of them Tera) | `HyperRare_SvUltra_Etched` | `foil-gold` | map-aware gold: Paradox Rift thread |
+| Hyper Rare (6, 2 of them Tera) | `HyperRare_SvUltra_Etched` | `foil-gold` | `sv-fullart.css` |
 
 The `C` on `DoubleRareC` / `UltraRareC` is what marks a Tera print. The
 Tera Special Illustration Rares (238 Pikachu ex, 240 Hydreigon ex, 242
@@ -71,9 +71,10 @@ Run the check on every set before shipping its maps.
 
 Six cards carry the Ancient or Future frame: 38 Gouging Fire (Rare), 55
 Iron Bundle, 69 Miraidon, 96 Flutter Mane, 116 Koraidon (Uncommons) and 132
-Iron Crown (Rare). Their reverses and the two Rares' text boxes need the
-shared Ancient/Future fixes (the Paradox Rift thread's reverse and the
-Twilight Masquerade thread's `sv-rare.css`); nothing set-specific.
+Iron Crown (Rare). The two Rares get `frame-paradox` from `foilExtras()`, so
+`sv-rare.css` keeps their text boxes from going black under the SV holo. Their
+reverses wait on the Paradox Rift thread's shared reverse; nothing here is
+set-specific.
 
 ## Promos sold with the set
 
