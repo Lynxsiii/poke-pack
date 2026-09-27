@@ -5,12 +5,12 @@ export const RARITY_ORDER = [
   "Rare",
   "Pikachu Rare",
   "Double Rare",
+  "Shiny Rare",
   "ACE SPEC Rare",
   "Ultra Rare",
+  "Shiny Ultra Rare",
   "Illustration Rare",
   "Classic Collection",
-  "Shiny Rare",
-  "Shiny Ultra Rare",
   "Mega Attack Rare",
   "Black White Rare",
   "Hyper Rare",
@@ -387,6 +387,21 @@ function svSlots({ double, ultra, ir = 0, sir, hyper, ace = 0 }) {
 }
 
 /**
+ * Shrouded Fable: the same pack as svSlots, but every reverse holo carries the
+ * set's own Poké Ball chain pattern, and the basic Energy is sometimes a
+ * reverse holo of its own (data/sv6pt5.json's `sv6pt5-energy-*` cards).
+ */
+function chainSlots(rates, reverseEnergy) {
+  return svSlots(rates).map((slot) => {
+    if (slot.pool === "energy") {
+      return { ...slot, table: [["energy", 1 - reverseEnergy], ["reverseEnergy", reverseEnergy]] };
+    }
+    if (slot.pool === "reverse" || slot.pool === "art-slot") return { ...slot, kinds: [["chain", 1]] };
+    return slot;
+  });
+}
+
+/**
  * Prismatic Evolutions. Every Common / Uncommon / Rare / Double Rare has a
  * Poké Ball patterned printing of itself; C/U/R Pokémon also have Master Ball.
  * Those are extra finishes of the same number (Holofoil, Reverse Holofoil,
@@ -451,6 +466,50 @@ function celebrationSlots({ double, ir, classic, sir, futuristic, rgb }) {
         ["sir", sir],
         ["futuristic", futuristic],
         ["rgb", rgb],
+      ],
+    },
+  ];
+}
+
+/**
+ * Paldean Fates: the Scarlet & Violet main-set skeleton, but the first
+ * reverse holo is where the Shiny Vault lives. A Shiny Rare (one of 120) or a
+ * Shiny Ultra Rare (one of 12) replaces that reverse in about one pack in
+ * three; IR, SIR and gold take the second reverse; the rare slot holds Double
+ * and Ultra Rares. Three separate slots, so one pack can hold three hits.
+ * Rates are TCGplayer's study of more than 1,500 packs (data/pullrates.json).
+ */
+function shinyVaultSlots({ double, ultra, shiny, shinyUltra, ir, sir, hyper }) {
+  return [
+    { pool: "energy", count: 1 },
+    { pool: "common", count: 4 },
+    { pool: "uncommon", count: 3 },
+    {
+      pool: "reverse",
+      count: 1,
+      table: [
+        ["reverse", 1 - shiny - shinyUltra],
+        ["shiny", shiny],
+        ["shinyUltra", shinyUltra],
+      ],
+    },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 1 - double - ultra],
+        ["double", double],
+        ["ultra", ultra],
+      ],
+    },
+    {
+      pool: "art-slot",
+      count: 1,
+      table: [
+        ["reverse", 1 - ir - sir - hyper],
+        ["ir", ir],
+        ["sir", sir],
+        ["hyper", hyper],
       ],
     },
   ];
@@ -1020,15 +1079,16 @@ export const SURGING_SPARKS = {
   released: "November 8, 2024",
   live: true,
   printedTotal: 191,
-  totalCount: 252,
+  totalCount: 262,
   packSize: 11,
-  cost: 7.78,
+  cost: 8.42,
   dataFile: "data/sv8.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, November 2024. Paldea’s lightning set — Pikachu, ACE SPEC, four wrappers.",
-  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/189",
-  lede: "The last big Paldea wave before Prismatic. ACE SPEC sits in the reverse slot; gold is a Hyper Rare, not a Mega.",
-  slots: svSlots({ double: 0.167, ultra: 0.067, ir: 0.077, sir: 0.0115, hyper: 0.0053, ace: 0.05 }),
+  blurb: "Scarlet & Violet, November 2024. Stellar Tera Pikachu ex, crystal Tera foils and ACE SPECs, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/188",
+  lede: "Pikachu ex went Stellar Tera and became the chase. ACE SPEC takes the first reverse slot, and IR, SIR and gold share the second.",
+  // TCGplayer's study of 8,000+ English packs (sources in data/pullrates.json).
+  slots: svSlots({ double: 0.1694, ultra: 0.0674, ir: 0.0767, sir: 0.0115, hyper: 0.0053, ace: 0.0503 }),
   heroIds: ["sv8-238", "sv8-239", "sv8-241", "sv8-242"],
   wrappers: boosterWrappers("sv8", [
     { id: "pikachu", name: "Pikachu", cardId: "sv8-238", tag: "The chase" },
@@ -1078,15 +1138,19 @@ export const SHROUDED_FABLE = {
   released: "August 2, 2024",
   live: true,
   printedTotal: 64,
-  totalCount: 99,
+  totalCount: 113,
   packSize: 11,
-  cost: 14.79,
+  cost: 14.49,
   dataFile: "data/sv6pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, August 2024. Pecharunt and the Loyal Three — a 99-card special set, four wrappers.",
-  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/12 · SIR 1/67 · gold 1/143",
-  lede: "Kitakami’s Loyal Three plus Pecharunt. Same 11-card math as a main set, shorter checklist.",
-  slots: svSlots({ double: 0.167, ultra: 0.065, ir: 0.085, sir: 0.015, hyper: 0.007, ace: 0.05 }),
+  reverseFoil: "chain",
+  blurb: "Scarlet & Violet, August 2024. Pecharunt and the Loyal Three: a 99-card special set with its own chained Poké Ball reverse holo, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/14 · ACE 1/20 · IR 1/12 · SIR 1/67 · gold 1/128",
+  lede: "Kitakami’s Loyal Three plus Pecharunt. Every reverse holo wears Poké Balls in chains, and the basic Energy can come reverse holo too.",
+  // Rates: data/pullrates.json (Dripshop, Mark van Zee's 2,354 packs and
+  // ThePriceDex; the middle of the three for each). The reverse holo Energy
+  // rate is an estimate, since no study counts it.
+  slots: chainSlots({ double: 0.1667, ultra: 0.0694, ir: 0.0833, sir: 0.0149, hyper: 0.0078, ace: 0.05 }, 0.1667),
   heroIds: ["sv6pt5-93", "sv6pt5-92", "sv6pt5-91", "sv6pt5-90"],
   wrappers: boosterWrappers("sv6pt5", [
     { id: "okidogi", name: "Okidogi", cardId: "sv6pt5-90", tag: "Loyal" },
@@ -1159,6 +1223,69 @@ export const TEMPORAL_FORCES = {
     { id: "iron-leaves", name: "Iron Leaves", cardId: "sv5-203", tag: "Future" },
     { id: "iron-crown", name: "Iron Crown", cardId: "sv5-206", tag: "Paradox" },
   ]),
+};
+
+export const PALDEAN_FATES = {
+  id: "sv4pt5",
+  tcgId: "sv4pt5",
+  name: "Paldean Fates",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "January 26, 2024",
+  live: true,
+  printedTotal: 91,
+  totalCount: 264,
+  packSize: 11,
+  cost: 24.89,
+  dataFile: "data/sv4pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, January 2024. The Shiny Vault set: 132 Shiny Pokémon, four wrappers, 11 cards a pack.",
+  oddsLine: "DR 1/6 · UR 1/15 · Shiny 1/4 · Shiny ex 1/13 · IR 1/14 · SIR 1/58 · gold 1/62",
+  lede: "One pack in three trades its first reverse holo for a Shiny Pokémon, from 132 of them. Mew ex's special illustration is the chase.",
+  slots: shinyVaultSlots({
+    double: 0.1589,
+    ultra: 0.0661,
+    shiny: 0.2544,
+    shinyUltra: 0.0772,
+    ir: 0.0722,
+    sir: 0.0172,
+    hyper: 0.0161,
+  }),
+  heroIds: ["sv4pt5-232", "sv4pt5-234", "sv4pt5-233", "sv4pt5-131"],
+  wrappers: [
+    {
+      id: "pikachu",
+      name: "Pikachu",
+      cardId: "sv4pt5-131",
+      tag: "The chase",
+      art: "assets/packs/sv4pt5/pikachu.avif",
+      artFallback: "assets/packs/sv4pt5/pikachu.png",
+    },
+    {
+      id: "tinkaton",
+      name: "Tinkaton",
+      cardId: "sv4pt5-167",
+      tag: "Big hammer",
+      art: "assets/packs/sv4pt5/tinkaton.avif",
+      artFallback: "assets/packs/sv4pt5/tinkaton.png",
+    },
+    {
+      id: "dondozo",
+      name: "Dondozo",
+      cardId: "sv4pt5-126",
+      tag: "Deep sea",
+      art: "assets/packs/sv4pt5/dondozo.avif",
+      artFallback: "assets/packs/sv4pt5/dondozo.png",
+    },
+    {
+      id: "ceruledge",
+      name: "Ceruledge",
+      cardId: "sv4pt5-162",
+      tag: "Blue flame",
+      art: "assets/packs/sv4pt5/ceruledge.avif",
+      artFallback: "assets/packs/sv4pt5/ceruledge.png",
+    },
+  ],
 };
 
 /**
@@ -1234,6 +1361,33 @@ export const PALDEA_EVOLVED = {
   ]),
 };
 
+export const SCARLET_VIOLET = {
+  id: "sv1",
+  tcgId: "sv1",
+  name: "Scarlet & Violet",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "March 31, 2023",
+  live: true,
+  printedTotal: 198,
+  totalCount: 270,
+  packSize: 11,
+  cost: 9.1,
+  dataFile: "data/sv1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, March 2023. Paldea's first set — Koraidon, Miraidon, Tera ex, and the first Illustration Rares.",
+  oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/54",
+  lede: "Where the era starts: lowercase ex, etched Tera full arts, and an art slot far kinder than later sets — SIR at 1/32, gold at 1/54. Gardevoir ex's Special Illustration Rare is the chase.",
+  slots: svSlots({ double: 0.1376, ultra: 0.0657, ir: 0.0767, sir: 0.0315, hyper: 0.0185 }),
+  heroIds: ["sv1-245", "sv1-244", "sv1-247", "sv1-251"],
+  wrappers: boosterWrappers("sv1", [
+    { id: "starters", name: "Sprigatito, Fuecoco & Quaxly", cardId: "sv1-13", tag: "Paldea" },
+    { id: "miraidon", name: "Miraidon", cardId: "sv1-244", tag: "Violet" },
+    { id: "gyarados", name: "Gyarados", cardId: "sv1-225", tag: "Tera" },
+    { id: "koraidon", name: "Koraidon", cardId: "sv1-247", tag: "Scarlet" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1246,11 +1400,15 @@ export const PLAYABLE_SETS = [
   WHITE_FLARE,
   DESTINED_RIVALS,
   JOURNEY_TOGETHER,
+  SURGING_SPARKS,
   TWILIGHT_MASQUERADE,
   TEMPORAL_FORCES,
+  PALDEAN_FATES,
   OBSIDIAN_FLAMES,
   STELLAR_CROWN,
   PALDEA_EVOLVED,
+  SHROUDED_FABLE,
+  SCARLET_VIOLET,
 ];
 
 /**
@@ -1262,8 +1420,6 @@ export const PLAYABLE_SETS = [
  */
 export const RETIRED_SETS = [
   PRISMATIC_EVOLUTIONS,
-  SURGING_SPARKS,
-  SHROUDED_FABLE,
 ];
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
@@ -1309,12 +1465,8 @@ export const ROADMAP = [
     era: "Scarlet & Violet",
     sets: [
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
-      { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
-      { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
-      { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
-      { id: "sv1", name: "Scarlet & Violet", released: "Mar 2023", cards: "—" },
     ],
   },
   {

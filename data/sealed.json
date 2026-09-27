@@ -87,12 +87,12 @@
     "boosterPack": 15.09
   },
   "sv8": {
-    "boosterBox": 307.93,
-    "eliteTrainerBox": 127.99,
-    "pcEliteTrainerBox": 272.37,
-    "boosterBundle": 63.28,
-    "buildBattleBox": 61.46,
-    "boosterPack": 7.78
+    "boosterBox": 303.5,
+    "eliteTrainerBox": 121.42,
+    "pcEliteTrainerBox": 270.33,
+    "boosterBundle": 62.02,
+    "buildBattleBox": 62.57,
+    "boosterPack": 8.42
   },
   "sv7": {
     "boosterBox": 309.27,
@@ -103,10 +103,10 @@
     "boosterPack": 10.63
   },
   "sv6pt5": {
-    "eliteTrainerBox": 116.15,
-    "pcEliteTrainerBox": 166.43,
-    "boosterBundle": 51.98,
-    "boosterPack": 14.79
+    "eliteTrainerBox": 111.94,
+    "pcEliteTrainerBox": 166.35,
+    "boosterBundle": 59.63,
+    "boosterPack": 14.49
   },
   "sv6": {
     "boosterBox": 351.91,
@@ -139,5 +139,19 @@
     "boosterBundle": 127.73,
     "buildBattleBox": 64.56,
     "boosterPack": 15.56
+  },
+  "sv1": {
+    "boosterBox": 296.19,
+    "eliteTrainerBox": 131.88,
+    "pcEliteTrainerBox": 287.05,
+    "boosterBundle": 104.72,
+    "buildBattleBox": 40.94,
+    "boosterPack": 9.1
+  },
+  "sv4pt5": {
+    "eliteTrainerBox": 432.7,
+    "pcEliteTrainerBox": 566.94,
+    "boosterBundle": 173.65,
+    "boosterPack": 24.89
   }
 }

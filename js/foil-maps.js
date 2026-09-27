@@ -6,7 +6,8 @@
  *   per-card foil maps: white where the card is foil, black where it is not.
  *   They stop the shine at the Pokémon, the text and the 30th Celebration
  *   Pikachu stamp exactly. `etchMap` is the etched texture on SIR, Futuristic
- *   and RGB prints; `etchMapH/V` split it by line direction.
+ *   and RGB prints; `etchMapH/V` split it by line direction, and `etchAngle`
+ *   draws that direction as a grey (the Paldean Fates shinies).
  *   The card-textures skill's scripts/fetch_foil_maps.py writes all of these
  *   into data/<set>.json.
  * - `stampPos` / `stampSize` place the 30th Celebration stamp on cards with no
@@ -60,6 +61,7 @@ export function foilExtras(card, url) {
     add("has-etch-bins", "--etch-map-h", card.etchMapH);
     add("", "--etch-map-v", card.etchMapV);
   }
+  if (card.etchAngle) add("has-etch-angle", "--etch-angle", card.etchAngle);
   if (card.stampPos && card.stampSize && !card.foilMap) {
     classes.push("has-stamp");
     vars.push(`--stamp-pos:${card.stampPos}`, `--stamp-size:${card.stampSize}`);

@@ -4068,6 +4068,15 @@ a.solid { color: #1a1408; }
 }
 .pc-band { color: rgba(244, 239, 228, 0.5); }
 
+/* Stands in for the chart and its date row while a set's history loads. */
+.pc-loading {
+  display: grid;
+  place-items: center;
+  height: 211px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .pc-empty {
   display: flex;
   align-items: center;
@@ -4099,6 +4108,7 @@ a.solid { color: #1a1408; }
 @media (max-width: 620px) {
   .pc-now b { font-size: 25px; }
   .pc-svg { height: 150px; }
+  .pc-loading { height: 171px; }
 }
 
 .toast {

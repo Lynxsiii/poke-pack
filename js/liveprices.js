@@ -25,11 +25,15 @@ const TCGDEX_SET = {
   me5: "me05",
   sv2: "sv02",
   sv3: "sv03",
+  sv4pt5: "sv04.5",
   sv5: "sv05",
   sv6: "sv06",
   sv7: "sv07",
+  sv8: "sv08",
   sv9: "sv09",
   sv10: "sv10",
+  sv1: "sv01",
+  sv6pt5: "sv06.5",
 };
 
 /** pokemontcg.io is flaky on new sets; one 5xx and we stop asking for this session. */
@@ -212,8 +216,9 @@ async function singlesFromTcgdex(setId, numbers) {
 async function singlesForSet(setId, cards) {
   // Promos (numbered "mep082") live in TCGdex's promo set, not this one, so
   // asking for them under the set only ever 404s. They keep their baked
-  // market price.
-  const numbers = (cards || []).filter((c) => !c.promo).map((c) => c.number).filter((n) => n != null);
+  // market price. So do set Energy cards (Shrouded Fable's reverse holo
+  // Energy), which have no collector number in the set.
+  const numbers = (cards || []).filter((c) => !c.promo && !c.energy).map((c) => c.number).filter((n) => n != null);
   if (ptcgioOk) {
     try {
       return await singlesFromPtcgio(setId);
