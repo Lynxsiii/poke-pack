@@ -148,6 +148,7 @@ const PRODUCT_KINDS = {
   blister: { short: "Blister", noun: "blister" },
   deck: { short: "Deck", noun: "deck" },
   battle: { short: "Box", noun: "box" },
+  bundle: { short: "Bundle", noun: "bundle" },
 };
 
 /**
@@ -185,7 +186,8 @@ function promoPick(item) {
  * scripts/build_products.py into data/products.json, priced at TCGplayer
  * market. `packs` are the set's boosters, `special` any extra packs from the
  * set's `specialPacks`, `promos` the card ids that come in the box, and
- * `pick` how many of them one box holds when it is not all of them.
+ * `pick` how many of them one box holds when it is not all of them (`groupOf`:
+ * in fixed runs, see drawPromos in js/engine.js).
  */
 export function promoOffers(products = []) {
   const standard = new Set(SEALED_PRODUCTS.map((product) => product.id));
@@ -204,6 +206,7 @@ export function promoOffers(products = []) {
       special: item.special && typeof item.special === "object" ? item.special : {},
       promos,
       pick: promoPick(item),
+      ...(item.groupOf ? { groupOf: Math.floor(Number(item.groupOf) || 0) } : {}),
       price: money(item.price),
       image: item.image || "",
       released: item.released || "",
@@ -590,7 +593,7 @@ export const PITCH_BLACK = {
   released: "July 17, 2026",
   live: true,
   printedTotal: 84,
-  totalCount: 130,
+  totalCount: 150,
   packSize: 11,
   cost: 6.0,
   dataFile: "data/me5.json",
@@ -645,7 +648,7 @@ export const CHAOS_RISING = {
   released: "May 22, 2026",
   live: true,
   printedTotal: 86,
-  totalCount: 133,
+  totalCount: 150,
   packSize: 11,
   cost: 5.64,
   dataFile: "data/me4.json",
@@ -700,7 +703,7 @@ export const PERFECT_ORDER = {
   released: "March 27, 2026",
   live: true,
   printedTotal: 88,
-  totalCount: 133,
+  totalCount: 141,
   packSize: 11,
   cost: 5.53,
   dataFile: "data/me3.json",
@@ -756,7 +759,7 @@ export const ASCENDED_HEROES = {
   released: "January 30, 2026",
   live: true,
   printedTotal: 217,
-  totalCount: 302,
+  totalCount: 309,
   packSize: 11,
   cost: 13.87,
   dataFile: "data/me2pt5.json",
@@ -789,7 +792,7 @@ export const PHANTASMAL_FLAMES = {
   released: "November 14, 2025",
   live: true,
   printedTotal: 94,
-  totalCount: 146,
+  totalCount: 159,
   packSize: 11,
   cost: 11.82,
   dataFile: "data/me2.json",
@@ -844,7 +847,7 @@ export const MEGA_EVOLUTION = {
   released: "September 26, 2025",
   live: true,
   printedTotal: 132,
-  totalCount: 204,
+  totalCount: 227,
   packSize: 11,
   cost: 8.31,
   dataFile: "data/me1.json",
@@ -899,7 +902,7 @@ export const BLACK_BOLT = {
   released: "July 18, 2025",
   live: true,
   printedTotal: 86,
-  totalCount: 176,
+  totalCount: 181,
   packSize: 11,
   cost: 14.69,
   dataFile: "data/zsv10pt5.json",
@@ -939,7 +942,7 @@ export const WHITE_FLARE = {
   released: "July 18, 2025",
   live: true,
   printedTotal: 86,
-  totalCount: 176,
+  totalCount: 179,
   packSize: 11,
   cost: 13.43,
   dataFile: "data/rsv10pt5.json",

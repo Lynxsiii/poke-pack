@@ -673,11 +673,15 @@ function assetUrl(src) {
  * like an Illustration Rare, an ex promo like a Double Rare. `foilAs` names that
  * rarity (scripts/build_products.py reads it from TCG Live's print data), so the
  * foil engine draws the promo with its recipe. "Cosmos" is the galaxy holo most
- * collection-box promos use; "Frame" foils only the card frame, like a reverse.
+ * collection-box promos use; "Frame" foils only the card frame, like a reverse,
+ * and "Poke Ball" is a Poké Ball pattern reverse.
  */
 function foilLook(card) {
   if (!card?.promo || !card.foilAs || card.reverse) return card;
   if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
+  // A Poké Ball pattern print, like Black Bolt's reverses (the Victini
+  // Illustration Collection's Victini).
+  if (card.foilAs === "Poke Ball") return { ...card, rarity: "Rare", reverse: true, reverseKind: "pokeball" };
   return { ...card, rarity: card.foilAs };
 }
 
@@ -986,6 +990,7 @@ function promoNames(ids, pick = 0) {
     const names = cards.map((card) => card.name);
     return `one of ${names.length} promos: ${names.slice(0, -1).join(", ")} or ${names.at(-1)}`;
   }
+  if (pick > 1 && pick < cards.length) return `${pick} of ${cards.length} promos`;
   // The Pokémon Center ETB has the Nidorina promo twice, stamped and not.
   const counts = new Map();
   for (const card of cards) counts.set(card.name, (counts.get(card.name) || 0) + 1);

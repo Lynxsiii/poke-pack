@@ -27,7 +27,56 @@
     "mep033": {},
     "mep034": {},
     "mep035": {},
-    "mep036": {}
+    "mep036": {},
+    "7-cosmos": {
+      "like": "7",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 679253,
+      "foilAs": "Cosmos",
+      "printedNumber": "007/217"
+    },
+    "175-cosmos": {
+      "like": "175",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 679249,
+      "foilAs": "Cosmos",
+      "printedNumber": "175/217"
+    },
+    "20-cosmos": {
+      "like": "20",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 677398,
+      "foilAs": "Cosmos",
+      "printedNumber": "020/217"
+    },
+    "123-cosmos": {
+      "like": "123",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 677399,
+      "foilAs": "Cosmos",
+      "printedNumber": "123/217"
+    },
+    "8-cosmos": {
+      "like": "8",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 680709,
+      "foilAs": "Cosmos",
+      "printedNumber": "008/217"
+    },
+    "29-cosmos": {
+      "like": "29",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 681895,
+      "foilAs": "Cosmos",
+      "printedNumber": "029/217"
+    },
+    "41-cosmos": {
+      "like": "41",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 680710,
+      "foilAs": "Cosmos",
+      "printedNumber": "041/217"
+    }
   },
   "products": [
     {
@@ -129,6 +178,58 @@
       "packs": 4,
       "promos": [
         "mep036"
+      ]
+    },
+    {
+      "id": "collection-erika",
+      "name": "Ascended Heroes Collection: Erika",
+      "kind": "collection",
+      "tcgplayerId": 666906,
+      "packs": 2,
+      "promos": [
+        "7-cosmos"
+      ]
+    },
+    {
+      "id": "collection-larry",
+      "name": "Ascended Heroes Collection: Larry",
+      "kind": "collection",
+      "tcgplayerId": 666907,
+      "packs": 2,
+      "promos": [
+        "175-cosmos"
+      ]
+    },
+    {
+      "id": "tech-charmander",
+      "name": "Tech Sticker Collection: Charmander",
+      "kind": "collection",
+      "tcgplayerId": 666908,
+      "packs": 3,
+      "promos": [
+        "20-cosmos"
+      ]
+    },
+    {
+      "id": "tech-gastly",
+      "name": "Tech Sticker Collection: Gastly",
+      "kind": "collection",
+      "tcgplayerId": 666909,
+      "packs": 3,
+      "promos": [
+        "123-cosmos"
+      ]
+    },
+    {
+      "id": "pin-first-partners",
+      "name": "First Partners Deluxe Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 672391,
+      "packs": 5,
+      "promos": [
+        "8-cosmos",
+        "29-cosmos",
+        "41-cosmos"
       ]
     }
   ]

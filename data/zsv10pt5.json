@@ -6160,6 +6160,127 @@
     "imageRemote": "https://images.scrydex.com/pokemon/zsv10pt5-172/large"
   },
   {
+    "id": "zsv10pt5-12-pokeball",
+    "name": "Victini",
+    "number": "12-pokeball",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Natsumi Yoshida",
+    "flavorText": "This Pokémon brings victory. It is said that Trainers with Victini always win, regardless of the type of encounter.",
+    "image": "assets/cards/zsv10pt5/12-pokeball.webp",
+    "imageSmall": "assets/cards/zsv10pt5/12-pokeball-sm.webp",
+    "attacks": [
+      {
+        "name": "V-Force",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "120",
+        "text": "If you have 4 or fewer Benched Pokémon, this attack does nothing."
+      }
+    ],
+    "market": 0.31,
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/svalt/zsv10-5_en_012_alt.png",
+    "printedNumber": "012/086",
+    "foilMap": "assets/foil/maps/zsv10pt5/12-pokeball.webp",
+    "promo": true,
+    "foilAs": "Poke Ball",
+    "variant": "Poké Ball pattern",
+    "tcgplayerId": 642706
+  },
+  {
+    "id": "zsv10pt5-12-stamp",
+    "name": "Victini",
+    "number": "12-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Natsumi Yoshida",
+    "flavorText": "This Pokémon brings victory. It is said that Trainers with Victini always win, regardless of the type of encounter.",
+    "image": "assets/cards/zsv10pt5/12-stamp.webp",
+    "imageSmall": "assets/cards/zsv10pt5/12-stamp-sm.webp",
+    "attacks": [
+      {
+        "name": "V-Force",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "120",
+        "text": "If you have 4 or fewer Benched Pokémon, this attack does nothing."
+      }
+    ],
+    "market": 0.84,
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/svalt/zsv10-5_en_012_alt2.png",
+    "printedNumber": "012/086",
+    "foilAs": "Cosmos",
+    "foilMap": "assets/foil/maps/zsv10pt5/12-stamp.webp",
+    "promo": true,
+    "variant": "Black Bolt stamp",
+    "tcgplayerId": 668956
+  },
+  {
+    "id": "zsv10pt5-34-stamp",
+    "name": "Zekrom ex",
+    "number": "34-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "230",
+    "artist": "takuyoa",
+    "image": "assets/cards/zsv10pt5/34-stamp.webp",
+    "imageSmall": "assets/cards/zsv10pt5/34-stamp-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Voltage Burst",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "This attack does 50 more damage for each Prize card your opponent has taken. This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "market": 0.87,
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/svalt/zsv10-5_en_034_alt.png",
+    "printedNumber": "034/086",
+    "foilAs": "Double Rare",
+    "foilMap": "assets/foil/maps/zsv10pt5/34-stamp.webp",
+    "promo": true,
+    "variant": "Black Bolt stamp",
+    "tcgplayerId": 668957
+  },
+  {
     "id": "zsv10pt5-svp208",
     "name": "Victini",
     "number": "svp208",
@@ -6327,5 +6448,99 @@
     "foilAs": "Illustration Rare",
     "promo": true,
     "foilMap": "assets/foil/maps/zsv10pt5/svp212.webp"
+  },
+  {
+    "id": "zsv10pt5-wht020-stamp",
+    "name": "Reshiram ex",
+    "number": "wht020-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/zsv10pt5/wht020-stamp.webp",
+    "imageSmall": "assets/cards/zsv10pt5/wht020-stamp-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Blazing Burst",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "This attack does 50 more damage for each Prize card your opponent has taken. Discard an Energy from this Pokémon."
+      }
+    ],
+    "market": 0.77,
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/svalt/rsv10-5_en_020_alt.png",
+    "printedNumber": "020/086",
+    "foilAs": "Double Rare",
+    "foilMap": "assets/foil/maps/zsv10pt5/wht020-stamp.webp",
+    "promo": true,
+    "variant": "White Flare stamp",
+    "tcgplayerId": 668958
+  },
+  {
+    "id": "zsv10pt5-wht062-stamp",
+    "name": "Zoroark",
+    "number": "wht062-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "akagi",
+    "flavorText": "Bonds between these Pokémon are very strong. It protects the safety of its pack by tricking its opponents.",
+    "evolvesFrom": "Zorua",
+    "image": "assets/cards/zsv10pt5/wht062-stamp.webp",
+    "imageSmall": "assets/cards/zsv10pt5/wht062-stamp-sm.webp",
+    "attacks": [
+      {
+        "name": "Mind Jack",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each of your opponent's Benched Pokémon."
+      },
+      {
+        "name": "Foul Play",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack."
+      }
+    ],
+    "market": 0.52,
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/svalt/rsv10-5_en_062_alt.png",
+    "printedNumber": "062/086",
+    "foilAs": "Cosmos",
+    "foilMap": "assets/foil/maps/zsv10pt5/wht062-stamp.webp",
+    "promo": true,
+    "variant": "White Flare stamp",
+    "tcgplayerId": 668959
   }
 ]

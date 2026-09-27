@@ -35,7 +35,62 @@
       "variant": "Pokémon Center stamp",
       "tcgplayerId": 685563
     },
-    "mep071": {}
+    "mep071": {},
+    "24-stamp": {
+      "like": "24",
+      "variant": "Perfect Order stamp",
+      "tcgplayerId": 685559,
+      "foilAs": "Cosmos",
+      "printedNumber": "024/088"
+    },
+    "28-stamp": {
+      "like": "28",
+      "variant": "Perfect Order stamp",
+      "tcgplayerId": 685560,
+      "foilAs": "Cosmos",
+      "printedNumber": "028/088"
+    },
+    "50-gamestop": {
+      "like": "50",
+      "variant": "GameStop stamp",
+      "tcgplayerId": 685555,
+      "foilAs": "Cosmos",
+      "printedNumber": "050/088"
+    },
+    "50-ebgames": {
+      "like": "50",
+      "variant": "EB Games stamp",
+      "tcgplayerId": 686505,
+      "foilAs": "Cosmos",
+      "printedNumber": "050/088"
+    },
+    "meg010-cosmos": {
+      "like": "me1:10",
+      "variant": "Cosmos Holo",
+      "foilAs": "Cosmos",
+      "printedNumber": "010/132"
+    },
+    "meg028-cosmos": {
+      "like": "me1:28",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 716728,
+      "foilAs": "Cosmos",
+      "printedNumber": "028/132"
+    },
+    "meg038-cosmos": {
+      "like": "me1:38",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 686357,
+      "foilAs": "Cosmos",
+      "printedNumber": "038/132"
+    },
+    "meg093-cosmos": {
+      "like": "me1:93",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 691166,
+      "foilAs": "Cosmos",
+      "printedNumber": "093/132"
+    }
   },
   "products": [
     {
@@ -102,6 +157,90 @@
       "packs": 1,
       "promos": [
         "mep068"
+      ]
+    },
+    {
+      "id": "gift-24-stamp",
+      "name": "Booster Bundle + stamped Aurorus",
+      "kind": "bundle",
+      "tcgplayerId": 672396,
+      "packs": 6,
+      "promos": [
+        "24-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-28-stamp",
+      "name": "Booster Bundle + stamped Luxray",
+      "kind": "bundle",
+      "tcgplayerId": 672396,
+      "packs": 6,
+      "promos": [
+        "28-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-50-gamestop",
+      "name": "Booster Bundle + GameStop Gengar",
+      "kind": "bundle",
+      "tcgplayerId": 672396,
+      "packs": 6,
+      "promos": [
+        "50-gamestop"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-50-ebgames",
+      "name": "Booster Bundle + EB Games Gengar",
+      "kind": "bundle",
+      "tcgplayerId": 672396,
+      "packs": 6,
+      "promos": [
+        "50-ebgames"
+      ],
+      "gift": true
+    },
+    {
+      "id": "checklane-meganium",
+      "name": "Premium Checklane Blister: Meganium",
+      "kind": "blister",
+      "tcgplayerId": 672406,
+      "packs": 1,
+      "promos": [
+        "meg010-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-cinderace",
+      "name": "Premium Checklane Blister: Cinderace",
+      "kind": "blister",
+      "tcgplayerId": 672407,
+      "packs": 1,
+      "promos": [
+        "meg028-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-steelix",
+      "name": "Checklane Blister: Steelix",
+      "kind": "blister",
+      "tcgplayerId": 672408,
+      "packs": 1,
+      "promos": [
+        "meg093-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-clawitzer",
+      "name": "Checklane Blister: Clawitzer",
+      "kind": "blister",
+      "tcgplayerId": 672409,
+      "packs": 1,
+      "promos": [
+        "meg038-cosmos"
       ]
     }
   ]

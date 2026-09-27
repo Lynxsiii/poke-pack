@@ -37,7 +37,72 @@
       "variant": "Pokémon Center stamp",
       "tcgplayerId": 694695
     },
-    "mep081": {}
+    "mep081": {},
+    "10-gamestop": {
+      "like": "10",
+      "variant": "GameStop stamp",
+      "tcgplayerId": 694625,
+      "foilAs": "Cosmos",
+      "printedNumber": "010/086"
+    },
+    "10-ebgames": {
+      "like": "10",
+      "variant": "EB Games stamp",
+      "tcgplayerId": 694626,
+      "foilAs": "Cosmos",
+      "printedNumber": "010/086"
+    },
+    "13-stamp": {
+      "like": "13",
+      "variant": "Chaos Rising stamp",
+      "tcgplayerId": 694677,
+      "foilAs": "Cosmos",
+      "printedNumber": "013/086"
+    },
+    "19-stamp": {
+      "like": "19",
+      "variant": "Chaos Rising stamp",
+      "tcgplayerId": 694630,
+      "foilAs": "Cosmos",
+      "printedNumber": "019/086"
+    },
+    "mep046": {},
+    "mep047": {},
+    "mep048": {},
+    "mep049": {},
+    "mep050": {},
+    "mep051": {},
+    "mep052": {},
+    "mep053": {},
+    "mep054": {},
+    "pfl017-cosmos": {
+      "like": "me2:17",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 696441,
+      "foilAs": "Cosmos",
+      "printedNumber": "017/094"
+    },
+    "pfl034-cosmos": {
+      "like": "me2:34",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 696233,
+      "foilAs": "Cosmos",
+      "printedNumber": "034/094"
+    },
+    "pfl045-cosmos": {
+      "like": "me2:45",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 696145,
+      "foilAs": "Cosmos",
+      "printedNumber": "045/094"
+    },
+    "pfl053-cosmos": {
+      "like": "me2:53",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 696232,
+      "foilAs": "Cosmos",
+      "printedNumber": "053/094"
+    }
   },
   "products": [
     {
@@ -126,6 +191,111 @@
       "packs": 1,
       "promos": [
         "mep078"
+      ]
+    },
+    {
+      "id": "first-partner-2",
+      "name": "First Partner Illustration Collection: Series 2",
+      "kind": "collection",
+      "tcgplayerId": 688712,
+      "tcgplayerGroup": 24584,
+      "packs": 2,
+      "promos": [
+        "mep046",
+        "mep047",
+        "mep048",
+        "mep049",
+        "mep050",
+        "mep051",
+        "mep052",
+        "mep053",
+        "mep054"
+      ],
+      "pick": 3,
+      "groupOf": 3
+    },
+    {
+      "id": "gift-10-gamestop",
+      "name": "Booster Bundle + GameStop Ho-Oh",
+      "kind": "bundle",
+      "tcgplayerId": 684456,
+      "packs": 6,
+      "promos": [
+        "10-gamestop"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-10-ebgames",
+      "name": "Booster Bundle + EB Games Ho-Oh",
+      "kind": "bundle",
+      "tcgplayerId": 684456,
+      "packs": 6,
+      "promos": [
+        "10-ebgames"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-13-stamp",
+      "name": "Booster Bundle + stamped Delphox",
+      "kind": "bundle",
+      "tcgplayerId": 684456,
+      "packs": 6,
+      "promos": [
+        "13-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-19-stamp",
+      "name": "Booster Bundle + stamped Keldeo",
+      "kind": "bundle",
+      "tcgplayerId": 684456,
+      "packs": 6,
+      "promos": [
+        "19-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "checklane-pawmot",
+      "name": "Premium Checklane Blister: Pawmot",
+      "kind": "blister",
+      "tcgplayerId": 684459,
+      "packs": 1,
+      "promos": [
+        "pfl034-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-flygon",
+      "name": "Premium Checklane Blister: Flygon",
+      "kind": "blister",
+      "tcgplayerId": 684460,
+      "packs": 1,
+      "promos": [
+        "pfl053-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-zacian",
+      "name": "Checklane Blister: Zacian & Mimikyu",
+      "kind": "blister",
+      "tcgplayerId": 696144,
+      "packs": 1,
+      "promos": [
+        "pfl045-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-reshiram",
+      "name": "Checklane Blister: Reshiram & Moltres",
+      "kind": "blister",
+      "tcgplayerId": 696150,
+      "packs": 1,
+      "promos": [
+        "pfl017-cosmos"
       ]
     }
   ]

@@ -21,10 +21,14 @@ A set lists the ones worth opening in data/sets/<id>.json:
 `packs` counts the set's own booster packs; `special` names extra packs from
 the set's `specialPacks` in js/catalog.js (the Ultra-Premium Collections'
 Classic Collection pack). `pick` is how many of `promos` one box holds when it
-is not all of them (a Build & Battle Box holds one of four at random), and
+is not all of them (a Build & Battle Box holds one of four at random;
+`groupOf` 3 makes that one of the runs of three in `promos`, one region's
+starters in a First Partner Illustration Collection), and
 `tcgplayerGroup` names the TCGplayer group of a product filed outside the
 set's own (Miscellaneous Cards & Products, 2374). A product whose id matches one of SEALED_PRODUCTS
-(eliteTrainerBox) only adds its promos to that product.
+(eliteTrainerBox) only adds its promos to that product. `gift: true` marks a
+store's gift-with-purchase promo (GameStop and EB Games stamps): no box holds
+it, so it is sold with the product it came free with, at both market prices.
 
 This script then:
 
@@ -33,6 +37,11 @@ This script then:
     rarity whose foil recipe it borrows. A number with a promoSeries prefix
     (mep094) is read from pkmn.gg's promo pages; one with `like` copies an
     existing card and swaps in its own scan (a stamped or product-only print).
+    `like: "me2:17"` copies a card of another set, for a product that ships
+    another set's card (Chaos Rising's checklane blisters carry Phantasmal
+    Flames cosmos holos). `tcgl` names the print in Pokémon TCG Live's alt
+    exports (`svalt/zsv10-5_en_012_alt2`): its render becomes the scan, its
+    foil map ships to assets/foil/maps/<id>/, and its foil type sets `foilAs`.
     `foilAs` comes from Pokémon TCG Live's foil type when the export has the
     card, else from the config.
   * mirrors each promo scan to assets/cards/<id>/ at the site's two sizes.
@@ -82,10 +91,12 @@ TCGCSV = "https://tcgcsv.com/tcgplayer/3/{group}/{what}"
 TCG_IMAGE = "https://tcgplayer-cdn.tcgplayer.com/product/{id}_in_1000x1000.jpg"
 TCGL = "https://cdn.malie.io/file/malie-io/tcgl/export/{path}"
 TCGL_INDEX = "https://cdn.malie.io/file/malie-io/tcgl/export/index.json"
+TCGL_PRINT = "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/{path}{kind}.png"
 # TCG Live's key for each promo series prefix.
 TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
+MISC = 2374
 NEXT_DATA = re.compile(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', re.S)
 
 
@@ -154,13 +165,56 @@ def tcgl_card(key: str, number: int) -> dict | None:
     return _tcgl[key].get(number)
 
 
+def tcgl_print(path: str) -> dict | None:
+    """A print from TCG Live's alt exports (svalt, mealt) by its image path."""
+    key = path.split("/")[0]
+    if key not in _tcgl:
+        index = json.loads(fetch(TCGL_INDEX, "tcgl-index.json"))
+        entry = index.get("en-US", {}).get(key)
+        cards = json.loads(fetch(TCGL.format(path=entry["path"]), f"tcgl-{key}.json")) if entry else []
+        _tcgl[key] = {c["images"]["tcgl"]["png"]["front"]: c for c in cards if c.get("images")}
+    return _tcgl[key].get(TCGL_PRINT.format(path=path, kind=""))
+
+
+def ship_print_map(set_id: str, number: str, path: str) -> str | None:
+    """Ship a TCG Live print's foil map as the site's alpha mask; its repo path."""
+    rel = f"assets/foil/maps/{set_id}/{number}.webp"
+    if (ROOT / rel).exists():
+        return rel
+    try:
+        raw = fetch(TCGL_PRINT.format(path=path, kind=".foil"))
+    except (subprocess.CalledProcessError, OSError):
+        return None
+    # As the card-textures skill's fetch_foil_maps.py ships them: white, with
+    # the map's brightness (times its own alpha) as the alpha.
+    a = np.asarray(Image.open(BytesIO(raw)).convert("RGBA")).astype(np.float32)
+    lum = ((0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]) * a[..., 3] / 255).clip(0, 255)
+    white = np.full(lum.shape, 255, np.uint8)
+    mask = Image.fromarray(np.dstack([white, white, white, lum.round().astype(np.uint8)]), "RGBA")
+    (ROOT / rel).parent.mkdir(parents=True, exist_ok=True)
+    mask.save(ROOT / rel, "WEBP", quality=85, alpha_quality=80, method=6)
+    return rel
+
+
+_set_cards: dict[str, dict[str, dict]] = {}
+
+
+def set_cards(set_id: str) -> dict[str, dict]:
+    """Another set's cards by id, for a promo that copies one of them."""
+    if set_id not in _set_cards:
+        records = json.loads((DATA / f"{set_id}.json").read_text(encoding="utf-8"))
+        _set_cards[set_id] = {c["id"]: c for c in records}
+    return _set_cards[set_id]
+
+
 def foil_from_tcgl(card: dict) -> str:
     """The site rarity whose foil recipe matches TCG Live's print type."""
     foil = card.get("foil") or {}
     kind, long_id = foil.get("type", ""), card.get("ext", {}).get("tcgl", {}).get("longFormID", "")
     if kind == "COSMOS":
         return "Cosmos"
-    if kind == "SV_HOLO":
+    # White Flare prints its holo rares in tinsel; the site draws them as its holo.
+    if kind in ("SV_HOLO", "TINSEL"):
         return "Rare"
     if kind == "SUN_PILLAR":
         return "Double Rare" if "DoubleRare" in long_id else "Illustration Rare"
@@ -266,19 +320,37 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     card_id = f"{set_id}-{number}"
     prior = cards.get(card_id)
     price = None
-    remote = ""
+    remote = fallback = ""
 
     if spec.get("like"):
-        base = cards.get(f"{set_id}-{spec['like']}")
+        like_set, _, like = spec["like"].rpartition(":")
+        pool = set_cards(like_set) if like_set else cards
+        base = pool.get(f"{like_set or set_id}-{like}")
         if not base:
-            raise RuntimeError(f"{number}: like {spec['like']} is not in data/{set_id}.json yet")
+            raise RuntimeError(f"{number}: like {spec['like']} is not in data/{like_set or set_id}.json yet")
         keep = {k: v for k, v in base.items() if k not in (
             "image", "imageSmall", "imageRemote", "market", "foilMap", "etchMap",
-            "etchMapH", "etchMapV", "stampPos", "stampSize", "variant", "tcgplayerId")}
+            "etchMapH", "etchMapV", "stampPos", "stampSize", "variant", "tcgplayerId",
+            "reverseMap")}
         record = {**keep, "id": card_id, "number": number}
         if "printedNumber" not in record:
             record["printedNumber"] = f"{base['number']}/{cfg.get('printedTotal', '')}".rstrip("/")
-        remote = TCG_IMAGE.format(id=spec["tcgplayerId"])
+        # A print with no scan of its own anywhere (Perfect Order's cosmos
+        # Meganium has no TCGplayer listing) shows the card it copies.
+        # TCGplayer has no photo of some listings (Hydrapple's cosmos holo
+        # answers 403), so the copied card's scan stands in for those too.
+        remote = TCG_IMAGE.format(id=spec["tcgplayerId"]) if spec.get("tcgplayerId") else base.get("imageRemote", "")
+        fallback = base.get("imageRemote", "")
+        if spec.get("tcgl"):
+            live = tcgl_print(spec["tcgl"])
+            if not live:
+                raise RuntimeError(f"{number}: {spec['tcgl']} is not in TCG Live's exports")
+            remote = TCGL_PRINT.format(path=spec["tcgl"], kind="")
+            if not spec.get("foilAs"):
+                record["foilAs"] = foil_from_tcgl(live)
+            foil_map = ship_print_map(set_id, number, spec["tcgl"])
+            if foil_map:
+                record["foilMap"] = foil_map
     else:
         parts = split_number(number, series)
         if not parts:
@@ -315,15 +387,22 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     # A rebuild must not keep a mirrored path that points at another card's scan.
     if not prior:
         record["imageRemote"] = remote
-    return ordered(record), price, remote
+    return ordered(record), price, (remote, fallback) if fallback and fallback != remote else remote
 
 
-def mirror(set_id: str, record: dict, remote: str, refresh: bool) -> None:
+def mirror(set_id: str, record: dict, remote: str | tuple[str, str], refresh: bool) -> None:
     stem = record["number"]
     local = f"assets/cards/{set_id}/{stem}.webp"
     if (ROOT / local).exists() and not refresh and record.get("image") == local:
         return
-    raw = fetch(remote)
+    remote, fallback = remote if isinstance(remote, tuple) else (remote, "")
+    try:
+        raw = fetch(remote)
+    except urllib.error.HTTPError:
+        if not fallback:
+            raise
+        print(f"    {record['number']}: no scan at {remote}, showing the card it copies")
+        raw, remote = fetch(fallback), fallback
     encode(raw, ROOT / "assets" / "cards" / set_id, stem, force=True)
     record["image"] = local
     record["imageSmall"] = f"assets/cards/{set_id}/{stem}-sm.webp"
@@ -363,10 +442,9 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     listings: dict[str, dict[str, float]] = {}
     groups = [cfg.get("tcgplayerGroup"), *(s.get("tcgplayerGroup") for s in cfg.get("promoSeries", {}).values())]
     # Product-only prints (blister exclusives) are filed in a group of their own,
-    # or beside their product in Miscellaneous Cards & Products (Journey
-    # Together's Cosmos Holo box cards), and a promo spec can name another
-    # (Paldean Fates' stamped prints, also in Miscellaneous, 2374).
-    groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES]
+    # or in Miscellaneous Cards & Products (Journey Together's Cosmos Holo box
+    # cards, the stamped store promos), and a promo spec can name another.
+    groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES, MISC]
     groups += sorted({p["tcgplayerGroup"] for p in products if p.get("tcgplayerGroup")} - set(groups))
     groups += sorted({s["tcgplayerGroup"] for s in (cfg.get("promoCards") or {}).values() if s.get("tcgplayerGroup")} - set(groups))
     tcg_market: dict[int, dict[int, float]] = {}
@@ -433,6 +511,14 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         missing = [p for p in promos if p not in cards]
         if missing:
             raise RuntimeError(f"{product['id']}: promo card(s) {missing} not built")
+        if product.get("gift"):
+            # A store gave this promo free with the product, so the offer costs
+            # both: the product's market price plus the promo's.
+            gifts = [cards[p].get("market") for p in promos]
+            if not all(gifts):
+                print(f"    {product['id']}: its gift promo has no price, left out")
+                continue
+            price = round(price + sum(gifts), 2)
         released = (info.get("presaleInfo") or {}).get("releasedOn") or ""
         entry = {
             "id": product["id"],
@@ -442,6 +528,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             **({"special": product["special"]} if product.get("special") else {}),
             "promos": promos,
             **({"pick": int(product["pick"])} if product.get("pick") else {}),
+            **({"groupOf": int(product["groupOf"])} if product.get("groupOf") else {}),
             "price": price,
             "tcgplayerId": pid,
             **({"released": released[:10]} if released else {}),
