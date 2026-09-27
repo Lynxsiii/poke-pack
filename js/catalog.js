@@ -1136,6 +1136,39 @@ export const TEMPORAL_FORCES = {
   ]),
 };
 
+export const PALDEA_EVOLVED = {
+  id: "sv2",
+  tcgId: "sv2",
+  name: "Paldea Evolved",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "June 9, 2023",
+  live: true,
+  printedTotal: 193,
+  totalCount: 289,
+  packSize: 11,
+  cost: 15.56,
+  dataFile: "data/sv2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, June 2023. The Paldea starters grow into ex, Iono gets her Special Illustration Rare, five wrappers.",
+  oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/57",
+  lede: "The biggest early Scarlet & Violet set: 279 cards, 36 of them Illustration Rares, and the Magikarp everyone hunts. Tera ex print on etched foil, gold lands in 1 of 57 packs.",
+  /**
+   * TCGplayer Authentication Center, 8,000+ English packs (June 2023):
+   * DR 13.72%, UR 6.64% in the rare slot; IR 7.70%, SIR 3.17%, Hyper Rare
+   * 1.76% in the second reverse slot. No ACE SPEC yet. data/pullrates.json.
+   */
+  slots: svSlots({ double: 0.1372, ultra: 0.0664, ir: 0.077, sir: 0.0317, hyper: 0.0176 }),
+  heroIds: ["sv2-203", "sv2-269", "sv2-262", "sv2-211"],
+  wrappers: boosterWrappers("sv2", [
+    { id: "ting-lu", name: "Ting-Lu", cardId: "sv2-263", tag: "Ruinous" },
+    { id: "skeledirge", name: "Skeledirge", cardId: "sv2-258", tag: "Fire starter" },
+    { id: "quaquaval", name: "Quaquaval", cardId: "sv2-260", tag: "Water starter" },
+    { id: "meowscarada", name: "Meowscarada", cardId: "sv2-256", tag: "Grass starter" },
+    { id: "chien-pao", name: "Chien-Pao", cardId: "sv2-261", tag: "Ruinous" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1146,6 +1179,7 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  PALDEA_EVOLVED,
 ];
 
 /**
@@ -1220,7 +1254,6 @@ export const ROADMAP = [
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
       { id: "sv3", name: "Obsidian Flames", released: "Aug 2023", cards: "—" },
-      { id: "sv2", name: "Paldea Evolved", released: "Jun 2023", cards: "—" },
       { id: "sv1", name: "Scarlet & Violet", released: "Mar 2023", cards: "—" },
     ],
   },

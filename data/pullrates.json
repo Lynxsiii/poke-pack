@@ -216,5 +216,19 @@
       "sir": 0.0117,
       "hyper": 0.0072
     }
+  },
+  "sv2": {
+    "name": "Paldea Evolved",
+    "printedTotal": 193,
+    "released": "2023-06-09",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, 8,000+ English booster packs opened before release (article by Peter Day, https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Paldea-Evolved-Pull-Rates/1b7d3e70-9542-4a50-8692-1661e2316521/). Per pack, 95% confidence: Double Rare 13.72% ± 0.73% (1 in 7) and Ultra Rare 6.64% ± 0.53% (1 in 15) in the rare slot; Illustration Rare 7.70% ± 0.56% (1 in 13), Special Illustration Rare 3.17% ± 0.37% (1 in 32) and Hyper Rare 1.76% ± 0.28% (1 in 57) in the second reverse holo slot. Same figures on pullrates.com, which cites the same study. No ACE SPEC in this set (they start in Temporal Forces).",
+    "rates": {
+      "double": 0.1372,
+      "ultra": 0.0664,
+      "ir": 0.077,
+      "sir": 0.0317,
+      "hyper": 0.0176
+    }
   }
 }
