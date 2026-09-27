@@ -1,7 +1,7 @@
 // Promo products for every set in data/products.json. Run: node scripts/test-products.mjs
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { contentsValue, drawPromos, poolsFrom, priceOffer } from "../js/engine.js";
+import { drawPromos, poolsFrom } from "../js/engine.js";
 import { BASIC_ENERGY, findOffer, getSet, PLAYABLE_SETS, promoOffers, sealedOffers, sellValue } from "../js/catalog.js";
 
 const root = new URL("../", import.meta.url);
@@ -45,10 +45,11 @@ for (const [setId, list] of Object.entries(products)) {
     } else {
       assert.deepEqual(drawPromos(offer), offer.promos);
     }
-    const priced = priceOffer(offer, set, cards);
-    assert.ok(priced.price >= offer.price, `${offer.id} never costs less than market`);
-    assert.ok(priced.price >= contentsValue(offer, set, cards), `${offer.id} costs at least what's inside`);
+    // Every product costs its TCGplayer market price, from products.json or sealed.json.
+    const market = sealed[setId]?.[offer.id] ?? list.find((entry) => entry.id === offer.id)?.price;
+    assert.ok(market > 0, `${offer.id} has a market price`);
+    assert.equal(offer.price, Math.round(market * 100) / 100, `${offer.id} costs its market price`);
     checked += 1;
   }
 }
-console.log(`Promo product checks passed: ${checked} products across ${Object.keys(products).length - 1} sets, promos exist with scans and prices, none in packs, random picks, price floor.`);
+console.log(`Promo product checks passed: ${checked} products across ${Object.keys(products).length - 1} sets, promos exist with scans and prices, none in packs, random picks, market prices.`);

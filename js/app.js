@@ -22,7 +22,7 @@ import {
   findOffer,
   offerPackCount,
 } from "./catalog.js";
-import { HIT_RARITIES, isHit, priceOffer } from "./engine.js";
+import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge } from "./social.js";
 import {
@@ -979,9 +979,7 @@ function promoNames(ids, pick = 0) {
 /** Booster boxes, ETBs and bundles for the live set, priced from data/sealed.json. */
 function renderSealed() {
   if (!els.sealedGrid) return;
-  const offers = sealedOffers(sealedPrices[liveSet.id], productList[liveSet.id]).map((offer) =>
-    priceOffer(offer, liveSet, cards)
-  );
+  const offers = sealedOffers(sealedPrices[liveSet.id], productList[liveSet.id]);
   els.sealedBlock.classList.toggle("hidden", !offers.length || !liveSet.wrappers.length);
   const single = Number(liveSet.cost) || 0;
   const stack = [0, 1, 2].map((i) => liveSet.wrappers[i % liveSet.wrappers.length]).filter(Boolean);
@@ -1039,8 +1037,7 @@ function releaseNote(offer) {
 function renderPromoProducts() {
   if (!els.promoGrid) return;
   const offers = promoOffers(productList[liveSet.id])
-    .filter((offer) => offer.promos.every((id) => byId[id]))
-    .map((offer) => priceOffer(offer, liveSet, cards));
+    .filter((offer) => offer.promos.every((id) => byId[id]));
   els.promoBlock.classList.toggle("hidden", !offers.length);
   els.promoGrid.innerHTML = offers
     .map((offer) => {
@@ -1070,7 +1067,6 @@ function renderPromoProducts() {
           <h3>${esc(offer.name)}</h3>
           <p>${esc(productContents(offer))} · ${esc(promoNames(offer.promos, offer.pick))}</p>
           <p class="promo-worth">${worth}</p>
-          ${offer.market ? `<p class="promo-market">Market ✦ ${coin(offer.market)}, but what's inside is worth more, so it costs that.</p>` : ""}
         </div>
         <div class="pack-meta">
           <span class="cost">✦ ${coin(offer.price)}</span>
@@ -4516,7 +4512,7 @@ async function startSealed(productId) {
     openAuth("signup");
     return;
   }
-  const offer = priceOffer(findOffer(sealedPrices[liveSet.id], productList[liveSet.id], productId), liveSet, cards);
+  const offer = findOffer(sealedPrices[liveSet.id], productList[liveSet.id], productId);
   if (!offer) {
     toast("That product isn't sold for this set.");
     return;
