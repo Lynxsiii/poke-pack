@@ -24,7 +24,7 @@ import {
 } from "./catalog.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
-import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge } from "./social.js";
+import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge, currentFriends } from "./social.js";
 import {
   AVATARS,
   avatarSrc,
@@ -2891,6 +2891,28 @@ async function renderSocial() {
         </a>`;
       })
       .join("");
+    const { incoming, outgoing } = currentFriends();
+    const incomingRows = incoming
+      .map(
+        (row) => `<div class="friends-row">
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>@${esc(row.handle)}</small></span></a>
+          <div class="friends-row-actions">
+            <button type="button" class="solid" data-friend-accept="${esc(row.handle)}">Accept</button>
+            <button type="button" class="ghost" data-friend-deny="${esc(row.handle)}">No</button>
+          </div>
+        </div>`
+      )
+      .join("");
+    const outgoingRows = outgoing
+      .map(
+        (row) => `<div class="friends-row dim">
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>pending</small></span></a>
+        </div>`
+      )
+      .join("");
+    const requests =
+      (incomingRows ? `<p class="friends-label">Requests</p><div class="dm-threads">${incomingRows}</div>` : "") +
+      (outgoingRows ? `<p class="friends-label">Sent</p><div class="dm-threads">${outgoingRows}</div>` : "");
     const pane = thread?.error
       ? `<p class="panel-empty">${esc(thread.error)}</p>`
       : thread
@@ -2923,7 +2945,9 @@ async function renderSocial() {
       <div class="social-grid">
         <div class="panel">
           <h3>Friends</h3>
-          <div class="dm-threads">${list || `<p class="panel-empty">Add friends from the list on the left.</p>`}</div>
+          ${requests}
+          ${requests && list ? `<p class="friends-label">Friends</p>` : ""}
+          <div class="dm-threads">${list || `<p class="panel-empty">No friends yet. Use the Friends button in the bottom-left corner to add a trainer by handle.</p>`}</div>
         </div>
         <div class="panel dm-pane">${pane}</div>
       </div>
@@ -2951,6 +2975,23 @@ async function renderSocial() {
     body.innerHTML = `<div class="panel"><p class="panel-empty">${esc(err.message || "Couldn't load social.")}</p></div>`;
   }
 }
+
+els.socialBody?.addEventListener("click", async (e) => {
+  const accept = e.target.closest("[data-friend-accept]");
+  const deny = e.target.closest("[data-friend-deny]");
+  const handle = accept?.dataset.friendAccept || deny?.dataset.friendDeny;
+  if (!handle) return;
+  e.preventDefault();
+  e.target.closest(".friends-row")?.querySelectorAll("button").forEach((btn) => (btn.disabled = true));
+  try {
+    await api("/api/friends/respond", { method: "POST", body: JSON.stringify({ handle, accept: Boolean(accept) }) });
+    toast(accept ? `You and @${handle} are friends.` : "Request declined.");
+  } catch (err) {
+    toast(err.message || "Couldn't update friends.");
+  }
+  await notifySignedIn();
+  renderSocial();
+});
 
 /*
  * Settings are grouped for the page, and each row declares its own control so
@@ -6316,6 +6357,9 @@ async function boot() {
   try {
     await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
     await refreshSession();
+    // Friends and requests load now rather than on the next 5s poll, so the
+    // Social page and the Friends badge are right on first paint.
+    if (cloudUser) notifySignedIn();
     await activateSet(setIdFromPath(location.pathname) || state.activeSetId || DEFAULT_SET_ID);
     applySettings();
     renderHeader();
