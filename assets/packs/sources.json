@@ -1,7 +1,7 @@
 {
   "source": "https://pokesymbols.com/tcg/booster-pack-art",
   "urlPattern": "https://pokesymbols.com/images/tcg/sets/booster-pack-art/{set-slug}-pack-{n}.avif",
-  "note": "Newer sets are isolated AVIFs with real alpha. Vintage Base Set files from the same folder are tight pack photos without alpha.",
+  "note": "Mega Evolution sets and Scarlet & Violet from Journey Together on are isolated AVIFs with real alpha. Older Scarlet & Violet packs (and the 30th Classic Collection pack) come flattened onto white: run scripts/clean_pack_art.py on them after downloading. Vintage Base Set files from the same folder are tight pack photos without alpha.",
   "sets": {
       "me5": {
       "name": "Pitch Black",
