@@ -6,5 +6,90 @@
   "scrydexId": "sv6",
   "pittSlug": "Twilight-Masquerade",
   "artSlug": "twilight-masquerade",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
+  "tcgplayerGroup": 23473,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp115": {},
+    "svp116": {},
+    "svp117": {},
+    "svp118": {},
+    "svp119": {},
+    "svp120": {},
+    "svp121": {},
+    "svp122": {},
+    "svp123": {},
+    "svp123-pc": {
+      "like": "svp123",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 552786
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 543845,
+      "packs": 9,
+      "promos": ["svp123"]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 543844,
+      "packs": 11,
+      "promos": ["svp123-pc"]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 544386,
+      "packs": 4,
+      "promos": ["svp115", "svp116", "svp117", "svp118"],
+      "pick": 1
+    },
+    {
+      "id": "blister3-snorlax",
+      "name": "3 Pack Blister: Snorlax",
+      "kind": "blister",
+      "tcgplayerId": 544171,
+      "packs": 3,
+      "promos": ["svp122"]
+    },
+    {
+      "id": "blister3-revavroom",
+      "name": "3 Pack Blister: Revavroom",
+      "kind": "blister",
+      "tcgplayerId": 544172,
+      "packs": 3,
+      "promos": ["svp121"]
+    },
+    {
+      "id": "blister-pupitar",
+      "name": "Single Pack Blister: Pupitar",
+      "kind": "blister",
+      "tcgplayerId": 544177,
+      "packs": 1,
+      "promos": ["svp120"]
+    },
+    {
+      "id": "blister-toxel",
+      "name": "Single Pack Blister: Toxel",
+      "kind": "blister",
+      "tcgplayerId": 544179,
+      "packs": 1,
+      "promos": ["svp119"]
+    }
+  ]
 }
