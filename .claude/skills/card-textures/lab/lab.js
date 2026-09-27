@@ -48,6 +48,9 @@ function foilLayout(c) {
 function foilPattern(c) {
   const r = c.rarity;
   if (r === "Mega Hyper Rare" || r === "Hyper Rare") return "foil-gold";
+  if (c.foilMap && (c.subtypes || []).includes("Tera") && (r === "Double Rare" || r === "Ultra Rare")) {
+    return r === "Ultra Rare" ? "foil-ultra foil-tera" : "foil-ex foil-tera";
+  }
   if (r === "Special Illustration Rare") return "foil-sir";
   if (r === "Illustration Rare") return "foil-ir";
   if (r === "Ultra Rare") return "foil-ultra";
@@ -57,7 +60,7 @@ function foilPattern(c) {
   if (r === "RGB Rare") return "foil-future foil-rgb";
   if (r === "Classic Collection") return `${CLASSIC_FULL_FOIL.test(c.name || "") ? "foil-ultra" : "foil-holo"} foil-classic`;
   if (r === "Pikachu Rare") return "foil-holo foil-pikachu";
-  if (r === "ACE SPEC Rare") return "foil-holo";
+  if (r === "ACE SPEC Rare") return c.foilMap ? "foil-holo foil-acespec" : "foil-holo";
   if (isEx(c) && (HIT_RARITIES.has(r) || r === "Rare")) return c.foilMap && r === "Double Rare" ? "foil-ex foil-sunpillar" : "foil-ex";
   if (c.supertype === "Trainer" && HIT_RARITIES.has(r)) return "foil-ex";
   if (r === "Rare" && c.foilMap) return "foil-holo foil-svholo";
