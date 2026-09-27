@@ -62,28 +62,43 @@ Photos in the project's shared folder, `paldean-fates/texture-refs/`
 
 ## Recipe: Shiny Vault (`.foil-shiny`)
 
-The whole `.foil` group hard-lights onto the scan. That is the only blend
-that works on both kinds of print under this foil: the pale window (which
-colour-dodge cannot brighten) goes silver-grey where the group is under
-half, and the inked Pokémon and border brighten where it is over.
+Rewritten 2026-09-27 (the "Shiny and promo holo fix" thread; the first
+version's hard-light group left the window paper white because the etch's
+white ridges pushed the group over half, where hard-light screens). The
+scan is white where the silver is, so the silver has to darken it: `.foil`
+multiplies onto the card.
 
-- `.foil` (rest and held): flat grey with the etch map drawn over it in
-  white, multiplied by a silver ramp that is brighter under the pointer,
-  then a narrow repeating sun-pillar band on top (`--pf-w`, `--pf-period`,
-  wider on the SUR). Rest: saturate 0.3, opacity 0.3 x strength.
-- `::before` (held): the fingerprint catching the light. A fine grating
-  flashes where its lines face the lamp, so whole arcs of one direction
-  light together. `--etch-angle` is the etch's line direction as a grey (0
-  lines up and down, 1 across; structure tensor, sigma 3 px at 733 px, half
-  size, q60, ~10 KB per SR). The layer is a flat colour set by the pointer,
-  `--pf-p` = 0.8 x from-left + 0.2 x from-top, difference-blended over that
-  map, then `filter: invert(1) brightness(0.57) contrast(15)`: 1 - |angle -
-  p|, with everything more than ~0.18 away pushed to black. The flat colour
-  is `rgb(p+22, p, p-22)`, so each channel matches a slightly different
-  direction and the arcs get rainbow edges, like a real grating. Masked by
-  the etch map, screened.
-- `::after`: a cyan-to-blue radial round the pointer, masked by the etch,
-  screened. `.glare`: soft white overlay only.
+- `.foil` (rest and held), bottom up: a silver radial centred on the
+  pointer (97% under the lamp, 88% at a quarter, `--pf-lo` 74% far off,
+  which is what reads as a mirror); the sun-pillar bands, pastel and
+  translucent (`--pf-a` 0.62, so over the silver they come out as tinted
+  silver, not paint; `--pf-w` 9% every 30%); the etch map soft-lit on top,
+  which at card size is grain, not lines. Rest: saturate 0.6, opacity 0.85.
+  The SUR (`.foil-ultra.foil-shiny`) widens the bands to 13% every 26%,
+  `--pf-a` 0.85, `--pf-lo` 68%.
+- `::before` (held): the same bands, saturated, screened at `--pf-screen`
+  (0.38, SUR 0.5), so a band that crosses the Pokémon's ink lightens it
+  with colour.
+- `::after` (held): the fingerprint catching the light. `--etch-angle` is
+  the etch's line direction as a grey (0 lines up and down, 1 across;
+  structure tensor, sigma 3 px at 733 px, half size, q60, ~10 KB per SR).
+  A flat colour set by the pointer, `--pf-p` = 0.15 + 0.8 x (0.8 x
+  from-left + 0.2 x from-top), is difference-blended over that map, then
+  `filter: invert(1) brightness(0.6) contrast(6)`: 1 - |angle - p|, with
+  everything more than ~0.2 away fading to black. Softer than the first
+  version's `contrast(15)`, so the arcs read as ripples rather than wires.
+  The flat colour is `rgb(p+24, p, p-24)`, so each channel matches a
+  slightly different direction and the arcs get rainbow edges. Masked by
+  the etch map, screened at 0.9.
+- `.glare::after` (held): the ridges facing away, half a turn round the
+  whorl (`--pf-q: mod(calc(var(--pf-p) + 0.5), 1)`), the same difference
+  trick multiplied in at 0.45: the dark half of the same ripples. Browsers
+  without `mod()` drop the rule and lose only the dark half.
+- `.glare`: a white overlay highlight, 0.75 under the lamp, a shade darker
+  away.
+
+Stamped shinies (svp072-stamp, svp073-stamp) cut the Paldean Fates logo out
+of the map: [promos.md](promos.md).
 
 ## Recipe: Scodix gold (`.foil-gold.foil-scodix`)
 

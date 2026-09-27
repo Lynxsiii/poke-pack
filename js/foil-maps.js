@@ -32,6 +32,23 @@ export function cureOf(card) {
   return "";
 }
 
+/**
+ * Whether a cosmos promo prints the "pixel" (retro) cosmos foil rather than
+ * the smooth one: every English cosmos promo since Tinkaton SVP 140
+ * (September 2024) and every Mega Evolution-era one does (the card-textures
+ * skill, reference/promos.md). A `variant` naming "Pixel" settles it either
+ * way; otherwise the promo number or the set decides.
+ */
+export function pixelCosmos(card) {
+  const variant = String(card?.variant || "");
+  if (/pixel/i.test(variant)) return true;
+  if (/smooth|hd cosmos/i.test(variant)) return false;
+  const set = String(card?.id || "").split("-")[0];
+  if (/^me\d/.test(set) || ["sv8pt5", "sv9", "sv10", "zsv10pt5", "rsv10pt5"].includes(set)) return true;
+  const svp = /^svp(\d+)/i.exec(String(card?.number || ""));
+  return Boolean(svp && Number(svp[1]) >= 140);
+}
+
 /** A stable 0..1 pair per card, so tiled glitter never lines up the same way twice. */
 function seed(id) {
   let h = 2166136261;
@@ -86,5 +103,7 @@ export function foilExtras(card, url) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }
+  // Cosmos promos since late 2024 print the pixel cosmos (css/holo/promos.css).
+  if (card.rarity === "Cosmos" && pixelCosmos(card)) classes.push("cosmos-pixel");
   return { classes: classes.join(" "), style: vars.join(";"), cure: Boolean(cure) };
 }

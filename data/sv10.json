@@ -9116,7 +9116,9 @@
     "foilAs": "Ultra Rare",
     "variant": "Destined Rivals stamp",
     "tcgplayerId": 663426,
-    "market": 7.01
+    "market": 7.01,
+    "foilMap": "assets/foil/maps/sv10/208-stamp.webp",
+    "etchMap": "assets/foil/maps/sv10/208-etch.webp"
   },
   {
     "id": "sv10-229-stamp",
@@ -9165,7 +9167,9 @@
     "foilAs": "Special Illustration Rare",
     "variant": "Destined Rivals stamp",
     "tcgplayerId": 663427,
-    "market": 56.84
+    "market": 56.84,
+    "foilMap": "assets/foil/maps/sv10/229-stamp.webp",
+    "etchMap": "assets/foil/maps/sv10/229-etch.webp"
   },
   {
     "id": "sv10-31-stamp",
@@ -9215,7 +9219,8 @@
     "foilAs": "Double Rare",
     "variant": "Destined Rivals stamp",
     "tcgplayerId": 663425,
-    "market": 1.47
+    "market": 1.47,
+    "foilMap": "assets/foil/maps/sv10/31-stamp.webp"
   },
   {
     "id": "sv10-34-prerelease",
@@ -9263,7 +9268,8 @@
     "foilAs": "Rare",
     "variant": "Prerelease stamp",
     "tcgplayerId": 633107,
-    "market": 9.42
+    "market": 9.42,
+    "foilMap": "assets/foil/maps/sv10/34-prerelease.webp"
   },
   {
     "id": "sv10-49-prerelease",
@@ -9311,7 +9317,8 @@
     "foilAs": "Rare",
     "variant": "Prerelease stamp",
     "tcgplayerId": 633108,
-    "market": 13.93
+    "market": 13.93,
+    "foilMap": "assets/foil/maps/sv10/49-prerelease.webp"
   },
   {
     "id": "sv10-87-prerelease",
@@ -9349,7 +9356,8 @@
     "foilAs": "Rare",
     "variant": "Prerelease stamp",
     "tcgplayerId": 633112,
-    "market": 15.12
+    "market": 15.12,
+    "foilMap": "assets/foil/maps/sv10/87-prerelease.webp"
   },
   {
     "id": "sv10-96-prerelease",
@@ -9397,7 +9405,8 @@
     "foilAs": "Rare",
     "variant": "Prerelease stamp",
     "tcgplayerId": 633111,
-    "market": 10.5
+    "market": 10.5,
+    "foilMap": "assets/foil/maps/sv10/96-prerelease.webp"
   },
   {
     "id": "sv10-svp199",
@@ -9441,7 +9450,8 @@
     "printedNumber": "SVP 199",
     "tcgplayerId": 637662,
     "foilAs": "Cosmos",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp199.webp"
   },
   {
     "id": "sv10-svp200",
@@ -9484,7 +9494,8 @@
     "printedNumber": "SVP 200",
     "tcgplayerId": 637077,
     "foilAs": "Cosmos",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp200.webp"
   },
   {
     "id": "sv10-svp201",
@@ -9528,7 +9539,8 @@
     "printedNumber": "SVP 201",
     "tcgplayerId": 637669,
     "foilAs": "Cosmos",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp201.webp"
   },
   {
     "id": "sv10-svp202",
@@ -9572,7 +9584,8 @@
     "printedNumber": "SVP 202",
     "tcgplayerId": 637413,
     "foilAs": "Cosmos",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp202.webp"
   },
   {
     "id": "sv10-svp203",
@@ -9617,7 +9630,8 @@
     "printedNumber": "SVP 203",
     "tcgplayerId": 635467,
     "foilAs": "Illustration Rare",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp203.webp"
   },
   {
     "id": "sv10-svp203-pc",
@@ -9663,7 +9677,8 @@
     "foilAs": "Illustration Rare",
     "promo": true,
     "variant": "Pokémon Center stamp",
-    "tcgplayerId": 635468
+    "tcgplayerId": 635468,
+    "foilMap": "assets/foil/maps/sv10/svp203-pc.webp"
   },
   {
     "id": "sv10-svp204",
@@ -9706,7 +9721,10 @@
     "printedNumber": "SVP 204",
     "tcgplayerId": 637613,
     "foilAs": "Ultra Rare",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp204.webp",
+    "etchMap": "assets/foil/maps/sv10/svp204-etch.webp",
+    "etchAngle": "assets/foil/maps/sv10/svp204-etch-angle.webp"
   },
   {
     "id": "sv10-svp205",
@@ -9749,7 +9767,8 @@
     "printedNumber": "SVP 205",
     "tcgplayerId": 637617,
     "foilAs": "Double Rare",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp205.webp"
   },
   {
     "id": "sv10-svp216",
@@ -9792,7 +9811,8 @@
     "printedNumber": "SVP 216",
     "tcgplayerId": 653257,
     "foilAs": "Double Rare",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp216.webp"
   },
   {
     "id": "sv10-svp217",
@@ -9841,7 +9861,8 @@
     "printedNumber": "SVP 217",
     "tcgplayerId": 653258,
     "foilAs": "Double Rare",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp217.webp"
   },
   {
     "id": "sv10-svp218",
@@ -9888,6 +9909,7 @@
     "printedNumber": "SVP 218",
     "tcgplayerId": 653259,
     "foilAs": "Double Rare",
-    "promo": true
+    "promo": true,
+    "foilMap": "assets/foil/maps/sv10/svp218.webp"
   }
 ]

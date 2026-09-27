@@ -4367,7 +4367,8 @@
     "tcgplayerId": 664098,
     "image": "assets/cards/me2/17-stamp.webp",
     "imageSmall": "assets/cards/me2/17-stamp-sm.webp",
-    "market": 11.31
+    "market": 11.31,
+    "foilMap": "assets/foil/maps/me2/17-stamp.webp"
   },
   {
     "id": "me2-2-cosmos",
@@ -4475,7 +4476,8 @@
     "tcgplayerId": 671234,
     "image": "assets/cards/me2/26-ebgames.webp",
     "imageSmall": "assets/cards/me2/26-ebgames-sm.webp",
-    "market": 67.17
+    "market": 67.17,
+    "foilMap": "assets/foil/maps/me2/26-ebgames.webp"
   },
   {
     "id": "me2-26-gamestop",
@@ -4511,7 +4513,8 @@
     "tcgplayerId": 666533,
     "image": "assets/cards/me2/26-gamestop.webp",
     "imageSmall": "assets/cards/me2/26-gamestop-sm.webp",
-    "market": 18.02
+    "market": 18.02,
+    "foilMap": "assets/foil/maps/me2/26-gamestop.webp"
   },
   {
     "id": "me2-3-cosmos",
@@ -4600,7 +4603,8 @@
     "tcgplayerId": 664012,
     "image": "assets/cards/me2/8-stamp.webp",
     "imageSmall": "assets/cards/me2/8-stamp-sm.webp",
-    "market": 14.64
+    "market": 14.64,
+    "foilMap": "assets/foil/maps/me2/8-stamp.webp"
   },
   {
     "id": "me2-dri018-cosmos",
@@ -5469,6 +5473,7 @@
     "tcgplayerId": 673358,
     "image": "assets/cards/me2/tef051-stamp.webp",
     "imageSmall": "assets/cards/me2/tef051-stamp-sm.webp",
-    "market": 2.62
+    "market": 2.62,
+    "foilMap": "assets/foil/maps/me2/tef051-stamp.webp"
   }
 ]

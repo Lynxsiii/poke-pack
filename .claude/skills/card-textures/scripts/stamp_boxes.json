@@ -1,0 +1,101 @@
+{
+  "_": "Stamp boxes [x, y, w, h] on the 600x838 scan (a fifth entry \"ellipse\" makes it a round badge) for prints whose two scans come from different sources; the stamp's shape is refined from the difference inside the box, and the result seeds a template for the rest of the set.",
+  "sv8pt5-34-stamp": [
+    10,
+    303,
+    200,
+    112
+  ],
+  "sv4pt5-svp072-stamp": [
+    20,
+    300,
+    135,
+    100
+  ],
+  "sv4pt5-svp073-stamp": [
+    350,
+    378,
+    150,
+    92
+  ],
+  "me55-116-blister": [
+    490,
+    333,
+    78,
+    80,
+    "ellipse"
+  ],
+  "sv10-34-prerelease": [
+    30,
+    338,
+    150,
+    75
+  ],
+  "sv10-49-prerelease": [
+    30,
+    338,
+    150,
+    75
+  ],
+  "sv10-96-prerelease": [
+    30,
+    338,
+    150,
+    75
+  ],
+  "me4-mep080-pc": [
+    402,
+    672,
+    190,
+    44
+  ],
+  "sv9-svp189-pc": [
+    402,
+    672,
+    190,
+    44
+  ],
+  "me1-88-gamestop": [
+    455,
+    362,
+    125,
+    40
+  ],
+  "me1-88-ebgames": [
+    420,
+    362,
+    150,
+    42
+  ],
+  "me2-tef051-stamp": [
+    444,
+    264,
+    134,
+    142,
+    "ellipse"
+  ],
+  "me2-17-stamp": [
+    430,
+    308,
+    125,
+    92
+  ],
+  "me2-8-stamp": [
+    430,
+    308,
+    125,
+    92
+  ],
+  "zsv10pt5-wht020-stamp": [
+    350,
+    292,
+    180,
+    100
+  ],
+  "me3-50-ebgames": [
+    392,
+    364,
+    196,
+    44
+  ]
+}
