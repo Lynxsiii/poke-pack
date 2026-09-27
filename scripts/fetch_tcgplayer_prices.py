@@ -94,7 +94,12 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         if re.fullmatch(r"\d+/\d+", number):
             pattern = PATTERN.search(product["name"])
             suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""
-            by_number[str(int(number.split("/")[0])) + suffix] = product
+            key = str(int(number.split("/")[0])) + suffix
+            # Any other variant print filed under the same number ("Mew ex -
+            # 205/165 (151 Metal Card)") never displaces the pack print.
+            if not pattern and key in by_number and product["name"].endswith(")"):
+                continue
+            by_number[key] = product
 
     wrong = [
         (c["number"], c["name"], by_number[c["number"]]["name"])
