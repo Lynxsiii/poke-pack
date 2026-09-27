@@ -538,6 +538,8 @@ function foilPattern(card) {
     const kind = reverseKindOf(card);
     if (kind === "pokeball") return "foil-reverse foil-rev-pokeball";
     if (kind === "masterball") return "foil-reverse foil-rev-masterball";
+    // The galaxy holo (css/holo/promos.css) on the frame: 151's Costco promos.
+    if (kind === "galaxy") return "foil-reverse foil-cosmos";
     return "foil-reverse";
   }
   if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "foil-gold";
@@ -655,12 +657,13 @@ function assetUrl(src) {
  * like an Illustration Rare, an ex promo like a Double Rare. `foilAs` names that
  * rarity (scripts/build_products.py reads it from TCG Live's print data), so the
  * foil engine draws the promo with its recipe. "Cosmos" is the galaxy holo most
- * collection-box promos use; "Frame" foils only the card frame, like a reverse.
- * 151's Cosmos holo basic Energies use it too.
+ * collection-box promos (and 151's holo basic Energies) use; "Frame" foils only
+ * the card frame, like a reverse, and "Reverse Cosmos" puts the galaxy there.
  */
 function foilLook(card) {
   if (!(card?.promo || card?.energy) || !card.foilAs || card.reverse) return card;
   if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
+  if (card.foilAs === "Reverse Cosmos") return { ...card, rarity: "Common", reverse: true, reverseKind: "galaxy" };
   return { ...card, rarity: card.foilAs };
 }
 

@@ -7678,6 +7678,8 @@
     "hp": "70",
     "artist": "Yuu Nishida",
     "flavorText": "While it is young, it uses the nutrients that are stored in the seed on its back in order to grow.",
+    "image": "assets/cards/sv3pt5/1.webp",
+    "imageSmall": "assets/cards/sv3pt5/1-sm.webp",
     "attacks": [
       {
         "name": "Leech Seed",
@@ -7689,15 +7691,13 @@
         "text": "Heal 20 damage from this Pokémon."
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/587935_in_1000x1000.jpg",
+    "market": 2.91,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-1/large",
     "printedNumber": "001/165",
     "promo": true,
     "foilAs": "Reverse Cosmos",
     "variant": "Reverse cosmos holo",
-    "tcgplayerId": 587935,
-    "image": "assets/cards/sv3pt5/1-costco.webp",
-    "imageSmall": "assets/cards/sv3pt5/1-costco-sm.webp",
-    "market": 2.91
+    "tcgplayerId": 587935
   },
   {
     "id": "sv3pt5-125-cosmos",
@@ -7714,6 +7714,8 @@
     "hp": "90",
     "artist": "NC Empire",
     "flavorText": "With the coming of a storm, many of these Pokémon will gather under tall trees and sit there waiting for lightning to strike.",
+    "image": "assets/cards/sv3pt5/125.webp",
+    "imageSmall": "assets/cards/sv3pt5/125-sm.webp",
     "attacks": [
       {
         "name": "Electro Combo",
@@ -7733,15 +7735,14 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/520726_in_1000x1000.jpg",
+    "market": 0.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-125/large",
     "printedNumber": "125/165",
     "promo": true,
     "foilAs": "Cosmos",
     "variant": "Cosmos holo",
     "tcgplayerId": 520726,
-    "image": "assets/cards/sv3pt5/125-cosmos.webp",
-    "imageSmall": "assets/cards/sv3pt5/125-cosmos-sm.webp",
-    "market": 0.55
+    "foilMap": "assets/foil/maps/sv3pt5/125-cosmos.webp"
   },
   {
     "id": "sv3pt5-149-cosmos",
@@ -7759,6 +7760,8 @@
     "artist": "Sanosuke Sakuma",
     "flavorText": "It is said that somewhere in the ocean lies an island where these gather. Only they live there.",
     "evolvesFrom": "Dragonair",
+    "image": "assets/cards/sv3pt5/149.webp",
+    "imageSmall": "assets/cards/sv3pt5/149-sm.webp",
     "attacks": [
       {
         "name": "Dragon Pulse",
@@ -7777,16 +7780,14 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/662053_in_1000x1000.jpg",
+    "market": 6.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-149/large",
     "foilMap": "assets/foil/maps/sv3pt5/149.webp",
     "printedNumber": "149/165",
     "promo": true,
     "foilAs": "Cosmos",
     "variant": "Cosmos holo",
-    "tcgplayerId": 662053,
-    "image": "assets/cards/sv3pt5/149-cosmos.webp",
-    "imageSmall": "assets/cards/sv3pt5/149-cosmos-sm.webp",
-    "market": 6.09
+    "tcgplayerId": 662053
   },
   {
     "id": "sv3pt5-205-metal",
@@ -7803,6 +7804,8 @@
     ],
     "hp": "180",
     "artist": "aky CG Works",
+    "image": "assets/cards/sv3pt5/205-metal.webp",
+    "imageSmall": "assets/cards/sv3pt5/205-metal-sm.webp",
     "attacks": [
       {
         "name": "Genome Hacking",
@@ -7822,6 +7825,7 @@
         "type": "Ability"
       }
     ],
+    "market": 24.15,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/519481_in_1000x1000.jpg",
     "foilMap": "assets/foil/maps/sv3pt5/205.webp",
     "etchMap": "assets/foil/maps/sv3pt5/205-etch.webp",
@@ -7829,10 +7833,7 @@
     "promo": true,
     "foilAs": "Hyper Rare",
     "variant": "Metal card",
-    "tcgplayerId": 519481,
-    "image": "assets/cards/sv3pt5/205-metal.webp",
-    "imageSmall": "assets/cards/sv3pt5/205-metal-sm.webp",
-    "market": 24.15
+    "tcgplayerId": 519481
   },
   {
     "id": "sv3pt5-25-costco",
@@ -7849,6 +7850,8 @@
     "hp": "60",
     "artist": "Naoyo Kimura",
     "flavorText": "When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/sv3pt5/25.webp",
+    "imageSmall": "assets/cards/sv3pt5/25-sm.webp",
     "attacks": [
       {
         "name": "Charge",
@@ -7869,15 +7872,13 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/587938_in_1000x1000.jpg",
+    "market": 5.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-25/large",
     "printedNumber": "025/165",
     "promo": true,
     "foilAs": "Reverse Cosmos",
     "variant": "Reverse cosmos holo",
-    "tcgplayerId": 587938,
-    "image": "assets/cards/sv3pt5/25-costco.webp",
-    "imageSmall": "assets/cards/sv3pt5/25-costco-sm.webp",
-    "market": 5.12
+    "tcgplayerId": 587938
   },
   {
     "id": "sv3pt5-26-cosmos",
@@ -7895,6 +7896,8 @@
     "artist": "Naoyo Kimura",
     "flavorText": "Its tail discharges electricity into the ground, protecting it from getting shocked.",
     "evolvesFrom": "Pikachu",
+    "image": "assets/cards/sv3pt5/26.webp",
+    "imageSmall": "assets/cards/sv3pt5/26-sm.webp",
     "attacks": [
       {
         "name": "Thunder",
@@ -7914,16 +7917,14 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/662074_in_1000x1000.jpg",
+    "market": 3.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-26/large",
     "foilMap": "assets/foil/maps/sv3pt5/26.webp",
     "printedNumber": "026/165",
     "promo": true,
     "foilAs": "Cosmos",
     "variant": "Cosmos holo",
-    "tcgplayerId": 662074,
-    "image": "assets/cards/sv3pt5/26-cosmos.webp",
-    "imageSmall": "assets/cards/sv3pt5/26-cosmos-sm.webp",
-    "market": 3.73
+    "tcgplayerId": 662074
   },
   {
     "id": "sv3pt5-4-costco",
@@ -7940,6 +7941,8 @@
     "hp": "70",
     "artist": "GIDORA",
     "flavorText": "From the time it is born, a flame burns at the tip of its tail. Its life would end if the flame were to go out.",
+    "image": "assets/cards/sv3pt5/4.webp",
+    "imageSmall": "assets/cards/sv3pt5/4-sm.webp",
     "attacks": [
       {
         "name": "Blazing Destruction",
@@ -7959,15 +7962,13 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/587936_in_1000x1000.jpg",
+    "market": 4.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-4/large",
     "printedNumber": "004/165",
     "promo": true,
     "foilAs": "Reverse Cosmos",
     "variant": "Reverse cosmos holo",
-    "tcgplayerId": 587936,
-    "image": "assets/cards/sv3pt5/4-costco.webp",
-    "imageSmall": "assets/cards/sv3pt5/4-costco-sm.webp",
-    "market": 4.95
+    "tcgplayerId": 587936
   },
   {
     "id": "sv3pt5-63-cosmos",
@@ -7984,6 +7985,8 @@
     "hp": "50",
     "artist": "Mitsuhiro Arita",
     "flavorText": "Abra can teleport in its sleep. Apparently the more deeply Abra sleeps, the farther its teleportations go.",
+    "image": "assets/cards/sv3pt5/63.webp",
+    "imageSmall": "assets/cards/sv3pt5/63-sm.webp",
     "attacks": [
       {
         "name": "Psyshot",
@@ -7994,15 +7997,14 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/520727_in_1000x1000.jpg",
+    "market": 0.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-63/large",
     "printedNumber": "063/165",
     "promo": true,
     "foilAs": "Cosmos",
     "variant": "Cosmos holo",
     "tcgplayerId": 520727,
-    "image": "assets/cards/sv3pt5/63-cosmos.webp",
-    "imageSmall": "assets/cards/sv3pt5/63-cosmos-sm.webp",
-    "market": 0.87
+    "foilMap": "assets/foil/maps/sv3pt5/63-cosmos.webp"
   },
   {
     "id": "sv3pt5-64-cosmos",
@@ -8020,6 +8022,8 @@
     "artist": "Mitsuhiro Arita",
     "flavorText": "This Pokémon's telekinesis is immensely powerful. To prepare for evolution, Kadabra stores up psychic energy in the star on its forehead.",
     "evolvesFrom": "Abra",
+    "image": "assets/cards/sv3pt5/64.webp",
+    "imageSmall": "assets/cards/sv3pt5/64-sm.webp",
     "attacks": [
       {
         "name": "Teleportation Attack",
@@ -8030,15 +8034,14 @@
         "text": "Switch this Pokémon with 1 of your Benched Pokémon."
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/520725_in_1000x1000.jpg",
+    "market": 0.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-64/large",
     "printedNumber": "064/165",
     "promo": true,
     "foilAs": "Cosmos",
     "variant": "Cosmos holo",
     "tcgplayerId": 520725,
-    "image": "assets/cards/sv3pt5/64-cosmos.webp",
-    "imageSmall": "assets/cards/sv3pt5/64-cosmos-sm.webp",
-    "market": 0.56
+    "foilMap": "assets/foil/maps/sv3pt5/64-cosmos.webp"
   },
   {
     "id": "sv3pt5-68-cosmos",
@@ -8056,6 +8059,8 @@
     "artist": "Ryuta Fuse",
     "flavorText": "With four arms that react more quickly than it can think, it can execute many punches at once.",
     "evolvesFrom": "Machoke",
+    "image": "assets/cards/sv3pt5/68.webp",
+    "imageSmall": "assets/cards/sv3pt5/68-sm.webp",
     "attacks": [
       {
         "name": "Mountain Chopping",
@@ -8074,16 +8079,14 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/662070_in_1000x1000.jpg",
+    "market": 1.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-68/large",
     "foilMap": "assets/foil/maps/sv3pt5/68.webp",
     "printedNumber": "068/165",
     "promo": true,
     "foilAs": "Cosmos",
     "variant": "Cosmos holo",
-    "tcgplayerId": 662070,
-    "image": "assets/cards/sv3pt5/68-cosmos.webp",
-    "imageSmall": "assets/cards/sv3pt5/68-cosmos-sm.webp",
-    "market": 1.14
+    "tcgplayerId": 662070
   },
   {
     "id": "sv3pt5-7-costco",
@@ -8100,6 +8103,8 @@
     "hp": "60",
     "artist": "kantaro",
     "flavorText": "When it feels threatened, it draws its limbs inside its shell and sprays water from its mouth.",
+    "image": "assets/cards/sv3pt5/7.webp",
+    "imageSmall": "assets/cards/sv3pt5/7-sm.webp",
     "attacks": [
       {
         "name": "Withdraw",
@@ -8119,15 +8124,13 @@
         "text": ""
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/587937_in_1000x1000.jpg",
+    "market": 4.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-7/large",
     "printedNumber": "007/165",
     "promo": true,
     "foilAs": "Reverse Cosmos",
     "variant": "Reverse cosmos holo",
-    "tcgplayerId": 587937,
-    "image": "assets/cards/sv3pt5/7-costco.webp",
-    "imageSmall": "assets/cards/sv3pt5/7-costco-sm.webp",
-    "market": 4.02
+    "tcgplayerId": 587937
   },
   {
     "id": "sv3pt5-94-cosmos",
@@ -8145,6 +8148,8 @@
     "artist": "Tomokazu Komiya",
     "flavorText": "To steal the life of its target, it slips into the prey's shadow and silently waits for an opportunity.",
     "evolvesFrom": "Haunter",
+    "image": "assets/cards/sv3pt5/94.webp",
+    "imageSmall": "assets/cards/sv3pt5/94-sm.webp",
     "attacks": [
       {
         "name": "Poltergeist",
@@ -8164,16 +8169,14 @@
         "text": "Put 3 damage counters on your opponent's Benched Pokémon in any way you like."
       }
     ],
-    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/662072_in_1000x1000.jpg",
+    "market": 21.75,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv3pt5-94/large",
     "foilMap": "assets/foil/maps/sv3pt5/94.webp",
     "printedNumber": "094/165",
     "promo": true,
     "foilAs": "Cosmos",
     "variant": "Cosmos holo",
-    "tcgplayerId": 662072,
-    "image": "assets/cards/sv3pt5/94-cosmos.webp",
-    "imageSmall": "assets/cards/sv3pt5/94-cosmos-sm.webp",
-    "market": 21.75
+    "tcgplayerId": 662072
   },
   {
     "id": "sv3pt5-svp046",
@@ -8204,12 +8207,12 @@
         "text": ""
       }
     ],
+    "market": 1.71,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-46/large",
     "printedNumber": "SVP 046",
     "tcgplayerId": 517271,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 1.71,
     "foilMap": "assets/foil/maps/sv3pt5/svp046.webp"
   },
   {
@@ -8240,12 +8243,12 @@
         "text": "Discard an Energy from this Pokémon."
       }
     ],
+    "market": 2.02,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-47/large",
     "printedNumber": "SVP 047",
     "tcgplayerId": 517272,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 2.02,
     "foilMap": "assets/foil/maps/sv3pt5/svp047.webp"
   },
   {
@@ -8276,12 +8279,12 @@
         "text": "Flip a coin. If heads, your opponent’s Active Pokémon is now Paralyzed."
       }
     ],
+    "market": 2.3,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-48/large",
     "printedNumber": "SVP 048",
     "tcgplayerId": 517273,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 2.3,
     "foilMap": "assets/foil/maps/sv3pt5/svp048.webp"
   },
   {
@@ -8319,12 +8322,12 @@
         "type": "Ability"
       }
     ],
+    "market": 0.83,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-49/large",
     "printedNumber": "SVP 049",
     "tcgplayerId": 518869,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 0.83,
     "foilMap": "assets/foil/maps/sv3pt5/svp049.webp"
   },
   {
@@ -8365,12 +8368,12 @@
         "text": "This attack can be used even if this Pokémon is on the Bench."
       }
     ],
+    "market": 0.76,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-50/large",
     "printedNumber": "SVP 050",
     "tcgplayerId": 518868,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 0.76,
     "foilMap": "assets/foil/maps/sv3pt5/svp050.webp"
   },
   {
@@ -8409,12 +8412,12 @@
         "type": "Ability"
       }
     ],
+    "market": 19.58,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-51/large",
     "printedNumber": "SVP 051",
     "tcgplayerId": 517175,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 19.58,
     "foilMap": "assets/foil/maps/sv3pt5/svp051.webp"
   },
   {
@@ -8432,6 +8435,8 @@
     "hp": "150",
     "artist": "GOSSAN",
     "flavorText": "This Pokémon’s stomach is so strong, even eating moldy or rotten food will not affect it.",
+    "image": "assets/cards/sv3pt5/svp051-pc.webp",
+    "imageSmall": "assets/cards/sv3pt5/svp051-pc-sm.webp",
     "attacks": [
       {
         "name": "Thudding Press",
@@ -8451,15 +8456,13 @@
         "type": "Ability"
       }
     ],
+    "market": 283.07,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/517270_in_1000x1000.jpg",
     "printedNumber": "SVP 051",
     "foilAs": "Illustration Rare",
     "promo": true,
     "variant": "Pokémon Center stamp",
     "tcgplayerId": 517270,
-    "image": "assets/cards/sv3pt5/svp051-pc.webp",
-    "imageSmall": "assets/cards/sv3pt5/svp051-pc-sm.webp",
-    "market": 283.07,
     "foilMap": "assets/foil/maps/sv3pt5/svp051-pc.webp"
   },
   {
@@ -8500,12 +8503,12 @@
         "text": "Discard 2 Energy from this Pokémon."
       }
     ],
+    "market": 41.57,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-52/large",
     "printedNumber": "SVP 052",
     "tcgplayerId": 518872,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 41.57,
     "foilMap": "assets/foil/maps/sv3pt5/svp052.webp"
   },
   {
@@ -8543,12 +8546,12 @@
         "type": "Ability"
       }
     ],
+    "market": 67.16,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-53/large",
     "printedNumber": "SVP 053",
     "tcgplayerId": 518871,
     "foilAs": "Special Illustration Rare",
     "promo": true,
-    "market": 67.16,
     "foilMap": "assets/foil/maps/sv3pt5/svp053.webp",
     "etchMap": "assets/foil/maps/sv3pt5/svp053-etch.webp"
   }
