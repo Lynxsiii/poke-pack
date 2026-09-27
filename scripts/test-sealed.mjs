@@ -40,7 +40,7 @@ assert.deepEqual(sealedOffers(sealed.me5).map(o=>[o.id,o.packs]),[['boosterBox',
 assert.deepEqual(sealedOffers(sealed.me2pt5).map(o=>o.id),['eliteTrainerBox','boosterBundle']);
 
 assert.equal((await request('/api/sealed/open','POST',{setId:'me5',product:'boosterBox'},false)).status,401);
-assert.equal((await request('/api/sealed/open','POST',{setId:'sv8pt5',product:'eliteTrainerBox'})).status,400,'retired sets stay closed');
+assert.equal((await request('/api/sealed/open','POST',{setId:'sv0',product:'eliteTrainerBox'})).body.error,'Unknown set.','sets that are not open stay closed');
 assert.equal((await request('/api/sealed/open','POST',{setId:'me2pt5',product:'boosterBox'})).status,400);
 assert.equal((await request('/api/sealed/open','POST',{setId:'me5',product:'pcEliteTrainerBox'})).status,400);
 let response=await request('/api/sealed/open','POST',{setId:'me5',product:'boosterBox'});

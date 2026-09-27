@@ -6,5 +6,113 @@
   "scrydexId": "sv8",
   "pittSlug": "Surging-Sparks",
   "artSlug": "surging-sparks",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 23651,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp151": {},
+    "svp152": {},
+    "svp153": {},
+    "svp154": {},
+    "svp155": {},
+    "svp156": {},
+    "svp157": {},
+    "svp158": {},
+    "svp159": {},
+    "svp159-pc": {
+      "like": "svp159",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 594468
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 565630,
+      "packs": 9,
+      "promos": [
+        "svp159"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 565632,
+      "packs": 11,
+      "promos": [
+        "svp159-pc",
+        "svp159"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 565599,
+      "packs": 4,
+      "promos": [
+        "svp151",
+        "svp152",
+        "svp153",
+        "svp154"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-zapdos",
+      "name": "3 Pack Blister: Zapdos",
+      "kind": "blister",
+      "tcgplayerId": 565634,
+      "packs": 3,
+      "promos": [
+        "svp157"
+      ]
+    },
+    {
+      "id": "blister3-quagsire",
+      "name": "3 Pack Blister: Quagsire",
+      "kind": "blister",
+      "tcgplayerId": 565635,
+      "packs": 3,
+      "promos": [
+        "svp156"
+      ]
+    },
+    {
+      "id": "blister-wooper",
+      "name": "Single Pack Blister: Wooper",
+      "kind": "blister",
+      "tcgplayerId": 565636,
+      "packs": 1,
+      "promos": [
+        "svp155"
+      ]
+    },
+    {
+      "id": "blister-pachirisu",
+      "name": "Single Pack Blister: Pachirisu",
+      "kind": "blister",
+      "tcgplayerId": 565637,
+      "packs": 1,
+      "promos": [
+        "svp158"
+      ]
+    }
+  ]
 }
