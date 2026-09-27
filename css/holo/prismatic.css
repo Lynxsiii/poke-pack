@@ -1,0 +1,160 @@
+/*
+ * Prismatic Evolutions' own foils: the Poké Ball and Master Ball pattern
+ * prints, and the regular reverse holo. The research is in the card-textures
+ * skill, .claude/skills/card-textures/reference/prismatic-evolutions.md.
+ *
+ * - Poké Ball and Master Ball prints (`foil-prism`, next to the older
+ *   `foil-reverse foil-rev-pokeball` / `-masterball` classes so the Classic
+ *   engine keeps its own ball reverse). Pokémon TCG Live prints them RAINBOW /
+ *   ETCHED: rainbow foil everywhere but the Pokémon and the text (the card's
+ *   own foil map), cut with a grating of crystal shards whose lines each run
+ *   at their own angle, and a big unetched ball behind the attacks that
+ *   catches the light as one smooth rainbow. The shards and the balls are the
+ *   same on every card, so they ship once (scripts/make_prismatic_textures.py):
+ *   shards.webp holds each shard's line angle as grey, which lets the light
+ *   pick out the shards that face it; pokeball.webp and masterball.webp are
+ *   the balls in their resting colours.
+ * - The regular reverse holo (`has-rev-map`, js/foil-maps.js): TCG Live's map
+ *   of the reverse print works Tera crystals and the card's type symbol into
+ *   the foil, so the map's greys replace the plain reverse window.
+ *
+ * The doubled class outranks the older ball reverse in finishes.css and the
+ * map mask in maps.css, whichever order the sheets load in. Loaded last.
+ *
+ * Rest state (PR 5): a resting card paints `.foil` alone; the pseudo layers
+ * and `.glare` only exist while a card is held or settling.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism {
+  --prism-shards: url("/assets/foil/prismatic/shards.webp");
+  --prism-ball: url("/assets/foil/prismatic/pokeball.webp");
+  --prism-spectrum: hsl(2, 100%, 73%), hsl(40, 100%, 70%), hsl(93, 100%, 69%),
+    hsl(176, 100%, 76%), hsl(228, 100%, 74%), hsl(283, 100%, 73%), hsl(2, 100%, 73%);
+  /* The drifting rainbow under the shards: close to mid grey, so it tints. */
+  --prism-wash: hsl(2, 45%, 55%), hsl(40, 45%, 55%), hsl(93, 40%, 52%),
+    hsl(176, 45%, 55%), hsl(228, 45%, 56%), hsl(283, 40%, 55%), hsl(2, 45%, 55%);
+  --prism-saturate: 1;
+  --prism-strength: 1;
+}
+/* Photos of the Master Ball print read paler and more silver, and its ball
+   brighter against the rest of the card. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-rev-masterball {
+  --prism-ball: url("/assets/foil/prismatic/masterball.webp");
+  --prism-saturate: 0.8;
+  --prism-strength: 1.25;
+}
+
+/* ---- Poké Ball and Master Ball prints: RAINBOW / ETCHED ---------------------
+   `.foil`, masked by the card's foil map (maps.css), hard-lit onto the card:
+   mid grey changes nothing, lighter lifts and darker dims, so the same layer
+   reads on dark ink and on white Trainer stock. The shards soft-light a
+   faint rainbow that drifts with the tilt into light and dark facets, a grey
+   veil keeps those facets quiet (the light picks them out on `::before`), and
+   the ball sits on top in its own rainbow. Resting, the ball and the facets
+   are already there, as on the real card. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.has-foil-map .foil {
+  background-image:
+    var(--prism-ball),
+    linear-gradient(hsla(0, 0%, 50%, 0.45), hsla(0, 0%, 50%, 0.45)),
+    var(--prism-shards),
+    repeating-linear-gradient(110deg, var(--prism-wash));
+  background-size: 100% 100%, 100% 100%, 100% 100%, 400% 400%;
+  background-position: center, center, center, var(--background-x) var(--background-y);
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  background-blend-mode: normal, normal, soft-light, normal;
+  filter: saturate(var(--prism-saturate));
+  mix-blend-mode: hard-light;
+  opacity: calc((0.5 + var(--card-opacity) * 0.3) * var(--prism-strength) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.5 * var(--prism-strength) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.has-foil-map .foil::after {
+  background-image: none;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+  opacity: 1;
+}
+/* The shards catching the light. Each shard's grey is its line angle, so the
+   difference from a grey set by the pointer is how far the shard is from
+   facing the light; inverted and crushed, only the shards within a few
+   degrees survive, and they change as the card turns. Screened on, so the
+   rest of the layer's black adds nothing; masked to the shards, so the art
+   window stays quiet. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.has-foil-map .foil::before {
+  --prism-light: calc(var(--pointer-from-left) * 0.7 + var(--pointer-from-top) * 0.3);
+  background-image:
+    var(--prism-shards),
+    linear-gradient(hsl(0, 0%, calc(var(--prism-light) * 100%)), hsl(0, 0%, calc(var(--prism-light) * 100%)));
+  background-blend-mode: difference, normal;
+  filter: invert(1) brightness(0.54) contrast(16);
+  -webkit-mask-image: var(--prism-shards);
+  mask-image: var(--prism-shards);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+/* The ball: smooth foil, so one rainbow slides across all of it, against
+   the rainbow around it. It covers the shards' glints inside its outline. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.has-foil-map .foil::after {
+  background-image: repeating-linear-gradient(125deg,
+    hsl(2, 95%, 64%) 0%, hsl(40, 95%, 60%) 7%, hsl(93, 80%, 56%) 14%,
+    hsl(176, 90%, 60%) 21%, hsl(228, 95%, 66%) 28%, hsl(283, 90%, 66%) 35%, hsl(2, 95%, 64%) 42%);
+  background-size: 200% 200%;
+  background-position: calc(100% - var(--background-x)) calc(100% - var(--background-y));
+  -webkit-mask-image: var(--prism-ball);
+  mask-image: var(--prism-ball);
+  filter: brightness(1.05) saturate(0.85);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.6) 8%, hsla(0, 0%, 100%, 0.15) 30%, hsla(0, 0%, 0%, 0.35) 90%);
+  background-size: cover;
+  background-position: center;
+  filter: none;
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-prism.foil-prism.has-foil-map .glare::after {
+  background: none;
+}
+
+/* ---- The regular reverse holo: TCG Live's reverse map ----------------------
+   The reverse recipe stays (rarities.css); the map replaces the window, so
+   the crystals and the type symbol show as brighter and dimmer foil. */
+body.fx-holo.fx-holo.fx-holo .tcg.reverse.has-rev-map.has-rev-map .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--rev-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--rev-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* ---- Rarity marks for the pattern prints (filters, legends) ---------------- */
+.pip.tone-pokeball,
+.rarity-ico.tone-pokeball {
+  color: #e2463c;
+}
+.pip.tone-masterball,
+.rarity-ico.tone-masterball {
+  color: #8b4fd6;
+}

@@ -45,9 +45,12 @@ export const HIT_RARITIES = new Set([
   "RGB Rare",
   "Shiny Rare",
   "Shiny Ultra Rare",
+  // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
+  // for many times their base card.
+  "Master Ball",
 ]);
 
-/** Hits are rarity-slot cards. A Poké Ball Double Rare is still a reverse. */
+/** Hits are rarity-slot cards (and Master Ball prints). A reverse never is. */
 export function isHit(card) {
   return Boolean(card) && !card.reverse && HIT_RARITIES.has(card.rarity);
 }
@@ -65,14 +68,22 @@ export function poolsFrom(cards, set) {
   const reverseRarities = set?.reverseRarities || ["Common", "Uncommon", "Rare"];
   const pokeballRarities = set?.pokeballRarities || reverseRarities;
   const reversePool = pokemonOrTrainer.filter((c) => reverseRarities.includes(c.rarity));
-  const pokeballPool = pokemonOrTrainer.filter((c) => pokeballRarities.includes(c.rarity));
-  // Prismatic Master Ball printings are C/U/R Pokémon only — not trainers, not ex.
-  const masterballPool = pokemonOrTrainer.filter(
-    (c) =>
-      ["Common", "Uncommon", "Rare"].includes(c.rarity) &&
-      c.supertype !== "Trainer" &&
-      !isExCard(c)
-  );
+  // A set that files its pattern prints as cards of their own (Prismatic
+  // Evolutions, scripts/build_patterns.py) deals those. Otherwise the ball
+  // is a reverse finish on a pool card.
+  const printed = (kind) => pokemonOrTrainer.filter((c) => c.pattern === kind);
+  const pokeballPool = printed("pokeball").length
+    ? printed("pokeball")
+    : pokemonOrTrainer.filter((c) => pokeballRarities.includes(c.rarity));
+  // Master Ball finishes are C/U/R Pokémon only — not trainers, not ex.
+  const masterballPool = printed("masterball").length
+    ? printed("masterball")
+    : pokemonOrTrainer.filter(
+      (c) =>
+        ["Common", "Uncommon", "Rare"].includes(c.rarity) &&
+        c.supertype !== "Trainer" &&
+        !isExCard(c)
+    );
   return {
     energy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && !c.reverse),
     // Shrouded Fable's reverse holo basic Energy: set cards that are always
@@ -124,7 +135,9 @@ function reverseKind(slot) {
 }
 
 function pullReverse(pools, used, kind) {
-  return asReverse(pick(reversePoolFor(pools, kind), used), kind);
+  const card = pick(reversePoolFor(pools, kind), used);
+  // A pattern print is a card of its own, not a reverse of one.
+  return card.pattern ? card : asReverse(card, kind);
 }
 
 /** 4C + 3U + reverse + rare slot + art slot + energy. No pity. */

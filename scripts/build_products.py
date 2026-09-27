@@ -274,7 +274,7 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
             raise RuntimeError(f"{number}: like {spec['like']} is not in data/{set_id}.json yet")
         keep = {k: v for k, v in base.items() if k not in (
             "image", "imageSmall", "imageRemote", "market", "foilMap", "etchMap",
-            "etchMapH", "etchMapV", "stampPos", "stampSize", "variant", "tcgplayerId")}
+            "etchMapH", "etchMapV", "reverseMap", "stampPos", "stampSize", "variant", "tcgplayerId")}
         record = {**keep, "id": card_id, "number": number}
         if "printedNumber" not in record:
             record["printedNumber"] = f"{base['number']}/{cfg.get('printedTotal', '')}".rstrip("/")
