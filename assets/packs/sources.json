@@ -55,6 +55,16 @@
       "packs": [
         { "id": "reshiram", "remote": "white-flare-pack-0.avif", "file": "rsv10pt5/reshiram.avif" }
       ]
+    },
+    "sv4": {
+      "name": "Paradox Rift",
+      "slug": "paradox-rift",
+      "packs": [
+        { "id": "garchomp", "remote": "paradox-rift-pack-0.avif", "file": "sv4/garchomp.avif" },
+        { "id": "iron-valiant", "remote": "paradox-rift-pack-1.avif", "file": "sv4/iron-valiant.avif" },
+        { "id": "armarouge", "remote": "paradox-rift-pack-2.avif", "file": "sv4/armarouge.avif" },
+        { "id": "roaring-moon", "remote": "paradox-rift-pack-3.avif", "file": "sv4/roaring-moon.avif" }
+      ]
     }
   }
 }
