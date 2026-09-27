@@ -77,7 +77,10 @@ export function poolsFrom(cards, set) {
     // chrome Futuristic Rares, and the three RGB Mews.
     pikachu: pokemonOrTrainer.filter((c) => c.rarity === "Pikachu Rare"),
     classic: pokemonOrTrainer.filter((c) => c.rarity === "Classic Collection"),
-    futuristic: pokemonOrTrainer.filter((c) => c.rarity === "Futuristic Rare"),
+    futuristic: pokemonOrTrainer.filter((c) => c.rarity === "Futuristic Rare" && !c.promo),
+    // The two Pikachu ex Futuristic promos (MEP 107 and 109) come in the
+    // Ultra-Premium Collections, not in packs; the site lets them drop anyway.
+    futuristicPromo: pokemonOrTrainer.filter((c) => c.rarity === "Futuristic Rare" && c.promo),
     rgb: pokemonOrTrainer.filter((c) => c.rarity === "RGB Rare"),
     reversePool,
     pokeballPool,

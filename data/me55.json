@@ -6088,6 +6088,102 @@
     "stampSize": "22.33% auto"
   },
   {
+    "id": "me55-mep107",
+    "name": "Pikachu ex",
+    "number": "mep107",
+    "rarity": "Futuristic Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "YOSHIROTTEN",
+    "printedNumber": "MEP 107",
+    "promo": true,
+    "image": "assets/cards/me55/mep107.webp",
+    "imageSmall": "assets/cards/me55/mep107-sm.webp",
+    "attacks": [
+      {
+        "name": "Pika-Pika Parade",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-107/large",
+    "market": 492.48,
+    "foilMap": "assets/foil/maps/me55/mep107.webp",
+    "etchMap": "assets/foil/maps/me55/mep107-etch.webp",
+    "etchMapH": "assets/foil/maps/me55/mep107-etch-h.webp",
+    "etchMapV": "assets/foil/maps/me55/mep107-etch-v.webp",
+    "stampPos": "98.07% 48.44%",
+    "stampSize": "22.33% auto"
+  },
+  {
+    "id": "me55-mep109",
+    "name": "Pikachu ex",
+    "number": "mep109",
+    "rarity": "Futuristic Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "YOSHIROTTEN",
+    "printedNumber": "MEP 109",
+    "promo": true,
+    "image": "assets/cards/me55/mep109.webp",
+    "imageSmall": "assets/cards/me55/mep109-sm.webp",
+    "attacks": [
+      {
+        "name": "Zip-Zap Frenzy",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "You may attach any number of Basic Energy cards from your hand to your Pokémon in any way you like."
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-109/large",
+    "market": 299.99,
+    "foilMap": "assets/foil/maps/me55/mep109.webp",
+    "etchMap": "assets/foil/maps/me55/mep109-etch.webp",
+    "etchMapH": "assets/foil/maps/me55/mep109-etch-h.webp",
+    "etchMapV": "assets/foil/maps/me55/mep109-etch-v.webp",
+    "stampPos": "98.07% 48.44%",
+    "stampSize": "22.33% auto"
+  },
+  {
     "id": "me55-cc4",
     "name": "Charizard",
     "number": "cc4",

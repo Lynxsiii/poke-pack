@@ -135,13 +135,31 @@ Every finish is masked by its card's foil map unless noted.
 | Illustration Rare `foil-ir` | Soft light pillars on chosen parts of the painting | 151's illustration rare with the map |
 | SIR `foil-sir` | Organic contour etch, glitter, low sheen | 151's SIR: 15deg rainbow shown only inside two crossing bars, glitter, a multiply glare; the etch glare lights the contour lines |
 | Futuristic `foil-future` + `has-etch-bins` | Opalescent inks, grid glitter, op-art cells flashing at their own tilt | Grid glitter and a pastel opal; op-art bands on `::before` and `::after`, masked by the horizontal and vertical halves of the etch so cells flash separately |
-| RGB `foil-rgb` | Transparent colour ink on mirror foil, bare-foil streaks, striped chrome on Mew | A radial light that keeps the ink saturated; a white radial through the blue channel (streaks); 1px ridges through the red channel |
+| RGB `foil-rgb` | Transparent colour ink on mirror foil over the whole card, bare-foil streaks, striped chrome on Mew | A radial light and fine glitter over the whole card (masked by the card, not the map); a white radial through the blue channel (streaks); 1px ridges through the red channel |
 | Classic `foil-classic` | One shared stock: confetti glitter, puffy stars, gold border, crosshatch | Two confetti tiles with counter parallax over a band spectrum; puffy stars at mid brightness so they stay coloured; crosshatch and radial `::after` |
 
 Checked: the lab at rest and three poses per finish, the real site's
 inspector (default, shine off, Classic engine), phone width, and
 `foil_probe.mjs --idle` (the lab idles at 0 ms; the home page's cost is the
 headline shimmer and pack glint it already had).
+
+## The Pikachu ex Futuristic promos
+
+Two YOSHIROTTEN Pikachu ex Futuristic Rares, a day and a night version, are
+numbered in the promo line, not the set: MEP 107 and MEP 109, from the
+Ultra-Premium Collections (MEP 108 Espeon ex and 110 Umbreon ex, by REND,
+are not Futuristic). They are in `data/me55.json` as `me55-mep107` and
+`me55-mep109` with `promo: true`; Noah chose on 2026-09-27 to let them drop
+from packs, each as often as Mewtwo ex or Mew ex (1/240 apiece, the
+`futuristicPromo` slot in `js/catalog.js`).
+
+TCG Live's export stopped at MEP 101 on 2026-09-27, so their maps are drawn
+by `scripts/make_futuristic_maps.py` from the scans, laid out like 157's:
+the card foil, Pikachu at part strength, text and stamp not foil, and an
+op-art plate with rings round each energy orb. The hints (GrabCut strokes,
+orb centres) are in `lab/masks/futuristic/me55.json` and the cuts beside
+them. When TCG Live adds MEP 107 and 109 (`mebsp` in the export), fetch
+their real maps instead: add them to `SETS` in `fetch_foil_maps.py`.
 
 ## Still open
 

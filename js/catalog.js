@@ -345,8 +345,12 @@ function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }
  * TCGplayer's 3,000-pack study (IR 1/5, Classic 1/10, SIR 1/21, Futuristic
  * 1/120) plus @switchstock's 6,500-pack tally for the two it could not pin
  * (ex 1/4, RGB Mew 1/3,200). Sources and dates are in data/pullrates.json.
+ *
+ * `futuristicPromo` is not a real rate. The Pikachu ex Futuristic promos only
+ * come in the Ultra-Premium Collections; Noah chose to let them drop from
+ * packs, each as often as Mewtwo ex or Mew ex (1/240 apiece).
  */
-function celebrationSlots({ double, ir, classic, sir, futuristic, rgb }) {
+function celebrationSlots({ double, ir, classic, sir, futuristic, futuristicPromo, rgb }) {
   return [
     { pool: "energy", count: 1 },
     { pool: "pikachu", count: 1 },
@@ -355,12 +359,13 @@ function celebrationSlots({ double, ir, classic, sir, futuristic, rgb }) {
       pool: "rare-slot",
       count: 1,
       table: [
-        ["rare", 1 - double - ir - classic - sir - futuristic - rgb],
+        ["rare", 1 - double - ir - classic - sir - futuristic - futuristicPromo - rgb],
         ["double", double],
         ["ir", ir],
         ["classic", classic],
         ["sir", sir],
         ["futuristic", futuristic],
+        ["futuristicPromo", futuristicPromo],
         ["rgb", rgb],
       ],
     },
@@ -387,7 +392,7 @@ export const CELEBRATION_30TH = {
   released: "September 16, 2026",
   live: true,
   printedTotal: 128,
-  totalCount: 191,
+  totalCount: 193,
   packSize: 6,
   cost: 16.41,
   allFoil: true,
@@ -402,6 +407,7 @@ export const CELEBRATION_30TH = {
     classic: 0.1,
     sir: 1 / 21,
     futuristic: 1 / 120,
+    futuristicPromo: 1 / 120,
     rgb: 1 / 3200,
   }),
   heroIds: ["me55-158", "me55-157", "me55-152", "me55-149"],

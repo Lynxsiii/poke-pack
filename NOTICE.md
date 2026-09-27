@@ -43,7 +43,9 @@ Card names, numbers, artists and scans match the public Pokémon TCG card
 database. The per-card foil and etch maps in `assets/foil/maps/` are
 Pokémon TCG Live's own, as published through [malie.io](https://malie.io)'s
 TCG Live exports; they say where each printed card is foil, which is what
-lets the shine stop at the Pokémon and the 30th Celebration stamp. poke-pack.rip is a fan-made simulator and is not affiliated with
+lets the shine stop at the Pokémon and the 30th Celebration stamp. The
+maps for the two Pikachu ex promos (`mep107*`, `mep109*`) are not TCG
+Live's: we drew them from the card scans in the same layout. poke-pack.rip is a fan-made simulator and is not affiliated with
 Nintendo, Game Freak, Wizards of the Coast, or The Pokémon Company. The GPL
 covers this project's own code; it makes no claim over Pokémon trademarks or
 card artwork.
