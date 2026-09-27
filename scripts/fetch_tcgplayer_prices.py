@@ -57,9 +57,9 @@ def fetch(group: int, what: str) -> list[dict]:
 
 def norm(name: str) -> str:
     name = re.sub(r"\s+-\s+\d+/\d+$", "", name)
-    # TCGplayer spells the Nidoran symbols out: "Nidoran F", "Nidoran M".
-    name = name.replace("♀", " F").replace("♂", " M")
-    return re.sub(r"\s+", " ", name.replace("’", "'")).strip().lower()
+    # TCGplayer spells Nidoran's symbols out ("Nidoran F"); our data keeps ♀/♂.
+    name = name.replace("♀", " F").replace("♂", " M").replace("’", "'")
+    return re.sub(r"\s+", " ", name).strip().lower()
 
 
 def market(rows: list[dict], sub: str) -> float | None:
