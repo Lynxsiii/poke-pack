@@ -51,7 +51,14 @@ import {
 } from "./achievements.js";
 import { QUESTS } from "./quests.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
-import { loadPriceHistory, priceHistoryReady, renderPriceChart, renderWorthChart } from "./pricechart.js";
+import {
+  loadPriceHistory,
+  priceHistoryReady,
+  productTrend,
+  renderPriceChart,
+  renderProductChart,
+  renderWorthChart,
+} from "./pricechart.js";
 import {
   loadState,
   saveState,
@@ -274,6 +281,14 @@ const els = {
   shopPackTitle: document.getElementById("shop-pack-title"),
   shopPackSub: document.getElementById("shop-pack-sub"),
   shopOdds: document.getElementById("shop-odds"),
+  shopPackTrend: document.getElementById("shop-pack-trend"),
+  priceDialog: document.getElementById("price-dialog"),
+  priceClose: document.getElementById("price-close"),
+  priceArt: document.getElementById("price-art"),
+  priceKicker: document.getElementById("price-kicker"),
+  priceTitle: document.getElementById("price-title"),
+  priceChart: document.getElementById("price-chart"),
+  priceNote: document.getElementById("price-note"),
   binderTitle: document.getElementById("binder-title"),
   bulkKicker: document.getElementById("bulk-kicker"),
   bulkLede: document.getElementById("bulk-lede"),
@@ -972,7 +987,52 @@ function renderShop() {
     })
     .join("");
   tintFrom(els.packGrid.querySelector(".shop-wrapper img"));
+  if (els.shopPackTrend) els.shopPackTrend.innerHTML = trendButton("boosterPack", `${liveSet.name} booster pack`);
   renderSealed();
+  loadShopTrends();
+}
+
+/** Sets whose price history has loaded for the shop's trend buttons. */
+const shopTrendSets = new Set();
+
+/**
+ * A pack's or box's market trend for the shop: a sparkline and the change
+ * over three months, from data/prices/<set>.json. Tapping it opens the full
+ * chart. A placeholder until the set's file arrives, and nothing at all for a
+ * product with under two recorded prices.
+ */
+function trendButton(key, name) {
+  const trend = productTrend(liveSet.id, key);
+  if (!trend && shopTrendSets.has(liveSet.id)) return "";
+  const attrs = `type="button" data-price-chart="${esc(key)}" data-price-name="${esc(name)}"`;
+  if (!trend) {
+    return `<button ${attrs} class="price-trend pending" aria-label="${esc(name)} price history">
+      <span class="pt-spark" aria-hidden="true"></span>
+      <span class="pt-copy"><b>Market</b><small>Loading prices</small></span>
+    </button>`;
+  }
+  const way = trend.dir === "up" ? "up" : trend.dir === "down" ? "down" : "flat at";
+  return `<button ${attrs} class="price-trend ${trend.dir}"
+      aria-label="${esc(name)} price history: ${way} ${Math.abs(trend.pct).toFixed(1)}% over ${trend.span}">
+    ${trend.spark}
+    <span class="pt-copy"><b>${trend.change}</b><small>${trend.span}</small></span>
+    <span class="pt-go" aria-hidden="true">Chart</span>
+  </button>`;
+}
+
+/** Fetch the live set's price history once, then swap the placeholders for trends. */
+function loadShopTrends() {
+  const setId = liveSet.id;
+  if (shopTrendSets.has(setId)) return;
+  loadPriceHistory(setId).then((store) => {
+    if (store) shopTrendSets.add(setId);
+    if (liveSet.id !== setId) return;
+    for (const grid of [els.shopPackTrend, els.sealedGrid, els.promoGrid]) {
+      grid?.querySelectorAll(".price-trend.pending").forEach((el) => {
+        el.outerHTML = store ? trendButton(el.dataset.priceChart, el.dataset.priceName) : "";
+      });
+    }
+  });
 }
 
 /** The buy button's label, shared by the sealed and promo product cards. */
@@ -1027,6 +1087,7 @@ function renderSealed() {
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
           <p>${offer.packs} packs${promo ? ` + ${esc(promo)}` : ""} · ✦ ${coin(each)} each · ${esc(deal)}</p>
+          ${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}
         </div>
         <div class="pack-meta">
           <span class="cost">✦ ${coin(offer.price)}</span>
@@ -1097,6 +1158,7 @@ function renderPromoProducts() {
           <h3>${esc(offer.name)}</h3>
           <p>${esc(productContents(offer))} · ${esc(promoNames(offer.promos, offer.pick))}</p>
           <p class="promo-worth">${worth}</p>
+          ${trendButton(offer.id, offer.name)}
         </div>
         <div class="pack-meta">
           <span class="cost">✦ ${coin(offer.price)}</span>
@@ -5927,6 +5989,66 @@ els.dailyBtn.addEventListener("click", async () => {
   }
 });
 
+/*
+ * Price history for a pack or box. The trend buttons sit inside cards that buy
+ * on click, so this listens in the capture phase and stops the click there.
+ */
+let priceKey = "";
+let priceRange = "90d";
+let priceOpenedAt = 0;
+
+function paintPriceDialog() {
+  renderProductChart(els.priceChart, liveSet.id, priceKey, priceRange);
+}
+
+function openPriceDialog(key, name) {
+  const offer = key === "boosterPack" ? null : findOffer(sealedPrices[liveSet.id], productList[liveSet.id], key);
+  const shopPrice = key === "boosterPack" ? liveSet.cost : offer?.price;
+  const wrap = liveSet.wrappers[0];
+  priceKey = key;
+  priceRange = "90d";
+  priceOpenedAt = Date.now();
+  els.priceArt.innerHTML = offer?.image
+    ? `<img src="${esc(offer.image)}" alt="" decoding="async" />`
+    : wrap
+      ? packPicture(wrap, " ")
+      : "";
+  els.priceKicker.textContent = `${liveSet.name} · Market price`;
+  els.priceTitle.textContent = key === "boosterPack" ? "Booster pack" : offer?.name || name;
+  els.priceNote.textContent =
+    `TCGplayer market price in US dollars, recorded once a day.` +
+    (shopPrice > 0 ? ` The shop sells it for ✦ ${coin(shopPrice)}.` : "");
+  paintPriceDialog();
+  const setId = liveSet.id;
+  loadPriceHistory(setId).then(() => {
+    if (priceKey === key && liveSet.id === setId && !els.priceDialog.classList.contains("hidden")) paintPriceDialog();
+  });
+  openDialog(els.priceDialog, els.priceClose);
+}
+
+document.getElementById("view-shop")?.addEventListener(
+  "click",
+  (e) => {
+    const trend = e.target.closest("[data-price-chart]");
+    if (!trend) return;
+    e.stopPropagation();
+    openPriceDialog(trend.dataset.priceChart, trend.dataset.priceName);
+  },
+  true
+);
+
+els.priceDialog?.addEventListener("click", (e) => {
+  const range = e.target.closest("[data-range]");
+  if (range) {
+    priceRange = range.dataset.range;
+    paintPriceDialog();
+    return;
+  }
+  if (e.target === els.priceClose || (e.target === els.priceDialog && Date.now() - priceOpenedAt > 500)) {
+    closeDialog(els.priceDialog);
+  }
+});
+
 els.packGrid.addEventListener("click", (e) => {
   const card = e.target.closest("[data-wrapper]");
   if (!card) return;
@@ -6227,6 +6349,10 @@ els.bulkSets?.addEventListener("error", hideBrokenSetArt, true);
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
+    if (els.priceDialog && !els.priceDialog.classList.contains("hidden")) {
+      closeDialog(els.priceDialog);
+      return;
+    }
     if (!els.inspect.classList.contains("hidden")) {
       closeDialog(els.inspect);
       return;
