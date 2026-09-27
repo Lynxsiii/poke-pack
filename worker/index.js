@@ -16,6 +16,7 @@ import {
 } from "../js/catalog.js";
 import { drawPromos, isHit, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
+import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
 import { QUESTS, questPeriods } from "../js/quests.js";
@@ -68,6 +69,17 @@ export default {
       return json({ error: status >= 500 ? "Server error." : message }, status);
     }
   },
+
+  // Every 10 minutes (wrangler.toml [triggers]): one small step of recording
+  // each set's market prices once a UTC day into D1. See worker/prices.js.
+  async scheduled(controller, env, ctx) {
+    ctx.waitUntil(
+      recordDailyPrices(env).then(
+        (result) => console.log("daily prices", JSON.stringify(result)),
+        (err) => console.error("daily prices failed", err)
+      )
+    );
+  },
 };
 
 export async function handleApi(request, env, url) {
@@ -76,6 +88,10 @@ export async function handleApi(request, env, url) {
 
   if (path === "/api/health" && method === "GET") {
     return json({ ok: true });
+  }
+
+  if (path.startsWith("/api/prices/") && method === "GET") {
+    return handlePrices(request, env, url, decodeURIComponent(path.slice("/api/prices/".length)));
   }
 
   if (path === "/api/auth/signup" && method === "POST") {
