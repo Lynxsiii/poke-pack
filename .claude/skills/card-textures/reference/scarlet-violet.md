@@ -43,11 +43,25 @@ Miraidon and 014 Koraidon (ETB, and the Pokémon Center stamped prints)
   (Koraidon ex especially, and the near-white gold energies) are brighter
   than later sets'. pokemon-cards-151's hyper rare dodges its 15deg rainbow
   at `brightness(.6) saturate(1)`; the rainbow's red and magenta slices push
-  the red channel to full and the card turns orange and red when lit.
+  the red channel to full and the whole card turns orange and red when lit.
   `soft-light` and `overlay` keep the hue but go orange-brown in the
   shadows. A paler dodge, `brightness(.5) contrast(1.5) saturate(.45)`, kept
   it gold with a rainbow tint. `sv-fullart.css` settled on `saturate(.8)`
   from Paradox Rift; check sv1 253/254/257 before raising it.
+- **What the real gold does** (seller photos in
+  `/mnt/project-files/scarlet-violet/texture-refs/hyper-rare-*`, contact
+  sheet `contact-sheet_hyper-rare-gold.jpg`): warm gold off-angle; at the
+  glare angle it washes to pale champagne or silver with a pastel rainbow;
+  a strong glitter grain over the whole card, Pokémon included; concentric
+  etched rings radiating from behind the subject (253, 254, 256); printed
+  four-point star glints. A saturated red-orange-green flare does happen,
+  but as a band at a steep angle, not over the whole card.
+- **What the real full art does** (`ultra-rare-*`,
+  `contact-sheet_ultra-rare-full-art.jpg`): several parallel diagonal
+  rainbow bands at once, over the Pokémon or Trainer, the text and the
+  frame; the silver frame always shows a rainbow edge; the etch reads as a
+  fine crosshatch in the background (227) and lines following the art's
+  light bars (228); at the glare the card washes to champagne or silver.
 - **A Supporter glare on a pale full art hazes the face.** A brighter glare
   variant for Supporter Ultra Rares washed out 238 Miriam's face; the plain
   full-art glare is enough.
