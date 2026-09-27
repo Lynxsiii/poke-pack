@@ -1117,6 +1117,11 @@ export const TWILIGHT_MASQUERADE = {
   ]),
 };
 
+/**
+ * Temporal Forces: odds from TCGplayer's 8,000-pack study (Peter Day, March
+ * 2024, 95% intervals): DR 16.83%, UR 6.67%, ACE SPEC 5.00% (first reverse
+ * slot), IR 7.72%, SIR 1.17%, Hyper Rare 0.72%. Sources in data/pullrates.json.
+ */
 export const TEMPORAL_FORCES = {
   id: "sv5",
   tcgId: "sv5",
@@ -1126,15 +1131,15 @@ export const TEMPORAL_FORCES = {
   released: "March 22, 2024",
   live: true,
   printedTotal: 162,
-  totalCount: 218,
+  totalCount: 232,
   packSize: 11,
-  cost: 11.37,
+  cost: 9.37,
   dataFile: "data/sv5.json",
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Scarlet & Violet, March 2024. Walking Wake, Iron Leaves, and the first ACE SPEC cards.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/86 · gold 1/139",
   lede: "Where ACE SPEC starts. The art slot is the hardest of the block — SIR at 1/86, gold at 1/139.",
-  slots: svSlots({ double: 0.1695, ultra: 0.0667, ir: 0.0769, sir: 0.0117, hyper: 0.0072, ace: 0.05 }),
+  slots: svSlots({ double: 0.1683, ultra: 0.0667, ir: 0.0772, sir: 0.0117, hyper: 0.0072, ace: 0.05 }),
   heroIds: ["sv5-205", "sv5-208", "sv5-203", "sv5-206"],
   wrappers: boosterWrappers("sv5", [
     { id: "walking-wake", name: "Walking Wake", cardId: "sv5-205", tag: "The chase" },
@@ -1142,6 +1147,46 @@ export const TEMPORAL_FORCES = {
     { id: "iron-leaves", name: "Iron Leaves", cardId: "sv5-203", tag: "Future" },
     { id: "iron-crown", name: "Iron Crown", cardId: "sv5-206", tag: "Paradox" },
   ]),
+};
+
+/**
+ * Obsidian Flames. Rates from TCGplayer's Authentication Center study of
+ * 8,000+ English packs (Aug 2023): DR 13.61%, UR 6.63%, IR 7.60%, SIR 3.13%,
+ * gold 1.92%. Before ACE SPEC, so the first reverse slot is always a reverse.
+ * Sources are in data/pullrates.json.
+ */
+export const OBSIDIAN_FLAMES = {
+  id: "sv3",
+  tcgId: "sv3",
+  name: "Obsidian Flames",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "August 11, 2023",
+  live: true,
+  printedTotal: 197,
+  totalCount: 240,
+  packSize: 11,
+  cost: 13.05,
+  dataFile: "data/sv3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, August 2023. Tera Charizard ex in Darkness, four wrappers, and only six Special Illustration Rares.",
+  oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/52",
+  lede: "A SIR every 32 packs, and one in six of them is the dark Charizard. Tera ex are printed in etched crystal foil; the rest is a standard Paldea pack.",
+  slots: svSlots({ double: 0.1361, ultra: 0.0663, ir: 0.076, sir: 0.0313, hyper: 0.0192 }),
+  heroIds: ["sv3-223", "sv3-228", "sv3-225", "sv3-215"],
+  wrappers: [
+    ["charizard", "Charizard", "sv3-125", "The chase"],
+    ["tyranitar", "Tyranitar", "sv3-66", "Tera"],
+    ["dragonite", "Dragonite", "sv3-159", "Mighty meteor"],
+    ["revavroom", "Revavroom", "sv3-156", "Starmobile"],
+  ].map(([id, name, cardId, tag]) => ({
+    id,
+    name,
+    cardId,
+    tag,
+    art: `assets/packs/sv3/${id}.avif`,
+    artFallback: `assets/packs/sv3/${id}.png`,
+  })),
 };
 
 export const PLAYABLE_SETS = [
@@ -1155,6 +1200,8 @@ export const PLAYABLE_SETS = [
   BLACK_BOLT,
   WHITE_FLARE,
   JOURNEY_TOGETHER,
+  TEMPORAL_FORCES,
+  OBSIDIAN_FLAMES,
 ];
 
 /**
@@ -1171,7 +1218,6 @@ export const RETIRED_SETS = [
   STELLAR_CROWN,
   SHROUDED_FABLE,
   TWILIGHT_MASQUERADE,
-  TEMPORAL_FORCES,
 ];
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
@@ -1222,11 +1268,9 @@ export const ROADMAP = [
       { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
       { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },
-      { id: "sv5", name: "Temporal Forces", released: "Mar 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
-      { id: "sv3", name: "Obsidian Flames", released: "Aug 2023", cards: "—" },
       { id: "sv2", name: "Paldea Evolved", released: "Jun 2023", cards: "—" },
       { id: "sv1", name: "Scarlet & Violet", released: "Mar 2023", cards: "—" },
     ],
