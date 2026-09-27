@@ -1,4 +1,19 @@
 {
+  "me55": {
+    "name": "30th Celebration",
+    "printedTotal": 128,
+    "released": "2026-09-16",
+    "updated": "2026-09-27",
+    "source": "Six-card special set (Pikachu Rare + 3 main-set foils + 1 hit slot + basic Energy, all foil); one hit slot per pack, leftover is a regular Rare. IR 1 in 5, Classic Collection 1 in 10, SIR 1 in 21 and Futuristic Rare 1 in 120 from TCGplayer's study of 3,000 English packs, reported by PokeBeach (Sep 2026). ex (Double Rare) 1 in 4 and RGB Mew 1 in 3,200 from @switchstock's 6,500-pack tally (reported by Sports Illustrated, Sep 2026); TCGplayer could not pin the RGB rate. Cross-checked against tcgtalk.com (652 packs: ex 21.9%, IR 18.4%, Classic 9.8%, SIR 5.5%, FUR 1.2%) and pullrates.com (FUR 1 in 103). The RGB Mew rate is the least certain figure. No god packs reported.",
+    "rates": {
+      "double": 0.25,
+      "ir": 0.2,
+      "classic": 0.1,
+      "sir": 0.0476,
+      "futuristic": 0.00833,
+      "rgb": 0.0003125
+    }
+  },
   "me1": {
     "name": "Mega Evolution",
     "printedTotal": 132,

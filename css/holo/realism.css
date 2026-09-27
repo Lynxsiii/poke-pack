@@ -17,10 +17,10 @@ body.fx-holo.fx-holo.fx-holo .tcg {
 
 /* A foil reaches full strength under the pointer, like upstream, instead of
    stopping at a third. The resting glint stays low. */
-body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ex, .foil-ultra, .foil-sir, .foil-ir, .foil-mega-attack, .foil-gold, .foil-bwr) .foil {
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ex, .foil-ultra, .foil-sir, .foil-ir, .foil-mega-attack, .foil-gold, .foil-bwr, .foil-future) .foil {
   opacity: calc((0.16 + var(--card-opacity) * 0.84) * var(--foil-strength, 1));
 }
-body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ex, .foil-ultra, .foil-sir, .foil-ir, .foil-mega-attack, .foil-gold, .foil-bwr):not(.lit):not(.settling) .foil {
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ex, .foil-ultra, .foil-sir, .foil-ir, .foil-mega-attack, .foil-gold, .foil-bwr, .foil-future):not(.lit):not(.settling) .foil {
   opacity: calc(0.16 * var(--foil-strength, 1));
 }
 

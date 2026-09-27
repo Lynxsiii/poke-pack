@@ -566,6 +566,10 @@ h1 em { font-style: normal; color: var(--sel); }
 .pip.tone-white { color: #ffffff; }
 .pip.tone-ace { color: #ff3d8b; text-shadow: 0 0 6px rgba(255, 61, 139, 0.45); }
 .pip.tone-shiny { color: #9fd8ff; text-shadow: 0 0 6px rgba(159, 216, 255, 0.45); }
+.pip.tone-pika { color: #ffd84a; }
+.pip.tone-rgbR { color: #ff4d5e; }
+.pip.tone-rgbG { color: #3fd97a; }
+.pip.tone-rgbB { color: #4d8dff; }
 
 .rarity-ico {
   width: 15px;
@@ -588,6 +592,10 @@ h1 em { font-style: normal; color: var(--sel); }
 .rarity-ico.tone-white { color: #ffffff; }
 .rarity-ico.tone-ace { color: #ff3d8b; filter: drop-shadow(0 0 4px rgba(255, 61, 139, 0.45)); }
 .rarity-ico.tone-shiny { color: #9fd8ff; filter: drop-shadow(0 0 4px rgba(159, 216, 255, 0.45)); }
+.rarity-ico.tone-pika { color: #ffd84a; }
+.rarity-ico.tone-rgbR { color: #ff4d5e; }
+.rarity-ico.tone-rgbG { color: #3fd97a; }
+.rarity-ico.tone-rgbB { color: #4d8dff; }
 
 .rarity-stamp {
   position: absolute;
@@ -659,7 +667,8 @@ body.fx-classic .tcg.lit.foil-gold .glare,
 body.fx-classic .tcg.lit.foil-ultra .glare,
 body.fx-classic .tcg.lit.foil-ex .glare,
 body.fx-classic .tcg.lit.foil-mega-attack .glare,
-body.fx-classic .tcg.lit.foil-bwr .glare { opacity: 0.4; }
+body.fx-classic .tcg.lit.foil-bwr .glare,
+body.fx-classic .tcg.lit.foil-future .glare { opacity: 0.4; }
 /* ---- Foil ----------------------------------------------------------------
    Pointer-driven holofoil: color-dodge rainbow + grain, same family of tricks
    as a real card under a lamp. Each rarity gets its own pattern. */
@@ -1398,6 +1407,39 @@ body.fx-classic .foil-mega-attack .foil::after {
     transparent 60%
   );
 }
+
+/* Futuristic Rare: pearl-white chrome. A pale sheen with a narrow spectral
+   band that follows the pointer; RGB Mews tint the band to their colour. */
+body.fx-classic .foil-future .foil {
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  background-image:
+    var(--foil-facet),
+    repeating-linear-gradient(
+      118deg,
+      hsl(190 90% 72% / 0.5) 0 4%,
+      hsl(280 85% 76% / 0.45) 8%,
+      hsl(330 90% 78% / 0.45) 12%,
+      hsl(50 95% 76% / 0.4) 16%,
+      hsl(190 90% 72% / 0.5) 20%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.4) 0%,
+      transparent 50%
+    );
+  background-size: 140px 140px, 260% 100%, 150% 150%;
+  background-position:
+    calc(var(--px) * 28px) calc(var(--py) * 22px),
+    calc(var(--px) * 100%) 0,
+    var(--mx, 50%) var(--my, 50%);
+  background-blend-mode: overlay, normal, normal;
+  filter: brightness(calc(0.7 + var(--hyp, 0.12) * 0.4)) contrast(1.15) saturate(1.3);
+}
+body.fx-classic .tcg.lit.foil-future .foil { opacity: 0.55; }
+body.fx-classic .foil-future[data-finish="red"] .foil { filter: hue-rotate(-40deg) saturate(1.8); }
+body.fx-classic .foil-future[data-finish="green"] .foil { filter: hue-rotate(150deg) saturate(1.8); }
+body.fx-classic .foil-future[data-finish="blue"] .foil { filter: hue-rotate(60deg) saturate(1.8); }
 
 /* Black White Rare: same stamped swirl as SARs, kept silver. Overlay so the
    linework stays readable; metal + swirl catch as white, not a colour wash. */

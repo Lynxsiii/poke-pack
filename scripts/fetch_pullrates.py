@@ -44,6 +44,9 @@ POOL = {
     "ACE SPEC Rare": "ace",
     "Black White Rare": "bwr",
     "Mega Attack Rare": "megaAttack",
+    "Futuristic Rare": "futuristic",
+    "Classic Collection": "classic",
+    "RGB Rare": "rgb",
 }
 
 

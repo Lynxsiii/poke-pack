@@ -26,6 +26,9 @@ export const HIT_RARITIES = new Set([
   "ACE SPEC Rare",
   "Mega Attack Rare",
   "Black White Rare",
+  "Futuristic Rare",
+  "Classic Collection",
+  "RGB Rare",
 ]);
 
 /** Hits are rarity-slot cards. A Poké Ball Double Rare is still a reverse. */
@@ -70,6 +73,12 @@ export function poolsFrom(cards, set) {
     // is why that set's UR rate drops from ~1/12 to 1/21.
     megaAttack: pokemonOrTrainer.filter((c) => c.rarity === "Mega Attack Rare"),
     bwr: pokemonOrTrainer.filter((c) => c.rarity === "Black White Rare"),
+    // 30th Celebration: a Pikachu in every pack, gold-bordered reprints, the
+    // chrome Futuristic Rares, and the three RGB Mews.
+    pikachu: pokemonOrTrainer.filter((c) => c.rarity === "Pikachu Rare"),
+    classic: pokemonOrTrainer.filter((c) => c.rarity === "Classic Collection"),
+    futuristic: pokemonOrTrainer.filter((c) => c.rarity === "Futuristic Rare"),
+    rgb: pokemonOrTrainer.filter((c) => c.rarity === "RGB Rare"),
     reversePool,
     pokeballPool,
     masterballPool,
