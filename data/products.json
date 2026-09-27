@@ -1020,6 +1020,98 @@
       "image": "assets/products/rsv10pt5/tech-gothitelle.webp"
     }
   ],
+  "sv6": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv6-svp123"
+      ],
+      "price": 104.32,
+      "tcgplayerId": 543845,
+      "released": "2024-05-24",
+      "image": "assets/products/sv6/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv6-svp123-pc"
+      ],
+      "price": 187.03,
+      "tcgplayerId": 543844,
+      "released": "2024-05-24",
+      "image": "assets/products/sv6/pc-etb.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv6-svp115",
+        "sv6-svp116",
+        "sv6-svp117",
+        "sv6-svp118"
+      ],
+      "pick": 1,
+      "price": 62.59,
+      "tcgplayerId": 544386,
+      "image": "assets/products/sv6/build-battle.webp"
+    },
+    {
+      "id": "blister3-snorlax",
+      "name": "3 Pack Blister: Snorlax",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv6-svp122"
+      ],
+      "price": 44.79,
+      "tcgplayerId": 544171,
+      "image": "assets/products/sv6/blister3-snorlax.webp"
+    },
+    {
+      "id": "blister3-revavroom",
+      "name": "3 Pack Blister: Revavroom",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv6-svp121"
+      ],
+      "price": 34.91,
+      "tcgplayerId": 544172,
+      "image": "assets/products/sv6/blister3-revavroom.webp"
+    },
+    {
+      "id": "blister-pupitar",
+      "name": "Single Pack Blister: Pupitar",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv6-svp120"
+      ],
+      "price": 10.6,
+      "tcgplayerId": 544177,
+      "image": "assets/products/sv6/blister-pupitar.webp"
+    },
+    {
+      "id": "blister-toxel",
+      "name": "Single Pack Blister: Toxel",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv6-svp119"
+      ],
+      "price": 9.9,
+      "tcgplayerId": 544179,
+      "image": "assets/products/sv6/blister-toxel.webp"
+    }
+  ],
   "zsv10pt5": [
     {
       "id": "eliteTrainerBox",
