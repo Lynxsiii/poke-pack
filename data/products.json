@@ -1020,6 +1020,101 @@
       "image": "assets/products/rsv10pt5/tech-gothitelle.webp"
     }
   ],
+  "sv3": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv3-svp044"
+      ],
+      "price": 274.91,
+      "tcgplayerId": 501264,
+      "released": "2023-08-11",
+      "image": "assets/products/sv3/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv3-svp044-pc",
+        "sv3-svp044"
+      ],
+      "price": 631.59,
+      "tcgplayerId": 501266,
+      "released": "2023-08-11",
+      "image": "assets/products/sv3/pc-etb.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv3-svp036",
+        "sv3-svp037",
+        "sv3-svp038",
+        "sv3-svp039"
+      ],
+      "pick": 1,
+      "price": 57.8,
+      "tcgplayerId": 501268,
+      "image": "assets/products/sv3/build-battle.webp"
+    },
+    {
+      "id": "blister3-eevee",
+      "name": "3 Pack Blister: Eevee",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv3-svp043"
+      ],
+      "price": 41.03,
+      "tcgplayerId": 501259,
+      "released": "2023-08-11",
+      "image": "assets/products/sv3/blister3-eevee.webp"
+    },
+    {
+      "id": "blister3-houndstone",
+      "name": "3 Pack Blister: Houndstone",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv3-svp042"
+      ],
+      "price": 38.39,
+      "tcgplayerId": 501260,
+      "released": "2023-08-11",
+      "image": "assets/products/sv3/blister3-houndstone.webp"
+    },
+    {
+      "id": "blister-pawmi",
+      "name": "Single Pack Blister: Pawmi",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv3-svp040"
+      ],
+      "price": 14.55,
+      "tcgplayerId": 501262,
+      "image": "assets/products/sv3/blister-pawmi.webp"
+    },
+    {
+      "id": "blister-wooper",
+      "name": "Single Pack Blister: Paldean Wooper",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv3-svp041"
+      ],
+      "price": 15.2,
+      "tcgplayerId": 512047,
+      "image": "assets/products/sv3/blister-wooper.webp"
+    }
+  ],
   "zsv10pt5": [
     {
       "id": "eliteTrainerBox",
