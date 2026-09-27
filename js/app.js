@@ -1606,6 +1606,7 @@ function renderHome() {
         <span>On the press table</span><span>${esc(liveSet.edition)}</span>
       </div>
       <div class="home-feature-art">
+        <span class="home-sparks" aria-hidden="true"></span>
         ${featureCard ? `<div class="home-feature-card">${tcgFace(featureCard, { small: true })}</div>` : ""}
         ${wrap ? `<div class="home-feature-pack">${packPicture(wrap, "", liveSet)}</div>` : ""}
       </div>

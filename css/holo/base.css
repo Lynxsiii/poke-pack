@@ -170,6 +170,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-none .foil,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-none .glare {
   display: none;
 }
+/* At rest the glare sits at opacity 0 and the foil's two pseudo layers add
+   almost nothing under the 16-18% resting glint, but every one of them is a
+   blended, filtered layer the browser still composites. On a binder of a
+   hundred cards that was a third of the scroll frame rate, so they only
+   exist while a card is held or settling. */
+body.fx-holo.fx-holo.fx-holo .tcg:not(.lit):not(.settling) .glare,
+body.fx-holo.fx-holo.fx-holo .tcg:not(.lit):not(.settling) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg:not(.lit):not(.settling) .foil::after {
+  display: none;
+}
 
 /*
  * Rotated colour ramps per layer.
