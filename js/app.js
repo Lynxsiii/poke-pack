@@ -492,8 +492,8 @@ function isAllFoil(card) {
 
 function foilClass(card) {
   if (!card) return "";
-  if (card.reverse) return "rare-glow";
-  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Pikachu Rare", "Cosmos"].includes(card.rarity)) return "holo";
+  if (card.reverse || card.pattern) return "rare-glow";
+  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Pikachu Rare", "Cosmos", "Metal"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
 }
@@ -530,6 +530,8 @@ function setForCard(card) {
 }
 
 function reverseKindOf(card) {
+  // Prismatic Evolutions files its pattern prints as cards of their own.
+  if (card?.pattern) return card.pattern;
   if (!card?.reverse) return "";
   if (card.reverseKind) return card.reverseKind === "cosmos" ? "" : card.reverseKind;
   return setForCard(card)?.reverseFoil || "";
@@ -545,8 +547,14 @@ function foilLayout(card) {
 
 function foilPattern(card) {
   if (!card) return "foil-none";
+  // Prismatic Evolutions' Poké Ball and Master Ball prints: the ball reverse,
+  // and with the card's foil map TCG Live's RAINBOW / ETCHED recipe on a
+  // second class (css/holo/prismatic.css).
+  if (card.pattern) return `foil-reverse foil-rev-${card.pattern} foil-prism`;
   if (card.reverse) {
     const kind = reverseKindOf(card);
+    // The galaxy holo (css/holo/promos.css) on the frame: 151's Costco promos.
+    if (kind === "galaxy") return "foil-reverse foil-cosmos";
     return kind ? `foil-reverse foil-rev-${kind}` : "foil-reverse";
   }
   // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
@@ -576,6 +584,8 @@ function foilPattern(card) {
   if (card.rarity === "Pikachu Rare") return "foil-holo foil-pikachu";
   // Collection-box promos (css/holo/promos.css).
   if (card.rarity === "Cosmos") return "foil-holo foil-cosmos";
+  // Brass cards like 151's Ultra-Premium Collection Mew ex (css/holo/sv151.css).
+  if (card.rarity === "Metal") return "foil-metal";
   if (card.rarity === "ACE SPEC Rare") return card.foilMap ? "foil-holo foil-acespec" : "foil-holo";
   // TCG Live's SUN_PILLAR and SV_HOLO recipes need the card's foil map to keep
   // off the Pokémon, so they only replace the older recipes where one ships.
@@ -603,6 +613,7 @@ const RARITY_SHAPE = {
   "★": "star",
   "☆": "star-line",
   "◈": "gem",
+  "◓": "ball",
 };
 
 function rarityShapeSvg(shape) {
@@ -611,6 +622,9 @@ function rarityShapeSvg(shape) {
   }
   if (shape === "diamond") {
     return `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>`;
+  }
+  if (shape === "ball") {
+    return `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.6a6.4 6.4 0 0 0-6.4 6.4h3.9a2.5 2.5 0 0 1 5 0h3.9A6.4 6.4 0 0 0 8 1.6Z"/><circle cx="8" cy="8" r="5.8" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/></svg>`;
   }
   if (shape === "gem") {
     return `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 1.2 14.8 8 8 14.8 1.2 8Z M8 4.2 11.8 8 8 11.8 4.2 8Z"/></svg>`;
@@ -633,21 +647,22 @@ function rarityIcons(rarity) {
 }
 
 function rarityMark(card) {
-  const pips = rarityPips(card.rarity);
+  // A pattern print carries its base card's printed symbol.
+  const pips = rarityPips(card.printedRarity || card.rarity);
   if (!pips) return "";
   const label = rarityLine(card);
   const kind = reverseKindOf(card);
-  const rev = card.reverse ? ` rev${kind ? ` rev-${kind}` : ""}` : "";
+  const rev = card.reverse || card.pattern ? ` rev${kind ? ` rev-${kind}` : ""}` : "";
   return `<span class="focus-mark${rev}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
 }
 
 /** Printed rarity mark, bottom-right of the card so it reads at a glance. */
 function rarityStamp(card, extraClass = "") {
-  const pips = rarityPips(card.rarity);
+  const pips = rarityPips(card.printedRarity || card.rarity);
   if (!pips) return "";
   const label = rarityLine(card);
   const kind = reverseKindOf(card);
-  const rev = card.reverse ? ` rev${kind ? ` rev-${kind}` : ""}` : "";
+  const rev = card.reverse || card.pattern ? ` rev${kind ? ` rev-${kind}` : ""}` : "";
   return `<span class="rarity-stamp${rev}${extraClass}" title="${esc(label)}" aria-label="${esc(label)}">${pips}</span>`;
 }
 
@@ -673,12 +688,15 @@ function assetUrl(src) {
  * like an Illustration Rare, an ex promo like a Double Rare. `foilAs` names that
  * rarity (scripts/build_products.py reads it from TCG Live's print data), so the
  * foil engine draws the promo with its recipe. "Cosmos" is the galaxy holo most
- * collection-box promos use; "Frame" foils only the card frame, like a reverse,
- * and "Poke Ball" is a Poké Ball pattern reverse.
+ * collection-box promos (and 151's holo basic Energies) use; "Frame" foils only
+ * the card frame, like a reverse, and "Reverse Cosmos" puts the galaxy there.
+ * "Metal" is a brass card: one broad reflection, no rainbow. "Poke Ball" is a
+ * Poké Ball pattern reverse.
  */
 function foilLook(card) {
-  if (!card?.promo || !card.foilAs || card.reverse) return card;
+  if (!(card?.promo || card?.energy) || !card.foilAs || card.reverse) return card;
   if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
+  if (card.foilAs === "Reverse Cosmos") return { ...card, rarity: "Common", reverse: true, reverseKind: "galaxy" };
   // A Poké Ball pattern print, like Black Bolt's reverses (the Victini
   // Illustration Collection's Victini).
   if (card.foilAs === "Poke Ball") return { ...card, rarity: "Rare", reverse: true, reverseKind: "pokeball" };
@@ -738,7 +756,8 @@ function numberLine(card) {
 
 function rarityLine(card) {
   const label = RARITY_LABEL[card.rarity] || card.rarity;
-  if (card.promo && card.variant) return `${label} · ${card.variant}`;
+  if ((card.promo || card.energy) && card.variant) return `${label} · ${card.variant}`;
+  if (card.pattern) return `${label} · ${RARITY_LABEL[card.printedRarity] || card.printedRarity}`;
   if (!card.reverse) return label;
   if (card.reverseKind === "pokeball" || reverseKindOf(card) === "pokeball") {
     return `Poké Ball reverse · ${label}`;
@@ -3602,6 +3621,7 @@ function dealSpread() {
 function hitTier(card) {
   if (!card) return 0;
   if (card.reverse) return card.reverseKind === "masterball" ? 2 : 1;
+  if (card.rarity === "Poké Ball") return 1;
   if (
     card.rarity === "Mega Hyper Rare" ||
     card.rarity === "Hyper Rare" ||

@@ -129,7 +129,7 @@ Every finish is masked by its card's foil map unless noted.
 | Finish | What the real card does | Recipe |
 |---|---|---|
 | Common `foil-rainbow` | Soft wide rainbow on the art background only | Grain plus a 112deg spectrum with black ends, colour-dodged; a counter sweep on `::before`, a radial falloff on `::after`; a soft glare so pale Pokémon do not bleach |
-| Rare `foil-svholo` | Scarlet & Violet regular holo | 151's regular holo: 10deg spectrum at 400%, tilt bars, luminosity radial |
+| Rare `foil-svholo` | Scarlet & Violet regular holo | One broad rainbow band and fine silver glitter, hard-lit (rebuilt 2026-09-27 from photos; see sv-rare-holo.md) |
 | Double Rare `foil-sunpillar` + `cure-stars` | Diagonal sun-pillar bars; SouthernCross star glints over the whole card, ink included | 115deg spectral bars plus light bars, mirrored exclusion `::after`. Stars on `.cure`: `southern-cross.webp`, screen, each card's hue cycling with the pointer |
 | Pikachu Rare `foil-pikachu` + `cure-rings` | Cracked-ice foil in the window, the big foil stamp; StitchedRings firework bursts of dashes | Cracked ice over a sun pillar, a difference twinkle, a vivid gradient masked by `stitched-rings.webp`; paler rings on `.cure` over the whole card |
 | Illustration Rare `foil-ir` | Soft light pillars on chosen parts of the painting | 151's illustration rare with the map |
