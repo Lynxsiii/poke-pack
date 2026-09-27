@@ -6,7 +6,9 @@
  *   per-card foil maps: white where the card is foil, black where it is not.
  *   They stop the shine at the Pokémon, the text and the 30th Celebration
  *   Pikachu stamp exactly. `etchMap` is the etched texture on SIR, Futuristic
- *   and RGB prints; `etchMapH/V` split it by line direction.
+ *   and RGB prints; `etchMapH/V` split it by line direction, and `etchAngle`
+ *   draws that direction as a grey (the Paldean Fates shinies).
+ *   `reverseMap` is the same for the card's reverse holo print.
  *   The card-textures skill's scripts/fetch_foil_maps.py writes all of these
  *   into data/<set>.json.
  * - `stampPos` / `stampSize` place the 30th Celebration stamp on cards with no
@@ -50,13 +52,14 @@ const SV_REVERSE_TYPES = new Set([
  *   Special Energy is foil only in its text box);
  * - a plain mirror on Ancient and Future cards, and on every Mega Evolution
  *   reverse.
- * Promos and older sets keep their own. So does any reverse with a kind of
+ * Promos, Prismatic's Poké Ball and Master Ball prints (`pattern`) and
+ * older sets keep their own. So does any reverse with a kind of
  * its own: `kind` is the one the site resolved (the card's `reverseKind`,
  * else its set's `reverseFoil`), such as Poké Ball, Master Ball or Shrouded
  * Fable's chain; "cosmos" means none.
  */
 export function reverseFinish(card, kind = card?.reverseKind) {
-  if (!card?.reverse || card.foilAs || (kind && kind !== "cosmos")) return "";
+  if (!card?.reverse || card.foilAs || card.pattern || (kind && kind !== "cosmos")) return "";
   const set = String(card.id || "").split("-")[0];
   const sv = /^sv\d/.test(set);
   if (!sv && !(/^me\d/.test(set) && set !== "me55")) return "";
@@ -75,8 +78,13 @@ export function reverseFinish(card, kind = card?.reverseKind) {
  */
 export function foilExtras(card, url, reverseKind) {
   // The maps describe the holo print; a reverse holo is foil everywhere else,
-  // in the reverse's own pattern.
+  // in the reverse's own pattern: TCG Live's map of the reverse print where
+  // it ships (`reverseMap`: Prismatic Evolutions prints its reverses with Tera
+  // crystals and a type symbol worked into the foil), else the SV one.
   if (card.reverse) {
+    if (card.reverseMap) {
+      return { classes: "has-rev-map", style: `--rev-map:url('${url(card.reverseMap)}')`, cure: false };
+    }
     const finish = reverseFinish(card, reverseKind);
     if (finish === "mirror") return { classes: "rev-mirror", style: "", cure: false };
     if (!finish) return { classes: "", style: "", cure: false };
@@ -102,6 +110,7 @@ export function foilExtras(card, url, reverseKind) {
     add("has-etch-bins", "--etch-map-h", card.etchMapH);
     add("", "--etch-map-v", card.etchMapV);
   }
+  if (card.etchAngle) add("has-etch-angle", "--etch-angle", card.etchAngle);
   if (card.stampPos && card.stampSize && !card.foilMap) {
     classes.push("has-stamp");
     vars.push(`--stamp-pos:${card.stampPos}`, `--stamp-size:${card.stampSize}`);

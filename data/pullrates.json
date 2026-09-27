@@ -130,8 +130,8 @@
     "name": "Prismatic Evolutions",
     "printedTotal": 131,
     "released": "2025-01-17",
-    "updated": "2026-05-10",
-    "source": "TCGPlayer article (1,200 packs, Jan 2025) as reported by PokeBeach. Poké Ball foil 33.1% (1/3), Master Ball 4.92% (1/20) on the second reverse slot. DR 16.51% (1/6), UR 7.46% (1/13), ACE SPEC 4.68% (1/21), SIR 2.22% (1/45), Hyper Rare 0.56% (1/180). No Illustration Rares. Poké Ball printings exist for every Common, Uncommon, Rare, and Double Rare; Master Ball is C/U/R Pokémon only.",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, 1,200+ English packs opened before release: 'Pokémon TCG: Prismatic Evolutions Pull Rates' (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Prismatic-Evolutions-Pull-Rates/d94889ea-f76a-4a13-b74d-5b0b071220a7/, updated 2025-01-27), 95% confidence intervals: Poké Ball Foil 33.10% ± 2.60% (1 in 3, first reverse holo slot), Double Rare 16.51% ± 2.05% (1 in 6), Ultra Rare 7.46% ± 1.45% (1 in 13), ACE SPEC Rare 4.68% ± 1.17% (1 in 21, first reverse holo slot), Master Ball Foil 4.92% ± 1.19% (1 in 20, second reverse holo slot), Special Illustration Rare 2.22% ± 0.81% (1 in 45, per-pack average), Hyper Rare 0.56% ± 0.41% (1 in 180). DR and UR sit in the rare slot; SIR and Hyper Rare in the second reverse slot. No Illustration Rares. Poké Ball prints exist for all 100 Commons, Uncommons and Rares, Master Ball prints for the 67 Pokémon among them (not Double Rares). Reported by PokeBeach (https://www.pokebeach.com/2025/01/prismatic-evolutions-pull-rates-revealed-special-illustration-rares-twice-as-easy-to-pull). God packs (Master Ball Eevee plus the SIR Eevee ex and Eeveelutions) and demigod packs (three SIRs) exist, but TCGplayer could not count them, so they are not modelled; the SIR rate above is the average per pack.",
     "rates": {
       "double": 0.1651,
       "ultra": 0.0746,
@@ -146,13 +146,13 @@
     "name": "Surging Sparks",
     "printedTotal": 191,
     "released": "2024-11-08",
-    "updated": "2026-05-05",
-    "source": "TCGPlayer official pull rate study (Nov 2024, ~8,640 packs) via PokeBeach. DR 1/6, ACE SPEC 1/20, IR 1/13, UR 1/15, SIR 1/87, Hyper Rare 1/189.",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center study of more than 8,000 English packs (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Surging-Sparks-Pull-Rates/6ccfb6ab-f26a-4ce8-bab5-5f91c85ec70e/, published 2024-11-08, updated 2025-02-27), with 95% intervals: DR 16.94% ±0.79 (1 in 6), UR 6.74% ±0.53 (1 in 15), ACE SPEC 5.03% ±0.46 (1 in 20, in the first reverse slot), IR 7.67% ±0.56 (1 in 13), SIR 1.15% ±0.22 (1 in 87), Hyper Rare 0.53% ±0.15 (1 in 188). IR, SIR and Hyper Rare share the second reverse slot. Cross-checked against tcgtalk.com's 500-pack case opening (DR 85, UR 34, ACE 25, IR 39, SIR 7, HR 5), inside TCGplayer's intervals except SIR and HR, which 500 packs cannot pin. No English god packs reported.",
     "rates": {
-      "double": 0.167,
-      "ace": 0.05,
-      "ir": 0.077,
-      "ultra": 0.067,
+      "double": 0.1694,
+      "ace": 0.0503,
+      "ir": 0.0767,
+      "ultra": 0.0674,
       "sir": 0.0115,
       "hyper": 0.0053
     }
@@ -162,7 +162,7 @@
     "printedTotal": 142,
     "released": "2024-09-13",
     "updated": "2026-09-27",
-    "source": "TCGplayer Authentication Center study of 8,000+ English packs (published 2024-09-13, updated 2025-02-27), per pack with 95% intervals: Double Rare 16.90% \u00b10.79% (1 in 6), Ultra Rare 6.75% \u00b10.53% (1 in 15), ACE SPEC Rare 4.94% \u00b10.46% (1 in 20, first reverse slot), Illustration Rare 7.79% \u00b10.57% (1 in 13), Special Illustration Rare 1.11% \u00b10.22% (1 in 90) and Hyper Rare 0.73% \u00b10.18% (1 in 137), all three in the second reverse slot. TCGplayer found Dachsbun ex (067) at 0.76% \u00b10.18% against about 1.24% for each other Double Rare and calls it likely short printed, so data/sv7.json gives it pullWeight 0.61. Same rates as Temporal Forces and Twilight Masquerade; no god packs in English Scarlet & Violet.",
+    "source": "TCGplayer Authentication Center study of 8,000+ English packs (published 2024-09-13, updated 2025-02-27), per pack with 95% intervals: Double Rare 16.90% ±0.79% (1 in 6), Ultra Rare 6.75% ±0.53% (1 in 15), ACE SPEC Rare 4.94% ±0.46% (1 in 20, first reverse slot), Illustration Rare 7.79% ±0.57% (1 in 13), Special Illustration Rare 1.11% ±0.22% (1 in 90) and Hyper Rare 0.73% ±0.18% (1 in 137), all three in the second reverse slot. TCGplayer found Dachsbun ex (067) at 0.76% ±0.18% against about 1.24% for each other Double Rare and calls it likely short printed, so data/sv7.json gives it pullWeight 0.61. Same rates as Temporal Forces and Twilight Masquerade; no god packs in English Scarlet & Violet.",
     "sourceUrl": "https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Stellar-Crown-Pull-Rates/2c0743dd-dbd0-4504-9ff8-be5a72dd04d1/",
     "rates": {
       "double": 0.169,
@@ -273,6 +273,22 @@
       "ir": 0.0767,
       "sir": 0.0315,
       "hyper": 0.0185
+    }
+  },
+  "sv4pt5": {
+    "name": "Paldean Fates",
+    "printedTotal": 91,
+    "released": "2024-01-26",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, more than 1,500 English packs opened before release: 'Pokémon TCG: Paldean Fates Pull Rates' by Peter Day (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Paldean-Fates-Pull-Rates/23de3e93-0d0f-4ae0-abc4-13664f3001a3/, 2024-01-26), 95% confidence intervals: Double Rare 15.89% ± 1.69% (1 in 6), Ultra Rare 6.61% ± 1.15% (1 in 15), Shiny Rare 25.44% ± 2.01% (1 in 4), Shiny Ultra Rare 7.72% ± 1.23% (1 in 13), Illustration Rare 7.22% ± 1.20% (1 in 14), Special Illustration Rare 1.72% ± 0.60% (1 in 58), Hyper Rare 1.61% ± 0.58% (1 in 62). DR and UR sit in the rare slot; Shiny Rare and Shiny Ultra Rare replace the first reverse holo (about 1 pack in 3 has a shiny); IR, SIR and Hyper Rare sit in the second reverse slot.",
+    "rates": {
+      "double": 0.1589,
+      "ultra": 0.0661,
+      "shiny": 0.2544,
+      "shinyUltra": 0.0772,
+      "ir": 0.0722,
+      "sir": 0.0172,
+      "hyper": 0.0161
     }
   }
 }

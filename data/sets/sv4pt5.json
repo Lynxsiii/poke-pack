@@ -1,0 +1,222 @@
+{
+  "id": "sv4pt5",
+  "name": "Paldean Fates",
+  "series": "scarlet-violet",
+  "slug": "paldean-fates",
+  "scrydexId": "sv4pt5",
+  "pittSlug": "Paldean-Fates",
+  "artSlug": "paldean-fates",
+  "packs": [
+    "tinkaton",
+    "pikachu",
+    "dondozo",
+    "ceruledge"
+  ],
+  "tcgplayerGroup": 23353,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp069": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp070": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp071": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp072": {
+      "foilAs": "Shiny Ultra Rare"
+    },
+    "svp072-stamp": {
+      "like": "svp072",
+      "variant": "Premium Collection stamp",
+      "tcgplayerId": 666591,
+      "foilAs": "Shiny Ultra Rare",
+      "tcgplayerGroup": 2374
+    },
+    "svp073": {
+      "foilAs": "Shiny Ultra Rare"
+    },
+    "svp073-stamp": {
+      "like": "svp073",
+      "variant": "Premium Collection stamp",
+      "tcgplayerId": 666603,
+      "foilAs": "Shiny Ultra Rare",
+      "tcgplayerGroup": 2374
+    },
+    "svp074": {
+      "foilAs": "Shiny Ultra Rare"
+    },
+    "svp075": {},
+    "svp075-pc": {
+      "like": "svp075",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 535953
+    },
+    "svp076": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp077": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp078": {
+      "foilAs": "Shiny Ultra Rare"
+    },
+    "svp079": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp080": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp081": {
+      "foilAs": "Shiny Ultra Rare"
+    },
+    "svp082": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp083": {
+      "foilAs": "Shiny Rare"
+    },
+    "svp084": {
+      "foilAs": "Shiny Ultra Rare"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 528040,
+      "packs": 9,
+      "promos": [
+        "svp075"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 528039,
+      "packs": 11,
+      "promos": [
+        "svp075-pc",
+        "svp075"
+      ]
+    },
+    {
+      "id": "tin-charizard",
+      "name": "Tin: Charizard ex",
+      "kind": "tin",
+      "tcgplayerId": 528056,
+      "packs": 5,
+      "promos": [
+        "svp074"
+      ]
+    },
+    {
+      "id": "tin-great-tusk",
+      "name": "Tin: Great Tusk ex",
+      "kind": "tin",
+      "tcgplayerId": 528057,
+      "packs": 5,
+      "promos": [
+        "svp072"
+      ]
+    },
+    {
+      "id": "tin-iron-treads",
+      "name": "Tin: Iron Treads ex",
+      "kind": "tin",
+      "tcgplayerId": 528058,
+      "packs": 5,
+      "promos": [
+        "svp073"
+      ]
+    },
+    {
+      "id": "premium-meowscarada",
+      "name": "Premium Collection: Meowscarada ex",
+      "kind": "premium",
+      "tcgplayerId": 528079,
+      "packs": 8,
+      "promos": [
+        "svp076",
+        "svp077",
+        "svp078"
+      ]
+    },
+    {
+      "id": "premium-skeledirge",
+      "name": "Premium Collection: Skeledirge ex",
+      "kind": "premium",
+      "tcgplayerId": 528080,
+      "packs": 8,
+      "promos": [
+        "svp079",
+        "svp080",
+        "svp081"
+      ]
+    },
+    {
+      "id": "premium-quaquaval",
+      "name": "Premium Collection: Quaquaval ex",
+      "kind": "premium",
+      "tcgplayerId": 528082,
+      "packs": 8,
+      "promos": [
+        "svp082",
+        "svp083",
+        "svp084"
+      ]
+    },
+    {
+      "id": "premium-paradox",
+      "name": "Great Tusk ex & Iron Treads ex Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 665113,
+      "packs": 11,
+      "promos": [
+        "svp072-stamp",
+        "svp073-stamp"
+      ]
+    },
+    {
+      "id": "tech-fidough",
+      "name": "Tech Sticker Collection: Fidough",
+      "kind": "collection",
+      "tcgplayerId": 528043,
+      "packs": 3,
+      "promos": [
+        "svp069"
+      ]
+    },
+    {
+      "id": "tech-maschiff",
+      "name": "Tech Sticker Collection: Maschiff",
+      "kind": "collection",
+      "tcgplayerId": 528044,
+      "packs": 3,
+      "promos": [
+        "svp071"
+      ]
+    },
+    {
+      "id": "tech-greavard",
+      "name": "Tech Sticker Collection: Greavard",
+      "kind": "collection",
+      "tcgplayerId": 528045,
+      "packs": 3,
+      "promos": [
+        "svp070"
+      ]
+    }
+  ]
+}
