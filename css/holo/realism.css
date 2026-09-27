@@ -180,7 +180,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.settling img {
     drop-shadow(calc((var(--pointer-from-left) - 0.5) * -24px) calc(14px + (var(--pointer-from-top) - 0.5) * -20px) 22px rgba(0, 0, 0, 0.55))
     drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
 }
-/* A faint rim of light on foiled cards while held. */
-body.fx-holo.fx-holo.fx-holo .tcg.lit:not(.foil-none) {
-  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.06);
-}
+/* No outline on .tcg itself. The box is square but the printed card is not:
+   a 1px rim here stuck out past all four rounded corners as a faint
+   rectangle whenever a foil was held. Anything drawn around the card has to
+   follow the art's own alpha, like the drop shadows above. */
