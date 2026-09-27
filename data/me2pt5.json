@@ -9918,6 +9918,281 @@
     "imageRemote": "https://images.scrydex.com/pokemon/me2pt5-295/large"
   },
   {
+    "id": "me2pt5-123-cosmos",
+    "name": "Gastly",
+    "number": "123-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "flavorText": "It wraps its opponent in its gas-like body, slowly weakening its prey by poisoning it through the skin.",
+    "attacks": [
+      {
+        "name": "Petty Grudge",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/677399_in_1000x1000.jpg",
+    "printedNumber": "123/217",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 677399,
+    "image": "assets/cards/me2pt5/123-cosmos.webp",
+    "imageSmall": "assets/cards/me2pt5/123-cosmos-sm.webp",
+    "market": 0.41
+  },
+  {
+    "id": "me2pt5-175-cosmos",
+    "name": "Larry's Komala",
+    "number": "175-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Trainer's Pokémon"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "ryoma uratsuka",
+    "flavorText": "A potent anesthetic can be made by diluting Komala’s drool. This anesthetic was used for surgeries in the past.",
+    "attacks": [
+      {
+        "name": "Dozing Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This Pokémon is now Asleep. Draw 2 cards."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lethargic Charge",
+        "text": "Once during your turn, if this Pokémon is on your Bench, you may use this Ability. Attach an Energy card from your hand to your Active Larry's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/679249_in_1000x1000.jpg",
+    "ownerMask": "larry",
+    "printedNumber": "175/217",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 679249,
+    "image": "assets/cards/me2pt5/175-cosmos.webp",
+    "imageSmall": "assets/cards/me2pt5/175-cosmos-sm.webp",
+    "market": 0.31
+  },
+  {
+    "id": "me2pt5-20-cosmos",
+    "name": "Charmander",
+    "number": "20-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Orca",
+    "flavorText": "The flame on its tail indicates Charmander’s life force. If it is healthy, the flame burns brightly.",
+    "attacks": [
+      {
+        "name": "Fire Claws",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/677398_in_1000x1000.jpg",
+    "printedNumber": "020/217",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 677398,
+    "image": "assets/cards/me2pt5/20-cosmos.webp",
+    "imageSmall": "assets/cards/me2pt5/20-cosmos-sm.webp",
+    "market": 0.52
+  },
+  {
+    "id": "me2pt5-29-cosmos",
+    "name": "Tepig",
+    "number": "29-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Uninori",
+    "flavorText": "It can deftly dodge its foe’s attacks while shooting fireballs from its nose. It roasts berries before it eats them.",
+    "attacks": [
+      {
+        "name": "Steady Firebreathing",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/681895_in_1000x1000.jpg",
+    "printedNumber": "029/217",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 681895,
+    "image": "assets/cards/me2pt5/29-cosmos.webp",
+    "imageSmall": "assets/cards/me2pt5/29-cosmos-sm.webp",
+    "market": 0.24
+  },
+  {
+    "id": "me2pt5-41-cosmos",
+    "name": "Totodile",
+    "number": "41-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "REND",
+    "flavorText": "It is small but rough and tough. It won't hesitate to take a bite out of anything that moves.",
+    "attacks": [
+      {
+        "name": "Slight Intrusion",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "40",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/680710_in_1000x1000.jpg",
+    "printedNumber": "041/217",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 680710,
+    "image": "assets/cards/me2pt5/41-cosmos.webp",
+    "imageSmall": "assets/cards/me2pt5/41-cosmos-sm.webp",
+    "market": 0.45
+  },
+  {
+    "id": "me2pt5-7-cosmos",
+    "name": "Erika's Tangela",
+    "number": "7-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Trainer's Pokémon"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "GIDORA",
+    "flavorText": "Hidden beneath a tangle of vines that grows nonstop even if the vines are torn off, this Pokémon’s true appearance remains a mystery.",
+    "attacks": [
+      {
+        "name": "Bind",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Gathering of Blossoms",
+        "text": "Once during your turn, you may use this Ability. Search your deck for an Erika's Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/679253_in_1000x1000.jpg",
+    "ownerMask": "erika",
+    "printedNumber": "007/217",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 679253,
+    "image": "assets/cards/me2pt5/7-cosmos.webp",
+    "imageSmall": "assets/cards/me2pt5/7-cosmos-sm.webp",
+    "market": 0.32
+  },
+  {
+    "id": "me2pt5-8-cosmos",
+    "name": "Chikorita",
+    "number": "8-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Kariya",
+    "flavorText": "A sweet aroma gently wafts from the leaf on its head. It is docile and loves to soak up sun rays.",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, attacks used by the Defending Pokémon do 20 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/680709_in_1000x1000.jpg",
+    "printedNumber": "008/217",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 680709,
+    "image": "assets/cards/me2pt5/8-cosmos.webp",
+    "imageSmall": "assets/cards/me2pt5/8-cosmos-sm.webp",
+    "market": 0.34
+  },
+  {
     "id": "me2pt5-mep031",
     "name": "N's Zekrom",
     "number": "mep031",
@@ -9957,12 +10232,12 @@
         "text": "During your next turn, this Pokémon can't use attacks."
       }
     ],
+    "market": 5.87,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-31/large",
     "printedNumber": "MEP 031",
     "tcgplayerId": 680480,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 5.87,
     "foilMap": "assets/foil/maps/me2pt5/mep031.webp"
   },
   {
@@ -9980,6 +10255,8 @@
     "hp": "130",
     "artist": "Bun Toujo",
     "flavorText": "When the interior part of its tail spins like a motor, Zekrom can generate many bolts of lightning to blast its surrounds.",
+    "image": "assets/cards/me2pt5/mep031-pc.webp",
+    "imageSmall": "assets/cards/me2pt5/mep031-pc-sm.webp",
     "attacks": [
       {
         "name": "Shred",
@@ -10003,15 +10280,13 @@
         "text": "During your next turn, this Pokémon can't use attacks."
       }
     ],
+    "market": 61.02,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/680481_in_1000x1000.jpg",
     "printedNumber": "MEP 031",
     "foilAs": "Illustration Rare",
     "promo": true,
     "variant": "Pokémon Center stamp",
     "tcgplayerId": 680481,
-    "image": "assets/cards/me2pt5/mep031-pc.webp",
-    "imageSmall": "assets/cards/me2pt5/mep031-pc-sm.webp",
-    "market": 61.41,
     "foilMap": "assets/foil/maps/me2pt5/mep031-pc.webp"
   },
   {
@@ -10050,12 +10325,12 @@
         "text": "This attack does 50 damage for each Psychic Energy attached to all of your Pokémon."
       }
     ],
+    "market": 6.7,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-32/large",
     "printedNumber": "MEP 032",
     "tcgplayerId": 685510,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 6.7,
     "foilMap": "assets/foil/maps/me2pt5/mep032.webp",
     "etchMap": "assets/foil/maps/me2pt5/mep032-etch.webp"
   },
@@ -10097,12 +10372,12 @@
         "text": "During your next turn, this Pokémon can't use Mega Brave."
       }
     ],
+    "market": 9.61,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-33/large",
     "printedNumber": "MEP 033",
     "tcgplayerId": 685511,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 9.61,
     "foilMap": "assets/foil/maps/me2pt5/mep033.webp",
     "etchMap": "assets/foil/maps/me2pt5/mep033-etch.webp"
   },
@@ -10134,12 +10409,12 @@
         "text": "This attack does 50 more damage for each Grass Energy attached to this Pokémon."
       }
     ],
+    "market": 0.62,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-34/large",
     "printedNumber": "MEP 034",
     "tcgplayerId": 692120,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 0.62,
     "foilMap": "assets/foil/maps/me2pt5/mep034.webp",
     "etchMap": "assets/foil/maps/me2pt5/mep034-etch.webp"
   },
@@ -10172,12 +10447,12 @@
         "text": "This Pokémon also does 60 damage to itself."
       }
     ],
+    "market": 0.42,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-35/large",
     "printedNumber": "MEP 035",
     "tcgplayerId": 692119,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 0.42,
     "foilMap": "assets/foil/maps/me2pt5/mep035.webp",
     "etchMap": "assets/foil/maps/me2pt5/mep035-etch.webp"
   },
@@ -10210,12 +10485,12 @@
         "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 200 more damage."
       }
     ],
+    "market": 0.56,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-36/large",
     "printedNumber": "MEP 036",
     "tcgplayerId": 692118,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 0.56,
     "foilMap": "assets/foil/maps/me2pt5/mep036.webp",
     "etchMap": "assets/foil/maps/me2pt5/mep036-etch.webp"
   }

@@ -4065,6 +4065,495 @@
     "imageRemote": "https://images.scrydex.com/pokemon/me4-122/large"
   },
   {
+    "id": "me4-10-ebgames",
+    "name": "Ho-Oh",
+    "number": "10-ebgames",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Takumi Wada",
+    "attacks": [
+      {
+        "name": "Flames of Revival",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Basic Pokémon from your discard pile onto your Bench."
+      },
+      {
+        "name": "Bright Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "130",
+        "text": "Discard a Fire Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/694626_in_1000x1000.jpg",
+    "printedNumber": "010/086",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "EB Games stamp",
+    "tcgplayerId": 694626,
+    "image": "assets/cards/me4/10-ebgames.webp",
+    "imageSmall": "assets/cards/me4/10-ebgames-sm.webp",
+    "market": 93.45
+  },
+  {
+    "id": "me4-10-gamestop",
+    "name": "Ho-Oh",
+    "number": "10-gamestop",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Takumi Wada",
+    "attacks": [
+      {
+        "name": "Flames of Revival",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Basic Pokémon from your discard pile onto your Bench."
+      },
+      {
+        "name": "Bright Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "130",
+        "text": "Discard a Fire Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/694625_in_1000x1000.jpg",
+    "printedNumber": "010/086",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "GameStop stamp",
+    "tcgplayerId": 694625,
+    "image": "assets/cards/me4/10-gamestop.webp",
+    "imageSmall": "assets/cards/me4/10-gamestop-sm.webp",
+    "market": 18.54
+  },
+  {
+    "id": "me4-13-stamp",
+    "name": "Delphox",
+    "number": "13-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "160",
+    "artist": "Gemi",
+    "evolvesFrom": "Braixen",
+    "attacks": [
+      {
+        "name": "Energized Storm",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy attached to all Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flaring Magic",
+        "text": "Once during your turn, you may discard a Basic [Fire] Energy card from your hand in order to use this Ability. Draw cards until you have 7 cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/694677_in_1000x1000.jpg",
+    "printedNumber": "013/086",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Chaos Rising stamp",
+    "tcgplayerId": 694677,
+    "image": "assets/cards/me4/13-stamp.webp",
+    "imageSmall": "assets/cards/me4/13-stamp-sm.webp",
+    "market": 14.44
+  },
+  {
+    "id": "me4-19-stamp",
+    "name": "Keldeo",
+    "number": "19-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Mitsuhiro Arita",
+    "attacks": [
+      {
+        "name": "Shoot Through",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Reflect Energy",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "70",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/694630_in_1000x1000.jpg",
+    "printedNumber": "019/086",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Chaos Rising stamp",
+    "tcgplayerId": 694630,
+    "image": "assets/cards/me4/19-stamp.webp",
+    "imageSmall": "assets/cards/me4/19-stamp-sm.webp",
+    "market": 9.91
+  },
+  {
+    "id": "me4-mep046",
+    "name": "Chikorita",
+    "number": "mep046",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "flavorText": "A sweet aroma gently wafts from the leaf on its head. It is docile and loves to soak up sun rays.",
+    "image": "assets/cards/me4/mep046.webp",
+    "imageSmall": "assets/cards/me4/mep046-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-46/large",
+    "printedNumber": "MEP 046",
+    "tcgplayerId": 699870,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 5.62
+  },
+  {
+    "id": "me4-mep047",
+    "name": "Cyndaquil",
+    "number": "mep047",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "flavorText": "It is timid and always curls itself up in a ball. If attacked, it flares up its back for protection.",
+    "image": "assets/cards/me4/mep047.webp",
+    "imageSmall": "assets/cards/me4/mep047-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-47/large",
+    "printedNumber": "MEP 047",
+    "tcgplayerId": 699871,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 7.53
+  },
+  {
+    "id": "me4-mep048",
+    "name": "Totodile",
+    "number": "mep048",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Saboteri",
+    "flavorText": "Its powerful, well-developed jaws are capable of crushing anything. Even its Trainer must be careful.",
+    "image": "assets/cards/me4/mep048.webp",
+    "imageSmall": "assets/cards/me4/mep048-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-48/large",
+    "printedNumber": "MEP 048",
+    "tcgplayerId": 699872,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 11.42
+  },
+  {
+    "id": "me4-mep049",
+    "name": "Snivy",
+    "number": "mep049",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Saboteri",
+    "flavorText": "It is very intelligent and calm. Being exposed to lots of sunlight makes its movements swifter.",
+    "image": "assets/cards/me4/mep049.webp",
+    "imageSmall": "assets/cards/me4/mep049-sm.webp",
+    "attacks": [
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-49/large",
+    "printedNumber": "MEP 049",
+    "tcgplayerId": 699873,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 3.7
+  },
+  {
+    "id": "me4-mep050",
+    "name": "Tepig",
+    "number": "mep050",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Saboteri",
+    "image": "assets/cards/me4/mep050.webp",
+    "imageSmall": "assets/cards/me4/mep050-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "40",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-50/large",
+    "printedNumber": "MEP 050",
+    "tcgplayerId": 699874,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 3.69
+  },
+  {
+    "id": "me4-mep051",
+    "name": "Oshawott",
+    "number": "mep051",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "flavorText": "It fights using the scalchop on its stomach. In response to an attack, it retaliates immediately by slashing.",
+    "image": "assets/cards/me4/mep051.webp",
+    "imageSmall": "assets/cards/me4/mep051-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Shell",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-51/large",
+    "printedNumber": "MEP 051",
+    "tcgplayerId": 699875,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 4.74
+  },
+  {
+    "id": "me4-mep052",
+    "name": "Grookey",
+    "number": "mep052",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "flavorText": "When it uses its special stick to strike up a beat, the sound waves produced carry revitalizing energy to the plants and flowers in the area.",
+    "image": "assets/cards/me4/mep052.webp",
+    "imageSmall": "assets/cards/me4/mep052-sm.webp",
+    "attacks": [
+      {
+        "name": "Branch Poke",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-52/large",
+    "printedNumber": "MEP 052",
+    "tcgplayerId": 699876,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 3.69
+  },
+  {
+    "id": "me4-mep053",
+    "name": "Scorbunny",
+    "number": "mep053",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "flavorText": "A warm-up of running around gets fire energy coursing through this Pokémon's body. Once that happens, it's ready to fight at full power.",
+    "image": "assets/cards/me4/mep053.webp",
+    "imageSmall": "assets/cards/me4/mep053-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Kick",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-53/large",
+    "printedNumber": "MEP 053",
+    "tcgplayerId": 699877,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 4.01
+  },
+  {
+    "id": "me4-mep054",
+    "name": "Sobble",
+    "number": "mep054",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "artist": "Saboteri",
+    "flavorText": "When scared, this Pokémon cries. Its tears pack the chemical punch of 100 onions, and attackers won't be able to resist weeping.",
+    "image": "assets/cards/me4/mep054.webp",
+    "imageSmall": "assets/cards/me4/mep054-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-54/large",
+    "printedNumber": "MEP 054",
+    "tcgplayerId": 699878,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 2.97
+  },
+  {
     "id": "me4-mep072",
     "name": "Mega Clefable ex",
     "number": "mep072",
@@ -4100,12 +4589,12 @@
         "type": "Ability"
       }
     ],
+    "market": 0.65,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-72/large",
     "printedNumber": "MEP 072",
     "tcgplayerId": 696607,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 0.65,
     "foilMap": "assets/foil/maps/me4/mep072.webp",
     "etchMap": "assets/foil/maps/me4/mep072-etch.webp"
   },
@@ -4145,12 +4634,12 @@
         "type": "Ability"
       }
     ],
+    "market": 3.64,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-73/large",
     "printedNumber": "MEP 073",
     "tcgplayerId": 696608,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 3.64,
     "foilMap": "assets/foil/maps/me4/mep073.webp",
     "etchMap": "assets/foil/maps/me4/mep073-etch.webp"
   },
@@ -4189,12 +4678,12 @@
         "type": "Ability"
       }
     ],
+    "market": 11.66,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-74/large",
     "printedNumber": "MEP 074",
     "tcgplayerId": 694679,
     "foilAs": "Rare",
     "promo": true,
-    "market": 11.66,
     "foilMap": "assets/foil/maps/me4/mep074.webp"
   },
   {
@@ -4232,12 +4721,12 @@
         "type": "Ability"
       }
     ],
+    "market": 12.05,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-75/large",
     "printedNumber": "MEP 075",
     "tcgplayerId": 694681,
     "foilAs": "Rare",
     "promo": true,
-    "market": 12.05,
     "foilMap": "assets/foil/maps/me4/mep075.webp"
   },
   {
@@ -4267,12 +4756,12 @@
         "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
       }
     ],
+    "market": 14.32,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-76/large",
     "printedNumber": "MEP 076",
     "tcgplayerId": 694686,
     "foilAs": "Rare",
     "promo": true,
-    "market": 14.32,
     "foilMap": "assets/foil/maps/me4/mep076.webp"
   },
   {
@@ -4303,12 +4792,12 @@
         "text": "Discard the top card of your deck."
       }
     ],
+    "market": 10.27,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-77/large",
     "printedNumber": "MEP 077",
     "tcgplayerId": 694688,
     "foilAs": "Rare",
     "promo": true,
-    "market": 10.27,
     "foilMap": "assets/foil/maps/me4/mep077.webp"
   },
   {
@@ -4346,12 +4835,12 @@
         "text": ""
       }
     ],
+    "market": 0.36,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-78/large",
     "printedNumber": "MEP 078",
     "tcgplayerId": 694692,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.36,
     "foilMap": "assets/foil/maps/me4/mep078.webp"
   },
   {
@@ -4381,12 +4870,12 @@
         "text": ""
       }
     ],
+    "market": 0.64,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-79/large",
     "printedNumber": "MEP 079",
     "tcgplayerId": 694693,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.64,
     "foilMap": "assets/foil/maps/me4/mep079.webp"
   },
   {
@@ -4423,12 +4912,12 @@
         "text": ""
       }
     ],
+    "market": 1.93,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-80/large",
     "printedNumber": "MEP 080",
     "tcgplayerId": 694694,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 1.93,
     "foilMap": "assets/foil/maps/me4/mep080.webp"
   },
   {
@@ -4445,6 +4934,8 @@
     ],
     "hp": "70",
     "artist": "satoma",
+    "image": "assets/cards/me4/mep080-pc.webp",
+    "imageSmall": "assets/cards/me4/mep080-pc-sm.webp",
     "attacks": [
       {
         "name": "Call for Family",
@@ -4463,15 +4954,13 @@
         "text": ""
       }
     ],
+    "market": 32.08,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/694695_in_1000x1000.jpg",
     "printedNumber": "MEP 080",
     "foilAs": "Illustration Rare",
     "promo": true,
     "variant": "Pokémon Center stamp",
     "tcgplayerId": 694695,
-    "image": "assets/cards/me4/mep080-pc.webp",
-    "imageSmall": "assets/cards/me4/mep080-pc-sm.webp",
-    "market": 32.28,
     "foilMap": "assets/foil/maps/me4/mep080-pc.webp"
   },
   {
@@ -4509,13 +4998,176 @@
         "type": "Ability"
       }
     ],
+    "market": 0.78,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-81/large",
     "printedNumber": "MEP 081",
     "tcgplayerId": 704879,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 0.78,
     "foilMap": "assets/foil/maps/me4/mep081.webp",
     "etchMap": "assets/foil/maps/me4/mep081-etch.webp"
+  },
+  {
+    "id": "me4-pfl017-cosmos",
+    "name": "Reshiram",
+    "number": "pfl017-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "According to myth, if people ignore truth and let themselves become consumed by greed, Reshiram will arrive to burn their kingdoms down.",
+    "attacks": [
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Burning Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "240",
+        "text": "This Pokémon also does 60 damage to itself."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/696441_in_1000x1000.jpg",
+    "printedNumber": "017/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 696441,
+    "image": "assets/cards/me4/pfl017-cosmos.webp",
+    "imageSmall": "assets/cards/me4/pfl017-cosmos-sm.webp",
+    "market": 5.27
+  },
+  {
+    "id": "me4-pfl034-cosmos",
+    "name": "Pawmot",
+    "number": "pfl034-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "140",
+    "artist": "satoma",
+    "flavorText": "This Pokémon normally is slow to react, but once it enters battle, it will strike down its enemies with lightning-fast movements.",
+    "evolvesFrom": "Pawmo",
+    "attacks": [
+      {
+        "name": "Voltaic Fist",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "130",
+        "text": "You may have this Pokémon also do 60 damage to itself and make your opponent's Active Pokémon Paralyzed."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/696233_in_1000x1000.jpg",
+    "printedNumber": "034/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 696233,
+    "image": "assets/cards/me4/pfl034-cosmos.webp",
+    "imageSmall": "assets/cards/me4/pfl034-cosmos-sm.webp",
+    "market": 1.48
+  },
+  {
+    "id": "me4-pfl045-cosmos",
+    "name": "Zacian",
+    "number": "pfl045-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "kawayoo",
+    "flavorText": "Able to cut down anything with a single strike, it became known as the Fairy King’s Sword, and it inspired awe in friend and foe alike.",
+    "attacks": [
+      {
+        "name": "Limit Break",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If your opponent has 3 or fewer Prize cards remaining, this attack does 90 more damage."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/696145_in_1000x1000.jpg",
+    "printedNumber": "045/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 696145,
+    "image": "assets/cards/me4/pfl045-cosmos.webp",
+    "imageSmall": "assets/cards/me4/pfl045-cosmos-sm.webp",
+    "market": 7.37
+  },
+  {
+    "id": "me4-pfl053-cosmos",
+    "name": "Flygon",
+    "number": "pfl053-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Jerky",
+    "flavorText": "Known as the Desert Spirit, this Pokémon hides in the sandstorms it causes by beating its wings.",
+    "evolvesFrom": "Vibrava",
+    "attacks": [
+      {
+        "name": "Cutting Wind",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sandy Flapping",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. You may also use this Ability if this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent's Pokémon. Discard the top 2 cards of your opponent's deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/696232_in_1000x1000.jpg",
+    "printedNumber": "053/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 696232,
+    "image": "assets/cards/me4/pfl053-cosmos.webp",
+    "imageSmall": "assets/cards/me4/pfl053-cosmos-sm.webp",
+    "market": 1.44
   }
 ]

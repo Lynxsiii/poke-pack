@@ -214,10 +214,18 @@ export function ripPack(set, cards) {
 
 /**
  * The promo ids one box of `offer` holds: all of them, or `pick` at random.
+ * With `groupOf`, the promos come in fixed runs of that many and a box holds
+ * one run: a First Partner Illustration Collection's promo pack is one
+ * region's three starters.
  */
 export function drawPromos(offer) {
   const promos = [...(offer?.promos || [])];
   if (!offer?.pick) return promos;
+  const size = Math.floor(Number(offer.groupOf) || 0);
+  if (size > 1 && size === offer.pick && promos.length % size === 0) {
+    const start = Math.floor(Math.random() * (promos.length / size)) * size;
+    return promos.slice(start, start + size);
+  }
   for (let i = promos.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [promos[i], promos[j]] = [promos[j], promos[i]];

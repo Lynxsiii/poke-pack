@@ -40,7 +40,114 @@
     "mep011": {},
     "mep012": {},
     "mep013": {},
-    "mep025": {}
+    "mep025": {},
+    "133-stamp": {
+      "like": "133",
+      "variant": "Mega Evolution stamp",
+      "tcgplayerId": 654703,
+      "tcgl": "mealt/me1_en_133_alt",
+      "printedNumber": "133/132"
+    },
+    "34-cosmos": {
+      "like": "34",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 670787,
+      "foilAs": "Cosmos",
+      "printedNumber": "034/132"
+    },
+    "48-cosmos": {
+      "like": "48",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 670910,
+      "foilAs": "Cosmos",
+      "printedNumber": "048/132"
+    },
+    "58-cosmos": {
+      "like": "58",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 668453,
+      "foilAs": "Cosmos",
+      "printedNumber": "058/132"
+    },
+    "59-cosmos": {
+      "like": "59",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 668455,
+      "foilAs": "Cosmos",
+      "printedNumber": "059/132"
+    },
+    "76-cosmos": {
+      "like": "76",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 668457,
+      "foilAs": "Cosmos",
+      "printedNumber": "076/132"
+    },
+    "jtg018-cosmos": {
+      "like": "sv9:18",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 657213,
+      "foilAs": "Cosmos",
+      "printedNumber": "018/159"
+    },
+    "jtg041-cosmos": {
+      "like": "sv9:41",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 657214,
+      "foilAs": "Cosmos",
+      "printedNumber": "041/159"
+    },
+    "jtg085-cosmos": {
+      "like": "sv9:85",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 657216,
+      "foilAs": "Cosmos",
+      "printedNumber": "085/159"
+    },
+    "jtg095-cosmos": {
+      "like": "sv9:95",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 657212,
+      "foilAs": "Cosmos",
+      "printedNumber": "095/159"
+    },
+    "64-stamp": {
+      "like": "64",
+      "variant": "Mega Evolution stamp",
+      "tcgplayerId": 655977,
+      "foilAs": "Cosmos",
+      "printedNumber": "064/132"
+    },
+    "88-gamestop": {
+      "like": "88",
+      "variant": "GameStop stamp",
+      "tcgplayerId": 655978,
+      "foilAs": "Cosmos",
+      "printedNumber": "088/132"
+    },
+    "88-ebgames": {
+      "like": "88",
+      "variant": "EB Games stamp",
+      "tcgplayerId": 658354,
+      "foilAs": "Cosmos",
+      "printedNumber": "088/132"
+    },
+    "88-stamp": {
+      "like": "88",
+      "variant": "Mega Evolution stamp",
+      "tcgplayerId": 659592,
+      "foilAs": "Cosmos",
+      "printedNumber": "088/132"
+    },
+    "mep037": {},
+    "mep038": {},
+    "mep039": {},
+    "mep040": {},
+    "mep041": {},
+    "mep042": {},
+    "mep043": {},
+    "mep044": {},
+    "mep045": {}
   },
   "products": [
     {
@@ -174,6 +281,156 @@
       "promos": [
         "mep006"
       ]
+    },
+    {
+      "id": "enhanced-box",
+      "name": "Enhanced Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 644300,
+      "packs": 36,
+      "promos": [
+        "133-stamp"
+      ]
+    },
+    {
+      "id": "first-partner-1",
+      "name": "First Partner Illustration Collection: Series 1",
+      "kind": "collection",
+      "tcgplayerId": 673436,
+      "tcgplayerGroup": 24584,
+      "packs": 2,
+      "promos": [
+        "mep037",
+        "mep038",
+        "mep039",
+        "mep040",
+        "mep041",
+        "mep042",
+        "mep043",
+        "mep044",
+        "mep045"
+      ],
+      "pick": 3,
+      "groupOf": 3
+    },
+    {
+      "id": "collector-chest-fall-2025",
+      "name": "Collector Chest (Fall 2025)",
+      "kind": "collection",
+      "tcgplayerId": 654593,
+      "tcgplayerGroup": 2374,
+      "packs": 6,
+      "promos": [
+        "58-cosmos",
+        "59-cosmos",
+        "76-cosmos"
+      ]
+    },
+    {
+      "id": "knock-out-kyogre",
+      "name": "Knock Out Collection: Kyogre",
+      "kind": "collection",
+      "tcgplayerId": 670782,
+      "tcgplayerGroup": 2374,
+      "packs": 2,
+      "promos": [
+        "34-cosmos"
+      ]
+    },
+    {
+      "id": "blister2-raikou",
+      "name": "2 Pack Blister: Raikou",
+      "kind": "blister",
+      "tcgplayerId": 671271,
+      "tcgplayerGroup": 2374,
+      "packs": 2,
+      "promos": [
+        "48-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-tyranitar",
+      "name": "Premium Checklane Blister: Tyranitar",
+      "kind": "blister",
+      "tcgplayerId": 644360,
+      "packs": 1,
+      "promos": [
+        "jtg095-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-meowscarada",
+      "name": "Premium Checklane Blister: Meowscarada",
+      "kind": "blister",
+      "tcgplayerId": 644361,
+      "packs": 1,
+      "promos": [
+        "jtg018-cosmos"
+      ]
+    },
+    {
+      "id": "blister-wailord",
+      "name": "Single Pack Blister: Wailord",
+      "kind": "blister",
+      "tcgplayerId": 657489,
+      "packs": 1,
+      "promos": [
+        "jtg041-cosmos"
+      ]
+    },
+    {
+      "id": "blister-lycanroc",
+      "name": "Single Pack Blister: Lycanroc",
+      "kind": "blister",
+      "tcgplayerId": 657490,
+      "packs": 1,
+      "promos": [
+        "jtg085-cosmos"
+      ]
+    },
+    {
+      "id": "gift-64-stamp",
+      "name": "Booster Bundle + stamped Xerneas",
+      "kind": "bundle",
+      "tcgplayerId": 644362,
+      "packs": 6,
+      "promos": [
+        "64-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-88-gamestop",
+      "name": "Booster Bundle + GameStop Yveltal",
+      "kind": "bundle",
+      "tcgplayerId": 644362,
+      "packs": 6,
+      "promos": [
+        "88-gamestop"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-88-ebgames",
+      "name": "Booster Bundle + EB Games Yveltal",
+      "kind": "bundle",
+      "tcgplayerId": 644362,
+      "packs": 6,
+      "promos": [
+        "88-ebgames"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-88-stamp",
+      "name": "Booster Bundle + stamped Yveltal",
+      "kind": "bundle",
+      "tcgplayerId": 644362,
+      "packs": 6,
+      "promos": [
+        "88-stamp"
+      ],
+      "gift": true
     }
   ]
 }
