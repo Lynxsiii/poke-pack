@@ -1,5 +1,5 @@
 /*
- * Price history chart for the card inspector.
+ * Price history charts: the card inspector, and packs and boxes in the shop.
  *
  * Points come from data/prices/<set>.json, one file per set, loaded the first
  * time one of that set's cards is inspected. scripts/backfill_prices.py fills
@@ -27,6 +27,9 @@ const live = new Map();
 
 /** Set ids never contain a dash, so a card id's set is everything before one. */
 const setOf = (id) => String(id || "").split("-")[0];
+
+/** Gives every rendered chart its own gradient id; a hidden dialog's copy would shadow a shared one. */
+let chartId = 0;
 
 const series = (value) => (value && typeof value === "object" && !Array.isArray(value) ? value : {});
 
@@ -79,6 +82,19 @@ export function pointsFor(cardId) {
   const last = points[points.length - 1];
   if (last && last[0] > now[0]) return points;
   return last && last[0] === now[0] ? [...points.slice(0, -1), now] : [...points, now];
+}
+
+/** Whether a set's history has settled: loaded, or failed and not coming. */
+const settled = (setId) => loaded.has(setId) || failed.has(setId);
+
+/**
+ * Raw [date, price] points for a sealed product, oldest first. `key` is the
+ * shop's offer id: boosterPack, boosterBox, eliteTrainerBox, or a
+ * data/products.json id.
+ */
+export function productPointsFor(setId, key) {
+  const raw = loaded.get(setId)?.sealed?.[key];
+  return Array.isArray(raw) ? raw.filter((p) => Array.isArray(p) && p.length === 2) : [];
 }
 
 function withinRange(points, days) {
@@ -154,11 +170,52 @@ export function renderPriceChart(mount, card, range = "30d") {
   const all = pointsFor(card.id);
   const current =
     typeof card.market === "number" ? card.market : all.length ? all[all.length - 1][1] : null;
-  // Loaded, or failed and not coming: either way the chart shows what it has.
-  const ready = loaded.has(setOf(card.id)) || failed.has(setOf(card.id));
+  drawChart(mount, all, current, settled(setOf(card.id)), range, "No market price for this card yet.");
+}
 
+/**
+ * The same block for a pack or box in the shop. The headline is the last
+ * recorded TCGplayer price, so it always sits at the end of the line.
+ */
+export function renderProductChart(mount, setId, key, range = "90d") {
+  const all = productPointsFor(setId, key);
+  const current = all.length ? all[all.length - 1][1] : null;
+  drawChart(mount, all, current, settled(setId), range, "No market price for this product yet.");
+}
+
+/**
+ * Shop-card summary of a product's history: a sparkline and the change over
+ * the last 90 days (or all of it, when there is less). Null until the set's
+ * file has loaded, or when there is only one point.
+ */
+export function productTrend(setId, key) {
+  const all = productPointsFor(setId, key);
+  if (all.length < 2) return null;
+  const shown = withinRange(all, 90);
+  const first = shown[0][1];
+  const last = shown[shown.length - 1][1];
+  const delta = last - first;
+  const pct = first ? (delta / first) * 100 : 0;
+  const dir = delta > 0.004 ? "up" : delta < -0.004 ? "down" : "flat";
+  const days = Math.round((Date.parse(shown[shown.length - 1][0]) - Date.parse(shown[0][0])) / 86_400_000);
+  const W = 80;
+  const H = 26;
+  const { coords } = geometry(shown, W, H, 2, true);
+  return {
+    dir,
+    pct,
+    change: `${dir === "up" ? "▲" : dir === "down" ? "▼" : "■"} ${Math.abs(pct).toFixed(1)}%`,
+    span: days >= 80 ? "3 months" : days >= 2 ? `${days} days` : "today",
+    spark: `<svg class="pt-spark ${dir}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+      <path class="pt-area" d="${areaPath(coords, H, 2)}" />
+      <path class="pt-line" d="${linePath(coords)}" />
+    </svg>`,
+  };
+}
+
+function drawChart(mount, all, current, ready, range, noneText) {
   if (current == null && ready) {
-    mount.innerHTML = `<div class="pc-empty">No market price for this card yet.</div>`;
+    mount.innerHTML = `<div class="pc-empty">${noneText}</div>`;
     return;
   }
 
@@ -192,6 +249,7 @@ export function renderPriceChart(mount, card, range = "30d") {
   }
 
   const days = (RANGES.find(([id]) => id === range) || RANGES[1])[2];
+  const fill = `pcFill${++chartId}`;
   const shown = withinRange(all, days);
   const first = shown[0][1];
   const delta = current - first;
@@ -239,12 +297,12 @@ export function renderPriceChart(mount, card, range = "30d") {
       <svg class="pc-svg ${dir}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"
            role="img" aria-label="Price history, ${shown.length} points from $${fmtMoney(lo)} to $${fmtMoney(hi)}">
         <defs>
-          <linearGradient id="pcFill" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="${fill}" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" class="pc-stop-a" />
             <stop offset="100%" class="pc-stop-b" />
           </linearGradient>
         </defs>
-        <path class="pc-area" d="${areaPath(coords, H, PAD)}" fill="url(#pcFill)" />
+        <path class="pc-area" d="${areaPath(coords, H, PAD)}" fill="url(#${fill})" />
         <path class="pc-line" d="${linePath(coords)}" />
         <line class="pc-cross" x1="0" y1="${PAD}" x2="0" y2="${H - PAD}" opacity="0" />
         <circle class="pc-marker" r="4.5" cx="0" cy="0" opacity="0" />

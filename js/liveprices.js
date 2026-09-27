@@ -25,11 +25,13 @@ const TCGDEX_SET = {
   me5: "me05",
   sv2: "sv02",
   sv3: "sv03",
+  sv3pt5: "sv03.5",
   sv4pt5: "sv04.5",
   sv5: "sv05",
   sv6: "sv06",
   sv7: "sv07",
   sv8: "sv08",
+  sv8pt5: "sv08.5",
   sv9: "sv09",
   sv10: "sv10",
   sv1: "sv01",
@@ -219,6 +221,8 @@ async function singlesForSet(setId, cards) {
   // market price. So do set Energy cards (Shrouded Fable's reverse holo
   // Energy), which have no collector number in the set.
   const numbers = (cards || []).filter((c) => !c.promo && !c.energy).map((c) => c.number).filter((n) => n != null);
+  // A promo set (SV Black Star Promos) has nothing else, so nothing to ask for.
+  if (!numbers.length) throw new Error("no singles");
   if (ptcgioOk) {
     try {
       return await singlesFromPtcgio(setId);

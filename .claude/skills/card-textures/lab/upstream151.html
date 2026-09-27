@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>pokemon-cards-151 reference</title>
+  <!-- pokemon-cards-151's own CSS (../upstream/sv151/, GPL-3.0, NOTICE.md)
+       drawing our cards with TCG Live's raw maps, pinned to the same poses as
+       the lab and scripts/site_cards.mjs, so a site recipe can be compared
+       side by side with the upstream it was ported from. Needs the raw maps
+       in ./cache/<set>/ first:
+
+         python3 .claude/skills/card-textures/scripts/fetch_foil_maps.py --set <set> --key <tcgl key> --all
+
+       then open /.claude/skills/card-textures/lab/upstream151.html?set=sv3pt5&cards=183,196,205&poses=30:25,65:70
+       (or pass the same path to foil_probe.mjs --page).
+       Only numbered set cards; upstream's reverse holo needs the `_ph` maps,
+       which fetch_foil_maps.py does not keep.
+       Where headless Chromium cannot reach upstream's CDN (a proxy with its
+       own certificate authority), download the textures once and add &tex=cache:
+         mkdir -p .claude/skills/card-textures/lab/cache/upstream151 && cd $_ &&
+         for f in iri-7 iri-8 iri-9 birthday-holo birthday-holo-dank birthday-holo-dank-2 noise-base noise-top; do
+           curl -sSfO https://poke-holo.b-cdn.net/foils/151/$f.webp; done -->
+  <link rel="stylesheet" href="../upstream/sv151/base.css" />
+  <link rel="stylesheet" href="../upstream/sv151/_cards.css" />
+  <link rel="stylesheet" href="../upstream/sv151/regular-holo.css" />
+  <link rel="stylesheet" href="../upstream/sv151/ex-regular.css" />
+  <link rel="stylesheet" href="../upstream/sv151/ex-full-art.css" />
+  <link rel="stylesheet" href="../upstream/sv151/illustration-rare.css" />
+  <link rel="stylesheet" href="../upstream/sv151/ex-special-illustration-rare.css" />
+  <link rel="stylesheet" href="../upstream/sv151/hyper-rare.css" />
+  <style>
+    body { margin: 0; padding: 16px; background: #0c0d12; color: #9d9fa6; font: 11px ui-monospace, monospace; }
+    /* Upstream serves grain and glitter from its own /img/; ours stand in.
+       Absolute paths: Chrome resolves a url() in a custom property against
+       the sheet that uses the var(), not this one. The iri and noise layers
+       load from upstream's CDN. */
+    .card {
+      --grain: url(/assets/foil/grain.png);
+      --glitter: url(/assets/foil/reference/glitter.png);
+      width: var(--w, 280px);
+      --card-scale: 1; --translate-x: 0px; --translate-y: 0px; --rotate-delta: 0deg; --card-opacity: 1;
+      --seedx: 0.3; --seedy: 0.6; --cosmosbg: 20px 40px; --birthdaybg: 30px 60px;
+    }
+    .row { display: flex; flex-wrap: wrap; gap: 24px; margin: 0 0 24px; }
+    .row h2 { width: 100%; margin: 0; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <main id="grid"></main>
+  <script type="module">
+    const params = new URLSearchParams(location.search);
+    const setId = params.get("set") || "sv3pt5";
+    const nums = (params.get("cards") || "").split(",").filter(Boolean);
+    const poses = (params.get("poses") || "30:25,50:50,75:70").split(",");
+    const width = Number(params.get("w")) || 280;
+    const cards = await (await fetch(`/data/${setId}.json`)).json();
+    // Our rarity names to upstream's data-rarity values.
+    const RARITY = {
+      Rare: "rare holo", "Double Rare": "double rare", "Illustration Rare": "illustration rare",
+      "Ultra Rare": "ultra rare", "Special Illustration Rare": "special illustration rare", "Hyper Rare": "hyper rare",
+    };
+    // Upstream's CardProxy: --foil is the etch map on etched prints, else the
+    // foil map; --mask is always the foil map.
+    const ETCHED = new Set(["Ultra Rare", "Special Illustration Rare", "Hyper Rare"]);
+    const pose = (x, y) => {
+      const px = x / 100, py = y / 100, r = Math.min(1, Math.hypot(px - 0.5, py - 0.5) * 2);
+      return `--pointer-x:${x}%;--pointer-y:${y}%;--pointer-from-left:${px};--pointer-from-top:${py};` +
+        `--pointer-from-center:${r};--rotate-x:${(0.5 - px) * 28}deg;--rotate-y:${(py - 0.5) * 28}deg;` +
+        `--background-x:${37 + px * 26}%;--background-y:${33 + py * 34}%;`;
+    };
+    // Absolute, like the textures above: these are custom properties too.
+    const cache = new URL(`./cache/${setId}/`, location.href).pathname;
+    if (params.get("tex") === "cache") {
+      const dir = new URL("./cache/upstream151/", location.href).pathname;
+      const tex = { iri7: "iri-7", iri8: "iri-8", iri9: "iri-9", birthday: "birthday-holo",
+        "birthday-dank": "birthday-holo-dank", "birthday-dank2": "birthday-holo-dank-2",
+        noise: "noise-base", "noise-over": "noise-top" };
+      const style = document.createElement("style");
+      style.textContent = `.card { ${Object.entries(tex).map(([k, f]) => `--${k}: url(${dir}${f}.webp);`).join(" ")} }`;
+      document.head.appendChild(style);
+    }
+    let html = "";
+    for (const p of poses) {
+      const [x, y] = p.split(":").map(Number);
+      html += `<section class="row"><h2>upstream ${p}</h2>`;
+      for (const n of nums) {
+        const c = cards.find((card) => card.number === n);
+        if (!c) continue;
+        const mask = `${cache}${n}.foil.png`;
+        const foil = ETCHED.has(c.rarity) ? `${cache}${n}.etch.png` : mask;
+        html += `<div class="card interactive masked ${String((c.types || [""])[0]).toLowerCase()}"
+          data-rarity="${RARITY[c.rarity] || "common"}" data-supertype="${c.supertype.toLowerCase()}"
+          data-subtypes="${(c.subtypes || []).join(" ").toLowerCase()}"
+          style="--w:${width}px;--mask:url(${mask});--foil:url(${foil});${pose(x, y)}">
+          <div class="card__translater"><button class="card__rotator"><div class="card__front">
+            <img src="/${c.image}" alt="${c.name}" />
+            <div class="card__shine"></div><div class="card__glitter"></div>
+            <div class="card__glare"></div><div class="card__glare2"></div>
+          </div></button></div></div>`;
+      }
+      html += "</section>";
+    }
+    document.querySelector("#grid").innerHTML = html;
+    await Promise.all([...document.images].map((img) => img.decode().catch(() => {})));
+    document.body.dataset.ready = "1";
+  </script>
+</body>
+</html>

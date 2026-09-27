@@ -26,6 +26,17 @@ is not all of them (a Build & Battle Box holds one of four at random), and
 set's own (Miscellaneous Cards & Products, 2374). A product whose id matches one of SEALED_PRODUCTS
 (eliteTrainerBox) only adds its promos to that product.
 
+A promo set with no boosters of its own (svp, the SV Black Star Promos)
+names the sets its products' packs come from instead of `packs`:
+
+    { "id": "charizard-ex-premium", "kind": "premium", "tcgplayerId": 516576,
+      "from": { "sv3": 3, "sv2": 3 }, "promos": ["svp056"],
+      "note": "The real box held 6 assorted Scarlet & Violet packs." }
+
+and sells a promo handed out on its own (a tournament reward, a museum
+giveaway) as `"kind": "event"`: the card alone, priced from its own listing
+in the promo group (`tcgplayerGroup` 22872), with no box photo.
+
 This script then:
 
   * writes each promo card into data/<id>.json as `<id>-<number>` with
@@ -272,13 +283,21 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         base = cards.get(f"{set_id}-{spec['like']}")
         if not base:
             raise RuntimeError(f"{number}: like {spec['like']} is not in data/{set_id}.json yet")
-        keep = {k: v for k, v in base.items() if k not in (
-            "image", "imageSmall", "imageRemote", "market", "foilMap", "etchMap",
-            "etchMapH", "etchMapV", "stampPos", "stampSize", "variant", "tcgplayerId")}
+        drop = ["image", "imageSmall", "imageRemote", "market", "stampPos", "stampSize", "variant", "tcgplayerId", "reverseMap"]
+        # `keepMaps`: the same print in another foil (151's cosmos holo Rares,
+        # the UPC's metal Mew ex) still foils where the set card does.
+        if not spec.get("keepMaps"):
+            drop += ["foilMap", "etchMap", "etchMapH", "etchMapV"]
+        # `keepScan`: a print that differs from the set card only in its foil
+        # (151's cosmos holos) keeps the set card's clean scan. A scan of the
+        # foil print bakes the foil in dark, and the foil engine draws it again.
+        if spec.get("keepScan"):
+            drop = [k for k in drop if k not in ("image", "imageSmall", "imageRemote")]
+        keep = {k: v for k, v in base.items() if k not in drop}
         record = {**keep, "id": card_id, "number": number}
         if "printedNumber" not in record:
             record["printedNumber"] = f"{base['number']}/{cfg.get('printedTotal', '')}".rstrip("/")
-        remote = TCG_IMAGE.format(id=spec["tcgplayerId"])
+        remote = "" if spec.get("keepScan") else TCG_IMAGE.format(id=spec["tcgplayerId"])
     else:
         parts = split_number(number, series)
         if not parts:
@@ -308,12 +327,13 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     record["name"] = str(record.get("name", "")).strip().replace("’", "'")
     record["rarity"] = "Promo"
     record["promo"] = True
-    for key in ("foilAs", "variant", "tcgplayerId", "printedNumber"):
+    # `foilMap`: a hand-made map for a print TCG Live has none for.
+    for key in ("foilAs", "variant", "tcgplayerId", "printedNumber", "foilMap"):
         if spec.get(key):
             record[key] = spec[key]
     record = merge(prior, record) if prior else record
     # A rebuild must not keep a mirrored path that points at another card's scan.
-    if not prior:
+    if not prior and remote:
         record["imageRemote"] = remote
     return ordered(record), price, remote
 
@@ -400,7 +420,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
                 price = listed_price(*parts)
         else:
             record, price, remote = promo_record(cfg, number, spec, cards, refresh)
-            if refresh or not str(record.get("image", "")).startswith("assets/"):
+            if remote and (refresh or not str(record.get("image", "")).startswith("assets/")):
                 mirror(set_id, record, remote, refresh)
         # A stamped or product-only print is priced from its own TCGplayer
         # listing, and so is a promo pkmn.gg has no price for.
@@ -434,11 +454,14 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         if missing:
             raise RuntimeError(f"{product['id']}: promo card(s) {missing} not built")
         released = (info.get("presaleInfo") or {}).get("releasedOn") or ""
+        source = {str(k): int(v) for k, v in (product.get("from") or {}).items() if int(v) > 0}
         entry = {
             "id": product["id"],
             "name": product["name"],
             "kind": product.get("kind", "collection"),
-            "packs": int(product.get("packs", 0)),
+            "packs": sum(source.values()) if source else int(product.get("packs", 0)),
+            **({"from": source} if source else {}),
+            **({"note": product["note"]} if product.get("note") else {}),
             **({"special": product["special"]} if product.get("special") else {}),
             "promos": promos,
             **({"pick": int(product["pick"])} if product.get("pick") else {}),
@@ -446,7 +469,10 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             "tcgplayerId": pid,
             **({"released": released[:10]} if released else {}),
         }
-        if not prices_only or not (ROOT / f"assets/products/{set_id}/{product['id']}.webp").exists():
+        if entry["kind"] == "event":
+            # The card is the product: its own scan stands in for a box photo.
+            image = None
+        elif not prices_only or not (ROOT / f"assets/products/{set_id}/{product['id']}.webp").exists():
             image = save_product_image(set_id, product, refresh)
         else:
             image = f"assets/products/{set_id}/{product['id']}.webp"
@@ -454,7 +480,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             entry["image"] = image
         out.append(entry)
         product_prices[product["id"]] = price
-        print(f"    {product['id']:<16} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}")
+        print(f"    {product['id']:<24} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}")
     price_history.record(set_id, "sealed", product_prices, today)
     return out
 

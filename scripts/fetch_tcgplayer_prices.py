@@ -50,6 +50,12 @@ SEALED_NAMES = [
 ]
 
 
+# Prismatic Evolutions' Poké Ball and Master Ball prints are products of their
+# own; data/<id>.json files them as cards <n>-pb and <n>-mb (build_patterns.py).
+PATTERN = re.compile(r"\s+\((Poke|Master) Ball Pattern\)$", re.I)
+PATTERN_SUFFIX = {"poke": "pb", "master": "mb"}
+
+
 def fetch(group: int, what: str) -> list[dict]:
     req = urllib.request.Request(TCGCSV.format(group=group, what=what), headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=60) as resp:
@@ -57,9 +63,12 @@ def fetch(group: int, what: str) -> list[dict]:
 
 
 def norm(name: str) -> str:
+    name = PATTERN.sub("", name)
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
+    # Which professor a Professor's Research shows ("[Professor Oak]").
+    name = re.sub(r"\s+\[[^\]]*\]$", "", name)
     # TCGplayer spells Nidoran's symbols out ("Nidoran F"); our data keeps ♀/♂.
     name = name.replace("♀", " F").replace("♂", " M").replace("’", "'")
     # ...and drops accents ("Flabebe" for Flabébé).
@@ -83,7 +92,14 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         ext = {e["name"]: e["value"] for e in product.get("extendedData", [])}
         number = ext.get("Number", "")
         if re.fullmatch(r"\d+/\d+", number):
-            by_number[str(int(number.split("/")[0]))] = product
+            pattern = PATTERN.search(product["name"])
+            suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""
+            key = str(int(number.split("/")[0])) + suffix
+            # Any other variant print filed under the same number ("Mew ex -
+            # 205/165 (151 Metal Card)") never displaces the pack print.
+            if not pattern and key in by_number and product["name"].endswith(")"):
+                continue
+            by_number[key] = product
 
     wrong = [
         (c["number"], c["name"], by_number[c["number"]]["name"])

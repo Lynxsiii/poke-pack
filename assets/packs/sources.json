@@ -1,7 +1,7 @@
 {
   "source": "https://pokesymbols.com/tcg/booster-pack-art",
   "urlPattern": "https://pokesymbols.com/images/tcg/sets/booster-pack-art/{set-slug}-pack-{n}.avif",
-  "note": "Newer sets are isolated AVIFs with real alpha. Vintage Base Set files from the same folder are tight pack photos without alpha.",
+  "note": "Mega Evolution sets and Scarlet & Violet from Journey Together on are isolated AVIFs with real alpha. Older Scarlet & Violet packs (and the 30th Classic Collection pack) come flattened onto white: run scripts/clean_pack_art.py on them after downloading. Vintage Base Set files from the same folder are tight pack photos without alpha.",
   "sets": {
       "me5": {
       "name": "Pitch Black",
@@ -95,6 +95,14 @@
         { "id": "miraidon", "remote": "scarlet-and-violet-pack-1.avif", "file": "sv1/pack-1.avif" },
         { "id": "gyarados", "remote": "scarlet-and-violet-pack-2.avif", "file": "sv1/pack-2.avif" },
         { "id": "koraidon", "remote": "scarlet-and-violet-pack-3.avif", "file": "sv1/pack-3.avif" }
+      ]
+    },
+    "sv3pt5": {
+      "name": "151",
+      "slug": "151",
+      "note": "The only upstream file has no alpha; resized to 400x731 and cut with the Black Bolt wrapper's edge alpha.",
+      "packs": [
+        { "id": "mew", "remote": "151-pack-0.avif", "file": "sv3pt5/mew.avif" }
       ]
     }
   }

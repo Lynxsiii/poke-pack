@@ -45,9 +45,12 @@ export const HIT_RARITIES = new Set([
   "RGB Rare",
   "Shiny Rare",
   "Shiny Ultra Rare",
+  // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
+  // for many times their base card.
+  "Master Ball",
 ]);
 
-/** Hits are rarity-slot cards. A Poké Ball Double Rare is still a reverse. */
+/** Hits are rarity-slot cards (and Master Ball prints). A reverse never is. */
 export function isHit(card) {
   return Boolean(card) && !card.reverse && HIT_RARITIES.has(card.rarity);
 }
@@ -65,14 +68,22 @@ export function poolsFrom(cards, set) {
   const reverseRarities = set?.reverseRarities || ["Common", "Uncommon", "Rare"];
   const pokeballRarities = set?.pokeballRarities || reverseRarities;
   const reversePool = pokemonOrTrainer.filter((c) => reverseRarities.includes(c.rarity));
-  const pokeballPool = pokemonOrTrainer.filter((c) => pokeballRarities.includes(c.rarity));
-  // Prismatic Master Ball printings are C/U/R Pokémon only — not trainers, not ex.
-  const masterballPool = pokemonOrTrainer.filter(
-    (c) =>
-      ["Common", "Uncommon", "Rare"].includes(c.rarity) &&
-      c.supertype !== "Trainer" &&
-      !isExCard(c)
-  );
+  // A set that files its pattern prints as cards of their own (Prismatic
+  // Evolutions, scripts/build_patterns.py) deals those. Otherwise the ball
+  // is a reverse finish on a pool card.
+  const printed = (kind) => pokemonOrTrainer.filter((c) => c.pattern === kind);
+  const pokeballPool = printed("pokeball").length
+    ? printed("pokeball")
+    : pokemonOrTrainer.filter((c) => pokeballRarities.includes(c.rarity));
+  // Master Ball finishes are C/U/R Pokémon only — not trainers, not ex.
+  const masterballPool = printed("masterball").length
+    ? printed("masterball")
+    : pokemonOrTrainer.filter(
+      (c) =>
+        ["Common", "Uncommon", "Rare"].includes(c.rarity) &&
+        c.supertype !== "Trainer" &&
+        !isExCard(c)
+    );
   // Basic Energy comes in runs (BASIC_ENERGY in js/catalog.js); a set's slot
   // keeps to its own. Energy from the set's own data always qualifies.
   const energyPrint = set?.energyPrint || "";
@@ -81,11 +92,15 @@ export function poolsFrom(cards, set) {
       (c) =>
         (c.rarity === "Energy" || c.energy) &&
         !c.reverse &&
+        !c.foilAs &&
         (!String(c.id).startsWith("energy-") || (c.energyPrint || "") === energyPrint)
     ),
     // Shrouded Fable's reverse holo basic Energy: set cards that are always
     // reverse, rolled in the Energy slot's own table.
     reverseEnergy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && c.reverse),
+    // A set's own foil printings of the basic Energies (151's Cosmos holos)
+    // are a separate roll, never mixed into the plain ones.
+    foilEnergy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && !c.reverse && c.foilAs),
     common: pokemonOrTrainer.filter((c) => c.rarity === "Common"),
     uncommon: pokemonOrTrainer.filter((c) => c.rarity === "Uncommon"),
     rare: pokemonOrTrainer.filter((c) => c.rarity === "Rare" || c.rarity === "Rare Holo"),
@@ -136,7 +151,26 @@ function reverseKind(slot) {
 }
 
 function pullReverse(pools, used, kind) {
-  return asReverse(pick(reversePoolFor(pools, kind), used), kind);
+  const card = pick(reversePoolFor(pools, kind), used);
+  // A pattern print is a card of its own, not a reverse of one.
+  return card.pattern ? card : asReverse(card, kind);
+}
+
+/** The slots a god pack fills, in the order its cards go into them. */
+const GOD_SLOTS = new Set(["reverse", "rare-slot", "art-slot"]);
+
+/**
+ * A god pack (`set.godPack`) is a rare pack whose foil slots hold one fixed
+ * run of cards instead of rolling: 151's English "demigod" packs are a
+ * starter's whole evolution line in Illustration and Special Illustration
+ * art. Returns that run, or null for an ordinary pack.
+ */
+function rollGodPack(set, cards) {
+  const god = set.godPack;
+  if (!god || !(Math.random() < god.rate)) return null;
+  const line = god.lines[Math.floor(Math.random() * god.lines.length)];
+  const picked = line.map((id) => cards.find((card) => card.id === id));
+  return picked.every(Boolean) ? picked.map((card) => ({ ...card })) : null;
 }
 
 /** 4C + 3U + reverse + rare slot + art slot + energy. No pity. */
@@ -145,10 +179,13 @@ export function ripPack(set, cards) {
   const pools = poolsFrom(cards, set);
   const used = new Set();
   const pulls = [];
+  const god = rollGodPack(set, cards);
 
   for (const slot of set.slots) {
     for (let i = 0; i < slot.count; i += 1) {
-      if (slot.pool === "rare-slot") {
+      if (god?.length && GOD_SLOTS.has(slot.pool)) {
+        pulls.push(god.shift());
+      } else if (slot.pool === "rare-slot") {
         pulls.push(pick(pools[rollTable(slot.table)], used));
       } else if (slot.pool === "art-slot") {
         const key = rollTable(slot.table);

@@ -42,6 +42,20 @@ Two extras, both written with --ship and recorded with --write-data:
   arcs whose grey matches the pointer (css/holo/shiny-vault.css). It is
   blurred, so it ships small at half size.
 
+Other prints of a card: --variant fetches one of TCG Live's other prints
+instead of the numbered (`std`) one. `ph` is the reverse holo, whose map
+carries the set's reverse pattern (Prismatic Evolutions prints type symbols
+and Tera crystals there); it ships as <n>-rev.webp, recorded as `reverseMap`
+on card <n>. `sph` and `mph` are the Poké Ball and Master Ball pattern prints;
+they ship as <n>-ball.webp (and <n>-master.webp) and are recorded as
+`foilMap`/`etchMap` on the cards named by --onto: `--variant sph --onto pb,mb`
+stamps cards <n>-pb and <n>-mb, the prints scripts/build_patterns.py files as
+cards of their own. --no-etch skips the etch maps (the Prismatic pattern
+prints' etch is one texture shared by every card, which the site ships once).
+
+    python3 .claude/skills/card-textures/scripts/fetch_foil_maps.py --set sv8pt5 --all --variant ph --ship --write-data
+    python3 .claude/skills/card-textures/scripts/fetch_foil_maps.py --set sv8pt5 --all --variant sph --onto pb,mb --no-etch --ship --write-data
+
 Set keys: SETS below maps a site set id to TCG Live's key, plus any cards
 filed under another key. Other sets: --key, or add a row after checking
 https://cdn.malie.io/file/malie-io/tcgl/export/index.json.
@@ -69,7 +83,12 @@ ETCH_WIDTH = 400
 SETS = {
     "me55": ("me5-5", {"R": ("me5-5m", 1), "G": ("me5-5m", 2), "B": ("me5-5m", 3)}),
     "sv4pt5": ("sv4-5", {}),
+    "sv8pt5": ("sv8-5", {}),
 }
+
+# TCG Live's print variants (the code in each print's longFormID) -> the
+# suffix their maps ship under. See "Other prints of a card" above.
+VARIANT_FILE = {"std": "", "ph": "-rev", "sph": "-ball", "mph": "-master"}
 
 
 # Foil maps TCG Live files under the wrong card, as (site set, site number):
@@ -80,6 +99,11 @@ FOIL_SWAPS = {
     ("sv8", "162"): 164,
     ("sv8", "164"): 162,
 }
+
+
+def cached(n: str, variant: str) -> str:
+    """Cache file stem: <n> for the numbered print, <n>-<variant> for the others."""
+    return n if variant == "std" else f"{n}-{variant}"
 
 
 def curl(url: str, dest: Path) -> bool:
@@ -189,13 +213,24 @@ def main() -> None:
     ap.add_argument("--write-data", action="store_true", help="stamp foilMap/etchMap onto data/<set>.json")
     ap.add_argument("--etch-bins", default="", help="card numbers whose etch maps get split by line direction")
     ap.add_argument("--etch-angle", default="", help='card numbers that get a line-direction map, or "etched" for all')
+    ap.add_argument("--variant", default="std", choices=sorted(VARIANT_FILE), help="which TCG Live print (default std)")
+    ap.add_argument("--onto", default="", help="sph/mph: card suffixes that get the maps, e.g. pb,mb")
+    ap.add_argument("--no-etch", action="store_true", help="skip etch maps")
     args = ap.parse_args()
+    variant = args.variant
+    onto = [s.strip() for s in args.onto.split(",") if s.strip()]
+    if args.write_data and variant in ("sph", "mph") and not onto:
+        sys.exit("--variant sph/mph needs --onto to say which cards get the maps")
 
     data_path = ROOT / "data" / f"{args.set}.json"
     raw = data_path.read_text(encoding="utf-8")
     cards = json.loads(raw)
     records = cards if isinstance(cards, list) else cards["cards"]
-    numbers = [str(c["number"]) for c in records] if args.all else [n.strip() for n in args.cards.split(",") if n.strip()]
+    # Pattern prints (build_patterns.py) take their maps through --onto.
+    numbers = (
+        [str(c["number"]) for c in records if not c.get("pattern")]
+        if args.all else [n.strip() for n in args.cards.split(",") if n.strip()]
+    )
     if not numbers:
         sys.exit("give --cards or --all")
 
@@ -208,15 +243,15 @@ def main() -> None:
             unknown.append(n)
             continue
         key, num = src
-        for kind in ("foil", "etch"):
-            dest = cache / f"{n}.{kind}.png"
-            if dest.exists() or (cache / f"{n}.{kind}.none").exists():
+        for kind in ("foil",) if args.no_etch else ("foil", "etch"):
+            dest = cache / f"{cached(n, variant)}.{kind}.png"
+            if dest.exists() or (cache / f"{cached(n, variant)}.{kind}.none").exists():
                 continue
             at = FOIL_SWAPS.get((args.set, n), num) if kind == "foil" else num
-            if curl(f"{BASE}/{key}/{key}_en_{at:03d}_std.{kind}.png", dest):
+            if curl(f"{BASE}/{key}/{key}_en_{at:03d}_{variant}.{kind}.png", dest):
                 fetched += 1
             else:
-                (cache / f"{n}.{kind}.none").touch()  # remember the miss; etch maps are rare
+                (cache / f"{cached(n, variant)}.{kind}.none").touch()  # remember the miss; etch maps are rare
     print(f"{fetched} maps fetched into {cache}")
     if unknown:
         print(f"no TCG Live source for: {', '.join(unknown)} (not in the export, or add them to SETS)")
@@ -229,19 +264,26 @@ def main() -> None:
     bins = {n.strip() for n in args.etch_bins.split(",") if n.strip()}
     angles = {n.strip() for n in args.etch_angle.split(",") if n.strip()}
     shipped = {}
+    stem = VARIANT_FILE[variant]
     for n in numbers:
+        # A card with no TCG Live source (151's Cosmos Energies, numbered "—")
+        # keeps whatever maps it was given by hand.
+        if n in unknown:
+            continue
         entry = {}
-        foil, etch = cache / f"{n}.foil.png", cache / f"{n}.etch.png"
+        foil, etch = cache / f"{cached(n, variant)}.foil.png", cache / f"{cached(n, variant)}.etch.png"
+        if args.no_etch:
+            etch = cache / "-"
         colour = foil.exists() and is_colour_map(foil)
         split = etch.exists() and n in bins
         angle = etch.exists() and (n in angles or "etched" in angles)
         if foil.exists():
-            entry["foilMap"] = f"{rel}/{n}.webp"
+            entry["foilMap"] = f"{rel}/{n}{stem}.webp"
         if colour:
             for c in "RGB":
-                entry[f"foilMap{c}"] = f"{rel}/{n}-foil-{c.lower()}.webp"
+                entry[f"foilMap{c}"] = f"{rel}/{n}{stem}-foil-{c.lower()}.webp"
         if etch.exists():
-            entry["etchMap"] = f"{rel}/{n}-etch.webp"
+            entry["etchMap"] = f"{rel}/{n}{stem}-etch.webp"
         if split:
             entry["etchMapH"] = f"{rel}/{n}-etch-h.webp"
             entry["etchMapV"] = f"{rel}/{n}-etch-v.webp"
@@ -250,12 +292,12 @@ def main() -> None:
         if args.ship and entry:
             out.mkdir(parents=True, exist_ok=True)
             if foil.exists():
-                alpha_mask(foil).save(out / f"{n}.webp", "WEBP", quality=85, alpha_quality=80, method=6)
+                alpha_mask(foil).save(out / f"{n}{stem}.webp", "WEBP", quality=85, alpha_quality=80, method=6)
             if colour:
                 for i, c in enumerate("rgb"):
-                    channel_mask(foil, i).save(out / f"{n}-foil-{c}.webp", "WEBP", quality=85, alpha_quality=80, method=6)
+                    channel_mask(foil, i).save(out / f"{n}{stem}-foil-{c}.webp", "WEBP", quality=85, alpha_quality=80, method=6)
             if etch.exists():
-                alpha_mask(etch, ETCH_WIDTH).save(out / f"{n}-etch.webp", "WEBP", quality=80, alpha_quality=80, method=6)
+                alpha_mask(etch, ETCH_WIDTH).save(out / f"{n}{stem}-etch.webp", "WEBP", quality=80, alpha_quality=80, method=6)
             if split:
                 h, v = etch_bins(etch, ETCH_WIDTH)
                 h.save(out / f"{n}-etch-h.webp", "WEBP", quality=80, alpha_quality=80, method=6)
@@ -269,11 +311,18 @@ def main() -> None:
 
     if args.write_data:
         changed = 0
+        fields = ("foilMap", "foilMapR", "foilMapG", "foilMapB", "etchMap", "etchMapH", "etchMapV", "etchAngle")
+        # Which card each shipped entry lands on, and under which field names.
+        if variant == "ph":
+            fields = ("reverseMap",)
+            shipped = {n: {"reverseMap": e["foilMap"]} if e.get("foilMap") else {} for n, e in shipped.items()}
+        elif variant in ("sph", "mph"):
+            shipped = {f"{n}-{suffix}": e for n, e in shipped.items() for suffix in onto}
         for record in records:
             n = str(record["number"])
             if n not in shipped:
                 continue
-            for field in ("foilMap", "foilMapR", "foilMapG", "foilMapB", "etchMap", "etchMapH", "etchMapV", "etchAngle"):
+            for field in fields:
                 value = shipped[n].get(field)
                 if value and record.get(field) != value:
                     record[field] = value

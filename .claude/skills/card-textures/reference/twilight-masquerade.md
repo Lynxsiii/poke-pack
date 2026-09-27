@@ -54,8 +54,9 @@ Promos don't pull from packs, so they borrow a pack rarity's recipe with
   `svp123`. The rest are Rares and promos with busy art (Ting-Lu 110,
   Infernape 33) scoring slightly above a faint map. Overlay the flagged
   map on its own scan before believing a swap.
-- A Future or Ancient Rare (19 Iron Leaves, 63 Walking Wake) needs the
-  `frame-paradox` fix or its attacks go black under the light.
+- A Future or Ancient Rare (19 Iron Leaves, 63 Walking Wake) went black
+  across its attacks under the old Rare recipe. The current one keeps them
+  readable (see [sv-rare-holo.md](sv-rare-holo.md)).
 
 ## Verify
 
