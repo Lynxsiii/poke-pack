@@ -37,8 +37,10 @@ Card N of the list is `<id>-N` (or `<id>-<stem>` with a `stem`).
 
 Every card is priced at the TCGplayer market price of its own print
 (Holofoil for a holo, Normal otherwise) and keeps its `tcgplayerId`. Scans
-are mirrored to assets/cards/<id>/ at the site's two sizes. Products (the
-bundles) are built by build_products.py from the same config.
+are mirrored to assets/cards/<id>/ at the site's two sizes. `sealed` maps
+data/sealed.json keys to TCGplayer listings ({"boosterPack": 505945}, the
+single mini pack). Products (the bundles) are built by build_products.py
+from the same config's `products`.
 
 Usage:
     python3 scripts/build_side_sets.py tot23 tot24 mcd23 mcd24 sve
@@ -65,6 +67,7 @@ from mirror_images import encode  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 SETS = DATA / "sets"
+SEALED = DATA / "sealed.json"
 CACHE = ROOT / "scripts" / ".cache" / "side-sets"
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) poke-pack.rip side set builder"
@@ -239,6 +242,11 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> int:
             for key in SPEC_FIELDS:
                 if key in spec:
                     record[key] = spec[key]
+            # A Rare printed without foil (Trick or Trade's Banette, the 2024
+            # Chandelure) would otherwise take the Rare holo: it borrows the
+            # Common's look, which is none.
+            if not record.get("holo") and record.get("rarity") == "Rare":
+                record["foilAs"] = "Common"
             if spec.get("tcgl"):
                 subtypes = record.get("subtypes") or []
                 evolves = "Stage 1" in subtypes or "Stage 2" in subtypes
@@ -249,6 +257,15 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> int:
         if value:
             record["market"] = value
         built[card_id] = ordered(record)
+
+    # The single pack's own TCGplayer listing is what one pack costs here
+    # (packCost() in worker/index.js); the bundles are build_products.py's.
+    sealed = {key: market(prices.get(pid, {}), False) for key, pid in cfg.get("sealed", {}).items()}
+    sealed = {key: value for key, value in sealed.items() if value}
+    if sealed:
+        store = json.loads(SEALED.read_text(encoding="utf-8"))
+        store.setdefault(set_id, {}).update(sealed)
+        SEALED.write_text(json.dumps(store, indent=2) + "\n", encoding="utf-8", newline="\n")
 
     cards = list(built.values())
     path.write_text(json.dumps(cards, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

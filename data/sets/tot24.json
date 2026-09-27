@@ -3,6 +3,25 @@
   "name": "Trick or Trade 2024",
   "side": true,
   "tcgplayerGroup": 23561,
+  "sealed": {
+    "boosterPack": 579930
+  },
+  "products": [
+    {
+      "id": "booster-bundle-35",
+      "name": "Trick or Trade BOOster Bundle (35 packs)",
+      "kind": "bundle",
+      "tcgplayerId": 558713,
+      "packs": 35
+    },
+    {
+      "id": "booster-bundle-120",
+      "name": "Trick or Trade BOOster Bundle (120 packs)",
+      "kind": "bundle",
+      "tcgplayerId": 591211,
+      "packs": 120
+    }
+  ],
   "cards": [
     {
       "from": "scarlet-violet/paldea-evolved/12",

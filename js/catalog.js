@@ -148,6 +148,7 @@ const PRODUCT_KINDS = {
   blister: { short: "Blister", noun: "blister" },
   deck: { short: "Deck", noun: "deck" },
   battle: { short: "Box", noun: "box" },
+  bundle: { short: "Bundle", noun: "bundle" },
 };
 
 /**
@@ -1388,6 +1389,129 @@ export const SCARLET_VIOLET = {
   ]),
 };
 
+/**
+ * The Scarlet & Violet side sets: packs sold outside the expansions, filled
+ * by print rather than by rarity (the `holo` and `plain` pools in
+ * js/engine.js). Each card keeps the rarity symbol printed on it; `holo` says
+ * whether this printing is foil. Checklists, foils and prices are built by
+ * scripts/build_side_sets.py from data/sets/<id>.json; the research is in
+ * .claude/skills/card-textures/reference/sv-side-sets.md.
+ *
+ * Trick or Trade BOOster Bundles hold three-card mini packs, one holo and two
+ * non-holo in each (PokeBeach; Sleeve No Card Behind for 2024).
+ */
+function printSlots(plain, holo = 1) {
+  return [
+    { pool: "plain", count: plain },
+    { pool: "holo", count: holo },
+  ];
+}
+
+export const TRICK_OR_TRADE_2023 = {
+  id: "tot23",
+  name: "Trick or Trade 2023",
+  edition: "Trick or Trade",
+  era: "Scarlet & Violet",
+  released: "September 1, 2023",
+  live: true,
+  printedTotal: 30,
+  totalCount: 30,
+  packSize: 3,
+  cost: 2.38,
+  dataFile: "data/tot23.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Halloween 2023. Thirty spooky reprints from Sword & Shield to Paldea Evolved, each stamped with a jack-o'-lantern Pikachu, three cards a mini pack.",
+  oddsLine: "3 cards · 1 holo in every pack · 10 holos",
+  lede: "The BOOster Bundle's 50 mini packs were made to hand out instead of candy. Every pack has one holo, and every card wears the pumpkin Pikachu stamp.",
+  slots: printSlots(2),
+  heroIds: ["tot23-17", "tot23-29", "tot23-27", "tot23-9"],
+  wrappers: boosterWrappers("tot23", [
+    { id: "mimikyu", name: "Mimikyu & Pikachu", cardId: "tot23-29", tag: "Boo" },
+  ]),
+};
+
+/**
+ * Trick or Trade 2024: the holos moved to a Cosmos foil on the art's
+ * background and the silver border (TCGplayer's scans), and Chandelure and
+ * Houndstone came non-holo. The bundle's 35 packs were pre-sorted into ten
+ * combinations (Bulbapedia, unsourced); packs here are drawn at random.
+ */
+export const TRICK_OR_TRADE_2024 = {
+  id: "tot24",
+  name: "Trick or Trade 2024",
+  edition: "Trick or Trade",
+  era: "Scarlet & Violet",
+  released: "August 30, 2024",
+  live: true,
+  printedTotal: 30,
+  totalCount: 30,
+  packSize: 3,
+  cost: 1.95,
+  dataFile: "data/tot24.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Halloween 2024. Thirty reprints from Paldea Evolved to Twilight Masquerade with the pumpkin Pikachu stamp, and Cosmos holos this time.",
+  oddsLine: "3 cards · 1 Cosmos holo in every pack · 10 holos",
+  lede: "Gengar, Darkrai and the Loyal Three in Cosmos holo, one in every mini pack, with the pumpkin Pikachu stamp on every card.",
+  slots: printSlots(2),
+  heroIds: ["tot24-14", "tot24-10", "tot24-6", "tot24-11"],
+  wrappers: boosterWrappers("tot24", [
+    { id: "trevenant", name: "Trevenant & Gengar", cardId: "tot24-14", tag: "Boo" },
+  ]),
+};
+
+/**
+ * McDonald's Happy Meal promos: four-card packs. In 2023 each held one
+ * confetti holo and three non-holo (Bulbapedia). For 2024 Bulbapedia only says
+ * the Scarlet & Violet cards are holo and the Sword & Shield ones are not, so
+ * its packs are split the same way as 2023's. The confetti foil covers the
+ * art's background and the silver border (css/holo/side-sets.css).
+ */
+export const MCDONALDS_2023 = {
+  id: "mcd23",
+  name: "McDonald's Match Battle 2023",
+  edition: "McDonald's",
+  era: "Scarlet & Violet",
+  released: "September 12, 2023",
+  live: true,
+  printedTotal: 15,
+  totalCount: 15,
+  packSize: 4,
+  cost: 6.47,
+  dataFile: "data/mcd23.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Happy Meal promos, 2023. Paldea's starters, Pikachu and friends in a 15-card Match Battle set, four cards a pack.",
+  oddsLine: "4 cards · 1 holo in every pack · 6 holos",
+  lede: "The Match Battle Happy Meal set: each pack has one confetti holo. The holo Pikachu is the one to find.",
+  slots: printSlots(3),
+  heroIds: ["mcd23-6", "mcd23-2", "mcd23-1", "mcd23-3"],
+  wrappers: boosterWrappers("mcd23", [
+    { id: "starters", name: "Paldea's starters & Pikachu", cardId: "mcd23-6", tag: "Match Battle" },
+  ]),
+};
+
+export const MCDONALDS_2024 = {
+  id: "mcd24",
+  name: "McDonald's Dragon Discovery",
+  edition: "McDonald's",
+  era: "Scarlet & Violet",
+  released: "January 21, 2025",
+  live: true,
+  printedTotal: 15,
+  totalCount: 15,
+  packSize: 4,
+  cost: 8.98,
+  dataFile: "data/mcd24.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Happy Meal promos, the 2024 collection. Dragon types and Pikachu, 15 cards, four a pack.",
+  oddsLine: "4 cards · 1 holo in every pack · 7 holos",
+  lede: "Dragonite, Koraidon, Miraidon and Roaring Moon in confetti holo, one to a pack. Charizard is in here too, non-holo.",
+  slots: printSlots(3),
+  heroIds: ["mcd24-12", "mcd24-2", "mcd24-1", "mcd24-11"],
+  wrappers: boosterWrappers("mcd24", [
+    { id: "dragonite", name: "Dragonite & Pikachu", cardId: "mcd24-12", tag: "Dragon Discovery" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1409,6 +1533,10 @@ export const PLAYABLE_SETS = [
   PALDEA_EVOLVED,
   SHROUDED_FABLE,
   SCARLET_VIOLET,
+  MCDONALDS_2024,
+  TRICK_OR_TRADE_2024,
+  MCDONALDS_2023,
+  TRICK_OR_TRADE_2023,
 ];
 
 /**
