@@ -1,0 +1,99 @@
+{
+  "id": "mcd23",
+  "name": "McDonald's Match Battle 2023",
+  "side": true,
+  "series": "other",
+  "slug": "mcdonalds-collection-2023",
+  "scrydexId": "mcd23",
+  "printedTotal": 15,
+  "tcgplayerGroup": 23306,
+  "defaults": {
+    "rarity": "Promo"
+  },
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 516512,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "svalt/sv1_en_013_alt",
+      "border": true
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 516513,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "svalt/sv1_en_036_alt",
+      "border": true
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 516514,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "svalt/sv1_en_052_alt",
+      "border": true
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 516515
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 516516,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "window",
+      "border": true
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 516517,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "window",
+      "border": true
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 516518
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 516519
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 516520
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 516521
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 516522,
+      "holo": true,
+      "foilAs": "Confetti",
+      "tcgl": "sv1/sv1_en_122_std",
+      "border": true
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 516523
+    },
+    {
+      "number": "13",
+      "tcgplayerId": 516524
+    },
+    {
+      "number": "14",
+      "tcgplayerId": 516525
+    },
+    {
+      "number": "15",
+      "tcgplayerId": 516526
+    }
+  ]
+}

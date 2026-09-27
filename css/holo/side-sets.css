@@ -1,0 +1,92 @@
+/*
+ * Finishes of the Scarlet & Violet side sets (js/catalog.js): the McDonald's
+ * Happy Meal promos. The research behind them is in the card-textures skill,
+ * .claude/skills/card-textures/reference/sv-side-sets.md.
+ *
+ * Layer ideas follow pokemon-cards-css by Simon Goellner (@simeydotme),
+ * GPL-3.0; see NOTICE.md. The flake texture is the 30th Celebration's
+ * cracked-ice tile (scripts/make_celebration_textures.py).
+ *
+ * Same contract as celebration.css and promos.css: each finish rides on a
+ * second class next to foil-holo (foilPattern() in js/app.js), sets every
+ * paint property the older recipes set, paints `.foil` alone at rest
+ * (0.18 x --foil-strength) and never animates on its own. The foil map
+ * (maps.css) says where the card is foil.
+ */
+
+/* ---- Confetti: McDonald's 2023 and 2024 --------------------------------------
+   The Happy Meal holo. Irregular angular flecks, bigger and sparser than a
+   cracked-ice print, each catching its own colour, over the art background
+   and the whole silver border (the text box and the Pokémon stay plain).
+   Flecks wink as the card turns instead of the whole field sliding. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti {
+  --confetti: url("/assets/foil/celebration/cracked-ice.webp");
+  --confetti-rainbow: repeating-linear-gradient(0deg,
+    hsl(2, 100%, 73%) 5%, hsl(53, 100%, 69%) 10%, hsl(93, 100%, 69%) 15%,
+    hsl(176, 100%, 76%) 20%, hsl(228, 100%, 74%) 25%, hsl(283, 100%, 73%) 30%, hsl(2, 100%, 73%) 35%);
+  --confetti-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti .foil {
+  background-image:
+    var(--confetti),
+    var(--confetti-rainbow),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, #7a7a7a 38%, #1a1a1a 95%);
+  background-size: 34% auto, 200% 700%, cover;
+  background-position: var(--confetti-pos), 0% var(--background-y), center;
+  background-repeat: repeat;
+  background-blend-mode: exclusion, multiply;
+  filter: brightness(calc(0.62 + var(--pointer-from-center) * 0.25)) contrast(2.1) saturate(1.25);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti:not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+/* Clear what the older holo recipes put on the pseudo layers first. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 1;
+}
+/* The same flakes a few pixels off, counter-shifting, so single flakes flash
+   on and off as the light crosses them. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti .foil::before {
+  background-image: var(--confetti);
+  background-size: 34% auto;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left) - 0.5) * 7px)
+    calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top) - 0.5) * 7px);
+  mix-blend-mode: difference;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: 0.45;
+}
+/* A broad pale sweep, the flat sheen of the foil between the flakes. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti .foil::after {
+  background-image: linear-gradient(115deg,
+    transparent 25%, hsla(190, 80%, 80%, 0.35) 42%, hsla(300, 70%, 82%, 0.35) 52%,
+    hsla(55, 90%, 80%, 0.35) 62%, transparent 78%);
+  background-size: 300% 300%;
+  background-position: calc(((50% - var(--background-x)) * 2.4) + 50%) calc(((50% - var(--background-y)) * 2.4) + 50%);
+  mix-blend-mode: screen;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.65) 5%, hsla(0, 0%, 100%, 0.2) 30%, hsla(0, 0%, 0%, 0.3) 95%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-confetti .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}

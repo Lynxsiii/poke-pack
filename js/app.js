@@ -493,7 +493,7 @@ function isAllFoil(card) {
 function foilClass(card) {
   if (!card) return "";
   if (card.reverse) return "rare-glow";
-  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Pikachu Rare", "Cosmos"].includes(card.rarity)) return "holo";
+  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Pikachu Rare", "Cosmos", "Confetti"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
 }
@@ -573,6 +573,8 @@ function foilPattern(card) {
   if (card.rarity === "Pikachu Rare") return "foil-holo foil-pikachu";
   // Collection-box promos (css/holo/promos.css).
   if (card.rarity === "Cosmos") return "foil-holo foil-cosmos";
+  // McDonald's Happy Meal holos (css/holo/side-sets.css).
+  if (card.rarity === "Confetti") return "foil-holo foil-confetti";
   if (card.rarity === "ACE SPEC Rare") return card.foilMap ? "foil-holo foil-acespec" : "foil-holo";
   // TCG Live's SUN_PILLAR and SV_HOLO recipes need the card's foil map to keep
   // off the Pokémon, so they only replace the older recipes where one ships.
