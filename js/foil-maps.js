@@ -24,8 +24,9 @@ export function cureOf(card) {
   if (card?.rarity === "Pikachu Rare") return "rings";
   // SouthernCross is TCG Live's name for the Double Rare star coat. Only cards
   // with a foil map are confirmed to carry it (every Double Rare in the
-  // Mega ex era is not).
-  if (card?.rarity === "Double Rare" && card.foilMap) return "stars";
+  // Mega ex era is not). Tera ex Double Rares print SV_ULTRA etched foil
+  // instead and carry no coat.
+  if (card?.rarity === "Double Rare" && card.foilMap && !(card.subtypes || []).includes("Tera")) return "stars";
   return "";
 }
 
