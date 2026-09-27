@@ -1186,6 +1186,50 @@ function renderBulkSets() {
     <div class="bulk-era-sets">${setBtns || `<p class="bulk-era-empty">No sets in this era yet.</p>`}</div>`;
 }
 
+/*
+ * Long card grids (a set's collection, the binder's card picker) draw only the
+ * cards within a screen and a half of what is showing. Every face is a scan
+ * plus a masked, filtered, blended foil, and holding a whole 200-card set of
+ * them at once was enough for a phone to kill the tab and reload the site.
+ * A holder is an element with `data-face="<index into faces>"` that keeps the
+ * card's size while empty; faces mount as they come near and unmount once
+ * they are far away, so memory stays at a few screens however far you scroll.
+ */
+const FACE_REACH = 1.5;
+const faceWindows = new Map();
+
+function windowFaces(key, holders, faces, render, root = null) {
+  faceWindows.get(key)?.disconnect();
+  faceWindows.delete(key);
+  if (!holders.length) return;
+  const draw = (holder, near) => {
+    const face = holder.firstElementChild;
+    if (near) {
+      if (!face) holder.innerHTML = render(faces[holder.dataset.face]);
+    } else if (face && !face.matches(".lit, .settling")) {
+      holder.replaceChildren();
+    }
+  };
+  if (!("IntersectionObserver" in window)) {
+    holders.forEach((holder) => draw(holder, true));
+    return;
+  }
+  // Draw what is near the screen now, so a re-render (a sale, a filter) does
+  // not blink empty for a frame while the observer catches up.
+  const box = root ? root.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
+  const reach = (box.bottom - box.top) * FACE_REACH;
+  for (const holder of holders) {
+    const rect = holder.getBoundingClientRect();
+    if (rect.height && rect.bottom > box.top - reach && rect.top < box.bottom + reach) draw(holder, true);
+  }
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((entry) => draw(entry.target, entry.isIntersecting)),
+    { root, rootMargin: `${FACE_REACH * 100}% 0px` }
+  );
+  holders.forEach((holder) => observer.observe(holder));
+  faceWindows.set(key, observer);
+}
+
 function renderCollection({ refreshSets = true } = {}) {
   const q = (els.search?.value || "").trim().toLowerCase();
   const rarity = rarityMode;
@@ -1248,6 +1292,7 @@ function renderCollection({ refreshSets = true } = {}) {
   }
 
   if (!list.length) {
+    windowFaces("collection", [], [], tcgFace);
     els.dexGrid.innerHTML = `<div class="bulk-empty">
       <b>Nothing in this view.</b>
       <span>Try another filter, or rip a pack to fill the set.</span>
@@ -1255,11 +1300,12 @@ function renderCollection({ refreshSets = true } = {}) {
     return;
   }
 
+  const faces = list.map((card) => ((state.collection[card.id] || 0) < 1 ? card : withOwnedFoil(card)));
   els.dexGrid.innerHTML = list
-    .map((card) => {
+    .map((card, i) => {
       const count = state.collection[card.id] || 0;
       const missing = count < 1;
-      const face = missing ? card : withOwnedFoil(card);
+      const face = faces[i];
       const sell = !activeTrainer()
         ? `<span class="slot-miss">Sign in</span>`
         : count > 0
@@ -1269,9 +1315,7 @@ function renderCollection({ refreshSets = true } = {}) {
         : `<span class="slot-miss">Unpulled</span>`;
       return `<article class="binder-slot bulk-card ${missing ? "missing" : ""}">
         ${count > 1 ? `<span class="count-badge">×${count}</span>` : ""}
-        <button type="button" class="slot-face" ${inspectAttrs(face)} aria-label="${esc(card.name)}">
-          ${tcgFace(face, { small: true, lazy: true })}
-        </button>
+        <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}"></button>
         <div class="slot-meta">
           <b>${esc(card.name)}</b>
           <span>${esc(numberLine(card))} · ${rarityPips(card.rarity)} ${esc(rarityLine(face))}</span>
@@ -1283,6 +1327,9 @@ function renderCollection({ refreshSets = true } = {}) {
       </article>`;
     })
     .join("");
+  windowFaces("collection", els.dexGrid.querySelectorAll("[data-face]"), faces, (face) =>
+    tcgFace(face, { small: true, lazy: true })
+  );
 }
 
 function catalogCard(set, { live = false } = {}) {
@@ -1373,15 +1420,14 @@ function binderCandidates() {
   return out.sort((a, b) => sellValue(b.card) - sellValue(a.card));
 }
 
-function binderPickerHtml() {
+function binderPickerHtml(options) {
   if (binderPicking == null) return "";
-  const options = binderCandidates();
   const body = options.length
     ? `<div class="picker-grid">${options
         .map(
-          ({ card, spare }) => `<button type="button" class="picker-card" data-pick="${esc(card.id)}"
+          ({ card, spare }, i) => `<button type="button" class="picker-card" data-pick="${esc(card.id)}"
             title="${esc(card.name)}">
-            ${tcgFace(card, { small: true, stamp: false })}
+            <span class="picker-face" data-face="${i}"></span>
             <span class="picker-name">${esc(card.name)}</span>
             <span class="picker-meta">✦ ${coin(sellValue(card))}${spare > 1 ? ` · ${spare} spare` : ""}</span>
           </button>`
@@ -1426,6 +1472,7 @@ function renderBinder() {
       : "No cards on show yet";
   }
 
+  const options = binderPicking == null ? [] : binderCandidates();
   els.binderBody.innerHTML = `
     <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} / ${PROFILE_PAGE_LIMIT} pages on your profile</span><small>Displayed pages update when you change their cards.</small></div>
     <div class="binder-spread">
@@ -1437,7 +1484,15 @@ function renderBinder() {
       <span>Pages ${left + 1}–${Math.min(right + 1, pages)} of ${pages}</span>
       <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next ›</button>
     </div>
-    ${binderPickerHtml()}`;
+    ${binderPickerHtml(options)}`;
+  const picker = els.binderBody.querySelector(".picker");
+  windowFaces(
+    "picker",
+    picker?.querySelectorAll("[data-face]") || [],
+    options.map((option) => option.card),
+    (card) => tcgFace(card, { small: true, stamp: false, lazy: true }),
+    picker
+  );
 }
 
 function renderCatalog() {
