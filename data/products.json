@@ -2329,5 +2329,98 @@
       "released": "2024-01-26",
       "image": "assets/products/sv4pt5/tech-greavard.webp"
     }
+  ],
+  "sv8": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv8-svp159"
+      ],
+      "price": 121.42,
+      "tcgplayerId": 565630,
+      "released": "2024-11-08",
+      "image": "assets/products/sv8/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv8-svp159-pc",
+        "sv8-svp159"
+      ],
+      "price": 270.33,
+      "tcgplayerId": 565632,
+      "released": "2024-11-08",
+      "image": "assets/products/sv8/pc-etb.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv8-svp151",
+        "sv8-svp152",
+        "sv8-svp153",
+        "sv8-svp154"
+      ],
+      "pick": 1,
+      "price": 62.57,
+      "tcgplayerId": 565599,
+      "image": "assets/products/sv8/build-battle.webp"
+    },
+    {
+      "id": "blister3-zapdos",
+      "name": "3 Pack Blister: Zapdos",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv8-svp157"
+      ],
+      "price": 47.49,
+      "tcgplayerId": 565634,
+      "image": "assets/products/sv8/blister3-zapdos.webp"
+    },
+    {
+      "id": "blister3-quagsire",
+      "name": "3 Pack Blister: Quagsire",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv8-svp156"
+      ],
+      "price": 43.44,
+      "tcgplayerId": 565635,
+      "image": "assets/products/sv8/blister3-quagsire.webp"
+    },
+    {
+      "id": "blister-wooper",
+      "name": "Single Pack Blister: Wooper",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv8-svp155"
+      ],
+      "price": 12.84,
+      "tcgplayerId": 565636,
+      "image": "assets/products/sv8/blister-wooper.webp"
+    },
+    {
+      "id": "blister-pachirisu",
+      "name": "Single Pack Blister: Pachirisu",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv8-svp158"
+      ],
+      "price": 11.87,
+      "tcgplayerId": 565637,
+      "image": "assets/products/sv8/blister-pachirisu.webp"
+    }
   ]
 }
