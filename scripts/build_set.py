@@ -116,6 +116,9 @@ RARITY_ALIASES = {
     "Rare Holo": "Rare",
     "Rare Holofoil": "Rare",
     "Holo Rare": "Rare",
+    # Unrated cards (30th Celebration's RGB Mews) come through as the string
+    # "None". Blank it so merge() keeps the rarity the set already has.
+    "None": "",
 }
 
 # pkmn.gg writes energy symbols as single letters ("[G] Energy"); the existing

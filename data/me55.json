@@ -8,9 +8,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-1/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-1/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-1/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Nelnal",
+    "image": "assets/cards/me55/1.webp",
+    "imageSmall": "assets/cards/me55/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnosis",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-1/large",
+    "market": 0.18
   },
   {
     "id": "me55-2",
@@ -19,11 +35,39 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-2/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-2/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-2/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "Oswaldo KATO",
+    "evolvesFrom": "Exeggcute",
+    "image": "assets/cards/me55/2.webp",
+    "imageSmall": "assets/cards/me55/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Heal 50 damage from this Pokémon"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Scale Up",
+        "text": "If this Pokémon has 6 or more Grass Energy attached, it gets +250 HP.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-2/large",
+    "market": 0.25
   },
   {
     "id": "me55-3",
@@ -34,9 +78,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-3/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-3/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-3/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Yoriyuki Ikegami",
+    "image": "assets/cards/me55/3.webp",
+    "imageSmall": "assets/cards/me55/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Luring Glow",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Switch in 1 of your opponent's Benched Pokémon to the Active Spot."
+      },
+      {
+        "name": "Bug Buzz",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-3/large",
+    "market": 0.18
   },
   {
     "id": "me55-4",
@@ -47,9 +117,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-4/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-4/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-4/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Shibuzoh.",
+    "image": "assets/cards/me55/4.webp",
+    "imageSmall": "assets/cards/me55/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Supereffective Pheromones",
+        "text": "If you have Volbeat in play, apply Weakness for both Active Pokémon as x3",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-4/large",
+    "market": 0.23
   },
   {
     "id": "me55-5",
@@ -60,9 +154,36 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-5/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-5/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-5/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Minahamu",
+    "image": "assets/cards/me55/5.webp",
+    "imageSmall": "assets/cards/me55/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Rally Back",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If any of your Pokémon were Knocked Out by damage from an attack during your opponent's last turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Cutting Wind",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-5/large",
+    "market": 0.18
   },
   {
     "id": "me55-6",
@@ -73,9 +194,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-6/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-6/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-6/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Kurata So",
+    "image": "assets/cards/me55/6.webp",
+    "imageSmall": "assets/cards/me55/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Hide",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      },
+      {
+        "name": "Flop",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-6/large",
+    "market": 0.14
   },
   {
     "id": "me55-7",
@@ -84,11 +229,38 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-7/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-7/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-7/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "takashi shiraishi",
+    "evolvesFrom": "Cherubi",
+    "image": "assets/cards/me55/7.webp",
+    "imageSmall": "assets/cards/me55/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Gift",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck."
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-7/large",
+    "market": 0.18
   },
   {
     "id": "me55-8",
@@ -97,11 +269,37 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-8/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-8/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-8/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Jerky",
+    "evolvesFrom": "Spewpa",
+    "image": "assets/cards/me55/8.webp",
+    "imageSmall": "assets/cards/me55/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Powder",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Guiding Dance",
+        "text": "Once during your turn, you may use this Ability. Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-8/large",
+    "market": 0.12
   },
   {
     "id": "me55-9",
@@ -112,9 +310,118 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-9/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-9/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-9/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "miki kudo",
+    "image": "assets/cards/me55/9.webp",
+    "imageSmall": "assets/cards/me55/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Wild Kick",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-9/large",
+    "market": 0.14
+  },
+  {
+    "id": "me55-B",
+    "name": "Mew",
+    "number": "B",
+    "rarity": "RGB Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "YOSHIROTTEN",
+    "image": "assets/cards/me55/B.webp",
+    "imageSmall": "assets/cards/me55/B-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "10+",
+        "text": "This attack does 40 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-B/large",
+    "printedNumber": "B",
+    "market": 0.0
+  },
+  {
+    "id": "me55-G",
+    "name": "Mew",
+    "number": "G",
+    "rarity": "RGB Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "YOSHIROTTEN",
+    "image": "assets/cards/me55/G.webp",
+    "imageSmall": "assets/cards/me55/G-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "10+",
+        "text": "This attack does 40 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-G/large",
+    "printedNumber": "G",
+    "market": 0.0
+  },
+  {
+    "id": "me55-R",
+    "name": "Mew",
+    "number": "R",
+    "rarity": "RGB Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "YOSHIROTTEN",
+    "image": "assets/cards/me55/R.webp",
+    "imageSmall": "assets/cards/me55/R-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "10+",
+        "text": "This attack does 40 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-R/large",
+    "printedNumber": "R",
+    "market": 6499.64
   },
   {
     "id": "me55-10",
@@ -123,11 +430,29 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-10/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-10/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-10/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "kodama",
+    "evolvesFrom": "Vulpix",
+    "image": "assets/cards/me55/10.webp",
+    "imageSmall": "assets/cards/me55/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Tail",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-10/large",
+    "market": 0.2
   },
   {
     "id": "me55-11",
@@ -138,9 +463,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-11/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-11/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-11/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "HYOGONOSUKE",
+    "image": "assets/cards/me55/11.webp",
+    "imageSmall": "assets/cards/me55/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fiery Flapping",
+        "text": "Once during your turn, if you have Articuno and Zapdos in play, you may use this Ability. Attach a Basic Fire Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-11/large",
+    "market": 0.25
   },
   {
     "id": "me55-12",
@@ -151,9 +501,36 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-12/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-12/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-12/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Anesaki Dynamic",
+    "image": "assets/cards/me55/12.webp",
+    "imageSmall": "assets/cards/me55/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Sacred Breath",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard all Energy from this Pokémon. Heal all damage from 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Fire Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-12/large",
+    "market": 0.28
   },
   {
     "id": "me55-13",
@@ -164,9 +541,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-13/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-13/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-13/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Jiro Sasumo",
+    "image": "assets/cards/me55/13.webp",
+    "imageSmall": "assets/cards/me55/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "V-Flame",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-13/large",
+    "market": 0.16
   },
   {
     "id": "me55-14",
@@ -177,9 +579,36 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-14/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-14/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-14/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Uta",
+    "image": "assets/cards/me55/14.webp",
+    "imageSmall": "assets/cards/me55/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Laser Flame",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon has any Lightning Energy attached, this attack does 80 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-14/large",
+    "market": 0.21
   },
   {
     "id": "me55-15",
@@ -191,9 +620,35 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-15/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-15/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-15/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me55/15.webp",
+    "imageSmall": "assets/cards/me55/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Cheerful Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "70×",
+        "text": "This attack does 70 damage for each Prize card you have taken."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-15/large",
+    "market": 0.43
   },
   {
     "id": "me55-16",
@@ -204,9 +659,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-16/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-16/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-16/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Uninori",
+    "image": "assets/cards/me55/16.webp",
+    "imageSmall": "assets/cards/me55/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Well-Hidden",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-16/large",
+    "market": 0.24
   },
   {
     "id": "me55-17",
@@ -217,9 +697,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-17/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-17/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-17/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Masa",
+    "image": "assets/cards/me55/17.webp",
+    "imageSmall": "assets/cards/me55/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Ferry Across",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Ice Beam",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-17/large",
+    "market": 0.19
   },
   {
     "id": "me55-18",
@@ -230,9 +736,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-18/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-18/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-18/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "HYOGONOSUKE",
+    "image": "assets/cards/me55/18.webp",
+    "imageSmall": "assets/cards/me55/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Hail",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frosty Flapping",
+        "text": "Once during your turn, if you have Moltres and Zapdos in play, you may use this Ability. Attach a Basic Water Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-18/large",
+    "market": 0.3
   },
   {
     "id": "me55-19",
@@ -243,9 +774,28 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-19/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-19/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-19/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Tonji Matsuno",
+    "image": "assets/cards/me55/19.webp",
+    "imageSmall": "assets/cards/me55/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 30 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-19/large",
+    "market": 0.23
   },
   {
     "id": "me55-20",
@@ -256,9 +806,27 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-20/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-20/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-20/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "kawayoo",
+    "image": "assets/cards/me55/20.webp",
+    "imageSmall": "assets/cards/me55/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Wormhole",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon. If you do, switch out your oppoennt's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-20/large",
+    "market": 0.2
   },
   {
     "id": "me55-21",
@@ -267,12 +835,39 @@
     "rarity": "Double Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 2",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-21/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-21/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-21/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/me55/21.webp",
+    "imageSmall": "assets/cards/me55/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Stealthy Slash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon for each damage counter on that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-21/large",
+    "market": 0.57
   },
   {
     "id": "me55-22",
@@ -283,9 +878,32 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-22/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-22/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-22/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Narano",
+    "image": "assets/cards/me55/22.webp",
+    "imageSmall": "assets/cards/me55/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Counterattack Grouping",
+        "text": "If your Wishiwashi or Wishiwashi ex is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if your Pokémon is Knocked Out), place 3 damage counters on the Attacking Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-22/large",
+    "market": 0.2
   },
   {
     "id": "me55-23",
@@ -296,9 +914,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-23/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-23/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-23/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/me55/23.webp",
+    "imageSmall": "assets/cards/me55/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-23/large",
+    "market": 1.9
   },
   {
     "id": "me55-24",
@@ -309,9 +944,27 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-24/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-24/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-24/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "danciao",
+    "image": "assets/cards/me55/24.webp",
+    "imageSmall": "assets/cards/me55/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Volt Tackle",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-24/large",
+    "market": 1.79
   },
   {
     "id": "me55-25",
@@ -322,9 +975,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-25/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-25/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-25/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "satoma",
+    "image": "assets/cards/me55/25.webp",
+    "imageSmall": "assets/cards/me55/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Spark",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-25/large",
+    "market": 0.95
   },
   {
     "id": "me55-26",
@@ -335,9 +1005,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-26/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-26/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-26/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Takeshi Nakamura",
+    "image": "assets/cards/me55/26.webp",
+    "imageSmall": "assets/cards/me55/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Peer At",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals their hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-26/large",
+    "market": 1.66
   },
   {
     "id": "me55-27",
@@ -348,9 +1034,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-27/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-27/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-27/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Asako Ito",
+    "image": "assets/cards/me55/27.webp",
+    "imageSmall": "assets/cards/me55/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Nap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-27/large",
+    "market": 2.21
   },
   {
     "id": "me55-28",
@@ -361,9 +1063,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-28/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-28/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-28/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "sowsow",
+    "image": "assets/cards/me55/28.webp",
+    "imageSmall": "assets/cards/me55/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Pika Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lonely Gaze",
+        "text": "As long as this Pokémon is in the Active Spot, attacks used by your opponent's Active Pokémon do 20 less damage (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-28/large",
+    "market": 1.86
   },
   {
     "id": "me55-29",
@@ -374,9 +1100,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-29/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-29/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-29/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "James Turner",
+    "image": "assets/cards/me55/29.webp",
+    "imageSmall": "assets/cards/me55/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Find a Friend",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-29/large",
+    "market": 1.88
   },
   {
     "id": "me55-30",
@@ -387,9 +1129,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-30/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-30/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-30/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "DOM",
+    "image": "assets/cards/me55/30.webp",
+    "imageSmall": "assets/cards/me55/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Mach Bolt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-30/large",
+    "market": 1.13
   },
   {
     "id": "me55-31",
@@ -400,9 +1158,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-31/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-31/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-31/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Atsushi Furusawa",
+    "image": "assets/cards/me55/31.webp",
+    "imageSmall": "assets/cards/me55/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-31/large",
+    "market": 1.46
   },
   {
     "id": "me55-32",
@@ -413,9 +1187,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-32/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-32/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-32/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/me55/32.webp",
+    "imageSmall": "assets/cards/me55/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Scurry About",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-32/large",
+    "market": 3.37
   },
   {
     "id": "me55-33",
@@ -426,9 +1216,32 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-33/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-33/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-33/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Narumi Sato",
+    "image": "assets/cards/me55/33.webp",
+    "imageSmall": "assets/cards/me55/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Tiny Charge",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Keep Hidden",
+        "text": "As long as this Pokémon is on your Bench, prevent all damage from and effects of attacks from your opponent's Pokémon done to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-33/large",
+    "market": 1.5
   },
   {
     "id": "me55-34",
@@ -439,9 +1252,27 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-34/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-34/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-34/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "USGMEN",
+    "image": "assets/cards/me55/34.webp",
+    "imageSmall": "assets/cards/me55/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Pika Chain",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage for each of your Pikachu and Pikachu ex in play."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-34/large",
+    "market": 2.78
   },
   {
     "id": "me55-35",
@@ -452,9 +1283,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-35/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-35/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-35/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Susumu Maeya",
+    "image": "assets/cards/me55/35.webp",
+    "imageSmall": "assets/cards/me55/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-35/large",
+    "market": 1.67
   },
   {
     "id": "me55-36",
@@ -465,9 +1313,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-36/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-36/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-36/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "OKACHEKE",
+    "image": "assets/cards/me55/36.webp",
+    "imageSmall": "assets/cards/me55/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Slight Intrusion",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-36/large",
+    "market": 2.99
   },
   {
     "id": "me55-37",
@@ -478,9 +1343,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-37/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-37/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-37/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Yuu Nishida",
+    "image": "assets/cards/me55/37.webp",
+    "imageSmall": "assets/cards/me55/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Energized Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for an Energy card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Pika Punch",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-37/large",
+    "market": 1.55
   },
   {
     "id": "me55-38",
@@ -491,9 +1381,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-38/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-38/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-38/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Tetsu Kayama",
+    "image": "assets/cards/me55/38.webp",
+    "imageSmall": "assets/cards/me55/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Targeted Spark",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-38/large",
+    "market": 1.42
   },
   {
     "id": "me55-39",
@@ -504,9 +1410,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-39/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-39/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-39/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Teeziro",
+    "image": "assets/cards/me55/39.webp",
+    "imageSmall": "assets/cards/me55/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-39/large",
+    "market": 2.16
   },
   {
     "id": "me55-40",
@@ -517,9 +1439,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-40/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-40/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-40/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Shinji Kanda",
+    "image": "assets/cards/me55/40.webp",
+    "imageSmall": "assets/cards/me55/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Overwriting Bolt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "The Defending Pokémon's Weakness is now Lightning until the end of your next turn. (Apply Weakness as x2.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-40/large",
+    "market": 5.72
   },
   {
     "id": "me55-41",
@@ -530,9 +1468,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-41/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-41/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-41/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Rianti Hidayat",
+    "image": "assets/cards/me55/41.webp",
+    "imageSmall": "assets/cards/me55/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Hang Down",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Zap Kick",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-41/large",
+    "market": 1.6
   },
   {
     "id": "me55-42",
@@ -543,9 +1507,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-42/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-42/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-42/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "image": "assets/cards/me55/42.webp",
+    "imageSmall": "assets/cards/me55/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge-Up Dash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin until you get tails. Search your deck for an amount of Basic Lightning Energy up to the number of heads and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Pika Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-42/large",
+    "market": 1.24
   },
   {
     "id": "me55-43",
@@ -556,9 +1546,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-43/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-43/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-43/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "OOYAMA",
+    "image": "assets/cards/me55/43.webp",
+    "imageSmall": "assets/cards/me55/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Tropical Vibes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This Pokémon is now Asleep. Draw cards until you have 6 cards in your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-43/large",
+    "market": 2.21
   },
   {
     "id": "me55-44",
@@ -569,9 +1576,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-44/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-44/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-44/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "akagi",
+    "image": "assets/cards/me55/44.webp",
+    "imageSmall": "assets/cards/me55/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Agility",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-44/large",
+    "market": 1.56
   },
   {
     "id": "me55-45",
@@ -582,9 +1605,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-45/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-45/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-45/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/me55/45.webp",
+    "imageSmall": "assets/cards/me55/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Nightime Stroll",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Static Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-45/large",
+    "market": 1.15
   },
   {
     "id": "me55-46",
@@ -595,9 +1643,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-46/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-46/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-46/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "svlt",
+    "image": "assets/cards/me55/46.webp",
+    "imageSmall": "assets/cards/me55/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Get Some Air",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This Pokémon recovers from all Special Conditions."
+      },
+      {
+        "name": "Smash Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-46/large",
+    "market": 1.37
   },
   {
     "id": "me55-47",
@@ -608,9 +1681,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-47/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-47/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-47/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/me55/47.webp",
+    "imageSmall": "assets/cards/me55/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-47/large",
+    "market": 1.58
   },
   {
     "id": "me55-48",
@@ -621,9 +1710,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-48/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-48/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-48/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "KIYOTAKA OSHIYAMA",
+    "image": "assets/cards/me55/48.webp",
+    "imageSmall": "assets/cards/me55/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Store Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put up to 2 Basic Energy cards from your discard pile into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-48/large",
+    "market": 1.8
   },
   {
     "id": "me55-49",
@@ -634,9 +1739,27 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-49/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-49/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-49/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Nurikabe",
+    "image": "assets/cards/me55/49.webp",
+    "imageSmall": "assets/cards/me55/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Fighting Lightning",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex, this attack does 80 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-49/large",
+    "market": 1.38
   },
   {
     "id": "me55-50",
@@ -647,9 +1770,28 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-50/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-50/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-50/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Shimaris Yukichi",
+    "image": "assets/cards/me55/50.webp",
+    "imageSmall": "assets/cards/me55/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Satisfied Spark",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-50/large",
+    "market": 1.74
   },
   {
     "id": "me55-51",
@@ -660,9 +1802,27 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-51/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-51/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-51/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "nagimiso",
+    "image": "assets/cards/me55/51.webp",
+    "imageSmall": "assets/cards/me55/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Crash",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Discard all Lightning Energy from this Pokémon, and this attack does 90 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-51/large",
+    "market": 1.17
   },
   {
     "id": "me55-52",
@@ -673,9 +1833,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-52/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-52/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-52/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Kazuki Minami",
+    "image": "assets/cards/me55/52.webp",
+    "imageSmall": "assets/cards/me55/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Angry Bolt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-52/large",
+    "market": 1.31
   },
   {
     "id": "me55-53",
@@ -687,9 +1863,35 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-53/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-53/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-53/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me55/53.webp",
+    "imageSmall": "assets/cards/me55/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Pika-Pika Parade",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-53/large",
+    "market": 1.76
   },
   {
     "id": "me55-54",
@@ -701,9 +1903,35 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-54/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-54/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-54/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "takuyoa",
+    "image": "assets/cards/me55/54.webp",
+    "imageSmall": "assets/cards/me55/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Zip-Zap Frenzy",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "You may attach any number of Basic Energy cards from your hand to your Pokémon in any way you like."
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-54/large",
+    "market": 2.26
   },
   {
     "id": "me55-55",
@@ -714,9 +1942,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-55/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-55/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-55/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "HYOGONOSUKE",
+    "image": "assets/cards/me55/55.webp",
+    "imageSmall": "assets/cards/me55/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundering Lightning",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "This Pokémon also does 60 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flash-Pop Flapping",
+        "text": "Once during your turn, if you have Moltres and Articuno in play, you may use this Ability. Attach a Basic Lightning Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-55/large",
+    "market": 0.21
   },
   {
     "id": "me55-56",
@@ -727,9 +1981,36 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-56/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-56/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-56/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "akagi",
+    "image": "assets/cards/me55/56.webp",
+    "imageSmall": "assets/cards/me55/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Nitro Thunder",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon has any Fire Energy attaches, this attack does 80 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-56/large",
+    "market": 0.22
   },
   {
     "id": "me55-57",
@@ -740,9 +2021,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-57/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-57/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-57/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "Bun Toujo",
+    "image": "assets/cards/me55/57.webp",
+    "imageSmall": "assets/cards/me55/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Electrobullet",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-57/large",
+    "market": 0.16
   },
   {
     "id": "me55-58",
@@ -753,9 +2059,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-58/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-58/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-58/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Shimaris Yukichi",
+    "image": "assets/cards/me55/58.webp",
+    "imageSmall": "assets/cards/me55/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-58/large",
+    "market": 0.14
   },
   {
     "id": "me55-59",
@@ -764,11 +2086,30 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-59/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-59/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-59/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "Haru Akasaka",
+    "evolvesFrom": "Toxel",
+    "image": "assets/cards/me55/59.webp",
+    "imageSmall": "assets/cards/me55/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Mach Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-59/large",
+    "market": 0.15
   },
   {
     "id": "me55-60",
@@ -777,11 +2118,39 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-60/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-60/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-60/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "140",
+    "artist": "Yuriko Akase",
+    "evolvesFrom": "Toxel",
+    "image": "assets/cards/me55/60.webp",
+    "imageSmall": "assets/cards/me55/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Light Punch",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Thunderous Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-60/large",
+    "market": 0.17
   },
   {
     "id": "me55-61",
@@ -792,9 +2161,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-61/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-61/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-61/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Naoki Saito",
+    "image": "assets/cards/me55/61.webp",
+    "imageSmall": "assets/cards/me55/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Select a Snack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard the top 3 cards of your deck and put 1 of them into your hand."
+      },
+      {
+        "name": "Slap",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-61/large",
+    "market": 0.18
   },
   {
     "id": "me55-62",
@@ -805,9 +2198,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-62/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-62/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-62/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Kazumasa Yasukuni",
+    "image": "assets/cards/me55/62.webp",
+    "imageSmall": "assets/cards/me55/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Mach Bolt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Electro Drift",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "Discard 2 Lightning Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-62/large",
+    "market": 0.15
   },
   {
     "id": "me55-63",
@@ -818,9 +2237,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-63/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-63/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-63/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "nagimiso",
+    "image": "assets/cards/me55/63.webp",
+    "imageSmall": "assets/cards/me55/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Empower",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Basic Energy cards from your discard pile to 1 of your Pokémon."
+      },
+      {
+        "name": "Psydrive",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-63/large",
+    "market": 1.08
   },
   {
     "id": "me55-64",
@@ -832,9 +2277,36 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-64/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-64/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-64/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me55/64.webp",
+    "imageSmall": "assets/cards/me55/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Photon Bullets",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to each of your opponent's Pokémon ex. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Psychic Powers",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "230",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-64/large",
+    "market": 1.04
   },
   {
     "id": "me55-65",
@@ -845,9 +2317,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-65/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-65/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-65/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "danciao",
+    "image": "assets/cards/me55/65.webp",
+    "imageSmall": "assets/cards/me55/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "10+",
+        "text": "This attack does 40 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-65/large",
+    "market": 0.91
   },
   {
     "id": "me55-66",
@@ -859,9 +2348,32 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-66/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-66/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-66/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "160",
+    "artist": "aky CG Works",
+    "image": "assets/cards/me55/66.webp",
+    "imageSmall": "assets/cards/me55/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Teleportation Burst",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Memory Helix",
+        "text": "This Pokémon can use the attacks of any of your Benched Pokémon. (You still need the necessary Energy to use each attack.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-66/large",
+    "market": 6.26
   },
   {
     "id": "me55-67",
@@ -872,9 +2384,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-67/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-67/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-67/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Saya Tsuruta",
+    "image": "assets/cards/me55/67.webp",
+    "imageSmall": "assets/cards/me55/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-67/large",
+    "market": 0.16
   },
   {
     "id": "me55-68",
@@ -883,11 +2412,31 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-68/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-68/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-68/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Marill",
+    "image": "assets/cards/me55/68.webp",
+    "imageSmall": "assets/cards/me55/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-68/large",
+    "market": 0.16
   },
   {
     "id": "me55-69",
@@ -896,11 +2445,40 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-69/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-69/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-69/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "aspara",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/69.webp",
+    "imageSmall": "assets/cards/me55/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Miraculous Shine",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Devolve each of your opponent's evolved Pokémon by putting the highest Stage Evolution card on it into your opponent's hand."
+      },
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-69/large",
+    "market": 0.71
   },
   {
     "id": "me55-70",
@@ -909,12 +2487,31 @@
     "rarity": "Double Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 1",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-70/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-70/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-70/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/70.webp",
+    "imageSmall": "assets/cards/me55/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Beatdown",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each of your Pokémon in play."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-70/large",
+    "market": 1.08
   },
   {
     "id": "me55-71",
@@ -923,12 +2520,32 @@
     "rarity": "Double Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 1",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-71/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-71/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-71/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "270",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/71.webp",
+    "imageSmall": "assets/cards/me55/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Colorful Harmony",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each type of Basic Energy attached to all of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-71/large",
+    "market": 0.98
   },
   {
     "id": "me55-72",
@@ -939,9 +2556,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-72/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-72/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-72/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "mingo",
+    "image": "assets/cards/me55/72.webp",
+    "imageSmall": "assets/cards/me55/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Mysterious Signal",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "40",
+        "text": "If your opponent's Pokémon is Knocked Out by damage from this attack, take 1 more Prize card."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-72/large",
+    "market": 0.38
   },
   {
     "id": "me55-73",
@@ -952,9 +2586,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-73/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-73/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-73/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Shinya Komatsu",
+    "image": "assets/cards/me55/73.webp",
+    "imageSmall": "assets/cards/me55/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Float Up",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "You may shuffle this Pokémon and all attached cards into your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-73/large",
+    "market": 0.2
   },
   {
     "id": "me55-74",
@@ -965,9 +2615,36 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-74/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-74/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-74/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "KEIICHIRO ITO",
+    "image": "assets/cards/me55/74.webp",
+    "imageSmall": "assets/cards/me55/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Aurora Gain",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Lunar Blast",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-74/large",
+    "market": 0.19
   },
   {
     "id": "me55-75",
@@ -976,11 +2653,30 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-75/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-75/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-75/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Yoshioka",
+    "evolvesFrom": "Lampent",
+    "image": "assets/cards/me55/75.webp",
+    "imageSmall": "assets/cards/me55/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Eerie Glow",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130",
+        "text": "Your opponent's Active Pokémon is now Burned and Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-75/large",
+    "market": 0.18
   },
   {
     "id": "me55-76",
@@ -991,9 +2687,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-76/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-76/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-76/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "kodama",
+    "image": "assets/cards/me55/76.webp",
+    "imageSmall": "assets/cards/me55/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Geonavigation",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Stadium card, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Aurora Horns",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-76/large",
+    "market": 0.14
   },
   {
     "id": "me55-77",
@@ -1004,9 +2726,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-77/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-77/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-77/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "sui",
+    "image": "assets/cards/me55/77.webp",
+    "imageSmall": "assets/cards/me55/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Comforting Aroma",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 80 damage from 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-77/large",
+    "market": 0.15
   },
   {
     "id": "me55-78",
@@ -1017,9 +2763,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-78/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-78/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-78/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Mina Nakai",
+    "image": "assets/cards/me55/78.webp",
+    "imageSmall": "assets/cards/me55/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Splash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-78/large",
+    "market": 0.21
   },
   {
     "id": "me55-79",
@@ -1028,11 +2790,30 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-79/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-79/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-79/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Masako Tomii",
+    "evolvesFrom": "Cosmog",
+    "image": "assets/cards/me55/79.webp",
+    "imageSmall": "assets/cards/me55/79-sm.webp",
+    "attacks": [
+      {
+        "name": "Stiffen",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, this Pokémon takes 60 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-79/large",
+    "market": 0.18
   },
   {
     "id": "me55-80",
@@ -1041,11 +2822,39 @@
     "rarity": "Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-80/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-80/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-80/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "160",
+    "artist": "Bun Toujo",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/me55/80.webp",
+    "imageSmall": "assets/cards/me55/80-sm.webp",
+    "attacks": [
+      {
+        "name": "Midnight Ray",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each Energy card in your discard pile."
+      },
+      {
+        "name": "Lunar Blast",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-80/large",
+    "market": 0.19
   },
   {
     "id": "me55-81",
@@ -1056,9 +2865,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-81/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-81/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-81/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Fujimoto Gold",
+    "image": "assets/cards/me55/81.webp",
+    "imageSmall": "assets/cards/me55/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Strolls So Much",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for a card and put it into your hand. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-81/large",
+    "market": 0.16
   },
   {
     "id": "me55-82",
@@ -1069,9 +2894,29 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-82/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-82/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-82/large"
+    "types": [
+      "Fighting"
+    ],
+    "hp": "140",
+    "artist": "Takumi Wada",
+    "image": "assets/cards/me55/82.webp",
+    "imageSmall": "assets/cards/me55/82-sm.webp",
+    "attacks": [
+      {
+        "name": "Break Ground",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "250",
+        "text": "This attack also does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-82/large",
+    "market": 0.18
   },
   {
     "id": "me55-83",
@@ -1080,11 +2925,31 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-83/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-83/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-83/large"
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Hideki Ishikawa",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/me55/83.webp",
+    "imageSmall": "assets/cards/me55/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Aura Sphere",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack also does 60 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-83/large",
+    "market": 0.24
   },
   {
     "id": "me55-84",
@@ -1093,11 +2958,40 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-84/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-84/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-84/large"
+    "types": [
+      "Fighting"
+    ],
+    "hp": "160",
+    "artist": "Kurata So",
+    "evolvesFrom": "Palpitoad",
+    "image": "assets/cards/me55/84.webp",
+    "imageSmall": "assets/cards/me55/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Quaking Fist",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, whenever they try to use a Trainer card from their hand, they flip a coin. If tails, your opponent discards that Trainer card instead of using it."
+      },
+      {
+        "name": "Mega Punch",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-84/large",
+    "market": 0.17
   },
   {
     "id": "me55-85",
@@ -1106,11 +3000,38 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-85/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-85/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-85/large"
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "matazo",
+    "evolvesFrom": "Rockruff",
+    "image": "assets/cards/me55/85.webp",
+    "imageSmall": "assets/cards/me55/85-sm.webp",
+    "attacks": [
+      {
+        "name": "Counter",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10+",
+        "text": "If this Pokémon was damaged by an attack during your opponent's last turn, this attack does that much more damage."
+      },
+      {
+        "name": "Boulder Crush",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-85/large",
+    "market": 0.21
   },
   {
     "id": "me55-86",
@@ -1121,9 +3042,36 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-86/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-86/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-86/large"
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/me55/86.webp",
+    "imageSmall": "assets/cards/me55/86-sm.webp",
+    "attacks": [
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Collision Course",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "Discard 2 Fighting Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-86/large",
+    "market": 0.16
   },
   {
     "id": "me55-87",
@@ -1134,9 +3082,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-87/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-87/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-87/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Taira Akitsu",
+    "image": "assets/cards/me55/87.webp",
+    "imageSmall": "assets/cards/me55/87-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, attacks used by the Defending Pokémon do 30 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-87/large",
+    "market": 0.18
   },
   {
     "id": "me55-88",
@@ -1145,11 +3117,37 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-88/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-88/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-88/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Miki Tanaka",
+    "evolvesFrom": "Nidoran ♀",
+    "image": "assets/cards/me55/88.webp",
+    "imageSmall": "assets/cards/me55/88-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Share Happiness",
+        "text": "Once during your turn, you may use this Ability. Heal 30 damage from 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-88/large",
+    "market": 0.16
   },
   {
     "id": "me55-89",
@@ -1160,9 +3158,22 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-89/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-89/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-89/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Natsumi Yoshida",
+    "image": "assets/cards/me55/89.webp",
+    "imageSmall": "assets/cards/me55/89-sm.webp",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "damage": "10",
+        "text": "Draw a card."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-89/large",
+    "market": 0.17
   },
   {
     "id": "me55-90",
@@ -1171,12 +3182,38 @@
     "rarity": "Double Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 2",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-90/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-90/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-90/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/me55/90.webp",
+    "imageSmall": "assets/cards/me55/90-sm.webp",
+    "attacks": [
+      {
+        "name": "Chaotic Pain",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Place 13 damage counters on 1 of your opponent's Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fainting Spell",
+        "text": "If this Pokémon is Knocket Out by damage from an attack from your opponent's Pokémon, flip a coin. If heads, the Attacking Pokémon is Knocket Out.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-90/large",
+    "market": 3.35
   },
   {
     "id": "me55-91",
@@ -1185,11 +3222,39 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-91/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-91/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-91/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "Iori Suzuki",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/91.webp",
+    "imageSmall": "assets/cards/me55/91-sm.webp",
+    "attacks": [
+      {
+        "name": "Retaliate",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30+",
+        "text": "If any of your Pokémon were Knocked Out by damage from an attack during your opponent's last turn, this attack does 100 more damage."
+      },
+      {
+        "name": "Darkness Fang",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-91/large",
+    "market": 0.7
   },
   {
     "id": "me55-92",
@@ -1198,12 +3263,31 @@
     "rarity": "Double Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 1",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-92/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-92/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-92/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "270",
+    "artist": "Keisuke Azuma",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/92.webp",
+    "imageSmall": "assets/cards/me55/92-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunatic Claw",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 140 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-92/large",
+    "market": 1.45
   },
   {
     "id": "me55-93",
@@ -1214,9 +3298,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-93/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-93/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-93/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/me55/93.webp",
+    "imageSmall": "assets/cards/me55/93-sm.webp",
+    "attacks": [
+      {
+        "name": "Clumsily Clutch",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, during your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-93/large",
+    "market": 0.19
   },
   {
     "id": "me55-94",
@@ -1227,9 +3327,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-94/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-94/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-94/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Souichirou Gunjima",
+    "image": "assets/cards/me55/94.webp",
+    "imageSmall": "assets/cards/me55/94-sm.webp",
+    "attacks": [
+      {
+        "name": "Nitpick",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent shuffles their hand into their deck and draws 4 cards."
+      },
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-94/large",
+    "market": 0.19
   },
   {
     "id": "me55-95",
@@ -1240,9 +3365,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-95/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-95/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-95/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Atsuya Uki",
+    "image": "assets/cards/me55/95.webp",
+    "imageSmall": "assets/cards/me55/95-sm.webp",
+    "attacks": [
+      {
+        "name": "Darkness Fang",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-95/large",
+    "market": 0.18
   },
   {
     "id": "me55-96",
@@ -1251,11 +3393,37 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-96/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-96/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-96/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Shiburingaru",
+    "image": "assets/cards/me55/96.webp",
+    "imageSmall": "assets/cards/me55/96-sm.webp",
+    "attacks": [
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Nighttime Byway",
+        "text": "As long as this Pokémon is on your Bench, your Active Pokémon's Retreat Cost is 2 less.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-96/large",
+    "market": 0.16
   },
   {
     "id": "me55-97",
@@ -1266,9 +3434,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-97/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-97/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-97/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Gapao",
+    "image": "assets/cards/me55/97.webp",
+    "imageSmall": "assets/cards/me55/97-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-97/large",
+    "market": 0.18
   },
   {
     "id": "me55-98",
@@ -1277,11 +3470,38 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-98/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-98/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-98/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "IKEDA Saki",
+    "evolvesFrom": "Deino",
+    "image": "assets/cards/me55/98.webp",
+    "imageSmall": "assets/cards/me55/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-98/large",
+    "market": 0.15
   },
   {
     "id": "me55-99",
@@ -1290,11 +3510,38 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-99/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-99/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-99/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "Ryuta Fuse",
+    "evolvesFrom": "Zweilous",
+    "image": "assets/cards/me55/99.webp",
+    "imageSmall": "assets/cards/me55/99-sm.webp",
+    "attacks": [
+      {
+        "name": "Three-Headed Bite",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Flip 3 coins. For each heads, discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Pitch-Black Fangs",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-99/large",
+    "market": 0.16
   },
   {
     "id": "me55-100",
@@ -1305,9 +3552,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-100/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-100/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-100/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "hncl",
+    "image": "assets/cards/me55/100.webp",
+    "imageSmall": "assets/cards/me55/100-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Cutter",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Life-Locked",
+        "text": "Your opponent's Active Pokémon can't be healed.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-100/large",
+    "market": 0.21
   },
   {
     "id": "me55-101",
@@ -1318,9 +3590,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-101/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-101/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-101/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "Mékayu",
+    "image": "assets/cards/me55/101.webp",
+    "imageSmall": "assets/cards/me55/101-sm.webp",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Treasure Rush",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10×",
+        "text": "This attack does 10 damage for each card in your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-101/large",
+    "market": 0.17
   },
   {
     "id": "me55-102",
@@ -1332,9 +3628,35 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-102/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-102/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-102/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me55/102.webp",
+    "imageSmall": "assets/cards/me55/102-sm.webp",
+    "attacks": [
+      {
+        "name": "Wish Granter",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw cards until you have 7 cards in your hand."
+      },
+      {
+        "name": "Swift",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-102/large",
+    "market": 0.49
   },
   {
     "id": "me55-103",
@@ -1345,9 +3667,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-103/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-103/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-103/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "toriyufu",
+    "image": "assets/cards/me55/103.webp",
+    "imageSmall": "assets/cards/me55/103-sm.webp",
+    "attacks": [
+      {
+        "name": "Reversed Clock",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle up to 3 in any combination of Pokémon and Basic Energy cards from your discard pile into your deck."
+      },
+      {
+        "name": "Heavy Impact",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-103/large",
+    "market": 0.17
   },
   {
     "id": "me55-104",
@@ -1356,11 +3704,39 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-104/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-104/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-104/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Po-Suzuki",
+    "evolvesFrom": "Ferroseed",
+    "image": "assets/cards/me55/104.webp",
+    "imageSmall": "assets/cards/me55/104-sm.webp",
+    "attacks": [
+      {
+        "name": "Spike Sting",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Kaboom Needles",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) This Pokémon also does 130 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-104/large",
+    "market": 0.15
   },
   {
     "id": "me55-105",
@@ -1369,11 +3745,39 @@
     "rarity": "Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-105/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-105/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-105/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "170",
+    "artist": "Nurikabe",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/me55/105.webp",
+    "imageSmall": "assets/cards/me55/105-sm.webp",
+    "attacks": [
+      {
+        "name": "Sunsteel Strike",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sunrise",
+        "text": "Once during your turn, if this Pokémon is on your Bench, you may use this Ability. Search your deck for up to 2 Basic Metal Energy cards and attach them to this Pokémon. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-105/large",
+    "market": 0.2
   },
   {
     "id": "me55-106",
@@ -1384,9 +3788,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-106/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-106/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-106/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/me55/106.webp",
+    "imageSmall": "assets/cards/me55/106-sm.webp",
+    "attacks": [
+      {
+        "name": "Hardened Blade",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon has a Pokémon Tool attached, this attack does 40 more damage."
+      },
+      {
+        "name": "Slashing Strike",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your next turn, this Pokémon can't use Slashing Strike"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-106/large",
+    "market": 0.21
   },
   {
     "id": "me55-107",
@@ -1397,9 +3827,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-107/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-107/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-107/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Tsuyoshi Nagano",
+    "image": "assets/cards/me55/107.webp",
+    "imageSmall": "assets/cards/me55/107-sm.webp",
+    "attacks": [
+      {
+        "name": "Fend Off",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20",
+        "text": "Before doing damage, discard all Pokémon Tools from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Shield Press",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-107/large",
+    "market": 0.22
   },
   {
     "id": "me55-108",
@@ -1408,11 +3864,37 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-108/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-108/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-108/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Sanosuke Sakuma",
+    "evolvesFrom": "Gimmighoul",
+    "image": "assets/cards/me55/108.webp",
+    "imageSmall": "assets/cards/me55/108-sm.webp",
+    "attacks": [
+      {
+        "name": "Celebration",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "if you have exactly 30 cards in your hand, take 2 Prize cards. If you do, shuffle your hand into your deck."
+      },
+      {
+        "name": "Triple Smash",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "50×",
+        "text": "Flip 3 coins. This attack does 50 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-108/large",
+    "market": 0.18
   },
   {
     "id": "me55-109",
@@ -1421,12 +3903,39 @@
     "rarity": "Double Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 2",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-109/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-109/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-109/large"
+    "types": [
+      "Dragon"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Shelgon",
+    "image": "assets/cards/me55/109.webp",
+    "imageSmall": "assets/cards/me55/109-sm.webp",
+    "attacks": [
+      {
+        "name": "Booming Call",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Dragon Pokémon from your discard pile onto your Bench."
+      },
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Fire",
+          "Water"
+        ],
+        "damage": "240",
+        "text": "Discard the top 2 cards of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-109/large",
+    "market": 0.58
   },
   {
     "id": "me55-110",
@@ -1437,9 +3946,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-110/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-110/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-110/large"
+    "types": [
+      "Dragon"
+    ],
+    "hp": "70",
+    "artist": "miki kudo",
+    "image": "assets/cards/me55/110.webp",
+    "imageSmall": "assets/cards/me55/110-sm.webp",
+    "attacks": [
+      {
+        "name": "Screech",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your next turn, the Defending Pokémon takes 30 more damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-110/large",
+    "market": 0.2
   },
   {
     "id": "me55-111",
@@ -1448,11 +3982,38 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-111/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-111/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-111/large"
+    "types": [
+      "Dragon"
+    ],
+    "hp": "90",
+    "artist": "Jiro Sasumo",
+    "evolvesFrom": "Jangmo-o",
+    "image": "assets/cards/me55/111.webp",
+    "imageSmall": "assets/cards/me55/111-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-111/large",
+    "market": 0.22
   },
   {
     "id": "me55-112",
@@ -1461,11 +4022,31 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-112/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-112/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-112/large"
+    "types": [
+      "Dragon"
+    ],
+    "hp": "180",
+    "artist": "MARINA Chikazawa",
+    "evolvesFrom": "Hakamo-o",
+    "image": "assets/cards/me55/112.webp",
+    "imageSmall": "assets/cards/me55/112-sm.webp",
+    "attacks": [
+      {
+        "name": "Blazing Uppercut",
+        "cost": [
+          "Lightning",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-112/large",
+    "market": 0.2
   },
   {
     "id": "me55-113",
@@ -1476,9 +4057,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-113/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-113/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-113/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "MINAMINAMI Take",
+    "image": "assets/cards/me55/113.webp",
+    "imageSmall": "assets/cards/me55/113-sm.webp",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Draw a card."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-113/large",
+    "market": 0.19
   },
   {
     "id": "me55-114",
@@ -1489,9 +4087,36 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-114/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-114/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-114/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Pani Kobayashi",
+    "image": "assets/cards/me55/114.webp",
+    "imageSmall": "assets/cards/me55/114-sm.webp",
+    "attacks": [
+      {
+        "name": "Rage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Mega Punch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-114/large",
+    "market": 0.2
   },
   {
     "id": "me55-115",
@@ -1502,9 +4127,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-115/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-115/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-115/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Toshinao Aoki",
+    "image": "assets/cards/me55/115.webp",
+    "imageSmall": "assets/cards/me55/115-sm.webp",
+    "attacks": [
+      {
+        "name": "Surprisingly Transform",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for a Pokémon and switch it with this Pokémon. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon. If you switched a Pokémon in this way, put this card into your deck. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-115/large",
+    "market": 0.69
   },
   {
     "id": "me55-116",
@@ -1515,9 +4157,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-116/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-116/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-116/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Wintr Wandr",
+    "image": "assets/cards/me55/116.webp",
+    "imageSmall": "assets/cards/me55/116-sm.webp",
+    "attacks": [
+      {
+        "name": "Fetch and Hide",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals their hand, and you put an Item card you find there on the bottom of your opponent's deck."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-116/large",
+    "market": 0.32
   },
   {
     "id": "me55-117",
@@ -1528,9 +4194,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-117/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-117/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-117/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "En Morikura",
+    "image": "assets/cards/me55/117.webp",
+    "imageSmall": "assets/cards/me55/117-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-117/large",
+    "market": 0.64
   },
   {
     "id": "me55-118",
@@ -1541,9 +4224,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-118/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-118/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-118/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/me55/118.webp",
+    "imageSmall": "assets/cards/me55/118-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-118/large",
+    "market": 0.99
   },
   {
     "id": "me55-119",
@@ -1554,9 +4254,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-119/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-119/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-119/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "160",
+    "artist": "Aya Kusube",
+    "image": "assets/cards/me55/119.webp",
+    "imageSmall": "assets/cards/me55/119-sm.webp",
+    "attacks": [
+      {
+        "name": "Collapse",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Good Sleep",
+        "text": "If this Pokémon remains Asleep during Pokémon Checkup, heal all damage from this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-119/large",
+    "market": 0.6
   },
   {
     "id": "me55-120",
@@ -1567,9 +4292,22 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-120/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-120/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-120/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "30",
+    "artist": "Kanami Ogata",
+    "image": "assets/cards/me55/120.webp",
+    "imageSmall": "assets/cards/me55/120-sm.webp",
+    "attacks": [
+      {
+        "name": "Bouncy Circle",
+        "damage": "30×",
+        "text": "This attack does 30 damage for each of your Benched Pokémon that has a maximum HP of 30."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-120/large",
+    "market": 0.5
   },
   {
     "id": "me55-121",
@@ -1580,9 +4318,27 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-121/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-121/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-121/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Kazuki Minami",
+    "image": "assets/cards/me55/121.webp",
+    "imageSmall": "assets/cards/me55/121-sm.webp",
+    "attacks": [
+      {
+        "name": "Elemental Blast",
+        "cost": [
+          "Fire",
+          "Water",
+          "Lightning"
+        ],
+        "damage": "250",
+        "text": "Discard a Fire Energy, a Water Energy, and a Lightning Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-121/large",
+    "market": 1.19
   },
   {
     "id": "me55-122",
@@ -1593,9 +4349,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-122/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-122/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-122/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/me55/122.webp",
+    "imageSmall": "assets/cards/me55/122-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-122/large",
+    "market": 0.18
   },
   {
     "id": "me55-123",
@@ -1604,11 +4376,39 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-123/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-123/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-123/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Kamome Shirahama",
+    "evolvesFrom": "Hisuian Zorua",
+    "image": "assets/cards/me55/123.webp",
+    "imageSmall": "assets/cards/me55/123-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Swirling Resentment",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Place damage counters on your opponent's Active Pokémon until its remaining HP is 50."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-123/large",
+    "market": 0.2
   },
   {
     "id": "me55-124",
@@ -1619,9 +4419,27 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-124/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-124/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-124/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "ryoma uratsuka",
+    "image": "assets/cards/me55/124.webp",
+    "imageSmall": "assets/cards/me55/124-sm.webp",
+    "attacks": [
+      {
+        "name": "Shoot Meteors",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Energy from this Pokémon, and this attack does 120 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-124/large",
+    "market": 0.17
   },
   {
     "id": "me55-125",
@@ -1630,11 +4448,37 @@
     "rarity": "Common",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-125/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-125/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-125/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Kariya",
+    "evolvesFrom": "Tandemaus",
+    "image": "assets/cards/me55/125.webp",
+    "imageSmall": "assets/cards/me55/125-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw Together",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin for each Maushold you have in play. For each heads, discard the top 2 cards of your opponent's deck."
+      },
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-125/large",
+    "market": 0.78
   },
   {
     "id": "me55-126",
@@ -1642,9 +4486,14 @@
     "number": "126",
     "rarity": "Common",
     "supertype": "Trainer",
-    "image": "https://images.scrydex.com/pokemon/me55-126/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-126/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-126/large"
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Yuka Morii",
+    "image": "assets/cards/me55/126.webp",
+    "imageSmall": "assets/cards/me55/126-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-126/large",
+    "market": 0.83
   },
   {
     "id": "me55-127",
@@ -1652,9 +4501,14 @@
     "number": "127",
     "rarity": "Common",
     "supertype": "Trainer",
-    "image": "https://images.scrydex.com/pokemon/me55-127/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-127/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-127/large"
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Yuka Morii",
+    "image": "assets/cards/me55/127.webp",
+    "imageSmall": "assets/cards/me55/127-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-127/large",
+    "market": 0.36
   },
   {
     "id": "me55-128",
@@ -1662,9 +4516,14 @@
     "number": "128",
     "rarity": "Common",
     "supertype": "Trainer",
-    "image": "https://images.scrydex.com/pokemon/me55-128/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-128/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-128/large"
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Yuka Morii",
+    "image": "assets/cards/me55/128.webp",
+    "imageSmall": "assets/cards/me55/128-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-128/large",
+    "market": 0.85
   },
   {
     "id": "me55-129",
@@ -1673,11 +4532,39 @@
     "rarity": "Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-129/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-129/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-129/large"
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "AYUMI ODASHIMA",
+    "evolvesFrom": "Exeggcute",
+    "image": "assets/cards/me55/129.webp",
+    "imageSmall": "assets/cards/me55/129-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Heal 50 damage from this Pokémon"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Scale Up",
+        "text": "If this Pokémon has 6 or more Grass Energy attached, it gets +250 HP.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-129/large",
+    "market": 3.9
   },
   {
     "id": "me55-130",
@@ -1688,9 +4575,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-130/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-130/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-130/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "mashu",
+    "image": "assets/cards/me55/130.webp",
+    "imageSmall": "assets/cards/me55/130-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fiery Flapping",
+        "text": "Once during your turn, if you have Articuno and Zapdos in play, you may use this Ability. Attach a Basic Fire Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-130/large",
+    "market": 11.96
   },
   {
     "id": "me55-131",
@@ -1701,9 +4613,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-131/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-131/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-131/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Amelicart",
+    "image": "assets/cards/me55/131.webp",
+    "imageSmall": "assets/cards/me55/131-sm.webp",
+    "attacks": [
+      {
+        "name": "Ferry Across",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Ice Beam",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-131/large",
+    "market": 13.5
   },
   {
     "id": "me55-132",
@@ -1714,9 +4652,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-132/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-132/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-132/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "mashu",
+    "image": "assets/cards/me55/132.webp",
+    "imageSmall": "assets/cards/me55/132-sm.webp",
+    "attacks": [
+      {
+        "name": "Hail",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frosty Flapping",
+        "text": "Once during your turn, if you have Moltres and Zapdos in play, you may use this Ability. Attach a Basic Water Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-132/large",
+    "market": 12.72
   },
   {
     "id": "me55-133",
@@ -1727,9 +4690,35 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-133/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-133/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-133/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "mashu",
+    "image": "assets/cards/me55/133.webp",
+    "imageSmall": "assets/cards/me55/133-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundering Lightning",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "This Pokémon also does 60 damage to itself."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flash-Pop Flapping",
+        "text": "Once during your turn, if you have Moltres and Articuno in play, you may use this Ability. Attach a Basic Lightning Energy card from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-133/large",
+    "market": 11.95
   },
   {
     "id": "me55-134",
@@ -1738,11 +4727,39 @@
     "rarity": "Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-134/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-134/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-134/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "140",
+    "artist": "Kazumasa Yasukuni",
+    "evolvesFrom": "Toxel",
+    "image": "assets/cards/me55/134.webp",
+    "imageSmall": "assets/cards/me55/134-sm.webp",
+    "attacks": [
+      {
+        "name": "Light Punch",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Thunderous Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-134/large",
+    "market": 5.12
   },
   {
     "id": "me55-135",
@@ -1753,9 +4770,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-135/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-135/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-135/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Yoshimi Miyoshi",
+    "image": "assets/cards/me55/135.webp",
+    "imageSmall": "assets/cards/me55/135-sm.webp",
+    "attacks": [
+      {
+        "name": "Select a Snack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard the top 3 cards of your deck and put 1 of them into your hand."
+      },
+      {
+        "name": "Slap",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-135/large",
+    "market": 8.94
   },
   {
     "id": "me55-136",
@@ -1766,9 +4807,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-136/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-136/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-136/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Whisker",
+    "image": "assets/cards/me55/136.webp",
+    "imageSmall": "assets/cards/me55/136-sm.webp",
+    "attacks": [
+      {
+        "name": "Float Up",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "You may shuffle this Pokémon and all attached cards into your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-136/large",
+    "market": 6.98
   },
   {
     "id": "me55-137",
@@ -1777,11 +4834,30 @@
     "rarity": "Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-137/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-137/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-137/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "YASHIRO Nanaco",
+    "evolvesFrom": "Lampent",
+    "image": "assets/cards/me55/137.webp",
+    "imageSmall": "assets/cards/me55/137-sm.webp",
+    "attacks": [
+      {
+        "name": "Eerie Glow",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130",
+        "text": "Your opponent's Active Pokémon is now Burned and Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-137/large",
+    "market": 5.17
   },
   {
     "id": "me55-138",
@@ -1790,11 +4866,38 @@
     "rarity": "Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-138/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-138/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-138/large"
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Raita Kazama",
+    "evolvesFrom": "Rockruff",
+    "image": "assets/cards/me55/138.webp",
+    "imageSmall": "assets/cards/me55/138-sm.webp",
+    "attacks": [
+      {
+        "name": "Counter",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10+",
+        "text": "If this Pokémon was damaged by an attack during your opponent's last turn, this attack does that much more damage."
+      },
+      {
+        "name": "Boulder Crush",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-138/large",
+    "market": 3.47
   },
   {
     "id": "me55-139",
@@ -1805,9 +4908,22 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-139/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-139/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-139/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "OKUBO",
+    "image": "assets/cards/me55/139.webp",
+    "imageSmall": "assets/cards/me55/139-sm.webp",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "damage": "10",
+        "text": "Draw a card."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-139/large",
+    "market": 12.35
   },
   {
     "id": "me55-140",
@@ -1818,9 +4934,34 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-140/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-140/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-140/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "GOSSAN",
+    "image": "assets/cards/me55/140.webp",
+    "imageSmall": "assets/cards/me55/140-sm.webp",
+    "attacks": [
+      {
+        "name": "Nitpick",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent shuffles their hand into their deck and draws 4 cards."
+      },
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-140/large",
+    "market": 2.75
   },
   {
     "id": "me55-141",
@@ -1831,9 +4972,33 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-141/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-141/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-141/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "OKUBO",
+    "image": "assets/cards/me55/141.webp",
+    "imageSmall": "assets/cards/me55/141-sm.webp",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Treasure Rush",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10×",
+        "text": "This attack does 10 damage for each card in your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-141/large",
+    "market": 12.66
   },
   {
     "id": "me55-142",
@@ -1842,11 +5007,37 @@
     "rarity": "Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-142/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-142/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-142/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "toriyufu",
+    "evolvesFrom": "Gimmighoul",
+    "image": "assets/cards/me55/142.webp",
+    "imageSmall": "assets/cards/me55/142-sm.webp",
+    "attacks": [
+      {
+        "name": "Celebration",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "if you have exactly 30 cards in your hand, take 2 Prize cards. If you do, shuffle your hand into your deck."
+      },
+      {
+        "name": "Triple Smash",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "50×",
+        "text": "Flip 3 coins. This attack does 50 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-142/large",
+    "market": 2.76
   },
   {
     "id": "me55-143",
@@ -1855,11 +5046,31 @@
     "rarity": "Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 2",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-143/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-143/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-143/large"
+    "types": [
+      "Dragon"
+    ],
+    "hp": "180",
+    "artist": "Gemi",
+    "evolvesFrom": "Hakamo-o",
+    "image": "assets/cards/me55/143.webp",
+    "imageSmall": "assets/cards/me55/143-sm.webp",
+    "attacks": [
+      {
+        "name": "Blazing Uppercut",
+        "cost": [
+          "Lightning",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-143/large",
+    "market": 2.91
   },
   {
     "id": "me55-144",
@@ -1870,9 +5081,26 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-144/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-144/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-144/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "OKUBO",
+    "image": "assets/cards/me55/144.webp",
+    "imageSmall": "assets/cards/me55/144-sm.webp",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Draw a card."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-144/large",
+    "market": 17.56
   },
   {
     "id": "me55-145",
@@ -1883,9 +5111,25 @@
     "subtypes": [
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-145/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-145/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-145/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "0313",
+    "image": "assets/cards/me55/145.webp",
+    "imageSmall": "assets/cards/me55/145-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-145/large",
+    "market": 10.27
   },
   {
     "id": "me55-146",
@@ -1894,11 +5138,37 @@
     "rarity": "Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
+      "Stage 1",
       "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-146/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-146/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-146/large"
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "osare",
+    "evolvesFrom": "Tandemaus",
+    "image": "assets/cards/me55/146.webp",
+    "imageSmall": "assets/cards/me55/146-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw Together",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin for each Maushold you have in play. For each heads, discard the top 2 cards of your opponent's deck."
+      },
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-146/large",
+    "market": 20.29
   },
   {
     "id": "me55-147",
@@ -1910,9 +5180,35 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-147/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-147/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-147/large"
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "Atsushi Furusawa",
+    "image": "assets/cards/me55/147.webp",
+    "imageSmall": "assets/cards/me55/147-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Cheerful Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "70×",
+        "text": "This attack does 70 damage for each Prize card you have taken."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-147/large",
+    "market": 22.62
   },
   {
     "id": "me55-148",
@@ -1921,12 +5217,39 @@
     "rarity": "Special Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 2",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-148/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-148/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-148/large"
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "GIDORA",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/me55/148.webp",
+    "imageSmall": "assets/cards/me55/148-sm.webp",
+    "attacks": [
+      {
+        "name": "Stealthy Slash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon for each damage counter on that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-148/large",
+    "market": 36.58
   },
   {
     "id": "me55-149",
@@ -1938,9 +5261,35 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-149/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-149/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-149/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "kantaro",
+    "image": "assets/cards/me55/149.webp",
+    "imageSmall": "assets/cards/me55/149-sm.webp",
+    "attacks": [
+      {
+        "name": "Pika-Pika Parade",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-149/large",
+    "market": 20.99
   },
   {
     "id": "me55-150",
@@ -1952,9 +5301,35 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-150/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-150/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-150/large"
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "kantaro",
+    "image": "assets/cards/me55/150.webp",
+    "imageSmall": "assets/cards/me55/150-sm.webp",
+    "attacks": [
+      {
+        "name": "Zip-Zap Frenzy",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "You may attach any number of Basic Energy cards from your hand to your Pokémon in any way you like."
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-150/large",
+    "market": 31.67
   },
   {
     "id": "me55-151",
@@ -1966,9 +5341,36 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-151/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-151/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-151/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "230",
+    "artist": "Yano Keiji",
+    "image": "assets/cards/me55/151.webp",
+    "imageSmall": "assets/cards/me55/151-sm.webp",
+    "attacks": [
+      {
+        "name": "Photon Bullets",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to each of your opponent's Pokémon ex. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Psychic Powers",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "230",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-151/large",
+    "market": 82.43
   },
   {
     "id": "me55-152",
@@ -1980,9 +5382,32 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-152/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-152/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-152/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "160",
+    "artist": "Kuroimori",
+    "image": "assets/cards/me55/152.webp",
+    "imageSmall": "assets/cards/me55/152-sm.webp",
+    "attacks": [
+      {
+        "name": "Teleportation Burst",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Memory Helix",
+        "text": "This Pokémon can use the attacks of any of your Benched Pokémon. (You still need the necessary Energy to use each attack.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-152/large",
+    "market": 153.03
   },
   {
     "id": "me55-153",
@@ -1991,12 +5416,32 @@
     "rarity": "Special Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 1",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-153/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-153/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-153/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "270",
+    "artist": "You Iribi",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/me55/153.webp",
+    "imageSmall": "assets/cards/me55/153-sm.webp",
+    "attacks": [
+      {
+        "name": "Colorful Harmony",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each type of Basic Energy attached to all of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-153/large",
+    "market": 28.28
   },
   {
     "id": "me55-154",
@@ -2005,12 +5450,38 @@
     "rarity": "Special Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 2",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-154/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-154/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-154/large"
+    "types": [
+      "Darkness"
+    ],
+    "hp": "280",
+    "artist": "CHORISO",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/me55/154.webp",
+    "imageSmall": "assets/cards/me55/154-sm.webp",
+    "attacks": [
+      {
+        "name": "Chaotic Pain",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Place 13 damage counters on 1 of your opponent's Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fainting Spell",
+        "text": "If this Pokémon is Knocket Out by damage from an attack from your opponent's Pokémon, flip a coin. If heads, the Attacking Pokémon is Knocket Out.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-154/large",
+    "market": 122.94
   },
   {
     "id": "me55-155",
@@ -2022,9 +5493,35 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-155/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-155/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-155/large"
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/me55/155.webp",
+    "imageSmall": "assets/cards/me55/155-sm.webp",
+    "attacks": [
+      {
+        "name": "Wish Granter",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw cards until you have 7 cards in your hand."
+      },
+      {
+        "name": "Swift",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-155/large",
+    "market": 116.64
   },
   {
     "id": "me55-156",
@@ -2033,12 +5530,39 @@
     "rarity": "Special Illustration Rare",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic",
-      "ex"
+      "Stage 2",
+      "ex",
+      "Basic"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-156/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-156/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-156/large"
+    "types": [
+      "Dragon"
+    ],
+    "hp": "330",
+    "artist": "Ryota Murayama",
+    "evolvesFrom": "Shelgon",
+    "image": "assets/cards/me55/156.webp",
+    "imageSmall": "assets/cards/me55/156-sm.webp",
+    "attacks": [
+      {
+        "name": "Booming Call",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put up to 3 Dragon Pokémon from your discard pile onto your Bench."
+      },
+      {
+        "name": "Dragon Pulse",
+        "cost": [
+          "Fire",
+          "Water"
+        ],
+        "damage": "240",
+        "text": "Discard the top 2 cards of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-156/large",
+    "market": 25.45
   },
   {
     "id": "me55-157",
@@ -2050,9 +5574,36 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-157/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-157/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-157/large"
+    "types": [
+      "Psychic"
+    ],
+    "hp": "230",
+    "artist": "YOSHIROTTEN",
+    "image": "assets/cards/me55/157.webp",
+    "imageSmall": "assets/cards/me55/157-sm.webp",
+    "attacks": [
+      {
+        "name": "Photon Bullets",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to each of your opponent's Pokémon ex. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Psychic Powers",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "230",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-157/large",
+    "market": 72.05
   },
   {
     "id": "me55-158",
@@ -2064,65 +5615,32 @@
       "Basic",
       "ex"
     ],
-    "image": "https://images.scrydex.com/pokemon/me55-158/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-158/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-158/large"
-  },
-  {
-    "id": "me55-R",
-    "name": "Mew",
-    "number": "R",
-    "rarity": "RGB Rare",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
+    "types": [
+      "Psychic"
     ],
-    "printedNumber": "R",
-    "image": "https://images.scrydex.com/pokemon/me55-R/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-R/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-R/large"
-  },
-  {
-    "id": "me55-G",
-    "name": "Mew",
-    "number": "G",
-    "rarity": "RGB Rare",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
+    "hp": "160",
+    "artist": "YOSHIROTTEN",
+    "image": "assets/cards/me55/158.webp",
+    "imageSmall": "assets/cards/me55/158-sm.webp",
+    "attacks": [
+      {
+        "name": "Teleportation Burst",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      }
     ],
-    "printedNumber": "G",
-    "image": "https://images.scrydex.com/pokemon/me55-G/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-G/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-G/large"
-  },
-  {
-    "id": "me55-B",
-    "name": "Mew",
-    "number": "B",
-    "rarity": "RGB Rare",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
+    "abilities": [
+      {
+        "name": "Memory Helix",
+        "text": "This Pokémon can use the attacks of any of your Benched Pokémon. (You still need the necessary Energy to use each attack.)",
+        "type": "Ability"
+      }
     ],
-    "printedNumber": "B",
-    "image": "https://images.scrydex.com/pokemon/me55-B/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55-B/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55-B/large"
-  },
-  {
-    "id": "me55-cc58",
-    "name": "Pikachu",
-    "number": "cc58",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 58",
-    "image": "https://images.scrydex.com/pokemon/me55c-58/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-58/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-58/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55-158/large",
+    "market": 90.26
   },
   {
     "id": "me55-cc4",
@@ -2134,76 +5652,9 @@
       "Basic"
     ],
     "printedNumber": "Classic 4",
-    "image": "https://images.scrydex.com/pokemon/me55c-4/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-4/small",
+    "image": "assets/cards/me55/cc4.webp",
+    "imageSmall": "assets/cards/me55/cc4-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-4/large"
-  },
-  {
-    "id": "me55-cc18",
-    "name": "Misty",
-    "number": "cc18",
-    "rarity": "Classic Collection",
-    "supertype": "Trainer",
-    "printedNumber": "Classic 18",
-    "image": "https://images.scrydex.com/pokemon/me55c-18/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-18/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-18/large"
-  },
-  {
-    "id": "me55-cc69",
-    "name": "Erika's Jigglypuff",
-    "number": "cc69",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 69",
-    "image": "https://images.scrydex.com/pokemon/me55c-69/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-69/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-69/large"
-  },
-  {
-    "id": "me55-cc25",
-    "name": "Sneasel",
-    "number": "cc25",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 25",
-    "image": "https://images.scrydex.com/pokemon/me55c-25/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-25/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-25/large"
-  },
-  {
-    "id": "me55-cc106",
-    "name": "Shining Celebi",
-    "number": "cc106",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 106",
-    "image": "https://images.scrydex.com/pokemon/me55c-106/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-106/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106/large"
-  },
-  {
-    "id": "me55-cc149",
-    "name": "Lugia",
-    "number": "cc149",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 149",
-    "image": "https://images.scrydex.com/pokemon/me55c-149/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-149/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-149/large"
   },
   {
     "id": "me55-cc5",
@@ -2215,38 +5666,9 @@
       "Basic"
     ],
     "printedNumber": "Classic 5",
-    "image": "https://images.scrydex.com/pokemon/me55c-5/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-5/small",
+    "image": "assets/cards/me55/cc5.webp",
+    "imageSmall": "assets/cards/me55/cc5-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-5/large"
-  },
-  {
-    "id": "me55-cc19",
-    "name": "Dark Tyranitar",
-    "number": "cc19",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 19",
-    "image": "https://images.scrydex.com/pokemon/me55c-19/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-19/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-19/large"
-  },
-  {
-    "id": "me55-cc108",
-    "name": "Scizor ex",
-    "number": "cc108",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "ex"
-    ],
-    "printedNumber": "Classic 108",
-    "image": "https://images.scrydex.com/pokemon/me55c-108/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-108/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-108/large"
   },
   {
     "id": "me55-cc11",
@@ -2258,23 +5680,76 @@
       "Basic"
     ],
     "printedNumber": "Classic 11",
-    "image": "https://images.scrydex.com/pokemon/me55c-11/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-11/small",
+    "image": "assets/cards/me55/cc11.webp",
+    "imageSmall": "assets/cards/me55/cc11-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-11/large"
   },
   {
-    "id": "me55-cc106p",
-    "name": "Palkia LV.X",
-    "number": "cc106p",
+    "id": "me55-cc18",
+    "name": "Misty",
+    "number": "cc18",
+    "rarity": "Classic Collection",
+    "supertype": "Trainer",
+    "printedNumber": "Classic 18",
+    "image": "assets/cards/me55/cc18.webp",
+    "imageSmall": "assets/cards/me55/cc18-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-18/large"
+  },
+  {
+    "id": "me55-cc19",
+    "name": "Dark Tyranitar",
+    "number": "cc19",
     "rarity": "Classic Collection",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
-    "printedNumber": "Classic 106",
-    "image": "https://images.scrydex.com/pokemon/me55c-106p/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-106p/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106p/large"
+    "printedNumber": "Classic 19",
+    "image": "assets/cards/me55/cc19.webp",
+    "imageSmall": "assets/cards/me55/cc19-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-19/large"
+  },
+  {
+    "id": "me55-cc25",
+    "name": "Sneasel",
+    "number": "cc25",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 25",
+    "image": "assets/cards/me55/cc25.webp",
+    "imageSmall": "assets/cards/me55/cc25-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-25/large"
+  },
+  {
+    "id": "me55-cc33",
+    "name": "Pikachu & Zekrom-GX",
+    "number": "cc33",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 33",
+    "image": "assets/cards/me55/cc33.webp",
+    "imageSmall": "assets/cards/me55/cc33-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-33/large"
+  },
+  {
+    "id": "me55-cc41",
+    "name": "Greninja BREAK",
+    "number": "cc41",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 41",
+    "image": "assets/cards/me55/cc41.webp",
+    "imageSmall": "assets/cards/me55/cc41-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-41/large"
   },
   {
     "id": "me55-cc43",
@@ -2286,8 +5761,8 @@
       "Basic"
     ],
     "printedNumber": "Classic 43",
-    "image": "https://images.scrydex.com/pokemon/me55c-43/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-43/small",
+    "image": "assets/cards/me55/cc43.webp",
+    "imageSmall": "assets/cards/me55/cc43-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-43/large"
   },
   {
@@ -2300,9 +5775,93 @@
       "Basic"
     ],
     "printedNumber": "Classic 47",
-    "image": "https://images.scrydex.com/pokemon/me55c-47/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-47/small",
+    "image": "assets/cards/me55/cc47.webp",
+    "imageSmall": "assets/cards/me55/cc47-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-47/large"
+  },
+  {
+    "id": "me55-cc50",
+    "name": "Raikou",
+    "number": "cc50",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 50",
+    "image": "assets/cards/me55/cc50.webp",
+    "imageSmall": "assets/cards/me55/cc50-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-50/large"
+  },
+  {
+    "id": "me55-cc57",
+    "name": "Buzzwole-GX",
+    "number": "cc57",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 57",
+    "image": "assets/cards/me55/cc57.webp",
+    "imageSmall": "assets/cards/me55/cc57-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-57/large"
+  },
+  {
+    "id": "me55-cc58",
+    "name": "Pikachu",
+    "number": "cc58",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 58",
+    "image": "assets/cards/me55/cc58.webp",
+    "imageSmall": "assets/cards/me55/cc58-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-58/large"
+  },
+  {
+    "id": "me55-cc69",
+    "name": "Erika's Jigglypuff",
+    "number": "cc69",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 69",
+    "image": "assets/cards/me55/cc69.webp",
+    "imageSmall": "assets/cards/me55/cc69-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-69/large"
+  },
+  {
+    "id": "me55-cc85",
+    "name": "Rayquaza-EX",
+    "number": "cc85",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 85",
+    "image": "assets/cards/me55/cc85.webp",
+    "imageSmall": "assets/cards/me55/cc85-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-85/large"
+  },
+  {
+    "id": "me55-cc89",
+    "name": "Solgaleo-GX",
+    "number": "cc89",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 89",
+    "image": "assets/cards/me55/cc89.webp",
+    "imageSmall": "assets/cards/me55/cc89-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-89/large"
   },
   {
     "id": "me55-cc94",
@@ -2314,8 +5873,8 @@
       "Basic"
     ],
     "printedNumber": "Classic 94",
-    "image": "https://images.scrydex.com/pokemon/me55c-94/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-94/small",
+    "image": "assets/cards/me55/cc94.webp",
+    "imageSmall": "assets/cards/me55/cc94-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-94/large"
   },
   {
@@ -2328,8 +5887,8 @@
       "Basic"
     ],
     "printedNumber": "Classic 99",
-    "image": "https://images.scrydex.com/pokemon/me55c-99/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-99/small",
+    "image": "assets/cards/me55/cc99.webp",
+    "imageSmall": "assets/cards/me55/cc99-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-99/large"
   },
   {
@@ -2342,8 +5901,8 @@
       "Basic"
     ],
     "printedNumber": "Classic 100",
-    "image": "https://images.scrydex.com/pokemon/me55c-100/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-100/small",
+    "image": "assets/cards/me55/cc100.webp",
+    "imageSmall": "assets/cards/me55/cc100-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-100/large"
   },
   {
@@ -2353,135 +5912,38 @@
     "rarity": "Classic Collection",
     "supertype": "Trainer",
     "printedNumber": "Classic 101",
-    "image": "https://images.scrydex.com/pokemon/me55c-101/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-101/small",
+    "image": "assets/cards/me55/cc101.webp",
+    "imageSmall": "assets/cards/me55/cc101-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-101/large"
   },
   {
-    "id": "me55-cc85",
-    "name": "Rayquaza-EX",
-    "number": "cc85",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 85",
-    "image": "https://images.scrydex.com/pokemon/me55c-85/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-85/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-85/large"
-  },
-  {
-    "id": "me55-cc11g",
-    "name": "Genesect-EX",
-    "number": "cc11g",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 11",
-    "image": "https://images.scrydex.com/pokemon/me55c-11g/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-11g/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-11g/large"
-  },
-  {
-    "id": "me55-cc106m",
-    "name": "M Gardevoir-EX",
-    "number": "cc106m",
+    "id": "me55-cc106",
+    "name": "Shining Celebi",
+    "number": "cc106",
     "rarity": "Classic Collection",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic"
     ],
     "printedNumber": "Classic 106",
-    "image": "https://images.scrydex.com/pokemon/me55c-106m/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-106m/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106m/large"
+    "image": "assets/cards/me55/cc106.webp",
+    "imageSmall": "assets/cards/me55/cc106-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106/large"
   },
   {
-    "id": "me55-cc41",
-    "name": "Greninja BREAK",
-    "number": "cc41",
+    "id": "me55-cc108",
+    "name": "Scizor ex",
+    "number": "cc108",
     "rarity": "Classic Collection",
     "supertype": "Pokémon",
     "subtypes": [
-      "Basic"
+      "Basic",
+      "ex"
     ],
-    "printedNumber": "Classic 41",
-    "image": "https://images.scrydex.com/pokemon/me55c-41/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-41/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-41/large"
-  },
-  {
-    "id": "me55-cc89",
-    "name": "Solgaleo-GX",
-    "number": "cc89",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 89",
-    "image": "https://images.scrydex.com/pokemon/me55c-89/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-89/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-89/large"
-  },
-  {
-    "id": "me55-cc57",
-    "name": "Buzzwole-GX",
-    "number": "cc57",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 57",
-    "image": "https://images.scrydex.com/pokemon/me55c-57/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-57/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-57/large"
-  },
-  {
-    "id": "me55-cc33",
-    "name": "Pikachu & Zekrom-GX",
-    "number": "cc33",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 33",
-    "image": "https://images.scrydex.com/pokemon/me55c-33/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-33/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-33/large"
-  },
-  {
-    "id": "me55-cc138",
-    "name": "Zacian V",
-    "number": "cc138",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 138",
-    "image": "https://images.scrydex.com/pokemon/me55c-138/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-138/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-138/large"
-  },
-  {
-    "id": "me55-cc50",
-    "name": "Raikou",
-    "number": "cc50",
-    "rarity": "Classic Collection",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic"
-    ],
-    "printedNumber": "Classic 50",
-    "image": "https://images.scrydex.com/pokemon/me55c-50/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-50/small",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-50/large"
+    "printedNumber": "Classic 108",
+    "image": "assets/cards/me55/cc108.webp",
+    "imageSmall": "assets/cards/me55/cc108-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-108/large"
   },
   {
     "id": "me55-cc114",
@@ -2493,9 +5955,23 @@
       "Basic"
     ],
     "printedNumber": "Classic 114",
-    "image": "https://images.scrydex.com/pokemon/me55c-114/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-114/small",
+    "image": "assets/cards/me55/cc114.webp",
+    "imageSmall": "assets/cards/me55/cc114-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-114/large"
+  },
+  {
+    "id": "me55-cc11g",
+    "name": "Genesect-EX",
+    "number": "cc11g",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 11",
+    "image": "assets/cards/me55/cc11g.webp",
+    "imageSmall": "assets/cards/me55/cc11g-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-11g/large"
   },
   {
     "id": "me55-cc123",
@@ -2507,9 +5983,37 @@
       "Basic"
     ],
     "printedNumber": "Classic 123",
-    "image": "https://images.scrydex.com/pokemon/me55c-123/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-123/small",
+    "image": "assets/cards/me55/cc123.webp",
+    "imageSmall": "assets/cards/me55/cc123-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-123/large"
+  },
+  {
+    "id": "me55-cc138",
+    "name": "Zacian V",
+    "number": "cc138",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 138",
+    "image": "assets/cards/me55/cc138.webp",
+    "imageSmall": "assets/cards/me55/cc138-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-138/large"
+  },
+  {
+    "id": "me55-cc149",
+    "name": "Lugia",
+    "number": "cc149",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 149",
+    "image": "assets/cards/me55/cc149.webp",
+    "imageSmall": "assets/cards/me55/cc149-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-149/large"
   },
   {
     "id": "me55-cc203",
@@ -2521,8 +6025,36 @@
       "Basic"
     ],
     "printedNumber": "Classic 203",
-    "image": "https://images.scrydex.com/pokemon/me55c-203/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/me55c-203/small",
+    "image": "assets/cards/me55/cc203.webp",
+    "imageSmall": "assets/cards/me55/cc203-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55c-203/large"
+  },
+  {
+    "id": "me55-cc106m",
+    "name": "M Gardevoir-EX",
+    "number": "cc106m",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 106",
+    "image": "assets/cards/me55/cc106m.webp",
+    "imageSmall": "assets/cards/me55/cc106m-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106m/large"
+  },
+  {
+    "id": "me55-cc106p",
+    "name": "Palkia LV.X",
+    "number": "cc106p",
+    "rarity": "Classic Collection",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "printedNumber": "Classic 106",
+    "image": "assets/cards/me55/cc106p.webp",
+    "imageSmall": "assets/cards/me55/cc106p-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106p/large"
   }
 ]
