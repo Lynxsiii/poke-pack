@@ -57,6 +57,15 @@ is the SIR's foil under gold ink.
   Blending the sunpillar ramp with `color` (the ramp's hue and saturation,
   the bars' luminance), tightening the bars to 200% (130% on the twin) and
   keeping `saturate(1)` gives the bands.
+- **Where the light is** (151 thread's photos, 2026-09-27): 151's Alakazam
+  ex, Arbok ex and Zapdos ex keep the art saturated, with fine glitter on
+  the body, etched swirls in the background and rainbow only at glancing
+  edges; SV base's photos show strong bands, but only in the part of the
+  card catching the light. Unmasked, the recipe washed the whole face pastel
+  at 30:25. So `.foil` (both twins with it) carries a third mask layer,
+  `--fa-light`: a radial around the pointer, full strength for about a
+  third of the card, a quarter by the far corner. The glare stays
+  whole-card.
 - **Glare**: upstream's hard-light radial. Upstream gives Supporters a
   flatter, brighter one; on a pale full art it hazes the face (sv1 238
   Miriam, found by the SV base thread), so every Ultra Rare gets the plain

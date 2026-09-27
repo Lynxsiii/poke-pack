@@ -62,6 +62,12 @@ the whole card below the art.
   sparkles or crackles.
 - The silver outer border is not foil (the map is 33 grey there, under the
   40 cut-off), the art window is matte.
+- Surging Sparks' photos (`/mnt/project-files/surging-sparks/texture-refs/
+  reverse-holo_*`) show the same: a type medallion behind the attacks and a
+  tile mosaic, art window and outer border matte. Its
+  `reverse-holo_CROSS-SET_ssp-143-eevee-nonholo_vs_pre-074-eevee-reverse`
+  puts a non-holo Eevee (plain text box) beside Prismatic Evolutions'
+  standard reverse Eevee (the star cobblestone).
 - The motif is not in the card scans. 151 Parasect's scan has a plain green
   text box; its reverse map is the leaf cobblestone and sunburst badge in the
   photo. So a mirror with no pattern would be wrong for 151 too.

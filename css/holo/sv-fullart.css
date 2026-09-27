@@ -101,6 +101,23 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.f
   filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.2) saturate(1);
   mix-blend-mode: color-dodge;
 }
+/* Where the light is. Photos under one lamp (151's Alakazam ex, Arbok ex and
+   Zapdos ex; SV base's Koraidon ex in flat light) keep the art saturated:
+   the bands show in the part of the card catching the light and along the
+   edges, not as a pastel wash over the whole face. So the whole foil layer
+   (both twins; `::before` inside it) is masked by a soft pool around the
+   pointer, a third of the card at full strength, a quarter strength by the
+   far corner. The glare stays whole-card. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
+  --fa-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 22%, rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0.25) 100%);
+  -webkit-mask-image: var(--art), var(--foil-map), var(--fa-light);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--fa-light);
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+}
 /* Resting, the silver-grey of the foil rather than a tinted wash. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic):not(.lit):not(.settling) .foil {
   filter: brightness(0.5) contrast(2.5) saturate(0.35);

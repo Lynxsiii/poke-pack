@@ -122,6 +122,10 @@ export function foilExtras(card, url, reverseKind) {
   if (card.foilMap && (card.subtypes || []).some((s) => s === "Future" || s === "Ancient")) {
     classes.push("frame-paradox");
   }
+  // Scarlet & Violet prints (sv*, and Black Bolt / White Flare's zsv/rsv):
+  // finishes the Mega Evolution era prints differently key off this, such as
+  // the Double Rare streaks (css/holo/sv-double-rare.css).
+  if (/^[zr]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
   // Tiled or galaxy textures start somewhere different on every card.
   if (cure || card.rarity === "Classic Collection" || card.rarity === "Cosmos") {
     const [x, y] = seed(card.id);
