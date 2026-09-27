@@ -2423,6 +2423,161 @@
       "image": "assets/products/sv8/blister-pachirisu.webp"
     }
   ],
+  "sv8pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv8pt5-svp173"
+      ],
+      "price": 141.5,
+      "tcgplayerId": 593355,
+      "image": "assets/products/sv8pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv8pt5-svp173-pc",
+        "sv8pt5-svp173"
+      ],
+      "price": 411.77,
+      "tcgplayerId": 593324,
+      "image": "assets/products/sv8pt5/pc-etb.webp"
+    },
+    {
+      "id": "super-premium",
+      "name": "Super-Premium Collection",
+      "kind": "premium",
+      "packs": 15,
+      "promos": [
+        "sv8pt5-svp174"
+      ],
+      "price": 252.62,
+      "tcgplayerId": 622770,
+      "image": "assets/products/sv8pt5/super-premium.webp"
+    },
+    {
+      "id": "premium-figure",
+      "name": "Premium Figure Collection: Espeon & Umbreon",
+      "kind": "premium",
+      "packs": 11,
+      "promos": [
+        "sv8pt5-svp175",
+        "sv8pt5-svp176"
+      ],
+      "price": 220.85,
+      "tcgplayerId": 650799,
+      "released": "2025-09-26",
+      "image": "assets/products/sv8pt5/premium-figure.webp"
+    },
+    {
+      "id": "lucario-tyranitar",
+      "name": "Lucario ex & Tyranitar ex Premium Collection",
+      "kind": "premium",
+      "packs": 14,
+      "promos": [
+        "sv8pt5-51-stamp",
+        "sv8pt5-64-stamp"
+      ],
+      "price": 200.67,
+      "tcgplayerId": 648365,
+      "image": "assets/products/sv8pt5/lucario-tyranitar.webp"
+    },
+    {
+      "id": "surprise-box",
+      "name": "Surprise Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv8pt5-75-stamp",
+        "sv8pt5-23-stamp",
+        "sv8pt5-30-stamp",
+        "sv8pt5-14-stamp",
+        "sv8pt5-34-stamp",
+        "sv8pt5-60-stamp",
+        "sv8pt5-6-stamp",
+        "sv8pt5-26-stamp",
+        "sv8pt5-41-stamp"
+      ],
+      "pick": 1,
+      "price": 67.38,
+      "tcgplayerId": 593466,
+      "released": "2025-02-07",
+      "image": "assets/products/sv8pt5/surprise-box.webp"
+    },
+    {
+      "id": "poster",
+      "name": "Poster Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv8pt5-svp167",
+        "sv8pt5-svp168",
+        "sv8pt5-svp169"
+      ],
+      "price": 40.48,
+      "tcgplayerId": 593359,
+      "released": "2025-01-17",
+      "image": "assets/products/sv8pt5/poster.webp"
+    },
+    {
+      "id": "tech-leafeon",
+      "name": "Tech Sticker Collection: Leafeon",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv8pt5-svp170"
+      ],
+      "price": 41.5,
+      "tcgplayerId": 593453,
+      "released": "2025-01-17",
+      "image": "assets/products/sv8pt5/tech-leafeon.webp"
+    },
+    {
+      "id": "tech-glaceon",
+      "name": "Tech Sticker Collection: Glaceon",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv8pt5-svp171"
+      ],
+      "price": 43.13,
+      "tcgplayerId": 593451,
+      "released": "2025-01-17",
+      "image": "assets/products/sv8pt5/tech-glaceon.webp"
+    },
+    {
+      "id": "tech-sylveon",
+      "name": "Tech Sticker Collection: Sylveon",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv8pt5-svp172"
+      ],
+      "price": 45.1,
+      "tcgplayerId": 593450,
+      "released": "2025-01-17",
+      "image": "assets/products/sv8pt5/tech-sylveon.webp"
+    },
+    {
+      "id": "blister2-eevee",
+      "name": "2-Pack Blister: Eevee",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "sv8pt5-74-pokemon-day"
+      ],
+      "price": 36.64,
+      "tcgplayerId": 609716,
+      "released": "2025-02-21",
+      "image": "assets/products/sv8pt5/blister2-eevee.webp"
+    }
+  ],
   "sv3pt5": [
     {
       "id": "eliteTrainerBox",

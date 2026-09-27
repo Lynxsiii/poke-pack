@@ -272,7 +272,7 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         base = cards.get(f"{set_id}-{spec['like']}")
         if not base:
             raise RuntimeError(f"{number}: like {spec['like']} is not in data/{set_id}.json yet")
-        drop = ["image", "imageSmall", "imageRemote", "market", "stampPos", "stampSize", "variant", "tcgplayerId"]
+        drop = ["image", "imageSmall", "imageRemote", "market", "stampPos", "stampSize", "variant", "tcgplayerId", "reverseMap"]
         # `keepMaps`: the same print in another foil (151's cosmos holo Rares,
         # the UPC's metal Mew ex) still foils where the set card does.
         if not spec.get("keepMaps"):

@@ -6,5 +6,256 @@
   "scrydexId": "sv8pt5",
   "pittSlug": "Prismatic-Evolutions",
   "artSlug": "prismatic-evolutions",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "printedTotal": 131,
+  "tcglKey": "sv8-5",
+  "patternPrints": [
+    "pokeball",
+    "masterball"
+  ],
+  "tcgplayerGroup": 23821,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp167": {},
+    "svp168": {},
+    "svp169": {},
+    "svp170": {},
+    "svp171": {},
+    "svp172": {},
+    "svp173": {},
+    "svp173-pc": {
+      "like": "svp173",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 610757
+    },
+    "svp174": {
+      "foilAs": "Special Illustration Rare"
+    },
+    "svp175": {},
+    "svp176": {},
+    "75-stamp": {
+      "like": "75",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618089,
+      "foilAs": "Double Rare",
+      "printedNumber": "075/131"
+    },
+    "23-stamp": {
+      "like": "23",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618093,
+      "foilAs": "Double Rare",
+      "printedNumber": "023/131"
+    },
+    "30-stamp": {
+      "like": "30",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618095,
+      "foilAs": "Double Rare",
+      "printedNumber": "030/131"
+    },
+    "14-stamp": {
+      "like": "14",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618090,
+      "foilAs": "Double Rare",
+      "printedNumber": "014/131"
+    },
+    "34-stamp": {
+      "like": "34",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618101,
+      "foilAs": "Double Rare",
+      "printedNumber": "034/131"
+    },
+    "60-stamp": {
+      "like": "60",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618104,
+      "foilAs": "Double Rare",
+      "printedNumber": "060/131"
+    },
+    "6-stamp": {
+      "like": "6",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618107,
+      "foilAs": "Double Rare",
+      "printedNumber": "006/131"
+    },
+    "26-stamp": {
+      "like": "26",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618108,
+      "foilAs": "Double Rare",
+      "printedNumber": "026/131"
+    },
+    "41-stamp": {
+      "like": "41",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 618119,
+      "foilAs": "Double Rare",
+      "printedNumber": "041/131"
+    },
+    "51-stamp": {
+      "like": "51",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 652715,
+      "foilAs": "Double Rare",
+      "printedNumber": "051/131"
+    },
+    "64-stamp": {
+      "like": "64",
+      "variant": "Prismatic Evolutions stamp",
+      "tcgplayerId": 652713,
+      "foilAs": "Double Rare",
+      "printedNumber": "064/131"
+    },
+    "74-pokemon-day": {
+      "like": "74",
+      "variant": "Pokémon Day 2025 stamp",
+      "tcgplayerId": 619725,
+      "foilAs": "Frame",
+      "printedNumber": "074/131"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 593355,
+      "packs": 9,
+      "promos": [
+        "svp173"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 593324,
+      "packs": 11,
+      "promos": [
+        "svp173-pc",
+        "svp173"
+      ]
+    },
+    {
+      "id": "super-premium",
+      "name": "Super-Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 622770,
+      "packs": 15,
+      "promos": [
+        "svp174"
+      ]
+    },
+    {
+      "id": "premium-figure",
+      "name": "Premium Figure Collection: Espeon & Umbreon",
+      "kind": "premium",
+      "tcgplayerId": 650799,
+      "packs": 11,
+      "promos": [
+        "svp175",
+        "svp176"
+      ]
+    },
+    {
+      "id": "lucario-tyranitar",
+      "name": "Lucario ex & Tyranitar ex Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 648365,
+      "tcgplayerGroup": 2374,
+      "packs": 14,
+      "promos": [
+        "51-stamp",
+        "64-stamp"
+      ]
+    },
+    {
+      "id": "surprise-box",
+      "name": "Surprise Box",
+      "kind": "collection",
+      "tcgplayerId": 593466,
+      "packs": 4,
+      "promos": [
+        "75-stamp",
+        "23-stamp",
+        "30-stamp",
+        "14-stamp",
+        "34-stamp",
+        "60-stamp",
+        "6-stamp",
+        "26-stamp",
+        "41-stamp"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "poster",
+      "name": "Poster Collection",
+      "kind": "collection",
+      "tcgplayerId": 593359,
+      "packs": 3,
+      "promos": [
+        "svp167",
+        "svp168",
+        "svp169"
+      ]
+    },
+    {
+      "id": "tech-leafeon",
+      "name": "Tech Sticker Collection: Leafeon",
+      "kind": "collection",
+      "tcgplayerId": 593453,
+      "packs": 3,
+      "promos": [
+        "svp170"
+      ]
+    },
+    {
+      "id": "tech-glaceon",
+      "name": "Tech Sticker Collection: Glaceon",
+      "kind": "collection",
+      "tcgplayerId": 593451,
+      "packs": 3,
+      "promos": [
+        "svp171"
+      ]
+    },
+    {
+      "id": "tech-sylveon",
+      "name": "Tech Sticker Collection: Sylveon",
+      "kind": "collection",
+      "tcgplayerId": 593450,
+      "packs": 3,
+      "promos": [
+        "svp172"
+      ]
+    },
+    {
+      "id": "blister2-eevee",
+      "name": "2-Pack Blister: Eevee",
+      "kind": "blister",
+      "tcgplayerId": 609716,
+      "packs": 2,
+      "promos": [
+        "74-pokemon-day"
+      ]
+    }
+  ]
 }
