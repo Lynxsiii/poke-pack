@@ -1045,20 +1045,24 @@ export const STELLAR_CROWN = {
   released: "September 13, 2024",
   live: true,
   printedTotal: 142,
-  totalCount: 175,
+  totalCount: 188,
   packSize: 11,
-  cost: 10.58,
+  cost: 10.63,
   dataFile: "data/sv7.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, September 2024. Terapagos and the Stellar Tera types, four wrappers.",
+  blurb: "Scarlet & Violet, September 2024. Terapagos and the Stellar Tera Pokémon ex, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/90 · gold 1/137",
-  lede: "Terapagos crowns the Tera era. Same reverse / rare / art skeleton as the rest of the block, gold at 1/137.",
-  slots: svSlots({ double: 0.1695, ultra: 0.0676, ir: 0.0781, sir: 0.0111, hyper: 0.0073, ace: 0.0495 }),
-  heroIds: ["sv7-170", "sv7-167", "sv7-173", "sv7-168"],
+  lede: "Terapagos takes the crown with Cinderace, Lapras and Galvantula as Stellar Tera ex, printed in crystal foil edge to edge. Only 33 secret rares, so each one comes easier than in the sets around it.",
+  // TCGplayer's 8,000-pack study (Sep 2024): DR 16.90%, UR 6.75%, ACE SPEC
+  // 4.94% (first reverse slot), IR 7.79%, SIR 1.11%, Hyper Rare 0.73%
+  // (second reverse slot). Source and date in data/pullrates.json; Dachsbun
+  // ex's short print is its `pullWeight` in data/sv7.json.
+  slots: svSlots({ double: 0.169, ultra: 0.0675, ir: 0.0779, sir: 0.0111, hyper: 0.0073, ace: 0.0494 }),
+  heroIds: ["sv7-170", "sv7-148", "sv7-169", "sv7-173"],
   wrappers: boosterWrappers("sv7", [
     { id: "terapagos", name: "Terapagos", cardId: "sv7-170", tag: "The chase" },
-    { id: "lapras", name: "Lapras", cardId: "sv7-31", tag: "Ferry" },
-    { id: "terapagos-stellar", name: "Terapagos", cardId: "sv7-173", tag: "Stellar" },
+    { id: "lapras", name: "Lapras", cardId: "sv7-32", tag: "Ferry" },
+    { id: "galvantula", name: "Galvantula", cardId: "sv7-51", tag: "Electroweb" },
     { id: "cinderace", name: "Cinderace", cardId: "sv7-28", tag: "Pyro ball" },
   ]),
 };
@@ -1195,6 +1199,39 @@ export const OBSIDIAN_FLAMES = {
   })),
 };
 
+export const PALDEA_EVOLVED = {
+  id: "sv2",
+  tcgId: "sv2",
+  name: "Paldea Evolved",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "June 9, 2023",
+  live: true,
+  printedTotal: 193,
+  totalCount: 289,
+  packSize: 11,
+  cost: 15.56,
+  dataFile: "data/sv2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, June 2023. The Paldea starters grow into ex, Iono gets her Special Illustration Rare, five wrappers.",
+  oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/57",
+  lede: "The biggest early Scarlet & Violet set: 279 cards, 36 of them Illustration Rares, and the Magikarp everyone hunts. Tera ex print on etched foil, gold lands in 1 of 57 packs.",
+  /**
+   * TCGplayer Authentication Center, 8,000+ English packs (June 2023):
+   * DR 13.72%, UR 6.64% in the rare slot; IR 7.70%, SIR 3.17%, Hyper Rare
+   * 1.76% in the second reverse slot. No ACE SPEC yet. data/pullrates.json.
+   */
+  slots: svSlots({ double: 0.1372, ultra: 0.0664, ir: 0.077, sir: 0.0317, hyper: 0.0176 }),
+  heroIds: ["sv2-203", "sv2-269", "sv2-262", "sv2-211"],
+  wrappers: boosterWrappers("sv2", [
+    { id: "ting-lu", name: "Ting-Lu", cardId: "sv2-263", tag: "Ruinous" },
+    { id: "skeledirge", name: "Skeledirge", cardId: "sv2-258", tag: "Fire starter" },
+    { id: "quaquaval", name: "Quaquaval", cardId: "sv2-260", tag: "Water starter" },
+    { id: "meowscarada", name: "Meowscarada", cardId: "sv2-256", tag: "Grass starter" },
+    { id: "chien-pao", name: "Chien-Pao", cardId: "sv2-261", tag: "Ruinous" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1209,6 +1246,8 @@ export const PLAYABLE_SETS = [
   TWILIGHT_MASQUERADE,
   TEMPORAL_FORCES,
   OBSIDIAN_FLAMES,
+  STELLAR_CROWN,
+  PALDEA_EVOLVED,
 ];
 
 /**
@@ -1222,7 +1261,6 @@ export const RETIRED_SETS = [
   DESTINED_RIVALS,
   PRISMATIC_EVOLUTIONS,
   SURGING_SPARKS,
-  STELLAR_CROWN,
   SHROUDED_FABLE,
 ];
 
@@ -1271,12 +1309,10 @@ export const ROADMAP = [
       { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
       { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
-      { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
-      { id: "sv2", name: "Paldea Evolved", released: "Jun 2023", cards: "—" },
       { id: "sv1", name: "Scarlet & Violet", released: "Mar 2023", cards: "—" },
     ],
   },
