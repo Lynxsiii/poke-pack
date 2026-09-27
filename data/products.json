@@ -1020,6 +1020,113 @@
       "image": "assets/products/rsv10pt5/tech-gothitelle.webp"
     }
   ],
+  "sv2": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv2-svp027"
+      ],
+      "price": 217.95,
+      "tcgplayerId": 493974,
+      "image": "assets/products/sv2/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv2-svp027-pc",
+        "sv2-svp027"
+      ],
+      "price": 611.51,
+      "tcgplayerId": 493973,
+      "image": "assets/products/sv2/pc-etb.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv2-svp019",
+        "sv2-svp020",
+        "sv2-svp021",
+        "sv2-svp022"
+      ],
+      "pick": 1,
+      "price": 64.56,
+      "tcgplayerId": 496929,
+      "image": "assets/products/sv2/build-battle.webp"
+    },
+    {
+      "id": "build-battle-stadium",
+      "name": "Build & Battle Stadium",
+      "kind": "battle",
+      "packs": 11,
+      "promos": [
+        "sv2-svp019",
+        "sv2-svp020",
+        "sv2-svp021",
+        "sv2-svp022"
+      ],
+      "pick": 2,
+      "price": 205.49,
+      "tcgplayerId": 496935,
+      "image": "assets/products/sv2/build-battle-stadium.webp"
+    },
+    {
+      "id": "blister3-tinkatink",
+      "name": "3 Pack Blister: Tinkatink",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv2-svp025"
+      ],
+      "price": 48.84,
+      "tcgplayerId": 493997,
+      "image": "assets/products/sv2/blister3-tinkatink.webp"
+    },
+    {
+      "id": "blister3-varoom",
+      "name": "3 Pack Blister: Varoom",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv2-svp026"
+      ],
+      "price": 43.44,
+      "tcgplayerId": 493998,
+      "image": "assets/products/sv2/blister3-varoom.webp"
+    },
+    {
+      "id": "blister-smoliv",
+      "name": "Single Pack Blister: Smoliv",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv2-svp023"
+      ],
+      "price": 14.94,
+      "tcgplayerId": 493999,
+      "image": "assets/products/sv2/blister-smoliv.webp"
+    },
+    {
+      "id": "blister-growlithe",
+      "name": "Single Pack Blister: Growlithe",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv2-svp024"
+      ],
+      "price": 18.61,
+      "tcgplayerId": 494001,
+      "image": "assets/products/sv2/blister-growlithe.webp"
+    }
+  ],
   "zsv10pt5": [
     {
       "id": "eliteTrainerBox",

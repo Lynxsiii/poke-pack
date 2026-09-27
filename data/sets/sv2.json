@@ -6,5 +6,127 @@
   "scrydexId": "sv2",
   "pittSlug": "Paldea-Evolved",
   "artSlug": "paldea-evolved",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 23120,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp019": {},
+    "svp020": {},
+    "svp021": {},
+    "svp022": {},
+    "svp023": {},
+    "svp024": {},
+    "svp025": {},
+    "svp026": {},
+    "svp027": {},
+    "svp027-pc": {
+      "like": "svp027",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 500264
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 493974,
+      "packs": 9,
+      "promos": [
+        "svp027"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 493973,
+      "packs": 11,
+      "promos": [
+        "svp027-pc",
+        "svp027"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 496929,
+      "packs": 4,
+      "promos": [
+        "svp019",
+        "svp020",
+        "svp021",
+        "svp022"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "build-battle-stadium",
+      "name": "Build & Battle Stadium",
+      "kind": "battle",
+      "tcgplayerId": 496935,
+      "packs": 11,
+      "promos": [
+        "svp019",
+        "svp020",
+        "svp021",
+        "svp022"
+      ],
+      "pick": 2
+    },
+    {
+      "id": "blister3-tinkatink",
+      "name": "3 Pack Blister: Tinkatink",
+      "kind": "blister",
+      "tcgplayerId": 493997,
+      "packs": 3,
+      "promos": [
+        "svp025"
+      ]
+    },
+    {
+      "id": "blister3-varoom",
+      "name": "3 Pack Blister: Varoom",
+      "kind": "blister",
+      "tcgplayerId": 493998,
+      "packs": 3,
+      "promos": [
+        "svp026"
+      ]
+    },
+    {
+      "id": "blister-smoliv",
+      "name": "Single Pack Blister: Smoliv",
+      "kind": "blister",
+      "tcgplayerId": 493999,
+      "packs": 1,
+      "promos": [
+        "svp023"
+      ]
+    },
+    {
+      "id": "blister-growlithe",
+      "name": "Single Pack Blister: Growlithe",
+      "kind": "blister",
+      "tcgplayerId": 494001,
+      "packs": 1,
+      "promos": [
+        "svp024"
+      ]
+    }
+  ]
 }
