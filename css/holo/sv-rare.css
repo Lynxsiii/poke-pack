@@ -1,0 +1,24 @@
+/*
+ * Scarlet & Violet holo Rares with a Future or Ancient frame.
+ *
+ * Those frames print a halftone panel down the right of the text box, and on
+ * the holo print (TCG Live's SV_HOLO) it sits on foil: the card's foil map is
+ * white there as well as round the Pokémon. foil-svholo (celebration.css)
+ * was tuned for a background-only mask. Its light bars multiply to black for
+ * most of their period and its luminosity layer darkens away from the light,
+ * which is right for mirror foil behind the painting but turns the panel,
+ * and the attack text printed on it, solid black under the light.
+ *
+ * So below the art window the panel keeps only the rainbow on `.foil`, which
+ * overlays light and tints the ink rather than hiding it, and the bars and the
+ * falloff stay in the art. `frame-paradox` comes from foilExtras() in
+ * js/foil-maps.js, on mapped cards whose subtypes are Future or Ancient.
+ * Write-up: .claude/skills/card-textures/reference/sv-rare-holo.md.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo.frame-paradox .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo.frame-paradox .foil::after {
+  /* The text box starts at about 50% of the card's height on every frame. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 48%, transparent 51%);
+  mask-image: linear-gradient(to bottom, #000 48%, transparent 51%);
+}
