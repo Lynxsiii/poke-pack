@@ -1140,15 +1140,16 @@ export const SURGING_SPARKS = {
   released: "November 8, 2024",
   live: true,
   printedTotal: 191,
-  totalCount: 252,
+  totalCount: 262,
   packSize: 11,
-  cost: 7.78,
+  cost: 8.42,
   dataFile: "data/sv8.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, November 2024. Paldea’s lightning set — Pikachu, ACE SPEC, four wrappers.",
-  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/189",
-  lede: "The last big Paldea wave before Prismatic. ACE SPEC sits in the reverse slot; gold is a Hyper Rare, not a Mega.",
-  slots: svSlots({ double: 0.167, ultra: 0.067, ir: 0.077, sir: 0.0115, hyper: 0.0053, ace: 0.05 }),
+  blurb: "Scarlet & Violet, November 2024. Stellar Tera Pikachu ex, crystal Tera foils and ACE SPECs, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/188",
+  lede: "Pikachu ex went Stellar Tera and became the chase. ACE SPEC takes the first reverse slot, and IR, SIR and gold share the second.",
+  // TCGplayer's study of 8,000+ English packs (sources in data/pullrates.json).
+  slots: svSlots({ double: 0.1694, ultra: 0.0674, ir: 0.0767, sir: 0.0115, hyper: 0.0053, ace: 0.0503 }),
   heroIds: ["sv8-238", "sv8-239", "sv8-241", "sv8-242"],
   wrappers: boosterWrappers("sv8", [
     { id: "pikachu", name: "Pikachu", cardId: "sv8-238", tag: "The chase" },
@@ -1460,6 +1461,7 @@ export const PLAYABLE_SETS = [
   WHITE_FLARE,
   DESTINED_RIVALS,
   JOURNEY_TOGETHER,
+  SURGING_SPARKS,
   TWILIGHT_MASQUERADE,
   TEMPORAL_FORCES,
   PALDEAN_FATES,
@@ -1480,7 +1482,6 @@ export const PLAYABLE_SETS = [
  */
 export const RETIRED_SETS = [
   PRISMATIC_EVOLUTIONS,
-  SURGING_SPARKS,
 ];
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
@@ -1526,7 +1527,6 @@ export const ROADMAP = [
     era: "Scarlet & Violet",
     sets: [
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
-      { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
     ],
   },

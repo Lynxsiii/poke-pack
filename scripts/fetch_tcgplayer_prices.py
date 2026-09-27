@@ -57,7 +57,9 @@ def fetch(group: int, what: str) -> list[dict]:
 
 
 def norm(name: str) -> str:
-    name = re.sub(r"\s+-\s+\d+/\d+$", "", name)
+    # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
+    # "Ninetales -199/197".
+    name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
     # TCGplayer spells Nidoran's symbols out ("Nidoran F"); our data keeps ♀/♂.
     name = name.replace("♀", " F").replace("♂", " M").replace("’", "'")
     # ...and drops accents ("Flabebe" for Flabébé).
