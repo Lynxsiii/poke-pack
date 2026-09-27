@@ -24,6 +24,7 @@ const TCGDEX_SET = {
   me4: "me04",
   me5: "me05",
   sv2: "sv02",
+  sv5: "sv05",
 };
 
 /** pokemontcg.io is flaky on new sets; one 5xx and we stop asking for this session. */
