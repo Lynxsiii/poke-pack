@@ -27,6 +27,9 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from build_patterns import PATTERNS  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 SEALED_OUT = DATA / "sealed.json"
@@ -92,6 +95,13 @@ def singles(cfg: dict) -> dict[str, dict]:
         prev = out.get(number)
         if prev is None or price < prev["price"]:
             out[number] = {"price": price, "name": card.get("name", "")}
+        # Sets that file those printings as cards of their own
+        # (scripts/build_patterns.py) price each one from its own variant.
+        for kind in cfg.get("patternPrints") or []:
+            suffix, _, key, _ = PATTERNS[kind]
+            entry = (card.get("variantMap") or {}).get(key) or {}
+            if isinstance(entry.get("price"), (int, float)) and entry["price"] > 0:
+                out[f"{number}-{suffix}"] = {"price": float(entry["price"]), "name": card.get("name", "")}
     return out
 
 

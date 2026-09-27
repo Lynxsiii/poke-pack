@@ -85,6 +85,7 @@ TCGL_INDEX = "https://cdn.malie.io/file/malie-io/tcgl/export/index.json"
 TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
+MISC = 2374
 HISTORY_LIMIT = 400
 NEXT_DATA = re.compile(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', re.S)
 
@@ -274,7 +275,7 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
             raise RuntimeError(f"{number}: like {spec['like']} is not in data/{set_id}.json yet")
         keep = {k: v for k, v in base.items() if k not in (
             "image", "imageSmall", "imageRemote", "market", "foilMap", "etchMap",
-            "etchMapH", "etchMapV", "stampPos", "stampSize", "variant", "tcgplayerId")}
+            "etchMapH", "etchMapV", "reverseMap", "stampPos", "stampSize", "variant", "tcgplayerId")}
         record = {**keep, "id": card_id, "number": number}
         if "printedNumber" not in record:
             record["printedNumber"] = f"{base['number']}/{cfg.get('printedTotal', '')}".rstrip("/")
@@ -377,8 +378,9 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     card_prices: dict[str, float] = {}
     listings: dict[str, dict[str, float]] = {}
     groups = [cfg.get("tcgplayerGroup"), *(s.get("tcgplayerGroup") for s in cfg.get("promoSeries", {}).values())]
-    # Product-only prints (blister exclusives) are filed in a group of their own.
-    groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES]
+    # Product-only prints are filed in groups of their own: blister exclusives,
+    # and stamped cards like Prismatic Evolutions' Surprise Box ex (Miscellaneous).
+    groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES, MISC]
     tcg_market: dict[int, dict[int, float]] = {}
 
     def tcg_price(pid: int) -> float | None:
