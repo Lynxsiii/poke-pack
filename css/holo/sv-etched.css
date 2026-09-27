@@ -132,12 +132,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-etch-map .foil {
   background-position: var(--background-x) var(--background-y);
   background-repeat: repeat;
   background-blend-mode: normal;
-  filter: brightness(0.6) contrast(1.5) saturate(1);
+  /* Upstream's brightness(.6) at full saturation dodges bright gold ink to
+     orange and red; a paler rainbow keeps it gold with a rainbow tint. */
+  filter: brightness(0.5) contrast(1.5) saturate(0.45);
   mix-blend-mode: color-dodge;
 }
 /* Resting, the gold stays gold rather than taking the rainbow's centre. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-etch-map:not(.lit):not(.settling) .foil {
-  filter: brightness(0.6) contrast(1.5) saturate(0.3);
+  filter: brightness(0.5) contrast(1.5) saturate(0.3);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-etch-map .foil::before {
   background-image:
