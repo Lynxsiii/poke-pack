@@ -38,7 +38,8 @@
     ],
     "market": 1.42,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-1/large",
-    "foilMap": "assets/foil/maps/sv7/1.webp"
+    "foilMap": "assets/foil/maps/sv7/1.webp",
+    "tcgplayerId": 567227
   },
   {
     "id": "sv7-2",
@@ -69,7 +70,8 @@
       }
     ],
     "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-2/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-2/large",
+    "tcgplayerId": 567228
   },
   {
     "id": "sv7-3",
@@ -107,9 +109,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.18,
+    "market": 0.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-3/large",
-    "foilMap": "assets/foil/maps/sv7/3.webp"
+    "foilMap": "assets/foil/maps/sv7/3.webp",
+    "tcgplayerId": 567229
   },
   {
     "id": "sv7-4",
@@ -146,8 +149,9 @@
         "text": ""
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-4/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-4/large",
+    "tcgplayerId": 567230
   },
   {
     "id": "sv7-5",
@@ -177,8 +181,9 @@
         "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
       }
     ],
-    "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-5/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-5/large",
+    "tcgplayerId": 567231
   },
   {
     "id": "sv7-6",
@@ -215,9 +220,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.2,
+    "market": 0.21,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-6/large",
-    "foilMap": "assets/foil/maps/sv7/6.webp"
+    "foilMap": "assets/foil/maps/sv7/6.webp",
+    "tcgplayerId": 567232
   },
   {
     "id": "sv7-7",
@@ -257,7 +263,8 @@
       }
     ],
     "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-7/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-7/large",
+    "tcgplayerId": 567233
   },
   {
     "id": "sv7-8",
@@ -287,7 +294,8 @@
       }
     ],
     "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-8/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-8/large",
+    "tcgplayerId": 567234
   },
   {
     "id": "sv7-9",
@@ -318,7 +326,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-9/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-9/large",
+    "tcgplayerId": 567235
   },
   {
     "id": "sv7-10",
@@ -348,7 +357,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-10/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-10/large",
+    "tcgplayerId": 567236
   },
   {
     "id": "sv7-11",
@@ -387,7 +397,8 @@
       }
     ],
     "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-11/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-11/large",
+    "tcgplayerId": 567237
   },
   {
     "id": "sv7-12",
@@ -416,8 +427,9 @@
         "text": ""
       }
     ],
-    "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-12/large"
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-12/large",
+    "tcgplayerId": 567238
   },
   {
     "id": "sv7-13",
@@ -448,7 +460,8 @@
       }
     ],
     "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-13/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-13/large",
+    "tcgplayerId": 567239
   },
   {
     "id": "sv7-14",
@@ -486,9 +499,10 @@
         "type": "Ability"
       }
     ],
-    "market": 1.87,
+    "market": 1.84,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-14/large",
-    "foilMap": "assets/foil/maps/sv7/14.webp"
+    "foilMap": "assets/foil/maps/sv7/14.webp",
+    "tcgplayerId": 567240
   },
   {
     "id": "sv7-15",
@@ -518,7 +532,8 @@
       }
     ],
     "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-15/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-15/large",
+    "tcgplayerId": 567241
   },
   {
     "id": "sv7-16",
@@ -549,7 +564,8 @@
       }
     ],
     "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-16/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-16/large",
+    "tcgplayerId": 567242
   },
   {
     "id": "sv7-17",
@@ -588,7 +604,8 @@
       }
     ],
     "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-17/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-17/large",
+    "tcgplayerId": 567243
   },
   {
     "id": "sv7-18",
@@ -630,7 +647,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-18/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-18/large",
+    "tcgplayerId": 567244
   },
   {
     "id": "sv7-19",
@@ -659,8 +677,9 @@
         "text": ""
       }
     ],
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-19/large"
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-19/large",
+    "tcgplayerId": 567245
   },
   {
     "id": "sv7-20",
@@ -692,7 +711,8 @@
       }
     ],
     "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-20/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-20/large",
+    "tcgplayerId": 567246
   },
   {
     "id": "sv7-21",
@@ -732,7 +752,8 @@
       }
     ],
     "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-21/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-21/large",
+    "tcgplayerId": 567247
   },
   {
     "id": "sv7-22",
@@ -763,8 +784,9 @@
         "text": ""
       }
     ],
-    "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-22/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-22/large",
+    "tcgplayerId": 567248
   },
   {
     "id": "sv7-23",
@@ -794,7 +816,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-23/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-23/large",
+    "tcgplayerId": 567249
   },
   {
     "id": "sv7-24",
@@ -836,7 +859,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-24/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-24/large",
+    "tcgplayerId": 567250
   },
   {
     "id": "sv7-25",
@@ -879,7 +903,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-25/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-25/large",
+    "tcgplayerId": 567251
   },
   {
     "id": "sv7-26",
@@ -909,7 +934,8 @@
       }
     ],
     "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-26/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-26/large",
+    "tcgplayerId": 567252
   },
   {
     "id": "sv7-27",
@@ -950,7 +976,8 @@
       }
     ],
     "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-27/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-27/large",
+    "tcgplayerId": 567253
   },
   {
     "id": "sv7-28",
@@ -993,10 +1020,11 @@
         "text": "This attack does 180 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 0.87,
+    "market": 0.89,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-28/large",
     "foilMap": "assets/foil/maps/sv7/28.webp",
-    "etchMap": "assets/foil/maps/sv7/28-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/28-etch.webp",
+    "tcgplayerId": 567254
   },
   {
     "id": "sv7-29",
@@ -1027,7 +1055,8 @@
       }
     ],
     "market": 0.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-29/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-29/large",
+    "tcgplayerId": 567255
   },
   {
     "id": "sv7-30",
@@ -1065,9 +1094,10 @@
         "type": "Ability"
       }
     ],
-    "market": 2.91,
+    "market": 2.92,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-30/large",
-    "foilMap": "assets/foil/maps/sv7/30.webp"
+    "foilMap": "assets/foil/maps/sv7/30.webp",
+    "tcgplayerId": 567256
   },
   {
     "id": "sv7-31",
@@ -1106,8 +1136,9 @@
         "text": ""
       }
     ],
-    "market": 0.22,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-31/large"
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-31/large",
+    "tcgplayerId": 567257
   },
   {
     "id": "sv7-32",
@@ -1147,10 +1178,11 @@
         "text": "Look at the top 20 cards of your deck and attach any number of Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck."
       }
     ],
-    "market": 1.88,
+    "market": 1.89,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-32/large",
     "foilMap": "assets/foil/maps/sv7/32.webp",
-    "etchMap": "assets/foil/maps/sv7/32-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/32-etch.webp",
+    "tcgplayerId": 567258
   },
   {
     "id": "sv7-33",
@@ -1179,8 +1211,9 @@
         "text": ""
       }
     ],
-    "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-33/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-33/large",
+    "tcgplayerId": 567259
   },
   {
     "id": "sv7-34",
@@ -1212,7 +1245,8 @@
       }
     ],
     "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-34/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-34/large",
+    "tcgplayerId": 567260
   },
   {
     "id": "sv7-35",
@@ -1241,8 +1275,9 @@
         "text": ""
       }
     ],
-    "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-35/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-35/large",
+    "tcgplayerId": 567261
   },
   {
     "id": "sv7-36",
@@ -1282,7 +1317,8 @@
       }
     ],
     "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-36/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-36/large",
+    "tcgplayerId": 567262
   },
   {
     "id": "sv7-37",
@@ -1314,7 +1350,8 @@
       }
     ],
     "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-37/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-37/large",
+    "tcgplayerId": 567263
   },
   {
     "id": "sv7-38",
@@ -1352,9 +1389,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.17,
+    "market": 0.15,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-38/large",
-    "foilMap": "assets/foil/maps/sv7/38.webp"
+    "foilMap": "assets/foil/maps/sv7/38.webp",
+    "tcgplayerId": 567264
   },
   {
     "id": "sv7-39",
@@ -1384,8 +1422,9 @@
         "text": ""
       }
     ],
-    "market": 0.2,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-39/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-39/large",
+    "tcgplayerId": 567265
   },
   {
     "id": "sv7-40",
@@ -1416,8 +1455,9 @@
         "text": ""
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-40/large"
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-40/large",
+    "tcgplayerId": 567266
   },
   {
     "id": "sv7-41",
@@ -1448,9 +1488,10 @@
         "text": "Flip a coin. If heads, this attack does 100 more damage."
       }
     ],
-    "market": 1.14,
+    "market": 1.2,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-41/large",
-    "foilMap": "assets/foil/maps/sv7/41.webp"
+    "foilMap": "assets/foil/maps/sv7/41.webp",
+    "tcgplayerId": 567267
   },
   {
     "id": "sv7-42",
@@ -1492,7 +1533,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-42/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-42/large",
+    "tcgplayerId": 567268
   },
   {
     "id": "sv7-43",
@@ -1523,8 +1565,9 @@
         "text": ""
       }
     ],
-    "market": 0.24,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-43/large"
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-43/large",
+    "tcgplayerId": 567269
   },
   {
     "id": "sv7-44",
@@ -1565,7 +1608,8 @@
     ],
     "market": 0.14,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-44/large",
-    "foilMap": "assets/foil/maps/sv7/44.webp"
+    "foilMap": "assets/foil/maps/sv7/44.webp",
+    "tcgplayerId": 567270
   },
   {
     "id": "sv7-45",
@@ -1604,8 +1648,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-45/large"
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-45/large",
+    "tcgplayerId": 567271
   },
   {
     "id": "sv7-46",
@@ -1644,7 +1689,8 @@
       }
     ],
     "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-46/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-46/large",
+    "tcgplayerId": 567272
   },
   {
     "id": "sv7-47",
@@ -1684,7 +1730,8 @@
       }
     ],
     "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-47/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-47/large",
+    "tcgplayerId": 567273
   },
   {
     "id": "sv7-48",
@@ -1714,8 +1761,9 @@
         "text": "Flip 2 coins. This attack does 20 damage for each heads."
       }
     ],
-    "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-48/large"
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-48/large",
+    "tcgplayerId": 567274
   },
   {
     "id": "sv7-49",
@@ -1757,7 +1805,8 @@
       }
     ],
     "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-49/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-49/large",
+    "tcgplayerId": 567275
   },
   {
     "id": "sv7-50",
@@ -1786,8 +1835,9 @@
         "text": "Search your deck for up to 2 Basic Grass Energy cards and up to 2 Basic Lightning Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck."
       }
     ],
-    "market": 0.23,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-50/large"
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-50/large",
+    "tcgplayerId": 567276
   },
   {
     "id": "sv7-51",
@@ -1832,7 +1882,8 @@
     "market": 0.88,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-51/large",
     "foilMap": "assets/foil/maps/sv7/51.webp",
-    "etchMap": "assets/foil/maps/sv7/51-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/51-etch.webp",
+    "tcgplayerId": 567277
   },
   {
     "id": "sv7-52",
@@ -1863,7 +1914,8 @@
       }
     ],
     "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-52/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-52/large",
+    "tcgplayerId": 567278
   },
   {
     "id": "sv7-53",
@@ -1905,7 +1957,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-53/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-53/large",
+    "tcgplayerId": 567279
   },
   {
     "id": "sv7-54",
@@ -1935,7 +1988,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-54/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-54/large",
+    "tcgplayerId": 567280
   },
   {
     "id": "sv7-55",
@@ -1967,7 +2021,8 @@
     ],
     "market": 0.15,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-55/large",
-    "foilMap": "assets/foil/maps/sv7/55.webp"
+    "foilMap": "assets/foil/maps/sv7/55.webp",
+    "tcgplayerId": 567281
   },
   {
     "id": "sv7-56",
@@ -1997,7 +2052,8 @@
       }
     ],
     "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-56/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-56/large",
+    "tcgplayerId": 567282
   },
   {
     "id": "sv7-57",
@@ -2035,8 +2091,9 @@
         "text": ""
       }
     ],
-    "market": 3.59,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-57/large"
+    "market": 3.63,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-57/large",
+    "tcgplayerId": 567283
   },
   {
     "id": "sv7-58",
@@ -2077,8 +2134,9 @@
         "text": ""
       }
     ],
-    "market": 0.3,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-58/large"
+    "market": 0.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-58/large",
+    "tcgplayerId": 567284
   },
   {
     "id": "sv7-59",
@@ -2109,8 +2167,9 @@
         "text": ""
       }
     ],
-    "market": 0.38,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-59/large"
+    "market": 0.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-59/large",
+    "tcgplayerId": 567285
   },
   {
     "id": "sv7-60",
@@ -2139,8 +2198,9 @@
         "text": "During your opponent's next turn, this Pokémon takes 10 less damage from attacks (after applying Weakness and Resistance)."
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-60/large"
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-60/large",
+    "tcgplayerId": 567286
   },
   {
     "id": "sv7-61",
@@ -2171,7 +2231,8 @@
       }
     ],
     "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-61/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-61/large",
+    "tcgplayerId": 567287
   },
   {
     "id": "sv7-62",
@@ -2202,7 +2263,8 @@
       }
     ],
     "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-62/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-62/large",
+    "tcgplayerId": 567288
   },
   {
     "id": "sv7-63",
@@ -2240,7 +2302,8 @@
       }
     ],
     "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-63/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-63/large",
+    "tcgplayerId": 567289
   },
   {
     "id": "sv7-64",
@@ -2270,7 +2333,8 @@
       }
     ],
     "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-64/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-64/large",
+    "tcgplayerId": 567290
   },
   {
     "id": "sv7-65",
@@ -2311,7 +2375,8 @@
     ],
     "market": 0.32,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-65/large",
-    "foilMap": "assets/foil/maps/sv7/65.webp"
+    "foilMap": "assets/foil/maps/sv7/65.webp",
+    "tcgplayerId": 567291
   },
   {
     "id": "sv7-66",
@@ -2348,8 +2413,9 @@
         "text": ""
       }
     ],
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-66/large"
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-66/large",
+    "tcgplayerId": 567292
   },
   {
     "id": "sv7-67",
@@ -2387,10 +2453,11 @@
         "type": "Ability"
       }
     ],
-    "market": 1.38,
+    "market": 1.37,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-67/large",
     "pullWeight": 0.61,
-    "foilMap": "assets/foil/maps/sv7/67.webp"
+    "foilMap": "assets/foil/maps/sv7/67.webp",
+    "tcgplayerId": 567293
   },
   {
     "id": "sv7-68",
@@ -2420,7 +2487,8 @@
       }
     ],
     "market": 0.2,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-68/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-68/large",
+    "tcgplayerId": 567294
   },
   {
     "id": "sv7-69",
@@ -2451,7 +2519,8 @@
       }
     ],
     "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-69/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-69/large",
+    "tcgplayerId": 567295
   },
   {
     "id": "sv7-70",
@@ -2492,7 +2561,8 @@
       }
     ],
     "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-70/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-70/large",
+    "tcgplayerId": 567296
   },
   {
     "id": "sv7-71",
@@ -2525,7 +2595,8 @@
     ],
     "market": 0.2,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-71/large",
-    "foilMap": "assets/foil/maps/sv7/71.webp"
+    "foilMap": "assets/foil/maps/sv7/71.webp",
+    "tcgplayerId": 567297
   },
   {
     "id": "sv7-72",
@@ -2554,8 +2625,9 @@
         "text": "This Pokémon also does 10 damage to itself."
       }
     ],
-    "market": 0.24,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-72/large"
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-72/large",
+    "tcgplayerId": 567298
   },
   {
     "id": "sv7-73",
@@ -2594,8 +2666,9 @@
         "text": "If any of your Benched Cubone have any damage counters on them, this attack does 120 more damage."
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-73/large"
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-73/large",
+    "tcgplayerId": 567299
   },
   {
     "id": "sv7-74",
@@ -2626,7 +2699,8 @@
       }
     ],
     "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-74/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-74/large",
+    "tcgplayerId": 567300
   },
   {
     "id": "sv7-75",
@@ -2659,7 +2733,8 @@
       }
     ],
     "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-75/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-75/large",
+    "tcgplayerId": 567301
   },
   {
     "id": "sv7-76",
@@ -2698,9 +2773,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.22,
+    "market": 0.23,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-76/large",
-    "foilMap": "assets/foil/maps/sv7/76.webp"
+    "foilMap": "assets/foil/maps/sv7/76.webp",
+    "tcgplayerId": 567302
   },
   {
     "id": "sv7-77",
@@ -2730,7 +2806,8 @@
       }
     ],
     "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-77/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-77/large",
+    "tcgplayerId": 567303
   },
   {
     "id": "sv7-78",
@@ -2770,7 +2847,8 @@
       }
     ],
     "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-78/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-78/large",
+    "tcgplayerId": 567304
   },
   {
     "id": "sv7-79",
@@ -2801,7 +2879,8 @@
       }
     ],
     "market": 0.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-79/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-79/large",
+    "tcgplayerId": 567305
   },
   {
     "id": "sv7-80",
@@ -2844,7 +2923,8 @@
     ],
     "market": 0.66,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-80/large",
-    "foilMap": "assets/foil/maps/sv7/80.webp"
+    "foilMap": "assets/foil/maps/sv7/80.webp",
+    "tcgplayerId": 567306
   },
   {
     "id": "sv7-81",
@@ -2875,7 +2955,8 @@
       }
     ],
     "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-81/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-81/large",
+    "tcgplayerId": 567307
   },
   {
     "id": "sv7-82",
@@ -2916,9 +2997,10 @@
         "text": ""
       }
     ],
-    "market": 0.96,
+    "market": 0.92,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-82/large",
-    "foilMap": "assets/foil/maps/sv7/82.webp"
+    "foilMap": "assets/foil/maps/sv7/82.webp",
+    "tcgplayerId": 567308
   },
   {
     "id": "sv7-83",
@@ -2948,7 +3030,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-83/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-83/large",
+    "tcgplayerId": 567309
   },
   {
     "id": "sv7-84",
@@ -2978,8 +3061,9 @@
         "text": "If your opponent has 5 or fewer cards in their hand, this attack does 60 more damage."
       }
     ],
-    "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-84/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-84/large",
+    "tcgplayerId": 567310
   },
   {
     "id": "sv7-85",
@@ -3018,7 +3102,8 @@
       }
     ],
     "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-85/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-85/large",
+    "tcgplayerId": 567311
   },
   {
     "id": "sv7-86",
@@ -3057,7 +3142,8 @@
       }
     ],
     "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-86/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-86/large",
+    "tcgplayerId": 567312
   },
   {
     "id": "sv7-87",
@@ -3097,8 +3183,9 @@
         "text": ""
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-87/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-87/large",
+    "tcgplayerId": 567313
   },
   {
     "id": "sv7-88",
@@ -3137,7 +3224,8 @@
       }
     ],
     "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-88/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-88/large",
+    "tcgplayerId": 567314
   },
   {
     "id": "sv7-89",
@@ -3178,7 +3266,8 @@
     ],
     "market": 0.6,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-89/large",
-    "foilMap": "assets/foil/maps/sv7/89.webp"
+    "foilMap": "assets/foil/maps/sv7/89.webp",
+    "tcgplayerId": 567315
   },
   {
     "id": "sv7-90",
@@ -3209,7 +3298,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-90/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-90/large",
+    "tcgplayerId": 567316
   },
   {
     "id": "sv7-91",
@@ -3249,7 +3339,8 @@
       }
     ],
     "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-91/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-91/large",
+    "tcgplayerId": 567317
   },
   {
     "id": "sv7-92",
@@ -3289,8 +3380,9 @@
         "text": "Your opponent's Active Pokémon is now Poisoned."
       }
     ],
-    "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-92/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-92/large",
+    "tcgplayerId": 567318
   },
   {
     "id": "sv7-93",
@@ -3331,7 +3423,8 @@
       }
     ],
     "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-93/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-93/large",
+    "tcgplayerId": 567319
   },
   {
     "id": "sv7-94",
@@ -3371,7 +3464,8 @@
       }
     ],
     "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-94/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-94/large",
+    "tcgplayerId": 567320
   },
   {
     "id": "sv7-95",
@@ -3413,7 +3507,8 @@
       }
     ],
     "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-95/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-95/large",
+    "tcgplayerId": 567321
   },
   {
     "id": "sv7-96",
@@ -3456,7 +3551,8 @@
     ],
     "market": 0.18,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-96/large",
-    "foilMap": "assets/foil/maps/sv7/96.webp"
+    "foilMap": "assets/foil/maps/sv7/96.webp",
+    "tcgplayerId": 567322
   },
   {
     "id": "sv7-97",
@@ -3487,7 +3583,8 @@
       }
     ],
     "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-97/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-97/large",
+    "tcgplayerId": 567323
   },
   {
     "id": "sv7-98",
@@ -3526,7 +3623,8 @@
       }
     ],
     "market": 0.22,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-98/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-98/large",
+    "tcgplayerId": 567324
   },
   {
     "id": "sv7-99",
@@ -3564,8 +3662,9 @@
         "text": ""
       }
     ],
-    "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-99/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-99/large",
+    "tcgplayerId": 567325
   },
   {
     "id": "sv7-100",
@@ -3597,7 +3696,8 @@
       }
     ],
     "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-100/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-100/large",
+    "tcgplayerId": 567326
   },
   {
     "id": "sv7-101",
@@ -3635,9 +3735,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.11,
+    "market": 0.12,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-101/large",
-    "foilMap": "assets/foil/maps/sv7/101.webp"
+    "foilMap": "assets/foil/maps/sv7/101.webp",
+    "tcgplayerId": 567327
   },
   {
     "id": "sv7-102",
@@ -3677,7 +3778,8 @@
       }
     ],
     "market": 0.29,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-102/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-102/large",
+    "tcgplayerId": 567328
   },
   {
     "id": "sv7-103",
@@ -3716,7 +3818,8 @@
       }
     ],
     "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-103/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-103/large",
+    "tcgplayerId": 567329
   },
   {
     "id": "sv7-104",
@@ -3759,7 +3862,8 @@
     ],
     "market": 0.07,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-104/large",
-    "foilMap": "assets/foil/maps/sv7/104.webp"
+    "foilMap": "assets/foil/maps/sv7/104.webp",
+    "tcgplayerId": 567330
   },
   {
     "id": "sv7-105",
@@ -3794,7 +3898,8 @@
     ],
     "market": 0.64,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-105/large",
-    "foilMap": "assets/foil/maps/sv7/105.webp"
+    "foilMap": "assets/foil/maps/sv7/105.webp",
+    "tcgplayerId": 567331
   },
   {
     "id": "sv7-106",
@@ -3834,7 +3939,8 @@
       }
     ],
     "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-106/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-106/large",
+    "tcgplayerId": 567332
   },
   {
     "id": "sv7-107",
@@ -3875,7 +3981,8 @@
     ],
     "market": 0.03,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-107/large",
-    "foilMap": "assets/foil/maps/sv7/107.webp"
+    "foilMap": "assets/foil/maps/sv7/107.webp",
+    "tcgplayerId": 567333
   },
   {
     "id": "sv7-108",
@@ -3906,7 +4013,8 @@
       }
     ],
     "market": 0.02,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-108/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-108/large",
+    "tcgplayerId": 567334
   },
   {
     "id": "sv7-109",
@@ -3939,7 +4047,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-109/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-109/large",
+    "tcgplayerId": 567335
   },
   {
     "id": "sv7-110",
@@ -3978,9 +4087,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.77,
+    "market": 0.74,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-110/large",
-    "foilMap": "assets/foil/maps/sv7/110.webp"
+    "foilMap": "assets/foil/maps/sv7/110.webp",
+    "tcgplayerId": 567336
   },
   {
     "id": "sv7-111",
@@ -4021,9 +4131,10 @@
         "text": ""
       }
     ],
-    "market": 0.19,
+    "market": 0.21,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-111/large",
-    "foilMap": "assets/foil/maps/sv7/111.webp"
+    "foilMap": "assets/foil/maps/sv7/111.webp",
+    "tcgplayerId": 567337
   },
   {
     "id": "sv7-112",
@@ -4055,7 +4166,8 @@
       }
     ],
     "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-112/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-112/large",
+    "tcgplayerId": 567338
   },
   {
     "id": "sv7-113",
@@ -4093,8 +4205,9 @@
         "text": ""
       }
     ],
-    "market": 0.31,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-113/large"
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-113/large",
+    "tcgplayerId": 567339
   },
   {
     "id": "sv7-114",
@@ -4124,7 +4237,8 @@
       }
     ],
     "market": 0.28,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-114/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-114/large",
+    "tcgplayerId": 567340
   },
   {
     "id": "sv7-115",
@@ -4162,9 +4276,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.28,
+    "market": 0.27,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-115/large",
-    "foilMap": "assets/foil/maps/sv7/115.webp"
+    "foilMap": "assets/foil/maps/sv7/115.webp",
+    "tcgplayerId": 567341
   },
   {
     "id": "sv7-116",
@@ -4194,7 +4309,8 @@
       }
     ],
     "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-116/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-116/large",
+    "tcgplayerId": 567342
   },
   {
     "id": "sv7-117",
@@ -4226,7 +4342,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-117/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-117/large",
+    "tcgplayerId": 567343
   },
   {
     "id": "sv7-118",
@@ -4263,7 +4380,8 @@
       }
     ],
     "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-118/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-118/large",
+    "tcgplayerId": 567344
   },
   {
     "id": "sv7-119",
@@ -4301,9 +4419,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.19,
+    "market": 0.18,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-119/large",
-    "foilMap": "assets/foil/maps/sv7/119.webp"
+    "foilMap": "assets/foil/maps/sv7/119.webp",
+    "tcgplayerId": 567345
   },
   {
     "id": "sv7-120",
@@ -4344,7 +4463,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-120/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-120/large",
+    "tcgplayerId": 567346
   },
   {
     "id": "sv7-121",
@@ -4374,7 +4494,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-121/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-121/large",
+    "tcgplayerId": 567348
   },
   {
     "id": "sv7-122",
@@ -4406,7 +4527,8 @@
       }
     ],
     "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-122/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-122/large",
+    "tcgplayerId": 567353
   },
   {
     "id": "sv7-123",
@@ -4437,8 +4559,9 @@
         "text": "If the Retreat Cost of your opponent's Active Pokémon is ColorlessColorless or more, this attack does 110 more damage."
       }
     ],
-    "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-123/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-123/large",
+    "tcgplayerId": 567356
   },
   {
     "id": "sv7-124",
@@ -4468,8 +4591,9 @@
         "text": "You may discard a Stadium in play."
       }
     ],
-    "market": 0.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-124/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-124/large",
+    "tcgplayerId": 567358
   },
   {
     "id": "sv7-125",
@@ -4507,8 +4631,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-125/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-125/large",
+    "tcgplayerId": 567365
   },
   {
     "id": "sv7-126",
@@ -4537,8 +4662,9 @@
         "text": ""
       }
     ],
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-126/large"
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-126/large",
+    "tcgplayerId": 567369
   },
   {
     "id": "sv7-127",
@@ -4577,7 +4703,8 @@
       }
     ],
     "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-127/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-127/large",
+    "tcgplayerId": 567372
   },
   {
     "id": "sv7-128",
@@ -4618,10 +4745,11 @@
         "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic non-Colorless Pokémon."
       }
     ],
-    "market": 0.9,
+    "market": 0.87,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-128/large",
     "foilMap": "assets/foil/maps/sv7/128.webp",
-    "etchMap": "assets/foil/maps/sv7/128-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/128-etch.webp",
+    "tcgplayerId": 567376
   },
   {
     "id": "sv7-129",
@@ -4643,8 +4771,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-129/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-129/large",
+    "tcgplayerId": 567378
   },
   {
     "id": "sv7-130",
@@ -4666,8 +4795,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-130/large"
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-130/large",
+    "tcgplayerId": 567380
   },
   {
     "id": "sv7-131",
@@ -4681,8 +4811,9 @@
     "artist": "MARINA Chikazawa",
     "image": "assets/cards/sv7/131.webp",
     "imageSmall": "assets/cards/sv7/131-sm.webp",
-    "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-131/large"
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-131/large",
+    "tcgplayerId": 567384
   },
   {
     "id": "sv7-132",
@@ -4697,7 +4828,8 @@
     "image": "assets/cards/sv7/132.webp",
     "imageSmall": "assets/cards/sv7/132-sm.webp",
     "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-132/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-132/large",
+    "tcgplayerId": 567385
   },
   {
     "id": "sv7-133",
@@ -4711,8 +4843,9 @@
     "artist": "GIDORA",
     "image": "assets/cards/sv7/133.webp",
     "imageSmall": "assets/cards/sv7/133-sm.webp",
-    "market": 0.28,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-133/large"
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-133/large",
+    "tcgplayerId": 567390
   },
   {
     "id": "sv7-134",
@@ -4727,10 +4860,11 @@
     "artist": "inose yukie",
     "image": "assets/cards/sv7/134.webp",
     "imageSmall": "assets/cards/sv7/134-sm.webp",
-    "market": 0.51,
+    "market": 0.5,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-134/large",
     "foilMap": "assets/foil/maps/sv7/134.webp",
-    "etchMap": "assets/foil/maps/sv7/134-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/134-etch.webp",
+    "tcgplayerId": 567392
   },
   {
     "id": "sv7-135",
@@ -4745,7 +4879,8 @@
     "image": "assets/cards/sv7/135.webp",
     "imageSmall": "assets/cards/sv7/135-sm.webp",
     "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-135/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-135/large",
+    "tcgplayerId": 567394
   },
   {
     "id": "sv7-136",
@@ -4760,10 +4895,11 @@
     "artist": "AYUMI ODASHIMA",
     "image": "assets/cards/sv7/136.webp",
     "imageSmall": "assets/cards/sv7/136-sm.webp",
-    "market": 0.44,
+    "market": 0.41,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-136/large",
     "foilMap": "assets/foil/maps/sv7/136.webp",
-    "etchMap": "assets/foil/maps/sv7/136-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/136-etch.webp",
+    "tcgplayerId": 567397
   },
   {
     "id": "sv7-137",
@@ -4778,7 +4914,8 @@
     "image": "assets/cards/sv7/137.webp",
     "imageSmall": "assets/cards/sv7/137-sm.webp",
     "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-137/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-137/large",
+    "tcgplayerId": 567400
   },
   {
     "id": "sv7-138",
@@ -4793,7 +4930,8 @@
     "image": "assets/cards/sv7/138.webp",
     "imageSmall": "assets/cards/sv7/138-sm.webp",
     "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-138/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-138/large",
+    "tcgplayerId": 567404
   },
   {
     "id": "sv7-139",
@@ -4808,7 +4946,8 @@
     "image": "assets/cards/sv7/139.webp",
     "imageSmall": "assets/cards/sv7/139-sm.webp",
     "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-139/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-139/large",
+    "tcgplayerId": 567407
   },
   {
     "id": "sv7-140",
@@ -4823,7 +4962,8 @@
     "image": "assets/cards/sv7/140.webp",
     "imageSmall": "assets/cards/sv7/140-sm.webp",
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-140/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-140/large",
+    "tcgplayerId": 567409
   },
   {
     "id": "sv7-141",
@@ -4838,7 +4978,8 @@
     "image": "assets/cards/sv7/141.webp",
     "imageSmall": "assets/cards/sv7/141-sm.webp",
     "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv7-141/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv7-141/large",
+    "tcgplayerId": 567414
   },
   {
     "id": "sv7-142",
@@ -4853,10 +4994,11 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/sv7/142.webp",
     "imageSmall": "assets/cards/sv7/142-sm.webp",
-    "market": 0.43,
+    "market": 0.44,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-142/large",
     "foilMap": "assets/foil/maps/sv7/142.webp",
-    "etchMap": "assets/foil/maps/sv7/142-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/142-etch.webp",
+    "tcgplayerId": 567416
   },
   {
     "id": "sv7-143",
@@ -4888,7 +5030,8 @@
     ],
     "market": 96.87,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-143/large",
-    "foilMap": "assets/foil/maps/sv7/143.webp"
+    "foilMap": "assets/foil/maps/sv7/143.webp",
+    "tcgplayerId": 567418
   },
   {
     "id": "sv7-144",
@@ -4928,7 +5071,8 @@
     ],
     "market": 5.92,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-144/large",
-    "foilMap": "assets/foil/maps/sv7/144.webp"
+    "foilMap": "assets/foil/maps/sv7/144.webp",
+    "tcgplayerId": 567420
   },
   {
     "id": "sv7-145",
@@ -4958,9 +5102,10 @@
         "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
       }
     ],
-    "market": 9.91,
+    "market": 9.78,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-145/large",
-    "foilMap": "assets/foil/maps/sv7/145.webp"
+    "foilMap": "assets/foil/maps/sv7/145.webp",
+    "tcgplayerId": 567421
   },
   {
     "id": "sv7-146",
@@ -5002,9 +5147,10 @@
         "text": "This Pokémon also does 60 damage to itself."
       }
     ],
-    "market": 4.9,
+    "market": 4.97,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-146/large",
-    "foilMap": "assets/foil/maps/sv7/146.webp"
+    "foilMap": "assets/foil/maps/sv7/146.webp",
+    "tcgplayerId": 567424
   },
   {
     "id": "sv7-147",
@@ -5046,7 +5192,8 @@
     ],
     "market": 8.04,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-147/large",
-    "foilMap": "assets/foil/maps/sv7/147.webp"
+    "foilMap": "assets/foil/maps/sv7/147.webp",
+    "tcgplayerId": 567427
   },
   {
     "id": "sv7-148",
@@ -5086,7 +5233,8 @@
     ],
     "market": 99.35,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-148/large",
-    "foilMap": "assets/foil/maps/sv7/148.webp"
+    "foilMap": "assets/foil/maps/sv7/148.webp",
+    "tcgplayerId": 567429
   },
   {
     "id": "sv7-149",
@@ -5129,7 +5277,8 @@
     ],
     "market": 3.85,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-149/large",
-    "foilMap": "assets/foil/maps/sv7/149.webp"
+    "foilMap": "assets/foil/maps/sv7/149.webp",
+    "tcgplayerId": 567431
   },
   {
     "id": "sv7-150",
@@ -5160,7 +5309,8 @@
     ],
     "market": 6.54,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-150/large",
-    "foilMap": "assets/foil/maps/sv7/150.webp"
+    "foilMap": "assets/foil/maps/sv7/150.webp",
+    "tcgplayerId": 567433
   },
   {
     "id": "sv7-151",
@@ -5192,7 +5342,8 @@
     ],
     "market": 12.96,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-151/large",
-    "foilMap": "assets/foil/maps/sv7/151.webp"
+    "foilMap": "assets/foil/maps/sv7/151.webp",
+    "tcgplayerId": 567434
   },
   {
     "id": "sv7-152",
@@ -5223,7 +5374,8 @@
     ],
     "market": 15.93,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-152/large",
-    "foilMap": "assets/foil/maps/sv7/152.webp"
+    "foilMap": "assets/foil/maps/sv7/152.webp",
+    "tcgplayerId": 567435
   },
   {
     "id": "sv7-153",
@@ -5262,9 +5414,10 @@
         "text": ""
       }
     ],
-    "market": 8.25,
+    "market": 8.26,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-153/large",
-    "foilMap": "assets/foil/maps/sv7/153.webp"
+    "foilMap": "assets/foil/maps/sv7/153.webp",
+    "tcgplayerId": 567436
   },
   {
     "id": "sv7-154",
@@ -5303,9 +5456,10 @@
         "text": "Your opponent's Active Pokémon is now Poisoned."
       }
     ],
-    "market": 14.24,
+    "market": 14.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-154/large",
-    "foilMap": "assets/foil/maps/sv7/154.webp"
+    "foilMap": "assets/foil/maps/sv7/154.webp",
+    "tcgplayerId": 567439
   },
   {
     "id": "sv7-155",
@@ -5344,9 +5498,10 @@
         "type": "Ability"
       }
     ],
-    "market": 4.26,
+    "market": 4.32,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-155/large",
-    "foilMap": "assets/foil/maps/sv7/155.webp"
+    "foilMap": "assets/foil/maps/sv7/155.webp",
+    "tcgplayerId": 567441
   },
   {
     "id": "sv7-156",
@@ -5387,7 +5542,8 @@
     "market": 2.97,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-156/large",
     "foilMap": "assets/foil/maps/sv7/156.webp",
-    "etchMap": "assets/foil/maps/sv7/156-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/156-etch.webp",
+    "tcgplayerId": 567443
   },
   {
     "id": "sv7-157",
@@ -5430,10 +5586,11 @@
         "text": "This attack does 180 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 3.69,
+    "market": 3.7,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-157/large",
     "foilMap": "assets/foil/maps/sv7/157.webp",
-    "etchMap": "assets/foil/maps/sv7/157-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/157-etch.webp",
+    "tcgplayerId": 567447
   },
   {
     "id": "sv7-158",
@@ -5476,7 +5633,8 @@
     "market": 6.63,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-158/large",
     "foilMap": "assets/foil/maps/sv7/158.webp",
-    "etchMap": "assets/foil/maps/sv7/158-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/158-etch.webp",
+    "tcgplayerId": 567448
   },
   {
     "id": "sv7-159",
@@ -5521,7 +5679,8 @@
     "market": 2.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-159/large",
     "foilMap": "assets/foil/maps/sv7/159.webp",
-    "etchMap": "assets/foil/maps/sv7/159-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/159-etch.webp",
+    "tcgplayerId": 567449
   },
   {
     "id": "sv7-160",
@@ -5562,7 +5721,8 @@
     "market": 4.56,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-160/large",
     "foilMap": "assets/foil/maps/sv7/160.webp",
-    "etchMap": "assets/foil/maps/sv7/160-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/160-etch.webp",
+    "tcgplayerId": 567452
   },
   {
     "id": "sv7-161",
@@ -5603,10 +5763,11 @@
         "text": "This attack's damage isn't affected by Weakness or Resistance."
       }
     ],
-    "market": 1.08,
+    "market": 1.1,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-161/large",
     "foilMap": "assets/foil/maps/sv7/161.webp",
-    "etchMap": "assets/foil/maps/sv7/161-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/161-etch.webp",
+    "tcgplayerId": 567455
   },
   {
     "id": "sv7-162",
@@ -5645,10 +5806,11 @@
         "type": "Ability"
       }
     ],
-    "market": 1.17,
+    "market": 1.15,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-162/large",
     "foilMap": "assets/foil/maps/sv7/162.webp",
-    "etchMap": "assets/foil/maps/sv7/162-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/162-etch.webp",
+    "tcgplayerId": 567457
   },
   {
     "id": "sv7-163",
@@ -5662,10 +5824,11 @@
     "artist": "Naoki Saito",
     "image": "assets/cards/sv7/163.webp",
     "imageSmall": "assets/cards/sv7/163-sm.webp",
-    "market": 1.44,
+    "market": 1.41,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-163/large",
     "foilMap": "assets/foil/maps/sv7/163.webp",
-    "etchMap": "assets/foil/maps/sv7/163-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/163-etch.webp",
+    "tcgplayerId": 567460
   },
   {
     "id": "sv7-164",
@@ -5679,10 +5842,11 @@
     "artist": "GIDORA",
     "image": "assets/cards/sv7/164.webp",
     "imageSmall": "assets/cards/sv7/164-sm.webp",
-    "market": 6.74,
+    "market": 6.63,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-164/large",
     "foilMap": "assets/foil/maps/sv7/164.webp",
-    "etchMap": "assets/foil/maps/sv7/164-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/164-etch.webp",
+    "tcgplayerId": 567465
   },
   {
     "id": "sv7-165",
@@ -5696,10 +5860,11 @@
     "artist": "Hideki Ishikawa",
     "image": "assets/cards/sv7/165.webp",
     "imageSmall": "assets/cards/sv7/165-sm.webp",
-    "market": 0.93,
+    "market": 0.88,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-165/large",
     "foilMap": "assets/foil/maps/sv7/165.webp",
-    "etchMap": "assets/foil/maps/sv7/165-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/165-etch.webp",
+    "tcgplayerId": 567467
   },
   {
     "id": "sv7-166",
@@ -5713,10 +5878,11 @@
     "artist": "Sanosuke Sakuma",
     "image": "assets/cards/sv7/166.webp",
     "imageSmall": "assets/cards/sv7/166-sm.webp",
-    "market": 2.48,
+    "market": 2.49,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-166/large",
     "foilMap": "assets/foil/maps/sv7/166.webp",
-    "etchMap": "assets/foil/maps/sv7/166-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/166-etch.webp",
+    "tcgplayerId": 567470
   },
   {
     "id": "sv7-167",
@@ -5754,10 +5920,11 @@
         "type": "Ability"
       }
     ],
-    "market": 39.53,
+    "market": 39.71,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-167/large",
     "foilMap": "assets/foil/maps/sv7/167.webp",
-    "etchMap": "assets/foil/maps/sv7/167-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/167-etch.webp",
+    "tcgplayerId": 567472
   },
   {
     "id": "sv7-168",
@@ -5799,10 +5966,11 @@
         "text": "Discard all Energy from this Pokémon. During your opponent's next turn, they can't play any Item cards from their hand."
       }
     ],
-    "market": 19.1,
+    "market": 18.9,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-168/large",
     "foilMap": "assets/foil/maps/sv7/168.webp",
-    "etchMap": "assets/foil/maps/sv7/168-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/168-etch.webp",
+    "tcgplayerId": 567474
   },
   {
     "id": "sv7-169",
@@ -5843,7 +6011,8 @@
     "market": 77.19,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-169/large",
     "foilMap": "assets/foil/maps/sv7/169.webp",
-    "etchMap": "assets/foil/maps/sv7/169-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/169-etch.webp",
+    "tcgplayerId": 567476
   },
   {
     "id": "sv7-170",
@@ -5884,10 +6053,11 @@
         "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic non-Colorless Pokémon."
       }
     ],
-    "market": 34.69,
+    "market": 34.44,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-170/large",
     "foilMap": "assets/foil/maps/sv7/170.webp",
-    "etchMap": "assets/foil/maps/sv7/170-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/170-etch.webp",
+    "tcgplayerId": 567478
   },
   {
     "id": "sv7-171",
@@ -5901,10 +6071,11 @@
     "artist": "DOM",
     "image": "assets/cards/sv7/171.webp",
     "imageSmall": "assets/cards/sv7/171-sm.webp",
-    "market": 12.13,
+    "market": 12.17,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-171/large",
     "foilMap": "assets/foil/maps/sv7/171.webp",
-    "etchMap": "assets/foil/maps/sv7/171-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/171-etch.webp",
+    "tcgplayerId": 567482
   },
   {
     "id": "sv7-172",
@@ -5918,10 +6089,11 @@
     "artist": "Souichirou Gunjima",
     "image": "assets/cards/sv7/172.webp",
     "imageSmall": "assets/cards/sv7/172-sm.webp",
-    "market": 17.88,
+    "market": 18.06,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-172/large",
     "foilMap": "assets/foil/maps/sv7/172.webp",
-    "etchMap": "assets/foil/maps/sv7/172-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/172-etch.webp",
+    "tcgplayerId": 567484
   },
   {
     "id": "sv7-173",
@@ -5965,7 +6137,8 @@
     "market": 12.77,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-173/large",
     "foilMap": "assets/foil/maps/sv7/173.webp",
-    "etchMap": "assets/foil/maps/sv7/173-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/173-etch.webp",
+    "tcgplayerId": 567486
   },
   {
     "id": "sv7-174",
@@ -5979,10 +6152,11 @@
     "artist": "MARINA Chikazawa",
     "image": "assets/cards/sv7/174.webp",
     "imageSmall": "assets/cards/sv7/174-sm.webp",
-    "market": 9.53,
+    "market": 9.56,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-174/large",
     "foilMap": "assets/foil/maps/sv7/174.webp",
-    "etchMap": "assets/foil/maps/sv7/174-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/174-etch.webp",
+    "tcgplayerId": 567490
   },
   {
     "id": "sv7-175",
@@ -5999,7 +6173,8 @@
     "market": 3.65,
     "imageRemote": "https://images.scrydex.com/pokemon/sv7-175/large",
     "foilMap": "assets/foil/maps/sv7/175.webp",
-    "etchMap": "assets/foil/maps/sv7/175-etch.webp"
+    "etchMap": "assets/foil/maps/sv7/175-etch.webp",
+    "tcgplayerId": 567491
   },
   {
     "id": "sv7-svp133",
