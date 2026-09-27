@@ -377,8 +377,11 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     card_prices: dict[str, float] = {}
     listings: dict[str, dict[str, float]] = {}
     groups = [cfg.get("tcgplayerGroup"), *(s.get("tcgplayerGroup") for s in cfg.get("promoSeries", {}).values())]
-    # Product-only prints (blister exclusives) are filed in a group of their own.
+    # Product-only prints (blister exclusives) are filed in a group of their own,
+    # and a collection's stamped or cosmos prints sit with the collection itself
+    # (Miscellaneous Cards & Products).
     groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES]
+    groups += [g for g in dict.fromkeys(p.get("tcgplayerGroup") for p in products) if g and g not in groups]
     tcg_market: dict[int, dict[int, float]] = {}
 
     def tcg_price(pid: int) -> float | None:
