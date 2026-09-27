@@ -26,7 +26,28 @@
       "variant": "Pokémon Center stamp",
       "tcgplayerId": 644836
     },
-    "svp211": {}
+    "svp211": {},
+    "11-tinsel": {
+      "like": "11",
+      "variant": "Tinsel Holo",
+      "tcgplayerId": 645570,
+      "tcgl": "svalt/rsv10-5_en_011_alt",
+      "printedNumber": "011/086"
+    },
+    "21-tinsel": {
+      "like": "21",
+      "variant": "Tinsel Holo",
+      "tcgplayerId": 645572,
+      "tcgl": "svalt/rsv10-5_en_021_alt",
+      "printedNumber": "021/086"
+    },
+    "blk001-tinsel": {
+      "like": "zsv10pt5:1",
+      "variant": "Tinsel Holo",
+      "tcgplayerId": 645571,
+      "tcgl": "svalt/zsv10-5_en_001_alt",
+      "printedNumber": "001/086"
+    }
   },
   "products": [
     {
@@ -58,6 +79,19 @@
       "packs": 3,
       "promos": [
         "svp211"
+      ]
+    },
+    {
+      "id": "unova-poster",
+      "name": "Unova Poster Collection",
+      "kind": "collection",
+      "tcgplayerId": 630612,
+      "tcgplayerGroup": 24325,
+      "packs": 4,
+      "promos": [
+        "blk001-tinsel",
+        "11-tinsel",
+        "21-tinsel"
       ]
     }
   ]

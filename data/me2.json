@@ -4289,6 +4289,506 @@
     "imageRemote": "https://images.scrydex.com/pokemon/me2-130/large"
   },
   {
+    "id": "me2-1-cosmos",
+    "name": "Oddish",
+    "number": "1-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "MINAMINAMI Take",
+    "flavorText": "Its scientific name is Oddium wanderus. It is said to cover distances as far as 1,000 feet when night falls, walking on its two roots.",
+    "attacks": [
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/684041_in_1000x1000.jpg",
+    "printedNumber": "001/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 684041,
+    "image": "assets/cards/me2/1-cosmos.webp",
+    "imageSmall": "assets/cards/me2/1-cosmos-sm.webp",
+    "market": 0.32
+  },
+  {
+    "id": "me2-17-stamp",
+    "name": "Reshiram",
+    "number": "17-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "According to myth, if people ignore truth and let themselves become consumed by greed, Reshiram will arrive to burn their kingdoms down.",
+    "attacks": [
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Burning Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "240",
+        "text": "This Pokémon also does 60 damage to itself."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/664098_in_1000x1000.jpg",
+    "printedNumber": "017/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Phantasmal Flames stamp",
+    "tcgplayerId": 664098,
+    "image": "assets/cards/me2/17-stamp.webp",
+    "imageSmall": "assets/cards/me2/17-stamp-sm.webp",
+    "market": 11.31
+  },
+  {
+    "id": "me2-2-cosmos",
+    "name": "Gloom",
+    "number": "2-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Yoriyuki Ikegami",
+    "flavorText": "The fluid that oozes from its mouth isn’t drool. It is a nectar that is used to attract prey.",
+    "evolvesFrom": "Oddish",
+    "attacks": [
+      {
+        "name": "Disperse Drool",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "This attack also does 20 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/684042_in_1000x1000.jpg",
+    "printedNumber": "002/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 684042,
+    "image": "assets/cards/me2/2-cosmos.webp",
+    "imageSmall": "assets/cards/me2/2-cosmos-sm.webp",
+    "market": 0.26
+  },
+  {
+    "id": "me2-26-cosmos",
+    "name": "Suicune",
+    "number": "26-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Takeshi Nakamura",
+    "flavorText": "Said to be the embodiment of north winds, it can instantly purify filthy, murky water.",
+    "attacks": [
+      {
+        "name": "Crystal Fall",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30+",
+        "text": "If you have at least 4 Water Energy in play, this attack does 90 more damage."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/670788_in_1000x1000.jpg",
+    "printedNumber": "026/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 670788,
+    "image": "assets/cards/me2/26-cosmos.webp",
+    "imageSmall": "assets/cards/me2/26-cosmos-sm.webp",
+    "market": 0.53
+  },
+  {
+    "id": "me2-26-ebgames",
+    "name": "Suicune",
+    "number": "26-ebgames",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Takeshi Nakamura",
+    "flavorText": "Said to be the embodiment of north winds, it can instantly purify filthy, murky water.",
+    "attacks": [
+      {
+        "name": "Crystal Fall",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30+",
+        "text": "If you have at least 4 Water Energy in play, this attack does 90 more damage."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/671234_in_1000x1000.jpg",
+    "printedNumber": "026/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "EB Games stamp",
+    "tcgplayerId": 671234,
+    "image": "assets/cards/me2/26-ebgames.webp",
+    "imageSmall": "assets/cards/me2/26-ebgames-sm.webp",
+    "market": 67.17
+  },
+  {
+    "id": "me2-26-gamestop",
+    "name": "Suicune",
+    "number": "26-gamestop",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Takeshi Nakamura",
+    "flavorText": "Said to be the embodiment of north winds, it can instantly purify filthy, murky water.",
+    "attacks": [
+      {
+        "name": "Crystal Fall",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30+",
+        "text": "If you have at least 4 Water Energy in play, this attack does 90 more damage."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/666533_in_1000x1000.jpg",
+    "printedNumber": "026/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "GameStop stamp",
+    "tcgplayerId": 666533,
+    "image": "assets/cards/me2/26-gamestop.webp",
+    "imageSmall": "assets/cards/me2/26-gamestop-sm.webp",
+    "market": 18.02
+  },
+  {
+    "id": "me2-3-cosmos",
+    "name": "Vileplume",
+    "number": "3-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "Shibuzoh.",
+    "flavorText": "The bud bursts into bloom with a bang. It then starts scattering allergenic, poisonous pollen.",
+    "evolvesFrom": "Gloom",
+    "attacks": [
+      {
+        "name": "Pollen Bomb",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep and Poisoned."
+      },
+      {
+        "name": "Lively Flower",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "60+",
+        "text": "If this Pokémon was healed during this turn, this attack does 120 more damage."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/684043_in_1000x1000.jpg",
+    "printedNumber": "003/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 684043,
+    "image": "assets/cards/me2/3-cosmos.webp",
+    "imageSmall": "assets/cards/me2/3-cosmos-sm.webp",
+    "market": 0.32
+  },
+  {
+    "id": "me2-8-stamp",
+    "name": "Genesect",
+    "number": "8-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "This Pokémon existed 300 million years ago. Team Plasma altered it and attached a cannon to its back.",
+    "attacks": [
+      {
+        "name": "Bug's Cannon",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon for each Grass Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Speed Attack",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/664012_in_1000x1000.jpg",
+    "printedNumber": "008/094",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Phantasmal Flames stamp",
+    "tcgplayerId": 664012,
+    "image": "assets/cards/me2/8-stamp.webp",
+    "imageSmall": "assets/cards/me2/8-stamp-sm.webp",
+    "market": 14.64
+  },
+  {
+    "id": "me2-dri018-cosmos",
+    "name": "Hydrapple",
+    "number": "dri018-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "170",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "Seven syrpents live inside an apple made of syrup. The syrpent in the center is the commander.",
+    "evolvesFrom": "Dipplin",
+    "attacks": [
+      {
+        "name": "Hydra Breath",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Discard 6 Basic Grass Energy cards from your hand, and Knock Out your opponent's Active Pokémon. If you can't discard 6 cards in this way, this attack does nothing."
+      },
+      {
+        "name": "Whip Smash",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sv10-18/large",
+    "printedNumber": "018/182",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 664138,
+    "image": "assets/cards/me2/dri018-cosmos.webp",
+    "imageSmall": "assets/cards/me2/dri018-cosmos-sm.webp",
+    "market": 4.74
+  },
+  {
+    "id": "me2-dri036-cosmos",
+    "name": "Ethan's Magcargo",
+    "number": "dri036-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Trainer's Pokémon"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "kodama",
+    "flavorText": "This Pokémon lives near the craters of volcanoes. It stores fire energy in its shell of cooled and hardened magma.",
+    "evolvesFrom": "Ethan's Slugma",
+    "attacks": [
+      {
+        "name": "Lava Burst",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "70×",
+        "text": "Discard up to 5 Fire Energy from this Pokémon. This attack does 70 damage for each card you discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Melt Away",
+        "text": "If this Pokémon has no Energy attached, it has no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/668437_in_1000x1000.jpg",
+    "ownerMask": "ethan",
+    "printedNumber": "036/182",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 668437,
+    "image": "assets/cards/me2/dri036-cosmos.webp",
+    "imageSmall": "assets/cards/me2/dri036-cosmos-sm.webp",
+    "market": 0.85
+  },
+  {
+    "id": "me2-dri042-cosmos",
+    "name": "Blaziken",
+    "number": "dri042-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "Kazumasa Yasukuni",
+    "flavorText": "When facing a tough foe, it looses flames from its wrists. Its powerful legs let it jump clear over buildings.",
+    "evolvesFrom": "Combusken",
+    "attacks": [
+      {
+        "name": "Heat Blast",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Inferno Kick Flurry",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 2 Energy from this Pokémon. This attack also does 120 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sv10-42/large",
+    "printedNumber": "042/182",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 664139,
+    "image": "assets/cards/me2/dri042-cosmos.webp",
+    "imageSmall": "assets/cards/me2/dri042-cosmos-sm.webp",
+    "market": 9.56
+  },
+  {
+    "id": "me2-dri159-cosmos",
+    "name": "Arven's Greedent",
+    "number": "dri159-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Trainer's Pokémon"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Akira Komayama",
+    "flavorText": "If it spots a berry tree, it will immediately go to gather berries without a sideways glance—even if it’s in the middle of a battle.",
+    "evolvesFrom": "Arven's Skwovet",
+    "attacks": [
+      {
+        "name": "Rolling Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Greedy Order",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put up to 2 Arven's Sandwich cards from your discard pile into your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/668438_in_1000x1000.jpg",
+    "ownerMask": "arven",
+    "printedNumber": "159/182",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 668438,
+    "image": "assets/cards/me2/dri159-cosmos.webp",
+    "imageSmall": "assets/cards/me2/dri159-cosmos-sm.webp",
+    "market": 0.99
+  },
+  {
     "id": "me2-mep014",
     "name": "Ceruledge",
     "number": "mep014",
@@ -4686,7 +5186,7 @@
         "text": ""
       }
     ],
-    "market": 41.82,
+    "market": 40.57,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/665053_in_1000x1000.jpg",
     "printedNumber": "MEP 022",
     "foilAs": "Illustration Rare",
@@ -4935,5 +5435,40 @@
     "promo": true,
     "foilMap": "assets/foil/maps/me2/mep030.webp",
     "etchMap": "assets/foil/maps/me2/mep030-etch.webp"
+  },
+  {
+    "id": "me2-tef051-stamp",
+    "name": "Pikachu",
+    "number": "tef051-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "kodama",
+    "flavorText": "When several of these Pokémon gather, their electricity can build and cause lightning storms.",
+    "attacks": [
+      {
+        "name": "Random Spark",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "This attack does 10 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/673358_in_1000x1000.jpg",
+    "printedNumber": "051/162",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pokémon Day 2026 stamp",
+    "tcgplayerId": 673358,
+    "image": "assets/cards/me2/tef051-stamp.webp",
+    "imageSmall": "assets/cards/me2/tef051-stamp-sm.webp",
+    "market": 2.62
   }
 ]

@@ -6236,6 +6236,141 @@
     "imageRemote": "https://images.scrydex.com/pokemon/rsv10pt5-173/large"
   },
   {
+    "id": "rsv10pt5-11-tinsel",
+    "name": "Tepig",
+    "number": "11-tinsel",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Teeziro",
+    "flavorText": "It can deftly dodge its foe’s attacks while shooting fireballs from its nose. It roasts berries before it eats them.",
+    "image": "assets/cards/rsv10pt5/11-tinsel.webp",
+    "imageSmall": "assets/cards/rsv10pt5/11-tinsel-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.23,
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/svalt/rsv10-5_en_011_alt.png",
+    "printedNumber": "011/086",
+    "foilAs": "Rare",
+    "foilMap": "assets/foil/maps/rsv10pt5/11-tinsel.webp",
+    "promo": true,
+    "variant": "Tinsel Holo",
+    "tcgplayerId": 645570
+  },
+  {
+    "id": "rsv10pt5-21-tinsel",
+    "name": "Oshawott",
+    "number": "21-tinsel",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "rika",
+    "flavorText": "It fights using the scalchop on its stomach. In response to an attack, it retaliates immediately by slashing.",
+    "image": "assets/cards/rsv10pt5/21-tinsel.webp",
+    "imageSmall": "assets/cards/rsv10pt5/21-tinsel-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.28,
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/svalt/rsv10-5_en_021_alt.png",
+    "printedNumber": "021/086",
+    "foilAs": "Rare",
+    "foilMap": "assets/foil/maps/rsv10pt5/21-tinsel.webp",
+    "promo": true,
+    "variant": "Tinsel Holo",
+    "tcgplayerId": 645572
+  },
+  {
+    "id": "rsv10pt5-blk001-tinsel",
+    "name": "Snivy",
+    "number": "blk001-tinsel",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Susumu Maeya",
+    "flavorText": "It is very intelligent and calm. Being exposed to lots of sunlight makes its movements swifter.",
+    "image": "assets/cards/rsv10pt5/blk001-tinsel.webp",
+    "imageSmall": "assets/cards/rsv10pt5/blk001-tinsel-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/svalt/zsv10-5_en_001_alt.png",
+    "printedNumber": "001/086",
+    "foilAs": "Rare",
+    "foilMap": "assets/foil/maps/rsv10pt5/blk001-tinsel.webp",
+    "promo": true,
+    "variant": "Tinsel Holo",
+    "tcgplayerId": 645571
+  },
+  {
     "id": "rsv10pt5-svp210",
     "name": "Tornadus",
     "number": "svp210",
@@ -6317,7 +6452,7 @@
         "text": "Move a Basic Energy from this Pokémon to 1 of your Benched Pokémon."
       }
     ],
-    "market": 15.96,
+    "market": 15.94,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/644836_in_1000x1000.jpg",
     "printedNumber": "SVP 210",
     "foilAs": "Illustration Rare",
