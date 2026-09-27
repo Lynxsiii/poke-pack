@@ -469,6 +469,17 @@ function isExCard(card) {
   );
 }
 
+/**
+ * Tera ex Double and Ultra Rares, which TCG Live prints in SV_ULTRA etched
+ * foil (its DoubleRareC / UltraRareC prints). Their Special Illustration and
+ * Hyper Rares print like any other. Needs the card's foil map to keep the
+ * shine to the foil, like the other TCG Live recipes.
+ */
+function isTeraFoil(card) {
+  return Boolean(card?.foilMap) && (card.subtypes || []).includes("Tera") &&
+    (card.rarity === "Double Rare" || card.rarity === "Ultra Rare");
+}
+
 function hasEvoCircle(card) {
   const subs = card?.subtypes || [];
   return subs.includes("Stage 1") || subs.includes("Stage 2") || Boolean(card?.evolvesFrom);
@@ -541,6 +552,10 @@ function foilPattern(card) {
     return "foil-reverse";
   }
   if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "foil-gold";
+  // Tera ex print TCG Live's SV_ULTRA etched foil across the whole card
+  // (css/holo/sv-finishes.css). Before the Ultra Rare check, which would
+  // otherwise take the full-art Tera cards.
+  if (isTeraFoil(card)) return card.rarity === "Ultra Rare" ? "foil-ultra foil-tera" : "foil-ex foil-tera";
   if (card.rarity === "Special Illustration Rare") return "foil-sir";
   if (card.rarity === "Illustration Rare") return "foil-ir";
   // Before the ex check: Ultra Rares are ex cards too, so they'd otherwise
@@ -558,7 +573,7 @@ function foilPattern(card) {
   if (card.rarity === "Pikachu Rare") return "foil-holo foil-pikachu";
   // Collection-box promos (css/holo/promos.css).
   if (card.rarity === "Cosmos") return "foil-holo foil-cosmos";
-  if (card.rarity === "ACE SPEC Rare") return "foil-holo";
+  if (card.rarity === "ACE SPEC Rare") return card.foilMap ? "foil-holo foil-acespec" : "foil-holo";
   // TCG Live's SUN_PILLAR and SV_HOLO recipes need the card's foil map to keep
   // off the Pokémon, so they only replace the older recipes where one ships.
   if (isExCard(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) {
