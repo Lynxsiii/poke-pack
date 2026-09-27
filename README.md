@@ -154,9 +154,20 @@ Every write only adds. A backfilled or daily point fills a date that has no
 point yet and never replaces one already recorded, and no point is dropped for
 its age, so each series grows by one point a day.
 
-A daily routine (a scheduled Claude session) runs `--daily --all` each morning
-UTC, opens a pull request with only `data/prices/` changed, merges it and
-checks that the site picked it up.
+Every day after the backfill is recorded by the Worker itself, with no commit
+involved. A cron every 10 minutes (`[triggers]` in `wrangler.toml`) runs
+`worker/prices.js`. Each UTC day it reads TCGplayer's market prices from
+tcgcsv.com, two TCGplayer groups per run to stay inside the free plan's CPU
+limit, into D1's `price_group_days`. Once every group a set draws on is in, it
+writes that set's row for the day to `price_days`, using the products listed in
+`data/tcgplayer-ids.json`. A day takes about 17 runs, and the runs after that
+find nothing to do. A group that fails to load is retried on the next run.
+Rows are only ever added; if two runs race, stored prices win.
+`backfill_prices.py` rewrites `data/tcgplayer-ids.json` on every run, so a new
+set's backfill also adds it to the cron. The page reads the committed file,
+then `GET /api/prices/<set>?since=<file's updated date>`, and a recorded day
+only fills a date the file has no point for. `node scripts/test-daily-prices.mjs`
+runs the cron, its retries and the API against an in-memory database.
 
 `data/price-history.json`, the single file every set used to share, is gone;
 if a branch brings it back, any of the three scripts folds its points into

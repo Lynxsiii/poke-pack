@@ -31,9 +31,10 @@ Usage:
 
 `--daily` records today's market price for the same cards and products from
 tcgcsv.com's daily TCGplayer price files: one request per TCGplayer group, so
-it is cheap enough to run every day, and a routine runs it each morning (UTC)
-and merges the result. It is additive too: a card or product that already has
-a point for today keeps it. A set whose data/sets/<id>.json has no
+it is cheap enough to run every day by hand. It is additive too: a card or
+product that already has a point for today keeps it. The site records each
+day on its own (worker/prices.js, from data/tcgplayer-ids.json, which every
+run of this script rewrites), so committing daily points is optional. A set whose data/sets/<id>.json has no
 `tcgplayerGroup` is looked up among TCGplayer's groups by its name.
 """
 from __future__ import annotations
@@ -56,6 +57,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 SETS = DATA / "sets"
 CACHE = ROOT / "scripts" / ".cache" / "prices"
+# Card and product ids -> TCGplayer product ids, for the Worker's daily cron.
+IDS = DATA / "tcgplayer-ids.json"
 
 TCGCSV = "https://tcgcsv.com/tcgplayer/3/{path}"
 HISTORY_API = "https://infinite-api.tcgplayer.com/price/history/{pid}/detailed?range={span}"
@@ -214,6 +217,13 @@ class Catalogue:
                 return round(float(price), 2) if price else None
         return None
 
+    def group_of(self, pid: int) -> int | None:
+        """The loaded TCGplayer group whose price file lists this product."""
+        for group, rows in self.prices.items():
+            if pid in rows:
+                return group
+        return None
+
     def set_group(self, cfg: dict) -> int:
         if cfg.get("tcgplayerGroup"):
             return int(cfg["tcgplayerGroup"])
@@ -338,8 +348,30 @@ def merge(old: list, new: list) -> list:
     return old + [p for p in new if p[0] not in have]
 
 
+def save_ids(set_id: str, card_pids: dict, sealed_pids: dict, cat: Catalogue) -> None:
+    """Record which TCGplayer products and groups a set's prices come from.
+
+    The Worker's daily price cron (worker/prices.js) reads this file to price
+    the same cards and products every day without matching anything itself.
+    One set per line, so a run diffs as the sets it touched.
+    """
+    ids = json.loads(IDS.read_text(encoding="utf-8")).get("sets", {}) if IDS.exists() else {}
+    groups = {cat.group_of(pid) for pid in [*card_pids.values(), *sealed_pids.values()]}
+    ids[set_id] = {
+        "groups": sorted(g for g in groups if g),
+        "cards": card_pids,
+        "sealed": sealed_pids,
+    }
+    rows = [
+        f"{json.dumps(key)}:{json.dumps(ids[key], separators=(',', ':'))}"
+        for key in sorted(ids)
+    ]
+    IDS.write_text('{"sets":{\n' + ",\n".join(rows) + "\n}}\n", encoding="utf-8")
+
+
 def backfill(set_id: str, cat: Catalogue, daily: bool) -> str:
     card_pids, sealed_pids, warnings = targets_for(set_id, cat)
+    save_ids(set_id, card_pids, sealed_pids, cat)
     store = price_history.load(set_id)
     store["source"] = SOURCE
     jobs = [("cards", k, pid) for k, pid in card_pids.items()] + [("sealed", k, pid) for k, pid in sealed_pids.items()]
