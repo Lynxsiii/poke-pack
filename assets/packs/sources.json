@@ -66,6 +66,16 @@
         { "id": "meowscarada", "remote": "paldea-evolved-pack-3.avif", "file": "sv2/pack-3.avif" },
         { "id": "chien-pao", "remote": "paldea-evolved-pack-4.avif", "file": "sv2/pack-4.avif" }
       ]
+    },
+    "sv3": {
+      "name": "Obsidian Flames",
+      "slug": "obsidian-flames",
+      "packs": [
+        { "id": "revavroom", "remote": "obsidian-flames-pack-0.avif", "file": "sv3/revavroom.avif" },
+        { "id": "tyranitar", "remote": "obsidian-flames-pack-1.avif", "file": "sv3/tyranitar.avif" },
+        { "id": "charizard", "remote": "obsidian-flames-pack-2.avif", "file": "sv3/charizard.avif" },
+        { "id": "dragonite", "remote": "obsidian-flames-pack-3.avif", "file": "sv3/dragonite.avif" }
+      ]
     }
   }
 }
