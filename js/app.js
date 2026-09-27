@@ -51,7 +51,7 @@ import {
 } from "./achievements.js";
 import { QUESTS } from "./quests.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
-import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
+import { loadPriceHistory, priceHistoryReady, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
   loadState,
   saveState,
@@ -549,6 +549,11 @@ function foilPattern(card) {
     const kind = reverseKindOf(card);
     return kind ? `foil-reverse foil-rev-${kind}` : "foil-reverse";
   }
+  // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
+  // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.
+  if (card.rarity === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
+  if (card.rarity === "Shiny Rare") return "foil-holo foil-shiny";
+  if (card.finish === "scodix") return "foil-gold foil-scodix";
   if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "foil-gold";
   // Tera ex print TCG Live's SV_ULTRA etched foil across the whole card
   // (css/holo/sv-finishes.css). Before the Ultra Rare check, which would
@@ -5065,6 +5070,13 @@ els.sellDuplicates?.addEventListener("click", sellSetDuplicates);
 function paintInspect(card) {
   const chart = els.inspectInfo.querySelector("#inspect-chart");
   if (chart) renderPriceChart(chart, card, inspectRange);
+  if (chart && !priceHistoryReady(card.id)) {
+    // Each set's history is its own file, fetched the first time it's needed.
+    loadPriceHistory(card.id.split("-")[0]).then(() => {
+      const mount = els.inspectInfo.querySelector("#inspect-chart");
+      if (mount && inspectCard?.id === card.id) renderPriceChart(mount, inspectCard, inspectRange);
+    });
+  }
   const sell = els.inspectInfo.querySelector("#inspect-sell");
   if (sell) sell.innerHTML = inspectSellRow(card);
 }
@@ -6340,7 +6352,7 @@ async function routeFromLocation() {
 
 async function boot() {
   try {
-    await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
+    await Promise.all([loadSealedPrices(), loadPatchNotes()]);
     await refreshSession();
     // Friends and requests load now rather than on the next 5s poll, so the
     // Social page and the Friends badge are right on first paint.

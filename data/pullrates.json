@@ -162,7 +162,7 @@
     "printedTotal": 142,
     "released": "2024-09-13",
     "updated": "2026-09-27",
-    "source": "TCGplayer Authentication Center study of 8,000+ English packs (published 2024-09-13, updated 2025-02-27), per pack with 95% intervals: Double Rare 16.90% \u00b10.79% (1 in 6), Ultra Rare 6.75% \u00b10.53% (1 in 15), ACE SPEC Rare 4.94% \u00b10.46% (1 in 20, first reverse slot), Illustration Rare 7.79% \u00b10.57% (1 in 13), Special Illustration Rare 1.11% \u00b10.22% (1 in 90) and Hyper Rare 0.73% \u00b10.18% (1 in 137), all three in the second reverse slot. TCGplayer found Dachsbun ex (067) at 0.76% \u00b10.18% against about 1.24% for each other Double Rare and calls it likely short printed, so data/sv7.json gives it pullWeight 0.61. Same rates as Temporal Forces and Twilight Masquerade; no god packs in English Scarlet & Violet.",
+    "source": "TCGplayer Authentication Center study of 8,000+ English packs (published 2024-09-13, updated 2025-02-27), per pack with 95% intervals: Double Rare 16.90% ±0.79% (1 in 6), Ultra Rare 6.75% ±0.53% (1 in 15), ACE SPEC Rare 4.94% ±0.46% (1 in 20, first reverse slot), Illustration Rare 7.79% ±0.57% (1 in 13), Special Illustration Rare 1.11% ±0.22% (1 in 90) and Hyper Rare 0.73% ±0.18% (1 in 137), all three in the second reverse slot. TCGplayer found Dachsbun ex (067) at 0.76% ±0.18% against about 1.24% for each other Double Rare and calls it likely short printed, so data/sv7.json gives it pullWeight 0.61. Same rates as Temporal Forces and Twilight Masquerade; no god packs in English Scarlet & Violet.",
     "sourceUrl": "https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Stellar-Crown-Pull-Rates/2c0743dd-dbd0-4504-9ff8-be5a72dd04d1/",
     "rates": {
       "double": 0.169,
@@ -245,6 +245,36 @@
       "ir": 0.077,
       "sir": 0.0317,
       "hyper": 0.0176
+    }
+  },
+  "sv1": {
+    "name": "Scarlet & Violet",
+    "printedTotal": 198,
+    "released": "2023-03-31",
+    "updated": "2026-09-27",
+    "source": "TCGplayer's study of 8,000+ English Scarlet & Violet packs (published Mar 31, 2023, updated Feb 27, 2025): Double Rare 1 in 7.3, Ultra Rare 1 in 15, Illustration Rare 1 in 13, Special Illustration Rare 1 in 32, gold Hyper Rare 1 in 54 (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Scarlet-Violet-Pull-Rates/a7702fce-dd64-4a58-beb1-0f871c853215/; PokeBeach chart: https://www.pokebeach.com/news/2024/03/Scarlet-and-Violet-Pull-Rates.png). Cross-checked against Card Shop Live's 1,728 packs (DR 13.54%, UR 6.48%, IR 7.52%, SIR 3.01%, gold 1.85%; https://cardshoplive.com/pages/hit-rates-for-pokemon-tcg-scarlet-and-violet). The first Scarlet & Violet set: no ACE SPEC, no god packs, Double and Ultra Rares share the rare slot, IR/SIR/gold share the second reverse slot.",
+    "rates": {
+      "double": 0.1376,
+      "ultra": 0.0657,
+      "ir": 0.0767,
+      "sir": 0.0315,
+      "hyper": 0.0185
+    }
+  },
+  "sv4pt5": {
+    "name": "Paldean Fates",
+    "printedTotal": 91,
+    "released": "2024-01-26",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, more than 1,500 English packs opened before release: 'Pokémon TCG: Paldean Fates Pull Rates' by Peter Day (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Paldean-Fates-Pull-Rates/23de3e93-0d0f-4ae0-abc4-13664f3001a3/, 2024-01-26), 95% confidence intervals: Double Rare 15.89% ± 1.69% (1 in 6), Ultra Rare 6.61% ± 1.15% (1 in 15), Shiny Rare 25.44% ± 2.01% (1 in 4), Shiny Ultra Rare 7.72% ± 1.23% (1 in 13), Illustration Rare 7.22% ± 1.20% (1 in 14), Special Illustration Rare 1.72% ± 0.60% (1 in 58), Hyper Rare 1.61% ± 0.58% (1 in 62). DR and UR sit in the rare slot; Shiny Rare and Shiny Ultra Rare replace the first reverse holo (about 1 pack in 3 has a shiny); IR, SIR and Hyper Rare sit in the second reverse slot.",
+    "rates": {
+      "double": 0.1589,
+      "ultra": 0.0661,
+      "shiny": 0.2544,
+      "shinyUltra": 0.0772,
+      "ir": 0.0722,
+      "sir": 0.0172,
+      "hyper": 0.0161
     }
   }
 }
