@@ -98,7 +98,9 @@ cure"). The surface gloss throws a soft highlight.
    `scripts/fetch_foil_maps.py --set <set> --all --ship --write-data`, wired
    in as masks.md "Shipping foil maps" shows. For cards without one, build
    the mask from geometry, consensus (`scripts/find_overlay.py` finds any
-   printed mark on every card of a set) or the scan (masks.md).
+   printed mark on every card of a set) or the scan (masks.md). A
+   Futuristic Rare TCG Live has not published yet gets both maps drawn from
+   its scan by `scripts/make_futuristic_maps.py`.
 3. **Pick the upstream recipe** (finish-catalog §3) and read it in
    `upstream/`. Map its layers onto the site's with the table in
    `upstream/README.md`.
@@ -176,6 +178,7 @@ the worked example of taking a whole set from research to CSS.
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
 | `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets (with RGB channel masks and `--etch-bins`) |
 | `scripts/ship_stamp.py` | Ship a mark found by `find_overlay.py`: mask into `assets/masks/stamp/`, placements into `data/<set>.json` |
+| `scripts/make_futuristic_maps.py` | Draw a Futuristic Rare's foil map, etch and etch bins from its scan when TCG Live has none (hints in `lab/masks/futuristic/`) |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
 
 On the site side:

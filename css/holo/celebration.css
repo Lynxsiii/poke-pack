@@ -530,18 +530,35 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .glare {
    half strength), B the sunburst streaks where no ink covers the silver, R
    Mew's highlights and the frame lines, bare silver with fine diagonal
    ridges. Under the light the colours go luminous and the streaks blaze
-   white; at a glancing angle a milky sheen washes over. */
+   white; at a glancing angle a milky sheen washes over.
+   The silver runs under the whole card, frame and text box included, and
+   sparkles all over in hand, so the base layer ignores the map (whose G
+   channel dims Mew and the text box) and covers the card; the channel masks
+   still pick out the streaks and ridges. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil {
+  --shift: 3px;
   background-image:
+    var(--holo-glitter),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 58%) 0%, hsl(0, 0%, 40%) 20%, hsl(0, 0%, 16%) 60%, hsl(0, 0%, 6%) 100%),
+      hsl(0, 0%, 62%) 0%, hsl(0, 0%, 46%) 20%, hsl(0, 0%, 24%) 60%, hsl(0, 0%, 12%) 100%),
     linear-gradient(hsla(0, 0%, 100%, calc(var(--pointer-from-center) * 0.16)),
       hsla(0, 0%, 100%, calc(var(--pointer-from-center) * 0.16)));
-  background-size: cover, cover;
-  background-position: center;
-  background-blend-mode: screen;
-  filter: brightness(calc(0.7 + var(--pointer-from-center) * 0.15)) contrast(1.2) saturate(1.4);
+  background-size: 25% auto, cover, cover;
+  background-position:
+    calc(50% + (var(--pointer-from-left) - 0.5) * var(--shift)) calc(50% + (var(--pointer-from-top) - 0.5) * var(--shift)),
+    center,
+    center;
+  background-blend-mode: overlay, screen;
+  filter: brightness(calc(0.72 + var(--pointer-from-center) * 0.18)) contrast(1.25) saturate(1.4);
   mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb.has-foil-map .foil {
+  -webkit-mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-image: var(--art);
+  mask-composite: add;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::before {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),

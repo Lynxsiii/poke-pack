@@ -200,12 +200,21 @@ gradient in `::after`, and again, paler, on `.cure` across the whole card.
 silver, grid glitter, and geometric relief cells that each flash at their
 own tilt. The trick is `--etch-bins`: the etch split into horizontal and
 vertical line masks, each lighting a band layer that moves differently, so
-neighbouring cells flash at different angles.
+neighbouring cells flash at different angles. A card with no TCG Live
+maps can have them drawn: `scripts/make_futuristic_maps.py` cuts the
+Pokémon out of the scan (GrabCut from hand hints), finds the text by its ink
+and white keyline, places the stamp by matching a sibling card, and draws
+the plate as rings round each energy orb plus hard-edged cells of rings,
+hatching and chevrons at TCG Live's 2.3 px pitch.
 
 **RGB (`RGB` / `ETCHED`)**. Transparent colour ink over mirror foil. Keep
-the dodge light dim (a 58% white core) so the ink glows in its own colour
+the dodge light dim (a 62% white core) so the ink glows in its own colour
 instead of going white; the map's blue channel is the bare-foil streaks,
-the red channel the chrome highlights, each its own mask.
+the red channel the chrome highlights, each its own mask. The silver runs
+under the whole card, frame and text box too, so the base layer is masked
+by the card alone, not the map (whose green channel dims Mew and the text
+box and left them looking printed); fine glitter over it sparkles like the
+real card in hand.
 
 **Classic Collection (not in TCG Live)**. One shared stock for every
 reprint: dense confetti glitter, sparse puffy stars in flat colours, a gold
