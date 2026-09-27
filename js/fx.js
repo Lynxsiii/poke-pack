@@ -116,8 +116,20 @@ function startParallax() {
   }, { passive: true });
 }
 
+// The hero's looping effects stop once they are scrolled out of view, so a
+// long page is not animating something nobody can see.
+function pauseOffscreen() {
+  if (!("IntersectionObserver" in window)) return;
+  const loops = document.querySelectorAll(".home-copy, .home-stage");
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) entry.target.classList.toggle("fx-paused", !entry.isIntersecting);
+  });
+  loops.forEach((el) => io.observe(el));
+}
+
 export function initFx() {
   document.documentElement.classList.add("fx-ready");
   if (!reduced()) startReveals();
   startParallax();
+  pauseOffscreen();
 }
