@@ -938,6 +938,13 @@ export const DESTINED_RIVALS = {
   ]),
 };
 
+/**
+ * Journey Together rates are TCGplayer's own: the Authentication Center opened
+ * more than 8,000 English packs for launch (article of Mar 28 2025, updated
+ * May 29 2025). DR 20.29%, UR 6.54% (both in the rare slot), IR 8.50%, SIR
+ * 1.16% and gold 0.73% (in the second reverse slot). No ACE SPEC in this set.
+ * Sources are in data/pullrates.json.
+ */
 export const JOURNEY_TOGETHER = {
   id: "sv9",
   tcgId: "sv9",
@@ -947,21 +954,22 @@ export const JOURNEY_TOGETHER = {
   released: "March 28, 2025",
   live: true,
   printedTotal: 159,
-  totalCount: 190,
+  // 190 cards plus the 18 promos its boxes and blisters carry.
+  totalCount: 208,
   packSize: 11,
-  cost: 6.43,
+  cost: 6.76,
   dataFile: "data/sv9.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono, and Hop — more Trainer’s Pokémon, four wrappers.",
+  blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono and Hop bring their own Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/15 · IR 1/12 · SIR 1/86 · gold 1/137",
-  lede: "The companions set. N’s Zoroark and Lillie’s Clefairy head a 190-card list with Gym Hero holos on the windowed cards.",
-  slots: svSlots({ double: 0.2, ultra: 0.067, ir: 0.083, sir: 0.0116, hyper: 0.0073 }),
-  heroIds: ["sv9-185", "sv9-184", "sv9-183", "sv9-186"],
+  lede: "Trainer’s Pokémon are back. N’s Zoroark, Iono’s Bellibolt and Lillie’s Clefairy head a 190-card list, and the Clefairy special art is the one to chase.",
+  slots: svSlots({ double: 0.2029, ultra: 0.0654, ir: 0.085, sir: 0.0116, hyper: 0.0073 }),
+  heroIds: ["sv9-184", "sv9-185", "sv9-183", "sv9-186"],
   wrappers: boosterWrappers("sv9", [
     { id: "zacian", name: "Zacian", cardId: "sv9-186", tag: "Hop" },
     { id: "bellibolt", name: "Bellibolt", cardId: "sv9-183", tag: "Iono" },
-    { id: "clefairy", name: "Clefairy", cardId: "sv9-184", tag: "Lillie" },
-    { id: "zoroark", name: "Zoroark", cardId: "sv9-185", tag: "The chase" },
+    { id: "clefairy", name: "Clefairy", cardId: "sv9-184", tag: "The chase" },
+    { id: "zoroark", name: "Zoroark", cardId: "sv9-185", tag: "N" },
   ]),
 };
 
@@ -1191,6 +1199,7 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  JOURNEY_TOGETHER,
   TEMPORAL_FORCES,
   OBSIDIAN_FLAMES,
 ];
@@ -1204,7 +1213,6 @@ export const PLAYABLE_SETS = [
  */
 export const RETIRED_SETS = [
   DESTINED_RIVALS,
-  JOURNEY_TOGETHER,
   PRISMATIC_EVOLUTIONS,
   SURGING_SPARKS,
   STELLAR_CROWN,
@@ -1255,7 +1263,6 @@ export const ROADMAP = [
     era: "Scarlet & Violet",
     sets: [
       { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
-      { id: "sv9", name: "Journey Together", released: "Mar 2025", cards: "—" },
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
       { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
