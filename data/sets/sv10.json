@@ -6,5 +6,214 @@
   "scrydexId": "sv10",
   "pittSlug": "Destined-Rivals",
   "artSlug": "destined-rivals",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
+  "tcgplayerGroup": 24269,
+  "printedTotal": 182,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp199": {},
+    "svp200": {},
+    "svp201": {},
+    "svp202": {},
+    "svp203": {},
+    "svp203-pc": {
+      "like": "svp203",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 635468
+    },
+    "svp204": {
+      "foilAs": "Ultra Rare"
+    },
+    "svp205": {},
+    "svp216": {},
+    "svp217": {},
+    "svp218": {},
+    "34-prerelease": {
+      "like": "34",
+      "variant": "Prerelease stamp",
+      "tcgplayerId": 633107,
+      "foilAs": "Rare"
+    },
+    "49-prerelease": {
+      "like": "49",
+      "variant": "Prerelease stamp",
+      "tcgplayerId": 633108,
+      "foilAs": "Rare"
+    },
+    "87-prerelease": {
+      "like": "87",
+      "variant": "Prerelease stamp",
+      "tcgplayerId": 633112,
+      "foilAs": "Rare"
+    },
+    "96-prerelease": {
+      "like": "96",
+      "variant": "Prerelease stamp",
+      "tcgplayerId": 633111,
+      "foilAs": "Rare"
+    },
+    "102-cosmos": {
+      "like": "102",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 637611,
+      "foilAs": "Cosmos"
+    },
+    "103-cosmos": {
+      "like": "103",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 637612,
+      "foilAs": "Cosmos"
+    },
+    "149-cosmos": {
+      "like": "149",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 639953,
+      "foilAs": "Cosmos"
+    },
+    "174-cosmos": {
+      "like": "174",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 639952,
+      "foilAs": "Cosmos"
+    },
+    "31-stamp": {
+      "like": "31",
+      "variant": "Destined Rivals stamp",
+      "tcgplayerId": 663425,
+      "foilAs": "Double Rare"
+    },
+    "208-stamp": {
+      "like": "208",
+      "variant": "Destined Rivals stamp",
+      "tcgplayerId": 663426,
+      "foilAs": "Ultra Rare"
+    },
+    "229-stamp": {
+      "like": "229",
+      "variant": "Destined Rivals stamp",
+      "tcgplayerId": 663427,
+      "foilAs": "Special Illustration Rare"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 624676,
+      "packs": 9,
+      "promos": ["svp203"]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 624675,
+      "packs": 11,
+      "promos": ["svp203-pc", "svp203"]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 625677,
+      "packs": 4,
+      "promos": ["34-prerelease", "49-prerelease", "96-prerelease", "87-prerelease"],
+      "pick": 1
+    },
+    {
+      "id": "upc-moltres",
+      "name": "Team Rocket's Moltres ex Ultra-Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 656997,
+      "tcgplayerGroup": 2374,
+      "packs": 18,
+      "promos": ["31-stamp", "208-stamp", "229-stamp"]
+    },
+    {
+      "id": "garchomp-premium",
+      "name": "Cynthia's Garchomp ex Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 625952,
+      "tcgplayerGroup": 2374,
+      "packs": 6,
+      "promos": ["svp204", "102-cosmos", "103-cosmos"]
+    },
+    {
+      "id": "mewtwo-box",
+      "name": "Team Rocket's Mewtwo ex Box",
+      "kind": "collection",
+      "tcgplayerId": 625695,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": ["svp205", "149-cosmos", "174-cosmos"]
+    },
+    {
+      "id": "tin-mewtwo",
+      "name": "Team Rocket Tin: Team Rocket's Mewtwo ex",
+      "kind": "tin",
+      "tcgplayerId": 649193,
+      "tcgplayerGroup": 2374,
+      "packs": 5,
+      "promos": ["svp216"]
+    },
+    {
+      "id": "tin-nidoking",
+      "name": "Team Rocket Tin: Team Rocket's Nidoking ex",
+      "kind": "tin",
+      "tcgplayerId": 649194,
+      "tcgplayerGroup": 2374,
+      "packs": 5,
+      "promos": ["svp217"]
+    },
+    {
+      "id": "tin-persian",
+      "name": "Team Rocket Tin: Team Rocket's Persian ex",
+      "kind": "tin",
+      "tcgplayerId": 649195,
+      "tcgplayerGroup": 2374,
+      "packs": 5,
+      "promos": ["svp218"]
+    },
+    {
+      "id": "blister3-kangaskhan",
+      "name": "3 Pack Blister: Kangaskhan",
+      "kind": "blister",
+      "tcgplayerId": 625683,
+      "packs": 3,
+      "promos": ["svp202"]
+    },
+    {
+      "id": "blister3-zebstrika",
+      "name": "3 Pack Blister: Zebstrika",
+      "kind": "blister",
+      "tcgplayerId": 625684,
+      "packs": 3,
+      "promos": ["svp201"]
+    },
+    {
+      "id": "blister-eevee",
+      "name": "Single Pack Blister: Eevee",
+      "kind": "blister",
+      "tcgplayerId": 633105,
+      "packs": 1,
+      "promos": ["svp200"]
+    },
+    {
+      "id": "blister-zarude",
+      "name": "Single Pack Blister: Zarude",
+      "kind": "blister",
+      "tcgplayerId": 633106,
+      "packs": 1,
+      "promos": ["svp199"]
+    }
+  ]
 }

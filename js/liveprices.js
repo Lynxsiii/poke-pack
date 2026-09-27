@@ -23,9 +23,13 @@ const TCGDEX_SET = {
   me3: "me03",
   me4: "me04",
   me5: "me05",
+  sv2: "sv02",
   sv3: "sv03",
   sv5: "sv05",
+  sv6: "sv06",
+  sv7: "sv07",
   sv9: "sv09",
+  sv10: "sv10",
   sv1: "sv01",
 };
 
@@ -207,7 +211,10 @@ async function singlesFromTcgdex(setId, numbers) {
 }
 
 async function singlesForSet(setId, cards) {
-  const numbers = (cards || []).map((c) => c.number).filter((n) => n != null);
+  // Promos (numbered "mep082") live in TCGdex's promo set, not this one, so
+  // asking for them under the set only ever 404s. They keep their baked
+  // market price.
+  const numbers = (cards || []).filter((c) => !c.promo).map((c) => c.number).filter((n) => n != null);
   if (ptcgioOk) {
     try {
       return await singlesFromPtcgio(setId);

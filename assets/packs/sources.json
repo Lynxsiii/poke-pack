@@ -56,6 +56,17 @@
         { "id": "reshiram", "remote": "white-flare-pack-0.avif", "file": "rsv10pt5/reshiram.avif" }
       ]
     },
+    "sv2": {
+      "name": "Paldea Evolved",
+      "slug": "paldea-evolved",
+      "packs": [
+        { "id": "ting-lu", "remote": "paldea-evolved-pack-0.avif", "file": "sv2/pack-0.avif" },
+        { "id": "skeledirge", "remote": "paldea-evolved-pack-1.avif", "file": "sv2/pack-1.avif" },
+        { "id": "quaquaval", "remote": "paldea-evolved-pack-2.avif", "file": "sv2/pack-2.avif" },
+        { "id": "meowscarada", "remote": "paldea-evolved-pack-3.avif", "file": "sv2/pack-3.avif" },
+        { "id": "chien-pao", "remote": "paldea-evolved-pack-4.avif", "file": "sv2/pack-4.avif" }
+      ]
+    },
     "sv3": {
       "name": "Obsidian Flames",
       "slug": "obsidian-flames",
@@ -64,6 +75,16 @@
         { "id": "tyranitar", "remote": "obsidian-flames-pack-1.avif", "file": "sv3/tyranitar.avif" },
         { "id": "charizard", "remote": "obsidian-flames-pack-2.avif", "file": "sv3/charizard.avif" },
         { "id": "dragonite", "remote": "obsidian-flames-pack-3.avif", "file": "sv3/dragonite.avif" }
+      ]
+    },
+    "sv7": {
+      "name": "Stellar Crown",
+      "slug": "stellar-crown",
+      "packs": [
+        { "id": "terapagos", "remote": "stellar-crown-pack-0.avif", "file": "sv7/pack-0.avif" },
+        { "id": "lapras", "remote": "stellar-crown-pack-1.avif", "file": "sv7/pack-1.avif" },
+        { "id": "galvantula", "remote": "stellar-crown-pack-2.avif", "file": "sv7/pack-2.avif" },
+        { "id": "cinderace", "remote": "stellar-crown-pack-3.avif", "file": "sv7/pack-3.avif" }
       ]
     },
     "sv1": {

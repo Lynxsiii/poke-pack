@@ -18,7 +18,8 @@
  *   Rare's foil). Gold ink over it. pokemon-cards-151's hyper rare is its
  *   Special Illustration Rare recipe too: a soft 15deg rainbow that shows
  *   only inside two light bars crossing with the tilt, glitter, and a
- *   multiply glare, plus the etch catching the light everywhere.
+ *   glare, plus the etch catching the light everywhere. Tuned against
+ *   photos of real cards (see the gold section).
  *
  * Layer ideas follow pokemon-cards-151 by Simon Goellner (@simeydotme),
  * GPL-3.0; see NOTICE.md. The research is in the card-textures skill,
@@ -66,7 +67,12 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ultra, .foil-gold).has-foil-map:not(.
    etch is: `.foil` draws the stack under a white and a black soft-light (the
    foil between the lines: the mask's lift and the unetched black), and
    `::before` draws the same stack under two white ones, masked by the etch
-   (the cut lines, a step brighter). `::after` is the exclusion twin. */
+   (the cut lines, a step brighter). `::after` is the exclusion twin.
+   Against photos of real cards (SV base thread's texture-refs), upstream's
+   `hue` blend over the grey bars left only a tint; the cards show several
+   saturated diagonal rainbow bands at once, over the Pokémon, text and frame.
+   So the ramp is `color`-blended (full saturation, the bars' luminance), the
+   bars are tighter (more bands) and the filter keeps saturation. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
   --fa-space: 5%;
   --fa-pillar: repeating-linear-gradient(0deg,
@@ -89,10 +95,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.f
     linear-gradient(#fff, #fff),
     linear-gradient(#000, #000),
     var(--fa-pillar), var(--fa-bars), var(--fa-dim);
-  background-size: cover, cover, 200% 700%, 300% 100%, 200% 100%;
+  background-size: cover, cover, 200% 700%, 200% 100%, 200% 100%;
   background-position: center, center, var(--fa-pos);
-  background-blend-mode: soft-light, soft-light, hue, hard-light, normal;
-  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.5) saturate(0.66);
+  background-blend-mode: soft-light, soft-light, color, hard-light, normal;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.2) saturate(1);
   mix-blend-mode: color-dodge;
 }
 /* Resting, the silver-grey of the foil rather than a tinted wash. */
@@ -104,9 +110,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map.has-etch-map:not(.foil
     linear-gradient(#fff, #fff),
     linear-gradient(#fff, #fff),
     var(--fa-pillar), var(--fa-bars), var(--fa-dim);
-  background-size: cover, cover, 200% 700%, 300% 100%, 200% 100%;
+  background-size: cover, cover, 200% 700%, 200% 100%, 200% 100%;
   background-position: center, center, var(--fa-pos);
-  background-blend-mode: soft-light, soft-light, hue, hard-light, normal;
+  background-blend-mode: soft-light, soft-light, color, hard-light, normal;
   -webkit-mask-image: var(--etch-map);
   mask-image: var(--etch-map);
   -webkit-mask-size: 100% 100%;
@@ -129,12 +135,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.f
     linear-gradient(#fff, #fff),
     linear-gradient(#000, #000),
     var(--fa-pillar), var(--fa-bars), var(--fa-dim);
-  background-size: cover, cover, 200% 400%, 195% 100%, 200% 100%;
+  background-size: cover, cover, 200% 400%, 130% 100%, 200% 100%;
   background-position: center, center,
     0% var(--background-y),
     calc((var(--background-x) + (var(--background-y) * 0.2)) * -1) calc(var(--background-y) * -1),
     var(--background-x) var(--background-y);
-  background-blend-mode: soft-light, soft-light, hue, hard-light, normal;
+  background-blend-mode: soft-light, soft-light, color, hard-light, normal;
   filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(1.66) saturate(1);
   mix-blend-mode: exclusion;
 }
@@ -146,13 +152,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.f
   mix-blend-mode: hard-light;
   filter: brightness(0.8) contrast(1) saturate(1);
   opacity: var(--card-opacity);
-}
-/* Supporter full arts: a flatter, brighter varnish (upstream). */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.foil-trainer.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 55%) 5%, hsl(200, 5%, 40%) 40%, hsl(200, 10%, 15%) 110%);
-  background-size: cover;
-  filter: brightness(1.25) contrast(1.4) saturate(1);
 }
 /* The etched lines under the light. Nine tenths of a full art is etched, so
    the hot spot celebration.css gives every etched card would be a white disc
@@ -174,7 +173,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map.has-etch-map:not(.foil
 
 /* ---- Hyper Rare: gold, SV_ULTRA / ETCHED ------------------------------------
    The rainbow is faint on the real cards: the gold ink tints it, so it reads
-   as a warm sheen moving through the light bars rather than colour. */
+   as a warm sheen moving through the light bars rather than colour. Dodged
+   paler than upstream: at brightness(.6) the rainbow's red slices turn the
+   brightest golds (sv1's Koraidon ex, the gold energies) orange. Photos show
+   a heavy glitter grain over the whole card, Pokémon included, and a wash
+   to pale champagne at the glare angle: two glitter tiles drifting apart,
+   and a hard-light glare that lifts near the light and dims away from it. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
   --fa-spectrum: hsl(2, 100%, 73%), hsl(53, 100%, 69%), hsl(93, 100%, 69%),
     hsl(176, 100%, 76%), hsl(228, 100%, 74%), hsl(283, 100%, 73%), hsl(2, 100%, 73%);
@@ -182,7 +186,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.fo
   background-size: 240% 240%;
   background-position: var(--background-x) var(--background-y);
   background-blend-mode: normal;
-  filter: brightness(0.6) contrast(1.5) saturate(0.8);
+  filter: brightness(0.5) contrast(1.5) saturate(0.45);
   mix-blend-mode: color-dodge;
 }
 /* Resting, gold stays gold. */
@@ -201,26 +205,27 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.fo
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::after {
   --shift: 3px;
-  background-image: var(--holo-glitter);
-  background-size: 25% auto;
-  background-position: calc(50% + var(--pointer-from-left) * var(--shift))
-    calc(50% + var(--pointer-from-top) * var(--shift));
-  filter: brightness(1.4) contrast(2) saturate(1.2);
+  background-image: var(--holo-glitter), var(--holo-glitter);
+  background-size: 14% auto, 23% auto;
+  background-position:
+    calc(50% + var(--pointer-from-left) * var(--shift)) calc(50% + var(--pointer-from-top) * var(--shift)),
+    calc(30% - var(--pointer-from-left) * var(--shift)) calc(70% - var(--pointer-from-top) * var(--shift));
+  background-blend-mode: screen;
+  filter: brightness(1.5) contrast(2.2) saturate(0.9);
   mix-blend-mode: plus-lighter;
-  opacity: calc(0.2 + var(--pointer-from-center) * 0.5);
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.5);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 92%) 10%, hsl(0, 0%, 66%) 70%);
+    hsl(40, 15%, 74%) 5%, hsl(0, 0%, 50%) 35%, hsl(0, 0%, 40%) 110%);
   background-size: cover;
   background-position: center;
-  mix-blend-mode: multiply;
-  filter: contrast(1.4);
-  opacity: calc(var(--card-opacity) * 0.8);
+  mix-blend-mode: hard-light;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.6);
 }
 /* Upstream's glare2: the etch lit across the whole card, brightest under the
-   light. Inside the multiply glare, white leaves the gold undimmed, so the
-   cut lines stand out bright against the rest. */
+   light. In the hard-light glare, the white lines lift the gold under them. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map.has-etch-map:not(.foil-tera):not(.foil-classic) .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 100%, 0.95) 0%, hsla(0, 0%, 100%, 0.55) 30%, hsla(0, 0%, 100%, 0.3) 80%);

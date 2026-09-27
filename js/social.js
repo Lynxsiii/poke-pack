@@ -29,7 +29,7 @@ export function initSocial(next) {
 }
 
 export function notifySignedIn() {
-  tickSocial(true);
+  return tickSocial(true);
 }
 
 export function faceHtml(user, size = "md") {

@@ -6,5 +6,106 @@
   "scrydexId": "sv7",
   "pittSlug": "Stellar-Crown",
   "artSlug": "stellar-crown",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
+  "tcgplayerGroup": 23537,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp133": {},
+    "svp134": {},
+    "svp135": {},
+    "svp136": {},
+    "svp137": {},
+    "svp138": {},
+    "svp139": {},
+    "svp140": {},
+    "svp141": {},
+    "svp141-pc": {
+      "like": "svp141",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 578812
+    },
+    "svp163": {
+      "foilAs": "Hyper Rare"
+    },
+    "svp164": {
+      "foilAs": "Hyper Rare"
+    },
+    "svp165": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 557350,
+      "packs": 9,
+      "promos": ["svp141"]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 557340,
+      "packs": 11,
+      "promos": ["svp141-pc", "svp141"]
+    },
+    {
+      "id": "terapagos-upc",
+      "name": "Terapagos ex Ultra-Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 575198,
+      "tcgplayerGroup": 2374,
+      "packs": 18,
+      "promos": ["svp165", "svp164", "svp163"]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 557330,
+      "packs": 4,
+      "promos": ["svp133", "svp134", "svp135", "svp136"],
+      "pick": 1
+    },
+    {
+      "id": "blister3-latias",
+      "name": "3 Pack Blister: Latias",
+      "kind": "blister",
+      "tcgplayerId": 557334,
+      "packs": 3,
+      "promos": ["svp139"]
+    },
+    {
+      "id": "blister3-tinkaton",
+      "name": "3 Pack Blister: Tinkaton",
+      "kind": "blister",
+      "tcgplayerId": 557337,
+      "packs": 3,
+      "promos": ["svp140"]
+    },
+    {
+      "id": "blister-horsea",
+      "name": "Single Pack Blister: Horsea",
+      "kind": "blister",
+      "tcgplayerId": 557338,
+      "packs": 1,
+      "promos": ["svp137"]
+    },
+    {
+      "id": "blister-porygon2",
+      "name": "Single Pack Blister: Porygon2",
+      "kind": "blister",
+      "tcgplayerId": 557341,
+      "packs": 1,
+      "promos": ["svp138"]
+    }
+  ]
 }
