@@ -94,68 +94,78 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.has-foil-map .glare {
    The whole group hard-lights onto the scan, which is what lets one layer
    work on both kinds of print under the foil: the pale art windows, which a
    colour-dodge cannot brighten, go silver-grey wherever the group is under
-   half brightness; the inked Pokémon and border brighten wherever it is
-   over. Bottom up, `.foil` is
-   - a silver ramp, bright under the light and dim away from it;
-   - soft rainbow bands, carried by hue only, so they tint the silver;
-   - the card's etch map, drawn as an image and difference-blended, so every
-     fingerprint ridge flips to the other side of half grey from its
-     neighbours and the whorls show on white and on ink alike. It is part of
-     the print, so it never moves. */
+   half brightness, and the lit ridges go white over them; the inked Pokémon
+   and border brighten wherever the group is over half.
+
+   `.foil`, bottom up (all of it shows at rest, faintly):
+   - grey, with the card's etch map drawn over it in white: the grain;
+   - multiplied by a silver ramp, a little brighter under the light, which
+     keeps the whole under half grey, so the pale window reads as metal
+     (a difference blend with the etch does not: where a fine etch
+     antialiases to half alpha it averages out to exactly half grey, which
+     hard-light leaves untouched);
+   - narrow rainbow bands sliding across, the sun pillar.
+   `::before` (held only) is the fingerprint catching the light. A fine etch
+   flashes where its lines face the lamp, so whole arcs of one direction light
+   together, and on the real cards that reads as rings round the Pokémon.
+   The card's line-direction map (`--etch-angle`, a grey per direction) is
+   difference-blended with a flat grey set by the pointer, inverted and
+   pushed through a steep contrast, which leaves light only on the arcs whose
+   direction matches; each colour channel matches a slightly different
+   direction, so the arcs have rainbow edges, like a grating. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map {
-  --pf-band: 6%;
+  /* Sun pillar: one band --pf-w wide every --pf-period, both in the band
+     layer's own units (it is twice the card). */
+  --pf-w: 7%;
+  --pf-period: 34%;
   --pf-band-angle: 118deg;
-  --pf-color: 0.55;
+  --pf-color: 0.8;
+  --pf-p: calc(var(--pointer-from-left, 0.5) * 0.8 + var(--pointer-from-top, 0.5) * 0.2);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.foil-shiny.foil-shiny.has-foil-map {
-  --pf-color: 0.8;
+  --pf-w: 11%;
+  --pf-period: 30%;
+  --pf-color: 0.9;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil {
   --pf-a: 0.85;
   background-image:
     repeating-linear-gradient(var(--pf-band-angle),
-      transparent 0%, transparent calc(var(--pf-band) * 3),
-      hsla(0, 95%, 62%, var(--pf-a)) calc(var(--pf-band) * 3.6),
-      hsla(42, 100%, 58%, var(--pf-a)) calc(var(--pf-band) * 4.1),
-      hsla(95, 85%, 55%, var(--pf-a)) calc(var(--pf-band) * 4.6),
-      hsla(185, 90%, 55%, var(--pf-a)) calc(var(--pf-band) * 5.1),
-      hsla(228, 95%, 64%, var(--pf-a)) calc(var(--pf-band) * 5.6),
-      hsla(285, 85%, 66%, var(--pf-a)) calc(var(--pf-band) * 6.1),
-      transparent calc(var(--pf-band) * 6.7), transparent calc(var(--pf-band) * 8)),
-    var(--etch-map, linear-gradient(transparent, transparent)),
+      transparent 0%,
+      hsla(0, 95%, 62%, var(--pf-a)) calc(var(--pf-w) * 0.12),
+      hsla(42, 100%, 58%, var(--pf-a)) calc(var(--pf-w) * 0.28),
+      hsla(95, 85%, 55%, var(--pf-a)) calc(var(--pf-w) * 0.44),
+      hsla(185, 90%, 55%, var(--pf-a)) calc(var(--pf-w) * 0.6),
+      hsla(228, 95%, 64%, var(--pf-a)) calc(var(--pf-w) * 0.76),
+      hsla(285, 85%, 66%, var(--pf-a)) calc(var(--pf-w) * 0.9),
+      transparent var(--pf-w), transparent var(--pf-period)),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 52%) 0%, hsl(0, 0%, 45%) 30%, hsl(0, 0%, 38%) 90%);
-  background-size: 300% 300%, 100% 100%, 100% 100%;
-  background-position: calc((var(--background-x) - 50%) * 1.8 + 50%)
-      calc((var(--background-y) - 50%) * 1.8 + 50%), center, center;
-  background-repeat: repeat, no-repeat, no-repeat;
-  background-blend-mode: normal, difference, normal;
+      hsl(0, 0%, 58%) 0%, hsl(0, 0%, 52%) 35%, hsl(0, 0%, 46%) 100%),
+    var(--etch-map, linear-gradient(transparent, transparent)),
+    linear-gradient(hsl(0, 0%, 60%), hsl(0, 0%, 60%));
+  background-size: 200% 200%, 100% 100%, 100% 100%, 100% 100%;
+  background-position: calc((var(--background-x) - 50%) * 3 + 50%)
+      calc((var(--background-y) - 50%) * 3 + 50%), center, center, center;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, multiply, normal, normal;
   filter: saturate(var(--pf-color));
   mix-blend-mode: hard-light;
 }
-/* Resting: silver and fingerprint, barely any colour. */
+/* Resting: silver and grain, barely any colour. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map:not(.lit):not(.settling) .foil {
   filter: saturate(0.3);
-  opacity: calc(0.22 * var(--foil-strength, 1));
+  opacity: calc(0.3 * var(--foil-strength, 1));
 }
-/* A second, fainter set of bands running the other way, so the colours
-   shift rather than slide as the card turns. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil::before {
-  background-image: repeating-linear-gradient(calc(var(--pf-band-angle) - 180deg),
-    hsl(0, 0%, 50%) 0%, hsl(0, 0%, 50%) 10%,
-    hsl(200, 80%, 55%) 13%, hsl(280, 70%, 58%) 16%, hsl(40, 90%, 55%) 19%,
-    hsl(0, 0%, 50%) 22%, hsl(0, 0%, 50%) 30%);
-  background-size: 250% 250%;
-  background-position: calc((var(--background-x) - 50%) * -1.2 + 50%)
-    calc((var(--background-y) - 50%) * -1.2 + 50%);
-  mix-blend-mode: soft-light;
-  opacity: calc(var(--pf-color) * 0.8);
-}
-/* The ridges catching the light: near the pointer the etch itself turns
-   bright, so the fingerprint glints in white where the lamp is. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil::after {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 85%) 14%, hsla(0, 0%, 60%, 0) 42%);
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map.has-etch-angle .foil::before {
+  background-image:
+    linear-gradient(rgb(calc(var(--pf-p) * 255 + 22) calc(var(--pf-p) * 255) calc(var(--pf-p) * 255 - 22)),
+      rgb(calc(var(--pf-p) * 255 + 22) calc(var(--pf-p) * 255) calc(var(--pf-p) * 255 - 22))),
+    var(--etch-angle);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-blend-mode: difference, normal;
+  /* 1 - |angle - pointer|, then everything more than ~0.18 away goes black. */
+  filter: invert(1) brightness(0.57) contrast(15);
   -webkit-mask-image: var(--etch-map);
   mask-image: var(--etch-map);
   -webkit-mask-size: 100% 100%;
@@ -163,16 +173,29 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil::afte
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   mix-blend-mode: screen;
-  opacity: calc(0.35 + var(--pointer-from-center) * 0.4);
+  opacity: calc(var(--card-opacity) * 0.85);
+}
+/* A cool sheen round the lamp, on the ridges only. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(195, 85%, 78%) 0%, hsla(215, 90%, 60%, 0.8) 22%, hsla(250, 70%, 55%, 0) 55%);
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity) * 0.6);
 }
 /* Gloss on the varnish: a soft overlay, since the pale windows bleach under
    anything stronger. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.7) 8%, hsla(0, 0%, 100%, 0.25) 30%, hsla(0, 0%, 0%, 0.35) 95%);
+    hsla(0, 0%, 100%, 0.6) 8%, hsla(0, 0%, 100%, 0.2) 30%, hsla(0, 0%, 0%, 0.3) 95%);
   background-size: cover;
   background-position: center;
   mix-blend-mode: overlay;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.7);
+  opacity: calc(var(--card-opacity) * 0.6);
 }
