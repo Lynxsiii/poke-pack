@@ -7,8 +7,9 @@ scraped markup, so a cosmetic redesign on either site won't silently break us:
   * sealed   — pittpokeresearch.com set page, JSON-LD ``Product`` offers
 
 Singles are written back into ``data/<set>.json`` as a ``market`` field on each
-card (USD). Sealed prices land in ``data/sealed.json``, keyed by set id, which
-is what the shop reads for pack cost.
+card (USD), and today's price is added to the card's chart in
+``data/prices/<set>.json``. Sealed prices land in ``data/sealed.json``, keyed by
+set id, which is what the shop reads for pack cost.
 
 Cards are matched by collector number, and the run aborts for a set if the
 names don't line up — a silent mismatch would mis-price the whole binder.
@@ -27,13 +28,12 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import price_history  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 SEALED_OUT = DATA / "sealed.json"
-HISTORY_OUT = DATA / "price-history.json"
-
-# Keep roughly a year of daily points per card.
-HISTORY_LIMIT = 400
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) poke-pack.rip price refresh"
 
@@ -162,33 +162,14 @@ def apply_singles(set_id: str, priced: dict[str, dict]) -> tuple[int, int]:
 
 
 def record_history(set_id: str, priced: dict[str, dict], today: str) -> int:
-    """Append today's price for each card to data/price-history.json.
+    """Add today's price for each card to data/prices/<set>.json.
 
-    No public source publishes a back catalogue of prices without a paid or
-    key-gated API, so the chart in the app is fed by these snapshots: one point
-    per card per day the script runs. Re-running on the same day overwrites
-    that day rather than stacking duplicates.
+    scripts/backfill_prices.py fills in the year before; this keeps the chart
+    moving. Re-running on the same day overwrites that day rather than stacking
+    duplicates.
     """
-    store = {}
-    if HISTORY_OUT.exists():
-        store = json.loads(HISTORY_OUT.read_text(encoding="utf-8"))
-    series = store.setdefault("cards", {})
-
-    written = 0
-    for number, entry in priced.items():
-        card_id = f"{set_id}-{number}"
-        points = series.setdefault(card_id, [])
-        price = round(float(entry["price"]), 2)
-        if points and points[-1][0] == today:
-            points[-1] = [today, price]
-        else:
-            points.append([today, price])
-        del points[:-HISTORY_LIMIT]
-        written += 1
-
-    store["updated"] = today
-    HISTORY_OUT.write_text(json.dumps(store, separators=(",", ":")) + "\n", encoding="utf-8")
-    return written
+    prices = {f"{set_id}-{number}": entry["price"] for number, entry in priced.items()}
+    return price_history.record(set_id, "cards", prices, today)
 
 
 def main(argv: list[str]) -> int:
@@ -200,6 +181,7 @@ def main(argv: list[str]) -> int:
         return 2
 
     today = time.strftime("%Y-%m-%d")
+    price_history.fold_legacy()
     store = {}
     if SEALED_OUT.exists():
         store = json.loads(SEALED_OUT.read_text(encoding="utf-8"))
