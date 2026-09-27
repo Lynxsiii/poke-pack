@@ -1,0 +1,237 @@
+{
+  "id": "sv3pt5",
+  "name": "151",
+  "series": "scarlet-violet",
+  "slug": "151",
+  "scrydexId": "sv3pt5",
+  "pittSlug": "151",
+  "artSlug": "151",
+  "packs": [
+    "mew"
+  ],
+  "tcgplayerGroup": 23237,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp046": {},
+    "svp047": {},
+    "svp048": {},
+    "svp049": {},
+    "svp050": {},
+    "svp051": {},
+    "svp051-pc": {
+      "like": "svp051",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 517270
+    },
+    "svp052": {},
+    "svp053": {},
+    "205-metal": {
+      "like": "205",
+      "variant": "Metal card",
+      "tcgplayerId": 519481,
+      "foilAs": "Hyper Rare",
+      "printedNumber": "205/165",
+      "keepMaps": true
+    },
+    "63-cosmos": {
+      "like": "63",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 520727,
+      "foilAs": "Cosmos",
+      "printedNumber": "063/165"
+    },
+    "64-cosmos": {
+      "like": "64",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 520725,
+      "foilAs": "Cosmos",
+      "printedNumber": "064/165"
+    },
+    "125-cosmos": {
+      "like": "125",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 520726,
+      "foilAs": "Cosmos",
+      "printedNumber": "125/165"
+    },
+    "26-cosmos": {
+      "like": "26",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 662074,
+      "foilAs": "Cosmos",
+      "printedNumber": "026/165",
+      "keepMaps": true
+    },
+    "68-cosmos": {
+      "like": "68",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 662070,
+      "foilAs": "Cosmos",
+      "printedNumber": "068/165",
+      "keepMaps": true
+    },
+    "94-cosmos": {
+      "like": "94",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 662072,
+      "foilAs": "Cosmos",
+      "printedNumber": "094/165",
+      "keepMaps": true
+    },
+    "149-cosmos": {
+      "like": "149",
+      "variant": "Cosmos holo",
+      "tcgplayerId": 662053,
+      "foilAs": "Cosmos",
+      "printedNumber": "149/165",
+      "keepMaps": true
+    },
+    "1-costco": {
+      "like": "1",
+      "variant": "Reverse cosmos holo",
+      "tcgplayerId": 587935,
+      "foilAs": "Reverse Cosmos",
+      "printedNumber": "001/165"
+    },
+    "4-costco": {
+      "like": "4",
+      "variant": "Reverse cosmos holo",
+      "tcgplayerId": 587936,
+      "foilAs": "Reverse Cosmos",
+      "printedNumber": "004/165"
+    },
+    "7-costco": {
+      "like": "7",
+      "variant": "Reverse cosmos holo",
+      "tcgplayerId": 587937,
+      "foilAs": "Reverse Cosmos",
+      "printedNumber": "007/165"
+    },
+    "25-costco": {
+      "like": "25",
+      "variant": "Reverse cosmos holo",
+      "tcgplayerId": 587938,
+      "foilAs": "Reverse Cosmos",
+      "printedNumber": "025/165"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 503313,
+      "packs": 9,
+      "promos": [
+        "svp051"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 501999,
+      "packs": 11,
+      "promos": [
+        "svp051-pc",
+        "svp051"
+      ]
+    },
+    {
+      "id": "upc",
+      "name": "Ultra-Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 502005,
+      "packs": 16,
+      "promos": [
+        "svp053",
+        "svp052",
+        "205-metal"
+      ]
+    },
+    {
+      "id": "box-alakazam",
+      "name": "Alakazam ex Collection",
+      "kind": "collection",
+      "tcgplayerId": 502006,
+      "packs": 4,
+      "promos": [
+        "svp050",
+        "64-cosmos",
+        "63-cosmos"
+      ]
+    },
+    {
+      "id": "box-zapdos",
+      "name": "Zapdos ex Collection",
+      "kind": "collection",
+      "tcgplayerId": 502007,
+      "packs": 4,
+      "promos": [
+        "svp049",
+        "125-cosmos"
+      ]
+    },
+    {
+      "id": "poster",
+      "name": "Poster Collection",
+      "kind": "collection",
+      "tcgplayerId": 502001,
+      "packs": 3,
+      "promos": [
+        "svp046",
+        "svp047",
+        "svp048"
+      ]
+    },
+    {
+      "id": "tins-samsclub",
+      "name": "Sam's Club Mini Tin Bundle",
+      "kind": "tin",
+      "tcgplayerId": 662302,
+      "packs": 8,
+      "promos": [
+        "26-cosmos",
+        "68-cosmos",
+        "94-cosmos",
+        "149-cosmos"
+      ]
+    },
+    {
+      "id": "tins-costco-meowth",
+      "name": "Costco Mini Tin 5-Pack (Meowth)",
+      "kind": "tin",
+      "tcgplayerId": 587746,
+      "tcgplayerGroup": 2374,
+      "packs": 10,
+      "promos": [
+        "25-costco",
+        "1-costco",
+        "4-costco",
+        "7-costco"
+      ]
+    },
+    {
+      "id": "tins-costco-magneton",
+      "name": "Costco Mini Tin 5-Pack (Magneton)",
+      "kind": "tin",
+      "tcgplayerId": 587747,
+      "tcgplayerGroup": 2374,
+      "packs": 10,
+      "promos": [
+        "25-costco",
+        "1-costco",
+        "4-costco",
+        "7-costco"
+      ]
+    }
+  ]
+}

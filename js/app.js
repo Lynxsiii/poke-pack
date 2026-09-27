@@ -656,9 +656,10 @@ function assetUrl(src) {
  * rarity (scripts/build_products.py reads it from TCG Live's print data), so the
  * foil engine draws the promo with its recipe. "Cosmos" is the galaxy holo most
  * collection-box promos use; "Frame" foils only the card frame, like a reverse.
+ * 151's Cosmos holo basic Energies use it too.
  */
 function foilLook(card) {
-  if (!card?.promo || !card.foilAs || card.reverse) return card;
+  if (!(card?.promo || card?.energy) || !card.foilAs || card.reverse) return card;
   if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
   return { ...card, rarity: card.foilAs };
 }
@@ -716,7 +717,7 @@ function numberLine(card) {
 
 function rarityLine(card) {
   const label = RARITY_LABEL[card.rarity] || card.rarity;
-  if (card.promo && card.variant) return `${label} · ${card.variant}`;
+  if ((card.promo || card.energy) && card.variant) return `${label} · ${card.variant}`;
   if (!card.reverse) return label;
   if (card.reverseKind === "pokeball" || reverseKindOf(card) === "pokeball") {
     return `Poké Ball reverse · ${label}`;

@@ -55,6 +55,14 @@
       "packs": [
         { "id": "reshiram", "remote": "white-flare-pack-0.avif", "file": "rsv10pt5/reshiram.avif" }
       ]
+    },
+    "sv3pt5": {
+      "name": "151",
+      "slug": "151",
+      "note": "The only upstream file has no alpha; resized to 400x731 and cut with the Black Bolt wrapper's edge alpha.",
+      "packs": [
+        { "id": "mew", "remote": "151-pack-0.avif", "file": "sv3pt5/mew.avif" }
+      ]
     }
   }
 }

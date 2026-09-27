@@ -85,6 +85,8 @@ TCGL_INDEX = "https://cdn.malie.io/file/malie-io/tcgl/export/index.json"
 TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
+# Miscellaneous Cards & Products: retailer-exclusive prints (151's cosmos holos).
+MISC_PRODUCTS = 2374
 HISTORY_LIMIT = 400
 NEXT_DATA = re.compile(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', re.S)
 
@@ -272,9 +274,12 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         base = cards.get(f"{set_id}-{spec['like']}")
         if not base:
             raise RuntimeError(f"{number}: like {spec['like']} is not in data/{set_id}.json yet")
-        keep = {k: v for k, v in base.items() if k not in (
-            "image", "imageSmall", "imageRemote", "market", "foilMap", "etchMap",
-            "etchMapH", "etchMapV", "stampPos", "stampSize", "variant", "tcgplayerId")}
+        drop = ["image", "imageSmall", "imageRemote", "market", "stampPos", "stampSize", "variant", "tcgplayerId"]
+        # `keepMaps`: the same print in another foil (151's cosmos holo Rares,
+        # the UPC's metal Mew ex) still foils where the set card does.
+        if not spec.get("keepMaps"):
+            drop += ["foilMap", "etchMap", "etchMapH", "etchMapV"]
+        keep = {k: v for k, v in base.items() if k not in drop}
         record = {**keep, "id": card_id, "number": number}
         if "printedNumber" not in record:
             record["printedNumber"] = f"{base['number']}/{cfg.get('printedTotal', '')}".rstrip("/")
@@ -378,7 +383,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     listings: dict[str, dict[str, float]] = {}
     groups = [cfg.get("tcgplayerGroup"), *(s.get("tcgplayerGroup") for s in cfg.get("promoSeries", {}).values())]
     # Product-only prints (blister exclusives) are filed in a group of their own.
-    groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES]
+    groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES, MISC_PRODUCTS]
     tcg_market: dict[int, dict[int, float]] = {}
 
     def tcg_price(pid: int) -> float | None:

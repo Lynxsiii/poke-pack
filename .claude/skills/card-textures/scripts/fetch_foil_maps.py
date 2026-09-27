@@ -195,6 +195,10 @@ def main() -> None:
     bins = {n.strip() for n in args.etch_bins.split(",") if n.strip()}
     shipped = {}
     for n in numbers:
+        # A card with no TCG Live source (151's Cosmos Energies, numbered "—")
+        # keeps whatever maps it was given by hand.
+        if n in unknown:
+            continue
         entry = {}
         foil, etch = cache / f"{n}.foil.png", cache / f"{n}.etch.png"
         colour = foil.exists() and is_colour_map(foil)

@@ -911,6 +911,67 @@ export const WHITE_FLARE = {
   ],
 };
 
+/**
+ * 151. A main-set pack with no ACE SPEC: Double and Ultra Rares share the rare
+ * slot, and Illustration, Special Illustration and gold Hyper Rares take the
+ * second reverse. The basic Energy is a Cosmos holo one (data/sv3pt5.json)
+ * about one pack in four.
+ *
+ * Rates are TCGplayer's study of 1,500+ English packs (Sep 2023): DR 1/8,
+ * UR 1/16, IR 1/12, SIR 1/32, gold 1/51, Cosmos Energy 1/4. English 151 also
+ * has "demigod" packs: a starter's IR, IR and SIR ex filling both reverses
+ * and the rare slot. Nobody has measured how rare they are, so 1 in 1,300 is
+ * the community estimate. Sources in data/pullrates.json.
+ */
+export const SV_151 = {
+  id: "sv3pt5",
+  tcgId: "sv3pt5",
+  name: "151",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "September 22, 2023",
+  live: true,
+  printedTotal: 165,
+  totalCount: 236,
+  packSize: 11,
+  cost: 29.64,
+  dataFile: "data/sv3pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, September 2023. The original 151, one Mew wrapper, and a Cosmos holo Energy in every fourth pack.",
+  oddsLine: "DR 1/8 · UR 1/16 · IR 1/12 · SIR 1/32 · gold 1/51",
+  lede: "Kanto again, card for card. Charizard ex heads seven Special Illustration Rares, and a rare demigod pack holds a starter's whole line in illustration art.",
+  slots: [
+    {
+      pool: "energy",
+      count: 1,
+      table: [
+        ["energy", 1 - 0.2483],
+        ["foilEnergy", 0.2483],
+      ],
+    },
+    ...svSlots({ double: 0.1328, ultra: 0.0644, ir: 0.085, sir: 0.0311, hyper: 0.0194 }).slice(1),
+  ],
+  godPack: {
+    rate: 1 / 1300,
+    lines: [
+      ["sv3pt5-166", "sv3pt5-167", "sv3pt5-198"],
+      ["sv3pt5-168", "sv3pt5-169", "sv3pt5-199"],
+      ["sv3pt5-170", "sv3pt5-171", "sv3pt5-200"],
+    ],
+  },
+  heroIds: ["sv3pt5-199", "sv3pt5-205", "sv3pt5-200", "sv3pt5-198"],
+  wrappers: [
+    {
+      id: "mew",
+      name: "Mew",
+      cardId: "sv3pt5-151",
+      tag: "The original 151",
+      art: "assets/packs/sv3pt5/mew.avif",
+      artFallback: "assets/packs/sv3pt5/mew.png",
+    },
+  ],
+};
+
 export const DESTINED_RIVALS = {
   id: "sv10",
   tcgId: "sv10",
@@ -1146,6 +1207,7 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  SV_151,
 ];
 
 /**
@@ -1218,7 +1280,6 @@ export const ROADMAP = [
       { id: "sv5", name: "Temporal Forces", released: "Mar 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
-      { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
       { id: "sv3", name: "Obsidian Flames", released: "Aug 2023", cards: "—" },
       { id: "sv2", name: "Paldea Evolved", released: "Jun 2023", cards: "—" },
       { id: "sv1", name: "Scarlet & Violet", released: "Mar 2023", cards: "—" },
