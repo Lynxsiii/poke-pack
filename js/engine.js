@@ -43,6 +43,8 @@ export const HIT_RARITIES = new Set([
   "Futuristic Rare",
   "Classic Collection",
   "RGB Rare",
+  "Shiny Rare",
+  "Shiny Ultra Rare",
 ]);
 
 /** Hits are rarity-slot cards. A Poké Ball Double Rare is still a reverse. */
@@ -72,7 +74,10 @@ export function poolsFrom(cards, set) {
       !isExCard(c)
   );
   return {
-    energy: cards.filter((c) => c.rarity === "Energy" || c.energy),
+    energy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && !c.reverse),
+    // Shrouded Fable's reverse holo basic Energy: set cards that are always
+    // reverse, rolled in the Energy slot's own table.
+    reverseEnergy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && c.reverse),
     common: pokemonOrTrainer.filter((c) => c.rarity === "Common"),
     uncommon: pokemonOrTrainer.filter((c) => c.rarity === "Uncommon"),
     rare: pokemonOrTrainer.filter((c) => c.rarity === "Rare" || c.rarity === "Rare Holo"),
@@ -94,6 +99,10 @@ export function poolsFrom(cards, set) {
     classic: pokemonOrTrainer.filter((c) => c.rarity === "Classic Collection"),
     futuristic: pokemonOrTrainer.filter((c) => c.rarity === "Futuristic Rare"),
     rgb: pokemonOrTrainer.filter((c) => c.rarity === "RGB Rare"),
+    // Paldean Fates' Shiny Vault: baby shinies and shiny ex share the first
+    // reverse holo slot.
+    shiny: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Rare"),
+    shinyUltra: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Ultra Rare"),
     reversePool,
     pokeballPool,
     masterballPool,
@@ -146,7 +155,7 @@ export function ripPack(set, cards) {
           pulls.push(pick(pools[key], used));
         }
       } else {
-        pulls.push(pick(pools[slot.pool], used));
+        pulls.push(pick(pools[slot.table ? rollTable(slot.table) : slot.pool], used));
       }
     }
   }

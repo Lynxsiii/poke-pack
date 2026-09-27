@@ -1,8 +1,10 @@
 /*
  * Price history chart for the card inspector.
  *
- * Points come from data/price-history.json, which scripts/fetch_prices.py
- * appends to on every run — one real market price per card per day. Nothing
+ * Points come from data/prices/<set>.json, one file per set, loaded the first
+ * time one of that set's cards is inspected. scripts/backfill_prices.py fills
+ * each file with a year of TCGplayer market prices (weekly, then every 3 days,
+ * then daily for the last month) and the daily refresh appends to it. Nothing
  * here interpolates or invents a value: a card with a single snapshot draws a
  * single snapshot and says so, because a made-up trend line on something people
  * treat as a price guide would be worse than no line at all.
@@ -15,38 +17,68 @@ const RANGES = [
   ["all", "All", Infinity],
 ];
 
-let history = { cards: {} };
+/** Set id -> { cards, sealed } once its file has loaded. */
+const loaded = new Map();
+const pending = new Map();
+/** Sets whose last fetch failed: the chart stops saying "loading" for them. */
+const failed = new Set();
+/** Card id -> [day, price] from the live ticker, laid over the loaded file. */
+const live = new Map();
 
-export async function loadPriceHistory() {
-  try {
-    history = await fetch("data/price-history.json", { cache: "no-cache" }).then((r) => {
-      if (!r.ok) throw new Error(r.status);
-      return r.json();
-    });
-    if (!history.cards || typeof history.cards !== "object") history.cards = {};
-  } catch {
-    history = { cards: {} };
+/** Set ids never contain a dash, so a card id's set is everything before one. */
+const setOf = (id) => String(id || "").split("-")[0];
+
+const series = (value) => (value && typeof value === "object" && !Array.isArray(value) ? value : {});
+
+/**
+ * Fetch a set's price history once. A failed fetch is not cached, so the next
+ * call tries again.
+ */
+export function loadPriceHistory(setId) {
+  if (!setId) return Promise.resolve(null);
+  if (loaded.has(setId)) return Promise.resolve(loaded.get(setId));
+  if (!pending.has(setId)) {
+    const request = fetch(`data/prices/${encodeURIComponent(setId)}.json`, { cache: "no-cache" })
+      .then((r) => {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      })
+      .then((store) => {
+        const clean = { cards: series(store?.cards), sealed: series(store?.sealed) };
+        loaded.set(setId, clean);
+        failed.delete(setId);
+        return clean;
+      })
+      .catch(() => {
+        failed.add(setId);
+        return null;
+      })
+      .finally(() => pending.delete(setId));
+    pending.set(setId, request);
   }
-  return history;
+  return pending.get(setId);
+}
+
+/** Whether a card's set history has arrived. */
+export function priceHistoryReady(cardId) {
+  return loaded.has(setOf(cardId));
 }
 
 /** Fold a live snapshot into today's chart point so the inspector moves with the ticker. */
 export function noteLivePrice(cardId, price, day) {
   if (!cardId || !(price > 0) || !day) return;
-  if (!history.cards || typeof history.cards !== "object") history.cards = {};
-  const points = Array.isArray(history.cards[cardId]) ? history.cards[cardId] : (history.cards[cardId] = []);
-  const value = Math.round(Number(price) * 100) / 100;
-  if (points.length && points[points.length - 1][0] === day) {
-    points[points.length - 1] = [day, value];
-  } else {
-    points.push([day, value]);
-  }
+  live.set(cardId, [day, Math.round(Number(price) * 100) / 100]);
 }
 
 /** Raw [date, price] points for a card, oldest first. */
 export function pointsFor(cardId) {
-  const raw = history?.cards?.[cardId];
-  return Array.isArray(raw) ? raw.filter((p) => Array.isArray(p) && p.length === 2) : [];
+  const raw = loaded.get(setOf(cardId))?.cards?.[cardId];
+  const points = Array.isArray(raw) ? raw.filter((p) => Array.isArray(p) && p.length === 2) : [];
+  const now = live.get(cardId);
+  if (!now) return points;
+  const last = points[points.length - 1];
+  if (last && last[0] > now[0]) return points;
+  return last && last[0] === now[0] ? [...points.slice(0, -1), now] : [...points, now];
 }
 
 function withinRange(points, days) {
@@ -65,17 +97,20 @@ const fmtMoney = (n) =>
     maximumFractionDigits: 2,
   });
 
-const fmtDate = (iso) =>
+const fmtDate = (iso, withYear = false) =>
   new Date(`${iso}T00:00:00`).toLocaleDateString(undefined, {
     month: "short",
     day: "numeric",
+    ...(withYear ? { year: "numeric" } : {}),
   });
 
 /**
  * Build the chart geometry in a 0..W / 0..H viewBox. Returns null when there
- * is nothing to draw.
+ * is nothing to draw. `byDate` spaces points by their date rather than their
+ * index: price history is weekly a year back and daily this month, and evenly
+ * spaced points would stretch the last month across most of the chart.
  */
-function geometry(points, w, h, pad) {
+function geometry(points, w, h, pad, byDate = false) {
   if (!points.length) return null;
   const values = points.map(([, price]) => price);
   const lo = Math.min(...values);
@@ -86,10 +121,15 @@ function geometry(points, w, h, pad) {
   const bottom = Math.max(0, lo - span * 0.18);
   const range = top - bottom || 1;
 
+  const times = byDate ? points.map(([date]) => Date.parse(date)) : null;
+  const t0 = times?.[0];
+  const duration = times ? times[times.length - 1] - t0 : 0;
   const x = (i) =>
     points.length === 1
       ? w / 2
-      : pad + (i * (w - pad * 2)) / (points.length - 1);
+      : times && duration > 0
+        ? pad + ((times[i] - t0) * (w - pad * 2)) / duration
+        : pad + (i * (w - pad * 2)) / (points.length - 1);
   const y = (v) => h - pad - ((v - bottom) / range) * (h - pad * 2);
 
   const coords = points.map(([date, price], i) => ({ date, price, cx: x(i), cy: y(price) }));
@@ -114,9 +154,24 @@ export function renderPriceChart(mount, card, range = "30d") {
   const all = pointsFor(card.id);
   const current =
     typeof card.market === "number" ? card.market : all.length ? all[all.length - 1][1] : null;
+  // Loaded, or failed and not coming: either way the chart shows what it has.
+  const ready = loaded.has(setOf(card.id)) || failed.has(setOf(card.id));
 
-  if (current == null) {
+  if (current == null && ready) {
     mount.innerHTML = `<div class="pc-empty">No market price for this card yet.</div>`;
+    return;
+  }
+
+  if (all.length < 2 && !ready) {
+    // Same height as the chart, so the dialog doesn't jump when the file lands.
+    mount.innerHTML = `
+      <div class="pc-head">
+        <div class="pc-now">
+          <span class="pc-label">Market price</span>
+          <b>${current == null ? "—" : `$${fmtMoney(current)}`}</b>
+        </div>
+      </div>
+      <div class="pc-loading" aria-busy="true">Loading price history…</div>`;
     return;
   }
 
@@ -146,8 +201,10 @@ export function renderPriceChart(mount, card, range = "30d") {
   const W = 640;
   const H = 200;
   const PAD = 16;
-  const geo = geometry(shown, W, H, PAD);
+  const geo = geometry(shown, W, H, PAD, true);
   const { coords } = geo;
+  // A year of history starts and ends on the same month; the year tells them apart.
+  const years = shown[0][0].slice(0, 4) !== shown[shown.length - 1][0].slice(0, 4);
 
   const buttons = RANGES.filter(([, , d]) => {
     if (!Number.isFinite(d)) return true;
@@ -194,13 +251,13 @@ export function renderPriceChart(mount, card, range = "30d") {
       </svg>
       <div class="pc-tip" hidden><b></b><span></span></div>
       <figcaption class="pc-foot">
-        <span>${fmtDate(shown[0][0])}</span>
+        <span>${fmtDate(shown[0][0], years)}</span>
         <span class="pc-band">low $${fmtMoney(lo)} · high $${fmtMoney(hi)}</span>
-        <span>${fmtDate(shown[shown.length - 1][0])}</span>
+        <span>${fmtDate(shown[shown.length - 1][0], years)}</span>
       </figcaption>
     </figure>`;
 
-  wireHover(mount, coords, W, H);
+  wireHover(mount, coords, W, H, years);
 }
 
 /**
@@ -256,7 +313,7 @@ export function renderWorthChart(mount, points, baseline) {
  * Pointer tracking: snap a crosshair to the nearest point and follow it with a
  * tooltip. Works for mouse, pen and touch via pointer events.
  */
-function wireHover(mount, coords, W, H) {
+function wireHover(mount, coords, W, H, years = false) {
   const figure = mount.querySelector(".pc-figure");
   const svg = mount.querySelector(".pc-svg");
   const cross = mount.querySelector(".pc-cross");
@@ -283,7 +340,7 @@ function wireHover(mount, coords, W, H) {
 
     tip.hidden = false;
     tip.querySelector("b").textContent = `$${fmtMoney(nearest.price)}`;
-    tip.querySelector("span").textContent = fmtDate(nearest.date);
+    tip.querySelector("span").textContent = fmtDate(nearest.date, years);
     // Position in figure space, clamped so the bubble never leaves the card.
     const left = (nearest.cx / W) * box.width;
     const top = (nearest.cy / H) * box.height;
