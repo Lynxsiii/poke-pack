@@ -696,7 +696,7 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   // layout mask at all.
   const owner = evo === "foil-owner" ? ownerWindow(card) : "";
   // Per-card foil maps, stamp placement and cast-and-cure coats (js/foil-maps.js).
-  const extra = foilExtras(card, assetUrl);
+  const extra = foilExtras(card, assetUrl, reverseKindOf(card));
   const load = lazy ? ` loading="lazy" decoding="async"` : ` decoding="async"`;
   return `<div class="tcg ${rarityKey(shown.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo} ${extra.classes}" data-finish="${finish}" data-ball-layout="${setForCard(card)?.id === "sv8pt5" ? "prismatic" : "repeat"}"
     style="--art:url('${esc(assetUrl(src))}')${owner ? `;--win-owner:url('${esc(owner)}')` : ""}${extra.style ? `;${esc(extra.style)}` : ""}">

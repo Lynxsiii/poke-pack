@@ -19,6 +19,7 @@ choice, not an accident — the effects were worth it.
 | Layer recipes in `css/holo/sv-finishes.css` (Tera ex and ACE SPEC), following the special-illustration-rare card of pokemon-cards-151 and the radiant holo of pokemon-cards-css | [Simon Goellner](https://github.com/simeydotme) | GPL-3.0 |
 | The cosmos holo in `css/holo/promos.css` and its three galaxy layers, `assets/foil/promo/cosmos-bottom.webp`, `cosmos-middle-trans.webp` and `cosmos-top-trans.webp`, copied from upstream's `public/img/` | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
 | Layer recipes in `css/holo/sv-fullart.css` (the Scarlet & Violet full-art Ultra Rare and gold Hyper Rare), following the ex-full-art and hyper-rare cards | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
+| The pointer radial, diagonal streak and color-dodge of the Scarlet & Violet reverse holo in `css/holo/sv-reverse.css`, following the reverse-holo card | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
 | Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
 | Archivo font in `assets/fonts/archivo-*.woff2` | Omnibus-Type, via Google Fonts | SIL Open Font License 1.1 |
 | IBM Plex Mono font in `assets/fonts/plex-mono-*.woff2` | IBM, via Google Fonts | SIL Open Font License 1.1 |
@@ -47,6 +48,8 @@ database. The per-card foil and etch maps in `assets/foil/maps/` are
 Pokémon TCG Live's own, as published through [malie.io](https://malie.io)'s
 TCG Live exports; they say where each printed card is foil, which is what
 lets the shine stop at the Pokémon and the 30th Celebration stamp. The
+Scarlet & Violet reverse holo patterns in `assets/foil/sv-reverse/` are
+medians of TCG Live's reverse maps, one per type. The
 maps for the two Pikachu ex promos (`mep107*`, `mep109*`) are not TCG
 Live's: we drew them from the card scans in the same layout. Product photos
 in `assets/products/` are TCGplayer's catalogue images, cut out of their

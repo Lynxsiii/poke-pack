@@ -1,0 +1,95 @@
+/*
+ * Scarlet & Violet and Mega Evolution reverse holos, from TCG Live's reverse
+ * maps (the `_ph.foil.png` beside every reverse print). The research is in
+ * the card-textures skill, .claude/skills/card-textures/reference/sv-reverse.md.
+ *
+ * - `rev-sv rev-<type>`: the SV "cobblestone". Pebbles, the type's symbol
+ *   and a big type badge on the right of the body; Trainers get Poké Balls.
+ *   It is the same picture on every card of a type in every SV set, so one
+ *   image per type ships in assets/foil/sv-reverse/ (built by the skill's
+ *   make_sv_reverse.py) and js/foil-maps.js hands it over as --rev-pattern.
+ *   Its grey is the pattern and its alpha is where the card is foil, so it
+ *   is the shine's texture and part of its mask.
+ * - `rev-sv rev-special-energy`: Special Energy is foil only in the text
+ *   box, under the colorless star pattern.
+ * - `rev-mirror`: Ancient and Future cards, and Mega Evolution reverses, are
+ *   a plain mirror with no pattern.
+ * The site's older reverse (a cosmos tile, rarities.css) stays for every
+ * other set. Poké Ball and Master Ball reverses are untouched.
+ *
+ * The light keeps upstream's reverse holo parts (pokemon-cards-151 by Simon
+ * Goellner, GPL-3.0; see NOTICE.md): a pointer radial and a diagonal streak,
+ * color-dodged onto the card. Upstream `difference`-blends them with the
+ * card's reverse map; here they are multiplied by it (see below). Loaded
+ * after windows.css and rarities.css; each rule outranks theirs by one class.
+ */
+
+/* ---- The light -------------------------------------------------------------
+   The foil shows through the pattern: pale pebbles carry more of it than the
+   dark lines between them, at every angle. So the light is multiplied by the
+   pattern, never differenced with it (upstream's reverse inverts the pattern
+   under the light, which lights the thin lines up as veins). Two lights: a
+   broad soft one following the pointer and a diagonal streak sliding across,
+   the smooth mirror sheen of the real cards. A little of both stays at rest,
+   where real cards still show their pattern. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse:is(.rev-sv, .rev-mirror) .foil {
+  --foil-tex: var(--rev-pattern);
+  background-image:
+    var(--foil-tex),
+    linear-gradient(-45deg, #000 30%, #fff 50%, #000 70%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, hsl(0, 0%, 55%) 35%, hsl(0, 0%, 30%) 100%);
+  background-blend-mode: multiply, screen, normal;
+  background-size: contain, 250% 250%, 100% 100%;
+  background-repeat: no-repeat;
+  background-position:
+    center center,
+    calc(100% * var(--pointer-from-left)) calc(100% * var(--pointer-from-top)),
+    center center;
+  filter: brightness(0.55) contrast(1.2) saturate(1);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.4 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse:is(.rev-sv, .rev-mirror):not(.lit):not(.settling) .foil {
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
+
+/* Mask: the card, cut to where the map is foil (the pattern's alpha: no art
+   window, no name bar), less the layout's own window so a Stage card's
+   evolution circle and a Trainer's larger picture stay plain too. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.rev-sv .foil {
+  --rev-window: var(--win-holo);
+  -webkit-mask-image: var(--art), var(--rev-pattern), var(--rev-window);
+  -webkit-mask-composite: source-in, source-out;
+  mask-image: var(--art), var(--rev-pattern), var(--rev-window);
+  mask-composite: intersect, subtract;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, contain, contain;
+  mask-size: contain, contain, contain;
+  -webkit-mask-position: center, center, center;
+  mask-position: center, center, center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  clip-path: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.rev-sv.foil-evo .foil { --rev-window: var(--win-evo); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.rev-sv.foil-owner .foil { --rev-window: var(--win-owner); }
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.rev-sv.foil-trainer .foil { --rev-window: var(--win-holo-trainer); }
+/* Special Energy: the text box alone, which the pattern's alpha already is. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.rev-sv.rev-special-energy .foil {
+  -webkit-mask-image: var(--art), var(--rev-pattern);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--art), var(--rev-pattern);
+  mask-composite: intersect;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, contain;
+  mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+}
+
+/* ---- Plain mirror ----------------------------------------------------------
+   A flat grey in place of a pattern: the same two lights on a smooth mirror. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.rev-mirror .foil {
+  --foil-tex: linear-gradient(hsl(0, 0%, 72%), hsl(0, 0%, 72%));
+}
