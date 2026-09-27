@@ -911,6 +911,66 @@ export const WHITE_FLARE = {
   ],
 };
 
+/**
+ * Paradox Rift: the standard Scarlet & Violet pack, no ACE SPEC yet. Rates are
+ * TCGplayer's 8,000-pack study (Nov 2023): DR 15.57%, UR 6.64%, IR 7.70%,
+ * SIR 2.11%, Hyper Rare 1.22%. Sources are in data/pullrates.json.
+ */
+export const PARADOX_RIFT = {
+  id: "sv4",
+  tcgId: "sv4",
+  name: "Paradox Rift",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "November 3, 2023",
+  live: true,
+  printedTotal: 182,
+  totalCount: 280,
+  packSize: 11,
+  cost: 8.44,
+  dataFile: "data/sv4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, November 2023. Ancient and Future Paradox Pokémon, Tera ex, four wrappers.",
+  oddsLine: "DR 1/6 · UR 1/15 · IR 1/13 · SIR 1/47 · gold 1/82",
+  lede: "Roaring Moon and Iron Valiant split the set into Ancient and Future. 34 Illustration Rares, Tera ex in crystal etched foil, and SIRs a third rarer than the sets before it.",
+  slots: svSlots({ double: 0.1557, ultra: 0.0664, ir: 0.077, sir: 0.0211, hyper: 0.0122 }),
+  heroIds: ["sv4-251", "sv4-249", "sv4-245", "sv4-199"],
+  wrappers: [
+    {
+      id: "roaring-moon",
+      name: "Roaring Moon",
+      cardId: "sv4-124",
+      tag: "The chase",
+      art: "assets/packs/sv4/roaring-moon.avif",
+      artFallback: "assets/packs/sv4/roaring-moon.png",
+    },
+    {
+      id: "iron-valiant",
+      name: "Iron Valiant",
+      cardId: "sv4-89",
+      tag: "Future",
+      art: "assets/packs/sv4/iron-valiant.avif",
+      artFallback: "assets/packs/sv4/iron-valiant.png",
+    },
+    {
+      id: "garchomp",
+      name: "Garchomp",
+      cardId: "sv4-38",
+      tag: "Tera",
+      art: "assets/packs/sv4/garchomp.avif",
+      artFallback: "assets/packs/sv4/garchomp.png",
+    },
+    {
+      id: "armarouge",
+      name: "Armarouge",
+      cardId: "sv4-27",
+      tag: "Fire armor",
+      art: "assets/packs/sv4/armarouge.avif",
+      artFallback: "assets/packs/sv4/armarouge.png",
+    },
+  ],
+};
+
 export const DESTINED_RIVALS = {
   id: "sv10",
   tcgId: "sv10",
@@ -1146,6 +1206,7 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  PARADOX_RIFT,
 ];
 
 /**
@@ -1217,7 +1278,6 @@ export const ROADMAP = [
       { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },
       { id: "sv5", name: "Temporal Forces", released: "Mar 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
-      { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
       { id: "sv3", name: "Obsidian Flames", released: "Aug 2023", cards: "—" },
       { id: "sv2", name: "Paldea Evolved", released: "Jun 2023", cards: "—" },
