@@ -73,8 +73,16 @@ export function poolsFrom(cards, set) {
       c.supertype !== "Trainer" &&
       !isExCard(c)
   );
+  // Basic Energy comes in runs (BASIC_ENERGY in js/catalog.js); a set's slot
+  // keeps to its own. Energy from the set's own data always qualifies.
+  const energyPrint = set?.energyPrint || "";
   return {
-    energy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && !c.reverse),
+    energy: cards.filter(
+      (c) =>
+        (c.rarity === "Energy" || c.energy) &&
+        !c.reverse &&
+        (!String(c.id).startsWith("energy-") || (c.energyPrint || "") === energyPrint)
+    ),
     // Shrouded Fable's reverse holo basic Energy: set cards that are always
     // reverse, rolled in the Energy slot's own table.
     reverseEnergy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && c.reverse),

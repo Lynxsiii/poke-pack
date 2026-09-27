@@ -235,11 +235,7 @@ export function sellValue(card) {
   return SELL_VALUE[card.rarity] || 0.1;
 }
 
-/**
- * Generic basic Energy — one per modern pack, not part of the 120-card set.
- * Faces are mirrored locally by scripts/mirror_images.py, same as the cards.
- */
-export const BASIC_ENERGY = [
+const ENERGY_TYPES = [
   ["grass", "Grass"],
   ["fire", "Fire"],
   ["water", "Water"],
@@ -248,19 +244,41 @@ export const BASIC_ENERGY = [
   ["fighting", "Fighting"],
   ["darkness", "Darkness"],
   ["metal", "Metal"],
-].map(([id, name]) => ({
-  id: `energy-${id}`,
-  name: `${name} Energy`,
-  number: "—",
-  rarity: "Energy",
-  energy: true,
-  supertype: "Energy",
-  subtypes: ["Basic"],
-  types: [name],
-  artist: "Pokémon",
-  image: `assets/cards/shared/energy-${id}.webp`,
-  imageSmall: `assets/cards/shared/energy-${id}-sm.webp`,
-}));
+];
+
+/**
+ * The basic Energy in a pack's Energy slot. Scarlet & Violet printed three
+ * runs of it in the SVE set (Bulbapedia's SVE Basic Energies gallery;
+ * PokeBeach's Stellar Crown guide): 001-008 in every set up to Shrouded
+ * Fable, the art every set here used before; 009-016 on Tera crystals from
+ * Stellar Crown to Destined Rivals; 017-024 in the Black & White style for
+ * Black Bolt and White Flare. A set names its run with `energyPrint` and the
+ * engine keeps its Energy slot to that run (poolsFrom() in js/engine.js).
+ * None of them is part of a set's checklist. Faces are mirrored locally by
+ * scripts/mirror_images.py's encode(), same as the cards.
+ */
+const ENERGY_PRINTS = [
+  { print: "", suffix: "", first: 1 },
+  { print: "tera", suffix: "-tera", first: 9 },
+  { print: "unova", suffix: "-unova", first: 17 },
+];
+
+export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first }) =>
+  ENERGY_TYPES.map(([id, name], i) => ({
+    id: `energy-${id}${suffix}`,
+    name: `${name} Energy`,
+    number: "—",
+    rarity: "Energy",
+    energy: true,
+    ...(print ? { energyPrint: print, variant: `SVE ${String(first + i).padStart(3, "0")}` } : {}),
+    supertype: "Energy",
+    subtypes: ["Basic"],
+    types: [name],
+    artist: "Pokémon",
+    image: `assets/cards/shared/energy-${id}${suffix}.webp`,
+    imageSmall: `assets/cards/shared/energy-${id}${suffix}-sm.webp`,
+  }))
+);
 
 /**
  * Mega Evolution era pack: 4 commons + 3 uncommons + a reverse + a rare slot +
@@ -905,6 +923,7 @@ export const BLACK_BOLT = {
   cost: 14.69,
   dataFile: "data/zsv10pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "unova",
   reverseFoil: "pokeball",
   blurb: "Scarlet & Violet, July 2025. Unova's black half — one wrapper, Poké Ball reverses, and the Black White Rare chase.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
@@ -945,6 +964,7 @@ export const WHITE_FLARE = {
   cost: 13.43,
   dataFile: "data/rsv10pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "unova",
   reverseFoil: "pokeball",
   blurb: "Scarlet & Violet, July 2025. Unova's white half — one wrapper, Poké Ball reverses, Reshiram on the front.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
@@ -985,6 +1005,7 @@ export const DESTINED_RIVALS = {
   cost: 9.13,
   dataFile: "data/sv10.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, May 2025. Team Rocket against Cynthia, Ethan and the old champions — Trainer’s Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/12 · SIR 1/94 · gold 1/149",
   lede: "Team Rocket’s Mewtwo ex SIR is the chase, about 1 in 1,033 packs. Holo Rares and ex shine around the Pokémon and the owner’s portrait, as the printed cards do.",
@@ -1022,6 +1043,7 @@ export const JOURNEY_TOGETHER = {
   cost: 6.76,
   dataFile: "data/sv9.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono and Hop bring their own Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/15 · IR 1/12 · SIR 1/86 · gold 1/137",
   lede: "Trainer’s Pokémon are back. N’s Zoroark, Iono’s Bellibolt and Lillie’s Clefairy head a 190-card list, and the Clefairy special art is the one to chase.",
@@ -1049,6 +1071,7 @@ export const PRISMATIC_EVOLUTIONS = {
   cost: 15.09,
   dataFile: "data/sv8pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   pokeballRarities: ["Common", "Uncommon", "Rare", "Double Rare"],
   blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and a Poké Ball printing of every base card.",
   oddsLine: "DR 1/6 · UR 1/13 · ACE 1/21 · SIR 1/45 · gold 1/180 · Poké Ball 1/3 · Master Ball 1/20",
@@ -1085,6 +1108,7 @@ export const SURGING_SPARKS = {
   cost: 8.42,
   dataFile: "data/sv8.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, November 2024. Stellar Tera Pikachu ex, crystal Tera foils and ACE SPECs, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/188",
   lede: "Pikachu ex went Stellar Tera and became the chase. ACE SPEC takes the first reverse slot, and IR, SIR and gold share the second.",
@@ -1113,6 +1137,7 @@ export const STELLAR_CROWN = {
   cost: 10.63,
   dataFile: "data/sv7.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, September 2024. Terapagos and the Stellar Tera Pokémon ex, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/90 · gold 1/137",
   lede: "Terapagos takes the crown with Cinderace, Lapras and Galvantula as Stellar Tera ex, printed in crystal foil edge to edge. Only 33 secret rares, so each one comes easier than in the sets around it.",
