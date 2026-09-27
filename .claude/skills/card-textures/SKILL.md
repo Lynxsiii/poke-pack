@@ -47,22 +47,33 @@ cure"). The surface gloss throws a soft highlight.
 | Foil pattern, colour shift | `.foil` | big gradients or textures at 200-400%, moved by `--background-x/y`; `color-dodge`, `overlay` or `hard-light` onto the scan |
 | Pattern detail: bars, glitter, etch, grain | `.foil::before`, `.foil::after` | blended inside the `.foil` group (it is isolated by its own filter and blend) |
 | Where the foil is | `mask-image` on `.foil` and `.glare` | `--art` (the scan's alpha) plus window, stamp and per-card masks |
+| Cast-and-cure coat (clear UV pattern over ink and foil alike) | `.cure` | a texture tile masked by the scan only, never by the foil map; `screen` |
 | Surface gloss, specular | `.glare`, `.glare::after` | `radial-gradient` at `--pointer-x/y`, `overlay` or `soft-light` |
 
 ## The site's rules (read before writing CSS)
 
-- **DOM**: `.tcg > img + span.foil + span.glare`, built by `tcgFace()` in
-  `js/app.js`. Classes: rarity key (`pikachu-rare`, `double-rare`, ...),
-  `holo` or `rare-glow`, a pattern (`foil-holo`, `foil-reverse`, `foil-ex`,
-  `foil-ultra`, `foil-ir`, `foil-sir`, `foil-gold`, `foil-future`, ...), a
-  layout (`foil-evo`, `foil-owner`, `foil-trainer`, `foil-energy`) and
-  `data-finish` for special stock. The scan is inline as `--art`.
+- **DOM**: `.tcg > img + span.foil + [span.cure] + span.glare`, built by
+  `tcgFace()` in `js/app.js`. Classes: rarity key (`pikachu-rare`,
+  `double-rare`, ...), `holo` or `rare-glow`, a pattern (`foil-holo`,
+  `foil-reverse`, `foil-ex`, `foil-ultra`, `foil-ir`, `foil-sir`,
+  `foil-gold`, `foil-future`, ...), a layout (`foil-evo`, `foil-owner`,
+  `foil-trainer`, `foil-energy`) and `data-finish` for special stock. The
+  scan is inline as `--art`. `js/foil-maps.js` adds the per-card data:
+  `has-foil-map` (`--foil-map`), `has-etch-map`, `has-etch-bins`,
+  `has-foil-rgb`, `has-stamp` and `cure-<kind>` (which also adds the
+  `.cure` span).
+- **New finishes ride on a second class** next to the old pattern class
+  (`foil-holo foil-rainbow`, `foil-ex foil-sunpillar`), so the Classic
+  engine, which keys on the old classes, is untouched. The new rules then
+  have to set every paint property the older recipes set, pseudo layers
+  included (celebration.css's shared resets).
 - **Selectors** are prefixed `body.fx-holo.fx-holo.fx-holo` to beat the
   Classic engine in `css/app.css`. Sheet order: `holo/windows.css`,
-  `base.css`, `rarities.css`, `finishes.css`, `realism.css`.
+  `base.css`, `rarities.css`, `finishes.css`, `realism.css`, `maps.css`,
+  `celebration.css`. Later sheets win ties, which the map rules rely on.
 - **Rest state** (PR 5): a resting card paints only `.foil`;
-  `.foil::before`, `.foil::after` and `.glare` are `display: none` until
-  `.lit` or `.settling`. The resting sheen lives on `.foil` at about
+  `.foil::before`, `.foil::after`, `.cure` and `.glare` are `display: none`
+  until `.lit` or `.settling`. The resting sheen lives on `.foil` at about
   `0.16-0.18 x --foil-strength`.
 - **Performance**: animate only `transform`, `opacity`, `filter`; no
   infinite `background-position` or `@property` animations.
@@ -93,7 +104,9 @@ cure"). The surface gloss throws a soft highlight.
    `upstream/README.md`.
 4. **Port it into `lab/lab.css`** under
    `body.fx-holo.fx-holo.fx-holo .lab-proof ...`, so the lab shows it next
-   to what the site draws today.
+   to what the site draws today. (Or, once the finish has its own class,
+   straight into `css/holo/`: the lab loads every site sheet, so
+   `proof=off` shows the site's version.)
 5. **Tune against the photos** in the lab: rest plus at least three poses,
    zoomed on what you changed ([reference/verify.md](reference/verify.md)).
    `scripts/foil_probe.mjs` takes the screenshots; `--styles` shows which
@@ -102,8 +115,9 @@ cure"). The surface gloss throws a soft highlight.
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
 7. **Ship**: move the rules into `css/holo/`, masks into `assets/masks/`,
-   per-card data into `data/<set>.json`, update `NOTICE.md`, and record what
-   you learned in the finish's catalogue entry.
+   per-card data into `data/<set>.json`, update `NOTICE.md`, bump the
+   `?v=` of every sheet and script you changed in `index.html`, and record
+   what you learned in the finish's catalogue entry.
 
 ## Pitfalls
 
@@ -127,16 +141,25 @@ cure"). The surface gloss throws a soft highlight.
   Multiply relief in or screen colour on instead (blend-and-mask.md).
 - **`--rotate-delta`** is not written by the site; upstream formulas that
   use it should treat it as `0deg`.
+- **Old recipes leak into new ones.** rarities.css and realism.css put
+  filters, blends and masks on `::before`, `::after` and `.glare::after`
+  (`contrast(4)` on a holo `::after`, for one). A finish added as a second
+  class inherits all of it unless it resets every paint property first.
+- **Pseudo-elements cannot go inside `:is()`**: `:is(.foil::before)` is
+  invalid and drops the whole rule. Write each selector out.
+- **Colour-dodge a colour at mid brightness, not full.** A bright tint
+  dodges to white; about 0.5-0.85 brightness leaves it coloured (the
+  Classic Collection stars).
 
 ## 30th Celebration
 
-The set's finishes, foil maps and the Pikachu stamp are in
-[reference/30th-celebration.md](reference/30th-celebration.md). In short:
-the small stamp is never foil, but the window holo clips through it; the
-Pikachu Rare's big stamp is foil but gets none. Shipping the foil maps fixes
-both on the 161 cards TCG Live carries; the 30 Classic Collection cards need
-the stamp knockout in `lab/lab.css` section 1, with placements in
-`lab/masks/stamp30.json`. The reference file has the steps.
+Shipped (2026-09-27): all nine of the set's finishes have their own recipe
+in `css/holo/celebration.css`, the 161 cards TCG Live carries are masked by
+its foil maps (`css/holo/maps.css`), and the 30 Classic Collection cards
+cut the Pikachu stamp out of the foil with `has-stamp`. What each finish is,
+and what shipped for it, is in
+[reference/30th-celebration.md](reference/30th-celebration.md); it is also
+the worked example of taking a whole set from research to CSS.
 
 ## Files
 
@@ -151,5 +174,15 @@ the stamp knockout in `lab/lab.css` section 1, with placements in
 | `lab/` | The foil lab page, proof recipes (`lab.css`), stamp masks |
 | `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost |
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
-| `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets |
+| `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets (with RGB channel masks and `--etch-bins`) |
+| `scripts/ship_stamp.py` | Ship a mark found by `find_overlay.py`: mask into `assets/masks/stamp/`, placements into `data/<set>.json` |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
+
+On the site side:
+
+| Path | What |
+|---|---|
+| `js/foil-maps.js` | Per-card map, etch, stamp and cast-and-cure classes and variables for `tcgFace()` (shared with the lab) |
+| `css/holo/maps.css` | Foil maps as the mask, the stamp knockout, the `.cure` layer |
+| `css/holo/celebration.css` | The 30th Celebration finishes |
+| `scripts/make_celebration_textures.py` | Draws the texture tiles in `assets/foil/celebration/` (seeded, tileable) |

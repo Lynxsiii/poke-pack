@@ -15,11 +15,16 @@ choice, not an accident — the effects were worth it.
 |---|---|---|
 | Holofoil CSS in `css/holo/` — the shine and glare layer maths, the pointer variable model, and the spring-damped interaction | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
 | `assets/foil/reference/vmaxbg.jpg`, `glitter.png`, `illusion.png` and `illusion2.png`, copied from the upstream `public/img/` directory | [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css/tree/main/public/img) | GPL-3.0 repository; upstream also credits Vecteezy for some backgrounds |
+| Layer recipes in `css/holo/celebration.css` (the 30th Celebration finishes), following the regular-holo, illustration-rare and special-illustration-rare cards | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
 | Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
 | Archivo font in `assets/fonts/archivo-*.woff2` | Omnibus-Type, via Google Fonts | SIL Open Font License 1.1 |
 | IBM Plex Mono font in `assets/fonts/plex-mono-*.woff2` | IBM, via Google Fonts | SIL Open Font License 1.1 |
 
 `css/holo/realism.css` follows upstream's full-art, rainbow-alt and glare layers most closely.
+
+The 30th Celebration textures in `assets/foil/celebration/` (star glints,
+firework rings, cracked ice, confetti, puffy stars, grid glitter) are our own,
+drawn by `scripts/make_celebration_textures.py`.
 
 `css/holo/` is adapted rather than copied verbatim: the selectors are remapped
 from simey's `.card__translater / .card__rotator / .card__shine / .card__glare`
@@ -35,7 +40,10 @@ original work and not derived from pokemon-cards-css.
 ## Not third-party, but not ours either
 
 Card names, numbers, artists and scans match the public Pokémon TCG card
-database. poke-pack.rip is a fan-made simulator and is not affiliated with
+database. The per-card foil and etch maps in `assets/foil/maps/` are
+Pokémon TCG Live's own, as published through [malie.io](https://malie.io)'s
+TCG Live exports; they say where each printed card is foil, which is what
+lets the shine stop at the Pokémon and the 30th Celebration stamp. poke-pack.rip is a fan-made simulator and is not affiliated with
 Nintendo, Game Freak, Wizards of the Coast, or The Pokémon Company. The GPL
 covers this project's own code; it makes no claim over Pokémon trademarks or
 card artwork.

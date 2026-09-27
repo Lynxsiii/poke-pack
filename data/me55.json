@@ -26,7 +26,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-1/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/1.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-2",
@@ -67,7 +70,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-2/large",
-    "market": 0.25
+    "market": 0.25,
+    "foilMap": "assets/foil/maps/me55/2.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-3",
@@ -106,7 +112,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-3/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/3.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-4",
@@ -143,7 +152,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-4/large",
-    "market": 0.23
+    "market": 0.23,
+    "foilMap": "assets/foil/maps/me55/4.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-5",
@@ -183,7 +195,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-5/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/5.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-6",
@@ -220,7 +235,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-6/large",
-    "market": 0.14
+    "market": 0.14,
+    "foilMap": "assets/foil/maps/me55/6.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-7",
@@ -260,7 +278,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-7/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/7.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-8",
@@ -299,7 +320,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-8/large",
-    "market": 0.12
+    "market": 0.12,
+    "foilMap": "assets/foil/maps/me55/8.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-9",
@@ -328,7 +352,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-9/large",
-    "market": 0.14
+    "market": 0.14,
+    "foilMap": "assets/foil/maps/me55/9.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-B",
@@ -359,7 +386,12 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-B/large",
     "printedNumber": "B",
-    "market": 0.0
+    "market": 0.0,
+    "foilMap": "assets/foil/maps/me55/B.webp",
+    "etchMap": "assets/foil/maps/me55/B-etch.webp",
+    "foilMapR": "assets/foil/maps/me55/B-foil-r.webp",
+    "foilMapG": "assets/foil/maps/me55/B-foil-g.webp",
+    "foilMapB": "assets/foil/maps/me55/B-foil-b.webp"
   },
   {
     "id": "me55-G",
@@ -390,7 +422,12 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-G/large",
     "printedNumber": "G",
-    "market": 0.0
+    "market": 0.0,
+    "foilMap": "assets/foil/maps/me55/G.webp",
+    "etchMap": "assets/foil/maps/me55/G-etch.webp",
+    "foilMapR": "assets/foil/maps/me55/G-foil-r.webp",
+    "foilMapG": "assets/foil/maps/me55/G-foil-g.webp",
+    "foilMapB": "assets/foil/maps/me55/G-foil-b.webp"
   },
   {
     "id": "me55-R",
@@ -421,7 +458,12 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-R/large",
     "printedNumber": "R",
-    "market": 6499.64
+    "market": 6499.64,
+    "foilMap": "assets/foil/maps/me55/R.webp",
+    "etchMap": "assets/foil/maps/me55/R-etch.webp",
+    "foilMapR": "assets/foil/maps/me55/R-foil-r.webp",
+    "foilMapG": "assets/foil/maps/me55/R-foil-g.webp",
+    "foilMapB": "assets/foil/maps/me55/R-foil-b.webp"
   },
   {
     "id": "me55-10",
@@ -452,7 +494,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-10/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/10.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-11",
@@ -490,7 +535,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-11/large",
-    "market": 0.25
+    "market": 0.25,
+    "foilMap": "assets/foil/maps/me55/11.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-12",
@@ -530,7 +578,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-12/large",
-    "market": 0.28
+    "market": 0.28,
+    "foilMap": "assets/foil/maps/me55/12.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-13",
@@ -568,7 +619,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-13/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/13.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-14",
@@ -608,7 +662,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-14/large",
-    "market": 0.21
+    "market": 0.21,
+    "foilMap": "assets/foil/maps/me55/14.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-15",
@@ -648,7 +705,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-15/large",
-    "market": 0.43
+    "market": 0.43,
+    "foilMap": "assets/foil/maps/me55/15.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-16",
@@ -686,7 +746,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-16/large",
-    "market": 0.24
+    "market": 0.24,
+    "foilMap": "assets/foil/maps/me55/16.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-17",
@@ -725,7 +788,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-17/large",
-    "market": 0.19
+    "market": 0.19,
+    "foilMap": "assets/foil/maps/me55/17.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-18",
@@ -763,7 +829,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-18/large",
-    "market": 0.3
+    "market": 0.3,
+    "foilMap": "assets/foil/maps/me55/18.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-19",
@@ -795,7 +864,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-19/large",
-    "market": 0.23
+    "market": 0.23,
+    "foilMap": "assets/foil/maps/me55/19.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-20",
@@ -826,7 +898,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-20/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/20.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-21",
@@ -867,7 +942,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-21/large",
-    "market": 0.57
+    "market": 0.57,
+    "foilMap": "assets/foil/maps/me55/21.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-22",
@@ -903,7 +981,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-22/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/22.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-23",
@@ -933,7 +1014,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-23/large",
-    "market": 1.9
+    "market": 1.9,
+    "foilMap": "assets/foil/maps/me55/23.webp"
   },
   {
     "id": "me55-24",
@@ -964,7 +1046,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-24/large",
-    "market": 1.79
+    "market": 1.79,
+    "foilMap": "assets/foil/maps/me55/24.webp"
   },
   {
     "id": "me55-25",
@@ -994,7 +1077,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-25/large",
-    "market": 0.95
+    "market": 0.95,
+    "foilMap": "assets/foil/maps/me55/25.webp"
   },
   {
     "id": "me55-26",
@@ -1023,7 +1107,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-26/large",
-    "market": 1.66
+    "market": 1.66,
+    "foilMap": "assets/foil/maps/me55/26.webp"
   },
   {
     "id": "me55-27",
@@ -1052,7 +1137,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-27/large",
-    "market": 2.21
+    "market": 2.21,
+    "foilMap": "assets/foil/maps/me55/27.webp"
   },
   {
     "id": "me55-28",
@@ -1089,7 +1175,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-28/large",
-    "market": 1.86
+    "market": 1.86,
+    "foilMap": "assets/foil/maps/me55/28.webp"
   },
   {
     "id": "me55-29",
@@ -1118,7 +1205,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-29/large",
-    "market": 1.88
+    "market": 1.88,
+    "foilMap": "assets/foil/maps/me55/29.webp"
   },
   {
     "id": "me55-30",
@@ -1147,7 +1235,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-30/large",
-    "market": 1.13
+    "market": 1.13,
+    "foilMap": "assets/foil/maps/me55/30.webp"
   },
   {
     "id": "me55-31",
@@ -1176,7 +1265,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-31/large",
-    "market": 1.46
+    "market": 1.46,
+    "foilMap": "assets/foil/maps/me55/31.webp"
   },
   {
     "id": "me55-32",
@@ -1205,7 +1295,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-32/large",
-    "market": 3.37
+    "market": 3.37,
+    "foilMap": "assets/foil/maps/me55/32.webp"
   },
   {
     "id": "me55-33",
@@ -1241,7 +1332,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-33/large",
-    "market": 1.5
+    "market": 1.5,
+    "foilMap": "assets/foil/maps/me55/33.webp"
   },
   {
     "id": "me55-34",
@@ -1272,7 +1364,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-34/large",
-    "market": 2.78
+    "market": 2.78,
+    "foilMap": "assets/foil/maps/me55/34.webp"
   },
   {
     "id": "me55-35",
@@ -1302,7 +1395,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-35/large",
-    "market": 1.67
+    "market": 1.67,
+    "foilMap": "assets/foil/maps/me55/35.webp"
   },
   {
     "id": "me55-36",
@@ -1332,7 +1426,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-36/large",
-    "market": 2.99
+    "market": 2.99,
+    "foilMap": "assets/foil/maps/me55/36.webp"
   },
   {
     "id": "me55-37",
@@ -1370,7 +1465,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-37/large",
-    "market": 1.55
+    "market": 1.55,
+    "foilMap": "assets/foil/maps/me55/37.webp"
   },
   {
     "id": "me55-38",
@@ -1399,7 +1495,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-38/large",
-    "market": 1.42
+    "market": 1.42,
+    "foilMap": "assets/foil/maps/me55/38.webp"
   },
   {
     "id": "me55-39",
@@ -1428,7 +1525,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-39/large",
-    "market": 2.16
+    "market": 2.16,
+    "foilMap": "assets/foil/maps/me55/39.webp"
   },
   {
     "id": "me55-40",
@@ -1457,7 +1555,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-40/large",
-    "market": 5.72
+    "market": 5.72,
+    "foilMap": "assets/foil/maps/me55/40.webp"
   },
   {
     "id": "me55-41",
@@ -1496,7 +1595,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-41/large",
-    "market": 1.6
+    "market": 1.6,
+    "foilMap": "assets/foil/maps/me55/41.webp"
   },
   {
     "id": "me55-42",
@@ -1535,7 +1635,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-42/large",
-    "market": 1.24
+    "market": 1.24,
+    "foilMap": "assets/foil/maps/me55/42.webp"
   },
   {
     "id": "me55-43",
@@ -1565,7 +1666,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-43/large",
-    "market": 2.21
+    "market": 2.21,
+    "foilMap": "assets/foil/maps/me55/43.webp"
   },
   {
     "id": "me55-44",
@@ -1594,7 +1696,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-44/large",
-    "market": 1.56
+    "market": 1.56,
+    "foilMap": "assets/foil/maps/me55/44.webp"
   },
   {
     "id": "me55-45",
@@ -1632,7 +1735,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-45/large",
-    "market": 1.15
+    "market": 1.15,
+    "foilMap": "assets/foil/maps/me55/45.webp"
   },
   {
     "id": "me55-46",
@@ -1670,7 +1774,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-46/large",
-    "market": 1.37
+    "market": 1.37,
+    "foilMap": "assets/foil/maps/me55/46.webp"
   },
   {
     "id": "me55-47",
@@ -1699,7 +1804,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-47/large",
-    "market": 1.58
+    "market": 1.58,
+    "foilMap": "assets/foil/maps/me55/47.webp"
   },
   {
     "id": "me55-48",
@@ -1728,7 +1834,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-48/large",
-    "market": 1.8
+    "market": 1.8,
+    "foilMap": "assets/foil/maps/me55/48.webp"
   },
   {
     "id": "me55-49",
@@ -1759,7 +1866,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-49/large",
-    "market": 1.38
+    "market": 1.38,
+    "foilMap": "assets/foil/maps/me55/49.webp"
   },
   {
     "id": "me55-50",
@@ -1791,7 +1899,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-50/large",
-    "market": 1.74
+    "market": 1.74,
+    "foilMap": "assets/foil/maps/me55/50.webp"
   },
   {
     "id": "me55-51",
@@ -1822,7 +1931,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-51/large",
-    "market": 1.17
+    "market": 1.17,
+    "foilMap": "assets/foil/maps/me55/51.webp"
   },
   {
     "id": "me55-52",
@@ -1851,7 +1961,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-52/large",
-    "market": 1.31
+    "market": 1.31,
+    "foilMap": "assets/foil/maps/me55/52.webp"
   },
   {
     "id": "me55-53",
@@ -1891,7 +2002,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-53/large",
-    "market": 1.76
+    "market": 1.76,
+    "foilMap": "assets/foil/maps/me55/53.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-54",
@@ -1931,7 +2045,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-54/large",
-    "market": 2.26
+    "market": 2.26,
+    "foilMap": "assets/foil/maps/me55/54.webp",
+    "stampPos": "2.22% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-55",
@@ -1970,7 +2087,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-55/large",
-    "market": 0.21
+    "market": 0.21,
+    "foilMap": "assets/foil/maps/me55/55.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-56",
@@ -2010,7 +2130,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-56/large",
-    "market": 0.22
+    "market": 0.22,
+    "foilMap": "assets/foil/maps/me55/56.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-57",
@@ -2048,7 +2171,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-57/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/57.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-58",
@@ -2077,7 +2203,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-58/large",
-    "market": 0.14
+    "market": 0.14,
+    "foilMap": "assets/foil/maps/me55/58.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-59",
@@ -2109,7 +2238,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-59/large",
-    "market": 0.15
+    "market": 0.15,
+    "foilMap": "assets/foil/maps/me55/59.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-60",
@@ -2150,7 +2282,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-60/large",
-    "market": 0.17
+    "market": 0.17,
+    "foilMap": "assets/foil/maps/me55/60.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-61",
@@ -2187,7 +2322,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-61/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/61.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-62",
@@ -2226,7 +2364,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-62/large",
-    "market": 0.15
+    "market": 0.15,
+    "foilMap": "assets/foil/maps/me55/62.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-63",
@@ -2265,7 +2406,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-63/large",
-    "market": 1.08
+    "market": 1.08,
+    "foilMap": "assets/foil/maps/me55/63.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-64",
@@ -2306,7 +2450,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-64/large",
-    "market": 1.04
+    "market": 1.04,
+    "foilMap": "assets/foil/maps/me55/64.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-65",
@@ -2336,7 +2483,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-65/large",
-    "market": 0.91
+    "market": 0.91,
+    "foilMap": "assets/foil/maps/me55/65.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-66",
@@ -2373,7 +2523,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-66/large",
-    "market": 6.26
+    "market": 6.26,
+    "foilMap": "assets/foil/maps/me55/66.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-67",
@@ -2403,7 +2556,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-67/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/67.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-68",
@@ -2436,7 +2592,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-68/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/68.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-69",
@@ -2478,7 +2637,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-69/large",
-    "market": 0.71
+    "market": 0.71,
+    "foilMap": "assets/foil/maps/me55/69.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-70",
@@ -2511,7 +2673,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-70/large",
-    "market": 1.08
+    "market": 1.08,
+    "foilMap": "assets/foil/maps/me55/70.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-71",
@@ -2545,7 +2710,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-71/large",
-    "market": 0.98
+    "market": 0.98,
+    "foilMap": "assets/foil/maps/me55/71.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-72",
@@ -2575,7 +2743,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-72/large",
-    "market": 0.38
+    "market": 0.38,
+    "foilMap": "assets/foil/maps/me55/72.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-73",
@@ -2604,7 +2775,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-73/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/73.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-74",
@@ -2644,7 +2818,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-74/large",
-    "market": 0.19
+    "market": 0.19,
+    "foilMap": "assets/foil/maps/me55/74.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-75",
@@ -2676,7 +2853,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-75/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/75.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-76",
@@ -2715,7 +2895,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-76/large",
-    "market": 0.14
+    "market": 0.14,
+    "foilMap": "assets/foil/maps/me55/76.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-77",
@@ -2752,7 +2935,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-77/large",
-    "market": 0.15
+    "market": 0.15,
+    "foilMap": "assets/foil/maps/me55/77.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-78",
@@ -2781,7 +2967,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-78/large",
-    "market": 0.21
+    "market": 0.21,
+    "foilMap": "assets/foil/maps/me55/78.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-79",
@@ -2813,7 +3002,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-79/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/79.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-80",
@@ -2854,7 +3046,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-80/large",
-    "market": 0.19
+    "market": 0.19,
+    "foilMap": "assets/foil/maps/me55/80.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-81",
@@ -2883,7 +3078,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-81/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/81.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-82",
@@ -2916,7 +3114,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-82/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/82.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-83",
@@ -2949,7 +3150,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-83/large",
-    "market": 0.24
+    "market": 0.24,
+    "foilMap": "assets/foil/maps/me55/83.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-84",
@@ -2991,7 +3195,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-84/large",
-    "market": 0.17
+    "market": 0.17,
+    "foilMap": "assets/foil/maps/me55/84.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-85",
@@ -3031,7 +3238,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-85/large",
-    "market": 0.21
+    "market": 0.21,
+    "foilMap": "assets/foil/maps/me55/85.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-86",
@@ -3071,7 +3281,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-86/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/86.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-87",
@@ -3108,7 +3321,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-87/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/87.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-88",
@@ -3147,7 +3363,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-88/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/88.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-89",
@@ -3173,7 +3392,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-89/large",
-    "market": 0.17
+    "market": 0.17,
+    "foilMap": "assets/foil/maps/me55/89.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-90",
@@ -3213,7 +3435,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-90/large",
-    "market": 3.35
+    "market": 3.35,
+    "foilMap": "assets/foil/maps/me55/90.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-91",
@@ -3254,7 +3479,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-91/large",
-    "market": 0.7
+    "market": 0.7,
+    "foilMap": "assets/foil/maps/me55/91.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-92",
@@ -3287,7 +3515,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-92/large",
-    "market": 1.45
+    "market": 1.45,
+    "foilMap": "assets/foil/maps/me55/92.webp",
+    "stampPos": "2.22% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-93",
@@ -3316,7 +3547,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-93/large",
-    "market": 0.19
+    "market": 0.19,
+    "foilMap": "assets/foil/maps/me55/93.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-94",
@@ -3354,7 +3588,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-94/large",
-    "market": 0.19
+    "market": 0.19,
+    "foilMap": "assets/foil/maps/me55/94.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-95",
@@ -3384,7 +3621,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-95/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/95.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-96",
@@ -3423,7 +3663,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-96/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/96.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-97",
@@ -3461,7 +3704,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-97/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/97.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-98",
@@ -3501,7 +3747,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-98/large",
-    "market": 0.15
+    "market": 0.15,
+    "foilMap": "assets/foil/maps/me55/98.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-99",
@@ -3541,7 +3790,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-99/large",
-    "market": 0.16
+    "market": 0.16,
+    "foilMap": "assets/foil/maps/me55/99.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-100",
@@ -3579,7 +3831,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-100/large",
-    "market": 0.21
+    "market": 0.21,
+    "foilMap": "assets/foil/maps/me55/100.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-101",
@@ -3616,7 +3871,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-101/large",
-    "market": 0.17
+    "market": 0.17,
+    "foilMap": "assets/foil/maps/me55/101.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-102",
@@ -3656,7 +3914,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-102/large",
-    "market": 0.49
+    "market": 0.49,
+    "foilMap": "assets/foil/maps/me55/102.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-103",
@@ -3695,7 +3956,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-103/large",
-    "market": 0.17
+    "market": 0.17,
+    "foilMap": "assets/foil/maps/me55/103.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-104",
@@ -3736,7 +4000,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-104/large",
-    "market": 0.15
+    "market": 0.15,
+    "foilMap": "assets/foil/maps/me55/104.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-105",
@@ -3777,7 +4044,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-105/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/105.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-106",
@@ -3816,7 +4086,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-106/large",
-    "market": 0.21
+    "market": 0.21,
+    "foilMap": "assets/foil/maps/me55/106.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-107",
@@ -3855,7 +4128,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-107/large",
-    "market": 0.22
+    "market": 0.22,
+    "foilMap": "assets/foil/maps/me55/107.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-108",
@@ -3894,7 +4170,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-108/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/108.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-109",
@@ -3935,7 +4214,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-109/large",
-    "market": 0.58
+    "market": 0.58,
+    "foilMap": "assets/foil/maps/me55/109.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-110",
@@ -3973,7 +4255,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-110/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/110.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-111",
@@ -4013,7 +4298,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-111/large",
-    "market": 0.22
+    "market": 0.22,
+    "foilMap": "assets/foil/maps/me55/111.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-112",
@@ -4046,7 +4334,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-112/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/112.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-113",
@@ -4076,7 +4367,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-113/large",
-    "market": 0.19
+    "market": 0.19,
+    "foilMap": "assets/foil/maps/me55/113.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-114",
@@ -4116,7 +4410,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-114/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/114.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-115",
@@ -4146,7 +4443,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-115/large",
-    "market": 0.69
+    "market": 0.69,
+    "foilMap": "assets/foil/maps/me55/115.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-116",
@@ -4183,7 +4483,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-116/large",
-    "market": 0.32
+    "market": 0.32,
+    "foilMap": "assets/foil/maps/me55/116.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-117",
@@ -4213,7 +4516,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-117/large",
-    "market": 0.64
+    "market": 0.64,
+    "foilMap": "assets/foil/maps/me55/117.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-118",
@@ -4243,7 +4549,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-118/large",
-    "market": 0.99
+    "market": 0.99,
+    "foilMap": "assets/foil/maps/me55/118.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-119",
@@ -4281,7 +4590,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-119/large",
-    "market": 0.6
+    "market": 0.6,
+    "foilMap": "assets/foil/maps/me55/119.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-120",
@@ -4307,7 +4619,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-120/large",
-    "market": 0.5
+    "market": 0.5,
+    "foilMap": "assets/foil/maps/me55/120.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-121",
@@ -4338,7 +4653,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-121/large",
-    "market": 1.19
+    "market": 1.19,
+    "foilMap": "assets/foil/maps/me55/121.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-122",
@@ -4367,7 +4685,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-122/large",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me55/122.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-123",
@@ -4408,7 +4729,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-123/large",
-    "market": 0.2
+    "market": 0.2,
+    "foilMap": "assets/foil/maps/me55/123.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-124",
@@ -4439,7 +4763,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-124/large",
-    "market": 0.17
+    "market": 0.17,
+    "foilMap": "assets/foil/maps/me55/124.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-125",
@@ -4478,7 +4805,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-125/large",
-    "market": 0.78
+    "market": 0.78,
+    "foilMap": "assets/foil/maps/me55/125.webp",
+    "stampPos": "100.00% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-126",
@@ -4493,7 +4823,10 @@
     "image": "assets/cards/me55/126.webp",
     "imageSmall": "assets/cards/me55/126-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55-126/large",
-    "market": 0.83
+    "market": 0.83,
+    "foilMap": "assets/foil/maps/me55/126.webp",
+    "stampPos": "100.00% 45.72%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-127",
@@ -4508,7 +4841,10 @@
     "image": "assets/cards/me55/127.webp",
     "imageSmall": "assets/cards/me55/127-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55-127/large",
-    "market": 0.36
+    "market": 0.36,
+    "foilMap": "assets/foil/maps/me55/127.webp",
+    "stampPos": "100.00% 45.72%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-128",
@@ -4523,7 +4859,10 @@
     "image": "assets/cards/me55/128.webp",
     "imageSmall": "assets/cards/me55/128-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/me55-128/large",
-    "market": 0.85
+    "market": 0.85,
+    "foilMap": "assets/foil/maps/me55/128.webp",
+    "stampPos": "100.00% 45.72%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-129",
@@ -4564,7 +4903,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-129/large",
-    "market": 3.9
+    "market": 3.9,
+    "foilMap": "assets/foil/maps/me55/129.webp",
+    "stampPos": "100.00% 43.40%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-130",
@@ -4602,7 +4944,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-130/large",
-    "market": 11.96
+    "market": 11.96,
+    "foilMap": "assets/foil/maps/me55/130.webp",
+    "stampPos": "100.00% 43.40%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-131",
@@ -4641,7 +4986,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-131/large",
-    "market": 13.5
+    "market": 13.5,
+    "foilMap": "assets/foil/maps/me55/131.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-132",
@@ -4679,7 +5027,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-132/large",
-    "market": 12.72
+    "market": 12.72,
+    "foilMap": "assets/foil/maps/me55/132.webp",
+    "stampPos": "100.00% 43.40%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-133",
@@ -4718,7 +5069,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-133/large",
-    "market": 11.95
+    "market": 11.95,
+    "foilMap": "assets/foil/maps/me55/133.webp",
+    "stampPos": "100.00% 43.40%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-134",
@@ -4759,7 +5113,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-134/large",
-    "market": 5.12
+    "market": 5.12,
+    "foilMap": "assets/foil/maps/me55/134.webp",
+    "stampPos": "100.00% 50.80%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-135",
@@ -4796,7 +5153,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-135/large",
-    "market": 8.94
+    "market": 8.94,
+    "foilMap": "assets/foil/maps/me55/135.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-136",
@@ -4825,7 +5185,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-136/large",
-    "market": 6.98
+    "market": 6.98,
+    "foilMap": "assets/foil/maps/me55/136.webp",
+    "stampPos": "100.00% 53.12%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-137",
@@ -4857,7 +5220,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-137/large",
-    "market": 5.17
+    "market": 5.17,
+    "foilMap": "assets/foil/maps/me55/137.webp",
+    "stampPos": "100.00% 53.12%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-138",
@@ -4897,7 +5263,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-138/large",
-    "market": 3.47
+    "market": 3.47,
+    "foilMap": "assets/foil/maps/me55/138.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-139",
@@ -4923,7 +5292,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-139/large",
-    "market": 12.35
+    "market": 12.35,
+    "foilMap": "assets/foil/maps/me55/139.webp",
+    "stampPos": "100.00% 53.12%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-140",
@@ -4961,7 +5333,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-140/large",
-    "market": 2.75
+    "market": 2.75,
+    "foilMap": "assets/foil/maps/me55/140.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-141",
@@ -4998,7 +5373,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-141/large",
-    "market": 12.66
+    "market": 12.66,
+    "foilMap": "assets/foil/maps/me55/141.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-142",
@@ -5037,7 +5415,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-142/large",
-    "market": 2.76
+    "market": 2.76,
+    "foilMap": "assets/foil/maps/me55/142.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-143",
@@ -5070,7 +5451,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-143/large",
-    "market": 2.91
+    "market": 2.91,
+    "foilMap": "assets/foil/maps/me55/143.webp",
+    "stampPos": "99.56% 55.59%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-144",
@@ -5100,7 +5484,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-144/large",
-    "market": 17.56
+    "market": 17.56,
+    "foilMap": "assets/foil/maps/me55/144.webp",
+    "stampPos": "100.00% 53.12%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-145",
@@ -5129,7 +5516,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-145/large",
-    "market": 10.27
+    "market": 10.27,
+    "foilMap": "assets/foil/maps/me55/145.webp",
+    "stampPos": "100.00% 55.73%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-146",
@@ -5168,7 +5558,10 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-146/large",
-    "market": 20.29
+    "market": 20.29,
+    "foilMap": "assets/foil/maps/me55/146.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-147",
@@ -5208,7 +5601,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-147/large",
-    "market": 22.62
+    "market": 22.62,
+    "foilMap": "assets/foil/maps/me55/147.webp",
+    "etchMap": "assets/foil/maps/me55/147-etch.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-148",
@@ -5249,7 +5646,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-148/large",
-    "market": 36.58
+    "market": 36.58,
+    "foilMap": "assets/foil/maps/me55/148.webp",
+    "etchMap": "assets/foil/maps/me55/148-etch.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-149",
@@ -5289,7 +5690,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-149/large",
-    "market": 20.99
+    "market": 20.99,
+    "foilMap": "assets/foil/maps/me55/149.webp",
+    "etchMap": "assets/foil/maps/me55/149-etch.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-150",
@@ -5329,7 +5734,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-150/large",
-    "market": 31.67
+    "market": 31.67,
+    "foilMap": "assets/foil/maps/me55/150.webp",
+    "etchMap": "assets/foil/maps/me55/150-etch.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-151",
@@ -5370,7 +5779,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-151/large",
-    "market": 82.43
+    "market": 82.43,
+    "foilMap": "assets/foil/maps/me55/151.webp",
+    "etchMap": "assets/foil/maps/me55/151-etch.webp",
+    "stampPos": "99.56% 48.33%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-152",
@@ -5407,7 +5820,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-152/large",
-    "market": 153.03
+    "market": 153.03,
+    "foilMap": "assets/foil/maps/me55/152.webp",
+    "etchMap": "assets/foil/maps/me55/152-etch.webp",
+    "stampPos": "99.56% 43.40%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-153",
@@ -5441,7 +5858,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-153/large",
-    "market": 28.28
+    "market": 28.28,
+    "foilMap": "assets/foil/maps/me55/153.webp",
+    "etchMap": "assets/foil/maps/me55/153-etch.webp",
+    "stampPos": "100.00% 53.27%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-154",
@@ -5481,7 +5902,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-154/large",
-    "market": 122.94
+    "market": 122.94,
+    "foilMap": "assets/foil/maps/me55/154.webp",
+    "etchMap": "assets/foil/maps/me55/154-etch.webp",
+    "stampPos": "99.56% 43.40%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-155",
@@ -5521,7 +5946,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-155/large",
-    "market": 116.64
+    "market": 116.64,
+    "foilMap": "assets/foil/maps/me55/155.webp",
+    "etchMap": "assets/foil/maps/me55/155-etch.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-156",
@@ -5562,7 +5991,11 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-156/large",
-    "market": 25.45
+    "market": 25.45,
+    "foilMap": "assets/foil/maps/me55/156.webp",
+    "etchMap": "assets/foil/maps/me55/156-etch.webp",
+    "stampPos": "100.00% 48.48%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-157",
@@ -5603,7 +6036,13 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-157/large",
-    "market": 72.05
+    "market": 72.05,
+    "foilMap": "assets/foil/maps/me55/157.webp",
+    "etchMap": "assets/foil/maps/me55/157-etch.webp",
+    "etchMapH": "assets/foil/maps/me55/157-etch-h.webp",
+    "etchMapV": "assets/foil/maps/me55/157-etch-v.webp",
+    "stampPos": "98.28% 48.58%",
+    "stampSize": "22.33% auto"
   },
   {
     "id": "me55-158",
@@ -5640,7 +6079,13 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/me55-158/large",
-    "market": 90.26
+    "market": 90.26,
+    "foilMap": "assets/foil/maps/me55/158.webp",
+    "etchMap": "assets/foil/maps/me55/158-etch.webp",
+    "etchMapH": "assets/foil/maps/me55/158-etch-h.webp",
+    "etchMapV": "assets/foil/maps/me55/158-etch-v.webp",
+    "stampPos": "98.28% 43.89%",
+    "stampSize": "22.33% auto"
   },
   {
     "id": "me55-cc4",
@@ -5654,7 +6099,9 @@
     "printedNumber": "Classic 4",
     "image": "assets/cards/me55/cc4.webp",
     "imageSmall": "assets/cards/me55/cc4-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-4/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-4/large",
+    "stampPos": "99.56% 43.54%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc5",
@@ -5668,7 +6115,9 @@
     "printedNumber": "Classic 5",
     "image": "assets/cards/me55/cc5.webp",
     "imageSmall": "assets/cards/me55/cc5-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-5/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-5/large",
+    "stampPos": "99.56% 35.70%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc11",
@@ -5682,7 +6131,9 @@
     "printedNumber": "Classic 11",
     "image": "assets/cards/me55/cc11.webp",
     "imageSmall": "assets/cards/me55/cc11-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-11/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-11/large",
+    "stampPos": "99.56% 35.70%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc18",
@@ -5693,7 +6144,9 @@
     "printedNumber": "Classic 18",
     "image": "assets/cards/me55/cc18.webp",
     "imageSmall": "assets/cards/me55/cc18-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-18/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-18/large",
+    "stampPos": "99.78% 50.36%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc19",
@@ -5707,7 +6160,9 @@
     "printedNumber": "Classic 19",
     "image": "assets/cards/me55/cc19.webp",
     "imageSmall": "assets/cards/me55/cc19-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-19/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-19/large",
+    "stampPos": "99.56% 35.70%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc25",
@@ -5721,7 +6176,9 @@
     "printedNumber": "Classic 25",
     "image": "assets/cards/me55/cc25.webp",
     "imageSmall": "assets/cards/me55/cc25-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-25/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-25/large",
+    "stampPos": "1.77% 43.54%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc33",
@@ -5735,7 +6192,9 @@
     "printedNumber": "Classic 33",
     "image": "assets/cards/me55/cc33.webp",
     "imageSmall": "assets/cards/me55/cc33-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-33/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-33/large",
+    "stampPos": "99.78% 48.19%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc41",
@@ -5749,7 +6208,9 @@
     "printedNumber": "Classic 41",
     "image": "assets/cards/me55/cc41.webp",
     "imageSmall": "assets/cards/me55/cc41-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-41/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-41/large",
+    "stampPos": "68.93% 0.00%",
+    "stampSize": "19.00% auto"
   },
   {
     "id": "me55-cc43",
@@ -5763,7 +6224,9 @@
     "printedNumber": "Classic 43",
     "image": "assets/cards/me55/cc43.webp",
     "imageSmall": "assets/cards/me55/cc43-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-43/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-43/large",
+    "stampPos": "99.78% 43.54%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc47",
@@ -5777,7 +6240,9 @@
     "printedNumber": "Classic 47",
     "image": "assets/cards/me55/cc47.webp",
     "imageSmall": "assets/cards/me55/cc47-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-47/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-47/large",
+    "stampPos": "99.78% 27.43%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc50",
@@ -5791,7 +6256,9 @@
     "printedNumber": "Classic 50",
     "image": "assets/cards/me55/cc50.webp",
     "imageSmall": "assets/cards/me55/cc50-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-50/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-50/large",
+    "stampPos": "99.78% 40.20%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc57",
@@ -5805,7 +6272,9 @@
     "printedNumber": "Classic 57",
     "image": "assets/cards/me55/cc57.webp",
     "imageSmall": "assets/cards/me55/cc57-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-57/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-57/large",
+    "stampPos": "99.34% 36.71%",
+    "stampSize": "24.33% auto"
   },
   {
     "id": "me55-cc58",
@@ -5819,7 +6288,9 @@
     "printedNumber": "Classic 58",
     "image": "assets/cards/me55/cc58.webp",
     "imageSmall": "assets/cards/me55/cc58-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-58/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-58/large",
+    "stampPos": "1.77% 43.54%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc69",
@@ -5833,7 +6304,9 @@
     "printedNumber": "Classic 69",
     "image": "assets/cards/me55/cc69.webp",
     "imageSmall": "assets/cards/me55/cc69-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-69/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-69/large",
+    "stampPos": "99.78% 43.54%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc85",
@@ -5847,7 +6320,9 @@
     "printedNumber": "Classic 85",
     "image": "assets/cards/me55/cc85.webp",
     "imageSmall": "assets/cards/me55/cc85-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-85/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-85/large",
+    "stampPos": "1.77% 43.54%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc89",
@@ -5861,7 +6336,9 @@
     "printedNumber": "Classic 89",
     "image": "assets/cards/me55/cc89.webp",
     "imageSmall": "assets/cards/me55/cc89-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-89/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-89/large",
+    "stampPos": "99.78% 36.43%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc94",
@@ -5875,7 +6352,9 @@
     "printedNumber": "Classic 94",
     "image": "assets/cards/me55/cc94.webp",
     "imageSmall": "assets/cards/me55/cc94-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-94/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-94/large",
+    "stampPos": "2.00% 43.54%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc99",
@@ -5889,7 +6368,9 @@
     "printedNumber": "Classic 99",
     "image": "assets/cards/me55/cc99.webp",
     "imageSmall": "assets/cards/me55/cc99-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-99/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-99/large",
+    "stampPos": "73.05% 2.49%",
+    "stampSize": "19.00% auto"
   },
   {
     "id": "me55-cc100",
@@ -5914,7 +6395,9 @@
     "printedNumber": "Classic 101",
     "image": "assets/cards/me55/cc101.webp",
     "imageSmall": "assets/cards/me55/cc101-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-101/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-101/large",
+    "stampPos": "99.78% 54.14%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc106",
@@ -5928,7 +6411,9 @@
     "printedNumber": "Classic 106",
     "image": "assets/cards/me55/cc106.webp",
     "imageSmall": "assets/cards/me55/cc106-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106/large",
+    "stampPos": "99.56% 43.69%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc108",
@@ -5943,7 +6428,9 @@
     "printedNumber": "Classic 108",
     "image": "assets/cards/me55/cc108.webp",
     "imageSmall": "assets/cards/me55/cc108-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-108/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-108/large",
+    "stampPos": "99.56% 35.70%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc114",
@@ -5957,7 +6444,9 @@
     "printedNumber": "Classic 114",
     "image": "assets/cards/me55/cc114.webp",
     "imageSmall": "assets/cards/me55/cc114-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-114/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-114/large",
+    "stampPos": "99.78% 50.80%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc11g",
@@ -5971,7 +6460,9 @@
     "printedNumber": "Classic 11",
     "image": "assets/cards/me55/cc11g.webp",
     "imageSmall": "assets/cards/me55/cc11g-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-11g/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-11g/large",
+    "stampPos": "99.78% 43.69%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc123",
@@ -5985,7 +6476,9 @@
     "printedNumber": "Classic 123",
     "image": "assets/cards/me55/cc123.webp",
     "imageSmall": "assets/cards/me55/cc123-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-123/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-123/large",
+    "stampPos": "2.00% 41.22%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc138",
@@ -5999,7 +6492,9 @@
     "printedNumber": "Classic 138",
     "image": "assets/cards/me55/cc138.webp",
     "imageSmall": "assets/cards/me55/cc138-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-138/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-138/large",
+    "stampPos": "99.78% 51.67%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc149",
@@ -6013,7 +6508,9 @@
     "printedNumber": "Classic 149",
     "image": "assets/cards/me55/cc149.webp",
     "imageSmall": "assets/cards/me55/cc149-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-149/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-149/large",
+    "stampPos": "2.00% 40.78%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc203",
@@ -6027,7 +6524,9 @@
     "printedNumber": "Classic 203",
     "image": "assets/cards/me55/cc203.webp",
     "imageSmall": "assets/cards/me55/cc203-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-203/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-203/large",
+    "stampPos": "99.78% 53.27%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc106m",
@@ -6041,7 +6540,9 @@
     "printedNumber": "Classic 106",
     "image": "assets/cards/me55/cc106m.webp",
     "imageSmall": "assets/cards/me55/cc106m-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106m/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106m/large",
+    "stampPos": "2.00% 50.80%",
+    "stampSize": "24.83% auto"
   },
   {
     "id": "me55-cc106p",
@@ -6055,6 +6556,8 @@
     "printedNumber": "Classic 106",
     "image": "assets/cards/me55/cc106p.webp",
     "imageSmall": "assets/cards/me55/cc106p-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106p/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/me55c-106p/large",
+    "stampPos": "99.56% 43.54%",
+    "stampSize": "24.83% auto"
   }
 ]

@@ -13,9 +13,12 @@
 //   --idle   after load, sit for 3 s and report main-thread work plus every
 //            running animation, flagging infinite ones and any that animate
 //            something other than transform, opacity or filter
+//   --css    extra CSS injected after load, to isolate a layer while tuning
+//            (e.g. ".tcg .glare{display:none!important}")
 //   --styles print the computed paint properties of every layer (.foil,
-//            ::before, ::after, .glare, ::after) of the first card in the
-//            first row, site copy and proof copy, to see which rule won
+//            ::before, ::after, .cure if the card has one, .glare, ::after)
+//            of the first two cards in the first lit row, to see which rule
+//            won
 //
 // It serves the repo itself on a free port, so nothing else needs to run.
 // Needs Playwright: a local or global `playwright` package and its Chromium.
@@ -89,11 +92,13 @@ try {
   });
   page.on("pageerror", (e) => console.error("page error:", e.message));
   page.on("console", (m) => m.type() === "error" && console.error("console:", m.text()));
+  page.on("response", (r) => r.status() >= 400 && console.error(`http ${r.status()}: ${r.url()}`));
   // The app keeps requests open (prices, the worker API), so a page waits for
   // "load" and a moment more; the lab waits until every card has decoded.
   await page.goto(url, { waitUntil: args.page ? "load" : "networkidle", timeout: 60000 });
   if (args.page) await page.waitForTimeout(1500);
   if (!args.page) await page.waitForSelector("body[data-ready='1']", { timeout: 30000 });
+  if (typeof args.css === "string") await page.addStyleTag({ content: args.css });
   await page.waitForTimeout(400); // let any settle transition finish
   await page.screenshot({ path: out, fullPage: true });
   console.log(`wrote ${out}`);
@@ -102,11 +107,14 @@ try {
     const layers = await page.evaluate(() => {
       const keys = ["display", "opacity", "mix-blend-mode", "filter", "background-blend-mode", "background-size",
         "background-position", "mask-image", "mask-composite", "clip-path", "isolation"];
-      const cells = [...document.querySelectorAll(".lab-row:first-child .lab-cell")].slice(0, 2);
+      // The first lit row: at rest the pseudo layers, .cure and .glare do not exist.
+      const row = document.querySelector(".lab-row:not([data-pose='rest'])") || document.querySelector(".lab-row");
+      const cells = [...row.querySelectorAll(".lab-cell")].slice(0, 2);
       return cells.map((cell) => {
         const card = cell.querySelector(".tcg");
         const rows = [];
-        for (const [sel, pseudo] of [[".foil", null], [".foil", "::before"], [".foil", "::after"], [".glare", null], [".glare", "::after"]]) {
+        for (const [sel, pseudo] of [[".foil", null], [".foil", "::before"], [".foil", "::after"], [".cure", null], [".glare", null], [".glare", "::after"]]) {
+          if (!card.querySelector(sel)) continue;
           const cs = getComputedStyle(card.querySelector(sel), pseudo);
           rows.push([sel + (pseudo || ""), Object.fromEntries(keys.map((k) => [k, cs.getPropertyValue(k).slice(0, 140)]))]);
         }

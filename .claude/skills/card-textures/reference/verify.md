@@ -50,9 +50,14 @@ Read the PNG and look. Useful habits:
   PIL: at 240px wide, a 1px scanline or a 5% mask error is invisible.
 - **Compare** the proof against the site copy, and both against a photo of
   the real card at a similar angle.
-- `--styles` prints the computed paint properties of the first card's five
-  layers, site and proof, to see which rule actually won. Specificity
-  surprises are the most common reason a recipe "does nothing".
+- `--styles` prints the computed paint properties of the first two cards'
+  layers (`.foil`, its pseudo layers, `.cure` when there is one, `.glare`
+  and `::after`) in the first lit row, to see which rule actually won.
+  Specificity surprises are the most common reason a recipe "does nothing".
+- `--css "<rules>"` injects CSS after load: hide a layer
+  (`.tcg .glare{display:none!important}`) to see what each one adds.
+- `proof=off` in the query hides the proof column, for a site-only sheet
+  once a finish has shipped.
 - `--scale 2` for fine textures (glitter, etch).
 - `--page "/"` screenshots a page of the app instead of the lab.
 
@@ -89,12 +94,20 @@ a texture has to survive all of them:
   jumps to the pointer without springs. Tilt-driven bars must still look
   right at 0deg.
 - **Card shine** off: `body.no-shine` hides `.foil` and `.glare`
-  (`css/holo/base.css`); nothing from the recipe may leak past it.
+  (`css/holo/base.css`) and `.cure` (`css/holo/maps.css`); nothing from
+  the recipe may leak past it.
 - **Card effects: Classic**: `body.fx-classic` without `fx-holo`, the
   pre-redesign per-rarity system in `css/app.css`. A `css/holo/` recipe
   must not change it.
 - **Phones**: at 390px wide, scanlines and fine bars alias. Upstream widens
   them under `@media (max-width: 900px)`; do the same.
+
+The lab cannot toggle body classes. To check settings on the real app, drive
+it with Playwright: open `/packs/<set>` then `/catalog`, click a hidden
+`[data-inspect="<card id>"]` button from `page.evaluate` (the catalog tiles
+exist before the view shows them) to open the inspector, move the mouse over
+`dialog[open] .tcg` to light it, and toggle `no-shine` / `fx-classic` on
+`body` between screenshots.
 
 ## Before calling it done
 

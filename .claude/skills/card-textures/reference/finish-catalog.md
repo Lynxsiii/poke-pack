@@ -32,14 +32,14 @@ Tally across every SV and ME set in the export (checked 2026-09-27):
 | `SV_ULTRA_SCODIX` / `ETCHED` | 11 | Paldean Fates hyper rares (raised clear Scodix texture) | `foil-gold` |
 | `ULTRA_GOLD_RAINBOW` / `COLD_FOIL_ETCHED` | 8 | Mega Hyper Rare | `foil-gold` |
 | `RAINBOW` / `ETCHED` | 171 | Prismatic Evolutions commons to rares, Black White Rare | `foil-bwr` and others |
-| `RAINBOW` / `HOLO` | 76 | 30th Celebration commons, some energies | `foil-holo` |
+| `RAINBOW` / `HOLO` | 76 | 30th Celebration commons, some energies | `foil-holo foil-rainbow` (me55 commons) |
 | `COSMOS` / `HOLO` | 204 | Promos, some rares | none yet |
 | `COSMOS` / `REVERSE` | 9 | Some energies and alt prints | none yet |
 | `CRACKED_ICE` / `REVERSE` | 8 | Alt-print energies | none yet |
 | `TINSEL` / `HOLO`, `REVERSE` | 31 | White Flare (rsv10pt5) holo rares, some energies | `foil-holo` |
 | `ACE_FOIL` / `ETCHED` | 33 | ACE SPEC Rare | `foil-holo` |
-| `PIKACHU` / `HOLO` | 30 | 30th Celebration Pikachu Rare | `foil-holo` |
-| `RGB` / `ETCHED` | 3 | 30th Celebration RGB Mew | `foil-future` |
+| `PIKACHU` / `HOLO` | 30 | 30th Celebration Pikachu Rare | `foil-holo foil-pikachu` |
+| `RGB` / `ETCHED` | 3 | 30th Celebration RGB Mew | `foil-future foil-rgb` |
 | `STAMPED` / `STAMPED` | 5 | Stamped promos | none yet |
 
 Cast-and-cure patterns (a UV-cured holographic texture printed over the card,
@@ -93,7 +93,10 @@ with soft vertical light bars; the Pokémon is not foil. Start from
 (overlay-blended, `contrast(3)`), two sets of bars on `::before` whose angle
 follows `--rotate-x` (multiply), and a luminosity radial on `::after`. The
 site's `foil-holo` still uses the Sword & Shield recipe (`swsh/regular-holo.css`
-with 1px scanlines), which reads as an older card.
+with 1px scanlines), which reads as an older card; the port ships as
+`foil-svholo` (celebration.css) on cards with a foil map, where its
+`contrast(2.6)` lands on the background only. Give other sets' Rares the
+same class once they have maps.
 
 **Reverse holo (`FLAT_SILVER`)**. Flat mirror foil everywhere but the art
 window; a broad sheen and a diagonal dark band cross it. `sv151/reverse-holo.css`
@@ -111,7 +114,10 @@ Pokémon itself not foil. `sv151/ex-regular.css`: a glitter layer of
 `birthday-holo-dank*.webp` (the stars), masked by the card's foil map and a
 pointer radial; sunpillar with grain on the shine pseudos; two glares
 (color-burn and lighten). The site has one glare element, so fold the second
-glare into `.glare::after`.
+glare into `.glare::after`. Shipped for the 30th Celebration as
+`foil-sunpillar` plus `cure-stars`: the stars are a cast-and-cure coat, so
+they sit on `.cure` (masked by the card, not the foil map) and glint over
+the Pokémon too.
 
 **Ultra Rare full art (`SUN_PILLAR` / `ETCHED`)**. Textured full art: the etch
 catches bands of rainbow that slide diagonally. `sv151/ex-full-art.css` with a
@@ -130,7 +136,12 @@ tilt. `sv151/ex-special-illustration-rare.css`: bars on `::after`
 tiles (`iri-7/8/9.webp`) with opposite `--shift` parallax, masked by the etch
 map in luminance mode, and a white glare2 masked by the foil map. The site's
 per-card etch maps (`assets/foil/etch/`, `scripts/make_etch_maps.py`) stand in
-for the etch.
+for the etch. With a TCG Live map (`.foil-sir.has-foil-map`, celebration.css)
+the port is close to upstream: 15deg rainbow on `.foil`, the crossing tilt
+bars on `::before` in hard-light (the rainbow only shows inside them),
+glitter on `::after` in plus-lighter, a multiply glare, and the etch map on
+`.glare::after` as glare2. realism.css's no-map SIR looks grey over a map,
+because its hard-light glare darkens everything the map leaves out.
 
 **Hyper Rare, gold (`SV_ULTRA` / `ETCHED`)** and **Mega Hyper Rare
 (`ULTRA_GOLD_RAINBOW`)**. The gold is printed; the foil adds etch texture,
@@ -167,6 +178,40 @@ a given angle. No upstream sheet: generate a seamless Voronoi shard tile
 one), use it as the `--foil` texture over a sun-pillar ramp with
 `background-blend-mode: exclusion, hue, hard-light`, and give each shard a
 flat colour so it flips rather than slides.
+
+### 30th Celebration finishes (shipped, `css/holo/celebration.css`)
+
+Worked examples of finishes with no upstream sheet. Details and photo
+sources in `30th-celebration.md`.
+
+**Common rainbow (`RAINBOW` / `HOLO`)**. A soft wide rainbow on the art
+background only. Grain plus a 112deg spectrum whose ends fade to black, so
+the colour arrives in one broad band rather than a stripe pattern; a
+counter-moving sweep on `::before`; a gentle glare, because a strong one
+bleaches pale Pokémon that the map leaves unfoiled.
+
+**Pikachu Rare (`PIKACHU` / `HOLO` + `StitchedRings`)**. Cracked-ice foil
+in the window and in the big stamp, with firework bursts of short dashes.
+A seeded Voronoi shard tile (`cracked-ice.webp`) exclusion-blended over a
+sun pillar; the bursts (`stitched-rings.webp`) as a mask on a vivid
+gradient in `::after`, and again, paler, on `.cure` across the whole card.
+
+**Futuristic (`SV_ULTRA` / `ETCHED`, op-art plate)**. Opalescent inks on
+silver, grid glitter, and geometric relief cells that each flash at their
+own tilt. The trick is `--etch-bins`: the etch split into horizontal and
+vertical line masks, each lighting a band layer that moves differently, so
+neighbouring cells flash at different angles.
+
+**RGB (`RGB` / `ETCHED`)**. Transparent colour ink over mirror foil. Keep
+the dodge light dim (a 58% white core) so the ink glows in its own colour
+instead of going white; the map's blue channel is the bare-foil streaks,
+the red channel the chrome highlights, each its own mask.
+
+**Classic Collection (not in TCG Live)**. One shared stock for every
+reprint: dense confetti glitter, sparse puffy stars in flat colours, a gold
+border that glitters, fine crosshatch. Two confetti tiles offset and moved
+against each other twinkle without animation. Colour-dodged stars must
+stay at mid brightness or they turn white.
 
 ### Sword & Shield and older (upstream `swsh/`, direct matches)
 
@@ -212,3 +257,7 @@ When nothing upstream fits, build from these. Each is one background layer.
 | Etch / illusion | per-card etch map, or `illusion.png` at 33% | Embossed texture |
 | Motif mask | a shape tile as `mask-image` on a rainbow layer | Poké Balls, energy symbols, stars |
 | Galaxy | `cosmos-*-trans.png` stacked, random offset | Cosmos holo |
+| Cast-and-cure coat | a tile on `.cure`, masked by `--art` and a pointer radial, `screen` | Clear UV patterns (SouthernCross stars, StitchedRings) that shine over ink as well as foil |
+| Direction-binned etch | two layers masked by `--etch-map-h` and `--etch-map-v`, moving differently | Relief cells that flash one at a time |
+| Channel mask | one colour channel of a TCG Live map as its own alpha mask | Cards whose map is RGB (the RGB Mews) |
+| Per-card seed | `--seed-x/--seed-y` from the card id as a tile offset | Tiled glitter that never lines up the same way on two cards |

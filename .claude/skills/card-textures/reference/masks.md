@@ -63,13 +63,27 @@ about 6 MB (3.5 MB of foil maps, 2.3 MB of etch maps for the 15 etched
 cards); the 30 Classic Collection cards have no map. Look at a card with
 the lab's `?maps=1`, which prefers the shipped copy.
 
-Wiring it into the site (the texture work does this, not the fetch):
+Extras, for finishes that need more than one mask:
 
-- `tcgFace()` in `js/app.js`: when `card.foilMap` is set, add
-  `--foil-map:url('${assetUrl(card.foilMap)}')` to the inline style and a
-  `has-foil-map` class (`assetUrl()` because inline relative URLs resolve
-  against the stylesheet, see its comment).
-- `css/holo/windows.css`, after the window rules so it wins:
+- **Colour maps** (the RGB Mews' maps are RGB, not greyscale): each channel
+  ships as its own alpha mask, `<n>-foil-r/-g/-b.webp`, as `foilMapR/G/B`.
+- **`--etch-bins 157,158`** splits those cards' etch by line direction
+  (a structure tensor; `<n>-etch-h.webp` and `<n>-etch-v.webp`, as
+  `etchMapH/V`), so two layers can light the horizontal and vertical lines
+  at different tilts. That is how op-art cells flash one by one.
+
+How the site wires it (done for the 30th Celebration; reuse for any set):
+
+- `js/foil-maps.js` (`foilExtras()`, called by `tcgFace()`): when
+  `card.foilMap` is set, adds `--foil-map:url(...)` to the inline style and
+  a `has-foil-map` class, and likewise `--etch-map` / `has-etch-map`,
+  `--etch-map-h/-v` / `has-etch-bins`, `--foil-map-r/-b` / `has-foil-rgb`.
+  URLs go through `assetUrl()` because inline relative URLs resolve against
+  the stylesheet (see its comment).
+- `css/holo/maps.css`, loaded **after realism.css**. realism.css's full-art
+  rules (`.tcg:is(.foil-ex, ...) .foil`, specificity 0,6,1) clear every
+  mask; the map rule has the same specificity and wins only by coming
+  later. Put it in windows.css and the full arts lose their maps:
 
 ```css
 body.fx-holo.fx-holo.fx-holo .tcg.has-foil-map .foil {
@@ -92,10 +106,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-foil-map .foil {
   finish whether `.glare` keeps its window (a gloss on the art only) or
   lights the whole card as upstream's masked cards do (`clip-path: none;
   mask-image: var(--art)`); the lab's section 4 does the latter.
+  The site lights the whole card with `.glare` on mapped cards.
 - Etched finishes (SIR, Futuristic, RGB) use `etchMap` where upstream uses
-  `--foil` in its etched sheets, masking the texture layers.
-- `NOTICE.md`: add a row crediting the maps to Pokémon TCG Live, via
-  malie.io.
+  `--foil` in its etched sheets: `celebration.css` masks a white hot spot
+  on `.glare::after` with it, so the relief catches the light.
+- `NOTICE.md` credits the maps to Pokémon TCG Live, via malie.io.
 
 Maps and scans line up: both are the full card, 367x512 and 600x838 are the
 same shape, and the Pokémon silhouettes and stamp holes match when overlaid.
@@ -143,8 +158,13 @@ Placing the shared template per card in CSS (no per-card files):
 ```
 
 with `--stamp-mask`, `--stamp-size` and `--stamp-pos` set inline per card
-from the JSON (in `tcgFace()`, or copied onto the card records in
-`data/<set>.json` the way `make_owner_masks.py` stamps `ownerMask`).
+from the JSON. To ship it, `../scripts/ship_stamp.py --set <set>
+--placements <name>.json --mask <name>.png` copies the mask to
+`assets/masks/stamp/` and writes `stampPos` / `stampSize` onto the card
+records (skipping `--cutouts` cards, whose mark is foil). `foilExtras()`
+then adds `has-stamp` and the two variables to cards without a foil map,
+and `css/holo/maps.css` has the rule above. `.claude/` is not deployed, so
+the mask must be under `assets/`.
 
 ## Mask algebra cheat sheet
 
