@@ -94,6 +94,10 @@ export function poolsFrom(cards, set) {
     classic: pokemonOrTrainer.filter((c) => c.rarity === "Classic Collection"),
     futuristic: pokemonOrTrainer.filter((c) => c.rarity === "Futuristic Rare"),
     rgb: pokemonOrTrainer.filter((c) => c.rarity === "RGB Rare"),
+    // Trick or Trade and McDonald's packs are filled by print, not rarity:
+    // a set number of holo cards, the rest non-holo (data/sets/<set>.json).
+    holo: pokemonOrTrainer.filter((c) => c.holo),
+    plain: pokemonOrTrainer.filter((c) => !c.holo),
     reversePool,
     pokeballPool,
     masterballPool,

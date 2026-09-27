@@ -671,9 +671,10 @@ function assetUrl(src) {
  * rarity (scripts/build_products.py reads it from TCG Live's print data), so the
  * foil engine draws the promo with its recipe. "Cosmos" is the galaxy holo most
  * collection-box promos use; "Frame" foils only the card frame, like a reverse.
+ * Holo prints in Trick or Trade and McDonald's packs carry `foilAs` the same way.
  */
 function foilLook(card) {
-  if (!card?.promo || !card.foilAs || card.reverse) return card;
+  if (!card?.foilAs || card.reverse) return card;
   if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
   return { ...card, rarity: card.foilAs };
 }
