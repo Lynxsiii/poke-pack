@@ -48,10 +48,13 @@ is the SIR's foil under gold ink.
   up; `::before` inherits them, `::after` restates `--fa-pillar` so its ramp
   picks up the rotated sunpillar colours base.css gives `::after`.
   (Custom properties resolve `var()` where they are declared.)
-- **Glare**: upstream's hard-light radial (a flatter one for Supporters).
-  The etch hot spot `celebration.css` gives every etched card is a white disc
-  in a hard-light glare on a card this etched, so it is smaller and fainter
-  here, and still washed the Supporter text box at 0.7; 0.5 is right.
+- **Glare**: upstream's hard-light radial. Upstream gives Supporters a
+  flatter, brighter one; on a pale full art it hazes the face (sv1 238
+  Miriam, found by the SV base thread), so every Ultra Rare gets the plain
+  one. The etch hot spot `celebration.css` gives every etched card is a
+  white disc in a hard-light glare on a card this etched, so it is smaller
+  and fainter here, and still washed the Supporter text box at 0.7; 0.5 is
+  right.
 - **The printed outline**: Paradox Rift's full arts print a teal outline
   around the Pokémon (Armarouge, Roaring Moon). It is ink, not a foil
   artifact; check the raw scan before chasing it.
@@ -64,11 +67,19 @@ is the SIR's foil under gold ink.
   rainbow, two light bars crossing with the tilt (`hard-light`), iridescent
   glitter, a multiply glare, and `glare2`: white masked by the etch, so the
   cut lines light up across the whole card, not just under the pointer.
-- **Recipe**: the SIR-with-map port from `celebration.css`, rainbow
-  desaturated (0.8, resting 0.3) so gold stays gold, and a `.glare::after`
+- **Recipe**: the SIR-with-map port from `celebration.css`, dodged paler,
+  `brightness(.5) contrast(1.5) saturate(.45)` (resting `saturate(.3)`), and
+  a `.glare::after`
   whose etch-masked white never falls below 0.3 alpha (upstream's glare2).
   Inside the multiply glare, white means "not dimmed", so the lines read
   bright against the rest.
+- **Bright gold goes orange.** Upstream dodges the rainbow at
+  `brightness(.6) saturate(1)`; its red and magenta slices push the red
+  channel to full, and sv1's brighter golds (253 Miraidon ex, 254 Koraidon
+  ex, the near-white gold energies 257/258) turn orange and red when lit.
+  `soft-light` and `overlay` keep the hue but go orange-brown in the
+  shadows. The paler dodge above stays gold with a rainbow tint on sv1, sv4
+  and sv5 (found by the SV base thread; see its `scarlet-violet.md`).
 - **Before this**, the old gold recipe (`rarities.css`, conic gradient plus
   `--holo-metal`) drew horizontal scanlines on mapped cards.
 
@@ -80,4 +91,5 @@ node .claude/skills/card-textures/scripts/foil_probe.mjs --query "set=sv4&cards=
 
 218 Armarouge ex and 229 Roaring Moon ex (Pokémon Ultra Rares), 240
 Professor Turo's Scenario (Supporter Ultra Rare), 260 Garchomp ex and 264
-Counter Catcher (gold). Add `&w=420` to see the etch.
+Counter Catcher (gold). Add `&w=420` to see the etch. Brightest golds and a
+pale Supporter: `set=sv1&cards=253,254,257,238&poses=30:25,70:60`.

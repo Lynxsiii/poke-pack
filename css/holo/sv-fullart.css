@@ -147,13 +147,6 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.f
   filter: brightness(0.8) contrast(1) saturate(1);
   opacity: var(--card-opacity);
 }
-/* Supporter full arts: a flatter, brighter varnish (upstream). */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.foil-trainer.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 55%) 5%, hsl(200, 5%, 40%) 40%, hsl(200, 10%, 15%) 110%);
-  background-size: cover;
-  filter: brightness(1.25) contrast(1.4) saturate(1);
-}
 /* The etched lines under the light. Nine tenths of a full art is etched, so
    the hot spot celebration.css gives every etched card would be a white disc
    in this hard-light glare; kept small and soft here. */
@@ -174,7 +167,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map.has-etch-map:not(.foil
 
 /* ---- Hyper Rare: gold, SV_ULTRA / ETCHED ------------------------------------
    The rainbow is faint on the real cards: the gold ink tints it, so it reads
-   as a warm sheen moving through the light bars rather than colour. */
+   as a warm sheen moving through the light bars rather than colour. Dodged
+   paler than upstream: at brightness(.6) the rainbow's red slices turn the
+   brightest golds (sv1's Koraidon ex, the gold energies) orange. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
   --fa-spectrum: hsl(2, 100%, 73%), hsl(53, 100%, 69%), hsl(93, 100%, 69%),
     hsl(176, 100%, 76%), hsl(228, 100%, 74%), hsl(283, 100%, 73%), hsl(2, 100%, 73%);
@@ -182,7 +177,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.fo
   background-size: 240% 240%;
   background-position: var(--background-x) var(--background-y);
   background-blend-mode: normal;
-  filter: brightness(0.6) contrast(1.5) saturate(0.8);
+  filter: brightness(0.5) contrast(1.5) saturate(0.45);
   mix-blend-mode: color-dodge;
 }
 /* Resting, gold stays gold. */
