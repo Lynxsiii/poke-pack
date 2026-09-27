@@ -547,9 +547,7 @@ function foilPattern(card) {
   if (!card) return "foil-none";
   if (card.reverse) {
     const kind = reverseKindOf(card);
-    if (kind === "pokeball") return "foil-reverse foil-rev-pokeball";
-    if (kind === "masterball") return "foil-reverse foil-rev-masterball";
-    return "foil-reverse";
+    return kind ? `foil-reverse foil-rev-${kind}` : "foil-reverse";
   }
   if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "foil-gold";
   // Tera ex print TCG Live's SV_ULTRA etched foil across the whole card
@@ -698,7 +696,7 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   // layout mask at all.
   const owner = evo === "foil-owner" ? ownerWindow(card) : "";
   // Per-card foil maps, stamp placement and cast-and-cure coats (js/foil-maps.js).
-  const extra = foilExtras(card, assetUrl);
+  const extra = foilExtras(card, assetUrl, reverseKindOf(card));
   const load = lazy ? ` loading="lazy" decoding="async"` : ` decoding="async"`;
   return `<div class="tcg ${rarityKey(shown.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo} ${extra.classes}" data-finish="${finish}" data-ball-layout="${setForCard(card)?.id === "sv8pt5" ? "prismatic" : "repeat"}"
     style="--art:url('${esc(assetUrl(src))}')${owner ? `;--win-owner:url('${esc(owner)}')` : ""}${extra.style ? `;${esc(extra.style)}` : ""}">
@@ -1285,7 +1283,7 @@ function renderCollection({ refreshSets = true } = {}) {
     if (ownedMode === "owned" && count < 1) return false;
     if (ownedMode === "missing" && count > 0) return false;
     if (ownedMode === "dupes" && count < 2) return false;
-    if (card.energy && count < 1) return false;
+    if (card.energy && !card.reverse && count < 1) return false;
     if (
       q &&
       !card.name.toLowerCase().includes(q) &&
