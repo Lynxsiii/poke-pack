@@ -1,5 +1,752 @@
 {
   "_fetchedAt": "2026-09-27",
+  "me1": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "me1-mep009",
+        "me1-mep010"
+      ],
+      "pick": 1,
+      "price": 122.89,
+      "tcgplayerId": 644279,
+      "released": "2025-09-26",
+      "image": "assets/products/me1/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb-gardevoir",
+      "name": "Pokémon Center Elite Trainer Box: Mega Gardevoir",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me1-mep009-pc",
+        "me1-mep009"
+      ],
+      "price": 191.68,
+      "tcgplayerId": 648415,
+      "released": "2025-09-26",
+      "image": "assets/products/me1/pc-etb-gardevoir.webp"
+    },
+    {
+      "id": "pc-etb-lucario",
+      "name": "Pokémon Center Elite Trainer Box: Mega Lucario",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me1-mep010-pc",
+        "me1-mep010"
+      ],
+      "price": 198.91,
+      "tcgplayerId": 644282,
+      "released": "2025-09-26",
+      "image": "assets/products/me1/pc-etb-lucario.webp"
+    },
+    {
+      "id": "venusaur-premium",
+      "name": "Mega Venusaur ex Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "me1-mep013"
+      ],
+      "price": 72.39,
+      "tcgplayerId": 654212,
+      "released": "2025-12-05",
+      "image": "assets/products/me1/venusaur-premium.webp"
+    },
+    {
+      "id": "lucario-figure",
+      "name": "Mega Lucario ex Premium Figure Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "me1-mep012"
+      ],
+      "price": 55.8,
+      "tcgplayerId": 656487,
+      "released": "2025-11-07",
+      "image": "assets/products/me1/lucario-figure.webp"
+    },
+    {
+      "id": "latias-box",
+      "name": "Mega Latias ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "me1-mep011"
+      ],
+      "price": 40.79,
+      "tcgplayerId": 654188,
+      "released": "2025-10-10",
+      "image": "assets/products/me1/latias-box.webp"
+    },
+    {
+      "id": "kangaskhan-box",
+      "name": "Mega Kangaskhan ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "me1-mep025"
+      ],
+      "price": 40.68,
+      "tcgplayerId": 654211,
+      "released": "2025-12-05",
+      "image": "assets/products/me1/kangaskhan-box.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "me1-mep001",
+        "me1-mep002",
+        "me1-mep003",
+        "me1-mep004"
+      ],
+      "pick": 1,
+      "price": 61.13,
+      "tcgplayerId": 644363,
+      "released": "2025-10-10",
+      "image": "assets/products/me1/build-battle.webp"
+    },
+    {
+      "id": "blister3-psyduck",
+      "name": "3 Pack Blister: Psyduck",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "me1-mep007"
+      ],
+      "price": 45.49,
+      "tcgplayerId": 644357,
+      "released": "2025-09-26",
+      "image": "assets/products/me1/blister3-psyduck.webp"
+    },
+    {
+      "id": "blister3-golduck",
+      "name": "3 Pack Blister: Golduck",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "me1-mep008"
+      ],
+      "price": 34.03,
+      "tcgplayerId": 644356,
+      "released": "2025-09-26",
+      "image": "assets/products/me1/blister3-golduck.webp"
+    },
+    {
+      "id": "blister-drifloon",
+      "name": "Single Pack Blister: Drifloon",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me1-mep005"
+      ],
+      "price": 13.67,
+      "tcgplayerId": 644358,
+      "released": "2025-09-26",
+      "image": "assets/products/me1/blister-drifloon.webp"
+    },
+    {
+      "id": "blister-drifblim",
+      "name": "Single Pack Blister: Drifblim",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me1-mep006"
+      ],
+      "price": 13.37,
+      "tcgplayerId": 644359,
+      "released": "2025-09-26",
+      "image": "assets/products/me1/blister-drifblim.webp"
+    }
+  ],
+  "me2": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "me2-mep022"
+      ],
+      "price": 152.42,
+      "tcgplayerId": 654136,
+      "released": "2025-11-14",
+      "image": "assets/products/me2/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me2-mep022-pc",
+        "me2-mep022"
+      ],
+      "price": 288.21,
+      "tcgplayerId": 654135,
+      "released": "2025-11-14",
+      "image": "assets/products/me2/pc-etb.webp"
+    },
+    {
+      "id": "charizard-upc",
+      "name": "Mega Charizard X ex Ultra-Premium Collection",
+      "kind": "premium",
+      "packs": 18,
+      "promos": [
+        "me2-mep023",
+        "me2-mep024"
+      ],
+      "price": 227.22,
+      "tcgplayerId": 654213,
+      "image": "assets/products/me2/charizard-upc.webp"
+    },
+    {
+      "id": "tin-charizard-x",
+      "name": "Mega Charizard X ex Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me2-mep029"
+      ],
+      "price": 47.02,
+      "tcgplayerId": 671250,
+      "released": "2026-02-20",
+      "image": "assets/products/me2/tin-charizard-x.webp"
+    },
+    {
+      "id": "tin-charizard-y",
+      "name": "Mega Charizard Y ex Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me2-mep030"
+      ],
+      "price": 43.8,
+      "tcgplayerId": 671249,
+      "released": "2026-02-20",
+      "image": "assets/products/me2/tin-charizard-y.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "me2-mep014",
+        "me2-mep015",
+        "me2-mep016",
+        "me2-mep017"
+      ],
+      "pick": 1,
+      "price": 64.2,
+      "tcgplayerId": 662725,
+      "image": "assets/products/me2/build-battle.webp"
+    },
+    {
+      "id": "deck-gengar",
+      "name": "Mega Battle Deck: Mega Gengar ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "me2-mep027"
+      ],
+      "price": 66.13,
+      "tcgplayerId": 659192,
+      "released": "2025-10-24",
+      "image": "assets/products/me2/deck-gengar.webp"
+    },
+    {
+      "id": "deck-diancie",
+      "name": "Mega Battle Deck: Mega Diancie ex",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "me2-mep026"
+      ],
+      "price": 23.26,
+      "tcgplayerId": 659193,
+      "released": "2025-10-24",
+      "image": "assets/products/me2/deck-diancie.webp"
+    },
+    {
+      "id": "blister3-sneasel",
+      "name": "3 Pack Blister: Sneasel",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "me2-mep020"
+      ],
+      "price": 42.4,
+      "tcgplayerId": 654154,
+      "image": "assets/products/me2/blister3-sneasel.webp"
+    },
+    {
+      "id": "blister3-weavile",
+      "name": "3 Pack Blister: Weavile",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "me2-mep021"
+      ],
+      "price": 43.58,
+      "tcgplayerId": 654156,
+      "released": "2025-11-14",
+      "image": "assets/products/me2/blister3-weavile.webp"
+    },
+    {
+      "id": "blister-cottonee",
+      "name": "Single Pack Blister: Cottonee",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me2-mep018"
+      ],
+      "price": 13.03,
+      "tcgplayerId": 654151,
+      "released": "2025-11-14",
+      "image": "assets/products/me2/blister-cottonee.webp"
+    },
+    {
+      "id": "blister-whimsicott",
+      "name": "Single Pack Blister: Whimsicott",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me2-mep019"
+      ],
+      "price": 12.77,
+      "tcgplayerId": 654150,
+      "released": "2025-11-14",
+      "image": "assets/products/me2/blister-whimsicott.webp"
+    }
+  ],
+  "me2pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "me2pt5-mep031"
+      ],
+      "price": 150.5,
+      "tcgplayerId": 668496,
+      "image": "assets/products/me2pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me2pt5-mep031-pc",
+        "me2pt5-mep031"
+      ],
+      "price": 358.96,
+      "tcgplayerId": 668497,
+      "image": "assets/products/me2pt5/pc-etb.webp"
+    },
+    {
+      "id": "poster-gardevoir",
+      "name": "Premium Poster Collection: Mega Gardevoir",
+      "kind": "premium",
+      "packs": 10,
+      "promos": [
+        "me2pt5-mep032"
+      ],
+      "price": 145.43,
+      "tcgplayerId": 668537,
+      "released": "2026-03-20",
+      "image": "assets/products/me2pt5/poster-gardevoir.webp"
+    },
+    {
+      "id": "poster-lucario",
+      "name": "Premium Poster Collection: Mega Lucario",
+      "kind": "premium",
+      "packs": 10,
+      "promos": [
+        "me2pt5-mep033"
+      ],
+      "price": 153.52,
+      "tcgplayerId": 668536,
+      "released": "2026-03-20",
+      "image": "assets/products/me2pt5/poster-lucario.webp"
+    },
+    {
+      "id": "box-meganium",
+      "name": "Mega Meganium ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "me2pt5-mep034"
+      ],
+      "price": 55.61,
+      "tcgplayerId": 672733,
+      "image": "assets/products/me2pt5/box-meganium.webp"
+    },
+    {
+      "id": "box-emboar",
+      "name": "Mega Emboar ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "me2pt5-mep035"
+      ],
+      "price": 57.22,
+      "tcgplayerId": 672734,
+      "image": "assets/products/me2pt5/box-emboar.webp"
+    },
+    {
+      "id": "box-feraligatr",
+      "name": "Mega Feraligatr ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "me2pt5-mep036"
+      ],
+      "price": 58.23,
+      "tcgplayerId": 672735,
+      "image": "assets/products/me2pt5/box-feraligatr.webp"
+    },
+    {
+      "id": "tin-meganium",
+      "name": "Mega Meganium ex Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me2pt5-mep034"
+      ],
+      "price": 46.14,
+      "tcgplayerId": 702498,
+      "released": "2026-08-28",
+      "image": "assets/products/me2pt5/tin-meganium.webp"
+    },
+    {
+      "id": "tin-emboar",
+      "name": "Mega Emboar ex Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me2pt5-mep035"
+      ],
+      "price": 46.6,
+      "tcgplayerId": 702496,
+      "released": "2026-08-28",
+      "image": "assets/products/me2pt5/tin-emboar.webp"
+    },
+    {
+      "id": "tin-feraligatr",
+      "name": "Mega Feraligatr ex Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me2pt5-mep036"
+      ],
+      "price": 45.94,
+      "tcgplayerId": 702497,
+      "released": "2026-08-28",
+      "image": "assets/products/me2pt5/tin-feraligatr.webp"
+    }
+  ],
+  "me3": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "me3-mep070"
+      ],
+      "price": 70.9,
+      "tcgplayerId": 672401,
+      "released": "2026-03-27",
+      "image": "assets/products/me3/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me3-mep070-pc",
+        "me3-mep070"
+      ],
+      "price": 123.9,
+      "tcgplayerId": 672404,
+      "released": "2026-03-27",
+      "image": "assets/products/me3/pc-etb.webp"
+    },
+    {
+      "id": "zygarde-premium",
+      "name": "Mega Zygarde ex Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "me3-mep071"
+      ],
+      "price": 47.91,
+      "tcgplayerId": 682939,
+      "released": "2026-05-22",
+      "image": "assets/products/me3/zygarde-premium.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "me3-mep064",
+        "me3-mep065",
+        "me3-mep066",
+        "me3-mep067"
+      ],
+      "pick": 1,
+      "price": 38.21,
+      "tcgplayerId": 672400,
+      "released": "2026-04-10",
+      "image": "assets/products/me3/build-battle.webp"
+    },
+    {
+      "id": "blister3-chikorita",
+      "name": "3 Pack Blister: Chikorita",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "me3-mep069"
+      ],
+      "price": 20.79,
+      "tcgplayerId": 672393,
+      "released": "2026-03-27",
+      "image": "assets/products/me3/blister3-chikorita.webp"
+    },
+    {
+      "id": "blister-makuhita",
+      "name": "Single Pack Blister: Makuhita",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me3-mep068"
+      ],
+      "price": 7.74,
+      "tcgplayerId": 672410,
+      "released": "2026-03-27",
+      "image": "assets/products/me3/blister-makuhita.webp"
+    }
+  ],
+  "me4": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "me4-mep080"
+      ],
+      "price": 69.81,
+      "tcgplayerId": 684450,
+      "released": "2026-05-22",
+      "image": "assets/products/me4/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me4-mep080-pc",
+        "me4-mep080"
+      ],
+      "price": 120.82,
+      "tcgplayerId": 684452,
+      "released": "2026-05-22",
+      "image": "assets/products/me4/pc-etb.webp"
+    },
+    {
+      "id": "greninja-premium",
+      "name": "Mega Greninja ex Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "me4-mep081"
+      ],
+      "price": 49.23,
+      "tcgplayerId": 690660,
+      "image": "assets/products/me4/greninja-premium.webp"
+    },
+    {
+      "id": "tin-gengar",
+      "name": "Mega Moonlit Tin: Mega Gengar ex",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me4-mep073"
+      ],
+      "price": 32.58,
+      "tcgplayerId": 686437,
+      "released": "2026-06-05",
+      "image": "assets/products/me4/tin-gengar.webp"
+    },
+    {
+      "id": "tin-clefable",
+      "name": "Mega Moonlit Tin: Mega Clefable ex",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me4-mep072"
+      ],
+      "price": 26.68,
+      "tcgplayerId": 686438,
+      "released": "2026-06-05",
+      "image": "assets/products/me4/tin-clefable.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "me4-mep074",
+        "me4-mep075",
+        "me4-mep076",
+        "me4-mep077"
+      ],
+      "pick": 1,
+      "price": 43.78,
+      "tcgplayerId": 684454,
+      "released": "2026-06-05",
+      "image": "assets/products/me4/build-battle.webp"
+    },
+    {
+      "id": "blister3-charmeleon",
+      "name": "3 Pack Blister: Charmeleon",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "me4-mep079"
+      ],
+      "price": 20.51,
+      "tcgplayerId": 684458,
+      "image": "assets/products/me4/blister3-charmeleon.webp"
+    },
+    {
+      "id": "blister-toxel",
+      "name": "Single Pack Blister: Toxel",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me4-mep078"
+      ],
+      "price": 6.76,
+      "tcgplayerId": 684457,
+      "released": "2026-05-22",
+      "image": "assets/products/me4/blister-toxel.webp"
+    }
+  ],
+  "me5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "me5-mep088"
+      ],
+      "price": 72.04,
+      "tcgplayerId": 692947,
+      "released": "2026-07-17",
+      "image": "assets/products/me5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "me5-mep088-pc",
+        "me5-mep088"
+      ],
+      "price": 115.35,
+      "tcgplayerId": 692949,
+      "released": "2026-07-17",
+      "image": "assets/products/me5/pc-etb.webp"
+    },
+    {
+      "id": "tin-zeraora",
+      "name": "Mega Forces Tin: Mega Zeraora ex",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me5-mep089"
+      ],
+      "price": 52.76,
+      "tcgplayerId": 702507,
+      "released": "2026-08-28",
+      "image": "assets/products/me5/tin-zeraora.webp"
+    },
+    {
+      "id": "tin-darkrai",
+      "name": "Mega Forces Tin: Mega Darkrai ex",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "me5-mep090"
+      ],
+      "price": 53.42,
+      "tcgplayerId": 702506,
+      "released": "2026-08-28",
+      "image": "assets/products/me5/tin-darkrai.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "me5-mep082",
+        "me5-mep083",
+        "me5-mep084",
+        "me5-mep085"
+      ],
+      "pick": 1,
+      "price": 37.98,
+      "tcgplayerId": 692946,
+      "released": "2026-07-31",
+      "image": "assets/products/me5/build-battle.webp"
+    },
+    {
+      "id": "blister3-binacle",
+      "name": "3 Pack Blister: Binacle",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "me5-mep087"
+      ],
+      "price": 20.61,
+      "tcgplayerId": 692938,
+      "released": "2026-07-17",
+      "image": "assets/products/me5/blister3-binacle.webp"
+    },
+    {
+      "id": "blister-slowpoke",
+      "name": "Single Pack Blister: Slowpoke",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "me5-mep086"
+      ],
+      "price": 9.05,
+      "tcgplayerId": 692955,
+      "released": "2026-07-17",
+      "image": "assets/products/me5/blister-slowpoke.webp"
+    }
+  ],
   "me55": [
     {
       "id": "eliteTrainerBox",

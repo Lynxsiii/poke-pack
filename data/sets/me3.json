@@ -11,5 +11,98 @@
     "starmie",
     "zygarde",
     "meowth"
+  ],
+  "tcgplayerGroup": 24587,
+  "promoSeries": {
+    "mep": {
+      "series": "mega-evolution",
+      "slug": "me-black-star-promos",
+      "scrydex": "mep",
+      "tcgplayerGroup": 24451,
+      "printed": "MEP"
+    }
+  },
+  "promoCards": {
+    "mep064": {},
+    "mep065": {},
+    "mep066": {},
+    "mep067": {},
+    "mep068": {},
+    "mep069": {},
+    "mep070": {},
+    "mep070-pc": {
+      "like": "mep070",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 685563
+    },
+    "mep071": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 672401,
+      "packs": 9,
+      "promos": [
+        "mep070"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 672404,
+      "packs": 11,
+      "promos": [
+        "mep070-pc",
+        "mep070"
+      ]
+    },
+    {
+      "id": "zygarde-premium",
+      "name": "Mega Zygarde ex Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 682939,
+      "tcgplayerGroup": 2374,
+      "packs": 8,
+      "promos": [
+        "mep071"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 672400,
+      "packs": 4,
+      "promos": [
+        "mep064",
+        "mep065",
+        "mep066",
+        "mep067"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-chikorita",
+      "name": "3 Pack Blister: Chikorita",
+      "kind": "blister",
+      "tcgplayerId": 672393,
+      "packs": 3,
+      "promos": [
+        "mep069"
+      ]
+    },
+    {
+      "id": "blister-makuhita",
+      "name": "Single Pack Blister: Makuhita",
+      "kind": "blister",
+      "tcgplayerId": 672410,
+      "packs": 1,
+      "promos": [
+        "mep068"
+      ]
+    }
   ]
 }

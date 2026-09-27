@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { contentsValue, drawPromos, poolsFrom, priceOffer } from "../js/engine.js";
-import { BASIC_ENERGY, findOffer, getSet, PLAYABLE_SETS, promoOffers, sealedOffers } from "../js/catalog.js";
+import { BASIC_ENERGY, findOffer, getSet, PLAYABLE_SETS, promoOffers, sealedOffers, sellValue } from "../js/catalog.js";
 
 const root = new URL("../", import.meta.url);
 const read = (path) => JSON.parse(fs.readFileSync(new URL(path, root)));
@@ -16,6 +16,8 @@ for (const [setId, list] of Object.entries(products)) {
   assert.equal(set.id, setId, `${setId} is a known set`);
   assert.ok(PLAYABLE_SETS.some((s) => s.id === setId), `${setId} is playable`);
   const cards = [...read(set.dataFile), ...BASIC_ENERGY];
+  // Promos are part of the set's binder, so its card count includes them.
+  assert.equal(cards.length - BASIC_ENERGY.length, set.totalCount, `${setId}: totalCount counts its promos`);
   const byId = Object.fromEntries(cards.map((c) => [c.id, c]));
   const pools = Object.values(poolsFrom(cards, set)).flat();
   assert.ok(pools.every((c) => !c.promo), `${setId}: no promo is in a pack pool`);
@@ -32,7 +34,8 @@ for (const [setId, list] of Object.entries(products)) {
       assert.ok(card, `${setId}/${offer.id}: ${id} is in ${set.dataFile}`);
       assert.ok(card.promo && card.rarity === "Promo", `${id} is a promo`);
       assert.ok(fs.existsSync(new URL(card.image, root)), `${id} has its scan`);
-      assert.ok(card.market > 0, `${id} has a price`);
+      // The Mega Forces Tin promos have no sales yet; they sell at the Promo fallback.
+      assert.ok(sellValue(card) > 0, `${id} sells for something`);
     }
     if (offer.pick) {
       assert.ok(offer.pick < offer.promos.length, `${offer.id}: pick is fewer than its promos`);

@@ -293,12 +293,18 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{n}/large"
         record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{n}/small"
         remote = record["image"]
-        if isinstance(detail.get("sortPrice"), (int, float)):
+        if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
+        # Kept so a promo pkmn.gg has no price for yet is priced from TCGplayer.
+        listing = next((v.get("tcgPlayerId") for v in detail.get("variations") or [] if v.get("tcgPlayerId")), None)
+        if listing and str(listing).isdigit():
+            record["tcgplayerId"] = int(listing)
         live = tcgl_card(TCGL_KEYS.get(prefix, ""), n)
         if live and not spec.get("foilAs"):
             record["foilAs"] = foil_from_tcgl(live)
 
+    # pkmn.gg pads some names ("Alakazam  ").
+    record["name"] = str(record.get("name", "")).strip()
     record["rarity"] = "Promo"
     record["promo"] = True
     for key in ("foilAs", "variant", "tcgplayerId", "printedNumber"):
@@ -349,6 +355,24 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     cards = {c["id"]: c for c in records}
     today = time.strftime("%Y-%m-%d")
 
+    # Products TCGplayer has no price for are left out, and so are promos that
+    # only they carry: a card no product sells can't be pulled.
+    market_by: dict[int, dict[int, float]] = {}
+    meta_by: dict[int, dict[int, dict]] = {}
+
+    def product_market(product: dict) -> tuple[float | None, dict]:
+        group = product.get("tcgplayerGroup") or cfg["tcgplayerGroup"]
+        if group not in market_by:
+            market_by[group] = tcg_prices(group, refresh=True)
+            meta_by[group] = tcg_products(group, refresh)
+        pid = product["tcgplayerId"]
+        return market_by[group].get(pid), meta_by[group].get(pid) or {}
+
+    sold = {n for product in products if product_market(product)[0] is not None for n in product.get("promos") or []}
+    unsold = [n for n in (cfg.get("promoCards") or {}) if n not in sold]
+    if unsold:
+        print(f"  promos with no priced product, left out: {', '.join(unsold)}")
+
     # Promo cards: build or refresh each, keeping them after the set's own cards.
     card_prices: dict[str, float] = {}
     listings: dict[str, dict[str, float]] = {}
@@ -371,11 +395,13 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             rows = page_data(fetch(f"https://www.pkmn.gg/series/{ser['series']}/{ser['slug']}"))
             listings[prefix] = {
                 str(r.get("number")): round(float(r["sortPrice"]), 2)
-                for r in rows if isinstance(r.get("sortPrice"), (int, float))
+                for r in rows if isinstance(r.get("sortPrice"), (int, float)) and r["sortPrice"] > 0
             }
         return listings[prefix].get(str(n))
 
     for number, spec in (cfg.get("promoCards") or {}).items():
+        if number not in sold:
+            continue
         card_id = f"{set_id}-{number}"
         if prices_only and card_id in cards:
             record, price = dict(cards[card_id]), None
@@ -386,16 +412,18 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             record, price, remote = promo_record(cfg, number, spec, cards, refresh)
             if refresh or not str(record.get("image", "")).startswith("assets/"):
                 mirror(set_id, record, remote, refresh)
-        # A stamped or product-only print is priced from its own TCGplayer listing.
-        if spec.get("tcgplayerId") and (spec.get("like") or price is None):
-            price = tcg_price(spec["tcgplayerId"]) or price
+        # A stamped or product-only print is priced from its own TCGplayer
+        # listing, and so is a promo pkmn.gg has no price for.
+        listing = spec.get("tcgplayerId") or record.get("tcgplayerId")
+        if listing and (spec.get("like") or not price):
+            price = tcg_price(listing) or price
         if price is not None:
             record["market"] = price
             card_prices[card_id] = price
         cards[card_id] = record
 
-    promo_ids = {f"{set_id}-{n}" for n in (cfg.get("promoCards") or {})}
-    ordered_records = [cards[c["id"]] for c in records if c["id"] not in promo_ids]
+    promo_ids = {f"{set_id}-{n}" for n in (cfg.get("promoCards") or {}) if n in sold}
+    ordered_records = [cards[c["id"]] for c in records if c["id"] not in promo_ids and not c.get("promo")]
     ordered_records += [cards[i] for i in sorted(promo_ids, key=lambda i: cards[i]["number"])]
     data_path.write_text(json.dumps(ordered_records, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     log_history(card_prices, today)
@@ -403,17 +431,10 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
 
     # Products: price, photo, contents. Collections sold across sets are filed
     # in another TCGplayer group (Miscellaneous Cards & Products), named per product.
-    market_by: dict[int, dict[int, float]] = {}
-    meta_by: dict[int, dict[int, dict]] = {}
     out = []
     for product in products:
         pid = product["tcgplayerId"]
-        group = product.get("tcgplayerGroup") or cfg["tcgplayerGroup"]
-        if group not in market_by:
-            market_by[group] = tcg_prices(group, refresh=True)
-            meta_by[group] = tcg_products(group, refresh)
-        market, meta = market_by[group], meta_by[group]
-        price = market.get(pid)
+        price, info = product_market(product)
         if price is None:
             print(f"    {product['id']}: no TCGplayer price, left out")
             continue
@@ -421,7 +442,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         missing = [p for p in promos if p not in cards]
         if missing:
             raise RuntimeError(f"{product['id']}: promo card(s) {missing} not built")
-        released = ((meta.get(pid) or {}).get("presaleInfo") or {}).get("releasedOn") or ""
+        released = (info.get("presaleInfo") or {}).get("releasedOn") or ""
         entry = {
             "id": product["id"],
             "name": product["name"],

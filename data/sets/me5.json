@@ -11,5 +11,122 @@
     "chandelure",
     "zeraora",
     "excadrill"
+  ],
+  "tcgplayerGroup": 24688,
+  "promoSeries": {
+    "mep": {
+      "series": "mega-evolution",
+      "slug": "me-black-star-promos",
+      "scrydex": "mep",
+      "tcgplayerGroup": 24451,
+      "printed": "MEP"
+    }
+  },
+  "promoCards": {
+    "mep082": {},
+    "mep083": {},
+    "mep084": {},
+    "mep085": {},
+    "mep086": {},
+    "mep087": {},
+    "mep088": {},
+    "mep088-pc": {
+      "like": "mep088",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 706199
+    },
+    "mep089": {},
+    "mep090": {},
+    "mep091": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 692947,
+      "packs": 9,
+      "promos": [
+        "mep088"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 692949,
+      "packs": 11,
+      "promos": [
+        "mep088-pc",
+        "mep088"
+      ]
+    },
+    {
+      "id": "tin-zeraora",
+      "name": "Mega Forces Tin: Mega Zeraora ex",
+      "kind": "tin",
+      "tcgplayerId": 702507,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "mep089"
+      ]
+    },
+    {
+      "id": "tin-darkrai",
+      "name": "Mega Forces Tin: Mega Darkrai ex",
+      "kind": "tin",
+      "tcgplayerId": 702506,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "mep090"
+      ]
+    },
+    {
+      "id": "tin-dragonite",
+      "name": "Mega Forces Tin: Mega Dragonite ex",
+      "kind": "tin",
+      "tcgplayerId": 702505,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "mep091"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 692946,
+      "packs": 4,
+      "promos": [
+        "mep082",
+        "mep083",
+        "mep084",
+        "mep085"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-binacle",
+      "name": "3 Pack Blister: Binacle",
+      "kind": "blister",
+      "tcgplayerId": 692938,
+      "packs": 3,
+      "promos": [
+        "mep087"
+      ]
+    },
+    {
+      "id": "blister-slowpoke",
+      "name": "Single Pack Blister: Slowpoke",
+      "kind": "blister",
+      "tcgplayerId": 692955,
+      "packs": 1,
+      "promos": [
+        "mep086"
+      ]
+    }
   ]
 }

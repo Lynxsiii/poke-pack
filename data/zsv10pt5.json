@@ -6186,11 +6186,12 @@
         "text": "If you have 4 or fewer Benched Pokémon, this attack does nothing."
       }
     ],
+    "market": 9.37,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-208/large",
     "printedNumber": "SVP 208",
+    "tcgplayerId": 646169,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 9.37,
     "foilMap": "assets/foil/maps/zsv10pt5/svp208.webp"
   },
   {
@@ -6230,11 +6231,12 @@
         "text": "Discard an Energy from this Pokémon."
       }
     ],
+    "market": 1.2,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-209/large",
     "printedNumber": "SVP 209",
+    "tcgplayerId": 644833,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 1.2,
     "foilMap": "assets/foil/maps/zsv10pt5/svp209.webp"
   },
   {
@@ -6252,6 +6254,8 @@
     "hp": "120",
     "artist": "Anesaki Dynamic",
     "flavorText": "Countless charred remains mar the landscape of places through which Thundurus has passed.",
+    "image": "assets/cards/zsv10pt5/svp209-pc.webp",
+    "imageSmall": "assets/cards/zsv10pt5/svp209-pc-sm.webp",
     "attacks": [
       {
         "name": "Charge",
@@ -6272,15 +6276,13 @@
         "text": "Discard an Energy from this Pokémon."
       }
     ],
+    "market": 20.17,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/644834_in_1000x1000.jpg",
     "printedNumber": "SVP 209",
     "foilAs": "Illustration Rare",
     "promo": true,
     "variant": "Pokémon Center stamp",
     "tcgplayerId": 644834,
-    "image": "assets/cards/zsv10pt5/svp209-pc.webp",
-    "imageSmall": "assets/cards/zsv10pt5/svp209-pc-sm.webp",
-    "market": 20.17,
     "foilMap": "assets/foil/maps/zsv10pt5/svp209-pc.webp"
   },
   {
@@ -6318,11 +6320,12 @@
         "text": "This attack does 40 more damage for each of your Evolution Pokémon in play."
       }
     ],
+    "market": 2.5,
     "imageRemote": "https://images.scrydex.com/pokemon/svp-212/large",
     "printedNumber": "SVP 212",
+    "tcgplayerId": 647309,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 2.5,
     "foilMap": "assets/foil/maps/zsv10pt5/svp212.webp"
   }
 ]

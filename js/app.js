@@ -4611,7 +4611,9 @@ function showPromoIntro() {
       )
       .join("")}</div>
     <p class="spread-tip">${
-      packs ? "Your promos are saved. The packs come next." : "Your promo is saved. The deck's other cards aren't simulated."
+      `${promos.length === 1 ? "Your promo is" : "Your promos are"} saved. ${
+        packs ? "The packs come next." : "The deck's other cards aren't simulated."
+      }`
     } Select a card to inspect it.</p>`;
 
   els.ripHint.textContent = "";

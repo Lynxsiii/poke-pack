@@ -9916,5 +9916,307 @@
     ],
     "market": 246.49,
     "imageRemote": "https://images.scrydex.com/pokemon/me2pt5-295/large"
+  },
+  {
+    "id": "me2pt5-mep031",
+    "name": "N's Zekrom",
+    "number": "mep031",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Bun Toujo",
+    "flavorText": "When the interior part of its tail spins like a motor, Zekrom can generate many bolts of lightning to blast its surrounds.",
+    "image": "assets/cards/me2pt5/mep031.webp",
+    "imageSmall": "assets/cards/me2pt5/mep031-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Rampaging Thunder",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-31/large",
+    "printedNumber": "MEP 031",
+    "tcgplayerId": 680480,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 5.87,
+    "foilMap": "assets/foil/maps/me2pt5/mep031.webp"
+  },
+  {
+    "id": "me2pt5-mep031-pc",
+    "name": "N's Zekrom",
+    "number": "mep031-pc",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Bun Toujo",
+    "flavorText": "When the interior part of its tail spins like a motor, Zekrom can generate many bolts of lightning to blast its surrounds.",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Rampaging Thunder",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can't use attacks."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/680481_in_1000x1000.jpg",
+    "printedNumber": "MEP 031",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "variant": "Pokémon Center stamp",
+    "tcgplayerId": 680481,
+    "image": "assets/cards/me2pt5/mep031-pc.webp",
+    "imageSmall": "assets/cards/me2pt5/mep031-pc-sm.webp",
+    "market": 61.41,
+    "foilMap": "assets/foil/maps/me2pt5/mep031-pc.webp"
+  },
+  {
+    "id": "me2pt5-mep032",
+    "name": "Mega Gardevoir ex",
+    "number": "mep032",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex",
+      "Mega"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "360",
+    "artist": "Saboteri",
+    "image": "assets/cards/me2pt5/mep032.webp",
+    "imageSmall": "assets/cards/me2pt5/mep032-sm.webp",
+    "attacks": [
+      {
+        "name": "Overflowing Wishes",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "For each of your Benched Pokémon, search your deck for a Basic Psychic Energy card and attach it to that Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Mega Symphonia",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "50x",
+        "text": "This attack does 50 damage for each Psychic Energy attached to all of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-32/large",
+    "printedNumber": "MEP 032",
+    "tcgplayerId": 685510,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 6.7,
+    "foilMap": "assets/foil/maps/me2pt5/mep032.webp",
+    "etchMap": "assets/foil/maps/me2pt5/mep032-etch.webp"
+  },
+  {
+    "id": "me2pt5-mep033",
+    "name": "Mega Lucario ex",
+    "number": "mep033",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex",
+      "Mega"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/me2pt5/mep033.webp",
+    "imageSmall": "assets/cards/me2pt5/mep033-sm.webp",
+    "attacks": [
+      {
+        "name": "Aura Jab",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "130",
+        "text": "Attach up to 3 Basic Fighting Energy cards from your discard pile to your Benched Pokémon in any way you like."
+      },
+      {
+        "name": "Mega Brave",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "270",
+        "text": "During your next turn, this Pokémon can't use Mega Brave."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-33/large",
+    "printedNumber": "MEP 033",
+    "tcgplayerId": 685511,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 9.61,
+    "foilMap": "assets/foil/maps/me2pt5/mep033.webp",
+    "etchMap": "assets/foil/maps/me2pt5/mep033-etch.webp"
+  },
+  {
+    "id": "me2pt5-mep034",
+    "name": "Mega Meganium ex",
+    "number": "mep034",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "360",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me2pt5/mep034.webp",
+    "imageSmall": "assets/cards/me2pt5/mep034-sm.webp",
+    "attacks": [
+      {
+        "name": "Giant Bouquet",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "This attack does 50 more damage for each Grass Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-34/large",
+    "printedNumber": "MEP 034",
+    "tcgplayerId": 692120,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.62,
+    "foilMap": "assets/foil/maps/me2pt5/mep034.webp",
+    "etchMap": "assets/foil/maps/me2pt5/mep034-etch.webp"
+  },
+  {
+    "id": "me2pt5-mep035",
+    "name": "Mega Emboar ex",
+    "number": "mep035",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "380",
+    "artist": " 5ban Graphics",
+    "image": "assets/cards/me2pt5/mep035.webp",
+    "imageSmall": "assets/cards/me2pt5/mep035-sm.webp",
+    "attacks": [
+      {
+        "name": "Crimson Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "320",
+        "text": "This Pokémon also does 60 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-35/large",
+    "printedNumber": "MEP 035",
+    "tcgplayerId": 692119,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.42,
+    "foilMap": "assets/foil/maps/me2pt5/mep035.webp",
+    "etchMap": "assets/foil/maps/me2pt5/mep035-etch.webp"
+  },
+  {
+    "id": "me2pt5-mep036",
+    "name": "Mega Feraligatr ex",
+    "number": "mep036",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Mega"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "370",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/me2pt5/mep036.webp",
+    "imageSmall": "assets/cards/me2pt5/mep036-sm.webp",
+    "attacks": [
+      {
+        "name": "Mortal Crunch",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "200+",
+        "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 200 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-36/large",
+    "printedNumber": "MEP 036",
+    "tcgplayerId": 692118,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.56,
+    "foilMap": "assets/foil/maps/me2pt5/mep036.webp",
+    "etchMap": "assets/foil/maps/me2pt5/mep036-etch.webp"
   }
 ]

@@ -5,5 +5,131 @@
   "slug": "ascended-heroes",
   "scrydexId": "me2pt5",
   "pittSlug": "Ascended-Heroes",
-  "artSlug": "ascended-heroes"
+  "artSlug": "ascended-heroes",
+  "tcgplayerGroup": 24541,
+  "promoSeries": {
+    "mep": {
+      "series": "mega-evolution",
+      "slug": "me-black-star-promos",
+      "scrydex": "mep",
+      "tcgplayerGroup": 24451,
+      "printed": "MEP"
+    }
+  },
+  "promoCards": {
+    "mep031": {},
+    "mep031-pc": {
+      "like": "mep031",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 680481
+    },
+    "mep032": {},
+    "mep033": {},
+    "mep034": {},
+    "mep035": {},
+    "mep036": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 668496,
+      "packs": 9,
+      "promos": [
+        "mep031"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 668497,
+      "packs": 11,
+      "promos": [
+        "mep031-pc",
+        "mep031"
+      ]
+    },
+    {
+      "id": "poster-gardevoir",
+      "name": "Premium Poster Collection: Mega Gardevoir",
+      "kind": "premium",
+      "tcgplayerId": 668537,
+      "packs": 10,
+      "promos": [
+        "mep032"
+      ]
+    },
+    {
+      "id": "poster-lucario",
+      "name": "Premium Poster Collection: Mega Lucario",
+      "kind": "premium",
+      "tcgplayerId": 668536,
+      "packs": 10,
+      "promos": [
+        "mep033"
+      ]
+    },
+    {
+      "id": "box-meganium",
+      "name": "Mega Meganium ex Box",
+      "kind": "collection",
+      "tcgplayerId": 672733,
+      "packs": 4,
+      "promos": [
+        "mep034"
+      ]
+    },
+    {
+      "id": "box-emboar",
+      "name": "Mega Emboar ex Box",
+      "kind": "collection",
+      "tcgplayerId": 672734,
+      "packs": 4,
+      "promos": [
+        "mep035"
+      ]
+    },
+    {
+      "id": "box-feraligatr",
+      "name": "Mega Feraligatr ex Box",
+      "kind": "collection",
+      "tcgplayerId": 672735,
+      "packs": 4,
+      "promos": [
+        "mep036"
+      ]
+    },
+    {
+      "id": "tin-meganium",
+      "name": "Mega Meganium ex Tin",
+      "kind": "tin",
+      "tcgplayerId": 702498,
+      "packs": 4,
+      "promos": [
+        "mep034"
+      ]
+    },
+    {
+      "id": "tin-emboar",
+      "name": "Mega Emboar ex Tin",
+      "kind": "tin",
+      "tcgplayerId": 702496,
+      "packs": 4,
+      "promos": [
+        "mep035"
+      ]
+    },
+    {
+      "id": "tin-feraligatr",
+      "name": "Mega Feraligatr ex Tin",
+      "kind": "tin",
+      "tcgplayerId": 702497,
+      "packs": 4,
+      "promos": [
+        "mep036"
+      ]
+    }
+  ]
 }
