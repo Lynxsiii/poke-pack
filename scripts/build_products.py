@@ -26,6 +26,17 @@ is not all of them (a Build & Battle Box holds one of four at random), and
 set's own (Miscellaneous Cards & Products, 2374). A product whose id matches one of SEALED_PRODUCTS
 (eliteTrainerBox) only adds its promos to that product.
 
+A promo set with no boosters of its own (svp, the SV Black Star Promos)
+names the sets its products' packs come from instead of `packs`:
+
+    { "id": "charizard-ex-premium", "kind": "premium", "tcgplayerId": 516576,
+      "from": { "sv3": 3, "sv2": 3 }, "promos": ["svp056"],
+      "note": "The real box held 6 assorted Scarlet & Violet packs." }
+
+and sells a promo handed out on its own (a tournament reward, a museum
+giveaway) as `"kind": "event"`: the card alone, priced from its own listing
+in the promo group (`tcgplayerGroup` 22872), with no box photo.
+
 This script then:
 
   * writes each promo card into data/<id>.json as `<id>-<number>` with
@@ -447,11 +458,14 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         if missing:
             raise RuntimeError(f"{product['id']}: promo card(s) {missing} not built")
         released = (info.get("presaleInfo") or {}).get("releasedOn") or ""
+        source = {str(k): int(v) for k, v in (product.get("from") or {}).items() if int(v) > 0}
         entry = {
             "id": product["id"],
             "name": product["name"],
             "kind": product.get("kind", "collection"),
-            "packs": int(product.get("packs", 0)),
+            "packs": sum(source.values()) if source else int(product.get("packs", 0)),
+            **({"from": source} if source else {}),
+            **({"note": product["note"]} if product.get("note") else {}),
             **({"special": product["special"]} if product.get("special") else {}),
             "promos": promos,
             **({"pick": int(product["pick"])} if product.get("pick") else {}),
@@ -459,14 +473,17 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             "tcgplayerId": pid,
             **({"released": released[:10]} if released else {}),
         }
-        if not prices_only or not (ROOT / f"assets/products/{set_id}/{product['id']}.webp").exists():
+        if entry["kind"] == "event":
+            # The card is the product: its own scan stands in for a box photo.
+            image = None
+        elif not prices_only or not (ROOT / f"assets/products/{set_id}/{product['id']}.webp").exists():
             image = save_product_image(set_id, product, refresh)
         else:
             image = f"assets/products/{set_id}/{product['id']}.webp"
         if image:
             entry["image"] = image
         out.append(entry)
-        print(f"    {product['id']:<16} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}")
+        print(f"    {product['id']:<24} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}")
     return out
 
 
