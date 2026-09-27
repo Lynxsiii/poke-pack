@@ -1,0 +1,5 @@
+# TCG Live foil maps fetched by scripts/fetch_foil_maps.py: local reference only, never committed
+cache/
+# find_overlay.py --debug output: regenerate to look at it
+masks/*-check.jpg
+masks/*-rgb.png

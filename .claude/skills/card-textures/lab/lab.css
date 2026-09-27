@@ -1,0 +1,153 @@
+/*
+ * Proof recipes for the card-textures skill. Everything here is scoped to
+ * .lab-proof cells, so the "site" copy of each card next to it is exactly
+ * what the live site draws today.
+ *
+ * Portions follow pokemon-cards-151 by Simon Goellner (@simeydotme),
+ * https://github.com/simeydotme/pokemon-cards-151, GPL-3.0; see NOTICE.md.
+ *
+ * 1. The 30th Celebration Pikachu stamp is knocked out of the window holo.
+ *    On the real card (TCG Live foil maps) the foil stops at the stamp's
+ *    outline. The site's window clip runs straight through the stamp, so its
+ *    top-left half shines and the rest does not.
+ * 2. The Pikachu Rare's big stamp is foil. The window clip-path cannot add an
+ *    area outside the window, so the window becomes a mask layer and the
+ *    stamp (minus the attack text printed over it) is added to it.
+ * 3. A straight port of pokemon-cards-151's Scarlet & Violet regular holo
+ *    onto the site's DOM, for the 30th Celebration Rares (TCG Live: SV_HOLO).
+ *    Its contrast is tuned for a background-only mask: over the whole window
+ *    it blows out the Pokémon. Compare with ?maps=1.
+ * 4. With ?maps=1, TCG Live's per-card foil map replaces all of the above as
+ *    the mask (lab only; the maps are never committed or shipped).
+ */
+
+/* ---- 1. Stamp knockout on window holos ---------------------------------- */
+body.fx-holo .lab-proof .tcg.has-stamp.foil-holo:not(.pikachu-rare) :is(.foil, .glare) {
+  -webkit-mask-image: var(--art), var(--stamp-mask);
+  -webkit-mask-composite: source-out;
+  mask-image: var(--art), var(--stamp-mask);
+  mask-composite: subtract, add;
+  -webkit-mask-size: contain, var(--stamp-size);
+  mask-size: contain, var(--stamp-size);
+  -webkit-mask-position: center, var(--stamp-pos);
+  mask-position: center, var(--stamp-pos);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* Stage 1 and 2: the evolution badge punch is a second mask layer, so the
+   stamp becomes the third. Read bottom up: stamp, badge window minus stamp,
+   scan intersected with that. */
+body.fx-holo .lab-proof .tcg.has-stamp.foil-holo.foil-evo :is(.foil, .glare) {
+  -webkit-mask-image: var(--art), var(--win-evo), var(--stamp-mask);
+  -webkit-mask-composite: source-in, source-out, source-over;
+  mask-image: var(--art), var(--win-evo), var(--stamp-mask);
+  mask-composite: intersect, subtract, add;
+  -webkit-mask-size: contain, contain, var(--stamp-size);
+  mask-size: contain, contain, var(--stamp-size);
+  -webkit-mask-position: center, center, var(--stamp-pos);
+  mask-position: center, center, var(--stamp-pos);
+  mask-mode: alpha;
+}
+
+/* ---- 2. Pikachu Rare: window plus the big stamp ------------------------- */
+body.fx-holo .lab-proof .tcg.pikachu-rare.has-stamp-cut :is(.foil, .glare) {
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--win-holo), var(--stamp-cut);
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-image: var(--art), var(--win-holo), var(--stamp-cut);
+  mask-composite: intersect, add, add;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
+}
+
+/* ---- 3. Scarlet & Violet regular holo, ported from 151 ------------------- */
+body.fx-holo .lab-proof .tcg.rare.foil-holo {
+  --holo: var(--sunpillar-1), var(--sunpillar-2), var(--sunpillar-3),
+    var(--sunpillar-4), var(--sunpillar-5), var(--sunpillar-6), var(--sunpillar-1);
+  --bars: 5%;
+  --bar-color: hsla(0, 0%, 70%, 1);
+  --bar-bg: hsla(0, 0%, 0%, 1);
+}
+body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.rare.foil-holo .foil {
+  background-image: repeating-linear-gradient(10deg,
+    var(--holo), var(--holo), var(--holo), var(--holo), var(--holo), var(--holo), var(--holo));
+  background-position:
+    calc((50% - var(--background-x)) + 50%) calc((50% - var(--background-y)) + 50%);
+  background-size: 400% 400%;
+  background-blend-mode: normal;
+  filter: brightness(1.25) contrast(3) saturate(0.75);
+  mix-blend-mode: overlay;
+}
+/* Bars whose angle follows the tilt: upstream's calc(rotate-x - rotate-delta);
+   the site has no popover spin, so rotate-delta is 0. */
+body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.rare.foil-holo .foil::before {
+  background-image:
+    repeating-linear-gradient(calc(var(--rotate-x) * 0.25),
+      var(--bar-bg) calc(var(--bars) * 2.5), var(--bar-color) calc(var(--bars) * 3.25),
+      hsla(0, 0%, 75%, 0.5) calc(var(--bars) * 3.5), var(--bar-color) calc(var(--bars) * 3.75),
+      var(--bar-bg) calc(var(--bars) * 4.5), var(--bar-bg) calc(var(--bars) * 8)),
+    repeating-linear-gradient(calc(var(--rotate-x) * -0.25),
+      var(--bar-bg) calc(var(--bars) * 2.5), var(--bar-color) calc(var(--bars) * 3.25),
+      hsla(0, 0%, 75%, 0.5) calc(var(--bars) * 3.5), var(--bar-color) calc(var(--bars) * 3.75),
+      var(--bar-bg) calc(var(--bars) * 4.5), var(--bar-bg) calc(var(--bars) * 8));
+  background-position: 50% calc(var(--background-y) * 1.2), 50% calc(var(--background-y) * -1.2);
+  background-size: 200% 200%, 200% 200%;
+  background-blend-mode: screen;
+  filter: brightness(1) contrast(2) saturate(0.75);
+  mix-blend-mode: multiply;
+}
+body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.rare.foil-holo .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 90%, 0.8) 0%, hsla(0, 0%, 78%, 0.1) 25%, hsl(0, 0%, 35%) 90%);
+  background-size: cover;
+  mix-blend-mode: luminosity;
+  filter: brightness(1) contrast(3);
+}
+body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.rare.foil-holo .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%, hsla(0, 0%, 100%, 0.65) 20%, hsla(0, 0%, 0%, 0.5) 120%);
+  opacity: calc(var(--card-opacity) * 0.8);
+  mix-blend-mode: overlay;
+  filter: none;
+}
+body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.rare.foil-holo .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(205.6, 50%, 90%, 0.5) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.6) contrast(3);
+}
+
+/* ---- 4. Per-card foil map (lab only, ?maps=1) ---------------------------
+   TCG Live's map is luminance: white is foil, grey partly foil, black plain.
+   It replaces the window clip, the stamp knockout and the Pokémon cut-out at
+   once, the way upstream's `.masked` cards work. The glare then lights the
+   whole card, as upstream's does on masked cards. */
+body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.has-foil-map.has-foil-map .foil {
+  clip-path: none;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha, luminance;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .lab-proof .tcg.has-foil-map.has-foil-map .glare {
+  clip-path: none;
+  -webkit-mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-image: var(--art);
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
