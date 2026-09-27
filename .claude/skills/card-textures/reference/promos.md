@@ -62,9 +62,11 @@ top-to-bottom brightness ramp in their alpha.
 
 A cosmos print with no map (the set-card cosmos prints of Journey Together
 and the Mega Evolution sets, whose plain print is a non-holo Rare) falls
-back to the art window: foil over the Pokémon and no border. The stamped
-ones now get a drawn window-and-frame map (below); the unstamped ones
-could take the same map for the border's sake, not done yet. The drawing
+back to the art window: foil over the Pokémon and no border. They now get
+a drawn window-and-frame map from `stamp_knockout.py` (below), stamped or
+not, so the silver border is foil too; a Trainer's window sits lower
+(`TRAINER_WINDOW`, windows.css's `.foil-trainer` inset). The Pokémon stays
+foil: nothing on the scan says where it is. The drawing
 is only for window holos: a stamped full-art print (the Paradox Rift
 Pokémon Center promos, Illustration Rares) is foil where the drawing is
 not, so `stamp_knockout.py` skips it until its TCG Live map is fetched
@@ -128,8 +130,14 @@ text boxes).
 `--debug` writes a contact sheet per set to `scripts/_debug/stamps/`
 (gitignored); look at it. Anything skipped is listed with the reason; give
 it a box. Skipped for good reasons: `sv8pt5-74-pokemon-day` (a reverse
-frame print, the stamp sits in the matte art window) and
-`me1-64/88/133-stamp` (the scans show no stamp).
+frame print, the stamp sits in the matte art window) and `me1-133-stamp`
+(the scan shows no stamp). A stamped print whose scan is the plain print's
+(same `imageRemote`; `me1-64-stamp` and `me1-88-stamp`, which TCGplayer has
+no photo of) has nothing to cut and takes the map as it is.
+
+An unstamped window holo promo with no map (`foilAs` "Cosmos" or a holo
+rarity, not a reverse) gets the drawn map in the same run. Limit a run to
+some cards with `--only` (card numbers, across every set with `--all`).
 
 Adding a stamped print: name it `<base id>-<suffix>` with one of the
 suffixes above, ship its scan, run `stamp_knockout.py --set <set> --debug`,

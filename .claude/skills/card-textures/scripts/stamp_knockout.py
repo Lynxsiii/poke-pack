@@ -39,6 +39,12 @@ stamp, the new map) to scripts/_debug/stamps/, which is gitignored. Look at
 it: a stamp that sits on non-foil ink costs nothing, but a blob that is not
 the stamp would punch a hole in the foil. Anything the script skips is
 listed at the end with the reason; give it a box in stamp_boxes.json.
+
+A window holo promo with no map at all and no stamp (the unstamped cosmos
+prints of Mega Evolution and Journey Together cards, whose plain print is
+not holo) gets the drawn window-and-frame map too, so its silver border is
+foil like the real card's. So does a stamped print whose scan is the plain
+print's (there is no stamp in it to cut).
 """
 from __future__ import annotations
 
@@ -74,6 +80,7 @@ GLOBAL_KINDS = ("pc", "gamestop", "ebgames")
 # the card: for a print whose plain card has no map (a non-holo Rare that only
 # goes holo as a cosmos promo), the map is drawn from these instead.
 WINDOW = (0.07937, 0.09318, 1 - 0.07302, 1 - 0.52727)  # x0, y0, x1, y1 (windows.css)
+TRAINER_WINDOW = (0.07778, 0.14091, 1 - 0.06825, 1 - 0.47614)  # windows.css .foil-trainer
 FRAME = (0.036, 0.026)
 SUFFIXES = tuple(ZONES)
 # Finishes whose foil is the art window plus the outer frame, so a print with
@@ -310,19 +317,24 @@ def floor_alpha(alpha: np.ndarray) -> np.ndarray:
 
 
 def windowed(card: dict, base: dict | None) -> bool:
-    """Whether the print's foil is the standard window and frame (see WINDOWED)."""
+    """Whether the print's foil is the standard window and frame (see WINDOWED).
+    A reverse print ("Reverse Cosmos", "Frame") is foil everywhere else."""
     finish = str((card.get("foilAs") or card.get("rarity") or (base or {}).get("rarity") or "")).strip()
+    if finish.startswith("Reverse"):
+        return False
     return finish in WINDOWED or "Cosmos" in finish
 
 
-def window_map(scan: np.ndarray) -> np.ndarray:
+def window_map(scan: np.ndarray, trainer: bool = False) -> np.ndarray:
     """A foil map for a standard-layout print with no TCG Live map: the art
-    window and the outer frame, at the scan's size, as 0..255 alpha. The
-    Pokémon stays foil (there is nothing to cut it out with), as it was on
-    the window fallback this replaces; the frame is the gain."""
+    window (a Trainer's sits lower) and the outer frame, at the scan's size,
+    as 0..255 alpha. The Pokémon stays foil (there is nothing to cut it out
+    with), as it was on the window fallback this replaces; the frame is the
+    gain."""
     H, W = scan.shape[:2]
     alpha = np.zeros((H, W), np.float32)
-    x0, y0, x1, y1 = int(WINDOW[0] * W), int(WINDOW[1] * H), int(WINDOW[2] * W), int(WINDOW[3] * H)
+    win = TRAINER_WINDOW if trainer else WINDOW
+    x0, y0, x1, y1 = int(win[0] * W), int(win[1] * H), int(win[2] * W), int(win[3] * H)
     alpha[y0:y1, x0:x1] = 255
     fx, fy = int(FRAME[0] * W), int(FRAME[1] * H)
     alpha[:fy, :] = 255
@@ -332,9 +344,10 @@ def window_map(scan: np.ndarray) -> np.ndarray:
     return alpha
 
 
-def knock_out(map_path: Path | None, stamp: np.ndarray, scan: np.ndarray | None = None) -> Image.Image:
+def knock_out(map_path: Path | None, stamp: np.ndarray, scan: np.ndarray | None = None,
+              trainer: bool = False) -> Image.Image:
     if map_path is None:
-        alpha = window_map(scan)
+        alpha = window_map(scan, trainer)
         alpha = np.asarray(Image.fromarray(alpha.astype(np.uint8)).resize((367, 512), Image.LANCZOS)).astype(np.float32)
         m = np.zeros((512, 367, 4), np.float32)
     else:
@@ -392,12 +405,18 @@ def main() -> None:
         loaded = load_set(set_id)
         if loaded:
             sets[set_id] = loaded
+    plain = []
     for set_id, loaded in sets.items():
         for card in loaded["records"]:
+            if only and str(card.get("number")) not in only:
+                continue
             m = re.fullmatch(r"(.+?)-([a-z-]+)", card["id"])
             if not m or m.group(2) not in SUFFIXES:
-                continue
-            if only and str(card["number"]) not in only:
+                # An unstamped window holo promo with no map (a cosmos print
+                # of a card whose plain print is not holo).
+                has_map = card.get("foilMap") and (ROOT / card["foilMap"]).exists()
+                if card.get("promo") and not has_map and card.get("image") and windowed(card, None):
+                    plain.append({"set": set_id, "card": card})
                 continue
             base = loaded["by_id"].get(m.group(1))
             if not base:
@@ -431,6 +450,11 @@ def main() -> None:
             if a_img.size != SCAN:
                 a_img = a_img.resize(SCAN, Image.LANCZOS)
             a = np.asarray(a_img).astype(np.float32)
+            if card.get("imageRemote") and card["imageRemote"] == base.get("imageRemote"):
+                # The print has no scan of its own and shows the plain one
+                # (TCGplayer has no photo of it): no stamp to cut.
+                job["alpha"], job["how"] = np.zeros(a.shape[:2], np.float32), "the scan is the plain print's, nothing to cut"
+                continue
             b = job["b"] * (a.mean() / max(job["b"].mean(), 1))
             alpha, info = by_difference(a, b, kind, args.thr, args.min_fill)
             job["diff"] = info.get("diff")
@@ -505,7 +529,7 @@ def main() -> None:
             print(f"  skipped {card['id']}: no foil map to cut from, and a {finish} print is not a window holo; "
                   f"fetch its TCG Live map first (fetch_foil_maps.py --set {set_id} --cards {want} --ship --write-data)")
             continue
-        new_map = knock_out(source, job["alpha"], job["b"])
+        new_map = knock_out(source, job["alpha"], job["b"], card.get("supertype") == "Trainer")
         out.parent.mkdir(parents=True, exist_ok=True)
         new_map.save(out, "WEBP", quality=85, alpha_quality=80, method=6)
         changed = 0
@@ -525,12 +549,34 @@ def main() -> None:
             rows.setdefault(set_id, []).append((f"{card['id']} · {job['how'].split(' (')[0]}", [
                 Image.fromarray(job["b"].astype(np.uint8)), d_img,
                 Image.fromarray((job["alpha"] * 255).astype(np.uint8)), Image.fromarray(np.asarray(new_map)[..., 3])]))
+    # Unstamped window holos: the drawn map as it is, nothing to cut.
+    for job in plain:
+        set_id, card = job["set"], job["card"]
+        counts.setdefault(set_id, [0, 0])
+        scan = ROOT / card["image"]
+        if not scan.exists():
+            print(f"  skipped {card['id']}: scan missing")
+            continue
+        s_img = Image.open(scan).convert("RGB")
+        b = np.asarray(s_img.resize(SCAN, Image.LANCZOS) if s_img.size != SCAN else s_img).astype(np.float32)
+        new_map = knock_out(None, np.zeros(b.shape[:2], np.float32), b, card.get("supertype") == "Trainer")
+        out = ROOT / "assets" / "foil" / "maps" / set_id / f"{card['number']}.webp"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        new_map.save(out, "WEBP", quality=85, alpha_quality=80, method=6)
+        card["foilMap"] = str(out.relative_to(ROOT)).replace("\\", "/")
+        counts[set_id][0] += 1
+        counts[set_id][1] += 1
+        print(f"  {card['id']}: no stamp, a drawn window-and-frame map")
+        if args.debug:
+            rows.setdefault(set_id, []).append((f"{card['id']} · drawn map", [
+                Image.fromarray(b.astype(np.uint8)), Image.new("L", SCAN, 0), Image.new("L", SCAN, 0),
+                Image.fromarray(np.asarray(new_map)[..., 3])]))
     for set_id, loaded in sets.items():
         after = json.dumps(loaded["data"], ensure_ascii=False, indent=2) + "\n"
         if after != loaded["raw"]:
             loaded["path"].write_text(after, encoding="utf-8", newline="\n")
         if set_id in counts:
-            print(f"{set_id}: {counts[set_id][0]} stamped print(s) knocked out, {counts[set_id][1]} field(s) changed")
+            print(f"{set_id}: {counts[set_id][0]} print(s) mapped, {counts[set_id][1]} field(s) changed")
     if args.debug:
         for set_id, r in rows.items():
             dest = ROOT / "scripts" / "_debug" / "stamps" / f"{set_id}.png"
