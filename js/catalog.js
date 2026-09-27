@@ -1103,20 +1103,26 @@ export const TWILIGHT_MASQUERADE = {
   released: "May 24, 2024",
   live: true,
   printedTotal: 167,
-  totalCount: 226,
+  totalCount: 236,
   packSize: 11,
-  cost: 8.85,
+  cost: 9.23,
   dataFile: "data/sv6.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, May 2024. Ogerpon’s masks and Kitakami — four wrappers.",
+  blurb: "Scarlet & Violet, May 2024. Ogerpon’s four masks and the Kitakami festival, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/86 · gold 1/146",
-  lede: "Ogerpon and Bloodmoon Ursaluna. ACE SPEC in the reverse slot, gold Hyper Rares in the art slot.",
-  slots: svSlots({ double: 0.167, ultra: 0.067, ir: 0.077, sir: 0.0116, hyper: 0.00685, ace: 0.05 }),
+  lede: "Greninja ex’s Special Illustration Rare is the chase. Tera ex print in full-card etched foil, ACE SPEC takes the first reverse slot, gold lands 1 in 146.",
+  /*
+   * TCGplayer opened 8,000+ English packs before release (May 2024): DR
+   * 16.93%, UR 6.61%, ACE SPEC 5.06%, IR 7.73%, SIR 1.17%, Hyper Rare 0.68%
+   * per pack. Sources in data/pullrates.json.
+   */
+  slots: svSlots({ double: 0.1693, ultra: 0.0661, ir: 0.0773, sir: 0.0117, hyper: 0.0068, ace: 0.0506 }),
   heroIds: ["sv6-214", "sv6-211", "sv6-216", "sv6-210"],
+  // The four booster pack arts, in the order of assets/packs/sv6/pack-N.
   wrappers: boosterWrappers("sv6", [
     { id: "sinistcha", name: "Sinistcha", cardId: "sv6-210", tag: "Matcha" },
-    { id: "ogerpon", name: "Ogerpon", cardId: "sv6-211", tag: "The chase" },
-    { id: "ogerpon-tera", name: "Ogerpon", cardId: "sv6-215", tag: "Teal mask" },
+    { id: "ogerpon", name: "Ogerpon", cardId: "sv6-211", tag: "Teal mask" },
+    { id: "dragapult", name: "Dragapult", cardId: "sv6-200", tag: "Phantom dive" },
     { id: "ursaluna", name: "Ursaluna", cardId: "sv6-216", tag: "Bloodmoon" },
   ]),
 };
@@ -1237,6 +1243,7 @@ export const PLAYABLE_SETS = [
   BLACK_BOLT,
   WHITE_FLARE,
   JOURNEY_TOGETHER,
+  TWILIGHT_MASQUERADE,
   TEMPORAL_FORCES,
   OBSIDIAN_FLAMES,
   STELLAR_CROWN,
@@ -1255,7 +1262,6 @@ export const RETIRED_SETS = [
   PRISMATIC_EVOLUTIONS,
   SURGING_SPARKS,
   SHROUDED_FABLE,
-  TWILIGHT_MASQUERADE,
 ];
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
@@ -1304,7 +1310,6 @@ export const ROADMAP = [
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
       { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
-      { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },
       { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
