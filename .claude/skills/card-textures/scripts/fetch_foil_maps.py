@@ -34,6 +34,13 @@ Two extras, both written with --ship and recorded with --write-data:
   patch lights up at the tilt that matches its line direction, so two layers
   driven by different pointer axes make the cells flash separately, as on
   the Futuristic Rares' op-art plate.
+- --etch-angle <cards> (or "etched" for every card with an etch map) writes
+  <n>-etch-angle.webp, as `etchAngle`: the etch's line direction as a smooth
+  grey, black where the lines run up and down, white where they run across.
+  A fine fingerprint etch flashes along whole arcs of equal direction, which
+  is what reads as rings on the Paldean Fates shinies; the site lights the
+  arcs whose grey matches the pointer (css/holo/shiny-vault.css). It is
+  blurred, so it ships small at half size.
 
 Set keys: SETS below maps a site set id to TCG Live's key, plus any cards
 filed under another key. Other sets: --key, or add a row after checking
@@ -61,6 +68,7 @@ ETCH_WIDTH = 400
 # The RGB Mews are 001-003 in me5-5m, red, green, blue (checked by colour).
 SETS = {
     "me55": ("me5-5", {"R": ("me5-5m", 1), "G": ("me5-5m", 2), "B": ("me5-5m", 3)}),
+    "sv4pt5": ("sv4-5", {}),
 }
 
 
@@ -157,6 +165,20 @@ def etch_bins(path: Path, width: int) -> tuple[Image.Image, Image.Image]:
     return out[0], out[1]
 
 
+def etch_angle(path: Path, width: int) -> Image.Image:
+    """The etch's local line direction, 0 (lines up and down) to 1 (across)."""
+    a = np.asarray(Image.open(path).convert("RGBA")).astype(np.float32)
+    lum = (0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]) * a[..., 3] / 255
+    gy, gx = np.gradient(blur(lum, 0.8))
+    j11, j22, j12 = blur(gx * gx, 3), blur(gy * gy, 3), blur(gx * gy, 3)
+    # Direction of the gradient, which crosses the lines: 0 when it runs
+    # across (lines up and down), +-90 degrees when it runs up and down.
+    theta = 0.5 * np.arctan2(2 * j12, j11 - j22)
+    g = (np.abs(theta) / (np.pi / 2) * 255).round().astype(np.uint8)
+    img = Image.fromarray(g, "L")
+    return img.resize((width, round(img.height * width / img.width)), Image.LANCZOS)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--set", required=True, help="site set id, e.g. me55")
@@ -166,6 +188,7 @@ def main() -> None:
     ap.add_argument("--ship", action="store_true", help="also write site assets to assets/foil/maps/<set>/")
     ap.add_argument("--write-data", action="store_true", help="stamp foilMap/etchMap onto data/<set>.json")
     ap.add_argument("--etch-bins", default="", help="card numbers whose etch maps get split by line direction")
+    ap.add_argument("--etch-angle", default="", help='card numbers that get a line-direction map, or "etched" for all')
     args = ap.parse_args()
 
     data_path = ROOT / "data" / f"{args.set}.json"
@@ -204,6 +227,7 @@ def main() -> None:
     out = ROOT / "assets" / "foil" / "maps" / args.set
     rel = f"assets/foil/maps/{args.set}"
     bins = {n.strip() for n in args.etch_bins.split(",") if n.strip()}
+    angles = {n.strip() for n in args.etch_angle.split(",") if n.strip()}
     shipped = {}
     for n in numbers:
         # A card with no TCG Live source (151's Cosmos Energies, numbered "—")
@@ -214,6 +238,7 @@ def main() -> None:
         foil, etch = cache / f"{n}.foil.png", cache / f"{n}.etch.png"
         colour = foil.exists() and is_colour_map(foil)
         split = etch.exists() and n in bins
+        angle = etch.exists() and (n in angles or "etched" in angles)
         if foil.exists():
             entry["foilMap"] = f"{rel}/{n}.webp"
         if colour:
@@ -224,6 +249,8 @@ def main() -> None:
         if split:
             entry["etchMapH"] = f"{rel}/{n}-etch-h.webp"
             entry["etchMapV"] = f"{rel}/{n}-etch-v.webp"
+        if angle:
+            entry["etchAngle"] = f"{rel}/{n}-etch-angle.webp"
         if args.ship and entry:
             out.mkdir(parents=True, exist_ok=True)
             if foil.exists():
@@ -237,6 +264,8 @@ def main() -> None:
                 h, v = etch_bins(etch, ETCH_WIDTH)
                 h.save(out / f"{n}-etch-h.webp", "WEBP", quality=80, alpha_quality=80, method=6)
                 v.save(out / f"{n}-etch-v.webp", "WEBP", quality=80, alpha_quality=80, method=6)
+            if angle:
+                etch_angle(etch, 367).save(out / f"{n}-etch-angle.webp", "WEBP", quality=60, method=6)
         shipped[n] = entry
     if args.ship:
         size = sum(f.stat().st_size for f in out.glob("*.webp")) if out.exists() else 0
@@ -248,7 +277,7 @@ def main() -> None:
             n = str(record["number"])
             if n not in shipped:
                 continue
-            for field in ("foilMap", "foilMapR", "foilMapG", "foilMapB", "etchMap", "etchMapH", "etchMapV"):
+            for field in ("foilMap", "foilMapR", "foilMapG", "foilMapB", "etchMap", "etchMapH", "etchMapV", "etchAngle"):
                 value = shipped[n].get(field)
                 if value and record.get(field) != value:
                     record[field] = value

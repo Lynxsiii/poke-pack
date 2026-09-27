@@ -51,7 +51,7 @@ import {
 } from "./achievements.js";
 import { QUESTS } from "./quests.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
-import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
+import { loadPriceHistory, priceHistoryReady, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
   loadState,
   saveState,
@@ -547,12 +547,15 @@ function foilPattern(card) {
   if (!card) return "foil-none";
   if (card.reverse) {
     const kind = reverseKindOf(card);
-    if (kind === "pokeball") return "foil-reverse foil-rev-pokeball";
-    if (kind === "masterball") return "foil-reverse foil-rev-masterball";
     // The galaxy holo (css/holo/promos.css) on the frame: 151's Costco promos.
     if (kind === "galaxy") return "foil-reverse foil-cosmos";
-    return "foil-reverse";
+    return kind ? `foil-reverse foil-rev-${kind}` : "foil-reverse";
   }
+  // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
+  // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.
+  if (card.rarity === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
+  if (card.rarity === "Shiny Rare") return "foil-holo foil-shiny";
+  if (card.finish === "scodix") return "foil-gold foil-scodix";
   if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "foil-gold";
   // Tera ex print TCG Live's SV_ULTRA etched foil across the whole card
   // (css/holo/sv-finishes.css). Before the Ultra Rare check, which would
@@ -1292,7 +1295,7 @@ function renderCollection({ refreshSets = true } = {}) {
     if (ownedMode === "owned" && count < 1) return false;
     if (ownedMode === "missing" && count > 0) return false;
     if (ownedMode === "dupes" && count < 2) return false;
-    if (card.energy && count < 1) return false;
+    if (card.energy && !card.reverse && count < 1) return false;
     if (
       q &&
       !card.name.toLowerCase().includes(q) &&
@@ -5074,6 +5077,13 @@ els.sellDuplicates?.addEventListener("click", sellSetDuplicates);
 function paintInspect(card) {
   const chart = els.inspectInfo.querySelector("#inspect-chart");
   if (chart) renderPriceChart(chart, card, inspectRange);
+  if (chart && !priceHistoryReady(card.id)) {
+    // Each set's history is its own file, fetched the first time it's needed.
+    loadPriceHistory(card.id.split("-")[0]).then(() => {
+      const mount = els.inspectInfo.querySelector("#inspect-chart");
+      if (mount && inspectCard?.id === card.id) renderPriceChart(mount, inspectCard, inspectRange);
+    });
+  }
   const sell = els.inspectInfo.querySelector("#inspect-sell");
   if (sell) sell.innerHTML = inspectSellRow(card);
 }
@@ -6349,7 +6359,7 @@ async function routeFromLocation() {
 
 async function boot() {
   try {
-    await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
+    await Promise.all([loadSealedPrices(), loadPatchNotes()]);
     await refreshSession();
     // Friends and requests load now rather than on the next 5s poll, so the
     // Social page and the Friends badge are right on first paint.
