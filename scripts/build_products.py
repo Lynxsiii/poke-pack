@@ -38,8 +38,9 @@ This script then:
   * mirrors each promo scan to assets/cards/<id>/ at the site's two sizes.
   * prices every product from TCGplayer's market price (tcgcsv.com mirrors
     TCGplayer's catalogue as JSON) and every promo card from pkmn.gg, as
-    fetch_prices.py does the singles, and logs the card prices into
-    data/price-history.json.
+    fetch_prices.py does the singles, and adds today's card and product prices
+    to the charts in data/prices/<id>.json. Run backfill_prices.py <id> once
+    to fill in the year before.
   * cuts each product photo out of its white background into
     assets/products/<id>/<product>.webp.
   * writes data/products.json, which the shop and the Worker read.
@@ -65,6 +66,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import price_history  # noqa: E402
 from build_set import card_record, merge, ordered  # noqa: E402
 from mirror_images import encode  # noqa: E402
 
@@ -72,7 +74,6 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 SETS = DATA / "sets"
 OUT = DATA / "products.json"
-HISTORY = DATA / "price-history.json"
 PRODUCT_DIR = ROOT / "assets" / "products"
 CACHE = ROOT / "scripts" / ".cache" / "products"
 
@@ -85,7 +86,6 @@ TCGL_INDEX = "https://cdn.malie.io/file/malie-io/tcgl/export/index.json"
 TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
-HISTORY_LIMIT = 400
 NEXT_DATA = re.compile(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', re.S)
 
 
@@ -330,22 +330,6 @@ def mirror(set_id: str, record: dict, remote: str, refresh: bool) -> None:
     record["imageRemote"] = remote
 
 
-def log_history(prices: dict[str, float], today: str) -> None:
-    if not prices:
-        return
-    store = json.loads(HISTORY.read_text(encoding="utf-8")) if HISTORY.exists() else {}
-    series = store.setdefault("cards", {})
-    for card_id, price in prices.items():
-        points = series.setdefault(card_id, [])
-        if points and points[-1][0] == today:
-            points[-1] = [today, price]
-        else:
-            points.append([today, price])
-        del points[:-HISTORY_LIMIT]
-    store["updated"] = today
-    HISTORY.write_text(json.dumps(store, separators=(",", ":")) + "\n", encoding="utf-8")
-
-
 def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     cfg = json.loads((SETS / f"{set_id}.json").read_text(encoding="utf-8"))
     products = cfg.get("products") or []
@@ -380,9 +364,11 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     groups = [cfg.get("tcgplayerGroup"), *(s.get("tcgplayerGroup") for s in cfg.get("promoSeries", {}).values())]
     # Product-only prints (blister exclusives) are filed in a group of their own,
     # or beside their product in Miscellaneous Cards & Products (Journey
-    # Together's Cosmos Holo box cards).
+    # Together's Cosmos Holo box cards), and a promo spec can name another
+    # (Paldean Fates' stamped prints, also in Miscellaneous, 2374).
     groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES]
     groups += sorted({p["tcgplayerGroup"] for p in products if p.get("tcgplayerGroup")} - set(groups))
+    groups += sorted({s["tcgplayerGroup"] for s in (cfg.get("promoCards") or {}).values() if s.get("tcgplayerGroup")} - set(groups))
     tcg_market: dict[int, dict[int, float]] = {}
 
     def tcg_price(pid: int) -> float | None:
@@ -430,12 +416,13 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     ordered_records = [cards[c["id"]] for c in records if c["id"] not in promo_ids and not c.get("promo")]
     ordered_records += [cards[i] for i in sorted(promo_ids, key=lambda i: cards[i]["number"])]
     data_path.write_text(json.dumps(ordered_records, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    log_history(card_prices, today)
+    price_history.record(set_id, "cards", card_prices, today)
     print(f"  promo cards: {len(promo_ids)} ({len(card_prices)} priced)")
 
     # Products: price, photo, contents. Collections sold across sets are filed
     # in another TCGplayer group (Miscellaneous Cards & Products), named per product.
     out = []
+    product_prices: dict[str, float] = {}
     for product in products:
         pid = product["tcgplayerId"]
         price, info = product_market(product)
@@ -466,7 +453,9 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         if image:
             entry["image"] = image
         out.append(entry)
+        product_prices[product["id"]] = price
         print(f"    {product['id']:<16} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}")
+    price_history.record(set_id, "sealed", product_prices, today)
     return out
 
 
@@ -480,6 +469,7 @@ def main(argv: list[str]) -> int:
         print("give a set id, or --all", file=sys.stderr)
         return 2
     store = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
+    price_history.fold_legacy()
     failed = 0
     for set_id in wanted:
         print(f"{set_id}:")

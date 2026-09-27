@@ -177,15 +177,16 @@
     "name": "Shrouded Fable",
     "printedTotal": 64,
     "released": "2024-08-02",
-    "updated": "2026-05-05",
-    "source": "Community aggregate (~3,000 packs, riporfliptcg / Dripshop). DR 1/6, IR 1/12, UR 1/15, ACE SPEC 1/20, SIR 1/67, Hyper Rare 1/143.",
+    "updated": "2026-09-27",
+    "source": "Three community counts, taking the middle figure for each rarity. Dripshop (via PokéPatch, https://pokepatch.com/2025/05/24/shrouded-fable-pull-rates-in-pokemon-tcg-set/): DR 1/6, UR 1/15, ACE SPEC 1/20, IR 1/12, SIR 1/67, Hyper Rare 1/144. Mark van Zee, 2,354 packs, Aug 2024 (https://www.skool.com/pokemon/shrouded-fable-pull-rates): IR 1/12, full-art Pokémon 1/24 plus full-art Supporter 1/36 (UR 1/14.4 combined), SIR 1/64, gold 1/118. ThePriceDex (https://www.thepricedex.com/set/sv6pt5/shrouded-fable/pull-rates): DR 1/6, ACE SPEC 1/20, IR 1/13, UR 1/14.3, SIR 1/87, Hyper Rare 1/128. Reverse holo basic Energy: no count published; 1 in 6 is an estimate from TCGplayer prices (a reverse Energy sells for about 1.7x a reverse Common, Sep 2026). No god packs.",
     "rates": {
-      "double": 0.167,
-      "ir": 0.085,
-      "ultra": 0.065,
+      "double": 0.1667,
+      "ir": 0.0833,
+      "ultra": 0.0694,
       "ace": 0.05,
-      "sir": 0.015,
-      "hyper": 0.007
+      "sir": 0.0149,
+      "hyper": 0.0078,
+      "reverseEnergy": 0.1667
     }
   },
   "sv6": {
@@ -244,6 +245,36 @@
       "ir": 0.077,
       "sir": 0.0317,
       "hyper": 0.0176
+    }
+  },
+  "sv1": {
+    "name": "Scarlet & Violet",
+    "printedTotal": 198,
+    "released": "2023-03-31",
+    "updated": "2026-09-27",
+    "source": "TCGplayer's study of 8,000+ English Scarlet & Violet packs (published Mar 31, 2023, updated Feb 27, 2025): Double Rare 1 in 7.3, Ultra Rare 1 in 15, Illustration Rare 1 in 13, Special Illustration Rare 1 in 32, gold Hyper Rare 1 in 54 (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Scarlet-Violet-Pull-Rates/a7702fce-dd64-4a58-beb1-0f871c853215/; PokeBeach chart: https://www.pokebeach.com/news/2024/03/Scarlet-and-Violet-Pull-Rates.png). Cross-checked against Card Shop Live's 1,728 packs (DR 13.54%, UR 6.48%, IR 7.52%, SIR 3.01%, gold 1.85%; https://cardshoplive.com/pages/hit-rates-for-pokemon-tcg-scarlet-and-violet). The first Scarlet & Violet set: no ACE SPEC, no god packs, Double and Ultra Rares share the rare slot, IR/SIR/gold share the second reverse slot.",
+    "rates": {
+      "double": 0.1376,
+      "ultra": 0.0657,
+      "ir": 0.0767,
+      "sir": 0.0315,
+      "hyper": 0.0185
+    }
+  },
+  "sv4pt5": {
+    "name": "Paldean Fates",
+    "printedTotal": 91,
+    "released": "2024-01-26",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, more than 1,500 English packs opened before release: 'Pokémon TCG: Paldean Fates Pull Rates' by Peter Day (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Paldean-Fates-Pull-Rates/23de3e93-0d0f-4ae0-abc4-13664f3001a3/, 2024-01-26), 95% confidence intervals: Double Rare 15.89% ± 1.69% (1 in 6), Ultra Rare 6.61% ± 1.15% (1 in 15), Shiny Rare 25.44% ± 2.01% (1 in 4), Shiny Ultra Rare 7.72% ± 1.23% (1 in 13), Illustration Rare 7.22% ± 1.20% (1 in 14), Special Illustration Rare 1.72% ± 0.60% (1 in 58), Hyper Rare 1.61% ± 0.58% (1 in 62). DR and UR sit in the rare slot; Shiny Rare and Shiny Ultra Rare replace the first reverse holo (about 1 pack in 3 has a shiny); IR, SIR and Hyper Rare sit in the second reverse slot.",
+    "rates": {
+      "double": 0.1589,
+      "ultra": 0.0661,
+      "shiny": 0.2544,
+      "shinyUltra": 0.0772,
+      "ir": 0.0722,
+      "sir": 0.0172,
+      "hyper": 0.0161
     }
   }
 }

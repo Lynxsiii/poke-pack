@@ -122,6 +122,38 @@ never contain a duplicate — a deliberate softening of real pack behaviour.
 `data/<set>.json` when one is present, converting at `COINS_PER_USD`. Cards
 without a market price fall back to the flat rarity table.
 
+## Price history
+
+The market price chart in the card inspector reads `data/prices/<set id>.json`,
+one file per set, fetched the first time someone inspects one of that set's
+cards. Each file holds a year of TCGplayer market prices for the set's cards
+(`cards`, by card id) and for its pack, boxes and promo products (`sealed`, by
+the shop's product id): weekly points back to a year ago, every 3 days for the
+last quarter and daily for the last month. Cards are the Near Mint pack
+printing (holofoil, else normal, never the reverse holo); sealed products are
+Unopened.
+
+```
+python3 scripts/backfill_prices.py sv5        # a year of history for one set
+python3 scripts/backfill_prices.py --all      # every set with data/sets/<id>.json
+python3 scripts/backfill_prices.py --daily --all   # just today's point, cheap
+node scripts/test-price-history.mjs           # check the files and the chart
+```
+
+The backfill reads TCGplayer's own price history (the chart on a
+tcgplayer.com product page) and matches cards to TCGplayer products by
+collector number and name through tcgcsv.com. It prints any card it could not
+match rather than guessing, finds a set's TCGplayer group by name when
+`data/sets/<id>.json` has no `tcgplayerGroup`, and caches the day's downloads
+in `scripts/.cache/prices/`. Re-running is safe and only adds: a backfilled
+point fills a date with no point and never replaces one already recorded. `fetch_prices.py` and `build_products.py`
+add today's point through `scripts/price_history.py` too. A new set needs one
+backfill run after its data files exist.
+
+`data/price-history.json`, the single file every set used to share, is gone;
+if a branch brings it back, any of the three scripts folds its points into
+`data/prices/` and deletes it.
+
 ## Achievements
 
 `js/achievements.js` holds the table: each row has a `goal`, an `at(ctx)` that

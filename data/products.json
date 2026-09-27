@@ -1637,6 +1637,108 @@
       "image": "assets/products/sv6/blister-toxel.webp"
     }
   ],
+  "sv6pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv6pt5-svp129"
+      ],
+      "price": 111.94,
+      "tcgplayerId": 552999,
+      "released": "2024-08-23",
+      "image": "assets/products/sv6pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv6pt5-svp129-pc",
+        "sv6pt5-svp129"
+      ],
+      "price": 166.35,
+      "tcgplayerId": 552998,
+      "released": "2024-08-23",
+      "image": "assets/products/sv6pt5/pc-etb.webp"
+    },
+    {
+      "id": "sic-greninja",
+      "name": "Greninja ex Special Illustration Collection",
+      "kind": "premium",
+      "packs": 5,
+      "promos": [
+        "sv6pt5-svp132"
+      ],
+      "price": 212.43,
+      "tcgplayerId": 553002,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/sic-greninja.webp"
+    },
+    {
+      "id": "sic-kingdra",
+      "name": "Kingdra ex Special Illustration Collection",
+      "kind": "premium",
+      "packs": 5,
+      "promos": [
+        "sv6pt5-svp131"
+      ],
+      "price": 182.0,
+      "tcgplayerId": 553001,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/sic-kingdra.webp"
+    },
+    {
+      "id": "kingambit-collection",
+      "name": "Kingambit Illustration Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv6pt5-svp130"
+      ],
+      "price": 53.15,
+      "tcgplayerId": 553000,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/kingambit-collection.webp"
+    },
+    {
+      "id": "blister-pecharunt",
+      "name": "3 Pack Blister: Pecharunt",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv6pt5-svp149"
+      ],
+      "price": 34.67,
+      "tcgplayerId": 553007,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/blister-pecharunt.webp"
+    },
+    {
+      "id": "mini-tin",
+      "name": "Mini Tin",
+      "kind": "tin",
+      "packs": 2,
+      "promos": [],
+      "price": 23.58,
+      "tcgplayerId": 553018,
+      "released": "2024-08-02",
+      "image": "assets/products/sv6pt5/mini-tin.webp"
+    },
+    {
+      "id": "mini-tin-display",
+      "name": "Mini Tin Display",
+      "kind": "collection",
+      "packs": 20,
+      "promos": [],
+      "price": 202.1,
+      "tcgplayerId": 553008,
+      "image": "assets/products/sv6pt5/mini-tin-display.webp"
+    }
+  ],
   "sv7": [
     {
       "id": "eliteTrainerBox",
@@ -1743,161 +1845,6 @@
       "tcgplayerId": 557341,
       "released": "2024-09-13",
       "image": "assets/products/sv7/blister-porygon2.webp"
-    }
-  ],
-  "sv8pt5": [
-    {
-      "id": "eliteTrainerBox",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 9,
-      "promos": [
-        "sv8pt5-svp173"
-      ],
-      "price": 141.5,
-      "tcgplayerId": 593355,
-      "image": "assets/products/sv8pt5/eliteTrainerBox.webp"
-    },
-    {
-      "id": "pc-etb",
-      "name": "Pokémon Center Elite Trainer Box",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "sv8pt5-svp173-pc",
-        "sv8pt5-svp173"
-      ],
-      "price": 411.77,
-      "tcgplayerId": 593324,
-      "image": "assets/products/sv8pt5/pc-etb.webp"
-    },
-    {
-      "id": "super-premium",
-      "name": "Super-Premium Collection",
-      "kind": "premium",
-      "packs": 15,
-      "promos": [
-        "sv8pt5-svp174"
-      ],
-      "price": 252.62,
-      "tcgplayerId": 622770,
-      "image": "assets/products/sv8pt5/super-premium.webp"
-    },
-    {
-      "id": "premium-figure",
-      "name": "Premium Figure Collection: Espeon & Umbreon",
-      "kind": "premium",
-      "packs": 11,
-      "promos": [
-        "sv8pt5-svp175",
-        "sv8pt5-svp176"
-      ],
-      "price": 220.85,
-      "tcgplayerId": 650799,
-      "released": "2025-09-26",
-      "image": "assets/products/sv8pt5/premium-figure.webp"
-    },
-    {
-      "id": "lucario-tyranitar",
-      "name": "Lucario ex & Tyranitar ex Premium Collection",
-      "kind": "premium",
-      "packs": 14,
-      "promos": [
-        "sv8pt5-51-stamp",
-        "sv8pt5-64-stamp"
-      ],
-      "price": 200.67,
-      "tcgplayerId": 648365,
-      "image": "assets/products/sv8pt5/lucario-tyranitar.webp"
-    },
-    {
-      "id": "surprise-box",
-      "name": "Surprise Box",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "sv8pt5-75-stamp",
-        "sv8pt5-23-stamp",
-        "sv8pt5-30-stamp",
-        "sv8pt5-14-stamp",
-        "sv8pt5-34-stamp",
-        "sv8pt5-60-stamp",
-        "sv8pt5-6-stamp",
-        "sv8pt5-26-stamp",
-        "sv8pt5-41-stamp"
-      ],
-      "pick": 1,
-      "price": 67.38,
-      "tcgplayerId": 593466,
-      "released": "2025-02-07",
-      "image": "assets/products/sv8pt5/surprise-box.webp"
-    },
-    {
-      "id": "poster",
-      "name": "Poster Collection",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "sv8pt5-svp167",
-        "sv8pt5-svp168",
-        "sv8pt5-svp169"
-      ],
-      "price": 40.48,
-      "tcgplayerId": 593359,
-      "released": "2025-01-17",
-      "image": "assets/products/sv8pt5/poster.webp"
-    },
-    {
-      "id": "tech-leafeon",
-      "name": "Tech Sticker Collection: Leafeon",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "sv8pt5-svp170"
-      ],
-      "price": 41.5,
-      "tcgplayerId": 593453,
-      "released": "2025-01-17",
-      "image": "assets/products/sv8pt5/tech-leafeon.webp"
-    },
-    {
-      "id": "tech-glaceon",
-      "name": "Tech Sticker Collection: Glaceon",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "sv8pt5-svp171"
-      ],
-      "price": 43.13,
-      "tcgplayerId": 593451,
-      "released": "2025-01-17",
-      "image": "assets/products/sv8pt5/tech-glaceon.webp"
-    },
-    {
-      "id": "tech-sylveon",
-      "name": "Tech Sticker Collection: Sylveon",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "sv8pt5-svp172"
-      ],
-      "price": 45.1,
-      "tcgplayerId": 593450,
-      "released": "2025-01-17",
-      "image": "assets/products/sv8pt5/tech-sylveon.webp"
-    },
-    {
-      "id": "blister2-eevee",
-      "name": "2-Pack Blister: Eevee",
-      "kind": "blister",
-      "packs": 2,
-      "promos": [
-        "sv8pt5-74-pokemon-day"
-      ],
-      "price": 36.64,
-      "tcgplayerId": 609716,
-      "released": "2025-02-21",
-      "image": "assets/products/sv8pt5/blister2-eevee.webp"
     }
   ],
   "sv9": [
@@ -2100,6 +2047,442 @@
       "tcgplayerId": 630614,
       "released": "2025-08-01",
       "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
+    }
+  ],
+  "sv1": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box: Koraidon",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv1-svp014"
+      ],
+      "price": 131.88,
+      "tcgplayerId": 478335,
+      "image": "assets/products/sv1/eliteTrainerBox.webp"
+    },
+    {
+      "id": "etb-miraidon",
+      "name": "Elite Trainer Box: Miraidon",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv1-svp013"
+      ],
+      "price": 145.15,
+      "tcgplayerId": 478336,
+      "image": "assets/products/sv1/etb-miraidon.webp"
+    },
+    {
+      "id": "pc-etb-koraidon",
+      "name": "Pokémon Center Elite Trainer Box: Koraidon",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv1-svp014-pc",
+        "sv1-svp014"
+      ],
+      "price": 287.05,
+      "tcgplayerId": 478758,
+      "image": "assets/products/sv1/pc-etb-koraidon.webp"
+    },
+    {
+      "id": "pc-etb-miraidon",
+      "name": "Pokémon Center Elite Trainer Box: Miraidon",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv1-svp013-pc",
+        "sv1-svp013"
+      ],
+      "price": 317.06,
+      "tcgplayerId": 478756,
+      "image": "assets/products/sv1/pc-etb-miraidon.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv1-svp005",
+        "sv1-svp006",
+        "sv1-svp007",
+        "sv1-svp008"
+      ],
+      "pick": 1,
+      "price": 40.94,
+      "tcgplayerId": 478253,
+      "image": "assets/products/sv1/build-battle.webp"
+    },
+    {
+      "id": "blister3-arcanine",
+      "name": "3 Pack Blister: Arcanine",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv1-svp011"
+      ],
+      "price": 35.2,
+      "tcgplayerId": 478761,
+      "image": "assets/products/sv1/blister3-arcanine.webp"
+    },
+    {
+      "id": "blister3-dondozo",
+      "name": "3 Pack Blister: Dondozo",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv1-svp012"
+      ],
+      "price": 30.71,
+      "tcgplayerId": 478762,
+      "image": "assets/products/sv1/blister3-dondozo.webp"
+    },
+    {
+      "id": "blister-spidops",
+      "name": "Single Pack Blister: Spidops",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv1-svp009"
+      ],
+      "price": 12.33,
+      "tcgplayerId": 478765,
+      "released": "2023-03-31",
+      "image": "assets/products/sv1/blister-spidops.webp"
+    },
+    {
+      "id": "blister-espathra",
+      "name": "Single Pack Blister: Espathra",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv1-svp010"
+      ],
+      "price": 13.26,
+      "tcgplayerId": 478766,
+      "released": "2023-03-31",
+      "image": "assets/products/sv1/blister-espathra.webp"
+    }
+  ],
+  "sv4pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv4pt5-svp075"
+      ],
+      "price": 433.16,
+      "tcgplayerId": 528040,
+      "image": "assets/products/sv4pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv4pt5-svp075-pc",
+        "sv4pt5-svp075"
+      ],
+      "price": 566.94,
+      "tcgplayerId": 528039,
+      "image": "assets/products/sv4pt5/pc-etb.webp"
+    },
+    {
+      "id": "tin-charizard",
+      "name": "Tin: Charizard ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv4pt5-svp074"
+      ],
+      "price": 202.02,
+      "tcgplayerId": 528056,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/tin-charizard.webp"
+    },
+    {
+      "id": "tin-great-tusk",
+      "name": "Tin: Great Tusk ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv4pt5-svp072"
+      ],
+      "price": 128.57,
+      "tcgplayerId": 528057,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/tin-great-tusk.webp"
+    },
+    {
+      "id": "tin-iron-treads",
+      "name": "Tin: Iron Treads ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv4pt5-svp073"
+      ],
+      "price": 123.61,
+      "tcgplayerId": 528058,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/tin-iron-treads.webp"
+    },
+    {
+      "id": "premium-meowscarada",
+      "name": "Premium Collection: Meowscarada ex",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "sv4pt5-svp076",
+        "sv4pt5-svp077",
+        "sv4pt5-svp078"
+      ],
+      "price": 228.32,
+      "tcgplayerId": 528079,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/premium-meowscarada.webp"
+    },
+    {
+      "id": "premium-skeledirge",
+      "name": "Premium Collection: Skeledirge ex",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "sv4pt5-svp079",
+        "sv4pt5-svp080",
+        "sv4pt5-svp081"
+      ],
+      "price": 237.69,
+      "tcgplayerId": 528080,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/premium-skeledirge.webp"
+    },
+    {
+      "id": "premium-quaquaval",
+      "name": "Premium Collection: Quaquaval ex",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "sv4pt5-svp082",
+        "sv4pt5-svp083",
+        "sv4pt5-svp084"
+      ],
+      "price": 223.36,
+      "tcgplayerId": 528082,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/premium-quaquaval.webp"
+    },
+    {
+      "id": "premium-paradox",
+      "name": "Great Tusk ex & Iron Treads ex Premium Collection",
+      "kind": "premium",
+      "packs": 11,
+      "promos": [
+        "sv4pt5-svp072-stamp",
+        "sv4pt5-svp073-stamp"
+      ],
+      "price": 243.31,
+      "tcgplayerId": 665113,
+      "image": "assets/products/sv4pt5/premium-paradox.webp"
+    },
+    {
+      "id": "tech-fidough",
+      "name": "Tech Sticker Collection: Fidough",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv4pt5-svp069"
+      ],
+      "price": 71.76,
+      "tcgplayerId": 528043,
+      "released": "2024-01-26",
+      "image": "assets/products/sv4pt5/tech-fidough.webp"
+    },
+    {
+      "id": "tech-maschiff",
+      "name": "Tech Sticker Collection: Maschiff",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv4pt5-svp071"
+      ],
+      "price": 72.07,
+      "tcgplayerId": 528044,
+      "released": "2024-01-26",
+      "image": "assets/products/sv4pt5/tech-maschiff.webp"
+    },
+    {
+      "id": "tech-greavard",
+      "name": "Tech Sticker Collection: Greavard",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv4pt5-svp070"
+      ],
+      "price": 71.52,
+      "tcgplayerId": 528045,
+      "released": "2024-01-26",
+      "image": "assets/products/sv4pt5/tech-greavard.webp"
+    }
+  ],
+  "sv8pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv8pt5-svp173"
+      ],
+      "price": 141.5,
+      "tcgplayerId": 593355,
+      "image": "assets/products/sv8pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv8pt5-svp173-pc",
+        "sv8pt5-svp173"
+      ],
+      "price": 411.77,
+      "tcgplayerId": 593324,
+      "image": "assets/products/sv8pt5/pc-etb.webp"
+    },
+    {
+      "id": "super-premium",
+      "name": "Super-Premium Collection",
+      "kind": "premium",
+      "packs": 15,
+      "promos": [
+        "sv8pt5-svp174"
+      ],
+      "price": 252.62,
+      "tcgplayerId": 622770,
+      "image": "assets/products/sv8pt5/super-premium.webp"
+    },
+    {
+      "id": "premium-figure",
+      "name": "Premium Figure Collection: Espeon & Umbreon",
+      "kind": "premium",
+      "packs": 11,
+      "promos": [
+        "sv8pt5-svp175",
+        "sv8pt5-svp176"
+      ],
+      "price": 220.85,
+      "tcgplayerId": 650799,
+      "released": "2025-09-26",
+      "image": "assets/products/sv8pt5/premium-figure.webp"
+    },
+    {
+      "id": "lucario-tyranitar",
+      "name": "Lucario ex & Tyranitar ex Premium Collection",
+      "kind": "premium",
+      "packs": 14,
+      "promos": [
+        "sv8pt5-51-stamp",
+        "sv8pt5-64-stamp"
+      ],
+      "price": 200.67,
+      "tcgplayerId": 648365,
+      "image": "assets/products/sv8pt5/lucario-tyranitar.webp"
+    },
+    {
+      "id": "surprise-box",
+      "name": "Surprise Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv8pt5-75-stamp",
+        "sv8pt5-23-stamp",
+        "sv8pt5-30-stamp",
+        "sv8pt5-14-stamp",
+        "sv8pt5-34-stamp",
+        "sv8pt5-60-stamp",
+        "sv8pt5-6-stamp",
+        "sv8pt5-26-stamp",
+        "sv8pt5-41-stamp"
+      ],
+      "pick": 1,
+      "price": 67.38,
+      "tcgplayerId": 593466,
+      "released": "2025-02-07",
+      "image": "assets/products/sv8pt5/surprise-box.webp"
+    },
+    {
+      "id": "poster",
+      "name": "Poster Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv8pt5-svp167",
+        "sv8pt5-svp168",
+        "sv8pt5-svp169"
+      ],
+      "price": 40.48,
+      "tcgplayerId": 593359,
+      "released": "2025-01-17",
+      "image": "assets/products/sv8pt5/poster.webp"
+    },
+    {
+      "id": "tech-leafeon",
+      "name": "Tech Sticker Collection: Leafeon",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv8pt5-svp170"
+      ],
+      "price": 41.5,
+      "tcgplayerId": 593453,
+      "released": "2025-01-17",
+      "image": "assets/products/sv8pt5/tech-leafeon.webp"
+    },
+    {
+      "id": "tech-glaceon",
+      "name": "Tech Sticker Collection: Glaceon",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv8pt5-svp171"
+      ],
+      "price": 43.13,
+      "tcgplayerId": 593451,
+      "released": "2025-01-17",
+      "image": "assets/products/sv8pt5/tech-glaceon.webp"
+    },
+    {
+      "id": "tech-sylveon",
+      "name": "Tech Sticker Collection: Sylveon",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv8pt5-svp172"
+      ],
+      "price": 45.1,
+      "tcgplayerId": 593450,
+      "released": "2025-01-17",
+      "image": "assets/products/sv8pt5/tech-sylveon.webp"
+    },
+    {
+      "id": "blister2-eevee",
+      "name": "2-Pack Blister: Eevee",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "sv8pt5-74-pokemon-day"
+      ],
+      "price": 36.64,
+      "tcgplayerId": 609716,
+      "released": "2025-02-21",
+      "image": "assets/products/sv8pt5/blister2-eevee.webp"
     }
   ]
 }

@@ -8,10 +8,11 @@
 // Query string:
 //   set=me55              data/<set>.json to read
 //   cards=1,23,157        card numbers (default: one of each rarity and layout);
-//                         59r is card 59's reverse holo, 59-pb and 59-mb its
+//                         r59 is card 59's reverse holo, 59-pb and 59-mb its
 //                         Prismatic Poké Ball and Master Ball prints
 //   proof=split|on|off    show each card as the site draws it, with lab.css's
 //                         proof recipes, or both side by side (default split)
+//   rev=chain             reverse kind for cards listed as r<number>
 //   w=240                 card width in px
 //   poses=rest,50:50,...  one row per pose, pinned (x:y in 0-100, or "rest").
 //                         Without it the cards follow the pointer.
@@ -48,9 +49,12 @@ function foilLayout(c) {
   return hasEvo(c) ? "foil-evo" : "";
 }
 function foilPattern(c) {
+  if (c.reverse) return c.reverseKind && c.reverseKind !== "cosmos" ? `foil-reverse foil-rev-${c.reverseKind}` : "foil-reverse";
   const r = c.rarity;
   if (c.pattern) return `foil-reverse foil-rev-${c.pattern} foil-prism`;
-  if (c.reverse) return "foil-reverse";
+  if (r === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
+  if (r === "Shiny Rare") return "foil-holo foil-shiny";
+  if (c.finish === "scodix") return "foil-gold foil-scodix";
   if (r === "Mega Hyper Rare" || r === "Hyper Rare") return "foil-gold";
   if (c.foilMap && (c.subtypes || []).includes("Tera") && (r === "Double Rare" || r === "Ultra Rare")) {
     return r === "Ultra Rare" ? "foil-ultra foil-tera" : "foil-ex foil-tera";
@@ -162,7 +166,7 @@ function pose(x, y, { light = 1, tilt = true, root = document } = {}) {
 }
 
 // Per-card properties set in the markup, which a reset must not strip.
-const KEEP = /^--(art|stamp|foil-map|etch-map|seed)/;
+const KEEP = /^--(art|stamp|foil-map|etch-map|etch-angle|seed)/;
 
 function rest(root = document) {
   for (const el of root.querySelectorAll(".tcg")) {
@@ -179,11 +183,15 @@ async function render() {
     stamps(),
   ]);
   const wanted = (params.get("cards") || "").split(",").map((s) => s.trim()).filter(Boolean);
+  // "r12" draws card 12 as a reverse holo (kind from rev=, default the
+  // card's own); a card id without the set prefix works too (energy-grass).
+  const revKind = params.get("rev") || "";
+  const find = (n) => cards.find((c) => String(c.number) === n || c.id === `${setId}-${n}`);
   const list = wanted.length
-    // "59r" is card 59's reverse holo.
     ? wanted.map((n) => {
-      const card = cards.find((c) => String(c.number) === n.replace(/r$/, ""));
-      return card && n.endsWith("r") && !card.pattern ? { ...card, reverse: true } : card;
+      const rev = /^r\d/.test(n);
+      const c = find(rev ? n.slice(1) : n);
+      return c && rev ? { ...c, reverse: true, reverseKind: revKind || c.reverseKind || "" } : c;
     }).filter(Boolean)
     : pickDefault(cards);
   const maps = await foilMaps(list);
