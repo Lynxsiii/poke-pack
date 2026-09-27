@@ -920,15 +920,17 @@ export const DESTINED_RIVALS = {
   released: "May 30, 2025",
   live: true,
   printedTotal: 182,
-  totalCount: 244,
+  totalCount: 266,
   packSize: 11,
-  cost: 9.39,
+  cost: 9.13,
   dataFile: "data/sv10.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, May 2025. Team Rocket vs the old champions — Gym Hero holos, four wrappers.",
+  blurb: "Scarlet & Violet, May 2025. Team Rocket against Cynthia, Ethan and the old champions — Trainer’s Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/12 · SIR 1/94 · gold 1/149",
-  lede: "Cynthia, Ethan, and Team Rocket share a set. Trainer’s Pokémon use the same owner-portrait windows as Ascended Heroes.",
-  slots: svSlots({ double: 0.2, ultra: 0.0625, ir: 0.083, sir: 0.01064, hyper: 0.00671 }),
+  lede: "Team Rocket’s Mewtwo ex SIR is the chase, about 1 in 1,033 packs. Holo Rares and ex shine around the Pokémon and the owner’s portrait, as the printed cards do.",
+  // TCGplayer's 8,000-pack study (May 2025), unrounded: DR 19.83%, UR 6.39%,
+  // IR 8.29%, SIR 1.06%, Hyper Rare 0.67%. No ACE SPEC in this set.
+  slots: svSlots({ double: 0.1983, ultra: 0.0639, ir: 0.0829, sir: 0.0106, hyper: 0.0067 }),
   heroIds: ["sv10-231", "sv10-232", "sv10-230", "sv10-238"],
   wrappers: boosterWrappers("sv10", [
     { id: "garchomp", name: "Garchomp", cardId: "sv10-232", tag: "Cynthia" },
@@ -1242,6 +1244,7 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  DESTINED_RIVALS,
   JOURNEY_TOGETHER,
   TWILIGHT_MASQUERADE,
   TEMPORAL_FORCES,
@@ -1258,7 +1261,6 @@ export const PLAYABLE_SETS = [
  * a matter of returning it to PLAYABLE_SETS and dropping its ROADMAP row.
  */
 export const RETIRED_SETS = [
-  DESTINED_RIVALS,
   PRISMATIC_EVOLUTIONS,
   SURGING_SPARKS,
   SHROUDED_FABLE,
@@ -1306,7 +1308,6 @@ export const ROADMAP = [
   {
     era: "Scarlet & Violet",
     sets: [
-      { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
       { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
