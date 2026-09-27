@@ -127,10 +127,6 @@ function mountRadio() {
   audio.volume = Math.min(prefs.vol, 0.18);
   vol.value = String(Math.round(audio.volume * 100));
 
-  function unlockPlay() {
-    audio.play().catch(() => {});
-  }
-
   list.innerHTML = TRACKS.map(
     (track, i) => `<button type="button" class="radio-track" data-track="${i}">
       <img src="${esc(track.cover)}" alt="" width="32" height="32" loading="lazy" />
@@ -285,9 +281,7 @@ function mountRadio() {
     }
   });
 
-  window.addEventListener("pointerdown", unlockPlay, { once: true });
-  window.addEventListener("keydown", unlockPlay, { once: true });
-  window.addEventListener("touchstart", unlockPlay, { once: true, passive: true });
-
-  load(index, true);
+  // Music stays off until the player presses play; the track and volume are
+  // still remembered from last time.
+  load(index, false);
 }
