@@ -409,6 +409,17 @@ h1, h2, h3 { text-wrap: balance; }
 }
 .shop-quick-set:hover { color: var(--ink); border-color: rgba(255, 255, 255, 0.28); }
 .shop-quick-set.active { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+/* A /packs/<id> link that can't open says why, above the set showing instead. */
+.set-notice {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px 20px; margin: 0 0 20px; padding: 14px 16px;
+  background: var(--surface); border: 1px solid var(--line-2);
+  border-left: 3px solid var(--rip); border-radius: var(--r);
+}
+.set-notice-copy { flex: 1 1 280px; min-width: 0; }
+.set-notice-copy b { display: block; font-size: 15px; font-weight: 600; color: var(--ink); }
+.set-notice-copy p { margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: var(--muted); }
+.set-notice-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .hero { border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 28px; }
 #view-shop .hero .lede { font-size: 15px; max-width: 56ch; }
 #view-shop .hero-art { height: 230px; }

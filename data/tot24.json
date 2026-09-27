@@ -1,0 +1,1230 @@
+[
+  {
+    "id": "tot24-1",
+    "name": "Sprigatito",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Megumi Mizutani",
+    "flavorText": "Its fluffy fur is similar in composition to plants. This Pokémon frequently washes its face to keep it from drying out.",
+    "image": "assets/cards/tot24/1.webp",
+    "imageSmall": "assets/cards/tot24/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Gather Sunlight",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/568512_in_1000x1000.jpg",
+    "printedNumber": "012/193",
+    "tcgplayerId": 568512
+  },
+  {
+    "id": "tot24-2",
+    "name": "Quaxly",
+    "number": "2",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Naoki Saito",
+    "flavorText": "This Pokémon migrated to Paldea from distant lands long ago. The gel secreted by its feathers repels water and grime.",
+    "image": "assets/cards/tot24/2.webp",
+    "imageSmall": "assets/cards/tot24/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ],
+    "market": 0.12,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/568513_in_1000x1000.jpg",
+    "printedNumber": "050/193",
+    "tcgplayerId": 568513
+  },
+  {
+    "id": "tot24-3",
+    "name": "Umbreon",
+    "number": "3",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "rika",
+    "flavorText": "When exposed to the moon's aura, the rings on its body glow faintly and it gains a mysterious power.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/tot24/3.webp",
+    "imageSmall": "assets/cards/tot24/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Feint Attack",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. This attack's damage isn't affected by Weakness or Resistance, or by any effects on that Pokémon."
+      },
+      {
+        "name": "Pitch-Black Blade",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "market": 0.48,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/568704_in_1000x1000.jpg",
+    "printedNumber": "130/197",
+    "tcgplayerId": 568704
+  },
+  {
+    "id": "tot24-4",
+    "name": "Houndour",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "50",
+    "artist": "Scav",
+    "flavorText": "It is smart enough to hunt in packs. It uses a variety of cries for communicating with others.",
+    "image": "assets/cards/tot24/4.webp",
+    "imageSmall": "assets/cards/tot24/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Coordinated Pack",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "For each of your Benched Houndour, search your deck for a Basic Darkness Energy card and attach it to that Houndour. Then, shuffle your deck."
+      },
+      {
+        "name": "Focus Fangs",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/568705_in_1000x1000.jpg",
+    "printedNumber": "131/197",
+    "tcgplayerId": 568705
+  },
+  {
+    "id": "tot24-5",
+    "name": "Houndoom",
+    "number": "5",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Haru Akasaka",
+    "flavorText": "If you are burned by the flames it shoots from its mouth, the pain will never go away.",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/tot24/5.webp",
+    "imageSmall": "assets/cards/tot24/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Daring Strike",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 70 more damage."
+      },
+      {
+        "name": "Shadow Slash",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/568748_in_1000x1000.jpg",
+    "printedNumber": "133/197",
+    "tcgplayerId": 568748
+  },
+  {
+    "id": "tot24-6",
+    "name": "Darkrai",
+    "number": "6",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Bun Toujo",
+    "flavorText": "It can lull people to sleep and make them dream. It is active during nights of the new moon.",
+    "image": "assets/cards/tot24/6.webp",
+    "imageSmall": "assets/cards/tot24/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Slumber",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Night Cyclone",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Move all Energy from this Pokémon to your Benched Pokémon in any way you like."
+      }
+    ],
+    "market": 0.58,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/568826_in_1000x1000.jpg",
+    "printedNumber": "136/197",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 568826,
+    "foilMap": "assets/foil/maps/tot24/6.webp"
+  },
+  {
+    "id": "tot24-7",
+    "name": "Fuecoco",
+    "number": "7",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Gemi",
+    "flavorText": "It lies on warm rocks and uses the heat absorbed by its square-shaped scales to create fire energy.",
+    "image": "assets/cards/tot24/7.webp",
+    "imageSmall": "assets/cards/tot24/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Ram",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/568941_in_1000x1000.jpg",
+    "printedNumber": "023/182",
+    "tcgplayerId": 568941
+  },
+  {
+    "id": "tot24-8",
+    "name": "Pumpkaboo",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "saino misaki",
+    "flavorText": "The light that streams out from the holes in the pumpkin can hypnotize and control the people and Pokémon that see it.",
+    "image": "assets/cards/tot24/8.webp",
+    "imageSmall": "assets/cards/tot24/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This Pokémon also does 20 damage to itself."
+      }
+    ],
+    "market": 0.12,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/568968_in_1000x1000.jpg",
+    "printedNumber": "077/182",
+    "tcgplayerId": 568968
+  },
+  {
+    "id": "tot24-9",
+    "name": "Gourgeist",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "nisimono",
+    "flavorText": "In the darkness of a new-moon night, Gourgeist will come knocking. Whoever answers the door will be swept off to the afterlife.",
+    "evolvesFrom": "Pumpkaboo",
+    "image": "assets/cards/tot24/9.webp",
+    "imageSmall": "assets/cards/tot24/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Bind",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Startling Pumpkin",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, discard 2 random cards from your opponent's hand.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/569041_in_1000x1000.jpg",
+    "printedNumber": "078/182",
+    "tcgplayerId": 569041
+  },
+  {
+    "id": "tot24-10",
+    "name": "Pikachu",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "OKACHEKE",
+    "flavorText": "﻿When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/tot24/10.webp",
+    "imageSmall": "assets/cards/tot24/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 20 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Pika Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 2.09,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/569132_in_1000x1000.jpg",
+    "printedNumber": "018/091",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 569132,
+    "foilMap": "assets/foil/maps/tot24/10.webp"
+  },
+  {
+    "id": "tot24-11",
+    "name": "Mimikyu",
+    "number": "11",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "This Pokémon lives in dark places untouched by sunlight. When it appears before humans, it hides itself under a cloth that resembles a Pikachu.",
+    "image": "assets/cards/tot24/11.webp",
+    "imageSmall": "assets/cards/tot24/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Ghost Eye",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 7 damage counters on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Safeguard",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon ex and Pokémon V.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.89,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/569227_in_1000x1000.jpg",
+    "printedNumber": "037/091",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 569227,
+    "foilMap": "assets/foil/maps/tot24/11.webp"
+  },
+  {
+    "id": "tot24-12",
+    "name": "Greavard",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "yuu",
+    "flavorText": "This friendly Pokémon doesn't like being alone. Pay it even the slightest bit of attention, and it will follow you forever.",
+    "image": "assets/cards/tot24/12.webp",
+    "imageSmall": "assets/cards/tot24/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Graveyard Gamboling",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10×",
+        "text": "This attack does 10 damage for each Psychic Pokémon in your discard pile."
+      }
+    ],
+    "market": 0.11,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/569228_in_1000x1000.jpg",
+    "printedNumber": "042/091",
+    "tcgplayerId": 569228
+  },
+  {
+    "id": "tot24-13",
+    "name": "Houndstone",
+    "number": "13",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Kouki Saitou",
+    "flavorText": "A lovingly mourned Pokémon was reborn as Houndstone. It doesn't like anyone touching the protuberance atop its head.",
+    "evolvesFrom": "Greavard",
+    "image": "assets/cards/tot24/13.webp",
+    "imageSmall": "assets/cards/tot24/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Last Respects",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "80+",
+        "text": "This attack does 10 more damage for each Psychic Pokémon in your discard pile."
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/569323_in_1000x1000.jpg",
+    "printedNumber": "043/091",
+    "tcgplayerId": 569323,
+    "foilAs": "Common"
+  },
+  {
+    "id": "tot24-14",
+    "name": "Gengar",
+    "number": "14",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Nelnal",
+    "flavorText": "To steal the life of its target, it slips into the prey's shadow and silently waits for an opportunity.",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/tot24/14.webp",
+    "imageSmall": "assets/cards/tot24/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Nightmare",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Night Gate",
+        "text": "Once during your turn, you may switch your Active Pokémon with 1 of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 3.54,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570271_in_1000x1000.jpg",
+    "printedNumber": "057/091",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 570271,
+    "foilMap": "assets/foil/maps/tot24/14.webp"
+  },
+  {
+    "id": "tot24-15",
+    "name": "Scream Tail",
+    "number": "15",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ancient"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "kawayoo",
+    "flavorText": "There has been only one reported sighting of this Pokémon. It resembles a mysterious creature depicted in an old expedition journal.",
+    "image": "assets/cards/tot24/15.webp",
+    "imageSmall": "assets/cards/tot24/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Supportive Singing",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 100 damage from 1 of your Benched Ancient Pokémon."
+      },
+      {
+        "name": "Hyper Voice",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570272_in_1000x1000.jpg",
+    "printedNumber": "077/162",
+    "tcgplayerId": 570272
+  },
+  {
+    "id": "tot24-16",
+    "name": "Flutter Mane",
+    "number": "16",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ancient"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "kodama",
+    "flavorText": "This Pokémon has characteristics similar to those of Flutter Mane, a creature mentioned in a certain book.",
+    "image": "assets/cards/tot24/16.webp",
+    "imageSmall": "assets/cards/tot24/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Hex Hurl",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Put 2 damage counters on your opponent's Benched Pokémon in any way you like."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Midnight Fluttering",
+        "text": "As long as this Pokémon is in the Active Spot, your opponent's Active Pokémon has no Abilities, except for Midnight Fluttering.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.35,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570273_in_1000x1000.jpg",
+    "printedNumber": "078/162",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 570273,
+    "foilMap": "assets/foil/maps/tot24/16.webp"
+  },
+  {
+    "id": "tot24-17",
+    "name": "Gastly",
+    "number": "17",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Fujimoto Gold",
+    "flavorText": "It wraps its opponent in its gas-like body, slowly weakening its prey by poisoning it through the skin.",
+    "image": "assets/cards/tot24/17.webp",
+    "imageSmall": "assets/cards/tot24/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Mysterious Beam",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Suffocating Gas",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.16,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570320_in_1000x1000.jpg",
+    "printedNumber": "102/162",
+    "tcgplayerId": 570320
+  },
+  {
+    "id": "tot24-18",
+    "name": "Haunter",
+    "number": "18",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "MAHOU",
+    "flavorText": "It likes to lurk in the dark and tap shoulders with a gaseous hand. Its touch causes endless shuddering.",
+    "evolvesFrom": "Gastly",
+    "image": "assets/cards/tot24/18.webp",
+    "imageSmall": "assets/cards/tot24/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Poison Breath",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570361_in_1000x1000.jpg",
+    "printedNumber": "103/162",
+    "tcgplayerId": 570361
+  },
+  {
+    "id": "tot24-19",
+    "name": "Iron Jugulis",
+    "number": "19",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Future"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "KEIICHIRO ITO",
+    "flavorText": "It's possible that Iron Jugulis, an object described in an old book, may actually be this Pokémon.",
+    "image": "assets/cards/tot24/19.webp",
+    "imageSmall": "assets/cards/tot24/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Blasting Wind",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Automated Combat",
+        "text": "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), put 3 damage counters on the Attacking Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570362_in_1000x1000.jpg",
+    "printedNumber": "139/162",
+    "tcgplayerId": 570362
+  },
+  {
+    "id": "tot24-20",
+    "name": "Phantump",
+    "number": "20",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Katsunori Sato",
+    "flavorText": "This Pokémon came to be when the spirit of a deceased child possessed a tree stump. It now wanders the forest searching for friends.",
+    "image": "assets/cards/tot24/20.webp",
+    "imageSmall": "assets/cards/tot24/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Leech Seed",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570363_in_1000x1000.jpg",
+    "printedNumber": "012/167",
+    "tcgplayerId": 570363
+  },
+  {
+    "id": "tot24-21",
+    "name": "Trevenant",
+    "number": "21",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Oswaldo KATO",
+    "flavorText": "Trevenant is very kind to Pokémon living in the forest. It doesn't even care if these Pokémon take up residence in the greenery on its head.",
+    "evolvesFrom": "Phantump",
+    "image": "assets/cards/tot24/21.webp",
+    "imageSmall": "assets/cards/tot24/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Giga Drain",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Forest Dump",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570364_in_1000x1000.jpg",
+    "printedNumber": "013/167",
+    "tcgplayerId": 570364
+  },
+  {
+    "id": "tot24-22",
+    "name": "Poltchageist",
+    "number": "22",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "Poltchageist looks like a regional form of Sinistea, but it was recently discovered that the two Pokémon are entirely unrelated.",
+    "image": "assets/cards/tot24/22.webp",
+    "imageSmall": "assets/cards/tot24/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Tea Server",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Put a Basic Grass Energy card from your discard pile into your hand."
+      },
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570365_in_1000x1000.jpg",
+    "printedNumber": "021/167",
+    "tcgplayerId": 570365
+  },
+  {
+    "id": "tot24-23",
+    "name": "Sinistcha",
+    "number": "23",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "It prefers cool, dark places, such as the back of a shelf or the space beneath a home's floorboards. It wanders in search of prey after sunset.",
+    "evolvesFrom": "Poltchageist",
+    "image": "assets/cards/tot24/23.webp",
+    "imageSmall": "assets/cards/tot24/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Cursed Drop",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Put 4 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Spill the Tea",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "70×",
+        "text": "Discard up to 3 Grass Energy cards from your Pokémon. This attack does 70 damage for each card you discarded in this way."
+      }
+    ],
+    "market": 0.27,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570462_in_1000x1000.jpg",
+    "printedNumber": "022/167",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 570462,
+    "foilMap": "assets/foil/maps/tot24/23.webp"
+  },
+  {
+    "id": "tot24-24",
+    "name": "Teal Mask Ogerpon",
+    "number": "24",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "This mischief-loving Pokémon is full of curiosity. It battles by drawing out the type-based energy contained within its masks.",
+    "image": "assets/cards/tot24/24.webp",
+    "imageSmall": "assets/cards/tot24/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Mountain Stroll",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Ogre Comeback",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each of your opponent's Benched Pokémon."
+      }
+    ],
+    "market": 0.23,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570463_in_1000x1000.jpg",
+    "printedNumber": "024/167",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 570463,
+    "foilMap": "assets/foil/maps/tot24/24.webp"
+  },
+  {
+    "id": "tot24-25",
+    "name": "Litwick",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Saya Tsuruta",
+    "flavorText": "While shining a light and pretending to be a guide, it leeches off the life-force of any who follow it.",
+    "image": "assets/cards/tot24/25.webp",
+    "imageSmall": "assets/cards/tot24/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.13,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570563_in_1000x1000.jpg",
+    "printedNumber": "036/167",
+    "tcgplayerId": 570563
+  },
+  {
+    "id": "tot24-26",
+    "name": "Lampent",
+    "number": "26",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Rond",
+    "flavorText": "The spirits it absorbs fuel its baleful fire. It hangs around hospitals waiting for people to pass on.",
+    "evolvesFrom": "Litwick",
+    "image": "assets/cards/tot24/26.webp",
+    "imageSmall": "assets/cards/tot24/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Burn It All Up",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "market": 0.14,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570564_in_1000x1000.jpg",
+    "printedNumber": "037/167",
+    "tcgplayerId": 570564
+  },
+  {
+    "id": "tot24-27",
+    "name": "Chandelure",
+    "number": "27",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "saino misaki",
+    "flavorText": "It absorbs spirits, which it then burns. By waving the flames on its arms, it puts its foes into a hypnotic trance.",
+    "evolvesFrom": "Lampent",
+    "image": "assets/cards/tot24/27.webp",
+    "imageSmall": "assets/cards/tot24/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Mind Ruler",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each card in your opponent's hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Alluring Light",
+        "text": "Once during your turn, you may have each player draw a card.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570565_in_1000x1000.jpg",
+    "printedNumber": "038/167",
+    "tcgplayerId": 570565,
+    "foilAs": "Common"
+  },
+  {
+    "id": "tot24-28",
+    "name": "Munkidori",
+    "number": "28",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "kodama",
+    "flavorText": "Munkidori keeps itself somewhere safe while it toys with its foes, using psychokinesis to induce intense dizziness.",
+    "image": "assets/cards/tot24/28.webp",
+    "imageSmall": "assets/cards/tot24/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Mind Bend",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Adrena-Brain",
+        "text": "Once during your turn, if this Pokémon has any Darkness Energy attached, you may move up to 3 damage counters from 1 of your Pokémon to 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.39,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570567_in_1000x1000.jpg",
+    "printedNumber": "095/167",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 570567,
+    "foilMap": "assets/foil/maps/tot24/28.webp"
+  },
+  {
+    "id": "tot24-29",
+    "name": "Fezandipiti",
+    "number": "29",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Kouki Saitou",
+    "flavorText": "Fezandipiti beats its glossy wings to scatter pheromones that captivate people and Pokémon.",
+    "image": "assets/cards/tot24/29.webp",
+    "imageSmall": "assets/cards/tot24/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Feather",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Adrena-Pheromone",
+        "text": "If this Pokémon has any Darkness Energy attached and is damaged by an attack, flip a coin. If heads, prevent that damage.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570568_in_1000x1000.jpg",
+    "printedNumber": "096/167",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 570568,
+    "foilMap": "assets/foil/maps/tot24/29.webp"
+  },
+  {
+    "id": "tot24-30",
+    "name": "Okidogi",
+    "number": "30",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "Okidogi is a ruffian with a short temper. It can pulverize anything by swinging around the chain on its neck.",
+    "image": "assets/cards/tot24/30.webp",
+    "imageSmall": "assets/cards/tot24/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Good Punch",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Adrena-Power",
+        "text": "If this Pokémon has any Darkness Energy attached, it gets +100 HP, and the attacks it uses do 100 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.21,
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/570569_in_1000x1000.jpg",
+    "printedNumber": "111/167",
+    "holo": true,
+    "foilAs": "Cosmos",
+    "tcgplayerId": 570569,
+    "foilMap": "assets/foil/maps/tot24/30.webp"
+  }
+]

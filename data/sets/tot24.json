@@ -1,0 +1,217 @@
+{
+  "id": "tot24",
+  "name": "Trick or Trade 2024",
+  "side": true,
+  "tcgplayerGroup": 23561,
+  "sealed": {
+    "boosterPack": 579930
+  },
+  "products": [
+    {
+      "id": "booster-bundle-35",
+      "name": "Trick or Trade BOOster Bundle (35 packs)",
+      "kind": "bundle",
+      "tcgplayerId": 558713,
+      "packs": 35
+    },
+    {
+      "id": "booster-bundle-120",
+      "name": "Trick or Trade BOOster Bundle (120 packs)",
+      "kind": "bundle",
+      "tcgplayerId": 591211,
+      "packs": 120
+    }
+  ],
+  "cards": [
+    {
+      "from": "scarlet-violet/paldea-evolved/12",
+      "printedNumber": "012/193",
+      "tcgplayerId": 568512
+    },
+    {
+      "from": "scarlet-violet/paldea-evolved/50",
+      "printedNumber": "050/193",
+      "tcgplayerId": 568513
+    },
+    {
+      "from": "scarlet-violet/obsidian-flames/130",
+      "printedNumber": "130/197",
+      "tcgplayerId": 568704
+    },
+    {
+      "from": "scarlet-violet/obsidian-flames/131",
+      "printedNumber": "131/197",
+      "tcgplayerId": 568705
+    },
+    {
+      "from": "scarlet-violet/obsidian-flames/133",
+      "printedNumber": "133/197",
+      "tcgplayerId": 568748
+    },
+    {
+      "from": "scarlet-violet/obsidian-flames/136",
+      "printedNumber": "136/197",
+      "tcgplayerId": 568826,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "svalt/sv3_en_136_alt",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/paradox-rift/23",
+      "printedNumber": "023/182",
+      "tcgplayerId": 568941
+    },
+    {
+      "from": "scarlet-violet/paradox-rift/77",
+      "printedNumber": "077/182",
+      "tcgplayerId": 568968
+    },
+    {
+      "from": "scarlet-violet/paradox-rift/78",
+      "printedNumber": "078/182",
+      "tcgplayerId": 569041
+    },
+    {
+      "from": "scarlet-violet/paldean-fates/18",
+      "printedNumber": "018/091",
+      "tcgplayerId": 569132,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "window",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/paldean-fates/37",
+      "printedNumber": "037/091",
+      "tcgplayerId": 569227,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "sv4-5/sv4-5_en_037_std",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/paldean-fates/42",
+      "printedNumber": "042/091",
+      "tcgplayerId": 569228
+    },
+    {
+      "from": "scarlet-violet/paldean-fates/43",
+      "printedNumber": "043/091",
+      "tcgplayerId": 569323
+    },
+    {
+      "from": "scarlet-violet/paldean-fates/57",
+      "printedNumber": "057/091",
+      "tcgplayerId": 570271,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "window",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/temporal-forces/77",
+      "printedNumber": "077/162",
+      "tcgplayerId": 570272
+    },
+    {
+      "from": "scarlet-violet/temporal-forces/78",
+      "printedNumber": "078/162",
+      "tcgplayerId": 570273,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "sv5/sv5_en_078_std",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/temporal-forces/102",
+      "printedNumber": "102/162",
+      "tcgplayerId": 570320
+    },
+    {
+      "from": "scarlet-violet/temporal-forces/103",
+      "printedNumber": "103/162",
+      "tcgplayerId": 570361
+    },
+    {
+      "from": "scarlet-violet/temporal-forces/139",
+      "printedNumber": "139/162",
+      "tcgplayerId": 570362
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/12",
+      "printedNumber": "012/167",
+      "tcgplayerId": 570363
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/13",
+      "printedNumber": "013/167",
+      "tcgplayerId": 570364
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/21",
+      "printedNumber": "021/167",
+      "tcgplayerId": 570365
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/22",
+      "printedNumber": "022/167",
+      "tcgplayerId": 570462,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "svalt/sv6_en_022_alt",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/24",
+      "printedNumber": "024/167",
+      "tcgplayerId": 570463,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "svalt/sv6_en_024_alt",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/36",
+      "printedNumber": "036/167",
+      "tcgplayerId": 570563
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/37",
+      "printedNumber": "037/167",
+      "tcgplayerId": 570564
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/38",
+      "printedNumber": "038/167",
+      "tcgplayerId": 570565
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/95",
+      "printedNumber": "095/167",
+      "tcgplayerId": 570567,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "svalt/sv6_en_095_alt",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/96",
+      "printedNumber": "096/167",
+      "tcgplayerId": 570568,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "svalt/sv6_en_096_alt",
+      "border": true
+    },
+    {
+      "from": "scarlet-violet/twilight-masquerade/111",
+      "printedNumber": "111/167",
+      "tcgplayerId": 570569,
+      "holo": true,
+      "foilAs": "Cosmos",
+      "tcgl": "svalt/sv6_en_111_alt",
+      "border": true
+    }
+  ]
+}

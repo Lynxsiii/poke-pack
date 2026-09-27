@@ -4200,6 +4200,364 @@
     "imageRemote": "https://images.scrydex.com/pokemon/me3-124/large"
   },
   {
+    "id": "me3-24-stamp",
+    "name": "Aurorus",
+    "number": "24-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "HACCAN",
+    "flavorText": "The diamond-shaped crystals on its body expel air as cold as -240 degrees Fahrenheit, surrounding its enemies and encasing them in ice.",
+    "evolvesFrom": "Amaura",
+    "attacks": [
+      {
+        "name": "Freezing Chill",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon can't use attacks."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tundra Wall",
+        "text": "All of your Pokémon that have any Water Energy attached take 50 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance). The effect of Tundra Wall doesn't stack.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/685559_in_1000x1000.jpg",
+    "printedNumber": "024/088",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Perfect Order stamp",
+    "tcgplayerId": 685559,
+    "image": "assets/cards/me3/24-stamp.webp",
+    "imageSmall": "assets/cards/me3/24-stamp-sm.webp",
+    "market": 9.42
+  },
+  {
+    "id": "me3-28-stamp",
+    "name": "Luxray",
+    "number": "28-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "150",
+    "artist": "Taiga Kasai",
+    "flavorText": "Luxray’s ability to see through objects comes in handy when it’s scouting for danger.",
+    "evolvesFrom": "Luxio",
+    "attacks": [
+      {
+        "name": "Incessant Onslaught",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70×",
+        "text": "This attack does 70 damage for each Prize card you have taken."
+      },
+      {
+        "name": "Strong Volt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/685560_in_1000x1000.jpg",
+    "printedNumber": "028/088",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Perfect Order stamp",
+    "tcgplayerId": 685560,
+    "image": "assets/cards/me3/28-stamp.webp",
+    "imageSmall": "assets/cards/me3/28-stamp-sm.webp",
+    "market": 18.58
+  },
+  {
+    "id": "me3-50-ebgames",
+    "name": "Gengar",
+    "number": "50-ebgames",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Masako Tomii",
+    "flavorText": "It hides in shadows. It is said that in rooms where Gengar is hiding, the temperature drops by nearly 10 degrees Fahrenheit.",
+    "evolvesFrom": "Haunter",
+    "attacks": [
+      {
+        "name": "Mind Jack",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10+",
+        "text": "This attack does 30 more damage for each of your opponent's Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Infinite Shadow",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, put it into your hand instead of the discard pile. (Discard all attached cards.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/686505_in_1000x1000.jpg",
+    "printedNumber": "050/088",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "EB Games stamp",
+    "tcgplayerId": 686505,
+    "image": "assets/cards/me3/50-ebgames.webp",
+    "imageSmall": "assets/cards/me3/50-ebgames-sm.webp",
+    "market": 182.28
+  },
+  {
+    "id": "me3-50-gamestop",
+    "name": "Gengar",
+    "number": "50-gamestop",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Masako Tomii",
+    "flavorText": "It hides in shadows. It is said that in rooms where Gengar is hiding, the temperature drops by nearly 10 degrees Fahrenheit.",
+    "evolvesFrom": "Haunter",
+    "attacks": [
+      {
+        "name": "Mind Jack",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10+",
+        "text": "This attack does 30 more damage for each of your opponent's Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Infinite Shadow",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, put it into your hand instead of the discard pile. (Discard all attached cards.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/685555_in_1000x1000.jpg",
+    "printedNumber": "050/088",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "GameStop stamp",
+    "tcgplayerId": 685555,
+    "image": "assets/cards/me3/50-gamestop.webp",
+    "imageSmall": "assets/cards/me3/50-gamestop-sm.webp",
+    "market": 96.21
+  },
+  {
+    "id": "me3-meg010-cosmos",
+    "name": "Meganium",
+    "number": "meg010-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "160",
+    "artist": "Yoriyuki Ikegami",
+    "flavorText": "Anyone who stands beside it becomes refreshed, just as if they were soaking in the soothing atmosphere of a forest.",
+    "evolvesFrom": "Bayleef",
+    "attacks": [
+      {
+        "name": "Solar Beam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wild Growth",
+        "text": "Each Basic Grass Energy attached to all of your Pokémon provides GrassGrass Energy. The effect of Wild Growth doesn't stack.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me1-10/large",
+    "printedNumber": "010/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "image": "assets/cards/me3/meg010-cosmos.webp",
+    "imageSmall": "assets/cards/me3/meg010-cosmos-sm.webp"
+  },
+  {
+    "id": "me3-meg028-cosmos",
+    "name": "Cinderace",
+    "number": "meg028-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "160",
+    "artist": "REND",
+    "flavorText": "Although Cinderace loses its cool easily, it will battle flawlessly for a Trainer it trusts.",
+    "evolvesFrom": "Raboot",
+    "attacks": [
+      {
+        "name": "Turbo Flare",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Search your deck for up to 3 Basic Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Explosiveness",
+        "text": "If this Pokémon is in your hand when you are setting up to play, you may put it face down in the Active Spot.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/716728_in_1000x1000.jpg",
+    "printedNumber": "028/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 716728,
+    "image": "assets/cards/me3/meg028-cosmos.webp",
+    "imageSmall": "assets/cards/me3/meg028-cosmos-sm.webp",
+    "market": 0.75
+  },
+  {
+    "id": "me3-meg038-cosmos",
+    "name": "Clawitzer",
+    "number": "meg038-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "Clawitzer can move through the water at a speed of 60 knots by using gas inside its body to expel water from the back of its claw.",
+    "evolvesFrom": "Clauncher",
+    "attacks": [
+      {
+        "name": "Aqua Launcher",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "210",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fall Back to Reload",
+        "text": "Once during your turn, when this Pokémon moves from the Active Spot to your Bench, you may use this Ability. Attach up to 2 Basic Water Energy cards from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/686357_in_1000x1000.jpg",
+    "printedNumber": "038/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 686357,
+    "image": "assets/cards/me3/meg038-cosmos.webp",
+    "imageSmall": "assets/cards/me3/meg038-cosmos-sm.webp",
+    "market": 0.46
+  },
+  {
+    "id": "me3-meg093-cosmos",
+    "name": "Steelix",
+    "number": "meg093-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "200",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "It is thought its body transformed as a result of iron accumulating internally from swallowing soil.",
+    "evolvesFrom": "Onix",
+    "attacks": [
+      {
+        "name": "Welcoming Tail",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "If you have exactly 6 Prize cards remaining, this attack does 200 more damage."
+      },
+      {
+        "name": "Skull Bash",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/691166_in_1000x1000.jpg",
+    "printedNumber": "093/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 691166,
+    "image": "assets/cards/me3/meg093-cosmos.webp",
+    "imageSmall": "assets/cards/me3/meg093-cosmos-sm.webp",
+    "market": 1.02
+  },
+  {
     "id": "me3-mep064",
     "name": "Serperior",
     "number": "mep064",
@@ -4236,12 +4594,12 @@
         "text": "If Rosa's Encouragement is in your discard pile, this attack does 150 more damage."
       }
     ],
+    "market": 9.49,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-64/large",
     "printedNumber": "MEP 064",
     "tcgplayerId": 685494,
     "foilAs": "Rare",
     "promo": true,
-    "market": 9.49,
     "foilMap": "assets/foil/maps/me3/mep064.webp"
   },
   {
@@ -4273,12 +4631,12 @@
         "text": ""
       }
     ],
+    "market": 8.75,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-65/large",
     "printedNumber": "MEP 065",
     "tcgplayerId": 685495,
     "foilAs": "Rare",
     "promo": true,
-    "market": 8.75,
     "foilMap": "assets/foil/maps/me3/mep065.webp"
   },
   {
@@ -4316,12 +4674,12 @@
         "type": "Ability"
       }
     ],
+    "market": 16.02,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-66/large",
     "printedNumber": "MEP 066",
     "tcgplayerId": 685496,
     "foilAs": "Rare",
     "promo": true,
-    "market": 16.02,
     "foilMap": "assets/foil/maps/me3/mep066.webp"
   },
   {
@@ -4352,12 +4710,12 @@
         "text": "Reveal any number of Honedge, Doublade, and Aegislash from your hand, and this attack does 60 damage for each card you revealed in this way."
       }
     ],
+    "market": 9.81,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-67/large",
     "printedNumber": "MEP 067",
     "tcgplayerId": 685497,
     "foilAs": "Rare",
     "promo": true,
-    "market": 9.81,
     "foilMap": "assets/foil/maps/me3/mep067.webp"
   },
   {
@@ -4395,12 +4753,12 @@
         "text": ""
       }
     ],
+    "market": 0.23,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-68/large",
     "printedNumber": "MEP 068",
     "tcgplayerId": 686275,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.23,
     "foilMap": "assets/foil/maps/me3/mep068.webp"
   },
   {
@@ -4429,12 +4787,12 @@
         "text": ""
       }
     ],
+    "market": 0.39,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-69/large",
     "printedNumber": "MEP 069",
     "tcgplayerId": 686342,
     "foilAs": "Cosmos",
     "promo": true,
-    "market": 0.39,
     "foilMap": "assets/foil/maps/me3/mep069.webp"
   },
   {
@@ -4465,12 +4823,12 @@
         "text": "This attack does 20 damage for each damage counter on this Pokémon."
       }
     ],
+    "market": 2.22,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-70/large",
     "printedNumber": "MEP 070",
     "tcgplayerId": 685562,
     "foilAs": "Illustration Rare",
     "promo": true,
-    "market": 2.22,
     "foilMap": "assets/foil/maps/me3/mep070.webp"
   },
   {
@@ -4488,6 +4846,8 @@
     "hp": "100",
     "artist": "Shimaris Yukichi",
     "evolvesFrom": "Antique Jaw Fossil",
+    "image": "assets/cards/me3/mep070-pc.webp",
+    "imageSmall": "assets/cards/me3/mep070-pc-sm.webp",
     "attacks": [
       {
         "name": "Get Angry",
@@ -4499,15 +4859,13 @@
         "text": "This attack does 20 damage for each damage counter on this Pokémon."
       }
     ],
+    "market": 29.48,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/685563_in_1000x1000.jpg",
     "printedNumber": "MEP 070",
     "foilAs": "Illustration Rare",
     "promo": true,
     "variant": "Pokémon Center stamp",
     "tcgplayerId": 685563,
-    "image": "assets/cards/me3/mep070-pc.webp",
-    "imageSmall": "assets/cards/me3/mep070-pc-sm.webp",
-    "market": 29.46,
     "foilMap": "assets/foil/maps/me3/mep070-pc.webp"
   },
   {
@@ -4551,12 +4909,12 @@
         "text": "For each of your opponent's Pokémon, flip a coin. If heads, this attack does 150 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 0.46,
     "imageRemote": "https://images.scrydex.com/pokemon/mep-71/large",
     "printedNumber": "MEP 071",
     "tcgplayerId": 695311,
     "foilAs": "Double Rare",
     "promo": true,
-    "market": 0.46,
     "foilMap": "assets/foil/maps/me3/mep071.webp",
     "etchMap": "assets/foil/maps/me3/mep071-etch.webp"
   }

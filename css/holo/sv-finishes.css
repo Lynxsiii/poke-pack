@@ -12,8 +12,8 @@
  *   grey steps keep them faceted under the shine.
  * - ACE SPEC Rare: ACE_FOIL / ETCHED. A crosshatch holo that collectors
  *   likened to the Sword & Shield Radiant pattern when it was revealed
- *   (PokeBeach, January 2024), over the magenta stock, with the etched
- *   grating catching broad diagonal sweeps of light.
+ *   (PokeBeach, January 2024): hot pink stock that stays pink, cyan metal
+ *   banners, a rainbow art window, and fine horizontal ridges everywhere.
  *
  * Layer ideas follow pokemon-cards-151's special illustration rare and
  * pokemon-cards-css's radiant holo by Simon Goellner (@simeydotme), GPL-3.0;
@@ -113,12 +113,22 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-tera.foil-tera.has-foil-map .glare {
 }
 
 /* ---- ACE SPEC Rare: ACE_FOIL / ETCHED ---------------------------------------
-   pokemon-cards-css's radiant holo, masked by the map instead of a window:
-   crossed 45deg bars exclusion-blended into a crosshatch that slides against
-   the tilt on `.foil`; a pastel 55deg rainbow sweeping the other way through
-   the card's own etch on `::after` (the broad light bands across the magenta
-   frame); glitter under a pointer radial on `::before`; and a hard-light
-   glare. The etch glare below adds the grating's highlights. */
+   Retuned against Surging Sparks photos (2026-09-27): the magenta body stays
+   saturated hot pink at every angle and never goes silver; the ACE SPEC
+   banners are a separate cyan metal; the art window runs the full rainbow
+   with X and diamond facets (Deluxe Bomb); and fine horizontal ridges cross
+   the whole card, visible even unlit.
+
+   Everything that shines is a colour-dodge on `.foil`, masked by the map:
+   a dodge lifts the channels the print already has, so the magenta stock
+   (empty green channel) only gets hotter pink, the cyan banners (the map's
+   full-strength zone) turn bright cyan metal, and the art window takes the
+   whole spectrum. `.foil` stacks the ridges over a rainbow cut into a
+   crosshatch lattice (pokemon-cards-css's radiant holo bars, crossed with
+   `lighten` so the lattice lines are the bright ones); `::after` runs the
+   rainbow through the etch map's line fields; `::before` is the sparkle
+   grain. The glare darkens away from the light, and its `::after` only
+   brightens the ridges near the light, never a white wash. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map {
   --ace-bar: 1.2%;
   --ace-bars: hsl(0, 0%, 10%) 0%, hsl(0, 0%, 10%) var(--ace-bar),
@@ -131,95 +141,93 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map {
     hsl(0, 0%, 20%) calc(var(--ace-bar) * 7 + 0.01%), hsl(0, 0%, 20%) calc(var(--ace-bar) * 8),
     hsl(0, 0%, 10%) calc(var(--ace-bar) * 8 + 0.01%), hsl(0, 0%, 10%) calc(var(--ace-bar) * 9),
     hsl(0, 0%, 0%) calc(var(--ace-bar) * 9 + 0.01%), hsl(0, 0%, 0%) calc(var(--ace-bar) * 10);
+  /* The ridges: one bright line every 3px, in device-independent CSS px so
+     they stay fine on any card size. */
+  --ace-ridges: repeating-linear-gradient(180deg,
+    hsl(0, 0%, 100%) 0, hsl(0, 0%, 100%) 1px, hsl(0, 0%, 55%) 1px, hsl(0, 0%, 55%) 3px);
+  --ace-ridge-mask: repeating-linear-gradient(180deg,
+    #000 0, #000 1px, transparent 1px, transparent 3px);
+  --ace-bars-at: calc((var(--background-x) - 50%) * 1.5 + 50%) calc((var(--background-y) - 50%) * 1.5 + 50%);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map .foil {
   background-image:
-    radial-gradient(farthest-corner ellipse at calc(var(--pointer-x) * 0.5 + 25%) calc(var(--pointer-y) * 0.5 + 25%),
-      hsl(0, 0%, 95%) 20%, hsl(320, 60%, 45%) 130%),
+    var(--ace-ridges),
+    linear-gradient(115deg, var(--sv-spectrum)),
     repeating-linear-gradient(45deg, var(--ace-bars)),
     repeating-linear-gradient(-45deg, var(--ace-bars));
-  background-size: cover, 210% 210%, 210% 210%;
-  background-position:
-    center,
-    calc((var(--background-x) - 50%) * 1.5 + 50%) calc((var(--background-y) - 50%) * 1.5 + 50%),
-    calc((var(--background-x) - 50%) * 1.5 + 50%) calc((var(--background-y) - 50%) * 1.5 + 50%);
-  background-blend-mode: exclusion, darken, color-dodge;
-  filter: brightness(0.62) contrast(2) saturate(1.6);
+  background-size: 100% 3px, 300% 300%, 210% 210%, 210% 210%;
+  background-repeat: repeat;
+  background-position: 0 0, var(--background-x) var(--background-y), var(--ace-bars-at), var(--ace-bars-at);
+  background-blend-mode: multiply, multiply, lighten, normal;
+  filter: brightness(1.05) contrast(1.6) saturate(1.3);
   mix-blend-mode: color-dodge;
+  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--foil-strength, 1));
 }
-/* Resting, a faint crosshatch rather than a coloured wash. */
+/* Resting: the ridges and a faint lattice show, with no colour wash, as on
+   an unlit card. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map:not(.lit):not(.settling) .foil {
-  filter: brightness(0.62) contrast(2) saturate(0.5);
+  filter: brightness(1.1) contrast(1.1) saturate(0.35);
+  opacity: calc(0.3 * var(--foil-strength, 1));
 }
-body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map .foil::after {
-  --ace-space: 200px;
-  background-image: repeating-linear-gradient(55deg,
-    hsl(3, 95%, 85%) calc(var(--ace-space) * 1), hsl(207, 100%, 84%) calc(var(--ace-space) * 2),
-    hsl(29, 100%, 85%) calc(var(--ace-space) * 3), hsl(160, 100%, 86%) calc(var(--ace-space) * 4),
-    hsl(309, 94%, 87%) calc(var(--ace-space) * 5), hsl(188, 95%, 85%) calc(var(--ace-space) * 6),
-    hsl(3, 95%, 85%) calc(var(--ace-space) * 7));
-  background-size: 400% 100%;
-  background-position: calc((var(--background-x) - 50%) * -2.5 + 50%) calc((var(--background-y) - 50%) * -2.5 + 50%);
-  filter: brightness(0.6) contrast(2.4) saturate(1.8);
-  mix-blend-mode: color-dodge;
-  opacity: 0.8;
-}
-/* The rainbow sweep lives in the grating: a card with an etch map shows it
-   only where the lines are cut. */
+/* The etched line fields (art background, banners) catch the rainbow as it
+   sweeps against the tilt. Without an etch map the card keeps the lattice
+   alone. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map.has-etch-map .foil::after {
+  background-image: linear-gradient(55deg, var(--sv-spectrum));
+  background-size: 400% 400%;
+  background-position: calc((var(--background-x) - 50%) * -2.5 + 50%) calc((var(--background-y) - 50%) * -2.5 + 50%);
   -webkit-mask-image: var(--etch-map);
   mask-image: var(--etch-map);
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+  filter: brightness(0.55) saturate(1.3);
+  mix-blend-mode: screen;
+  opacity: 0.55;
 }
+/* Sparkle grain: glitter lit around the pointer. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map .foil::before {
   background-image:
     var(--holo-glitter),
-    radial-gradient(farthest-corner ellipse at calc(var(--pointer-x) * 0.5 + 25%) calc(var(--pointer-y) * 0.5 + 25%),
-      hsla(0, 0%, 58%, 0.8) 10%, hsla(0, 0%, 20%, 0.9) 20%, hsla(0, 0%, 20%, 0.5) 50%);
-  background-size: 15% 15%, 350% 350%;
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 70%) 0%, hsl(0, 0%, 30%) 45%, hsl(0, 0%, 12%) 100%);
+  background-size: 18% 18%, 100% 100%;
   background-position: center;
-  background-blend-mode: color-dodge;
-  filter: brightness(0.66) contrast(2) saturate(0.5);
-  mix-blend-mode: overlay;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply;
+  filter: contrast(1.6);
+  mix-blend-mode: screen;
+  opacity: 0.6;
 }
+/* Away from the light the pink deepens toward red-magenta; near it the
+   glare lifts only a little, so the stock never bleaches. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.33) 0%, hsl(0, 0%, 25%) 110%);
+    hsl(0, 0%, 60%) 0%, hsl(0, 0%, 50%) 30%, hsl(0, 0%, 32%) 110%);
   background-size: cover;
   background-position: center;
-  filter: brightness(1) contrast(1.5);
+  filter: none;
   mix-blend-mode: hard-light;
   opacity: calc(var(--card-opacity) * 0.7);
 }
-
-/* The grating catching the light. On the magenta stock a dodge has nothing
-   to brighten (its green channel is empty), so the sweep rides in the glare,
-   whose hard-light lifts it: pastel rainbow bands through the etch, moving
-   against the tilt, plus the white hot spot every etched card gets. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-etch-map .glare::after {
-  --ace-space: 7%;
-  background-image:
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.9) 0%, hsla(0, 0%, 100%, 0.35) 22%, hsla(0, 0%, 100%, 0) 50%),
-    repeating-linear-gradient(55deg,
-      hsl(3, 95%, 85%) calc(var(--ace-space) * 1), hsl(207, 100%, 84%) calc(var(--ace-space) * 2),
-      hsl(29, 100%, 85%) calc(var(--ace-space) * 3), hsl(160, 100%, 86%) calc(var(--ace-space) * 4),
-      hsl(309, 94%, 87%) calc(var(--ace-space) * 5), hsl(188, 95%, 85%) calc(var(--ace-space) * 6),
-      hsl(3, 95%, 85%) calc(var(--ace-space) * 7));
-  background-size: 100% 100%, 300% 300%;
-  background-position: center, calc((var(--background-x) - 50%) * -3 + 50%) calc((var(--background-y) - 50%) * -3 + 50%);
-  -webkit-mask-image: var(--etch-map);
-  mask-image: var(--etch-map);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+/* The ridges catching the light: thin bright lines near the pointer, the
+   stock showing between them. Replaces the white hot spot other etched
+   finishes use, which bleached the magenta and the art window. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-acespec.foil-acespec.has-foil-map .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(330, 100%, 94%, 0.75) 0%, hsla(330, 100%, 94%, 0.3) 25%, hsla(330, 100%, 94%, 0) 50%);
+  background-size: 100% 100%;
+  background-position: center;
+  -webkit-mask-image: var(--ace-ridge-mask);
+  mask-image: var(--ace-ridge-mask);
+  -webkit-mask-size: 100% 3px;
+  mask-size: 100% 3px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
   mix-blend-mode: normal;
   filter: none;
-  opacity: calc(0.45 + var(--pointer-from-center) * 0.4);
+  opacity: calc(var(--card-opacity) * 0.8);
 }
 
 /* ---- The etch catching the light -------------------------------------------

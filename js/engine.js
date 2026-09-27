@@ -84,8 +84,17 @@ export function poolsFrom(cards, set) {
         c.supertype !== "Trainer" &&
         !isExCard(c)
     );
+  // Basic Energy comes in runs (BASIC_ENERGY in js/catalog.js); a set's slot
+  // keeps to its own. Energy from the set's own data always qualifies.
+  const energyPrint = set?.energyPrint || "";
   return {
-    energy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && !c.reverse && !c.foilAs),
+    energy: cards.filter(
+      (c) =>
+        (c.rarity === "Energy" || c.energy) &&
+        !c.reverse &&
+        !c.foilAs &&
+        (!String(c.id).startsWith("energy-") || (c.energyPrint || "") === energyPrint)
+    ),
     // Shrouded Fable's reverse holo basic Energy: set cards that are always
     // reverse, rolled in the Energy slot's own table.
     reverseEnergy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && c.reverse),
@@ -117,6 +126,10 @@ export function poolsFrom(cards, set) {
     // reverse holo slot.
     shiny: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Rare"),
     shinyUltra: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Ultra Rare"),
+    // Trick or Trade and McDonald's packs are filled by print, not rarity:
+    // a set number of holo cards, the rest non-holo (data/sets/<set>.json).
+    holo: pokemonOrTrainer.filter((c) => c.holo),
+    plain: pokemonOrTrainer.filter((c) => !c.holo),
     reversePool,
     pokeballPool,
     masterballPool,
@@ -201,10 +214,18 @@ export function ripPack(set, cards) {
 
 /**
  * The promo ids one box of `offer` holds: all of them, or `pick` at random.
+ * With `groupOf`, the promos come in fixed runs of that many and a box holds
+ * one run: a First Partner Illustration Collection's promo pack is one
+ * region's three starters.
  */
 export function drawPromos(offer) {
   const promos = [...(offer?.promos || [])];
   if (!offer?.pick) return promos;
+  const size = Math.floor(Number(offer.groupOf) || 0);
+  if (size > 1 && size === offer.pick && promos.length % size === 0) {
+    const start = Math.floor(Math.random() * (promos.length / size)) * size;
+    return promos.slice(start, start + size);
+  }
   for (let i = promos.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [promos[i], promos[j]] = [promos[j], promos[i]];

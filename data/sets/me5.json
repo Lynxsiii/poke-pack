@@ -37,7 +37,89 @@
     },
     "mep089": {},
     "mep090": {},
-    "mep091": {}
+    "mep091": {},
+    "12-stamp": {
+      "like": "12",
+      "variant": "What's Your Favorite? stamp",
+      "tcgplayerId": 705528,
+      "foilAs": "Cosmos",
+      "printedNumber": "012/084"
+    },
+    "20-stamp": {
+      "like": "20",
+      "variant": "What's Your Favorite? stamp",
+      "tcgplayerId": 705526,
+      "foilAs": "Cosmos",
+      "printedNumber": "020/084"
+    },
+    "56-stamp": {
+      "like": "56",
+      "variant": "What's Your Favorite? stamp",
+      "tcgplayerId": 705527,
+      "foilAs": "Cosmos",
+      "printedNumber": "056/084"
+    },
+    "mep055": {},
+    "mep056": {},
+    "mep057": {},
+    "mep058": {},
+    "mep059": {},
+    "mep060": {},
+    "mep061": {},
+    "mep062": {},
+    "mep063": {},
+    "mep093": {
+      "tcgplayerId": 712963
+    },
+    "56-cosmos": {
+      "like": "56",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 706251,
+      "foilAs": "Cosmos",
+      "printedNumber": "056/084"
+    },
+    "40-cosmos": {
+      "like": "40",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 714065,
+      "foilAs": "Cosmos",
+      "printedNumber": "040/084"
+    },
+    "por024-cosmos": {
+      "like": "me3:24",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 709694,
+      "foilAs": "Cosmos",
+      "printedNumber": "024/088"
+    },
+    "por028-cosmos": {
+      "like": "me3:28",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 709696,
+      "foilAs": "Cosmos",
+      "printedNumber": "028/088"
+    },
+    "por045-cosmos": {
+      "like": "me3:45",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 709698,
+      "foilAs": "Cosmos",
+      "printedNumber": "045/088"
+    },
+    "por050-cosmos": {
+      "like": "me3:50",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 709697,
+      "foilAs": "Cosmos",
+      "printedNumber": "050/088"
+    },
+    "asc097-cosmos": {
+      "like": "me2pt5:97",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 714066,
+      "foilAs": "Cosmos",
+      "printedNumber": "097/217"
+    }
   },
   "products": [
     {
@@ -126,6 +208,135 @@
       "packs": 1,
       "promos": [
         "mep086"
+      ]
+    },
+    {
+      "id": "first-partner-3",
+      "name": "First Partner Illustration Collection: Series 3",
+      "kind": "collection",
+      "tcgplayerId": 695400,
+      "tcgplayerGroup": 24584,
+      "packs": 2,
+      "promos": [
+        "mep055",
+        "mep056",
+        "mep057",
+        "mep058",
+        "mep059",
+        "mep060",
+        "mep061",
+        "mep062",
+        "mep063"
+      ],
+      "pick": 3,
+      "groupOf": 3
+    },
+    {
+      "id": "gift-12-stamp",
+      "name": "Booster Bundle + stamped Armarouge",
+      "kind": "bundle",
+      "tcgplayerId": 692942,
+      "packs": 6,
+      "promos": [
+        "12-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-20-stamp",
+      "name": "Booster Bundle + stamped Primarina",
+      "kind": "bundle",
+      "tcgplayerId": 692942,
+      "packs": 6,
+      "promos": [
+        "20-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-56-stamp",
+      "name": "Booster Bundle + stamped Zarude",
+      "kind": "bundle",
+      "tcgplayerId": 692942,
+      "packs": 6,
+      "promos": [
+        "56-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-mep093",
+      "name": "Booster Bundle + Worlds 2026 Pikachu",
+      "kind": "bundle",
+      "tcgplayerId": 692942,
+      "packs": 6,
+      "promos": [
+        "mep093"
+      ],
+      "gift": true
+    },
+    {
+      "id": "checklane-gengar",
+      "name": "Premium Checklane Blister: Gengar",
+      "kind": "blister",
+      "tcgplayerId": 692951,
+      "packs": 1,
+      "promos": [
+        "por050-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-luxray",
+      "name": "Premium Checklane Blister: Luxray",
+      "kind": "blister",
+      "tcgplayerId": 692952,
+      "packs": 1,
+      "promos": [
+        "por028-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-tyrantrum",
+      "name": "Checklane Blister: Tyrunt & Tyrantrum",
+      "kind": "blister",
+      "tcgplayerId": 692953,
+      "packs": 1,
+      "promos": [
+        "por045-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-aurorus",
+      "name": "Checklane Blister: Amaura & Aurorus",
+      "kind": "blister",
+      "tcgplayerId": 692954,
+      "packs": 1,
+      "promos": [
+        "por024-cosmos"
+      ]
+    },
+    {
+      "id": "blister2-zarude",
+      "name": "2 Pack Blister: Zarude",
+      "kind": "blister",
+      "tcgplayerId": 706250,
+      "tcgplayerGroup": 2374,
+      "packs": 2,
+      "promos": [
+        "56-cosmos"
+      ]
+    },
+    {
+      "id": "blister2-gengar",
+      "name": "Enhanced 2 Pack Blister: Gengar, Marshadow & Team Rocket's Mimikyu",
+      "kind": "blister",
+      "tcgplayerId": 714361,
+      "tcgplayerGroup": 2374,
+      "packs": 2,
+      "promos": [
+        "por050-cosmos",
+        "40-cosmos",
+        "asc097-cosmos"
       ]
     }
   ]

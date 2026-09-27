@@ -6181,6 +6181,597 @@
     "imageRemote": "https://images.scrydex.com/pokemon/me1-188/large"
   },
   {
+    "id": "me1-133-stamp",
+    "name": "Bulbasaur",
+    "number": "133-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "mashu",
+    "flavorText": "﻿For some time after its birth, it uses the nutrients that are packed into the seed on its back in order to grow.",
+    "attacks": [
+      {
+        "name": "Bind Down",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "imageRemote": "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/mealt/me1_en_133_alt.png",
+    "printedNumber": "133/132",
+    "foilAs": "Illustration Rare",
+    "foilMap": "assets/foil/maps/me1/133-stamp.webp",
+    "promo": true,
+    "variant": "Mega Evolution stamp",
+    "tcgplayerId": 654703,
+    "image": "assets/cards/me1/133-stamp.webp",
+    "imageSmall": "assets/cards/me1/133-stamp-sm.webp",
+    "market": 14.98
+  },
+  {
+    "id": "me1-34-cosmos",
+    "name": "Kyogre",
+    "number": "34-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Nisota Niso",
+    "flavorText": "It is said to have widened the seas by causing downpours. It had been asleep in a marine trench.",
+    "attacks": [
+      {
+        "name": "Riptide",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Basic Water Energy card in your discard pile. Then, shuffle those cards into your deck."
+      },
+      {
+        "name": "Swirling Waves",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/670787_in_1000x1000.jpg",
+    "printedNumber": "034/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 670787,
+    "image": "assets/cards/me1/34-cosmos.webp",
+    "imageSmall": "assets/cards/me1/34-cosmos-sm.webp",
+    "market": 0.52
+  },
+  {
+    "id": "me1-48-cosmos",
+    "name": "Raikou",
+    "number": "48-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Takumi Wada",
+    "flavorText": "This rough Pokémon stores energy inside its body, then sweeps across the land, shooting off electricity.",
+    "attacks": [
+      {
+        "name": "Electro Fall",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30+",
+        "text": "If you have at least 4 Lightning Energy in play, this attack does 90 more damage."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/670910_in_1000x1000.jpg",
+    "printedNumber": "048/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 670910,
+    "image": "assets/cards/me1/48-cosmos.webp",
+    "imageSmall": "assets/cards/me1/48-cosmos-sm.webp",
+    "market": 0.42
+  },
+  {
+    "id": "me1-58-cosmos",
+    "name": "Ralts",
+    "number": "58-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Terada Tera",
+    "flavorText": "The horns on its head provide a strong power that enables it to sense people’s emotions.",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/668453_in_1000x1000.jpg",
+    "printedNumber": "058/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 668453,
+    "image": "assets/cards/me1/58-cosmos.webp",
+    "imageSmall": "assets/cards/me1/58-cosmos-sm.webp",
+    "market": 0.43
+  },
+  {
+    "id": "me1-59-cosmos",
+    "name": "Kirlia",
+    "number": "59-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "satoma",
+    "flavorText": "It has a psychic power that enables it to distort the space around it and see into the future.",
+    "evolvesFrom": "Ralts",
+    "attacks": [
+      {
+        "name": "Call Sign",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Psyshot",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/668455_in_1000x1000.jpg",
+    "printedNumber": "059/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 668455,
+    "image": "assets/cards/me1/59-cosmos.webp",
+    "imageSmall": "assets/cards/me1/59-cosmos-sm.webp",
+    "market": 0.45
+  },
+  {
+    "id": "me1-64-stamp",
+    "name": "Xerneas",
+    "number": "64-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Kazumasa Yasukuni",
+    "flavorText": "When the horns on its head shine in seven colors, it is said to be sharing everlasting life.",
+    "attacks": [
+      {
+        "name": "Geo Gate",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Basic Psychic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Bright Horns",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your next turn, this Pokémon can't use Bright Horns."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me1-64/large",
+    "printedNumber": "064/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Mega Evolution stamp",
+    "tcgplayerId": 655977,
+    "image": "assets/cards/me1/64-stamp.webp",
+    "imageSmall": "assets/cards/me1/64-stamp-sm.webp",
+    "market": 5.67
+  },
+  {
+    "id": "me1-76-cosmos",
+    "name": "Riolu",
+    "number": "76-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "hncl",
+    "flavorText": "They communicate with one another using their auras. They are able to run all through the night.",
+    "attacks": [
+      {
+        "name": "Accelerating Stab",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "During your next turn, this Pokémon can't use Accelerating Stab."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/668457_in_1000x1000.jpg",
+    "printedNumber": "076/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Pixel Cosmos Holo",
+    "tcgplayerId": 668457,
+    "image": "assets/cards/me1/76-cosmos.webp",
+    "imageSmall": "assets/cards/me1/76-cosmos-sm.webp",
+    "market": 0.39
+  },
+  {
+    "id": "me1-88-ebgames",
+    "name": "Yveltal",
+    "number": "88-ebgames",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "akagi",
+    "flavorText": "When its life comes to an end, it absorbs the life energy of every living thing and turns into a cocoon once more.",
+    "attacks": [
+      {
+        "name": "Clutch",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Dark Feather",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/658354_in_1000x1000.jpg",
+    "printedNumber": "088/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "EB Games stamp",
+    "tcgplayerId": 658354,
+    "image": "assets/cards/me1/88-ebgames.webp",
+    "imageSmall": "assets/cards/me1/88-ebgames-sm.webp",
+    "market": 33.87
+  },
+  {
+    "id": "me1-88-gamestop",
+    "name": "Yveltal",
+    "number": "88-gamestop",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "akagi",
+    "flavorText": "When its life comes to an end, it absorbs the life energy of every living thing and turns into a cocoon once more.",
+    "attacks": [
+      {
+        "name": "Clutch",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Dark Feather",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/655978_in_1000x1000.jpg",
+    "printedNumber": "088/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "GameStop stamp",
+    "tcgplayerId": 655978,
+    "image": "assets/cards/me1/88-gamestop.webp",
+    "imageSmall": "assets/cards/me1/88-gamestop-sm.webp",
+    "market": 10.37
+  },
+  {
+    "id": "me1-88-stamp",
+    "name": "Yveltal",
+    "number": "88-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "akagi",
+    "flavorText": "When its life comes to an end, it absorbs the life energy of every living thing and turns into a cocoon once more.",
+    "attacks": [
+      {
+        "name": "Clutch",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Dark Feather",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/me1-88/large",
+    "printedNumber": "088/132",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Mega Evolution stamp",
+    "tcgplayerId": 659592,
+    "image": "assets/cards/me1/88-stamp.webp",
+    "imageSmall": "assets/cards/me1/88-stamp-sm.webp",
+    "market": 38.42
+  },
+  {
+    "id": "me1-jtg018-cosmos",
+    "name": "Meowscarada",
+    "number": "jtg018-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "160",
+    "artist": "kodama",
+    "flavorText": "This Pokémon uses the reflective fur lining its cape to camouflage the stem of its flower, creating the illusion that the flower is floating.",
+    "evolvesFrom": "Floragato",
+    "attacks": [
+      {
+        "name": "Rising Bloom",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex, this attack does 90 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Showtime",
+        "text": "Once during your turn, if this Pokémon is on your Bench, you may switch it with your Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sv9-18/large",
+    "printedNumber": "018/159",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 657213,
+    "image": "assets/cards/me1/jtg018-cosmos.webp",
+    "imageSmall": "assets/cards/me1/jtg018-cosmos-sm.webp",
+    "market": 11.02
+  },
+  {
+    "id": "me1-jtg041-cosmos",
+    "name": "Wailord",
+    "number": "jtg041-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "240",
+    "artist": "Takeshi Nakamura",
+    "flavorText": "Its immense size is the reason for its popularity. Wailord watching is a favorite sightseeing activity in various parts of the world.",
+    "evolvesFrom": "Wailmer",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 50 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sv9-41/large",
+    "printedNumber": "041/159",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 657214,
+    "image": "assets/cards/me1/jtg041-cosmos.webp",
+    "imageSmall": "assets/cards/me1/jtg041-cosmos-sm.webp",
+    "market": 1.69
+  },
+  {
+    "id": "me1-jtg085-cosmos",
+    "name": "Lycanroc",
+    "number": "jtg085-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Shiburingaru",
+    "flavorText": "Lycanroc attacks its prey with its sharp claws and fangs. It loyally obeys the instructions of a Trainer it trusts.",
+    "evolvesFrom": "Rockruff",
+    "attacks": [
+      {
+        "name": "Clamping Fangs",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each damage counter on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spike-Clad",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may attach up to 2 Spiky Energy cards from your discard pile to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sv9-85/large",
+    "printedNumber": "085/159",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 657216,
+    "image": "assets/cards/me1/jtg085-cosmos.webp",
+    "imageSmall": "assets/cards/me1/jtg085-cosmos-sm.webp",
+    "market": 0.71
+  },
+  {
+    "id": "me1-jtg095-cosmos",
+    "name": "Tyranitar",
+    "number": "jtg095-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "190",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "Extremely strong, it can change the landscape. It is so insolent that it doesn’t care about others.",
+    "evolvesFrom": "Pupitar",
+    "attacks": [
+      {
+        "name": "Cracking Stomp",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard the top 2 cards of your opponent's deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Daunting Gaze",
+        "text": "As long as this Pokémon is in the Active Spot, your opponent can't play any Item cards from their hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sv9-95/large",
+    "printedNumber": "095/159",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 657212,
+    "image": "assets/cards/me1/jtg095-cosmos.webp",
+    "imageSmall": "assets/cards/me1/jtg095-cosmos-sm.webp",
+    "market": 19.37
+  },
+  {
     "id": "me1-mep001",
     "name": "Meganium",
     "number": "mep001",
@@ -6869,5 +7460,308 @@
     "promo": true,
     "foilMap": "assets/foil/maps/me1/mep025.webp",
     "etchMap": "assets/foil/maps/me1/mep025-etch.webp"
+  },
+  {
+    "id": "me1-mep037",
+    "name": "Bulbasaur",
+    "number": "mep037",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep037.webp",
+    "imageSmall": "assets/cards/me1/mep037-sm.webp",
+    "attacks": [
+      {
+        "name": "Leech Seed",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Heal 10 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-37/large",
+    "printedNumber": "MEP 037",
+    "tcgplayerId": 684461,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 19.56
+  },
+  {
+    "id": "me1-mep038",
+    "name": "Charmander",
+    "number": "mep038",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep038.webp",
+    "imageSmall": "assets/cards/me1/mep038-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-38/large",
+    "printedNumber": "MEP 038",
+    "tcgplayerId": 684462,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 26.68
+  },
+  {
+    "id": "me1-mep039",
+    "name": "Squirtle",
+    "number": "mep039",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep039.webp",
+    "imageSmall": "assets/cards/me1/mep039-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-39/large",
+    "printedNumber": "MEP 039",
+    "tcgplayerId": 684463,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 22.48
+  },
+  {
+    "id": "me1-mep040",
+    "name": "Turtwig",
+    "number": "mep040",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep040.webp",
+    "imageSmall": "assets/cards/me1/mep040-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-40/large",
+    "printedNumber": "MEP 040",
+    "tcgplayerId": 684464,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 5.54
+  },
+  {
+    "id": "me1-mep041",
+    "name": "Chimchar",
+    "number": "mep041",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep041.webp",
+    "imageSmall": "assets/cards/me1/mep041-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 3 coins. This attack does 20 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-41/large",
+    "printedNumber": "MEP 041",
+    "tcgplayerId": 684465,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 5.87
+  },
+  {
+    "id": "me1-mep042",
+    "name": "Piplup",
+    "number": "mep042",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep042.webp",
+    "imageSmall": "assets/cards/me1/mep042-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-42/large",
+    "printedNumber": "MEP 042",
+    "tcgplayerId": 684466,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 11.0
+  },
+  {
+    "id": "me1-mep043",
+    "name": "Rowlet",
+    "number": "mep043",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep043.webp",
+    "imageSmall": "assets/cards/me1/mep043-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-43/large",
+    "printedNumber": "MEP 043",
+    "tcgplayerId": 684467,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 5.74
+  },
+  {
+    "id": "me1-mep044",
+    "name": "Litten",
+    "number": "mep044",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep044.webp",
+    "imageSmall": "assets/cards/me1/mep044-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-44/large",
+    "printedNumber": "MEP 044",
+    "tcgplayerId": 684468,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 6.11
+  },
+  {
+    "id": "me1-mep045",
+    "name": "Popplio",
+    "number": "mep045",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me1/mep045.webp",
+    "imageSmall": "assets/cards/me1/mep045-sm.webp",
+    "attacks": [
+      {
+        "name": "Disarming Voice",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-45/large",
+    "printedNumber": "MEP 045",
+    "tcgplayerId": 684469,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 5.78
   }
 ]

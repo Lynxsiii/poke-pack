@@ -159,6 +159,11 @@ const PRODUCT_KINDS = {
   blister: { short: "Blister", noun: "blister" },
   deck: { short: "Deck", noun: "deck" },
   battle: { short: "Box", noun: "box" },
+  bundle: { short: "Bundle", noun: "bundle" },
+  // A promo handed out on its own (a tournament reward, a museum or store
+  // giveaway), sold as the card alone at its market price.
+  event: { short: "Promo", noun: "promo" },
+  bundle: { short: "Bundle", noun: "bundle" },
 };
 
 /**
@@ -196,14 +201,18 @@ function promoPick(item) {
  * scripts/build_products.py into data/products.json, priced at TCGplayer
  * market. `packs` are the set's boosters, `special` any extra packs from the
  * set's `specialPacks`, `promos` the card ids that come in the box, and
- * `pick` how many of them one box holds when it is not all of them.
+ * `pick` how many of them one box holds when it is not all of them (`groupOf`:
+ * in fixed runs, see drawPromos in js/engine.js).
  */
 export function promoOffers(products = []) {
   const standard = new Set(SEALED_PRODUCTS.map((product) => product.id));
   return (products || []).flatMap((item) => {
     if (standard.has(item.id) || !(typeof item.price === "number" && item.price > 0)) return [];
     const promos = Array.isArray(item.promos) ? item.promos : [];
-    const packs = Math.max(0, Math.floor(Number(item.packs) || 0));
+    const from = packsFrom(item);
+    const packs = from
+      ? Object.values(from).reduce((sum, n) => sum + n, 0)
+      : Math.max(0, Math.floor(Number(item.packs) || 0));
     if (!packs && !promos.length) return [];
     const words = PRODUCT_KINDS[item.kind] || PRODUCT_KINDS.collection;
     return [{
@@ -212,14 +221,51 @@ export function promoOffers(products = []) {
       kind: item.kind || "collection",
       ...words,
       packs,
+      ...(from ? { from } : {}),
+      ...(item.note ? { note: String(item.note) } : {}),
       special: item.special && typeof item.special === "object" ? item.special : {},
       promos,
       pick: promoPick(item),
+      ...(item.groupOf ? { groupOf: Math.floor(Number(item.groupOf) || 0) } : {}),
       price: money(item.price),
       image: item.image || "",
       released: item.released || "",
     }];
   });
+}
+
+/**
+ * `{ setId: packs }` for a product whose boosters come from other sets (the
+ * SV Black Star Promos' tins and ex boxes), or null when they are the selling
+ * set's own.
+ */
+function packsFrom(item) {
+  if (!item?.from || typeof item.from !== "object") return null;
+  const out = {};
+  for (const [setId, n] of Object.entries(item.from)) {
+    const count = Math.max(0, Math.floor(Number(n) || 0));
+    if (count) out[String(setId)] = count;
+  }
+  return Object.keys(out).length ? out : null;
+}
+
+/**
+ * The boosters an offer opens, as `[{ set, count }]`. A product with `from`
+ * opens those sets' packs; any other opens its own set's. Null when a set it
+ * needs is not playable yet, so the shop hides it and the Worker refuses it
+ * until that set goes live.
+ */
+export function offerPackSets(offer, set) {
+  if (offer?.from) {
+    const out = [];
+    for (const [id, count] of Object.entries(offer.from)) {
+      const packSet = PLAYABLE_SETS.find((item) => item.id === id);
+      if (!packSet?.wrappers?.length) return null;
+      out.push({ set: packSet, count });
+    }
+    return out;
+  }
+  return offer?.packs ? [{ set, count: offer.packs }] : [];
 }
 
 /** Any product a set sells, standard or promo, by id. */
@@ -245,11 +291,7 @@ export function sellValue(card) {
   return SELL_VALUE[card.rarity] || 0.1;
 }
 
-/**
- * Generic basic Energy — one per modern pack, not part of the 120-card set.
- * Faces are mirrored locally by scripts/mirror_images.py, same as the cards.
- */
-export const BASIC_ENERGY = [
+const ENERGY_TYPES = [
   ["grass", "Grass"],
   ["fire", "Fire"],
   ["water", "Water"],
@@ -258,19 +300,41 @@ export const BASIC_ENERGY = [
   ["fighting", "Fighting"],
   ["darkness", "Darkness"],
   ["metal", "Metal"],
-].map(([id, name]) => ({
-  id: `energy-${id}`,
-  name: `${name} Energy`,
-  number: "—",
-  rarity: "Energy",
-  energy: true,
-  supertype: "Energy",
-  subtypes: ["Basic"],
-  types: [name],
-  artist: "Pokémon",
-  image: `assets/cards/shared/energy-${id}.webp`,
-  imageSmall: `assets/cards/shared/energy-${id}-sm.webp`,
-}));
+];
+
+/**
+ * The basic Energy in a pack's Energy slot. Scarlet & Violet printed three
+ * runs of it in the SVE set (Bulbapedia's SVE Basic Energies gallery;
+ * PokeBeach's Stellar Crown guide): 001-008 in every set up to Shrouded
+ * Fable, the art every set here used before; 009-016 on Tera crystals from
+ * Stellar Crown to Destined Rivals; 017-024 in the Black & White style for
+ * Black Bolt and White Flare. A set names its run with `energyPrint` and the
+ * engine keeps its Energy slot to that run (poolsFrom() in js/engine.js).
+ * None of them is part of a set's checklist. Faces are mirrored locally by
+ * scripts/mirror_images.py's encode(), same as the cards.
+ */
+const ENERGY_PRINTS = [
+  { print: "", suffix: "", first: 1 },
+  { print: "tera", suffix: "-tera", first: 9 },
+  { print: "unova", suffix: "-unova", first: 17 },
+];
+
+export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first }) =>
+  ENERGY_TYPES.map(([id, name], i) => ({
+    id: `energy-${id}${suffix}`,
+    name: `${name} Energy`,
+    number: "—",
+    rarity: "Energy",
+    energy: true,
+    ...(print ? { energyPrint: print, variant: `SVE ${String(first + i).padStart(3, "0")}` } : {}),
+    supertype: "Energy",
+    subtypes: ["Basic"],
+    types: [name],
+    artist: "Pokémon",
+    image: `assets/cards/shared/energy-${id}${suffix}.webp`,
+    imageSmall: `assets/cards/shared/energy-${id}${suffix}-sm.webp`,
+  }))
+);
 
 /**
  * Mega Evolution era pack: 4 commons + 3 uncommons + a reverse + a rare slot +
@@ -606,7 +670,7 @@ export const PITCH_BLACK = {
   released: "July 17, 2026",
   live: true,
   printedTotal: 84,
-  totalCount: 130,
+  totalCount: 150,
   packSize: 11,
   cost: 6.0,
   dataFile: "data/me5.json",
@@ -661,7 +725,7 @@ export const CHAOS_RISING = {
   released: "May 22, 2026",
   live: true,
   printedTotal: 86,
-  totalCount: 133,
+  totalCount: 150,
   packSize: 11,
   cost: 5.64,
   dataFile: "data/me4.json",
@@ -716,7 +780,7 @@ export const PERFECT_ORDER = {
   released: "March 27, 2026",
   live: true,
   printedTotal: 88,
-  totalCount: 133,
+  totalCount: 141,
   packSize: 11,
   cost: 5.53,
   dataFile: "data/me3.json",
@@ -772,7 +836,7 @@ export const ASCENDED_HEROES = {
   released: "January 30, 2026",
   live: true,
   printedTotal: 217,
-  totalCount: 302,
+  totalCount: 309,
   packSize: 11,
   cost: 13.87,
   dataFile: "data/me2pt5.json",
@@ -786,9 +850,9 @@ export const ASCENDED_HEROES = {
   heroIds: ["me2pt5-272", "me2pt5-276", "me2pt5-273", "me2pt5-274"],
   wrappers: [
     {
-      id: "meganium",
-      name: "Meganium",
-      cardId: "me2pt5-272",
+      id: "dragonite",
+      name: "Dragonite",
+      cardId: "me2pt5-290",
       tag: "The chase",
       art: "assets/packs/me2pt5/pack-0.avif",
       artFallback: "assets/packs/me2pt5/pack-0.png",
@@ -805,7 +869,7 @@ export const PHANTASMAL_FLAMES = {
   released: "November 14, 2025",
   live: true,
   printedTotal: 94,
-  totalCount: 146,
+  totalCount: 159,
   packSize: 11,
   cost: 11.82,
   dataFile: "data/me2.json",
@@ -825,26 +889,26 @@ export const PHANTASMAL_FLAMES = {
       artFallback: "assets/packs/me2/pack-0.png",
     },
     {
-      id: "sharpedo",
-      name: "Sharpedo",
-      cardId: "me2-127",
-      tag: "Deep water",
+      id: "gengar",
+      name: "Gengar",
+      cardId: "me2-56",
+      tag: "Shadow play",
       art: "assets/packs/me2/pack-1.avif",
       artFallback: "assets/packs/me2/pack-1.png",
+    },
+    {
+      id: "heracross",
+      name: "Heracross",
+      cardId: "me2-108",
+      tag: "Megahorn",
+      art: "assets/packs/me2/pack-2.avif",
+      artFallback: "assets/packs/me2/pack-2.png",
     },
     {
       id: "lopunny",
       name: "Lopunny",
       cardId: "me2-128",
       tag: "Quick step",
-      art: "assets/packs/me2/pack-2.avif",
-      artFallback: "assets/packs/me2/pack-2.png",
-    },
-    {
-      id: "rotom",
-      name: "Rotom",
-      cardId: "me2-126",
-      tag: "Short circuit",
       art: "assets/packs/me2/pack-3.avif",
       artFallback: "assets/packs/me2/pack-3.png",
     },
@@ -860,7 +924,7 @@ export const MEGA_EVOLUTION = {
   released: "September 26, 2025",
   live: true,
   printedTotal: 132,
-  totalCount: 204,
+  totalCount: 227,
   packSize: 11,
   cost: 8.31,
   dataFile: "data/me1.json",
@@ -876,16 +940,16 @@ export const MEGA_EVOLUTION = {
       name: "Venusaur",
       cardId: "me1-177",
       tag: "The chase",
-      art: "assets/packs/me1/pack-0.avif",
-      artFallback: "assets/packs/me1/pack-0.png",
+      art: "assets/packs/me1/pack-3.avif",
+      artFallback: "assets/packs/me1/pack-3.png",
     },
     {
       id: "gardevoir",
       name: "Gardevoir",
       cardId: "me1-178",
       tag: "Moonblast",
-      art: "assets/packs/me1/pack-1.avif",
-      artFallback: "assets/packs/me1/pack-1.png",
+      art: "assets/packs/me1/pack-0.avif",
+      artFallback: "assets/packs/me1/pack-0.png",
     },
     {
       id: "lucario",
@@ -896,12 +960,12 @@ export const MEGA_EVOLUTION = {
       artFallback: "assets/packs/me1/pack-2.png",
     },
     {
-      id: "absol",
-      name: "Absol",
-      cardId: "me1-180",
-      tag: "Dark omen",
-      art: "assets/packs/me1/pack-3.avif",
-      artFallback: "assets/packs/me1/pack-3.png",
+      id: "kangaskhan",
+      name: "Kangaskhan",
+      cardId: "me1-182",
+      tag: "Parent and child",
+      art: "assets/packs/me1/pack-1.avif",
+      artFallback: "assets/packs/me1/pack-1.png",
     },
   ],
 };
@@ -915,11 +979,12 @@ export const BLACK_BOLT = {
   released: "July 18, 2025",
   live: true,
   printedTotal: 86,
-  totalCount: 176,
+  totalCount: 181,
   packSize: 11,
   cost: 14.69,
   dataFile: "data/zsv10pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "unova",
   reverseFoil: "pokeball",
   blurb: "Scarlet & Violet, July 2025. Unova's black half — one wrapper, Poké Ball reverses, and the Black White Rare chase.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
@@ -955,11 +1020,12 @@ export const WHITE_FLARE = {
   released: "July 18, 2025",
   live: true,
   printedTotal: 86,
-  totalCount: 176,
+  totalCount: 179,
   packSize: 11,
   cost: 13.43,
   dataFile: "data/rsv10pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "unova",
   reverseFoil: "pokeball",
   blurb: "Scarlet & Violet, July 2025. Unova's white half — one wrapper, Poké Ball reverses, Reshiram on the front.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/6 · SIR 1/76 · BWR 1/496",
@@ -1061,6 +1127,7 @@ export const DESTINED_RIVALS = {
   cost: 9.13,
   dataFile: "data/sv10.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, May 2025. Team Rocket against Cynthia, Ethan and the old champions — Trainer’s Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/12 · SIR 1/94 · gold 1/149",
   lede: "Team Rocket’s Mewtwo ex SIR is the chase, about 1 in 1,033 packs. Holo Rares and ex shine around the Pokémon and the owner’s portrait, as the printed cards do.",
@@ -1098,6 +1165,7 @@ export const JOURNEY_TOGETHER = {
   cost: 6.76,
   dataFile: "data/sv9.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono and Hop bring their own Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/15 · IR 1/12 · SIR 1/86 · gold 1/137",
   lede: "Trainer’s Pokémon are back. N’s Zoroark, Iono’s Bellibolt and Lillie’s Clefairy head a 190-card list, and the Clefairy special art is the one to chase.",
@@ -1126,6 +1194,7 @@ export const PRISMATIC_EVOLUTIONS = {
   cost: 14.3,
   dataFile: "data/sv8pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and Poké Ball and Master Ball prints of the base cards.",
   oddsLine: "Poké Ball 1/3 · DR 1/6 · UR 1/13 · Master Ball 1/20 · ACE 1/21 · SIR 1/45 · gold 1/179",
   lede: "Every Common, Uncommon and Rare comes in a Poké Ball pattern, and every Pokémon among them in a Master Ball one. Each print is its own card with its own price.",
@@ -1162,6 +1231,7 @@ export const SURGING_SPARKS = {
   cost: 8.42,
   dataFile: "data/sv8.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, November 2024. Stellar Tera Pikachu ex, crystal Tera foils and ACE SPECs, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/87 · gold 1/188",
   lede: "Pikachu ex went Stellar Tera and became the chase. ACE SPEC takes the first reverse slot, and IR, SIR and gold share the second.",
@@ -1190,6 +1260,7 @@ export const STELLAR_CROWN = {
   cost: 10.63,
   dataFile: "data/sv7.json",
   cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "tera",
   blurb: "Scarlet & Violet, September 2024. Terapagos and the Stellar Tera Pokémon ex, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/90 · gold 1/137",
   lede: "Terapagos takes the crown with Cinderace, Lapras and Galvantula as Stellar Tera ex, printed in crystal foil edge to edge. Only 33 secret rares, so each one comes easier than in the sets around it.",
@@ -1466,6 +1537,159 @@ export const SCARLET_VIOLET = {
   ]),
 };
 
+/**
+ * Scarlet & Violet Black Star Promos. There is no SVP booster: every card
+ * comes in a product that holds other sets' packs (a tin, an ex box, a
+ * premium collection, sold here with `from` naming those sets), in a deck,
+ * or on its own at an event. The promos a set's own boxes carry (its ETB,
+ * Build & Battle Box and blisters) stay filed under that set, and this page
+ * lists them too.
+ */
+export const SV_PROMOS = {
+  id: "svp",
+  tcgId: "svp",
+  name: "SV Black Star Promos",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "January 6, 2023",
+  live: true,
+  promoSet: true,
+  totalCount: 77,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/svp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, 2023 to 2025. The black star promos from tins, ex boxes, battle decks and premium collections.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Scarlet & Violet black star promo that isn't in a set's own boxes: the tins, ex boxes, battle decks and premium collections, each with its real packs, plus the tournament and museum promos on their own.",
+  slots: [],
+  heroIds: ["svp-svp056", "svp-svp124", "svp-svp166", "svp-svp085"],
+  wrappers: [],
+};
+
+/**
+ * The Scarlet & Violet side sets: packs sold outside the expansions, filled
+ * by print rather than by rarity (the `holo` and `plain` pools in
+ * js/engine.js). Each card keeps the rarity symbol printed on it; `holo` says
+ * whether this printing is foil. Checklists, foils and prices are built by
+ * scripts/build_side_sets.py from data/sets/<id>.json; the research is in
+ * .claude/skills/card-textures/reference/sv-side-sets.md.
+ *
+ * Trick or Trade BOOster Bundles hold three-card mini packs, one holo and two
+ * non-holo in each (PokeBeach; Sleeve No Card Behind for 2024).
+ */
+function printSlots(plain, holo = 1) {
+  return [
+    { pool: "plain", count: plain },
+    { pool: "holo", count: holo },
+  ];
+}
+
+export const TRICK_OR_TRADE_2023 = {
+  id: "tot23",
+  name: "Trick or Trade 2023",
+  edition: "Trick or Trade",
+  era: "Scarlet & Violet",
+  released: "September 1, 2023",
+  live: true,
+  printedTotal: 30,
+  totalCount: 30,
+  packSize: 3,
+  cost: 2.38,
+  dataFile: "data/tot23.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Halloween 2023. Thirty spooky reprints from Sword & Shield to Paldea Evolved, each stamped with a jack-o'-lantern Pikachu, three cards a mini pack.",
+  oddsLine: "3 cards · 1 holo in every pack · 10 holos",
+  lede: "The BOOster Bundle's 50 mini packs were made to hand out instead of candy. Every pack has one holo, and every card wears the pumpkin Pikachu stamp.",
+  slots: printSlots(2),
+  heroIds: ["tot23-17", "tot23-29", "tot23-27", "tot23-9"],
+  wrappers: boosterWrappers("tot23", [
+    { id: "mimikyu", name: "Mimikyu & Pikachu", cardId: "tot23-29", tag: "Boo" },
+  ]),
+};
+
+/**
+ * Trick or Trade 2024: the holos moved to a Cosmos foil on the art's
+ * background and the silver border (TCGplayer's scans), and Chandelure and
+ * Houndstone came non-holo. The bundle's 35 packs were pre-sorted into ten
+ * combinations (Bulbapedia, unsourced); packs here are drawn at random.
+ */
+export const TRICK_OR_TRADE_2024 = {
+  id: "tot24",
+  name: "Trick or Trade 2024",
+  edition: "Trick or Trade",
+  era: "Scarlet & Violet",
+  released: "August 30, 2024",
+  live: true,
+  printedTotal: 30,
+  totalCount: 30,
+  packSize: 3,
+  cost: 1.95,
+  dataFile: "data/tot24.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Halloween 2024. Thirty reprints from Paldea Evolved to Twilight Masquerade with the pumpkin Pikachu stamp, and Cosmos holos this time.",
+  oddsLine: "3 cards · 1 Cosmos holo in every pack · 10 holos",
+  lede: "Gengar, Darkrai and the Loyal Three in Cosmos holo, one in every mini pack, with the pumpkin Pikachu stamp on every card.",
+  slots: printSlots(2),
+  heroIds: ["tot24-14", "tot24-10", "tot24-6", "tot24-11"],
+  wrappers: boosterWrappers("tot24", [
+    { id: "trevenant", name: "Trevenant & Gengar", cardId: "tot24-14", tag: "Boo" },
+  ]),
+};
+
+/**
+ * McDonald's Happy Meal promos: four-card packs. In 2023 each held one
+ * confetti holo and three non-holo (Bulbapedia). For 2024 Bulbapedia only says
+ * the Scarlet & Violet cards are holo and the Sword & Shield ones are not, so
+ * its packs are split the same way as 2023's. The confetti foil covers the
+ * art's background and the silver border (css/holo/side-sets.css).
+ */
+export const MCDONALDS_2023 = {
+  id: "mcd23",
+  name: "McDonald's Match Battle 2023",
+  edition: "McDonald's",
+  era: "Scarlet & Violet",
+  released: "September 12, 2023",
+  live: true,
+  printedTotal: 15,
+  totalCount: 15,
+  packSize: 4,
+  cost: 6.47,
+  dataFile: "data/mcd23.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Happy Meal promos, 2023. Paldea's starters, Pikachu and friends in a 15-card Match Battle set, four cards a pack.",
+  oddsLine: "4 cards · 1 holo in every pack · 6 holos",
+  lede: "The Match Battle Happy Meal set: each pack has one confetti holo. The holo Pikachu is the one to find.",
+  slots: printSlots(3),
+  heroIds: ["mcd23-6", "mcd23-2", "mcd23-1", "mcd23-3"],
+  wrappers: boosterWrappers("mcd23", [
+    { id: "starters", name: "Paldea's starters & Pikachu", cardId: "mcd23-6", tag: "Match Battle" },
+  ]),
+};
+
+export const MCDONALDS_2024 = {
+  id: "mcd24",
+  name: "McDonald's Dragon Discovery",
+  edition: "McDonald's",
+  era: "Scarlet & Violet",
+  released: "January 21, 2025",
+  live: true,
+  printedTotal: 15,
+  totalCount: 15,
+  packSize: 4,
+  cost: 8.98,
+  dataFile: "data/mcd24.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Happy Meal promos, the 2024 collection. Dragon types and Pikachu, 15 cards, four a pack.",
+  oddsLine: "4 cards · 1 holo in every pack · 7 holos",
+  lede: "Dragonite, Koraidon, Miraidon and Roaring Moon in confetti holo, one to a pack. Charizard is in here too, non-holo.",
+  slots: printSlots(3),
+  heroIds: ["mcd24-12", "mcd24-2", "mcd24-1", "mcd24-11"],
+  wrappers: boosterWrappers("mcd24", [
+    { id: "dragonite", name: "Dragonite & Pikachu", cardId: "mcd24-12", tag: "Dragon Discovery" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1489,6 +1713,11 @@ export const PLAYABLE_SETS = [
   SCARLET_VIOLET,
   PRISMATIC_EVOLUTIONS,
   SV_151,
+  SV_PROMOS,
+  MCDONALDS_2024,
+  TRICK_OR_TRADE_2024,
+  MCDONALDS_2023,
+  TRICK_OR_TRADE_2023,
 ];
 
 /**

@@ -1,0 +1,638 @@
+[
+  {
+    "id": "mcd23-1",
+    "name": "Sprigatito",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Saya Tsuruta",
+    "flavorText": "It's fluffy fur is similar in composition to plants. This Pokémon frequently washes its face to keep it from drying out.",
+    "image": "assets/cards/mcd23/1.webp",
+    "imageSmall": "assets/cards/mcd23/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 1.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-1/large",
+    "printedNumber": "001/015",
+    "holo": true,
+    "foilAs": "Confetti",
+    "tcgplayerId": 516512,
+    "foilMap": "assets/foil/maps/mcd23/1.webp"
+  },
+  {
+    "id": "mcd23-2",
+    "name": "Fuecoco",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Akira Komayama",
+    "flavorText": "Its flame sac is small, so energy is always leaking out. This energy is released from the dent atop Fuecoco's head and flickers to and fro.",
+    "image": "assets/cards/mcd23/2.webp",
+    "imageSmall": "assets/cards/mcd23/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 2.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-2/large",
+    "printedNumber": "002/015",
+    "holo": true,
+    "foilAs": "Confetti",
+    "tcgplayerId": 516513,
+    "foilMap": "assets/foil/maps/mcd23/2.webp"
+  },
+  {
+    "id": "mcd23-3",
+    "name": "Quaxly",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Mizue",
+    "flavorText": "This Pokémon migrated to Paldea from distance lands long ago. The gel secreted by its feathers repeals water and grime.",
+    "image": "assets/cards/mcd23/3.webp",
+    "imageSmall": "assets/cards/mcd23/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound ",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Kick",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 1.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-3/large",
+    "printedNumber": "003/015",
+    "holo": true,
+    "foilAs": "Confetti",
+    "tcgplayerId": 516514,
+    "foilMap": "assets/foil/maps/mcd23/3.webp"
+  },
+  {
+    "id": "mcd23-4",
+    "name": "Cetoddle",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Kouki Saitou",
+    "flavorText": "It lives in frigid regions in pods of five or so individuals. It loves the minerals found in snow and ice.",
+    "image": "assets/cards/mcd23/4.webp",
+    "imageSmall": "assets/cards/mcd23/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Icicle",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sharp Fin",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-4/large",
+    "printedNumber": "004/015",
+    "tcgplayerId": 516515
+  },
+  {
+    "id": "mcd23-5",
+    "name": "Cetitan",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "Ice energy builds up in the horn on its upper jaw, causing the horn to reach cryogenic temperatures that freeze its surroundings.",
+    "evolvesFrom": "Cetoddle",
+    "image": "assets/cards/mcd23/5.webp",
+    "imageSmall": "assets/cards/mcd23/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Sweeping Tackle",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200-",
+        "text": "This attack does 20 less damage for each damage counter on this Pokémon."
+      }
+    ],
+    "market": 0.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-5/large",
+    "printedNumber": "005/015",
+    "holo": true,
+    "foilAs": "Confetti",
+    "tcgplayerId": 516516,
+    "foilMap": "assets/foil/maps/mcd23/5.webp"
+  },
+  {
+    "id": "mcd23-6",
+    "name": "Pikachu",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "OKACHEKE",
+    "flavorText": "When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/mcd23/6.webp",
+    "imageSmall": "assets/cards/mcd23/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 20 less damage (before applying Weakness and Resistance)"
+      },
+      {
+        "name": "Pika Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 10.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-6/large",
+    "printedNumber": "006/015",
+    "holo": true,
+    "foilAs": "Confetti",
+    "tcgplayerId": 516517,
+    "foilMap": "assets/foil/maps/mcd23/6.webp"
+  },
+  {
+    "id": "mcd23-7",
+    "name": "Pawmi",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "kantaro",
+    "flavorText": "The pads of its paws are electricity-discharging organs. Pawmi fires electricity from its forepaws while standing unsteadily on its hind legs.",
+    "image": "assets/cards/mcd23/7.webp",
+    "imageSmall": "assets/cards/mcd23/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Light Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Zap Kick",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-7/large",
+    "printedNumber": "007/015",
+    "tcgplayerId": 516518
+  },
+  {
+    "id": "mcd23-8",
+    "name": "Kilowattrel",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Kouki Saitou",
+    "flavorText": "Kilowattrel inflates its throat sac to amplify its electricity. By riding the wind, this Pokémon can fly over 430 miles in a day.",
+    "evolvesFrom": "Wattrel",
+    "image": "assets/cards/mcd23/8.webp",
+    "imageSmall": "assets/cards/mcd23/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Skill Dive",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and reistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Thunder Blast",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "Discard a Lightning energy from this Pokémon."
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-8/large",
+    "printedNumber": "008/015",
+    "tcgplayerId": 516519
+  },
+  {
+    "id": "mcd23-9",
+    "name": "Flittle",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "30",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "Flittle's toes levitate about half an inch above the ground because of the psychic power emitted from the frills on the Pokémon's belly.",
+    "image": "assets/cards/mcd23/9.webp",
+    "imageSmall": "assets/cards/mcd23/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-9/large",
+    "printedNumber": "009/015",
+    "tcgplayerId": 516520
+  },
+  {
+    "id": "mcd23-10",
+    "name": "Sandaconda",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "140",
+    "artist": "Yuya Oka",
+    "flavorText": "It will expand its body as much as it can and then contract itself, blasting out sand with enough force to wash away a dump truck.",
+    "evolvesFrom": "Silicobra",
+    "image": "assets/cards/mcd23/10.webp",
+    "imageSmall": "assets/cards/mcd23/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Skull Bash",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Sandstorm Spray",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard 2 Energy from this Pokémon. If you discarded any Energy in this way, your opponent shuffles their Active Pokémon and all attached cards into their deck."
+      }
+    ],
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-10/large",
+    "printedNumber": "010/015",
+    "tcgplayerId": 516521
+  },
+  {
+    "id": "mcd23-11",
+    "name": "Klawf",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "nagimiso",
+    "flavorText": "Klawf hangs upside-down from the cliffs, waiting for prey. But Klawf can't remain in this position for long because its blood rushes to its head.",
+    "image": "assets/cards/mcd23/11.webp",
+    "imageSmall": "assets/cards/mcd23/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Vise Grip",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Adrenaline Hammer",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "130",
+        "text": "This Pokemon is now confused."
+      }
+    ],
+    "market": 0.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-11/large",
+    "printedNumber": "011/015",
+    "holo": true,
+    "foilAs": "Confetti",
+    "tcgplayerId": 516522,
+    "foilMap": "assets/foil/maps/mcd23/11.webp"
+  },
+  {
+    "id": "mcd23-12",
+    "name": "Blissey",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "chibi",
+    "flavorText": "The eggs it lays are filled with happiness. Eating even one bite will bring a smile to anyone.",
+    "evolvesFrom": "Chansey",
+    "image": "assets/cards/mcd23/12.webp",
+    "imageSmall": "assets/cards/mcd23/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Happy Cyclone",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Move all Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Busybody Nurse",
+        "text": "Once during your turn, you may use this Ability. Your Active Pokémon recovers from all Special Conditions.",
+        "type": "Ability"
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-12/large",
+    "printedNumber": "012/015",
+    "tcgplayerId": 516523
+  },
+  {
+    "id": "mcd23-13",
+    "name": "Tandemaus",
+    "number": "13",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "yuu",
+    "flavorText": "The pair sticks together no matter what. They split any food they find exactly in half and then eat it together.",
+    "image": "assets/cards/mcd23/13.webp",
+    "imageSmall": "assets/cards/mcd23/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Hit",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30x",
+        "text": "Flip 2 coins. This attack does 30 damage for each heads."
+      }
+    ],
+    "market": 0.6,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-13/large",
+    "printedNumber": "013/015",
+    "tcgplayerId": 516524
+  },
+  {
+    "id": "mcd23-14",
+    "name": "Cyclizar",
+    "number": "14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Ryota Murayama",
+    "flavorText": "It can sprint at over 70 mph while carrying a human. The rider's body heat warms Cyclizar's back and lifts the Pokémon's spirit.",
+    "image": "assets/cards/mcd23/14.webp",
+    "imageSmall": "assets/cards/mcd23/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Touring",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 2 cards."
+      },
+      {
+        "name": "Speed Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-14/large",
+    "printedNumber": "014/015",
+    "tcgplayerId": 516525
+  },
+  {
+    "id": "mcd23-15",
+    "name": "Kirlia",
+    "number": "15",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "kawayoo",
+    "flavorText": "It has a psychic power that enables it to distort the space around it and see into the future.",
+    "evolvesFrom": "Ralts",
+    "image": "assets/cards/mcd23/15.webp",
+    "imageSmall": "assets/cards/mcd23/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "market": 0.65,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd23-15/large",
+    "printedNumber": "015/015",
+    "tcgplayerId": 516526
+  }
+]

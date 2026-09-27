@@ -27,7 +27,43 @@
       "variant": "Pokémon Center stamp",
       "tcgplayerId": 644834
     },
-    "svp212": {}
+    "svp212": {},
+    "12-pokeball": {
+      "like": "12",
+      "variant": "Poké Ball pattern",
+      "tcgplayerId": 642706,
+      "foilAs": "Poke Ball",
+      "printedNumber": "012/086",
+      "tcgl": "svalt/zsv10-5_en_012_alt"
+    },
+    "12-stamp": {
+      "like": "12",
+      "variant": "Black Bolt stamp",
+      "tcgplayerId": 668956,
+      "tcgl": "svalt/zsv10-5_en_012_alt2",
+      "printedNumber": "012/086"
+    },
+    "34-stamp": {
+      "like": "34",
+      "variant": "Black Bolt stamp",
+      "tcgplayerId": 668957,
+      "tcgl": "svalt/zsv10-5_en_034_alt",
+      "printedNumber": "034/086"
+    },
+    "wht020-stamp": {
+      "like": "rsv10pt5:20",
+      "variant": "White Flare stamp",
+      "tcgplayerId": 668958,
+      "tcgl": "svalt/rsv10-5_en_020_alt",
+      "printedNumber": "020/086"
+    },
+    "wht062-stamp": {
+      "like": "rsv10pt5:62",
+      "variant": "White Flare stamp",
+      "tcgplayerId": 668959,
+      "tcgl": "svalt/rsv10-5_en_062_alt",
+      "printedNumber": "062/086"
+    }
   },
   "products": [
     {
@@ -58,7 +94,8 @@
       "tcgplayerId": 630615,
       "packs": 4,
       "promos": [
-        "svp208"
+        "svp208",
+        "12-pokeball"
       ]
     },
     {
@@ -69,6 +106,19 @@
       "packs": 3,
       "promos": [
         "svp212"
+      ]
+    },
+    {
+      "id": "heavy-hitters",
+      "name": "Unova Heavy Hitters Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 668632,
+      "packs": 12,
+      "promos": [
+        "12-stamp",
+        "34-stamp",
+        "wht020-stamp",
+        "wht062-stamp"
       ]
     }
   ]
