@@ -31,7 +31,9 @@ Usage:
 
 `--daily` records today's market price for the same cards and products from
 tcgcsv.com's daily TCGplayer price files: one request per TCGplayer group, so
-it is cheap enough to run every day. A set whose data/sets/<id>.json has no
+it is cheap enough to run every day, and a routine runs it each morning (UTC)
+and merges the result. It is additive too: a card or product that already has
+a point for today keeps it. A set whose data/sets/<id>.json has no
 `tcgplayerGroup` is looked up among TCGplayer's groups by its name.
 """
 from __future__ import annotations
@@ -346,9 +348,10 @@ def backfill(set_id: str, cat: Catalogue, daily: bool) -> str:
     if daily:
         for section, key, pid in jobs:
             price = cat.market(pid)
-            if price:
-                points = [p for p in store[section].get(key, []) if p[0] != TODAY]
-                store[section][key] = points + [[TODAY, price]]
+            points = store[section].setdefault(key, [])
+            # Additive like the backfill: a date already on file keeps its price.
+            if price and not price_history.has_day(points, TODAY):
+                points.append([TODAY, price])
                 written[section] += 1
     else:
         with ThreadPoolExecutor(WORKERS) as pool:
