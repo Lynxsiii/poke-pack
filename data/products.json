@@ -1258,6 +1258,153 @@
       "image": "assets/products/sv5/blister-bellibolt.webp"
     }
   ],
+  "sv9": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv9-svp189"
+      ],
+      "price": 136.43,
+      "tcgplayerId": 610930,
+      "image": "assets/products/sv9/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv9-svp189-pc",
+        "sv9-svp189"
+      ],
+      "price": 195.25,
+      "tcgplayerId": 610929,
+      "image": "assets/products/sv9/pc-etb.webp"
+    },
+    {
+      "id": "enhanced-box",
+      "name": "Enhanced Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "promos": [
+        "sv9-167-stamped"
+      ],
+      "price": 253.18,
+      "tcgplayerId": 623628,
+      "released": "2025-03-28",
+      "image": "assets/products/sv9/enhanced-box.webp"
+    },
+    {
+      "id": "premium-bellibolt",
+      "name": "Iono's Bellibolt ex Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "promos": [
+        "sv9-svp194",
+        "sv9-52-cosmos"
+      ],
+      "price": 57.75,
+      "tcgplayerId": 616304,
+      "released": "2025-04-11",
+      "image": "assets/products/sv9/premium-bellibolt.webp"
+    },
+    {
+      "id": "ptc-lillie",
+      "name": "Lillie Premium Tournament Collection",
+      "kind": "premium",
+      "packs": 6,
+      "promos": [
+        "sv9-svp195",
+        "sv9-151-cosmos"
+      ],
+      "price": 78.71,
+      "tcgplayerId": 626605,
+      "image": "assets/products/sv9/ptc-lillie.webp"
+    },
+    {
+      "id": "box-zacian",
+      "name": "Hop's Zacian ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv9-svp193",
+        "sv9-135-cosmos",
+        "sv9-136-cosmos"
+      ],
+      "price": 33.94,
+      "tcgplayerId": 616303,
+      "released": "2025-03-28",
+      "image": "assets/products/sv9/box-zacian.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv9-svp181",
+        "sv9-svp182",
+        "sv9-svp183",
+        "sv9-svp184"
+      ],
+      "pick": 1,
+      "price": 39.07,
+      "tcgplayerId": 610954,
+      "released": "2025-04-11",
+      "image": "assets/products/sv9/build-battle.webp"
+    },
+    {
+      "id": "blister3-yanmega",
+      "name": "3 Pack Blister: Yanmega",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv9-svp187"
+      ],
+      "price": 23.94,
+      "tcgplayerId": 610940,
+      "image": "assets/products/sv9/blister3-yanmega.webp"
+    },
+    {
+      "id": "blister3-scrafty",
+      "name": "3 Pack Blister: Scrafty",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv9-svp188"
+      ],
+      "price": 26.78,
+      "tcgplayerId": 610948,
+      "image": "assets/products/sv9/blister3-scrafty.webp"
+    },
+    {
+      "id": "blister-yanma",
+      "name": "Single Pack Blister: Yanma",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv9-svp185"
+      ],
+      "price": 11.38,
+      "tcgplayerId": 610950,
+      "image": "assets/products/sv9/blister-yanma.webp"
+    },
+    {
+      "id": "blister-scraggy",
+      "name": "Single Pack Blister: Scraggy",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv9-svp186"
+      ],
+      "price": 10.17,
+      "tcgplayerId": 610949,
+      "image": "assets/products/sv9/blister-scraggy.webp"
+    }
+  ],
   "zsv10pt5": [
     {
       "id": "eliteTrainerBox",
