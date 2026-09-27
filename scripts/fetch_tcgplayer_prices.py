@@ -81,7 +81,12 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         ext = {e["name"]: e["value"] for e in product.get("extendedData", [])}
         number = ext.get("Number", "")
         if re.fullmatch(r"\d+/\d+", number):
-            by_number[str(int(number.split("/")[0]))] = product
+            key = str(int(number.split("/")[0]))
+            # A variant print filed under the same number ("Mew ex - 205/165
+            # (151 Metal Card)") never displaces the pack print.
+            if key in by_number and product["name"].endswith(")"):
+                continue
+            by_number[key] = product
 
     wrong = [
         (c["number"], c["name"], by_number[c["number"]]["name"])

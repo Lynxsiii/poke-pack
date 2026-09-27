@@ -934,7 +934,7 @@ export const SV_151 = {
   printedTotal: 165,
   totalCount: 236,
   packSize: 11,
-  cost: 29.64,
+  cost: 29.71,
   dataFile: "data/sv3pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
   blurb: "Scarlet & Violet, September 2023. The original 151, one Mew wrapper, and a Cosmos holo Energy in every fourth pack.",
