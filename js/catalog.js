@@ -462,7 +462,7 @@ function celebrationSlots({ double, ir, classic, sir, futuristic, rgb }) {
  * Shiny Ultra Rare (one of 12) replaces that reverse in about one pack in
  * three; IR, SIR and gold take the second reverse; the rare slot holds Double
  * and Ultra Rares. Three separate slots, so one pack can hold three hits.
- * Rates are TCGplayer's study of about 1,800 packs (data/pullrates.json).
+ * Rates are TCGplayer's study of more than 1,500 packs (data/pullrates.json).
  */
 function shinyVaultSlots({ double, ultra, shiny, shinyUltra, ir, sir, hyper }) {
   return [

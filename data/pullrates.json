@@ -216,5 +216,21 @@
       "sir": 0.0117,
       "hyper": 0.0072
     }
+  },
+  "sv4pt5": {
+    "name": "Paldean Fates",
+    "printedTotal": 91,
+    "released": "2024-01-26",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, more than 1,500 English packs opened before release: 'Pokémon TCG: Paldean Fates Pull Rates' by Peter Day (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Paldean-Fates-Pull-Rates/23de3e93-0d0f-4ae0-abc4-13664f3001a3/, 2024-01-26), 95% confidence intervals: Double Rare 15.89% ± 1.69% (1 in 6), Ultra Rare 6.61% ± 1.15% (1 in 15), Shiny Rare 25.44% ± 2.01% (1 in 4), Shiny Ultra Rare 7.72% ± 1.23% (1 in 13), Illustration Rare 7.22% ± 1.20% (1 in 14), Special Illustration Rare 1.72% ± 0.60% (1 in 58), Hyper Rare 1.61% ± 0.58% (1 in 62). DR and UR sit in the rare slot; Shiny Rare and Shiny Ultra Rare replace the first reverse holo (about 1 pack in 3 has a shiny); IR, SIR and Hyper Rare sit in the second reverse slot.",
+    "rates": {
+      "double": 0.1589,
+      "ultra": 0.0661,
+      "shiny": 0.2544,
+      "shinyUltra": 0.0772,
+      "ir": 0.0722,
+      "sir": 0.0172,
+      "hyper": 0.0161
+    }
   }
 }
