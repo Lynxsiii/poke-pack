@@ -2577,5 +2577,135 @@
       "released": "2025-02-21",
       "image": "assets/products/sv8pt5/blister2-eevee.webp"
     }
+  ],
+  "sv3pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv3pt5-svp051"
+      ],
+      "price": 468.81,
+      "tcgplayerId": 503313,
+      "image": "assets/products/sv3pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv3pt5-svp051-pc",
+        "sv3pt5-svp051"
+      ],
+      "price": 1264.45,
+      "tcgplayerId": 501999,
+      "image": "assets/products/sv3pt5/pc-etb.webp"
+    },
+    {
+      "id": "upc",
+      "name": "Ultra-Premium Collection",
+      "kind": "premium",
+      "packs": 16,
+      "promos": [
+        "sv3pt5-svp053",
+        "sv3pt5-svp052",
+        "sv3pt5-205-metal"
+      ],
+      "price": 881.05,
+      "tcgplayerId": 502005,
+      "image": "assets/products/sv3pt5/upc.webp"
+    },
+    {
+      "id": "box-alakazam",
+      "name": "Alakazam ex Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv3pt5-svp050",
+        "sv3pt5-64-cosmos",
+        "sv3pt5-63-cosmos"
+      ],
+      "price": 118.31,
+      "tcgplayerId": 502006,
+      "released": "2023-10-06",
+      "image": "assets/products/sv3pt5/box-alakazam.webp"
+    },
+    {
+      "id": "box-zapdos",
+      "name": "Zapdos ex Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv3pt5-svp049",
+        "sv3pt5-125-cosmos"
+      ],
+      "price": 120.89,
+      "tcgplayerId": 502007,
+      "released": "2023-10-06",
+      "image": "assets/products/sv3pt5/box-zapdos.webp"
+    },
+    {
+      "id": "poster",
+      "name": "Poster Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv3pt5-svp046",
+        "sv3pt5-svp047",
+        "sv3pt5-svp048"
+      ],
+      "price": 85.9,
+      "tcgplayerId": 502001,
+      "released": "2023-09-22",
+      "image": "assets/products/sv3pt5/poster.webp"
+    },
+    {
+      "id": "tins-samsclub",
+      "name": "Sam's Club Mini Tin Bundle",
+      "kind": "tin",
+      "packs": 8,
+      "promos": [
+        "sv3pt5-26-cosmos",
+        "sv3pt5-68-cosmos",
+        "sv3pt5-94-cosmos",
+        "sv3pt5-149-cosmos"
+      ],
+      "price": 214.64,
+      "tcgplayerId": 662302,
+      "image": "assets/products/sv3pt5/tins-samsclub.webp"
+    },
+    {
+      "id": "tins-costco-meowth",
+      "name": "Costco Mini Tin 5-Pack (Meowth)",
+      "kind": "tin",
+      "packs": 10,
+      "promos": [
+        "sv3pt5-25-costco",
+        "sv3pt5-1-costco",
+        "sv3pt5-4-costco",
+        "sv3pt5-7-costco"
+      ],
+      "price": 277.0,
+      "tcgplayerId": 587746,
+      "image": "assets/products/sv3pt5/tins-costco-meowth.webp"
+    },
+    {
+      "id": "tins-costco-magneton",
+      "name": "Costco Mini Tin 5-Pack (Magneton)",
+      "kind": "tin",
+      "packs": 10,
+      "promos": [
+        "sv3pt5-25-costco",
+        "sv3pt5-1-costco",
+        "sv3pt5-4-costco",
+        "sv3pt5-7-costco"
+      ],
+      "price": 279.31,
+      "tcgplayerId": 587747,
+      "image": "assets/products/sv3pt5/tins-costco-magneton.webp"
+    }
   ]
 }

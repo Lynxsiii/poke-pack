@@ -266,6 +266,10 @@ def main() -> None:
     shipped = {}
     stem = VARIANT_FILE[variant]
     for n in numbers:
+        # A card with no TCG Live source (151's Cosmos Energies, numbered "—")
+        # keeps whatever maps it was given by hand.
+        if n in unknown:
+            continue
         entry = {}
         foil, etch = cache / f"{cached(n, variant)}.foil.png", cache / f"{cached(n, variant)}.etch.png"
         if args.no_etch:
