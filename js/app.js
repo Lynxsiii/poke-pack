@@ -549,6 +549,11 @@ function foilPattern(card) {
     const kind = reverseKindOf(card);
     return kind ? `foil-reverse foil-rev-${kind}` : "foil-reverse";
   }
+  // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
+  // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.
+  if (card.rarity === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
+  if (card.rarity === "Shiny Rare") return "foil-holo foil-shiny";
+  if (card.finish === "scodix") return "foil-gold foil-scodix";
   if (card.rarity === "Mega Hyper Rare" || card.rarity === "Hyper Rare") return "foil-gold";
   // Tera ex print TCG Live's SV_ULTRA etched foil across the whole card
   // (css/holo/sv-finishes.css). Before the Ultra Rare check, which would

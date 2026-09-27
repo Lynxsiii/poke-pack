@@ -43,6 +43,8 @@ export const HIT_RARITIES = new Set([
   "Futuristic Rare",
   "Classic Collection",
   "RGB Rare",
+  "Shiny Rare",
+  "Shiny Ultra Rare",
 ]);
 
 /** Hits are rarity-slot cards. A Poké Ball Double Rare is still a reverse. */
@@ -97,6 +99,10 @@ export function poolsFrom(cards, set) {
     classic: pokemonOrTrainer.filter((c) => c.rarity === "Classic Collection"),
     futuristic: pokemonOrTrainer.filter((c) => c.rarity === "Futuristic Rare"),
     rgb: pokemonOrTrainer.filter((c) => c.rarity === "RGB Rare"),
+    // Paldean Fates' Shiny Vault: baby shinies and shiny ex share the first
+    // reverse holo slot.
+    shiny: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Rare"),
+    shinyUltra: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Ultra Rare"),
     reversePool,
     pokeballPool,
     masterballPool,

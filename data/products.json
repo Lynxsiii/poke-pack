@@ -2166,5 +2166,168 @@
       "released": "2023-03-31",
       "image": "assets/products/sv1/blister-espathra.webp"
     }
+  ],
+  "sv4pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv4pt5-svp075"
+      ],
+      "price": 433.16,
+      "tcgplayerId": 528040,
+      "image": "assets/products/sv4pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv4pt5-svp075-pc",
+        "sv4pt5-svp075"
+      ],
+      "price": 566.94,
+      "tcgplayerId": 528039,
+      "image": "assets/products/sv4pt5/pc-etb.webp"
+    },
+    {
+      "id": "tin-charizard",
+      "name": "Tin: Charizard ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv4pt5-svp074"
+      ],
+      "price": 202.02,
+      "tcgplayerId": 528056,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/tin-charizard.webp"
+    },
+    {
+      "id": "tin-great-tusk",
+      "name": "Tin: Great Tusk ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv4pt5-svp072"
+      ],
+      "price": 128.57,
+      "tcgplayerId": 528057,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/tin-great-tusk.webp"
+    },
+    {
+      "id": "tin-iron-treads",
+      "name": "Tin: Iron Treads ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv4pt5-svp073"
+      ],
+      "price": 123.61,
+      "tcgplayerId": 528058,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/tin-iron-treads.webp"
+    },
+    {
+      "id": "premium-meowscarada",
+      "name": "Premium Collection: Meowscarada ex",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "sv4pt5-svp076",
+        "sv4pt5-svp077",
+        "sv4pt5-svp078"
+      ],
+      "price": 228.32,
+      "tcgplayerId": 528079,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/premium-meowscarada.webp"
+    },
+    {
+      "id": "premium-skeledirge",
+      "name": "Premium Collection: Skeledirge ex",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "sv4pt5-svp079",
+        "sv4pt5-svp080",
+        "sv4pt5-svp081"
+      ],
+      "price": 237.69,
+      "tcgplayerId": 528080,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/premium-skeledirge.webp"
+    },
+    {
+      "id": "premium-quaquaval",
+      "name": "Premium Collection: Quaquaval ex",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "sv4pt5-svp082",
+        "sv4pt5-svp083",
+        "sv4pt5-svp084"
+      ],
+      "price": 223.36,
+      "tcgplayerId": 528082,
+      "released": "2024-02-09",
+      "image": "assets/products/sv4pt5/premium-quaquaval.webp"
+    },
+    {
+      "id": "premium-paradox",
+      "name": "Great Tusk ex & Iron Treads ex Premium Collection",
+      "kind": "premium",
+      "packs": 11,
+      "promos": [
+        "sv4pt5-svp072-stamp",
+        "sv4pt5-svp073-stamp"
+      ],
+      "price": 243.31,
+      "tcgplayerId": 665113,
+      "image": "assets/products/sv4pt5/premium-paradox.webp"
+    },
+    {
+      "id": "tech-fidough",
+      "name": "Tech Sticker Collection: Fidough",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv4pt5-svp069"
+      ],
+      "price": 71.76,
+      "tcgplayerId": 528043,
+      "released": "2024-01-26",
+      "image": "assets/products/sv4pt5/tech-fidough.webp"
+    },
+    {
+      "id": "tech-maschiff",
+      "name": "Tech Sticker Collection: Maschiff",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv4pt5-svp071"
+      ],
+      "price": 72.07,
+      "tcgplayerId": 528044,
+      "released": "2024-01-26",
+      "image": "assets/products/sv4pt5/tech-maschiff.webp"
+    },
+    {
+      "id": "tech-greavard",
+      "name": "Tech Sticker Collection: Greavard",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv4pt5-svp070"
+      ],
+      "price": 71.52,
+      "tcgplayerId": 528045,
+      "released": "2024-01-26",
+      "image": "assets/products/sv4pt5/tech-greavard.webp"
+    }
   ]
 }

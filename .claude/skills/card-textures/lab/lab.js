@@ -49,6 +49,9 @@ function foilLayout(c) {
 function foilPattern(c) {
   if (c.reverse) return c.reverseKind && c.reverseKind !== "cosmos" ? `foil-reverse foil-rev-${c.reverseKind}` : "foil-reverse";
   const r = c.rarity;
+  if (r === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
+  if (r === "Shiny Rare") return "foil-holo foil-shiny";
+  if (c.finish === "scodix") return "foil-gold foil-scodix";
   if (r === "Mega Hyper Rare" || r === "Hyper Rare") return "foil-gold";
   if (c.foilMap && (c.subtypes || []).includes("Tera") && (r === "Double Rare" || r === "Ultra Rare")) {
     return r === "Ultra Rare" ? "foil-ultra foil-tera" : "foil-ex foil-tera";
@@ -160,7 +163,7 @@ function pose(x, y, { light = 1, tilt = true, root = document } = {}) {
 }
 
 // Per-card properties set in the markup, which a reset must not strip.
-const KEEP = /^--(art|stamp|foil-map|etch-map|seed)/;
+const KEEP = /^--(art|stamp|foil-map|etch-map|etch-angle|seed)/;
 
 function rest(root = document) {
   for (const el of root.querySelectorAll(".tcg")) {

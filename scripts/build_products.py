@@ -364,9 +364,11 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     groups = [cfg.get("tcgplayerGroup"), *(s.get("tcgplayerGroup") for s in cfg.get("promoSeries", {}).values())]
     # Product-only prints (blister exclusives) are filed in a group of their own,
     # or beside their product in Miscellaneous Cards & Products (Journey
-    # Together's Cosmos Holo box cards).
+    # Together's Cosmos Holo box cards), and a promo spec can name another
+    # (Paldean Fates' stamped prints, also in Miscellaneous, 2374).
     groups = [g for g in groups if g] + [BLISTER_EXCLUSIVES]
     groups += sorted({p["tcgplayerGroup"] for p in products if p.get("tcgplayerGroup")} - set(groups))
+    groups += sorted({s["tcgplayerGroup"] for s in (cfg.get("promoCards") or {}).values() if s.get("tcgplayerGroup")} - set(groups))
     tcg_market: dict[int, dict[int, float]] = {}
 
     def tcg_price(pid: int) -> float | None:
