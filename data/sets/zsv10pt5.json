@@ -6,5 +6,70 @@
   "scrydexId": "zsv10pt5",
   "pittSlug": "Black-Bolt",
   "artSlug": "black-bolt",
-  "packs": ["zekrom"]
+  "packs": [
+    "zekrom"
+  ],
+  "tcgplayerGroup": 24325,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp208": {},
+    "svp209": {},
+    "svp209-pc": {
+      "like": "svp209",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 644834
+    },
+    "svp212": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 630686,
+      "packs": 9,
+      "promos": [
+        "svp209"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 630687,
+      "packs": 11,
+      "promos": [
+        "svp209-pc",
+        "svp209"
+      ]
+    },
+    {
+      "id": "victini-collection",
+      "name": "Unova Victini Illustration Collection",
+      "kind": "collection",
+      "tcgplayerId": 630615,
+      "packs": 4,
+      "promos": [
+        "svp208"
+      ]
+    },
+    {
+      "id": "tech-reuniclus",
+      "name": "Tech Sticker Collection: Reuniclus",
+      "kind": "collection",
+      "tcgplayerId": 630614,
+      "packs": 3,
+      "promos": [
+        "svp212"
+      ]
+    }
+  ]
 }

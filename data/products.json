@@ -230,5 +230,102 @@
       "released": "2026-10-30",
       "image": "assets/products/me55/deck-umbreon.webp"
     }
+  ],
+  "rsv10pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "rsv10pt5-svp210"
+      ],
+      "price": 148.46,
+      "tcgplayerId": 630689,
+      "released": "2025-07-18",
+      "image": "assets/products/rsv10pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "rsv10pt5-svp210-pc",
+        "rsv10pt5-svp210"
+      ],
+      "price": 238.84,
+      "tcgplayerId": 630688,
+      "released": "2025-07-18",
+      "image": "assets/products/rsv10pt5/pc-etb.webp"
+    },
+    {
+      "id": "tech-gothitelle",
+      "name": "Tech Sticker Collection: Gothitelle",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "rsv10pt5-svp211"
+      ],
+      "price": 48.75,
+      "tcgplayerId": 630700,
+      "released": "2025-08-01",
+      "image": "assets/products/rsv10pt5/tech-gothitelle.webp"
+    }
+  ],
+  "zsv10pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "zsv10pt5-svp209"
+      ],
+      "price": 161.95,
+      "tcgplayerId": 630686,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "zsv10pt5-svp209-pc",
+        "zsv10pt5-svp209"
+      ],
+      "price": 272.56,
+      "tcgplayerId": 630687,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/pc-etb.webp"
+    },
+    {
+      "id": "victini-collection",
+      "name": "Unova Victini Illustration Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "zsv10pt5-svp208"
+      ],
+      "price": 71.86,
+      "tcgplayerId": 630615,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/victini-collection.webp"
+    },
+    {
+      "id": "tech-reuniclus",
+      "name": "Tech Sticker Collection: Reuniclus",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "zsv10pt5-svp212"
+      ],
+      "price": 50.44,
+      "tcgplayerId": 630614,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
+    }
   ]
 }

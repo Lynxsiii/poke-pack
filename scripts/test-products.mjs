@@ -1,0 +1,51 @@
+// Promo products for every set in data/products.json. Run: node scripts/test-products.mjs
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import { contentsValue, drawPromos, poolsFrom, priceOffer } from "../js/engine.js";
+import { BASIC_ENERGY, findOffer, getSet, PLAYABLE_SETS, promoOffers, sealedOffers } from "../js/catalog.js";
+
+const root = new URL("../", import.meta.url);
+const read = (path) => JSON.parse(fs.readFileSync(new URL(path, root)));
+const products = read("data/products.json");
+const sealed = read("data/sealed.json");
+let checked = 0;
+
+for (const [setId, list] of Object.entries(products)) {
+  if (setId.startsWith("_")) continue;
+  const set = getSet(setId);
+  assert.equal(set.id, setId, `${setId} is a known set`);
+  assert.ok(PLAYABLE_SETS.some((s) => s.id === setId), `${setId} is playable`);
+  const cards = [...read(set.dataFile), ...BASIC_ENERGY];
+  const byId = Object.fromEntries(cards.map((c) => [c.id, c]));
+  const pools = Object.values(poolsFrom(cards, set)).flat();
+  assert.ok(pools.every((c) => !c.promo), `${setId}: no promo is in a pack pool`);
+
+  const offers = [...sealedOffers(sealed[setId], list), ...promoOffers(list)];
+  assert.ok(offers.length >= list.length, `${setId}: every product is on sale`);
+  for (const entry of list) {
+    assert.ok(findOffer(sealed[setId], list, entry.id), `${setId}/${entry.id} is sold`);
+    if (entry.image) assert.ok(fs.existsSync(new URL(entry.image, root)), `${entry.image} exists`);
+  }
+  for (const offer of offers) {
+    for (const id of offer.promos) {
+      const card = byId[id];
+      assert.ok(card, `${setId}/${offer.id}: ${id} is in ${set.dataFile}`);
+      assert.ok(card.promo && card.rarity === "Promo", `${id} is a promo`);
+      assert.ok(fs.existsSync(new URL(card.image, root)), `${id} has its scan`);
+      assert.ok(card.market > 0, `${id} has a price`);
+    }
+    if (offer.pick) {
+      assert.ok(offer.pick < offer.promos.length, `${offer.id}: pick is fewer than its promos`);
+      const drawn = drawPromos(offer);
+      assert.equal(drawn.length, offer.pick);
+      assert.ok(drawn.every((id) => offer.promos.includes(id)));
+    } else {
+      assert.deepEqual(drawPromos(offer), offer.promos);
+    }
+    const priced = priceOffer(offer, set, cards);
+    assert.ok(priced.price >= offer.price, `${offer.id} never costs less than market`);
+    assert.ok(priced.price >= contentsValue(offer, set, cards), `${offer.id} costs at least what's inside`);
+    checked += 1;
+  }
+}
+console.log(`Promo product checks passed: ${checked} products across ${Object.keys(products).length - 1} sets, promos exist with scans and prices, none in packs, random picks, price floor.`);
