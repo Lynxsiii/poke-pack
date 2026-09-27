@@ -216,5 +216,19 @@
       "sir": 0.0117,
       "hyper": 0.0072
     }
+  },
+  "sv1": {
+    "name": "Scarlet & Violet",
+    "printedTotal": 198,
+    "released": "2023-03-31",
+    "updated": "2026-09-27",
+    "source": "TCGplayer's study of 8,000+ English Scarlet & Violet packs (published Mar 31, 2023, updated Feb 27, 2025): Double Rare 1 in 7.3, Ultra Rare 1 in 15, Illustration Rare 1 in 13, Special Illustration Rare 1 in 32, gold Hyper Rare 1 in 54 (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Scarlet-Violet-Pull-Rates/a7702fce-dd64-4a58-beb1-0f871c853215/; PokeBeach chart: https://www.pokebeach.com/news/2024/03/Scarlet-and-Violet-Pull-Rates.png). Cross-checked against Card Shop Live's 1,728 packs (DR 13.54%, UR 6.48%, IR 7.52%, SIR 3.01%, gold 1.85%; https://cardshoplive.com/pages/hit-rates-for-pokemon-tcg-scarlet-and-violet). The first Scarlet & Violet set: no ACE SPEC, no god packs, Double and Ultra Rares share the rare slot, IR/SIR/gold share the second reverse slot.",
+    "rates": {
+      "double": 0.1376,
+      "ultra": 0.0657,
+      "ir": 0.0767,
+      "sir": 0.0315,
+      "hyper": 0.0185
+    }
   }
 }

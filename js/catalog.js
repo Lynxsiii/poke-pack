@@ -1136,6 +1136,33 @@ export const TEMPORAL_FORCES = {
   ]),
 };
 
+export const SCARLET_VIOLET = {
+  id: "sv1",
+  tcgId: "sv1",
+  name: "Scarlet & Violet",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "March 31, 2023",
+  live: true,
+  printedTotal: 198,
+  totalCount: 270,
+  packSize: 11,
+  cost: 9.1,
+  dataFile: "data/sv1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, March 2023. Paldea's first set — Koraidon, Miraidon, Tera ex, and the first Illustration Rares.",
+  oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/54",
+  lede: "Where the era starts: lowercase ex, etched Tera full arts, and an art slot far kinder than later sets — SIR at 1/32, gold at 1/54. Gardevoir ex's Special Illustration Rare is the chase.",
+  slots: svSlots({ double: 0.1376, ultra: 0.0657, ir: 0.0767, sir: 0.0315, hyper: 0.0185 }),
+  heroIds: ["sv1-245", "sv1-244", "sv1-247", "sv1-251"],
+  wrappers: boosterWrappers("sv1", [
+    { id: "starters", name: "Sprigatito, Fuecoco & Quaxly", cardId: "sv1-13", tag: "Paldea" },
+    { id: "miraidon", name: "Miraidon", cardId: "sv1-244", tag: "Violet" },
+    { id: "gyarados", name: "Gyarados", cardId: "sv1-225", tag: "Tera" },
+    { id: "koraidon", name: "Koraidon", cardId: "sv1-247", tag: "Scarlet" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1146,6 +1173,7 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  SCARLET_VIOLET,
 ];
 
 /**
@@ -1221,7 +1249,6 @@ export const ROADMAP = [
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
       { id: "sv3", name: "Obsidian Flames", released: "Aug 2023", cards: "—" },
       { id: "sv2", name: "Paldea Evolved", released: "Jun 2023", cards: "—" },
-      { id: "sv1", name: "Scarlet & Violet", released: "Mar 2023", cards: "—" },
     ],
   },
   {

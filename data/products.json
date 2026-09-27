@@ -1020,6 +1020,124 @@
       "image": "assets/products/rsv10pt5/tech-gothitelle.webp"
     }
   ],
+  "sv1": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box: Koraidon",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv1-svp014"
+      ],
+      "price": 131.88,
+      "tcgplayerId": 478335,
+      "image": "assets/products/sv1/eliteTrainerBox.webp"
+    },
+    {
+      "id": "etb-miraidon",
+      "name": "Elite Trainer Box: Miraidon",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv1-svp013"
+      ],
+      "price": 145.15,
+      "tcgplayerId": 478336,
+      "image": "assets/products/sv1/etb-miraidon.webp"
+    },
+    {
+      "id": "pc-etb-koraidon",
+      "name": "Pokémon Center Elite Trainer Box: Koraidon",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv1-svp014-pc",
+        "sv1-svp014"
+      ],
+      "price": 287.05,
+      "tcgplayerId": 478758,
+      "image": "assets/products/sv1/pc-etb-koraidon.webp"
+    },
+    {
+      "id": "pc-etb-miraidon",
+      "name": "Pokémon Center Elite Trainer Box: Miraidon",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv1-svp013-pc",
+        "sv1-svp013"
+      ],
+      "price": 317.06,
+      "tcgplayerId": 478756,
+      "image": "assets/products/sv1/pc-etb-miraidon.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv1-svp005",
+        "sv1-svp006",
+        "sv1-svp007",
+        "sv1-svp008"
+      ],
+      "pick": 1,
+      "price": 40.94,
+      "tcgplayerId": 478253,
+      "image": "assets/products/sv1/build-battle.webp"
+    },
+    {
+      "id": "blister3-arcanine",
+      "name": "3 Pack Blister: Arcanine",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv1-svp011"
+      ],
+      "price": 35.2,
+      "tcgplayerId": 478761,
+      "image": "assets/products/sv1/blister3-arcanine.webp"
+    },
+    {
+      "id": "blister3-dondozo",
+      "name": "3 Pack Blister: Dondozo",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv1-svp012"
+      ],
+      "price": 30.71,
+      "tcgplayerId": 478762,
+      "image": "assets/products/sv1/blister3-dondozo.webp"
+    },
+    {
+      "id": "blister-spidops",
+      "name": "Single Pack Blister: Spidops",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv1-svp009"
+      ],
+      "price": 12.33,
+      "tcgplayerId": 478765,
+      "released": "2023-03-31",
+      "image": "assets/products/sv1/blister-spidops.webp"
+    },
+    {
+      "id": "blister-espathra",
+      "name": "Single Pack Blister: Espathra",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv1-svp010"
+      ],
+      "price": 13.26,
+      "tcgplayerId": 478766,
+      "released": "2023-03-31",
+      "image": "assets/products/sv1/blister-espathra.webp"
+    }
+  ],
   "zsv10pt5": [
     {
       "id": "eliteTrainerBox",

@@ -55,6 +55,16 @@
       "packs": [
         { "id": "reshiram", "remote": "white-flare-pack-0.avif", "file": "rsv10pt5/reshiram.avif" }
       ]
+    },
+    "sv1": {
+      "name": "Scarlet & Violet",
+      "slug": "scarlet-and-violet",
+      "packs": [
+        { "id": "starters", "remote": "scarlet-and-violet-pack-0.avif", "file": "sv1/pack-0.avif" },
+        { "id": "miraidon", "remote": "scarlet-and-violet-pack-1.avif", "file": "sv1/pack-1.avif" },
+        { "id": "gyarados", "remote": "scarlet-and-violet-pack-2.avif", "file": "sv1/pack-2.avif" },
+        { "id": "koraidon", "remote": "scarlet-and-violet-pack-3.avif", "file": "sv1/pack-3.avif" }
+      ]
     }
   }
 }
