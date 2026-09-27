@@ -5,12 +5,12 @@ export const RARITY_ORDER = [
   "Rare",
   "Pikachu Rare",
   "Double Rare",
+  "Shiny Rare",
   "ACE SPEC Rare",
   "Ultra Rare",
+  "Shiny Ultra Rare",
   "Illustration Rare",
   "Classic Collection",
-  "Shiny Rare",
-  "Shiny Ultra Rare",
   "Mega Attack Rare",
   "Black White Rare",
   "Hyper Rare",
@@ -451,6 +451,50 @@ function celebrationSlots({ double, ir, classic, sir, futuristic, rgb }) {
         ["sir", sir],
         ["futuristic", futuristic],
         ["rgb", rgb],
+      ],
+    },
+  ];
+}
+
+/**
+ * Paldean Fates: the Scarlet & Violet main-set skeleton, but the first
+ * reverse holo is where the Shiny Vault lives. A Shiny Rare (one of 120) or a
+ * Shiny Ultra Rare (one of 12) replaces that reverse in about one pack in
+ * three; IR, SIR and gold take the second reverse; the rare slot holds Double
+ * and Ultra Rares. Three separate slots, so one pack can hold three hits.
+ * Rates are TCGplayer's study of about 1,800 packs (data/pullrates.json).
+ */
+function shinyVaultSlots({ double, ultra, shiny, shinyUltra, ir, sir, hyper }) {
+  return [
+    { pool: "energy", count: 1 },
+    { pool: "common", count: 4 },
+    { pool: "uncommon", count: 3 },
+    {
+      pool: "reverse",
+      count: 1,
+      table: [
+        ["reverse", 1 - shiny - shinyUltra],
+        ["shiny", shiny],
+        ["shinyUltra", shinyUltra],
+      ],
+    },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [
+        ["rare", 1 - double - ultra],
+        ["double", double],
+        ["ultra", ultra],
+      ],
+    },
+    {
+      pool: "art-slot",
+      count: 1,
+      table: [
+        ["reverse", 1 - ir - sir - hyper],
+        ["ir", ir],
+        ["sir", sir],
+        ["hyper", hyper],
       ],
     },
   ];
@@ -1136,6 +1180,69 @@ export const TEMPORAL_FORCES = {
   ]),
 };
 
+export const PALDEAN_FATES = {
+  id: "sv4pt5",
+  tcgId: "sv4pt5",
+  name: "Paldean Fates",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "January 26, 2024",
+  live: true,
+  printedTotal: 91,
+  totalCount: 264,
+  packSize: 11,
+  cost: 24.89,
+  dataFile: "data/sv4pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, January 2024. The Shiny Vault set: 132 Shiny Pokémon, four wrappers, 11 cards a pack.",
+  oddsLine: "DR 1/6 · UR 1/15 · Shiny 1/4 · Shiny ex 1/13 · IR 1/14 · SIR 1/58 · gold 1/62",
+  lede: "One pack in three trades its first reverse holo for a Shiny Pokémon, from 132 of them. Mew ex's special illustration is the chase.",
+  slots: shinyVaultSlots({
+    double: 0.1589,
+    ultra: 0.0661,
+    shiny: 0.2544,
+    shinyUltra: 0.0772,
+    ir: 0.0722,
+    sir: 0.0172,
+    hyper: 0.0161,
+  }),
+  heroIds: ["sv4pt5-232", "sv4pt5-234", "sv4pt5-233", "sv4pt5-131"],
+  wrappers: [
+    {
+      id: "pikachu",
+      name: "Pikachu",
+      cardId: "sv4pt5-131",
+      tag: "The chase",
+      art: "assets/packs/sv4pt5/pikachu.avif",
+      artFallback: "assets/packs/sv4pt5/pikachu.png",
+    },
+    {
+      id: "tinkaton",
+      name: "Tinkaton",
+      cardId: "sv4pt5-167",
+      tag: "Big hammer",
+      art: "assets/packs/sv4pt5/tinkaton.avif",
+      artFallback: "assets/packs/sv4pt5/tinkaton.png",
+    },
+    {
+      id: "dondozo",
+      name: "Dondozo",
+      cardId: "sv4pt5-126",
+      tag: "Deep sea",
+      art: "assets/packs/sv4pt5/dondozo.avif",
+      artFallback: "assets/packs/sv4pt5/dondozo.png",
+    },
+    {
+      id: "ceruledge",
+      name: "Ceruledge",
+      cardId: "sv4pt5-162",
+      tag: "Blue flame",
+      art: "assets/packs/sv4pt5/ceruledge.avif",
+      artFallback: "assets/packs/sv4pt5/ceruledge.png",
+    },
+  ],
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1146,6 +1253,7 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  PALDEAN_FATES,
 ];
 
 /**
@@ -1216,7 +1324,6 @@ export const ROADMAP = [
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
       { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },
       { id: "sv5", name: "Temporal Forces", released: "Mar 2024", cards: "—" },
-      { id: "sv4pt5", name: "Paldean Fates", released: "Jan 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
       { id: "sv3", name: "Obsidian Flames", released: "Aug 2023", cards: "—" },
