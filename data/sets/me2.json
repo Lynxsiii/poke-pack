@@ -36,7 +36,98 @@
     "mep026": {},
     "mep027": {},
     "mep029": {},
-    "mep030": {}
+    "mep030": {},
+    "1-cosmos": {
+      "like": "1",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 684041,
+      "foilAs": "Cosmos",
+      "printedNumber": "001/094"
+    },
+    "2-cosmos": {
+      "like": "2",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 684042,
+      "foilAs": "Cosmos",
+      "printedNumber": "002/094"
+    },
+    "3-cosmos": {
+      "like": "3",
+      "variant": "Pixel Cosmos Holo",
+      "tcgplayerId": 684043,
+      "foilAs": "Cosmos",
+      "printedNumber": "003/094"
+    },
+    "26-cosmos": {
+      "like": "26",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 670788,
+      "foilAs": "Cosmos",
+      "printedNumber": "026/094"
+    },
+    "dri018-cosmos": {
+      "like": "sv10:18",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 664138,
+      "foilAs": "Cosmos",
+      "printedNumber": "018/182"
+    },
+    "dri036-cosmos": {
+      "like": "sv10:36",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 668437,
+      "foilAs": "Cosmos",
+      "printedNumber": "036/182"
+    },
+    "dri042-cosmos": {
+      "like": "sv10:42",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 664139,
+      "foilAs": "Cosmos",
+      "printedNumber": "042/182"
+    },
+    "dri159-cosmos": {
+      "like": "sv10:159",
+      "variant": "Cosmos Holo",
+      "tcgplayerId": 668438,
+      "foilAs": "Cosmos",
+      "printedNumber": "159/182"
+    },
+    "tef051-stamp": {
+      "like": "sv5:51",
+      "variant": "Pokémon Day 2026 stamp",
+      "tcgplayerId": 673358,
+      "foilAs": "Cosmos",
+      "printedNumber": "051/162"
+    },
+    "8-stamp": {
+      "like": "8",
+      "variant": "Phantasmal Flames stamp",
+      "tcgplayerId": 664012,
+      "foilAs": "Cosmos",
+      "printedNumber": "008/094"
+    },
+    "17-stamp": {
+      "like": "17",
+      "variant": "Phantasmal Flames stamp",
+      "tcgplayerId": 664098,
+      "foilAs": "Cosmos",
+      "printedNumber": "017/094"
+    },
+    "26-gamestop": {
+      "like": "26",
+      "variant": "GameStop stamp",
+      "tcgplayerId": 666533,
+      "foilAs": "Cosmos",
+      "printedNumber": "026/094"
+    },
+    "26-ebgames": {
+      "like": "26",
+      "variant": "EB Games stamp",
+      "tcgplayerId": 671234,
+      "foilAs": "Cosmos",
+      "printedNumber": "026/094"
+    }
   },
   "products": [
     {
@@ -169,6 +260,125 @@
       "promos": [
         "mep019"
       ]
+    },
+    {
+      "id": "blister2-vileplume",
+      "name": "Enhanced 2 Pack Blister: Oddish, Gloom & Vileplume",
+      "kind": "blister",
+      "tcgplayerId": 683264,
+      "tcgplayerGroup": 2374,
+      "packs": 2,
+      "promos": [
+        "1-cosmos",
+        "2-cosmos",
+        "3-cosmos"
+      ]
+    },
+    {
+      "id": "knock-out-suicune",
+      "name": "Knock Out Collection: Suicune",
+      "kind": "collection",
+      "tcgplayerId": 670783,
+      "tcgplayerGroup": 2374,
+      "packs": 2,
+      "promos": [
+        "26-cosmos"
+      ]
+    },
+    {
+      "id": "pokemon-day-2026",
+      "name": "Pokémon Day 2026 Collection",
+      "kind": "collection",
+      "tcgplayerId": 668590,
+      "tcgplayerGroup": 2374,
+      "packs": 3,
+      "promos": [
+        "tef051-stamp"
+      ]
+    },
+    {
+      "id": "checklane-hydrapple",
+      "name": "Premium Checklane Blister: Hydrapple",
+      "kind": "blister",
+      "tcgplayerId": 654146,
+      "packs": 1,
+      "promos": [
+        "dri018-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-blaziken",
+      "name": "Premium Checklane Blister: Blaziken",
+      "kind": "blister",
+      "tcgplayerId": 654147,
+      "packs": 1,
+      "promos": [
+        "dri042-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-greedent",
+      "name": "Premium Checklane Blister: Arven's Greedent",
+      "kind": "blister",
+      "tcgplayerId": 668931,
+      "packs": 1,
+      "promos": [
+        "dri159-cosmos"
+      ]
+    },
+    {
+      "id": "checklane-magcargo",
+      "name": "Premium Checklane Blister: Ethan's Magcargo",
+      "kind": "blister",
+      "tcgplayerId": 672588,
+      "packs": 1,
+      "promos": [
+        "dri036-cosmos"
+      ]
+    },
+    {
+      "id": "gift-8-stamp",
+      "name": "Booster Bundle + stamped Genesect",
+      "kind": "bundle",
+      "tcgplayerId": 654160,
+      "packs": 6,
+      "promos": [
+        "8-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-17-stamp",
+      "name": "Booster Bundle + stamped Reshiram",
+      "kind": "bundle",
+      "tcgplayerId": 654160,
+      "packs": 6,
+      "promos": [
+        "17-stamp"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-26-gamestop",
+      "name": "Booster Bundle + GameStop Suicune",
+      "kind": "bundle",
+      "tcgplayerId": 654160,
+      "packs": 6,
+      "promos": [
+        "26-gamestop"
+      ],
+      "gift": true
+    },
+    {
+      "id": "gift-26-ebgames",
+      "name": "Booster Bundle + EB Games Suicune",
+      "kind": "bundle",
+      "tcgplayerId": 654160,
+      "packs": 6,
+      "promos": [
+        "26-ebgames"
+      ],
+      "gift": true
     }
   ]
 }

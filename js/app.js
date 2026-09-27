@@ -712,12 +712,16 @@ function assetUrl(src) {
  * foil engine draws the promo with its recipe. "Cosmos" is the galaxy holo most
  * collection-box promos (and 151's holo basic Energies) use; "Frame" foils only
  * the card frame, like a reverse, and "Reverse Cosmos" puts the galaxy there.
- * "Metal" is a brass card: one broad reflection, no rainbow.
+ * "Metal" is a brass card: one broad reflection, no rainbow. "Poke Ball" is a
+ * Poké Ball pattern reverse.
  */
 function foilLook(card) {
   if (!(card?.promo || card?.energy) || !card.foilAs || card.reverse) return card;
   if (card.foilAs === "Frame") return { ...card, rarity: "Common", reverse: true, reverseKind: "cosmos" };
   if (card.foilAs === "Reverse Cosmos") return { ...card, rarity: "Common", reverse: true, reverseKind: "galaxy" };
+  // A Poké Ball pattern print, like Black Bolt's reverses (the Victini
+  // Illustration Collection's Victini).
+  if (card.foilAs === "Poke Ball") return { ...card, rarity: "Rare", reverse: true, reverseKind: "pokeball" };
   return { ...card, rarity: card.foilAs };
 }
 
@@ -1077,6 +1081,7 @@ function promoNames(ids, pick = 0) {
     const names = cards.map((card) => card.name);
     return `one of ${names.length} promos: ${names.slice(0, -1).join(", ")} or ${names.at(-1)}`;
   }
+  if (pick > 1 && pick < cards.length) return `${pick} of ${cards.length} promos`;
   // The Pokémon Center ETB has the Nidorina promo twice, stamped and not.
   const counts = new Map();
   for (const card of cards) counts.set(card.name, (counts.get(card.name) || 0) + 1);

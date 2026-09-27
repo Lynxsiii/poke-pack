@@ -3894,6 +3894,544 @@
     "imageRemote": "https://images.scrydex.com/pokemon/me5-120/large"
   },
   {
+    "id": "me5-12-stamp",
+    "name": "Armarouge",
+    "number": "12-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Jiro Sasumo",
+    "flavorText": "This Pokémon clads itself in armor that has been fortified by psychic and fire energy, and it shoots blazing fireballs.",
+    "evolvesFrom": "Charcadet",
+    "attacks": [
+      {
+        "name": "Flame Legion",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each of your Benched Pokémon that has any Fire Energy attached."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/705528_in_1000x1000.jpg",
+    "printedNumber": "012/084",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "What's Your Favorite? stamp",
+    "tcgplayerId": 705528,
+    "image": "assets/cards/me5/12-stamp.webp",
+    "imageSmall": "assets/cards/me5/12-stamp-sm.webp",
+    "market": 27.48
+  },
+  {
+    "id": "me5-20-stamp",
+    "name": "Primarina",
+    "number": "20-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Taira Akitsu",
+    "flavorText": "Also known as a songstress, it is a sight to behold on moonlit nights when it sings in front of the colony it leads.",
+    "evolvesFrom": "Brionne",
+    "attacks": [
+      {
+        "name": "Aqua Return",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Shuffle this Pokémon and all attached cards into your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Enriching Melody",
+        "text": "Once during your turn, when you play this Pokémon from your hand to evolve 1 of your Pokémon, you may use this Ability. Heal all damage from 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/705526_in_1000x1000.jpg",
+    "printedNumber": "020/084",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "What's Your Favorite? stamp",
+    "tcgplayerId": 705526,
+    "image": "assets/cards/me5/20-stamp.webp",
+    "imageSmall": "assets/cards/me5/20-stamp-sm.webp",
+    "market": 10.28
+  },
+  {
+    "id": "me5-40-cosmos",
+    "name": "Marshadow",
+    "number": "40-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Nakamura Ippan",
+    "flavorText": "By slipping into the shadow of a martial arts master and copying their movements, this Pokémon learned the ultimate techniques.",
+    "attacks": [
+      {
+        "name": "Shadowy Knot",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/714065_in_1000x1000.jpg",
+    "printedNumber": "040/084",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 714065,
+    "image": "assets/cards/me5/40-cosmos.webp",
+    "imageSmall": "assets/cards/me5/40-cosmos-sm.webp",
+    "market": 0.35
+  },
+  {
+    "id": "me5-56-cosmos",
+    "name": "Zarude",
+    "number": "56-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "matazo",
+    "flavorText": "Within dense forests, this Pokemon lives in a pack with others of its kind. It's incredibly aggressive, and the other Pokemon of the forest fear it.",
+    "attacks": [
+      {
+        "name": "Overhead Throw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "This attack also does 30 damage to 1 of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Shadowy Whip",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "100+",
+        "text": "If your Benched Pokémon have any Shadowy Darkness Energy attached, this attack does 70 more damage."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/706251_in_1000x1000.jpg",
+    "printedNumber": "056/084",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 706251,
+    "image": "assets/cards/me5/56-cosmos.webp",
+    "imageSmall": "assets/cards/me5/56-cosmos-sm.webp",
+    "market": 0.18
+  },
+  {
+    "id": "me5-56-stamp",
+    "name": "Zarude",
+    "number": "56-stamp",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "matazo",
+    "flavorText": "Within dense forests, this Pokemon lives in a pack with others of its kind. It's incredibly aggressive, and the other Pokemon of the forest fear it.",
+    "attacks": [
+      {
+        "name": "Overhead Throw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "This attack also does 30 damage to 1 of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Shadowy Whip",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "100+",
+        "text": "If your Benched Pokémon have any Shadowy Darkness Energy attached, this attack does 70 more damage."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/705527_in_1000x1000.jpg",
+    "printedNumber": "056/084",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "What's Your Favorite? stamp",
+    "tcgplayerId": 705527,
+    "image": "assets/cards/me5/56-stamp.webp",
+    "imageSmall": "assets/cards/me5/56-stamp-sm.webp",
+    "market": 27.08
+  },
+  {
+    "id": "me5-asc097-cosmos",
+    "name": "Team Rocket's Mimikyu",
+    "number": "asc097-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Rocket's Pokémon"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "DOM",
+    "flavorText": "This Pokémon lives in dark places untouched by sunlight. When it appears before humans, it hides itself under a cloth that resembles a Pikachu.",
+    "attacks": [
+      {
+        "name": "Gemstone Mimicry",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Active Tera Pokémon's attacks and use it as this attack."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/714066_in_1000x1000.jpg",
+    "ownerMask": "team-rocket",
+    "printedNumber": "097/217",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 714066,
+    "image": "assets/cards/me5/asc097-cosmos.webp",
+    "imageSmall": "assets/cards/me5/asc097-cosmos-sm.webp",
+    "market": 0.84
+  },
+  {
+    "id": "me5-mep055",
+    "name": "Treecko",
+    "number": "mep055",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "75",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep055.webp",
+    "imageSmall": "assets/cards/me5/mep055-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-55/large",
+    "printedNumber": "MEP 055",
+    "tcgplayerId": 709969,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 7.74
+  },
+  {
+    "id": "me5-mep056",
+    "name": "Torchic",
+    "number": "mep056",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep056.webp",
+    "imageSmall": "assets/cards/me5/mep056-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-56/large",
+    "printedNumber": "MEP 056",
+    "tcgplayerId": 709970,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 7.42
+  },
+  {
+    "id": "me5-mep057",
+    "name": "Mudkip",
+    "number": "mep057",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep057.webp",
+    "imageSmall": "assets/cards/me5/mep057-sm.webp",
+    "attacks": [
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-57/large",
+    "printedNumber": "MEP 057",
+    "tcgplayerId": 709971,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 14.42
+  },
+  {
+    "id": "me5-mep058",
+    "name": "Chespin",
+    "number": "mep058",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep058.webp",
+    "imageSmall": "assets/cards/me5/mep058-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-58/large",
+    "printedNumber": "MEP 058",
+    "tcgplayerId": 709972,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 2.6
+  },
+  {
+    "id": "me5-mep059",
+    "name": "Fennekin",
+    "number": "mep059",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep059.webp",
+    "imageSmall": "assets/cards/me5/mep059-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-59/large",
+    "printedNumber": "MEP 059",
+    "tcgplayerId": 709973,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 3.75
+  },
+  {
+    "id": "me5-mep060",
+    "name": "Froakie",
+    "number": "mep060",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep060.webp",
+    "imageSmall": "assets/cards/me5/mep060-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-60/large",
+    "printedNumber": "MEP 060",
+    "tcgplayerId": 709974,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 5.67
+  },
+  {
+    "id": "me5-mep061",
+    "name": "Sprigatito",
+    "number": "mep061",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep061.webp",
+    "imageSmall": "assets/cards/me5/mep061-sm.webp",
+    "attacks": [
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-61/large",
+    "printedNumber": "MEP 061",
+    "tcgplayerId": 709975,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 4.99
+  },
+  {
+    "id": "me5-mep062",
+    "name": "Fuecoco",
+    "number": "mep062",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep062.webp",
+    "imageSmall": "assets/cards/me5/mep062-sm.webp",
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Discard an energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-62/large",
+    "printedNumber": "MEP 062",
+    "tcgplayerId": 709976,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 5.57
+  },
+  {
+    "id": "me5-mep063",
+    "name": "Quaxly",
+    "number": "mep063",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Saboteri",
+    "image": "assets/cards/me5/mep063.webp",
+    "imageSmall": "assets/cards/me5/mep063-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-63/large",
+    "printedNumber": "MEP 063",
+    "tcgplayerId": 709977,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 3.49
+  },
+  {
     "id": "me5-mep082",
     "name": "Miraidon",
     "number": "mep082",
@@ -4224,7 +4762,7 @@
         "text": "If your Benched Pokémon have any Shadowy Darkness Energy attached, this attack does 70 more damage."
       }
     ],
-    "market": 24.01,
+    "market": 24.13,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/706199_in_1000x1000.jpg",
     "printedNumber": "MEP 088",
     "foilAs": "Illustration Rare",
@@ -4325,5 +4863,218 @@
     "promo": true,
     "foilMap": "assets/foil/maps/me5/mep090.webp",
     "etchMap": "assets/foil/maps/me5/mep090-etch.webp"
+  },
+  {
+    "id": "me5-mep093",
+    "name": "Pikachu",
+    "number": "mep093",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "DOM",
+    "image": "assets/cards/me5/mep093.webp",
+    "imageSmall": "assets/cards/me5/mep093-sm.webp",
+    "attacks": [
+      {
+        "name": "Scrappy Spark",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/mep-93/large",
+    "printedNumber": "MEP 093",
+    "tcgplayerId": 712963,
+    "promo": true,
+    "market": 9.3
+  },
+  {
+    "id": "me5-por024-cosmos",
+    "name": "Aurorus",
+    "number": "por024-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "HACCAN",
+    "flavorText": "The diamond-shaped crystals on its body expel air as cold as -240 degrees Fahrenheit, surrounding its enemies and encasing them in ice.",
+    "evolvesFrom": "Amaura",
+    "attacks": [
+      {
+        "name": "Freezing Chill",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon can't use attacks."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tundra Wall",
+        "text": "All of your Pokémon that have any Water Energy attached take 50 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance). The effect of Tundra Wall doesn't stack.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/709694_in_1000x1000.jpg",
+    "printedNumber": "024/088",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 709694,
+    "image": "assets/cards/me5/por024-cosmos.webp",
+    "imageSmall": "assets/cards/me5/por024-cosmos-sm.webp",
+    "market": 4.45
+  },
+  {
+    "id": "me5-por028-cosmos",
+    "name": "Luxray",
+    "number": "por028-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "150",
+    "artist": "Taiga Kasai",
+    "flavorText": "Luxray’s ability to see through objects comes in handy when it’s scouting for danger.",
+    "evolvesFrom": "Luxio",
+    "attacks": [
+      {
+        "name": "Incessant Onslaught",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70×",
+        "text": "This attack does 70 damage for each Prize card you have taken."
+      },
+      {
+        "name": "Strong Volt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/709696_in_1000x1000.jpg",
+    "printedNumber": "028/088",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 709696,
+    "image": "assets/cards/me5/por028-cosmos.webp",
+    "imageSmall": "assets/cards/me5/por028-cosmos-sm.webp",
+    "market": 5.78
+  },
+  {
+    "id": "me5-por045-cosmos",
+    "name": "Tyrantrum",
+    "number": "por045-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "180",
+    "artist": "Dsuke",
+    "flavorText": "This Pokémon behaved like a king 100 million years ago. Nothing could stop it.",
+    "evolvesFrom": "Tyrunt",
+    "attacks": [
+      {
+        "name": "Wreak Havoc",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Flip a coin until you get tails. For each heads, discard the top card of your opponent's deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tyrannically Gutsy",
+        "text": "If this Pokémon has any Special Energy attached, it gets +150 HP.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/709698_in_1000x1000.jpg",
+    "printedNumber": "045/088",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 709698,
+    "image": "assets/cards/me5/por045-cosmos.webp",
+    "imageSmall": "assets/cards/me5/por045-cosmos-sm.webp",
+    "market": 3.18
+  },
+  {
+    "id": "me5-por050-cosmos",
+    "name": "Gengar",
+    "number": "por050-cosmos",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Masako Tomii",
+    "flavorText": "It hides in shadows. It is said that in rooms where Gengar is hiding, the temperature drops by nearly 10 degrees Fahrenheit.",
+    "evolvesFrom": "Haunter",
+    "attacks": [
+      {
+        "name": "Mind Jack",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10+",
+        "text": "This attack does 30 more damage for each of your opponent's Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Infinite Shadow",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, put it into your hand instead of the discard pile. (Discard all attached cards.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/709697_in_1000x1000.jpg",
+    "printedNumber": "050/088",
+    "promo": true,
+    "foilAs": "Cosmos",
+    "variant": "Cosmos Holo",
+    "tcgplayerId": 709697,
+    "image": "assets/cards/me5/por050-cosmos.webp",
+    "imageSmall": "assets/cards/me5/por050-cosmos-sm.webp",
+    "market": 5.59
   }
 ]
