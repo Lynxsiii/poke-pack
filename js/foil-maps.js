@@ -39,19 +39,60 @@ function seed(id) {
   return [((h >>> 0) % 1000) / 1000, ((h >>> 10) % 1000) / 1000];
 }
 
+const SV_REVERSE_TYPES = new Set([
+  "grass", "fire", "water", "lightning", "psychic", "fighting", "darkness", "metal", "dragon", "colorless",
+]);
+
+/**
+ * The standard reverse holo of a Scarlet & Violet or Mega Evolution print
+ * (css/holo/sv-reverse.css). TCG Live's reverse maps show three kinds:
+ * - the SV "cobblestone": pebbles, the type's symbol and a big type badge,
+ *   the same picture on every card of a type in every SV set, so one pattern
+ *   per type ships in assets/foil/sv-reverse/ (Trainers get Poké Balls,
+ *   Special Energy is foil only in its text box);
+ * - a plain mirror on Ancient and Future cards, and on every Mega Evolution
+ *   reverse.
+ * Promos, Prismatic's Poké Ball and Master Ball prints (`pattern`) and
+ * older sets keep their own. So does any reverse with a kind of
+ * its own: `kind` is the one the site resolved (the card's `reverseKind`,
+ * else its set's `reverseFoil`), such as Poké Ball, Master Ball or Shrouded
+ * Fable's chain; "cosmos" means none.
+ */
+export function reverseFinish(card, kind = card?.reverseKind) {
+  if (!card?.reverse || card.foilAs || card.pattern || (kind && kind !== "cosmos")) return "";
+  const set = String(card.id || "").split("-")[0];
+  const sv = /^sv\d/.test(set);
+  if (!sv && !(/^me\d/.test(set) && set !== "me55")) return "";
+  const subtypes = card.subtypes || [];
+  if (!sv || subtypes.includes("Ancient") || subtypes.includes("Future")) return "mirror";
+  if (card.supertype === "Trainer") return "trainer";
+  if (card.supertype === "Energy") return subtypes.includes("Special") ? "special-energy" : "";
+  const type = String(card.types?.[0] || "").toLowerCase();
+  return SV_REVERSE_TYPES.has(type) ? type : "";
+}
+
 /**
  * Extra classes and inline custom properties for a card face. `url` turns a
  * repo path into an absolute URL (see assetUrl() in app.js for why).
+ * `reverseKind` is reverseKindOf() in app.js, for reverseFinish().
  */
-export function foilExtras(card, url) {
+export function foilExtras(card, url, reverseKind) {
   // The maps describe the holo print; a reverse holo is foil everywhere else,
-  // unless TCG Live's map of the reverse print ships (`reverseMap`:
-  // Prismatic Evolutions prints its reverses with Tera crystals and a type
-  // symbol worked into the foil).
+  // in the reverse's own pattern: TCG Live's map of the reverse print where
+  // it ships (`reverseMap`: Prismatic Evolutions prints its reverses with Tera
+  // crystals and a type symbol worked into the foil), else the SV one.
   if (card.reverse) {
-    return card.reverseMap
-      ? { classes: "has-rev-map", style: `--rev-map:url('${url(card.reverseMap)}')`, cure: false }
-      : { classes: "", style: "", cure: false };
+    if (card.reverseMap) {
+      return { classes: "has-rev-map", style: `--rev-map:url('${url(card.reverseMap)}')`, cure: false };
+    }
+    const finish = reverseFinish(card, reverseKind);
+    if (finish === "mirror") return { classes: "rev-mirror", style: "", cure: false };
+    if (!finish) return { classes: "", style: "", cure: false };
+    return {
+      classes: `rev-sv rev-${finish}`,
+      style: `--rev-pattern:url('${url(`assets/foil/sv-reverse/${finish}.webp`)}')`,
+      cure: false,
+    };
   }
   const classes = [];
   const vars = [];
@@ -81,6 +122,10 @@ export function foilExtras(card, url) {
   if (card.foilMap && (card.subtypes || []).some((s) => s === "Future" || s === "Ancient")) {
     classes.push("frame-paradox");
   }
+  // Scarlet & Violet prints (sv*, and Black Bolt / White Flare's zsv/rsv):
+  // finishes the Mega Evolution era prints differently key off this, such as
+  // the Double Rare streaks (css/holo/sv-double-rare.css).
+  if (/^[zr]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
   // Tiled or galaxy textures start somewhere different on every card.
   if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity)) {
     const [x, y] = seed(card.id);

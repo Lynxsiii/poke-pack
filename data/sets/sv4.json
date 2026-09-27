@@ -1,0 +1,161 @@
+{
+  "id": "sv4",
+  "name": "Paradox Rift",
+  "series": "scarlet-violet",
+  "slug": "paradox-rift",
+  "scrydexId": "sv4",
+  "pittSlug": "Paradox-Rift",
+  "artSlug": "paradox-rift",
+  "packs": [
+    "garchomp",
+    "iron-valiant",
+    "armarouge",
+    "roaring-moon"
+  ],
+  "tcgplayerGroup": 23286,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp057": {},
+    "svp058": {},
+    "svp059": {},
+    "svp060": {},
+    "svp061": {},
+    "svp062": {},
+    "svp063": {},
+    "svp064": {},
+    "svp065": {},
+    "svp066": {},
+    "svp065-pc": {
+      "like": "svp065",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 526655
+    },
+    "svp066-pc": {
+      "like": "svp066",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 526657
+    },
+    "svp067": {},
+    "svp068": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 512815,
+      "packs": 9,
+      "promos": [
+        "svp065",
+        "svp066"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "pc-etb-roaring-moon",
+      "name": "Pokémon Center Elite Trainer Box: Roaring Moon",
+      "kind": "etb",
+      "tcgplayerId": 512809,
+      "packs": 11,
+      "promos": [
+        "svp065-pc",
+        "svp065"
+      ]
+    },
+    {
+      "id": "pc-etb-iron-valiant",
+      "name": "Pokémon Center Elite Trainer Box: Iron Valiant",
+      "kind": "etb",
+      "tcgplayerId": 512801,
+      "packs": 11,
+      "promos": [
+        "svp066-pc",
+        "svp066"
+      ]
+    },
+    {
+      "id": "roaring-moon-box",
+      "name": "Roaring Moon ex Box",
+      "kind": "collection",
+      "tcgplayerId": 516577,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "svp067"
+      ]
+    },
+    {
+      "id": "iron-valiant-box",
+      "name": "Iron Valiant ex Box",
+      "kind": "collection",
+      "tcgplayerId": 516578,
+      "tcgplayerGroup": 2374,
+      "packs": 4,
+      "promos": [
+        "svp068"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 514068,
+      "packs": 4,
+      "promos": [
+        "svp057",
+        "svp058",
+        "svp059",
+        "svp060"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-arctibax",
+      "name": "3 Pack Blister: Arctibax",
+      "kind": "blister",
+      "tcgplayerId": 513433,
+      "packs": 3,
+      "promos": [
+        "svp064"
+      ]
+    },
+    {
+      "id": "blister3-cetitan",
+      "name": "3 Pack Blister: Cetitan",
+      "kind": "blister",
+      "tcgplayerId": 513434,
+      "packs": 3,
+      "promos": [
+        "svp063"
+      ]
+    },
+    {
+      "id": "blister-sinistea",
+      "name": "Single Pack Blister: Sinistea",
+      "kind": "blister",
+      "tcgplayerId": 514223,
+      "packs": 1,
+      "promos": [
+        "svp062"
+      ]
+    },
+    {
+      "id": "blister-pineco",
+      "name": "Single Pack Blister: Pineco",
+      "kind": "blister",
+      "tcgplayerId": 514224,
+      "packs": 1,
+      "promos": [
+        "svp061"
+      ]
+    }
+  ]
+}

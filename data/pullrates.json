@@ -247,6 +247,20 @@
       "hyper": 0.0176
     }
   },
+  "sv4": {
+    "name": "Paradox Rift",
+    "printedTotal": 182,
+    "rates": {
+      "double": 0.1557,
+      "ultra": 0.0664,
+      "ir": 0.077,
+      "sir": 0.0211,
+      "hyper": 0.0122
+    },
+    "released": "2023-11-03",
+    "source": "TCGplayer Authentication Center, 8,000+ English packs opened before release (article 'Pokémon TCG: Paradox Rift Pull Rates', 2023-11-04, https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Paradox-Rift-Pull-Rates/0b5fb648-38fc-4f61-a6af-57c2737b4a48/). Per pack, 95% intervals: Double Rare 15.57% ±0.76% (1 in 6), Ultra Rare 6.64% ±0.53% (1 in 15), Illustration Rare 7.70% ±0.56% (1 in 13), Special Illustration Rare 2.11% ±0.30% (1 in 47), Hyper Rare 1.22% ±0.23% (1 in 82). DR and UR in the rare slot; IR, SIR and HR replace the second reverse holo. No ACE SPEC in this set. Cross-checked against pullrates.com (same study).",
+    "updated": "2026-09-27"
+  },
   "sv1": {
     "name": "Scarlet & Violet",
     "printedTotal": 198,

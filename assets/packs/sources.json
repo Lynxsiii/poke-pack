@@ -87,6 +87,16 @@
         { "id": "cinderace", "remote": "stellar-crown-pack-3.avif", "file": "sv7/pack-3.avif" }
       ]
     },
+    "sv4": {
+      "name": "Paradox Rift",
+      "slug": "paradox-rift",
+      "packs": [
+        { "id": "garchomp", "remote": "paradox-rift-pack-0.avif", "file": "sv4/garchomp.avif" },
+        { "id": "iron-valiant", "remote": "paradox-rift-pack-1.avif", "file": "sv4/iron-valiant.avif" },
+        { "id": "armarouge", "remote": "paradox-rift-pack-2.avif", "file": "sv4/armarouge.avif" },
+        { "id": "roaring-moon", "remote": "paradox-rift-pack-3.avif", "file": "sv4/roaring-moon.avif" }
+      ]
+    },
     "sv1": {
       "name": "Scarlet & Violet",
       "slug": "scarlet-and-violet",
