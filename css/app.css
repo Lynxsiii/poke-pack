@@ -1614,6 +1614,12 @@ select.filter option {
 .slot-face {
   display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer;
 }
+/* Collection and picker cards mount only near the screen (windowFaces() in
+   js/app.js), so a holder keeps the card's shape while it is empty. */
+.bulk-card .slot-face,
+.picker-face { display: block; aspect-ratio: 63 / 88; }
+.bulk-card .slot-face:empty,
+.picker-face:empty { border-radius: 3.97% / 2.84%; background: rgb(255 255 255 / 0.03); }
 .slot-meta { margin-top: 8px; min-height: 38px; }
 .slot-meta b { display: block; font-size: 13px; line-height: 1.25; }
 .slot-meta span { color: var(--muted); font-size: 11px; }

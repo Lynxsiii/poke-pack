@@ -6,5 +6,132 @@
   "scrydexId": "sv5",
   "pittSlug": "Temporal-Forces",
   "artSlug": "temporal-forces",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"],
+  "tcgplayerGroup": 23381,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp089": {},
+    "svp090": {},
+    "svp091": {},
+    "svp092": {},
+    "svp093": {},
+    "svp094": {},
+    "svp095": {},
+    "svp096": {},
+    "svp097": {},
+    "svp097-pc": {
+      "like": "svp097",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 543947
+    },
+    "svp098": {},
+    "svp098-pc": {
+      "like": "svp098",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 543949
+    },
+    "svp127": {},
+    "svp128": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 532848,
+      "packs": 9,
+      "promos": ["svp098"]
+    },
+    {
+      "id": "etb-walking-wake",
+      "name": "Elite Trainer Box: Walking Wake",
+      "kind": "etb",
+      "tcgplayerId": 532845,
+      "packs": 9,
+      "promos": ["svp097"]
+    },
+    {
+      "id": "pc-etb-iron-leaves",
+      "name": "Pokémon Center Elite Trainer Box: Iron Leaves",
+      "kind": "etb",
+      "tcgplayerId": 532853,
+      "packs": 11,
+      "promos": ["svp098-pc", "svp098"]
+    },
+    {
+      "id": "pc-etb-walking-wake",
+      "name": "Pokémon Center Elite Trainer Box: Walking Wake",
+      "kind": "etb",
+      "tcgplayerId": 538775,
+      "packs": 11,
+      "promos": ["svp097-pc", "svp097"]
+    },
+    {
+      "id": "tin-walking-wake",
+      "name": "Paradox Clash Tin: Walking Wake ex",
+      "kind": "tin",
+      "tcgplayerId": 544239,
+      "tcgplayerGroup": 2374,
+      "packs": 5,
+      "promos": ["svp127"]
+    },
+    {
+      "id": "tin-iron-leaves",
+      "name": "Paradox Clash Tin: Iron Leaves ex",
+      "kind": "tin",
+      "tcgplayerId": 544241,
+      "tcgplayerGroup": 2374,
+      "packs": 5,
+      "promos": ["svp128"]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 537411,
+      "packs": 4,
+      "promos": ["svp089", "svp090", "svp091", "svp092"],
+      "pick": 1
+    },
+    {
+      "id": "blister3-cyclizar",
+      "name": "3 Pack Blister: Cyclizar",
+      "kind": "blister",
+      "tcgplayerId": 536227,
+      "packs": 3,
+      "promos": ["svp096"]
+    },
+    {
+      "id": "blister3-cleffa",
+      "name": "3 Pack Blister: Cleffa",
+      "kind": "blister",
+      "tcgplayerId": 536229,
+      "packs": 3,
+      "promos": ["svp095"]
+    },
+    {
+      "id": "blister-carvanha",
+      "name": "Single Pack Blister: Carvanha",
+      "kind": "blister",
+      "tcgplayerId": 536284,
+      "packs": 1,
+      "promos": ["svp093"]
+    },
+    {
+      "id": "blister-bellibolt",
+      "name": "Single Pack Blister: Bellibolt",
+      "kind": "blister",
+      "tcgplayerId": 536594,
+      "packs": 1,
+      "promos": ["svp094"]
+    }
+  ]
 }

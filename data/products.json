@@ -1020,6 +1020,391 @@
       "image": "assets/products/rsv10pt5/tech-gothitelle.webp"
     }
   ],
+  "sv3": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv3-svp044"
+      ],
+      "price": 274.91,
+      "tcgplayerId": 501264,
+      "released": "2023-08-11",
+      "image": "assets/products/sv3/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv3-svp044-pc",
+        "sv3-svp044"
+      ],
+      "price": 631.59,
+      "tcgplayerId": 501266,
+      "released": "2023-08-11",
+      "image": "assets/products/sv3/pc-etb.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv3-svp036",
+        "sv3-svp037",
+        "sv3-svp038",
+        "sv3-svp039"
+      ],
+      "pick": 1,
+      "price": 57.8,
+      "tcgplayerId": 501268,
+      "image": "assets/products/sv3/build-battle.webp"
+    },
+    {
+      "id": "blister3-eevee",
+      "name": "3 Pack Blister: Eevee",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv3-svp043"
+      ],
+      "price": 41.03,
+      "tcgplayerId": 501259,
+      "released": "2023-08-11",
+      "image": "assets/products/sv3/blister3-eevee.webp"
+    },
+    {
+      "id": "blister3-houndstone",
+      "name": "3 Pack Blister: Houndstone",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv3-svp042"
+      ],
+      "price": 38.39,
+      "tcgplayerId": 501260,
+      "released": "2023-08-11",
+      "image": "assets/products/sv3/blister3-houndstone.webp"
+    },
+    {
+      "id": "blister-pawmi",
+      "name": "Single Pack Blister: Pawmi",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv3-svp040"
+      ],
+      "price": 14.55,
+      "tcgplayerId": 501262,
+      "image": "assets/products/sv3/blister-pawmi.webp"
+    },
+    {
+      "id": "blister-wooper",
+      "name": "Single Pack Blister: Paldean Wooper",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv3-svp041"
+      ],
+      "price": 15.2,
+      "tcgplayerId": 512047,
+      "image": "assets/products/sv3/blister-wooper.webp"
+    }
+  ],
+  "sv5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv5-svp098"
+      ],
+      "price": 123.82,
+      "tcgplayerId": 532848,
+      "image": "assets/products/sv5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "etb-walking-wake",
+      "name": "Elite Trainer Box: Walking Wake",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv5-svp097"
+      ],
+      "price": 140.0,
+      "tcgplayerId": 532845,
+      "released": "2024-03-22",
+      "image": "assets/products/sv5/etb-walking-wake.webp"
+    },
+    {
+      "id": "pc-etb-iron-leaves",
+      "name": "Pokémon Center Elite Trainer Box: Iron Leaves",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv5-svp098-pc",
+        "sv5-svp098"
+      ],
+      "price": 196.67,
+      "tcgplayerId": 532853,
+      "image": "assets/products/sv5/pc-etb-iron-leaves.webp"
+    },
+    {
+      "id": "pc-etb-walking-wake",
+      "name": "Pokémon Center Elite Trainer Box: Walking Wake",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv5-svp097-pc",
+        "sv5-svp097"
+      ],
+      "price": 200.9,
+      "tcgplayerId": 538775,
+      "image": "assets/products/sv5/pc-etb-walking-wake.webp"
+    },
+    {
+      "id": "tin-walking-wake",
+      "name": "Paradox Clash Tin: Walking Wake ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv5-svp127"
+      ],
+      "price": 37.62,
+      "tcgplayerId": 544239,
+      "image": "assets/products/sv5/tin-walking-wake.webp"
+    },
+    {
+      "id": "tin-iron-leaves",
+      "name": "Paradox Clash Tin: Iron Leaves ex",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "sv5-svp128"
+      ],
+      "price": 37.19,
+      "tcgplayerId": 544241,
+      "image": "assets/products/sv5/tin-iron-leaves.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv5-svp089",
+        "sv5-svp090",
+        "sv5-svp091",
+        "sv5-svp092"
+      ],
+      "pick": 1,
+      "price": 43.46,
+      "tcgplayerId": 537411,
+      "image": "assets/products/sv5/build-battle.webp"
+    },
+    {
+      "id": "blister3-cyclizar",
+      "name": "3 Pack Blister: Cyclizar",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv5-svp096"
+      ],
+      "price": 31.02,
+      "tcgplayerId": 536227,
+      "image": "assets/products/sv5/blister3-cyclizar.webp"
+    },
+    {
+      "id": "blister3-cleffa",
+      "name": "3 Pack Blister: Cleffa",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv5-svp095"
+      ],
+      "price": 30.34,
+      "tcgplayerId": 536229,
+      "image": "assets/products/sv5/blister3-cleffa.webp"
+    },
+    {
+      "id": "blister-carvanha",
+      "name": "Single Pack Blister: Carvanha",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv5-svp093"
+      ],
+      "price": 10.81,
+      "tcgplayerId": 536284,
+      "released": "2024-03-22",
+      "image": "assets/products/sv5/blister-carvanha.webp"
+    },
+    {
+      "id": "blister-bellibolt",
+      "name": "Single Pack Blister: Bellibolt",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv5-svp094"
+      ],
+      "price": 11.03,
+      "tcgplayerId": 536594,
+      "released": "2024-03-22",
+      "image": "assets/products/sv5/blister-bellibolt.webp"
+    }
+  ],
+  "sv9": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv9-svp189"
+      ],
+      "price": 136.43,
+      "tcgplayerId": 610930,
+      "image": "assets/products/sv9/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv9-svp189-pc",
+        "sv9-svp189"
+      ],
+      "price": 195.25,
+      "tcgplayerId": 610929,
+      "image": "assets/products/sv9/pc-etb.webp"
+    },
+    {
+      "id": "enhanced-box",
+      "name": "Enhanced Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "promos": [
+        "sv9-167-stamped"
+      ],
+      "price": 253.18,
+      "tcgplayerId": 623628,
+      "released": "2025-03-28",
+      "image": "assets/products/sv9/enhanced-box.webp"
+    },
+    {
+      "id": "premium-bellibolt",
+      "name": "Iono's Bellibolt ex Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "promos": [
+        "sv9-svp194",
+        "sv9-52-cosmos"
+      ],
+      "price": 57.75,
+      "tcgplayerId": 616304,
+      "released": "2025-04-11",
+      "image": "assets/products/sv9/premium-bellibolt.webp"
+    },
+    {
+      "id": "ptc-lillie",
+      "name": "Lillie Premium Tournament Collection",
+      "kind": "premium",
+      "packs": 6,
+      "promos": [
+        "sv9-svp195",
+        "sv9-151-cosmos"
+      ],
+      "price": 78.71,
+      "tcgplayerId": 626605,
+      "image": "assets/products/sv9/ptc-lillie.webp"
+    },
+    {
+      "id": "box-zacian",
+      "name": "Hop's Zacian ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv9-svp193",
+        "sv9-135-cosmos",
+        "sv9-136-cosmos"
+      ],
+      "price": 33.94,
+      "tcgplayerId": 616303,
+      "released": "2025-03-28",
+      "image": "assets/products/sv9/box-zacian.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv9-svp181",
+        "sv9-svp182",
+        "sv9-svp183",
+        "sv9-svp184"
+      ],
+      "pick": 1,
+      "price": 39.07,
+      "tcgplayerId": 610954,
+      "released": "2025-04-11",
+      "image": "assets/products/sv9/build-battle.webp"
+    },
+    {
+      "id": "blister3-yanmega",
+      "name": "3 Pack Blister: Yanmega",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv9-svp187"
+      ],
+      "price": 23.94,
+      "tcgplayerId": 610940,
+      "image": "assets/products/sv9/blister3-yanmega.webp"
+    },
+    {
+      "id": "blister3-scrafty",
+      "name": "3 Pack Blister: Scrafty",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv9-svp188"
+      ],
+      "price": 26.78,
+      "tcgplayerId": 610948,
+      "image": "assets/products/sv9/blister3-scrafty.webp"
+    },
+    {
+      "id": "blister-yanma",
+      "name": "Single Pack Blister: Yanma",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv9-svp185"
+      ],
+      "price": 11.38,
+      "tcgplayerId": 610950,
+      "image": "assets/products/sv9/blister-yanma.webp"
+    },
+    {
+      "id": "blister-scraggy",
+      "name": "Single Pack Blister: Scraggy",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv9-svp186"
+      ],
+      "price": 10.17,
+      "tcgplayerId": 610949,
+      "image": "assets/products/sv9/blister-scraggy.webp"
+    }
+  ],
   "zsv10pt5": [
     {
       "id": "eliteTrainerBox",
@@ -1073,6 +1458,114 @@
       "tcgplayerId": 630614,
       "released": "2025-08-01",
       "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
+    }
+  ],
+  "sv7": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv7-svp141"
+      ],
+      "price": 156.75,
+      "tcgplayerId": 557350,
+      "image": "assets/products/sv7/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv7-svp141-pc",
+        "sv7-svp141"
+      ],
+      "price": 169.45,
+      "tcgplayerId": 557340,
+      "image": "assets/products/sv7/pc-etb.webp"
+    },
+    {
+      "id": "terapagos-upc",
+      "name": "Terapagos ex Ultra-Premium Collection",
+      "kind": "premium",
+      "packs": 18,
+      "promos": [
+        "sv7-svp165",
+        "sv7-svp164",
+        "sv7-svp163"
+      ],
+      "price": 251.09,
+      "tcgplayerId": 575198,
+      "released": "2024-11-22",
+      "image": "assets/products/sv7/terapagos-upc.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv7-svp133",
+        "sv7-svp134",
+        "sv7-svp135",
+        "sv7-svp136"
+      ],
+      "pick": 1,
+      "price": 49.38,
+      "tcgplayerId": 557330,
+      "image": "assets/products/sv7/build-battle.webp"
+    },
+    {
+      "id": "blister3-latias",
+      "name": "3 Pack Blister: Latias",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv7-svp139"
+      ],
+      "price": 35.81,
+      "tcgplayerId": 557334,
+      "image": "assets/products/sv7/blister3-latias.webp"
+    },
+    {
+      "id": "blister3-tinkaton",
+      "name": "3 Pack Blister: Tinkaton",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv7-svp140"
+      ],
+      "price": 36.18,
+      "tcgplayerId": 557337,
+      "image": "assets/products/sv7/blister3-tinkaton.webp"
+    },
+    {
+      "id": "blister-horsea",
+      "name": "Single Pack Blister: Horsea",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv7-svp137"
+      ],
+      "price": 12.42,
+      "tcgplayerId": 557338,
+      "released": "2024-09-13",
+      "image": "assets/products/sv7/blister-horsea.webp"
+    },
+    {
+      "id": "blister-porygon2",
+      "name": "Single Pack Blister: Porygon2",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv7-svp138"
+      ],
+      "price": 12.31,
+      "tcgplayerId": 557341,
+      "released": "2024-09-13",
+      "image": "assets/products/sv7/blister-porygon2.webp"
     }
   ]
 }
