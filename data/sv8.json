@@ -8880,5 +8880,447 @@
     "foilMap": "assets/foil/maps/sv8/252.webp",
     "etchMap": "assets/foil/maps/sv8/252-etch.webp",
     "tcgplayerId": 593861
+  },
+  {
+    "id": "sv8-svp151",
+    "name": "Gouging Fire",
+    "number": "svp151",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Hasuno",
+    "flavorText": "There are scant few reports of this creature being sighted. One short video shows it rampaging and spouting pillars of flame.",
+    "image": "assets/cards/sv8/svp151.webp",
+    "imageSmall": "assets/cards/sv8/svp151-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge Out",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Blazing Charge",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your opponent has 4 or fewer Prize cards remaining, this attack does 70 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-151/large",
+    "printedNumber": "SVP 151",
+    "tcgplayerId": 594382,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 4.91,
+    "foilMap": "assets/foil/maps/sv8/svp151.webp"
+  },
+  {
+    "id": "sv8-svp152",
+    "name": "Chien-Pao",
+    "number": "svp152",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "toi8",
+    "flavorText": "The hatred of those who perished by the sword long ago has clad itself in snow and become a Pokémon.",
+    "image": "assets/cards/sv8/svp152.webp",
+    "imageSmall": "assets/cards/sv8/svp152-sm.webp",
+    "attacks": [
+      {
+        "name": "Icicle Loop",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Put an Energy attached to this Pokémon into your hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Snow Sink",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may discard a Stadium in play.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-152/large",
+    "printedNumber": "SVP 152",
+    "tcgplayerId": 594383,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 10.01,
+    "foilMap": "assets/foil/maps/sv8/svp152.webp"
+  },
+  {
+    "id": "sv8-svp153",
+    "name": "Magneton",
+    "number": "svp153",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Shinya Mizuno",
+    "flavorText": "They’re formed by several Magnemite linked together. They frequently appear when sunspots flare up.",
+    "evolvesFrom": "Magnemite",
+    "image": "assets/cards/sv8/svp153.webp",
+    "imageSmall": "assets/cards/sv8/svp153-sm.webp",
+    "attacks": [
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Overvolt Discharge",
+        "text": "Once during your turn, you may attach up to 3 Basic Energy cards from your discard pile to your {L} Pokémon in any way you like. If you use this Ability, this Pokémon is Knocked Out.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-153/large",
+    "printedNumber": "SVP 153",
+    "tcgplayerId": 594385,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 6.32,
+    "foilMap": "assets/foil/maps/sv8/svp153.webp"
+  },
+  {
+    "id": "sv8-svp154",
+    "name": "Indeedee",
+    "number": "svp154",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "buchi",
+    "flavorText": "This Pokémon never leaves its Trainer’s side. It predicts their actions with its psychic power and takes care of their day-to-day needs.",
+    "image": "assets/cards/sv8/svp154.webp",
+    "imageSmall": "assets/cards/sv8/svp154-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Obliging Heal",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may heal 30 damage from your Active Pokémon and have it recover from a Special Condition.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-154/large",
+    "printedNumber": "SVP 154",
+    "tcgplayerId": 594388,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 3.82,
+    "foilMap": "assets/foil/maps/sv8/svp154.webp"
+  },
+  {
+    "id": "sv8-svp155",
+    "name": "Wooper",
+    "number": "svp155",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Saboteri",
+    "flavorText": "This Pokémon lives in cold water. It will leave the water to search for food when it gets cold outside.",
+    "image": "assets/cards/sv8/svp155.webp",
+    "imageSmall": "assets/cards/sv8/svp155-sm.webp",
+    "attacks": [
+      {
+        "name": "Scoop Water",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Shuffle up to 3 Basic Water Energy cards from your discard pile into your deck."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-155/large",
+    "printedNumber": "SVP 155",
+    "tcgplayerId": 594389,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 2.43,
+    "foilMap": "assets/foil/maps/sv8/svp155.webp"
+  },
+  {
+    "id": "sv8-svp156",
+    "name": "Quagsire",
+    "number": "svp156",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Saboteri",
+    "flavorText": "It has an easygoing nature. It doesn't care if it bumps its head on boats and boulders while swimming.",
+    "evolvesFrom": "Wooper",
+    "image": "assets/cards/sv8/svp156.webp",
+    "imageSmall": "assets/cards/sv8/svp156-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Drenched Headbutt",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "Discard the top 3 cards of your deck. This attack does 80 damage for each Energy card you discarded this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-156/large",
+    "printedNumber": "SVP 156",
+    "tcgplayerId": 594403,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 1.79,
+    "foilMap": "assets/foil/maps/sv8/svp156.webp"
+  },
+  {
+    "id": "sv8-svp157",
+    "name": "Zapdos",
+    "number": "svp157",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "Nisota Niso",
+    "flavorText": "This Pokémon has complete control over electricity. There are tales of Zapdos nesting in the dark depths of pitch-black thunderclouds.",
+    "image": "assets/cards/sv8/svp157.webp",
+    "imageSmall": "assets/cards/sv8/svp157-sm.webp",
+    "attacks": [
+      {
+        "name": "Follow-Up Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 10 more damage for each damage counter on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Drill Peck",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-157/large",
+    "printedNumber": "SVP 157",
+    "tcgplayerId": 594405,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 2.44,
+    "foilMap": "assets/foil/maps/sv8/svp157.webp"
+  },
+  {
+    "id": "sv8-svp158",
+    "name": "Pachirisu",
+    "number": "svp158",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Yuya Oka",
+    "flavorText": "A pair may be seen rubbing their cheek pouches together in an effort to share stored electricity.",
+    "image": "assets/cards/sv8/svp158.webp",
+    "imageSmall": "assets/cards/sv8/svp158-sm.webp",
+    "attacks": [
+      {
+        "name": "Crackling Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 3 coins. Attach a number of Basic Lightning Energy cards up to the number of heads from your discard pile to your Benched Pokémon in any way you like."
+      },
+      {
+        "name": "Tiny Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-158/large",
+    "printedNumber": "SVP 158",
+    "tcgplayerId": 594410,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 0.83,
+    "foilMap": "assets/foil/maps/sv8/svp158.webp"
+  },
+  {
+    "id": "sv8-svp159",
+    "name": "Magneton",
+    "number": "svp159",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Shinji Kanda",
+    "evolvesFrom": "Magnemite",
+    "image": "assets/cards/sv8/svp159.webp",
+    "imageSmall": "assets/cards/sv8/svp159-sm.webp",
+    "attacks": [
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Overvolt Discharge",
+        "text": "Once during your turn you may attach up to 3 Basic Energy cards from your discord pile to your Lightning Pokémon in any way you like. If you use this Ability, this Pokémon is Knocked Out.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-159/large",
+    "printedNumber": "SVP 159",
+    "tcgplayerId": 594386,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 6.95,
+    "foilMap": "assets/foil/maps/sv8/svp159.webp"
+  },
+  {
+    "id": "sv8-svp159-pc",
+    "name": "Magneton",
+    "number": "svp159-pc",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Shinji Kanda",
+    "evolvesFrom": "Magnemite",
+    "attacks": [
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Overvolt Discharge",
+        "text": "Once during your turn you may attach up to 3 Basic Energy cards from your discord pile to your Lightning Pokémon in any way you like. If you use this Ability, this Pokémon is Knocked Out.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/594468_in_1000x1000.jpg",
+    "printedNumber": "SVP 159",
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "variant": "Pokémon Center stamp",
+    "tcgplayerId": 594468,
+    "image": "assets/cards/sv8/svp159-pc.webp",
+    "imageSmall": "assets/cards/sv8/svp159-pc-sm.webp",
+    "market": 65.73,
+    "foilMap": "assets/foil/maps/sv8/svp159-pc.webp"
   }
 ]
