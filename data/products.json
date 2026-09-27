@@ -1020,6 +1020,114 @@
       "image": "assets/products/rsv10pt5/tech-gothitelle.webp"
     }
   ],
+  "sv7": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv7-svp141"
+      ],
+      "price": 156.75,
+      "tcgplayerId": 557350,
+      "image": "assets/products/sv7/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv7-svp141-pc",
+        "sv7-svp141"
+      ],
+      "price": 169.45,
+      "tcgplayerId": 557340,
+      "image": "assets/products/sv7/pc-etb.webp"
+    },
+    {
+      "id": "terapagos-upc",
+      "name": "Terapagos ex Ultra-Premium Collection",
+      "kind": "premium",
+      "packs": 18,
+      "promos": [
+        "sv7-svp165",
+        "sv7-svp164",
+        "sv7-svp163"
+      ],
+      "price": 251.09,
+      "tcgplayerId": 575198,
+      "released": "2024-11-22",
+      "image": "assets/products/sv7/terapagos-upc.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv7-svp133",
+        "sv7-svp134",
+        "sv7-svp135",
+        "sv7-svp136"
+      ],
+      "pick": 1,
+      "price": 49.38,
+      "tcgplayerId": 557330,
+      "image": "assets/products/sv7/build-battle.webp"
+    },
+    {
+      "id": "blister3-latias",
+      "name": "3 Pack Blister: Latias",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv7-svp139"
+      ],
+      "price": 35.81,
+      "tcgplayerId": 557334,
+      "image": "assets/products/sv7/blister3-latias.webp"
+    },
+    {
+      "id": "blister3-tinkaton",
+      "name": "3 Pack Blister: Tinkaton",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv7-svp140"
+      ],
+      "price": 36.18,
+      "tcgplayerId": 557337,
+      "image": "assets/products/sv7/blister3-tinkaton.webp"
+    },
+    {
+      "id": "blister-horsea",
+      "name": "Single Pack Blister: Horsea",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv7-svp137"
+      ],
+      "price": 12.42,
+      "tcgplayerId": 557338,
+      "released": "2024-09-13",
+      "image": "assets/products/sv7/blister-horsea.webp"
+    },
+    {
+      "id": "blister-porygon2",
+      "name": "Single Pack Blister: Porygon2",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv7-svp138"
+      ],
+      "price": 12.31,
+      "tcgplayerId": 557341,
+      "released": "2024-09-13",
+      "image": "assets/products/sv7/blister-porygon2.webp"
+    }
+  ],
   "zsv10pt5": [
     {
       "id": "eliteTrainerBox",
