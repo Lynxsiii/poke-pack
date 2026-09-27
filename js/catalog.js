@@ -964,15 +964,17 @@ export const DESTINED_RIVALS = {
   released: "May 30, 2025",
   live: true,
   printedTotal: 182,
-  totalCount: 244,
+  totalCount: 266,
   packSize: 11,
-  cost: 9.39,
+  cost: 9.13,
   dataFile: "data/sv10.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, May 2025. Team Rocket vs the old champions — Gym Hero holos, four wrappers.",
+  blurb: "Scarlet & Violet, May 2025. Team Rocket against Cynthia, Ethan and the old champions — Trainer’s Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/16 · IR 1/12 · SIR 1/94 · gold 1/149",
-  lede: "Cynthia, Ethan, and Team Rocket share a set. Trainer’s Pokémon use the same owner-portrait windows as Ascended Heroes.",
-  slots: svSlots({ double: 0.2, ultra: 0.0625, ir: 0.083, sir: 0.01064, hyper: 0.00671 }),
+  lede: "Team Rocket’s Mewtwo ex SIR is the chase, about 1 in 1,033 packs. Holo Rares and ex shine around the Pokémon and the owner’s portrait, as the printed cards do.",
+  // TCGplayer's 8,000-pack study (May 2025), unrounded: DR 19.83%, UR 6.39%,
+  // IR 8.29%, SIR 1.06%, Hyper Rare 0.67%. No ACE SPEC in this set.
+  slots: svSlots({ double: 0.1983, ultra: 0.0639, ir: 0.0829, sir: 0.0106, hyper: 0.0067 }),
   heroIds: ["sv10-231", "sv10-232", "sv10-230", "sv10-238"],
   wrappers: boosterWrappers("sv10", [
     { id: "garchomp", name: "Garchomp", cardId: "sv10-232", tag: "Cynthia" },
@@ -982,6 +984,13 @@ export const DESTINED_RIVALS = {
   ]),
 };
 
+/**
+ * Journey Together rates are TCGplayer's own: the Authentication Center opened
+ * more than 8,000 English packs for launch (article of Mar 28 2025, updated
+ * May 29 2025). DR 20.29%, UR 6.54% (both in the rare slot), IR 8.50%, SIR
+ * 1.16% and gold 0.73% (in the second reverse slot). No ACE SPEC in this set.
+ * Sources are in data/pullrates.json.
+ */
 export const JOURNEY_TOGETHER = {
   id: "sv9",
   tcgId: "sv9",
@@ -991,21 +1000,22 @@ export const JOURNEY_TOGETHER = {
   released: "March 28, 2025",
   live: true,
   printedTotal: 159,
-  totalCount: 190,
+  // 190 cards plus the 18 promos its boxes and blisters carry.
+  totalCount: 208,
   packSize: 11,
-  cost: 6.43,
+  cost: 6.76,
   dataFile: "data/sv9.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono, and Hop — more Trainer’s Pokémon, four wrappers.",
+  blurb: "Scarlet & Violet, March 2025. N, Lillie, Iono and Hop bring their own Pokémon, four wrappers.",
   oddsLine: "DR 1/5 · UR 1/15 · IR 1/12 · SIR 1/86 · gold 1/137",
-  lede: "The companions set. N’s Zoroark and Lillie’s Clefairy head a 190-card list with Gym Hero holos on the windowed cards.",
-  slots: svSlots({ double: 0.2, ultra: 0.067, ir: 0.083, sir: 0.0116, hyper: 0.0073 }),
-  heroIds: ["sv9-185", "sv9-184", "sv9-183", "sv9-186"],
+  lede: "Trainer’s Pokémon are back. N’s Zoroark, Iono’s Bellibolt and Lillie’s Clefairy head a 190-card list, and the Clefairy special art is the one to chase.",
+  slots: svSlots({ double: 0.2029, ultra: 0.0654, ir: 0.085, sir: 0.0116, hyper: 0.0073 }),
+  heroIds: ["sv9-184", "sv9-185", "sv9-183", "sv9-186"],
   wrappers: boosterWrappers("sv9", [
     { id: "zacian", name: "Zacian", cardId: "sv9-186", tag: "Hop" },
     { id: "bellibolt", name: "Bellibolt", cardId: "sv9-183", tag: "Iono" },
-    { id: "clefairy", name: "Clefairy", cardId: "sv9-184", tag: "Lillie" },
-    { id: "zoroark", name: "Zoroark", cardId: "sv9-185", tag: "The chase" },
+    { id: "clefairy", name: "Clefairy", cardId: "sv9-184", tag: "The chase" },
+    { id: "zoroark", name: "Zoroark", cardId: "sv9-185", tag: "N" },
   ]),
 };
 
@@ -1081,20 +1091,24 @@ export const STELLAR_CROWN = {
   released: "September 13, 2024",
   live: true,
   printedTotal: 142,
-  totalCount: 175,
+  totalCount: 188,
   packSize: 11,
-  cost: 10.58,
+  cost: 10.63,
   dataFile: "data/sv7.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, September 2024. Terapagos and the Stellar Tera types, four wrappers.",
+  blurb: "Scarlet & Violet, September 2024. Terapagos and the Stellar Tera Pokémon ex, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/90 · gold 1/137",
-  lede: "Terapagos crowns the Tera era. Same reverse / rare / art skeleton as the rest of the block, gold at 1/137.",
-  slots: svSlots({ double: 0.1695, ultra: 0.0676, ir: 0.0781, sir: 0.0111, hyper: 0.0073, ace: 0.0495 }),
-  heroIds: ["sv7-170", "sv7-167", "sv7-173", "sv7-168"],
+  lede: "Terapagos takes the crown with Cinderace, Lapras and Galvantula as Stellar Tera ex, printed in crystal foil edge to edge. Only 33 secret rares, so each one comes easier than in the sets around it.",
+  // TCGplayer's 8,000-pack study (Sep 2024): DR 16.90%, UR 6.75%, ACE SPEC
+  // 4.94% (first reverse slot), IR 7.79%, SIR 1.11%, Hyper Rare 0.73%
+  // (second reverse slot). Source and date in data/pullrates.json; Dachsbun
+  // ex's short print is its `pullWeight` in data/sv7.json.
+  slots: svSlots({ double: 0.169, ultra: 0.0675, ir: 0.0779, sir: 0.0111, hyper: 0.0073, ace: 0.0494 }),
+  heroIds: ["sv7-170", "sv7-148", "sv7-169", "sv7-173"],
   wrappers: boosterWrappers("sv7", [
     { id: "terapagos", name: "Terapagos", cardId: "sv7-170", tag: "The chase" },
-    { id: "lapras", name: "Lapras", cardId: "sv7-31", tag: "Ferry" },
-    { id: "terapagos-stellar", name: "Terapagos", cardId: "sv7-173", tag: "Stellar" },
+    { id: "lapras", name: "Lapras", cardId: "sv7-32", tag: "Ferry" },
+    { id: "galvantula", name: "Galvantula", cardId: "sv7-51", tag: "Electroweb" },
     { id: "cinderace", name: "Cinderace", cardId: "sv7-28", tag: "Pyro ball" },
   ]),
 };
@@ -1135,20 +1149,26 @@ export const TWILIGHT_MASQUERADE = {
   released: "May 24, 2024",
   live: true,
   printedTotal: 167,
-  totalCount: 226,
+  totalCount: 236,
   packSize: 11,
-  cost: 8.85,
+  cost: 9.23,
   dataFile: "data/sv6.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  blurb: "Scarlet & Violet, May 2024. Ogerpon’s masks and Kitakami — four wrappers.",
+  blurb: "Scarlet & Violet, May 2024. Ogerpon’s four masks and the Kitakami festival, four wrappers.",
   oddsLine: "DR 1/6 · UR 1/15 · ACE 1/20 · IR 1/13 · SIR 1/86 · gold 1/146",
-  lede: "Ogerpon and Bloodmoon Ursaluna. ACE SPEC in the reverse slot, gold Hyper Rares in the art slot.",
-  slots: svSlots({ double: 0.167, ultra: 0.067, ir: 0.077, sir: 0.0116, hyper: 0.00685, ace: 0.05 }),
+  lede: "Greninja ex’s Special Illustration Rare is the chase. Tera ex print in full-card etched foil, ACE SPEC takes the first reverse slot, gold lands 1 in 146.",
+  /*
+   * TCGplayer opened 8,000+ English packs before release (May 2024): DR
+   * 16.93%, UR 6.61%, ACE SPEC 5.06%, IR 7.73%, SIR 1.17%, Hyper Rare 0.68%
+   * per pack. Sources in data/pullrates.json.
+   */
+  slots: svSlots({ double: 0.1693, ultra: 0.0661, ir: 0.0773, sir: 0.0117, hyper: 0.0068, ace: 0.0506 }),
   heroIds: ["sv6-214", "sv6-211", "sv6-216", "sv6-210"],
+  // The four booster pack arts, in the order of assets/packs/sv6/pack-N.
   wrappers: boosterWrappers("sv6", [
     { id: "sinistcha", name: "Sinistcha", cardId: "sv6-210", tag: "Matcha" },
-    { id: "ogerpon", name: "Ogerpon", cardId: "sv6-211", tag: "The chase" },
-    { id: "ogerpon-tera", name: "Ogerpon", cardId: "sv6-215", tag: "Teal mask" },
+    { id: "ogerpon", name: "Ogerpon", cardId: "sv6-211", tag: "Teal mask" },
+    { id: "dragapult", name: "Dragapult", cardId: "sv6-200", tag: "Phantom dive" },
     { id: "ursaluna", name: "Ursaluna", cardId: "sv6-216", tag: "Bloodmoon" },
   ]),
 };
@@ -1248,6 +1268,79 @@ export const PALDEAN_FATES = {
   ],
 };
 
+/**
+ * Obsidian Flames. Rates from TCGplayer's Authentication Center study of
+ * 8,000+ English packs (Aug 2023): DR 13.61%, UR 6.63%, IR 7.60%, SIR 3.13%,
+ * gold 1.92%. Before ACE SPEC, so the first reverse slot is always a reverse.
+ * Sources are in data/pullrates.json.
+ */
+export const OBSIDIAN_FLAMES = {
+  id: "sv3",
+  tcgId: "sv3",
+  name: "Obsidian Flames",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "August 11, 2023",
+  live: true,
+  printedTotal: 197,
+  totalCount: 240,
+  packSize: 11,
+  cost: 13.05,
+  dataFile: "data/sv3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, August 2023. Tera Charizard ex in Darkness, four wrappers, and only six Special Illustration Rares.",
+  oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/52",
+  lede: "A SIR every 32 packs, and one in six of them is the dark Charizard. Tera ex are printed in etched crystal foil; the rest is a standard Paldea pack.",
+  slots: svSlots({ double: 0.1361, ultra: 0.0663, ir: 0.076, sir: 0.0313, hyper: 0.0192 }),
+  heroIds: ["sv3-223", "sv3-228", "sv3-225", "sv3-215"],
+  wrappers: [
+    ["charizard", "Charizard", "sv3-125", "The chase"],
+    ["tyranitar", "Tyranitar", "sv3-66", "Tera"],
+    ["dragonite", "Dragonite", "sv3-159", "Mighty meteor"],
+    ["revavroom", "Revavroom", "sv3-156", "Starmobile"],
+  ].map(([id, name, cardId, tag]) => ({
+    id,
+    name,
+    cardId,
+    tag,
+    art: `assets/packs/sv3/${id}.avif`,
+    artFallback: `assets/packs/sv3/${id}.png`,
+  })),
+};
+
+export const PALDEA_EVOLVED = {
+  id: "sv2",
+  tcgId: "sv2",
+  name: "Paldea Evolved",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "June 9, 2023",
+  live: true,
+  printedTotal: 193,
+  totalCount: 289,
+  packSize: 11,
+  cost: 15.56,
+  dataFile: "data/sv2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, June 2023. The Paldea starters grow into ex, Iono gets her Special Illustration Rare, five wrappers.",
+  oddsLine: "DR 1/7 · UR 1/15 · IR 1/13 · SIR 1/32 · gold 1/57",
+  lede: "The biggest early Scarlet & Violet set: 279 cards, 36 of them Illustration Rares, and the Magikarp everyone hunts. Tera ex print on etched foil, gold lands in 1 of 57 packs.",
+  /**
+   * TCGplayer Authentication Center, 8,000+ English packs (June 2023):
+   * DR 13.72%, UR 6.64% in the rare slot; IR 7.70%, SIR 3.17%, Hyper Rare
+   * 1.76% in the second reverse slot. No ACE SPEC yet. data/pullrates.json.
+   */
+  slots: svSlots({ double: 0.1372, ultra: 0.0664, ir: 0.077, sir: 0.0317, hyper: 0.0176 }),
+  heroIds: ["sv2-203", "sv2-269", "sv2-262", "sv2-211"],
+  wrappers: boosterWrappers("sv2", [
+    { id: "ting-lu", name: "Ting-Lu", cardId: "sv2-263", tag: "Ruinous" },
+    { id: "skeledirge", name: "Skeledirge", cardId: "sv2-258", tag: "Fire starter" },
+    { id: "quaquaval", name: "Quaquaval", cardId: "sv2-260", tag: "Water starter" },
+    { id: "meowscarada", name: "Meowscarada", cardId: "sv2-256", tag: "Grass starter" },
+    { id: "chien-pao", name: "Chien-Pao", cardId: "sv2-261", tag: "Ruinous" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1258,8 +1351,14 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  DESTINED_RIVALS,
+  JOURNEY_TOGETHER,
+  TWILIGHT_MASQUERADE,
   TEMPORAL_FORCES,
   PALDEAN_FATES,
+  OBSIDIAN_FLAMES,
+  STELLAR_CROWN,
+  PALDEA_EVOLVED,
 ];
 
 /**
@@ -1270,13 +1369,9 @@ export const PLAYABLE_SETS = [
  * a matter of returning it to PLAYABLE_SETS and dropping its ROADMAP row.
  */
 export const RETIRED_SETS = [
-  DESTINED_RIVALS,
-  JOURNEY_TOGETHER,
   PRISMATIC_EVOLUTIONS,
   SURGING_SPARKS,
-  STELLAR_CROWN,
   SHROUDED_FABLE,
-  TWILIGHT_MASQUERADE,
 ];
 
 export const ALL_SETS = [...PLAYABLE_SETS, ...RETIRED_SETS];
@@ -1321,17 +1416,11 @@ export const ROADMAP = [
   {
     era: "Scarlet & Violet",
     sets: [
-      { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
-      { id: "sv9", name: "Journey Together", released: "Mar 2025", cards: "—" },
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
       { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
-      { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
-      { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },
       { id: "sv4", name: "Paradox Rift", released: "Nov 2023", cards: "—" },
       { id: "sv3pt5", name: "151", released: "Sep 2023", cards: "—" },
-      { id: "sv3", name: "Obsidian Flames", released: "Aug 2023", cards: "—" },
-      { id: "sv2", name: "Paldea Evolved", released: "Jun 2023", cards: "—" },
       { id: "sv1", name: "Scarlet & Violet", released: "Mar 2023", cards: "—" },
     ],
   },

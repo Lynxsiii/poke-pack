@@ -68,6 +68,11 @@ export function foilExtras(card, url) {
   }
   const cure = cureOf(card);
   if (cure) classes.push(`cure-${cure}`);
+  // Future and Ancient frames print a halftone panel in the text box, and
+  // their holo prints foil it too (css/holo/sv-rare.css).
+  if (card.foilMap && (card.subtypes || []).some((s) => s === "Future" || s === "Ancient")) {
+    classes.push("frame-paradox");
+  }
   // Tiled or galaxy textures start somewhere different on every card.
   if (cure || card.rarity === "Classic Collection" || card.rarity === "Cosmos") {
     const [x, y] = seed(card.id);
