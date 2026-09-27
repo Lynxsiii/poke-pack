@@ -35,3 +35,15 @@
   .elsewhere-cards { grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 6px; }
   .elsewhere-set header { flex-wrap: wrap; }
 }
+/* On a phone each set is one row that scrolls sideways, edge to edge. The
+   max-width caps the row's min-content width, or the shop's grid column
+   would grow to fit every card and push the page sideways. */
+@media (max-width: 600px) {
+  .elsewhere-cards {
+    max-width: 100vw; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84px; gap: 8px;
+    margin: 0 -16px; padding: 2px 16px 10px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity; scroll-padding: 0 16px; scrollbar-width: none;
+  }
+  .elsewhere-cards::-webkit-scrollbar { display: none; }
+  .elsewhere-card { scroll-snap-align: start; }
+}

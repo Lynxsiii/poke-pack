@@ -833,6 +833,8 @@ function renderSetChrome() {
   // A promo set sells no boosters, only the boxes its promos come in.
   els.packHead?.classList.toggle("hidden", Boolean(liveSet.promoSet));
   els.packGrid?.classList.toggle("hidden", Boolean(liveSet.promoSet));
+  const bulkRip = document.getElementById("bulk-rip");
+  if (bulkRip) bulkRip.textContent = liveSet.promoSet ? "Shop the promos" : "Rip a pack";
   if (els.shopPackSub) {
     els.shopPackSub.textContent = `${liveSet.packSize}-card pack. ${wrapCount} wrapper${
       wrapCount === 1 ? "" : "s"
@@ -1083,6 +1085,18 @@ const PROMO_KIND_HEADS = [
  * promo cards sit in front of the box photo, and each one can be inspected.
  * A product holding a set that isn't playable yet stays off the shelf.
  */
+/** " 19 more open once Paradox Rift and Surging Sparks are here.": a promo set's boxes waiting on their packs' sets. */
+function waitingLine() {
+  const waiting = promoOffers(productList[liveSet.id]).filter((offer) => !offerPackSets(offer, liveSet));
+  const ids = [...new Set(waiting.flatMap((offer) => Object.keys(offer.from || {})))].filter(
+    (id) => !PLAYABLE_SETS.some((set) => set.id === id && set.wrappers?.length)
+  );
+  if (!waiting.length || !ids.length) return "";
+  const names = ids.map((id) => ROADMAP.flatMap((era) => era.sets).find((set) => set.id === id)?.name || id);
+  const list = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0];
+  return ` ${waiting.length} more open once ${list} ${names.length > 1 ? "are" : "is"} here.`;
+}
+
 function renderPromoProducts() {
   if (!els.promoGrid) return;
   let offers = promoOffers(productList[liveSet.id]).filter(
@@ -1101,7 +1115,7 @@ function renderPromoProducts() {
   if (els.promoBlockTitle) els.promoBlockTitle.textContent = grouped ? "Boxes, tins and decks" : "Collections and promos";
   if (els.promoBlockSub) {
     els.promoBlockSub.textContent = grouped
-      ? "Every product opens with its real packs, named on each box, and its promos land in your binder with them. Priced at TCGplayer market."
+      ? `Every product opens with its real packs, named on each box, and its promos land in your binder with them. Priced at TCGplayer market.${waitingLine()}`
       : "Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.";
   }
   const faces = [];
@@ -1476,7 +1490,9 @@ function catalogCard(set, { live = false } = {}) {
   const released = set.released;
   const count = live ? set.totalCount : set.cards;
   const note = live
-    ? `${set.edition} · ${set.packSize}-card boosters`
+    ? set.promoSet
+      ? `${set.edition} · promos in their boxes`
+      : `${set.edition} · ${set.packSize}-card boosters`
     : set.note || "Queued for poke-pack.rip";
   return `<article class="catalog-card ${live ? "live" : ""}">
     <div class="catalog-head">
