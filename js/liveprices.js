@@ -25,6 +25,7 @@ const TCGDEX_SET = {
   me5: "me05",
   sv2: "sv02",
   sv3: "sv03",
+  sv4pt5: "sv04.5",
   sv5: "sv05",
   sv6: "sv06",
   sv7: "sv07",
