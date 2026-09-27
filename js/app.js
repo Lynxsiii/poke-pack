@@ -51,7 +51,7 @@ import {
 } from "./achievements.js";
 import { QUESTS } from "./quests.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
-import { loadPriceHistory, renderPriceChart, renderWorthChart } from "./pricechart.js";
+import { loadPriceHistory, priceHistoryReady, renderPriceChart, renderWorthChart } from "./pricechart.js";
 import {
   loadState,
   saveState,
@@ -4956,6 +4956,13 @@ els.sellDuplicates?.addEventListener("click", sellSetDuplicates);
 function paintInspect(card) {
   const chart = els.inspectInfo.querySelector("#inspect-chart");
   if (chart) renderPriceChart(chart, card, inspectRange);
+  if (chart && !priceHistoryReady(card.id)) {
+    // Each set's history is its own file, fetched the first time it's needed.
+    loadPriceHistory(card.id.split("-")[0]).then(() => {
+      const mount = els.inspectInfo.querySelector("#inspect-chart");
+      if (mount && inspectCard?.id === card.id) renderPriceChart(mount, inspectCard, inspectRange);
+    });
+  }
   const sell = els.inspectInfo.querySelector("#inspect-sell");
   if (sell) sell.innerHTML = inspectSellRow(card);
 }
@@ -6231,7 +6238,7 @@ async function routeFromLocation() {
 
 async function boot() {
   try {
-    await Promise.all([loadSealedPrices(), loadPriceHistory(), loadPatchNotes()]);
+    await Promise.all([loadSealedPrices(), loadPatchNotes()]);
     await refreshSession();
     await activateSet(setIdFromPath(location.pathname) || state.activeSetId || DEFAULT_SET_ID);
     applySettings();
