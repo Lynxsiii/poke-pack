@@ -1,7 +1,21 @@
+/**
+ * A card's share of its pool. Every card is 1 unless the set data marks a
+ * short print with `pullWeight` (Stellar Crown's Dachsbun ex turns up about
+ * 0.6 times as often as the other Double Rares in TCGplayer's study).
+ */
+function weightOf(card) {
+  const weight = Number(card.pullWeight);
+  return weight > 0 ? weight : 1;
+}
+
 function pick(list, used) {
   const available = list.filter((card) => !used.has(card.id));
   const source = available.length ? available : list;
-  const card = source[Math.floor(Math.random() * source.length)];
+  let card = source[Math.floor(Math.random() * source.length)];
+  if (source.some((c) => c.pullWeight)) {
+    let roll = Math.random() * source.reduce((sum, c) => sum + weightOf(c), 0);
+    card = source.find((c) => (roll -= weightOf(c)) < 0) || source[source.length - 1];
+  }
   used.add(card.id);
   return { ...card };
 }
