@@ -1,0 +1,237 @@
+/*
+ * Scarlet & Violet full arts with a TCG Live foil map: the Ultra Rare (ex and
+ * Supporter full arts) and the gold Hyper Rare. Every Scarlet & Violet and
+ * Mega Evolution set prints them the same way, so they live here rather than
+ * in one set's sheet. Cards without a map keep the older recipes in
+ * rarities.css and realism.css.
+ *
+ * - Ultra Rare (TCG Live: SUN_PILLAR / ETCHED, the Double Rare's sun pillar
+ *   foil with an etch instead of a holo window). The whole card is foil, the
+ *   Pokémon at part strength (the map's greys), under a fine etched texture
+ *   of lines that follow the art. pokemon-cards-151's ex full art: a
+ *   vertical sunpillar ramp hue-blended over steep 128.5deg tinsel bars and a
+ *   pointer darkener, soft-lit by the card's etch, with an exclusion twin
+ *   sliding the other way so the colour shifts like an oil slick instead of
+ *   a rainbow sliding past. The etch lines run brighter than the flat foil
+ *   between them, which is what makes the texture read under a lamp.
+ * - Hyper Rare (gold; TCG Live: SV_ULTRA / ETCHED, the Special Illustration
+ *   Rare's foil). Gold ink over it. pokemon-cards-151's hyper rare is its
+ *   Special Illustration Rare recipe too: a soft 15deg rainbow that shows
+ *   only inside two light bars crossing with the tilt, glitter, and a
+ *   multiply glare, plus the etch catching the light everywhere.
+ *
+ * Layer ideas follow pokemon-cards-151 by Simon Goellner (@simeydotme),
+ * GPL-3.0; see NOTICE.md. The research is in the card-textures skill,
+ * .claude/skills/card-textures/reference/sv-fullart.md.
+ *
+ * Each rule carries two extra :not() classes, which puts it above the
+ * three-class full-art rules in rarities.css and realism.css and the map
+ * rules in celebration.css, whichever order the sheets load in. Tera ex
+ * (sv-finishes.css) and the 30th's Classic Collection are left alone.
+ *
+ * Rest state (PR 5): a resting card paints `.foil` alone; the pseudo layers
+ * and `.glare` only exist while a card is held or settling.
+ */
+
+/* ---- Shared shape --------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ultra, .foil-gold).has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
+  background-repeat: repeat;
+  border-radius: 0;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ultra, .foil-gold).has-foil-map:not(.foil-tera):not(.foil-classic):not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ultra, .foil-gold).has-foil-map:not(.foil-tera):not(.foil-classic) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ultra, .foil-gold).has-foil-map:not(.foil-tera):not(.foil-classic) .foil::after {
+  /* Clear what the older recipes put here; each finish sets its own. */
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+
+/* ---- Ultra Rare: SUN_PILLAR / ETCHED ---------------------------------------
+   Upstream stacks the card's mask and etch as soft-light images on top of the
+   gradients. Here the mask is already the layer's mask (maps.css), and the
+   etch is an alpha map, so the two soft-light passes are split by where the
+   etch is: `.foil` draws the stack under a white and a black soft-light (the
+   foil between the lines: the mask's lift and the unetched black), and
+   `::before` draws the same stack under two white ones, masked by the etch
+   (the cut lines, a step brighter). `::after` is the exclusion twin. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
+  --fa-space: 5%;
+  --fa-pillar: repeating-linear-gradient(0deg,
+    var(--sunpillar-clr-1) calc(var(--fa-space) * 1),
+    var(--sunpillar-clr-2) calc(var(--fa-space) * 2),
+    var(--sunpillar-clr-3) calc(var(--fa-space) * 3),
+    var(--sunpillar-clr-4) calc(var(--fa-space) * 4),
+    var(--sunpillar-clr-5) calc(var(--fa-space) * 5),
+    var(--sunpillar-clr-6) calc(var(--fa-space) * 6),
+    var(--sunpillar-clr-1) calc(var(--fa-space) * 7));
+  --fa-bars: repeating-linear-gradient(128.5deg,
+    #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%,
+    hsl(180, 10%, 60%) 5.2%, #0e152e 14%, #0e152e 16%);
+  --fa-dim: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
+  --fa-pos: 0% var(--background-y),
+    calc(var(--background-x) + (var(--background-y) * 0.2)) var(--background-y),
+    var(--background-x) var(--background-y);
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(#000, #000),
+    var(--fa-pillar), var(--fa-bars), var(--fa-dim);
+  background-size: cover, cover, 200% 700%, 300% 100%, 200% 100%;
+  background-position: center, center, var(--fa-pos);
+  background-blend-mode: soft-light, soft-light, hue, hard-light, normal;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.5) saturate(0.66);
+  mix-blend-mode: color-dodge;
+}
+/* Resting, the silver-grey of the foil rather than a tinted wash. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic):not(.lit):not(.settling) .foil {
+  filter: brightness(0.5) contrast(2.5) saturate(0.35);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map.has-etch-map:not(.foil-tera):not(.foil-classic) .foil::before {
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(#fff, #fff),
+    var(--fa-pillar), var(--fa-bars), var(--fa-dim);
+  background-size: cover, cover, 200% 700%, 300% 100%, 200% 100%;
+  background-position: center, center, var(--fa-pos);
+  background-blend-mode: soft-light, soft-light, hue, hard-light, normal;
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::after {
+  /* Restated so the ramp picks up this layer's rotated sunpillar colours
+     (base.css); `::before` inherits `.foil`'s, as it is the same layer. */
+  --fa-pillar: repeating-linear-gradient(0deg,
+    var(--sunpillar-clr-1) calc(var(--fa-space) * 1),
+    var(--sunpillar-clr-2) calc(var(--fa-space) * 2),
+    var(--sunpillar-clr-3) calc(var(--fa-space) * 3),
+    var(--sunpillar-clr-4) calc(var(--fa-space) * 4),
+    var(--sunpillar-clr-5) calc(var(--fa-space) * 5),
+    var(--sunpillar-clr-6) calc(var(--fa-space) * 6),
+    var(--sunpillar-clr-1) calc(var(--fa-space) * 7));
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(#000, #000),
+    var(--fa-pillar), var(--fa-bars), var(--fa-dim);
+  background-size: cover, cover, 200% 400%, 195% 100%, 200% 100%;
+  background-position: center, center,
+    0% var(--background-y),
+    calc((var(--background-x) + (var(--background-y) * 0.2)) * -1) calc(var(--background-y) * -1),
+    var(--background-x) var(--background-y);
+  background-blend-mode: soft-light, soft-light, hue, hard-light, normal;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(1.66) saturate(1);
+  mix-blend-mode: exclusion;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 75%) 5%, hsl(200, 5%, 35%) 70%, hsl(320, 40%, 10%) 150%);
+  background-size: 120% 150%;
+  background-position: center;
+  mix-blend-mode: hard-light;
+  filter: brightness(0.8) contrast(1) saturate(1);
+  opacity: var(--card-opacity);
+}
+/* Supporter full arts: a flatter, brighter varnish (upstream). */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.foil-trainer.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 55%) 5%, hsl(200, 5%, 40%) 40%, hsl(200, 10%, 15%) 110%);
+  background-size: cover;
+  filter: brightness(1.25) contrast(1.4) saturate(1);
+}
+/* The etched lines under the light. Nine tenths of a full art is etched, so
+   the hot spot celebration.css gives every etched card would be a white disc
+   in this hard-light glare; kept small and soft here. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map.has-etch-map:not(.foil-tera):not(.foil-classic) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.15) 18%, hsla(0, 0%, 100%, 0) 40%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.3 + var(--pointer-from-center) * 0.4);
+}
+
+/* ---- Hyper Rare: gold, SV_ULTRA / ETCHED ------------------------------------
+   The rainbow is faint on the real cards: the gold ink tints it, so it reads
+   as a warm sheen moving through the light bars rather than colour. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .foil {
+  --fa-spectrum: hsl(2, 100%, 73%), hsl(53, 100%, 69%), hsl(93, 100%, 69%),
+    hsl(176, 100%, 76%), hsl(228, 100%, 74%), hsl(283, 100%, 73%), hsl(2, 100%, 73%);
+  background-image: repeating-linear-gradient(15deg, var(--fa-spectrum), var(--fa-spectrum), var(--fa-spectrum));
+  background-size: 240% 240%;
+  background-position: var(--background-x) var(--background-y);
+  background-blend-mode: normal;
+  filter: brightness(0.6) contrast(1.5) saturate(0.8);
+  mix-blend-mode: color-dodge;
+}
+/* Resting, gold stays gold. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic):not(.lit):not(.settling) .foil {
+  filter: brightness(0.55) contrast(1.5) saturate(0.3);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::before {
+  background-image:
+    linear-gradient(calc(var(--rotate-x) * -0.25), #000 24%, #797979 30%, #000 36%),
+    linear-gradient(calc(var(--rotate-x) * 0.25), #000 24%, #797979 30%, #000 36%);
+  background-size: 300% 300%;
+  background-position: 50% calc(var(--background-y) * 1.7), 50% calc(var(--background-y) * -1.3);
+  background-blend-mode: exclusion;
+  filter: contrast(0.75);
+  mix-blend-mode: hard-light;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::after {
+  --shift: 3px;
+  background-image: var(--holo-glitter);
+  background-size: 25% auto;
+  background-position: calc(50% + var(--pointer-from-left) * var(--shift))
+    calc(50% + var(--pointer-from-top) * var(--shift));
+  filter: brightness(1.4) contrast(2) saturate(1.2);
+  mix-blend-mode: plus-lighter;
+  opacity: calc(0.2 + var(--pointer-from-center) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 92%) 10%, hsl(0, 0%, 66%) 70%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  filter: contrast(1.4);
+  opacity: calc(var(--card-opacity) * 0.8);
+}
+/* Upstream's glare2: the etch lit across the whole card, brightest under the
+   light. Inside the multiply glare, white leaves the gold undimmed, so the
+   cut lines stand out bright against the rest. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map.has-etch-map:not(.foil-tera):not(.foil-classic) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.95) 0%, hsla(0, 0%, 100%, 0.55) 30%, hsla(0, 0%, 100%, 0.3) 80%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.6 + var(--pointer-from-center) * 0.4);
+}
