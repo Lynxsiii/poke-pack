@@ -6,5 +6,111 @@
   "scrydexId": "sv6pt5",
   "pittSlug": "Shrouded-Fable",
   "artSlug": "shrouded-fable",
-  "packs": ["pack-0", "pack-1", "pack-2", "pack-3"]
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 23529,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp129": {},
+    "svp129-pc": {
+      "like": "svp129",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 573720
+    },
+    "svp130": {},
+    "svp131": {},
+    "svp132": {},
+    "svp149": {}
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 552999,
+      "packs": 9,
+      "promos": [
+        "svp129"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 552998,
+      "packs": 11,
+      "promos": [
+        "svp129-pc",
+        "svp129"
+      ]
+    },
+    {
+      "id": "sic-greninja",
+      "name": "Greninja ex Special Illustration Collection",
+      "kind": "premium",
+      "tcgplayerId": 553002,
+      "packs": 5,
+      "promos": [
+        "svp132"
+      ]
+    },
+    {
+      "id": "sic-kingdra",
+      "name": "Kingdra ex Special Illustration Collection",
+      "kind": "premium",
+      "tcgplayerId": 553001,
+      "packs": 5,
+      "promos": [
+        "svp131"
+      ]
+    },
+    {
+      "id": "kingambit-collection",
+      "name": "Kingambit Illustration Collection",
+      "kind": "collection",
+      "tcgplayerId": 553000,
+      "packs": 4,
+      "promos": [
+        "svp130"
+      ]
+    },
+    {
+      "id": "blister-pecharunt",
+      "name": "3 Pack Blister: Pecharunt",
+      "kind": "blister",
+      "tcgplayerId": 553007,
+      "packs": 3,
+      "promos": [
+        "svp149"
+      ]
+    },
+    {
+      "id": "mini-tin",
+      "name": "Mini Tin",
+      "kind": "tin",
+      "tcgplayerId": 553018,
+      "packs": 2,
+      "promos": []
+    },
+    {
+      "id": "mini-tin-display",
+      "name": "Mini Tin Display",
+      "kind": "collection",
+      "tcgplayerId": 553008,
+      "packs": 20,
+      "promos": []
+    }
+  ]
 }
