@@ -1020,10 +1020,11 @@ export const PRISMATIC_EVOLUTIONS = {
   }),
   heroIds: ["sv8pt5-161", "sv8pt5-155", "sv8pt5-167", "sv8pt5-156"],
   wrappers: boosterWrappers("sv8pt5", [
-    { id: "jolteon", name: "Jolteon", cardId: "sv8pt5-153", tag: "Spark" },
-    { id: "eevee", name: "Eevee", cardId: "sv8pt5-167", tag: "The chase" },
-    { id: "umbreon", name: "Umbreon", cardId: "sv8pt5-161", tag: "Moon" },
-    { id: "glaceon", name: "Glaceon", cardId: "sv8pt5-150", tag: "Ice" },
+    { id: "jolteon", name: "Jolteon", cardId: "sv8pt5-153", tag: "Kanto trio" },
+    { id: "eevee", name: "Eevee", cardId: "sv8pt5-167", tag: "Sylveon" },
+    // Umbreon ex's Special Illustration Rare is the set's chase card.
+    { id: "umbreon", name: "Umbreon", cardId: "sv8pt5-161", tag: "The chase" },
+    { id: "glaceon", name: "Glaceon", cardId: "sv8pt5-150", tag: "Leafeon" },
   ]),
 };
 

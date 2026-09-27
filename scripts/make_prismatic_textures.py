@@ -27,7 +27,7 @@ CSS stretches to the card (css/holo/prismatic.css):
                      (0-180deg as 0-255), so the CSS can light the shards
                      whose lines face the light; transparent in the art
                      window, which has no shards
-    pokeball.webp    the Poké Ball in the pastel rainbow it shows at rest,
+    pokeball.webp    the Poké Ball in the rainbow it shows at rest,
                      alpha = its shape
     masterball.webp  the Master Ball, likewise
 """
@@ -145,10 +145,12 @@ def ball_shape(dark: np.ndarray, size: tuple[int, int], margin: float, mirror: s
     return shrink(blur(solid, 1.2), size).clip(0, 1)
 
 
-def pastel_rainbow(size: tuple[int, int], saturation: float) -> np.ndarray:
+def ball_rainbow(size: tuple[int, int], lightness: float, saturation: float) -> np.ndarray:
     """The ball's resting colours: a diagonal sweep from warm to cool, as photos
     of the Poké Ball print show (orange and yellow on the dome's upper left,
-    cyan through the middle, violet and pink on the lower right)."""
+    cyan through the middle, violet and pink on the lower right). Mid
+    lightness, because the CSS hard-lights it: it has to tint white Trainer
+    stock as well as brighten dark ink."""
     w, h = size
     cx, cy, r = (v * w / 733 for v in BALL)
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
@@ -159,7 +161,7 @@ def pastel_rainbow(size: tuple[int, int], saturation: float) -> np.ndarray:
     rgb = np.zeros((h, w, 3), np.float32)
     for y in range(h):
         for x in range(w):
-            rgb[y, x] = colorsys.hls_to_rgb(float(hue[y, x]), 0.76, saturation)
+            rgb[y, x] = colorsys.hls_to_rgb(float(hue[y, x]), lightness, saturation)
     return (rgb * 255).round().astype(np.uint8)
 
 
@@ -180,12 +182,13 @@ def main() -> int:
     rows = np.arange(sph.shape[0])[:, None]
     dome = rows < BALL[1] - 0.42 * BALL[2]
     balls = (
-        ("pokeball", np.where(dome, sph_low, mph), 2, "max", 0.9),
-        ("masterball", mph, 14, "max", 0.55),
+        ("pokeball", np.where(dome, sph_low, mph), 2, "max", 0.6, 0.95),
+        # Photos of the Master Ball print read paler and more silver.
+        ("masterball", mph, 14, "max", 0.6, 0.85),
     )
-    for name, dark, margin, mirror, saturation in balls:
+    for name, dark, margin, mirror, lightness, saturation in balls:
         alpha = (ball_shape(dark, size, margin, mirror) * 255).round().astype(np.uint8)
-        rgb = pastel_rainbow(size, saturation)
+        rgb = ball_rainbow(size, lightness, saturation)
         Image.fromarray(np.dstack([rgb, alpha]), "RGBA").save(
             OUT / f"{name}.webp", "WEBP", quality=88, alpha_quality=90, method=6)
     for p in sorted(OUT.glob("*.webp")):

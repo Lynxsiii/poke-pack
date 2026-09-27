@@ -7,6 +7,7 @@
  *   They stop the shine at the Pokémon, the text and the 30th Celebration
  *   Pikachu stamp exactly. `etchMap` is the etched texture on SIR, Futuristic
  *   and RGB prints; `etchMapH/V` split it by line direction.
+ *   `reverseMap` is the same for the card's reverse holo print.
  *   The card-textures skill's scripts/fetch_foil_maps.py writes all of these
  *   into data/<set>.json.
  * - `stampPos` / `stampSize` place the 30th Celebration stamp on cards with no
@@ -42,8 +43,15 @@ function seed(id) {
  * repo path into an absolute URL (see assetUrl() in app.js for why).
  */
 export function foilExtras(card, url) {
-  // The maps describe the holo print; a reverse holo is foil everywhere else.
-  if (card.reverse) return { classes: "", style: "", cure: false };
+  // The maps describe the holo print; a reverse holo is foil everywhere else,
+  // unless TCG Live's map of the reverse print ships (`reverseMap`:
+  // Prismatic Evolutions prints its reverses with Tera crystals and a type
+  // symbol worked into the foil).
+  if (card.reverse) {
+    return card.reverseMap
+      ? { classes: "has-rev-map", style: `--rev-map:url('${url(card.reverseMap)}')`, cure: false }
+      : { classes: "", style: "", cure: false };
+  }
   const classes = [];
   const vars = [];
   const add = (cls, name, path) => {
