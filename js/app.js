@@ -1315,13 +1315,57 @@ function renderPromoElsewhere() {
   );
 }
 
-async function activateSet(id, force = false) {
+/**
+ * Explain a /packs/<id> link that can't open, above the set showing instead.
+ * The address keeps the asked-for set, so the link still says what it named.
+ */
+function showSetNotice(id, failed = false) {
+  const box = document.getElementById("set-notice");
+  if (!box) return;
+  const known = ALL_SETS.find((set) => set.id === id);
+  const queued = ROADMAP.flatMap((block) => block.sets).find((set) => set.id === id);
+  const name = esc(known?.name || queued?.name || id);
+  let title = `There's no set called “${name}”.`;
+  let body = "That link doesn't match any set here.";
+  if (failed) {
+    title = `Couldn't load ${name}.`;
+    body = "Its cards didn't come through.";
+  } else if (known) {
+    title = `${name} is closed for now.`;
+    body = "Its packs can't be opened at the moment. Cards you already pulled stay in your binder.";
+  } else if (queued) {
+    title = `${name} isn't open yet.`;
+    body = "It's queued in the catalog, newest sets first.";
+  }
+  box.dataset.set = id;
+  box.innerHTML = `<div class="set-notice-copy">
+      <b>${title}</b>
+      <p>${body} Showing ${esc(liveSet.name)} ${failed ? "until they do" : "instead"}.</p>
+    </div>
+    <div class="set-notice-actions">
+      ${failed
+        ? `<button type="button" class="solid sm" data-notice="retry">Try again</button>`
+        : `<button type="button" class="ghost sm" data-notice="catalog">See all sets</button>`}
+      <button type="button" class="ghost sm" data-notice="dismiss">Dismiss</button>
+    </div>`;
+  box.classList.remove("hidden");
+}
+
+function hideSetNotice() {
+  document.getElementById("set-notice")?.classList.add("hidden");
+}
+
+async function activateSet(id, force = false, quiet = false) {
   if (packPhase !== "idle") {
     toast("Finish this pack first.");
-    return;
+    return false;
   }
   const next = getSet(id);
-  if (next.id === liveSet.id && setCards.length && !force) return;
+  if (next.id === liveSet.id && setCards.length && !force) {
+    hideSetNotice();
+    if (view === "shop") replacePath(pathForView("shop"));
+    return true;
+  }
   try {
     if (!setCache[next.id]) {
       setCache[next.id] = await fetch(next.dataFile, { cache: "no-cache" }).then((r) => {
@@ -1331,9 +1375,10 @@ async function activateSet(id, force = false) {
     }
     applyCachedPrices(setCache[next.id], next.id);
   } catch {
-    toast(`Couldn't load ${next.name}.`);
-    return;
+    if (!quiet) toast(`Couldn't load ${next.name}.`);
+    return false;
   }
+  hideSetNotice();
   liveSet = next;
   state.activeSetId = next.id;
   saveState(state);
@@ -1357,6 +1402,7 @@ async function activateSet(id, force = false) {
     toast(err?.message || `Couldn't render ${next.name}.`);
     throw err;
   }
+  return true;
 }
 
 function spareCopies(set = liveSet) {
@@ -3524,9 +3570,14 @@ function viewFromPath(pathname) {
   return null;
 }
 
+/** The set id a /packs/<id> path names, playable or not; "" for /packs itself. */
+function pathSetId(pathname) {
+  return normalizePath(pathname).match(/^\/(?:packs|shop)\/([a-z0-9]+)$/i)?.[1].toLowerCase() || "";
+}
+
 /** The playable set a /packs/<id> path names, or "" when it names none. */
 function setIdFromPath(pathname) {
-  const id = normalizePath(pathname).match(/^\/(?:packs|shop)\/([a-z0-9]+)$/i)?.[1].toLowerCase();
+  const id = pathSetId(pathname);
   return id && PLAYABLE_SETS.some((set) => set.id === id) ? id : "";
 }
 
@@ -3575,6 +3626,7 @@ function applyView(next, hist) {
   }
   paintNav(view);
   document.querySelector(".nav-more")?.removeAttribute("open");
+  if (view !== "shop") hideSetNotice();
   VIEW_RENDER[view]?.();
   document.body.classList.toggle("on-home", view === "home");
   document.body.classList.toggle("on-shop", view === "shop");
@@ -5444,6 +5496,21 @@ window.addEventListener("popstate", () => {
   routeFromLocation();
 });
 
+document.getElementById("set-notice")?.addEventListener("click", async (e) => {
+  const btn = e.target.closest("[data-notice]");
+  if (!btn) return;
+  const act = btn.dataset.notice;
+  if (act === "retry") {
+    btn.disabled = true;
+    await activateSet(e.currentTarget.dataset.set);
+    btn.disabled = false;
+    return;
+  }
+  hideSetNotice();
+  if (act === "catalog") setView("catalog");
+  else replacePath(pathForView("shop"));
+});
+
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape" || !historyOpen) return;
   historyOpen = false;
@@ -5470,8 +5537,7 @@ els.viewHome.addEventListener("click", (e) => {
 });
 
 async function playSet(id) {
-  await activateSet(id);
-  setView("shop");
+  if (await activateSet(id)) setView("shop");
 }
 
 document.querySelector(".brand")?.addEventListener("click", (e) => {
@@ -6656,10 +6722,18 @@ async function routeFromLocation() {
   const atRoot = path === "/" || path === "/index.html";
   const pathView = viewFromPath(path);
   if (pathView === "shop") {
+    const wanted = pathSetId(path);
     const setId = setIdFromPath(path);
-    if (setId) await activateSet(setId);
-    // /packs and unknown sets settle on the address of the set that is showing.
-    setView("shop", { history: "replace" });
+    const opened = setId ? await activateSet(setId, false, true) : !wanted;
+    if (opened || packPhase !== "idle") {
+      // /packs settles on the address of the set that is showing.
+      setView("shop", { history: "replace" });
+      return;
+    }
+    // A set that is queued, retired, unknown or failed to load keeps its
+    // address and says why, rather than quietly becoming another set.
+    showSetNotice(wanted, Boolean(setId));
+    setView("shop", { history: "none" });
     return;
   }
   if (pathView && !atRoot) {
@@ -6681,7 +6755,13 @@ async function boot() {
     // Friends and requests load now rather than on the next 5s poll, so the
     // Social page and the Friends badge are right on first paint.
     if (cloudUser) notifySignedIn();
-    await activateSet(setIdFromPath(location.pathname) || state.activeSetId || DEFAULT_SET_ID);
+    // A linked set that won't load falls back to the saved one so the page
+    // still has cards; routeFromLocation then says why.
+    const linkedSet = setIdFromPath(location.pathname);
+    if (!linkedSet || !(await activateSet(linkedSet, false, true))) {
+      const saved = state.activeSetId || DEFAULT_SET_ID;
+      if (saved === linkedSet || !(await activateSet(saved))) await activateSet(DEFAULT_SET_ID);
+    }
     applySettings();
     renderHeader();
     scheduleDailyTick();
