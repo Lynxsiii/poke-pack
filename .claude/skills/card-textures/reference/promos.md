@@ -64,7 +64,11 @@ A cosmos print with no map (the set-card cosmos prints of Journey Together
 and the Mega Evolution sets, whose plain print is a non-holo Rare) falls
 back to the art window: foil over the Pokémon and no border. The stamped
 ones now get a drawn window-and-frame map (below); the unstamped ones
-could take the same map for the border's sake, not done yet.
+could take the same map for the border's sake, not done yet. The drawing
+is only for window holos: a stamped full-art print (the Paradox Rift
+Pokémon Center promos, Illustration Rares) is foil where the drawing is
+not, so `stamp_knockout.py` skips it until its TCG Live map is fetched
+(`fetch_foil_maps.py --set <set> --cards <plain number> --ship --write-data`).
 
 ## Shiny Rare and Shiny Ultra Rare (`css/holo/shiny-vault.css`)
 

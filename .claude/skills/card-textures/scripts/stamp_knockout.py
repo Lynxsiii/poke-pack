@@ -76,6 +76,11 @@ GLOBAL_KINDS = ("pc", "gamestop", "ebgames")
 WINDOW = (0.07937, 0.09318, 1 - 0.07302, 1 - 0.52727)  # x0, y0, x1, y1 (windows.css)
 FRAME = (0.036, 0.026)
 SUFFIXES = tuple(ZONES)
+# Finishes whose foil is the art window plus the outer frame, so a print with
+# no TCG Live map can take the drawn window-and-frame map. Anything else (an
+# Illustration Rare, an ex, an Ultra Rare) is foil where the drawing is not:
+# fetch its Live map first (fetch_foil_maps.py), then rerun.
+WINDOWED = ("Cosmos", "Holo Rare", "Rare Holo", "Holo")
 NOISE_MAX = 0.05  # share of the card that may differ for the pair to count as one source
 MATCH_MIN = 0.5  # normalised cross-correlation a template match must reach
 
@@ -304,6 +309,12 @@ def floor_alpha(alpha: np.ndarray) -> np.ndarray:
     return ((alpha - FLOOR) * (255 / (255 - FLOOR))).clip(0, 255)
 
 
+def windowed(card: dict, base: dict | None) -> bool:
+    """Whether the print's foil is the standard window and frame (see WINDOWED)."""
+    finish = str((card.get("foilAs") or card.get("rarity") or (base or {}).get("rarity") or "")).strip()
+    return finish in WINDOWED or "Cosmos" in finish
+
+
 def window_map(scan: np.ndarray) -> np.ndarray:
     """A foil map for a standard-layout print with no TCG Live map: the art
     window and the outer frame, at the scan's size, as 0..255 alpha. The
@@ -485,9 +496,15 @@ def main() -> None:
             source = live
         elif live.exists():
             source = live
-        else:
+        elif windowed(card, base):
             source = None
             job["how"] += ", on a drawn window-and-frame map"
+        else:
+            finish = card.get("foilAs") or card.get("rarity")
+            want = base["number"] if base else card["number"]
+            print(f"  skipped {card['id']}: no foil map to cut from, and a {finish} print is not a window holo; "
+                  f"fetch its TCG Live map first (fetch_foil_maps.py --set {set_id} --cards {want} --ship --write-data)")
+            continue
         new_map = knock_out(source, job["alpha"], job["b"])
         out.parent.mkdir(parents=True, exist_ok=True)
         new_map.save(out, "WEBP", quality=85, alpha_quality=80, method=6)
