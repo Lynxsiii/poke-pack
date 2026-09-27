@@ -80,6 +80,12 @@ so it draws with its `foilAs` rarity's older recipe. TCGplayer has no photo
 of the cosmos Cynthia's Gible (product 637611, 403 on every size); its scan
 is the base card's.
 
+TCG Live files the full-art Cynthia's Garchomp ex promo (SVP 204) as
+`SUN_PILLAR`, which `foil_from_tcgl()` reads as an Illustration Rare. It is a
+full-art ex, so `data/sets/sv10.json` pins `"foilAs": "Ultra Rare"`. Check
+each ex promo's scan: a full-art one needs that pin, a regular-frame ex
+(SVP 205, the tin promos) stays a Double Rare.
+
 Related: the shared SV finishes (Tera ex, ACE SPEC in `sv-tera-acespec.md`;
 map-aware Ultra Rare and gold are owned by the Paradox Rift thread) apply
 to this set as soon as they land, because they key on the classes above.
