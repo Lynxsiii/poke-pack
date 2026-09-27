@@ -127,7 +127,7 @@ export function foilExtras(card, url, reverseKind) {
   // the Double Rare streaks (css/holo/sv-double-rare.css).
   if (/^[zr]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
   // Tiled or galaxy textures start somewhere different on every card.
-  if (cure || card.rarity === "Classic Collection" || card.rarity === "Cosmos") {
+  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity)) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }
