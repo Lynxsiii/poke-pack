@@ -98,16 +98,6 @@ def cached(n: str, variant: str) -> str:
     return n if variant == "std" else f"{n}-{variant}"
 
 
-# Foil maps TCG Live files under the wrong card, as (site set, site number):
-# the number whose map it really is. Etch maps are not affected. Found by
-# overlaying every map on its scan (Surging Sparks' Amulet of Hope and
-# Brilliant Blender foil maps are swapped; their etch maps are right).
-FOIL_SWAPS = {
-    ("sv8", "162"): 164,
-    ("sv8", "164"): 162,
-}
-
-
 def curl(url: str, dest: Path) -> bool:
     # urllib gets a 403 from this CDN; curl is accepted.
     res = subprocess.run(["curl", "-sfL", url, "-o", str(dest)], capture_output=True)

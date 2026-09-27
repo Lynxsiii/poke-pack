@@ -4,8 +4,11 @@ export const RARITY_ORDER = [
   "Uncommon",
   "Rare",
   "Pikachu Rare",
+  // Prismatic Evolutions' pattern prints of its Commons, Uncommons and Rares.
+  "Poké Ball",
   "Double Rare",
   "ACE SPEC Rare",
+  "Master Ball",
   "Ultra Rare",
   "Illustration Rare",
   "Classic Collection",
@@ -29,6 +32,8 @@ export const RARITY_LABEL = {
   Uncommon: "Uncommon",
   Rare: "Rare",
   "Pikachu Rare": "Pikachu rare",
+  "Poké Ball": "Poké Ball pattern",
+  "Master Ball": "Master Ball pattern",
   "Double Rare": "Double rare",
   "ACE SPEC Rare": "ACE SPEC rare",
   "Ultra Rare": "Ultra rare",
@@ -70,6 +75,10 @@ export const RARITY_MARK = {
   "Black White Rare": { pips: [["★", "black"], ["☆", "white"]], group: "untilI" },
   "Hyper Rare": { pips: [["☆", "gold"], ["☆", "gold"]], group: "untilI" },
   "ACE SPEC Rare": { pips: [["★", "ace"]], group: "untilH" },
+  // Not printed marks: the card carries its base rarity's symbol
+  // (`printedRarity`), and the ball stands for the pattern in filters.
+  "Poké Ball": { pips: [["◓", "pokeball"]], group: "untilI" },
+  "Master Ball": { pips: [["◓", "masterball"]], group: "untilI" },
   "Shiny Rare": { pips: [["☆", "shiny"]], group: "expanded" },
   "Shiny Ultra Rare": { pips: [["☆", "shiny"], ["☆", "shiny"]], group: "expanded" },
   Promo: { pips: [["★", "black"]], group: "current" },
@@ -99,6 +108,8 @@ export const SELL_VALUE = {
   "Illustration Rare": 3.2,
   "Futuristic Rare": 150,
   "Pikachu Rare": 0.5,
+  "Poké Ball": 1.2,
+  "Master Ball": 8,
   "Classic Collection": 12,
   "RGB Rare": 4000,
   "Shiny Rare": 2,
@@ -387,18 +398,24 @@ function svSlots({ double, ultra, ir = 0, sir, hyper, ace = 0 }) {
 }
 
 /**
- * Prismatic Evolutions. Every Common / Uncommon / Rare / Double Rare has a
- * Poké Ball patterned printing of itself; C/U/R Pokémon also have Master Ball.
- * Those are extra finishes of the same number (Holofoil, Reverse Holofoil,
- * Poké Ball, Master Ball) — not extra checklist cards. They land in the
- * second reverse slot. ACE SPEC still replaces the first reverse.
+ * Prismatic Evolutions. Every Common, Uncommon and Rare has a Poké Ball
+ * pattern print, and the Pokémon among them a Master Ball one too; each is a
+ * card of its own here (scripts/build_patterns.py) with its own price. Both
+ * come out of the reverse slots: the first holds a Poké Ball print or an
+ * ACE SPEC instead of its reverse, the second a Master Ball print, a Special
+ * Illustration Rare or a gold Hyper Rare. Odds are TCGplayer's 1,200-pack
+ * study (data/pullrates.json).
  */
 function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }) {
   return [
     { pool: "energy", count: 1 },
     { pool: "common", count: 4 },
     { pool: "uncommon", count: 3 },
-    { pool: "reverse", count: 1, table: [["reverse", 1 - ace], ["ace", ace]] },
+    {
+      pool: "reverse",
+      count: 1,
+      table: [["reverse", 1 - pokeball - ace], ["pokeball", pokeball], ["ace", ace]],
+    },
     {
       pool: "rare-slot",
       count: 1,
@@ -412,8 +429,7 @@ function prismaticSlots({ double, ultra, sir, hyper, ace, pokeball, masterball }
       pool: "art-slot",
       count: 1,
       table: [
-        ["reverse", 1 - pokeball - masterball - sir - hyper],
-        ["pokeball", pokeball],
+        ["reverse", 1 - masterball - sir - hyper],
         ["masterball", masterball],
         ["sir", sir],
         ["hyper", hyper],
@@ -974,15 +990,15 @@ export const PRISMATIC_EVOLUTIONS = {
   released: "January 17, 2025",
   live: true,
   printedTotal: 131,
-  totalCount: 180,
+  // 180 numbered cards, 167 Poké Ball and Master Ball prints, 23 box promos.
+  totalCount: 370,
   packSize: 11,
-  cost: 15.09,
+  cost: 14.3,
   dataFile: "data/sv8pt5.json",
   cardBack: "assets/cards/shared/card-back.webp",
-  pokeballRarities: ["Common", "Uncommon", "Rare", "Double Rare"],
-  blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and a Poké Ball printing of every base card.",
-  oddsLine: "DR 1/6 · UR 1/13 · ACE 1/21 · SIR 1/45 · gold 1/180 · Poké Ball 1/3 · Master Ball 1/20",
-  lede: "Every Common, Uncommon, Rare, and Double Rare has a Poké Ball version of itself. Master Ball is C/U/R Pokémon only. Same number, extra finish — not a second checklist.",
+  blurb: "Scarlet & Violet, January 2025. Eeveelutions, no Illustration Rares, and Poké Ball and Master Ball prints of the base cards.",
+  oddsLine: "Poké Ball 1/3 · DR 1/6 · UR 1/13 · Master Ball 1/20 · ACE 1/21 · SIR 1/45 · gold 1/179",
+  lede: "Every Common, Uncommon and Rare comes in a Poké Ball pattern, and every Pokémon among them in a Master Ball one. Each print is its own card with its own price.",
   slots: prismaticSlots({
     double: 0.1651,
     ultra: 0.0746,
@@ -1152,6 +1168,7 @@ export const PLAYABLE_SETS = [
   BLACK_BOLT,
   WHITE_FLARE,
   TEMPORAL_FORCES,
+  PRISMATIC_EVOLUTIONS,
 ];
 
 /**
@@ -1164,7 +1181,6 @@ export const PLAYABLE_SETS = [
 export const RETIRED_SETS = [
   DESTINED_RIVALS,
   JOURNEY_TOGETHER,
-  PRISMATIC_EVOLUTIONS,
   SURGING_SPARKS,
   STELLAR_CROWN,
   SHROUDED_FABLE,
@@ -1215,7 +1231,6 @@ export const ROADMAP = [
     sets: [
       { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
       { id: "sv9", name: "Journey Together", released: "Mar 2025", cards: "—" },
-      { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
       { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
