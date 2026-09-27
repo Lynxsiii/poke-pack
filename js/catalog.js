@@ -159,6 +159,9 @@ const PRODUCT_KINDS = {
   blister: { short: "Blister", noun: "blister" },
   deck: { short: "Deck", noun: "deck" },
   battle: { short: "Box", noun: "box" },
+  // A promo handed out on its own (a tournament reward, a museum or store
+  // giveaway), sold as the card alone at its market price.
+  event: { short: "Promo", noun: "promo" },
 };
 
 /**
@@ -203,7 +206,10 @@ export function promoOffers(products = []) {
   return (products || []).flatMap((item) => {
     if (standard.has(item.id) || !(typeof item.price === "number" && item.price > 0)) return [];
     const promos = Array.isArray(item.promos) ? item.promos : [];
-    const packs = Math.max(0, Math.floor(Number(item.packs) || 0));
+    const from = packsFrom(item);
+    const packs = from
+      ? Object.values(from).reduce((sum, n) => sum + n, 0)
+      : Math.max(0, Math.floor(Number(item.packs) || 0));
     if (!packs && !promos.length) return [];
     const words = PRODUCT_KINDS[item.kind] || PRODUCT_KINDS.collection;
     return [{
@@ -212,6 +218,8 @@ export function promoOffers(products = []) {
       kind: item.kind || "collection",
       ...words,
       packs,
+      ...(from ? { from } : {}),
+      ...(item.note ? { note: String(item.note) } : {}),
       special: item.special && typeof item.special === "object" ? item.special : {},
       promos,
       pick: promoPick(item),
@@ -220,6 +228,40 @@ export function promoOffers(products = []) {
       released: item.released || "",
     }];
   });
+}
+
+/**
+ * `{ setId: packs }` for a product whose boosters come from other sets (the
+ * SV Black Star Promos' tins and ex boxes), or null when they are the selling
+ * set's own.
+ */
+function packsFrom(item) {
+  if (!item?.from || typeof item.from !== "object") return null;
+  const out = {};
+  for (const [setId, n] of Object.entries(item.from)) {
+    const count = Math.max(0, Math.floor(Number(n) || 0));
+    if (count) out[String(setId)] = count;
+  }
+  return Object.keys(out).length ? out : null;
+}
+
+/**
+ * The boosters an offer opens, as `[{ set, count }]`. A product with `from`
+ * opens those sets' packs; any other opens its own set's. Null when a set it
+ * needs is not playable yet, so the shop hides it and the Worker refuses it
+ * until that set goes live.
+ */
+export function offerPackSets(offer, set) {
+  if (offer?.from) {
+    const out = [];
+    for (const [id, count] of Object.entries(offer.from)) {
+      const packSet = PLAYABLE_SETS.find((item) => item.id === id);
+      if (!packSet?.wrappers?.length) return null;
+      out.push({ set: packSet, count });
+    }
+    return out;
+  }
+  return offer?.packs ? [{ set, count: offer.packs }] : [];
 }
 
 /** Any product a set sells, standard or promo, by id. */
@@ -1466,6 +1508,36 @@ export const SCARLET_VIOLET = {
   ]),
 };
 
+/**
+ * Scarlet & Violet Black Star Promos. There is no SVP booster: every card
+ * comes in a product that holds other sets' packs (a tin, an ex box, a
+ * premium collection, sold here with `from` naming those sets), in a deck,
+ * or on its own at an event. The promos a set's own boxes carry (its ETB,
+ * Build & Battle Box and blisters) stay filed under that set, and this page
+ * lists them too.
+ */
+export const SV_PROMOS = {
+  id: "svp",
+  tcgId: "svp",
+  name: "SV Black Star Promos",
+  edition: "Scarlet & Violet",
+  era: "Scarlet & Violet",
+  released: "January 6, 2023",
+  live: true,
+  promoSet: true,
+  totalCount: 77,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/svp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Scarlet & Violet, 2023 to 2025. The black star promos from tins, ex boxes, battle decks and premium collections.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Scarlet & Violet black star promo that isn't in a set's own boxes: the tins, ex boxes, battle decks and premium collections, each with its real packs, plus the tournament and museum promos on their own.",
+  slots: [],
+  heroIds: ["svp-svp056", "svp-svp124", "svp-svp166", "svp-svp085"],
+  wrappers: [],
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -1489,6 +1561,7 @@ export const PLAYABLE_SETS = [
   SCARLET_VIOLET,
   PRISMATIC_EVOLUTIONS,
   SV_151,
+  SV_PROMOS,
 ];
 
 /**

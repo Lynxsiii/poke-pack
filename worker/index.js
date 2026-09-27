@@ -11,6 +11,7 @@ import {
   RARITY_ORDER,
   findOffer,
   money,
+  offerPackSets,
   sellValue,
 } from "../js/catalog.js";
 import { drawPromos, isHit, ripPack } from "../js/engine.js";
@@ -437,18 +438,29 @@ async function openSealed(request, env) {
     body.product
   );
   if (!offer) return json({ error: "That product isn't sold for this set." }, 400);
-  if (!live.wrappers.length) return json({ error: "Unknown pack art." }, 400);
+  // A promo product can hold other sets' packs (the SV Black Star Promos'
+  // tins and ex boxes); it isn't sold until every one of those sets is live.
+  const groups = offerPackSets(offer, live);
+  if (!groups) return json({ error: "That product's packs aren't open yet." }, 400);
+  if (groups.some(({ set }) => !set.wrappers.length)) return json({ error: "Unknown pack art." }, 400);
 
   const catalog = await loadSetCards(env, request, live);
-  const packs = Array.from({ length: offer.packs }, () => ({
-    wrapper: live.wrappers[Math.floor(Math.random() * live.wrappers.length)],
-    pulls: ripPack(live, catalog),
-  }));
+  const packs = [];
+  for (const { set, count } of groups) {
+    const cards = set.id === live.id ? catalog : await loadSetCards(env, request, set);
+    for (let i = 0; i < count; i += 1) {
+      packs.push({
+        set,
+        wrapper: set.wrappers[Math.floor(Math.random() * set.wrappers.length)],
+        pulls: ripPack(set, cards),
+      });
+    }
+  }
   for (const [key, count] of Object.entries(offer.special || {})) {
     const special = live.specialPacks?.[key];
     if (!special) fail(`Missing special pack ${key}.`, 500);
     for (let i = 0; i < count; i += 1) {
-      packs.push({ wrapper: special.wrapper, pulls: ripPack({ ...live, slots: special.slots }, catalog) });
+      packs.push({ set: live, wrapper: special.wrapper, pulls: ripPack({ ...live, slots: special.slots }, catalog) });
     }
   }
   const promos = drawPromos(offer).map((id) => {
@@ -461,7 +473,7 @@ async function openSealed(request, env) {
   return json({
     save: opened.save,
     product: { id: offer.id, name: offer.name, packs: opened.packs.length },
-    packs: opened.packs.map((pack) => ({ wrapperId: pack.wrapper.id, cards: pack.cards })),
+    packs: opened.packs.map((pack) => ({ setId: (pack.set || live).id, wrapperId: pack.wrapper.id, cards: pack.cards })),
     promos: opened.promos,
     cost: offer.price,
   });
@@ -515,7 +527,7 @@ async function openPacks(env, userId, live, packs, cost, promos = []) {
     }
     pulled += cards.length;
     sinceHit = hits > 0 ? 0 : sinceHit < 0 ? sinceHit : sinceHit + 1;
-    return { wrapper: pack.wrapper, cards };
+    return { set: pack.set, wrapper: pack.wrapper, cards };
   });
 
   // sinceHit is -1 when nothing hit, else the dry packs after the last hit.
@@ -571,7 +583,7 @@ async function openPacks(env, userId, live, packs, cost, promos = []) {
         `INSERT INTO pack_log (user_id, set_id, wrapper_id, cost, cards, at) VALUES (?, ?, ?, ?, ?, ?)`
       ).bind(
         userId,
-        live.id,
+        (pack.set || live).id,
         pack.wrapper.id,
         packCostShare,
         JSON.stringify(pack.cards.map((card) => ({ id: card.id, reverse: card.reverse, rarity: card.rarity }))),

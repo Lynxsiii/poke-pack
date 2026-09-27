@@ -1,0 +1,2974 @@
+[
+  {
+    "id": "svp-svp001",
+    "name": "Sprigatito",
+    "number": "svp001",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Yuu Nishida",
+    "flavorText": "Its fluffy fur is similar in composition to plants. This Pokémon frequently washes its face to keep it from drying out...",
+    "image": "assets/cards/svp/svp001.webp",
+    "imageSmall": "assets/cards/svp/svp001-sm.webp",
+    "attacks": [
+      {
+        "name": "Mini Drain",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Heal 10 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-1/large",
+    "printedNumber": "SVP 001",
+    "tcgplayerId": 477184,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 10.7,
+    "foilMap": "assets/foil/maps/svp/svp001.webp"
+  },
+  {
+    "id": "svp-svp002",
+    "name": "Fuecoco",
+    "number": "svp002",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Ryuta Fuse",
+    "flavorText": "It lies on warm rocks and uses the heat absorbed by its square-shaped scales to create fire energy.",
+    "image": "assets/cards/svp/svp002.webp",
+    "imageSmall": "assets/cards/svp/svp002-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Singe",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-2/large",
+    "printedNumber": "SVP 002",
+    "tcgplayerId": 477182,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 5.45,
+    "foilMap": "assets/foil/maps/svp/svp002.webp"
+  },
+  {
+    "id": "svp-svp003",
+    "name": "Quaxly",
+    "number": "svp003",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Narumi Sato",
+    "flavorText": "This Pokémon migrated to Paldea from distant lands long ago. The gel secreted by its feathers repels water and grime.",
+    "image": "assets/cards/svp/svp003.webp",
+    "imageSmall": "assets/cards/svp/svp003-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-3/large",
+    "printedNumber": "SVP 003",
+    "tcgplayerId": 477183,
+    "foilAs": "Rare",
+    "promo": true,
+    "market": 2.78,
+    "foilMap": "assets/foil/maps/svp/svp003.webp"
+  },
+  {
+    "id": "svp-svp004",
+    "name": "Mimikyu ex",
+    "number": "svp004",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "190",
+    "artist": "PLANETA Yamashita",
+    "image": "assets/cards/svp/svp004.webp",
+    "imageSmall": "assets/cards/svp/svp004-sm.webp",
+    "attacks": [
+      {
+        "name": "Void Return",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Energy Burst",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy attached to both Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-4/large",
+    "printedNumber": "SVP 004",
+    "tcgplayerId": 487435,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 1.73,
+    "foilMap": "assets/foil/maps/svp/svp004.webp"
+  },
+  {
+    "id": "svp-svp015",
+    "name": "Flaaffy",
+    "number": "svp015",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "0313",
+    "flavorText": "As a result of storing too much electricity, it developed patches where even downy wool won't grow.",
+    "evolvesFrom": "Mareep",
+    "image": "assets/cards/svp/svp015.webp",
+    "imageSmall": "assets/cards/svp/svp015-sm.webp",
+    "attacks": [
+      {
+        "name": "Static Shock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Extreme Current",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy from this Pokemon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-15/large",
+    "printedNumber": "SVP 015",
+    "tcgplayerId": 496972,
+    "foilAs": "",
+    "promo": true,
+    "market": 2.33
+  },
+  {
+    "id": "svp-svp016",
+    "name": "Ampharos ex",
+    "number": "svp016",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "330",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Flaaffy",
+    "image": "assets/cards/svp/svp016.webp",
+    "imageSmall": "assets/cards/svp/svp016-sm.webp",
+    "attacks": [
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Thunderstrike Tail",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140+",
+        "text": "You may discard 2 Energy from this Pokémon to have this attack do 100 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-16/large",
+    "printedNumber": "SVP 016",
+    "tcgplayerId": 484397,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 4.51,
+    "foilMap": "assets/foil/maps/svp/svp016.webp"
+  },
+  {
+    "id": "svp-svp017",
+    "name": "Lucario ex",
+    "number": "svp017",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/svp/svp017.webp",
+    "imageSmall": "assets/cards/svp/svp017-sm.webp",
+    "attacks": [
+      {
+        "name": "Low Sweep",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Aura Sphere",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This attack also does 50 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-17/large",
+    "printedNumber": "SVP 017",
+    "tcgplayerId": 484396,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 5.88,
+    "foilMap": "assets/foil/maps/svp/svp017.webp"
+  },
+  {
+    "id": "svp-svp018",
+    "name": "Cyclizar ex",
+    "number": "svp018",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/svp/svp018.webp",
+    "imageSmall": "assets/cards/svp/svp018-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Run",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Search your deck for a Basic Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Full Throttle",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your next turn, this Pokémon can’t attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-18/large",
+    "printedNumber": "SVP 018",
+    "tcgplayerId": 496429,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.64,
+    "foilMap": "assets/foil/maps/svp/svp018.webp"
+  },
+  {
+    "id": "svp-svp028",
+    "name": "Miraidon ex",
+    "number": "svp028",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/svp/svp028.webp",
+    "imageSmall": "assets/cards/svp/svp028-sm.webp",
+    "attacks": [
+      {
+        "name": "Photon Blaster",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "During your next turn, this Pokémon can’t attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tandem Unit",
+        "text": "Once during your turn, you may search your deck for up to 2 Basic Lightning Pokémon and put them onto your Bench. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-28/large",
+    "printedNumber": "SVP 028",
+    "tcgplayerId": 500062,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 0.63,
+    "foilMap": "assets/foil/maps/svp/svp028.webp"
+  },
+  {
+    "id": "svp-svp029",
+    "name": "Koraidon ex",
+    "number": "svp029",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "230",
+    "artist": "aky CG Works",
+    "image": "assets/cards/svp/svp029.webp",
+    "imageSmall": "assets/cards/svp/svp029-sm.webp",
+    "attacks": [
+      {
+        "name": "Wild Impact",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dino Cry",
+        "text": "Once during your turn, you may attach up to 2 Basic Fighting Energy cards from your discard pile to your Basic Fighting Pokémon in any way you like. If you use this Ability, your turn ends.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-29/large",
+    "printedNumber": "SVP 029",
+    "tcgplayerId": 500070,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 0.58,
+    "foilMap": "assets/foil/maps/svp/svp029.webp"
+  },
+  {
+    "id": "svp-svp030",
+    "name": "Chien-Pao ex",
+    "number": "svp030",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "220",
+    "artist": "aky CG Works",
+    "image": "assets/cards/svp/svp030.webp",
+    "imageSmall": "assets/cards/svp/svp030-sm.webp",
+    "attacks": [
+      {
+        "name": "Hail Blade",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "60×",
+        "text": "You may discard any amount of Water Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shivery Chill",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may search your deck for up to 2 Basic Water Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-30/large",
+    "printedNumber": "SVP 030",
+    "tcgplayerId": 505534,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 3.62,
+    "foilMap": "assets/foil/maps/svp/svp030.webp"
+  },
+  {
+    "id": "svp-svp031",
+    "name": "Tinkaton ex",
+    "number": "svp031",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "300",
+    "artist": "takuyoa",
+    "evolvesFrom": "Tinkatuff",
+    "image": "assets/cards/svp/svp031.webp",
+    "imageSmall": "assets/cards/svp/svp031-sm.webp",
+    "attacks": [
+      {
+        "name": "Big Hammer",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each card in your hand."
+      },
+      {
+        "name": "Pulverizing Press",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "This attack’s damage isn’t affected by any effects on your opponent’s Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-31/large",
+    "printedNumber": "SVP 031",
+    "tcgplayerId": 505537,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 10.12,
+    "foilMap": "assets/foil/maps/svp/svp031.webp"
+  },
+  {
+    "id": "svp-svp032",
+    "name": "Annihilape ex",
+    "number": "svp032",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "320",
+    "artist": "PLANETA Hiiragi",
+    "evolvesFrom": "Primeape",
+    "image": "assets/cards/svp/svp032.webp",
+    "imageSmall": "assets/cards/svp/svp032-sm.webp",
+    "attacks": [
+      {
+        "name": "Angry Grudge",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20×",
+        "text": "Put up to 12 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way."
+      },
+      {
+        "name": "Seismic Toss",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-32/large",
+    "printedNumber": "SVP 032",
+    "tcgplayerId": 502981,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 1.05,
+    "foilMap": "assets/foil/maps/svp/svp032.webp"
+  },
+  {
+    "id": "svp-svp033",
+    "name": "Meowscarada ex",
+    "number": "svp033",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "310",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Floragato",
+    "image": "assets/cards/svp/svp033.webp",
+    "imageSmall": "assets/cards/svp/svp033-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratching Nails",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your opponent’s Active Pokemon already has any damage counters on it, this attack does 120 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bouquet Magic",
+        "text": "You must discard a Basic Grass Energy card from your hand in order to use this Ability. Once during your turn, you may put 3 damage counters on 1 of your opponent's Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-33/large",
+    "printedNumber": "SVP 033",
+    "tcgplayerId": 513876,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 1.12,
+    "foilMap": "assets/foil/maps/svp/svp033.webp"
+  },
+  {
+    "id": "svp-svp034",
+    "name": "Skeledirge ex",
+    "number": "svp034",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "types": [
+      "Fire"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Crocalor",
+    "image": "assets/cards/svp/svp034.webp",
+    "imageSmall": "assets/cards/svp/svp034-sm.webp",
+    "attacks": [
+      {
+        "name": "Vitality Song",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "50",
+        "text": "Heal 30 damage from each of your Pokemon."
+      },
+      {
+        "name": "Burning Voice",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "270-",
+        "text": "This attack does 10 less damage for each damage counter on this Pokemon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-34/large",
+    "printedNumber": "SVP 034",
+    "tcgplayerId": 513831,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.85,
+    "foilMap": "assets/foil/maps/svp/svp034.webp"
+  },
+  {
+    "id": "svp-svp035",
+    "name": "Quaquaval ex",
+    "number": "svp035",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Quaxwell",
+    "image": "assets/cards/svp/svp035.webp",
+    "imageSmall": "assets/cards/svp/svp035-sm.webp",
+    "attacks": [
+      {
+        "name": "Exciting Dance",
+        "cost": [
+          "Water"
+        ],
+        "damage": "60",
+        "text": "Switch this Pokemon with 1 of your Benched Pokemon. If you do, switch out your opponent's Active Pokemon to the Bench. (Your opponent chooses the new Active Pokemon.)"
+      },
+      {
+        "name": "Spiral Shot",
+        "cost": [
+          "Water",
+          "colorless"
+        ],
+        "damage": "230",
+        "text": "Put 2 Energy attached to this Pokemon into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-35/large",
+    "printedNumber": "SVP 035",
+    "tcgplayerId": 513874,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.72,
+    "foilMap": "assets/foil/maps/svp/svp035.webp"
+  },
+  {
+    "id": "svp-svp045",
+    "name": "Paradise Resort",
+    "number": "svp045",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/svp/svp045.webp",
+    "imageSmall": "assets/cards/svp/svp045-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-45/large",
+    "printedNumber": "SVP 045",
+    "tcgplayerId": 518863,
+    "foilAs": "",
+    "promo": true,
+    "market": 499.26,
+    "foilMap": "assets/foil/maps/svp/svp045.webp"
+  },
+  {
+    "id": "svp-svp054",
+    "name": "Greninja ex",
+    "number": "svp054",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "ex",
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "takuyoa",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/svp/svp054.webp",
+    "imageSmall": "assets/cards/svp/svp054-sm.webp",
+    "attacks": [
+      {
+        "name": "Stealthy Shuriken",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 40 damage to 1 of your opponent’s Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Torrential Slash",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "120+",
+        "text": "If your opponent’s Active Pokémon already has any damage counters on it, this attack does 120 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-54/large",
+    "printedNumber": "SVP 054",
+    "tcgplayerId": 518878,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 5.46,
+    "foilMap": "assets/foil/maps/svp/svp054.webp"
+  },
+  {
+    "id": "svp-svp055",
+    "name": "Kangaskhan ex",
+    "number": "svp055",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "230",
+    "artist": "N-DESIGN Inc.",
+    "image": "assets/cards/svp/svp055.webp",
+    "imageSmall": "assets/cards/svp/svp055-sm.webp",
+    "attacks": [
+      {
+        "name": "Triple Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 3 cards."
+      },
+      {
+        "name": "Incessant Punching",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100x",
+        "text": "Flip 4 coins. This attack does 100 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-55/large",
+    "printedNumber": "SVP 055",
+    "tcgplayerId": 519482,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 8.49,
+    "foilMap": "assets/foil/maps/svp/svp055.webp"
+  },
+  {
+    "id": "svp-svp056",
+    "name": "Charizard ex",
+    "number": "svp056",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "ex",
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "330",
+    "artist": "takuyoa",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/svp/svp056.webp",
+    "imageSmall": "assets/cards/svp/svp056-sm.webp",
+    "attacks": [
+      {
+        "name": "Burning Darkness",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "180+",
+        "text": "This attack does 30 more damage for each Prize card your opponent has taken."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Infernal Reign",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may search your deck for up to 3 Basic Fire Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-56/large",
+    "printedNumber": "SVP 056",
+    "tcgplayerId": 521697,
+    "foilAs": "Ultra Rare",
+    "promo": true,
+    "market": 15.81,
+    "foilMap": "assets/foil/maps/svp/svp056.webp",
+    "etchMap": "assets/foil/maps/svp/svp056-etch.webp"
+  },
+  {
+    "id": "svp-svp085",
+    "name": "Pikachu with Grey Felt Hat",
+    "number": "svp085",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Naoyo Kimura",
+    "flavorText": "When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/svp/svp085.webp",
+    "imageSmall": "assets/cards/svp/svp085-sm.webp",
+    "attacks": [
+      {
+        "name": "Pika-Portrait",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Pikachu and put it onto your Bench. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-85/large",
+    "printedNumber": "SVP 085",
+    "tcgplayerId": 518861,
+    "promo": true,
+    "market": 1048.43
+  },
+  {
+    "id": "svp-svp086",
+    "name": "Mabosstiff ex",
+    "number": "svp086",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "260",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Maschiff",
+    "image": "assets/cards/svp/svp086.webp",
+    "imageSmall": "assets/cards/svp/svp086-sm.webp",
+    "attacks": [
+      {
+        "name": "Daunt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent’s next turn, attacks used by the Defending Pokémon do 50 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Proud Fangs",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your Benched Pokémon have any damage counters on them, this attack does 120 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-86/large",
+    "printedNumber": "SVP 086",
+    "tcgplayerId": 542255,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.48,
+    "foilMap": "assets/foil/maps/svp/svp086.webp"
+  },
+  {
+    "id": "svp-svp087",
+    "name": "Sprigatito ex",
+    "number": "svp087",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "200",
+    "artist": "takuyoa",
+    "image": "assets/cards/svp/svp087.webp",
+    "imageSmall": "assets/cards/svp/svp087-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Magical Leaf",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-87/large",
+    "printedNumber": "SVP 087",
+    "tcgplayerId": 542468,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 1.25,
+    "foilMap": "assets/foil/maps/svp/svp087.webp"
+  },
+  {
+    "id": "svp-svp088",
+    "name": "Pikachu",
+    "number": "svp088",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "saino misaki",
+    "flavorText": "﻿When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/svp/svp088.webp",
+    "imageSmall": "assets/cards/svp/svp088-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent’s next turn, the Defending Pokémon’s attacks do 20 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Pika Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-88/large",
+    "printedNumber": "SVP 088",
+    "tcgplayerId": 542481,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 24.12,
+    "foilMap": "assets/foil/maps/svp/svp088.webp"
+  },
+  {
+    "id": "svp-svp099",
+    "name": "Shroodle",
+    "number": "svp099",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "Though usually a mellow Pokémon, it will sink its sharp, poison-soaked front teeth into any that anger it, causing paralysis in the object of its ire.",
+    "image": "assets/cards/svp/svp099.webp",
+    "imageSmall": "assets/cards/svp/svp099-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Toxic Teeth",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Your opponent’s Active Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-99/large",
+    "printedNumber": "SVP 099",
+    "tcgplayerId": 546450,
+    "foilAs": "Cosmos",
+    "promo": true,
+    "market": 0.46,
+    "foilMap": "assets/foil/maps/svp/svp099.webp"
+  },
+  {
+    "id": "svp-svp100",
+    "name": "Grafaiai ex",
+    "number": "svp100",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "250",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Shroodle",
+    "image": "assets/cards/svp/svp100.webp",
+    "imageSmall": "assets/cards/svp/svp100-sm.webp",
+    "attacks": [
+      {
+        "name": "Numbing Saliva",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent’s Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Toxic Throw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "Your opponent’s Active Pokémon is now Poisoned. During your next turn, this Pokémon can’t use Toxic Throw."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-100/large",
+    "printedNumber": "SVP 100",
+    "tcgplayerId": 546448,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.79,
+    "foilMap": "assets/foil/maps/svp/svp100.webp"
+  },
+  {
+    "id": "svp-svp101",
+    "name": "Pikachu",
+    "number": "svp101",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Jiro Sasumo",
+    "flavorText": "When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/svp/svp101.webp",
+    "imageSmall": "assets/cards/svp/svp101-sm.webp",
+    "attacks": [
+      {
+        "name": "Scrappy Spark",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-101/large",
+    "printedNumber": "SVP 101",
+    "tcgplayerId": 528365,
+    "foilAs": "",
+    "promo": true,
+    "market": 40.54
+  },
+  {
+    "id": "svp-svp102",
+    "name": "Oddish",
+    "number": "svp102",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Miranda Branley",
+    "flavorText": "During the day, it stays in the cold underground to avoid the sun. It grows by bathing in moonlight.",
+    "image": "assets/cards/svp/svp102.webp",
+    "imageSmall": "assets/cards/svp/svp102-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Grass Knot",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "This attack does 20 damage for each Colorless in your opponent’s Active Pokémon’s Retreat Cost."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-102/large",
+    "printedNumber": "SVP 102",
+    "tcgplayerId": 525293,
+    "promo": true,
+    "market": 6.66
+  },
+  {
+    "id": "svp-svp103",
+    "name": "Houndoom ex",
+    "number": "svp103",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "270",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/svp/svp103.webp",
+    "imageSmall": "assets/cards/svp/svp103-sm.webp",
+    "attacks": [
+      {
+        "name": "Evil Claw",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "90",
+        "text": "If the Defending Pokémon is a Basic Pokémon, it can’t attack during your opponent’s next turn."
+      },
+      {
+        "name": "Hound’s Fang",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "220",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-103/large",
+    "printedNumber": "SVP 103",
+    "tcgplayerId": 546754,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 3.48,
+    "foilMap": "assets/foil/maps/svp/svp103.webp"
+  },
+  {
+    "id": "svp-svp104",
+    "name": "Melmetal ex",
+    "number": "svp104",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "300",
+    "artist": "PLANETA Igarashi",
+    "evolvesFrom": "Meltan",
+    "image": "assets/cards/svp/svp104.webp",
+    "imageSmall": "assets/cards/svp/svp104-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal-bolize",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Metal Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Full Metal Knuckle",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "This attack does 30 more damage for each Metal Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-104/large",
+    "printedNumber": "SVP 104",
+    "tcgplayerId": 546755,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 1.9,
+    "foilMap": "assets/foil/maps/svp/svp104.webp"
+  },
+  {
+    "id": "svp-svp105",
+    "name": "Armarouge ex",
+    "number": "svp105",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "260",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Charcadet",
+    "image": "assets/cards/svp/svp105.webp",
+    "imageSmall": "assets/cards/svp/svp105-sm.webp",
+    "attacks": [
+      {
+        "name": "Armor Cannon",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard a Fire Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-105/large",
+    "printedNumber": "SVP 105",
+    "tcgplayerId": 556445,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 2.45,
+    "foilMap": "assets/foil/maps/svp/svp105.webp"
+  },
+  {
+    "id": "svp-svp106",
+    "name": "Pikachu ex",
+    "number": "svp106",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "200",
+    "artist": "takuyoa",
+    "image": "assets/cards/svp/svp106.webp",
+    "imageSmall": "assets/cards/svp/svp106-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-106/large",
+    "printedNumber": "SVP 106",
+    "tcgplayerId": 556443,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 12.46,
+    "foilMap": "assets/foil/maps/svp/svp106.webp"
+  },
+  {
+    "id": "svp-svp107",
+    "name": "Mareep",
+    "number": "svp107",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Orca",
+    "flavorText": "Mareep’s fluffy coat of wool rubs together and builds a static charge. The more static electricity is charged, the more brightly the lightbulb at the tip of its tail glows.",
+    "image": "assets/cards/svp/svp107.webp",
+    "imageSmall": "assets/cards/svp/svp107-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Lightning Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-107/large",
+    "printedNumber": "SVP 107",
+    "tcgplayerId": 556927,
+    "foilAs": "",
+    "promo": true,
+    "market": 1.09
+  },
+  {
+    "id": "svp-svp108",
+    "name": "Flaaffy",
+    "number": "svp108",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Akira Komayama",
+    "flavorText": "Its fluffy fleece easily stores electricity. Its rubbery hide keeps it from being electrocuted.",
+    "evolvesFrom": "Mareep",
+    "image": "assets/cards/svp/svp108.webp",
+    "imageSmall": "assets/cards/svp/svp108-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-108/large",
+    "printedNumber": "SVP 108",
+    "tcgplayerId": 556910,
+    "foilAs": "",
+    "promo": true,
+    "market": 2.18
+  },
+  {
+    "id": "svp-svp109",
+    "name": "Ampharos",
+    "number": "svp109",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "GIDORA",
+    "flavorText": "Its tail shines bright and strong. It has been prized since long ago as a beacon for sailors.\n",
+    "evolvesFrom": "Flaffy",
+    "image": "assets/cards/svp/svp109.webp",
+    "imageSmall": "assets/cards/svp/svp109-sm.webp",
+    "attacks": [
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-109/large",
+    "printedNumber": "SVP 109",
+    "tcgplayerId": 556880,
+    "foilAs": "",
+    "promo": true,
+    "market": 2.91
+  },
+  {
+    "id": "svp-svp110",
+    "name": "Darkrai ex",
+    "number": "svp110",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/svp/svp110.webp",
+    "imageSmall": "assets/cards/svp/svp110-sm.webp",
+    "attacks": [
+      {
+        "name": "Wind of Darkness",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Night Impact",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-110/large",
+    "printedNumber": "SVP 110",
+    "tcgplayerId": 556444,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 7.37,
+    "foilMap": "assets/foil/maps/svp/svp110.webp"
+  },
+  {
+    "id": "svp-svp111",
+    "name": "Pawniard",
+    "number": "svp111",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "matazo",
+    "flavorText": "Blades comprise this Pokémon’s entire body. If battling dulls the blades, it sharpens them on stones by the river.",
+    "image": "assets/cards/svp/svp111.webp",
+    "imageSmall": "assets/cards/svp/svp111-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-111/large",
+    "printedNumber": "SVP 111",
+    "tcgplayerId": 556854,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.2
+  },
+  {
+    "id": "svp-svp112",
+    "name": "Bisharp",
+    "number": "svp112",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "Bisharp mercilessly cuts its opponents to pieces with the sharp blades covering its body. It will do anything to win.",
+    "evolvesFrom": "Pawniard",
+    "image": "assets/cards/svp/svp112.webp",
+    "imageSmall": "assets/cards/svp/svp112-sm.webp",
+    "attacks": [
+      {
+        "name": "Cut",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-112/large",
+    "printedNumber": "SVP 112",
+    "tcgplayerId": 556815,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.31
+  },
+  {
+    "id": "svp-svp113",
+    "name": "Kingambit",
+    "number": "svp113",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "nagimiso",
+    "flavorText": "Only a Bisharp that stands above all others in its vast army can evolve into Kingambit.",
+    "evolvesFrom": "Bisharp",
+    "image": "assets/cards/svp/svp113.webp",
+    "imageSmall": "assets/cards/svp/svp113-sm.webp",
+    "attacks": [
+      {
+        "name": "Elbow Strike",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-113/large",
+    "printedNumber": "SVP 113",
+    "tcgplayerId": 556835,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.56
+  },
+  {
+    "id": "svp-svp114",
+    "name": "Picnicker",
+    "number": "svp114",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "Susumu Maeya",
+    "image": "assets/cards/svp/svp114.webp",
+    "imageSmall": "assets/cards/svp/svp114-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-114/large",
+    "printedNumber": "SVP 114",
+    "tcgplayerId": 551687,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.41
+  },
+  {
+    "id": "svp-svp124",
+    "name": "Iono",
+    "number": "svp124",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "yuu",
+    "image": "assets/cards/svp/svp124.webp",
+    "imageSmall": "assets/cards/svp/svp124-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-124/large",
+    "printedNumber": "SVP 124",
+    "tcgplayerId": 545661,
+    "foilAs": "Ultra Rare",
+    "promo": true,
+    "market": 11.23,
+    "foilMap": "assets/foil/maps/svp/svp124.webp",
+    "etchMap": "assets/foil/maps/svp/svp124-etch.webp"
+  },
+  {
+    "id": "svp-svp125",
+    "name": "Armarouge ex",
+    "number": "svp125",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "ex",
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Charcadet",
+    "image": "assets/cards/svp/svp125.webp",
+    "imageSmall": "assets/cards/svp/svp125-sm.webp",
+    "attacks": [
+      {
+        "name": "Scorching Bazooka",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each Fire Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Crimson Armor",
+        "text": "If this Pokémon has full HP, it takes 80 less damage from attacks from your opponent’s Pokémon (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-125/large",
+    "printedNumber": "SVP 125",
+    "tcgplayerId": 547653,
+    "promo": true,
+    "foilAs": "Ultra Rare",
+    "market": 1.04,
+    "foilMap": "assets/foil/maps/svp/svp125.webp",
+    "etchMap": "assets/foil/maps/svp/svp125-etch.webp"
+  },
+  {
+    "id": "svp-svp126",
+    "name": "Palafin ex",
+    "number": "svp126",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "340",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Finizen",
+    "image": "assets/cards/svp/svp126.webp",
+    "imageSmall": "assets/cards/svp/svp126-sm.webp",
+    "attacks": [
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can’t attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hero’s Spirit",
+        "text": "Put this Pokémon into play only with the effect of Palafin’s Zero to Hero Ability.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-126/large",
+    "printedNumber": "SVP 126",
+    "tcgplayerId": 556449,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.75,
+    "foilMap": "assets/foil/maps/svp/svp126.webp"
+  },
+  {
+    "id": "svp-svp142",
+    "name": "Victini ex",
+    "number": "svp142",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "190",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/svp/svp142.webp",
+    "imageSmall": "assets/cards/svp/svp142-sm.webp",
+    "attacks": [
+      {
+        "name": "Strafe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Victory Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "During your next turn, this Pokémon can’t attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-142/large",
+    "printedNumber": "SVP 142",
+    "tcgplayerId": 586179,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 4.68,
+    "foilMap": "assets/foil/maps/svp/svp142.webp"
+  },
+  {
+    "id": "svp-svp143",
+    "name": "Miraidon ex",
+    "number": "svp143",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/svp/svp143.webp",
+    "imageSmall": "assets/cards/svp/svp143-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid Draw",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Draw 2 cards."
+      },
+      {
+        "name": "Techno Turbo",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "150",
+        "text": "Attach a Basic Lightning Energy card from your discard pile to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-143/large",
+    "printedNumber": "SVP 143",
+    "tcgplayerId": 593277,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 4.41,
+    "foilMap": "assets/foil/maps/svp/svp143.webp"
+  },
+  {
+    "id": "svp-svp144",
+    "name": "Gouging Fire ex",
+    "number": "svp144",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "types": [
+      "Fire"
+    ],
+    "hp": "230",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/svp/svp144.webp",
+    "imageSmall": "assets/cards/svp/svp144-sm.webp",
+    "attacks": [
+      {
+        "name": "Heat Blast",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Blaze Blitz",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "260",
+        "text": "This Pokémon can’t use Blaze Blitz again until it leaves the Active Spot."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-144/large",
+    "printedNumber": "SVP 144",
+    "tcgplayerId": 579993,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.85,
+    "foilMap": "assets/foil/maps/svp/svp144.webp"
+  },
+  {
+    "id": "svp-svp145",
+    "name": "Raging Bolt ex",
+    "number": "svp145",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "types": [
+      "Dragon"
+    ],
+    "hp": "240",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/svp/svp145.webp",
+    "imageSmall": "assets/cards/svp/svp145-sm.webp",
+    "attacks": [
+      {
+        "name": "Burst Roar",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard your hand and draw 6 cards."
+      },
+      {
+        "name": "Bellowing Thunder",
+        "cost": [
+          "Lightning",
+          "Fighting"
+        ],
+        "damage": "70×",
+        "text": "You may discard any amount of Basic Energy from your Pokémon. This attack does 70 damage for each card you discarded in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-145/large",
+    "printedNumber": "SVP 145",
+    "tcgplayerId": 583850,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 1.28,
+    "foilMap": "assets/foil/maps/svp/svp145.webp"
+  },
+  {
+    "id": "svp-svp146",
+    "name": "Iron Crown ex",
+    "number": "svp146",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/svp/svp146.webp",
+    "imageSmall": "assets/cards/svp/svp146-sm.webp",
+    "attacks": [
+      {
+        "name": "Twin Shotels",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 2 of your opponent’s Pokémon. This attack’s damage isn’t affected by Weakness or Resistance, or by any effects on those Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cobalt Command",
+        "text": "Attacks used by your Future Pokémon, except any Iron Crown ex, do 20 more damage to your opponent’s Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-146/large",
+    "printedNumber": "SVP 146",
+    "tcgplayerId": 579992,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.9,
+    "foilMap": "assets/foil/maps/svp/svp146.webp"
+  },
+  {
+    "id": "svp-svp147",
+    "name": "Iron Boulder ex",
+    "number": "svp147",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "types": [
+      "Fighting"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/svp/svp147.webp",
+    "imageSmall": "assets/cards/svp/svp147-sm.webp",
+    "attacks": [
+      {
+        "name": "Repulsor Axe",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent’s next turn, if this Pokémon is damaged by an attack (even if it is Knocked Out), put 8 damage counters on the Attacking Pokémon."
+      },
+      {
+        "name": "Power Stomp",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-147/large",
+    "printedNumber": "SVP 147",
+    "tcgplayerId": 583851,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.64,
+    "foilMap": "assets/foil/maps/svp/svp147.webp"
+  },
+  {
+    "id": "svp-svp148",
+    "name": "Miraidon",
+    "number": "svp148",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "hncl",
+    "flavorText": "This seems to be the Iron Serpent mentioned in an old book. The Iron Serpent is said to have turned the land to ash with its lightning.",
+    "image": "assets/cards/svp/svp148.webp",
+    "imageSmall": "assets/cards/svp/svp148-sm.webp",
+    "attacks": [
+      {
+        "name": "Electric Claws",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Mach Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-148/large",
+    "printedNumber": "SVP 148",
+    "tcgplayerId": 556929,
+    "foilAs": "",
+    "promo": true,
+    "market": 1.92
+  },
+  {
+    "id": "svp-svp150",
+    "name": "Paradise Resort",
+    "number": "svp150",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/svp/svp150.webp",
+    "imageSmall": "assets/cards/svp/svp150-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-150/large",
+    "printedNumber": "SVP 150",
+    "tcgplayerId": 578146,
+    "foilAs": "",
+    "promo": true,
+    "market": 597.66,
+    "foilMap": "assets/foil/maps/svp/svp150.webp"
+  },
+  {
+    "id": "svp-svp160",
+    "name": "Squawkabilly ex",
+    "number": "svp160",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "160",
+    "artist": "N-DESIGN Inc.",
+    "image": "assets/cards/svp/svp160.webp",
+    "imageSmall": "assets/cards/svp/svp160-sm.webp",
+    "attacks": [
+      {
+        "name": "Motivate",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Attach up to 2 Basic Energy cards from your discard pile to 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Squawk and Seize",
+        "text": "Once during your first turn, you may discard your hand and draw 6 cards. You can’t use more than 1 Squawk and Seize Ability during your turn.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-160/large",
+    "printedNumber": "SVP 160",
+    "tcgplayerId": 587945,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.92,
+    "foilMap": "assets/foil/maps/svp/svp160.webp"
+  },
+  {
+    "id": "svp-svp161",
+    "name": "Charizard ex",
+    "number": "svp161",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "330",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/svp/svp161.webp",
+    "imageSmall": "assets/cards/svp/svp161-sm.webp",
+    "attacks": [
+      {
+        "name": "Brave Wing",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "60+",
+        "text": "If this Pokémon has any damage counters on it, this attack does 100 more damage."
+      },
+      {
+        "name": "Explosive Vortex",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "330",
+        "text": "Discard 3 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-161/large",
+    "printedNumber": "SVP 161",
+    "tcgplayerId": 586831,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 6.05,
+    "foilMap": "assets/foil/maps/svp/svp161.webp"
+  },
+  {
+    "id": "svp-svp162",
+    "name": "Houndstone ex",
+    "number": "svp162",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "260",
+    "artist": "takuyoa",
+    "evolvesFrom": "Greavard",
+    "image": "assets/cards/svp/svp162.webp",
+    "imageSmall": "assets/cards/svp/svp162-sm.webp",
+    "attacks": [
+      {
+        "name": "Horrifying Fang",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "Flip a coin until you get tails. This attack does 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-162/large",
+    "printedNumber": "SVP 162",
+    "tcgplayerId": 591023,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.78,
+    "foilMap": "assets/foil/maps/svp/svp162.webp"
+  },
+  {
+    "id": "svp-svp166",
+    "name": "Teal Mask Ogerpon ex",
+    "number": "svp166",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Tera"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/svp/svp166.webp",
+    "imageSmall": "assets/cards/svp/svp166-sm.webp",
+    "attacks": [
+      {
+        "name": "Myriad Leaf Shower",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30+",
+        "text": "This attack does 30 more damage for each Energy attached to both Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Teal Dance",
+        "text": "Once during your turn, you may attach a Basic Grass Energy card from your hand to this Pokémon. If you attached Energy to a Pokémon this way, draw a card.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-166/large",
+    "printedNumber": "SVP 166",
+    "tcgplayerId": 596439,
+    "foilAs": "Ultra Rare",
+    "promo": true,
+    "market": 3.95,
+    "foilMap": "assets/foil/maps/svp/svp166.webp",
+    "etchMap": "assets/foil/maps/svp/svp166-etch.webp"
+  },
+  {
+    "id": "svp-svp177",
+    "name": "Bloodmoon Ursaluna ex",
+    "number": "svp177",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "260",
+    "artist": "Cg Works",
+    "image": "assets/cards/svp/svp177.webp",
+    "imageSmall": "assets/cards/svp/svp177-sm.webp",
+    "attacks": [
+      {
+        "name": "Blood Moon",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Seasoned Skill",
+        "text": "Blood Moon used by this Pokémon costs 1 Colorless less for each Prize card your opponent has taken.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-177/large",
+    "printedNumber": "SVP 177",
+    "tcgplayerId": 595473,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.91,
+    "foilMap": "assets/foil/maps/svp/svp177.webp"
+  },
+  {
+    "id": "svp-svp178",
+    "name": "Kyogre ex",
+    "number": "svp178",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "230",
+    "image": "assets/cards/svp/svp178.webp",
+    "imageSmall": "assets/cards/svp/svp178-sm.webp",
+    "attacks": [
+      {
+        "name": "Winding Waves",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "You may switch out your opponent's Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)"
+      },
+      {
+        "name": "Tidal Surge",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "230",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-178/large",
+    "printedNumber": "SVP 178",
+    "tcgplayerId": 619580,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 1.12,
+    "foilMap": "assets/foil/maps/svp/svp178.webp"
+  },
+  {
+    "id": "svp-svp179",
+    "name": "Xerneas ex",
+    "number": "svp179",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "image": "assets/cards/svp/svp179.webp",
+    "imageSmall": "assets/cards/svp/svp179-sm.webp",
+    "attacks": [
+      {
+        "name": "Aurora Beam",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Rising Horns",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "If your opponent's Active Pokémon is a Pokémon ex, this attack does 100 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-179/large",
+    "printedNumber": "SVP 179",
+    "tcgplayerId": 619584,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.63,
+    "foilMap": "assets/foil/maps/svp/svp179.webp"
+  },
+  {
+    "id": "svp-svp180",
+    "name": "Dialga ex",
+    "number": "svp180",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "image": "assets/cards/svp/svp180.webp",
+    "imageSmall": "assets/cards/svp/svp180-sm.webp",
+    "attacks": [
+      {
+        "name": "Time Bellow",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Metal Blast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "This attack does 20 more damage for each Metal Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-180/large",
+    "printedNumber": "SVP 180",
+    "tcgplayerId": 619587,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.89,
+    "foilMap": "assets/foil/maps/svp/svp180.webp"
+  },
+  {
+    "id": "svp-svp190",
+    "name": "Pikachu",
+    "number": "svp190",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Atsushi Furusawa",
+    "flavorText": "When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/svp/svp190.webp",
+    "imageSmall": "assets/cards/svp/svp190-sm.webp",
+    "attacks": [
+      {
+        "name": "Scrappy Spark",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-190/large",
+    "printedNumber": "SVP 190",
+    "tcgplayerId": 562088,
+    "promo": true,
+    "market": 10.25
+  },
+  {
+    "id": "svp-svp191",
+    "name": "Sprigatito",
+    "number": "svp191",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "flavorText": "Liko's partner is quirky and has its own tempo. No one really knows what this Sprigatito is thinking.",
+    "image": "assets/cards/svp/svp191.webp",
+    "imageSmall": "assets/cards/svp/svp191-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-191/large",
+    "printedNumber": "SVP 191",
+    "tcgplayerId": 595036,
+    "promo": true,
+    "foilAs": "Rare",
+    "market": 1.11
+  },
+  {
+    "id": "svp-svp192",
+    "name": "Fuecoco",
+    "number": "svp192",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Ito Kyoko",
+    "flavorText": "Roy's partner is lax and prone to gluttony. This Fuecoco loves to sing its heart out.",
+    "image": "assets/cards/svp/svp192.webp",
+    "imageSmall": "assets/cards/svp/svp192-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-192/large",
+    "printedNumber": "SVP 192",
+    "tcgplayerId": 595038,
+    "promo": true,
+    "foilAs": "Rare",
+    "market": 0.54
+  },
+  {
+    "id": "svp-svp196",
+    "name": "Charizard ex",
+    "number": "svp196",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/svp/svp196.webp",
+    "imageSmall": "assets/cards/svp/svp196-sm.webp",
+    "attacks": [
+      {
+        "name": "Burning Darkness",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "180+",
+        "text": "This attack does 30 more damage for each Prize card your opponent has taken."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Infernal Reign",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may search your deck for up to 3 Basic Fire Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-196/large",
+    "printedNumber": "SVP 196",
+    "tcgplayerId": 641610,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 4.57,
+    "foilMap": "assets/foil/maps/svp/svp196.webp",
+    "etchMap": "assets/foil/maps/svp/svp196-etch.webp"
+  },
+  {
+    "id": "svp-svp197",
+    "name": "Koraidon ex",
+    "number": "svp197",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "230",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/svp/svp197.webp",
+    "imageSmall": "assets/cards/svp/svp197-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Revenge Buster",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your Benched Pokémon have any damage counters on them, this attack does 120 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-197/large",
+    "printedNumber": "SVP 197",
+    "tcgplayerId": 634348,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.52,
+    "foilMap": "assets/foil/maps/svp/svp197.webp"
+  },
+  {
+    "id": "svp-svp198",
+    "name": "Zacian ex",
+    "number": "svp198",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/svp/svp198.webp",
+    "imageSmall": "assets/cards/svp/svp198-sm.webp",
+    "attacks": [
+      {
+        "name": "Steel Armament",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Search your deck for a Basic Metal Energy card and attach it to this Pokémon. Then Shuffle your deck."
+      },
+      {
+        "name": "Slashing Strike",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "During your next turn, this Pokémon can't use Slashing Strike."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-198/large",
+    "printedNumber": "SVP 198",
+    "tcgplayerId": 632678,
+    "foilAs": "Double Rare",
+    "promo": true,
+    "market": 0.78,
+    "foilMap": "assets/foil/maps/svp/svp198.webp"
+  },
+  {
+    "id": "svp-svp206",
+    "name": "Marnie's Morpeko",
+    "number": "svp206",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Susumu Maeya",
+    "flavorText": "Morpeko eats seeds constantly to keep its hunger at bay. If it’s hungry for too long, it grows wild and brutish.",
+    "image": "assets/cards/svp/svp206.webp",
+    "imageSmall": "assets/cards/svp/svp206-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiky Wheel",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 40 more damage for each Darkness Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-206/large",
+    "printedNumber": "SVP 206",
+    "tcgplayerId": 635456,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 54.5,
+    "foilMap": "assets/foil/maps/svp/svp206.webp"
+  },
+  {
+    "id": "svp-svp207",
+    "name": "Steven's Beldum",
+    "number": "svp207",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "hncl",
+    "flavorText": "The magnetic force generated by its body repels the ground’s natural magnetism, letting it float.",
+    "image": "assets/cards/svp/svp207.webp",
+    "imageSmall": "assets/cards/svp/svp207-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-207/large",
+    "printedNumber": "SVP 207",
+    "tcgplayerId": 635457,
+    "foilAs": "Illustration Rare",
+    "promo": true,
+    "market": 29.98,
+    "foilMap": "assets/foil/maps/svp/svp207.webp"
+  },
+  {
+    "id": "svp-svp213",
+    "name": "Feraligatr",
+    "number": "svp213",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Acorviart",
+    "flavorText": "When it bites with its massive and powerful jaws, it shakes its head and savagely tears its victim up.",
+    "evolvesFrom": "Croconaw",
+    "image": "assets/cards/svp/svp213.webp",
+    "imageSmall": "assets/cards/svp/svp213-sm.webp",
+    "attacks": [
+      {
+        "name": "Deep Submergence",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-213/large",
+    "printedNumber": "SVP 213",
+    "tcgplayerId": 620104,
+    "promo": true,
+    "market": 3.79
+  },
+  {
+    "id": "svp-svp214",
+    "name": "Pikachu",
+    "number": "svp214",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kazuki Minami",
+    "flavorText": "When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+    "image": "assets/cards/svp/svp214.webp",
+    "imageSmall": "assets/cards/svp/svp214-sm.webp",
+    "attacks": [
+      {
+        "name": "Unwind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Head 20 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-214/large",
+    "printedNumber": "SVP 214",
+    "tcgplayerId": 620106,
+    "promo": true,
+    "market": 18.33
+  },
+  {
+    "id": "svp-svp215",
+    "name": "Toxtricity ex",
+    "number": "svp215",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "ex"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "260",
+    "artist": "Anderson",
+    "evolvesFrom": "Toxel",
+    "image": "assets/cards/svp/svp215.webp",
+    "imageSmall": "assets/cards/svp/svp215-sm.webp",
+    "attacks": [
+      {
+        "name": "Strumming Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-215/large",
+    "printedNumber": "SVP 215",
+    "tcgplayerId": 620107,
+    "promo": true,
+    "market": 1.03
+  },
+  {
+    "id": "svp-svp219",
+    "name": "Black Belt's Training",
+    "number": "svp219",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "GOSSAN",
+    "image": "assets/cards/svp/svp219.webp",
+    "imageSmall": "assets/cards/svp/svp219-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-219/large",
+    "printedNumber": "SVP 219",
+    "tcgplayerId": 664825,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.29
+  },
+  {
+    "id": "svp-svp220",
+    "name": "Black Belt's Training",
+    "number": "svp220",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "GOSSAN",
+    "image": "assets/cards/svp/svp220.webp",
+    "imageSmall": "assets/cards/svp/svp220-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-220/large",
+    "printedNumber": "SVP 220",
+    "tcgplayerId": 664824,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.29
+  },
+  {
+    "id": "svp-svp221",
+    "name": "Professor's Research",
+    "number": "svp221",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/svp/svp221.webp",
+    "imageSmall": "assets/cards/svp/svp221-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-221/large",
+    "printedNumber": "SVP 221",
+    "tcgplayerId": 664829,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.22
+  },
+  {
+    "id": "svp-svp222",
+    "name": "Professor's Research",
+    "number": "svp222",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/svp/svp222.webp",
+    "imageSmall": "assets/cards/svp/svp222-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-222/large",
+    "printedNumber": "SVP 222",
+    "tcgplayerId": 664827,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.23
+  },
+  {
+    "id": "svp-svp223",
+    "name": "Professor's Research",
+    "number": "svp223",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "Taira Akitsu",
+    "image": "assets/cards/svp/svp223.webp",
+    "imageSmall": "assets/cards/svp/svp223-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-223/large",
+    "printedNumber": "SVP 223",
+    "tcgplayerId": 664828,
+    "foilAs": "",
+    "promo": true,
+    "market": 0.16
+  },
+  {
+    "id": "svp-svp224",
+    "name": "Paradise Resort",
+    "number": "svp224",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/svp/svp224.webp",
+    "imageSmall": "assets/cards/svp/svp224-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-224/large",
+    "printedNumber": "SVP 224",
+    "tcgplayerId": 649232,
+    "foilAs": "",
+    "promo": true,
+    "market": 295.61,
+    "foilMap": "assets/foil/maps/svp/svp224.webp"
+  },
+  {
+    "id": "svp-svp225",
+    "name": "Pikachu",
+    "number": "svp225",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "DOM",
+    "image": "assets/cards/svp/svp225.webp",
+    "imageSmall": "assets/cards/svp/svp225-sm.webp",
+    "attacks": [
+      {
+        "name": "Scrappy Spark",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/svp-225/large",
+    "printedNumber": "SVP 225",
+    "tcgplayerId": 648631,
+    "promo": true,
+    "market": 7.09
+  }
+]
