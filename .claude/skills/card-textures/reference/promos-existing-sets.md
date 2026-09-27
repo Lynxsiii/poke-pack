@@ -14,7 +14,7 @@ holos" thread; this file is only what was learned while adding the cards.
 |---|---|---|
 | Black Bolt / White Flare stamped and pattern alts | `svalt`, e.g. `svalt/zsv10-5_en_012_alt2` | `tcgl` on the promo spec: scan and `foilMap` from TCG Live |
 | Mega Evolution stamped alts | `mealt`, e.g. `mealt/me1_en_133_alt` | same |
-| Cosmos, Pixel Cosmos, store-stamped cosmos | none | TCGplayer scan, `foilAs: "Cosmos"`, no map |
+| Cosmos, Pixel Cosmos, store-stamped cosmos | none | TCGplayer scan, `foilAs: "Cosmos"`, a drawn window-and-frame map (`stamp_knockout.py`) |
 
 An alt print's front is
 `https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/<path>.png` and its

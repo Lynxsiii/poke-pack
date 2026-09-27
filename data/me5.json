@@ -4008,7 +4008,8 @@
     "tcgplayerId": 714065,
     "image": "assets/cards/me5/40-cosmos-v2.webp",
     "imageSmall": "assets/cards/me5/40-cosmos-v2-sm.webp",
-    "market": 0.35
+    "market": 0.35,
+    "foilMap": "assets/foil/maps/me5/40-cosmos.webp"
   },
   {
     "id": "me5-56-cosmos",
@@ -4053,7 +4054,8 @@
     "tcgplayerId": 706251,
     "image": "assets/cards/me5/56-cosmos-v2.webp",
     "imageSmall": "assets/cards/me5/56-cosmos-v2-sm.webp",
-    "market": 0.18
+    "market": 0.18,
+    "foilMap": "assets/foil/maps/me5/56-cosmos.webp"
   },
   {
     "id": "me5-56-stamp",
@@ -4137,7 +4139,8 @@
     "tcgplayerId": 714066,
     "image": "assets/cards/me5/asc097-cosmos-v2.webp",
     "imageSmall": "assets/cards/me5/asc097-cosmos-v2-sm.webp",
-    "market": 0.84
+    "market": 0.84,
+    "foilMap": "assets/foil/maps/me5/asc097-cosmos.webp"
   },
   {
     "id": "me5-mep055",
@@ -4944,7 +4947,8 @@
     "tcgplayerId": 709694,
     "image": "assets/cards/me5/por024-cosmos-v2.webp",
     "imageSmall": "assets/cards/me5/por024-cosmos-v2-sm.webp",
-    "market": 4.45
+    "market": 4.45,
+    "foilMap": "assets/foil/maps/me5/por024-cosmos.webp"
   },
   {
     "id": "me5-por028-cosmos",
@@ -4991,7 +4995,8 @@
     "tcgplayerId": 709696,
     "image": "assets/cards/me5/por028-cosmos-v2.webp",
     "imageSmall": "assets/cards/me5/por028-cosmos-v2-sm.webp",
-    "market": 5.78
+    "market": 5.78,
+    "foilMap": "assets/foil/maps/me5/por028-cosmos.webp"
   },
   {
     "id": "me5-por045-cosmos",
@@ -5035,7 +5040,8 @@
     "tcgplayerId": 709698,
     "image": "assets/cards/me5/por045-cosmos-v2.webp",
     "imageSmall": "assets/cards/me5/por045-cosmos-v2-sm.webp",
-    "market": 3.18
+    "market": 3.18,
+    "foilMap": "assets/foil/maps/me5/por045-cosmos.webp"
   },
   {
     "id": "me5-por050-cosmos",
@@ -5078,6 +5084,7 @@
     "tcgplayerId": 709697,
     "image": "assets/cards/me5/por050-cosmos-v2.webp",
     "imageSmall": "assets/cards/me5/por050-cosmos-v2-sm.webp",
-    "market": 5.59
+    "market": 5.59,
+    "foilMap": "assets/foil/maps/me5/por050-cosmos.webp"
   }
 ]

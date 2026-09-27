@@ -4423,7 +4423,8 @@
     "foilAs": "Cosmos",
     "variant": "Cosmos Holo",
     "image": "assets/cards/me3/meg010-cosmos.webp",
-    "imageSmall": "assets/cards/me3/meg010-cosmos-sm.webp"
+    "imageSmall": "assets/cards/me3/meg010-cosmos-sm.webp",
+    "foilMap": "assets/foil/maps/me3/meg010-cosmos.webp"
   },
   {
     "id": "me3-meg028-cosmos",
@@ -4466,7 +4467,8 @@
     "tcgplayerId": 716728,
     "image": "assets/cards/me3/meg028-cosmos-v2.webp",
     "imageSmall": "assets/cards/me3/meg028-cosmos-v2-sm.webp",
-    "market": 0.75
+    "market": 0.75,
+    "foilMap": "assets/foil/maps/me3/meg028-cosmos.webp"
   },
   {
     "id": "me3-meg038-cosmos",
@@ -4511,7 +4513,8 @@
     "tcgplayerId": 686357,
     "image": "assets/cards/me3/meg038-cosmos-v2.webp",
     "imageSmall": "assets/cards/me3/meg038-cosmos-v2-sm.webp",
-    "market": 0.46
+    "market": 0.46,
+    "foilMap": "assets/foil/maps/me3/meg038-cosmos.webp"
   },
   {
     "id": "me3-meg093-cosmos",
@@ -4559,7 +4562,8 @@
     "tcgplayerId": 691166,
     "image": "assets/cards/me3/meg093-cosmos-v2.webp",
     "imageSmall": "assets/cards/me3/meg093-cosmos-v2-sm.webp",
-    "market": 1.02
+    "market": 1.02,
+    "foilMap": "assets/foil/maps/me3/meg093-cosmos.webp"
   },
   {
     "id": "me3-mep064",
