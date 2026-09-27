@@ -1,0 +1,118 @@
+{
+  "id": "sv3",
+  "name": "Obsidian Flames",
+  "series": "scarlet-violet",
+  "slug": "obsidian-flames",
+  "scrydexId": "sv3",
+  "pittSlug": "Obsidian-Flames",
+  "artSlug": "obsidian-flames",
+  "packs": [
+    "revavroom",
+    "tyranitar",
+    "charizard",
+    "dragonite"
+  ],
+  "tcgplayerGroup": 23228,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp036": {},
+    "svp037": {},
+    "svp038": {},
+    "svp039": {},
+    "svp040": {},
+    "svp041": {},
+    "svp042": {},
+    "svp043": {},
+    "svp044": {},
+    "svp044-pc": {
+      "like": "svp044",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 512036
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 501264,
+      "packs": 9,
+      "promos": [
+        "svp044"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 501266,
+      "packs": 11,
+      "promos": [
+        "svp044-pc",
+        "svp044"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 501268,
+      "packs": 4,
+      "promos": [
+        "svp036",
+        "svp037",
+        "svp038",
+        "svp039"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-eevee",
+      "name": "3 Pack Blister: Eevee",
+      "kind": "blister",
+      "tcgplayerId": 501259,
+      "packs": 3,
+      "promos": [
+        "svp043"
+      ]
+    },
+    {
+      "id": "blister3-houndstone",
+      "name": "3 Pack Blister: Houndstone",
+      "kind": "blister",
+      "tcgplayerId": 501260,
+      "packs": 3,
+      "promos": [
+        "svp042"
+      ]
+    },
+    {
+      "id": "blister-pawmi",
+      "name": "Single Pack Blister: Pawmi",
+      "kind": "blister",
+      "tcgplayerId": 501262,
+      "packs": 1,
+      "promos": [
+        "svp040"
+      ]
+    },
+    {
+      "id": "blister-wooper",
+      "name": "Single Pack Blister: Paldean Wooper",
+      "kind": "blister",
+      "tcgplayerId": 512047,
+      "packs": 1,
+      "promos": [
+        "svp041"
+      ]
+    }
+  ]
+}

@@ -26,6 +26,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import unicodedata
 import urllib.request
 from pathlib import Path
 
@@ -59,6 +60,8 @@ def norm(name: str) -> str:
     name = re.sub(r"\s+-\s+\d+/\d+$", "", name)
     # TCGplayer spells Nidoran's symbols out ("Nidoran F"); our data keeps ♀/♂.
     name = name.replace("♀", " F").replace("♂", " M").replace("’", "'")
+    # ...and drops accents ("Flabebe" for Flabébé).
+    name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
     return re.sub(r"\s+", " ", name).strip().lower()
 
 
