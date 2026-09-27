@@ -1,0 +1,144 @@
+{
+  "id": "sv1",
+  "name": "Scarlet & Violet",
+  "series": "scarlet-violet",
+  "slug": "scarlet-violet",
+  "scrydexId": "sv1",
+  "artSlug": "scarlet-and-violet",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 22873,
+  "promoSeries": {
+    "svp": {
+      "series": "scarlet-violet",
+      "slug": "scarlet-violet-black-star-promos",
+      "scrydex": "svp",
+      "tcgplayerGroup": 22872,
+      "printed": "SVP"
+    }
+  },
+  "promoCards": {
+    "svp005": {},
+    "svp006": {},
+    "svp007": {},
+    "svp008": {},
+    "svp009": {},
+    "svp010": {},
+    "svp011": {},
+    "svp012": {},
+    "svp013": {},
+    "svp013-pc": {
+      "like": "svp013",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 490730
+    },
+    "svp014": {},
+    "svp014-pc": {
+      "like": "svp014",
+      "variant": "Pokémon Center stamp",
+      "tcgplayerId": 490725
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box: Koraidon",
+      "kind": "etb",
+      "tcgplayerId": 478335,
+      "packs": 9,
+      "promos": [
+        "svp014"
+      ]
+    },
+    {
+      "id": "etb-miraidon",
+      "name": "Elite Trainer Box: Miraidon",
+      "kind": "etb",
+      "tcgplayerId": 478336,
+      "packs": 9,
+      "promos": [
+        "svp013"
+      ]
+    },
+    {
+      "id": "pc-etb-koraidon",
+      "name": "Pokémon Center Elite Trainer Box: Koraidon",
+      "kind": "etb",
+      "tcgplayerId": 478758,
+      "packs": 11,
+      "promos": [
+        "svp014-pc",
+        "svp014"
+      ]
+    },
+    {
+      "id": "pc-etb-miraidon",
+      "name": "Pokémon Center Elite Trainer Box: Miraidon",
+      "kind": "etb",
+      "tcgplayerId": 478756,
+      "packs": 11,
+      "promos": [
+        "svp013-pc",
+        "svp013"
+      ]
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 478253,
+      "packs": 4,
+      "promos": [
+        "svp005",
+        "svp006",
+        "svp007",
+        "svp008"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "blister3-arcanine",
+      "name": "3 Pack Blister: Arcanine",
+      "kind": "blister",
+      "tcgplayerId": 478761,
+      "packs": 3,
+      "promos": [
+        "svp011"
+      ]
+    },
+    {
+      "id": "blister3-dondozo",
+      "name": "3 Pack Blister: Dondozo",
+      "kind": "blister",
+      "tcgplayerId": 478762,
+      "packs": 3,
+      "promos": [
+        "svp012"
+      ]
+    },
+    {
+      "id": "blister-spidops",
+      "name": "Single Pack Blister: Spidops",
+      "kind": "blister",
+      "tcgplayerId": 478765,
+      "packs": 1,
+      "promos": [
+        "svp009"
+      ]
+    },
+    {
+      "id": "blister-espathra",
+      "name": "Single Pack Blister: Espathra",
+      "kind": "blister",
+      "tcgplayerId": 478766,
+      "packs": 1,
+      "promos": [
+        "svp010"
+      ]
+    }
+  ]
+}
