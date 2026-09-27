@@ -116,12 +116,12 @@
     "name": "Journey Together",
     "printedTotal": 159,
     "released": "2025-03-28",
-    "updated": "2026-05-05",
-    "source": "Rates sourced from aggregated community data (cardrake.com, TCGPlayer set analytics, and a referenced 1000-pack opening). DR 1/5, IR 1/12, UR 1/15, SIR 1/86, HR 1/137. No ACE SPEC.",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, 8,000+ English packs opened for launch: 'Pokémon TCG: Journey Together Pull Rates' (tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Journey-Together-Pull-Rates/1b9f379f-97cb-45cc-b6f6-a1a070a422cd/, published 2025-03-28, updated 2025-05-29). Per pack, 95% confidence: Double Rare 20.29% ± 0.85% (1 in 5), Ultra Rare 6.54% ± 0.52% (1 in 15), both in the rare slot; Illustration Rare 8.50% ± 0.59% (1 in 12), Special Illustration Rare 1.16% ± 0.23% (1 in 86), Hyper Rare 0.73% ± 0.18% (1 in 137), all in the second reverse slot. Each card of a rarity is equally likely (specific SIR 1 in 518). No ACE SPEC. pullrates.com cites the same study but rounds to generic SV figures (DR 1 in 6, IR 1 in 13), so it is not used.",
     "rates": {
-      "double": 0.2,
-      "ir": 0.083,
-      "ultra": 0.067,
+      "double": 0.2029,
+      "ir": 0.085,
+      "ultra": 0.0654,
       "sir": 0.0116,
       "hyper": 0.0073
     }
