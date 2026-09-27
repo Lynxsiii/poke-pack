@@ -64,6 +64,16 @@ SETS = {
 }
 
 
+# Foil maps TCG Live files under the wrong card, as (site set, site number):
+# the number whose map it really is. Etch maps are not affected. Found by
+# overlaying every map on its scan (Surging Sparks' Amulet of Hope and
+# Brilliant Blender foil maps are swapped; their etch maps are right).
+FOIL_SWAPS = {
+    ("sv8", "162"): 164,
+    ("sv8", "164"): 162,
+}
+
+
 def curl(url: str, dest: Path) -> bool:
     # urllib gets a 403 from this CDN; curl is accepted.
     res = subprocess.run(["curl", "-sfL", url, "-o", str(dest)], capture_output=True)
@@ -179,7 +189,8 @@ def main() -> None:
             dest = cache / f"{n}.{kind}.png"
             if dest.exists() or (cache / f"{n}.{kind}.none").exists():
                 continue
-            if curl(f"{BASE}/{key}/{key}_en_{num:03d}_std.{kind}.png", dest):
+            at = FOIL_SWAPS.get((args.set, n), num) if kind == "foil" else num
+            if curl(f"{BASE}/{key}/{key}_en_{at:03d}_std.{kind}.png", dest):
                 fetched += 1
             else:
                 (cache / f"{n}.{kind}.none").touch()  # remember the miss; etch maps are rare

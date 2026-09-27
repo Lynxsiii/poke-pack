@@ -116,12 +116,12 @@
     "name": "Journey Together",
     "printedTotal": 159,
     "released": "2025-03-28",
-    "updated": "2026-05-05",
-    "source": "Rates sourced from aggregated community data (cardrake.com, TCGPlayer set analytics, and a referenced 1000-pack opening). DR 1/5, IR 1/12, UR 1/15, SIR 1/86, HR 1/137. No ACE SPEC.",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, 8,000+ English packs opened for launch: 'Pokémon TCG: Journey Together Pull Rates' (tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Journey-Together-Pull-Rates/1b9f379f-97cb-45cc-b6f6-a1a070a422cd/, published 2025-03-28, updated 2025-05-29). Per pack, 95% confidence: Double Rare 20.29% ± 0.85% (1 in 5), Ultra Rare 6.54% ± 0.52% (1 in 15), both in the rare slot; Illustration Rare 8.50% ± 0.59% (1 in 12), Special Illustration Rare 1.16% ± 0.23% (1 in 86), Hyper Rare 0.73% ± 0.18% (1 in 137), all in the second reverse slot. Each card of a rarity is equally likely (specific SIR 1 in 518). No ACE SPEC. pullrates.com cites the same study but rounds to generic SV figures (DR 1 in 6, IR 1 in 13), so it is not used.",
     "rates": {
-      "double": 0.2,
-      "ir": 0.083,
-      "ultra": 0.067,
+      "double": 0.2029,
+      "ir": 0.085,
+      "ultra": 0.0654,
       "sir": 0.0116,
       "hyper": 0.0073
     }
@@ -161,13 +161,14 @@
     "name": "Stellar Crown",
     "printedTotal": 142,
     "released": "2024-09-13",
-    "updated": "2026-05-05",
-    "source": "TCGPlayer study (~8,000 packs) as reported alongside Twilight Masquerade / Temporal Forces. DR 1/5.9, ACE SPEC 1/20.2, IR 1/12.8, UR 1/14.8, SIR 1/90.1, Hyper Rare 1/137.",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center study of 8,000+ English packs (published 2024-09-13, updated 2025-02-27), per pack with 95% intervals: Double Rare 16.90% \u00b10.79% (1 in 6), Ultra Rare 6.75% \u00b10.53% (1 in 15), ACE SPEC Rare 4.94% \u00b10.46% (1 in 20, first reverse slot), Illustration Rare 7.79% \u00b10.57% (1 in 13), Special Illustration Rare 1.11% \u00b10.22% (1 in 90) and Hyper Rare 0.73% \u00b10.18% (1 in 137), all three in the second reverse slot. TCGplayer found Dachsbun ex (067) at 0.76% \u00b10.18% against about 1.24% for each other Double Rare and calls it likely short printed, so data/sv7.json gives it pullWeight 0.61. Same rates as Temporal Forces and Twilight Masquerade; no god packs in English Scarlet & Violet.",
+    "sourceUrl": "https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Stellar-Crown-Pull-Rates/2c0743dd-dbd0-4504-9ff8-be5a72dd04d1/",
     "rates": {
-      "double": 0.1695,
-      "ace": 0.0495,
-      "ir": 0.0781,
-      "ultra": 0.0676,
+      "double": 0.169,
+      "ace": 0.0494,
+      "ir": 0.0779,
+      "ultra": 0.0675,
       "sir": 0.0111,
       "hyper": 0.0073
     }
@@ -206,15 +207,29 @@
     "name": "Temporal Forces",
     "printedTotal": 162,
     "released": "2024-03-22",
-    "updated": "2026-05-05",
-    "source": "TCGPlayer (8,000+ packs, Mar 2024) via PokeBeach. Hardest SIR/gold of the early SV block. DR 1/5.9, ACE SPEC 1/20 (first reverse slot), IR 1/13, UR 1/15, SIR 1/86, Hyper Rare 1/139.",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, 8,000+ English packs opened before release: 'Pokémon TCG: Temporal Forces Pull Rates' by Peter Day (https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Temporal-Forces-Pull-Rates/28c0ad22-00a4-428f-b22d-e7fee9ec50bc/, updated 2025-02-27), 95% confidence intervals: Double Rare 16.83% ± 0.79% (1 in 6), Ultra Rare 6.67% ± 0.53% (1 in 15), ACE SPEC Rare 5.00% ± 0.46% (1 in 20, replaces the first reverse holo), Illustration Rare 7.72% ± 0.56% (1 in 13), Special Illustration Rare 1.17% ± 0.23% (1 in 86), Hyper Rare 0.72% ± 0.18% (1 in 139). DR and UR sit in the rare slot; IR, SIR and Hyper Rare in the second reverse slot. Reported by PokeBeach (2024-03) and ScreenRant (2024-03-29); ThePriceDex and tcgtalk.com carry the same figures. No god packs in English Temporal Forces.",
     "rates": {
-      "double": 0.1695,
+      "double": 0.1683,
       "ace": 0.05,
-      "ir": 0.0769,
+      "ir": 0.0772,
       "ultra": 0.0667,
       "sir": 0.0117,
       "hyper": 0.0072
+    }
+  },
+  "sv3": {
+    "name": "Obsidian Flames",
+    "printedTotal": 197,
+    "released": "2023-08-11",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center, 8,000+ English packs opened before release (Peter Day, 'Pokémon TCG: Obsidian Flames Pull Rates', tcgplayer.com, updated Feb 2025), 95% confidence intervals: Double Rare 13.61% ±0.72% (1 in 7), Ultra Rare 6.63% ±0.52% (1 in 15), Illustration Rare 7.60% ±0.56% (1 in 13), Special Illustration Rare 3.13% ±0.37% (1 in 32), Hyper Rare 1.92% ±0.29% (1 in 52). DR and UR take the rare slot; IR, SIR and gold take the second reverse slot. No ACE SPEC in this set. https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Obsidian-Flames-Pull-Rates/e2a66999-a7b5-4621-9765-c9a132e04bd2/",
+    "rates": {
+      "double": 0.1361,
+      "ultra": 0.0663,
+      "ir": 0.076,
+      "sir": 0.0313,
+      "hyper": 0.0192
     }
   },
   "sv3pt5": {
