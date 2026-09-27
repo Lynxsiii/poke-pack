@@ -475,7 +475,6 @@ h1, h2, h3 { text-wrap: balance; }
   font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .promo-product .sealed-copy .promo-worth { margin-top: 2px; font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--gold-2); }
-.promo-product .sealed-copy .promo-market { margin-top: 2px; font-size: 12px; }
 .promo-product:hover .promo-box { transform: translateY(-50%) translateY(-6px); }
 .promo-product:hover .promo-fan.count-1 .promo-face { transform: rotate(2deg) translateY(-8px); }
 .promo-product:hover .promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(12px, -6px); }

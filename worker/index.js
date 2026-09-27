@@ -13,7 +13,7 @@ import {
   money,
   sellValue,
 } from "../js/catalog.js";
-import { drawPromos, isHit, priceOffer, ripPack } from "../js/engine.js";
+import { drawPromos, isHit, ripPack } from "../js/engine.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
@@ -431,16 +431,15 @@ async function openSealed(request, env) {
 
   const live = PLAYABLE_SETS.find((item) => item.id === String(body.setId || ""));
   if (!live) return json({ error: "Unknown set." }, 400);
-  const listed = findOffer(
+  const offer = findOffer(
     (await loadSealed(env, request))[live.id],
     (await loadProducts(env, request))[live.id],
     body.product
   );
-  if (!listed) return json({ error: "That product isn't sold for this set." }, 400);
+  if (!offer) return json({ error: "That product isn't sold for this set." }, 400);
   if (!live.wrappers.length) return json({ error: "Unknown pack art." }, 400);
 
   const catalog = await loadSetCards(env, request, live);
-  const offer = priceOffer(listed, live, catalog);
   const packs = Array.from({ length: offer.packs }, () => ({
     wrapper: live.wrappers[Math.floor(Math.random() * live.wrappers.length)],
     pulls: ripPack(live, catalog),

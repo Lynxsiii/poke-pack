@@ -102,11 +102,8 @@ assert.equal(response.body.packs.length,30,'29 boosters and the Classic Collecti
 const classicPack=response.body.packs.find(pack=>pack.wrapperId==='classic');
 assert.ok(classicPack&&classicPack.cards.length===3&&classicPack.cards.every(card=>card.rarity==='Classic Collection'));
 assert.ok(response.body.packs.flatMap(pack=>pack.cards).every(card=>!card.promo),'no promo comes out of a pack');
-// Its promos sell for more than the box's market price, so it costs what's
-// inside on average instead of paying out coins on every open.
-const promoWorth=response.body.promos.reduce((sum,card)=>sum+card.market,0);
-assert.ok(promoWorth>upc.price,'fixture: the Night promos outprice the box');
-assert.ok(response.body.cost>promoWorth,'never cheaper than its promos');
+// It costs its market price, even though its promos sell for more right now.
+assert.equal(response.body.cost,upc.price);
 assert.equal(cents(profile().coins),cents(5000-response.body.cost));
 assert.equal(profile().packs_opened,packsBefore+30);
 assert.equal(db.prepare('SELECT qty FROM cards WHERE user_id=? AND card_id=?').get('test','me55-mep109').qty,1);
