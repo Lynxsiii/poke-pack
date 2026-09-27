@@ -283,13 +283,21 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         base = cards.get(f"{set_id}-{spec['like']}")
         if not base:
             raise RuntimeError(f"{number}: like {spec['like']} is not in data/{set_id}.json yet")
-        keep = {k: v for k, v in base.items() if k not in (
-            "image", "imageSmall", "imageRemote", "market", "foilMap", "etchMap",
-            "etchMapH", "etchMapV", "stampPos", "stampSize", "variant", "tcgplayerId")}
+        drop = ["image", "imageSmall", "imageRemote", "market", "stampPos", "stampSize", "variant", "tcgplayerId", "reverseMap"]
+        # `keepMaps`: the same print in another foil (151's cosmos holo Rares,
+        # the UPC's metal Mew ex) still foils where the set card does.
+        if not spec.get("keepMaps"):
+            drop += ["foilMap", "etchMap", "etchMapH", "etchMapV"]
+        # `keepScan`: a print that differs from the set card only in its foil
+        # (151's cosmos holos) keeps the set card's clean scan. A scan of the
+        # foil print bakes the foil in dark, and the foil engine draws it again.
+        if spec.get("keepScan"):
+            drop = [k for k in drop if k not in ("image", "imageSmall", "imageRemote")]
+        keep = {k: v for k, v in base.items() if k not in drop}
         record = {**keep, "id": card_id, "number": number}
         if "printedNumber" not in record:
             record["printedNumber"] = f"{base['number']}/{cfg.get('printedTotal', '')}".rstrip("/")
-        remote = TCG_IMAGE.format(id=spec["tcgplayerId"])
+        remote = "" if spec.get("keepScan") else TCG_IMAGE.format(id=spec["tcgplayerId"])
     else:
         parts = split_number(number, series)
         if not parts:
@@ -319,12 +327,13 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     record["name"] = str(record.get("name", "")).strip().replace("’", "'")
     record["rarity"] = "Promo"
     record["promo"] = True
-    for key in ("foilAs", "variant", "tcgplayerId", "printedNumber"):
+    # `foilMap`: a hand-made map for a print TCG Live has none for.
+    for key in ("foilAs", "variant", "tcgplayerId", "printedNumber", "foilMap"):
         if spec.get(key):
             record[key] = spec[key]
     record = merge(prior, record) if prior else record
     # A rebuild must not keep a mirrored path that points at another card's scan.
-    if not prior:
+    if not prior and remote:
         record["imageRemote"] = remote
     return ordered(record), price, remote
 
@@ -411,7 +420,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
                 price = listed_price(*parts)
         else:
             record, price, remote = promo_record(cfg, number, spec, cards, refresh)
-            if refresh or not str(record.get("image", "")).startswith("assets/"):
+            if remote and (refresh or not str(record.get("image", "")).startswith("assets/")):
                 mirror(set_id, record, remote, refresh)
         # A stamped or product-only print is priced from its own TCGplayer
         # listing, and so is a promo pkmn.gg has no price for.

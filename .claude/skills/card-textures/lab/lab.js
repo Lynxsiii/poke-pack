@@ -7,7 +7,9 @@
 //
 // Query string:
 //   set=me55              data/<set>.json to read
-//   cards=1,23,157        card numbers (default: one of each rarity and layout)
+//   cards=1,23,157        card numbers (default: one of each rarity and layout);
+//                         r59 is card 59's reverse holo, 59-pb and 59-mb its
+//                         Prismatic Poké Ball and Master Ball prints
 //   proof=split|on|off    show each card as the site draws it, with lab.css's
 //                         proof recipes, or both side by side (default split)
 //   rev=chain             reverse kind for cards listed as r<number>
@@ -35,7 +37,7 @@ const hasEvo = (c) => (c.subtypes || []).some((s) => s === "Stage 1" || s === "S
 const allFoil = (c) => ALL_FOIL.has(setId) && !c.energy && c.supertype !== "Energy";
 
 function foilClass(c) {
-  if (c.reverse) return "rare-glow";
+  if (c.reverse || c.pattern) return "rare-glow";
   if (HIT_RARITIES.has(c.rarity) || c.rarity === "Rare" || c.rarity === "Pikachu Rare" || allFoil(c)) return "holo";
   return "";
 }
@@ -49,6 +51,7 @@ function foilLayout(c) {
 function foilPattern(c) {
   if (c.reverse) return c.reverseKind && c.reverseKind !== "cosmos" ? `foil-reverse foil-rev-${c.reverseKind}` : "foil-reverse";
   const r = c.rarity;
+  if (c.pattern) return `foil-reverse foil-rev-${c.pattern} foil-prism`;
   if (r === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
   if (r === "Shiny Rare") return "foil-holo foil-shiny";
   if (c.finish === "scodix") return "foil-gold foil-scodix";
@@ -117,7 +120,7 @@ function face(c, stamp, maps, withProof) {
     if (s.cutout) vars.push(`--stamp-cut:url('${abs(`./masks/${s.cutout}`)}')`);
   }
   if (map) vars.push(`--foil-map:url('${abs(map.url)}')`);
-  const classes = ["tcg", rarityKey(c.rarity), foilClass(c), foilPattern(c), foilLayout(c), extra.classes,
+  const classes = ["tcg", rarityKey(c.rarity), foilClass(c), foilPattern(c), c.reverse ? "reverse" : "", foilLayout(c), extra.classes,
     s ? "has-stamp" : "", s?.cutout ? "has-stamp-cut" : "", map ? "has-foil-map" : "", map?.lum ? "foil-map-lum" : ""].filter(Boolean).join(" ");
   return `<figure class="lab-cell ${withProof ? "lab-proof" : "lab-site"}" style="--w:${width}px">
     <div class="${classes}" data-finish="${finishOf(c)}" style="${vars.join(";")}">

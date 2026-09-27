@@ -46,7 +46,8 @@ Card names, numbers, artists and scans match the public Pokémon TCG card
 database. The per-card foil and etch maps in `assets/foil/maps/` are
 Pokémon TCG Live's own, as published through [malie.io](https://malie.io)'s
 TCG Live exports; they say where each printed card is foil, which is what
-lets the shine stop at the Pokémon and the 30th Celebration stamp. The
+lets the shine stop at the Pokémon and the 30th Celebration stamp. The Prismatic Evolutions pattern textures in `assets/foil/prismatic/` are
+derived from the same maps (`scripts/make_prismatic_textures.py`). The
 maps for the two Pikachu ex promos (`mep107*`, `mep109*`) are not TCG
 Live's: we drew them from the card scans in the same layout. Product photos
 in `assets/products/` are TCGplayer's catalogue images, cut out of their
