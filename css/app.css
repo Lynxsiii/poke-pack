@@ -3354,14 +3354,15 @@ html.dialog-open body {
   pointer-events: none;
   cursor: grabbing;
 }
-.pack-rest,
-.pack-scrap { width: 100%; }
+.pack-rest { width: 100%; }
 .pack-rest {
   position: relative;
   z-index: 1;
   filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.55));
 }
-.booster.dragging .pack-rest { animation: packStress 0.2s linear infinite; }
+.booster.dragging .pack-rest,
+.booster.dragging .tear-svg,
+.booster.dragging .tear-strip { animation: packStress 0.2s linear infinite; }
 .booster.torn .pack-rest { animation: packSettle 0.3s ease-out both; }
 @keyframes packStress {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
@@ -3374,102 +3375,18 @@ html.dialog-open body {
   100% { transform: none; }
 }
 
-/* Dark band under the torn edge so the pack reads as opened, not cropped. */
-.pack-mouth {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  opacity: 0;
-  pointer-events: none;
-  will-change: opacity, clip-path;
-  background: linear-gradient(
-    180deg,
-    rgba(4, 3, 8, 0) 4%,
-    rgba(4, 3, 8, 0.95) 7.2%,
-    rgba(7, 6, 13, 0.6) 11%,
-    rgba(10, 8, 16, 0) 15%
-  );
-}
-.pack-scrap {
-  position: absolute;
-  inset: 0;
-  z-index: 6;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  will-change: transform, opacity, clip-path;
-  filter:
-    drop-shadow(0 1.5px 0 rgba(246, 238, 219, 0.72))
-    drop-shadow(0 7px 12px rgba(0, 0, 0, 0.5));
-}
-.booster.tearing .pack-scrap {
-  z-index: 7;
-  visibility: visible;
-  opacity: 1;
-}
-/* Clip lives on .pack-art so the parent's filter can draw the torn paper fringe. */
-.pack-art {
-  width: 100%;
-  will-change: clip-path;
-}
+.pack-art { width: 100%; }
 .pack-art img {
   width: 100%;
   height: auto;
   display: block;
   pointer-events: none;
 }
-.booster.emptied .pack-scrap,
-.overlay.dealing .pack-scrap,
 .booster.emptied .pack-rest,
-.overlay.dealing .pack-rest,
-.booster.emptied .pack-mouth,
-.overlay.dealing .pack-mouth {
+.overlay.dealing .pack-rest {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-}
-.tear-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 4;
-  overflow: visible;
-  opacity: 0;
-}
-.booster.tearing .tear-svg { opacity: 1; }
-.tear-edge {
-  fill: none;
-  stroke: #f2e8d2;
-  stroke-width: 0.55;
-  stroke-linecap: round;
-  stroke-linejoin: miter;
-  filter: drop-shadow(0 0.4px 0.3px rgba(52, 36, 16, 0.7));
-}
-.overlay.dealing .tear-svg {
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.tear-crumbs {
-  position: absolute;
-  inset: 0;
-  z-index: 9;
-  pointer-events: none;
-}
-.crumb {
-  position: absolute;
-  display: block;
-  border-radius: 1px;
-  background: #f0e5cd;
-  box-shadow: 0 0 0 0.5px rgba(40, 28, 12, 0.35);
-  animation: crumbFly 0.72s cubic-bezier(0.22, 0.7, 0.3, 1) var(--dly, 0ms) both;
-}
-@keyframes crumbFly {
-  from { opacity: 1; transform: translate(0, 0) rotate(0deg); }
-  70% { opacity: 0.9; }
-  to { opacity: 0; transform: translate(var(--cx), var(--cy)) rotate(var(--rot)); }
 }
 
 .focus-wrap {
@@ -4320,7 +4237,7 @@ a.solid { color: #1a1408; }
   .tcg .glare,
   .focus-aura,
   .hit-spark,
-  .crumb,
+  .glint,
   .spread-card,
   .focus-card,
   .pull-inner {
