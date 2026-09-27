@@ -71,9 +71,11 @@ cure"). The surface gloss throws a soft highlight.
   Classic engine in `css/app.css`. Sheet order: `holo/windows.css`,
   `base.css`, `rarities.css`, `finishes.css`, `realism.css`, `maps.css`,
   `celebration.css`, `sv-fullart.css`, `promos.css`, `sv-finishes.css`,
-  `sv-rare.css`, `shrouded-fable.css`, `shiny-vault.css`, `prismatic.css`.
+  `sv-rare.css`, `shrouded-fable.css`, `shiny-vault.css`, `prismatic.css`,
+  `sv151.css`, `side-sets.css`, `sv-reverse.css`, `sv-double-rare.css`.
   Later sheets win ties, which the map rules rely on; the lab loads the
-  same list in the same order.
+  same list in the same order (check `lab/index.html` against `index.html`
+  when a sheet is added).
 - **Rest state** (PR 5): a resting card paints only `.foil`;
   `.foil::before`, `.foil::after`, `.cure` and `.glare` are `display: none`
   until `.lit` or `.settling`. The resting sheen lives on `.foil` at about
@@ -193,6 +195,11 @@ Shared finishes:
   Rare tuning.
 - [reference/sv-tera-acespec.md](reference/sv-tera-acespec.md): Tera ex
   and ACE SPEC (`sv-finishes.css`).
+- [reference/sv-reverse.md](reference/sv-reverse.md): the Scarlet & Violet
+  reverse holos, one pattern per type, and the Mega Evolution mirror
+  (`sv-reverse.css`, `scripts/make_sv_reverse.py`).
+- [reference/sv-double-rare.md](reference/sv-double-rare.md): the Scarlet
+  & Violet Double Rare streaks (`sv-double-rare.css`, scoped by `era-sv`).
 - [reference/promos.md](reference/promos.md): cosmos (smooth and pixel),
   shiny promos, stamped prints and `stamp_knockout.py`.
 - [reference/svp-promos.md](reference/svp-promos.md): the SV Black Star
@@ -226,8 +233,11 @@ Sets, oldest first:
   knockout; also the worked example of taking a whole set from research to
   CSS.
 
-Paradox Rift (sv4) has no note yet; its thread's finish work is in
-[reference/sv-fullart.md](reference/sv-fullart.md).
+Paradox Rift (sv4, live since 2026-09-27) has no note of its own: its
+thread's work is the shared notes
+[reference/sv-fullart.md](reference/sv-fullart.md) (full-art Ultra Rare and
+gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
+[reference/sv-double-rare.md](reference/sv-double-rare.md).
 
 ## Files
 
