@@ -1146,6 +1146,7 @@ export const PLAYABLE_SETS = [
   MEGA_EVOLUTION,
   BLACK_BOLT,
   WHITE_FLARE,
+  SURGING_SPARKS,
 ];
 
 /**
@@ -1159,7 +1160,6 @@ export const RETIRED_SETS = [
   DESTINED_RIVALS,
   JOURNEY_TOGETHER,
   PRISMATIC_EVOLUTIONS,
-  SURGING_SPARKS,
   STELLAR_CROWN,
   SHROUDED_FABLE,
   TWILIGHT_MASQUERADE,
@@ -1211,7 +1211,6 @@ export const ROADMAP = [
       { id: "sv10", name: "Destined Rivals", released: "May 2025", cards: "—" },
       { id: "sv9", name: "Journey Together", released: "Mar 2025", cards: "—" },
       { id: "sv8pt5", name: "Prismatic Evolutions", released: "Jan 2025", cards: "—" },
-      { id: "sv8", name: "Surging Sparks", released: "Nov 2024", cards: "—" },
       { id: "sv7", name: "Stellar Crown", released: "Sep 2024", cards: "—" },
       { id: "sv6pt5", name: "Shrouded Fable", released: "Aug 2024", cards: "—" },
       { id: "sv6", name: "Twilight Masquerade", released: "May 2024", cards: "—" },

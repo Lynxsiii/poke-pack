@@ -26,8 +26,9 @@
         "text": "If you go first, you can use this attack during your first turn. Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck."
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-1/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-1/large",
+    "tcgplayerId": 589939
   },
   {
     "id": "sv8-2",
@@ -56,8 +57,9 @@
         "text": "Heal 10 damage from this Pokémon."
       }
     ],
-    "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-2/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-2/large",
+    "tcgplayerId": 589940
   },
   {
     "id": "sv8-3",
@@ -87,8 +89,9 @@
         "text": "Flip a coin for each Energy attached to both Active Pokémon. This attack does 60 damage for each heads."
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-3/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-3/large",
+    "tcgplayerId": 589942
   },
   {
     "id": "sv8-4",
@@ -126,8 +129,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.62,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-4/large"
+    "market": 0.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-4/large",
+    "foilMap": "assets/foil/maps/sv8/4.webp",
+    "tcgplayerId": 589928
   },
   {
     "id": "sv8-5",
@@ -156,8 +161,9 @@
         "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-5/large"
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-5/large",
+    "tcgplayerId": 590039
   },
   {
     "id": "sv8-6",
@@ -195,8 +201,9 @@
         "text": ""
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-6/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-6/large",
+    "tcgplayerId": 590061
   },
   {
     "id": "sv8-7",
@@ -234,8 +241,9 @@
         "text": ""
       }
     ],
-    "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-7/large"
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-7/large",
+    "tcgplayerId": 590089
   },
   {
     "id": "sv8-8",
@@ -265,7 +273,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-8/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-8/large",
+    "tcgplayerId": 590009
   },
   {
     "id": "sv8-9",
@@ -304,7 +313,8 @@
       }
     ],
     "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-9/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-9/large",
+    "tcgplayerId": 590045
   },
   {
     "id": "sv8-10",
@@ -343,8 +353,9 @@
         "text": "Before doing damage, discard all Pokémon Tools from your opponent's Active Pokémon."
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-10/large"
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-10/large",
+    "tcgplayerId": 589917
   },
   {
     "id": "sv8-11",
@@ -383,8 +394,10 @@
         "text": "You may put all Energy attached to this Pokémon into your hand to have this attack do 80 more damage."
       }
     ],
-    "market": 0.2,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-11/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-11/large",
+    "foilMap": "assets/foil/maps/sv8/11.webp",
+    "tcgplayerId": 590099
   },
   {
     "id": "sv8-12",
@@ -414,8 +427,9 @@
         "text": ""
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-12/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-12/large",
+    "tcgplayerId": 589886
   },
   {
     "id": "sv8-13",
@@ -452,8 +466,9 @@
         "text": ""
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-13/large"
+    "market": 0.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-13/large",
+    "tcgplayerId": 590035
   },
   {
     "id": "sv8-14",
@@ -491,8 +506,10 @@
         "text": "If there are 3 or fewer cards in your deck, this attack does 200 more damage."
       }
     ],
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-14/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-14/large",
+    "foilMap": "assets/foil/maps/sv8/14.webp",
+    "tcgplayerId": 590033
   },
   {
     "id": "sv8-15",
@@ -532,8 +549,9 @@
         "text": "Discard the top 3 cards of your deck."
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-15/large"
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-15/large",
+    "tcgplayerId": 590095
   },
   {
     "id": "sv8-16",
@@ -562,8 +580,9 @@
         "text": "This Pokémon also does 10 damage to itself."
       }
     ],
-    "market": 0.24,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-16/large"
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-16/large",
+    "tcgplayerId": 590092
   },
   {
     "id": "sv8-17",
@@ -593,8 +612,9 @@
         "text": "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 0.2,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-17/large"
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-17/large",
+    "tcgplayerId": 590010
   },
   {
     "id": "sv8-18",
@@ -633,8 +653,9 @@
         "text": "If your opponent's Active Pokémon is a Stage 1 Pokémon, this attack does 90 more damage."
       }
     ],
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-18/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-18/large",
+    "tcgplayerId": 590014
   },
   {
     "id": "sv8-19",
@@ -674,8 +695,9 @@
         "text": "If you have any Tera Pokémon on your Bench, this attack does 100 more damage."
       }
     ],
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-19/large"
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-19/large",
+    "tcgplayerId": 589964
   },
   {
     "id": "sv8-20",
@@ -713,8 +735,9 @@
         "text": "Move all Energy from this Pokémon to 1 of your Benched Pokémon."
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-20/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-20/large",
+    "tcgplayerId": 589887
   },
   {
     "id": "sv8-21",
@@ -751,8 +774,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.22,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-21/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-21/large",
+    "tcgplayerId": 590087
   },
   {
     "id": "sv8-22",
@@ -781,8 +805,9 @@
         "text": ""
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-22/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-22/large",
+    "tcgplayerId": 590020
   },
   {
     "id": "sv8-23",
@@ -812,8 +837,9 @@
         "text": "Flip 2 coins. This attack does 70 damage for each heads."
       }
     ],
-    "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-23/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-23/large",
+    "tcgplayerId": 590049
   },
   {
     "id": "sv8-24",
@@ -851,8 +877,9 @@
         "text": ""
       }
     ],
-    "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-24/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-24/large",
+    "tcgplayerId": 589981
   },
   {
     "id": "sv8-25",
@@ -892,8 +919,9 @@
         "text": "This Pokémon also does 50 damage to itself."
       }
     ],
-    "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-25/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-25/large",
+    "tcgplayerId": 590091
   },
   {
     "id": "sv8-26",
@@ -931,7 +959,8 @@
       }
     ],
     "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-26/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-26/large",
+    "tcgplayerId": 590012
   },
   {
     "id": "sv8-27",
@@ -970,8 +999,9 @@
         "text": ""
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-27/large"
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-27/large",
+    "tcgplayerId": 590050
   },
   {
     "id": "sv8-28",
@@ -1011,8 +1041,9 @@
         "text": ""
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-28/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-28/large",
+    "tcgplayerId": 589889
   },
   {
     "id": "sv8-29",
@@ -1042,8 +1073,9 @@
         "text": "Your opponent's Active Pokémon is now Burned."
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-29/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-29/large",
+    "tcgplayerId": 589952
   },
   {
     "id": "sv8-30",
@@ -1074,8 +1106,9 @@
         "text": "Flip a coin. If heads, this attack does 50 more damage."
       }
     ],
-    "market": 0.22,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-30/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-30/large",
+    "tcgplayerId": 589908
   },
   {
     "id": "sv8-31",
@@ -1113,8 +1146,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-31/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-31/large",
+    "foilMap": "assets/foil/maps/sv8/31.webp",
+    "tcgplayerId": 590053
   },
   {
     "id": "sv8-32",
@@ -1143,8 +1178,9 @@
         "text": ""
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-32/large"
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-32/large",
+    "tcgplayerId": 589896
   },
   {
     "id": "sv8-33",
@@ -1183,8 +1219,9 @@
         "text": "Discard an Energy from this Pokémon."
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-33/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-33/large",
+    "tcgplayerId": 589897
   },
   {
     "id": "sv8-34",
@@ -1225,8 +1262,9 @@
         "text": "Discard all Fire Energy from this Pokémon, and this attack does 180 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 0.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-34/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-34/large",
+    "tcgplayerId": 589870
   },
   {
     "id": "sv8-35",
@@ -1266,14 +1304,16 @@
         "text": "During your next turn, this Pokémon can't attack."
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-35/large"
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-35/large",
+    "tcgplayerId": 589890
   },
   {
     "id": "sv8-36",
     "name": "Ceruledge ex",
     "number": "36",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1",
@@ -1308,8 +1348,11 @@
         "text": "Discard all Energy from this Pokémon."
       }
     ],
-    "market": 1.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-36/large"
+    "market": 1.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-36/large",
+    "foilMap": "assets/foil/maps/sv8/36.webp",
+    "etchMap": "assets/foil/maps/sv8/36-etch.webp",
+    "tcgplayerId": 589892
   },
   {
     "id": "sv8-37",
@@ -1347,8 +1390,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.58,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-37/large"
+    "market": 0.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-37/large",
+    "foilMap": "assets/foil/maps/sv8/37.webp",
+    "tcgplayerId": 590040
   },
   {
     "id": "sv8-38",
@@ -1388,8 +1433,10 @@
         "text": "If your opponent has 4 or fewer Prize cards remaining, this attack does 70 more damage."
       }
     ],
-    "market": 0.23,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-38/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-38/large",
+    "foilMap": "assets/foil/maps/sv8/38.webp",
+    "tcgplayerId": 589958
   },
   {
     "id": "sv8-39",
@@ -1429,8 +1476,9 @@
         "text": ""
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-39/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-39/large",
+    "tcgplayerId": 590015
   },
   {
     "id": "sv8-40",
@@ -1468,8 +1516,9 @@
         "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-40/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-40/large",
+    "tcgplayerId": 589996
   },
   {
     "id": "sv8-41",
@@ -1498,8 +1547,9 @@
         "text": "Switch this Pokémon with 1 of your Benched Pokémon."
       }
     ],
-    "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-41/large"
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-41/large",
+    "tcgplayerId": 589943
   },
   {
     "id": "sv8-42",
@@ -1538,8 +1588,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.66,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-42/large"
+    "market": 0.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-42/large",
+    "foilMap": "assets/foil/maps/sv8/42.webp",
+    "tcgplayerId": 590004
   },
   {
     "id": "sv8-43",
@@ -1568,8 +1620,9 @@
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-43/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-43/large",
+    "tcgplayerId": 590062
   },
   {
     "id": "sv8-44",
@@ -1608,8 +1661,9 @@
         "text": ""
       }
     ],
-    "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-44/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-44/large",
+    "tcgplayerId": 590043
   },
   {
     "id": "sv8-45",
@@ -1648,8 +1702,9 @@
         "text": "This Pokémon also does 50 damage to itself."
       }
     ],
-    "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-45/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-45/large",
+    "tcgplayerId": 590093
   },
   {
     "id": "sv8-46",
@@ -1679,8 +1734,9 @@
         "text": ""
       }
     ],
-    "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-46/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-46/large",
+    "tcgplayerId": 590044
   },
   {
     "id": "sv8-47",
@@ -1717,8 +1773,9 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-47/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-47/large",
+    "tcgplayerId": 589909
   },
   {
     "id": "sv8-48",
@@ -1760,8 +1817,10 @@
         "text": "This Pokémon also does 30 damage to itself."
       }
     ],
-    "market": 0.62,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-48/large"
+    "market": 0.77,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-48/large",
+    "foilMap": "assets/foil/maps/sv8/48.webp",
+    "tcgplayerId": 589874
   },
   {
     "id": "sv8-49",
@@ -1798,8 +1857,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-49/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-49/large",
+    "tcgplayerId": 589883
   },
   {
     "id": "sv8-50",
@@ -1828,8 +1888,9 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage."
       }
     ],
-    "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-50/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-50/large",
+    "tcgplayerId": 590031
   },
   {
     "id": "sv8-51",
@@ -1859,8 +1920,9 @@
         "text": ""
       }
     ],
-    "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-51/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-51/large",
+    "tcgplayerId": 590032
   },
   {
     "id": "sv8-52",
@@ -1898,8 +1960,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-52/large"
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-52/large",
+    "tcgplayerId": 590030
   },
   {
     "id": "sv8-53",
@@ -1929,8 +1992,9 @@
         "text": "Heal 20 damage from this Pokémon."
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-53/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-53/large",
+    "tcgplayerId": 589895
   },
   {
     "id": "sv8-54",
@@ -1970,8 +2034,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-54/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-54/large",
+    "tcgplayerId": 589893
   },
   {
     "id": "sv8-55",
@@ -2003,8 +2068,9 @@
         "text": "This attack does 50 less damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
       }
     ],
-    "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-55/large"
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-55/large",
+    "tcgplayerId": 589969
   },
   {
     "id": "sv8-56",
@@ -2042,14 +2108,17 @@
         "type": "Ability"
       }
     ],
-    "market": 0.24,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-56/large"
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-56/large",
+    "foilMap": "assets/foil/maps/sv8/56.webp",
+    "tcgplayerId": 589898
   },
   {
     "id": "sv8-57",
     "name": "Pikachu ex",
     "number": "57",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
@@ -2082,8 +2151,11 @@
         "type": "Ability"
       }
     ],
-    "market": 4.47,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-57/large"
+    "market": 4.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-57/large",
+    "foilMap": "assets/foil/maps/sv8/57.webp",
+    "etchMap": "assets/foil/maps/sv8/57-etch.webp",
+    "tcgplayerId": 590025
   },
   {
     "id": "sv8-58",
@@ -2112,8 +2184,9 @@
         "text": ""
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-58/large"
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-58/large",
+    "tcgplayerId": 589992
   },
   {
     "id": "sv8-59",
@@ -2151,8 +2224,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-59/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-59/large",
+    "tcgplayerId": 589993
   },
   {
     "id": "sv8-60",
@@ -2195,8 +2269,9 @@
         "text": "During your next turn, this Pokémon can't use Zap Cannon."
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-60/large"
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-60/large",
+    "tcgplayerId": 589994
   },
   {
     "id": "sv8-61",
@@ -2233,8 +2308,9 @@
         "text": "This attack does 20 damage for each Energy attached to your opponent's Active Pokémon."
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-61/large"
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-61/large",
+    "tcgplayerId": 590036
   },
   {
     "id": "sv8-62",
@@ -2272,8 +2348,9 @@
         "text": ""
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-62/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-62/large",
+    "tcgplayerId": 589876
   },
   {
     "id": "sv8-63",
@@ -2313,8 +2390,9 @@
         "text": ""
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-63/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-63/large",
+    "tcgplayerId": 590100
   },
   {
     "id": "sv8-64",
@@ -2344,8 +2422,9 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed, and discard an Energy from that Pokémon."
       }
     ],
-    "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-64/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-64/large",
+    "tcgplayerId": 590064
   },
   {
     "id": "sv8-65",
@@ -2384,8 +2463,10 @@
         "text": "If you have more Prize cards remaining than your opponent, this attack does 90 more damage."
       }
     ],
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-65/large"
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-65/large",
+    "foilMap": "assets/foil/maps/sv8/65.webp",
+    "tcgplayerId": 590071
   },
   {
     "id": "sv8-66",
@@ -2415,7 +2496,8 @@
       }
     ],
     "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-66/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-66/large",
+    "tcgplayerId": 590094
   },
   {
     "id": "sv8-67",
@@ -2456,8 +2538,9 @@
         "text": "Move all Energy from this Pokémon to your Benched Pokémon in any way you like."
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-67/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-67/large",
+    "tcgplayerId": 589976
   },
   {
     "id": "sv8-68",
@@ -2496,8 +2579,10 @@
         "text": "This attack does 40 more damage for each Lightning Energy attached to this Pokémon."
       }
     ],
-    "market": 0.53,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-68/large"
+    "market": 0.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-68/large",
+    "foilMap": "assets/foil/maps/sv8/68.webp",
+    "tcgplayerId": 589977
   },
   {
     "id": "sv8-69",
@@ -2538,8 +2623,9 @@
         "text": ""
       }
     ],
-    "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-69/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-69/large",
+    "tcgplayerId": 590008
   },
   {
     "id": "sv8-70",
@@ -2569,8 +2655,9 @@
         "text": ""
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-70/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-70/large",
+    "tcgplayerId": 590079
   },
   {
     "id": "sv8-71",
@@ -2602,7 +2689,8 @@
       }
     ],
     "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-71/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-71/large",
+    "tcgplayerId": 590080
   },
   {
     "id": "sv8-72",
@@ -2642,7 +2730,9 @@
       }
     ],
     "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-72/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-72/large",
+    "foilMap": "assets/foil/maps/sv8/72.webp",
+    "tcgplayerId": 590078
   },
   {
     "id": "sv8-73",
@@ -2671,8 +2761,9 @@
         "text": ""
       }
     ],
-    "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-73/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-73/large",
+    "tcgplayerId": 589997
   },
   {
     "id": "sv8-74",
@@ -2712,8 +2803,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-74/large"
+    "market": 0.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-74/large",
+    "tcgplayerId": 589872
   },
   {
     "id": "sv8-75",
@@ -2742,8 +2834,9 @@
         "text": "Search your deck for up to 2 Basic Psychic Energy cards and attach them to 1 of your Benched Pokémon. Then, shuffle your deck."
       }
     ],
-    "market": 0.25,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-75/large"
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-75/large",
+    "tcgplayerId": 590059
   },
   {
     "id": "sv8-76",
@@ -2781,8 +2874,10 @@
         "type": "Ability"
       }
     ],
-    "market": 6.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-76/large"
+    "market": 6.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-76/large",
+    "foilMap": "assets/foil/maps/sv8/76.webp",
+    "tcgplayerId": 589983
   },
   {
     "id": "sv8-77",
@@ -2822,8 +2917,9 @@
         "text": ""
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-77/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-77/large",
+    "tcgplayerId": 589986
   },
   {
     "id": "sv8-78",
@@ -2852,8 +2948,9 @@
         "text": "Put 2 damage counters on each of your opponent's Pokémon."
       }
     ],
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-78/large"
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-78/large",
+    "tcgplayerId": 590084
   },
   {
     "id": "sv8-79",
@@ -2891,8 +2988,9 @@
         "text": "If you don't have Uxie and Azelf on your Bench, this attack does nothing."
       }
     ],
-    "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-79/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-79/large",
+    "tcgplayerId": 590002
   },
   {
     "id": "sv8-80",
@@ -2923,7 +3021,8 @@
       }
     ],
     "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-80/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-80/large",
+    "tcgplayerId": 589871
   },
   {
     "id": "sv8-81",
@@ -2962,8 +3061,9 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-81/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-81/large",
+    "tcgplayerId": 590048
   },
   {
     "id": "sv8-82",
@@ -3001,8 +3101,9 @@
         "text": ""
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-82/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-82/large",
+    "tcgplayerId": 590097
   },
   {
     "id": "sv8-83",
@@ -3042,8 +3143,10 @@
         "text": ""
       }
     ],
-    "market": 0.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-83/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-83/large",
+    "foilMap": "assets/foil/maps/sv8/83.webp",
+    "tcgplayerId": 589905
   },
   {
     "id": "sv8-84",
@@ -3081,8 +3184,9 @@
         "text": ""
       }
     ],
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-84/large"
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-84/large",
+    "tcgplayerId": 589936
   },
   {
     "id": "sv8-85",
@@ -3121,14 +3225,16 @@
         "type": "Ability"
       }
     ],
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-85/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-85/large",
+    "tcgplayerId": 590001
   },
   {
     "id": "sv8-86",
     "name": "Sylveon ex",
     "number": "86",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1",
@@ -3165,8 +3271,11 @@
         "text": "Choose 2 of your opponent's Benched Pokémon. Shuffle those Pokémon and all attached cards into your opponent's deck. If 1 of your Pokémon used Angelite during your last turn, this attack can't be used."
       }
     ],
-    "market": 2.38,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-86/large"
+    "market": 2.78,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-86/large",
+    "foilMap": "assets/foil/maps/sv8/86.webp",
+    "etchMap": "assets/foil/maps/sv8/86-etch.webp",
+    "tcgplayerId": 590069
   },
   {
     "id": "sv8-87",
@@ -3204,7 +3313,8 @@
       }
     ],
     "market": 0.22,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-87/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-87/large",
+    "tcgplayerId": 589914
   },
   {
     "id": "sv8-88",
@@ -3244,8 +3354,9 @@
         "text": "During your next turn, this Pokémon can't attack."
       }
     ],
-    "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-88/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-88/large",
+    "tcgplayerId": 590096
   },
   {
     "id": "sv8-89",
@@ -3284,7 +3395,8 @@
       }
     ],
     "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-89/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-89/large",
+    "tcgplayerId": 590013
   },
   {
     "id": "sv8-90",
@@ -3315,14 +3427,16 @@
         "text": ""
       }
     ],
-    "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-90/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-90/large",
+    "tcgplayerId": 590038
   },
   {
     "id": "sv8-91",
     "name": "Palossand ex",
     "number": "91",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1",
@@ -3359,8 +3473,11 @@
         "text": "Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is 100."
       }
     ],
-    "market": 0.66,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-91/large"
+    "market": 0.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-91/large",
+    "foilMap": "assets/foil/maps/sv8/91.webp",
+    "etchMap": "assets/foil/maps/sv8/91-etch.webp",
+    "tcgplayerId": 590018
   },
   {
     "id": "sv8-92",
@@ -3400,8 +3517,10 @@
         "text": "If your opponent's Active Pokémon is Confused, this attack does 90 more damage."
       }
     ],
-    "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-92/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-92/large",
+    "foilMap": "assets/foil/maps/sv8/92.webp",
+    "tcgplayerId": 590072
   },
   {
     "id": "sv8-93",
@@ -3438,8 +3557,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-93/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-93/large",
+    "tcgplayerId": 589968
   },
   {
     "id": "sv8-94",
@@ -3469,7 +3589,8 @@
       }
     ],
     "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-94/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-94/large",
+    "tcgplayerId": 589948
   },
   {
     "id": "sv8-95",
@@ -3509,7 +3630,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-95/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-95/large",
+    "tcgplayerId": 589935
   },
   {
     "id": "sv8-96",
@@ -3549,8 +3671,9 @@
         "text": "During your opponent's next turn, attacks used by the Defending Pokémon do 30 less damage (before applying Weakness and Resistance)."
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-96/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-96/large",
+    "tcgplayerId": 589949
   },
   {
     "id": "sv8-97",
@@ -3589,8 +3712,9 @@
         "text": ""
       }
     ],
-    "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-97/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-97/large",
+    "tcgplayerId": 589955
   },
   {
     "id": "sv8-98",
@@ -3620,7 +3744,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-98/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-98/large",
+    "tcgplayerId": 589995
   },
   {
     "id": "sv8-99",
@@ -3659,8 +3784,9 @@
         "text": ""
       }
     ],
-    "market": 0.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-99/large"
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-99/large",
+    "tcgplayerId": 590029
   },
   {
     "id": "sv8-100",
@@ -3699,8 +3825,9 @@
         "text": "Both Active Pokémon are Knocked Out."
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-100/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-100/large",
+    "tcgplayerId": 589863
   },
   {
     "id": "sv8-101",
@@ -3740,8 +3867,9 @@
         "text": "If the Defending Pokémon is a Basic Pokémon, it can't attack during your opponent's next turn."
       }
     ],
-    "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-101/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-101/large",
+    "tcgplayerId": 590016
   },
   {
     "id": "sv8-102",
@@ -3771,7 +3899,8 @@
       }
     ],
     "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-102/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-102/large",
+    "tcgplayerId": 590023
   },
   {
     "id": "sv8-103",
@@ -3812,7 +3941,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-103/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-103/large",
+    "tcgplayerId": 589919
   },
   {
     "id": "sv8-104",
@@ -3851,7 +3981,8 @@
       }
     ],
     "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-104/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-104/large",
+    "tcgplayerId": 590081
   },
   {
     "id": "sv8-105",
@@ -3890,14 +4021,16 @@
         "text": ""
       }
     ],
-    "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-105/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-105/large",
+    "tcgplayerId": 590085
   },
   {
     "id": "sv8-106",
     "name": "Flygon ex",
     "number": "106",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2",
@@ -3932,8 +4065,11 @@
         "text": "This attack does 100 damage to each of your opponent's Pokémon ex and Pokémon V. This attack's damage isn't affected by Weakness or Resistance."
       }
     ],
-    "market": 0.7,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-106/large"
+    "market": 0.6,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-106/large",
+    "foilMap": "assets/foil/maps/sv8/106.webp",
+    "etchMap": "assets/foil/maps/sv8/106-etch.webp",
+    "tcgplayerId": 589950
   },
   {
     "id": "sv8-107",
@@ -3972,8 +4108,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.2,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-107/large"
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-107/large",
+    "foilMap": "assets/foil/maps/sv8/107.webp",
+    "tcgplayerId": 589953
   },
   {
     "id": "sv8-108",
@@ -4010,8 +4148,9 @@
         "text": ""
       }
     ],
-    "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-108/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-108/large",
+    "tcgplayerId": 589926
   },
   {
     "id": "sv8-109",
@@ -4050,8 +4189,9 @@
         "text": "If you have any Metal Pokémon on your Bench, this attack does 80 more damage."
       }
     ],
-    "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-109/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-109/large",
+    "tcgplayerId": 589938
   },
   {
     "id": "sv8-110",
@@ -4091,8 +4231,10 @@
         "text": "This attack's damage isn't affected by Resistance."
       }
     ],
-    "market": 0.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-110/large"
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-110/large",
+    "foilMap": "assets/foil/maps/sv8/110.webp",
+    "tcgplayerId": 589980
   },
   {
     "id": "sv8-111",
@@ -4122,8 +4264,9 @@
         "text": "This attack does 20 damage for each of your Basic Pokémon in play."
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-111/large"
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-111/large",
+    "tcgplayerId": 590022
   },
   {
     "id": "sv8-112",
@@ -4152,8 +4295,9 @@
         "text": "This Pokémon also does 10 damage to itself."
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-112/large"
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-112/large",
+    "tcgplayerId": 589903
   },
   {
     "id": "sv8-113",
@@ -4193,8 +4337,9 @@
         "text": "If this Pokémon has any damage counters on it, this attack can be used for Fighting."
       }
     ],
-    "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-113/large"
+    "market": 0.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-113/large",
+    "tcgplayerId": 589960
   },
   {
     "id": "sv8-114",
@@ -4223,8 +4368,9 @@
         "text": "This attack's damage isn't affected by Resistance."
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-114/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-114/large",
+    "tcgplayerId": 589956
   },
   {
     "id": "sv8-115",
@@ -4263,8 +4409,9 @@
         "text": ""
       }
     ],
-    "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-115/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-115/large",
+    "tcgplayerId": 589957
   },
   {
     "id": "sv8-116",
@@ -4305,8 +4452,9 @@
         "text": ""
       }
     ],
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-116/large"
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-116/large",
+    "tcgplayerId": 589979
   },
   {
     "id": "sv8-117",
@@ -4344,8 +4492,9 @@
         "text": ""
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-117/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-117/large",
+    "tcgplayerId": 589916
   },
   {
     "id": "sv8-118",
@@ -4385,14 +4534,16 @@
         "text": ""
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-118/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-118/large",
+    "tcgplayerId": 590101
   },
   {
     "id": "sv8-119",
     "name": "Hydreigon ex",
     "number": "119",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2",
@@ -4429,8 +4580,11 @@
         "text": "This attack also does 130 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 0.85,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-119/large"
+    "market": 0.8,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-119/large",
+    "foilMap": "assets/foil/maps/sv8/119.webp",
+    "etchMap": "assets/foil/maps/sv8/119-etch.webp",
+    "tcgplayerId": 589965
   },
   {
     "id": "sv8-120",
@@ -4460,7 +4614,8 @@
       }
     ],
     "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-120/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-120/large",
+    "tcgplayerId": 590047
   },
   {
     "id": "sv8-121",
@@ -4499,8 +4654,9 @@
         "text": "This attack does 40 damage for each Energy attached to all of your opponent's Pokémon."
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-121/large"
+    "market": 0.04,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-121/large",
+    "tcgplayerId": 589959
   },
   {
     "id": "sv8-122",
@@ -4529,8 +4685,9 @@
         "text": "Flip a coin. If tails, this attack does nothing."
       }
     ],
-    "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-122/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-122/large",
+    "tcgplayerId": 589855
   },
   {
     "id": "sv8-123",
@@ -4560,8 +4717,9 @@
         "text": "If you don't have exactly 3 cards in your hand, this attack does nothing."
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-123/large"
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-123/large",
+    "tcgplayerId": 589856
   },
   {
     "id": "sv8-124",
@@ -4591,8 +4749,9 @@
         "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
       }
     ],
-    "market": 0.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-124/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-124/large",
+    "tcgplayerId": 590051
   },
   {
     "id": "sv8-125",
@@ -4622,8 +4781,9 @@
         "text": "This attack does 10 more damage for each damage counter on this Pokémon."
       }
     ],
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-125/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-125/large",
+    "tcgplayerId": 590034
   },
   {
     "id": "sv8-126",
@@ -4653,8 +4813,9 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage."
       }
     ],
-    "market": 0.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-126/large"
+    "market": 0.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-126/large",
+    "tcgplayerId": 589882
   },
   {
     "id": "sv8-127",
@@ -4695,8 +4856,9 @@
         "text": "Flip 2 coins. This attack does 100 damage for each heads."
       }
     ],
-    "market": 0.05,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-127/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-127/large",
+    "tcgplayerId": 589881
   },
   {
     "id": "sv8-128",
@@ -4733,8 +4895,9 @@
         "text": ""
       }
     ],
-    "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-128/large"
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-128/large",
+    "tcgplayerId": 589978
   },
   {
     "id": "sv8-129",
@@ -4774,8 +4937,9 @@
         "text": "Discard 2 Energy from this Pokémon."
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-129/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-129/large",
+    "tcgplayerId": 589927
   },
   {
     "id": "sv8-130",
@@ -4814,8 +4978,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.67,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-130/large"
+    "market": 0.57,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-130/large",
+    "foilMap": "assets/foil/maps/sv8/130.webp",
+    "tcgplayerId": 589867
   },
   {
     "id": "sv8-131",
@@ -4855,8 +5021,9 @@
         "text": "You may shuffle this Pokémon and all attached cards into your deck."
       }
     ],
-    "market": 0.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-131/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-131/large",
+    "tcgplayerId": 589954
   },
   {
     "id": "sv8-132",
@@ -4897,14 +5064,17 @@
         "text": ""
       }
     ],
-    "market": 0.27,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-132/large"
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-132/large",
+    "foilMap": "assets/foil/maps/sv8/132.webp",
+    "tcgplayerId": 589970
   },
   {
     "id": "sv8-133",
     "name": "Alolan Exeggutor ex",
     "number": "133",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1",
@@ -4940,8 +5110,11 @@
         "text": "Flip a coin. If heads, Knock Out your opponent's Active Basic Pokémon. If tails, Knock Out 1 of your opponent's Benched Basic Pokémon."
       }
     ],
-    "market": 0.75,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-133/large"
+    "market": 0.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-133/large",
+    "foilMap": "assets/foil/maps/sv8/133.webp",
+    "etchMap": "assets/foil/maps/sv8/133-etch.webp",
+    "tcgplayerId": 589858
   },
   {
     "id": "sv8-134",
@@ -4980,8 +5153,9 @@
         "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage done to this Pokémon by attacks."
       }
     ],
-    "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-134/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-134/large",
+    "tcgplayerId": 589861
   },
   {
     "id": "sv8-135",
@@ -5020,8 +5194,10 @@
         "text": ""
       }
     ],
-    "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-135/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-135/large",
+    "foilMap": "assets/foil/maps/sv8/135.webp",
+    "tcgplayerId": 589918
   },
   {
     "id": "sv8-136",
@@ -5052,7 +5228,9 @@
       }
     ],
     "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-136/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-136/large",
+    "foilMap": "assets/foil/maps/sv8/136.webp",
+    "tcgplayerId": 590017
   },
   {
     "id": "sv8-137",
@@ -5091,8 +5269,9 @@
         "text": ""
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-137/large"
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-137/large",
+    "tcgplayerId": 590082
   },
   {
     "id": "sv8-138",
@@ -5131,7 +5310,8 @@
       }
     ],
     "market": 0.2,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-138/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-138/large",
+    "tcgplayerId": 589866
   },
   {
     "id": "sv8-139",
@@ -5170,8 +5350,9 @@
         "text": ""
       }
     ],
-    "market": 0.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-139/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-139/large",
+    "tcgplayerId": 589946
   },
   {
     "id": "sv8-140",
@@ -5211,8 +5392,9 @@
         "text": "This Pokémon also does 20 damage to itself."
       }
     ],
-    "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-140/large"
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-140/large",
+    "tcgplayerId": 589864
   },
   {
     "id": "sv8-141",
@@ -5251,14 +5433,17 @@
         "text": "Discard a Stadium in play. If you can't, this attack does nothing."
       }
     ],
-    "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-141/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-141/large",
+    "foilMap": "assets/foil/maps/sv8/141.webp",
+    "tcgplayerId": 589937
   },
   {
     "id": "sv8-142",
     "name": "Tatsugiri ex",
     "number": "142",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
@@ -5293,8 +5478,11 @@
         "text": "Look at the top 10 cards of your deck. You may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck."
       }
     ],
-    "market": 0.58,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-142/large"
+    "market": 0.7,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-142/large",
+    "foilMap": "assets/foil/maps/sv8/142.webp",
+    "etchMap": "assets/foil/maps/sv8/142-etch.webp",
+    "tcgplayerId": 590073
   },
   {
     "id": "sv8-143",
@@ -5331,8 +5519,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.22,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-143/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-143/large",
+    "tcgplayerId": 589932
   },
   {
     "id": "sv8-144",
@@ -5371,8 +5560,9 @@
         "text": ""
       }
     ],
-    "market": 0.32,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-144/large"
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-144/large",
+    "tcgplayerId": 590060
   },
   {
     "id": "sv8-145",
@@ -5401,8 +5591,9 @@
         "text": "Heal 60 damage from this Pokémon. During your next turn, this Pokémon can't retreat."
       }
     ],
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-145/large"
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-145/large",
+    "tcgplayerId": 590056
   },
   {
     "id": "sv8-146",
@@ -5433,8 +5624,9 @@
         "text": ""
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-146/large"
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-146/large",
+    "tcgplayerId": 590088
   },
   {
     "id": "sv8-147",
@@ -5472,8 +5664,10 @@
         "type": "Ability"
       }
     ],
-    "market": 0.56,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-147/large"
+    "market": 0.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-147/large",
+    "foilMap": "assets/foil/maps/sv8/147.webp",
+    "tcgplayerId": 590054
   },
   {
     "id": "sv8-148",
@@ -5502,8 +5696,9 @@
         "text": "Your opponent's Active Pokémon is now Confused."
       }
     ],
-    "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-148/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-148/large",
+    "tcgplayerId": 590068
   },
   {
     "id": "sv8-149",
@@ -5532,8 +5727,9 @@
         "text": "Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 50 more damage. If all of them are heads, this attack does 80 more damage."
       }
     ],
-    "market": 0.02,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-149/large"
+    "market": 0.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-149/large",
+    "tcgplayerId": 590098
   },
   {
     "id": "sv8-150",
@@ -5570,8 +5766,9 @@
         "type": "Ability"
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-150/large"
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-150/large",
+    "tcgplayerId": 589974
   },
   {
     "id": "sv8-151",
@@ -5612,8 +5809,9 @@
         "text": "Discard 2 Energy from this Pokémon."
       }
     ],
-    "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-151/large"
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-151/large",
+    "tcgplayerId": 589877
   },
   {
     "id": "sv8-152",
@@ -5643,8 +5841,9 @@
         "text": ""
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-152/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-152/large",
+    "tcgplayerId": 590037
   },
   {
     "id": "sv8-153",
@@ -5686,7 +5885,8 @@
       }
     ],
     "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-153/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-153/large",
+    "tcgplayerId": 589878
   },
   {
     "id": "sv8-154",
@@ -5725,8 +5925,9 @@
         "text": "This Pokémon also does 10 damage to itself."
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-154/large"
+    "market": 0.02,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-154/large",
+    "tcgplayerId": 589963
   },
   {
     "id": "sv8-155",
@@ -5767,7 +5968,8 @@
       }
     ],
     "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-155/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-155/large",
+    "tcgplayerId": 589962
   },
   {
     "id": "sv8-156",
@@ -5806,8 +6008,9 @@
         "text": ""
       }
     ],
-    "market": 0.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-156/large"
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-156/large",
+    "tcgplayerId": 590011
   },
   {
     "id": "sv8-157",
@@ -5836,8 +6039,9 @@
         "text": "Flip a coin. If heads, this attack does 10 more damage."
       }
     ],
-    "market": 0.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-157/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-157/large",
+    "tcgplayerId": 590070
   },
   {
     "id": "sv8-158",
@@ -5875,14 +6079,16 @@
         "text": "Flip 4 coins. This attack does 30 damage for each heads."
       }
     ],
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-158/large"
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-158/large",
+    "tcgplayerId": 589998
   },
   {
     "id": "sv8-159",
     "name": "Cyclizar ex",
     "number": "159",
     "rarity": "Double Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
@@ -5918,8 +6124,11 @@
         "text": "You may draw 5 cards."
       }
     ],
-    "market": 0.7,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-159/large"
+    "market": 0.68,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-159/large",
+    "foilMap": "assets/foil/maps/sv8/159.webp",
+    "etchMap": "assets/foil/maps/sv8/159-etch.webp",
+    "tcgplayerId": 589910
   },
   {
     "id": "sv8-160",
@@ -5960,8 +6169,10 @@
         "text": "This Pokémon also does 30 damage to itself."
       }
     ],
-    "market": 0.62,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-160/large"
+    "market": 0.57,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-160/large",
+    "foilMap": "assets/foil/maps/sv8/160.webp",
+    "tcgplayerId": 589945
   },
   {
     "id": "sv8-161",
@@ -6000,8 +6211,10 @@
         "text": ""
       }
     ],
-    "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-161/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-161/large",
+    "foilMap": "assets/foil/maps/sv8/161.webp",
+    "tcgplayerId": 590077
   },
   {
     "id": "sv8-162",
@@ -6016,8 +6229,11 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/sv8/162.webp",
     "imageSmall": "assets/cards/sv8/162-sm.webp",
-    "market": 0.54,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-162/large"
+    "market": 0.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-162/large",
+    "foilMap": "assets/foil/maps/sv8/162.webp",
+    "etchMap": "assets/foil/maps/sv8/162-etch.webp",
+    "tcgplayerId": 589862
   },
   {
     "id": "sv8-163",
@@ -6031,8 +6247,9 @@
     "artist": "Studio Bora Inc.",
     "image": "assets/cards/sv8/163.webp",
     "imageSmall": "assets/cards/sv8/163-sm.webp",
-    "market": 0.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-163/large"
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-163/large",
+    "tcgplayerId": 589873
   },
   {
     "id": "sv8-164",
@@ -6047,8 +6264,11 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/sv8/164.webp",
     "imageSmall": "assets/cards/sv8/164-sm.webp",
-    "market": 0.78,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-164/large"
+    "market": 0.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-164/large",
+    "foilMap": "assets/foil/maps/sv8/164.webp",
+    "etchMap": "assets/foil/maps/sv8/164-etch.webp",
+    "tcgplayerId": 589880
   },
   {
     "id": "sv8-165",
@@ -6062,8 +6282,9 @@
     "artist": "Ayaka Yoshida",
     "image": "assets/cards/sv8/165.webp",
     "imageSmall": "assets/cards/sv8/165-sm.webp",
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-165/large"
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-165/large",
+    "tcgplayerId": 589885
   },
   {
     "id": "sv8-166",
@@ -6077,8 +6298,9 @@
     "artist": "AYUMI ODASHIMA",
     "image": "assets/cards/sv8/166.webp",
     "imageSmall": "assets/cards/sv8/166-sm.webp",
-    "market": 0.06,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-166/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-166/large",
+    "tcgplayerId": 589899
   },
   {
     "id": "sv8-167",
@@ -6092,8 +6314,9 @@
     "artist": "Naoki Saito",
     "image": "assets/cards/sv8/167.webp",
     "imageSmall": "assets/cards/sv8/167-sm.webp",
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-167/large"
+    "market": 0.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-167/large",
+    "tcgplayerId": 589900
   },
   {
     "id": "sv8-168",
@@ -6107,8 +6330,9 @@
     "artist": "Studio Bora Inc.",
     "image": "assets/cards/sv8/168.webp",
     "imageSmall": "assets/cards/sv8/168-sm.webp",
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-168/large"
+    "market": 0.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-168/large",
+    "tcgplayerId": 589906
   },
   {
     "id": "sv8-169",
@@ -6122,8 +6346,9 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/sv8/169.webp",
     "imageSmall": "assets/cards/sv8/169-sm.webp",
-    "market": 0.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-169/large"
+    "market": 0.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-169/large",
+    "tcgplayerId": 589907
   },
   {
     "id": "sv8-170",
@@ -6137,8 +6362,9 @@
     "artist": "Akira Komayama",
     "image": "assets/cards/sv8/170.webp",
     "imageSmall": "assets/cards/sv8/170-sm.webp",
-    "market": 0.28,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-170/large"
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-170/large",
+    "tcgplayerId": 589912
   },
   {
     "id": "sv8-171",
@@ -6152,8 +6378,9 @@
     "artist": "AYUMI ODASHIMA",
     "image": "assets/cards/sv8/171.webp",
     "imageSmall": "assets/cards/sv8/171-sm.webp",
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-171/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-171/large",
+    "tcgplayerId": 589915
   },
   {
     "id": "sv8-172",
@@ -6167,8 +6394,9 @@
     "artist": "AYUMI ODASHIMA",
     "image": "assets/cards/sv8/172.webp",
     "imageSmall": "assets/cards/sv8/172-sm.webp",
-    "market": 0.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-172/large"
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-172/large",
+    "tcgplayerId": 589920
   },
   {
     "id": "sv8-173",
@@ -6182,8 +6410,9 @@
     "artist": "Hideki Ishikawa",
     "image": "assets/cards/sv8/173.webp",
     "imageSmall": "assets/cards/sv8/173-sm.webp",
-    "market": 0.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-173/large"
+    "market": 0.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-173/large",
+    "tcgplayerId": 589921
   },
   {
     "id": "sv8-174",
@@ -6197,8 +6426,9 @@
     "artist": "GIDORA",
     "image": "assets/cards/sv8/174.webp",
     "imageSmall": "assets/cards/sv8/174-sm.webp",
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-174/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-174/large",
+    "tcgplayerId": 589923
   },
   {
     "id": "sv8-175",
@@ -6212,8 +6442,9 @@
     "artist": "Studio Bora Inc.",
     "image": "assets/cards/sv8/175.webp",
     "imageSmall": "assets/cards/sv8/175-sm.webp",
-    "market": 0.24,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-175/large"
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-175/large",
+    "tcgplayerId": 589931
   },
   {
     "id": "sv8-176",
@@ -6228,8 +6459,11 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/sv8/176.webp",
     "imageSmall": "assets/cards/sv8/176-sm.webp",
-    "market": 0.73,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-176/large"
+    "market": 0.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-176/large",
+    "foilMap": "assets/foil/maps/sv8/176.webp",
+    "etchMap": "assets/foil/maps/sv8/176-etch.webp",
+    "tcgplayerId": 589933
   },
   {
     "id": "sv8-177",
@@ -6243,8 +6477,9 @@
     "artist": "AYUMI ODASHIMA",
     "image": "assets/cards/sv8/177.webp",
     "imageSmall": "assets/cards/sv8/177-sm.webp",
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-177/large"
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-177/large",
+    "tcgplayerId": 589961
   },
   {
     "id": "sv8-178",
@@ -6258,8 +6493,9 @@
     "artist": "Taira Akitsu",
     "image": "assets/cards/sv8/178.webp",
     "imageSmall": "assets/cards/sv8/178-sm.webp",
-    "market": 0.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-178/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-178/large",
+    "tcgplayerId": 589971
   },
   {
     "id": "sv8-179",
@@ -6273,8 +6509,9 @@
     "artist": "En Morikura",
     "image": "assets/cards/sv8/179.webp",
     "imageSmall": "assets/cards/sv8/179-sm.webp",
-    "market": 0.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-179/large"
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-179/large",
+    "tcgplayerId": 589988
   },
   {
     "id": "sv8-180",
@@ -6288,8 +6525,9 @@
     "artist": "imoniii",
     "image": "assets/cards/sv8/180.webp",
     "imageSmall": "assets/cards/sv8/180-sm.webp",
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-180/large"
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-180/large",
+    "tcgplayerId": 589991
   },
   {
     "id": "sv8-181",
@@ -6303,8 +6541,9 @@
     "artist": "Ayaka Yoshida",
     "image": "assets/cards/sv8/181.webp",
     "imageSmall": "assets/cards/sv8/181-sm.webp",
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-181/large"
+    "market": 0.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-181/large",
+    "tcgplayerId": 589999
   },
   {
     "id": "sv8-182",
@@ -6319,8 +6558,11 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/sv8/182.webp",
     "imageSmall": "assets/cards/sv8/182-sm.webp",
-    "market": 0.42,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-182/large"
+    "market": 0.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-182/large",
+    "foilMap": "assets/foil/maps/sv8/182.webp",
+    "etchMap": "assets/foil/maps/sv8/182-etch.webp",
+    "tcgplayerId": 590000
   },
   {
     "id": "sv8-183",
@@ -6335,8 +6577,11 @@
     "artist": "inose yukie",
     "image": "assets/cards/sv8/183.webp",
     "imageSmall": "assets/cards/sv8/183-sm.webp",
-    "market": 0.68,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-183/large"
+    "market": 0.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-183/large",
+    "foilMap": "assets/foil/maps/sv8/183.webp",
+    "etchMap": "assets/foil/maps/sv8/183-etch.webp",
+    "tcgplayerId": 590007
   },
   {
     "id": "sv8-184",
@@ -6350,8 +6595,9 @@
     "artist": "Studio Bora Inc.",
     "image": "assets/cards/sv8/184.webp",
     "imageSmall": "assets/cards/sv8/184-sm.webp",
-    "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-184/large"
+    "market": 0.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-184/large",
+    "tcgplayerId": 590021
   },
   {
     "id": "sv8-185",
@@ -6366,8 +6612,11 @@
     "artist": "inose yukie",
     "image": "assets/cards/sv8/185.webp",
     "imageSmall": "assets/cards/sv8/185-sm.webp",
-    "market": 3.58,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-185/large"
+    "market": 3.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-185/large",
+    "foilMap": "assets/foil/maps/sv8/185.webp",
+    "etchMap": "assets/foil/maps/sv8/185-etch.webp",
+    "tcgplayerId": 590028
   },
   {
     "id": "sv8-186",
@@ -6382,8 +6631,11 @@
     "artist": "Ayaka Yoshida",
     "image": "assets/cards/sv8/186.webp",
     "imageSmall": "assets/cards/sv8/186-sm.webp",
-    "market": 0.47,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-186/large"
+    "market": 0.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-186/large",
+    "foilMap": "assets/foil/maps/sv8/186.webp",
+    "etchMap": "assets/foil/maps/sv8/186-etch.webp",
+    "tcgplayerId": 590042
   },
   {
     "id": "sv8-187",
@@ -6397,8 +6649,9 @@
     "artist": "Sanosuke Sakuma",
     "image": "assets/cards/sv8/187.webp",
     "imageSmall": "assets/cards/sv8/187-sm.webp",
-    "market": 0.21,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-187/large"
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-187/large",
+    "tcgplayerId": 590066
   },
   {
     "id": "sv8-188",
@@ -6425,7 +6678,8 @@
       }
     ],
     "market": 0.07,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-188/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-188/large",
+    "tcgplayerId": 590075
   },
   {
     "id": "sv8-189",
@@ -6439,8 +6693,9 @@
     "artist": "Ayaka Yoshida",
     "image": "assets/cards/sv8/189.webp",
     "imageSmall": "assets/cards/sv8/189-sm.webp",
-    "market": 0.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-189/large"
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-189/large",
+    "tcgplayerId": 590076
   },
   {
     "id": "sv8-190",
@@ -6454,8 +6709,9 @@
     "artist": "Akira Komayama",
     "image": "assets/cards/sv8/190.webp",
     "imageSmall": "assets/cards/sv8/190-sm.webp",
-    "market": 0.16,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-190/large"
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-190/large",
+    "tcgplayerId": 590083
   },
   {
     "id": "sv8-191",
@@ -6469,8 +6725,11 @@
     ],
     "image": "assets/cards/sv8/191.webp",
     "imageSmall": "assets/cards/sv8/191-sm.webp",
-    "market": 3.39,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-191/large"
+    "market": 3.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-191/large",
+    "foilMap": "assets/foil/maps/sv8/191.webp",
+    "etchMap": "assets/foil/maps/sv8/191-etch.webp",
+    "tcgplayerId": 589934
   },
   {
     "id": "sv8-192",
@@ -6499,8 +6758,10 @@
         "text": "If you go first, you can use this attack during your first turn. Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck."
       }
     ],
-    "market": 8.57,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-192/large"
+    "market": 7.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-192/large",
+    "foilMap": "assets/foil/maps/sv8/192.webp",
+    "tcgplayerId": 589941
   },
   {
     "id": "sv8-193",
@@ -6538,8 +6799,10 @@
         "text": ""
       }
     ],
-    "market": 6.35,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-193/large"
+    "market": 4.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-193/large",
+    "foilMap": "assets/foil/maps/sv8/193.webp",
+    "tcgplayerId": 590090
   },
   {
     "id": "sv8-194",
@@ -6577,8 +6840,10 @@
         "type": "Ability"
       }
     ],
-    "market": 3.82,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-194/large"
+    "market": 3.84,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-194/large",
+    "foilMap": "assets/foil/maps/sv8/194.webp",
+    "tcgplayerId": 590046
   },
   {
     "id": "sv8-195",
@@ -6616,8 +6881,10 @@
         "text": "Move all Energy from this Pokémon to 1 of your Benched Pokémon."
       }
     ],
-    "market": 9.18,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-195/large"
+    "market": 8.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-195/large",
+    "foilMap": "assets/foil/maps/sv8/195.webp",
+    "tcgplayerId": 589888
   },
   {
     "id": "sv8-196",
@@ -6655,8 +6922,10 @@
         "text": ""
       }
     ],
-    "market": 3.36,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-196/large"
+    "market": 3.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-196/large",
+    "foilMap": "assets/foil/maps/sv8/196.webp",
+    "tcgplayerId": 589982
   },
   {
     "id": "sv8-197",
@@ -6696,8 +6965,10 @@
         "text": "During your next turn, this Pokémon can't attack."
       }
     ],
-    "market": 24.42,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-197/large"
+    "market": 24.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-197/large",
+    "foilMap": "assets/foil/maps/sv8/197.webp",
+    "tcgplayerId": 589891
   },
   {
     "id": "sv8-198",
@@ -6726,8 +6997,10 @@
         "text": "Switch this Pokémon with 1 of your Benched Pokémon."
       }
     ],
-    "market": 10.08,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-198/large"
+    "market": 8.91,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-198/large",
+    "foilMap": "assets/foil/maps/sv8/198.webp",
+    "tcgplayerId": 589944
   },
   {
     "id": "sv8-199",
@@ -6756,8 +7029,10 @@
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
     ],
-    "market": 10.03,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-199/large"
+    "market": 9.93,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-199/large",
+    "foilMap": "assets/foil/maps/sv8/199.webp",
+    "tcgplayerId": 590063
   },
   {
     "id": "sv8-200",
@@ -6794,8 +7069,10 @@
         "type": "Ability"
       }
     ],
-    "market": 2.72,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-200/large"
+    "market": 2.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-200/large",
+    "foilMap": "assets/foil/maps/sv8/200.webp",
+    "tcgplayerId": 589884
   },
   {
     "id": "sv8-201",
@@ -6835,8 +7112,10 @@
         "type": "Ability"
       }
     ],
-    "market": 2.92,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-201/large"
+    "market": 2.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-201/large",
+    "foilMap": "assets/foil/maps/sv8/201.webp",
+    "tcgplayerId": 589894
   },
   {
     "id": "sv8-202",
@@ -6866,8 +7145,10 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed, and discard an Energy from that Pokémon."
       }
     ],
-    "market": 2.41,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-202/large"
+    "market": 2.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-202/large",
+    "foilMap": "assets/foil/maps/sv8/202.webp",
+    "tcgplayerId": 590065
   },
   {
     "id": "sv8-203",
@@ -6907,8 +7188,10 @@
         "text": ""
       }
     ],
-    "market": 34.57,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-203/large"
+    "market": 34.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-203/large",
+    "foilMap": "assets/foil/maps/sv8/203.webp",
+    "tcgplayerId": 589987
   },
   {
     "id": "sv8-204",
@@ -6946,8 +7229,10 @@
         "text": "If you don't have Uxie and Azelf on your Bench, this attack does nothing."
       }
     ],
-    "market": 13.65,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-204/large"
+    "market": 13.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-204/large",
+    "foilMap": "assets/foil/maps/sv8/204.webp",
+    "tcgplayerId": 590003
   },
   {
     "id": "sv8-205",
@@ -6976,8 +7261,10 @@
         "text": ""
       }
     ],
-    "market": 9.75,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-205/large"
+    "market": 8.68,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-205/large",
+    "foilMap": "assets/foil/maps/sv8/205.webp",
+    "tcgplayerId": 590024
   },
   {
     "id": "sv8-206",
@@ -7016,8 +7303,10 @@
         "text": ""
       }
     ],
-    "market": 4.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-206/large"
+    "market": 3.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-206/large",
+    "foilMap": "assets/foil/maps/sv8/206.webp",
+    "tcgplayerId": 590086
   },
   {
     "id": "sv8-207",
@@ -7046,8 +7335,10 @@
         "text": "This Pokémon also does 10 damage to itself."
       }
     ],
-    "market": 6.93,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-207/large"
+    "market": 5.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-207/large",
+    "foilMap": "assets/foil/maps/sv8/207.webp",
+    "tcgplayerId": 589904
   },
   {
     "id": "sv8-208",
@@ -7077,8 +7368,10 @@
         "text": "If you don't have exactly 3 cards in your hand, this attack does nothing."
       }
     ],
-    "market": 9.51,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-208/large"
+    "market": 8.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-208/large",
+    "foilMap": "assets/foil/maps/sv8/208.webp",
+    "tcgplayerId": 589857
   },
   {
     "id": "sv8-209",
@@ -7108,8 +7401,10 @@
         "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
       }
     ],
-    "market": 8.76,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-209/large"
+    "market": 8.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-209/large",
+    "foilMap": "assets/foil/maps/sv8/209.webp",
+    "tcgplayerId": 590052
   },
   {
     "id": "sv8-210",
@@ -7148,8 +7443,10 @@
         "text": ""
       }
     ],
-    "market": 4.43,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-210/large"
+    "market": 4.46,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-210/large",
+    "foilMap": "assets/foil/maps/sv8/210.webp",
+    "tcgplayerId": 589947
   },
   {
     "id": "sv8-211",
@@ -7189,8 +7486,10 @@
         "text": "This Pokémon also does 20 damage to itself."
       }
     ],
-    "market": 7.66,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-211/large"
+    "market": 9.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-211/large",
+    "foilMap": "assets/foil/maps/sv8/211.webp",
+    "tcgplayerId": 589865
   },
   {
     "id": "sv8-212",
@@ -7219,8 +7518,10 @@
         "text": "Heal 60 damage from this Pokémon. During your next turn, this Pokémon can't retreat."
       }
     ],
-    "market": 12.82,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-212/large"
+    "market": 12.63,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-212/large",
+    "foilMap": "assets/foil/maps/sv8/212.webp",
+    "tcgplayerId": 590057
   },
   {
     "id": "sv8-213",
@@ -7257,8 +7558,10 @@
         "type": "Ability"
       }
     ],
-    "market": 8.82,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-213/large"
+    "market": 9.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-213/large",
+    "foilMap": "assets/foil/maps/sv8/213.webp",
+    "tcgplayerId": 589975
   },
   {
     "id": "sv8-214",
@@ -7299,8 +7602,10 @@
         "text": ""
       }
     ],
-    "market": 5.86,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-214/large"
+    "market": 5.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-214/large",
+    "foilMap": "assets/foil/maps/sv8/214.webp",
+    "tcgplayerId": 589879
   },
   {
     "id": "sv8-215",
@@ -7338,8 +7643,11 @@
         "type": "Ability"
       }
     ],
-    "market": 1.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-215/large"
+    "market": 0.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-215/large",
+    "foilMap": "assets/foil/maps/sv8/215.webp",
+    "etchMap": "assets/foil/maps/sv8/215-etch.webp",
+    "tcgplayerId": 589929
   },
   {
     "id": "sv8-216",
@@ -7377,8 +7685,11 @@
         "type": "Ability"
       }
     ],
-    "market": 1.15,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-216/large"
+    "market": 0.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-216/large",
+    "foilMap": "assets/foil/maps/sv8/216.webp",
+    "etchMap": "assets/foil/maps/sv8/216-etch.webp",
+    "tcgplayerId": 590041
   },
   {
     "id": "sv8-217",
@@ -7417,8 +7728,11 @@
         "type": "Ability"
       }
     ],
-    "market": 2.32,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-217/large"
+    "market": 2.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-217/large",
+    "foilMap": "assets/foil/maps/sv8/217.webp",
+    "etchMap": "assets/foil/maps/sv8/217-etch.webp",
+    "tcgplayerId": 590005
   },
   {
     "id": "sv8-218",
@@ -7460,14 +7774,18 @@
         "text": "This Pokémon also does 30 damage to itself."
       }
     ],
-    "market": 2.26,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-218/large"
+    "market": 2.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-218/large",
+    "foilMap": "assets/foil/maps/sv8/218.webp",
+    "etchMap": "assets/foil/maps/sv8/218-etch.webp",
+    "tcgplayerId": 589875
   },
   {
     "id": "sv8-219",
     "name": "Pikachu ex",
     "number": "219",
     "rarity": "Ultra Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
@@ -7500,8 +7818,11 @@
         "type": "Ability"
       }
     ],
-    "market": 30.88,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-219/large"
+    "market": 28.57,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-219/large",
+    "foilMap": "assets/foil/maps/sv8/219.webp",
+    "etchMap": "assets/foil/maps/sv8/219-etch.webp",
+    "tcgplayerId": 590026
   },
   {
     "id": "sv8-220",
@@ -7539,14 +7860,18 @@
         "type": "Ability"
       }
     ],
-    "market": 8.1,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-220/large"
+    "market": 7.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-220/large",
+    "foilMap": "assets/foil/maps/sv8/220.webp",
+    "etchMap": "assets/foil/maps/sv8/220-etch.webp",
+    "tcgplayerId": 589984
   },
   {
     "id": "sv8-221",
     "name": "Palossand ex",
     "number": "221",
     "rarity": "Ultra Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1",
@@ -7583,14 +7908,18 @@
         "text": "Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is 100."
       }
     ],
-    "market": 2.19,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-221/large"
+    "market": 1.68,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-221/large",
+    "foilMap": "assets/foil/maps/sv8/221.webp",
+    "etchMap": "assets/foil/maps/sv8/221-etch.webp",
+    "tcgplayerId": 590019
   },
   {
     "id": "sv8-222",
     "name": "Flygon ex",
     "number": "222",
     "rarity": "Ultra Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2",
@@ -7625,14 +7954,18 @@
         "text": "This attack does 100 damage to each of your opponent's Pokémon ex and Pokémon V. This attack's damage isn't affected by Weakness or Resistance."
       }
     ],
-    "market": 2.52,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-222/large"
+    "market": 2.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-222/large",
+    "foilMap": "assets/foil/maps/sv8/222.webp",
+    "etchMap": "assets/foil/maps/sv8/222-etch.webp",
+    "tcgplayerId": 589951
   },
   {
     "id": "sv8-223",
     "name": "Hydreigon ex",
     "number": "223",
     "rarity": "Ultra Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 2",
@@ -7669,8 +8002,11 @@
         "text": "This attack also does 130 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 5.35,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-223/large"
+    "market": 5.1,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-223/large",
+    "foilMap": "assets/foil/maps/sv8/223.webp",
+    "etchMap": "assets/foil/maps/sv8/223-etch.webp",
+    "tcgplayerId": 589966
   },
   {
     "id": "sv8-224",
@@ -7709,14 +8045,18 @@
         "type": "Ability"
       }
     ],
-    "market": 1.12,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-224/large"
+    "market": 0.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-224/large",
+    "foilMap": "assets/foil/maps/sv8/224.webp",
+    "etchMap": "assets/foil/maps/sv8/224-etch.webp",
+    "tcgplayerId": 589868
   },
   {
     "id": "sv8-225",
     "name": "Alolan Exeggutor ex",
     "number": "225",
     "rarity": "Ultra Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Stage 1",
@@ -7752,14 +8092,18 @@
         "text": "Flip a coin. If heads, Knock Out your opponent's Active Basic Pokémon. If tails, Knock Out 1 of your opponent's Benched Basic Pokémon."
       }
     ],
-    "market": 2.3,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-225/large"
+    "market": 2.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-225/large",
+    "foilMap": "assets/foil/maps/sv8/225.webp",
+    "etchMap": "assets/foil/maps/sv8/225-etch.webp",
+    "tcgplayerId": 589859
   },
   {
     "id": "sv8-226",
     "name": "Tatsugiri ex",
     "number": "226",
     "rarity": "Ultra Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
@@ -7794,8 +8138,11 @@
         "text": "Look at the top 10 cards of your deck. You may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck."
       }
     ],
-    "market": 1.83,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-226/large"
+    "market": 1.93,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-226/large",
+    "foilMap": "assets/foil/maps/sv8/226.webp",
+    "etchMap": "assets/foil/maps/sv8/226-etch.webp",
+    "tcgplayerId": 590074
   },
   {
     "id": "sv8-227",
@@ -7833,14 +8180,18 @@
         "type": "Ability"
       }
     ],
-    "market": 1.13,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-227/large"
+    "market": 0.97,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-227/large",
+    "foilMap": "assets/foil/maps/sv8/227.webp",
+    "etchMap": "assets/foil/maps/sv8/227-etch.webp",
+    "tcgplayerId": 590055
   },
   {
     "id": "sv8-228",
     "name": "Cyclizar ex",
     "number": "228",
     "rarity": "Ultra Rare",
+    "finish": "tera",
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
@@ -7876,8 +8227,11 @@
         "text": "You may draw 5 cards."
       }
     ],
-    "market": 1.36,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-228/large"
+    "market": 1.49,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-228/large",
+    "foilMap": "assets/foil/maps/sv8/228.webp",
+    "etchMap": "assets/foil/maps/sv8/228-etch.webp",
+    "tcgplayerId": 589911
   },
   {
     "id": "sv8-229",
@@ -7891,8 +8245,11 @@
     "artist": "Naoki Saito",
     "image": "assets/cards/sv8/229.webp",
     "imageSmall": "assets/cards/sv8/229-sm.webp",
-    "market": 1.27,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-229/large"
+    "market": 1.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-229/large",
+    "foilMap": "assets/foil/maps/sv8/229.webp",
+    "etchMap": "assets/foil/maps/sv8/229-etch.webp",
+    "tcgplayerId": 589901
   },
   {
     "id": "sv8-230",
@@ -7906,8 +8263,11 @@
     "artist": "Akira Komayama",
     "image": "assets/cards/sv8/230.webp",
     "imageSmall": "assets/cards/sv8/230-sm.webp",
-    "market": 2.48,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-230/large"
+    "market": 2.86,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-230/large",
+    "foilMap": "assets/foil/maps/sv8/230.webp",
+    "etchMap": "assets/foil/maps/sv8/230-etch.webp",
+    "tcgplayerId": 589913
   },
   {
     "id": "sv8-231",
@@ -7921,8 +8281,11 @@
     "artist": "Hideki Ishikawa",
     "image": "assets/cards/sv8/231.webp",
     "imageSmall": "assets/cards/sv8/231-sm.webp",
-    "market": 1.02,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-231/large"
+    "market": 0.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-231/large",
+    "foilMap": "assets/foil/maps/sv8/231.webp",
+    "etchMap": "assets/foil/maps/sv8/231-etch.webp",
+    "tcgplayerId": 589922
   },
   {
     "id": "sv8-232",
@@ -7936,8 +8299,11 @@
     "artist": "GIDORA",
     "image": "assets/cards/sv8/232.webp",
     "imageSmall": "assets/cards/sv8/232-sm.webp",
-    "market": 1.04,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-232/large"
+    "market": 0.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-232/large",
+    "foilMap": "assets/foil/maps/sv8/232.webp",
+    "etchMap": "assets/foil/maps/sv8/232-etch.webp",
+    "tcgplayerId": 589924
   },
   {
     "id": "sv8-233",
@@ -7951,8 +8317,11 @@
     "artist": "Taira Akitsu",
     "image": "assets/cards/sv8/233.webp",
     "imageSmall": "assets/cards/sv8/233-sm.webp",
-    "market": 1.94,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-233/large"
+    "market": 1.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-233/large",
+    "foilMap": "assets/foil/maps/sv8/233.webp",
+    "etchMap": "assets/foil/maps/sv8/233-etch.webp",
+    "tcgplayerId": 589972
   },
   {
     "id": "sv8-234",
@@ -7966,8 +8335,11 @@
     "artist": "En Morikura",
     "image": "assets/cards/sv8/234.webp",
     "imageSmall": "assets/cards/sv8/234-sm.webp",
-    "market": 4.4,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-234/large"
+    "market": 3.91,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-234/large",
+    "foilMap": "assets/foil/maps/sv8/234.webp",
+    "etchMap": "assets/foil/maps/sv8/234-etch.webp",
+    "tcgplayerId": 589989
   },
   {
     "id": "sv8-235",
@@ -7981,8 +8353,11 @@
     "artist": "Sanosuke Sakuma",
     "image": "assets/cards/sv8/235.webp",
     "imageSmall": "assets/cards/sv8/235-sm.webp",
-    "market": 1.31,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-235/large"
+    "market": 1.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-235/large",
+    "foilMap": "assets/foil/maps/sv8/235.webp",
+    "etchMap": "assets/foil/maps/sv8/235-etch.webp",
+    "tcgplayerId": 590067
   },
   {
     "id": "sv8-236",
@@ -8020,8 +8395,11 @@
         "type": "Ability"
       }
     ],
-    "market": 38.0,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-236/large"
+    "market": 39.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-236/large",
+    "foilMap": "assets/foil/maps/sv8/236.webp",
+    "etchMap": "assets/foil/maps/sv8/236-etch.webp",
+    "tcgplayerId": 589930
   },
   {
     "id": "sv8-237",
@@ -8060,8 +8438,11 @@
         "type": "Ability"
       }
     ],
-    "market": 123.49,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-237/large"
+    "market": 120.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-237/large",
+    "foilMap": "assets/foil/maps/sv8/237.webp",
+    "etchMap": "assets/foil/maps/sv8/237-etch.webp",
+    "tcgplayerId": 590006
   },
   {
     "id": "sv8-238",
@@ -8100,8 +8481,11 @@
         "type": "Ability"
       }
     ],
-    "market": 292.4,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-238/large"
+    "market": 285.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-238/large",
+    "foilMap": "assets/foil/maps/sv8/238.webp",
+    "etchMap": "assets/foil/maps/sv8/238-etch.webp",
+    "tcgplayerId": 590027
   },
   {
     "id": "sv8-239",
@@ -8139,8 +8523,11 @@
         "type": "Ability"
       }
     ],
-    "market": 179.38,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-239/large"
+    "market": 186.93,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-239/large",
+    "foilMap": "assets/foil/maps/sv8/239.webp",
+    "etchMap": "assets/foil/maps/sv8/239-etch.webp",
+    "tcgplayerId": 589985
   },
   {
     "id": "sv8-240",
@@ -8183,8 +8570,11 @@
         "text": "This attack also does 130 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
-    "market": 37.58,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-240/large"
+    "market": 36.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-240/large",
+    "foilMap": "assets/foil/maps/sv8/240.webp",
+    "etchMap": "assets/foil/maps/sv8/240-etch.webp",
+    "tcgplayerId": 589967
   },
   {
     "id": "sv8-241",
@@ -8223,8 +8613,11 @@
         "type": "Ability"
       }
     ],
-    "market": 12.38,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-241/large"
+    "market": 12.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-241/large",
+    "foilMap": "assets/foil/maps/sv8/241.webp",
+    "etchMap": "assets/foil/maps/sv8/241-etch.webp",
+    "tcgplayerId": 589869
   },
   {
     "id": "sv8-242",
@@ -8266,8 +8659,11 @@
         "text": "Flip a coin. If heads, Knock Out your opponent's Active Basic Pokémon. If tails, Knock Out 1 of your opponent's Benched Basic Pokémon."
       }
     ],
-    "market": 32.95,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-242/large"
+    "market": 26.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-242/large",
+    "foilMap": "assets/foil/maps/sv8/242.webp",
+    "etchMap": "assets/foil/maps/sv8/242-etch.webp",
+    "tcgplayerId": 589860
   },
   {
     "id": "sv8-243",
@@ -8281,8 +8677,11 @@
     "artist": "Shinya Mizuno",
     "image": "assets/cards/sv8/243.webp",
     "imageSmall": "assets/cards/sv8/243-sm.webp",
-    "market": 8.39,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-243/large"
+    "market": 8.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-243/large",
+    "foilMap": "assets/foil/maps/sv8/243.webp",
+    "etchMap": "assets/foil/maps/sv8/243-etch.webp",
+    "tcgplayerId": 589902
   },
   {
     "id": "sv8-244",
@@ -8296,8 +8695,11 @@
     "artist": "DOM",
     "image": "assets/cards/sv8/244.webp",
     "imageSmall": "assets/cards/sv8/244-sm.webp",
-    "market": 8.29,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-244/large"
+    "market": 8.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-244/large",
+    "foilMap": "assets/foil/maps/sv8/244.webp",
+    "etchMap": "assets/foil/maps/sv8/244-etch.webp",
+    "tcgplayerId": 589925
   },
   {
     "id": "sv8-245",
@@ -8311,8 +8713,11 @@
     "artist": "Fujimoto Gold",
     "image": "assets/cards/sv8/245.webp",
     "imageSmall": "assets/cards/sv8/245-sm.webp",
-    "market": 20.7,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-245/large"
+    "market": 20.66,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-245/large",
+    "foilMap": "assets/foil/maps/sv8/245.webp",
+    "etchMap": "assets/foil/maps/sv8/245-etch.webp",
+    "tcgplayerId": 589973
   },
   {
     "id": "sv8-246",
@@ -8326,8 +8731,11 @@
     "artist": "Nobusawa/Mochipuyo",
     "image": "assets/cards/sv8/246.webp",
     "imageSmall": "assets/cards/sv8/246-sm.webp",
-    "market": 26.41,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-246/large"
+    "market": 28.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-246/large",
+    "foilMap": "assets/foil/maps/sv8/246.webp",
+    "etchMap": "assets/foil/maps/sv8/246-etch.webp",
+    "tcgplayerId": 589990
   },
   {
     "id": "sv8-247",
@@ -8366,8 +8774,11 @@
         "type": "Ability"
       }
     ],
-    "market": 93.17,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-247/large"
+    "market": 80.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-247/large",
+    "foilMap": "assets/foil/maps/sv8/247.webp",
+    "etchMap": "assets/foil/maps/sv8/247-etch.webp",
+    "tcgplayerId": 593169
   },
   {
     "id": "sv8-248",
@@ -8409,8 +8820,11 @@
         "text": "Flip a coin. If heads, Knock Out your opponent's Active Basic Pokémon. If tails, Knock Out 1 of your opponent's Benched Basic Pokémon."
       }
     ],
-    "market": 10.64,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-248/large"
+    "market": 10.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-248/large",
+    "foilMap": "assets/foil/maps/sv8/248.webp",
+    "etchMap": "assets/foil/maps/sv8/248-etch.webp",
+    "tcgplayerId": 593855
   },
   {
     "id": "sv8-249",
@@ -8424,8 +8838,11 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/sv8/249.webp",
     "imageSmall": "assets/cards/sv8/249-sm.webp",
-    "market": 2.99,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-249/large"
+    "market": 2.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-249/large",
+    "foilMap": "assets/foil/maps/sv8/249.webp",
+    "etchMap": "assets/foil/maps/sv8/249-etch.webp",
+    "tcgplayerId": 593856
   },
   {
     "id": "sv8-250",
@@ -8439,8 +8856,11 @@
     "artist": "AYUMI ODASHIMA",
     "image": "assets/cards/sv8/250.webp",
     "imageSmall": "assets/cards/sv8/250-sm.webp",
-    "market": 12.11,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-250/large"
+    "market": 10.78,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-250/large",
+    "foilMap": "assets/foil/maps/sv8/250.webp",
+    "etchMap": "assets/foil/maps/sv8/250-etch.webp",
+    "tcgplayerId": 593857
   },
   {
     "id": "sv8-251",
@@ -8454,8 +8874,11 @@
     "artist": "Toyste Beach",
     "image": "assets/cards/sv8/251.webp",
     "imageSmall": "assets/cards/sv8/251-sm.webp",
-    "market": 9.09,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-251/large"
+    "market": 9.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-251/large",
+    "foilMap": "assets/foil/maps/sv8/251.webp",
+    "etchMap": "assets/foil/maps/sv8/251-etch.webp",
+    "tcgplayerId": 593859
   },
   {
     "id": "sv8-252",
@@ -8468,7 +8891,10 @@
     ],
     "image": "assets/cards/sv8/252.webp",
     "imageSmall": "assets/cards/sv8/252-sm.webp",
-    "market": 4.32,
-    "imageRemote": "https://images.scrydex.com/pokemon/sv8-252/large"
+    "market": 3.8,
+    "imageRemote": "https://images.scrydex.com/pokemon/sv8-252/large",
+    "foilMap": "assets/foil/maps/sv8/252.webp",
+    "etchMap": "assets/foil/maps/sv8/252-etch.webp",
+    "tcgplayerId": 593861
   }
 ]
