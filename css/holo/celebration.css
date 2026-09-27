@@ -1,0 +1,646 @@
+/*
+ * The 30th Celebration's finishes (set me55), each drawn from photos of the
+ * physical cards and TCG Live's name for its foil. The research behind every
+ * number here is in the card-textures skill,
+ * .claude/skills/card-textures/reference/30th-celebration.md.
+ *
+ * Layer ideas follow pokemon-cards-css and pokemon-cards-151 by Simon Goellner
+ * (@simeydotme), GPL-3.0; see NOTICE.md. The textures are our own, drawn by
+ * scripts/make_celebration_textures.py.
+ *
+ * Every finish here rides on a second class next to the older pattern class
+ * (foilPattern() in js/app.js), so the Classic engine is untouched and the
+ * rules below have to set every paint property the older recipes set.
+ * Loaded last. Foil maps and the `.cure` layer are wired in maps.css.
+ *
+ * Rest state (PR 5): a resting card paints `.foil` alone, at about 0.16-0.2
+ * x --foil-strength; pseudo layers, `.cure` and `.glare` only exist while a
+ * card is held or settling. Nothing here animates on its own.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo, .foil-sunpillar, .foil-pikachu, .foil-rgb, .foil-classic),
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map {
+  --c30-grain: url("/assets/foil/grain.png");
+  --c30-stars: url("/assets/foil/celebration/southern-cross.webp");
+  --c30-rings: url("/assets/foil/celebration/stitched-rings.webp");
+  --c30-ice: url("/assets/foil/celebration/cracked-ice.webp");
+  --c30-confetti: url("/assets/foil/celebration/confetti.webp");
+  --c30-classic-stars: url("/assets/foil/celebration/classic-stars.webp");
+  --c30-grid: url("/assets/foil/celebration/glitter-grid.webp");
+  --spectrum: hsl(2, 100%, 73%), hsl(53, 100%, 69%), hsl(93, 100%, 69%),
+    hsl(176, 100%, 76%), hsl(228, 100%, 74%), hsl(283, 100%, 73%), hsl(2, 100%, 73%);
+  /* Tiled textures start somewhere different on every card. */
+  --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* Shared shape for the finishes' shine layers. */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo, .foil-sunpillar, .foil-pikachu, .foil-rgb, .foil-classic) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil {
+  background-repeat: repeat;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo, .foil-sunpillar, .foil-pikachu, .foil-rgb, .foil-classic):not(.lit):not(.settling) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins:not(.lit):not(.settling) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo, .foil-sunpillar, .foil-pikachu, .foil-rgb, .foil-classic) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo, .foil-sunpillar, .foil-pikachu, .foil-rgb, .foil-classic) .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::after {
+  /* Clear what the older recipes put here; each finish sets its own. */
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo, .foil-sunpillar, .foil-pikachu, .foil-rgb, .foil-classic) .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Common: RAINBOW / HOLO ----------------------------------------------
+   New for this set: ME commons are not foil. One soft, broad rainbow sweep
+   (yellow-white, green, blue-violet) across the art background with a fine
+   sandy grain, gentler than the Rare's stacked bands; the silver border is
+   foil too (the map says so) and turns pastel. The Pokémon and the stamp stay
+   plain: the map. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rainbow .foil {
+  background-image:
+    var(--c30-grain),
+    linear-gradient(112deg,
+      #000 8%, hsl(48, 85%, 62%) 26%, hsl(95, 70%, 60%) 36%, hsl(170, 75%, 62%) 45%,
+      hsl(215, 80%, 68%) 54%, hsl(270, 65%, 68%) 63%, #000 82%);
+  background-size: 110px 110px, 260% 260%;
+  background-position:
+    center,
+    calc(((50% - var(--background-x)) * 3.2) + 50%) calc(((50% - var(--background-y)) * 2.2) + 50%);
+  background-blend-mode: soft-light;
+  filter: brightness(calc(0.8 + var(--pointer-from-center) * 0.2)) contrast(1.3) saturate(0.95);
+  mix-blend-mode: color-dodge;
+}
+/* A fainter second sweep running the other way: the two never line up, so
+   the colour drifts instead of sliding past as one stripe. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rainbow .foil::before {
+  background-image: linear-gradient(68deg,
+    transparent 20%, hsla(300, 70%, 70%, 0.5) 38%, hsla(190, 80%, 70%, 0.5) 50%,
+    hsla(60, 80%, 70%, 0.5) 62%, transparent 80%);
+  background-size: 300% 300%;
+  background-position: calc(var(--background-x) * 1.8) calc(var(--background-y) * -1.2);
+  mix-blend-mode: screen;
+}
+/* The light: foil is brightest under it and falls off towards the edges. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rainbow .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #fff 0%, #bdbdbd 32%, #4d4d4d 90%);
+  mix-blend-mode: multiply;
+}
+
+/* The gloss on the varnish for the two background-only holos: soft, so a
+   pale Pokémon is not bleached by it. */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.6) 5%, hsla(0, 0%, 100%, 0.22) 28%, hsla(0, 0%, 0%, 0.3) 95%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+
+/* ---- Rare: SV_HOLO / HOLO --------------------------------------------------
+   The standard Scarlet & Violet holo, ported from pokemon-cards-151's
+   regular holo: saturated stacked rainbow bands, two sets of light bars that
+   swing with the tilt, a crinkly grain. Its high contrast is tuned for a
+   background-only mask, which the map now gives it. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo {
+  --bars: 5%;
+  --bar-color: hsla(0, 0%, 70%, 1);
+  --bar-bg: hsla(0, 0%, 0%, 1);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo .foil {
+  background-image:
+    var(--c30-grain),
+    repeating-linear-gradient(10deg,
+      var(--spectrum), var(--spectrum), var(--spectrum), var(--spectrum), var(--spectrum), var(--spectrum));
+  background-size: 90px 90px, 400% 400%;
+  background-position:
+    center,
+    calc((50% - var(--background-x)) + 50%) calc((50% - var(--background-y)) + 50%);
+  background-blend-mode: overlay;
+  filter: brightness(1.2) contrast(2.6) saturate(0.8);
+  mix-blend-mode: overlay;
+}
+/* Bars whose angle follows the tilt: upstream's calc(rotate-x - rotate-delta);
+   there is no popover spin here, so rotate-delta is 0. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo .foil::before {
+  background-image:
+    repeating-linear-gradient(calc(var(--rotate-x) * 0.25),
+      var(--bar-bg) calc(var(--bars) * 2.5), var(--bar-color) calc(var(--bars) * 3.25),
+      hsla(0, 0%, 75%, 0.5) calc(var(--bars) * 3.5), var(--bar-color) calc(var(--bars) * 3.75),
+      var(--bar-bg) calc(var(--bars) * 4.5), var(--bar-bg) calc(var(--bars) * 8)),
+    repeating-linear-gradient(calc(var(--rotate-x) * -0.25),
+      var(--bar-bg) calc(var(--bars) * 2.5), var(--bar-color) calc(var(--bars) * 3.25),
+      hsla(0, 0%, 75%, 0.5) calc(var(--bars) * 3.5), var(--bar-color) calc(var(--bars) * 3.75),
+      var(--bar-bg) calc(var(--bars) * 4.5), var(--bar-bg) calc(var(--bars) * 8));
+  background-position: 50% calc(var(--background-y) * 1.2), 50% calc(var(--background-y) * -1.2);
+  background-size: 200% 200%, 200% 200%;
+  background-blend-mode: screen;
+  filter: brightness(1) contrast(2) saturate(0.75);
+  mix-blend-mode: multiply;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 90%, 0.8) 0%, hsla(0, 0%, 78%, 0.1) 25%, hsl(0, 0%, 35%) 90%);
+  mix-blend-mode: luminosity;
+  filter: brightness(1) contrast(3);
+}
+
+/* ---- Double Rare: SUN_PILLAR / HOLO ----------------------------------------
+   Parallel diagonal rainbow bars, each 3-6% of the card wide and holding a
+   full spectrum, running lower left to upper right at 60-70 degrees, over
+   the frame, art and text box but not the Pokémon or the text (the map).
+   The star glints on top are the cast-and-cure coat: `.cure.cure-stars`. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::after {
+  background-image:
+    var(--c30-grain),
+    repeating-linear-gradient(115deg,
+      hsl(2, 100%, 73%) 0%, hsl(53, 100%, 69%) 0.8%, hsl(93, 100%, 69%) 1.6%,
+      hsl(176, 100%, 76%) 2.4%, hsl(228, 100%, 74%) 3.2%, hsl(283, 100%, 73%) 4%, hsl(2, 100%, 73%) 4.8%),
+    repeating-linear-gradient(115deg,
+      #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 70%) 4.5%,
+      hsl(180, 10%, 60%) 5.2%, #0e152e 10%, #0e152e 12%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.35) 0%, hsla(0, 0%, 0%, 0.2) 40%, hsla(0, 0%, 0%, 0.45) 120%);
+  background-size: 120px 120px, 200% 200%, 300% 300%, cover;
+  background-position:
+    center,
+    calc(var(--background-x) * 1.6) calc(var(--background-y) * 0.8),
+    calc(var(--background-x) + (var(--background-y) * 0.2)) var(--background-y),
+    center;
+  background-blend-mode: soft-light, hard-light, hard-light;
+  filter: brightness(calc(0.5 + var(--pointer-from-center) * 0.3)) contrast(1.7) saturate(1.3);
+  mix-blend-mode: color-dodge;
+}
+/* The counter-tracked twin, mirrored, where the colour flips. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::after {
+  background-position:
+    center,
+    calc(var(--background-x) * -1.2) calc(var(--background-y) * -0.6),
+    calc((var(--background-x) + (var(--background-y) * 0.2)) * -1) calc(var(--background-y) * -1),
+    center;
+  background-size: 120px 120px, 190% 190%, 280% 280%, cover;
+  filter: brightness(calc(0.8 + var(--pointer-from-center) * 0.4)) contrast(1.4) saturate(1.2);
+  mix-blend-mode: exclusion;
+  opacity: 0.5;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::before {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #fff 0%, #555 45%, #111 100%);
+  mix-blend-mode: multiply;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 92%) 8%, hsla(0, 0%, 60%, 0.5) 45%, hsla(0, 0%, 20%, 0.9) 120%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.75);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .glare::after {
+  background: none;
+}
+
+/* Southern Cross: four-point sparkles, eight-point stars and crosses, 1.5-5%
+   of the card wide, each one flat spectral colour, over the whole card
+   including the Pokémon (the coat ignores the foil map). They pop on dark
+   art and go pale on light art, which is `screen`. Each star cycles through
+   the spectrum on its own phase as the card turns: a rainbow sliding under a
+   star-shaped stencil. */
+body.fx-holo.fx-holo.fx-holo .tcg.cure-stars .cure {
+  background-image: var(--c30-stars);
+  background-size: 62% auto;
+  background-position: var(--seed-pos);
+  mix-blend-mode: screen;
+  filter: hue-rotate(calc((var(--pointer-from-left) * 1.3 + var(--pointer-from-top) * 0.9) * 360deg))
+    brightness(calc(0.8 + var(--pointer-from-center) * 0.5)) saturate(1.6);
+  opacity: calc(var(--card-opacity) * 0.9 * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.35) 90%);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.9) 35%, rgba(0, 0, 0, 0.35) 90%);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, cover;
+  mask-size: contain, cover;
+}
+
+/* ---- Pikachu Rare: PIKACHU / HOLO + StitchedRings ------------------------
+   Three layers, all new for this set.
+   1. The foil (the map: art background, the silver border, and the big
+      Pikachu head in the text box minus the attack text over it) is a fine
+      cracked-ice mosaic: small angular flakes, each flashing its own colour.
+      On the head that reads as gold-green glitter; on the border as
+      white and light-blue sparkle.
+   2. Fireworks: bursts of short radial dashes in rings, over the whole
+      face. Vivid gold, green and cyan on the foil (`.foil::before`), a faint
+      glossy dash on plain ink (`.cure`). Flat to the touch, cast and cure.
+   3. Pikachu itself stays plain: the map. At rest the card looks nearly
+      like the scan; the effect lives in the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-pikachu .foil {
+  background-image:
+    var(--c30-ice),
+    repeating-linear-gradient(0deg,
+      hsl(2, 100%, 73%) 5%, hsl(53, 100%, 69%) 10%, hsl(93, 100%, 69%) 15%,
+      hsl(176, 100%, 76%) 20%, hsl(228, 100%, 74%) 25%, hsl(283, 100%, 73%) 30%, hsl(2, 100%, 73%) 35%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, #777 35%, #1a1a1a 90%);
+  background-size: 18% auto, 200% 700%, cover;
+  background-position: var(--seed-pos), 0% var(--background-y), center;
+  background-blend-mode: exclusion, multiply;
+  filter: brightness(calc(0.6 + var(--pointer-from-center) * 0.25)) contrast(1.9) saturate(1.3);
+  mix-blend-mode: color-dodge;
+}
+/* The same flakes a few pixels apart, counter-shifting: flakes wink on and
+   off instead of the whole mosaic sliding. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-pikachu .foil::before {
+  background-image: var(--c30-ice);
+  background-size: 18% auto;
+  background-position:
+    calc(var(--seed-x) * 100% + (var(--pointer-from-left) - 0.5) * 6px)
+    calc(var(--seed-y) * 100% + (var(--pointer-from-top) - 0.5) * 6px);
+  mix-blend-mode: difference;
+  filter: brightness(0.8) contrast(1.4);
+  opacity: 0.4;
+}
+/* The fireworks on the foil: vivid, one colour per zone, sliding through
+   gold, orange, green and cyan as the card turns. On top of the flakes. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-pikachu .foil::after {
+  background-image: linear-gradient(125deg,
+    hsl(40, 100%, 62%) 0%, hsl(22, 100%, 64%) 16%, hsl(95, 95%, 66%) 32%,
+    hsl(175, 100%, 70%) 48%, hsl(205, 100%, 80%) 62%, hsl(320, 95%, 78%) 78%, hsl(40, 100%, 62%) 100%);
+  background-size: 300% 300%;
+  background-position: calc(((50% - var(--background-x)) * 3) + 50%) calc(((50% - var(--background-y)) * 3) + 50%);
+  -webkit-mask-image: var(--c30-rings);
+  mask-image: var(--c30-rings);
+  -webkit-mask-size: 70% auto;
+  mask-size: 70% auto;
+  -webkit-mask-position: var(--seed-pos);
+  mask-position: var(--seed-pos);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  mix-blend-mode: normal;
+  filter: brightness(1.15) saturate(1.5);
+}
+/* The rings over plain ink: the same pattern, registered to the foil's copy,
+   only a brighter, glossier dash. */
+body.fx-holo.fx-holo.fx-holo .tcg.cure-rings .cure {
+  background-image: linear-gradient(125deg,
+    hsl(52, 100%, 88%) 0%, hsl(38, 100%, 84%) 25%, hsl(80, 90%, 88%) 50%, hsl(190, 100%, 92%) 75%, hsl(52, 100%, 88%) 100%);
+  background-size: 300% 300%;
+  background-position: calc(((50% - var(--background-x)) * 3) + 50%) calc(((50% - var(--background-y)) * 3) + 50%);
+  -webkit-mask-image: var(--art), var(--c30-rings),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.1) 100%);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--c30-rings),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), #000 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.1) 100%);
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 70% auto, cover;
+  mask-size: contain, 70% auto, cover;
+  -webkit-mask-position: center, var(--seed-pos), center;
+  mask-position: center, var(--seed-pos), center;
+  -webkit-mask-repeat: no-repeat, repeat, no-repeat;
+  mask-repeat: no-repeat, repeat, no-repeat;
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity) * 0.8 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-pikachu .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(50, 100%, 96%, 0.85) 6%, hsla(0, 0%, 60%, 0.4) 40%, hsla(0, 0%, 10%, 0.8) 110%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-pikachu .glare::after {
+  background: none;
+}
+
+/* ---- Illustration Rare: SUN_PILLAR / HOLO, with a map ------------------------
+   The standard IR, but the map puts the foil on chosen parts of each painting
+   (Alolan Exeggutor: the leaves and background shapes). Soft light-pillar
+   bands in pale lavender, blue and yellow with a fine paper-tooth grain, from
+   pokemon-cards-151's illustration rare. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .foil::after {
+  --space: 5%;
+  --angle: 133deg;
+  background-image:
+    var(--holo-grain),
+    repeating-linear-gradient(0deg,
+      var(--sunpillar-clr-1) calc(var(--space) * 1), var(--sunpillar-clr-2) calc(var(--space) * 2),
+      var(--sunpillar-clr-3) calc(var(--space) * 3), var(--sunpillar-clr-4) calc(var(--space) * 4),
+      var(--sunpillar-clr-5) calc(var(--space) * 5), var(--sunpillar-clr-6) calc(var(--space) * 6),
+      var(--sunpillar-clr-1) calc(var(--space) * 7)),
+    repeating-linear-gradient(var(--angle),
+      #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%,
+      hsl(180, 10%, 60%) 5.2%, #0e152e 10%, #0e152e 12%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
+  background-blend-mode: screen, hue, hard-light;
+  background-size: 140px 100%, 200% 700%, 300% 100%, 200% 100%;
+  background-position: center, 0% var(--background-y), var(--background-x) var(--background-y),
+    var(--background-x) var(--background-y);
+  background-repeat: repeat;
+  filter: brightness(0.8) contrast(2.4) saturate(0.65);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .foil::after {
+  background-position: center, 0% var(--background-y),
+    calc(var(--background-x) * -1) calc(var(--background-y) * -1), var(--background-x) var(--background-y);
+  background-size: 140px 100%, 200% 400%, 195% 100%, 200% 100%;
+  filter: brightness(1) contrast(2.5) saturate(1.5);
+  mix-blend-mode: soft-light;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .foil::before {
+  background: none;
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 0%) 100%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.9) contrast(1.2);
+  opacity: calc(var(--card-opacity) * 0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 5%, hsl(0, 0%, 0%) 120%);
+  mix-blend-mode: screen;
+  filter: brightness(0.475) contrast(2);
+  opacity: var(--pointer-from-center);
+}
+
+/* ---- Etched cards: the relief catching the light ----------------------------
+   SIRs, the Futuristic Rares and the RGB Mews carry an etch map (TCG Live).
+   The raised lines light up where the light falls on them, as upstream's
+   glare2 does with its --foil map: a white hot spot masked by the etch. */
+body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.has-etch-map .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.95) 0%, hsla(0, 0%, 100%, 0.45) 25%, hsla(0, 0%, 100%, 0) 60%);
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.55 + var(--pointer-from-center) * 0.45);
+}
+
+/* ---- Special Illustration Rare: SV_ULTRA / ETCHED, with a map ----------------
+   The standard SIR; what the 30th Celebration adds is TCG Live's map and etch
+   for every one, so the foil stops at the Pokémon and the stamp and each
+   painting's own contour lines catch the light (the etch glare above).
+   pokemon-cards-151's special illustration rare: a soft 15deg rainbow that
+   only shows inside two light bars crossing with the tilt, fine glitter, and
+   a multiply glare that dims the card away from the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil {
+  background-image: repeating-linear-gradient(15deg, var(--spectrum), var(--spectrum), var(--spectrum));
+  background-size: 240% 240%;
+  background-position: var(--background-x) var(--background-y);
+  background-blend-mode: normal;
+  filter: brightness(0.55) contrast(1.5) saturate(1);
+  mix-blend-mode: color-dodge;
+}
+/* Resting, the silver frame stays silver rather than taking the rainbow's
+   colour at the centre. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.55) contrast(1.5) saturate(0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::before {
+  background-image:
+    linear-gradient(calc(var(--rotate-x) * -0.25), #000 24%, #797979 30%, #000 36%),
+    linear-gradient(calc(var(--rotate-x) * 0.25), #000 24%, #797979 30%, #000 36%);
+  background-size: 300% 300%;
+  background-position: 50% calc(var(--background-y) * 1.7), 50% calc(var(--background-y) * -1.3);
+  background-blend-mode: exclusion;
+  filter: contrast(0.75);
+  mix-blend-mode: hard-light;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::after {
+  --shift: 3px;
+  background-image: var(--holo-glitter);
+  background-size: 25% auto;
+  background-position: calc(50% + var(--pointer-from-left) * var(--shift))
+    calc(50% + var(--pointer-from-top) * var(--shift));
+  filter: brightness(1.4) contrast(2) saturate(1.2);
+  mix-blend-mode: plus-lighter;
+  opacity: calc(0.2 + var(--pointer-from-center) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 88%) 10%, hsl(0, 0%, 60%) 70%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  filter: contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.8);
+}
+
+/* ---- Futuristic Rare: SV_ULTRA / ETCHED, the op-art plate --------------------
+   Semi-transparent inks over silver, so every colour reads opalescent; dense
+   pin-point glitter on an almost regular grid over everything; and the new
+   etch plate: concentric rings, chevrons and hatching in hard geometric
+   cells, each cell lighting up at its own tilt. The Pokémon is foil at part
+   strength (the map) and smooth, no etch. The etch is split by line direction
+   (etchMapH / etchMapV): one half follows the pointer across, the other up
+   and down, so neighbouring cells flash separately like the real plate. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .foil {
+  --shift: 2px;
+  background-image:
+    var(--c30-grid),
+    linear-gradient(120deg,
+      hsl(190, 70%, 72%) 0%, hsl(275, 60%, 76%) 20%, hsl(330, 70%, 78%) 38%,
+      hsl(48, 80%, 74%) 56%, hsl(150, 60%, 72%) 74%, hsl(190, 70%, 72%) 100%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, #8a8a8a 30%, #1c1c1c 85%);
+  background-size: 20% auto, 300% 300%, cover;
+  background-position:
+    calc(50% + (var(--pointer-from-left) - 0.5) * var(--shift)) calc(50% + (var(--pointer-from-top) - 0.5) * var(--shift)),
+    var(--background-x) var(--background-y),
+    center;
+  background-blend-mode: screen, multiply;
+  filter: brightness(calc(0.42 + var(--pointer-from-center) * 0.28)) contrast(1.35) saturate(1.15);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .foil::after {
+  /* Prismatic bands racing across the relief: orange, magenta, yellow,
+     electric blue, with dark gaps so only some cells are lit at a time. */
+  --op-bands: #000 0%, hsl(25, 100%, 58%) 5%, hsl(320, 100%, 62%) 9%, hsl(55, 100%, 60%) 13%,
+    hsl(195, 100%, 60%) 17%, hsl(255, 100%, 68%) 21%, #000 27%, #000 40%;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: brightness(1.3) saturate(1.3);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .foil::before {
+  background-image: repeating-linear-gradient(100deg, var(--op-bands));
+  background-size: 180% 180%;
+  background-position: calc(((50% - var(--background-x)) * 5) + 50%) calc(var(--background-y) * 0.5);
+  -webkit-mask-image: var(--etch-map-h);
+  mask-image: var(--etch-map-h);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .foil::after {
+  background-image: repeating-linear-gradient(10deg, var(--op-bands));
+  background-size: 180% 180%;
+  background-position: calc(var(--background-x) * 0.5) calc(((var(--background-y) - 50%) * 5) + 50%);
+  -webkit-mask-image: var(--etch-map-v);
+  mask-image: var(--etch-map-v);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 96%) 4%, hsla(210, 15%, 60%, 0.55) 40%, hsla(250, 30%, 12%, 0.9) 110%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.8);
+}
+
+/* ---- RGB Mew: RGB / ETCHED ---------------------------------------------------
+   Coloured transparent ink on mirror foil, a foil type of its own. TCG Live
+   packs three regions into the map's channels: G is the whole card (Mew at
+   half strength), B the sunburst streaks where no ink covers the silver, R
+   Mew's highlights and the frame lines, bare silver with fine diagonal
+   ridges. Under the light the colours go luminous and the streaks blaze
+   white; at a glancing angle a milky sheen washes over. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 58%) 0%, hsl(0, 0%, 40%) 20%, hsl(0, 0%, 16%) 60%, hsl(0, 0%, 6%) 100%),
+    linear-gradient(hsla(0, 0%, 100%, calc(var(--pointer-from-center) * 0.16)),
+      hsla(0, 0%, 100%, calc(var(--pointer-from-center) * 0.16)));
+  background-size: cover, cover;
+  background-position: center;
+  background-blend-mode: screen;
+  filter: brightness(calc(0.7 + var(--pointer-from-center) * 0.15)) contrast(1.2) saturate(1.4);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::before {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #fff 0%, hsl(200, 30%, 88%) 22%, hsl(260, 15%, 42%) 55%, #1a1a1a 100%);
+  -webkit-mask-image: var(--foil-map-b);
+  mask-image: var(--foil-map-b);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::after {
+  background-image:
+    repeating-linear-gradient(45deg, #fff 0px, #fff 1px, #000 1.5px, #000 3px),
+    linear-gradient(125deg, var(--spectrum));
+  background-size: auto, 300% 300%;
+  background-position: center, calc(((50% - var(--background-x)) * 3) + 50%) calc(((50% - var(--background-y)) * 3) + 50%);
+  background-blend-mode: multiply;
+  -webkit-mask-image: var(--foil-map-r);
+  mask-image: var(--foil-map-r);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: brightness(1.2) saturate(1.3);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 4%, hsla(0, 0%, 60%, 0.4) 30%, hsla(0, 0%, 10%, 0.85) 100%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+
+/* ---- Classic Collection --------------------------------------------------------
+   One new stock for all 30 reprints, not a copy of each original's holo:
+   the whole card is foil, the border is gold (printed on the scans; the foil
+   makes it glitter), and over everything sit dense round confetti glitter,
+   sparse puffy five-point stars in flat colours, and a fine crosshatch
+   emboss. Dots and stars twinkle while the colour cycles in broad bands.
+   The stamp is flat ink: has-stamp in maps.css cuts it out. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-classic .foil {
+  --shift: 3px;
+  background-image:
+    var(--c30-confetti),
+    var(--c30-confetti),
+    repeating-linear-gradient(0deg,
+      hsl(330, 90%, 72%) 0%, hsl(20, 95%, 66%) 6%, hsl(50, 100%, 66%) 12%,
+      hsl(110, 80%, 64%) 18%, hsl(190, 90%, 70%) 24%, hsl(270, 80%, 74%) 30%, hsl(330, 90%, 72%) 36%);
+  background-size: 30% auto, 30% auto, 200% 400%;
+  background-position:
+    calc(var(--seed-x) * 100% + (var(--pointer-from-left) - 0.5) * var(--shift))
+      calc(var(--seed-y) * 100% + (var(--pointer-from-top) - 0.5) * var(--shift)),
+    calc(var(--seed-x) * 100% + 37% - (var(--pointer-from-left) - 0.5) * var(--shift))
+      calc(var(--seed-y) * 100% + 61% - (var(--pointer-from-top) - 0.5) * var(--shift)),
+    0% calc(var(--background-y) * 2);
+  background-blend-mode: lighten, multiply;
+  filter: brightness(calc(0.72 + var(--pointer-from-center) * 0.3)) contrast(1.25) saturate(1.3);
+  mix-blend-mode: color-dodge;
+}
+/* The puffy stars, each on its own phase through the spectrum. Kept at mid
+   brightness so the colour dodge leaves them coloured, not white. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-classic .foil::before {
+  background-image: var(--c30-classic-stars);
+  background-size: 60% auto;
+  background-position: calc(var(--seed-y) * 100%) calc(var(--seed-x) * 100%);
+  mix-blend-mode: normal;
+  filter: hue-rotate(calc((var(--pointer-from-left) - var(--pointer-from-top)) * 200deg)) brightness(0.85) saturate(1.8);
+}
+/* Crosshatch emboss, and the light falling off away from the pointer. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-classic .foil::after {
+  background-image:
+    repeating-linear-gradient(45deg, hsla(0, 0%, 100%, 0.18) 0px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(-45deg, hsla(0, 0%, 100%, 0.18) 0px, transparent 1px, transparent 3px),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, #8c8c8c 40%, #3a3a3a 100%);
+  background-size: auto, auto, cover;
+  background-blend-mode: normal, normal;
+  mix-blend-mode: multiply;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-classic .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(45, 100%, 95%, 0.9) 5%, hsla(40, 30%, 55%, 0.45) 40%, hsla(30, 30%, 12%, 0.85) 110%);
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.75);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-classic .glare::after {
+  background: none;
+}
+
+/* ---- Phones ---------------------------------------------------------------
+   Fine repeating stripes alias at phone widths; open them up. */
+@media (max-width: 900px) {
+  body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::after {
+    background-image:
+      repeating-linear-gradient(45deg, #fff 0px, #fff 1px, #000 2px, #000 4px),
+      linear-gradient(125deg, var(--spectrum));
+  }
+}

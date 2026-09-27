@@ -1,4 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
+import { foilExtras } from "./foil-maps.js";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
@@ -539,17 +540,24 @@ function foilPattern(card) {
   if (card.rarity === "Ultra Rare") return "foil-ultra";
   if (card.rarity === "Mega Attack Rare") return "foil-mega-attack";
   if (card.rarity === "Black White Rare") return "foil-bwr";
-  // Chrome on pearl stock; the three RGB Mews share it, tinted per card.
-  if (card.rarity === "Futuristic Rare" || card.rarity === "RGB Rare") return "foil-future";
+  // The 30th Celebration's own finishes (css/holo/celebration.css) ride on a
+  // second class, so the Classic engine keeps reading the first one.
+  if (card.rarity === "Futuristic Rare") return "foil-future";
+  if (card.rarity === "RGB Rare") return "foil-future foil-rgb";
   if (card.rarity === "Classic Collection") {
-    return CLASSIC_FULL_FOIL.test(card.name || "") ? "foil-ultra" : "foil-holo";
+    return `${CLASSIC_FULL_FOIL.test(card.name || "") ? "foil-ultra" : "foil-holo"} foil-classic`;
   }
-  if (card.rarity === "Pikachu Rare") return "foil-holo";
+  if (card.rarity === "Pikachu Rare") return "foil-holo foil-pikachu";
   if (card.rarity === "ACE SPEC Rare") return "foil-holo";
-  if (isExCard(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) return "foil-ex";
+  // TCG Live's SUN_PILLAR and SV_HOLO recipes need the card's foil map to keep
+  // off the Pokémon, so they only replace the older recipes where one ships.
+  if (isExCard(card) && (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare")) {
+    return card.foilMap && card.rarity === "Double Rare" ? "foil-ex foil-sunpillar" : "foil-ex";
+  }
   if (card.supertype === "Trainer" && HIT_RARITIES.has(card.rarity)) return "foil-ex";
+  if (card.rarity === "Rare" && card.foilMap) return "foil-holo foil-svholo";
   if (HIT_RARITIES.has(card.rarity) || card.rarity === "Rare") return "foil-holo";
-  if (isAllFoil(card)) return "foil-holo";
+  if (isAllFoil(card)) return card.foilMap ? "foil-holo foil-rainbow" : "foil-holo";
   return "foil-none";
 }
 
@@ -649,11 +657,14 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   // IR, SIR, gold) print shiny edge to edge, portrait included, so they take no
   // layout mask at all.
   const owner = evo === "foil-owner" ? ownerWindow(card) : "";
+  // Per-card foil maps, stamp placement and cast-and-cure coats (js/foil-maps.js).
+  const extra = foilExtras(card, assetUrl);
   const load = lazy ? ` loading="lazy" decoding="async"` : ` decoding="async"`;
-  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo}" data-finish="${finish}" data-ball-layout="${setForCard(card)?.id === "sv8pt5" ? "prismatic" : "repeat"}"
-    style="--art:url('${esc(assetUrl(src))}')${owner ? `;--win-owner:url('${esc(owner)}')` : ""}">
+  return `<div class="tcg ${rarityKey(card.rarity)} ${foilClass(card)} ${pattern} ${reverse} ${evo} ${extra.classes}" data-finish="${finish}" data-ball-layout="${setForCard(card)?.id === "sv8pt5" ? "prismatic" : "repeat"}"
+    style="--art:url('${esc(assetUrl(src))}')${owner ? `;--win-owner:url('${esc(owner)}')` : ""}${extra.style ? `;${esc(extra.style)}` : ""}">
     <img src="${esc(src)}" alt="${esc(card.name)}"${load} />
     <span class="foil" aria-hidden="true"></span>
+    ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
     <span class="glare" aria-hidden="true"></span>
     ${stamp ? rarityStamp(card) : ""}
   </div>`;

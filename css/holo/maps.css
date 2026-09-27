@@ -1,0 +1,104 @@
+/*
+ * Where each card is foil, card by card.
+ *
+ * The window rules in windows.css cut the foil to rectangles, so it washes
+ * over the Pokémon and through anything printed on the art. Real cards stop
+ * the foil at the Pokémon's outline, the text and the stamps. Pokémon TCG
+ * Live publishes that as a per-card foil map (credited in NOTICE.md), which
+ * is also what pokemon-cards-151 masks every card with. js/foil-maps.js puts
+ * a card's map on it as --foil-map; this sheet makes it the mask.
+ *
+ * Loaded after realism.css, whose full-art rules clear every mask: the map
+ * rules below match those selectors' specificity and win by coming later.
+ * Also here: the 30th Celebration stamp knockout for cards with no map, and
+ * the `.cure` layer for cast-and-cure coats. The card-textures skill in
+ * .claude/skills/ explains all three (reference/masks.md).
+ */
+
+/* ---- Foil maps ------------------------------------------------------------
+   The map replaces the window clip, the evolution and owner punches and the
+   stamp knockout at once: all of them are already black in it. */
+body.fx-holo.fx-holo.fx-holo .tcg.has-foil-map .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* The gloss sits on the varnish, over the whole card, as upstream's masked
+   cards do. */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.has-foil-map, .has-stamp) .glare {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-image: var(--art);
+  mask-composite: add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* ---- The 30th Celebration stamp, on cards with no map ----------------------
+   The Pikachu "30" stamp is flat ink on the real card, never foil. Cards
+   TCG Live has no map for (the Classic Collection) cut its shape out of the
+   foil instead, placed per card by --stamp-pos and --stamp-size. */
+body.fx-holo.fx-holo.fx-holo .tcg.has-stamp {
+  --stamp-mask: url("/assets/masks/stamp/stamp30.png");
+}
+body.fx-holo.fx-holo.fx-holo .tcg.has-stamp .foil {
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--stamp-mask);
+  -webkit-mask-composite: source-out, source-over;
+  mask-image: var(--art), var(--stamp-mask);
+  mask-composite: subtract, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, var(--stamp-size);
+  mask-size: contain, var(--stamp-size);
+  -webkit-mask-position: center, var(--stamp-pos);
+  mask-position: center, var(--stamp-pos);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* ---- Cast and cure ----------------------------------------------------------
+   A holographic pattern pressed into the UV varnish. It shines over plain ink
+   as well as over foil, so it cannot live inside `.foil` (masked by the map):
+   it gets its own layer, masked only by the card. Like the other shine layers
+   (base.css) it only exists while a card is held or settling; at rest the
+   coat is invisible on the real cards too. */
+.tcg .cure {
+  display: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.lit, .settling) .cure {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo.no-shine .tcg.tcg .cure {
+  display: none;
+}

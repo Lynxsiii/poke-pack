@@ -1,10 +1,10 @@
 # 30th Celebration (site set `me55`)
 
 What is known about this set's foil, where it came from, and what the site
-does about it today. The research thread's notes, when they land, are at
+ships for it (2026-09-27). The research notes are at
 `/mnt/project-files/30th-celebration/texture-research.md` with reference
-images in `/mnt/project-files/30th-celebration/texture-refs/`; read them too,
-and where they disagree with this file, trust photos of the physical card.
+images in `/mnt/project-files/30th-celebration/texture-refs/`; where they
+disagree with this file, trust photos of the physical card.
 
 ## Ids
 
@@ -20,21 +20,21 @@ right: every card in the TCG Live export has a foil type.
 
 ## Foil by rarity (TCG Live export, 2026-09-27)
 
-| Rarity | `foil.type` / `foil.mask` | Cast and cure | Site pattern today |
+| Rarity | `foil.type` / `foil.mask` | Cast and cure | Site classes (shipped) |
 |---|---|---|---|
-| Common | `RAINBOW` / `HOLO` | | `foil-holo` |
-| Rare | `SV_HOLO` / `HOLO` | | `foil-holo` (Sword & Shield recipe) |
-| Double Rare | `SUN_PILLAR` / `HOLO` | `SouthernCross` (star sparkle) | `foil-ex` |
-| Illustration Rare | `SUN_PILLAR` / `HOLO` | | `foil-ir` |
-| Special Illustration Rare | `SV_ULTRA` / `ETCHED` | | `foil-sir` |
-| Futuristic Rare | `SV_ULTRA` / `ETCHED` | | `foil-future` |
-| Pikachu Rare | `PIKACHU` / `HOLO` | `StitchedRings` | `foil-holo` |
-| RGB Rare | `RGB` / `ETCHED` | | `foil-future` + `data-finish` red, green, blue |
-| Classic Collection | not in the export yet | | `foil-holo`, or `foil-ultra` for EX, GX, V, BREAK, LEGEND |
+| Common | `RAINBOW` / `HOLO` | | `foil-holo foil-rainbow` |
+| Rare | `SV_HOLO` / `HOLO` | | `foil-holo foil-svholo` |
+| Double Rare | `SUN_PILLAR` / `HOLO` | `SouthernCross` (star sparkle) | `foil-ex foil-sunpillar cure-stars` |
+| Illustration Rare | `SUN_PILLAR` / `HOLO` | | `foil-ir` + `has-foil-map` |
+| Special Illustration Rare | `SV_ULTRA` / `ETCHED` | | `foil-sir` + `has-foil-map has-etch-map` |
+| Futuristic Rare | `SV_ULTRA` / `ETCHED` | | `foil-future` + `has-etch-bins` |
+| Pikachu Rare | `PIKACHU` / `HOLO` | `StitchedRings` | `foil-holo foil-pikachu cure-rings` |
+| RGB Rare | `RGB` / `ETCHED` | | `foil-future foil-rgb` + `has-foil-rgb` |
+| Classic Collection | not in the export yet | | `foil-holo` or `foil-ultra`, plus `foil-classic has-stamp` |
 
-`PIKACHU`, `RGB` and `StitchedRings` exist only in this set. `StitchedRings`
-is a UV texture of rings, going by the name; confirm its look on photos of a
-Pikachu Rare before drawing it.
+`PIKACHU`, `RGB` and `StitchedRings` exist only in this set. The first
+pattern class is what the Classic engine keys on; the second is the new
+finish, in `css/holo/celebration.css`.
 
 ## Where the foil is (TCG Live foil maps)
 
@@ -52,8 +52,12 @@ What they show:
 - **Special Illustration Rare**: the whole card in grades, with a separate
   etch map; the stamp and text are not foil.
 - **Futuristic Rare**: the whole card, the Pokémon at partial strength, with
-  a fingerprint-swirl etch across the background (the etch skips the
-  Pokémon); the rainbow stamp is not foil.
+  a geometric op-art etch (rings, chevrons, hatching in separate cells)
+  across the background that skips the Pokémon; the rainbow stamp is not
+  foil.
+- **RGB Mews**: colour maps, not greyscale. Red is Mew's highlights and the
+  frame lines, green the whole card, blue the sunburst streaks.
+  `fetch_foil_maps.py` ships each channel as its own mask.
 
 ## The Pikachu stamp
 
@@ -102,54 +106,47 @@ python3 .claude/skills/card-textures/scripts/find_overlay.py --set me55 \
   --name stamp30 --out <dir>
 ```
 
-**Shipping it.** Noah chose on 2026-09-27 to ship TCG Live's foil maps,
-and they settle the stamp for every card that has one: the small stamp is
-black in the map and the Pikachu Rare's big stamp is white, minus its text.
-So:
+**How it shipped.**
 
-1. **The 161 cards with maps** (158 numbered plus the RGB Mews): run
-   `fetch_foil_maps.py --set me55 --all --ship --write-data` and wire
-   `foilMap` into `tcgFace()` and `css/holo/windows.css` as
-   [masks.md](masks.md) "Shipping foil maps" shows. No stamp rules needed.
+1. **The 161 cards with maps** (158 numbered plus the RGB Mews):
+   `fetch_foil_maps.py --set me55 --all --ship --write-data --etch-bins 157,158`
+   wrote `assets/foil/maps/me55/` and the `foilMap`, `etchMap`,
+   `foilMapR/G/B` and `etchMapH/V` fields. The small stamp is black in the
+   maps and the Pikachu Rare's big stamp white minus its text, so no stamp
+   rule is needed on these cards.
 2. **The 30 Classic Collection cards** have no map (TCG Live's `me5-5c` is
-   empty), so they need the stamp knockout from `stamp30.json`. `.claude/`
-   is not deployed (`scripts/prepare-cf-assets.mjs` copies only
-   `index.html`, `_headers`, `css`, `js`, `data`, `assets`), so rerun
-   `find_overlay.py` with `--out assets/masks/stamp`, put each card's
-   `position` and `size` on its record in `data/me55.json` the way
-   `make_owner_masks.py` adds `ownerMask`, set `--stamp-mask`,
-   `--stamp-pos`, `--stamp-size` and `has-stamp` in `tcgFace()`, and move
-   section 1 of `lab/lab.css` into `css/holo/windows.css` under the site's
-   prefix. Classic cards drawn with `foil-ultra` (EX, GX, V, BREAK, LEGEND)
-   cover the whole card, so theirs is the two-layer "card minus a stamp"
-   from the mask algebra table. Custom property URLs must be root-relative
-   (`/assets/masks/stamp/stamp30.png`).
+   empty), so `scripts/ship_stamp.py` copied `stamp30.png` to
+   `assets/masks/stamp/` and wrote `stampPos` and `stampSize` onto every
+   card with a stamp; `has-stamp` in `css/holo/maps.css` cuts it out of the
+   foil. `cc100` has no stamp, so no `has-stamp`.
 
-Section 2 (the Pikachu Rare union mask) is only a fallback now; the maps do
-it better.
+## What shipped, finish by finish
 
-## What the lab showed
+Recipes in `css/holo/celebration.css`, textures from
+`scripts/make_celebration_textures.py` (seeded, so reruns are identical).
+Every finish is masked by its card's foil map unless noted.
 
-- The stamp knockout and the three-layer evolution mask composite correctly
-  in Chromium (`mask-composite: intersect, subtract, add`).
-- A straight port of 151's Scarlet & Violet regular holo onto the Rares
-  (`lab.css` section 3) is right in movement but too harsh across the whole
-  window: its high contrast is meant to land on the background only. With
-  the TCG Live map as the mask (`?maps=1`) the Pokémon stays clean and the
-  card reads like the real one. Per-card foil maps matter more than any
-  gradient tuning for this set, which is why they ship. On cards without a
-  map, soften the port (lower `contrast`, lower `.foil` opacity) rather
-  than use it at full strength.
-- Shipped maps (alpha WebP) and raw maps (luminance PNG) render the same.
+| Finish | What the real card does | Recipe |
+|---|---|---|
+| Common `foil-rainbow` | Soft wide rainbow on the art background only | Grain plus a 112deg spectrum with black ends, colour-dodged; a counter sweep on `::before`, a radial falloff on `::after`; a soft glare so pale Pokémon do not bleach |
+| Rare `foil-svholo` | Scarlet & Violet regular holo | 151's regular holo: 10deg spectrum at 400%, tilt bars, luminosity radial |
+| Double Rare `foil-sunpillar` + `cure-stars` | Diagonal sun-pillar bars; SouthernCross star glints over the whole card, ink included | 115deg spectral bars plus light bars, mirrored exclusion `::after`. Stars on `.cure`: `southern-cross.webp`, screen, each card's hue cycling with the pointer |
+| Pikachu Rare `foil-pikachu` + `cure-rings` | Cracked-ice foil in the window, the big foil stamp; StitchedRings firework bursts of dashes | Cracked ice over a sun pillar, a difference twinkle, a vivid gradient masked by `stitched-rings.webp`; paler rings on `.cure` over the whole card |
+| Illustration Rare `foil-ir` | Soft light pillars on chosen parts of the painting | 151's illustration rare with the map |
+| SIR `foil-sir` | Organic contour etch, glitter, low sheen | 151's SIR: 15deg rainbow shown only inside two crossing bars, glitter, a multiply glare; the etch glare lights the contour lines |
+| Futuristic `foil-future` + `has-etch-bins` | Opalescent inks, grid glitter, op-art cells flashing at their own tilt | Grid glitter and a pastel opal; op-art bands on `::before` and `::after`, masked by the horizontal and vertical halves of the etch so cells flash separately |
+| RGB `foil-rgb` | Transparent colour ink on mirror foil, bare-foil streaks, striped chrome on Mew | A radial light that keeps the ink saturated; a white radial through the blue channel (streaks); 1px ridges through the red channel |
+| Classic `foil-classic` | One shared stock: confetti glitter, puffy stars, gold border, crosshatch | Two confetti tiles with counter parallax over a band spectrum; puffy stars at mid brightness so they stay coloured; crosshatch and radial `::after` |
 
-## Open for the texture thread
+Checked: the lab at rest and three poses per finish, the real site's
+inspector (default, shine off, Classic engine), phone width, and
+`foil_probe.mjs --idle` (the lab idles at 0 ms; the home page's cost is the
+headline shimmer and pack glint it already had).
 
-- `RAINBOW` holo on commons versus `SV_HOLO` on Rares: how do they differ on
-  the physical card?
-- `StitchedRings` on Pikachu Rares and `SouthernCross` on Double Rares:
-  pattern, scale, and whether the stars show at rest.
-- `RGB` etch on the Mews and `SV_ULTRA` etch on Futuristic Rares: the etch
-  map is a fingerprint swirl; `scripts/make_etch_maps.py` can synthesise a
-  similar map from our own scans.
-- Classic Collection reprints: each should follow its original card's foil
-  (for example Base Set starlight holo), plus the stamp.
+## Still open
+
+- YOSHIROTTEN Energy: the real cards have their own art with a wide
+  rainbow panel foil; the site still shows the shared Energy art.
+- Classic Collection per-card relief (light emboss following each
+  original's art) is not drawn; the shared stock is.
+- No set symbol icon (Scrydex has none).

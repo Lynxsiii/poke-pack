@@ -20,6 +20,7 @@
 import { createCardMotion } from "/js/card-motion.js";
 import { HIT_RARITIES } from "/js/engine.js";
 import { rarityKey } from "/js/catalog.js";
+import { foilExtras } from "/js/foil-maps.js";
 
 const params = new URLSearchParams(location.search);
 const setId = params.get("set") || "me55";
@@ -52,12 +53,16 @@ function foilPattern(c) {
   if (r === "Ultra Rare") return "foil-ultra";
   if (r === "Mega Attack Rare") return "foil-mega-attack";
   if (r === "Black White Rare") return "foil-bwr";
-  if (r === "Futuristic Rare" || r === "RGB Rare") return "foil-future";
-  if (r === "Classic Collection") return CLASSIC_FULL_FOIL.test(c.name || "") ? "foil-ultra" : "foil-holo";
-  if (r === "Pikachu Rare" || r === "ACE SPEC Rare") return "foil-holo";
-  if (isEx(c) && (HIT_RARITIES.has(r) || r === "Rare")) return "foil-ex";
+  if (r === "Futuristic Rare") return "foil-future";
+  if (r === "RGB Rare") return "foil-future foil-rgb";
+  if (r === "Classic Collection") return `${CLASSIC_FULL_FOIL.test(c.name || "") ? "foil-ultra" : "foil-holo"} foil-classic`;
+  if (r === "Pikachu Rare") return "foil-holo foil-pikachu";
+  if (r === "ACE SPEC Rare") return "foil-holo";
+  if (isEx(c) && (HIT_RARITIES.has(r) || r === "Rare")) return c.foilMap && r === "Double Rare" ? "foil-ex foil-sunpillar" : "foil-ex";
   if (c.supertype === "Trainer" && HIT_RARITIES.has(r)) return "foil-ex";
-  if (HIT_RARITIES.has(r) || r === "Rare" || allFoil(c)) return "foil-holo";
+  if (r === "Rare" && c.foilMap) return "foil-holo foil-svholo";
+  if (HIT_RARITIES.has(r) || r === "Rare") return "foil-holo";
+  if (allFoil(c)) return c.foilMap ? "foil-holo foil-rainbow" : "foil-holo";
   return "foil-none";
 }
 function finishOf(c) {
@@ -92,20 +97,25 @@ async function foilMaps(list) {
 const abs = (path) => new URL(path, location.href).href;
 
 function face(c, stamp, maps, withProof) {
-  const s = stamp[c.id];
-  const map = withProof ? maps[c.id] : null;
+  // The site's own per-card extras (foil maps, stamp, cast-and-cure coat), on
+  // both copies. The proof-only extras below are the lab's older experiments.
+  const extra = foilExtras(c, (path) => abs(`/${path}`));
+  const s = withProof && !c.foilMap ? stamp[c.id] : null;
+  const map = withProof && !c.foilMap ? maps[c.id] : null;
   const vars = [`--art:url('${abs(`/${c.image}`)}')`];
+  if (extra.style) vars.push(extra.style);
   if (s) {
     vars.push(`--stamp-mask:url('${abs("./masks/stamp30.png")}')`, `--stamp-pos:${s.position}`, `--stamp-size:${s.size}`);
     if (s.cutout) vars.push(`--stamp-cut:url('${abs(`./masks/${s.cutout}`)}')`);
   }
   if (map) vars.push(`--foil-map:url('${abs(map.url)}')`);
-  const classes = ["tcg", rarityKey(c.rarity), foilClass(c), foilPattern(c), foilLayout(c),
+  const classes = ["tcg", rarityKey(c.rarity), foilClass(c), foilPattern(c), foilLayout(c), extra.classes,
     s ? "has-stamp" : "", s?.cutout ? "has-stamp-cut" : "", map ? "has-foil-map" : "", map?.lum ? "foil-map-lum" : ""].filter(Boolean).join(" ");
   return `<figure class="lab-cell ${withProof ? "lab-proof" : "lab-site"}" style="--w:${width}px">
     <div class="${classes}" data-finish="${finishOf(c)}" style="${vars.join(";")}">
       <img src="/${c.image}" alt="${c.name}" decoding="async" />
       <span class="foil" aria-hidden="true"></span>
+      ${extra.cure ? `<span class="cure" aria-hidden="true"></span>` : ""}
       <span class="glare" aria-hidden="true"></span>
     </div>
     <figcaption>${withProof ? (map ? `proof + ${map.lum ? "raw" : "shipped"} foil map` : "proof") : "site"} · ${c.number} ${c.name}<br>${c.rarity}</figcaption>
@@ -144,11 +154,14 @@ function pose(x, y, { light = 1, tilt = true, root = document } = {}) {
   }
 }
 
+// Per-card properties set in the markup, which a reset must not strip.
+const KEEP = /^--(art|stamp|foil-map|etch-map|seed)/;
+
 function rest(root = document) {
   for (const el of root.querySelectorAll(".tcg")) {
     el.classList.remove("lit", "settling");
     for (const name of [...el.style]) {
-      if (name !== "--art" && !name.startsWith("--stamp")) el.style.removeProperty(name);
+      if (!KEEP.test(name)) el.style.removeProperty(name);
     }
   }
 }
