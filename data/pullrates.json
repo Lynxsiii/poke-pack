@@ -161,13 +161,14 @@
     "name": "Stellar Crown",
     "printedTotal": 142,
     "released": "2024-09-13",
-    "updated": "2026-05-05",
-    "source": "TCGPlayer study (~8,000 packs) as reported alongside Twilight Masquerade / Temporal Forces. DR 1/5.9, ACE SPEC 1/20.2, IR 1/12.8, UR 1/14.8, SIR 1/90.1, Hyper Rare 1/137.",
+    "updated": "2026-09-27",
+    "source": "TCGplayer Authentication Center study of 8,000+ English packs (published 2024-09-13, updated 2025-02-27), per pack with 95% intervals: Double Rare 16.90% \u00b10.79% (1 in 6), Ultra Rare 6.75% \u00b10.53% (1 in 15), ACE SPEC Rare 4.94% \u00b10.46% (1 in 20, first reverse slot), Illustration Rare 7.79% \u00b10.57% (1 in 13), Special Illustration Rare 1.11% \u00b10.22% (1 in 90) and Hyper Rare 0.73% \u00b10.18% (1 in 137), all three in the second reverse slot. TCGplayer found Dachsbun ex (067) at 0.76% \u00b10.18% against about 1.24% for each other Double Rare and calls it likely short printed, so data/sv7.json gives it pullWeight 0.61. Same rates as Temporal Forces and Twilight Masquerade; no god packs in English Scarlet & Violet.",
+    "sourceUrl": "https://www.tcgplayer.com/content/article/Pok%C3%A9mon-TCG-Stellar-Crown-Pull-Rates/2c0743dd-dbd0-4504-9ff8-be5a72dd04d1/",
     "rates": {
-      "double": 0.1695,
-      "ace": 0.0495,
-      "ir": 0.0781,
-      "ultra": 0.0676,
+      "double": 0.169,
+      "ace": 0.0494,
+      "ir": 0.0779,
+      "ultra": 0.0675,
       "sir": 0.0111,
       "hyper": 0.0073
     }
