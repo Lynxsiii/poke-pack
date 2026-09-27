@@ -66,10 +66,33 @@ export async function ensureSocialSchema(env) {
       "CREATE INDEX IF NOT EXISTS idx_dms_thread ON dms(from_id, to_id, created_at)",
     ];
     for (const sql of stmts) await runDdl(env, sql);
+    await clearChatOnce(env, "clear-chat-2026-09-27");
     schemaReady = true;
   } catch (err) {
     console.error("ensureSocialSchema", err);
   }
+}
+
+/**
+ * Empty the global chat once per key, the first time any isolate readies the
+ * social schema. The rows move to chat_messages_cleared rather than vanishing,
+ * and the key is recorded in the same batch, so the wipe never repeats.
+ */
+async function clearChatOnce(env, key) {
+  await runDdl(env, "CREATE TABLE IF NOT EXISTS maintenance (key TEXT PRIMARY KEY, done_at INTEGER NOT NULL)");
+  await runDdl(
+    env,
+    "CREATE TABLE IF NOT EXISTS chat_messages_cleared (id INTEGER PRIMARY KEY, user_id TEXT NOT NULL, body TEXT NOT NULL, created_at INTEGER NOT NULL, cleared_by TEXT NOT NULL)"
+  );
+  const pending = "NOT EXISTS (SELECT 1 FROM maintenance WHERE key = ?)";
+  await env.DB.batch([
+    env.DB.prepare(
+      `INSERT OR IGNORE INTO chat_messages_cleared (id, user_id, body, created_at, cleared_by)
+       SELECT id, user_id, body, created_at, ? FROM chat_messages WHERE ${pending}`
+    ).bind(key, key),
+    env.DB.prepare(`DELETE FROM chat_messages WHERE ${pending}`).bind(key),
+    env.DB.prepare("INSERT OR IGNORE INTO maintenance (key, done_at) VALUES (?, ?)").bind(key, Date.now()),
+  ]);
 }
 
 async function queryAll(env, sql, ...binds) {

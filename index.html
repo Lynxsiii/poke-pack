@@ -36,9 +36,10 @@
       <style>.boot-veil { display: none !important; }</style>
     </noscript>
     <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="css/app.css?v=49" />
+    <link rel="stylesheet" href="css/app.css?v=50" />
     <link rel="stylesheet" href="css/theme.css?v=5" />
     <link rel="stylesheet" href="css/opening.css?v=1" />
+    <link rel="stylesheet" href="css/promo-set.css?v=2" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -171,12 +172,15 @@
               <div class="hero-art" id="hero-art"></div>
             </div>
 
-            <div class="section-head">
+            <div class="section-head" id="pack-head">
               <div>
                 <h2 id="shop-pack-title">Pitch Black boosters</h2>
                 <p id="shop-pack-sub">Same 11-card pack. Four wrappers from the July 2026 print.</p>
               </div>
-              <p class="pack-odds" id="shop-odds">DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081</p>
+              <div class="pack-head-side">
+                <p class="pack-odds" id="shop-odds">DR 1/5 · UR 1/12 · IR 1/9 · SIR 1/80 · gold 1/1081</p>
+                <div class="shop-pack-trend" id="shop-pack-trend"></div>
+              </div>
             </div>
             <div class="pack-grid" id="pack-grid"></div>
             <div class="sealed-block hidden" id="sealed-block">
@@ -191,12 +195,13 @@
             <div class="sealed-block promo-block hidden" id="promo-block">
               <div class="section-head">
                 <div>
-                  <h2>Collections and promos</h2>
-                  <p>Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.</p>
+                  <h2 id="promo-block-title">Collections and promos</h2>
+                  <p id="promo-block-sub">Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.</p>
                 </div>
               </div>
               <div class="sealed-grid promo-grid" id="promo-grid"></div>
             </div>
+            <div class="sealed-block promo-elsewhere hidden" id="promo-elsewhere"></div>
           </div>
           <aside class="shop-rail" aria-label="All expansions">
             <div class="shop-rail-head">
@@ -217,7 +222,7 @@
               price, or send keepers to your binder.
             </p>
             <div class="bulk-cta">
-              <button class="solid" type="button" data-goto="shop">Rip a pack</button>
+              <button class="solid" type="button" data-goto="shop" id="bulk-rip">Rip a pack</button>
               <button class="ghost" type="button" data-goto="binder">Open binder</button>
               <button class="ghost" type="button" id="sell-duplicates" disabled>Sell set duplicates</button>
             </div>
@@ -353,6 +358,21 @@
       </div>
     </div>
 
+    <div class="overlay hidden" id="price-dialog" role="dialog" aria-modal="true" aria-labelledby="price-title">
+      <div class="price-stage">
+        <button class="ghost inspect-close" id="price-close">Close</button>
+        <div class="price-head">
+          <div class="price-art" id="price-art" aria-hidden="true"></div>
+          <div>
+            <p class="kicker" id="price-kicker"></p>
+            <h2 id="price-title"></h2>
+          </div>
+        </div>
+        <div class="price-card" id="price-chart"></div>
+        <p class="price-note" id="price-note"></p>
+      </div>
+    </div>
+
     <div class="overlay hidden" id="inspect" role="dialog" aria-modal="true" aria-labelledby="inspect-info">
       <div class="inspect-stage">
         <button class="ghost inspect-close" id="inspect-close">Close</button>
@@ -370,6 +390,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=69"></script>
+    <script type="module" src="js/app.js?v=71"></script>
   </body>
 </html>

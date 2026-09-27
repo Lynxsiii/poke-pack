@@ -21,6 +21,7 @@ import {
   promoOffers,
   findOffer,
   offerPackCount,
+  offerPackSets,
 } from "./catalog.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
@@ -51,7 +52,14 @@ import {
 } from "./achievements.js";
 import { QUESTS } from "./quests.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
-import { loadPriceHistory, priceHistoryReady, renderPriceChart, renderWorthChart } from "./pricechart.js";
+import {
+  loadPriceHistory,
+  priceHistoryReady,
+  productTrend,
+  renderPriceChart,
+  renderProductChart,
+  renderWorthChart,
+} from "./pricechart.js";
 import {
   loadState,
   saveState,
@@ -241,6 +249,8 @@ let sealedConfirm = null;
 let sealedConfirmTimer = 0;
 let focusIndex = 0;
 let activeWrapper = liveSet.wrappers[0];
+/** The set of the pack on the table: a promo set's boxes open other sets' packs. */
+let packSet = liveSet;
 let tearing = false;
 let tearStart = { x: 0, y: 0 };
 let lastPointer = { x: 0, y: 0 };
@@ -265,6 +275,10 @@ const els = {
   sealedBlock: document.getElementById("sealed-block"),
   sealedGrid: document.getElementById("sealed-grid"),
   promoBlock: document.getElementById("promo-block"),
+  promoBlockTitle: document.getElementById("promo-block-title"),
+  promoBlockSub: document.getElementById("promo-block-sub"),
+  promoElsewhere: document.getElementById("promo-elsewhere"),
+  packHead: document.getElementById("pack-head"),
   promoGrid: document.getElementById("promo-grid"),
   setSwitcher: document.getElementById("set-switcher"),
   heroArt: document.getElementById("hero-art"),
@@ -274,6 +288,14 @@ const els = {
   shopPackTitle: document.getElementById("shop-pack-title"),
   shopPackSub: document.getElementById("shop-pack-sub"),
   shopOdds: document.getElementById("shop-odds"),
+  shopPackTrend: document.getElementById("shop-pack-trend"),
+  priceDialog: document.getElementById("price-dialog"),
+  priceClose: document.getElementById("price-close"),
+  priceArt: document.getElementById("price-art"),
+  priceKicker: document.getElementById("price-kicker"),
+  priceTitle: document.getElementById("price-title"),
+  priceChart: document.getElementById("price-chart"),
+  priceNote: document.getElementById("price-note"),
   binderTitle: document.getElementById("binder-title"),
   bulkKicker: document.getElementById("bulk-kicker"),
   bulkLede: document.getElementById("bulk-lede"),
@@ -846,6 +868,11 @@ function renderSetChrome() {
   if (els.shopTitle) els.shopTitle.textContent = `${liveSet.name}.`;
   if (els.shopLede) els.shopLede.textContent = liveSet.lede || liveSet.blurb;
   if (els.shopPackTitle) els.shopPackTitle.textContent = `${liveSet.name} boosters`;
+  // A promo set sells no boosters, only the boxes its promos come in.
+  els.packHead?.classList.toggle("hidden", Boolean(liveSet.promoSet));
+  els.packGrid?.classList.toggle("hidden", Boolean(liveSet.promoSet));
+  const bulkRip = document.getElementById("bulk-rip");
+  if (bulkRip) bulkRip.textContent = liveSet.promoSet ? "Shop the promos" : "Rip a pack";
   if (els.shopPackSub) {
     els.shopPackSub.textContent = `${liveSet.packSize}-card pack. ${wrapCount} wrapper${
       wrapCount === 1 ? "" : "s"
@@ -983,7 +1010,52 @@ function renderShop() {
     })
     .join("");
   tintFrom(els.packGrid.querySelector(".shop-wrapper img"));
+  if (els.shopPackTrend) els.shopPackTrend.innerHTML = trendButton("boosterPack", `${liveSet.name} booster pack`);
   renderSealed();
+  loadShopTrends();
+}
+
+/** Sets whose price history has loaded for the shop's trend buttons. */
+const shopTrendSets = new Set();
+
+/**
+ * A pack's or box's market trend for the shop: a sparkline and the change
+ * over three months, from data/prices/<set>.json. Tapping it opens the full
+ * chart. A placeholder until the set's file arrives, and nothing at all for a
+ * product with under two recorded prices.
+ */
+function trendButton(key, name) {
+  const trend = productTrend(liveSet.id, key);
+  if (!trend && shopTrendSets.has(liveSet.id)) return "";
+  const attrs = `type="button" data-price-chart="${esc(key)}" data-price-name="${esc(name)}"`;
+  if (!trend) {
+    return `<button ${attrs} class="price-trend pending" aria-label="${esc(name)} price history">
+      <span class="pt-spark" aria-hidden="true"></span>
+      <span class="pt-copy"><b>Market</b><small>Loading prices</small></span>
+    </button>`;
+  }
+  const way = trend.dir === "up" ? "up" : trend.dir === "down" ? "down" : "flat at";
+  return `<button ${attrs} class="price-trend ${trend.dir}"
+      aria-label="${esc(name)} price history: ${way} ${Math.abs(trend.pct).toFixed(1)}% over ${trend.span}">
+    ${trend.spark}
+    <span class="pt-copy"><b>${trend.change}</b><small>${trend.span}</small></span>
+    <span class="pt-go" aria-hidden="true">Chart</span>
+  </button>`;
+}
+
+/** Fetch the live set's price history once, then swap the placeholders for trends. */
+function loadShopTrends() {
+  const setId = liveSet.id;
+  if (shopTrendSets.has(setId)) return;
+  loadPriceHistory(setId).then((store) => {
+    if (store) shopTrendSets.add(setId);
+    if (liveSet.id !== setId) return;
+    for (const grid of [els.shopPackTrend, els.sealedGrid, els.promoGrid]) {
+      grid?.querySelectorAll(".price-trend.pending").forEach((el) => {
+        el.outerHTML = store ? trendButton(el.dataset.priceChart, el.dataset.priceName) : "";
+      });
+    }
+  });
 }
 
 /** The buy button's label, shared by the sealed and promo product cards. */
@@ -1039,6 +1111,7 @@ function renderSealed() {
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
           <p>${offer.packs} packs${promo ? ` + ${esc(promo)}` : ""} · ✦ ${coin(each)} each · ${esc(deal)}</p>
+          ${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}
         </div>
         <div class="pack-meta">
           <span class="cost">✦ ${coin(offer.price)}</span>
@@ -1050,16 +1123,27 @@ function renderSealed() {
   renderPromoProducts();
 }
 
-/** What a promo product holds, in one line: "29 packs + 1 Classic Collection pack". */
+/**
+ * What a promo product holds, in one line: "29 packs + 1 Classic Collection
+ * pack", or "2 Obsidian Flames packs + 2 Paldea Evolved packs" when the packs
+ * are another set's.
+ */
 function productContents(offer) {
   const parts = [];
-  if (offer.packs) parts.push(`${offer.packs} pack${offer.packs === 1 ? "" : "s"}`);
+  if (offer.from) {
+    for (const [id, n] of Object.entries(offer.from)) {
+      parts.push(`${n} ${getSet(id).name} pack${n === 1 ? "" : "s"}`);
+    }
+  } else if (offer.packs) {
+    parts.push(`${offer.packs} pack${offer.packs === 1 ? "" : "s"}`);
+  }
   for (const [key, n] of Object.entries(offer.special || {})) {
     const name = liveSet.specialPacks?.[key]?.wrapper?.name || key;
     parts.push(`${n} ${name} pack${n === 1 ? "" : "s"}`);
   }
   if (!parts.length && offer.kind === "deck") parts.push("60-card deck");
   if (offer.kind === "battle") parts.push("40-card deck");
+  if (!parts.length && offer.kind === "event") parts.push(offer.note || "The card on its own");
   return parts.join(" + ");
 }
 
@@ -1071,16 +1155,56 @@ function releaseNote(offer) {
   return `Out ${when.toLocaleDateString(undefined, { month: "short", day: "numeric" })}`;
 }
 
+/** Headings for a promo set's products, which run to dozens: kind, then newest first. */
+const PROMO_KIND_HEADS = [
+  ["premium", "Premium collections"],
+  ["collection", "Boxes"],
+  ["tin", "Tins"],
+  ["deck", "Battle decks"],
+  ["event", "Event promos"],
+];
+
 /**
  * Collections, tins, premium collections and battle decks for the live set:
  * the products that come with promo cards, from data/products.json. The
  * promo cards sit in front of the box photo, and each one can be inspected.
+ * A product holding a set that isn't playable yet stays off the shelf.
  */
+/** " 19 more open once Paradox Rift and Surging Sparks are here.": a promo set's boxes waiting on their packs' sets. */
+function waitingLine() {
+  const waiting = promoOffers(productList[liveSet.id]).filter((offer) => !offerPackSets(offer, liveSet));
+  const ids = [...new Set(waiting.flatMap((offer) => Object.keys(offer.from || {})))].filter(
+    (id) => !PLAYABLE_SETS.some((set) => set.id === id && set.wrappers?.length)
+  );
+  if (!waiting.length || !ids.length) return "";
+  const names = ids.map((id) => ROADMAP.flatMap((era) => era.sets).find((set) => set.id === id)?.name || id);
+  const list = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0];
+  return ` ${waiting.length} more open once ${list} ${names.length > 1 ? "are" : "is"} here.`;
+}
+
 function renderPromoProducts() {
   if (!els.promoGrid) return;
-  const offers = promoOffers(productList[liveSet.id])
-    .filter((offer) => offer.promos.every((id) => byId[id]));
+  let offers = promoOffers(productList[liveSet.id]).filter(
+    (offer) => offer.promos.every((id) => byId[id]) && offerPackSets(offer, liveSet)
+  );
+  const grouped = Boolean(liveSet.promoSet);
+  if (grouped) {
+    const rank = (offer) => {
+      const i = PROMO_KIND_HEADS.findIndex(([kind]) => kind === offer.kind);
+      return i < 0 ? PROMO_KIND_HEADS.length : i;
+    };
+    const newest = (offer) => Math.max(...offer.promos.map((id) => parseInt(String(byId[id]?.number).replace(/\D/g, ""), 10) || 0));
+    offers = offers.slice().sort((a, b) => rank(a) - rank(b) || newest(b) - newest(a));
+  }
   els.promoBlock.classList.toggle("hidden", !offers.length);
+  if (els.promoBlockTitle) els.promoBlockTitle.textContent = grouped ? "Boxes, tins and decks" : "Collections and promos";
+  if (els.promoBlockSub) {
+    els.promoBlockSub.textContent = grouped
+      ? `Every product opens with its real packs, named on each box, and its promos land in your binder with them. Priced at TCGplayer market.${waitingLine()}`
+      : "Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.";
+  }
+  const faces = [];
+  let lastKind = "";
   els.promoGrid.innerHTML = offers
     .map((offer) => {
       const promos = offer.promos.map((id) => byId[id]);
@@ -1089,26 +1213,34 @@ function renderPromoProducts() {
       const worth = offer.pick
         ? `Promo worth ✦ ${coin(Math.min(...values))} to ✦ ${coin(Math.max(...values))}`
         : `Promo${promos.length === 1 ? "" : "s"} worth ✦ ${coin(values.reduce((sum, v) => sum + v, 0))}`;
-      return `<article class="sealed-card promo-product" data-sealed="${esc(offer.id)}">
+      let head = "";
+      if (grouped && offer.kind !== lastKind) {
+        lastKind = offer.kind;
+        const label = PROMO_KIND_HEADS.find(([kind]) => kind === offer.kind)?.[1] || "More";
+        head = `<h3 class="promo-kind-head">${esc(label)}</h3>`;
+      }
+      const fan = promos
+        .slice(0, 4)
+        .map((card) => {
+          faces.push(card);
+          return `<button type="button" class="promo-face" data-face="${faces.length - 1}" ${inspectAttrs(card)}
+            title="${esc(card.name)} · ${esc(numberLine(card))}" aria-label="Inspect the ${esc(card.name)} promo"></button>`;
+        })
+        .join("");
+      const contents = productContents(offer);
+      const lines = [contents, offer.kind === "event" ? "" : promoNames(offer.promos, offer.pick)].filter(Boolean);
+      return `${head}<article class="sealed-card promo-product${offer.image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
         <div class="promo-stage">
           ${offer.image ? `<img class="promo-box" src="${esc(offer.image)}" alt="" loading="lazy" decoding="async" />` : ""}
-          <div class="promo-fan count-${Math.min(promos.length, 4)}">
-            ${promos
-              .slice(0, 4)
-              .map(
-                (card) => `<button type="button" class="promo-face" ${inspectAttrs(card)}
-                  title="${esc(card.name)} · ${esc(numberLine(card))}" aria-label="Inspect the ${esc(card.name)} promo">
-                  ${tcgFace(card, { small: true, stamp: false, lazy: true })}
-                </button>`
-              )
-              .join("")}
-          </div>
+          <div class="promo-fan count-${Math.min(promos.length, 4)}">${fan}</div>
           ${note ? `<span class="promo-note">${esc(note)}</span>` : ""}
         </div>
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
-          <p>${esc(productContents(offer))} · ${esc(promoNames(offer.promos, offer.pick))}</p>
+          <p>${esc(lines.join(" · "))}</p>
+          ${offer.note && offer.kind !== "event" ? `<p class="promo-real">${esc(offer.note)}</p>` : ""}
           <p class="promo-worth">${worth}</p>
+          ${trendButton(offer.id, offer.name)}
         </div>
         <div class="pack-meta">
           <span class="cost">✦ ${coin(offer.price)}</span>
@@ -1117,6 +1249,70 @@ function renderPromoProducts() {
       </article>`;
     })
     .join("");
+  // Dozens of products on a promo set's page: only the faces near the screen are drawn.
+  windowFaces("promos", els.promoGrid.querySelectorAll(".promo-face[data-face]"), faces, (card) =>
+    tcgFace(card, { small: true, stamp: false, lazy: true })
+  );
+  renderPromoElsewhere();
+}
+
+/**
+ * On a promo set's page, the promos that come in a set's own boxes (its ETB,
+ * Build & Battle Box, blisters). They are that set's cards and are bought
+ * there, so this lists them from the sets already loaded and links across.
+ */
+function renderPromoElsewhere() {
+  const block = els.promoElsewhere;
+  if (!block) return;
+  const prefix = liveSet.promoSet ? `${String(liveSet.id).toUpperCase()} ` : "";
+  const groups = prefix
+    ? PLAYABLE_SETS.filter((set) => set.id !== liveSet.id)
+        .map((set) => ({
+          set,
+          cards: (setCache[set.id] || [])
+            .filter((card) => card.promo && String(card.printedNumber || "").startsWith(prefix))
+            .sort((a, b) => String(a.number).localeCompare(String(b.number))),
+        }))
+        .filter((group) => group.cards.length)
+    : [];
+  block.classList.toggle("hidden", !groups.length);
+  if (!groups.length) {
+    windowFaces("promo-elsewhere", [], [], tcgFace);
+    block.innerHTML = "";
+    return;
+  }
+  const faces = [];
+  const total = groups.reduce((n, group) => n + group.cards.length, 0);
+  const owned = groups.reduce((n, group) => n + group.cards.filter((card) => state.collection[card.id] > 0).length, 0);
+  block.innerHTML = `<div class="section-head">
+      <div>
+        <h2>In the sets' own boxes</h2>
+        <p>${total} more ${esc(liveSet.name)} come in a set's Elite Trainer Box, Build &amp; Battle Box or blisters, so they're sold on that set's page. You have ${owned}.</p>
+      </div>
+    </div>
+    ${groups
+      .map(({ set, cards: list }) => {
+        const have = list.filter((card) => state.collection[card.id] > 0).length;
+        return `<section class="elsewhere-set">
+          <header>
+            <b>${esc(set.name)}</b>
+            <span>${have} / ${list.length}</span>
+            <button type="button" class="ghost" data-go-set="${esc(set.id)}">Open ${esc(set.name)}</button>
+          </header>
+          <div class="elsewhere-cards">${list
+            .map((card) => {
+              faces.push(card);
+              const missing = !(state.collection[card.id] > 0);
+              return `<button type="button" class="elsewhere-card${missing ? " missing" : ""}" data-face="${faces.length - 1}"
+                ${inspectAttrs(card)} title="${esc(card.name)} · ${esc(numberLine(card))}" aria-label="Inspect ${esc(card.name)}"></button>`;
+            })
+            .join("")}</div>
+        </section>`;
+      })
+      .join("")}`;
+  windowFaces("promo-elsewhere", block.querySelectorAll(".elsewhere-card[data-face]"), faces, (card) =>
+    tcgFace(card, { small: true, stamp: false, lazy: true })
+  );
 }
 
 async function activateSet(id, force = false) {
@@ -1380,7 +1576,9 @@ function catalogCard(set, { live = false } = {}) {
   const released = set.released;
   const count = live ? set.totalCount : set.cards;
   const note = live
-    ? `${set.edition} · ${set.packSize}-card boosters`
+    ? set.promoSet
+      ? `${set.edition} · promos in their boxes`
+      : `${set.edition} · ${set.packSize}-card boosters`
     : set.note || "Queued for poke-pack.rip";
   return `<article class="catalog-card ${live ? "live" : ""}">
     <div class="catalog-head">
@@ -1823,7 +2021,9 @@ function renderHome() {
       .join("")}</div>`;
   }
   const homeRip = document.getElementById("home-rip");
-  if (homeRip) homeRip.textContent = `Open ${liveSet.name} · ✦ ${coin(liveSet.cost)}`;
+  if (homeRip) {
+    homeRip.textContent = liveSet.promoSet ? `Shop ${liveSet.name}` : `Open ${liveSet.name} · ✦ ${coin(liveSet.cost)}`;
+  }
 
   if (els.homeStage) {
     const wrap = liveSet.wrappers?.[0];
@@ -1838,7 +2038,7 @@ function renderHome() {
       </div>
       <div class="home-feature-bottom">
         <div><strong>${esc(liveSet.name)}</strong><span>${esc(liveSet.released)} · ${liveSet.totalCount} cards</span></div>
-        <b>✦ ${coin(liveSet.cost)}</b>
+        <b>${liveSet.promoSet ? "Promos" : `✦ ${coin(liveSet.cost)}`}</b>
       </div>
       <p class="home-feature-odds">${esc(liveSet.oddsLine)}</p>`;
     tintFrom(els.homeStage.querySelector(".home-feature-pack img"), els.homeStage.querySelector(".home-feature-pack"));
@@ -3784,7 +3984,7 @@ function canSkipToHits() {
 
 function slotHints() {
   const hints = [];
-  for (const slot of liveSet.slots) {
+  for (const slot of (packSet || liveSet).slots) {
     const label =
       slot.pool === "energy"
         ? "E"
@@ -3820,7 +4020,7 @@ function renderFocusMeta(pull) {
     els.hitBanner.classList.remove("on");
     return;
   }
-  const bits = [liveSet.name, numberLine(pull), pull.types?.join(" / ")].filter(Boolean);
+  const bits = [(packSet || liveSet).name, numberLine(pull), pull.types?.join(" / ")].filter(Boolean);
   els.focusMeta.innerHTML = `
     <p class="focus-kicker">${esc(bits.join(" · "))} ${rarityMark(pull)}</p>
     <h2 class="focus-title">${esc(pull.name)}</h2>`;
@@ -4101,7 +4301,7 @@ function showSpread() {
 
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker">${esc(liveSet.name)} · ${
+      <p class="spread-kicker">${esc((packSet || liveSet).name)} · ${
         sealedRun
           ? `${esc(sealedRun.product.name)} · pack ${sealedRun.index + 1} of ${sealedRun.packs.length}`
           : `pack #${state.packsOpened}`
@@ -4304,7 +4504,7 @@ function nextBoxPack() {
   }
   sealedRun.index += 1;
   finishRip({ keepOpen: true });
-  presentPack(pack.wrapper, pack.cards);
+  presentPack(pack.wrapper, pack.cards, pack.set);
 }
 
 /** Leaving mid-box goes to the summary: the rest of the box is already in the collection. */
@@ -4634,10 +4834,25 @@ async function startRip(wrapper) {
   }
 }
 
-/** Pack art for a pack the server opened: one of the set's wrappers, or a special pack's. */
-function wrapperFor(id) {
-  const special = Object.values(liveSet.specialPacks || {}).find((pack) => pack.wrapper.id === id);
-  return special?.wrapper || liveSet.wrappers.find((w) => w.id === id) || liveSet.wrappers[0];
+/**
+ * Pack art for a pack the server opened: one of its set's wrappers, or a
+ * special pack's. A promo set's boxes hold other sets' packs.
+ */
+function wrapperFor(id, set = liveSet) {
+  const special = Object.values(set.specialPacks || {}).find((pack) => pack.wrapper.id === id);
+  return special?.wrapper || set.wrappers.find((w) => w.id === id) || set.wrappers[0];
+}
+
+/** A set's cards, fetched once, for a box that holds another set's packs. */
+async function loadSetData(set) {
+  if (setCache[set.id]) return setCache[set.id];
+  const list = await fetch(set.dataFile, { cache: "no-cache" }).then((r) => {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  });
+  setCache[set.id] = list;
+  applyCachedPrices(list, set.id);
+  return list;
 }
 
 /**
@@ -4668,10 +4883,14 @@ async function startSealed(productId) {
       body: JSON.stringify({ setId: liveSet.id, product: offer.id }),
     });
     afterEconomy(data.save);
-    const packs = (data.packs || []).map((pack) => ({
-      wrapper: wrapperFor(pack.wrapperId),
-      cards: pack.cards || [],
-    }));
+    const packs = (data.packs || []).map((pack) => {
+      const set = pack.setId ? getSet(pack.setId) : liveSet;
+      return { set, wrapper: wrapperFor(pack.wrapperId, set), cards: pack.cards || [] };
+    });
+    // The inspector looks cards up by id, so another set's packs need its data.
+    await Promise.all(
+      [...new Set(packs.map((pack) => pack.set))].map((set) => loadSetData(set).catch(() => null))
+    );
     const promos = (data.promos || []).map((card) => ({ ...card, reverse: false }));
     sealedRun = {
       product: { ...offer, ...data.product },
@@ -4683,7 +4902,7 @@ async function startSealed(productId) {
     renderHeader();
     renderShop();
     if (promos.length) showPromoIntro();
-    else if (packs.length) presentPack(packs[0].wrapper, packs[0].cards);
+    else if (packs.length) presentPack(packs[0].wrapper, packs[0].cards, packs[0].set);
   } catch (err) {
     toast(err.message || "Couldn't open that box.");
     renderHeader();
@@ -4759,9 +4978,13 @@ function showPromoIntro() {
   countUpStats(els.spread);
 }
 
-/** Put a freshly ripped pack on the table, ready to tear. */
-function presentPack(wrapper, pulled) {
+/**
+ * Put a freshly ripped pack on the table, ready to tear. `set` is the set the
+ * pack belongs to, which is not the live set for a promo set's boxes.
+ */
+function presentPack(wrapper, pulled, set = liveSet) {
   activeWrapper = wrapper;
+  packSet = set || liveSet;
   currentPulls = (pulled || []).map((card) => ({
     ...card,
     reverse: Boolean(card.reverse),
@@ -5234,7 +5457,8 @@ els.viewHome.addEventListener("click", (e) => {
     return;
   }
   if (e.target.closest("#home-rip")) {
-    startRip(liveSet.wrappers?.[0]);
+    if (liveSet.promoSet) setView("shop");
+    else startRip(liveSet.wrappers?.[0]);
     return;
   }
   const play = e.target.closest("[data-play-set]");
@@ -5939,6 +6163,66 @@ els.dailyBtn.addEventListener("click", async () => {
   }
 });
 
+/*
+ * Price history for a pack or box. The trend buttons sit inside cards that buy
+ * on click, so this listens in the capture phase and stops the click there.
+ */
+let priceKey = "";
+let priceRange = "90d";
+let priceOpenedAt = 0;
+
+function paintPriceDialog() {
+  renderProductChart(els.priceChart, liveSet.id, priceKey, priceRange);
+}
+
+function openPriceDialog(key, name) {
+  const offer = key === "boosterPack" ? null : findOffer(sealedPrices[liveSet.id], productList[liveSet.id], key);
+  const shopPrice = key === "boosterPack" ? liveSet.cost : offer?.price;
+  const wrap = liveSet.wrappers[0];
+  priceKey = key;
+  priceRange = "90d";
+  priceOpenedAt = Date.now();
+  els.priceArt.innerHTML = offer?.image
+    ? `<img src="${esc(offer.image)}" alt="" decoding="async" />`
+    : wrap
+      ? packPicture(wrap, " ")
+      : "";
+  els.priceKicker.textContent = `${liveSet.name} · Market price`;
+  els.priceTitle.textContent = key === "boosterPack" ? "Booster pack" : offer?.name || name;
+  els.priceNote.textContent =
+    `TCGplayer market price in US dollars, recorded once a day.` +
+    (shopPrice > 0 ? ` The shop sells it for ✦ ${coin(shopPrice)}.` : "");
+  paintPriceDialog();
+  const setId = liveSet.id;
+  loadPriceHistory(setId).then(() => {
+    if (priceKey === key && liveSet.id === setId && !els.priceDialog.classList.contains("hidden")) paintPriceDialog();
+  });
+  openDialog(els.priceDialog, els.priceClose);
+}
+
+document.getElementById("view-shop")?.addEventListener(
+  "click",
+  (e) => {
+    const trend = e.target.closest("[data-price-chart]");
+    if (!trend) return;
+    e.stopPropagation();
+    openPriceDialog(trend.dataset.priceChart, trend.dataset.priceName);
+  },
+  true
+);
+
+els.priceDialog?.addEventListener("click", (e) => {
+  const range = e.target.closest("[data-range]");
+  if (range) {
+    priceRange = range.dataset.range;
+    paintPriceDialog();
+    return;
+  }
+  if (e.target === els.priceClose || (e.target === els.priceDialog && Date.now() - priceOpenedAt > 500)) {
+    closeDialog(els.priceDialog);
+  }
+});
+
 els.packGrid.addEventListener("click", (e) => {
   const card = e.target.closest("[data-wrapper]");
   if (!card) return;
@@ -5972,6 +6256,15 @@ function onProductClick(e) {
 }
 els.sealedGrid?.addEventListener("click", onProductClick);
 els.promoGrid?.addEventListener("click", onProductClick);
+els.promoElsewhere?.addEventListener("click", (e) => {
+  const go = e.target.closest("[data-go-set]");
+  if (go) {
+    activateSet(go.dataset.goSet).then(() => window.scrollTo({ top: 0, behavior: "smooth" }));
+    return;
+  }
+  const face = e.target.closest("[data-inspect]");
+  if (face) inspectFromEl(face);
+});
 
 function grabTop(e) {
   if (e.target.closest?.(".tear-handle")) return true;
@@ -6239,6 +6532,10 @@ els.bulkSets?.addEventListener("error", hideBrokenSetArt, true);
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
+    if (els.priceDialog && !els.priceDialog.classList.contains("hidden")) {
+      closeDialog(els.priceDialog);
+      return;
+    }
     if (!els.inspect.classList.contains("hidden")) {
       closeDialog(els.inspect);
       return;
@@ -6322,6 +6619,8 @@ async function loadAllSets() {
   allSetsLoaded = true;
   trackWorth();
   if (view === "home") renderHome();
+  // A promo set's page lists the promos in other sets' boxes once they load.
+  if (view === "shop" && liveSet.promoSet && packPhase === "idle") renderPromoElsewhere();
   priceTicker?.tick?.();
 }
 
