@@ -25,6 +25,7 @@ import {
 } from "./catalog.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
+import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge, currentFriends } from "./social.js";
 import {
   AVATARS,
@@ -252,14 +253,6 @@ let activeWrapper = liveSet.wrappers[0];
 /** The set of the pack on the table: a promo set's boxes open other sets' packs. */
 let packSet = liveSet;
 let tearing = false;
-let tearStart = { x: 0, y: 0 };
-let lastPointer = { x: 0, y: 0 };
-let tearCut = 0;
-let tearLift = 0;
-let tearDir = null;
-let tearAnim = 0;
-let tearPose = { dx: 0, dy: 0, rot: 0 };
-let lastCrumbCut = 0;
 let flipBusy = false;
 let flipTimer = 0;
 let flipGen = 0;
@@ -343,13 +336,12 @@ const els = {
   catalogEras: document.getElementById("catalog-eras"),
   overlay: document.getElementById("overlay"),
   packBody: document.getElementById("pack-body"),
-  packTop: document.getElementById("pack-top"),
   packRest: document.getElementById("pack-rest"),
-  packTopArt: document.getElementById("pack-top-art"),
   packRestArt: document.getElementById("pack-rest-art"),
-  packMouth: document.getElementById("pack-mouth"),
+  tearStrip: document.getElementById("tear-strip"),
   tearEdge: document.getElementById("tear-edge"),
-  crumbs: document.getElementById("tear-crumbs"),
+  tearShade: document.getElementById("tear-shade"),
+  tearGlints: document.getElementById("tear-glints"),
   focusWrap: document.getElementById("focus-wrap"),
   focusMeta: document.getElementById("focus-meta"),
   focusAura: document.getElementById("focus-aura"),
@@ -4517,7 +4509,7 @@ function revealAllCards() {
   if (packPhase === "ready") {
     tearing = false;
     packExiting = false;
-    cancelTearAnim();
+    tear.reset();
     clearHandoff();
     els.packBody.classList.add("hidden", "emptied");
     packPhase = "reveal";
@@ -4643,202 +4635,28 @@ function showBoxSummary() {
 }
 
 function setPackArt(wrap) {
-  const html = packPicture(wrap);
-  els.packTopArt.innerHTML = html;
-  els.packRestArt.innerHTML = html;
+  els.packRestArt.innerHTML = packPicture(wrap);
 }
 
-function cancelTearAnim() {
-  if (tearAnim) {
-    cancelAnimationFrame(tearAnim);
-    tearAnim = 0;
-  }
-}
-
-const TEAR_BASE = 6.6;
-let TEAR = [];
-
-// Fresh zigzag per pack so no two rips look identical.
-function buildTearPath() {
-  const pts = [];
-  let x = 0;
-  let up = Math.random() > 0.5;
-  while (x < 99) {
-    const swing = 0.45 + Math.random() * 1.75;
-    pts.push([x, clamp(TEAR_BASE + (up ? -swing : swing), 3.2, 9.8)]);
-    x += 1.8 + Math.random() * 4.2;
-    up = !up;
-  }
-  pts.push([100, TEAR_BASE + (Math.random() - 0.5) * 1.4]);
-  TEAR = pts;
-}
-
-buildTearPath();
-
-function tearY(x) {
-  const t = clamp(x, 0, 100);
-  for (let i = 0; i < TEAR.length - 1; i++) {
-    const [x0, y0] = TEAR[i];
-    const [x1, y1] = TEAR[i + 1];
-    if (t >= x0 && t <= x1) {
-      const u = x1 === x0 ? 0 : (t - x0) / (x1 - x0);
-      return y0 + (y1 - y0) * u;
-    }
-  }
-  return TEAR[TEAR.length - 1][1];
-}
-
-function jagged(from, to) {
-  const lo = Math.min(from, to);
-  const hi = Math.max(from, to);
-  const mids = TEAR.filter(([x]) => x > lo + 1e-6 && x < hi - 1e-6);
-  const pts = [[from, tearY(from)]];
-  if (from <= to) pts.push(...mids);
-  else pts.push(...mids.slice().reverse());
-  if (Math.abs(to - from) > 1e-6) pts.push([to, tearY(to)]);
-  return pts;
-}
-
-function poly(pts) {
-  return `polygon(${pts.map(([x, y]) => `${x.toFixed(2)}% ${y.toFixed(2)}%`).join(", ")})`;
-}
+/** The foil tear itself lives in js/tear.js; this wires it to the stage. */
+const tear = createTear({
+  booster: els.packBody,
+  art: els.packRestArt,
+  strip: els.tearStrip,
+  edge: els.tearEdge,
+  shade: els.tearShade,
+  glints: els.tearGlints,
+  fxOn: () => fxOk(),
+  buzz: (pattern) => buzz(pattern),
+});
 
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
 
-// Tearing rightward starts at the left edge, and vice versa.
-function tearFront(cut = tearCut) {
-  return tearDir === "left" ? 100 - cut * 100 : cut * 100;
-}
-
-// The strip that has already come loose, from the start edge to the tear front.
-function flapPoly(front) {
-  const f = clamp(front + (tearDir === "left" ? -0.7 : 0.7), 0, 100);
-  return tearDir === "left"
-    ? poly([[f, 0], [100, 0], ...jagged(100, f)])
-    : poly([[0, 0], [f, 0], ...jagged(f, 0)]);
-}
-
-// The pack minus that strip — the top stays intact ahead of the tear.
-function bodyPoly(front) {
-  const f = clamp(front, 0, 100);
-  return tearDir === "left"
-    ? poly([[0, 0], [f, 0], ...jagged(f, 100), [100, 100], [0, 100]])
-    : poly([[f, 0], [100, 0], [100, 100], [0, 100], ...jagged(0, f)]);
-}
-
-// Dark opening, only under the part that has torn away.
-function mouthPoly(front) {
-  const f = clamp(front, 0, 100);
-  const depth = 7;
-  return tearDir === "left"
-    ? poly([...jagged(f, 100), [100, tearY(100) + depth], [f, tearY(f) + depth]])
-    : poly([...jagged(0, f), [f, tearY(f) + depth], [0, tearY(0) + depth]]);
-}
-
-function applyTearVisuals({ fade = 1 } = {}) {
-  const live = els.packBody.classList.contains("tearing") || fade < 1;
-  if (!live || !tearDir || tearCut <= 0.001) {
-    els.packRestArt.style.clipPath = "";
-    els.packTopArt.style.clipPath = "";
-    els.packTop.style.transform = "";
-    els.packTop.style.transformOrigin = "";
-    els.packTop.style.opacity = "0";
-    els.packTop.style.visibility = "hidden";
-    if (els.packMouth) {
-      els.packMouth.style.clipPath = "";
-      els.packMouth.style.opacity = "0";
-    }
-    if (els.tearEdge) els.tearEdge.setAttribute("d", "");
-    return;
-  }
-
-  const front = tearFront();
-  els.packTopArt.style.clipPath = flapPoly(front);
-  els.packRestArt.style.clipPath = bodyPoly(front);
-  els.packTop.style.visibility = "visible";
-  els.packTop.style.opacity = String(clamp(fade, 0, 1));
-  // Hinge on the tear front so the loose strip peels off it as the tear grows.
-  els.packTop.style.transformOrigin = `${front.toFixed(2)}% ${tearY(front).toFixed(2)}%`;
-  els.packTop.style.transform =
-    `translate(${tearPose.dx.toFixed(2)}px, ${tearPose.dy.toFixed(2)}px) rotate(${tearPose.rot.toFixed(2)}deg)`;
-
-  if (els.packMouth) {
-    els.packMouth.style.clipPath = mouthPoly(front);
-    els.packMouth.style.opacity = String(clamp(tearCut * 6, 0, 1));
-  }
-
-  if (els.tearEdge) {
-    const pts = tearDir === "left" ? jagged(100, front) : jagged(0, front);
-    els.tearEdge.setAttribute(
-      "d",
-      pts.map((p, i) => `${i ? "L" : "M"} ${p[0].toFixed(2)} ${p[1].toFixed(2)}`).join(" ")
-    );
-  }
-}
-
-function addCrumbs(xPct, count, strong = false) {
-  if (!els.crumbs) return;
-  const away = tearDir === "left" ? -1 : 1;
-  const reach = strong ? 130 : 26;
-  const rise = strong ? 75 : 26;
-  const frag = document.createDocumentFragment();
-  for (let i = 0; i < count; i++) {
-    const at = clamp(xPct + (Math.random() - 0.5) * (strong ? 40 : 10), 0, 100);
-    const bit = document.createElement("i");
-    bit.className = "crumb";
-    bit.style.left = `${at.toFixed(2)}%`;
-    bit.style.top = `${(tearY(at) - 0.6 + Math.random() * 1.4).toFixed(2)}%`;
-    bit.style.width = `${2 + Math.random() * (strong ? 4 : 2.4)}px`;
-    bit.style.height = `${1.5 + Math.random() * (strong ? 3 : 2)}px`;
-    bit.style.setProperty("--cx", `${away * (10 + Math.random() * reach) + (Math.random() - 0.5) * 22}px`);
-    bit.style.setProperty("--cy", `${-8 - Math.random() * rise}px`);
-    bit.style.setProperty("--rot", `${(Math.random() - 0.5) * 620}deg`);
-    bit.style.setProperty("--dly", `${Math.random() * (strong ? 110 : 40)}ms`);
-    bit.addEventListener("animationend", () => bit.remove());
-    frag.appendChild(bit);
-  }
-  els.crumbs.appendChild(frag);
-}
-
-function tornEnough() {
-  return tearCut >= 0.45;
-}
-
-function setTearDir(dir) {
-  tearDir = dir === "right" ? "right" : "left";
-  els.packBody.classList.toggle("tear-from-left", tearDir === "left");
-  els.packBody.classList.toggle("tear-from-right", tearDir === "right");
-}
-
-function resetScrapStyle() {
-  els.packRestArt.style.clipPath = "";
-  els.packTopArt.style.clipPath = "";
-  els.packTop.style.transform = "";
-  els.packTop.style.transformOrigin = "";
-  els.packTop.style.opacity = "";
-  els.packTop.style.visibility = "";
-  els.packTop.style.pointerEvents = "";
-  els.packTop.style.animation = "";
-  if (els.packMouth) {
-    els.packMouth.style.clipPath = "";
-    els.packMouth.style.opacity = "";
-  }
-  if (els.crumbs) els.crumbs.innerHTML = "";
-  if (els.tearEdge) els.tearEdge.setAttribute("d", "");
-}
-
 function resetTear() {
-  cancelTearAnim();
   tearing = false;
-  tearCut = 0;
-  tearLift = 0;
-  lastCrumbCut = 0;
-  tearDir = null;
-  tearPose = { dx: 0, dy: 0, rot: 0 };
-  lastPointer = { x: 0, y: 0 };
-  resetScrapStyle();
+  tear.newPack();
   els.overlay.classList.remove("dealing");
   els.packBody.classList.remove(
     "torn",
@@ -5058,7 +4876,6 @@ function presentPack(wrapper, pulled, set = liveSet) {
   pendingAdvance = false;
   packExiting = false;
   showStrip = false;
-  buildTearPath();
   resetTear();
   clearFocusChrome({ snap: true });
   els.packBody.classList.remove("hidden", "emptied", "pack-exit");
@@ -5089,7 +4906,7 @@ function hidePackThenDeal() {
   if (packPhase !== "ready") return;
   packExiting = false;
   packPhase = "reveal";
-  resetScrapStyle();
+  tear.reset();
   els.packBody.classList.add("hidden", "emptied");
   els.packBody.classList.remove("torn", "tearing", "dragging", "cutting", "pack-exit", "spill");
   els.overlay.classList.add("dealing");
@@ -5098,104 +4915,25 @@ function hidePackThenDeal() {
   drawNext({ fromPack: true });
 }
 
-function flyOffPose() {
-  const away = tearDir === "left" ? -1 : 1;
-  return {
-    dx: away * (els.packBody.getBoundingClientRect().width * 0.55 + 70),
-    dy: -68,
-    rot: away * 46,
-  };
-}
-
 function completeTear() {
   if (packPhase !== "ready" || packExiting) return;
   packExiting = true;
   tearing = false;
-  cancelTearAnim();
-  if (!tearDir) setTearDir("right");
   els.packBody.classList.add("tearing", "torn");
   els.packBody.classList.remove("dragging");
   els.ripHint.textContent = "Wrapper coming off";
   buzz([12, 18, 26]);
-  const startCut = tearCut;
-  const startLift = tearLift;
-  const endPose = flyOffPose();
-  const t0 = performance.now();
-  const dur = 560;
-  let ripped = false;
-  const tick = (now) => {
-    const t = Math.min(1, (now - t0) / dur);
-    // Finish the tear across the pack first, then throw the strip clear.
-    const rip = clamp(t / 0.45, 0, 1);
-    const easeRip = 1 - Math.pow(1 - rip, 2);
-    tearCut = startCut + (1 - startCut) * easeRip;
-    const toss = clamp((t - 0.4) / 0.6, 0, 1);
-    const easeToss = 1 - Math.pow(1 - toss, 3);
-    const peel = liftRot(Math.max(startLift, 0.2 + 0.5 * easeRip), tearFront());
-    tearPose = {
-      dx: endPose.dx * easeToss,
-      dy: endPose.dy * easeToss,
-      rot: peel + (endPose.rot - peel) * easeToss,
-    };
-    if (!ripped && rip >= 1) {
-      ripped = true;
-      addCrumbs(tearFront(), 10, true);
+  tear.complete({
+    onRipped() {
       tearBurst();
       if (fxOk()) els.packBody.classList.add("spill");
-    } else if (rip < 1 && tearCut - lastCrumbCut > 0.07) {
-      lastCrumbCut = tearCut;
-      addCrumbs(tearFront(), 2);
-    }
-    applyTearVisuals({ fade: t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3 });
-    if (t < 1) {
-      tearAnim = requestAnimationFrame(tick);
-      return;
-    }
-    tearAnim = 0;
-    // Let the cards clear the wrapper before the first one comes forward.
-    if (els.packBody.classList.contains("spill")) handoffTimer = setTimeout(hidePackThenDeal, 300);
-    else hidePackThenDeal();
-  };
-  applyTearVisuals();
-  tearAnim = requestAnimationFrame(tick);
-}
-
-function clearLiveTear() {
-  tearCut = 0;
-  tearLift = 0;
-  lastCrumbCut = 0;
-  tearDir = null;
-  tearPose = { dx: 0, dy: 0, rot: 0 };
-  resetScrapStyle();
-  els.packBody.classList.remove("tearing", "dragging", "cutting", "tear-from-left", "tear-from-right");
-}
-
-function easeTearBack() {
-  cancelTearAnim();
-  const startCut = tearCut;
-  const startLift = tearLift;
-  if (startCut < 0.02) {
-    clearLiveTear();
-    return;
-  }
-  const t0 = performance.now();
-  const dur = 260;
-  const tick = (now) => {
-    if (tearing || packPhase !== "ready") return;
-    const t = Math.min(1, (now - t0) / dur);
-    const e = 1 - (1 - t) * (1 - t);
-    tearCut = startCut * (1 - e);
-    tearLift = startLift * (1 - e);
-    tearPose = { dx: 0, dy: 0, rot: liftRot(tearLift, tearFront()) };
-    applyTearVisuals();
-    if (t < 1) {
-      tearAnim = requestAnimationFrame(tick);
-      return;
-    }
-    tearAnim = 0;
-    clearLiveTear();
-  };
-  tearAnim = requestAnimationFrame(tick);
+    },
+    onDone() {
+      // Let the cards clear the wrapper before the first one comes forward.
+      if (els.packBody.classList.contains("spill")) handoffTimer = setTimeout(hidePackThenDeal, 300);
+      else hidePackThenDeal();
+    },
+  });
 }
 
 function finishRip({ keepOpen = false } = {}) {
@@ -6346,64 +6084,25 @@ function grabTop(e) {
 function beginTear(e) {
   if (packPhase !== "ready" || tearing) return false;
   if (!grabTop(e)) return false;
-  cancelTearAnim();
   tearing = true;
-  tearStart = { x: e.clientX, y: e.clientY };
-  lastPointer = { x: e.clientX, y: e.clientY };
-  tearCut = 0;
-  tearLift = 0;
-  lastCrumbCut = 0;
-  tearDir = null;
-  tearPose = { dx: 0, dy: 0, rot: 0 };
   els.packBody.classList.add("tearing");
+  tear.begin(e);
   try {
     els.packBody.setPointerCapture?.(e.pointerId);
   } catch {
     /* no capture available; window listeners still track the drag */
   }
-  applyTearVisuals();
   e.preventDefault();
   return true;
 }
 
 els.packBody.addEventListener("pointerdown", beginTear);
 
-// Angle the loose strip so its free end peels up by a steady amount, however
-// long the strip has grown — a fixed angle would swing it wildly once it's long.
-function liftRot(lift, front) {
-  const w = els.packBody.getBoundingClientRect().width || 270;
-  const lenPct = tearDir === "left" ? 100 - front : front;
-  const lenPx = Math.max((lenPct / 100) * w, 1);
-  const rise = 20 + 38 * clamp(lift, 0, 1);
-  const deg = (Math.asin(clamp(rise / lenPx, 0, 0.6)) * 180) / Math.PI;
-  return (tearDir === "left" ? -1 : 1) * deg;
-}
-
 function moveTear(e) {
   if (!tearing || packPhase !== "ready") return;
-  lastPointer = { x: e.clientX, y: e.clientY };
-  const rect = els.packBody.getBoundingClientRect();
-  const dx = e.clientX - tearStart.x;
-  const dy = e.clientY - tearStart.y;
-  if (!tearDir && Math.abs(dx) >= 5) {
-    setTearDir(dx > 0 ? "right" : "left");
-    els.packBody.classList.add("dragging");
-  }
-  if (!tearDir) return;
-
-  // 1px of drag = 1px of tear, so the front stays under the cursor.
-  const along = tearDir === "left" ? Math.max(0, -dx) : Math.max(0, dx);
-  tearCut = clamp(along / Math.max(rect.width, 1), 0, 1);
-  tearLift = Math.max(tearCut * 0.55, clamp(-dy / Math.max(rect.height * 0.3, 1), 0, 1));
-  tearPose = { dx: 0, dy: 0, rot: liftRot(tearLift, tearFront()) };
-
-  if (tearCut - lastCrumbCut > 0.07) {
-    lastCrumbCut = tearCut;
-    addCrumbs(tearFront(), 2);
-  }
-
-  applyTearVisuals();
-  if (tearCut >= 0.94) completeTear();
+  tear.move(e);
+  if (tear.started()) els.packBody.classList.add("dragging");
+  if (tear.tornThrough()) completeTear();
 }
 
 // On window so the rip keeps following the cursor past the pack edges.
@@ -6414,8 +6113,11 @@ function endTear(e) {
   tearing = false;
   els.packBody.classList.remove("dragging");
   if (packPhase === "ready") {
-    if (tornEnough()) completeTear();
-    else easeTearBack();
+    if (tear.tornEnough()) completeTear();
+    else
+      tear.easeBack(() => {
+        if (packPhase === "ready" && !packExiting) els.packBody.classList.remove("tearing");
+      });
   }
   try {
     els.packBody.releasePointerCapture(e.pointerId);

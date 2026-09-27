@@ -4,7 +4,9 @@
  * Points come from data/prices/<set>.json, one file per set, loaded the first
  * time one of that set's cards is inspected. scripts/backfill_prices.py fills
  * each file with a year of TCGplayer market prices (weekly, then every 3 days,
- * then daily for the last month) and the daily refresh appends to it. Nothing
+ * then daily for the last month). The days since the file was written come
+ * from /api/prices/<set>, which the Worker records once a day
+ * (worker/prices.js); they only ever fill dates the file has no point for. Nothing
  * here interpolates or invents a value: a card with a single snapshot draws a
  * single snapshot and says so, because a made-up trend line on something people
  * treat as a price guide would be worse than no line at all.
@@ -33,21 +35,60 @@ let chartId = 0;
 
 const series = (value) => (value && typeof value === "object" && !Array.isArray(value) ? value : {});
 
+const getJson = (url, init) =>
+  fetch(url, init).then((r) => {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  });
+
 /**
- * Fetch a set's price history once. A failed fetch is not cached, so the next
- * call tries again.
+ * Add the Worker's recorded days ({days: [[day, {cards, sealed}], ...]}) to
+ * the file's series, only on dates the file has no point for.
+ */
+function foldRecent(store, recent) {
+  const extra = { cards: new Map(), sealed: new Map() };
+  for (const [day, row] of Array.isArray(recent?.days) ? recent.days : []) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) continue;
+    for (const section of ["cards", "sealed"]) {
+      for (const [key, price] of Object.entries(series(row?.[section]))) {
+        if (!(price > 0)) continue;
+        const list = extra[section].get(key);
+        if (list) list.push([day, price]);
+        else extra[section].set(key, [[day, price]]);
+      }
+    }
+  }
+  for (const section of ["cards", "sealed"]) {
+    for (const [key, points] of extra[section]) {
+      const have = store[section][key] || [];
+      const days = new Set(have.map((p) => p[0]));
+      const add = points.filter((p) => !days.has(p[0]));
+      if (add.length) store[section][key] = [...have, ...add].sort((a, b) => (a[0] < b[0] ? -1 : 1));
+    }
+  }
+  return store;
+}
+
+/**
+ * Fetch a set's price history once: the committed file, then the days the
+ * Worker recorded since. Either can fail on its own; only both failing marks
+ * the set as failed, and a failed fetch is not cached, so the next call tries
+ * again.
  */
 export function loadPriceHistory(setId) {
   if (!setId) return Promise.resolve(null);
   if (loaded.has(setId)) return Promise.resolve(loaded.get(setId));
   if (!pending.has(setId)) {
-    const request = fetch(`data/prices/${encodeURIComponent(setId)}.json`, { cache: "no-cache" })
-      .then((r) => {
-        if (!r.ok) throw new Error(r.status);
-        return r.json();
+    const id = encodeURIComponent(setId);
+    const request = getJson(`data/prices/${id}.json`, { cache: "no-cache" })
+      .catch(() => null)
+      .then(async (file) => {
+        const since = /^\d{4}-\d{2}-\d{2}$/.test(file?.updated || "") ? `?since=${file.updated}` : "";
+        const recent = await getJson(`/api/prices/${id}${since}`).catch(() => null);
+        if (!file && !recent) throw new Error("no price history");
+        return foldRecent({ cards: { ...series(file?.cards) }, sealed: { ...series(file?.sealed) } }, recent);
       })
-      .then((store) => {
-        const clean = { cards: series(store?.cards), sealed: series(store?.sealed) };
+      .then((clean) => {
         loaded.set(setId, clean);
         failed.delete(setId);
         return clean;
