@@ -82,7 +82,7 @@ export function foilExtras(card, url) {
     classes.push("frame-paradox");
   }
   // Tiled or galaxy textures start somewhere different on every card.
-  if (cure || card.rarity === "Classic Collection" || card.rarity === "Cosmos") {
+  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity)) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }
