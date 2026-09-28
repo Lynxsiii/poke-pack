@@ -173,8 +173,8 @@ async function refreshSession() {
 function accountGateHtml(kind) {
   const copy =
     kind === "binder"
-      ? "The showcase binder lives on your account so it can follow you — and, later, trade."
-      : "Cards, coins, and sales live on your account, not this browser.";
+      ? "Your binder lives on your account, so it follows you to any device. Sign in to start filling it."
+      : "Cards, coins and sales live on your account, not in this browser. Sign in to keep what you pull.";
   return `<div class="need-account">
     <p>${copy}</p>
     <div class="account-hero-actions">
@@ -879,7 +879,7 @@ function renderSetChrome() {
     els.bulkKicker.textContent = `Collection · ${liveSet.edition} · ${month}`;
   }
   if (els.bulkLede) {
-    els.bulkLede.textContent = `Everything you pull from ${liveSet.name} lands here. Sell extras at their listed value, or send keepers to the binder.`;
+    els.bulkLede.textContent = `Every card you pull from ${liveSet.name} lands here. Sell spares at market value, or move keepers to your binder.`;
   }
   document.title = viewTitle();
 }
@@ -1426,11 +1426,10 @@ function renderBulkSets() {
   const active = eras.find((block) => block.era === bulkEra) || eras[0];
   const eraTabs = eras
     .map((block) => {
-      const on = block.era === bulkEra ? "on" : "";
-      return `<button type="button" class="bulk-era ${on}" data-era="${esc(block.era)}">
-        <b>${esc(block.era)}</b>
-        <small>${esc(eraYears(block.sets) || eraCountLabel(block))}</small>
-      </button>`;
+      const on = block.era === bulkEra;
+      const years = eraYears(block.sets) || eraCountLabel(block);
+      return `<button type="button" class="seg-btn bulk-era${on ? " on" : ""}" role="tab"
+        aria-selected="${on}" data-era="${esc(block.era)}" title="${esc(years)}">${esc(block.era)}</button>`;
     })
     .join("");
   const setBtns = (active?.sets || [])
@@ -1438,31 +1437,35 @@ function renderBulkSets() {
       const live = Boolean(set.live && set.dataFile);
       const { symbol } = setIdentity(set);
       if (!live) {
-        return `<button type="button" class="bulk-set-card is-queued" data-soon="${esc(set.name)}">
-          <img class="rail-symbol" src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
-          <span class="bulk-set-copy">
-            <b>${esc(set.name)}</b>
-            <small>${esc(shortReleased(set))}</small>
-          </span>
-          <span class="soon">Queued</span>
+        return `<button type="button" class="bulk-set is-queued" data-soon="${esc(set.name)}"
+          title="${esc(set.name)} is queued (${esc(shortReleased(set))})">
+          <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" width="30" height="30" loading="lazy" decoding="async" />
+          <span class="bulk-set-copy"><b>${esc(set.name)}</b><small>Queued</small></span>
         </button>`;
       }
-      const on = set.id === liveSet.id ? "active" : "";
-      return `<button type="button" class="bulk-set-card ${on}" data-set="${esc(set.id)}" ${
-        ripping ? "disabled" : ""
-      }>
-        <img class="rail-symbol" src="${esc(symbol)}" alt="" width="28" height="28" loading="lazy" decoding="async" />
-        <span class="bulk-set-copy">
-          <b>${esc(set.name)}</b>
-          <small>${ownedInSet(set)}/${set.totalCount}</small>
-        </span>
-        <span class="live-tag">Live</span>
+      const on = set.id === liveSet.id;
+      return `<button type="button" class="bulk-set${on ? " active" : ""}" data-set="${esc(set.id)}"
+        aria-pressed="${on}" ${ripping ? "disabled" : ""}>
+        <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" width="30" height="30" loading="lazy" decoding="async" />
+        <span class="bulk-set-copy"><b>${esc(set.name)}</b><small>${ownedInSet(set)}/${set.totalCount}</small></span>
       </button>`;
     })
     .join("");
   els.bulkSets.innerHTML = `
-    <div class="bulk-eras" role="tablist" aria-label="Eras">${eraTabs}</div>
-    <div class="bulk-era-sets">${setBtns || `<p class="bulk-era-empty">No sets in this era yet.</p>`}</div>`;
+    <div class="seg bulk-eras" role="tablist" aria-label="Eras">${eraTabs}</div>
+    <div class="bulk-set-row" aria-label="Sets">${setBtns || `<p class="bulk-era-empty">No sets in this era yet.</p>`}</div>`;
+  // Both rows scroll sideways on a phone: bring the chosen era and set into view
+  // (horizontally only, so the page itself does not jump).
+  for (const [row, on] of [
+    [".bulk-eras", ".bulk-era.on"],
+    [".bulk-set-row", ".bulk-set.active"],
+  ]) {
+    const track = els.bulkSets.querySelector(row);
+    const chip = track?.querySelector(on);
+    if (track && chip && track.scrollWidth > track.clientWidth) {
+      track.scrollLeft = Math.max(0, chip.offsetLeft - (track.clientWidth - chip.offsetWidth) / 2);
+    }
+  }
 }
 
 /*
@@ -1524,15 +1527,17 @@ function renderCollection({ refreshSets = true } = {}) {
   }
 
   if (els.bulkPulse) {
-    els.bulkPulse.innerHTML = `
-      ${activeTrainer() ? "" : accountGateHtml("bulk")}
-      <div class="home-ring" style="--pct:${pct}" title="${esc(liveSet.name)} completion">
-        <span><b>${pct}%</b><small>set</small></span>
-      </div>
-      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>Owned</span></div>
-      <div class="home-pulse-stat"><b>${missingN}</b><span>Missing</span></div>
-      <div class="home-pulse-stat"><b>✦ ${coin(purse.value)}</b><span>This set</span></div>
-      <div class="home-pulse-stat"><b>${spares}</b><span>Spares</span></div>`;
+    els.bulkPulse.innerHTML = activeTrainer()
+      ? `<div class="bulk-figures">
+          <div class="bulk-figure" title="${missingN} still to pull">
+            <b>${owned} <small>of ${total}</small></b><span>${pct}% collected</span>
+          </div>
+          <div class="bulk-figure gold"><b>✦ ${coin(purse.value)}</b><span>Set value</span></div>
+          <div class="bulk-figure"><b>${spares}</b><span>${spares === 1 ? "Spare copy" : "Spare copies"}</span></div>
+        </div>
+        <div class="bulk-bar" role="progressbar" aria-label="${esc(liveSet.name)} completion"
+          aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${pct}%"></span></div>`
+      : accountGateHtml("bulk");
   }
 
   els.ownedFilter?.querySelectorAll("[data-owned]").forEach((btn) => {
@@ -1567,14 +1572,15 @@ function renderCollection({ refreshSets = true } = {}) {
       ownedMode === "all" && rarity === "all" && !q
         ? `Sell any copy at live market, including your last.`
         : `Filtered from ${total} in the set.`;
-    els.binderNote.textContent = `${shown} card${shown === 1 ? "" : "s"} · ${filterHint}`;
+    els.binderNote.textContent = `${shown} card${shown === 1 ? "" : "s"}. ${filterHint}`;
   }
 
   if (!list.length) {
     windowFaces("collection", [], [], tcgFace);
     els.dexGrid.innerHTML = `<div class="bulk-empty">
-      <b>Nothing in this view.</b>
-      <span>Try another filter, or rip a pack to fill the set.</span>
+      <b>Nothing in this view</b>
+      <span>Try another filter or search, or rip a pack to fill the set.</span>
+      <button type="button" class="ghost sm" data-goto="shop">Rip a pack</button>
     </div>`;
     return;
   }
@@ -1597,7 +1603,7 @@ function renderCollection({ refreshSets = true } = {}) {
         <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}"></button>
         <div class="slot-meta">
           <b>${esc(card.name)}</b>
-          <span>${esc(numberLine(card))} · ${rarityPips(card.rarity)} ${esc(rarityLine(face))}</span>
+          <span class="slot-line"><span class="slot-num">${esc(numberLine(card))}</span><i class="slot-dot">·</i><span class="slot-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(face))}</span></span>
         </div>
         <div class="slot-foot">
           <span class="slot-price">✦ ${coin(sellValue(card))}</span>
@@ -1684,7 +1690,6 @@ function binderPageHtml(page) {
         ${shared ? "Remove from profile" : "Display on profile"}
       </button></div>
     <div class="binder-pockets">${pockets}</div>
-    <span class="binder-page-no">${page + 1}</span>
   </div>`;
 }
 
@@ -1710,12 +1715,11 @@ function binderPickerHtml(options) {
             title="${esc(card.name)}">
             <span class="picker-face" data-face="${i}"></span>
             <span class="picker-name">${esc(card.name)}</span>
-            <span class="picker-meta">✦ ${coin(sellValue(card))}${spare > 1 ? ` · ${spare} spare` : ""}</span>
+            <span class="picker-meta"><span class="picker-price">✦ ${coin(sellValue(card))}</span>${spare > 1 ? ` · ${spare} spare` : ""}</span>
           </button>`
         )
         .join("")}</div>`
-    : `<p class="panel-empty">Nothing spare to show yet — rip a pack, or take a card
-       out of another pocket first.</p>`;
+    : `<p class="panel-empty">Nothing spare to show yet. Rip a pack, or take a card out of another pocket first.</p>`;
   return `<div class="picker-backdrop" data-picker-close></div>
     <div class="picker" role="dialog" aria-modal="true" aria-label="Choose a card">
       <div class="picker-head">
@@ -1748,22 +1752,22 @@ function renderBinder() {
         return card ? sum + sellValue(card) : sum;
       }, 0)
     );
-    els.binderCount.textContent = shown
-      ? `${shown} card${shown === 1 ? "" : "s"} on show · ✦ ${coin(worth)}`
-      : "No cards on show yet";
+    els.binderCount.innerHTML = shown
+      ? `${shown} card${shown === 1 ? "" : "s"} on show, worth <b class="binder-worth">✦ ${coin(worth)}</b>`
+      : "No cards on show yet. Tap a pocket to add one.";
   }
 
   const options = binderPicking == null ? [] : binderCandidates();
   els.binderBody.innerHTML = `
-    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} / ${PROFILE_PAGE_LIMIT} pages on your profile</span><small>Displayed pages update when you change their cards.</small></div>
+    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${PROFILE_PAGE_LIMIT} pages on your profile.</span><small>Shared pages update as you change them.</small></div>
     <div class="binder-spread">
       ${binderPageHtml(left)}
       ${right < pages ? binderPageHtml(right) : ""}
     </div>
     <div class="binder-nav">
-      <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>‹ Back</button>
-      <span>Pages ${left + 1}–${Math.min(right + 1, pages)} of ${pages}</span>
-      <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next ›</button>
+      <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
+      <span>${right < pages ? `Pages ${left + 1}–${right + 1}` : `Page ${left + 1}`} of ${pages}</span>
+      <button type="button" class="ghost" data-flip="1" ${right >= pages - 1 ? "disabled" : ""}>Next</button>
     </div>
     ${binderPickerHtml(options)}`;
   const picker = els.binderBody.querySelector(".picker");
