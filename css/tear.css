@@ -1,22 +1,38 @@
 /* poke-pack.rip — the foil tear on the opening stage.
-   js/tear.js builds the strip: a row of slices of the wrapper art laid over a
+   js/tear.js builds the lid: a row of slices of the wrapper art laid over a
    body that is clipped below the tear line, so the pack looks whole until a
-   slice comes loose. Everything here is transform, opacity or filter, and the
-   slices exist only while a tear is running. */
+   slice comes loose and lifts with the lid. Everything here is transform or
+   opacity, and the slices exist only while a tear is running. */
 
 .tear-strip {
   position: absolute;
   inset: 0;
   z-index: 6;
   pointer-events: none;
-  perspective: 900px;
-  perspective-origin: 50% 40%;
+  perspective: 700px;
+  perspective-origin: 50% 6%;
   visibility: hidden;
 }
 .tear-strip.on { visibility: visible; }
 .tear-strip.toss {
   opacity: 0;
-  transition: opacity 0.4s ease-in 0.08s;
+  transition: opacity 0.26s ease-in 0.1s;
+}
+/* The loose slices hang in the lid; it is what flies off the pack at the end:
+   up and away along the tear, turning edge-on as it goes, so it thins to a
+   sliver and is gone before the cards come up. */
+.tear-lid {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 6%;
+}
+.tear-strip.toss .tear-lid {
+  animation: tearToss 0.44s cubic-bezier(0.16, 0.6, 0.3, 1) both;
+}
+@keyframes tearToss {
+  from { transform: none; }
+  to { transform: translate3d(calc(var(--away, 1) * 30%), -30%, 0) rotate(calc(var(--away, 1) * 26deg)) rotateX(-84deg); }
 }
 
 .tear-slice {
@@ -37,7 +53,7 @@
    once the slice is loose. */
 .ts-front {
   --rim: 0;
-  background-color: rgba(230, 234, 238, var(--rim));
+  background-color: rgba(232, 236, 240, var(--rim));
 }
 .ts-clip {
   position: absolute;
@@ -49,24 +65,25 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-/* Light skating over the foil as it turns. */
+/* Light skating over the foil as it tips. */
 .ts-clip::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0.95) 50%, rgba(255, 255, 255, 0) 82%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0.4) 100%);
   opacity: var(--sheen);
 }
-/* The silver inside of the wrapper, seen once a slice turns over. */
+/* The silver inside of the wrapper, seen when the lid flips away. */
 .ts-back {
   transform: rotateX(180deg);
   background:
-    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0 1px, rgba(0, 0, 0, 0.12) 1px 2px),
-    linear-gradient(100deg, #8c929a 0%, #d9dde2 20%, #9aa0a8 38%, #f2f4f6 52%, #a4aab2 66%, #dcdfe4 84%, #878d95 100%);
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0 1px, rgba(0, 0, 0, 0.1) 1px 2px),
+    linear-gradient(100deg, #9198a0 0%, #dde1e6 22%, #a3a9b1 40%, #f4f6f8 54%, #aab0b8 68%, #e0e3e8 84%, #8c929a 100%);
 }
 
 /* The torn edge left on the body: a bright foil rim over a soft shadow, drawn
-   as far as the tear has run (pathLength 100, revealed by dash offset). */
+   as far as the tear has run (pathLength 100, revealed by dash offset). It is
+   part of the wrapper, so it settles and drops with it. */
 .tear-svg {
   position: absolute;
   inset: 0;
@@ -85,16 +102,18 @@
   stroke-dashoffset: 100;
 }
 .tear-edge {
-  stroke: rgba(226, 231, 237, 0.9);
-  stroke-width: 1px;
+  stroke: rgba(236, 240, 244, 0.92);
+  stroke-width: 1.2px;
 }
 .tear-shade {
-  stroke: rgba(6, 4, 10, 0.5);
-  stroke-width: 4px;
+  stroke: rgba(4, 3, 8, 0.6);
+  stroke-width: 3.5px;
 }
+#overlay .booster.torn .tear-svg { animation: packSettle 0.3s ease-out both; }
+#overlay .booster.spill .tear-svg { animation: opPackDrop 0.55s cubic-bezier(0.55, 0, 0.8, 0.3) 0.12s both; }
 .overlay.dealing .tear-svg { opacity: 0; }
 
-/* Flecks of foil thrown off the tear. */
+/* Flecks of foil thrown off the tear, and the hot point at the front. */
 .tear-glints {
   position: absolute;
   inset: 0;
@@ -115,18 +134,37 @@
   70% { opacity: 0.9; }
   to { opacity: 0; transform: translate(var(--gx), var(--gy)) rotate(var(--rot)); }
 }
+.tear-spark {
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #fff 35%, rgba(255, 255, 255, 0) 70%);
+  box-shadow:
+    0 0 6px 2px rgba(255, 255, 255, 0.75),
+    0 0 14px 5px rgb(var(--pack-glow) / 0.7),
+    0 0 28px 10px rgb(var(--pack-glow) / 0.3);
+  opacity: 0;
+  will-change: transform, opacity;
+}
 
 /* ---- Kill-switches ------------------------------------------------------- */
-body.no-motion .glint { display: none; }
+body.no-motion .glint,
+body.no-motion .tear-spark { display: none; }
 body.no-motion .tear-strip.toss { transition: none; }
+body.no-motion .tear-strip.toss .tear-lid { animation: none; }
 body.no-motion .tear-slice.free { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) {
-  .glint { display: none; }
+  .glint,
+  .tear-spark { display: none; }
   .tear-strip.toss { transition: none; }
+  .tear-strip.toss .tear-lid { animation: none; }
   .tear-slice.free { visibility: hidden; }
 }
 
-/* The hint gives way to the strip once a tear is under way. */
+/* The hint gives way to the lid once a tear is under way. */
 #overlay:has(.booster.dragging) .rip-hint,
 #overlay:has(.booster.torn) .rip-hint {
   animation: none;
