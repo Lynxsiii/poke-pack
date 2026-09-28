@@ -1202,7 +1202,9 @@
     "printedNumber": "Classic 15",
     "tcgplayerId": 250323,
     "market": 0.74,
-    "imageRemote": "https://images.scrydex.com/pokemon/cel25c-15_A2/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/cel25c-15_A2/large",
+    "etchMap": "assets/foil/maps/cel25/cc15-here-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "cel25-cc15-rockets",
@@ -1246,7 +1248,9 @@
     "printedNumber": "Classic 15",
     "tcgplayerId": 250324,
     "market": 3.26,
-    "imageRemote": "https://images.scrydex.com/pokemon/cel25c-15_A3/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/cel25c-15_A3/large",
+    "etchMap": "assets/foil/maps/cel25/cc15-rockets-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "cel25-cc15-venusaur",
