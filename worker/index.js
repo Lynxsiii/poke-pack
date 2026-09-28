@@ -58,6 +58,15 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (!url.pathname.startsWith("/api/")) {
+      // The small card thumbnails are not uploaded (Cloudflare allows 20,000
+      // static files and the scans alone pass that; scripts/prepare-cf-assets.mjs
+      // leaves them out), so a "-sm.webp" request gets the full scan. Same
+      // art, same immutable caching, a bigger file.
+      const small = url.pathname.match(/^\/assets\/cards\/.+-sm\.webp$/);
+      if (small) {
+        url.pathname = url.pathname.replace(/-sm\.webp$/, ".webp");
+        return env.ASSETS.fetch(new Request(url, request));
+      }
       return env.ASSETS.fetch(request);
     }
     try {
