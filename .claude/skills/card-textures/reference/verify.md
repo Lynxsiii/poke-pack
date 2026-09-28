@@ -123,8 +123,12 @@ python3 .claude/skills/card-textures/scripts/sweep_finishes.py --all           #
 ```
 
 The script first checks every `css/holo/` sheet for a rule defined twice
-at the top level and stops on an identical copy, then renders each set at
-rest, lit from the top left and with a thumb low on the text box.
+at the top level and stops on an identical copy, lists every promo the site
+draws as a window holo without a foil map (exit 1: it is on the old window
+recipe), then renders each set at rest, lit from the top left and with a
+thumb low on the text box. `--stamped` sheets every stamped print instead
+of one card per finish: the stamp sweep, after any change to
+`stamp_knockout.py`, `stamp_boxes.json`, a card photo or `windows.css`.
 
 Read every sheet. Noah found four kinds of failure on 2026-09-28 that the
 lab at desktop size had hidden (Espeon ex MEP 108, Keldeo ex, Team
@@ -139,6 +143,7 @@ Chi-Yu ex); each has a sign on the sheet, a cause and a fix:
 | A Pokémon that is a flat silhouette at rest | The scan itself is flat (Paldean Fates' Scodix golds) and the etch, the only line detail, was a lit-only relief | Draw the etch on `.foil` dark with a floor, and raise the rest opacity so it reads in any light |
 | Rings on a Shiny, stripes on a reverse, a white disc in a glare | Wrong map variant, tile pitch or hot-spot size | The finish's own note in `reference/` |
 | The whole card grey and washed in the thumb-on-the-text-box pose, fine in the others | A multiply ramp on `.foil` that falls to 70% far from the pointer, under a glare whose white lifts the matte ink and whose black end darkens the art | Keep a multiply floor at 80% or above (real silver stays bright away from the lamp), the glare's white under 0.6 and its black end under 0.15 (shiny-vault.css Shiny Rare, 2026-09-28) |
+| A stamp or logo printed in the art with foil bands streaking over it and a hard edge cutting through it | A promo the site draws as a window holo (`foilAs: "Rare"`, Cosmos, a holo rarity) with no foil map: the old window recipe clips the art window through the logo | A TCG Live map, or a hand box for its plain id in `stamp_boxes.json` and `stamp_knockout.py` (Sprigatito svp191, 2026-09-28); the sweep lists such promos and exits 1 |
 | A recipe change that does nothing, or the old look back after a merge | The sheet holds the same rule twice at the top level and the later copy wins: PR #55 pasted the pre-change sheet after the new rules | `sweep_finishes.py` refuses to run while a sheet holds an identical rule twice (`--check-only` runs just that check); delete the stale copy |
 
 The sheet is 220 CSS px at 3x by default: a phone. A desktop-size lab

@@ -131,7 +131,10 @@ card the stamp is opaque ink with no foil under it.
    `[x, y, w, h]` on the 600 x 838 scan (a fifth entry `"ellipse"` for a
    round badge). When a base scan exists the box is refined to the stamp's
    shape from the difference inside it, and the result seeds a template
-   for the rest of the set.
+   for the rest of the set. A list of boxes is knocked out as their union,
+   so a crest over a wordmark (Pokémon Horizons: the Pokémon logo,
+   HORIZONS, THE SERIES; Paradox Rift: the Scarlet & Violet mark over the
+   name) gets a hole that hugs it rather than one rectangle of art.
 
 The stamp is dilated two pixels, feathered, and subtracted from the map to
 cut from: the plain print's map; else the print's own TCG Live map (kept
@@ -160,6 +163,25 @@ Adding a stamped print: name it `<base id>-<suffix>` with one of the
 suffixes above, ship its scan, run `stamp_knockout.py --set <set> --debug`,
 and check the sheet. A new kind of stamp needs a zone in `ZONES` and, if
 it is one logo across sets, a place in `GLOBAL_KINDS`.
+
+**A print whose only copy is the stamped one is still a stamped print**
+(2026-09-28, Noah: "the badge is fucked here"). Sprigatito svp191 and
+Fuecoco svp192, the Pokémon Horizons promos, and the four Paradox Rift
+Build & Battle promos (svp057 Chi-Yu, svp058 Iron Bundle, svp059 Xatu,
+svp060 Aegislash) exist only with their logo, so they have no `-stamp`
+suffix, no plain print to difference against, and no TCG Live map; filed
+as `foilAs: "Rare"` with no map they fell to the old window recipe, whose
+`clip-path` cut straight through the logo and whose bands streaked over
+it. Give the plain id a hand box (a list of boxes for a logo with a
+wordmark) and the script treats it as a stamped print: the drawn
+window-and-frame map with the logo cut out (`"Rare"` counts as a window
+holo, as `foilClass()` draws it). `sweep_finishes.py` lists every promo the
+site draws as a window holo that has no map, and exits 1 while one exists;
+`--stamped` sheets every stamped print. Promos with `foilAs` unset draw
+with no foil at all, so a logo on them is safe until someone makes them
+holo, which is when they need a box too (svp101, svp190, svp213 to svp215,
+svp225 and me5 mep093 carry Play! Pokémon, Worlds and Illustration Contest
+logos in the art).
 
 ## Lab pitfalls fixed on the way
 
