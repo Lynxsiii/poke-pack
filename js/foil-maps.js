@@ -149,6 +149,9 @@ export function foilExtras(card, url, reverseKind) {
     // weight the tile had, since the print's foil map is the white fallback.
     if (card.etchDrawn) classes.push("has-etch-drawn");
   } else if (ETCHED.has(card.rarity)) add("has-etch-tile", "--etch-tile", ETCH_TILE);
+  // A gold print's soft engraving (the etch blurred a little, soften_etch.py):
+  // the dark line art without the hatch aliasing into speckle.
+  if (card.etchSoft) add("", "--etch-soft", card.etchSoft);
   if (card.etchMapH && card.etchMapV) {
     add("has-etch-bins", "--etch-map-h", card.etchMapH);
     add("", "--etch-map-v", card.etchMapV);
