@@ -104,16 +104,26 @@ of the map: [promos.md](promos.md).
 
 Same hard-light group.
 
-- `.foil`: grey 76% with the etch in white, times a silver ramp; the glitter
-  tile (`assets/foil/glitter-flecks.webp`, from
-  `scripts/make_glitter_flecks.py`, seeded, 26 KB) twice, once
-  difference-blended at an offset (grains near black) and once screened
-  (grains that sparkle), so flecks show on bright gold as well as teal; a
-  wide band at 176deg on a 100% x 300% layer that rolls with
-  `--background-y`.
-- `::before`: glitter times glitter at another scale, one copy moving with
-  the pointer, `brightness(6)`: only grains that line up light, so the
-  flecks wink one at a time as the card turns.
+- `.foil` (rebuilt 2026-09-28, Noah's Chien-Pao ex "speaks for itself"
+  screenshot: a flat gold silhouette on speckled teal): white, the etch
+  difference-blended onto it (dark where the line art and the hatch on the
+  gold fills are, the engraved grooves the photos show as darker gold), a
+  30% floor screened on so a full line stops at 30%, the light pool
+  multiplied in (56% at the pointer, 44% far: plain foil sits at
+  hard-light's neutral), then the glitter tile
+  (`assets/foil/glitter-flecks.webp`, from `scripts/make_glitter_flecks.py`,
+  seeded, 26 KB) twice at 96 and 112 px, once screened (grains that
+  sparkle) and once difference-blended at an offset (grains near black),
+  and the wide band at 176deg on a 100% x 300% layer that rolls with
+  `--background-y`. The official scan is flat gold fills on teal, so the
+  etch is the only line detail the Pokémon has: it has to read at rest.
+  Rest is opacity 0.6 with the band at `--pf-a: 0.3` and saturate 0.5.
+  Before this the etch was white over 76% grey: a relief that vanished at
+  the old 0.3 rest opacity and on a phone.
+- `::before`: glitter times glitter at 96 and 121 px, one copy moving with
+  the pointer, `brightness(3.5)` at 0.6: only grains that line up light, so
+  the flecks wink one at a time as the card turns (was 6 at 0.9: gold
+  speckle noise on a phone).
 - `::after` and `.glare::after`: the raised line. The etch map twice as a
   mask, one copy nudged up to 1.5 px towards the light, composited with
   `mask-composite: subtract` (`-webkit-mask-composite: source-out`): what is

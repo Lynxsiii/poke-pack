@@ -206,6 +206,10 @@ cure"). The surface gloss throws a soft highlight.
   arts: full-art Ultra Rares and golds light their etch over the whole card
   at every pose (`sv-fullart.css`) and take the tile when Live has no etch
   for them. Details: [reference/sv-fullart.md](reference/sv-fullart.md).
+  Where the scan itself is flat (Paldean Fates' Scodix golds: gold fills on
+  teal, the line art only in the etch), the etch has to read at rest too,
+  so it is drawn on `.foil` dark and the rest opacity is raised
+  ([reference/paldean-fates.md](reference/paldean-fates.md)).
 - **The lab must mirror the site.** It had no `foilLook()` and did not
   load `promos.css`, so promos looked nothing like the site; a recipe
   judged there was judged on the wrong render. Check `lab/index.html`'s
