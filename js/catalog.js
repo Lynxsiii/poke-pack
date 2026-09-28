@@ -2524,6 +2524,7 @@ const LIMITLESS_SYMBOL = {
   me3: "POR",
   me4: "CRI",
   me5: "PBL",
+  me55: "30C",
 };
 
 export function tcgSetId(set) {

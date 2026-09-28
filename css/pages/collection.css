@@ -130,12 +130,15 @@
 .need-account .account-hero-actions { margin-top: 2px; gap: 8px; }
 
 /* ---- Browsing sets ----------------------------------------------------------
-   One control in two rows: the eras as a segmented track, the sets as a row
-   of chips with the symbol and owned/total. Both scroll sideways on a phone. */
+   Two rows and no pills. The eras are words with an ink line under the one
+   that is open, like the header nav. The sets are a shelf of flat tiles:
+   symbol, name, and a hairline bar that fills as the set does, so the row
+   reads as progress rather than a wall of buttons. Both rows scroll sideways
+   on a phone; the shelf wraps into a grid on a laptop. */
 .bulk-browse {
   display: grid;
-  gap: 10px;
-  margin: 0 0 20px;
+  gap: 14px;
+  margin: 0 0 22px;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -143,49 +146,11 @@
 }
 .bulk-eras {
   position: relative;
-  display: inline-flex;
-  max-width: 100%;
-  margin: 0;
-  padding: 3px;
-  border: 0;
-  border-bottom: 0;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-.bulk-eras::-webkit-scrollbar { display: none; }
-.bulk-eras .bulk-era {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  min-width: 0;
-  min-height: 38px;
-  padding: 6px 15px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-  scroll-snap-align: start;
-  transition: color 0.15s ease, background 0.15s ease;
-}
-.bulk-eras .bulk-era:hover { color: var(--ink); background: transparent; }
-.bulk-eras .bulk-era.on {
-  background: var(--surface-3);
-  color: var(--ink);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
-}
-.bulk-set-row {
-  position: relative;
   display: flex;
-  gap: 8px;
+  gap: 24px;
   margin: 0 calc(-1 * var(--gutter));
-  padding: 2px var(--gutter) 6px;
+  padding: 0 var(--gutter);
+  border-bottom: 1px solid var(--line);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
@@ -193,59 +158,127 @@
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
-.bulk-set-row::-webkit-scrollbar { display: none; }
+.bulk-eras::-webkit-scrollbar { display: none; }
+.bulk-eras .bulk-era {
+  position: relative;
+  flex: none;
+  min-width: 0;
+  min-height: 0;
+  padding: 10px 0 13px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  scroll-snap-align: start;
+  transition: color 0.15s ease;
+}
+.bulk-eras .bulk-era:hover { color: var(--ink); background: transparent; }
+.bulk-eras .bulk-era.on { color: var(--ink); background: transparent; box-shadow: none; }
+.bulk-eras .bulk-era.on::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
+}
+.bulk-shelf {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 0 var(--gutter) 4px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.bulk-shelf::-webkit-scrollbar { display: none; }
 .bulk-set {
   flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 44px;
-  padding: 5px 15px 5px 7px;
+  display: grid;
+  grid-template-rows: 22px auto 1fr;
+  align-content: start;
+  gap: 10px 0;
+  width: 150px;
+  min-height: 0;
+  padding: 12px 12px 11px;
   border: 1px solid transparent;
-  border-radius: 999px;
-  background: var(--surface-2);
+  border-radius: var(--r-sm);
+  background: var(--surface);
   color: var(--ink-2);
   text-align: left;
   scroll-snap-align: start;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
-.bulk-set:hover:not(:disabled) { background: var(--surface-3); color: var(--ink); }
-.bulk-set.active, .bulk-set.active:hover:not(:disabled) { background: var(--ink); color: var(--black); }
+.bulk-set:hover:not(:disabled) { background: var(--surface-2); color: var(--ink); }
+.bulk-set.active, .bulk-set.active:hover:not(:disabled) {
+  background: var(--surface-3);
+  border-color: var(--line-2);
+  color: var(--ink);
+}
 .bulk-set:disabled { opacity: 0.45; cursor: default; }
-.bulk-set.is-queued { background: var(--surface); color: var(--muted); }
+.bulk-set.is-queued { color: var(--muted); }
 .bulk-set.is-queued:hover { background: var(--surface-2); color: var(--ink-2); }
 .bulk-set-symbol {
-  flex: none;
-  box-sizing: border-box;
-  width: 30px;
-  height: 30px;
-  padding: 5px;
-  border-radius: 50%;
-  background: var(--well);
+  display: block;
+  width: auto;
+  max-width: 44px;
+  height: 20px;
+  margin-top: 1px;
+  padding: 0;
+  border-radius: 0;
+  background: none;
   object-fit: contain;
+  object-position: left center;
   filter: none;
 }
-.bulk-set.active .bulk-set-symbol { background: rgba(8, 8, 11, 0.85); }
-.bulk-set.is-queued .bulk-set-symbol { opacity: 0.55; }
-.bulk-set-copy {
-  display: flex;
-  align-items: baseline;
-  gap: 7px;
-  min-width: 0;
-}
-.bulk-set-copy b {
+.bulk-set.is-queued .bulk-set-symbol { opacity: 0.5; }
+.bulk-set-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  min-height: 2.5em;
+  overflow: hidden;
   font-size: 14px;
   font-weight: 600;
-  white-space: nowrap;
+  line-height: 1.25;
 }
-.bulk-set-copy small {
+.bulk-set-foot {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  align-self: end;
+  gap: 10px;
+}
+.bulk-set-count {
   font-size: 13px;
   font-weight: 500;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.bulk-set.active .bulk-set-copy small { color: rgba(8, 8, 11, 0.62); }
+.bulk-set.active .bulk-set-count { color: var(--ink-2); }
+.bulk-set-bar {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--line-2);
+  overflow: hidden;
+}
+.bulk-set-bar i {
+  display: block;
+  height: 100%;
+  background: var(--ink-2);
+}
+.bulk-set.active .bulk-set-bar i { background: var(--ink); }
 .bulk-era-empty {
   margin: 0;
   padding: 10px 0;
@@ -253,13 +286,15 @@
   font-size: 14px;
 }
 
-/* ---- Toolbar ---------------------------------------------------------------- */
+/* ---- Toolbar ----------------------------------------------------------------
+   The search, a square segmented control for what to show, and the rarity
+   filter as a row of words with an ink line under the one that is on. */
 .bulk-toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin: 0 0 10px;
+  margin: 0 0 6px;
 }
 .bulk-toolbar .search {
   flex: 1 1 100%;
@@ -267,24 +302,28 @@
   padding: 10px 14px;
   font-size: 16px;
 }
-.bulk-seg {
+#view-collection .bulk-seg {
   display: flex;
   width: 100%;
   margin: 0;
+  padding: 3px;
+  border-radius: var(--r-sm);
 }
-.bulk-seg .seg-btn {
+#view-collection .bulk-seg .seg-btn {
   flex: 1 1 0;
-  min-height: 38px;
+  min-height: 36px;
   padding: 6px 8px;
+  border-radius: 6px;
   font-size: 14px;
   text-align: center;
 }
-.bulk-rarities {
+#view-collection .bulk-rarities {
   display: flex;
   flex-wrap: nowrap;
-  gap: 8px;
-  margin: 0 calc(-1 * var(--gutter)) 14px;
-  padding: 2px var(--gutter) 4px;
+  gap: 20px;
+  margin: 0 calc(-1 * var(--gutter)) 16px;
+  padding: 0 var(--gutter);
+  border-bottom: 1px solid var(--line);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
@@ -293,18 +332,36 @@
   -webkit-overflow-scrolling: touch;
 }
 .bulk-rarities::-webkit-scrollbar { display: none; }
-.rarity-chip {
+#view-collection .rarity-chip {
+  position: relative;
   flex: none;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 13px 6px 10px;
+  min-height: 0;
+  padding: 10px 0 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
   line-height: 1;
   white-space: nowrap;
   scroll-snap-align: start;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: color 0.15s ease;
 }
-.rarity-chip[data-rarity="all"] { padding-left: 13px; }
+#view-collection .rarity-chip:hover { background: transparent; color: var(--ink); }
+#view-collection .rarity-chip.on { background: transparent; color: var(--ink); }
+#view-collection .rarity-chip.on::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
+}
 .rarity-marks {
   display: inline-flex;
   align-items: center;
@@ -725,10 +782,18 @@ body.no-motion .bulk-bar span { animation: none; }
 @media (min-width: 720px) {
   .bulk-toolbar { gap: 12px; margin-bottom: 12px; }
   .bulk-toolbar .search { flex: 1 1 280px; font-size: 15px; }
-  .bulk-seg { display: inline-flex; width: auto; margin-left: auto; }
-  .bulk-seg .seg-btn { flex: none; padding: 6px 16px; }
-  .bulk-rarities { flex-wrap: wrap; margin-inline: 0; padding-inline: 0; overflow: visible; }
-  .bulk-set-row { flex-wrap: wrap; margin-inline: 0; padding-inline: 0; overflow: visible; }
+  #view-collection .bulk-seg { display: inline-flex; width: auto; margin-left: auto; }
+  #view-collection .bulk-seg .seg-btn { flex: none; padding: 6px 16px; }
+  #view-collection .bulk-rarities { flex-wrap: wrap; gap: 0 22px; margin-inline: 0; padding-inline: 0; overflow: visible; }
+  .bulk-eras { margin-inline: 0; padding-inline: 0; overflow: visible; }
+  .bulk-shelf {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+  }
+  .bulk-set { width: auto; }
   .slot-num { flex: none; }
   .slot-dot { display: inline; }
   .binder-page-toolbar { margin-bottom: 14px; }

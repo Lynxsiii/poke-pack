@@ -6,14 +6,16 @@
 
 #view-shop .shop-main { min-width: 0; }
 
-/* ---- Set chips ------------------------------------------------------------
-   One row that scrolls sideways on every size, snapping chip by chip, with
-   the row's ends faded into the gutter. The chosen set is ink. */
+/* ---- Set tabs -------------------------------------------------------------
+   One row of set names that scrolls sideways on every size, snapping name by
+   name, with the row's ends faded into the gutter. The chosen set carries an
+   ink line, like the header nav; no pills. */
 #view-shop .shop-quick-sets {
   display: flex;
-  gap: 6px;
-  margin: 0 calc(-1 * var(--gutter)) 24px;
-  padding: 2px var(--gutter) 6px;
+  gap: 22px;
+  margin: 0 calc(-1 * var(--gutter)) 26px;
+  padding: 0 var(--gutter);
+  border-bottom: 1px solid var(--line);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
@@ -24,14 +26,34 @@
 }
 #view-shop .shop-quick-sets::-webkit-scrollbar { display: none; }
 #view-shop .shop-quick-set {
+  position: relative;
   flex: none;
   scroll-snap-align: start;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 38px;
-  padding: 6px 14px 6px 10px;
+  min-height: 0;
+  padding: 10px 0 13px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
   white-space: nowrap;
+  transition: color 0.15s ease;
+}
+#view-shop .shop-quick-set:hover { background: transparent; color: var(--ink); }
+#view-shop .shop-quick-set.active { background: transparent; border-color: transparent; color: var(--ink); }
+#view-shop .shop-quick-set.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
 }
 #view-shop .qs-symbol {
   display: block;
@@ -39,8 +61,11 @@
   height: 15px;
   max-width: 34px;
   object-fit: contain;
-  opacity: 0.9;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
 }
+#view-shop .shop-quick-set:hover .qs-symbol,
+#view-shop .shop-quick-set.active .qs-symbol { opacity: 1; }
 
 /* ---- The set head ---------------------------------------------------------
    The set's name as shop signage, one line about the set, and three plain
