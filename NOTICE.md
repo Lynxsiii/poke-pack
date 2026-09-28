@@ -20,6 +20,7 @@ choice, not an accident — the effects were worth it.
 | The cosmos holo in `css/holo/promos.css` and its three galaxy layers, `assets/foil/promo/cosmos-bottom.webp`, `cosmos-middle-trans.webp` and `cosmos-top-trans.webp`, copied from upstream's `public/img/` | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
 | Layer recipes in `css/holo/sv-fullart.css` (the Scarlet & Violet full-art Ultra Rare and gold Hyper Rare), following the ex-full-art and hyper-rare cards | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
 | The pointer radial, diagonal streak and color-dodge of the Scarlet & Violet reverse holo in `css/holo/sv-reverse.css`, following the reverse-holo card | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
+| Layer recipes in `css/holo/swsh.css` (the Sword & Shield finishes: Rare Holo, Pokémon V, VMAX and VSTAR, Trainer Gallery, Rainbow and Amazing Rare, Radiant Rare, Shiny Vault), following the regular-holo, v-regular, v-full-art, vmax, rainbow-alt, radiant-holo and shiny-v cards | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
 | Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
 | Archivo font in `assets/fonts/archivo-*.woff2` | Omnibus-Type, via Google Fonts | SIL Open Font License 1.1 |
 | IBM Plex Mono font in `assets/fonts/plex-mono-*.woff2` | IBM, via Google Fonts | SIL Open Font License 1.1 |
@@ -29,6 +30,12 @@ choice, not an accident — the effects were worth it.
 The 30th Celebration textures in `assets/foil/celebration/` (star glints,
 firework rings, cracked ice, confetti, puffy stars, grid glitter) are our own,
 drawn by `scripts/make_celebration_textures.py`.
+
+The Sword & Shield foil textures are our own too: the etched diagonal streaks
+of Pokémon V in `assets/foil/swsh-streaks.webp` (drawn by
+`.claude/skills/card-textures/scripts/make_swsh_streaks.py`) and the chevron
+reverse-holo tiles per type in `assets/foil/swsh-reverse/` (drawn by
+`.claude/skills/card-textures/scripts/make_swsh_reverse.py`).
 
 `css/holo/` is adapted rather than copied verbatim: the selectors are remapped
 from simey's `.card__translater / .card__rotator / .card__shine / .card__glare`

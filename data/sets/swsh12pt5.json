@@ -1,0 +1,31 @@
+{
+  "id": "swsh12pt5",
+  "name": "Crown Zenith",
+  "series": "sword-shield",
+  "slug": "crown-zenith",
+  "scrydexId": "swsh12pt5",
+  "era": "swsh",
+  "artSlug": "crown-zenith",
+  "packs": [
+    "pack-0"
+  ],
+  "tcgplayerGroup": 17688,
+  "subsets": [
+    {
+      "slug": "crown-zenith-galarian-gallery",
+      "gallery": "gg",
+      "tcgplayerGroup": 17689
+    }
+  ],
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

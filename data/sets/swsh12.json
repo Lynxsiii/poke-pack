@@ -1,0 +1,34 @@
+{
+  "id": "swsh12",
+  "name": "Silver Tempest",
+  "series": "sword-shield",
+  "slug": "silver-tempest",
+  "scrydexId": "swsh12",
+  "era": "swsh",
+  "artSlug": "silver-tempest",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 3170,
+  "subsets": [
+    {
+      "slug": "silver-tempest-trainer-gallery",
+      "gallery": "tg",
+      "tcgplayerGroup": 17674
+    }
+  ],
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

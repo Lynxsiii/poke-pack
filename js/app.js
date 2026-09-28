@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras } from "./foil-maps.js";
+import { foilExtras, isSwsh, swshPattern } from "./foil-maps.js";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
@@ -507,7 +507,9 @@ function isAllFoil(card) {
 function foilClass(card) {
   if (!card) return "";
   if (card.reverse || card.pattern) return "rare-glow";
-  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
+  // Sword & Shield's plain Rare is not a foil card.
+  if (isSwsh(card) && !card.foilAs && swshPattern(card) === "foil-none") return "";
+  if (HIT_RARITIES.has(card.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
 }
@@ -570,6 +572,11 @@ function foilPattern(card) {
     // The galaxy holo (css/holo/promos.css) on the frame: 151's Costco promos.
     if (kind === "galaxy") return "foil-reverse foil-cosmos";
     return kind ? `foil-reverse foil-rev-${kind}` : "foil-reverse";
+  }
+  // Sword & Shield era prints (js/foil-maps.js, shared with the lab).
+  if (isSwsh(card) && !card.foilAs) {
+    const swsh = swshPattern(card);
+    if (swsh) return swsh;
   }
   // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
   // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.

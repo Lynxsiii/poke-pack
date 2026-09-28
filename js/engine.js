@@ -45,6 +45,18 @@ export const HIT_RARITIES = new Set([
   "RGB Rare",
   "Shiny Rare",
   "Shiny Ultra Rare",
+  // Sword & Shield: everything from a Pokémon V up. The holo Rare is the
+  // era's ordinary rare-slot card, not a hit.
+  "Rare Holo V",
+  "Rare Holo VMAX",
+  "Rare Holo VSTAR",
+  "Rare Ultra",
+  "Rare Rainbow",
+  "Rare Secret",
+  "Amazing Rare",
+  "Radiant Rare",
+  "Trainer Gallery Rare Holo",
+  "Rare Shiny",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -64,7 +76,12 @@ function isExCard(card) {
 
 export function poolsFrom(cards, set) {
   // Promo cards come in collection boxes (data/products.json), never in packs.
-  const pokemonOrTrainer = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo);
+  const everyCard = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo);
+  // A Sword & Shield sub-gallery (Trainer Gallery, Shiny Vault, Galarian
+  // Gallery, Classic Collection) has its own slot, so its cards keep out of
+  // the main pools even where they share a rarity name (a TG Pokémon V).
+  const pokemonOrTrainer = everyCard.filter((c) => !c.gallery);
+  const gallery = (tag) => everyCard.filter((c) => c.gallery === tag);
   const reverseRarities = set?.reverseRarities || ["Common", "Uncommon", "Rare"];
   const pokeballRarities = set?.pokeballRarities || reverseRarities;
   const reversePool = pokemonOrTrainer.filter((c) => reverseRarities.includes(c.rarity));
@@ -103,7 +120,26 @@ export function poolsFrom(cards, set) {
     foilEnergy: cards.filter((c) => (c.rarity === "Energy" || c.energy) && !c.reverse && c.foilAs),
     common: pokemonOrTrainer.filter((c) => c.rarity === "Common"),
     uncommon: pokemonOrTrainer.filter((c) => c.rarity === "Uncommon"),
-    rare: pokemonOrTrainer.filter((c) => c.rarity === "Rare" || c.rarity === "Rare Holo"),
+    rare: pokemonOrTrainer.filter((c) => c.rarity === "Rare"),
+    // Sword & Shield (swshSlots in js/catalog.js).
+    holo: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo"),
+    v: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo V"),
+    vmax: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo VMAX"),
+    vstar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo VSTAR"),
+    rareUltra: pokemonOrTrainer.filter((c) => c.rarity === "Rare Ultra"),
+    rainbow: pokemonOrTrainer.filter((c) => c.rarity === "Rare Rainbow"),
+    secret: pokemonOrTrainer.filter((c) => c.rarity === "Rare Secret"),
+    amazing: pokemonOrTrainer.filter((c) => c.rarity === "Amazing Rare"),
+    radiant: pokemonOrTrainer.filter((c) => c.rarity === "Radiant Rare"),
+    trainerGallery: gallery("tg"),
+    galarianGallery: gallery("gg"),
+    shinyVault: gallery("sv"),
+    // Shining Fates' Shiny Vault by tier (swshSlots rolls each at its own rate).
+    shinyBaby: gallery("sv").filter((c) => c.rarity === "Rare Shiny"),
+    shinyV: gallery("sv").filter((c) => c.rarity === "Rare Holo V"),
+    shinyVMAX: gallery("sv").filter((c) => c.rarity === "Rare Holo VMAX"),
+    shinyGold: gallery("sv").filter((c) => c.rarity === "Rare Secret"),
+    classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),
     ir: pokemonOrTrainer.filter((c) => c.rarity === "Illustration Rare"),
@@ -119,7 +155,7 @@ export function poolsFrom(cards, set) {
     // 30th Celebration: a Pikachu in every pack, gold-bordered reprints, the
     // chrome Futuristic Rares, and the three RGB Mews.
     pikachu: pokemonOrTrainer.filter((c) => c.rarity === "Pikachu Rare"),
-    classic: pokemonOrTrainer.filter((c) => c.rarity === "Classic Collection"),
+    classic: everyCard.filter((c) => c.rarity === "Classic Collection"),
     futuristic: pokemonOrTrainer.filter((c) => c.rarity === "Futuristic Rare"),
     rgb: pokemonOrTrainer.filter((c) => c.rarity === "RGB Rare"),
     // Paldean Fates' Shiny Vault: baby shinies and shiny ex share the first

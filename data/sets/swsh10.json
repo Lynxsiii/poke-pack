@@ -1,0 +1,35 @@
+{
+  "id": "swsh10",
+  "name": "Astral Radiance",
+  "series": "sword-shield",
+  "slug": "astral-radiance",
+  "scrydexId": "swsh10",
+  "era": "swsh",
+  "artSlug": "astral-radiance",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3",
+    "pack-4"
+  ],
+  "tcgplayerGroup": 3040,
+  "subsets": [
+    {
+      "slug": "astral-radiance-trainer-gallery",
+      "gallery": "tg",
+      "tcgplayerGroup": 3068
+    }
+  ],
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

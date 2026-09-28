@@ -85,6 +85,29 @@ SETS = {
     "me55": ("me5-5", {"R": ("me5-5m", 1), "G": ("me5-5m", 2), "B": ("me5-5m", 3)}),
     "sv4pt5": ("sv4-5", {}),
     "sv8pt5": ("sv8-5", {}),
+    # Sword & Shield is not in the export index, but its maps are on the CDN
+    # under these keys (probed 2026-09-28). The special sets take the
+    # half-number form; the promos are swshbsp like svbsp and mebsp.
+    "swsh35": ("swsh3-5", {}),
+    "swsh45": ("swsh4-5", {}),
+    "cel25": ("swsh7-5", {}),
+    "pgo": ("swsh10-5", {}),
+    "swsh12pt5": ("swsh12-5", {}),
+}
+
+# A set's sub-gallery is filed on TCG Live either under its own key (the
+# Trainer Galleries are swsh9a..swsh12a, the Galarian Gallery swsh12-5a, both
+# numbered 001 on) or after the main set's secret rares (Shining Fates'
+# Shiny Vault SV001 is swsh4-5 074, after 073). Celebrations' Classic
+# Collection is not on the CDN. Checked map by map against the scans
+# (2026-09-28): the printed count is not the offset.
+GALLERY_KEY = {
+    ("swsh9", "TG"): ("swsh9a", 0),
+    ("swsh10", "TG"): ("swsh10a", 0),
+    ("swsh11", "TG"): ("swsh11a", 0),
+    ("swsh12", "TG"): ("swsh12a", 0),
+    ("swsh45", "SV"): ("swsh4-5", 73),
+    ("swsh12pt5", "GG"): ("swsh12-5a", 0),
 }
 
 # TCG Live's print variants (the code in each print's longFormID) -> the
@@ -117,11 +140,14 @@ def curl(url: str, dest: Path) -> bool:
 
 # Black star promos sold with a set are filed in it as <prefix><number>, with
 # an optional -suffix for a stamped print of the same card (mep101-pc).
-PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp"}
+PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp"}
 
 
 def source(set_id: str, key: str | None, number: str) -> tuple[str, int] | None:
     main, extra = SETS.get(set_id, (None, {}))
+    # The numbered Sword & Shield sets use the site's own id as their key.
+    if main is None and re.fullmatch(r"swsh\d+", set_id):
+        main = set_id
     if number in extra:
         return extra[number]
     promo = re.fullmatch(r"([a-z]+)(\d+)(-[a-z0-9]+)?", number)
@@ -129,6 +155,10 @@ def source(set_id: str, key: str | None, number: str) -> tuple[str, int] | None:
         return PROMO_KEYS[promo.group(1)], int(promo.group(2))
     if number.isdigit() and (key or main):
         return key or main, int(number)
+    gallery = re.fullmatch(r"(TG|SV|GG)0*(\d+)", number)
+    if gallery and (set_id, gallery.group(1)) in GALLERY_KEY:
+        gkey, offset = GALLERY_KEY[(set_id, gallery.group(1))]
+        return gkey, offset + int(gallery.group(2))
     return None
 
 
@@ -240,7 +270,7 @@ def main() -> None:
 
     cache = CACHE / args.set
     cache.mkdir(parents=True, exist_ok=True)
-    fetched, unknown = 0, []
+    fetched, unknown, jobs = 0, [], []
     for n in numbers:
         src = source(args.set, args.key, n)
         if not src:
@@ -252,10 +282,20 @@ def main() -> None:
             if dest.exists() or (cache / f"{cached(n, variant)}.{kind}.none").exists():
                 continue
             at = FOIL_SWAPS.get((args.set, n), num) if kind == "foil" else num
-            if curl(f"{BASE}/{key}/{key}_en_{at:03d}_{variant}.{kind}.png", dest):
-                fetched += 1
-            else:
-                (cache / f"{cached(n, variant)}.{kind}.none").touch()  # remember the miss; etch maps are rare
+            jobs.append((f"{BASE}/{key}/{key}_en_{at:03d}_{variant}.{kind}.png", dest))
+
+    def fetch_one(job):
+        url, dest = job
+        if curl(url, dest):
+            return True
+        dest.with_suffix(".none").touch()  # remember the miss; etch maps are rare
+        return False
+
+    # A whole set is a few hundred small files; eight at a time keeps a
+    # Sword & Shield set under a minute without leaning on the CDN.
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        fetched = sum(1 for ok in pool.map(fetch_one, jobs) if ok)
     print(f"{fetched} maps fetched into {cache}")
     if unknown:
         print(f"no TCG Live source for: {', '.join(unknown)} (not in the export, or add them to SETS)")

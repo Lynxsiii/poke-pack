@@ -1,0 +1,32 @@
+{
+  "id": "cel25",
+  "name": "Celebrations",
+  "series": "sword-shield",
+  "slug": "celebrations",
+  "scrydexId": "cel25",
+  "era": "swsh",
+  "artSlug": "celebrations",
+  "packs": [
+    "pack-0"
+  ],
+  "tcgplayerGroup": 2867,
+  "subsets": [
+    {
+      "slug": "celebrations-classic-collection",
+      "gallery": "cc",
+      "tcgplayerGroup": 2931,
+      "scrydexId": "cel25c"
+    }
+  ],
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

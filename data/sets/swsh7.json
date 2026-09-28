@@ -1,0 +1,27 @@
+{
+  "id": "swsh7",
+  "name": "Evolving Skies",
+  "series": "sword-shield",
+  "slug": "evolving-skies",
+  "scrydexId": "swsh7",
+  "era": "swsh",
+  "artSlug": "evolving-skies",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2848,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

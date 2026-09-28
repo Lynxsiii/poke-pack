@@ -23,7 +23,7 @@
 import { createCardMotion } from "/js/card-motion.js";
 import { HIT_RARITIES } from "/js/engine.js";
 import { rarityKey } from "/js/catalog.js";
-import { foilExtras } from "/js/foil-maps.js";
+import { foilExtras, isSwsh, swshPattern } from "/js/foil-maps.js";
 
 const params = new URLSearchParams(location.search);
 const setId = params.get("set") || "me55";
@@ -38,7 +38,8 @@ const allFoil = (c) => ALL_FOIL.has(setId) && !c.energy && c.supertype !== "Ener
 
 function foilClass(c) {
   if (c.reverse || c.pattern) return "rare-glow";
-  if (HIT_RARITIES.has(c.rarity) || ["Rare", "Pikachu Rare", "Cosmos"].includes(c.rarity) || allFoil(c)) return "holo";
+  if (isSwsh(c) && !c.foilAs && swshPattern(c) === "foil-none") return "";
+  if (HIT_RARITIES.has(c.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos"].includes(c.rarity) || allFoil(c)) return "holo";
   return "";
 }
 function foilLayout(c) {
@@ -52,6 +53,7 @@ function foilPattern(c) {
   if (c.reverse) return c.reverseKind && c.reverseKind !== "cosmos" ? `foil-reverse foil-rev-${c.reverseKind}` : "foil-reverse";
   const r = c.rarity;
   if (c.pattern) return `foil-reverse foil-rev-${c.pattern} foil-prism`;
+  if (isSwsh(c) && !c.foilAs && swshPattern(c)) return swshPattern(c);
   if (r === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
   if (r === "Shiny Rare") return "foil-holo foil-shiny";
   if (c.finish === "scodix") return "foil-gold foil-scodix";

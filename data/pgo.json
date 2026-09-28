@@ -1,0 +1,3243 @@
+[
+  {
+    "id": "pgo-1",
+    "name": "Bulbasaur",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "sowsow",
+    "flavorText": "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
+    "image": "assets/cards/pgo/1.webp",
+    "imageSmall": "assets/cards/pgo/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 274433,
+    "market": 0.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-1/large"
+  },
+  {
+    "id": "pgo-2",
+    "name": "Ivysaur",
+    "number": "2",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "zig",
+    "flavorText": "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
+    "evolvesFrom": "Bulbasaur",
+    "image": "assets/cards/pgo/2.webp",
+    "imageSmall": "assets/cards/pgo/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Summoning Aroma",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 274434,
+    "market": 0.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-2/large"
+  },
+  {
+    "id": "pgo-3",
+    "name": "Venusaur",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "KEIICHIRO ITO",
+    "flavorText": "Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
+    "evolvesFrom": "Ivysaur",
+    "image": "assets/cards/pgo/3.webp",
+    "imageSmall": "assets/cards/pgo/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Beam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Loopy Lasso",
+        "text": "Once during your turn, you may flip a coin. If heads, switch 1 of your opponent's Benched Pokémon with their Active Pokémon, and the new Active Pokémon is now Asleep and Poisoned.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/3.webp",
+    "tcgplayerId": 274435,
+    "market": 2.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-3/large"
+  },
+  {
+    "id": "pgo-4",
+    "name": "Radiant Venusaur",
+    "number": "4",
+    "rarity": "Radiant Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Radiant"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "Misa Tsutsui",
+    "flavorText": "Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
+    "image": "assets/cards/pgo/4.webp",
+    "imageSmall": "assets/cards/pgo/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Pollen Hazard",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Your opponent's Active Pokémon is now Burned, Confused, and Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sunny Bloom",
+        "text": "Once at the end of your turn (after your attack), you may use this Ability. Draw cards until you have 4 cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/4.webp",
+    "etchMap": "assets/foil/maps/pgo/4-etch.webp",
+    "tcgplayerId": 274465,
+    "market": 8.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-4/large"
+  },
+  {
+    "id": "pgo-5",
+    "name": "Alolan Exeggutor V",
+    "number": "5",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "240",
+    "artist": "MUGENUP",
+    "image": "assets/cards/pgo/5.webp",
+    "imageSmall": "assets/cards/pgo/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Growing Tall",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for up to 5 Grass Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck."
+      },
+      {
+        "name": "Head Swing",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon for each Grass Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/5.webp",
+    "tcgplayerId": 276943,
+    "market": 0.8,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-5/large"
+  },
+  {
+    "id": "pgo-6",
+    "name": "Spinarak",
+    "number": "6",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Yuka Morii",
+    "flavorText": "Although the poison from its fangs isn't that strong, it's potent enough to weaken prey that gets caught in its web.",
+    "image": "assets/cards/pgo/6.webp",
+    "imageSmall": "assets/cards/pgo/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Sting",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "tcgplayerId": 276944,
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-6/large"
+  },
+  {
+    "id": "pgo-7",
+    "name": "Ariados",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Misa Tsutsui",
+    "flavorText": "It spews threads from its mouth to catch its prey. When night falls, it leaves its web to go hunt aggressively.",
+    "evolvesFrom": "Spinarak",
+    "image": "assets/cards/pgo/7.webp",
+    "imageSmall": "assets/cards/pgo/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison String-Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed and Poisoned."
+      },
+      {
+        "name": "Absorb",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Heal 50 damage from this Pokémon."
+      }
+    ],
+    "tcgplayerId": 276945,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-7/large"
+  },
+  {
+    "id": "pgo-8",
+    "name": "Charmander",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "saino misaki",
+    "flavorText": "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
+    "image": "assets/cards/pgo/8.webp",
+    "imageSmall": "assets/cards/pgo/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail on Fire",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": "Search your deck for a Fire Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      }
+    ],
+    "tcgplayerId": 274436,
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-8/large"
+  },
+  {
+    "id": "pgo-9",
+    "name": "Charmeleon",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "Shiburingaru",
+    "flavorText": "It has a barbaric nature. In battle, it whips its fiery tail around and slashes away with sharp claws.",
+    "evolvesFrom": "Charmander",
+    "image": "assets/cards/pgo/9.webp",
+    "imageSmall": "assets/cards/pgo/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard a Fire Energy from this Pokémon."
+      }
+    ],
+    "tcgplayerId": 274438,
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-9/large"
+  },
+  {
+    "id": "pgo-10",
+    "name": "Charizard",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "N-DESIGN Inc.",
+    "flavorText": "It spits fire that is hot enough to melt boulders. It may cause forest fires by blowing flames.",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/pgo/10.webp",
+    "imageSmall": "assets/cards/pgo/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Flare Blitz",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "Discard all Fire Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Burn Brightly",
+        "text": "Each basic Fire Energy attached to your Pokémon provides FireFire Energy. You can't apply more than 1 Burn Brightly Ability at a time.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/10.webp",
+    "tcgplayerId": 274439,
+    "market": 3.68,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-10/large"
+  },
+  {
+    "id": "pgo-11",
+    "name": "Radiant Charizard",
+    "number": "11",
+    "rarity": "Radiant Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Radiant"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "160",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It spits fire that is hot enough to melt boulders. It may cause forest fires by blowing flames.",
+    "image": "assets/cards/pgo/11.webp",
+    "imageSmall": "assets/cards/pgo/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Combustion Blast",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can't use Combustion Blast."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Excited Heart",
+        "text": "This Pokémon's attacks cost Colorless less for each Prize card your opponent has taken.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/11.webp",
+    "etchMap": "assets/foil/maps/pgo/11-etch.webp",
+    "tcgplayerId": 274467,
+    "market": 19.01,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-11/large"
+  },
+  {
+    "id": "pgo-12",
+    "name": "Moltres",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Pani Kobayashi",
+    "flavorText": "It's one of the legendary bird Pokémon. When Moltres flaps its flaming wings, they glimmer with a dazzling red glow.",
+    "image": "assets/cards/pgo/12.webp",
+    "imageSmall": "assets/cards/pgo/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flare Symbol",
+        "text": "Your Basic Fire Pokémon's attacks, except any Moltres, do 10 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/12.webp",
+    "tcgplayerId": 276953,
+    "market": 0.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-12/large"
+  },
+  {
+    "id": "pgo-13",
+    "name": "Numel",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Shibuzoh.",
+    "flavorText": "The magma in its body reaches 2,200 degrees Fahrenheit. Its hump gets smaller when it uses Fire-type moves.",
+    "image": "assets/cards/pgo/13.webp",
+    "imageSmall": "assets/cards/pgo/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Stomp",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 50 more damage."
+      }
+    ],
+    "tcgplayerId": 276947,
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-13/large"
+  },
+  {
+    "id": "pgo-14",
+    "name": "Camerupt",
+    "number": "14",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "yuu",
+    "flavorText": "If angered, the humps on its back erupt in a shower of molten lava. It lives in the craters of volcanoes.",
+    "evolvesFrom": "Numel",
+    "image": "assets/cards/pgo/14.webp",
+    "imageSmall": "assets/cards/pgo/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Split Bomb",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Heat Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 276948,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-14/large"
+  },
+  {
+    "id": "pgo-15",
+    "name": "Squirtle",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "sowsow",
+    "flavorText": "When it retracts its long neck into its shell, it squirts out water with vigorous force.",
+    "image": "assets/cards/pgo/15.webp",
+    "imageSmall": "assets/cards/pgo/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 274445,
+    "market": 0.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-15/large"
+  },
+  {
+    "id": "pgo-16",
+    "name": "Wartortle",
+    "number": "16",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "kurumitsu",
+    "flavorText": "It is recognized as a symbol of longevity. If its shell has algae on it, that Wartortle is very old.",
+    "evolvesFrom": "Squirtle",
+    "image": "assets/cards/pgo/16.webp",
+    "imageSmall": "assets/cards/pgo/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 10 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "tcgplayerId": 274451,
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-16/large"
+  },
+  {
+    "id": "pgo-17",
+    "name": "Blastoise",
+    "number": "17",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "NC Empire",
+    "flavorText": "It crushes its foe under its heavy body to cause fainting. In a pinch, it will withdraw inside its shell.",
+    "evolvesFrom": "Wartortle",
+    "image": "assets/cards/pgo/17.webp",
+    "imageSmall": "assets/cards/pgo/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "This attack does 30 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Vitality Spring",
+        "text": "Once during your turn, you may search your deck for up to 6 Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck. If you use this Ability, your turn ends.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/17.webp",
+    "tcgplayerId": 274453,
+    "market": 2.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-17/large"
+  },
+  {
+    "id": "pgo-18",
+    "name": "Radiant Blastoise",
+    "number": "18",
+    "rarity": "Radiant Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Radiant"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It crushes its foe under its heavy body to cause fainting. In a pinch, it will withdraw inside its shell.",
+    "image": "assets/cards/pgo/18.webp",
+    "imageSmall": "assets/cards/pgo/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Torrential Cannon",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "During your next turn, this Pokémon can't use Torrential Cannon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pump Shot",
+        "text": "You must discard a Water Energy card from your hand in order to use this Ability. Once during your turn, you may put 2 damage counters on 1 of your opponent's Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/18.webp",
+    "etchMap": "assets/foil/maps/pgo/18-etch.webp",
+    "tcgplayerId": 274468,
+    "market": 10.62,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-18/large"
+  },
+  {
+    "id": "pgo-19",
+    "name": "Slowpoke",
+    "number": "19",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "N-DESIGN Inc.",
+    "flavorText": "Slow-witted and oblivious, this Pokémon won't feel any pain if its tail gets eaten. It won't notice when its tail grows back, either.",
+    "image": "assets/cards/pgo/19.webp",
+    "imageSmall": "assets/cards/pgo/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Hold Still",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Ideal Fishing Day",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Put an Item card from your discard pile into your hand."
+      }
+    ],
+    "tcgplayerId": 276949,
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-19/large"
+  },
+  {
+    "id": "pgo-20",
+    "name": "Slowbro",
+    "number": "20",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Mina Nakai",
+    "flavorText": "Slowpoke became Slowbro when a Shellder bit on to its tail. Sweet flavors seeping from the tail make the Shellder feel as if its life is a dream.",
+    "evolvesFrom": "Slowpoke",
+    "image": "assets/cards/pgo/20.webp",
+    "imageSmall": "assets/cards/pgo/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Tumbling Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Both Active Pokémon are now Asleep."
+      },
+      {
+        "name": "Twilight Inspiration",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "You can use this attack only if your opponent has exactly 1 Prize card remaining. Take 2 Prize cards."
+      }
+    ],
+    "tcgplayerId": 276950,
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-20/large"
+  },
+  {
+    "id": "pgo-21",
+    "name": "Magikarp",
+    "number": "21",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "N-DESIGN Inc.",
+    "flavorText": "It is virtually worthless in terms of both power and speed. It is the most weak and pathetic Pokémon in the world.",
+    "image": "assets/cards/pgo/21.webp",
+    "imageSmall": "assets/cards/pgo/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Lively Grouping",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for any number of Magikarp, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Raging Fin",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 30 more damage for each Magikarp and Gyarados in your discard pile."
+      }
+    ],
+    "tcgplayerId": 276951,
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-21/large"
+  },
+  {
+    "id": "pgo-22",
+    "name": "Gyarados",
+    "number": "22",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It has an extremely aggressive nature. The Hyper Beam it shoots from its mouth totally incinerates all targets.",
+    "evolvesFrom": "Magikarp",
+    "image": "assets/cards/pgo/22.webp",
+    "imageSmall": "assets/cards/pgo/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Wreak Havoc",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin until you get tails. For each heads, discard the top 2 cards of your opponent's deck."
+      },
+      {
+        "name": "Wild Splash",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "230",
+        "text": "Discard the top 5 cards of your deck."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/22.webp",
+    "tcgplayerId": 276955,
+    "market": 0.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-22/large"
+  },
+  {
+    "id": "pgo-23",
+    "name": "Lapras",
+    "number": "23",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "N-DESIGN Inc.",
+    "flavorText": "A smart and kindhearted Pokémon, it glides across the surface of the sea while its beautiful song echoes around it.",
+    "image": "assets/cards/pgo/23.webp",
+    "imageSmall": "assets/cards/pgo/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Beam",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/23.webp",
+    "tcgplayerId": 276957,
+    "market": 0.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-23/large"
+  },
+  {
+    "id": "pgo-24",
+    "name": "Articuno",
+    "number": "24",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Jiro Sasumo",
+    "flavorText": "It's said that this Pokémon's beautiful blue wings are made of ice. Articuno flies over snowy mountains, its long tail fluttering along behind it.",
+    "image": "assets/cards/pgo/24.webp",
+    "imageSmall": "assets/cards/pgo/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Freezing Wind",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ice Symbol",
+        "text": "Your Basic Water Pokémon's attacks, except any Articuno, do 10 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/24.webp",
+    "tcgplayerId": 276959,
+    "market": 0.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-24/large"
+  },
+  {
+    "id": "pgo-25",
+    "name": "Wimpod",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Miki Tanaka",
+    "flavorText": "It's nature's cleaner—it eats anything and everything, including garbage and rotten things. The ground near its nest is always clean.",
+    "image": "assets/cards/pgo/25.webp",
+    "imageSmall": "assets/cards/pgo/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Punk Out",
+        "text": "If your opponent has any Pokémon V in play, this Pokémon has no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "tcgplayerId": 274457,
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-25/large"
+  },
+  {
+    "id": "pgo-26",
+    "name": "Golisopod",
+    "number": "26",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "otumami",
+    "flavorText": "It will do anything to win, taking advantage of every opening and finishing opponents off with the small claws on its front legs.",
+    "evolvesFrom": "Wimpod",
+    "image": "assets/cards/pgo/26.webp",
+    "imageSmall": "assets/cards/pgo/26-sm.webp",
+    "attacks": [
+      {
+        "name": "First Impression",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/26.webp",
+    "tcgplayerId": 274459,
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-26/large"
+  },
+  {
+    "id": "pgo-27",
+    "name": "Pikachu",
+    "number": "27",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "N-DESIGN Inc.",
+    "flavorText": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
+    "image": "assets/cards/pgo/27.webp",
+    "imageSmall": "assets/cards/pgo/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Buddy Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If you played a Supporter card from your hand during this turn, this attack does 30 more damage."
+      }
+    ],
+    "tcgplayerId": 276946,
+    "market": 0.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-27/large"
+  },
+  {
+    "id": "pgo-28",
+    "name": "Pikachu",
+    "number": "28",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Narumi Sato",
+    "flavorText": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
+    "image": "assets/cards/pgo/28.webp",
+    "imageSmall": "assets/cards/pgo/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Wild Charge",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/28.webp",
+    "tcgplayerId": 274461,
+    "market": 1.8,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-28/large"
+  },
+  {
+    "id": "pgo-29",
+    "name": "Zapdos",
+    "number": "29",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Yuya Oka",
+    "flavorText": "This Pokémon has complete control over electricity. There are tales of Zapdos nesting in the dark depths of pitch-black thunderclouds.",
+    "image": "assets/cards/pgo/29.webp",
+    "imageSmall": "assets/cards/pgo/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lightning Symbol",
+        "text": "Your Basic Lightning Pokémon's attacks, except any Zapdos, do 10 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/29.webp",
+    "tcgplayerId": 276954,
+    "market": 0.57,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-29/large"
+  },
+  {
+    "id": "pgo-30",
+    "name": "Mewtwo V",
+    "number": "30",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "220",
+    "artist": "Nurikabe",
+    "image": "assets/cards/pgo/30.webp",
+    "imageSmall": "assets/cards/pgo/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Transfer Break",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/30.webp",
+    "tcgplayerId": 276960,
+    "market": 5.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-30/large"
+  },
+  {
+    "id": "pgo-31",
+    "name": "Mewtwo VSTAR",
+    "number": "31",
+    "rarity": "Rare Holo VSTAR",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "280",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Mewtwo V",
+    "image": "assets/cards/pgo/31.webp",
+    "imageSmall": "assets/cards/pgo/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Purge",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "90×",
+        "text": "Discard up to 3 Psychic Energy from your Pokémon. This attack does 90 damage for each card you discarded in this way."
+      },
+      {
+        "name": "Star Raid",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 120 damage to each of your opponent's Pokémon V. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/31.webp",
+    "etchMap": "assets/foil/maps/pgo/31-etch.webp",
+    "tcgplayerId": 276963,
+    "market": 8.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-31/large"
+  },
+  {
+    "id": "pgo-32",
+    "name": "Natu",
+    "number": "32",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "It is extremely good at climbing tree trunks and likes to eat the new sprouts on the trees.",
+    "image": "assets/cards/pgo/32.webp",
+    "imageSmall": "assets/cards/pgo/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Nap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Peck",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 276966,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-32/large"
+  },
+  {
+    "id": "pgo-33",
+    "name": "Xatu",
+    "number": "33",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Hataya",
+    "flavorText": "They say that it stays still and quiet because it is seeing both the past and future at the same time.",
+    "evolvesFrom": "Natu",
+    "image": "assets/cards/pgo/33.webp",
+    "imageSmall": "assets/cards/pgo/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Pinpoint Wave",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "This attack does 90 damage to 1 of your opponent's Pokémon V. This damage isn't affected by Weakness or Resistance."
+      },
+      {
+        "name": "Mind Bend",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "tcgplayerId": 276969,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-33/large"
+  },
+  {
+    "id": "pgo-34",
+    "name": "Lunatone",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "miki kudo",
+    "flavorText": "The phase of the moon apparently has some effect on its power. It's active on the night of a full moon.",
+    "image": "assets/cards/pgo/34.webp",
+    "imageSmall": "assets/cards/pgo/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Cycle Draw",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Discard a card from your hand. If you do, draw 3 cards."
+      },
+      {
+        "name": "Moon Kinesis",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "This attack does 30 more damage for each Psychic Energy attached to this Pokémon."
+      }
+    ],
+    "tcgplayerId": 276972,
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-34/large"
+  },
+  {
+    "id": "pgo-35",
+    "name": "Sylveon",
+    "number": "35",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Atsushi Furusawa",
+    "flavorText": "By releasing enmity-erasing waves from its ribbonlike feelers, Sylveon stops any conflict.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/pgo/35.webp",
+    "imageSmall": "assets/cards/pgo/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Souvenir",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Wonder Flash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "If your opponent's Active Pokémon is a Dragon Pokémon, this attack does 90 more damage."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/35.webp",
+    "tcgplayerId": 276976,
+    "market": 0.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-35/large"
+  },
+  {
+    "id": "pgo-36",
+    "name": "Onix",
+    "number": "36",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "As it digs through the ground, it absorbs many hard objects. This is what makes its body so solid.",
+    "image": "assets/cards/pgo/36.webp",
+    "imageSmall": "assets/cards/pgo/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Tomb",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Raging Swing",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each damage counter on this Pokémon."
+      }
+    ],
+    "tcgplayerId": 276981,
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-36/large"
+  },
+  {
+    "id": "pgo-37",
+    "name": "Larvitar",
+    "number": "37",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "Born deep underground, it comes aboveground and becomes a pupa once it has finished eating the surrounding soil.",
+    "image": "assets/cards/pgo/37.webp",
+    "imageSmall": "assets/cards/pgo/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Smash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "tcgplayerId": 276984,
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-37/large"
+  },
+  {
+    "id": "pgo-38",
+    "name": "Pupitar",
+    "number": "38",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "Even sealed in its shell, it can move freely. Hard and fast, it has outstanding destructive power.",
+    "evolvesFrom": "Larvitar",
+    "image": "assets/cards/pgo/38.webp",
+    "imageSmall": "assets/cards/pgo/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Crashing Bullet",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This attack also does 20 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 276990,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-38/large"
+  },
+  {
+    "id": "pgo-39",
+    "name": "Solrock",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Sekio",
+    "flavorText": "When it rotates itself, it gives off light similar to the sun, thus blinding its foes.",
+    "image": "assets/cards/pgo/39.webp",
+    "imageSmall": "assets/cards/pgo/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Spinning Attack",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sun Energy",
+        "text": "Once during your turn, you may attach a Psychic Energy card from your discard pile to 1 of your Lunatone.",
+        "type": "Ability"
+      }
+    ],
+    "tcgplayerId": 276993,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-39/large"
+  },
+  {
+    "id": "pgo-40",
+    "name": "Conkeldurr V",
+    "number": "40",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "230",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/pgo/40.webp",
+    "imageSmall": "assets/cards/pgo/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Counter",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon was damaged by an attack during your opponent's last turn, this attack does that much more damage."
+      },
+      {
+        "name": "Dynamic Punch",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "Flip a coin. If heads, this attack does 90 more damage, and your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/40.webp",
+    "tcgplayerId": 276999,
+    "market": 0.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-40/large"
+  },
+  {
+    "id": "pgo-41",
+    "name": "Alolan Rattata",
+    "number": "41",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "40",
+    "artist": "KIYOTAKA OSHIYAMA",
+    "flavorText": "Night after night, they sneak into people's homes seeking food. A massive outbreak of them has become an issue of public concern.",
+    "image": "assets/cards/pgo/41.webp",
+    "imageSmall": "assets/cards/pgo/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Fang",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "tcgplayerId": 277002,
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-41/large"
+  },
+  {
+    "id": "pgo-42",
+    "name": "Alolan Raticate",
+    "number": "42",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It commands a nest of Rattata. Different nests don't get along, whipping up severe fights over feeding grounds.",
+    "evolvesFrom": "Alolan Rattata",
+    "image": "assets/cards/pgo/42.webp",
+    "imageSmall": "assets/cards/pgo/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Chase Up",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Super Fang",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 10."
+      }
+    ],
+    "tcgplayerId": 277003,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-42/large"
+  },
+  {
+    "id": "pgo-43",
+    "name": "Tyranitar",
+    "number": "43",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "Nisota Niso",
+    "flavorText": "Its body can't be harmed by any sort of attack, so it is very eager to make challenges against enemies.",
+    "evolvesFrom": "Pupitar",
+    "image": "assets/cards/pgo/43.webp",
+    "imageSmall": "assets/cards/pgo/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Raging Crash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "This attack does 10 damage for each damage counter on all of your Benched Pokémon."
+      },
+      {
+        "name": "Earthquake",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This attack also does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/43.webp",
+    "tcgplayerId": 277007,
+    "market": 0.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-43/large"
+  },
+  {
+    "id": "pgo-44",
+    "name": "Steelix",
+    "number": "44",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "180",
+    "artist": "GOSSAN",
+    "flavorText": "It is said that if an Onix lives for over 100 years, its composition changes to become diamond-like.",
+    "evolvesFrom": "Onix",
+    "image": "assets/cards/pgo/44.webp",
+    "imageSmall": "assets/cards/pgo/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Iron Buster",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "tcgplayerId": 277012,
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-44/large"
+  },
+  {
+    "id": "pgo-45",
+    "name": "Meltan",
+    "number": "45",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It melts particles of iron and other metals found in the subsoil, so it can absorb them into its body of molten steel.",
+    "image": "assets/cards/pgo/45.webp",
+    "imageSmall": "assets/cards/pgo/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "tcgplayerId": 277027,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-45/large"
+  },
+  {
+    "id": "pgo-46",
+    "name": "Melmetal",
+    "number": "46",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "Shigenori Negishi",
+    "flavorText": "Revered long ago for its capacity to create iron from nothing, for some reason it has come back to life after 3,000 years.",
+    "evolvesFrom": "Meltan",
+    "image": "assets/cards/pgo/46.webp",
+    "imageSmall": "assets/cards/pgo/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Swinging Smash",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip 2 coins. This attack does 90 more damage for each heads."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/46.webp",
+    "tcgplayerId": 277016,
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-46/large"
+  },
+  {
+    "id": "pgo-47",
+    "name": "Melmetal V",
+    "number": "47",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "sadaji",
+    "image": "assets/cards/pgo/47.webp",
+    "imageSmall": "assets/cards/pgo/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Arm Charge",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "50",
+        "text": "You may attach a Metal Energy card from your hand to this Pokémon."
+      },
+      {
+        "name": "Mega Punch",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/47.webp",
+    "tcgplayerId": 277019,
+    "market": 0.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-47/large"
+  },
+  {
+    "id": "pgo-48",
+    "name": "Melmetal VMAX",
+    "number": "48",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "330",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Melmetal V",
+    "image": "assets/cards/pgo/48.webp",
+    "imageSmall": "assets/cards/pgo/48-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Juggernaut",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "160+",
+        "text": "This attack does 60 more damage for each extra Metal Energy attached to this Pokémon (in addition to this attack's cost). You can't add more than 120 damage in this way."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/48.webp",
+    "etchMap": "assets/foil/maps/pgo/48-etch.webp",
+    "tcgplayerId": 277023,
+    "market": 1.7,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-48/large"
+  },
+  {
+    "id": "pgo-49",
+    "name": "Dragonite V",
+    "number": "49",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "230",
+    "artist": "kawayoo",
+    "image": "assets/cards/pgo/49.webp",
+    "imageSmall": "assets/cards/pgo/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Beam",
+        "cost": [
+          "Water",
+          "Lightning"
+        ],
+        "damage": "60",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Buster Tail",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/49.webp",
+    "tcgplayerId": 276962,
+    "market": 4.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-49/large"
+  },
+  {
+    "id": "pgo-50",
+    "name": "Dragonite VSTAR",
+    "number": "50",
+    "rarity": "Rare Holo VSTAR",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "280",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Dragonite V",
+    "image": "assets/cards/pgo/50.webp",
+    "imageSmall": "assets/cards/pgo/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can't attack."
+      },
+      {
+        "name": "Draconic Star",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 12 cards of your deck and attach any number of Water or Lightning Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/50.webp",
+    "etchMap": "assets/foil/maps/pgo/50-etch.webp",
+    "tcgplayerId": 276964,
+    "market": 3.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-50/large"
+  },
+  {
+    "id": "pgo-51",
+    "name": "Chansey",
+    "number": "51",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "ryoma uratsuka",
+    "flavorText": "The egg Chansey carries is not only delicious but also packed with nutrition. It's used as a high-class cooking ingredient.",
+    "image": "assets/cards/pgo/51.webp",
+    "imageSmall": "assets/cards/pgo/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Delicious Egg",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 276965,
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-51/large"
+  },
+  {
+    "id": "pgo-52",
+    "name": "Blissey",
+    "number": "52",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "200",
+    "artist": "Teeziro",
+    "flavorText": "Whenever a Blissey finds a weakened Pokémon, it will share its egg and offer its care until the other Pokémon is all better.",
+    "evolvesFrom": "Chansey",
+    "image": "assets/cards/pgo/52.webp",
+    "imageSmall": "assets/cards/pgo/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Enriching Egg",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal all damage from 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Zen Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/52.webp",
+    "tcgplayerId": 276967,
+    "market": 0.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-52/large"
+  },
+  {
+    "id": "pgo-53",
+    "name": "Ditto",
+    "number": "53",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Misa Tsutsui",
+    "flavorText": "It can reconstitute its entire cellular structure to change into what it sees, but it returns to normal when it relaxes.",
+    "image": "assets/cards/pgo/53.webp",
+    "imageSmall": "assets/cards/pgo/53-sm.webp",
+    "abilities": [
+      {
+        "name": "Sudden Transformation",
+        "text": "This Pokémon can use the attacks of any Basic Pokémon in your discard pile, except for Pokémon with a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes). (You still need the necessary Energy to use each attack.)",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/53.webp",
+    "tcgplayerId": 276971,
+    "market": 5.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-53/large"
+  },
+  {
+    "id": "pgo-54",
+    "name": "Eevee",
+    "number": "54",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "N-DESIGN Inc.",
+    "flavorText": "It has the ability to alter the composition of its body to suit its surrounding environment.",
+    "image": "assets/cards/pgo/54.webp",
+    "imageSmall": "assets/cards/pgo/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Whiny Voice",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 276973,
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-54/large"
+  },
+  {
+    "id": "pgo-55",
+    "name": "Snorlax",
+    "number": "55",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "N-DESIGN Inc.",
+    "flavorText": "It is not satisfied unless it eats over 880 pounds of food every day. When it is done eating, it goes promptly to sleep.",
+    "image": "assets/cards/pgo/55.webp",
+    "imageSmall": "assets/cards/pgo/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Collapse",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Block",
+        "text": "As long as this Pokémon is in the Active Spot, your opponent's Active Pokémon can't retreat.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/55.webp",
+    "tcgplayerId": 276974,
+    "market": 1.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-55/large"
+  },
+  {
+    "id": "pgo-56",
+    "name": "Aipom",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "It searches for prey from the tops of trees. When it spots its favorite food, Bounsweet, Aipom gets excited and pounces.",
+    "image": "assets/cards/pgo/56.webp",
+    "imageSmall": "assets/cards/pgo/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Bustle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      },
+      {
+        "name": "Slap",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 276975,
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-56/large"
+  },
+  {
+    "id": "pgo-57",
+    "name": "Ambipom",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Scav",
+    "flavorText": "It uses its tails for everything. If it wraps both of its tails around you and gives you a squeeze, that's proof it really likes you.",
+    "evolvesFrom": "Aipom",
+    "image": "assets/cards/pgo/57.webp",
+    "imageSmall": "assets/cards/pgo/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Full Tilt Fling",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Primate Dexterity",
+        "text": "If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.",
+        "type": "Ability"
+      }
+    ],
+    "tcgplayerId": 276978,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-57/large"
+  },
+  {
+    "id": "pgo-58",
+    "name": "Slaking V",
+    "number": "58",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "230",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/pgo/58.webp",
+    "imageSmall": "assets/cards/pgo/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Heavy Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "260",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Kinda Lazy",
+        "text": "If you have exactly 2, 4, or 6 Prize cards remaining, this Pokémon can't attack.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/58.webp",
+    "tcgplayerId": 276980,
+    "market": 0.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-58/large"
+  },
+  {
+    "id": "pgo-59",
+    "name": "Bidoof",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It constantly gnaws on logs and rocks to whittle down its front teeth. It nests alongside water.",
+    "image": "assets/cards/pgo/59.webp",
+    "imageSmall": "assets/cards/pgo/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This Pokémon also does 10 damage to itself."
+      }
+    ],
+    "tcgplayerId": 276982,
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-59/large"
+  },
+  {
+    "id": "pgo-60",
+    "name": "Bibarel",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "KIYOTAKA OSHIYAMA",
+    "flavorText": "It makes its nest by damming streams with bark and mud. It is known as an industrious worker.",
+    "evolvesFrom": "Bidoof",
+    "image": "assets/cards/pgo/60.webp",
+    "imageSmall": "assets/cards/pgo/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Reassuring Dam",
+        "text": "As long as this Pokémon is on your Bench, cards in your deck can't be discarded by effects of your opponent's attacks, Abilities, Item cards, or Supporter cards.",
+        "type": "Ability"
+      }
+    ],
+    "tcgplayerId": 276983,
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-60/large"
+  },
+  {
+    "id": "pgo-61",
+    "name": "Pidove",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "N-DESIGN Inc.",
+    "flavorText": "Where people go, these Pokémon follow. If you're scattering food for them, be careful— several hundred of them can gather at once.",
+    "image": "assets/cards/pgo/61.webp",
+    "imageSmall": "assets/cards/pgo/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 20 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Flap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 276985,
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-61/large"
+  },
+  {
+    "id": "pgo-62",
+    "name": "Tranquill",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "0313",
+    "flavorText": "It can fly moderately quickly. No matter how far it travels, it can always find its way back to its master and its nest.",
+    "evolvesFrom": "Pidove",
+    "image": "assets/cards/pgo/62.webp",
+    "imageSmall": "assets/cards/pgo/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Aerial Ace",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      },
+      {
+        "name": "Flap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "tcgplayerId": 276988,
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-62/large"
+  },
+  {
+    "id": "pgo-63",
+    "name": "Unfezant",
+    "number": "63",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "140",
+    "artist": "GIDORA",
+    "flavorText": "Unfezant are exceptional fliers. The females are known for their stamina, while the males outclass them in terms of speed.",
+    "evolvesFrom": "Tranquill",
+    "image": "assets/cards/pgo/63.webp",
+    "imageSmall": "assets/cards/pgo/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Hurricane Wing",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70×",
+        "text": "Flip 4 coins. This attack does 70 damage for each heads."
+      }
+    ],
+    "tcgplayerId": 276989,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-63/large"
+  },
+  {
+    "id": "pgo-64",
+    "name": "Blanche",
+    "number": "64",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Anesaki Dynamic",
+    "image": "assets/cards/pgo/64.webp",
+    "imageSmall": "assets/cards/pgo/64-sm.webp",
+    "tcgplayerId": 276991,
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-64/large"
+  },
+  {
+    "id": "pgo-65",
+    "name": "Candela",
+    "number": "65",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ryuta Fuse",
+    "image": "assets/cards/pgo/65.webp",
+    "imageSmall": "assets/cards/pgo/65-sm.webp",
+    "tcgplayerId": 276992,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-65/large"
+  },
+  {
+    "id": "pgo-66",
+    "name": "Egg Incubator",
+    "number": "66",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "sadaji",
+    "image": "assets/cards/pgo/66.webp",
+    "imageSmall": "assets/cards/pgo/66-sm.webp",
+    "tcgplayerId": 276994,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-66/large"
+  },
+  {
+    "id": "pgo-67",
+    "name": "Lure Module",
+    "number": "67",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "ORBITALLINK Inc.",
+    "image": "assets/cards/pgo/67.webp",
+    "imageSmall": "assets/cards/pgo/67-sm.webp",
+    "tcgplayerId": 276995,
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-67/large"
+  },
+  {
+    "id": "pgo-68",
+    "name": "PokéStop",
+    "number": "68",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "assets/cards/pgo/68.webp",
+    "imageSmall": "assets/cards/pgo/68-sm.webp",
+    "tcgplayerId": 276996,
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-68/large"
+  },
+  {
+    "id": "pgo-69",
+    "name": "Rare Candy",
+    "number": "69",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/pgo/69.webp",
+    "imageSmall": "assets/cards/pgo/69-sm.webp",
+    "tcgplayerId": 276997,
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-69/large"
+  },
+  {
+    "id": "pgo-70",
+    "name": "Spark",
+    "number": "70",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/pgo/70.webp",
+    "imageSmall": "assets/cards/pgo/70-sm.webp",
+    "tcgplayerId": 276998,
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-70/large"
+  },
+  {
+    "id": "pgo-71",
+    "name": "Alolan Exeggutor V",
+    "number": "71",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "240",
+    "artist": "MUGENUP",
+    "image": "assets/cards/pgo/71.webp",
+    "imageSmall": "assets/cards/pgo/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Growing Tall",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for up to 5 Grass Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck."
+      },
+      {
+        "name": "Head Swing",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon for each Grass Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/71.webp",
+    "etchMap": "assets/foil/maps/pgo/71-etch.webp",
+    "tcgplayerId": 277000,
+    "market": 2.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-71/large"
+  },
+  {
+    "id": "pgo-72",
+    "name": "Mewtwo V",
+    "number": "72",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "220",
+    "artist": "N-DESIGN Inc.",
+    "image": "assets/cards/pgo/72.webp",
+    "imageSmall": "assets/cards/pgo/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Transfer Break",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/72.webp",
+    "etchMap": "assets/foil/maps/pgo/72-etch.webp",
+    "tcgplayerId": 274470,
+    "market": 57.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-72/large"
+  },
+  {
+    "id": "pgo-73",
+    "name": "Conkeldurr V",
+    "number": "73",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "230",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/pgo/73.webp",
+    "imageSmall": "assets/cards/pgo/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Counter",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon was damaged by an attack during your opponent's last turn, this attack does that much more damage."
+      },
+      {
+        "name": "Dynamic Punch",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "Flip a coin. If heads, this attack does 90 more damage, and your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/73.webp",
+    "etchMap": "assets/foil/maps/pgo/73-etch.webp",
+    "tcgplayerId": 277001,
+    "market": 1.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-73/large"
+  },
+  {
+    "id": "pgo-74",
+    "name": "Conkeldurr V",
+    "number": "74",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "230",
+    "artist": "N-DESIGN Inc.",
+    "image": "assets/cards/pgo/74.webp",
+    "imageSmall": "assets/cards/pgo/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Counter",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon was damaged by an attack during your opponent's last turn, this attack does that much more damage."
+      },
+      {
+        "name": "Dynamic Punch",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "Flip a coin. If heads, this attack does 90 more damage, and your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/74.webp",
+    "etchMap": "assets/foil/maps/pgo/74-etch.webp",
+    "tcgplayerId": 277004,
+    "market": 4.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-74/large"
+  },
+  {
+    "id": "pgo-75",
+    "name": "Melmetal V",
+    "number": "75",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "sadaji",
+    "image": "assets/cards/pgo/75.webp",
+    "imageSmall": "assets/cards/pgo/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Arm Charge",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "50",
+        "text": "You may attach a Metal Energy card from your hand to this Pokémon."
+      },
+      {
+        "name": "Mega Punch",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/75.webp",
+    "etchMap": "assets/foil/maps/pgo/75-etch.webp",
+    "tcgplayerId": 277005,
+    "market": 1.57,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-75/large"
+  },
+  {
+    "id": "pgo-76",
+    "name": "Dragonite V",
+    "number": "76",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/pgo/76.webp",
+    "imageSmall": "assets/cards/pgo/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Beam",
+        "cost": [
+          "Water",
+          "Lightning"
+        ],
+        "damage": "60",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Buster Tail",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/76.webp",
+    "etchMap": "assets/foil/maps/pgo/76-etch.webp",
+    "tcgplayerId": 277006,
+    "market": 15.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-76/large"
+  },
+  {
+    "id": "pgo-77",
+    "name": "Slaking V",
+    "number": "77",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "230",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/pgo/77.webp",
+    "imageSmall": "assets/cards/pgo/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Heavy Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "260",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Kinda Lazy",
+        "text": "If you have exactly 2, 4, or 6 Prize cards remaining, this Pokémon can't attack.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/77.webp",
+    "etchMap": "assets/foil/maps/pgo/77-etch.webp",
+    "tcgplayerId": 277008,
+    "market": 1.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-77/large"
+  },
+  {
+    "id": "pgo-78",
+    "name": "Professor's Research",
+    "number": "78",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yusuke Kozaki",
+    "flavorText": "Professor Willow",
+    "image": "assets/cards/pgo/78.webp",
+    "imageSmall": "assets/cards/pgo/78-sm.webp",
+    "foilMap": "assets/foil/maps/pgo/78.webp",
+    "etchMap": "assets/foil/maps/pgo/78-etch.webp",
+    "tcgplayerId": 277009,
+    "market": 2.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-78/large"
+  },
+  {
+    "id": "pgo-79",
+    "name": "Mewtwo VSTAR",
+    "number": "79",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "280",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Mewtwo V",
+    "image": "assets/cards/pgo/79.webp",
+    "imageSmall": "assets/cards/pgo/79-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Purge",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "90×",
+        "text": "Discard up to 3 Psychic Energy from your Pokémon. This attack does 90 damage for each card you discarded in this way."
+      },
+      {
+        "name": "Star Raid",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 120 damage to each of your opponent's Pokémon V. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/79.webp",
+    "etchMap": "assets/foil/maps/pgo/79-etch.webp",
+    "tcgplayerId": 277011,
+    "market": 54.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-79/large"
+  },
+  {
+    "id": "pgo-80",
+    "name": "Melmetal VMAX",
+    "number": "80",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "330",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Melmetal V",
+    "image": "assets/cards/pgo/80.webp",
+    "imageSmall": "assets/cards/pgo/80-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Juggernaut",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "160+",
+        "text": "This attack does 60 more damage for each extra Metal Energy attached to this Pokémon (in addition to this attack's cost). You can't add more than 120 damage in this way."
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/80.webp",
+    "etchMap": "assets/foil/maps/pgo/80-etch.webp",
+    "tcgplayerId": 277013,
+    "market": 12.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-80/large"
+  },
+  {
+    "id": "pgo-81",
+    "name": "Dragonite VSTAR",
+    "number": "81",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "280",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Dragonite V",
+    "image": "assets/cards/pgo/81.webp",
+    "imageSmall": "assets/cards/pgo/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can't attack."
+      },
+      {
+        "name": "Draconic Star",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 12 cards of your deck and attach any number of Water or Lightning Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/81.webp",
+    "etchMap": "assets/foil/maps/pgo/81-etch.webp",
+    "tcgplayerId": 277014,
+    "market": 47.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-81/large"
+  },
+  {
+    "id": "pgo-82",
+    "name": "Blanche",
+    "number": "82",
+    "rarity": "Rare Rainbow",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Anesaki Dynamic",
+    "image": "assets/cards/pgo/82.webp",
+    "imageSmall": "assets/cards/pgo/82-sm.webp",
+    "foilMap": "assets/foil/maps/pgo/82.webp",
+    "etchMap": "assets/foil/maps/pgo/82-etch.webp",
+    "tcgplayerId": 277015,
+    "market": 8.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-82/large"
+  },
+  {
+    "id": "pgo-83",
+    "name": "Candela",
+    "number": "83",
+    "rarity": "Rare Rainbow",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ryuta Fuse",
+    "image": "assets/cards/pgo/83.webp",
+    "imageSmall": "assets/cards/pgo/83-sm.webp",
+    "foilMap": "assets/foil/maps/pgo/83.webp",
+    "etchMap": "assets/foil/maps/pgo/83-etch.webp",
+    "tcgplayerId": 277017,
+    "market": 7.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-83/large"
+  },
+  {
+    "id": "pgo-84",
+    "name": "Professor's Research",
+    "number": "84",
+    "rarity": "Rare Rainbow",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yusuke Kozaki",
+    "flavorText": "Professor Willow",
+    "image": "assets/cards/pgo/84.webp",
+    "imageSmall": "assets/cards/pgo/84-sm.webp",
+    "foilMap": "assets/foil/maps/pgo/84.webp",
+    "etchMap": "assets/foil/maps/pgo/84-etch.webp",
+    "tcgplayerId": 277018,
+    "market": 9.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-84/large"
+  },
+  {
+    "id": "pgo-85",
+    "name": "Spark",
+    "number": "85",
+    "rarity": "Rare Rainbow",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/pgo/85.webp",
+    "imageSmall": "assets/cards/pgo/85-sm.webp",
+    "foilMap": "assets/foil/maps/pgo/85.webp",
+    "etchMap": "assets/foil/maps/pgo/85-etch.webp",
+    "tcgplayerId": 277020,
+    "market": 8.98,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-85/large"
+  },
+  {
+    "id": "pgo-86",
+    "name": "Mewtwo VSTAR",
+    "number": "86",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "280",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Mewtwo V",
+    "image": "assets/cards/pgo/86.webp",
+    "imageSmall": "assets/cards/pgo/86-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Purge",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "90×",
+        "text": "Discard up to 3 Psychic Energy from your Pokémon. This attack does 90 damage for each card you discarded in this way."
+      },
+      {
+        "name": "Star Raid",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 120 damage to each of your opponent's Pokémon V. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/pgo/86.webp",
+    "etchMap": "assets/foil/maps/pgo/86-etch.webp",
+    "tcgplayerId": 277024,
+    "market": 35.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-86/large"
+  },
+  {
+    "id": "pgo-87",
+    "name": "Egg Incubator",
+    "number": "87",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "sadaji",
+    "image": "assets/cards/pgo/87.webp",
+    "imageSmall": "assets/cards/pgo/87-sm.webp",
+    "foilMap": "assets/foil/maps/pgo/87.webp",
+    "etchMap": "assets/foil/maps/pgo/87-etch.webp",
+    "tcgplayerId": 277025,
+    "market": 3.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-87/large"
+  },
+  {
+    "id": "pgo-88",
+    "name": "Lure Module",
+    "number": "88",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "ORBITALLINK Inc.",
+    "image": "assets/cards/pgo/88.webp",
+    "imageSmall": "assets/cards/pgo/88-sm.webp",
+    "foilMap": "assets/foil/maps/pgo/88.webp",
+    "etchMap": "assets/foil/maps/pgo/88-etch.webp",
+    "tcgplayerId": 277026,
+    "market": 2.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/pgo-88/large"
+  }
+]

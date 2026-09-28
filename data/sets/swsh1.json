@@ -1,0 +1,27 @@
+{
+  "id": "swsh1",
+  "name": "Sword & Shield",
+  "series": "sword-shield",
+  "slug": "sword-shield",
+  "scrydexId": "swsh1",
+  "era": "swsh",
+  "artSlug": "sword-and-shield",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2585,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

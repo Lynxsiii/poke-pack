@@ -1,0 +1,27 @@
+{
+  "id": "swsh35",
+  "name": "Champion's Path",
+  "series": "sword-shield",
+  "slug": "champions-path",
+  "scrydexId": "swsh35",
+  "era": "swsh",
+  "artSlug": "champions-path",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2685,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

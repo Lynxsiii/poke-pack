@@ -1,0 +1,27 @@
+{
+  "id": "swsh3",
+  "name": "Darkness Ablaze",
+  "series": "sword-shield",
+  "slug": "darkness-ablaze",
+  "scrydexId": "swsh3",
+  "era": "swsh",
+  "artSlug": "darkness-ablaze",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2675,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}
