@@ -58,6 +58,10 @@ export function pixelCosmos(card) {
  */
 const FULL_ART = new Set(["Illustration Rare", "Special Illustration Rare", "Ultra Rare", "Hyper Rare", "Mega Hyper Rare"]);
 const FULL_MAP = "assets/foil/maps/full.webp";
+// A Special Illustration Rare is engraved edge to edge (css/holo/celebration.css
+// cuts its foil to the etch and lights the lines). Where TCG Live has no etch
+// map, a drawn engraving tile stands in, seeded per card.
+const ETCH_TILE = "assets/foil/sir-etch.webp";
 
 /** A stable 0..1 pair per card, so tiled glitter never lines up the same way twice. */
 function seed(id) {
@@ -134,6 +138,7 @@ export function foilExtras(card, url, reverseKind) {
     add("", "--foil-map-b", card.foilMapB);
   }
   if (card.etchMap) add("has-etch-map", "--etch-map", card.etchMap);
+  else if (card.rarity === "Special Illustration Rare") add("has-etch-tile", "--etch-tile", ETCH_TILE);
   if (card.etchMapH && card.etchMapV) {
     add("has-etch-bins", "--etch-map-h", card.etchMapH);
     add("", "--etch-map-v", card.etchMapV);
@@ -155,7 +160,7 @@ export function foilExtras(card, url, reverseKind) {
   // the Double Rare streaks (css/holo/sv-double-rare.css).
   if (/^[zr]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
   // Tiled or galaxy textures start somewhere different on every card.
-  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity)) {
+  if (cure || ["Classic Collection", "Cosmos", "Confetti", "Special Illustration Rare"].includes(card.rarity)) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }
