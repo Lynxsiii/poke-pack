@@ -22,8 +22,7 @@ choice, not an accident — the effects were worth it.
 | The pointer radial, diagonal streak and color-dodge of the Scarlet & Violet reverse holo in `css/holo/sv-reverse.css`, following the reverse-holo card | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
 | Layer recipes in `css/holo/swsh.css` (the Sword & Shield finishes: Rare Holo, Pokémon V, VMAX and VSTAR, Trainer Gallery, Rainbow and Amazing Rare, Radiant Rare, Shiny Vault), following the regular-holo, v-regular, v-full-art, vmax, rainbow-alt, radiant-holo and shiny-v cards | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-css](https://github.com/simeydotme/pokemon-cards-css) | GPL-3.0 |
 | Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
-| Archivo font in `assets/fonts/archivo-*.woff2` | Omnibus-Type, via Google Fonts | SIL Open Font License 1.1 |
-| IBM Plex Mono font in `assets/fonts/plex-mono-*.woff2` | IBM, via Google Fonts | SIL Open Font License 1.1 |
+| Bricolage Grotesque font in `assets/fonts/bricolage-*.woff2` | Mathieu Triay (Atelier Triay), via Google Fonts | SIL Open Font License 1.1 |
 
 `css/holo/realism.css` follows upstream's full-art, rainbow-alt and glare layers most closely.
 

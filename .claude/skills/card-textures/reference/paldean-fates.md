@@ -69,13 +69,19 @@ scan is white where the silver is, so the silver has to darken it: `.foil`
 multiplies onto the card.
 
 - `.foil` (rest and held), bottom up: a silver radial centred on the
-  pointer (97% under the lamp, 88% at a quarter, `--pf-lo` 74% far off,
-  which is what reads as a mirror); the sun-pillar bands, pastel and
-  translucent (`--pf-a` 0.62, so over the silver they come out as tinted
-  silver, not paint; `--pf-w` 9% every 30%); the etch map soft-lit on top,
-  which at card size is grain, not lines. Rest: saturate 0.6, opacity 0.85.
-  The SUR (`.foil-ultra.foil-shiny`) widens the bands to 13% every 26%,
-  `--pf-a` 0.85, `--pf-lo` 68%.
+  pointer (97% under the lamp, 92% at a quarter, `--pf-lo` 85% far off:
+  a mirror reads from the hot spot, not from a dark far side); the
+  sun-pillar bands, pastel and translucent (`--pf-a` 0.62, so over the
+  silver they come out as tinted silver, not paint; `--pf-w` 9% every
+  30%); the etch map soft-lit on top, which at card size is grain, not
+  lines. Rest: saturate 0.6, opacity 0.85. The SUR (`.foil-ultra.foil-shiny`)
+  widens the bands to 13% every 26%, `--pf-a` 0.85, `--pf-lo` 81%.
+  Until 2026-09-28 the far side was 74% (SUR 68%) under a glare that went
+  to 30% black: with a thumb low on the text box, where a phone is held,
+  the whole art window multiplied down to grey while the glare's white
+  lifted the matte text box, and Murkrow 181 came out washed and muddy in
+  the reveal (Noah). The photos show the silver bright wherever the lamp
+  is not.
 - `::before` (held): the same bands, saturated, screened at `--pf-screen`
   (0.38, SUR 0.5), so a band that crosses the Pokémon's ink lightens it
   with colour.
@@ -94,8 +100,10 @@ multiplies onto the card.
   whorl (`--pf-q: mod(calc(var(--pf-p) + 0.5), 1)`), the same difference
   trick multiplied in at 0.45: the dark half of the same ripples. Browsers
   without `mod()` drop the rule and lose only the dark half.
-- `.glare`: a white overlay highlight, 0.75 under the lamp, a shade darker
-  away.
+- `.glare`: a white overlay highlight, 0.55 under the lamp, 0.18 at a
+  quarter, 12% black far off, at 0.7 (was 0.75 / 0.25 / 30% black at 0.8:
+  the white doubled the matte ink's darks where the thumb sat and the
+  black dimmed the art).
 
 Stamped shinies (svp072-stamp, svp073-stamp) cut the Paldean Fates logo out
 of the map: [promos.md](promos.md).

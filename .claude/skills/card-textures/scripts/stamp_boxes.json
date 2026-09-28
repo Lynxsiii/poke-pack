@@ -1,5 +1,5 @@
 {
-  "_": "Stamp boxes [x, y, w, h] on the 600x838 scan (a fifth entry \"ellipse\" makes it a round badge) for prints whose two scans come from different sources; the stamp's shape is refined from the difference inside the box, and the result seeds a template for the rest of the set.",
+  "_": "Stamp boxes [x, y, w, h] on the 600x838 scan (a fifth entry \"ellipse\" makes it a round badge) for prints whose two scans come from different sources; the stamp's shape is refined from the difference inside the box, and the result seeds a template for the rest of the set. A list of boxes is knocked out as their union; a plain id (no stamp suffix) with a box is a stamped print whose only copy is the stamped one.",
   "sv8pt5-34-stamp": [
     10,
     303,
@@ -103,5 +103,101 @@
     658,
     200,
     46
+  ],
+  "svp-svp191": [
+    [
+      456,
+      317,
+      86,
+      38
+    ],
+    [
+      402,
+      349,
+      196,
+      44
+    ],
+    [
+      434,
+      390,
+      132,
+      13
+    ]
+  ],
+  "svp-svp192": [
+    [
+      456,
+      317,
+      86,
+      38
+    ],
+    [
+      402,
+      349,
+      196,
+      44
+    ],
+    [
+      434,
+      390,
+      132,
+      13
+    ]
+  ],
+  "sv4-svp057": [
+    [
+      436,
+      335,
+      104,
+      19
+    ],
+    [
+      386,
+      352,
+      204,
+      38
+    ]
+  ],
+  "sv4-svp058": [
+    [
+      436,
+      335,
+      104,
+      19
+    ],
+    [
+      386,
+      352,
+      204,
+      38
+    ]
+  ],
+  "sv4-svp059": [
+    [
+      436,
+      335,
+      104,
+      19
+    ],
+    [
+      386,
+      352,
+      204,
+      38
+    ]
+  ],
+  "sv4-svp060": [
+    [
+      436,
+      335,
+      104,
+      19
+    ],
+    [
+      386,
+      352,
+      204,
+      38
+    ]
   ]
 }
