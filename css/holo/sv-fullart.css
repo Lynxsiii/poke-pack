@@ -223,12 +223,31 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.fo
   background-size: 240% 240%;
   background-position: var(--background-x) var(--background-y);
   background-blend-mode: normal;
-  filter: brightness(0.5) contrast(1.5) saturate(0.45);
+  filter: brightness(0.62) contrast(1.5) saturate(0.45);
   mix-blend-mode: color-dodge;
 }
 /* Resting, gold stays gold. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic):not(.lit):not(.settling) .foil {
-  filter: brightness(0.55) contrast(1.5) saturate(0.3);
+  filter: brightness(0.6) contrast(1.5) saturate(0.3);
+}
+/* The foil cut to the etch, as the SIR's (celebration.css): art, Live map,
+   then the etch with a 40% floor between the lines, so the sheen and the
+   glitter follow the engraving and the relief shows at rest as well as
+   under the light. Gold ink is bright, so white lines alone (the glare2
+   below) read faint on it; the cut is what makes the texture visible
+   (Noah, Iron Crown ex 216/162, 2026-09-28). */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:is(.has-etch-map, .has-etch-tile):not(.foil-tera):not(.foil-classic) .foil {
+  --fa-floor: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  -webkit-mask-image: var(--art), var(--foil-map), var(--fa-etch), var(--fa-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--fa-etch), var(--fa-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, var(--fa-etch-size), 100% 100%;
+  mask-size: contain, 100% 100%, var(--fa-etch-size), 100% 100%;
+  -webkit-mask-position: center, center, var(--fa-etch-pos), center;
+  mask-position: center, center, var(--fa-etch-pos), center;
+  -webkit-mask-repeat: no-repeat, no-repeat, var(--fa-etch-repeat), no-repeat;
+  mask-repeat: no-repeat, no-repeat, var(--fa-etch-repeat), no-repeat;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::before {
   background-image:

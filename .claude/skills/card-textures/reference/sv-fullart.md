@@ -184,6 +184,19 @@ fallback-map ME, Black Bolt and White Flare prints).
   Futuristic), all with `&proof=off&maps=1&w=300&poses=rest,30:25,70:60`
   and `--width 700 --scale 2`.
 
+### Gold relief (2026-09-28)
+
+Noah asked for "a little bit of texture" on the golds (Iron Crown ex
+216/162, Temporal Forces). White lit lines alone read faint on bright gold
+ink, so the gold `.foil` is now cut to the etch like the SIR's (art, map,
+etch with a 40% floor; `--fa-etch` picks the Live map or the tile), with
+brightness 0.62 lit and 0.6 at rest to pay for the cut. The sheen and the
+two glitter tiles then follow the engraving, and the relief shows at rest
+as well. The UR light pool and the gold glare2 are unchanged. ME Mega
+Hyper Rares (no Live etch) come along through `has-etch-tile`. Photos:
+Paldean Fates' Koraidon ex macro (glitter dots over a fine gold line
+texture) and Chien-Pao ex (crinkle texture under the glitter).
+
 ## Verify
 
 ```
