@@ -680,6 +680,7 @@ body.no-motion .home-shelf-pack img, body.no-motion .home-set-pack { transition:
   .home-words {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     grid-area: words;
     min-width: 0;
     container-type: inline-size;
@@ -698,7 +699,7 @@ body.no-motion .home-shelf-pack img, body.no-motion .home-set-pack { transition:
     align-self: stretch;
   }
   .home-meta { margin-top: 14px; }
-  .home-pitch { margin-top: auto; padding-top: 28px; }
+  .home-pitch { margin-top: 40px; }
   .home-cta { flex-direction: row; align-items: center; gap: 22px; margin-top: 22px; }
   .home-cta .solid { min-height: 52px; padding-inline: 28px; }
   .home-cta .text-btn { min-height: 0; }

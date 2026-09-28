@@ -68,7 +68,3 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
   .showcase-row { grid-template-columns: repeat(3,minmax(0,1fr)); }
 }
 
-@media(max-width: 860px) {
-  .home-stage { overflow: visible; margin-inline: 0; padding-inline: 18px; }
-  .home-stage-packs { overflow: clip; inset-inline: -12px; }
-}

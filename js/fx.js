@@ -175,8 +175,25 @@ function restWhenIdle() {
   }, 4000);
 }
 
+// body.at-top while the page is scrolled to its start (the phone docks hide
+// there on the home page so they never cover the rip button).
+function trackTop() {
+  let queued = false;
+  const paint = () => {
+    queued = false;
+    document.body.classList.toggle("at-top", window.scrollY < 48);
+  };
+  paint();
+  window.addEventListener("scroll", () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(paint);
+  }, { passive: true });
+}
+
 export function initFx() {
   document.documentElement.classList.add("fx-ready");
+  trackTop();
   if (!reduced()) startReveals();
   startParallax();
   pauseOffscreen();

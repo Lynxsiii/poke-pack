@@ -277,8 +277,11 @@ body::before {
   width: min(1200px, calc(100% - 2 * var(--gutter)));
   padding: 36px 0 96px;
 }
-/* A block that runs edge to edge on a phone (stages, shelves). */
-.bleed { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+/* A block that runs edge to edge on a phone (stages, shelves); a normal block
+   above 720px. */
+@media (max-width: 720px) {
+  .bleed { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+}
 
 /* Every view opens the same way: a big title, one quiet line under it. */
 .section-head { margin: 0 0 20px; align-items: end; gap: 16px; }
@@ -420,7 +423,15 @@ body::before {
 .chip { border-radius: 999px; font-weight: 650; font-size: 11px; }
 .chip.new { background: var(--gold); color: #1a1408; }
 .toast { bottom: calc(22px + var(--tabbar)); }
-.radio, .friends { bottom: calc(18px + var(--tabbar)); }
+.radio, .friends { bottom: calc(18px + var(--tabbar)); transition: opacity 0.25s ease, transform 0.3s var(--ease-out); }
+/* On a phone the docks would sit on the two ends of the home page's full-width
+   rip button at the fold, so they stay out of the way until the page scrolls
+   (js/fx.js keeps body.at-top current). */
+@media (max-width: 720px) {
+  body.on-home.at-top .friends:not(.is-open), body.on-home.at-top .radio:not(.is-open) {
+    opacity: 0; pointer-events: none; transform: translateY(10px);
+  }
+}
 .radio-peek, .friends-peek { border-radius: 50%; border-color: var(--line-2); }
 
 /* ---- Footer -------------------------------------------------------------- */
