@@ -1449,7 +1449,7 @@ function renderBulkSets() {
     .map((block) => {
       const on = block.era === bulkEra;
       const years = eraYears(block.sets) || eraCountLabel(block);
-      return `<button type="button" class="seg-btn bulk-era${on ? " on" : ""}" role="tab"
+      return `<button type="button" class="bulk-era${on ? " on" : ""}" role="tab"
         aria-selected="${on}" data-era="${esc(block.era)}" title="${esc(years)}">${esc(eraTitle(block.era))}</button>`;
     })
     .join("");
@@ -1460,26 +1460,33 @@ function renderBulkSets() {
       if (!live) {
         return `<button type="button" class="bulk-set is-queued" data-soon="${esc(set.name)}"
           title="${esc(set.name)} is queued (${esc(shortReleased(set))})">
-          <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" width="30" height="30" loading="lazy" decoding="async" />
-          <span class="bulk-set-copy"><b>${esc(set.name)}</b><small>Queued</small></span>
+          <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
+          <span class="bulk-set-name">${esc(set.name)}</span>
+          <span class="bulk-set-foot"><span class="bulk-set-count">Queued</span></span>
         </button>`;
       }
       const on = set.id === liveSet.id;
+      const owned = ownedInSet(set);
+      const pct = set.totalCount ? Math.min(100, (owned / set.totalCount) * 100) : 0;
       return `<button type="button" class="bulk-set${on ? " active" : ""}" data-set="${esc(set.id)}"
         aria-pressed="${on}" ${ripping ? "disabled" : ""}>
-        <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" width="30" height="30" loading="lazy" decoding="async" />
-        <span class="bulk-set-copy"><b>${esc(set.name)}</b><small>${ownedInSet(set)}/${set.totalCount}</small></span>
+        <img class="bulk-set-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
+        <span class="bulk-set-name">${esc(set.name)}</span>
+        <span class="bulk-set-foot">
+          <span class="bulk-set-count">${owned}/${set.totalCount}</span>
+          <span class="bulk-set-bar" aria-hidden="true"><i style="width:${pct.toFixed(1)}%"></i></span>
+        </span>
       </button>`;
     })
     .join("");
   els.bulkSets.innerHTML = `
-    <div class="seg bulk-eras" role="tablist" aria-label="Eras">${eraTabs}</div>
-    <div class="bulk-set-row" aria-label="Sets">${setBtns || `<p class="bulk-era-empty">No sets in this era yet.</p>`}</div>`;
+    <div class="bulk-eras" role="tablist" aria-label="Eras">${eraTabs}</div>
+    <div class="bulk-shelf" aria-label="Sets">${setBtns || `<p class="bulk-era-empty">No sets in this era yet.</p>`}</div>`;
   // Both rows scroll sideways on a phone: bring the chosen era and set into view
   // (horizontally only, so the page itself does not jump).
   for (const [row, on] of [
     [".bulk-eras", ".bulk-era.on"],
-    [".bulk-set-row", ".bulk-set.active"],
+    [".bulk-shelf", ".bulk-set.active"],
   ]) {
     const track = els.bulkSets.querySelector(row);
     const chip = track?.querySelector(on);
