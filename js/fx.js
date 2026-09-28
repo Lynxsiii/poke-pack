@@ -127,9 +127,58 @@ function pauseOffscreen() {
   loops.forEach((el) => io.observe(el));
 }
 
+// Every endless loop holds still while the window is in the background or
+// nobody has touched the page for a while, so a tab left open costs nothing:
+// a looping effect makes the browser draw every frame, forever, even when the
+// person is using another app. Any input brings them back at once. Only
+// infinite animations are held, so nothing waiting on an animation's end is.
+const REST_AFTER_MS = 20000;
+
+function restWhenIdle() {
+  if (!document.getAnimations) return;
+  const held = new Set();
+  let resting = false;
+  let lastInput = performance.now();
+
+  const hold = () => {
+    for (const anim of document.getAnimations()) {
+      const el = anim.effect?.target;
+      if (!el || held.has(el) || anim.playState !== "running") continue;
+      if (anim.effect.getTiming?.().iterations !== Infinity) continue;
+      el.classList.add("fx-held");
+      held.add(el);
+    }
+  };
+  const rest = () => {
+    resting = true;
+    hold();
+  };
+  const wake = () => {
+    lastInput = performance.now();
+    if (!resting) return;
+    resting = false;
+    held.forEach((el) => el.classList.remove("fx-held"));
+    held.clear();
+  };
+
+  for (const type of ["pointermove", "pointerdown", "keydown", "wheel", "touchstart", "scroll"]) {
+    window.addEventListener(type, wake, { capture: true, passive: true });
+  }
+  window.addEventListener("focus", wake);
+  window.addEventListener("blur", rest);
+  document.addEventListener("visibilitychange", () => (document.hidden ? rest() : wake()));
+  // A slow check, not a timer reset on every pointer move. While resting it
+  // also catches loops that a re-render started after the last sweep.
+  setInterval(() => {
+    if (resting) hold();
+    else if (performance.now() - lastInput > REST_AFTER_MS || !document.hasFocus()) rest();
+  }, 4000);
+}
+
 export function initFx() {
   document.documentElement.classList.add("fx-ready");
   if (!reduced()) startReveals();
   startParallax();
   pauseOffscreen();
+  restWhenIdle();
 }

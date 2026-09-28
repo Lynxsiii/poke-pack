@@ -693,16 +693,19 @@ h1, h2, h3 { text-wrap: balance; }
 
 /* Ambient light: two pools of the featured set's colour behind the page. It
    is painted once and left still: an animation on a fixed layer this size
-   makes every page draw a full-screen frame 60 times a second, forever. */
+   makes every page draw a full-screen frame 60 times a second, forever. The
+   layer is exactly the viewport; it used to overhang by 20vmax on every side
+   (left over from a drift animation), which made Safari hold a backing store
+   about twice the screen. The pools sit where they did on that larger box. */
 body::before {
   content: "";
   position: fixed;
-  inset: -20vmax;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(38vmax 30vmax at 78% 12%, rgb(var(--ambient) / 0.22), transparent 70%),
-    radial-gradient(34vmax 28vmax at 12% 78%, rgb(var(--ambient) / 0.12), transparent 70%);
+    radial-gradient(38vmax 30vmax at calc(78% + 11.2vmax) calc(12% - 15.2vmax), rgb(var(--ambient) / 0.22), transparent 70%),
+    radial-gradient(34vmax 28vmax at calc(12% - 15.2vmax) calc(78% + 11.2vmax), rgb(var(--ambient) / 0.12), transparent 70%);
 }
 
 /* View changes rise into place instead of just fading. */
@@ -743,7 +746,10 @@ body::before {
   background-size: 250% 100%;
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
-  animation: fx-sheen 7s ease-in-out infinite;
+  /* Two passes when the page shows, then it rests on plain ink. Text clipped
+     to a moving gradient is repainted on the main thread every frame, and
+     looping it held Safari's main thread near 4 fps on the home page. */
+  animation: fx-sheen 7s ease-in-out 2;
 }
 @keyframes fx-sheen {
   0%, 30% { background-position: 100% 0; }
@@ -891,9 +897,11 @@ body::before {
   .home-set:hover, .pack-card:hover, .sealed-card:hover { transform: none; }
 }
 
-/* Looping effects hold still while scrolled out of view (js/fx.js). */
+/* Looping effects hold still while scrolled out of view, and each endless
+   loop while the window is in the background or idle (js/fx.js). */
 .fx-paused, .fx-paused *, .fx-paused::before, .fx-paused::after,
-.fx-paused *::before, .fx-paused *::after {
+.fx-paused *::before, .fx-paused *::after,
+.fx-held, .fx-held::before, .fx-held::after {
   animation-play-state: paused !important;
 }
 
