@@ -2527,6 +2527,82 @@ const LIMITLESS_SYMBOL = {
   me55: "30C",
 };
 
+/**
+ * Set symbols come from pokesymbols.com, whose marks are drawn at 600px; the
+ * Limitless and pokemontcg.io copies are 33px wide and blur on a phone. Keyed
+ * by TCG set id (after TCG_ID_ALIAS), the value is the slug in
+ * https://pokesymbols.com/images/tcg/sets/symbols/<slug>.png. A set missing
+ * here falls back to the old sources in scripts/mirror_images.py.
+ */
+const POKESYMBOLS_SLUG = {
+  base1: "base",
+  base2: "jungle",
+  base3: "fossil",
+  base5: "team-rocket",
+  neo1: "neo-genesis",
+  ecard1: "expedition",
+  ecard2: "aquapolis",
+  ecard3: "skyridge",
+  ex1: "ruby-and-sapphire",
+  ex16: "power-keepers",
+  dp1: "diamond-and-pearl",
+  hgss1: "heartgold-soulsilver",
+  bw1: "black-and-white",
+  bw11: "legendary-treasures",
+  xy1: "xy",
+  xy12: "xy-evolutions",
+  sm1: "sun-and-moon",
+  sm12: "cosmic-eclipse",
+  swsh1: "sword-and-shield",
+  swsh2: "rebel-clash",
+  swsh3: "darkness-ablaze",
+  swsh35: "champions-path",
+  swsh4: "vivid-voltage",
+  swsh45: "shining-fates",
+  swsh5: "battle-styles",
+  swsh6: "chilling-reign",
+  swsh7: "evolving-skies",
+  cel25: "celebrations",
+  swsh8: "fusion-strike",
+  swsh9: "brilliant-stars",
+  swsh10: "astral-radiance",
+  pgo: "pokemon-go",
+  swsh11: "lost-origin",
+  swsh12: "silver-tempest",
+  swsh12pt5: "crown-zenith",
+  sv1: "scarlet-and-violet",
+  sv2: "paldea-evolved",
+  sv3: "obsidian-flames",
+  sv3pt5: "151",
+  sv4: "paradox-rift",
+  sv4pt5: "paldean-fates",
+  sv5: "temporal-forces",
+  sv6: "twilight-masquerade",
+  sv6pt5: "shrouded-fable",
+  sv7: "stellar-crown",
+  sv8: "surging-sparks",
+  sv8pt5: "prismatic-evolutions",
+  sv9: "journey-together",
+  sv10: "destined-rivals",
+  zsv10pt5: "black-bolt",
+  rsv10pt5: "white-flare",
+  svp: "_promo",
+  sve: "scarlet-and-violet-energies",
+  mcd23: "mcdonalds-collection-2023",
+  mcd24: "mcdonalds-collection-dragon-discovery-2024",
+  me1: "mega-evolution",
+  me2: "phantasmal-flames",
+  me2pt5: "ascended-heroes",
+  me3: "perfect-order",
+  me4: "chaos-rising",
+  me5: "pitch-black",
+  me55: "30th-celebration",
+};
+
+/* Bump when the symbol files are re-encoded: the host serves assets as
+   immutable for a year, so only a new URL reaches a phone that has them. */
+const SYMBOL_VERSION = 2;
+
 export function tcgSetId(set) {
   return set.tcgId || TCG_ID_ALIAS[set.id] || set.id;
 }
@@ -2543,7 +2619,7 @@ export function setIdentity(set) {
   return {
     id,
     logo: `assets/cards/sets/${id}-logo.webp`,
-    symbol: `assets/cards/sets/${id}-symbol.webp`,
+    symbol: `assets/cards/sets/${id}-symbol.webp?v=${SYMBOL_VERSION}`,
   };
 }
 

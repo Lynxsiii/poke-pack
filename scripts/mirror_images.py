@@ -417,13 +417,22 @@ def mirror_set(set_id: str, force: bool) -> tuple[int, int, int]:
     return done, failed, total_bytes
 
 
-def encode_flat(raw: bytes, path: Path, max_width: int, quality: int) -> int:
+SYMBOL_WIDTH = 192  # 24px tall at most on the page, sharp at 3x
+POKESYMBOLS = "https://pokesymbols.com/images/tcg/sets/symbols/{slug}.png"
+
+
+def encode_flat(raw: bytes, path: Path, max_width: int, quality: int, trim: bool = False) -> int:
     """Encode a logo or symbol, keeping transparency and aspect ratio.
 
     Card faces get converted to RGB, but these sit on the dark page and must
-    keep their alpha channel or they arrive in an opaque box.
+    keep their alpha channel or they arrive in an opaque box. `trim` crops to
+    the mark itself: pokesymbols.com draws every symbol on a 600px square.
     """
     img = Image.open(BytesIO(raw)).convert("RGBA")
+    if trim:
+        box = img.getchannel("A").getbbox()
+        if box:
+            img = img.crop(box)
     if img.width > max_width:
         height = round(img.height * max_width / img.width)
         img = img.resize((max_width, height), Image.LANCZOS)
@@ -446,6 +455,7 @@ def set_identities() -> list[tuple[str, str, str]]:
     alias = dict(re.findall(r'(\w+):\s*"([^"]+)"', block("TCG_ID_ALIAS")))
     scrydex = set(re.findall(r'"([^"]+)"', block("SCRYDEX_LOGO")))
     limitless = dict(re.findall(r'(\w+):\s*"([^"]+)"', block("LIMITLESS_SYMBOL")))
+    pokesymbols = dict(re.findall(r'(\w+):\s*"([^"]+)"', block("POKESYMBOLS_SLUG")))
 
     # Roadmap entries and playable sets both carry a released date; wrappers and
     # rarity groups do not, which keeps their ids out of this.
@@ -467,7 +477,15 @@ def set_identities() -> list[tuple[str, str, str]]:
         else:
             logo = f"https://images.pokemontcg.io/{set_id}/logo.png"
             symbol = f"https://images.pokemontcg.io/{set_id}/symbol.png"
+        if set_id in pokesymbols:
+            symbol = POKESYMBOLS.format(slug=pokesymbols[set_id])
         out.append((set_id, logo, symbol))
+    # Sets that are only in the slug map (an era another branch is adding) get
+    # a symbol too, so that branch can pick the file up rather than fetch its
+    # own low-resolution one.
+    for set_id, slug in pokesymbols.items():
+        if set_id not in ids:
+            out.append((set_id, "", POKESYMBOLS.format(slug=slug)))
     return out
 
 
@@ -479,8 +497,10 @@ def mirror_identity(force: bool) -> tuple[int, int, int]:
     for set_id, logo_url, symbol_url in set_identities():
         for kind, url, width, quality in (
             ("logo", logo_url, 480, 82),
-            ("symbol", symbol_url, 96, 88),
+            ("symbol", symbol_url, SYMBOL_WIDTH, 90),
         ):
+            if not url:
+                continue
             path = out_dir / f"{set_id}-{kind}.webp"
             if path.exists() and not force:
                 total += path.stat().st_size
@@ -491,11 +511,40 @@ def mirror_identity(force: bool) -> tuple[int, int, int]:
                 missing += 1
                 continue
             try:
-                total += encode_flat(raw, path, width, quality)
+                total += encode_flat(raw, path, width, quality, trim=kind == "symbol")
                 done += 1
             except OSError:
                 missing += 1
             time.sleep(0.1)
+    return done, missing, total
+
+
+def mirror_symbols(force: bool) -> tuple[int, int, int]:
+    """Only the set symbols, for a re-encode after the source or size changes."""
+    out_dir = CARD_DIR / "sets"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    done = missing = total = 0
+    for set_id, _logo_url, symbol_url in set_identities():
+        path = out_dir / f"{set_id}-symbol.webp"
+        if path.exists() and not force:
+            total += path.stat().st_size
+            done += 1
+            continue
+        raw = download(symbol_url, tries=2)
+        if raw is None:
+            print(f"  {set_id}: not available at {symbol_url}")
+            missing += 1
+            continue
+        try:
+            size = encode_flat(raw, path, SYMBOL_WIDTH, 90, trim=True)
+        except OSError:
+            missing += 1
+            continue
+        total += size
+        done += 1
+        with Image.open(path) as img:
+            print(f"  {set_id}: {img.width}x{img.height}, {size / 1024:.1f} KB")
+        time.sleep(0.1)
     return done, missing, total
 
 
@@ -531,6 +580,13 @@ def main(argv: list[str]) -> int:
     if unknown:
         print(f"unknown set(s): {', '.join(unknown)}", file=sys.stderr)
         return 2
+
+    if "--symbols" in argv:
+        print("set symbols:")
+        done, missing, size = mirror_symbols(force)
+        gap = f", {missing} unavailable upstream" if missing else ""
+        print(f"  {done} symbols ({size / 1024:.0f} KB){gap}")
+        return 0
 
     if "--photos" in argv:
         for set_id in wanted:
