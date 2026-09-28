@@ -58,7 +58,11 @@ derived from the same maps (`scripts/make_prismatic_textures.py`). The
 Scarlet & Violet reverse holo patterns in `assets/foil/sv-reverse/` are
 medians of TCG Live's reverse maps, one per type. The
 maps for the two Pikachu ex promos (`mep107*`, `mep109*`) are not TCG
-Live's: we drew them from the card scans in the same layout. Product photos
+Live's: we drew them from the card scans in the same layout. Set symbols in
+`assets/cards/sets/*-symbol.webp` are [pokesymbols.com](https://pokesymbols.com)'s
+drawings of the printed marks, cropped and resized by
+`scripts/mirror_images.py --symbols`; set logos come from scrydex and
+pokemontcg.io. Product photos
 in `assets/products/` are TCGplayer's catalogue images, cut out of their
 white backgrounds by `scripts/build_products.py`; product prices are
 TCGplayer market prices, read through [tcgcsv.com](https://tcgcsv.com). poke-pack.rip is a fan-made simulator and is not affiliated with
