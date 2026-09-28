@@ -944,7 +944,7 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
       return `<details class="rail-era" data-era="${esc(block.era)}" ${open}>
         <summary>
           <span class="rail-era-title">
-            <b>${esc(block.era)}</b>
+            <b>${esc(eraTitle(block.era))}</b>
             <small>${esc(eraYears(block.sets))}</small>
           </span>
           <span class="rail-era-count">${
@@ -1450,7 +1450,7 @@ function renderBulkSets() {
       const on = block.era === bulkEra;
       const years = eraYears(block.sets) || eraCountLabel(block);
       return `<button type="button" class="seg-btn bulk-era${on ? " on" : ""}" role="tab"
-        aria-selected="${on}" data-era="${esc(block.era)}" title="${esc(years)}">${esc(block.era)}</button>`;
+        aria-selected="${on}" data-era="${esc(block.era)}" title="${esc(years)}">${esc(eraTitle(block.era))}</button>`;
     })
     .join("");
   const setBtns = (active?.sets || [])
@@ -1660,7 +1660,7 @@ function catalogCard(set, { live = false } = {}) {
 }
 
 /* ROADMAP names a span of eras with arrows ("Sun & Moon → XY → BW"); on the
-   catalog they read as a plain list. */
+   page they read as a plain list. */
 function eraTitle(name) {
   const parts = String(name).split(/\s*→\s*/).filter(Boolean);
   return parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : String(name);
