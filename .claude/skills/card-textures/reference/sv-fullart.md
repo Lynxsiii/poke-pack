@@ -77,6 +77,20 @@ is the SIR's foil under gold ink.
   around the Pokémon (Armarouge, Roaring Moon). It is ink, not a foil
   artifact; check the raw scan before chasing it.
 
+### Etch over the whole card (2026-09-28)
+
+With the SIR rebuild, the Ultra Rare's `.glare::after` (the lit lines) went
+from a hot spot fading out at 40% to a whole-card floor (white 0.55 at the
+pointer, 0.28 at 25%, 0.16 at 60%, 0.1 at the edge; opacity 0.5 + 0.5
+from-center), so the relief shows at every pose, as the SIR's does, but
+softer: nine tenths of a full art is etched and the hard-light glare already
+lifts it. Ultra Rares and golds with no Live etch (the ME sets, Black Bolt,
+White Flare) get `has-etch-tile` and the drawn `assets/foil/sir-etch.webp`
+(`--fa-etch` / `--fa-etch-size` / `--fa-etch-pos` / `--fa-etch-repeat`
+pick the map or the tile) on the `::before` etch pass and on `.glare::after`.
+Before this they were a smooth rainbow with no relief at all (Kyurem ex and
+Serperior ex UR, White Flare).
+
 ## Gold Hyper Rare
 
 - **Where**: nearly the whole card (map mean alpha about 0.8); etched like
