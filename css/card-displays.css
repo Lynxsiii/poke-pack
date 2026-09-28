@@ -32,15 +32,10 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 
 .binder-sharing-note, .binder-page-toolbar, .profile-section-head,
 .profile-binder-page header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.binder-sharing-note { margin-bottom: 16px; flex-wrap: wrap; color: var(--ink-2); font-size: 13px; }
-.binder-sharing-note small { color: var(--muted); }
-.binder-page-toolbar { margin: 0 0 18px; font-size: 12px; color: var(--muted); }
-.page-share { font-size: 12px; padding: 6px 10px; min-height: 32px; }
-.page-share[aria-pressed="true"] { border-color: var(--line-2); color: var(--ink); }
-.page-share:disabled { opacity: .4; cursor: default; }
+.binder-sharing-note { flex-wrap: wrap; }
+.page-share:disabled { cursor: default; }
 .profile-binder { margin: 24px 0; padding: 24px; }
 .profile-section-head { margin-bottom: 22px; }
-.profile-section-head .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 7px; }
 .profile-section-head h3 { margin: 0; color: var(--ink); }
 .profile-section-head > span { color: var(--muted); font-size: 12px; }
 .profile-binder-pages { max-width: 600px; margin: 0 auto; }
@@ -48,20 +43,21 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 .profile-page-nav span { color: var(--muted); font-size: 13px; }
 .profile-page-nav button { min-width: 92px; }
 .profile-page-nav button:disabled { opacity: .35; cursor: default; }
-.profile-binder-page { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: var(--r);
-  background: var(--surface); }
+.profile-binder-page { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: var(--well); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
 .profile-binder-page header { margin: 0 0 20px; font-size: 12px; color: var(--muted); }
 .profile-binder-page header b { white-space: nowrap; }
 .profile-page-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-end; }
 .profile-binder-page .binder-pockets { gap: 14px; }
-.profile-pocket { position: relative; aspect-ratio: 63/88; min-width: 0; border-radius: var(--r-sm); }
+.profile-pocket { position: relative; aspect-ratio: 63/88; min-width: 0; border-radius: 3.97% / 2.84%; }
+.profile-pocket::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(158deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.035) 30%, transparent 52%); }
 .profile-pocket .mini-card { width: 100%; display: block; }
 .profile-pocket img { width: 100%; display: block; border-radius: 6px; }
-.profile-pocket.empty { border: 1px dashed rgba(255,255,255,.1); background: rgba(0,0,0,.18); }
+.profile-pocket.empty { border: 1px dashed var(--line-2); background: rgba(0,0,0,.2); }
 @media(max-width: 700px) {
   .showcase-row { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px 12px; }
   .profile-showcase, .profile-binder { padding: 18px 14px; }
-  .binder-page-toolbar { align-items: flex-start; flex-direction: column; gap: 6px; }
 }
 @media(prefers-reduced-motion: reduce) { .tcg img { transition: none; } }
 
@@ -71,7 +67,3 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
   .showcase-row { grid-template-columns: repeat(3,minmax(0,1fr)); }
 }
 
-@media(max-width: 860px) {
-  .home-stage { overflow: visible; margin-inline: 0; padding-inline: 18px; }
-  .home-stage-packs { overflow: clip; inset-inline: -12px; }
-}

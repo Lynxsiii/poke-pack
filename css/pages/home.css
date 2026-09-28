@@ -1,0 +1,730 @@
+/* Home: the showroom. The featured set's name is the biggest type on the page,
+   its pack stands tilted in a pool of its own light, and a shelf of the newest
+   sets runs under the stage: tap one and the whole page takes that set's
+   colour. Everything under the hero is quiet: figures with no boxes, packs on
+   the open page, hairlines where a division is needed and nothing where it is
+   not. Loads after css/theme.css; see DESIGN.md for the system. */
+
+/* ---- Hero ---------------------------------------------------------------- */
+/* .home-copy is the hero grid and keeps a real box at every width: js/fx.js
+   watches it to pause the hero's loops off screen, and a box-less element
+   would count as never on screen. On a phone the words and the stage
+   interleave through named areas; the inner .home-words is display: contents
+   there and becomes the left column on a laptop. */
+.home-hero { margin: 0; }
+.home-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "title" "meta" "stage" "cta" "pitch" "pulse";
+  container-type: inline-size;
+}
+.home-words { display: contents; }
+.home-page .home-title {
+  grid-area: title;
+  margin: 0;
+  font-weight: 800;
+  font-variation-settings: "opsz" 96;
+  font-size: clamp(56px, 15vw, 128px);
+  /* Never let a line of the name run out of its column: js/app.js measures
+     the widest line in em (--name-em) and the size stops where that line
+     would meet the edge. Browsers without container units keep the clamp. */
+  font-size: min(clamp(56px, 15vw, 128px), calc(100cqw * 0.96 / var(--name-em, 6)));
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  color: var(--ink);
+}
+.home-page .home-title > span { display: block; }
+.home-meta {
+  grid-area: meta;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+.home-pitch {
+  grid-area: pitch;
+  margin: 16px 0 0;
+  max-width: 40ch;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.home-cta {
+  grid-area: cta;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  margin-top: 12px;
+}
+.home-cta .solid {
+  min-height: 50px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.home-cta .text-btn {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-2);
+  font-size: 15px;
+  font-weight: 560;
+}
+.home-cta .text-btn:hover { color: var(--ink); }
+
+/* The pulse: three figures in a row, no boxes. */
+.home-pulse {
+  grid-area: pulse;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.home-pulse-stat { min-width: 0; }
+.home-pulse-stat b {
+  display: block;
+  font-size: 20px;
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.home-pulse-stat.coins b { color: var(--gold-2); }
+.home-pulse-stat span { display: block; margin-top: 3px; font-size: 13px; color: var(--muted); }
+
+/* ---- The stage ----------------------------------------------------------- */
+/* Edge to edge on a phone, a well a shade darker than the page, and a pool of
+   the set's own light behind the pack. card-displays.css also styles
+   .home-stage below 860px, so these rules carry the page class. */
+.home-page .home-stage {
+  --sx: 0;
+  --sy: 0;
+  grid-area: stage;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* As tall as the phone allows while the coral button still lands above the
+     tab bar: header, two-line name, meta line, button and tab bar add up to
+     about 366px. Never under 300px. */
+  height: clamp(300px, calc(100vh - 366px), 460px);
+  height: clamp(300px, calc(100svh - 366px), 460px);
+  min-height: 0;
+  margin-top: 12px;
+  margin-bottom: 0;
+  padding: 0;
+  background: var(--well);
+}
+.home-page .home-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(34% 30% at 50% 46%, rgb(var(--ambient) / 0.34), transparent 70%),
+    radial-gradient(60% 54% at 50% 46%, rgb(var(--ambient) / 0.42), transparent 70%),
+    radial-gradient(110% 36% at 50% 104%, rgb(var(--ambient) / 0.16), transparent 70%);
+}
+.home-stage-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  perspective: 1100px;
+}
+/* The hero card leans out from behind the pack. It is decoration here: the
+   pack is the thing to tap. Its shadow is a rounded rectangle the card's own
+   shape, sitting behind the art, never on .tcg itself. */
+.home-feature-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 66%;
+  aspect-ratio: 63 / 88;
+  pointer-events: none;
+  transform: translate(-50%, -50%) translate(34%, -9%) rotate(10deg)
+    translate(calc(var(--sx) * -10px), calc(var(--sy) * -6px));
+  transition: transform 0.7s var(--ease-out);
+}
+.home-feature-card::before {
+  content: "";
+  position: absolute;
+  inset: 3% 2%;
+  z-index: -1;
+  border-radius: 4.5% / 3.2%;
+  box-shadow: 0 26px 44px rgba(0, 0, 0, 0.55);
+}
+.home-feature-card .tcg { width: 100%; height: 100%; }
+.home-feature-pack {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 78%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%) translate(calc(var(--sx) * 14px), calc(var(--sy) * 10px))
+    rotate(-5deg) rotateY(calc(var(--sx) * 14deg)) rotateX(calc(var(--sy) * -8deg));
+  transition: transform 0.6s var(--ease-out);
+  animation: home-float 7s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+.home-feature-pack:focus-visible { outline: 0; }
+.home-feature-pack:focus-visible img { outline: 2px solid var(--focus); outline-offset: 6px; }
+.home-feature-pack picture { display: contents; }
+.home-feature-pack img {
+  display: block;
+  height: 100%;
+  width: auto;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 34px 34px rgba(0, 0, 0, 0.55)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+/* A sweep of light across the wrapper every few seconds, masked to the
+   wrapper's own outline (js/fx.js sets --pack-mask). The band slides by
+   transform; the img carries the shadow filter and the glint is its sibling,
+   so nothing animates inside a filtered element. */
+.home-feature-glint {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  -webkit-mask: var(--pack-mask, none);
+  mask: var(--pack-mask, none);
+}
+.home-feature-glint::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300%;
+  background: linear-gradient(110deg, transparent 40%, rgba(255, 255, 255, 0.55) 48.5%, rgba(255, 255, 255, 0.3) 51.5%, transparent 60%);
+  transform: translateX(-73.333%);
+  animation: home-glint 6.5s ease-in-out 1.6s infinite;
+}
+@keyframes home-glint {
+  0% { transform: translateX(-73.333%); }
+  32%, 100% { transform: translateX(40%); }
+}
+@keyframes home-float {
+  50% { translate: 0 -6px; }
+}
+/* The one orchestrated moment: when the featured set changes, the name settles
+   in and the pack rises into the light. Rise and float both use `translate`,
+   so the float only begins once the rise has landed. */
+.home-page .home-title > .is-new { animation: home-settle 0.55s var(--ease-out) both; }
+.home-stage-scene.is-new .home-feature-pack {
+  animation: home-rise 0.9s var(--ease-out) both, home-float 7s ease-in-out 0.9s infinite;
+}
+.home-stage-scene.is-new .home-feature-card { animation: home-rise-card 0.9s var(--ease-out) 0.1s both; }
+@keyframes home-settle {
+  from { opacity: 0; translate: 0 10px; }
+}
+@keyframes home-rise {
+  from { opacity: 0; translate: 0 56px; scale: 0.94; }
+}
+@keyframes home-rise-card {
+  from { opacity: 0; translate: 0 36px; }
+}
+
+/* ---- The shelf ----------------------------------------------------------- */
+/* The newest sets as small wrappers standing on one line, names under each.
+   Scrolls sideways edge to edge on a phone; the chosen set stands a little
+   taller and gets an ink mark on the shelf. */
+.home-page .home-shelf {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-top: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+.home-page .home-shelf::-webkit-scrollbar { display: none; }
+.home-shelf-set {
+  flex: none;
+  display: grid;
+  justify-items: center;
+  align-content: end;
+  gap: 8px;
+  width: 100px;
+  padding: 10px 0 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  scroll-snap-align: start;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.home-shelf-set:focus-visible { outline: 0; }
+.home-shelf-set:focus-visible .home-shelf-name { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.home-shelf-pack {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 96px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line-2);
+}
+.home-shelf-pack::after {
+  content: "";
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transition: transform 0.3s var(--ease-out);
+}
+.home-shelf-set.is-on .home-shelf-pack::after { transform: scaleX(1); }
+.home-shelf-pack picture { display: contents; }
+.home-shelf-pack img {
+  display: block;
+  height: 100%;
+  width: auto;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
+  transition: transform 0.35s var(--ease-spring), opacity 0.2s ease;
+  opacity: 0.82;
+}
+.home-shelf-set:hover img { opacity: 1; }
+.home-shelf-set.is-on img { transform: translateY(-6px); opacity: 1; }
+.home-shelf-name {
+  min-height: 30px;
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.15;
+  text-align: center;
+  text-wrap: balance;
+}
+.home-shelf-set:hover .home-shelf-name { color: var(--ink-2); }
+.home-shelf-set.is-on .home-shelf-name { color: var(--ink); font-weight: 650; }
+
+/* ---- Sections under the hero -------------------------------------------- */
+.home-block { margin: 44px 0 0; }
+.home-block-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+}
+.home-block-head h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.home-block-head p { margin: 5px 0 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.home-block-head .text-btn {
+  flex: none;
+  padding: 0 0 2px;
+  border: 0;
+  background: none;
+  font-size: 14px;
+}
+.home-block h3 { font-weight: 700; }
+
+/* Live now: packs on the open page. The fan is the tile; name, era and how
+   much of the set you hold sit under it. */
+.home-sets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px 16px;
+}
+.home-set {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.home-set:focus-visible { outline: 0; }
+.home-set:focus-visible .home-set-copy > b { text-decoration: underline; text-underline-offset: 4px; }
+.home-set-fan {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 140px;
+}
+.home-set-pack {
+  position: relative;
+  margin: 0 -16px;
+  transition: transform 0.3s var(--ease-out);
+}
+.home-set-pack picture { display: contents; }
+.home-set-pack img {
+  display: block;
+  height: 124px;
+  width: auto;
+  max-width: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.55));
+}
+.home-set-pack:nth-child(1) { transform: rotate(-11deg) translateY(10px); z-index: 1; }
+.home-set-pack:nth-child(2) { z-index: 3; }
+.home-set-pack:nth-child(3) { transform: rotate(11deg) translateY(10px); z-index: 2; }
+.home-set-pack:only-child { transform: none; }
+/* Two wrappers lean apart evenly instead of one tilted and one straight. */
+.home-set-pack:nth-child(1):nth-last-child(2) { transform: rotate(-8deg) translateY(4px); }
+.home-set-pack:nth-child(2):last-child { transform: rotate(8deg) translateY(4px); z-index: 2; }
+.home-set:hover .home-set-pack:nth-child(1):nth-last-child(2) { transform: rotate(-13deg) translateY(-2px); }
+.home-set:hover .home-set-pack:nth-child(2):last-child { transform: rotate(13deg) translateY(-2px); }
+.home-set:hover .home-set-pack:nth-child(1) { transform: rotate(-16deg) translateY(4px); }
+.home-set:hover .home-set-pack:nth-child(2) { transform: translateY(-8px); }
+.home-set:hover .home-set-pack:nth-child(3) { transform: rotate(16deg) translateY(4px); }
+.home-set:hover .home-set-pack:only-child { transform: translateY(-8px); }
+.home-set-copy { display: grid; gap: 3px; margin-top: 16px; }
+.home-set-copy > b {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.home-set-era { font-size: 13px; color: var(--muted); }
+.home-set-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+.home-set-meta .dex-bar { flex: 1; height: 3px; margin: 0; }
+.home-set-meta small {
+  flex: none;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Your pulls: the best pull sits in a well like a real object; the strip of
+   latest pulls runs on the open page. */
+.home-pulls { display: grid; gap: 22px; }
+.home-page .home-hit {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 18px;
+  border: 0;
+  border-radius: var(--r);
+  background: var(--well);
+}
+.home-hit-art {
+  flex: none;
+  width: 108px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-out);
+}
+.home-hit-art:hover { transform: translateY(-4px); }
+.home-hit-art:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; border-radius: 6px; }
+.home-hit-copy { min-width: 0; }
+.home-hit-label { display: block; font-size: 13px; color: var(--muted); }
+.home-hit-copy h3 {
+  margin: 4px 0 4px;
+  font-size: 20px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.home-hit-copy p { margin: 0; color: var(--muted); font-size: 13px; }
+.home-hit-value {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--gold-2);
+}
+.home-page .home-strip {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+.home-strip-label { display: block; font-size: 13px; color: var(--muted); }
+.home-page .home-film {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  margin: 0;
+  padding: 10px 0 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.home-page .home-film::-webkit-scrollbar { display: none; }
+.home-page .home-film .mini-card { width: 92px; flex: none; }
+.home-page .home-film .rarity-stamp { font-size: 10px; }
+.home-page .panel-empty { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* The market: your worth in a well, the priciest cards as a plain list with a
+   meter. Gold is money and nothing else here is coloured. */
+.home-market { display: grid; gap: 28px; }
+.home-page .home-worth {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  padding: 18px 18px 16px;
+  border: 0;
+  border-radius: var(--r);
+  background: var(--well);
+}
+.home-worth-label { font-size: 13px; color: var(--muted); }
+.home-page .home-worth > b {
+  font-size: clamp(32px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--gold-2);
+}
+.home-page .home-pnl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  font-weight: 560;
+  color: var(--muted);
+}
+.home-pnl.up { color: var(--ok); }
+.home-pnl.down { color: var(--bad); }
+.home-worth-chart { margin: 12px -4px 0; }
+.pc-spark { height: 96px; cursor: default; }
+.pc-spark.flat { --pc-key: var(--gold); }
+.pc-base {
+  stroke: rgba(243, 241, 236, 0.28);
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+  vector-effect: non-scaling-stroke;
+}
+.pc-empty-sm { font-size: 13px; padding: 16px 0 6px; }
+.home-page .home-worth-note { margin: 10px 0 0; font-size: 13px; color: var(--muted); }
+.home-page .home-board {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+.home-page .home-board-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.home-board-note { color: var(--faint); }
+.home-board-list { margin: 0; padding: 0; list-style: none; }
+.home-page .home-board-row {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: none;
+}
+.home-page .home-board-list li:first-child .home-board-row { border-top: 0; }
+.home-page .home-board-row:hover .home-board-name b { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
+.home-page .home-board-row:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.home-page .home-board-rank {
+  width: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.home-board-name { min-width: 0; }
+.home-page .home-board-name b {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.home-page .home-board-name small {
+  display: block;
+  font-size: 12.5px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.home-page .home-board-meter {
+  display: block;
+  height: 2px;
+  margin-top: 7px;
+  border-radius: 1px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.home-page .home-board-meter > span { display: block; height: 100%; width: var(--pct, 0%); background: var(--ink); }
+.home-page .home-board-price {
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--gold-2);
+  white-space: nowrap;
+}
+
+/* The long game: what is queued, as chips. */
+.home-road { display: flex; flex-wrap: wrap; gap: 8px; }
+.home-page .home-chip { cursor: default; color: var(--ink-2); }
+.home-page .home-chip.origin { background: transparent; border-color: var(--line-2); color: var(--muted); }
+
+/* ---- The lounge ---------------------------------------------------------- */
+.home-page .home-lounge {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  margin: 44px 0 0;
+}
+.home-page .lounge-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 18px 0;
+}
+.home-page .lounge-head h2 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.home-page .lounge-head span { font-size: 13px; color: var(--muted); }
+.home-page .lounge-head b { color: var(--ink); font-weight: 650; }
+.home-page .online-list { gap: 8px; padding: 14px 18px 18px; }
+.home-page .online-chip {
+  padding: 4px 12px 4px 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 560;
+}
+.home-page .online-chip:hover { border-color: var(--line-2); background: var(--surface-2); }
+.home-page .chat-log { height: 260px; padding: 12px 18px; }
+.home-page .chat-line b { font-size: 13px; color: var(--ink); font-weight: 650; }
+.home-page .chat-line span { font-size: 14px; color: var(--ink-2); }
+.home-page .chat-form { gap: 8px; padding: 0 18px 16px; }
+.home-page .chat-form input { background: var(--well); border-radius: var(--r-sm); }
+.home-page .chat-form .solid { min-height: 44px; padding-inline: 16px; }
+.home-page .lounge-empty { padding: 4px 18px 18px; font-size: 14px; }
+
+/* ---- Motion off ----------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .home-feature-pack, .home-feature-card, .home-feature-glint::after,
+  .home-stage-scene.is-new .home-feature-pack, .home-stage-scene.is-new .home-feature-card,
+  .home-page .home-title > .is-new { animation: none; }
+  .home-feature-pack, .home-feature-card, .home-shelf-pack img, .home-shelf-pack::after,
+  .home-set-pack, .home-hit-art { transition: none; }
+}
+body.no-motion .home-feature-pack, body.no-motion .home-feature-card,
+body.no-motion .home-feature-glint::after, body.no-motion .home-page .home-title > .is-new { animation: none; }
+body.no-motion .home-feature-pack, body.no-motion .home-feature-card,
+body.no-motion .home-shelf-pack img, body.no-motion .home-set-pack { transition: none; }
+@media (hover: none) {
+  .home-set:hover .home-set-pack:nth-child(1) { transform: rotate(-11deg) translateY(10px); }
+  .home-set:hover .home-set-pack:nth-child(2) { transform: none; }
+  .home-set:hover .home-set-pack:nth-child(3) { transform: rotate(11deg) translateY(10px); }
+  .home-set:hover .home-set-pack:only-child { transform: none; }
+  .home-set:hover .home-set-pack:nth-child(1):nth-last-child(2) { transform: rotate(-8deg) translateY(4px); }
+  .home-set:hover .home-set-pack:nth-child(2):last-child { transform: rotate(8deg) translateY(4px); }
+}
+
+/* ---- Laptop --------------------------------------------------------------- */
+@media (min-width: 721px) {
+  /* Two columns: the copy stacks on the left with the action pushed to the
+     bottom, the stage fills the right. The copy column is its own query
+     container so the name's size is measured against the column itself. */
+  .home-copy {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 46%);
+    grid-template-areas: "words stage";
+    column-gap: clamp(32px, 5vw, 64px);
+    align-items: stretch;
+    container-type: normal;
+  }
+  .home-words {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    grid-area: words;
+    min-width: 0;
+    container-type: inline-size;
+  }
+  .home-feature-card {
+    height: 70%;
+    transform: translate(-50%, -50%) translate(42%, -8%) rotate(11deg)
+      translate(calc(var(--sx) * -10px), calc(var(--sy) * -6px));
+  }
+  .home-page .home-stage {
+    height: auto;
+    min-height: 540px;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--r-lg);
+    align-self: stretch;
+  }
+  .home-meta { margin-top: 14px; }
+  .home-pitch { margin-top: 40px; }
+  .home-cta { flex-direction: row; align-items: center; gap: 22px; margin-top: 22px; }
+  .home-cta .solid { min-height: 52px; padding-inline: 28px; }
+  .home-cta .text-btn { min-height: 0; }
+  .home-pulse { justify-content: flex-start; gap: 12px 40px; margin-top: 26px; }
+  .home-pulse-stat b { font-size: 24px; }
+
+  .home-page .home-shelf { margin: 22px 0 0; padding: 0; }
+  .home-shelf-set { flex: 1 1 0; width: auto; min-width: 100px; }
+  .home-shelf-pack { height: 104px; }
+
+  .home-block { margin-top: 56px; }
+  .home-sets { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 34px 20px; }
+  .home-set-fan { height: 176px; }
+  .home-set-pack img { height: 156px; }
+  .home-set-pack { margin: 0 -20px; }
+  .home-set-copy > b { font-size: 19px; }
+
+  .home-pulls { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 32px; align-items: start; }
+  .home-hit-art { width: 120px; }
+  .home-market { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 40px; align-items: start; }
+  .home-page .home-worth { padding: 22px 22px 20px; }
+  .home-page .home-lounge { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 20px; margin-top: 56px; align-items: start; }
+  .home-page .chat-log { height: 280px; }
+}
+@media (min-width: 1100px) {
+  .home-copy { column-gap: 72px; }
+  .home-page .home-stage { min-height: 580px; }
+}
