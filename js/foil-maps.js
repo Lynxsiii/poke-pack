@@ -67,6 +67,85 @@ const FULL_MAP = "assets/foil/maps/full.webp";
 // drawn yet.
 const ETCHED = new Set(["Special Illustration Rare", "Ultra Rare", "Hyper Rare", "Mega Hyper Rare"]);
 const ETCH_TILE = "assets/foil/sir-etch.webp";
+// Sword & Shield prints that are foil edge to edge (css/holo/swsh.css). TCG
+// Live has maps for nearly all of them; the ones it lacks (Crown Zenith's
+// Galarian Gallery, a handful of others) take the all-white map, and the
+// etched ones the engraving tile, as the SV full arts do. The Classic
+// Collection (Celebrations) is a window holo with no map and stays as it is.
+const SWSH_FULL_ART = new Set([
+  "Rare Holo V", "Rare Holo VMAX", "Rare Holo VSTAR", "Rare Ultra", "Rare Rainbow", "Rare Secret",
+  "Radiant Rare", "Trainer Gallery Rare Holo",
+]);
+const SWSH_ETCHED = new Set([
+  "Rare Holo VMAX", "Rare Holo VSTAR", "Rare Ultra", "Rare Rainbow", "Rare Secret", "Trainer Gallery Rare Holo",
+]);
+
+/** Classic Collection reprints: the rule-box cards got full-card foil originally. */
+const CLASSIC_FULL_FOIL = /(^Shining |(-?EX|-?GX|\bV|VMAX|VSTAR|LV\.X|BREAK|LEGEND|★)$)/i;
+
+/**
+ * A Sword & Shield era print: the numbered sets, the special sets, the
+ * promos, and a Sword & Shield card reprinted in a later product (Trick or
+ * Trade 2023's Lost Origin ghosts), which carries `era: "swsh"` itself.
+ */
+export function isSwsh(card) {
+  return card?.era === "swsh" || /^(swsh|cel25|pgo)/.test(String(card?.id || ""));
+}
+
+/**
+ * Sword & Shield finishes (css/holo/swsh.css and swsh-fullart.css). Each
+ * rides on the older class the Classic engine keys on, plus its own
+ * `swsh-*` class; the finish is read from the rarity, the V / VMAX / VSTAR
+ * subtype and the sub-gallery (`gallery`: tg, gg, sv, cc), the way TCG Live
+ * files them.
+ */
+export function swshPattern(card) {
+  const subs = card.subtypes || [];
+  const is = (sub) => subs.includes(sub);
+  const trainer = card.supertype === "Trainer";
+  if (card.gallery === "cc") {
+    // No TCG Live map: the window holo keeps the layout's window clip, the
+    // whole-card holos (Gold Star, Shining, the ex and LV.X reprints) drop it.
+    return `foil-holo swsh-holo swsh-classic${CLASSIC_FULL_FOIL.test(card.name || "") ? " swsh-classic-full" : ""}`;
+  }
+  if (card.gallery === "sv") {
+    if (is("VMAX")) return "foil-ultra swsh-vmax swsh-shiny";
+    if (is("V")) return "foil-ex swsh-v swsh-shiny";
+    return "foil-holo swsh-holo swsh-shiny";
+  }
+  switch (card.rarity) {
+    case "Rare Secret":
+      return "foil-gold swsh-gold";
+    case "Rare Rainbow":
+      return "foil-ir swsh-rainbow";
+    case "Rare Ultra":
+      if (trainer) return "foil-ultra swsh-tfa";
+      if (is("VMAX") || is("VSTAR")) return "foil-ultra swsh-vmax swsh-alt";
+      return "foil-ultra swsh-vfa";
+    case "Rare Holo VMAX":
+      return "foil-ultra swsh-vmax";
+    case "Rare Holo VSTAR":
+      return "foil-ultra swsh-vstar";
+    case "Rare Holo V":
+      return "foil-ex swsh-v";
+    case "Amazing Rare":
+      return "foil-holo swsh-amazing";
+    case "Radiant Rare":
+      return "foil-holo swsh-radiant";
+    case "Trainer Gallery Rare Holo":
+      return "foil-ex swsh-tg";
+    case "Rare Holo":
+      return "foil-holo swsh-holo";
+    default:
+      break;
+  }
+  // Celebrations prints every card as a holo; its Rares are holos. In every
+  // other set the plain Rare is not foil at all.
+  if (card.rarity === "Rare") {
+    return String(card.id || "").startsWith("cel25-") ? "foil-holo swsh-holo" : "foil-none";
+  }
+  return "";
+}
 
 /** A stable 0..1 pair per card, so tiled glitter never lines up the same way twice. */
 function seed(id) {
@@ -98,6 +177,14 @@ export function reverseFinish(card, kind = card?.reverseKind) {
   if (!card?.reverse || card.foilAs || card.pattern || (kind && kind !== "cosmos")) return "";
   const set = String(card.id || "").split("-")[0];
   const sv = /^sv\d/.test(set);
+  // Sword & Shield's chevron sheet (assets/foil/swsh-reverse/, one per type,
+  // scripts/make_swsh_reverse.py in the card-textures skill).
+  if (isSwsh(card)) {
+    if (card.supertype === "Trainer") return "swsh-trainer";
+    if (card.supertype === "Energy" || card.energy) return "";
+    const type = String(card.types?.[0] || "").toLowerCase();
+    return SV_REVERSE_TYPES.has(type) ? `swsh-${type}` : "";
+  }
   if (!sv && !(/^me\d/.test(set) && set !== "me55")) return "";
   const subtypes = card.subtypes || [];
   if (!sv || subtypes.includes("Ancient") || subtypes.includes("Future")) return "mirror";
@@ -124,6 +211,14 @@ export function foilExtras(card, url, reverseKind) {
     const finish = reverseFinish(card, reverseKind);
     if (finish === "mirror") return { classes: "rev-mirror", style: "", cure: false };
     if (!finish) return { classes: "", style: "", cure: false };
+    if (finish.startsWith("swsh-")) {
+      const type = finish.slice(5);
+      return {
+        classes: `rev-sv rev-swsh rev-${type}`,
+        style: `--rev-pattern:url('${url(`assets/foil/swsh-reverse/${type}.webp`)}')`,
+        cure: false,
+      };
+    }
     return {
       classes: `rev-sv rev-${finish}`,
       style: `--rev-pattern:url('${url(`assets/foil/sv-reverse/${finish}.webp`)}')`,
@@ -136,8 +231,11 @@ export function foilExtras(card, url, reverseKind) {
     if (cls) classes.push(cls);
     vars.push(`${name}:url('${url(path)}')`);
   };
+  const swsh = isSwsh(card);
   if (card.foilMap) add("has-foil-map", "--foil-map", card.foilMap);
-  else if (FULL_ART.has(card.rarity)) add("has-foil-map", "--foil-map", FULL_MAP);
+  else if (FULL_ART.has(card.rarity) || (swsh && SWSH_FULL_ART.has(card.rarity) && card.gallery !== "cc")) {
+    add("has-foil-map", "--foil-map", FULL_MAP);
+  }
   if (card.foilMapR && card.foilMapB) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);
     add("", "--foil-map-b", card.foilMapB);
@@ -148,7 +246,9 @@ export function foilExtras(card, url, reverseKind) {
     // (scripts/make_card_etch.py): the SIR recipe keeps the flat background
     // weight the tile had, since the print's foil map is the white fallback.
     if (card.etchDrawn) classes.push("has-etch-drawn");
-  } else if (ETCHED.has(card.rarity)) add("has-etch-tile", "--etch-tile", ETCH_TILE);
+  } else if (ETCHED.has(card.rarity) || (swsh && SWSH_ETCHED.has(card.rarity) && card.gallery !== "cc")) {
+    add("has-etch-tile", "--etch-tile", ETCH_TILE);
+  }
   // A gold print's soft engraving (the etch blurred a little, soften_etch.py):
   // the dark line art without the hatch aliasing into speckle.
   if (card.etchSoft) add("", "--etch-soft", card.etchSoft);
@@ -172,8 +272,11 @@ export function foilExtras(card, url, reverseKind) {
   // finishes the Mega Evolution era prints differently key off this, such as
   // the Double Rare streaks (css/holo/sv-double-rare.css).
   if (/^[zr]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
+  // Sword & Shield prints (css/holo/swsh.css): the numbered sets, Champion's
+  // Path, Shining Fates, Celebrations, Pokémon GO, Crown Zenith, the promos.
+  if (/^(swsh|cel25|pgo)/.test(String(card.id || ""))) classes.push("era-swsh");
   // Tiled or galaxy textures start somewhere different on every card.
-  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity)) {
+  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }
