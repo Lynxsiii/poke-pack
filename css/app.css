@@ -1984,6 +1984,11 @@ html.dialog-open .wrap *::after {
 .pack-rest {
   position: relative;
   z-index: 1;
+}
+/* The shadow sits on the art, not on .pack-rest: the stress, settle and drop
+   animations move .pack-rest, and a filter on the moving element would be
+   re-run every frame. On the still child it is painted once. */
+.pack-rest > .pack-art {
   filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.55));
 }
 .booster.dragging .pack-rest,
