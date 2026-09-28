@@ -6,7 +6,12 @@ change to a foil recipe or a shared sheet (reference/verify.md, "The sweep").
     python3 .claude/skills/card-textures/scripts/sweep_finishes.py --set sv4pt5
     python3 .claude/skills/card-textures/scripts/sweep_finishes.py --all
     python3 .claude/skills/card-textures/scripts/sweep_finishes.py --set sv10 --poses rest,30:25,70:60 --w 300 --scale 2
+    python3 .claude/skills/card-textures/scripts/sweep_finishes.py --all --stamped   # every stamped print (the stamp sweep)
 
+Also lists every promo the site draws as a window holo that has no foil
+map (it falls to the old window recipe, which clips through a stamp printed
+in the art and streaks over it: Sprigatito svp191, 2026-09-28) and exits 1.
+`--stamped` sheets every stamped print instead of one card per finish.
 First checks every sheet in css/holo/ for a rule defined twice at the top
 level (PR #55 pasted a stale copy of shiny-vault.css after the new rules,
 and the later copy won, so the fix it shipped never showed); an identical
@@ -40,6 +45,48 @@ PROBE = os.path.join(HERE, "foil_probe.mjs")
 
 def has_evo(card):
     return any(s.startswith("Stage") for s in card.get("subtypes") or [])
+
+
+HOLO_LOOKS = {"Rare", "Pikachu Rare", "Cosmos", "Metal", "Confetti", "Holo", "Holo Rare", "Rare Holo"}
+STAMP_SUFFIXES = ("pc", "stamp", "stamped", "prerelease", "pokemon-day", "blister", "gamestop", "ebgames")
+
+
+def hand_boxes():
+    path = os.path.join(HERE, "stamp_boxes.json")
+    if not os.path.exists(path):
+        return set()
+    with open(path) as f:
+        return {k for k in json.load(f) if not k.startswith("_")}
+
+
+def stamped(cards, boxes):
+    """Every print that carries a stamp: an id with a stamp suffix, or a plain
+    id with a hand box (a print whose only copy is the stamped one)."""
+    out = []
+    for c in cards:
+        cid = str(c.get("id", ""))
+        if cid in boxes or any(cid.endswith("-" + s) for s in STAMP_SUFFIXES):
+            out.append(str(c.get("number")))
+    return out
+
+
+def check_promos(set_id, cards, boxes):
+    """A promo the site draws as a window holo (foilClass() in js/app.js) with
+    no foil map falls to the old window recipe, whose clip cuts through
+    anything printed in the art and streaks over it (Sprigatito svp191, the
+    Horizons promo, 2026-09-28). It needs a TCG Live map, or a hand box in
+    stamp_boxes.json and a stamp_knockout.py run (which also draws the
+    window-and-frame map)."""
+    n = 0
+    for c in cards:
+        if not c.get("promo") or c.get("foilMap"):
+            continue
+        look = c.get("foilAs") or c.get("rarity")
+        if look in HOLO_LOOKS:
+            print(f"{set_id}: {c['id']} ({c.get('name')}, {look}) is a window holo promo with no foil map: "
+                  f"old window recipe; give it a Live map or a hand box and run stamp_knockout.py")
+            n += 1
+    return n
 
 
 def pick(set_id, cards):
@@ -116,10 +163,13 @@ def check_sheets(holo_dir=os.path.join(ROOT, "css", "holo")):
     return bad
 
 
-def sweep(set_id, out_dir, poses, w, scale, per_row):
+def sweep(set_id, out_dir, poses, w, scale, per_row, only_stamped=False):
     cards = load(set_id)
-    ids = pick(set_id, cards)
-    rc = 0
+    boxes = hand_boxes()
+    rc = 1 if check_promos(set_id, cards, boxes) else 0
+    ids = stamped(cards, boxes) if only_stamped else pick(set_id, cards)
+    if not ids:
+        return rc
     sheets = [ids[i:i + per_row] for i in range(0, len(ids), per_row)]
     for n, chunk in enumerate(sheets, 1):
         png = os.path.join(out_dir, f"{set_id}-{n}.png")
@@ -149,6 +199,8 @@ def main():
     ap.add_argument("--poses", default="rest,30:25,50:78",
                     help="lab poses (default rest,30:25,50:78: rest, light top left, thumb on the text box)")
     ap.add_argument("--check-only", action="store_true", help="only check the sheets for rules defined twice")
+    ap.add_argument("--stamped", action="store_true",
+                    help="sheet every stamped print instead of one card per finish (the stamp sweep)")
     ap.add_argument("--w", type=int, default=220, help="card width in CSS px (default 220, a phone)")
     ap.add_argument("--scale", type=int, default=3, help="device pixels per CSS px (default 3, a phone)")
     ap.add_argument("--per-row", type=int, default=6, help="cards per sheet (a set gets several sheets)")
@@ -170,7 +222,7 @@ def main():
     os.makedirs(a.out_dir, exist_ok=True)
     rc = 0
     for s in sets:
-        rc |= sweep(s, a.out_dir, a.poses, a.w, a.scale, a.per_row)
+        rc |= sweep(s, a.out_dir, a.poses, a.w, a.scale, a.per_row, a.stamped)
     return rc
 
 

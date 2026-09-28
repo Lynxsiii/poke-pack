@@ -128,8 +128,10 @@ cure"). The surface gloss throws a soft highlight.
    rule won.
 6. **Sweep the set at phone size**:
    `scripts/sweep_finishes.py --set <set>` (`--all` after touching a shared
-   sheet or `js/foil-maps.js`) first refuses to run while any `css/holo/`
-   sheet holds the same rule twice, then renders one card of every finish
+   sheet or `js/foil-maps.js`; `--stamped` after touching stamps, boxes or
+   photos) first refuses to run while any `css/holo/` sheet holds the same
+   rule twice, lists every window holo promo without a map (exit 1), then
+   renders one card of every finish
    at rest, lit from the top left and with a thumb low on the text box, at
    220 px x 3, one sheet per set. Read every sheet against the table of
    failure signs in [reference/verify.md](reference/verify.md) (rings, flat
@@ -198,6 +200,19 @@ cure"). The surface gloss throws a soft highlight.
   finish or set without TCG Live maps must still get `has-foil-map`, via
   the white fallback map in `js/foil-maps.js`, and judge its look on a
   phone or at `--scale 2`, not only in the lab at desktop size.
+- **A stamped print with no plain copy is still a stamped print.** The
+  Pokémon Horizons promos (Sprigatito svp191, Fuecoco svp192) and the
+  Paradox Rift Build & Battle promos (svp057 to svp060) only exist with
+  their logo, so they carry no `-stamp` suffix and no TCG Live map, and
+  filed as `foilAs: "Rare"` they fell to the old window recipe: its
+  `clip-path` cut straight through the logo and its bands streaked over it
+  (Noah, 2026-09-28: "the badge is fucked here"). A window holo promo with
+  no map is always on that recipe. Give the plain id a hand box in
+  `scripts/stamp_boxes.json` (a list of boxes hugs a crest over a
+  wordmark) and `stamp_knockout.py` draws its window-and-frame map with the
+  logo cut out; `sweep_finishes.py` lists every window holo promo without
+  a map and exits 1, and `--stamped` sheets every stamped print
+  ([reference/promos.md](reference/promos.md)).
 - **The thumb sits on the text box, not on the art.** On a phone the
   pointer is wherever the card is held, usually low on the card, so every
   finish is judged with the light there too (`50:78` in the sweep). A
@@ -316,12 +331,12 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `reference/<set>.md` | One note per shipped set (the list above) |
 | `lab/` | The foil lab page, proof recipes (`lab.css`), stamp masks |
 | `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost |
-| `scripts/sweep_finishes.py` | One card of every finish a set prints, at phone size, at rest, lit from the top left and under a thumb on the text box, one sheet per set, after a check that no `css/holo/` sheet defines a rule twice: the check before merging (verify.md) |
+| `scripts/sweep_finishes.py` | One card of every finish a set prints (`--stamped`: every stamped print), at phone size, at rest, lit from the top left and under a thumb on the text box, one sheet per set, after checking that no `css/holo/` sheet defines a rule twice and no window holo promo lacks a map: the check before merging (verify.md) |
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
 | `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets (with RGB channel masks and `--etch-bins`) |
 | `scripts/ship_stamp.py` | Ship a mark found by `find_overlay.py`: mask into `assets/masks/stamp/`, placements into `data/<set>.json` |
 | `scripts/make_futuristic_maps.py` | Draw a Futuristic Rare's foil map, etch and etch bins from its scan when TCG Live has none (hints in `lab/masks/futuristic/`) |
-| `scripts/stamp_knockout.py` | Cut a stamped print's stamp (Pokémon Center, set logo, Prerelease, store) out of its foil map: difference of the two scans, template match, or a box from `scripts/stamp_boxes.json`; draws a window-and-frame map when a window holo's plain print has none (a full-art print needs its TCG Live map fetched first) |
+| `scripts/stamp_knockout.py` | Cut a stamped print's stamp (Pokémon Center, set logo, Prerelease, store) out of its foil map: difference of the two scans, template match, or a box from `scripts/stamp_boxes.json` (a list of boxes for a crest over a wordmark; a plain id with a box is a print whose only copy is the stamped one); draws a window-and-frame map when a window holo's plain print has none (a full-art print needs its TCG Live map fetched first) |
 | `scripts/make_pixel_cosmos.py` | Draws the pixel cosmos texture in `assets/foil/promo/` (seeded) |
 | `scripts/make_sir_etch.py` | Draws the SIR engraving tile `assets/foil/sir-etch.webp` (diagonal hatch, seamless) |
 | `scripts/check_foil_maps.py` | Flag foil maps that may be swapped between cards |
