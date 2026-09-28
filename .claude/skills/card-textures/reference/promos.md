@@ -51,7 +51,11 @@ at full. `::before` is the specks lit in the sweep's colour: the galaxy
 texture is the layer's mask (upstream's `cosmos-middle-trans` plus
 `cosmos-top-trans` at 200%, or `assets/foil/promo/pixel-cosmos.webp` at
 125%, both placed by `--seed-x/y`), and the sweep behind it sits a little
-off the ground's. `::after` runs narrow white stripes over the same specks,
+off the ground's. With a foil map, `::before` and `::after` are masked by
+the map as well (the map first, intersected with the union of the galaxy
+textures): the textures alone let the specks and glints cover the Pokémon
+and the text box, which read as a green wash over the whole card (Hop's
+Dubwool, 2026-09-28). `::after` runs narrow white stripes over the same specks,
 three times as fast as the pointer, so specks wink. `.glare` is a soft
 overlay highlight.
 
@@ -158,6 +162,19 @@ no photo of) has nothing to cut and takes the map as it is.
 An unstamped window holo promo with no map (`foilAs` "Cosmos" or a holo
 rarity, not a reverse) gets the drawn map in the same run. Limit a run to
 some cards with `--only` (card numbers, across every set with `--all`).
+
+Those drawn maps follow TCG Live's convention since 2026-09-28
+(`scripts/cosmos_window_maps.py --all`): the art window at alpha 130 (Live
+paints an inked art background at about half; sv9 136's map averages 131),
+the frame at full, the owner badge cut out through `assets/masks/owner/`,
+and, where the plain print has a Live map (Hop's Dubwool 136: the Rare
+holo's), that map's window with the Pokémon cut out. Drawn at full alpha
+with the Pokémon left in, the cosmos `.foil` (screened on) ran at twice a
+Live-mapped print's strength over the whole window: the art bleached and
+Dubwool washed out (Noah's viewer screenshot, 20:28). Stamp holes an
+existing map cut are kept (the rebuilt map is never brighter than the old
+one). The Pokémon still stays foil, at half, on a print with no Live map;
+cutting it out per card is the next step if it shows.
 
 Adding a stamped print: name it `<base id>-<suffix>` with one of the
 suffixes above, ship its scan, run `stamp_knockout.py --set <set> --debug`,
