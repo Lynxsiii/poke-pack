@@ -44,8 +44,11 @@ the cloud container; on a Mac, `npm i -g playwright && npx playwright install ch
 Read the PNG and look. Useful habits:
 
 - **Poses.** Always `rest` plus at least three lit poses: top left (the
-  classic "light from above"), centre, bottom right. A finish that only
-  looks right at one angle is wrong.
+  classic "light from above"), centre, bottom right, and a thumb low on
+  the text box (`50:78`): on a phone the pointer is wherever the thumb
+  rests, usually well below the art, and a finish that only looks right
+  with the light on the art is wrong (Murkrow 181, 2026-09-28: the shiny's
+  silver went grey and the card washed out with the thumb on the text box).
 - **Crop and zoom** the part you changed (a stamp, a border, an edge) with
   PIL: at 240px wide, a 1px scanline or a 5% mask error is invisible.
 - **Compare** the proof against the site copy, and both against a photo of
@@ -119,6 +122,10 @@ python3 .claude/skills/card-textures/scripts/sweep_finishes.py --set <set>     #
 python3 .claude/skills/card-textures/scripts/sweep_finishes.py --all           # after touching a shared sheet or js/foil-maps.js
 ```
 
+The script first checks every `css/holo/` sheet for a rule defined twice
+at the top level and stops on an identical copy, then renders each set at
+rest, lit from the top left and with a thumb low on the text box.
+
 Read every sheet. Noah found four kinds of failure on 2026-09-28 that the
 lab at desktop size had hidden (Espeon ex MEP 108, Keldeo ex, Team
 Rocket's Mewtwo ex, Cynthia's Garchomp ex, Iron Crown ex, Chien-Pao ex,
@@ -131,6 +138,8 @@ Chi-Yu ex); each has a sign on the sheet, a cause and a fix:
 | Gold speckle noise, coarse dots on a phone | Glitter tiles too large or the winking copy too bright | Tiles at 96 to 128 px, `brightness` under 4, opacity under 0.7 (shiny-vault.css Scodix) |
 | A Pokémon that is a flat silhouette at rest | The scan itself is flat (Paldean Fates' Scodix golds) and the etch, the only line detail, was a lit-only relief | Draw the etch on `.foil` dark with a floor, and raise the rest opacity so it reads in any light |
 | Rings on a Shiny, stripes on a reverse, a white disc in a glare | Wrong map variant, tile pitch or hot-spot size | The finish's own note in `reference/` |
+| The whole card grey and washed in the thumb-on-the-text-box pose, fine in the others | A multiply ramp on `.foil` that falls to 70% far from the pointer, under a glare whose white lifts the matte ink and whose black end darkens the art | Keep a multiply floor at 80% or above (real silver stays bright away from the lamp), the glare's white under 0.6 and its black end under 0.15 (shiny-vault.css Shiny Rare, 2026-09-28) |
+| A recipe change that does nothing, or the old look back after a merge | The sheet holds the same rule twice at the top level and the later copy wins: PR #55 pasted the pre-change sheet after the new rules | `sweep_finishes.py` refuses to run while a sheet holds an identical rule twice (`--check-only` runs just that check); delete the stale copy |
 
 The sheet is 220 CSS px at 3x by default: a phone. A desktop-size lab
 render (`w=380`, scale 1) averages a 1 px etch to grey and a 2 px glitter

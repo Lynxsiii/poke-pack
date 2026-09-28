@@ -128,12 +128,14 @@ cure"). The surface gloss throws a soft highlight.
    rule won.
 6. **Sweep the set at phone size**:
    `scripts/sweep_finishes.py --set <set>` (`--all` after touching a shared
-   sheet or `js/foil-maps.js`) renders one card of every finish at rest and
-   lit at 220 px x 3, one sheet per set. Read every sheet against the
-   table of failure signs in [reference/verify.md](reference/verify.md)
-   (rings, flat full arts, speckle, a silhouette at rest). Nothing merges
-   without it: on 2026-09-28 seven cards Noah screenshotted on his phone had
-   passed the lab at desktop size.
+   sheet or `js/foil-maps.js`) first refuses to run while any `css/holo/`
+   sheet holds the same rule twice, then renders one card of every finish
+   at rest, lit from the top left and with a thumb low on the text box, at
+   220 px x 3, one sheet per set. Read every sheet against the table of
+   failure signs in [reference/verify.md](reference/verify.md) (rings, flat
+   full arts, speckle, a silhouette at rest, a card gone grey under the
+   thumb). Nothing merges without it: on 2026-09-28 eight cards Noah
+   screenshotted on his phone had passed the lab at desktop size.
 7. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
@@ -196,6 +198,23 @@ cure"). The surface gloss throws a soft highlight.
   finish or set without TCG Live maps must still get `has-foil-map`, via
   the white fallback map in `js/foil-maps.js`, and judge its look on a
   phone or at `--scale 2`, not only in the lab at desktop size.
+- **The thumb sits on the text box, not on the art.** On a phone the
+  pointer is wherever the card is held, usually low on the card, so every
+  finish is judged with the light there too (`50:78` in the sweep). A
+  multiply ramp on `.foil` that falls to 70% away from the pointer turns
+  the art window grey, and a glare whose white end is 0.75 doubles the
+  matte ink's darks under the thumb while its 30% black end dims the art:
+  Murkrow 181's Shiny Rare came out washed and muddy in the reveal
+  (2026-09-28). Real silver stays bright wherever the lamp is not, so a
+  multiply floor stays at 80% or above, a glare's white under 0.6 and its
+  black end under 0.15 (`shiny-vault.css`).
+- **One copy of every rule.** An edit that pastes a sheet's old text after
+  the new rules leaves the later copy painting, and the change "does
+  nothing" while the lab and the live site agree with each other: PR #55's
+  Paldean Fates gold fix shipped that way and never showed. The sweep
+  script checks every `css/holo/` sheet for a rule defined twice at the top
+  level before it renders (`--check-only` runs just that), and an
+  identical copy stops it. `foil_probe.mjs --styles` shows which rule won.
 - **A Special Illustration Rare is engraved edge to edge.** Photos of the
   real cards (Latias ex, Charizard ex 151, Erika's Invitation, Mew ex PAF):
   fine etched lines run over the whole face, frame, text box and Pokémon
@@ -297,7 +316,7 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `reference/<set>.md` | One note per shipped set (the list above) |
 | `lab/` | The foil lab page, proof recipes (`lab.css`), stamp masks |
 | `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost |
-| `scripts/sweep_finishes.py` | One card of every finish a set prints, at phone size, rest and lit, one sheet per set: the check before merging (verify.md) |
+| `scripts/sweep_finishes.py` | One card of every finish a set prints, at phone size, at rest, lit from the top left and under a thumb on the text box, one sheet per set, after a check that no `css/holo/` sheet defines a rule twice: the check before merging (verify.md) |
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
 | `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets (with RGB channel masks and `--etch-bins`) |
 | `scripts/ship_stamp.py` | Ship a mark found by `find_overlay.py`: mask into `assets/masks/stamp/`, placements into `data/<set>.json` |
