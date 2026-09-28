@@ -471,7 +471,7 @@
   to { opacity: 1; transform: none; }
 }
 /* A face-down card hovers, asking to be turned. */
-#overlay[data-phase="reveal"] .focus-card:not(.flipped):not(.deal):not(.charging) .pull-lift {
+#overlay[data-phase="reveal"] .focus-card:not(.flipped):not(.deal):not(.charging):not(.charged) .pull-lift {
   animation: opCardIdle 3.2s ease-in-out infinite;
 }
 @keyframes opCardIdle {
@@ -503,6 +503,19 @@
    it; the rest of the chrome steps back. */
 .focus-card.charging .pull-lift { animation: opChargeT2 var(--charge-ms) ease-in both; }
 #overlay.charge-t3 .focus-card.charging .pull-lift { animation-name: opChargeT3; }
+/* The tremble ends lifted and swollen, and the turn starts from that pose:
+   .charged holds the last keyframe as a plain value, then .flipped eases it
+   down over the flip. Dropping the animation used to snap the card back to
+   rest in one frame, and the turn's slow start read as a stop. */
+.focus-card.charged .pull-lift { transform: translateY(-8px) scale(1.05); }
+#overlay.charge-t3 .focus-card.charged .pull-lift { transform: translate(0, -10px) scale(1.08); }
+.focus-card.flipped .pull-lift {
+  transform: none;
+  transition: transform var(--flip-ms) cubic-bezier(0.2, 0.6, 0.25, 1);
+}
+/* A charged card turns with momentum; the tremble was the anticipation. */
+.focus-card.t2 .pull-inner,
+.focus-card.t3 .pull-inner { transition-timing-function: cubic-bezier(0.25, 0.1, 0.2, 1); }
 @keyframes opChargeT2 {
   0% { transform: none; }
   20% { transform: translateY(-4px) rotate(-1deg) scale(1.01); }

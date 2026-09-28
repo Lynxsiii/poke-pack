@@ -2846,6 +2846,7 @@ a.solid { color: #1a1408; }
   }
   .focus-card,
   .pull-inner,
+  .pull-lift,
   .tcg,
   .tcg img {
     transition-duration: 0.01ms !important;

@@ -4448,7 +4448,7 @@ function clearHitFx() {
   playHitFx._b = 0;
   els.hitFx.replaceChildren();
   els.overlay.classList.remove(...HIT_CLASSES);
-  els.focusCard.classList.remove("charging");
+  els.focusCard.classList.remove("charging", "charged");
 }
 
 /** How long a hit builds up before it turns over; commons and rares flip at once. */
@@ -4466,9 +4466,10 @@ function playHitFx(card) {
   if (!hitFxOk()) return;
   els.overlay.classList.add(`hit-t${tier}`);
   // The burst lands as the face turns toward the viewer, a little under
-  // half-way through the flip. A fixed handful of sparks: each one is its own
-  // small layer, so the count is the cost.
-  const at = Math.round(flipDurationMs() * 0.42);
+  // half-way through the flip (earlier for a charged card, whose turn starts
+  // faster). A fixed handful of sparks: each one is its own small layer, so
+  // the count is the cost.
+  const at = Math.round(flipDurationMs() * (tier >= 2 ? 0.37 : 0.42));
   const frag = document.createDocumentFragment();
   const count = tier === 3 ? 16 : tier === 2 ? 12 : 6;
   const reach = tier === 3 ? 210 : tier === 2 ? 170 : 120;
@@ -4497,6 +4498,7 @@ function playHitFx(card) {
     els.overlay.classList.add("hit-flash");
     if (tier >= 3) els.overlay.classList.add("hit-shake");
     else if (tier === 2) els.overlay.classList.add("hit-shake-sm");
+    renderThumbs();
   }, at);
   clearTimeout(playHitFx._t);
   playHitFx._t = setTimeout(() => {
@@ -4722,6 +4724,7 @@ function flipCurrent() {
       if (gen !== flipGen) return;
       // The light holds where it gathered until the flash lets it go.
       els.focusCard.classList.remove("charging");
+      els.focusCard.classList.add("charged");
       els.overlay.classList.remove("charging");
       els.overlay.classList.add("charged");
       turnCard(pull, gen);
@@ -4736,9 +4739,13 @@ function turnCard(pull, gen) {
   clearGlare();
   els.focusCard.classList.add("flipping");
   void els.focusCard.offsetWidth;
+  // The charged pose is the turn's starting point (see .charged in opening.css).
+  els.focusCard.classList.remove("charged");
   els.focusCard.classList.add("flipped");
   if (tier) playHitFx(pull);
-  renderThumbs();
+  // A hit's thumb fills in with the flash, so the turn's first frame has no
+  // strip rebuild in it; a plain card's thumb updates now.
+  if (!tier || !hitFxOk()) renderThumbs();
   syncActions();
   const inner = els.focusCard.querySelector(".pull-inner");
   let settled = false;
