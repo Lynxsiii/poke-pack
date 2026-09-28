@@ -3,6 +3,19 @@ export const RARITY_ORDER = [
   "Common",
   "Uncommon",
   "Rare",
+  // Sword & Shield: the holo Rare is its own rarity (the plain Rare is not
+  // foil), then the V line, the special sets' finishes and the secret rares.
+  "Rare Holo",
+  "Rare Holo V",
+  "Rare Holo VMAX",
+  "Rare Holo VSTAR",
+  "Amazing Rare",
+  "Radiant Rare",
+  "Rare Shiny",
+  "Trainer Gallery Rare Holo",
+  "Rare Ultra",
+  "Rare Rainbow",
+  "Rare Secret",
   "Pikachu Rare",
   // Prismatic Evolutions' pattern prints of its Commons, Uncommons and Rares.
   "Poké Ball",
@@ -31,6 +44,17 @@ export const RARITY_LABEL = {
   Common: "Common",
   Uncommon: "Uncommon",
   Rare: "Rare",
+  "Rare Holo": "Rare holo",
+  "Rare Holo V": "Pokémon V",
+  "Rare Holo VMAX": "Pokémon VMAX",
+  "Rare Holo VSTAR": "Pokémon VSTAR",
+  "Amazing Rare": "Amazing rare",
+  "Radiant Rare": "Radiant rare",
+  "Rare Shiny": "Shiny Vault",
+  "Trainer Gallery Rare Holo": "Trainer Gallery",
+  "Rare Ultra": "Ultra rare",
+  "Rare Rainbow": "Rainbow rare",
+  "Rare Secret": "Secret rare",
   "Pikachu Rare": "Pikachu rare",
   "Poké Ball": "Poké Ball pattern",
   "Master Ball": "Master Ball pattern",
@@ -80,6 +104,19 @@ export const RARITY_MARK = {
   "Poké Ball": { pips: [["◓", "pokeball"]], group: "untilI" },
   "Master Ball": { pips: [["◓", "masterball"]], group: "untilI" },
   "Shiny Rare": { pips: [["☆", "shiny"]], group: "expanded" },
+  // Sword & Shield printed one black star on every rare-or-better card;
+  // the hollow and coloured pips here tell the finishes apart in filters.
+  "Rare Holo": { pips: [["★", "ink"]], group: "expanded" },
+  "Rare Holo V": { pips: [["★", "ink"]], group: "expanded" },
+  "Rare Holo VMAX": { pips: [["★", "ink"]], group: "expanded" },
+  "Rare Holo VSTAR": { pips: [["★", "ink"]], group: "expanded" },
+  "Amazing Rare": { pips: [["★", "rgbB"]], group: "expanded" },
+  "Radiant Rare": { pips: [["★", "silver"]], group: "expanded" },
+  "Rare Shiny": { pips: [["☆", "shiny"]], group: "expanded" },
+  "Trainer Gallery Rare Holo": { pips: [["★", "gold"]], group: "expanded" },
+  "Rare Ultra": { pips: [["☆", "silver"]], group: "expanded" },
+  "Rare Rainbow": { pips: [["☆", "gold"]], group: "expanded" },
+  "Rare Secret": { pips: [["☆", "gold"], ["☆", "gold"]], group: "expanded" },
   "Shiny Ultra Rare": { pips: [["☆", "shiny"], ["☆", "shiny"]], group: "expanded" },
   Promo: { pips: [["★", "black"]], group: "current" },
 };
@@ -103,6 +140,17 @@ export const SELL_VALUE = {
   Uncommon: 0.08,
   Rare: 0.18,
   "Double Rare": 0.61,
+  "Rare Holo": 0.4,
+  "Rare Holo V": 1.2,
+  "Rare Holo VMAX": 3,
+  "Rare Holo VSTAR": 3,
+  "Amazing Rare": 5,
+  "Radiant Rare": 3,
+  "Rare Shiny": 3,
+  "Trainer Gallery Rare Holo": 4,
+  "Rare Ultra": 8,
+  "Rare Rainbow": 15,
+  "Rare Secret": 15,
   "ACE SPEC Rare": 1.5,
   "Ultra Rare": 3.44,
   "Illustration Rare": 3.2,
@@ -317,16 +365,19 @@ const ENERGY_PRINTS = [
   { print: "", suffix: "", first: 1 },
   { print: "tera", suffix: "-tera", first: 9 },
   { print: "unova", suffix: "-unova", first: 17 },
+  // The Sword & Shield era's own basic Energy (the 2020 print, pkmn.gg's
+  // sword-shield-energy-2020), the eleventh card of every SWSH pack.
+  { print: "swsh", suffix: "-swsh", label: "Sword & Shield 2020" },
 ];
 
-export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first }) =>
+export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first, label }) =>
   ENERGY_TYPES.map(([id, name], i) => ({
     id: `energy-${id}${suffix}`,
     name: `${name} Energy`,
     number: "—",
     rarity: "Energy",
     energy: true,
-    ...(print ? { energyPrint: print, variant: `SVE ${String(first + i).padStart(3, "0")}` } : {}),
+    ...(print ? { energyPrint: print, variant: label || `SVE ${String(first + i).padStart(3, "0")}` } : {}),
     supertype: "Energy",
     subtypes: ["Basic"],
     types: [name],
@@ -459,6 +510,70 @@ function svSlots({ double, ultra, ir = 0, sir, hyper, ace = 0 }) {
       ],
     },
   ];
+}
+
+/**
+ * Sword & Shield era pack (data/pullrates.json): 5 commons, 3 uncommons, a
+ * reverse holo slot, a rare slot, and the basic Energy that comes as an
+ * eleventh card. The rare slot holds a plain Rare unless it rolls a holo
+ * Rare, a Pokémon V, VMAX or VSTAR, a full art (`Rare Ultra`: full-art V,
+ * alternate-art VMAX, full-art Supporter), a rainbow or a gold. The reverse
+ * slot is where the special cards of each set replace the reverse holo: the
+ * Trainer Gallery (`tg`), Crown Zenith's Galarian Gallery (`gg`), Radiant
+ * Rares, Amazing Rares, and Shining Fates' Shiny Vault (baby shinies, shiny
+ * V, shiny VMAX and its two golds). Every rate is per pack.
+ */
+function swshSlots({ holo, v, vmax = 0, vstar = 0, ultra, rainbow = 0, secret = 0, amazing = 0, radiant = 0, tg = 0, gg = 0, shiny = 0, shinyV = 0, shinyVMAX = 0, shinyGold = 0 }) {
+  const reverse = [
+    ["trainerGallery", tg],
+    ["galarianGallery", gg],
+    ["radiant", radiant],
+    ["amazing", amazing],
+    ["shinyBaby", shiny],
+    ["shinyV", shinyV],
+    ["shinyVMAX", shinyVMAX],
+    ["shinyGold", shinyGold],
+  ].filter(([, p]) => p > 0);
+  const special = reverse.reduce((sum, [, p]) => sum + p, 0);
+  const rare = [
+    ["v", v],
+    ["vmax", vmax],
+    ["vstar", vstar],
+    ["rareUltra", ultra],
+    ["rainbow", rainbow],
+    ["secret", secret],
+  ].filter(([, p]) => p > 0);
+  const hits = rare.reduce((sum, [, p]) => sum + p, 0);
+  const plain = Math.max(0, 1 - hits - holo);
+  return [
+    { pool: "energy", count: 1 },
+    { pool: "common", count: 5 },
+    { pool: "uncommon", count: 3 },
+    special
+      ? { pool: "reverse", count: 1, table: [["reverse", 1 - special], ...reverse] }
+      : { pool: "reverse", count: 1 },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [...(plain > 0.0005 ? [["rare", plain]] : []), ["holo", Math.min(holo, 1 - hits)], ...rare],
+    },
+  ];
+}
+
+/**
+ * Celebrations: four holo cards, no Energy and no reverse. Each slot can
+ * be a Classic Collection reprint, a V, a VMAX or the one full-art Trainer;
+ * otherwise one of the 25 (all holo; pkmn.gg files 12 as `Rare` and 6 as
+ * `Rare Holo`, drawn in proportion). Per-slot rates, so that a pack carries
+ * a Classic Collection card about 2 times in 5 (Cardzard's 5,000 packs).
+ */
+function celebrationsSlots({ classic, v, vmax, ultra }) {
+  const rest = 1 - classic - v - vmax - ultra;
+  return Array.from({ length: 4 }, () => ({
+    pool: "rare-slot",
+    count: 1,
+    table: [["rare", rest * 12 / 18], ["holo", rest * 6 / 18], ["classicCollection", classic], ["v", v], ["vmax", vmax], ["rareUltra", ultra]],
+  }));
 }
 
 /**
@@ -1638,6 +1753,509 @@ export const SV_PROMOS = {
  * Trick or Trade BOOster Bundles hold three-card mini packs, one holo and two
  * non-holo in each (PokeBeach; Sleeve No Card Behind for 2024).
  */
+export const CROWN_ZENITH = {
+  id: "swsh12pt5",
+  tcgId: "swsh12pt5",
+  name: "Crown Zenith",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "January 20, 2023",
+  live: true,
+  printedTotal: 159,
+  totalCount: 230,
+  packSize: 11,
+  cost: 25.65,
+  dataFile: "data/swsh12pt5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, January 2023. The era's finale, sold in boxes: the 70-card Galarian Gallery in a third of packs, one wrapper.",
+  oddsLine: "V 1/8 · VMAX 1/50 · VSTAR 1/30 · full art 1/33 · gold 1/133 · Radiant 1/22 · GG 1/3",
+  lede: "Every third pack carries a Galarian Gallery card in the reverse slot: Giratina V, Mewtwo VSTAR, Arceus VSTAR gold. The rare slot is a holo 2 packs in 5.",
+  // TCGplayer's 1,900-pack study; the Galarian Gallery takes the reverse slot. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.4016, v: 0.1235, vmax: 0.02, vstar: 0.033, ultra: 0.03, secret: 0.0075, radiant: 0.0455, gg: 0.352 }),
+  heroIds: ["swsh12pt5-GG69", "swsh12pt5-GG44", "swsh12pt5-GG70", "swsh12pt5-GG68"],
+  wrappers: boosterWrappers("swsh12pt5", [
+    { id: "crown-zenith", name: "Zacian and Zamazenta", cardId: "swsh12pt5-96", tag: "Crown Zenith" },
+  ]),
+};
+
+export const SILVER_TEMPEST = {
+  id: "swsh12",
+  tcgId: "swsh12",
+  name: "Silver Tempest",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "November 11, 2022",
+  live: true,
+  printedTotal: 195,
+  totalCount: 245,
+  packSize: 11,
+  cost: 15.05,
+  dataFile: "data/swsh12.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, November 2022. Lugia VSTAR and the Regis, Alolan Vulpix VSTAR, four wrappers.",
+  oddsLine: "V 1/9 · VMAX 1/200 · VSTAR 1/31 · full art 1/27 · rainbow 1/79 · gold 1/106 · Radiant 1/22 · TG 1/8",
+  lede: "Lugia VSTAR and its alternate art, Unown VSTAR, Serena and Radiant Alakazam. The Trainer Gallery lands 1 in 8, Radiant 1 in 22.",
+  // TCGplayer's 8,000-pack study. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.2535, v: 0.1155, vmax: 0.005, vstar: 0.032, ultra: 0.0371, rainbow: 0.0126, secret: 0.0094, radiant: 0.0455, tg: 0.1223 }),
+  heroIds: ["swsh12-186", "swsh12-TG20", "swsh12-202", "swsh12-TG15"],
+  wrappers: boosterWrappers("swsh12", [
+    { id: "regidrago", name: "Regidrago", cardId: "swsh12-184", tag: "Titan" },
+    { id: "regieleki", name: "Regieleki", cardId: "swsh12-198", tag: "Titan" },
+    { id: "lugia", name: "Lugia", cardId: "swsh12-186", tag: "The chase" },
+    { id: "vulpix", name: "Alolan Vulpix", cardId: "swsh12-197", tag: "Snow" },
+  ]),
+};
+
+export const LOST_ORIGIN = {
+  id: "swsh11",
+  tcgId: "swsh11",
+  name: "Lost Origin",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "September 9, 2022",
+  live: true,
+  printedTotal: 196,
+  totalCount: 247,
+  packSize: 11,
+  cost: 19.56,
+  dataFile: "data/swsh11.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, September 2022. Giratina VSTAR and the Lost Zone, Hisuian Zoroark, four wrappers.",
+  oddsLine: "V 1/9 · VMAX 1/167 · VSTAR 1/26 · full art 1/26 · rainbow 1/78 · gold 1/132 · Radiant 1/20 · TG 1/8",
+  lede: "Giratina VSTAR and its alternate art (1 in 200 packs), Aerodactyl VSTAR and Radiant Gardevoir. Trainer Gallery 1 in 8, Radiant 1 in 20.",
+  // TCGplayer's 8,000-pack study. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.2646, v: 0.1163, vmax: 0.006, vstar: 0.038, ultra: 0.039, rainbow: 0.0128, secret: 0.0076, radiant: 0.0501, tg: 0.1231 }),
+  heroIds: ["swsh11-186", "swsh11-180", "swsh11-TG16", "swsh11-TG17"],
+  wrappers: boosterWrappers("swsh11", [
+    { id: "zoroark", name: "Hisuian Zoroark", cardId: "swsh11-203", tag: "Lost zone" },
+    { id: "giratina", name: "Giratina", cardId: "swsh11-186", tag: "The chase" },
+    { id: "kyurem", name: "Kyurem", cardId: "swsh11-197", tag: "Lost zone" },
+    { id: "enamorus", name: "Enamorus", cardId: "swsh11-178", tag: "Lost zone" },
+  ]),
+};
+
+export const POKEMON_GO = {
+  id: "pgo",
+  tcgId: "pgo",
+  name: "Pokémon GO",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "July 1, 2022",
+  live: true,
+  printedTotal: 78,
+  totalCount: 88,
+  packSize: 11,
+  cost: 14.5,
+  dataFile: "data/pgo.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, July 2022. The Pokémon GO crossover: Mewtwo VSTAR, Radiant Charizard, the peelable Ditto, one wrapper.",
+  oddsLine: "V 1/6 · VMAX 1/62 · VSTAR 1/22 · full art 1/24 · rainbow 1/50 · gold 1/125 · Radiant 1/22",
+  lede: "Every rare slot is a holo or better. Mewtwo VSTAR, Radiant Charizard 1 in 100, and Professor Willow. The peelable Ditto is not simulated.",
+  // Derium's 500 packs; every rare slot is a holo or better; the peelable Ditto is not simulated. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.7, v: 0.16, vmax: 0.016, vstar: 0.046, ultra: 0.042, rainbow: 0.02, secret: 0.008, radiant: 0.046 }),
+  heroIds: ["pgo-72", "pgo-79", "pgo-81", "pgo-86"],
+  wrappers: boosterWrappers("pgo", [
+    { id: "pokemon-go", name: "Pokémon GO", cardId: "pgo-72", tag: "Go" },
+  ]),
+};
+
+export const ASTRAL_RADIANCE = {
+  id: "swsh10",
+  tcgId: "swsh10",
+  name: "Astral Radiance",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "May 27, 2022",
+  live: true,
+  printedTotal: 189,
+  totalCount: 246,
+  packSize: 11,
+  cost: 10.61,
+  dataFile: "data/swsh10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, May 2022. Origin Forme Dialga and Palkia VSTAR, the Hisui Pokémon, the first Radiant Rares, five wrappers.",
+  oddsLine: "V 1/8 · VMAX 1/130 · VSTAR 1/37 · full art 1/25 · rainbow 1/78 · gold 1/132 · Radiant 1/20 · TG 1/8",
+  lede: "Origin Forme Dialga and Palkia VSTAR, Radiant Greninja, and a Trainer Gallery with Machamp V and Gardenia's Vigor. Radiant Rares 1 in 20, Trainer Gallery 1 in 8.",
+  // TCGplayer's 8,000-pack study; Radiant from pullrates.com (missing from TCGplayer's table). Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.2553, v: 0.1277, vmax: 0.0077, vstar: 0.027, ultra: 0.0395, rainbow: 0.0128, secret: 0.0076, radiant: 0.05, tg: 0.1258 }),
+  heroIds: ["swsh10-172", "swsh10-TG13", "swsh10-167", "swsh10-161"],
+  wrappers: boosterWrappers("swsh10", [
+    { id: "typhlosion", name: "Hisuian Typhlosion", cardId: "swsh10-193", tag: "Hisui" },
+    { id: "decidueye", name: "Hisuian Decidueye", cardId: "swsh10-195", tag: "Hisui" },
+    { id: "dialga", name: "Origin Forme Dialga", cardId: "swsh10-177", tag: "Star portal" },
+    { id: "samurott", name: "Hisuian Samurott", cardId: "swsh10-209", tag: "Hisui" },
+    { id: "palkia", name: "Origin Forme Palkia", cardId: "swsh10-167", tag: "Star portal" },
+  ]),
+};
+
+export const BRILLIANT_STARS = {
+  id: "swsh9",
+  tcgId: "swsh9",
+  name: "Brilliant Stars",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "February 25, 2022",
+  live: true,
+  printedTotal: 172,
+  totalCount: 216,
+  packSize: 11,
+  cost: 16.96,
+  dataFile: "data/swsh9.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, February 2022. Arceus VSTAR, Charizard VSTAR, and the first Trainer Gallery, four wrappers.",
+  oddsLine: "V 1/10 · VMAX 1/200 · VSTAR 1/30 · full art 1/22 · rainbow 1/51 · gold 1/92 · TG 1/8",
+  lede: "VSTAR arrives with Arceus and Charizard. The 30-card Trainer Gallery takes the reverse slot 1 in 8; Charizard V alternate art is 1 in 143.",
+  // TCGplayer's 10,000-pack study; Trainer Gallery takes the reverse slot. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.333, v: 0.1, vmax: 0.005, vstar: 0.0333, ultra: 0.0455, rainbow: 0.0196, secret: 0.0109, tg: 0.1238 }),
+  heroIds: ["swsh9-154", "swsh9-TG23", "swsh9-TG16", "swsh9-TG17"],
+  wrappers: boosterWrappers("swsh9", [
+    { id: "whimsicott", name: "Whimsicott", cardId: "swsh9-175", tag: "Fluffy" },
+    { id: "shaymin", name: "Shaymin", cardId: "swsh9-173", tag: "Sky forme" },
+    { id: "charizard", name: "Charizard", cardId: "swsh9-154", tag: "VSTAR" },
+    { id: "arceus", name: "Arceus", cardId: "swsh9-166", tag: "The chase" },
+  ]),
+};
+
+export const FUSION_STRIKE = {
+  id: "swsh8",
+  tcgId: "swsh8",
+  name: "Fusion Strike",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "November 12, 2021",
+  live: true,
+  printedTotal: 264,
+  totalCount: 284,
+  packSize: 11,
+  cost: 18.83,
+  dataFile: "data/swsh8.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, November 2021. Mew VMAX and Gengar VMAX, the biggest set of the era at 264 cards, four wrappers.",
+  oddsLine: "V 1/10 · VMAX 1/30 · full art 1/24 · rainbow 1/127 · gold 1/120",
+  lede: "Mew VMAX, Gengar VMAX and Genesect V lead 264 cards. Full arts 1 in 24, alternate-art VMAX 1 in 333.",
+  // TCGplayer's 4,000-pack infographic; V by subtraction from its 20% hit rate. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.18, v: 0.105, vmax: 0.0333, ultra: 0.0414, rainbow: 0.0079, secret: 0.0083 }),
+  heroIds: ["swsh8-271", "swsh8-270", "swsh8-269", "swsh8-251"],
+  wrappers: boosterWrappers("swsh8", [
+    { id: "boltund", name: "Boltund", cardId: "swsh8-267", tag: "Fusion" },
+    { id: "genesect", name: "Genesect", cardId: "swsh8-255", tag: "Fusion Strike" },
+    { id: "mew", name: "Mew", cardId: "swsh8-269", tag: "Fusion Strike" },
+    { id: "gengar", name: "Gengar", cardId: "swsh8-271", tag: "Single Strike" },
+  ]),
+};
+
+export const CELEBRATIONS = {
+  id: "cel25",
+  tcgId: "cel25",
+  name: "Celebrations",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "October 8, 2021",
+  live: true,
+  printedTotal: 25,
+  totalCount: 50,
+  packSize: 4,
+  cost: 33.85,
+  dataFile: "data/cel25.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  allFoil: true,
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, October 2021. The 25th anniversary set: four holo cards a pack, and the Classic Collection reprints, one wrapper.",
+  oddsLine: "Classic Collection 2/5 · V 1/4 · VMAX 1/13 · gold Mew 1/150",
+  lede: "Every card is holo. A Classic Collection reprint (Base Set Charizard, Umbreon Gold Star, Shining Magikarp) lands in 2 packs of 5, the gold Mew 1 in 150.",
+  // Cardzard 5,000 packs: Classic Collection in 40% of packs, V 1 in 4, VMAX 1 in 13, gold Mew 1 in 150. Sources in data/pullrates.json.
+  slots: celebrationsSlots({ classic: 0.12, v: 0.07, vmax: 0.02, ultra: 0.005 }),
+  heroIds: ["cel25-cc4", "cel25-cc17", "cel25-25", "cel25-cc76"],
+  wrappers: boosterWrappers("cel25", [
+    { id: "celebrations", name: "Celebrations", cardId: "cel25-cc4", tag: "25 years" },
+  ]),
+};
+
+export const EVOLVING_SKIES = {
+  id: "swsh7",
+  tcgId: "swsh7",
+  name: "Evolving Skies",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "August 27, 2021",
+  live: true,
+  printedTotal: 203,
+  totalCount: 237,
+  packSize: 11,
+  cost: 45.52,
+  dataFile: "data/swsh7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, August 2021. The Eeveelution VMAX set, Rayquaza VMAX and Umbreon VMAX, four wrappers.",
+  oddsLine: "V 1/9 · VMAX 1/18 · full art 1/24 · rainbow 1/119 · gold 1/110",
+  lede: "The most chased set of the era: Umbreon VMAX and Rayquaza VMAX alternate arts at 1 in 333 packs, the Eeveelutions in every rarity. VMAX 1 in 18, alternate-art V 1 in 91.",
+  // TCGplayer's 8,000-pack study; holo Rare from pullrates.com and DigitalTQ. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.25, v: 0.1056, vmax: 0.056, ultra: 0.0418, rainbow: 0.0084, secret: 0.0091 }),
+  heroIds: ["swsh7-215", "swsh7-218", "swsh7-192", "swsh7-194"],
+  wrappers: boosterWrappers("swsh7", [
+    { id: "duraludon", name: "Duraludon", cardId: "swsh7-198", tag: "Dragon" },
+    { id: "sylveon", name: "Sylveon", cardId: "swsh7-212", tag: "Eeveelution" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "swsh7-218", tag: "Dragon" },
+    { id: "umbreon", name: "Umbreon", cardId: "swsh7-215", tag: "The chase" },
+  ]),
+};
+
+export const CHILLING_REIGN = {
+  id: "swsh6",
+  tcgId: "swsh6",
+  name: "Chilling Reign",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "June 18, 2021",
+  live: true,
+  printedTotal: 198,
+  totalCount: 233,
+  packSize: 11,
+  cost: 12.52,
+  dataFile: "data/swsh6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, June 2021. The Calyrex riders and the Galarian birds, five wrappers.",
+  oddsLine: "V 1/11 · VMAX 1/24 · full art 1/24 · rainbow 1/122 · gold 1/100",
+  lede: "Shadow Rider and Ice Rider Calyrex VMAX, and the Galarian bird alternate arts. VMAX 1 in 24, alternate-art V 1 in 147.",
+  // Cardzard 5,000 packs; V and holo from ThePriceDex. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.18, v: 0.09, vmax: 0.0417, ultra: 0.0422, rainbow: 0.0082, secret: 0.01 }),
+  heroIds: ["swsh6-222", "swsh6-223", "swsh6-224", "swsh6-225"],
+  wrappers: boosterWrappers("swsh6", [
+    { id: "moltres", name: "Galarian Moltres", cardId: "swsh6-176", tag: "Fiery wrath" },
+    { id: "zapdos", name: "Galarian Zapdos", cardId: "swsh6-173", tag: "Thunderous kick" },
+    { id: "shadow-rider", name: "Shadow Rider Calyrex", cardId: "swsh6-204", tag: "Astral barrage" },
+    { id: "articuno", name: "Galarian Articuno", cardId: "swsh6-169", tag: "Cruel sight" },
+    { id: "ice-rider", name: "Ice Rider Calyrex", cardId: "swsh6-202", tag: "Glacial lance" },
+  ]),
+};
+
+export const BATTLE_STYLES = {
+  id: "swsh5",
+  tcgId: "swsh5",
+  name: "Battle Styles",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "March 19, 2021",
+  live: true,
+  printedTotal: 163,
+  totalCount: 183,
+  packSize: 11,
+  cost: 9.57,
+  dataFile: "data/swsh5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, March 2021. Single Strike and Rapid Strike Urshifu VMAX, four wrappers.",
+  oddsLine: "V 1/12 · VMAX 1/25 · full art 1/25 · rainbow 1/90 · gold 1/106",
+  lede: "Urshifu VMAX in both styles, Tyranitar V and Empoleon V. Full arts 1 in 25, rainbow 1 in 90, gold 1 in 106.",
+  // markzeej 20,195 packs for the full arts and secrets; V, VMAX and holo from ThePriceDex and pullrates.com. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.18, v: 0.08, vmax: 0.04, ultra: 0.04, rainbow: 0.0111, secret: 0.0094 }),
+  heroIds: ["swsh5-155", "swsh5-170", "swsh5-146", "swsh5-148"],
+  wrappers: boosterWrappers("swsh5", [
+    { id: "urshifu", name: "Urshifu", cardId: "swsh5-168", tag: "Single Strike" },
+    { id: "tyranitar", name: "Tyranitar", cardId: "swsh5-155", tag: "Single Strike" },
+    { id: "empoleon", name: "Empoleon", cardId: "swsh5-146", tag: "Rapid Strike" },
+    { id: "urshifu-rapid", name: "Urshifu", cardId: "swsh5-170", tag: "Rapid Strike" },
+  ]),
+};
+
+export const SHINING_FATES = {
+  id: "swsh45",
+  tcgId: "swsh45",
+  name: "Shining Fates",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "February 19, 2021",
+  live: true,
+  printedTotal: 72,
+  totalCount: 195,
+  packSize: 11,
+  cost: 16.44,
+  dataFile: "data/swsh45.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, February 2021. Shiny Charizard VMAX and the 122-card Shiny Vault, four wrappers.",
+  oddsLine: "V 1/9 · VMAX 1/18 · full art 1/31 · rainbow 1/84 · Amazing 1/17 · shiny 1/3",
+  lede: "The Shiny Vault takes the reverse slot in nearly a third of packs: a baby shiny 1 in 4, a shiny V 1 in 14, a shiny VMAX 1 in 39. Shiny Charizard VMAX is 1 in 700 and change.",
+  // 2,187 packs (Elite Fourum / Cardzard); the Shiny Vault and the Amazing Rares take the reverse slot. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.18, v: 0.1084, vmax: 0.0544, ultra: 0.0325, rainbow: 0.0119, amazing: 0.0576, shiny: 0.2273, shinyV: 0.0714, shinyVMAX: 0.0256, shinyGold: 0.00645 }),
+  heroIds: ["swsh45-SV107", "swsh45-SV044", "swsh45-SV039", "swsh45-SV022"],
+  wrappers: boosterWrappers("swsh45", [
+    { id: "dragapult", name: "Dragapult", cardId: "swsh45-SV062", tag: "Shiny" },
+    { id: "toxtricity", name: "Toxtricity", cardId: "swsh45-SV113", tag: "Shiny" },
+    { id: "crobat", name: "Crobat", cardId: "swsh45-45", tag: "Shiny" },
+    { id: "charizard", name: "Charizard", cardId: "swsh45-SV107", tag: "Shiny chase" },
+  ]),
+};
+
+export const VIVID_VOLTAGE = {
+  id: "swsh4",
+  tcgId: "swsh4",
+  name: "Vivid Voltage",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "November 13, 2020",
+  live: true,
+  printedTotal: 185,
+  totalCount: 203,
+  packSize: 11,
+  cost: 11.09,
+  dataFile: "data/swsh4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, November 2020. Chonky Pikachu VMAX, Amazing Rares in the reverse slot, four wrappers.",
+  oddsLine: "V 1/8 · VMAX 1/23 · full art 1/24 · rainbow 1/79 · gold 1/95 · Amazing 1/20",
+  lede: "Pikachu VMAX and the six Amazing Rares: the first Amazing Rare set. An Amazing Rare replaces the reverse holo 1 in 20 packs.",
+  // Cardzard 2,184 packs (rainbow from DigitalTQ's 630 packs, since Cardzard's 1/31 is 2.5x the era); Amazing Rare in the reverse slot. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.2175, v: 0.127, vmax: 0.0429, ultra: 0.0417, rainbow: 0.0127, secret: 0.0105, amazing: 0.05 }),
+  heroIds: ["swsh4-188", "swsh4-170", "swsh4-138", "swsh4-185"],
+  wrappers: boosterWrappers("swsh4", [
+    { id: "zarude", name: "Zarude", cardId: "swsh4-167", tag: "Jungle" },
+    { id: "orbeetle", name: "Orbeetle", cardId: "swsh4-186", tag: "Psychic" },
+    { id: "celebi", name: "Celebi", cardId: "swsh4-9", tag: "Amazing" },
+    { id: "pikachu", name: "Pikachu", cardId: "swsh4-188", tag: "The chase" },
+  ]),
+};
+
+export const CHAMPIONS_PATH = {
+  id: "swsh35",
+  tcgId: "swsh35",
+  name: "Champion's Path",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "September 25, 2020",
+  live: true,
+  printedTotal: 73,
+  totalCount: 80,
+  packSize: 11,
+  cost: 19.54,
+  dataFile: "data/swsh35.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, September 2020. A 73-card special set sold in collection boxes: Charizard VMAX rainbow and the shiny Charizard V, four wrappers.",
+  oddsLine: "V 1/6 · VMAX 1/28 · full art 1/19 · rainbow 1/64 · gold 1/114",
+  lede: "Every rare slot is a holo or better. Charizard V full art 1 in 227 packs, the rainbow VMAX 1 in 230; Pokémon V come 1 in 6.",
+  // Elite Fourum 3,192 packs; every rare slot is a holo or better. Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.7265, v: 0.1573, vmax: 0.0355, ultra: 0.0539, rainbow: 0.0157, secret: 0.0088 }),
+  heroIds: ["swsh35-79", "swsh35-80", "swsh35-74", "swsh35-75"],
+  wrappers: boosterWrappers("swsh35", [
+    { id: "obstagoon", name: "Obstagoon", cardId: "swsh35-37", tag: "Galarian" },
+    { id: "gardevoir", name: "Gardevoir", cardId: "swsh35-76", tag: "Champion" },
+    { id: "drednaw", name: "Drednaw", cardId: "swsh35-75", tag: "Bite" },
+    { id: "alcremie", name: "Alcremie", cardId: "swsh35-23", tag: "Sweet" },
+  ]),
+};
+
+export const DARKNESS_ABLAZE = {
+  id: "swsh3",
+  tcgId: "swsh3",
+  name: "Darkness Ablaze",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "August 14, 2020",
+  live: true,
+  printedTotal: 189,
+  totalCount: 201,
+  packSize: 11,
+  cost: 9.85,
+  dataFile: "data/swsh3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, August 2020. Charizard VMAX and Eternatus VMAX, four wrappers.",
+  oddsLine: "V 1/8 · VMAX 1/26 · full art 1/26 · rainbow 1/84 · gold 1/115",
+  lede: "Charizard VMAX is the chase, with Eternatus, Centiskorch and Grimmsnarl VMAX behind it. VMAX 1 in 26, rainbow 1 in 84.",
+  // Elite Fourum 5,040 packs; holo Rare from ThePriceDex (1 in 5.9). Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.17, v: 0.1258, vmax: 0.0385, ultra: 0.0385, rainbow: 0.0119, secret: 0.0087 }),
+  heroIds: ["swsh3-20", "swsh3-190", "swsh3-194", "swsh3-193"],
+  wrappers: boosterWrappers("swsh3", [
+    { id: "eternatus", name: "Eternatus", cardId: "swsh3-192", tag: "Eternamax" },
+    { id: "grimmsnarl", name: "Grimmsnarl", cardId: "swsh3-115", tag: "G-Max" },
+    { id: "centiskorch", name: "Centiskorch", cardId: "swsh3-191", tag: "Burning" },
+    { id: "charizard", name: "Charizard", cardId: "swsh3-20", tag: "The chase" },
+  ]),
+};
+
+export const REBEL_CLASH = {
+  id: "swsh2",
+  tcgId: "swsh2",
+  name: "Rebel Clash",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "May 1, 2020",
+  live: true,
+  printedTotal: 192,
+  totalCount: 209,
+  packSize: 11,
+  cost: 12.28,
+  dataFile: "data/swsh2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, May 2020. Toxtricity VMAX and the Galar starters' VMAX, four wrappers.",
+  oddsLine: "V 1/8 · VMAX 1/29 · full art 1/27 · rainbow 1/67 · gold 1/105",
+  lede: "Toxtricity, Dragapult and Copperajah VMAX, plus the Boss's Orders full art. VMAX lands 1 in 29, rainbow 1 in 67.",
+  // Elite Fourum 2,736 packs; holo Rare from ThePriceDex (1 in 5.7). Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.175, v: 0.1265, vmax: 0.034, ultra: 0.0376, rainbow: 0.015, secret: 0.0095 }),
+  heroIds: ["swsh2-204", "swsh2-205", "swsh2-206", "swsh2-207"],
+  wrappers: boosterWrappers("swsh2", [
+    { id: "toxtricity", name: "Toxtricity", cardId: "swsh2-196", tag: "Amped" },
+    { id: "inteleon", name: "Inteleon", cardId: "swsh2-195", tag: "Sniper" },
+    { id: "cinderace", name: "Cinderace", cardId: "swsh2-194", tag: "Pyro ball" },
+    { id: "rillaboom", name: "Rillaboom", cardId: "swsh2-193", tag: "Drum beat" },
+  ]),
+};
+
+export const SWORD_SHIELD = {
+  id: "swsh1",
+  tcgId: "swsh1",
+  name: "Sword & Shield",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "February 7, 2020",
+  live: true,
+  printedTotal: 202,
+  totalCount: 216,
+  packSize: 11,
+  cost: 11.09,
+  dataFile: "data/swsh1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "swsh",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sword & Shield, February 2020. Where the era starts: Zacian V, Zamazenta V, Gigantamax Lapras, and the first VMAX, four wrappers.",
+  oddsLine: "V 1/7 · VMAX 1/45 · full art 1/27 · rainbow 1/81 · gold 1/110",
+  lede: "Zacian and Zamazenta lead the Galar era's first set: Pokémon V take the rare slot 1 in 7, VMAX 1 in 45, and the full arts, rainbows and golds share about 1 pack in 17.",
+  // Elite Fourum 4,628 packs; holo Rare from ThePriceDex (1 in 5.5). Sources in data/pullrates.json.
+  slots: swshSlots({ holo: 0.18, v: 0.142, vmax: 0.022, ultra: 0.0374, rainbow: 0.0123, secret: 0.0091 }),
+  heroIds: ["swsh1-206", "swsh1-142", "swsh1-197", "swsh1-200"],
+  wrappers: boosterWrappers("swsh1", [
+    { id: "rillaboom", name: "Rillaboom", cardId: "swsh1-15", tag: "Grookey's grown" },
+    { id: "lapras", name: "Lapras", cardId: "swsh1-203", tag: "Gigantamax" },
+    { id: "zamazenta", name: "Zamazenta", cardId: "swsh1-212", tag: "The shield" },
+    { id: "zacian", name: "Zacian", cardId: "swsh1-211", tag: "The sword" },
+  ]),
+};
+
 function printSlots(plain, holo = 1) {
   return [
     { pool: "plain", count: plain },
@@ -1775,6 +2393,23 @@ export const PLAYABLE_SETS = [
   PRISMATIC_EVOLUTIONS,
   SV_151,
   SV_PROMOS,
+  CROWN_ZENITH,
+  SILVER_TEMPEST,
+  LOST_ORIGIN,
+  POKEMON_GO,
+  ASTRAL_RADIANCE,
+  BRILLIANT_STARS,
+  FUSION_STRIKE,
+  CELEBRATIONS,
+  EVOLVING_SKIES,
+  CHILLING_REIGN,
+  BATTLE_STYLES,
+  SHINING_FATES,
+  VIVID_VOLTAGE,
+  CHAMPIONS_PATH,
+  DARKNESS_ABLAZE,
+  REBEL_CLASH,
+  SWORD_SHIELD,
   MCDONALDS_2024,
   TRICK_OR_TRADE_2024,
   MCDONALDS_2023,
@@ -1833,16 +2468,6 @@ export const ROADMAP = [
   {
     era: "Scarlet & Violet",
     sets: [
-    ],
-  },
-  {
-    era: "Sword & Shield",
-    sets: [
-      { id: "swsh12pt5", name: "Crown Zenith", released: "Jan 2023", cards: "—" },
-      { id: "swsh12", name: "Silver Tempest", released: "Nov 2022", cards: "—" },
-      { id: "pgo", name: "Pokémon GO", released: "Jul 2022", cards: "—" },
-      { id: "swsh7", name: "Evolving Skies", released: "Aug 2021", cards: "—" },
-      { id: "swsh1", name: "Sword & Shield", released: "Feb 2020", cards: "—" },
     ],
   },
   {

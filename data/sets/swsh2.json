@@ -1,0 +1,27 @@
+{
+  "id": "swsh2",
+  "name": "Rebel Clash",
+  "series": "sword-shield",
+  "slug": "rebel-clash",
+  "scrydexId": "swsh2",
+  "era": "swsh",
+  "artSlug": "rebel-clash",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2626,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

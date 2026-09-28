@@ -1,0 +1,27 @@
+{
+  "id": "swsh5",
+  "name": "Battle Styles",
+  "series": "sword-shield",
+  "slug": "battle-styles",
+  "scrydexId": "swsh5",
+  "era": "swsh",
+  "artSlug": "battle-styles",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2765,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

@@ -1,0 +1,27 @@
+{
+  "id": "swsh8",
+  "name": "Fusion Strike",
+  "series": "sword-shield",
+  "slug": "fusion-strike",
+  "scrydexId": "swsh8",
+  "era": "swsh",
+  "artSlug": "fusion-strike",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2906,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

@@ -1,0 +1,7303 @@
+[
+  {
+    "id": "swsh3-1",
+    "name": "Butterfree V",
+    "number": "1",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "190",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/swsh3/1.webp",
+    "imageSmall": "assets/cards/swsh3/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Dizzying Poison",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      },
+      {
+        "name": "Blasting Wind",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-1/large",
+    "tcgplayerId": 219054,
+    "market": 1.63,
+    "foilMap": "assets/foil/maps/swsh3/1.webp"
+  },
+  {
+    "id": "swsh3-2",
+    "name": "Butterfree VMAX",
+    "number": "2",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "300",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Butterfree V",
+    "image": "assets/cards/swsh3/2.webp",
+    "imageSmall": "assets/cards/swsh3/2-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Toxbreeze",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-2/large",
+    "tcgplayerId": 219055,
+    "market": 5.49,
+    "foilMap": "assets/foil/maps/swsh3/2.webp",
+    "etchMap": "assets/foil/maps/swsh3/2-etch.webp"
+  },
+  {
+    "id": "swsh3-3",
+    "name": "Paras",
+    "number": "3",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "The mushrooms, known as tochukaso, are controlling the bug. Even if the bug bugs the mushrooms, they tell it to bug off.",
+    "image": "assets/cards/swsh3/3.webp",
+    "imageSmall": "assets/cards/swsh3/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-3/large",
+    "tcgplayerId": 219061,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-4",
+    "name": "Parasect",
+    "number": "4",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Miki Tanaka",
+    "flavorText": "The bug is mostly dead, with the mushroom on its back having become the main body. If the mushroom comes off, the bug stops moving.",
+    "evolvesFrom": "Paras",
+    "image": "assets/cards/swsh3/4.webp",
+    "imageSmall": "assets/cards/swsh3/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Mushroom Tackle",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Solar Beam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-4/large",
+    "tcgplayerId": 219068,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-5",
+    "name": "Carnivine",
+    "number": "5",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It binds itself to trees in marshes. It attracts prey with its sweet-smelling drool and gulps them down.",
+    "image": "assets/cards/swsh3/5.webp",
+    "imageSmall": "assets/cards/swsh3/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Return",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "You may draw cards until you have 5 cards in your hand."
+      },
+      {
+        "name": "Giga Drain",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-5/large",
+    "tcgplayerId": 219069,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-6",
+    "name": "Pansage",
+    "number": "6",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Mina Nakai",
+    "flavorText": "It's good at finding berries and gathers them from all over. It's kind enough to share them with friends.",
+    "image": "assets/cards/swsh3/6.webp",
+    "imageSmall": "assets/cards/swsh3/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-6/large",
+    "tcgplayerId": 219074,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-7",
+    "name": "Simisage",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Hasegawa Saki",
+    "flavorText": "Ill tempered, it fights by swinging its barbed tail around wildly. The leaf growing on its head is very bitter.",
+    "evolvesFrom": "Pansage",
+    "image": "assets/cards/swsh3/7.webp",
+    "imageSmall": "assets/cards/swsh3/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-7/large",
+    "tcgplayerId": 219075,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-8",
+    "name": "Karrablast",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Mizue",
+    "flavorText": "Its strange physiology reacts to electrical energy in interesting ways. The presence of a Shelmet will cause this Pokémon to evolve.",
+    "image": "assets/cards/swsh3/8.webp",
+    "imageSmall": "assets/cards/swsh3/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Continuous Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-8/large",
+    "tcgplayerId": 219080,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-9",
+    "name": "Shelmet",
+    "number": "9",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Megumi Mizutani",
+    "flavorText": "When attacked, it tightly shuts the lid of its shell. This reaction fails to protect it from Karrablast, however, because they can still get into the shell.",
+    "image": "assets/cards/swsh3/9.webp",
+    "imageSmall": "assets/cards/swsh3/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Spray Fluid",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-9/large",
+    "tcgplayerId": 219081,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-10",
+    "name": "Accelgor",
+    "number": "10",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It moves with blinding speed and lobs poison at foes. Featuring Accelgor as a main character is a surefire way to make a movie or comic popular.",
+    "evolvesFrom": "Shelmet",
+    "image": "assets/cards/swsh3/10.webp",
+    "imageSmall": "assets/cards/swsh3/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Jet Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-10/large",
+    "tcgplayerId": 219087,
+    "market": 0.07
+  },
+  {
+    "id": "swsh3-11",
+    "name": "Rowlet",
+    "number": "11",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "At a distance, it launches its sharp feathers while flying about. If the enemy gets too close, Rowlet switches tactics and delivers vicious kicks.",
+    "image": "assets/cards/swsh3/11.webp",
+    "imageSmall": "assets/cards/swsh3/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Wind Shard",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 60 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sky Circus",
+        "text": "If you played Bird Keeper from your hand during this turn, ignore all Energy in this Pokémon's attack costs.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-11/large",
+    "tcgplayerId": 219090,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-12",
+    "name": "Dartrix",
+    "number": "12",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It throws one knifelike feather after another at its enemies, and each one precisely strikes a weak point. These feathers are known as blade quills.",
+    "evolvesFrom": "Rowlet",
+    "image": "assets/cards/swsh3/12.webp",
+    "imageSmall": "assets/cards/swsh3/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-12/large",
+    "tcgplayerId": 219092,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-13",
+    "name": "Decidueye",
+    "number": "13",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "Ryota Murayama",
+    "flavorText": "As if wielding a bow, it launches the arrow quills hidden among the feathers of its wings. Decidueye's shots never miss.",
+    "evolvesFrom": "Dartrix",
+    "image": "assets/cards/swsh3/13.webp",
+    "imageSmall": "assets/cards/swsh3/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Splitting Arrow",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack also does 20 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Deep Forest Camo",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon V and Pokémon-GX.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-13/large",
+    "tcgplayerId": 219226,
+    "market": 0.31,
+    "foilMap": "assets/foil/maps/swsh3/13.webp"
+  },
+  {
+    "id": "swsh3-14",
+    "name": "Bounsweet",
+    "number": "14",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Yuka Morii",
+    "flavorText": "Its body gives off a sweet, fruity scent that is extremely appetizing to bird Pokémon.",
+    "image": "assets/cards/swsh3/14.webp",
+    "imageSmall": "assets/cards/swsh3/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Synthesis",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Grass Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Flop",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-14/large",
+    "tcgplayerId": 219227,
+    "market": 0.29
+  },
+  {
+    "id": "swsh3-15",
+    "name": "Steenee",
+    "number": "15",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "sui",
+    "flavorText": "As it twirls like a dancer, a sweet smell spreads out around it. Anyone who inhales the scent will feel a surge of happiness.",
+    "evolvesFrom": "Bounsweet",
+    "image": "assets/cards/swsh3/15.webp",
+    "imageSmall": "assets/cards/swsh3/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Captivate",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon."
+      },
+      {
+        "name": "Smack",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-15/large",
+    "tcgplayerId": 219228,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-16",
+    "name": "Tsareena",
+    "number": "16",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "so-taro",
+    "flavorText": "This feared Pokémon has long, slender legs and a cruel heart. It shows no mercy as it stomps on its opponents.",
+    "evolvesFrom": "Steenee",
+    "image": "assets/cards/swsh3/16.webp",
+    "imageSmall": "assets/cards/swsh3/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Whip",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon for each Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Time Out Kick",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "You may put an Energy attached to your opponent's Active Pokémon into their hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-16/large",
+    "tcgplayerId": 219229,
+    "market": 0.35
+  },
+  {
+    "id": "swsh3-17",
+    "name": "Wimpod",
+    "number": "17",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "MAHOU",
+    "flavorText": "It's nature's cleaner—it eats anything and everything, including garbage and rotten things. The ground near its nest is always clean.",
+    "image": "assets/cards/swsh3/17.webp",
+    "imageSmall": "assets/cards/swsh3/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw and Run",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-17/large",
+    "tcgplayerId": 219230,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-18",
+    "name": "Golisopod",
+    "number": "18",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Ryuta Fuse",
+    "flavorText": "It will do anything to win, taking advantage of every opening and finishing opponents off with the small claws on its front legs.",
+    "evolvesFrom": "Wimpod",
+    "image": "assets/cards/swsh3/18.webp",
+    "imageSmall": "assets/cards/swsh3/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Hard Times Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "This attack does 50 more damage for each of your opponent's Pokémon V and Pokémon-GX in play."
+      },
+      {
+        "name": "Smash Turn",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-18/large",
+    "tcgplayerId": 219231,
+    "market": 0.27,
+    "foilMap": "assets/foil/maps/swsh3/18.webp"
+  },
+  {
+    "id": "swsh3-19",
+    "name": "Charizard V",
+    "number": "19",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "220",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swsh3/19.webp",
+    "imageSmall": "assets/cards/swsh3/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      },
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-19/large",
+    "tcgplayerId": 219232,
+    "market": 8.61,
+    "foilMap": "assets/foil/maps/swsh3/19.webp"
+  },
+  {
+    "id": "swsh3-20",
+    "name": "Charizard VMAX",
+    "number": "20",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "330",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Charizard V",
+    "image": "assets/cards/swsh3/20.webp",
+    "imageSmall": "assets/cards/swsh3/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      },
+      {
+        "name": "G-Max Wildfire",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-20/large",
+    "tcgplayerId": 219233,
+    "market": 43.73,
+    "foilMap": "assets/foil/maps/swsh3/20.webp",
+    "etchMap": "assets/foil/maps/swsh3/20-etch.webp"
+  },
+  {
+    "id": "swsh3-21",
+    "name": "Houndoom V",
+    "number": "21",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/swsh3/21.webp",
+    "imageSmall": "assets/cards/swsh3/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Vengeful Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your Benched Fire Pokémon have any damage counters on them, this attack does 100 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-21/large",
+    "tcgplayerId": 219234,
+    "market": 2.38,
+    "foilMap": "assets/foil/maps/swsh3/21.webp"
+  },
+  {
+    "id": "swsh3-22",
+    "name": "Torchic",
+    "number": "22",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Yuka Morii",
+    "flavorText": "A fire burns inside, so it feels very warm to hug. It launches fireballs of 1,800 degrees Fahrenheit.",
+    "image": "assets/cards/swsh3/22.webp",
+    "imageSmall": "assets/cards/swsh3/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-22/large",
+    "tcgplayerId": 219235,
+    "market": 0.3
+  },
+  {
+    "id": "swsh3-23",
+    "name": "Combusken",
+    "number": "23",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "kodama",
+    "flavorText": "During a battle, the hot flame in its body increases. Its kicks have outstanding destructive power.",
+    "evolvesFrom": "Torchic",
+    "image": "assets/cards/swsh3/23.webp",
+    "imageSmall": "assets/cards/swsh3/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Smash Kick",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Heat Beak",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-23/large",
+    "tcgplayerId": 219236,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-24",
+    "name": "Blaziken",
+    "number": "24",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "Ryuta Fuse",
+    "flavorText": "When facing a tough foe, it looses flames from its wrists. Its powerful legs let it jump clear over buildings.",
+    "evolvesFrom": "Combusken",
+    "image": "assets/cards/swsh3/24.webp",
+    "imageSmall": "assets/cards/swsh3/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Turbo Drive",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Double Type",
+        "text": "As long as this Pokémon is in play, it is Fire and Fighting type.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-24/large",
+    "tcgplayerId": 219237,
+    "market": 0.58,
+    "foilMap": "assets/foil/maps/swsh3/24.webp"
+  },
+  {
+    "id": "swsh3-25",
+    "name": "Heatran",
+    "number": "25",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "Boiling blood, like magma, circulates through its body. It makes its dwelling place in volcanic caves.",
+    "image": "assets/cards/swsh3/25.webp",
+    "imageSmall": "assets/cards/swsh3/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Raging Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-25/large",
+    "tcgplayerId": 219238,
+    "market": 0.26,
+    "foilMap": "assets/foil/maps/swsh3/25.webp"
+  },
+  {
+    "id": "swsh3-26",
+    "name": "Pansear",
+    "number": "26",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Megumi Higuchi",
+    "flavorText": "This Pokémon lives in caves in volcanoes. The fire within the tuft on its head can reach 600 degrees Fahrenheit.",
+    "image": "assets/cards/swsh3/26.webp",
+    "imageSmall": "assets/cards/swsh3/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-26/large",
+    "tcgplayerId": 219239,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-27",
+    "name": "Simisear",
+    "number": "27",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "0313",
+    "flavorText": "When it gets excited, embers rise from its head and tail and it gets hot. For some reason, it loves sweets.",
+    "evolvesFrom": "Pansear",
+    "image": "assets/cards/swsh3/27.webp",
+    "imageSmall": "assets/cards/swsh3/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-27/large",
+    "tcgplayerId": 219240,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-28",
+    "name": "Galarian Darmanitan",
+    "number": "28",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Misa Tsutsui",
+    "flavorText": "Anger has reignited its atrophied flame sac. This Pokémon spews fire everywhere as it rampages indiscriminately.",
+    "evolvesFrom": "Galarian Darumaka",
+    "image": "assets/cards/swsh3/28.webp",
+    "imageSmall": "assets/cards/swsh3/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Frozen Heat",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "110+",
+        "text": "You may discard all Water Energy from this Pokémon. If you do, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-28/large",
+    "tcgplayerId": 219241,
+    "market": 0.34
+  },
+  {
+    "id": "swsh3-29",
+    "name": "Larvesta",
+    "number": "29",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Uta",
+    "flavorText": "It protects itself with flame. Long years ago, people believed Larvesta had a nest on the sun.",
+    "image": "assets/cards/swsh3/29.webp",
+    "imageSmall": "assets/cards/swsh3/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-29/large",
+    "tcgplayerId": 219242,
+    "market": 0.08
+  },
+  {
+    "id": "swsh3-30",
+    "name": "Volcarona",
+    "number": "30",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "NC Empire",
+    "flavorText": "According to legends, it was hatched from a flaming cocoon to save people and Pokémon that were suffering from the cold.",
+    "evolvesFrom": "Larvesta",
+    "image": "assets/cards/swsh3/30.webp",
+    "imageSmall": "assets/cards/swsh3/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Cauterize",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "80",
+        "text": "If your opponent's Active Pokémon has no damage counters on it before this attack does damage, this attack does nothing."
+      },
+      {
+        "name": "Fire Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-30/large",
+    "tcgplayerId": 219244,
+    "market": 0.33
+  },
+  {
+    "id": "swsh3-31",
+    "name": "Fletchinder",
+    "number": "31",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Mina Nakai",
+    "flavorText": "Its speed right after takeoff already puts it in the top speed class of all bird Pokémon.",
+    "evolvesFrom": "Fletchling",
+    "image": "assets/cards/swsh3/31.webp",
+    "imageSmall": "assets/cards/swsh3/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-31/large",
+    "tcgplayerId": 219245,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-32",
+    "name": "Talonflame",
+    "number": "32",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "kawayoo",
+    "flavorText": "Bird Pokémon make up most of its diet. It approaches at high speeds and smacks them down to the ground with its powerful kick.",
+    "evolvesFrom": "Fletchinder",
+    "image": "assets/cards/swsh3/32.webp",
+    "imageSmall": "assets/cards/swsh3/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Mach Flight",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Scorching Feathers",
+        "text": "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), the Attacking Pokémon is now Burned.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-32/large",
+    "tcgplayerId": 219246,
+    "market": 0.17
+  },
+  {
+    "id": "swsh3-33",
+    "name": "Centiskorch V",
+    "number": "33",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/33.webp",
+    "imageSmall": "assets/cards/swsh3/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Radiating Heat",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "You may discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Burning Train",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "180",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-33/large",
+    "tcgplayerId": 219249,
+    "market": 0.79,
+    "foilMap": "assets/foil/maps/swsh3/33.webp"
+  },
+  {
+    "id": "swsh3-34",
+    "name": "Centiskorch VMAX",
+    "number": "34",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Centiskorch V",
+    "image": "assets/cards/swsh3/34.webp",
+    "imageSmall": "assets/cards/swsh3/34-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Centiferno",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each Fire Energy attached to this Pokémon. If you did any damage with this attack, you may attach a Fire Energy card from your discard pile to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-34/large",
+    "tcgplayerId": 219250,
+    "market": 1.82,
+    "foilMap": "assets/foil/maps/swsh3/34.webp",
+    "etchMap": "assets/foil/maps/swsh3/34-etch.webp"
+  },
+  {
+    "id": "swsh3-35",
+    "name": "Galarian Mr. Mime",
+    "number": "35",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Misa Tsutsui",
+    "flavorText": "Its talent is tap-dancing. It can also manipulate temperatures to create a floor of ice, which this Pokémon can kick up to use as a barrier.",
+    "image": "assets/cards/swsh3/35.webp",
+    "imageSmall": "assets/cards/swsh3/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Reflect",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Icy Snow",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-35/large",
+    "tcgplayerId": 219260,
+    "market": 0.06
+  },
+  {
+    "id": "swsh3-36",
+    "name": "Galarian Mr. Rime",
+    "number": "36",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Naoki Saito",
+    "flavorText": "It's highly skilled at tap-dancing. It waves its cane of ice in time with its graceful movements.",
+    "evolvesFrom": "Galarian Mr. Mime",
+    "image": "assets/cards/swsh3/36.webp",
+    "imageSmall": "assets/cards/swsh3/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Party",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shuffle Dance",
+        "text": "Once during your turn, you may switch 1 of your opponent's face-down Prize cards with the top card of their deck. (The cards stay face down.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-36/large",
+    "tcgplayerId": 219267,
+    "market": 0.33
+  },
+  {
+    "id": "swsh3-37",
+    "name": "Suicune",
+    "number": "37",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "so-taro",
+    "flavorText": "Said to be the embodiment of north winds, it can instantly purify filthy, murky water.",
+    "image": "assets/cards/swsh3/37.webp",
+    "imageSmall": "assets/cards/swsh3/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Aurora Loop",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Put 2 Water Energy attached to this Pokémon into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-37/large",
+    "tcgplayerId": 219271,
+    "market": 0.89,
+    "foilMap": "assets/foil/maps/swsh3/37.webp"
+  },
+  {
+    "id": "swsh3-38",
+    "name": "Feebas",
+    "number": "38",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "Although unattractive and unpopular, this Pokémon's marvelous vitality has made it a subject of research.",
+    "image": "assets/cards/swsh3/38.webp",
+    "imageSmall": "assets/cards/swsh3/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Nap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 20 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-38/large",
+    "tcgplayerId": 219275,
+    "market": 0.16
+  },
+  {
+    "id": "swsh3-39",
+    "name": "Milotic",
+    "number": "39",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "Milotic has provided inspiration to many artists. It has even been referred to as the most beautiful Pokémon of all.",
+    "evolvesFrom": "Feebas",
+    "image": "assets/cards/swsh3/39.webp",
+    "imageSmall": "assets/cards/swsh3/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bright Heal",
+        "text": "Once during your turn, you may heal 20 damage from each of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-39/large",
+    "tcgplayerId": 219303,
+    "market": 0.55,
+    "foilMap": "assets/foil/maps/swsh3/39.webp"
+  },
+  {
+    "id": "swsh3-40",
+    "name": "Relicanth",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "MAHOU",
+    "flavorText": "The reason it hasn't changed at all in a hundred million years is that it's apparently already a perfect life-form.",
+    "image": "assets/cards/swsh3/40.webp",
+    "imageSmall": "assets/cards/swsh3/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Fossil Search",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Rare Fossil cards and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-40/large",
+    "tcgplayerId": 219322,
+    "market": 0.06
+  },
+  {
+    "id": "swsh3-41",
+    "name": "Panpour",
+    "number": "41",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "ryoma uratsuka",
+    "flavorText": "The water stored inside the tuft on its head is full of nutrients. Plants that receive its water grow large.",
+    "image": "assets/cards/swsh3/41.webp",
+    "imageSmall": "assets/cards/swsh3/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-41/large",
+    "tcgplayerId": 219324,
+    "market": 0.21
+  },
+  {
+    "id": "swsh3-42",
+    "name": "Simipour",
+    "number": "42",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It prefers places with clean water. When its tuft runs low, it replenishes it by siphoning up water with its tail.",
+    "evolvesFrom": "Panpour",
+    "image": "assets/cards/swsh3/42.webp",
+    "imageSmall": "assets/cards/swsh3/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-42/large",
+    "tcgplayerId": 219338,
+    "market": 0.06
+  },
+  {
+    "id": "swsh3-43",
+    "name": "Galarian Darumaka",
+    "number": "43",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It lived in snowy areas for so long that its fire sac cooled off and atrophied. It now has an organ that generates cold instead.",
+    "image": "assets/cards/swsh3/43.webp",
+    "imageSmall": "assets/cards/swsh3/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-43/large",
+    "tcgplayerId": 219339,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-44",
+    "name": "Galarian Darmanitan",
+    "number": "44",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "On days when blizzards blow through, it comes down to where people live. It stashes food in the snowball on its head, taking it home for later.",
+    "evolvesFrom": "Galarian Darumaka",
+    "image": "assets/cards/swsh3/44.webp",
+    "imageSmall": "assets/cards/swsh3/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Blizzard",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Crushing Headbutt",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "During your next turn, this Pokémon can't use Crushing Headbutt."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-44/large",
+    "tcgplayerId": 219345,
+    "market": 0.27
+  },
+  {
+    "id": "swsh3-45",
+    "name": "Vanillite",
+    "number": "45",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "Unable to survive in hot areas, it makes itself comfortable by breathing out air cold enough to cause snow. It burrows into the snow to sleep.",
+    "image": "assets/cards/swsh3/45.webp",
+    "imageSmall": "assets/cards/swsh3/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Over",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-45/large",
+    "tcgplayerId": 219348,
+    "market": 0.07
+  },
+  {
+    "id": "swsh3-46",
+    "name": "Vanillish",
+    "number": "46",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Shibuzoh.",
+    "flavorText": "By drinking pure water, it grows its icy body. This Pokémon can be hard to find on days with warm, sunny weather.",
+    "evolvesFrom": "Vanillite",
+    "image": "assets/cards/swsh3/46.webp",
+    "imageSmall": "assets/cards/swsh3/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Freezing Headbutt",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-46/large",
+    "tcgplayerId": 219349,
+    "market": 0.08
+  },
+  {
+    "id": "swsh3-47",
+    "name": "Vanilluxe",
+    "number": "47",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "kodama",
+    "flavorText": "When its anger reaches a breaking point, this Pokémon unleashes a fierce blizzard that freezes every creature around it, be they friend or foe.",
+    "evolvesFrom": "Vanillish",
+    "image": "assets/cards/swsh3/47.webp",
+    "imageSmall": "assets/cards/swsh3/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Frost Smash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bitter Cold",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-47/large",
+    "tcgplayerId": 219351,
+    "market": 0.21
+  },
+  {
+    "id": "swsh3-48",
+    "name": "Cubchoo",
+    "number": "48",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Saya Tsuruta",
+    "flavorText": "When this Pokémon is in good health, its snot becomes thicker and stickier. It will smear its snot on anyone it doesn't like.",
+    "image": "assets/cards/swsh3/48.webp",
+    "imageSmall": "assets/cards/swsh3/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Chop",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Icicle",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-48/large",
+    "tcgplayerId": 219358,
+    "market": 0.09
+  },
+  {
+    "id": "swsh3-49",
+    "name": "Beartic",
+    "number": "49",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It swims through frigid seas, searching for prey. From its frozen breath, it forms icy fangs that are harder than steel.",
+    "evolvesFrom": "Cubchoo",
+    "image": "assets/cards/swsh3/49.webp",
+    "imageSmall": "assets/cards/swsh3/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Frozen Slice",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This Pokémon also does 50 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-49/large",
+    "tcgplayerId": 219361,
+    "market": 0.23
+  },
+  {
+    "id": "swsh3-50",
+    "name": "Wishiwashi",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "sui",
+    "flavorText": "Individually, they're incredibly weak. It's by gathering up into schools that they're able to confront opponents.",
+    "image": "assets/cards/swsh3/50.webp",
+    "imageSmall": "assets/cards/swsh3/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Deep Sea Swirl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw 8 cards."
+      },
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-50/large",
+    "tcgplayerId": 219375,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-51",
+    "name": "Mareanie",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "The first symptom of its sting is numbness. The next is an itching sensation so intense that it's impossible to resist the urge to claw at your skin.",
+    "image": "assets/cards/swsh3/51.webp",
+    "imageSmall": "assets/cards/swsh3/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Regeneration",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Poison Tentacles",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-51/large",
+    "tcgplayerId": 219377,
+    "market": 0.11
+  },
+  {
+    "id": "swsh3-52",
+    "name": "Toxapex",
+    "number": "52",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "To survive in the cold waters of Galar, this Pokémon forms a dome with its legs, enclosing its body so it can capture its own body heat.",
+    "evolvesFrom": "Mareanie",
+    "image": "assets/cards/swsh3/52.webp",
+    "imageSmall": "assets/cards/swsh3/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Recover",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard an Energy from this Pokémon and heal all damage from it."
+      },
+      {
+        "name": "Poisonous Whip",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-52/large",
+    "tcgplayerId": 219379,
+    "market": 0.08
+  },
+  {
+    "id": "swsh3-53",
+    "name": "Dracovish",
+    "number": "53",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "Powerful legs and jaws made it the apex predator of its time. Its own overhunting of its prey was what drove it to extinction.",
+    "evolvesFrom": "Rare Fossil",
+    "image": "assets/cards/swsh3/53.webp",
+    "imageSmall": "assets/cards/swsh3/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Primal Law",
+        "text": "As long as this Pokémon is in the Active Spot, your opponent can't play any Pokémon from their hand to evolve their Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-53/large",
+    "tcgplayerId": 219382,
+    "market": 1.11,
+    "foilMap": "assets/foil/maps/swsh3/53.webp"
+  },
+  {
+    "id": "swsh3-54",
+    "name": "Arctovish",
+    "number": "54",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Though it's able to capture prey by freezing its surroundings, it has trouble eating the prey afterward because its mouth is on top of its head.",
+    "evolvesFrom": "Rare Fossil",
+    "image": "assets/cards/swsh3/54.webp",
+    "imageSmall": "assets/cards/swsh3/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Hard Face",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "During your opponent's next turn, this Pokémon takes 60 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Cold Breath",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-54/large",
+    "tcgplayerId": 219384,
+    "market": 0.38
+  },
+  {
+    "id": "swsh3-55",
+    "name": "Mareep",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "sowsow",
+    "flavorText": "Rubbing its fleece generates electricity. You'll want to pet it because it's cute, but if you use your bare hand, you'll get a painful shock.",
+    "image": "assets/cards/swsh3/55.webp",
+    "imageSmall": "assets/cards/swsh3/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Static Shock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-55/large",
+    "tcgplayerId": 219387,
+    "market": 0.1
+  },
+  {
+    "id": "swsh3-56",
+    "name": "Flaaffy",
+    "number": "56",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It stores electricity in its fluffy fleece. If it stores up too much, it will start to go bald in those patches.",
+    "evolvesFrom": "Mareep",
+    "image": "assets/cards/swsh3/56.webp",
+    "imageSmall": "assets/cards/swsh3/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Static Shock",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-56/large",
+    "tcgplayerId": 219394,
+    "market": 0.29
+  },
+  {
+    "id": "swsh3-57",
+    "name": "Ampharos",
+    "number": "57",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "150",
+    "artist": "kodama",
+    "flavorText": "Its tail shines bright and strong. It has been prized since long ago as a beacon for sailors.",
+    "evolvesFrom": "Flaaffy",
+    "image": "assets/cards/swsh3/57.webp",
+    "imageSmall": "assets/cards/swsh3/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Dazzle Blast",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "50",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-57/large",
+    "tcgplayerId": 219403,
+    "market": 0.28
+  },
+  {
+    "id": "swsh3-58",
+    "name": "Electrike",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Yumi",
+    "flavorText": "It stores static electricity in its fur for discharging. It gives off sparks if a storm approaches.",
+    "image": "assets/cards/swsh3/58.webp",
+    "imageSmall": "assets/cards/swsh3/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-58/large",
+    "tcgplayerId": 219407,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-59",
+    "name": "Manectric",
+    "number": "59",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "nagimiso",
+    "flavorText": "It stimulates its own muscles with electricity, so it can move quickly. It eases its soreness with electricity, too, so it can recover quickly as well.",
+    "evolvesFrom": "Electrike",
+    "image": "assets/cards/swsh3/59.webp",
+    "imageSmall": "assets/cards/swsh3/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Strafe",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Flash Impact",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This attack also does 30 damage to 1 of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-59/large",
+    "tcgplayerId": 219408,
+    "market": 0.25
+  },
+  {
+    "id": "swsh3-60",
+    "name": "Vikavolt V",
+    "number": "60",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "210",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/swsh3/60.webp",
+    "imageSmall": "assets/cards/swsh3/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyzing Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, they can't play any Item cards from their hand."
+      },
+      {
+        "name": "Super Zap Cannon",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-60/large",
+    "tcgplayerId": 219411,
+    "market": 0.78,
+    "foilMap": "assets/foil/maps/swsh3/60.webp"
+  },
+  {
+    "id": "swsh3-61",
+    "name": "Tapu Koko",
+    "number": "61",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "Hasuno",
+    "flavorText": "The lightning-wielding guardian deity of Melemele, Tapu Koko is brimming with curiosity and appears before people from time to time.",
+    "image": "assets/cards/swsh3/61.webp",
+    "imageSmall": "assets/cards/swsh3/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Allure",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 2 cards."
+      },
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-61/large",
+    "tcgplayerId": 219413,
+    "market": 0.35,
+    "foilMap": "assets/foil/maps/swsh3/61.webp"
+  },
+  {
+    "id": "swsh3-62",
+    "name": "Toxel",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Akira Komayama",
+    "flavorText": "It stores poison in an internal poison sac and secretes that poison through its skin. If you touch this Pokémon, a tingling sensation follows.",
+    "image": "assets/cards/swsh3/62.webp",
+    "imageSmall": "assets/cards/swsh3/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Slap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Static Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-62/large",
+    "tcgplayerId": 219416,
+    "market": 0.08
+  },
+  {
+    "id": "swsh3-63",
+    "name": "Toxtricity",
+    "number": "63",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Capable of generating 15,000 volts of electricity, this Pokémon looks down on all that would challenge it.",
+    "evolvesFrom": "Toxel",
+    "image": "assets/cards/swsh3/63.webp",
+    "imageSmall": "assets/cards/swsh3/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Risk Taker",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, discard the top 5 cards of your opponent's deck. If tails, discard the top 5 cards of your deck."
+      },
+      {
+        "name": "Thunder Jolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-63/large",
+    "tcgplayerId": 219419,
+    "market": 0.28,
+    "foilMap": "assets/foil/maps/swsh3/63.webp"
+  },
+  {
+    "id": "swsh3-64",
+    "name": "Pincurchin",
+    "number": "64",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It feeds on seaweed, using its teeth to scrape it off rocks. Electric current flows from the tips of its spines.",
+    "image": "assets/cards/swsh3/64.webp",
+    "imageSmall": "assets/cards/swsh3/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Draw",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Draw 2 cards."
+      },
+      {
+        "name": "Zing Zap",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-64/large",
+    "tcgplayerId": 219421,
+    "market": 0.28,
+    "foilMap": "assets/foil/maps/swsh3/64.webp"
+  },
+  {
+    "id": "swsh3-65",
+    "name": "Dracozolt",
+    "number": "65",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "Misa Tsutsui",
+    "flavorText": "In ancient times, it was unbeatable thanks to its powerful lower body, but it went extinct anyway after it depleted all its plant-based food sources.",
+    "evolvesFrom": "Rare Fossil",
+    "image": "assets/cards/swsh3/65.webp",
+    "imageSmall": "assets/cards/swsh3/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Amping Up",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "During your next turn, this Pokémon's Amping Up attack does 90 more damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-65/large",
+    "tcgplayerId": 219432,
+    "market": 0.46
+  },
+  {
+    "id": "swsh3-66",
+    "name": "Arctozolt",
+    "number": "66",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "The shaking of its freezing upper half is what generates its electricity. It has a hard time walking around.",
+    "evolvesFrom": "Rare Fossil",
+    "image": "assets/cards/swsh3/66.webp",
+    "imageSmall": "assets/cards/swsh3/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Biting Whirlpool",
+        "text": "Whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 2 damage counters on that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-66/large",
+    "tcgplayerId": 219434,
+    "market": 1.79,
+    "foilMap": "assets/foil/maps/swsh3/66.webp"
+  },
+  {
+    "id": "swsh3-67",
+    "name": "Jigglypuff",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Motofumi Fujiwara",
+    "flavorText": "The songs they sing are totally different depending on the region they live in. Some even sound like they're shouting!",
+    "image": "assets/cards/swsh3/67.webp",
+    "imageSmall": "assets/cards/swsh3/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Mumble",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Moon Kick",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-67/large",
+    "tcgplayerId": 219441,
+    "market": 0.2
+  },
+  {
+    "id": "swsh3-68",
+    "name": "Wigglytuff",
+    "number": "68",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Lee HyunJung",
+    "flavorText": "When it gets angry, it inhales with all its might, and its body gradually inflates. Sometimes they can grow 20 times larger!",
+    "evolvesFrom": "Jigglypuff",
+    "image": "assets/cards/swsh3/68.webp",
+    "imageSmall": "assets/cards/swsh3/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Pulse",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Double Smash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90×",
+        "text": "Flip 2 coins. This attack does 90 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-68/large",
+    "tcgplayerId": 219442,
+    "market": 0.3
+  },
+  {
+    "id": "swsh3-69",
+    "name": "Mew V",
+    "number": "69",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/swsh3/69.webp",
+    "imageSmall": "assets/cards/swsh3/69-sm.webp",
+    "attacks": [
+      {
+        "name": "X Ball",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy attached to both Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-69/large",
+    "tcgplayerId": 219443,
+    "market": 5.63,
+    "foilMap": "assets/foil/maps/swsh3/69.webp"
+  },
+  {
+    "id": "swsh3-70",
+    "name": "Snubbull",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "otumami",
+    "flavorText": "In contrast to its appearance, it's quite timid. When playing with other puppy Pokémon, it sometimes gets bullied.",
+    "image": "assets/cards/swsh3/70.webp",
+    "imageSmall": "assets/cards/swsh3/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-70/large",
+    "tcgplayerId": 219445,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-71",
+    "name": "Granbull",
+    "number": "71",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "SATOSHI NAKAI",
+    "flavorText": "Although it's popular with young people, Granbull is timid and sensitive, so it's totally incompetent as a watchdog.",
+    "evolvesFrom": "Snubbull",
+    "image": "assets/cards/swsh3/71.webp",
+    "imageSmall": "assets/cards/swsh3/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Jaw Lock",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Headbutt Bounce",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-71/large",
+    "tcgplayerId": 219446,
+    "market": 0.19
+  },
+  {
+    "id": "swsh3-72",
+    "name": "Lunatone",
+    "number": "72",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Miki Tanaka",
+    "flavorText": "The phase of the moon apparently has some effect on its power. It's active on the night of a full moon.",
+    "image": "assets/cards/swsh3/72.webp",
+    "imageSmall": "assets/cards/swsh3/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Future Sight",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 4 cards of either player's deck and put them back in any order."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-72/large",
+    "tcgplayerId": 219447,
+    "market": 0.1
+  },
+  {
+    "id": "swsh3-73",
+    "name": "Gothita",
+    "number": "73",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Mizue",
+    "flavorText": "Though they're still only babies, there's psychic power stored in their ribbonlike feelers, and sometimes they use that power to fight.",
+    "image": "assets/cards/swsh3/73.webp",
+    "imageSmall": "assets/cards/swsh3/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Fortunate Eye",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Look at the top 5 cards of your opponent's deck and put them back in any order."
+      },
+      {
+        "name": "Gentle Slap",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-73/large",
+    "tcgplayerId": 219449,
+    "market": 0.21
+  },
+  {
+    "id": "swsh3-74",
+    "name": "Gothorita",
+    "number": "74",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "sowsow",
+    "flavorText": "It's said that when stars shine in the night sky, this Pokémon will spirit away sleeping children. Some call it the Witch of Punishment.",
+    "evolvesFrom": "Gothita",
+    "image": "assets/cards/swsh3/74.webp",
+    "imageSmall": "assets/cards/swsh3/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Whiny Voice",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck."
+      },
+      {
+        "name": "Double Spin",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-74/large",
+    "tcgplayerId": 219451,
+    "market": 0.28
+  },
+  {
+    "id": "swsh3-75",
+    "name": "Gothitelle",
+    "number": "75",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Eri Yamaki",
+    "flavorText": "It has tremendous psychic power, but it dislikes conflict. It's also able to predict the future based on the movement of the stars.",
+    "evolvesFrom": "Gothorita",
+    "image": "assets/cards/swsh3/75.webp",
+    "imageSmall": "assets/cards/swsh3/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Mind Bend",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "40",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Bend",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Choose 2 random cards from your opponent's hand. Your opponent reveals those cards and shuffles them into their deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-75/large",
+    "tcgplayerId": 219454,
+    "market": 0.26
+  },
+  {
+    "id": "swsh3-76",
+    "name": "Golett",
+    "number": "76",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Ryuta Fuse",
+    "flavorText": "They were sculpted from clay in ancient times. No one knows why, but some of them are driven to continually line up boulders.",
+    "image": "assets/cards/swsh3/76.webp",
+    "imageSmall": "assets/cards/swsh3/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-76/large",
+    "tcgplayerId": 219456,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-77",
+    "name": "Golurk",
+    "number": "77",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "150",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "Artillery platforms built into the walls of ancient castles served as perches from which Golurk could fire energy beams.",
+    "evolvesFrom": "Golett",
+    "image": "assets/cards/swsh3/77.webp",
+    "imageSmall": "assets/cards/swsh3/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Dynamic Chop",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      },
+      {
+        "name": "Golurk Hammer",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-77/large",
+    "tcgplayerId": 219459,
+    "market": 0.07
+  },
+  {
+    "id": "swsh3-78",
+    "name": "Dedenne",
+    "number": "78",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Shibuzoh.",
+    "flavorText": "Its upper whiskers are sensors that survey its surroundings. Its lower whiskers are organs that shoot electricity.",
+    "image": "assets/cards/swsh3/78.webp",
+    "imageSmall": "assets/cards/swsh3/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Party",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-78/large",
+    "tcgplayerId": 219462,
+    "market": 0.33
+  },
+  {
+    "id": "swsh3-79",
+    "name": "Morelull",
+    "number": "79",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Suwama Chiaki",
+    "flavorText": "Pokémon living in the forest eat the delicious caps on Morelull's head. The caps regrow overnight.",
+    "image": "assets/cards/swsh3/79.webp",
+    "imageSmall": "assets/cards/swsh3/79-sm.webp",
+    "attacks": [
+      {
+        "name": "Spore",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Flop",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-79/large",
+    "tcgplayerId": 219464,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-80",
+    "name": "Shiinotic",
+    "number": "80",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Misa Tsutsui",
+    "flavorText": "Its flickering spores lure in prey and put them to sleep. Once this Pokémon has its prey snoozing, it drains their vitality with its fingertips.",
+    "evolvesFrom": "Morelull",
+    "image": "assets/cards/swsh3/80.webp",
+    "imageSmall": "assets/cards/swsh3/80-sm.webp",
+    "attacks": [
+      {
+        "name": "Flickering Light",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, during your opponent's next turn, the Defending Pokémon can't attack."
+      },
+      {
+        "name": "Fear the Forest",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If Glimwood Tangle is in play, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-80/large",
+    "tcgplayerId": 219465,
+    "market": 0.19
+  },
+  {
+    "id": "swsh3-81",
+    "name": "Mimikyu",
+    "number": "81",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Ryota Murayama",
+    "flavorText": "It wears a rag fashioned into a Pikachu costume in an effort to look less scary. Unfortunately, the costume only makes it creepier.",
+    "image": "assets/cards/swsh3/81.webp",
+    "imageSmall": "assets/cards/swsh3/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heal Jamming",
+        "text": "Your opponent's Benched Pokémon can't be healed.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-81/large",
+    "tcgplayerId": 219467,
+    "market": 0.56
+  },
+  {
+    "id": "swsh3-82",
+    "name": "Sinistea",
+    "number": "82",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "30",
+    "artist": "Kouki Saitou",
+    "flavorText": "This Pokémon is said to have been born when a lonely spirit possessed a cold, leftover cup of tea.",
+    "image": "assets/cards/swsh3/82.webp",
+    "imageSmall": "assets/cards/swsh3/82-sm.webp",
+    "attacks": [
+      {
+        "name": "Furtive Drop",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 2 damage counters on your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-82/large",
+    "tcgplayerId": 219468,
+    "market": 0.09
+  },
+  {
+    "id": "swsh3-83",
+    "name": "Polteageist",
+    "number": "83",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "kirisAki",
+    "flavorText": "This species lives in antique teapots. Most pots are forgeries, but on rare occasions, an authentic work is found.",
+    "evolvesFrom": "Sinistea",
+    "image": "assets/cards/swsh3/83.webp",
+    "imageSmall": "assets/cards/swsh3/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Party",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tea Break",
+        "text": "You must discard a Pokémon that has the Mad Party attack from your hand in order to use this Ability. Once during your turn, you may draw 2 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-83/large",
+    "tcgplayerId": 219470,
+    "market": 0.18
+  },
+  {
+    "id": "swsh3-84",
+    "name": "Diglett",
+    "number": "84",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Hideki Ishikawa",
+    "flavorText": "If a Diglett digs through a field, it leaves the soil perfectly tilled and ideal for planting crops.",
+    "image": "assets/cards/swsh3/84.webp",
+    "imageSmall": "assets/cards/swsh3/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-84/large",
+    "tcgplayerId": 219471,
+    "market": 0.16
+  },
+  {
+    "id": "swsh3-85",
+    "name": "Dugtrio",
+    "number": "85",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Yukiko Baba",
+    "flavorText": "A team of Diglett triplets. It triggers huge earthquakes by burrowing 60 miles underground.",
+    "evolvesFrom": "Diglett",
+    "image": "assets/cards/swsh3/85.webp",
+    "imageSmall": "assets/cards/swsh3/85-sm.webp",
+    "attacks": [
+      {
+        "name": "Dig",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      },
+      {
+        "name": "Mud Bomb",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-85/large",
+    "tcgplayerId": 219473,
+    "market": 0.09
+  },
+  {
+    "id": "swsh3-86",
+    "name": "Larvitar",
+    "number": "86",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "Born deep underground, it comes aboveground and becomes a pupa once it has finished eating the surrounding soil.",
+    "image": "assets/cards/swsh3/86.webp",
+    "imageSmall": "assets/cards/swsh3/86-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Spray",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-86/large",
+    "tcgplayerId": 219474,
+    "market": 0.16
+  },
+  {
+    "id": "swsh3-87",
+    "name": "Pupitar",
+    "number": "87",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Sekio",
+    "flavorText": "Even sealed in its shell, it can move freely. Hard and fast, it has outstanding destructive power.",
+    "evolvesFrom": "Larvitar",
+    "image": "assets/cards/swsh3/87.webp",
+    "imageSmall": "assets/cards/swsh3/87-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Spray",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Rocket Evolution",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-87/large",
+    "tcgplayerId": 219476,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-88",
+    "name": "Tyranitar",
+    "number": "88",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "180",
+    "artist": "nagimiso",
+    "flavorText": "Its body can't be harmed by any sort of attack, so it is very eager to make challenges against enemies.",
+    "evolvesFrom": "Pupitar",
+    "image": "assets/cards/swsh3/88.webp",
+    "imageSmall": "assets/cards/swsh3/88-sm.webp",
+    "attacks": [
+      {
+        "name": "Bedrock Breaker",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard a Stadium in play."
+      },
+      {
+        "name": "Mountain Swing",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "Discard the top 5 cards of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-88/large",
+    "tcgplayerId": 219477,
+    "market": 0.44,
+    "foilMap": "assets/foil/maps/swsh3/88.webp"
+  },
+  {
+    "id": "swsh3-89",
+    "name": "Trapinch",
+    "number": "89",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Asako Ito",
+    "flavorText": "Its nest is a sloped, bowl-like pit in the desert. Once something has fallen in, there is no escape.",
+    "image": "assets/cards/swsh3/89.webp",
+    "imageSmall": "assets/cards/swsh3/89-sm.webp",
+    "attacks": [
+      {
+        "name": "Land's Pulse",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10+",
+        "text": "If a Stadium is in play, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-89/large",
+    "tcgplayerId": 219479,
+    "market": 0.47
+  },
+  {
+    "id": "swsh3-90",
+    "name": "Vibrava",
+    "number": "90",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "The ultrasonic waves it generates by rubbing its two wings together cause severe headaches.",
+    "evolvesFrom": "Trapinch",
+    "image": "assets/cards/swsh3/90.webp",
+    "imageSmall": "assets/cards/swsh3/90-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Pulse",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-90/large",
+    "tcgplayerId": 219481,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-91",
+    "name": "Flygon",
+    "number": "91",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "hatachu",
+    "flavorText": "This Pokémon hides in the heart of sandstorms it creates and seldom appears where people can see it.",
+    "evolvesFrom": "Vibrava",
+    "image": "assets/cards/swsh3/91.webp",
+    "imageSmall": "assets/cards/swsh3/91-sm.webp",
+    "attacks": [
+      {
+        "name": "Desert Geyser",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "If your opponent has a Stadium in play, discard it. If you discarded a Stadium in this way, during your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Labyrinth of Sand",
+        "text": "As long as this Pokémon is in the Active Spot, your opponent's Active Pokémon can't retreat.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-91/large",
+    "tcgplayerId": 219482,
+    "market": 0.25
+  },
+  {
+    "id": "swsh3-92",
+    "name": "Solrock",
+    "number": "92",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Miki Tanaka",
+    "flavorText": "When it rotates itself, it gives off light similar to the sun, thus blinding its foes.",
+    "image": "assets/cards/swsh3/92.webp",
+    "imageSmall": "assets/cards/swsh3/92-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Throw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Resistance Shade",
+        "text": "If you have Lunatone in play, your opponent's Pokémon in play have no Resistance.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-92/large",
+    "tcgplayerId": 219484,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-93",
+    "name": "Hippopotas",
+    "number": "93",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It moves through the sands with its mouth open, swallowing sand along with its prey. It gets rid of the sand by spouting it from its nose.",
+    "image": "assets/cards/swsh3/93.webp",
+    "imageSmall": "assets/cards/swsh3/93-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Double Stomp",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "Flip 2 coins. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-93/large",
+    "tcgplayerId": 219485,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-94",
+    "name": "Hippowdon",
+    "number": "94",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "KEIICHIRO ITO",
+    "flavorText": "Stones can get stuck in the ports on their bodies. Dwebble help dislodge such stones, so Hippowdon look after these Pokémon.",
+    "evolvesFrom": "Hippopotas",
+    "image": "assets/cards/swsh3/94.webp",
+    "imageSmall": "assets/cards/swsh3/94-sm.webp",
+    "attacks": [
+      {
+        "name": "Triple Smash",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80×",
+        "text": "Flip 3 coins. This attack does 80 damage for each heads."
+      },
+      {
+        "name": "Land Crush",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-94/large",
+    "tcgplayerId": 219487,
+    "market": 0.23
+  },
+  {
+    "id": "swsh3-95",
+    "name": "Rhyperior V",
+    "number": "95",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "230",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/swsh3/95.webp",
+    "imageSmall": "assets/cards/swsh3/95-sm.webp",
+    "attacks": [
+      {
+        "name": "Drill Run",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Heavy Rock Artillery",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "During your next turn, this Pokémon can't use Heavy Rock Artillery."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-95/large",
+    "tcgplayerId": 219488,
+    "market": 0.85,
+    "foilMap": "assets/foil/maps/swsh3/95.webp"
+  },
+  {
+    "id": "swsh3-96",
+    "name": "Diggersby",
+    "number": "96",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "0313",
+    "flavorText": "With power equal to an excavator, it can dig through dense bedrock. It's a huge help during tunnel construction.",
+    "evolvesFrom": "Bunnelby",
+    "image": "assets/cards/swsh3/96.webp",
+    "imageSmall": "assets/cards/swsh3/96-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      },
+      {
+        "name": "Land Crush",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-96/large",
+    "tcgplayerId": 219491,
+    "market": 0.22
+  },
+  {
+    "id": "swsh3-97",
+    "name": "Passimian",
+    "number": "97",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "SATOSHI NAKAI",
+    "flavorText": "Displaying amazing teamwork, they follow the orders of their boss as they all help out in the search for their favorite berries.",
+    "image": "assets/cards/swsh3/97.webp",
+    "imageSmall": "assets/cards/swsh3/97-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Rock Hurl",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-97/large",
+    "tcgplayerId": 219493,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-98",
+    "name": "Galarian Sirfetch'd",
+    "number": "98",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Ryota Murayama",
+    "flavorText": "Only Farfetch'd that have survived many battles can attain this evolution. When this Pokémon's leek withers, it will retire from combat.",
+    "evolvesFrom": "Galarian Farfetch'd",
+    "image": "assets/cards/swsh3/98.webp",
+    "imageSmall": "assets/cards/swsh3/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Meteor Assault",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This Pokémon can't use Meteor Assault again until it leaves the Active Spot."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-98/large",
+    "tcgplayerId": 219495,
+    "market": 0.33
+  },
+  {
+    "id": "swsh3-99",
+    "name": "Galarian Slowbro V",
+    "number": "99",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/99.webp",
+    "imageSmall": "assets/cards/swsh3/99-sm.webp",
+    "attacks": [
+      {
+        "name": "Tripping Shot",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rapid-Fire Poison",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may make your opponent's Active Pokémon Poisoned.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-99/large",
+    "tcgplayerId": 219399,
+    "market": 0.96,
+    "foilMap": "assets/foil/maps/swsh3/99.webp"
+  },
+  {
+    "id": "swsh3-100",
+    "name": "Grimer",
+    "number": "100",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Ryota Murayama",
+    "flavorText": "The wastewater coming from factories is clean these days, so Grimer have nothing to eat. They're said to be on the verge of extinction.",
+    "image": "assets/cards/swsh3/100.webp",
+    "imageSmall": "assets/cards/swsh3/100-sm.webp",
+    "attacks": [
+      {
+        "name": "Stomp Off",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Sludge Whirlpool",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-100/large",
+    "tcgplayerId": 219401,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-101",
+    "name": "Muk",
+    "number": "101",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "140",
+    "artist": "Eri Yamaki",
+    "flavorText": "Because they scatter germs everywhere, they've long been targeted for extermination, leading to a steep decline in their population.",
+    "evolvesFrom": "Grimer",
+    "image": "assets/cards/swsh3/101.webp",
+    "imageSmall": "assets/cards/swsh3/101-sm.webp",
+    "attacks": [
+      {
+        "name": "Triple Poison",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, put 3 damage counters on that Pokémon instead of 1."
+      },
+      {
+        "name": "Sludge Whirlpool",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-101/large",
+    "tcgplayerId": 219402,
+    "market": 0.1
+  },
+  {
+    "id": "swsh3-102",
+    "name": "Spinarak",
+    "number": "102",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "Although the poison from its fangs isn't that strong, it's potent enough to weaken prey that gets caught in its web.",
+    "image": "assets/cards/swsh3/102.webp",
+    "imageSmall": "assets/cards/swsh3/102-sm.webp",
+    "attacks": [
+      {
+        "name": "Hang Down",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sting",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-102/large",
+    "tcgplayerId": 219404,
+    "market": 0.11
+  },
+  {
+    "id": "swsh3-103",
+    "name": "Ariados",
+    "number": "103",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It spews threads from its mouth to catch its prey. When night falls, it leaves its web to go hunt aggressively.",
+    "evolvesFrom": "Spinarak",
+    "image": "assets/cards/swsh3/103.webp",
+    "imageSmall": "assets/cards/swsh3/103-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Sting",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spider Net",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch 1 of your opponent's Benched Evolution Pokémon with their Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-103/large",
+    "tcgplayerId": 219405,
+    "market": 0.06
+  },
+  {
+    "id": "swsh3-104",
+    "name": "Crobat V",
+    "number": "104",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/swsh3/104.webp",
+    "imageSmall": "assets/cards/swsh3/104-sm.webp",
+    "attacks": [
+      {
+        "name": "Venomous Fang",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Asset",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may draw cards until you have 6 cards in your hand. You can't use more than 1 Dark Asset Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-104/large",
+    "tcgplayerId": 219406,
+    "market": 0.8,
+    "foilMap": "assets/foil/maps/swsh3/104.webp"
+  },
+  {
+    "id": "swsh3-105",
+    "name": "Darkrai",
+    "number": "105",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "nagimiso",
+    "flavorText": "It can lull people to sleep and make them dream. It is active during nights of the new moon.",
+    "image": "assets/cards/swsh3/105.webp",
+    "imageSmall": "assets/cards/swsh3/105-sm.webp",
+    "attacks": [
+      {
+        "name": "Vortex of Darkness",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage for each Darkness Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Darkness Guard",
+        "text": "If this Pokémon has any Darkness Energy attached, it takes 20 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-105/large",
+    "tcgplayerId": 219409,
+    "market": 0.41,
+    "foilMap": "assets/foil/maps/swsh3/105.webp"
+  },
+  {
+    "id": "swsh3-106",
+    "name": "Purrloin",
+    "number": "106",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "sowsow",
+    "flavorText": "It steals things from people just to amuse itself with their frustration. A rivalry exists between this Pokémon and Nickit.",
+    "image": "assets/cards/swsh3/106.webp",
+    "imageSmall": "assets/cards/swsh3/106-sm.webp",
+    "attacks": [
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fake Out",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-106/large",
+    "tcgplayerId": 219412,
+    "market": 0.16
+  },
+  {
+    "id": "swsh3-107",
+    "name": "Liepard",
+    "number": "107",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Hasuno",
+    "flavorText": "Don't be fooled by its gorgeous fur and elegant figure. This is a moody and vicious Pokémon.",
+    "evolvesFrom": "Purrloin",
+    "image": "assets/cards/swsh3/107.webp",
+    "imageSmall": "assets/cards/swsh3/107-sm.webp",
+    "attacks": [
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Limber",
+        "text": "This Pokémon can't be Paralyzed.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-107/large",
+    "tcgplayerId": 219414,
+    "market": 0.25
+  },
+  {
+    "id": "swsh3-108",
+    "name": "Deino",
+    "number": "108",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "When it encounters something, its first urge is usually to bite it. If it likes what it tastes, it will commit the associated scent to memory.",
+    "image": "assets/cards/swsh3/108.webp",
+    "imageSmall": "assets/cards/swsh3/108-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-108/large",
+    "tcgplayerId": 219420,
+    "market": 0.18
+  },
+  {
+    "id": "swsh3-109",
+    "name": "Zweilous",
+    "number": "109",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "tetsuya koizumi",
+    "flavorText": "While hunting for prey, Zweilous wanders its territory, its two heads often bickering over which way to go.",
+    "evolvesFrom": "Deino",
+    "image": "assets/cards/swsh3/109.webp",
+    "imageSmall": "assets/cards/swsh3/109-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Darkness Fang",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-109/large",
+    "tcgplayerId": 219422,
+    "market": 0.06
+  },
+  {
+    "id": "swsh3-110",
+    "name": "Hydreigon",
+    "number": "110",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "160",
+    "artist": "kawayoo",
+    "flavorText": "There are a slew of stories about villages that were destroyed by Hydreigon. It bites anything that moves.",
+    "evolvesFrom": "Zweilous",
+    "image": "assets/cards/swsh3/110.webp",
+    "imageSmall": "assets/cards/swsh3/110-sm.webp",
+    "attacks": [
+      {
+        "name": "Pitch-Black Fangs",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Squall",
+        "text": "As often as you like during your turn, you may attach a Darkness Energy card from your hand to 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-110/large",
+    "tcgplayerId": 219423,
+    "market": 0.28
+  },
+  {
+    "id": "swsh3-111",
+    "name": "Hoopa",
+    "number": "111",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "so-taro",
+    "flavorText": "It gathers things it likes and passes them through its loop to teleport them to a secret place.",
+    "image": "assets/cards/swsh3/111.webp",
+    "imageSmall": "assets/cards/swsh3/111-sm.webp",
+    "attacks": [
+      {
+        "name": "Assault Gate",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "90",
+        "text": "If this Pokémon didn't move from the Bench to the Active Spot this turn, this attack does nothing. This attack's damage isn't affected by Weakness."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-111/large",
+    "tcgplayerId": 219424,
+    "market": 0.34,
+    "foilMap": "assets/foil/maps/swsh3/111.webp"
+  },
+  {
+    "id": "swsh3-112",
+    "name": "Nickit",
+    "number": "112",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Misa Tsutsui",
+    "flavorText": "Aided by the soft pads on its feet, it silently raids the food stores of other Pokémon. It survives off its ill-gotten gains.",
+    "image": "assets/cards/swsh3/112.webp",
+    "imageSmall": "assets/cards/swsh3/112-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Whip",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, during your opponent's next turn, the Defending Pokémon can't attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-112/large",
+    "tcgplayerId": 219426,
+    "market": 0.08
+  },
+  {
+    "id": "swsh3-113",
+    "name": "Thievul",
+    "number": "113",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Akira Komayama",
+    "flavorText": "It secretly marks potential targets with a scent. By following the scent, it stalks its targets and steals from them when they least expect it.",
+    "evolvesFrom": "Nickit",
+    "image": "assets/cards/swsh3/113.webp",
+    "imageSmall": "assets/cards/swsh3/113-sm.webp",
+    "attacks": [
+      {
+        "name": "Nasty Plot",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-113/large",
+    "tcgplayerId": 219427,
+    "market": 0.21
+  },
+  {
+    "id": "swsh3-114",
+    "name": "Grimmsnarl V",
+    "number": "114",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/114.webp",
+    "imageSmall": "assets/cards/swsh3/114-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Spiky Knuckle",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "200",
+        "text": "Put 2 Darkness Energy attached to this Pokémon into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-114/large",
+    "tcgplayerId": 219428,
+    "market": 1.01,
+    "foilMap": "assets/foil/maps/swsh3/114.webp"
+  },
+  {
+    "id": "swsh3-115",
+    "name": "Grimmsnarl VMAX",
+    "number": "115",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "330",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Grimmsnarl V",
+    "image": "assets/cards/swsh3/115.webp",
+    "imageSmall": "assets/cards/swsh3/115-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Drill",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "170+",
+        "text": "This attack does 50 more damage for each extra Darkness Energy attached to this Pokémon (in addition to this attack's cost). You can't add more than 100 damage in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-115/large",
+    "tcgplayerId": 219429,
+    "market": 2.38,
+    "foilMap": "assets/foil/maps/swsh3/115.webp",
+    "etchMap": "assets/foil/maps/swsh3/115-etch.webp"
+  },
+  {
+    "id": "swsh3-116",
+    "name": "Eternatus V",
+    "number": "116",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/116.webp",
+    "imageSmall": "assets/cards/swsh3/116-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Accelerator",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "You may attach a Darkness Energy card from your hand to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Dynamax Cannon",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "If your opponent's Active Pokémon is a Pokémon VMAX, this attack does 120 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-116/large",
+    "tcgplayerId": 219431,
+    "market": 1.6,
+    "foilMap": "assets/foil/maps/swsh3/116.webp"
+  },
+  {
+    "id": "swsh3-117",
+    "name": "Eternatus VMAX",
+    "number": "117",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eternatus V",
+    "image": "assets/cards/swsh3/117.webp",
+    "imageSmall": "assets/cards/swsh3/117-sm.webp",
+    "attacks": [
+      {
+        "name": "Dread End",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each of your Darkness Pokémon in play."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Eternal Zone",
+        "text": "If all of your Pokémon in play are Darkness type, you can have up to 8 Pokémon on your Bench, and you can't put non-Darkness Pokémon into play. (If this Ability stops working, discard Pokémon from your Bench until you have 5.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-117/large",
+    "tcgplayerId": 219435,
+    "market": 3.73,
+    "foilMap": "assets/foil/maps/swsh3/117.webp",
+    "etchMap": "assets/foil/maps/swsh3/117-etch.webp"
+  },
+  {
+    "id": "swsh3-118",
+    "name": "Scizor V",
+    "number": "118",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "210",
+    "artist": "Shin Nagasawa",
+    "image": "assets/cards/swsh3/118.webp",
+    "imageSmall": "assets/cards/swsh3/118-sm.webp",
+    "attacks": [
+      {
+        "name": "Hack Off",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "30",
+        "text": "Discard a Pokémon Tool and a Special Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-118/large",
+    "tcgplayerId": 219373,
+    "market": 2.35,
+    "foilMap": "assets/foil/maps/swsh3/118.webp"
+  },
+  {
+    "id": "swsh3-119",
+    "name": "Scizor VMAX",
+    "number": "119",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Scizor V",
+    "image": "assets/cards/swsh3/119.webp",
+    "imageSmall": "assets/cards/swsh3/119-sm.webp",
+    "attacks": [
+      {
+        "name": "Hard Scissors",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Max Steelspike",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-119/large",
+    "tcgplayerId": 219374,
+    "market": 4.42,
+    "foilMap": "assets/foil/maps/swsh3/119.webp",
+    "etchMap": "assets/foil/maps/swsh3/119-etch.webp"
+  },
+  {
+    "id": "swsh3-120",
+    "name": "Skarmory",
+    "number": "120",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "120",
+    "artist": "NC Empire",
+    "flavorText": "Its body is draped in steel armor. It looks heavy, but it can fly at speeds of up to 185 miles an hour!",
+    "image": "assets/cards/swsh3/120.webp",
+    "imageSmall": "assets/cards/swsh3/120-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Arms",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10+",
+        "text": "If this Pokémon has a Pokémon Tool attached, this attack does 40 more damage."
+      },
+      {
+        "name": "Cutting Wind",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-120/large",
+    "tcgplayerId": 219376,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-121",
+    "name": "Aron",
+    "number": "121",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "Naoyo Kimura",
+    "flavorText": "When it evolves, it sheds the steel carapace that covered its whole body and develops a new one.",
+    "image": "assets/cards/swsh3/121.webp",
+    "imageSmall": "assets/cards/swsh3/121-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-121/large",
+    "tcgplayerId": 219378,
+    "market": 0.06
+  },
+  {
+    "id": "swsh3-122",
+    "name": "Lairon",
+    "number": "122",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Mizue",
+    "flavorText": "It habitually shows off its strength with the sparks it creates by ramming its steel body into boulders.",
+    "evolvesFrom": "Aron",
+    "image": "assets/cards/swsh3/122.webp",
+    "imageSmall": "assets/cards/swsh3/122-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Away",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Lunge Out",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-122/large",
+    "tcgplayerId": 219380,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-123",
+    "name": "Aggron",
+    "number": "123",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "Hasuno",
+    "flavorText": "While seeking iron for food, it digs tunnels by breaking through bedrock with its steel horns.",
+    "evolvesFrom": "Lairon",
+    "image": "assets/cards/swsh3/123.webp",
+    "imageSmall": "assets/cards/swsh3/123-sm.webp",
+    "attacks": [
+      {
+        "name": "Gigaton Stomp",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sturdy",
+        "text": "If this Pokémon has full HP and would be Knocked Out by damage from an attack, it is not Knocked Out, and its remaining HP becomes 10.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-123/large",
+    "tcgplayerId": 219381,
+    "market": 0.41,
+    "foilMap": "assets/foil/maps/swsh3/123.webp"
+  },
+  {
+    "id": "swsh3-124",
+    "name": "Escavalier",
+    "number": "124",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "120",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "They use shells they've stolen from Shelmet to arm and protect themselves. They're very popular Pokémon in the Galar region.",
+    "evolvesFrom": "Karrablast",
+    "image": "assets/cards/swsh3/124.webp",
+    "imageSmall": "assets/cards/swsh3/124-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Cutter",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10+",
+        "text": "Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 70 more damage. If all of them are heads, this attack does 140 more damage."
+      },
+      {
+        "name": "Seashell Attack",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-124/large",
+    "tcgplayerId": 219383,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-125",
+    "name": "Klink",
+    "number": "125",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "The two minigears that compose this Pokémon are closer than twins. They mesh well only with each other.",
+    "image": "assets/cards/swsh3/125.webp",
+    "imageSmall": "assets/cards/swsh3/125-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Backup",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Metal Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-125/large",
+    "tcgplayerId": 219385,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-126",
+    "name": "Klang",
+    "number": "126",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "NC Empire",
+    "flavorText": "When Klang goes all out, the minigear links up perfectly with the outer part of the big gear, and this Pokémon's rotation speed increases sharply.",
+    "evolvesFrom": "Klink",
+    "image": "assets/cards/swsh3/126.webp",
+    "imageSmall": "assets/cards/swsh3/126-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Backup",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Metal Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Spinning Attack",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-126/large",
+    "tcgplayerId": 219386,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-127",
+    "name": "Klinklang",
+    "number": "127",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "150",
+    "artist": "Naoki Saito",
+    "flavorText": "From its spikes, it launches powerful blasts of electricity. Its red core contains an enormous amount of energy.",
+    "evolvesFrom": "Klang",
+    "image": "assets/cards/swsh3/127.webp",
+    "imageSmall": "assets/cards/swsh3/127-sm.webp",
+    "attacks": [
+      {
+        "name": "Beam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Clockwork",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "If you don't have Klink and Klang on your Bench, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-127/large",
+    "tcgplayerId": 219388,
+    "market": 0.06
+  },
+  {
+    "id": "swsh3-128",
+    "name": "Galarian Stunfisk V",
+    "number": "128",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "200",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swsh3/128.webp",
+    "imageSmall": "assets/cards/swsh3/128-sm.webp",
+    "attacks": [
+      {
+        "name": "Trapping Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, if this Pokémon is damaged by an attack (even if it is Knocked Out), put 12 damage counters on the Attacking Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metal Skin",
+        "text": "This Pokémon gets +20 HP for each Metal Energy attached to it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-128/large",
+    "tcgplayerId": 219389,
+    "market": 0.86,
+    "foilMap": "assets/foil/maps/swsh3/128.webp"
+  },
+  {
+    "id": "swsh3-129",
+    "name": "Meltan",
+    "number": "129",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "It dissolves and eats metal. Circulating liquid metal within its body is how it generates energy.",
+    "image": "assets/cards/swsh3/129.webp",
+    "imageSmall": "assets/cards/swsh3/129-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Beam",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-129/large",
+    "tcgplayerId": 219391,
+    "market": 0.19
+  },
+  {
+    "id": "swsh3-130",
+    "name": "Melmetal",
+    "number": "130",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "150",
+    "artist": "NC Empire",
+    "flavorText": "At the end of its life-span, Melmetal will rust and fall apart. The small shards left behind will eventually be reborn as Meltan.",
+    "evolvesFrom": "Meltan",
+    "image": "assets/cards/swsh3/130.webp",
+    "imageSmall": "assets/cards/swsh3/130-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Link",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "30",
+        "text": "Attach an Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Heavy Impact",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-130/large",
+    "tcgplayerId": 219392,
+    "market": 0.08
+  },
+  {
+    "id": "swsh3-131",
+    "name": "Cufant",
+    "number": "131",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Akira Komayama",
+    "flavorText": "It digs up the ground with its trunk. It's also very strong, being able to carry loads of over five tons without any problem at all.",
+    "image": "assets/cards/swsh3/131.webp",
+    "imageSmall": "assets/cards/swsh3/131-sm.webp",
+    "attacks": [
+      {
+        "name": "Strength",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-131/large",
+    "tcgplayerId": 219395,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-132",
+    "name": "Copperajah",
+    "number": "132",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "190",
+    "artist": "Kouki Saitou",
+    "flavorText": "They came over from another region long ago and worked together with humans. Their green skin is resistant to water.",
+    "evolvesFrom": "Cufant",
+    "image": "assets/cards/swsh3/132.webp",
+    "imageSmall": "assets/cards/swsh3/132-sm.webp",
+    "attacks": [
+      {
+        "name": "Vengeful Stomp",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "If your Benched Pokémon have any damage counters on them, this attack does 120 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Antibacterial Skin",
+        "text": "This Pokémon can't be affected by any Special Conditions.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-132/large",
+    "tcgplayerId": 219396,
+    "market": 0.28,
+    "foilMap": "assets/foil/maps/swsh3/132.webp"
+  },
+  {
+    "id": "swsh3-133",
+    "name": "Kangaskhan",
+    "number": "133",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "kawayoo",
+    "flavorText": "You shouldn't get close to the child when it's playing outside its mother's pouch. Its mother is always nearby watching over it.",
+    "image": "assets/cards/swsh3/133.webp",
+    "imageSmall": "assets/cards/swsh3/133-sm.webp",
+    "attacks": [
+      {
+        "name": "Rally Back",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If any of your Pokémon were Knocked Out by damage from an attack from your opponent's Pokémon during their last turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-133/large",
+    "tcgplayerId": 219328,
+    "market": 0.46,
+    "foilMap": "assets/foil/maps/swsh3/133.webp"
+  },
+  {
+    "id": "swsh3-134",
+    "name": "Tauros",
+    "number": "134",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "They live in groups. The one with the longest, thickest, and most-scarred horns is the boss of the herd.",
+    "image": "assets/cards/swsh3/134.webp",
+    "imageSmall": "assets/cards/swsh3/134-sm.webp",
+    "attacks": [
+      {
+        "name": "Horn Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-134/large",
+    "tcgplayerId": 219329,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-135",
+    "name": "Sentret",
+    "number": "135",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Mina Nakai",
+    "flavorText": "It stands on its tail so it can see a long way. If it spots an enemy, it cries loudly to warn its kind.",
+    "image": "assets/cards/swsh3/135.webp",
+    "imageSmall": "assets/cards/swsh3/135-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-135/large",
+    "tcgplayerId": 219331,
+    "market": 0.1
+  },
+  {
+    "id": "swsh3-136",
+    "name": "Furret",
+    "number": "136",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "tetsuya koizumi",
+    "flavorText": "It makes a nest to suit its long and skinny body. The nest is impossible for other Pokémon to enter.",
+    "evolvesFrom": "Sentret",
+    "image": "assets/cards/swsh3/136.webp",
+    "imageSmall": "assets/cards/swsh3/136-sm.webp",
+    "attacks": [
+      {
+        "name": "Feelin' Fine",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 3 cards."
+      },
+      {
+        "name": "Tail Smash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-136/large",
+    "tcgplayerId": 219333,
+    "market": 0.25
+  },
+  {
+    "id": "swsh3-137",
+    "name": "Dunsparce",
+    "number": "137",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kazuma Koda",
+    "flavorText": "When it sees a person, it digs a hole with its tail to make its escape. If you happen to find one, consider yourself lucky.",
+    "image": "assets/cards/swsh3/137.webp",
+    "imageSmall": "assets/cards/swsh3/137-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Final Dig",
+        "text": "If this Pokémon is Knocked Out by damage from an attack from your opponent's Pokémon, discard the top 2 cards of your opponent's deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-137/large",
+    "tcgplayerId": 219334,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-138",
+    "name": "Teddiursa",
+    "number": "138",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Yukiko Baba",
+    "flavorText": "Before food becomes scarce in wintertime, its habit is to hoard food in many hidden locations.",
+    "image": "assets/cards/swsh3/138.webp",
+    "imageSmall": "assets/cards/swsh3/138-sm.webp",
+    "attacks": [
+      {
+        "name": "Baby-Doll Eyes",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-138/large",
+    "tcgplayerId": 219336,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-139",
+    "name": "Ursaring",
+    "number": "139",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "140",
+    "artist": "Uta",
+    "flavorText": "Although it has a large body, it is quite skilled at climbing trees. It eats and sleeps in the treetops.",
+    "evolvesFrom": "Teddiursa",
+    "image": "assets/cards/swsh3/139.webp",
+    "imageSmall": "assets/cards/swsh3/139-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer Arm",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-139/large",
+    "tcgplayerId": 219337,
+    "market": 0.08
+  },
+  {
+    "id": "swsh3-140",
+    "name": "Lugia",
+    "number": "140",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Hasuno",
+    "flavorText": "It is said to be the guardian of the seas. It is rumored to have been seen on the night of a storm.",
+    "image": "assets/cards/swsh3/140.webp",
+    "imageSmall": "assets/cards/swsh3/140-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Energy Loop",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Put an Energy attached to this Pokémon into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-140/large",
+    "tcgplayerId": 219340,
+    "market": 0.49
+  },
+  {
+    "id": "swsh3-141",
+    "name": "Skitty",
+    "number": "141",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Saya Tsuruta",
+    "flavorText": "It shows its cute side by chasing its own tail until it gets dizzy.",
+    "image": "assets/cards/swsh3/141.webp",
+    "imageSmall": "assets/cards/swsh3/141-sm.webp",
+    "attacks": [
+      {
+        "name": "Drawup Power",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for an Energy card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Cat Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-141/large",
+    "tcgplayerId": 219341,
+    "market": 0.23
+  },
+  {
+    "id": "swsh3-142",
+    "name": "Delcatty",
+    "number": "142",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Tika Matsuno",
+    "flavorText": "It is highly popular among female Trainers for its sublime fur. It does not keep a nest.",
+    "evolvesFrom": "Skitty",
+    "image": "assets/cards/swsh3/142.webp",
+    "imageSmall": "assets/cards/swsh3/142-sm.webp",
+    "attacks": [
+      {
+        "name": "Captivating Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. The new Active Pokémon is now Confused."
+      },
+      {
+        "name": "Moon Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-142/large",
+    "tcgplayerId": 219342,
+    "market": 0.51
+  },
+  {
+    "id": "swsh3-143",
+    "name": "Salamence V",
+    "number": "143",
+    "rarity": "Rare Holo V",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "220",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/swsh3/143.webp",
+    "imageSmall": "assets/cards/swsh3/143-sm.webp",
+    "attacks": [
+      {
+        "name": "Swoop Across",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Heavy Storm",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-143/large",
+    "tcgplayerId": 219343,
+    "market": 1.08,
+    "foilMap": "assets/foil/maps/swsh3/143.webp"
+  },
+  {
+    "id": "swsh3-144",
+    "name": "Salamence VMAX",
+    "number": "144",
+    "rarity": "Rare Holo VMAX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Salamence V",
+    "image": "assets/cards/swsh3/144.webp",
+    "imageSmall": "assets/cards/swsh3/144-sm.webp",
+    "attacks": [
+      {
+        "name": "Sonic Double",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 40 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Max Wings",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "During your next turn, this Pokémon can't use Max Wings."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-144/large",
+    "tcgplayerId": 219347,
+    "market": 3.64,
+    "foilMap": "assets/foil/maps/swsh3/144.webp",
+    "etchMap": "assets/foil/maps/swsh3/144-etch.webp"
+  },
+  {
+    "id": "swsh3-145",
+    "name": "Starly",
+    "number": "145",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Naoyo Kimura",
+    "flavorText": "They flock around mountains and fields, chasing after bug Pokémon. Their singing is noisy and annoying.",
+    "image": "assets/cards/swsh3/145.webp",
+    "imageSmall": "assets/cards/swsh3/145-sm.webp",
+    "attacks": [
+      {
+        "name": "Keen Eye",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sky Circus",
+        "text": "If you played Bird Keeper from your hand during this turn, ignore all Energy in this Pokémon's attack costs.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-145/large",
+    "tcgplayerId": 219352,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-146",
+    "name": "Staravia",
+    "number": "146",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "chibi",
+    "flavorText": "It lives in forests and fields. Squabbles over territory occur when flocks collide.",
+    "evolvesFrom": "Starly",
+    "image": "assets/cards/swsh3/146.webp",
+    "imageSmall": "assets/cards/swsh3/146-sm.webp",
+    "attacks": [
+      {
+        "name": "Ambush",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      },
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-146/large",
+    "tcgplayerId": 219354,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-147",
+    "name": "Staraptor",
+    "number": "147",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "When Staravia evolve into Staraptor, they leave the flock to live alone. They have sturdy wings.",
+    "evolvesFrom": "Staravia",
+    "image": "assets/cards/swsh3/147.webp",
+    "imageSmall": "assets/cards/swsh3/147-sm.webp",
+    "attacks": [
+      {
+        "name": "Hurricane Blender",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Move any amount of Energy from your Pokémon to your other Pokémon in any way you like."
+      },
+      {
+        "name": "Brave Bird",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-147/large",
+    "tcgplayerId": 219355,
+    "market": 0.23
+  },
+  {
+    "id": "swsh3-148",
+    "name": "Ducklett",
+    "number": "148",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Midori Harada",
+    "flavorText": "They are better at swimming than flying, and they happily eat their favorite food, peat moss, as they dive underwater.",
+    "image": "assets/cards/swsh3/148.webp",
+    "imageSmall": "assets/cards/swsh3/148-sm.webp",
+    "attacks": [
+      {
+        "name": "Flap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-148/large",
+    "tcgplayerId": 219357,
+    "market": 0.13
+  },
+  {
+    "id": "swsh3-149",
+    "name": "Swanna",
+    "number": "149",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Taira Akitsu",
+    "flavorText": "Swanna start to dance at dusk. The one dancing in the middle is the leader of the flock.",
+    "evolvesFrom": "Ducklett",
+    "image": "assets/cards/swsh3/149.webp",
+    "imageSmall": "assets/cards/swsh3/149-sm.webp",
+    "attacks": [
+      {
+        "name": "Feather Slice",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "You may discard a card from your hand. If you do, this attack does 70 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sky Circus",
+        "text": "If you played Bird Keeper from your hand during this turn, ignore all Energy in this Pokémon's attack costs.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-149/large",
+    "tcgplayerId": 219360,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-150",
+    "name": "Bunnelby",
+    "number": "150",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It excels at digging holes. Using its ears, it can dig a nest 33 feet deep in one night.",
+    "image": "assets/cards/swsh3/150.webp",
+    "imageSmall": "assets/cards/swsh3/150-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Party",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-150/large",
+    "tcgplayerId": 219362,
+    "market": 0.07
+  },
+  {
+    "id": "swsh3-151",
+    "name": "Fletchling",
+    "number": "151",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "Its body is always warm. Trainers who live in cold areas apparently sleep with it in their bed.",
+    "image": "assets/cards/swsh3/151.webp",
+    "imageSmall": "assets/cards/swsh3/151-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-151/large",
+    "tcgplayerId": 219364,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-152",
+    "name": "Skwovet",
+    "number": "152",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Akira Komayama",
+    "flavorText": "Found throughout the Galar region, this Pokémon becomes uneasy if its cheeks are ever completely empty of berries.",
+    "image": "assets/cards/swsh3/152.webp",
+    "imageSmall": "assets/cards/swsh3/152-sm.webp",
+    "attacks": [
+      {
+        "name": "Whimsy Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-152/large",
+    "tcgplayerId": 219365,
+    "market": 0.18
+  },
+  {
+    "id": "swsh3-153",
+    "name": "Greedent",
+    "number": "153",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Kouki Saitou",
+    "flavorText": "It stashes berries in its tail—so many berries that they fall out constantly. But this Pokémon is a bit slow-witted, so it doesn't notice the loss.",
+    "evolvesFrom": "Skwovet",
+    "image": "assets/cards/swsh3/153.webp",
+    "imageSmall": "assets/cards/swsh3/153-sm.webp",
+    "attacks": [
+      {
+        "name": "Scrape Off",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Before doing damage, discard all Pokémon Tools from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Smack and Run",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Put this Pokémon and all attached cards into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-153/large",
+    "tcgplayerId": 219367,
+    "market": 0.24
+  },
+  {
+    "id": "swsh3-154",
+    "name": "Rookidee",
+    "number": "154",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "It will bravely challenge any opponent, no matter how powerful. This Pokémon benefits from every battle—even a defeat increases its strength a bit.",
+    "image": "assets/cards/swsh3/154.webp",
+    "imageSmall": "assets/cards/swsh3/154-sm.webp",
+    "attacks": [
+      {
+        "name": "Pluck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Before doing damage, discard all Pokémon Tools from your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-154/large",
+    "tcgplayerId": 219368,
+    "market": 0.06
+  },
+  {
+    "id": "swsh3-155",
+    "name": "Corvisquire",
+    "number": "155",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "kirisAki",
+    "flavorText": "Smart enough to use tools in battle, these Pokémon have been seen picking up rocks and flinging them or using ropes to wrap up enemies.",
+    "evolvesFrom": "Rookidee",
+    "image": "assets/cards/swsh3/155.webp",
+    "imageSmall": "assets/cards/swsh3/155-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Fury Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 3 coins. This attack does 40 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-155/large",
+    "tcgplayerId": 219370,
+    "market": 0.09
+  },
+  {
+    "id": "swsh3-156",
+    "name": "Corviknight",
+    "number": "156",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "160",
+    "artist": "Kouki Saitou",
+    "flavorText": "This Pokémon reigns supreme in the skies of the Galar region. The black luster of its steel body could drive terror into the heart of any foe.",
+    "evolvesFrom": "Corvisquire",
+    "image": "assets/cards/swsh3/156.webp",
+    "imageSmall": "assets/cards/swsh3/156-sm.webp",
+    "attacks": [
+      {
+        "name": "Blasting Wind",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flying Taxi",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put 1 of your Pokémon, except any Corviknight, and all attached cards into your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-156/large",
+    "tcgplayerId": 219371,
+    "market": 0.28,
+    "foilMap": "assets/foil/maps/swsh3/156.webp"
+  },
+  {
+    "id": "swsh3-157",
+    "name": "Big Parasol",
+    "number": "157",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/swsh3/157.webp",
+    "imageSmall": "assets/cards/swsh3/157-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-157/large",
+    "tcgplayerId": 219265,
+    "market": 0.03
+  },
+  {
+    "id": "swsh3-158",
+    "name": "Billowing Smoke",
+    "number": "158",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/158.webp",
+    "imageSmall": "assets/cards/swsh3/158-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-158/large",
+    "tcgplayerId": 219268,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-159",
+    "name": "Bird Keeper",
+    "number": "159",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/swsh3/159.webp",
+    "imageSmall": "assets/cards/swsh3/159-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-159/large",
+    "tcgplayerId": 219269,
+    "market": 0.21
+  },
+  {
+    "id": "swsh3-160",
+    "name": "Cape of Toughness",
+    "number": "160",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "inose yukie",
+    "image": "assets/cards/swsh3/160.webp",
+    "imageSmall": "assets/cards/swsh3/160-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-160/large",
+    "tcgplayerId": 219272,
+    "market": 0.1
+  },
+  {
+    "id": "swsh3-161",
+    "name": "Familiar Bell",
+    "number": "161",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "sadaji",
+    "image": "assets/cards/swsh3/161.webp",
+    "imageSmall": "assets/cards/swsh3/161-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-161/large",
+    "tcgplayerId": 219273,
+    "market": 0.01
+  },
+  {
+    "id": "swsh3-162",
+    "name": "Glimwood Tangle",
+    "number": "162",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "aky CG Works",
+    "image": "assets/cards/swsh3/162.webp",
+    "imageSmall": "assets/cards/swsh3/162-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-162/large",
+    "tcgplayerId": 219276,
+    "market": 0.17
+  },
+  {
+    "id": "swsh3-163",
+    "name": "Kabu",
+    "number": "163",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "take",
+    "image": "assets/cards/swsh3/163.webp",
+    "imageSmall": "assets/cards/swsh3/163-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-163/large",
+    "tcgplayerId": 219277,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-164",
+    "name": "Old PC",
+    "number": "164",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Studio Bora Inc.",
+    "image": "assets/cards/swsh3/164.webp",
+    "imageSmall": "assets/cards/swsh3/164-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-164/large",
+    "tcgplayerId": 219278,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-165",
+    "name": "Piers",
+    "number": "165",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "take",
+    "image": "assets/cards/swsh3/165.webp",
+    "imageSmall": "assets/cards/swsh3/165-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-165/large",
+    "tcgplayerId": 219280,
+    "market": 0.16
+  },
+  {
+    "id": "swsh3-166",
+    "name": "Pokémon Breeder's Nurturing",
+    "number": "166",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "kirisAki",
+    "image": "assets/cards/swsh3/166.webp",
+    "imageSmall": "assets/cards/swsh3/166-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-166/large",
+    "tcgplayerId": 219281,
+    "market": 0.22
+  },
+  {
+    "id": "swsh3-167",
+    "name": "Rare Fossil",
+    "number": "167",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "hp": "70",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/167.webp",
+    "imageSmall": "assets/cards/swsh3/167-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-167/large",
+    "tcgplayerId": 219282,
+    "market": 0.09
+  },
+  {
+    "id": "swsh3-168",
+    "name": "Rose",
+    "number": "168",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yusuke Ohmura",
+    "image": "assets/cards/swsh3/168.webp",
+    "imageSmall": "assets/cards/swsh3/168-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-168/large",
+    "tcgplayerId": 219284,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-169",
+    "name": "Rose Tower",
+    "number": "169",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/169.webp",
+    "imageSmall": "assets/cards/swsh3/169-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-169/large",
+    "tcgplayerId": 219285,
+    "market": 0.17
+  },
+  {
+    "id": "swsh3-170",
+    "name": "Spikemuth",
+    "number": "170",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/170.webp",
+    "imageSmall": "assets/cards/swsh3/170-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-170/large",
+    "tcgplayerId": 219286,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-171",
+    "name": "Struggle Gloves",
+    "number": "171",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/swsh3/171.webp",
+    "imageSmall": "assets/cards/swsh3/171-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-171/large",
+    "tcgplayerId": 219287,
+    "market": 0.02
+  },
+  {
+    "id": "swsh3-172",
+    "name": "Turbo Patch",
+    "number": "172",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/swsh3/172.webp",
+    "imageSmall": "assets/cards/swsh3/172-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-172/large",
+    "tcgplayerId": 219289,
+    "market": 0.05
+  },
+  {
+    "id": "swsh3-173",
+    "name": "Yell Horn",
+    "number": "173",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/173.webp",
+    "imageSmall": "assets/cards/swsh3/173-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-173/large",
+    "tcgplayerId": 219290,
+    "market": 0.04
+  },
+  {
+    "id": "swsh3-174",
+    "name": "Heat Fire Energy",
+    "number": "174",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "image": "assets/cards/swsh3/174.webp",
+    "imageSmall": "assets/cards/swsh3/174-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-174/large",
+    "tcgplayerId": 219291,
+    "market": 0.28
+  },
+  {
+    "id": "swsh3-175",
+    "name": "Hiding Darkness Energy",
+    "number": "175",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "image": "assets/cards/swsh3/175.webp",
+    "imageSmall": "assets/cards/swsh3/175-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-175/large",
+    "tcgplayerId": 219293,
+    "market": 0.3
+  },
+  {
+    "id": "swsh3-176",
+    "name": "Powerful Colorless Energy",
+    "number": "176",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "image": "assets/cards/swsh3/176.webp",
+    "imageSmall": "assets/cards/swsh3/176-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-176/large",
+    "tcgplayerId": 219294,
+    "market": 0.26
+  },
+  {
+    "id": "swsh3-177",
+    "name": "Butterfree V",
+    "number": "177",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "190",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/swsh3/177.webp",
+    "imageSmall": "assets/cards/swsh3/177-sm.webp",
+    "attacks": [
+      {
+        "name": "Dizzying Poison",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      },
+      {
+        "name": "Blasting Wind",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-177/large",
+    "tcgplayerId": 219297,
+    "market": 6.56,
+    "foilMap": "assets/foil/maps/swsh3/177.webp",
+    "etchMap": "assets/foil/maps/swsh3/177-etch.webp"
+  },
+  {
+    "id": "swsh3-178",
+    "name": "Houndoom V",
+    "number": "178",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/swsh3/178.webp",
+    "imageSmall": "assets/cards/swsh3/178-sm.webp",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Vengeful Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your Benched Fire Pokémon have any damage counters on them, this attack does 100 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-178/large",
+    "tcgplayerId": 219298,
+    "market": 6.46,
+    "foilMap": "assets/foil/maps/swsh3/178.webp",
+    "etchMap": "assets/foil/maps/swsh3/178-etch.webp"
+  },
+  {
+    "id": "swsh3-179",
+    "name": "Centiskorch V",
+    "number": "179",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh3/179.webp",
+    "imageSmall": "assets/cards/swsh3/179-sm.webp",
+    "attacks": [
+      {
+        "name": "Radiating Heat",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "You may discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Burning Train",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "180",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-179/large",
+    "tcgplayerId": 219299,
+    "market": 1.58,
+    "foilMap": "assets/foil/maps/swsh3/179.webp",
+    "etchMap": "assets/foil/maps/swsh3/179-etch.webp"
+  },
+  {
+    "id": "swsh3-180",
+    "name": "Vikavolt V",
+    "number": "180",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "210",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/swsh3/180.webp",
+    "imageSmall": "assets/cards/swsh3/180-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyzing Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, they can't play any Item cards from their hand."
+      },
+      {
+        "name": "Super Zap Cannon",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-180/large",
+    "tcgplayerId": 219301,
+    "market": 1.81,
+    "foilMap": "assets/foil/maps/swsh3/180.webp",
+    "etchMap": "assets/foil/maps/swsh3/180-etch.webp"
+  },
+  {
+    "id": "swsh3-181",
+    "name": "Rhyperior V",
+    "number": "181",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "230",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/swsh3/181.webp",
+    "imageSmall": "assets/cards/swsh3/181-sm.webp",
+    "attacks": [
+      {
+        "name": "Drill Run",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Heavy Rock Artillery",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "During your next turn, this Pokémon can't use Heavy Rock Artillery."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-181/large",
+    "tcgplayerId": 219302,
+    "market": 2.61,
+    "foilMap": "assets/foil/maps/swsh3/181.webp",
+    "etchMap": "assets/foil/maps/swsh3/181-etch.webp"
+  },
+  {
+    "id": "swsh3-182",
+    "name": "Crobat V",
+    "number": "182",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/swsh3/182.webp",
+    "imageSmall": "assets/cards/swsh3/182-sm.webp",
+    "attacks": [
+      {
+        "name": "Venomous Fang",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Asset",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may draw cards until you have 6 cards in your hand. You can't use more than 1 Dark Asset Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-182/large",
+    "tcgplayerId": 219304,
+    "market": 3.62,
+    "foilMap": "assets/foil/maps/swsh3/182.webp",
+    "etchMap": "assets/foil/maps/swsh3/182-etch.webp"
+  },
+  {
+    "id": "swsh3-183",
+    "name": "Scizor V",
+    "number": "183",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "210",
+    "artist": "Satoshi Shirai",
+    "image": "assets/cards/swsh3/183.webp",
+    "imageSmall": "assets/cards/swsh3/183-sm.webp",
+    "attacks": [
+      {
+        "name": "Hack Off",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "30",
+        "text": "Discard a Pokémon Tool and a Special Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-183/large",
+    "tcgplayerId": 219305,
+    "market": 4.41,
+    "foilMap": "assets/foil/maps/swsh3/183.webp",
+    "etchMap": "assets/foil/maps/swsh3/183-etch.webp"
+  },
+  {
+    "id": "swsh3-184",
+    "name": "Galarian Stunfisk V",
+    "number": "184",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "200",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swsh3/184.webp",
+    "imageSmall": "assets/cards/swsh3/184-sm.webp",
+    "attacks": [
+      {
+        "name": "Trapping Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, if this Pokémon is damaged by an attack (even if it is Knocked Out), put 12 damage counters on the Attacking Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metal Skin",
+        "text": "This Pokémon gets +20 HP for each Metal Energy attached to it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-184/large",
+    "tcgplayerId": 219306,
+    "market": 1.37,
+    "foilMap": "assets/foil/maps/swsh3/184.webp",
+    "etchMap": "assets/foil/maps/swsh3/184-etch.webp"
+  },
+  {
+    "id": "swsh3-185",
+    "name": "Salamence V",
+    "number": "185",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "220",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/swsh3/185.webp",
+    "imageSmall": "assets/cards/swsh3/185-sm.webp",
+    "attacks": [
+      {
+        "name": "Swoop Across",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Heavy Storm",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-185/large",
+    "tcgplayerId": 219307,
+    "market": 4.2,
+    "foilMap": "assets/foil/maps/swsh3/185.webp",
+    "etchMap": "assets/foil/maps/swsh3/185-etch.webp"
+  },
+  {
+    "id": "swsh3-186",
+    "name": "Kabu",
+    "number": "186",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/swsh3/186.webp",
+    "imageSmall": "assets/cards/swsh3/186-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-186/large",
+    "tcgplayerId": 219308,
+    "market": 1.17,
+    "foilMap": "assets/foil/maps/swsh3/186.webp",
+    "etchMap": "assets/foil/maps/swsh3/186-etch.webp"
+  },
+  {
+    "id": "swsh3-187",
+    "name": "Piers",
+    "number": "187",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "kirisAki",
+    "image": "assets/cards/swsh3/187.webp",
+    "imageSmall": "assets/cards/swsh3/187-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-187/large",
+    "tcgplayerId": 219309,
+    "market": 2.45,
+    "foilMap": "assets/foil/maps/swsh3/187.webp",
+    "etchMap": "assets/foil/maps/swsh3/187-etch.webp"
+  },
+  {
+    "id": "swsh3-188",
+    "name": "Pokémon Breeder's Nurturing",
+    "number": "188",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "kirisAki",
+    "image": "assets/cards/swsh3/188.webp",
+    "imageSmall": "assets/cards/swsh3/188-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-188/large",
+    "tcgplayerId": 219311,
+    "market": 2.9,
+    "foilMap": "assets/foil/maps/swsh3/188.webp",
+    "etchMap": "assets/foil/maps/swsh3/188-etch.webp"
+  },
+  {
+    "id": "swsh3-189",
+    "name": "Rose",
+    "number": "189",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/swsh3/189.webp",
+    "imageSmall": "assets/cards/swsh3/189-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-189/large",
+    "tcgplayerId": 219310,
+    "market": 1.38,
+    "foilMap": "assets/foil/maps/swsh3/189.webp",
+    "etchMap": "assets/foil/maps/swsh3/189-etch.webp"
+  },
+  {
+    "id": "swsh3-190",
+    "name": "Butterfree VMAX",
+    "number": "190",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "300",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Butterfree V",
+    "image": "assets/cards/swsh3/190.webp",
+    "imageSmall": "assets/cards/swsh3/190-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Toxbreeze",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-190/large",
+    "tcgplayerId": 219312,
+    "market": 17.58,
+    "foilMap": "assets/foil/maps/swsh3/190.webp",
+    "etchMap": "assets/foil/maps/swsh3/190-etch.webp"
+  },
+  {
+    "id": "swsh3-191",
+    "name": "Centiskorch VMAX",
+    "number": "191",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Centiskorch V",
+    "image": "assets/cards/swsh3/191.webp",
+    "imageSmall": "assets/cards/swsh3/191-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Centiferno",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each Fire Energy attached to this Pokémon. If you did any damage with this attack, you may attach a Fire Energy card from your discard pile to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-191/large",
+    "tcgplayerId": 219313,
+    "market": 7.39,
+    "foilMap": "assets/foil/maps/swsh3/191.webp",
+    "etchMap": "assets/foil/maps/swsh3/191-etch.webp"
+  },
+  {
+    "id": "swsh3-192",
+    "name": "Eternatus VMAX",
+    "number": "192",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eternatus V",
+    "image": "assets/cards/swsh3/192.webp",
+    "imageSmall": "assets/cards/swsh3/192-sm.webp",
+    "attacks": [
+      {
+        "name": "Dread End",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each of your Darkness Pokémon in play."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Eternal Zone",
+        "text": "If all of your Pokémon in play are Darkness type, you can have up to 8 Pokémon on your Bench, and you can't put non-Darkness Pokémon into play. (If this Ability stops working, discard Pokémon from your Bench until you have 5.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-192/large",
+    "tcgplayerId": 219318,
+    "market": 10.59,
+    "foilMap": "assets/foil/maps/swsh3/192.webp",
+    "etchMap": "assets/foil/maps/swsh3/192-etch.webp"
+  },
+  {
+    "id": "swsh3-193",
+    "name": "Scizor VMAX",
+    "number": "193",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Scizor V",
+    "image": "assets/cards/swsh3/193.webp",
+    "imageSmall": "assets/cards/swsh3/193-sm.webp",
+    "attacks": [
+      {
+        "name": "Hard Scissors",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Max Steelspike",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-193/large",
+    "tcgplayerId": 219319,
+    "market": 12.11,
+    "foilMap": "assets/foil/maps/swsh3/193.webp",
+    "etchMap": "assets/foil/maps/swsh3/193-etch.webp"
+  },
+  {
+    "id": "swsh3-194",
+    "name": "Salamence VMAX",
+    "number": "194",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "320",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Salamence V",
+    "image": "assets/cards/swsh3/194.webp",
+    "imageSmall": "assets/cards/swsh3/194-sm.webp",
+    "attacks": [
+      {
+        "name": "Sonic Double",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 40 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Max Wings",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "During your next turn, this Pokémon can't use Max Wings."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-194/large",
+    "tcgplayerId": 219320,
+    "market": 15.74,
+    "foilMap": "assets/foil/maps/swsh3/194.webp",
+    "etchMap": "assets/foil/maps/swsh3/194-etch.webp"
+  },
+  {
+    "id": "swsh3-195",
+    "name": "Pokémon Breeder's Nurturing",
+    "number": "195",
+    "rarity": "Rare Rainbow",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "kirisAki",
+    "image": "assets/cards/swsh3/195.webp",
+    "imageSmall": "assets/cards/swsh3/195-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-195/large",
+    "tcgplayerId": 219314,
+    "market": 4.5,
+    "foilMap": "assets/foil/maps/swsh3/195.webp",
+    "etchMap": "assets/foil/maps/swsh3/195-etch.webp"
+  },
+  {
+    "id": "swsh3-196",
+    "name": "Rose",
+    "number": "196",
+    "rarity": "Rare Rainbow",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/swsh3/196.webp",
+    "imageSmall": "assets/cards/swsh3/196-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-196/large",
+    "tcgplayerId": 219315,
+    "market": 3.46,
+    "foilMap": "assets/foil/maps/swsh3/196.webp",
+    "etchMap": "assets/foil/maps/swsh3/196-etch.webp"
+  },
+  {
+    "id": "swsh3-197",
+    "name": "Rillaboom",
+    "number": "197",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "flavorText": "By drumming, it taps into the power of its special tree stump. The roots of the stump follow its direction in battle.",
+    "evolvesFrom": "Thwackey",
+    "image": "assets/cards/swsh3/197.webp",
+    "imageSmall": "assets/cards/swsh3/197-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Voltage Beat",
+        "text": "Once during your turn, you may search your deck for up to 2 Grass Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-197/large",
+    "tcgplayerId": 219321,
+    "market": 7.04,
+    "foilMap": "assets/foil/maps/swsh3/197.webp",
+    "etchMap": "assets/foil/maps/swsh3/197-etch.webp"
+  },
+  {
+    "id": "swsh3-198",
+    "name": "Coalossal",
+    "number": "198",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "160",
+    "artist": "PLANETA Tsuji",
+    "flavorText": "It's usually peaceful, but the vandalism of mines enrages it. Offenders will be incinerated with flames that reach 2,700 degrees Fahrenheit.",
+    "evolvesFrom": "Carkol",
+    "image": "assets/cards/swsh3/198.webp",
+    "imageSmall": "assets/cards/swsh3/198-sm.webp",
+    "attacks": [
+      {
+        "name": "Flaming Avalanche",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tar Generator",
+        "text": "Once during your turn, you may attach a Fire Energy card, a Fighting Energy card, or 1 of each from your discard pile to your Pokémon in any way you like.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-198/large",
+    "tcgplayerId": 219323,
+    "market": 5.3,
+    "foilMap": "assets/foil/maps/swsh3/198.webp",
+    "etchMap": "assets/foil/maps/swsh3/198-etch.webp"
+  },
+  {
+    "id": "swsh3-199",
+    "name": "Big Parasol",
+    "number": "199",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/swsh3/199.webp",
+    "imageSmall": "assets/cards/swsh3/199-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-199/large",
+    "tcgplayerId": 219316,
+    "market": 2.19,
+    "foilMap": "assets/foil/maps/swsh3/199.webp",
+    "etchMap": "assets/foil/maps/swsh3/199-etch.webp"
+  },
+  {
+    "id": "swsh3-200",
+    "name": "Turbo Patch",
+    "number": "200",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/swsh3/200.webp",
+    "imageSmall": "assets/cards/swsh3/200-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-200/large",
+    "tcgplayerId": 219317,
+    "market": 2.48,
+    "foilMap": "assets/foil/maps/swsh3/200.webp",
+    "etchMap": "assets/foil/maps/swsh3/200-etch.webp"
+  },
+  {
+    "id": "swsh3-201",
+    "name": "Capture Energy",
+    "number": "201",
+    "rarity": "Rare Secret",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "image": "assets/cards/swsh3/201.webp",
+    "imageSmall": "assets/cards/swsh3/201-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swsh3-201/large",
+    "tcgplayerId": 219325,
+    "market": 2.73,
+    "foilMap": "assets/foil/maps/swsh3/201.webp",
+    "etchMap": "assets/foil/maps/swsh3/201-etch.webp"
+  }
+]

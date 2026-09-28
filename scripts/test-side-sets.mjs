@@ -72,7 +72,8 @@ assert.deepEqual(
 );
 
 // The Energy slot keeps to the set's run of basic Energy.
-assert.equal(BASIC_ENERGY.length, 24);
+// 24 Scarlet & Violet prints plus the eight Sword & Shield ones.
+assert.equal(BASIC_ENERGY.length, 32);
 for (const card of BASIC_ENERGY) {
   for (const path of [card.image, card.imageSmall]) assert.ok(fs.existsSync(new URL(path, root)), path);
 }

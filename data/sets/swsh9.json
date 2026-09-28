@@ -1,0 +1,34 @@
+{
+  "id": "swsh9",
+  "name": "Brilliant Stars",
+  "series": "sword-shield",
+  "slug": "brilliant-stars",
+  "scrydexId": "swsh9",
+  "era": "swsh",
+  "artSlug": "brilliant-stars",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2948,
+  "subsets": [
+    {
+      "slug": "brilliant-stars-trainer-gallery",
+      "gallery": "tg",
+      "tcgplayerGroup": 3020
+    }
+  ],
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

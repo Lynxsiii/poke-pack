@@ -54,7 +54,7 @@ NEXT_DATA = re.compile(
 FIELD_ORDER = [
     "id", "name", "number", "rarity", "supertype", "subtypes", "types", "hp",
     "artist", "flavorText", "evolvesFrom", "image", "imageSmall",
-    "attacks", "abilities", "market", "imageRemote",
+    "attacks", "abilities", "market", "imageRemote", "gallery", "printedNumber",
 ]
 
 # Written by fetch_prices.py / mirror_images.py — never clobbered on rebuild.
@@ -149,17 +149,39 @@ def clean_abilities(raw) -> list[dict]:
     return out
 
 
-def card_record(cfg: dict, detail: dict) -> dict:
+CLASSIC_15 = {"cc15-venusaur": "15_A1", "cc15-here": "15_A2", "cc15-rockets": "15_A3", "cc15": "15_A4"}
+
+
+def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     number = str(detail.get("number", "")).strip()
     set_id = cfg["id"]
-    scrydex = cfg.get("scrydexId", set_id)
+    scrydex = (subset or {}).get("scrydexId") or cfg.get("scrydexId", set_id)
+    remote_number = number
+    rarity = detail.get("rarity", "")
+    # Sword & Shield prints its holo Rares as a rarity of their own ("Rare
+    # Holo", the art background foil), separate from the plain Rare, so the
+    # alias that folds the two together is for the Scarlet & Violet feeds only.
+    if not (cfg.get("era") == "swsh" and rarity == "Rare Holo"):
+        rarity = RARITY_ALIASES.get(rarity, rarity)
+    if (subset or {}).get("gallery") == "cc":
+        # Celebrations' Classic Collection reprints keep their original
+        # numbers (4/102, 17/17), which collide with the set's own 1-25, so
+        # they are filed as cc<n> like the 30th Celebration's (me55-cc4).
+        # Three share number 15; pkmn.gg's numberKey tells them apart.
+        key = str(detail.get("numberKey", "")).strip()
+        suffix = re.sub(r"^0*\d+", "", key).strip("-")
+        number = f"cc{number}" + (f"-{suffix.split('-')[0]}" if suffix else "")
     card = {
         "id": f"{set_id}-{number}",
         "name": detail.get("name", ""),
         "number": number,
-        "rarity": RARITY_ALIASES.get(detail.get("rarity", ""), detail.get("rarity", "")),
+        "rarity": rarity,
         "supertype": detail.get("superType", ""),
     }
+    if subset:
+        card["gallery"] = subset["gallery"]
+    if (subset or {}).get("gallery") == "cc":
+        card["printedNumber"] = f"Classic {remote_number}"
     subtypes = detail.get("subtypes") or []
     if TRAINER_SUBTYPES & set(subtypes):
         card["supertype"] = "Trainer"
@@ -173,8 +195,17 @@ def card_record(cfg: dict, detail: dict) -> dict:
             continue
         if value:
             card[dst] = value
-    card["image"] = f"https://images.scrydex.com/pokemon/{scrydex}-{number}/large"
-    card["imageSmall"] = f"https://images.scrydex.com/pokemon/{scrydex}-{number}/small"
+    # scrydex files a Sword & Shield sub-gallery under its own id (swsh9tg-TG01,
+    # swsh45sv-SV001, swsh12pt5gg-GG01) and Celebrations' Classic Collection
+    # as cel25c-<n>_A; the bare set id returns the card back.
+    gallery = (subset or {}).get("gallery")
+    if gallery in ("tg", "sv", "gg") and not (subset or {}).get("scrydexId"):
+        scrydex = f"{scrydex}{gallery}"
+    if gallery == "cc":
+        # The three number-15 reprints are cel25c-15_A1..A4 (A4 is Claydol).
+        remote_number = CLASSIC_15.get(number, f"{remote_number}_A")
+    card["image"] = f"https://images.scrydex.com/pokemon/{scrydex}-{remote_number}/large"
+    card["imageSmall"] = f"https://images.scrydex.com/pokemon/{scrydex}-{remote_number}/small"
     attacks = clean_attacks(detail.get("attacks"))
     if attacks:
         card["attacks"] = attacks
@@ -286,6 +317,18 @@ def ordered(card: dict) -> dict:
     return out
 
 
+def sort_key(card: dict):
+    """Numbered cards first by number, then the galleries in their own order
+    (TG01... after the set, SV001..., GG01..., cc2...)."""
+    number = str(card["number"])
+    m = re.match(r"^([A-Za-z]*)0*(\d+)(.*)$", number)
+    if not m:
+        return (9, number, 0, "")
+    prefix, digits, rest = m.groups()
+    rank = {"": 0, "TG": 1, "SV": 1, "GG": 1, "cc": 2}.get(prefix, 3)
+    return (rank, prefix, int(digits), rest)
+
+
 def build(set_id: str, refresh: bool) -> int:
     cfg_path = SETS / f"{set_id}.json"
     if not cfg_path.exists():
@@ -293,30 +336,40 @@ def build(set_id: str, refresh: bool) -> int:
         return 1
     cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
 
-    base = f"https://www.pkmn.gg/series/{cfg['series']}/{cfg['slug']}"
-    listing = page_data(fetch(base, f"{set_id}-set", refresh))
-    print(f"  checklist: {len(listing)} cards")
-
     out_path = DATA / f"{set_id}.json"
     existing = {}
     if out_path.exists():
         existing = {c["id"]: c for c in json.loads(out_path.read_text(encoding="utf-8"))}
 
     cards = []
-    seen = set()
-    for index, row in enumerate(listing, start=1):
-        number = str(row.get("number", "")).strip()
-        if not number or number in seen:
-            continue
-        seen.add(number)
-        detail = page_data(fetch(f"{base}/{number}", f"{set_id}-{number}", refresh))
-        if isinstance(detail, list):  # a listing page came back; skip rather than guess
-            print(f"    #{number}: unexpected page shape, skipped")
-            continue
-        card = card_record(cfg, detail)
-        cards.append(ordered(merge(existing.get(card["id"]), card)))
-        if index % 25 == 0:
-            print(f"    {index}/{len(listing)}…")
+    # A set's sub-galleries (Sword & Shield's Trainer Gallery, Shining Fates'
+    # Shiny Vault, Crown Zenith's Galarian Gallery, Celebrations' Classic
+    # Collection) are checklists of their own on pkmn.gg but one product, so
+    # they build into the same data file, each card tagged with `gallery`.
+    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or []]
+    for slug, subset in sources:
+        base = f"https://www.pkmn.gg/series/{cfg['series']}/{slug}"
+        tag = f"{set_id}-{subset['gallery']}" if subset else set_id
+        listing = page_data(fetch(base, f"{tag}-set", refresh))
+        print(f"  checklist: {len(listing)} cards" + (f" ({subset['gallery']})" if subset else ""))
+        seen = set()
+        for index, row in enumerate(listing, start=1):
+            number = str(row.get("number", "")).strip()
+            # The detail page is addressed by numberKey where the two differ
+            # (TG01 lives at /TG001; the three Classic Collection number 15s
+            # at /015-<name>).
+            key = str(row.get("numberKey") or number).strip()
+            if not number or key in seen:
+                continue
+            seen.add(key)
+            detail = page_data(fetch(f"{base}/{key}", f"{tag}-{key}", refresh))
+            if isinstance(detail, list):  # a listing page came back; skip rather than guess
+                print(f"    #{number}: unexpected page shape, skipped")
+                continue
+            card = card_record(cfg, detail, subset)
+            cards.append(ordered(merge(existing.get(card["id"]), card)))
+            if index % 25 == 0:
+                print(f"    {index}/{len(listing)}…")
 
     # Cards the checklist doesn't carry — 30th Celebration's Classic Collection
     # reprints live in their own Scrydex expansion — were added by hand, so keep
@@ -326,7 +379,7 @@ def build(set_id: str, refresh: bool) -> int:
     if kept_extra:
         print(f"  kept {len(kept_extra)} card(s) not on the checklist")
     cards.extend(kept_extra)
-    cards.sort(key=lambda c: (len(c["number"]), c["number"]))
+    cards.sort(key=sort_key)
     out_path.write_text(
         json.dumps(cards, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )

@@ -1,0 +1,28 @@
+{
+  "id": "swsh6",
+  "name": "Chilling Reign",
+  "series": "sword-shield",
+  "slug": "chilling-reign",
+  "scrydexId": "swsh6",
+  "era": "swsh",
+  "artSlug": "chilling-reign",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3",
+    "pack-4"
+  ],
+  "tcgplayerGroup": 2807,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

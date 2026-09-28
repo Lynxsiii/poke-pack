@@ -1,110 +1,262 @@
 {
   "source": "https://pokesymbols.com/tcg/booster-pack-art",
   "urlPattern": "https://pokesymbols.com/images/tcg/sets/booster-pack-art/{set-slug}-pack-{n}.avif",
-  "note": "Mega Evolution sets and Scarlet & Violet from Journey Together on are isolated AVIFs with real alpha. Older Scarlet & Violet packs (and the 30th Classic Collection pack) come flattened onto white: run scripts/clean_pack_art.py on them after downloading. Vintage Base Set files from the same folder are tight pack photos without alpha.",
+  "note": "Mega Evolution sets and Scarlet & Violet from Journey Together on are isolated AVIFs with real alpha. Older Scarlet & Violet packs, the whole Sword & Shield era and the 30th Classic Collection pack come flattened onto white: run scripts/clean_pack_art.py on them after downloading. Vintage Base Set files from the same folder are tight pack photos without alpha.",
   "sets": {
-      "me5": {
+    "me5": {
       "name": "Pitch Black",
       "slug": "pitch-black",
       "packs": [
-        { "id": "chandelure", "remote": "pitch-black-pack-0.avif", "file": "me5/chandelure.avif" },
-        { "id": "darkrai", "remote": "pitch-black-pack-1.avif", "file": "me5/darkrai.avif" },
-        { "id": "excadrill", "remote": "pitch-black-pack-2.avif", "file": "me5/excadrill.avif" },
-        { "id": "zeraora", "remote": "pitch-black-pack-3.avif", "file": "me5/zeraora.avif" }
+        {
+          "id": "chandelure",
+          "remote": "pitch-black-pack-0.avif",
+          "file": "me5/chandelure.avif"
+        },
+        {
+          "id": "darkrai",
+          "remote": "pitch-black-pack-1.avif",
+          "file": "me5/darkrai.avif"
+        },
+        {
+          "id": "excadrill",
+          "remote": "pitch-black-pack-2.avif",
+          "file": "me5/excadrill.avif"
+        },
+        {
+          "id": "zeraora",
+          "remote": "pitch-black-pack-3.avif",
+          "file": "me5/zeraora.avif"
+        }
       ]
     },
     "me4": {
       "name": "Chaos Rising",
       "slug": "chaos-rising",
       "packs": [
-        { "id": "dragalge", "remote": "chaos-rising-pack-0.avif", "file": "me4/dragalge.avif" },
-        { "id": "floette", "remote": "chaos-rising-pack-1.avif", "file": "me4/floette.avif" },
-        { "id": "greninja", "remote": "chaos-rising-pack-2.avif", "file": "me4/greninja.avif" },
-        { "id": "pyroar", "remote": "chaos-rising-pack-3.avif", "file": "me4/pyroar.avif" }
+        {
+          "id": "dragalge",
+          "remote": "chaos-rising-pack-0.avif",
+          "file": "me4/dragalge.avif"
+        },
+        {
+          "id": "floette",
+          "remote": "chaos-rising-pack-1.avif",
+          "file": "me4/floette.avif"
+        },
+        {
+          "id": "greninja",
+          "remote": "chaos-rising-pack-2.avif",
+          "file": "me4/greninja.avif"
+        },
+        {
+          "id": "pyroar",
+          "remote": "chaos-rising-pack-3.avif",
+          "file": "me4/pyroar.avif"
+        }
       ]
     },
     "me3": {
       "name": "Perfect Order",
       "slug": "perfect-order",
       "packs": [
-        { "id": "clefable", "remote": "perfect-order-pack-0.avif", "file": "me3/clefable.avif" },
-        { "id": "starmie", "remote": "perfect-order-pack-1.avif", "file": "me3/starmie.avif" },
-        { "id": "zygarde", "remote": "perfect-order-pack-2.avif", "file": "me3/zygarde.avif" },
-        { "id": "meowth", "remote": "perfect-order-pack-3.avif", "file": "me3/meowth.avif" }
+        {
+          "id": "clefable",
+          "remote": "perfect-order-pack-0.avif",
+          "file": "me3/clefable.avif"
+        },
+        {
+          "id": "starmie",
+          "remote": "perfect-order-pack-1.avif",
+          "file": "me3/starmie.avif"
+        },
+        {
+          "id": "zygarde",
+          "remote": "perfect-order-pack-2.avif",
+          "file": "me3/zygarde.avif"
+        },
+        {
+          "id": "meowth",
+          "remote": "perfect-order-pack-3.avif",
+          "file": "me3/meowth.avif"
+        }
       ]
     },
     "base1": {
       "name": "Base",
       "slug": "base-set",
       "packs": [
-        { "id": "charizard", "remote": "base-set-pack-0.avif", "file": "base1/charizard.avif" },
-        { "id": "venusaur", "remote": "base-set-pack-1.avif", "file": "base1/venusaur.avif" },
-        { "id": "blastoise", "remote": "base-set-pack-2.avif", "file": "base1/blastoise.avif" }
+        {
+          "id": "charizard",
+          "remote": "base-set-pack-0.avif",
+          "file": "base1/charizard.avif"
+        },
+        {
+          "id": "venusaur",
+          "remote": "base-set-pack-1.avif",
+          "file": "base1/venusaur.avif"
+        },
+        {
+          "id": "blastoise",
+          "remote": "base-set-pack-2.avif",
+          "file": "base1/blastoise.avif"
+        }
       ]
     },
     "zsv10pt5": {
       "name": "Black Bolt",
       "slug": "black-bolt",
       "packs": [
-        { "id": "zekrom", "remote": "black-bolt-pack-0.avif", "file": "zsv10pt5/zekrom.avif" }
+        {
+          "id": "zekrom",
+          "remote": "black-bolt-pack-0.avif",
+          "file": "zsv10pt5/zekrom.avif"
+        }
       ]
     },
     "rsv10pt5": {
       "name": "White Flare",
       "slug": "white-flare",
       "packs": [
-        { "id": "reshiram", "remote": "white-flare-pack-0.avif", "file": "rsv10pt5/reshiram.avif" }
+        {
+          "id": "reshiram",
+          "remote": "white-flare-pack-0.avif",
+          "file": "rsv10pt5/reshiram.avif"
+        }
       ]
     },
     "sv2": {
       "name": "Paldea Evolved",
       "slug": "paldea-evolved",
       "packs": [
-        { "id": "ting-lu", "remote": "paldea-evolved-pack-0.avif", "file": "sv2/pack-0.avif" },
-        { "id": "skeledirge", "remote": "paldea-evolved-pack-1.avif", "file": "sv2/pack-1.avif" },
-        { "id": "quaquaval", "remote": "paldea-evolved-pack-2.avif", "file": "sv2/pack-2.avif" },
-        { "id": "meowscarada", "remote": "paldea-evolved-pack-3.avif", "file": "sv2/pack-3.avif" },
-        { "id": "chien-pao", "remote": "paldea-evolved-pack-4.avif", "file": "sv2/pack-4.avif" }
+        {
+          "id": "ting-lu",
+          "remote": "paldea-evolved-pack-0.avif",
+          "file": "sv2/pack-0.avif"
+        },
+        {
+          "id": "skeledirge",
+          "remote": "paldea-evolved-pack-1.avif",
+          "file": "sv2/pack-1.avif"
+        },
+        {
+          "id": "quaquaval",
+          "remote": "paldea-evolved-pack-2.avif",
+          "file": "sv2/pack-2.avif"
+        },
+        {
+          "id": "meowscarada",
+          "remote": "paldea-evolved-pack-3.avif",
+          "file": "sv2/pack-3.avif"
+        },
+        {
+          "id": "chien-pao",
+          "remote": "paldea-evolved-pack-4.avif",
+          "file": "sv2/pack-4.avif"
+        }
       ]
     },
     "sv3": {
       "name": "Obsidian Flames",
       "slug": "obsidian-flames",
       "packs": [
-        { "id": "revavroom", "remote": "obsidian-flames-pack-0.avif", "file": "sv3/revavroom.avif" },
-        { "id": "tyranitar", "remote": "obsidian-flames-pack-1.avif", "file": "sv3/tyranitar.avif" },
-        { "id": "charizard", "remote": "obsidian-flames-pack-2.avif", "file": "sv3/charizard.avif" },
-        { "id": "dragonite", "remote": "obsidian-flames-pack-3.avif", "file": "sv3/dragonite.avif" }
+        {
+          "id": "revavroom",
+          "remote": "obsidian-flames-pack-0.avif",
+          "file": "sv3/revavroom.avif"
+        },
+        {
+          "id": "tyranitar",
+          "remote": "obsidian-flames-pack-1.avif",
+          "file": "sv3/tyranitar.avif"
+        },
+        {
+          "id": "charizard",
+          "remote": "obsidian-flames-pack-2.avif",
+          "file": "sv3/charizard.avif"
+        },
+        {
+          "id": "dragonite",
+          "remote": "obsidian-flames-pack-3.avif",
+          "file": "sv3/dragonite.avif"
+        }
       ]
     },
     "sv7": {
       "name": "Stellar Crown",
       "slug": "stellar-crown",
       "packs": [
-        { "id": "terapagos", "remote": "stellar-crown-pack-0.avif", "file": "sv7/pack-0.avif" },
-        { "id": "lapras", "remote": "stellar-crown-pack-1.avif", "file": "sv7/pack-1.avif" },
-        { "id": "galvantula", "remote": "stellar-crown-pack-2.avif", "file": "sv7/pack-2.avif" },
-        { "id": "cinderace", "remote": "stellar-crown-pack-3.avif", "file": "sv7/pack-3.avif" }
+        {
+          "id": "terapagos",
+          "remote": "stellar-crown-pack-0.avif",
+          "file": "sv7/pack-0.avif"
+        },
+        {
+          "id": "lapras",
+          "remote": "stellar-crown-pack-1.avif",
+          "file": "sv7/pack-1.avif"
+        },
+        {
+          "id": "galvantula",
+          "remote": "stellar-crown-pack-2.avif",
+          "file": "sv7/pack-2.avif"
+        },
+        {
+          "id": "cinderace",
+          "remote": "stellar-crown-pack-3.avif",
+          "file": "sv7/pack-3.avif"
+        }
       ]
     },
     "sv4": {
       "name": "Paradox Rift",
       "slug": "paradox-rift",
       "packs": [
-        { "id": "garchomp", "remote": "paradox-rift-pack-0.avif", "file": "sv4/garchomp.avif" },
-        { "id": "iron-valiant", "remote": "paradox-rift-pack-1.avif", "file": "sv4/iron-valiant.avif" },
-        { "id": "armarouge", "remote": "paradox-rift-pack-2.avif", "file": "sv4/armarouge.avif" },
-        { "id": "roaring-moon", "remote": "paradox-rift-pack-3.avif", "file": "sv4/roaring-moon.avif" }
+        {
+          "id": "garchomp",
+          "remote": "paradox-rift-pack-0.avif",
+          "file": "sv4/garchomp.avif"
+        },
+        {
+          "id": "iron-valiant",
+          "remote": "paradox-rift-pack-1.avif",
+          "file": "sv4/iron-valiant.avif"
+        },
+        {
+          "id": "armarouge",
+          "remote": "paradox-rift-pack-2.avif",
+          "file": "sv4/armarouge.avif"
+        },
+        {
+          "id": "roaring-moon",
+          "remote": "paradox-rift-pack-3.avif",
+          "file": "sv4/roaring-moon.avif"
+        }
       ]
     },
     "sv1": {
       "name": "Scarlet & Violet",
       "slug": "scarlet-and-violet",
       "packs": [
-        { "id": "starters", "remote": "scarlet-and-violet-pack-0.avif", "file": "sv1/pack-0.avif" },
-        { "id": "miraidon", "remote": "scarlet-and-violet-pack-1.avif", "file": "sv1/pack-1.avif" },
-        { "id": "gyarados", "remote": "scarlet-and-violet-pack-2.avif", "file": "sv1/pack-2.avif" },
-        { "id": "koraidon", "remote": "scarlet-and-violet-pack-3.avif", "file": "sv1/pack-3.avif" }
+        {
+          "id": "starters",
+          "remote": "scarlet-and-violet-pack-0.avif",
+          "file": "sv1/pack-0.avif"
+        },
+        {
+          "id": "miraidon",
+          "remote": "scarlet-and-violet-pack-1.avif",
+          "file": "sv1/pack-1.avif"
+        },
+        {
+          "id": "gyarados",
+          "remote": "scarlet-and-violet-pack-2.avif",
+          "file": "sv1/pack-2.avif"
+        },
+        {
+          "id": "koraidon",
+          "remote": "scarlet-and-violet-pack-3.avif",
+          "file": "sv1/pack-3.avif"
+        }
       ]
     },
     "sv3pt5": {
@@ -112,7 +264,418 @@
       "slug": "151",
       "note": "The only upstream file has no alpha; resized to 400x731 and cut with the Black Bolt wrapper's edge alpha.",
       "packs": [
-        { "id": "mew", "remote": "151-pack-0.avif", "file": "sv3pt5/mew.avif" }
+        {
+          "id": "mew",
+          "remote": "151-pack-0.avif",
+          "file": "sv3pt5/mew.avif"
+        }
+      ]
+    },
+    "swsh1": {
+      "name": "Sword & Shield",
+      "slug": "sword-and-shield",
+      "packs": [
+        {
+          "id": "rillaboom",
+          "remote": "sword-and-shield-pack-0.avif",
+          "file": "swsh1/pack-0.avif"
+        },
+        {
+          "id": "lapras",
+          "remote": "sword-and-shield-pack-1.avif",
+          "file": "swsh1/pack-1.avif"
+        },
+        {
+          "id": "zamazenta",
+          "remote": "sword-and-shield-pack-2.avif",
+          "file": "swsh1/pack-2.avif"
+        },
+        {
+          "id": "zacian",
+          "remote": "sword-and-shield-pack-3.avif",
+          "file": "swsh1/pack-3.avif"
+        }
+      ]
+    },
+    "swsh2": {
+      "name": "Rebel Clash",
+      "slug": "rebel-clash",
+      "packs": [
+        {
+          "id": "toxtricity",
+          "remote": "rebel-clash-pack-0.avif",
+          "file": "swsh2/pack-0.avif"
+        },
+        {
+          "id": "inteleon",
+          "remote": "rebel-clash-pack-1.avif",
+          "file": "swsh2/pack-1.avif"
+        },
+        {
+          "id": "cinderace",
+          "remote": "rebel-clash-pack-2.avif",
+          "file": "swsh2/pack-2.avif"
+        },
+        {
+          "id": "rillaboom",
+          "remote": "rebel-clash-pack-3.avif",
+          "file": "swsh2/pack-3.avif"
+        }
+      ]
+    },
+    "swsh3": {
+      "name": "Darkness Ablaze",
+      "slug": "darkness-ablaze",
+      "packs": [
+        {
+          "id": "eternatus",
+          "remote": "darkness-ablaze-pack-0.avif",
+          "file": "swsh3/pack-0.avif"
+        },
+        {
+          "id": "grimmsnarl",
+          "remote": "darkness-ablaze-pack-1.avif",
+          "file": "swsh3/pack-1.avif"
+        },
+        {
+          "id": "centiskorch",
+          "remote": "darkness-ablaze-pack-2.avif",
+          "file": "swsh3/pack-2.avif"
+        },
+        {
+          "id": "charizard",
+          "remote": "darkness-ablaze-pack-3.avif",
+          "file": "swsh3/pack-3.avif"
+        }
+      ]
+    },
+    "swsh35": {
+      "name": "Champion's Path",
+      "slug": "champions-path",
+      "packs": [
+        {
+          "id": "obstagoon",
+          "remote": "champions-path-pack-0.avif",
+          "file": "swsh35/pack-0.avif"
+        },
+        {
+          "id": "gardevoir",
+          "remote": "champions-path-pack-1.avif",
+          "file": "swsh35/pack-1.avif"
+        },
+        {
+          "id": "drednaw",
+          "remote": "champions-path-pack-2.avif",
+          "file": "swsh35/pack-2.avif"
+        },
+        {
+          "id": "alcremie",
+          "remote": "champions-path-pack-3.avif",
+          "file": "swsh35/pack-3.avif"
+        }
+      ]
+    },
+    "swsh4": {
+      "name": "Vivid Voltage",
+      "slug": "vivid-voltage",
+      "packs": [
+        {
+          "id": "zarude",
+          "remote": "vivid-voltage-pack-0.avif",
+          "file": "swsh4/pack-0.avif"
+        },
+        {
+          "id": "orbeetle",
+          "remote": "vivid-voltage-pack-1.avif",
+          "file": "swsh4/pack-1.avif"
+        },
+        {
+          "id": "celebi",
+          "remote": "vivid-voltage-pack-2.avif",
+          "file": "swsh4/pack-2.avif"
+        },
+        {
+          "id": "pikachu",
+          "remote": "vivid-voltage-pack-3.avif",
+          "file": "swsh4/pack-3.avif"
+        }
+      ]
+    },
+    "swsh45": {
+      "name": "Shining Fates",
+      "slug": "shining-fates",
+      "packs": [
+        {
+          "id": "dragapult",
+          "remote": "shining-fates-pack-0.avif",
+          "file": "swsh45/pack-0.avif"
+        },
+        {
+          "id": "toxtricity",
+          "remote": "shining-fates-pack-1.avif",
+          "file": "swsh45/pack-1.avif"
+        },
+        {
+          "id": "crobat",
+          "remote": "shining-fates-pack-2.avif",
+          "file": "swsh45/pack-2.avif"
+        },
+        {
+          "id": "charizard",
+          "remote": "shining-fates-pack-3.avif",
+          "file": "swsh45/pack-3.avif"
+        }
+      ]
+    },
+    "swsh5": {
+      "name": "Battle Styles",
+      "slug": "battle-styles",
+      "packs": [
+        {
+          "id": "urshifu",
+          "remote": "battle-styles-pack-0.avif",
+          "file": "swsh5/pack-0.avif"
+        },
+        {
+          "id": "tyranitar",
+          "remote": "battle-styles-pack-1.avif",
+          "file": "swsh5/pack-1.avif"
+        },
+        {
+          "id": "empoleon",
+          "remote": "battle-styles-pack-2.avif",
+          "file": "swsh5/pack-2.avif"
+        },
+        {
+          "id": "urshifu-rapid",
+          "remote": "battle-styles-pack-3.avif",
+          "file": "swsh5/pack-3.avif"
+        }
+      ]
+    },
+    "swsh6": {
+      "name": "Chilling Reign",
+      "slug": "chilling-reign",
+      "packs": [
+        {
+          "id": "moltres",
+          "remote": "chilling-reign-pack-0.avif",
+          "file": "swsh6/pack-0.avif"
+        },
+        {
+          "id": "zapdos",
+          "remote": "chilling-reign-pack-1.avif",
+          "file": "swsh6/pack-1.avif"
+        },
+        {
+          "id": "shadow-rider",
+          "remote": "chilling-reign-pack-2.avif",
+          "file": "swsh6/pack-2.avif"
+        },
+        {
+          "id": "articuno",
+          "remote": "chilling-reign-pack-3.avif",
+          "file": "swsh6/pack-3.avif"
+        },
+        {
+          "id": "ice-rider",
+          "remote": "chilling-reign-pack-4.avif",
+          "file": "swsh6/pack-4.avif"
+        }
+      ]
+    },
+    "swsh7": {
+      "name": "Evolving Skies",
+      "slug": "evolving-skies",
+      "packs": [
+        {
+          "id": "duraludon",
+          "remote": "evolving-skies-pack-0.avif",
+          "file": "swsh7/pack-0.avif"
+        },
+        {
+          "id": "sylveon",
+          "remote": "evolving-skies-pack-1.avif",
+          "file": "swsh7/pack-1.avif"
+        },
+        {
+          "id": "rayquaza",
+          "remote": "evolving-skies-pack-2.avif",
+          "file": "swsh7/pack-2.avif"
+        },
+        {
+          "id": "umbreon",
+          "remote": "evolving-skies-pack-3.avif",
+          "file": "swsh7/pack-3.avif"
+        }
+      ]
+    },
+    "cel25": {
+      "name": "Celebrations",
+      "slug": "celebrations",
+      "packs": [
+        {
+          "id": "celebrations",
+          "remote": "celebrations-pack-0.avif",
+          "file": "cel25/pack-0.avif"
+        }
+      ]
+    },
+    "swsh8": {
+      "name": "Fusion Strike",
+      "slug": "fusion-strike",
+      "packs": [
+        {
+          "id": "boltund",
+          "remote": "fusion-strike-pack-0.avif",
+          "file": "swsh8/pack-0.avif"
+        },
+        {
+          "id": "genesect",
+          "remote": "fusion-strike-pack-1.avif",
+          "file": "swsh8/pack-1.avif"
+        },
+        {
+          "id": "mew",
+          "remote": "fusion-strike-pack-2.avif",
+          "file": "swsh8/pack-2.avif"
+        },
+        {
+          "id": "gengar",
+          "remote": "fusion-strike-pack-3.avif",
+          "file": "swsh8/pack-3.avif"
+        }
+      ]
+    },
+    "swsh9": {
+      "name": "Brilliant Stars",
+      "slug": "brilliant-stars",
+      "packs": [
+        {
+          "id": "whimsicott",
+          "remote": "brilliant-stars-pack-0.avif",
+          "file": "swsh9/pack-0.avif"
+        },
+        {
+          "id": "shaymin",
+          "remote": "brilliant-stars-pack-1.avif",
+          "file": "swsh9/pack-1.avif"
+        },
+        {
+          "id": "charizard",
+          "remote": "brilliant-stars-pack-2.avif",
+          "file": "swsh9/pack-2.avif"
+        },
+        {
+          "id": "arceus",
+          "remote": "brilliant-stars-pack-3.avif",
+          "file": "swsh9/pack-3.avif"
+        }
+      ]
+    },
+    "swsh10": {
+      "name": "Astral Radiance",
+      "slug": "astral-radiance",
+      "packs": [
+        {
+          "id": "typhlosion",
+          "remote": "astral-radiance-pack-0.avif",
+          "file": "swsh10/pack-0.avif"
+        },
+        {
+          "id": "decidueye",
+          "remote": "astral-radiance-pack-1.avif",
+          "file": "swsh10/pack-1.avif"
+        },
+        {
+          "id": "dialga",
+          "remote": "astral-radiance-pack-2.avif",
+          "file": "swsh10/pack-2.avif"
+        },
+        {
+          "id": "samurott",
+          "remote": "astral-radiance-pack-3.avif",
+          "file": "swsh10/pack-3.avif"
+        },
+        {
+          "id": "palkia",
+          "remote": "astral-radiance-pack-4.avif",
+          "file": "swsh10/pack-4.avif"
+        }
+      ]
+    },
+    "pgo": {
+      "name": "Pokémon GO",
+      "slug": "pokemon-go",
+      "packs": [
+        {
+          "id": "pokemon-go",
+          "remote": "pokemon-go-pack-0.avif",
+          "file": "pgo/pack-0.avif"
+        }
+      ]
+    },
+    "swsh11": {
+      "name": "Lost Origin",
+      "slug": "lost-origin",
+      "packs": [
+        {
+          "id": "zoroark",
+          "remote": "lost-origin-pack-0.avif",
+          "file": "swsh11/pack-0.avif"
+        },
+        {
+          "id": "giratina",
+          "remote": "lost-origin-pack-1.avif",
+          "file": "swsh11/pack-1.avif"
+        },
+        {
+          "id": "kyurem",
+          "remote": "lost-origin-pack-2.avif",
+          "file": "swsh11/pack-2.avif"
+        },
+        {
+          "id": "enamorus",
+          "remote": "lost-origin-pack-3.avif",
+          "file": "swsh11/pack-3.avif"
+        }
+      ]
+    },
+    "swsh12": {
+      "name": "Silver Tempest",
+      "slug": "silver-tempest",
+      "packs": [
+        {
+          "id": "regidrago",
+          "remote": "silver-tempest-pack-0.avif",
+          "file": "swsh12/pack-0.avif"
+        },
+        {
+          "id": "regieleki",
+          "remote": "silver-tempest-pack-1.avif",
+          "file": "swsh12/pack-1.avif"
+        },
+        {
+          "id": "lugia",
+          "remote": "silver-tempest-pack-2.avif",
+          "file": "swsh12/pack-2.avif"
+        },
+        {
+          "id": "vulpix",
+          "remote": "silver-tempest-pack-3.avif",
+          "file": "swsh12/pack-3.avif"
+        }
+      ]
+    },
+    "swsh12pt5": {
+      "name": "Crown Zenith",
+      "slug": "crown-zenith",
+      "packs": [
+        {
+          "id": "crown-zenith",
+          "remote": "crown-zenith-pack-0.avif",
+          "file": "swsh12pt5/pack-0.avif"
+        }
       ]
     }
   }

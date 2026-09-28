@@ -37,6 +37,10 @@ const TCGDEX_SET = {
   sv10: "sv10",
   sv1: "sv01",
   sv6pt5: "sv06.5",
+  // Sword & Shield: TCGdex keeps the era's ids; TG01-style numbers pass through.
+  swsh1: "swsh1", swsh2: "swsh2", swsh3: "swsh3", swsh35: "swsh3.5", swsh4: "swsh4", swsh45: "swsh4.5",
+  swsh5: "swsh5", swsh6: "swsh6", swsh7: "swsh7", cel25: "cel25", swsh8: "swsh8", swsh9: "swsh9",
+  swsh10: "swsh10", pgo: "pgo", swsh11: "swsh11", swsh12: "swsh12", swsh12pt5: "swsh12.5",
 };
 
 /** pokemontcg.io is flaky on new sets; one 5xx and we stop asking for this session. */

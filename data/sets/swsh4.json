@@ -1,0 +1,27 @@
+{
+  "id": "swsh4",
+  "name": "Vivid Voltage",
+  "series": "sword-shield",
+  "slug": "vivid-voltage",
+  "scrydexId": "swsh4",
+  "era": "swsh",
+  "artSlug": "vivid-voltage",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2701,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

@@ -67,10 +67,22 @@ def norm(name: str) -> str:
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
-    # Which professor a Professor's Research shows ("[Professor Oak]").
-    name = re.sub(r"\s+\[[^\]]*\]$", "", name)
+    # Sword & Shield listings tag the print in brackets: "Shaymin V (Full
+    # Art)", "Wormadam (10)", "Umbreon VMAX (Alternate Art Secret)", and
+    # which professor a Professor's Research shows ("[Professor Oak]"), in
+    # any order and sometimes with the number in between.
+    for _ in range(3):
+        name = re.sub(r"(\s+\([^)]*\))+$", "", name)
+        name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
+        name = re.sub(r"\s+\[[^\]]*\]$", "", name)
+    # Special Energy by type letter ("Speed L Energy" for Speed Lightning Energy).
+    name = re.sub(r"\b([GRWLPFDMNC]) Energy$", lambda m: {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "C": "Colorless"}[m.group(1)] + " Energy", name)
     # TCGplayer spells Nidoran's symbols out ("Nidoran F"); our data keeps ♀/♂.
     name = name.replace("♀", " F").replace("♂", " M").replace("’", "'")
+    # Classic Collection reprints: "M Rayquaza-EX" vs "M Rayquaza EX",
+    # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
+    name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "")
+    name = re.sub(r"_+", "_", name)
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
     return re.sub(r"\s+", " ", name).strip().lower()
@@ -88,9 +100,23 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
     raw = path.read_text(encoding="utf-8")
     cards = json.loads(raw)
     by_number: dict[str, dict] = {}
+    # Celebrations' Classic Collection reprints keep their original numbers
+    # (three are 15/xxx), filed on the site as cc<n>; pick among the
+    # candidates by name.
+    classic: dict[str, list[dict]] = {}
     for product in products:
         ext = {e["name"]: e["value"] for e in product.get("extendedData", [])}
         number = ext.get("Number", "")
+        if product.get("_gallery") == "cc":
+            if re.fullmatch(r"\d+/\d+", number):
+                classic.setdefault(str(int(number.split("/")[0])), []).append(product)
+            continue
+        # Sword & Shield's sub-galleries number their cards TG01/TG30,
+        # SV001/SV122, GG01/GG70; the site keeps those numbers as printed.
+        gallery = re.fullmatch(r"(TG|SV|GG)(\d+)/(?:TG|SV|GG)?\d+", number)
+        if gallery:
+            number = ""
+            by_number[gallery.group(1) + gallery.group(2)] = product
         if re.fullmatch(r"\d+/\d+", number):
             pattern = PATTERN.search(product["name"])
             suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""
@@ -100,6 +126,14 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
             if not pattern and key in by_number and product["name"].endswith(")"):
                 continue
             by_number[key] = product
+    for card in cards:
+        m = re.fullmatch(r"cc(\d+)(-.*)?", str(card.get("number", "")))
+        if not m:
+            continue
+        options = classic.get(m.group(1), [])
+        match = [o for o in options if norm(o["name"]) == norm(card["name"])] or options[:1]
+        if match:
+            by_number[card["number"]] = match[0]
 
     wrong = [
         (c["number"], c["name"], by_number[c["number"]]["name"])
@@ -161,6 +195,16 @@ def main(argv: list[str]) -> int:
         prices: dict[int, list[dict]] = {}
         for row in fetch(group, "prices"):
             prices.setdefault(row["productId"], []).append(row)
+        # A sub-gallery (Trainer Gallery, Shiny Vault...) is its own TCGplayer
+        # group; its singles join the set's, its sealed products do not exist.
+        for sub in cfg.get("subsets") or []:
+            if not sub.get("tcgplayerGroup"):
+                continue
+            for product in fetch(sub["tcgplayerGroup"], "products"):
+                if not NOT_RETAIL.search(product["name"]):
+                    products.append({**product, "_gallery": sub.get("gallery")})
+            for row in fetch(sub["tcgplayerGroup"], "prices"):
+                prices.setdefault(row["productId"], []).append(row)
         price_singles(set_id, products, prices)
         if not singles_only:
             price_sealed(set_id, products, prices)

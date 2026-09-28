@@ -1,0 +1,24 @@
+{
+  "id": "pgo",
+  "name": "Pokémon GO",
+  "series": "sword-shield",
+  "slug": "pokemon-go",
+  "scrydexId": "pgo",
+  "era": "swsh",
+  "artSlug": "pokemon-go",
+  "packs": [
+    "pack-0"
+  ],
+  "tcgplayerGroup": 3064,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

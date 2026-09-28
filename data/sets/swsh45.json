@@ -1,0 +1,34 @@
+{
+  "id": "swsh45",
+  "name": "Shining Fates",
+  "series": "sword-shield",
+  "slug": "shining-fates",
+  "scrydexId": "swsh45",
+  "era": "swsh",
+  "artSlug": "shining-fates",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2754,
+  "subsets": [
+    {
+      "slug": "shiny-vault",
+      "gallery": "sv",
+      "tcgplayerGroup": 2781
+    }
+  ],
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

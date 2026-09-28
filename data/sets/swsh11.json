@@ -1,0 +1,34 @@
+{
+  "id": "swsh11",
+  "name": "Lost Origin",
+  "series": "sword-shield",
+  "slug": "lost-origin",
+  "scrydexId": "swsh11",
+  "era": "swsh",
+  "artSlug": "lost-origin",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 3118,
+  "subsets": [
+    {
+      "slug": "lost-origin-trainer-gallery",
+      "gallery": "tg",
+      "tcgplayerGroup": 3172
+    }
+  ],
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}
