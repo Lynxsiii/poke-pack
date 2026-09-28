@@ -110,33 +110,53 @@ of the map: [promos.md](promos.md).
 
 ## Recipe: Scodix gold (`.foil-gold.foil-scodix`)
 
-Same hard-light group.
+Same hard-light group. Judge it beside
+`texture-refs/hyper-rare_242-chien-pao-ex_whole-card-glitter-rainbow-pillar_photo.jpg`
+and the flat-light Ting-Lu ex photo: smooth satin gold, the line art as
+darker gold outlines, a fine pinpoint grain on the teal, text crisp, one
+broad level rainbow band.
 
-- `.foil` (rebuilt 2026-09-28, Noah's Chien-Pao ex "speaks for itself"
-  screenshot: a flat gold silhouette on speckled teal): white, the etch
-  difference-blended onto it (dark where the line art and the hatch on the
-  gold fills are, the engraved grooves the photos show as darker gold), a
-  30% floor screened on so a full line stops at 30%, the light pool
-  multiplied in (56% at the pointer, 44% far: plain foil sits at
-  hard-light's neutral), then the glitter tile
-  (`assets/foil/glitter-flecks.webp`, from `scripts/make_glitter_flecks.py`,
-  seeded, 26 KB) twice at 96 and 112 px, once screened (grains that
-  sparkle) and once difference-blended at an offset (grains near black),
-  and the wide band at 176deg on a 100% x 300% layer that rolls with
-  `--background-y`. The official scan is flat gold fills on teal, so the
-  etch is the only line detail the Pokémon has: it has to read at rest.
-  Rest is opacity 0.6 with the band at `--pf-a: 0.3` and saturate 0.5.
-  Before this the etch was white over 76% grey: a relief that vanished at
-  the old 0.3 rest opacity and on a phone.
-- `::before`: glitter times glitter at 96 and 121 px, one copy moving with
-  the pointer, `brightness(3.5)` at 0.6: only grains that line up light, so
-  the flecks wink one at a time as the card turns (was 6 at 0.9: gold
-  speckle noise on a phone).
-- `::after` and `.glare::after`: the raised line. The etch map twice as a
-  mask, one copy nudged up to 1.5 px towards the light, composited with
-  `mask-composite: subtract` (`-webkit-mask-composite: source-out`): what is
-  left is a sliver on the lit side of every stroke (screened, pale gold) and,
-  nudged the other way on `.glare::after`, a sliver of shadow (multiply).
+- `.foil` (rebuilt twice on 2026-09-28; the second time after Noah's
+  Chien-Pao ex viewer screenshot, "I really hope this isnt the one it
+  pushed": flat yellow blobs, a rough speckle over the teal and the text):
+  white, the **soft engraving** difference-blended onto it, a 40% floor
+  screened on so a solid outline stops at 40%, the light pool multiplied in
+  (56% at the pointer, 44% far: plain foil sits at hard-light's neutral),
+  **one** copy of the fine glitter tile screened on at 170 px, and the wide
+  band at 176deg (`--pf-a` 0.62) on a 100% x 300% layer that rolls with
+  `--background-y`. Rest is opacity 0.6, band 0.22, saturate 0.55: the
+  official scan is flat gold fills on teal, so the engraving is the only
+  line detail the Pokémon has and it must read in any light.
+- The soft engraving is `etchSoft` on the card (`--etch-soft` from
+  `js/foil-maps.js`), `assets/foil/maps/<set>/<n>-etch-soft.webp`, drawn by
+  `scripts/soften_etch.py --set <set> --all`: TCG Live's etch blurred by
+  1.2 px at map size, gain 1.2, then raised to the power 2.6, so the thick
+  line art keeps nearly all its depth (about 0.9) while the 3 px hatch on
+  the gold fills averages to about 0.47, a satin tone. Why: at viewer size
+  (a 300 px card on a desktop, 220 px on a phone) the sharp hatch lands
+  between pixels and, difference-blended at full strength, aliased into
+  speckle over every gold fill; the photos show that hatch only as satin.
+- The glitter is `assets/foil/glitter-fine.webp` (256 px,
+  `scripts/make_glitter_flecks.py --density 0.03 --seed 4242`: 0.14% of
+  pixels bright, 4% lit at all), screened once. The old stack laid the
+  dense tile (`glitter-flecks.webp`, 0.3% bright, 16% lit) twice at 96 and
+  112 px, one copy difference-blended to near black: that copy put dark
+  grain over the text box and the teal, and both together read as sand
+  before anything else at phone size.
+- `::before`: fine glitter times fine glitter at 170 and 214 px, one copy
+  moving with the pointer, `brightness(3)` at 0.4: only grains that line up
+  light, a few points that change as the card turns (was the dense tile at
+  3.5 and 0.6: speckle).
+- `::after` and `.glare::after`: the raised line. The soft engraving twice
+  as a mask, one copy nudged up to 1.5 px towards the light, composited
+  with `mask-composite: subtract` (`-webkit-mask-composite: source-out`):
+  what is left is a sliver on the lit side of every stroke (screened, pale
+  gold, 0.55) and, nudged the other way on `.glare::after`, a sliver of
+  shadow (multiply, 0.35). Both took the sharp etch at 0.9 and 0.55 before,
+  which lit the whole hatch as a shimmer.
+
+Prismatic Evolutions' five Hyper Rares (sv8pt5 176-180) share the recipe
+and carry their own `etchSoft`.
 
 ## Pitfalls
 
