@@ -3005,8 +3005,9 @@ select.filter option {
   position: fixed;
   inset: 0;
   z-index: 60;
-  background: rgba(5, 4, 8, 0.72);
-  backdrop-filter: blur(3px);
+  /* No backdrop-filter: it re-blurred the page on every frame the picker
+     scrolled, halving the frame rate. A slightly deeper dim stands in. */
+  background: rgba(5, 4, 8, 0.8);
 }
 .picker {
   position: fixed;
@@ -3193,11 +3194,20 @@ html.dialog-open body {
   right: 0;
   width: 100%;
 }
+/* The page is hidden under an open dialog, so its loops hold still. */
+html.dialog-open .wrap *,
+html.dialog-open .wrap *::before,
+html.dialog-open .wrap *::after {
+  animation-play-state: paused !important;
+}
 
+/* Dialogs are opaque and have no backdrop-filter. A full-screen blur behind
+   them was re-rendered on every frame anything inside moved (a tilting card,
+   the opening stage), which held the pack opening and the card viewer near
+   16 fps on a Retina screen, and at 95% cover it only added a faint haze. */
 .overlay {
   position: fixed; inset: 0; z-index: 40;
-  background: rgba(6, 4, 10, 0.95);
-  backdrop-filter: blur(16px) saturate(120%);
+  background: #060409;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3213,7 +3223,7 @@ html.dialog-open body {
   isolation: isolate;
   overflow-x: hidden;
   overflow-y: auto;
-  background: rgba(6, 4, 10, 0.97);
+  background: #060409;
   box-shadow: inset 0 0 160px transparent;
   transition: box-shadow 1.8s ease;
 }
@@ -5915,8 +5925,7 @@ body:has(#price-dialog:not(.hidden)) .player-tip {
   position: fixed;
   inset: 0;
   z-index: 60;
-  background: rgba(5, 4, 8, 0.74);
-  backdrop-filter: blur(4px);
+  background: rgba(5, 4, 8, 0.8);
 }
 .sheet {
   position: fixed;

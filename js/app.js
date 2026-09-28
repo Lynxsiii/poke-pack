@@ -2075,7 +2075,7 @@ function renderHome() {
       <div class="home-feature-art">
         <span class="home-sparks" aria-hidden="true"></span>
         ${featureCard ? `<div class="home-feature-card">${tcgFace(featureCard, { small: true })}</div>` : ""}
-        ${wrap ? `<div class="home-feature-pack">${packPicture(wrap, "", liveSet)}</div>` : ""}
+        ${wrap ? `<div class="home-feature-pack">${packPicture(wrap, "", liveSet)}<span class="home-feature-glint" aria-hidden="true"></span></div>` : ""}
       </div>
       <div class="home-feature-bottom">
         <div><strong>${esc(liveSet.name)}</strong><span>${esc(liveSet.released)} · ${liveSet.totalCount} cards</span></div>
