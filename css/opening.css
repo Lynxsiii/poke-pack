@@ -146,7 +146,6 @@
   border: 1px solid var(--line-2);
   border-radius: var(--r);
   background: rgba(21, 23, 26, 0.72);
-  backdrop-filter: blur(8px);
   transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 #overlay .overlay-leave:hover { color: var(--ink); background: var(--surface-2); border-color: rgba(255, 255, 255, 0.25); }
@@ -173,7 +172,6 @@
   border: 1px solid var(--line);
   border-radius: var(--r);
   background: rgba(21, 23, 26, 0.7);
-  backdrop-filter: blur(8px);
   animation: opRise 0.45s var(--op-ease) both;
 }
 .box-pips { display: inline-flex; flex-wrap: wrap; gap: 3px; max-width: 160px; }
@@ -231,15 +229,29 @@
   50% { transform: translateY(10px) scale(0.84); opacity: 0.65; }
 }
 
-/* A light sweep across the wrapper, masked to the wrapper's own outline. */
+/* A light sweep across the wrapper, masked to the wrapper's own outline. The
+   band is three wrappers wide and slides by transform, and it sits beside the
+   art rather than inside it: a moving layer inside .pack-rest would make its
+   drop-shadow re-render every frame. It fades out once a tear starts. */
 #pack-rest-art { position: relative; }
-#pack-rest-art::after {
-  content: "";
+.pack-sheen {
   position: absolute;
   inset: 0;
+  z-index: 2;
+  overflow: hidden;
   pointer-events: none;
   -webkit-mask: var(--pack-mask) center / 100% 100% no-repeat;
   mask: var(--pack-mask) center / 100% 100% no-repeat;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.pack-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300%;
   background: linear-gradient(
     105deg,
     transparent 36%,
@@ -248,17 +260,15 @@
     rgba(255, 255, 255, 0) 58%,
     transparent 64%
   );
-  background-size: 300% 100%;
-  background-position: 120% 0;
-  opacity: 0;
+  transform: translateX(-80%);
 }
-#overlay[data-phase="ready"] #pack-rest-art::after {
-  opacity: 1;
+#overlay[data-phase="ready"] .booster:not(.tearing):not(.torn) .pack-sheen { opacity: 1; }
+#overlay[data-phase="ready"] .booster:not(.tearing):not(.torn) .pack-sheen::after {
   animation: opSheen 5.4s ease-in-out 1s infinite;
 }
 @keyframes opSheen {
-  0% { background-position: 120% 0; }
-  32%, 100% { background-position: -20% 0; }
+  0% { transform: translateX(-80%); }
+  32%, 100% { transform: translateX(13.333%); }
 }
 
 /* "Tear here": a dashed line along the crimp with a light running across it. */
@@ -604,7 +614,6 @@
 #overlay .focus-nav {
   border-color: var(--line-2);
   background: rgba(21, 23, 26, 0.6);
-  backdrop-filter: blur(6px);
   transition: background 0.15s ease, opacity 0.2s ease, transform 0.15s ease;
 }
 #overlay .focus-nav:hover:not(:disabled) { background: var(--surface-3); transform: scale(1.06); }
@@ -782,7 +791,7 @@ body.no-motion .op-glow,
 body.no-motion .op-rays,
 body.no-motion #overlay .booster,
 body.no-motion #overlay .booster::after,
-body.no-motion #pack-rest-art::after,
+body.no-motion .pack-sheen::after,
 body.no-motion .tear-guide i,
 body.no-motion #overlay .rip-hint,
 body.no-motion .box-pips i.now,
@@ -816,7 +825,7 @@ body.no-flash #overlay.hit-shake-sm .rip-stage { animation: none; }
   .op-rays,
   #overlay .booster,
   #overlay .booster::after,
-  #pack-rest-art::after,
+  .pack-sheen::after,
   .tear-guide i,
   #overlay .rip-hint,
   .box-pips i.now,

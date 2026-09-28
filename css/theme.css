@@ -345,10 +345,14 @@ h1, h2, h3 { text-wrap: balance; }
 .home-feature-pack, .home-feature-card { position: absolute; }
 .home-feature-pack {
   z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-4deg);
-  filter: drop-shadow(0 24px 24px rgba(0, 0, 0, 0.55));
 }
 .home-feature-pack picture { display: contents; }
-.home-feature-pack img { height: clamp(240px, 28vw, 360px); width: auto; max-width: none; }
+/* The shadow is on the art, not the floating pack, so the moving glint beside
+   it never makes the shadow re-render. */
+.home-feature-pack img {
+  height: clamp(240px, 28vw, 360px); width: auto; max-width: none;
+  filter: drop-shadow(0 24px 24px rgba(0, 0, 0, 0.55));
+}
 .home-feature-card {
   z-index: 1; width: clamp(125px, 13vw, 186px); left: 59%; top: 15%;
   transform: rotate(11deg); filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.5));
@@ -542,7 +546,7 @@ h1, h2, h3 { text-wrap: balance; }
 
 /* ---- Pack opening -------------------------------------------------------- */
 #overlay, #overlay.dealing { background: #0b0c0e; }
-#inspect { background: rgba(8, 9, 11, 0.94); }
+#inspect { background: #08080b; }
 #overlay .overlay-actions .solid { color: var(--on-rip); background: var(--rip); border-color: var(--rip); }
 #overlay .overlay-actions .solid:hover { background: var(--rip-hover); }
 #overlay .overlay-actions .solid:disabled { opacity: 0.45; cursor: default; }
@@ -788,19 +792,25 @@ body::before {
   0%, 100% { translate: 0 0; }
   50% { translate: 0 -10px; }
 }
-/* A sweep of light across the wrapper every few seconds. */
-.home-feature-pack::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, 0.5) 48%, transparent 58%);
+/* A sweep of light across the wrapper every few seconds, masked to the
+   wrapper's outline. The band is three wrappers wide and slides by transform;
+   sliding a background-position repainted it every frame. */
+.home-feature-glint {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
   mix-blend-mode: overlay;
   -webkit-mask: var(--pack-mask, none);
   mask: var(--pack-mask, none);
-  background-size: 300% 100%;
+}
+.home-feature-glint::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 300%;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, 0.5) 48%, transparent 58%);
+  transform: translateX(-73.333%);
   animation: fx-glint 5s ease-in-out 1.5s infinite;
 }
 @keyframes fx-glint {
-  0% { background-position: 110% 0; }
-  45%, 100% { background-position: -60% 0; }
+  0% { transform: translateX(-73.333%); }
+  45%, 100% { transform: translateX(40%); }
 }
 
 /* Set tiles and pack cards: the art lifts and a holo rim lights on hover. */
@@ -890,7 +900,7 @@ body::before {
 /* Everything above is decoration: off for reduced motion and Settings. */
 @media (prefers-reduced-motion: reduce) {
   body::before, .home-copy h1, .home-stage::before, .home-feature-pack,
-  .home-feature-card .tcg, .home-feature-pack::after, .dex-bar span, .ach-bar span,
+  .home-feature-card .tcg, .home-feature-glint::after, .dex-bar span, .ach-bar span,
   .home-board-meter > span, #inspect:not(.hidden) .inspect-art, #inspect:not(.hidden) .inspect-info,
   .seg-btn.on, .acct-tab.on, .rarity-chip.on, .home-set-option.active, .shop-quick-set.active,
   .home-set:hover::before, .pack-card:hover::before, .sealed-card:hover::before {
@@ -902,7 +912,7 @@ body::before {
 }
 body.no-motion::before, body.no-motion .home-copy h1, body.no-motion .home-stage::before,
 body.no-motion .home-feature-pack, body.no-motion .home-feature-card .tcg,
-body.no-motion .home-feature-pack::after, body.no-motion .dex-bar span, body.no-motion .ach-bar span,
+body.no-motion .home-feature-glint::after, body.no-motion .dex-bar span, body.no-motion .ach-bar span,
 body.no-motion .home-board-meter > span, body.no-motion #inspect:not(.hidden) .inspect-art,
 body.no-motion #inspect:not(.hidden) .inspect-info,
 body.no-motion .home-set:hover::before, body.no-motion .pack-card:hover::before,
