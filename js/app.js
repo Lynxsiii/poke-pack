@@ -3786,7 +3786,7 @@ function paintOpeningStage(wrap) {
   });
   if (els.opMotes && !els.opMotes.childElementCount) {
     const frag = document.createDocumentFragment();
-    for (let i = 0; i < 18; i += 1) {
+    for (let i = 0; i < 14; i += 1) {
       const mote = document.createElement("i");
       const dur = 10 + Math.random() * 10;
       mote.style.setProperty("--x", `${(Math.random() * 100).toFixed(1)}%`);
@@ -4069,7 +4069,7 @@ function renderFocusMeta(pull) {
   }
   const bits = [(packSet || liveSet).name, numberLine(pull), pull.types?.join(" / ")].filter(Boolean);
   els.focusMeta.innerHTML = `
-    <p class="focus-kicker">${esc(bits.join(" · "))} ${rarityMark(pull)}</p>
+    <p class="focus-kicker">${bits.map((bit) => `<span>${esc(bit)}</span>`).join("")}${rarityMark(pull)}</p>
     <h2 class="focus-title">${esc(pull.name)}</h2>`;
   const tier = hitTier(pull);
   els.hitBanner.innerHTML = tier >= 2 ? `<span class="t${tier}">${esc(rarityLine(pull))}</span>` : "";
@@ -4142,7 +4142,7 @@ function renderThumbs() {
     .map((card, i) => {
       const hint = hints[i] || { label: String(i + 1), kind: "basic" };
       if (!card.revealed) {
-        return `<div class="thumb empty ${hint.kind}" title="${esc(hint.label)}">${esc(hint.label)}</div>`;
+        return `<div class="thumb empty ${hint.kind} ${i === focusIndex && card.drawn ? "current" : ""}" title="${esc(hint.label)}">${esc(hint.label)}</div>`;
       }
       const hit = hitTier(card) >= 2 ? "hit" : card.reverse ? "rev" : "";
       // Only a card revealed since the last paint pops in; the rest stay put.
@@ -4154,7 +4154,21 @@ function renderThumbs() {
       </button>`;
     })
     .join("");
+  // Keep the current card's thumb in view once the strip is wider than the screen.
+  const now = els.thumbs.querySelector(".thumb.current");
+  if (now && els.thumbs.scrollWidth > els.thumbs.clientWidth) {
+    const strip = els.thumbs.getBoundingClientRect();
+    const box = now.getBoundingClientRect();
+    const left = els.thumbs.scrollLeft + (box.left - strip.left) - (strip.width - box.width) / 2;
+    els.thumbs.scrollTo({ left: Math.max(0, left), behavior: reduceMotion() ? "auto" : "smooth" });
+  }
 }
+
+/** Every state class the hit choreography puts on the overlay. */
+const HIT_CLASSES = [
+  "hit-flash", "hit-shake", "hit-shake-sm", "charging", "charged",
+  "charge-t2", "charge-t3", "hit-t1", "hit-t2", "hit-t3",
+];
 
 function clearHitFx() {
   clearTimeout(playHitFx._t);
@@ -4162,7 +4176,7 @@ function clearHitFx() {
   playHitFx._t = 0;
   playHitFx._b = 0;
   els.hitFx.replaceChildren();
-  els.overlay.classList.remove("hit-flash", "hit-shake", "hit-shake-sm", "charging", "charge-t2", "charge-t3");
+  els.overlay.classList.remove(...HIT_CLASSES);
   els.focusCard.classList.remove("charging");
 }
 
@@ -4179,25 +4193,25 @@ function playHitFx(card) {
   if (!tier) return;
   buzz(tier >= 3 ? [24, 40, 60] : tier === 2 ? [18, 30, 30] : 18);
   if (!hitFxOk()) return;
-  // The burst lands as the face turns toward the viewer, a little under half-way through the flip.
+  els.overlay.classList.add(`hit-t${tier}`);
+  // The burst lands as the face turns toward the viewer, a little under
+  // half-way through the flip. A fixed handful of sparks: each one is its own
+  // small layer, so the count is the cost.
   const at = Math.round(flipDurationMs() * 0.42);
   const frag = document.createDocumentFragment();
-  const count = tier === 3 ? 34 : tier === 2 ? 22 : 10;
+  const count = tier === 3 ? 16 : tier === 2 ? 12 : 6;
+  const reach = tier === 3 ? 210 : tier === 2 ? 170 : 120;
   for (let i = 0; i < count; i += 1) {
     const spark = document.createElement("span");
-    spark.className = `hit-spark t${tier}${tier >= 2 && i % 3 === 0 ? " streak" : ""}`;
-    const angle = (Math.PI * 2 * i) / count + Math.random() * 0.35;
-    const dist = 80 + Math.random() * (60 + tier * 48);
+    spark.className = `hit-spark t${tier}${tier >= 2 && i % 2 === 1 ? " streak" : ""}`;
+    const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+    const dist = reach * (0.7 + Math.random() * 0.5);
     spark.style.setProperty("--sx", `${(Math.cos(angle) * dist).toFixed(1)}px`);
     spark.style.setProperty("--sy", `${(Math.sin(angle) * dist).toFixed(1)}px`);
     spark.style.setProperty("--ang", `${((angle * 180) / Math.PI).toFixed(1)}deg`);
-    spark.style.setProperty("--dly", `${Math.round(at + Math.random() * 160)}ms`);
+    spark.style.setProperty("--dly", `${Math.round(at + Math.random() * 120)}ms`);
     frag.appendChild(spark);
   }
-  const glow = document.createElement("i");
-  glow.className = `hit-glow t${tier}`;
-  glow.style.setProperty("--dly", `${at}ms`);
-  frag.appendChild(glow);
   for (let i = 0; i < Math.min(tier, 2); i += 1) {
     const ring = document.createElement("i");
     ring.className = `hit-ring t${tier}`;
@@ -4207,14 +4221,15 @@ function playHitFx(card) {
   els.hitFx.appendChild(frag);
   clearTimeout(playHitFx._b);
   playHitFx._b = setTimeout(() => {
+    // The flash lets the dimmed room go; the halo and rays blow out with it.
+    els.overlay.classList.remove("charged");
     els.overlay.classList.add("hit-flash");
     if (tier >= 3) els.overlay.classList.add("hit-shake");
     else if (tier === 2) els.overlay.classList.add("hit-shake-sm");
   }, at);
   clearTimeout(playHitFx._t);
   playHitFx._t = setTimeout(() => {
-    els.overlay.classList.remove("hit-shake", "hit-shake-sm");
-    els.overlay.classList.remove("hit-flash");
+    els.overlay.classList.remove("hit-shake", "hit-shake-sm", "hit-flash");
     els.hitFx.replaceChildren();
   }, tier === 3 ? 2800 : tier === 2 ? 2000 : 1400);
 }
@@ -4256,7 +4271,7 @@ function mountFocus(pull, opts = {}) {
     <div class="pull-lift">
       <div class="pull-inner">
         <div class="face-front">${cardBack()}</div>
-        <div class="face-back">${tcgFace(pull)}${pull.wasNew ? `<span class="new-badge">NEW</span>` : ""}</div>
+        <div class="face-back">${tcgFace(pull)}${pull.wasNew ? `<span class="new-badge">New</span>` : ""}</div>
       </div>
     </div>
     <i class="reveal-sweep" aria-hidden="true"></i>`;
@@ -4300,11 +4315,27 @@ function showPullAt(index, { deal = false } = {}) {
 
 function packHitLine() {
   const hits = currentPulls.filter((card) => isHit(card));
-  if (hits.some((c) => c.rarity === "Mega Hyper Rare")) return "Gold Mega Hyper Rare. That’s the one.";
-  if (hits.some((c) => c.rarity === "Hyper Rare")) return "Gold Hyper Rare. That’s the one.";
-  if (hits.some((c) => c.rarity === "Special Illustration Rare")) return "Special Illustration Rare in the pack.";
-  if (hits.length) return `${hits.map((c) => RARITY_LABEL[c.rarity]).join(" · ")} pulled.`;
-  return "Pack ripped.";
+  if (hits.some((c) => c.rarity === "Mega Hyper Rare")) return "Gold mega hyper rare. That’s the one.";
+  if (hits.some((c) => c.rarity === "Hyper Rare")) return "Gold hyper rare. That’s the one.";
+  if (hits.some((c) => c.rarity === "Special Illustration Rare")) return "Special illustration rare in the pack.";
+  if (!hits.length) return "Pack ripped.";
+  // "Ultra rare and double rare pulled." / "Two double rares pulled."
+  const counts = new Map();
+  for (const c of hits) {
+    const label = RARITY_LABEL[c.rarity] || c.rarity;
+    counts.set(label, (counts.get(label) || 0) + 1);
+  }
+  const words = ["", "", "Two", "Three", "Four", "Five"];
+  const parts = [...counts].map(([label, n], i) => {
+    const low = label.toLowerCase();
+    if (n > 1) {
+      const num = words[n] || String(n);
+      return `${i === 0 ? num : num.toLowerCase()} ${low}s`;
+    }
+    return i === 0 ? label : low;
+  });
+  const list = parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : parts[0];
+  return `${list} pulled.`;
 }
 
 function bestPull() {
@@ -4348,11 +4379,11 @@ function showSpread() {
 
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker">${esc((packSet || liveSet).name)} · ${
+      <p class="spread-kicker"><span>${esc((packSet || liveSet).name)}</span><span>${
         sealedRun
-          ? `${esc(sealedRun.product.name)} · pack ${sealedRun.index + 1} of ${sealedRun.packs.length}`
-          : `pack #${state.packsOpened}`
-      }</p>
+          ? `${esc(sealedRun.product.name)}, pack ${sealedRun.index + 1} of ${sealedRun.packs.length}`
+          : `Pack ${state.packsOpened}`
+      }</span></p>
       <h2>${esc(packHitLine())}</h2>
       <div class="spread-stats">
         <span><b data-count="${currentPulls.length}">${currentPulls.length}</b> cards</span>
@@ -4411,14 +4442,17 @@ function flipCurrent() {
     // A hit gathers itself first: the room dims and the card trembles, then it turns.
     const tier = hitTier(pull);
     clearHitFx();
+    els.overlay.style.setProperty("--charge-ms", `${charge}ms`);
     els.focusCard.classList.add("charging");
     els.overlay.classList.add("charging", `charge-t${tier}`);
     buzz(tier >= 3 ? [8, 60, 8, 60, 8] : 8);
     syncActions();
     flipTimer = setTimeout(() => {
       if (gen !== flipGen) return;
+      // The light holds where it gathered until the flash lets it go.
       els.focusCard.classList.remove("charging");
-      els.overlay.classList.remove("charging", "charge-t2", "charge-t3");
+      els.overlay.classList.remove("charging");
+      els.overlay.classList.add("charged");
       turnCard(pull, gen);
     }, charge);
     return;
@@ -4538,7 +4572,7 @@ function syncBoxProgress() {
             (_, i) => `<i class="${i < done ? "done" : i === done ? "now" : ""}"></i>`
           ).join("")}</span>`
         : `<span class="box-progress-bar"><span style="width:${(done / total) * 100}%"></span></span>`;
-    els.boxProgress.innerHTML = `<b>${esc(sealedRun.product.name)}</b> · pack ${done + 1} of ${total} ${meter}`;
+    els.boxProgress.innerHTML = `<b>${esc(sealedRun.product.name)}</b><span>Pack ${done + 1} of ${total}</span>${meter}`;
   }
 }
 
@@ -4592,13 +4626,13 @@ function showBoxSummary() {
   for (const card of hits) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
   const tally = Object.entries(counts)
     .sort((a, b) => rank({ rarity: b[0] }) - rank({ rarity: a[0] }))
-    .map(([rarity, n]) => `${n} ${RARITY_LABEL[rarity] || rarity}`)
-    .join(" · ");
+    .map(([rarity, n]) => `<span>${esc(`${n} ${RARITY_LABEL[rarity] || rarity}`)}</span>`)
+    .join("");
   const unseen = run.packs.length - run.index - 1;
 
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker">${esc(liveSet.name)} · ${esc(run.product.name)} · ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</p>
+      <p class="spread-kicker"><span>${esc(liveSet.name)}</span><span>${esc(run.product.name)}, ${run.packs.length} pack${run.packs.length === 1 ? "" : "s"}</span></p>
       <h2>${esc(hits.length ? `${hits.length} hit${hits.length === 1 ? "" : "s"} in the ${run.product.noun}.` : promos.length ? "No pack hits, but the promos are yours." : "No hits this time.")}</h2>
       <div class="spread-stats">
         <span><b data-count="${all.length}">${all.length}</b> cards</span>
@@ -4606,7 +4640,7 @@ function showBoxSummary() {
         <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
         <span><b>✦ ${coin(run.cost)}</b> paid</span>
       </div>
-      ${tally ? `<p class="box-tally">${esc(tally)}</p>` : ""}
+      ${tally ? `<p class="box-tally">${tally}</p>` : ""}
     </div>
     <div class="spread-grid">${shown
       .map((card, i) => {
@@ -4816,7 +4850,7 @@ function showPromoIntro() {
       : `${promos.length} promos in the ${run.product.noun}.`;
   els.spread.innerHTML = `
     <div class="spread-head">
-      <p class="spread-kicker">${esc(liveSet.name)} · ${esc(run.product.name)}</p>
+      <p class="spread-kicker"><span>${esc(liveSet.name)}</span><span>${esc(run.product.name)}</span></p>
       <h2>${esc(head)}</h2>
       <div class="spread-stats">
         <span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>
@@ -4954,7 +4988,7 @@ function finishRip({ keepOpen = false } = {}) {
   clearTimeout(auraTimer);
   auraTimer = 0;
   auraGen += 1;
-  els.overlay.classList.remove("dealing", "hit-flash", "hit-shake", "rainbow", "glow-on", "aura-snap", "is-spread");
+  els.overlay.classList.remove("dealing", "rainbow", "glow-on", "aura-snap", "is-spread", ...HIT_CLASSES);
   els.overlay.style.removeProperty("--aura");
   els.focusWrap.classList.remove("rainbow", "revealed", "is-hit", "is-legend", "is-reverse", "aura-snap");
   els.focusWrap.style.removeProperty("--aura");
