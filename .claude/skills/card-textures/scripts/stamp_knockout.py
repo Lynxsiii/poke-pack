@@ -24,6 +24,14 @@ For each card whose id is `<base>-<suffix>` (svp072-stamp, mep009-pc,
      every promo; set stamps match within a set), at three scales.
   3. **Hand box.** scripts/stamp_boxes.json maps a card id to
      [x, y, w, h] on the 600x838 scan; a rounded rectangle is knocked out.
+     A list of boxes knocks out their union, so a logo with a wordmark
+     under a crest (Pokémon Horizons, Paradox Rift) gets a hole that hugs
+     it. A print whose only copy is the stamped one (Sprigatito svp191,
+     the Horizons promo: no plain print, no Live map, `foilAs: "Rare"`)
+     has no suffix in its id and is still a stamped print: give its plain
+     id a box and it gets the drawn window-and-frame map with the stamp
+     cut out. Without one it falls to the old window recipe, whose clip
+     cuts through the stamp and streaks over it (Noah, 2026-09-28).
 
 The stamp is dilated two pixels, feathered, and subtracted from the base
 print's foil map, shipped as assets/foil/maps/<set>/<number>.webp with the
@@ -87,7 +95,7 @@ SUFFIXES = tuple(ZONES)
 # no TCG Live map can take the drawn window-and-frame map. Anything else (an
 # Illustration Rare, an ex, an Ultra Rare) is foil where the drawing is not:
 # fetch its Live map first (fetch_foil_maps.py), then rerun.
-WINDOWED = ("Cosmos", "Holo Rare", "Rare Holo", "Holo")
+WINDOWED = ("Cosmos", "Holo Rare", "Rare Holo", "Holo", "Rare")  # an SV "Rare" is the holo Rare (js/app.js foilClass)
 NOISE_MAX = 0.05  # share of the card that may differ for the pair to count as one source
 MATCH_MIN = 0.5  # normalised cross-correlation a template match must reach
 
@@ -283,6 +291,15 @@ def by_box(box: list[int], shape: tuple[int, int], diff: np.ndarray | None, thr:
     inside it when there is one (the stamp is the strongest difference in
     its own box even when the two scans come from different sources)."""
     H, W = shape
+    if box and isinstance(box[0], list):
+        im = Image.new("L", (W, H), 0)
+        for b in box:
+            bx, by, bw, bh = b[:4]
+            if len(b) > 4 and b[4] == "ellipse":
+                ImageDraw.Draw(im).ellipse([bx, by, bx + bw, by + bh], fill=255)
+            else:
+                ImageDraw.Draw(im).rounded_rectangle([bx, by, bx + bw, by + bh], radius=6, fill=255)
+        return blur(np.asarray(im).astype(np.float32), 1.0) / 255, f"hand boxes {box}"
     x, y, w, h = box[:4]
     if diff is not None and len(box) == 4:
         d = diff[y:y + h, x:x + w]
@@ -412,6 +429,12 @@ def main() -> None:
                 continue
             m = re.fullmatch(r"(.+?)-([a-z-]+)", card["id"])
             if not m or m.group(2) not in SUFFIXES:
+                if card["id"] in boxes:
+                    # A stamped print whose only copy is the stamped one: no
+                    # plain print to difference against, so its hand box is
+                    # the stamp.
+                    jobs.append({"set": set_id, "card": card, "base": None, "kind": "box"})
+                    continue
                 # An unstamped window holo promo with no map (a cosmos print
                 # of a card whose plain print is not holo).
                 has_map = card.get("foilMap") and (ROOT / card["foilMap"]).exists()
@@ -467,7 +490,8 @@ def main() -> None:
         if card["id"] in boxes:
             key = kind if kind in GLOBAL_KINDS else f"{job['set']}:{kind}"
             job["alpha"], job["how"] = by_box(boxes[card["id"]], SCAN[::-1], job.get("diff"), args.thr)
-            templates.setdefault(key, []).append(template_from(job["b"], job["alpha"], boxes[card["id"]][:4], card["id"]))
+            if not isinstance(boxes[card["id"]][0], list):
+                templates.setdefault(key, []).append(template_from(job["b"], job["alpha"], boxes[card["id"]][:4], card["id"]))
             continue
         pending.append(job)
 
