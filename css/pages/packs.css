@@ -1,1 +1,669 @@
-/* packs page styles. Loads after css/theme.css; see DESIGN.md for the system. */
+/* packs page: the shop counter. Loads after css/theme.css; see DESIGN.md.
+   The boosters are the product and the only things on the page with a
+   shadow. Everything around them is a title, a hairline and space: no card
+   kit, no boxes. Rules are scoped to #view-shop so they win over the older
+   shop rules that app.css still carries in its responsive blocks. */
+
+#view-shop .shop-main { min-width: 0; }
+
+/* ---- Set chips ------------------------------------------------------------
+   One row that scrolls sideways on every size, snapping chip by chip, with
+   the row's ends faded into the gutter. The chosen set is ink. */
+#view-shop .shop-quick-sets {
+  display: flex;
+  gap: 6px;
+  margin: 0 calc(-1 * var(--gutter)) 24px;
+  padding: 2px var(--gutter) 6px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+}
+#view-shop .shop-quick-sets::-webkit-scrollbar { display: none; }
+#view-shop .shop-quick-set {
+  flex: none;
+  scroll-snap-align: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 6px 14px 6px 10px;
+  white-space: nowrap;
+}
+#view-shop .qs-symbol {
+  display: block;
+  width: auto;
+  height: 15px;
+  max-width: 34px;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+/* ---- The set head ---------------------------------------------------------
+   The set's name as shop signage, one line about the set, and three plain
+   figures. The hero cards float beside it on a laptop. */
+#view-shop .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+  margin: 0 0 36px;
+  padding: 0 0 26px;
+  border-bottom: 1px solid var(--line);
+}
+#view-shop .hero h1 {
+  margin: 0 0 14px;
+  font-size: clamp(44px, 14vw, 96px);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  font-variation-settings: "opsz" 96;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+#view-shop .hero .lede {
+  margin: 0 0 22px;
+  max-width: 58ch;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+#view-shop .stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, auto));
+  justify-content: start;
+  gap: 8px 28px;
+}
+#view-shop .stat {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+#view-shop .stat b {
+  display: block;
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+#view-shop .stat span { display: block; margin-top: 3px; font-size: 13px; color: var(--muted); }
+#view-shop .hero-art { display: none; }
+
+/* ---- Section heads within the shop --------------------------------------- */
+#view-shop .section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px 28px;
+  align-items: end;
+  margin: 0 0 18px;
+}
+#view-shop .section-head h2 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; line-height: 1.1; }
+#view-shop .section-head p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 64ch; }
+#view-shop .pack-head-side {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px 18px;
+}
+#view-shop .pack-odds {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The market trend: a sparkline and the change, then "Chart" as a link. No
+   box around it; it sits in the running text of a section head or a product. */
+#view-shop .price-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+#view-shop .price-trend:hover { background: none; border: 0; }
+#view-shop .pt-spark { flex: none; width: 60px; height: 20px; }
+#view-shop .price-trend.pending .pt-spark {
+  background: linear-gradient(var(--line-2), var(--line-2)) center / 100% 1px no-repeat;
+}
+#view-shop .pt-copy { flex-direction: row; align-items: baseline; gap: 6px; line-height: 1.3; }
+#view-shop .pt-copy b { font-family: var(--font); font-size: 13px; font-weight: 600; }
+#view-shop .pt-copy small { font-size: 13px; color: var(--muted); }
+#view-shop .price-trend.pending .pt-copy b { color: var(--muted); font-weight: 500; }
+#view-shop .pt-go {
+  margin-left: 0;
+  font-size: 13px;
+  font-weight: 560;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--faint);
+}
+#view-shop .pt-go::after { content: none; }
+#view-shop .price-trend:hover .pt-go { color: var(--ink); text-decoration-color: var(--ink); }
+#view-shop .sealed-card .pt-go { font-size: 13px; }
+#view-shop .sealed-card .pt-go::after { content: none; }
+#view-shop .sealed-card .pt-spark { width: 60px; }
+
+/* ---- Boosters --------------------------------------------------------------
+   Each wrapper stands on the open page as a product shot with its own drop
+   shadow, its name and tag under it, the price in gold and one coral button.
+   Two across on a phone, four on a laptop. The whole card rips the pack. */
+#view-shop .pack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 16px;
+  margin: 0 0 8px;
+}
+#view-shop .pack-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+  transform: none;
+  transition: none;
+}
+#view-shop .shop-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 10px 6px 0;
+}
+#view-shop .shop-wrapper img {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 24px rgba(0, 0, 0, 0.55)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+  transition: transform 0.45s var(--ease-spring), filter 0.3s ease;
+}
+#view-shop .pack-copy { margin: 18px 0 12px; }
+#view-shop .pack-card h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  font-variation-settings: normal;
+  text-wrap: balance;
+}
+#view-shop .pack-tag { margin: 3px 0 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
+#view-shop .pack-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: auto;
+  padding: 0;
+  border: 0;
+}
+#view-shop .cost {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+#view-shop .buy { width: 100%; min-height: 44px; padding: 10px 14px; }
+#view-shop .buy.confirming { background: var(--rip-hover); color: var(--on-rip); }
+@media (hover: hover) {
+  #view-shop .pack-card:hover .shop-wrapper img {
+    transform: translateY(-8px) rotate(-1.5deg) scale(1.03);
+    filter: drop-shadow(0 30px 28px rgba(0, 0, 0, 0.62)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+  }
+}
+
+/* ---- Sealed product, collections and promos -------------------------------
+   Rows on a phone: the box (or the packs alone) on the left, the copy on the
+   right, a hairline between rows. On a laptop the same items stand three
+   across, each above its own hairline. */
+#view-shop .sealed-block { margin-top: 52px; }
+#view-shop .sealed-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+#view-shop .sealed-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 124px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 16px;
+  row-gap: 12px;
+  align-items: start;
+  padding: 18px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+  transform: none;
+}
+#view-shop .sealed-stage, #view-shop .promo-stage {
+  position: relative;
+  grid-row: 1 / span 2;
+  align-self: center;
+  width: 124px;
+  height: 136px;
+}
+#view-shop .sealed-box, #view-shop .promo-box {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 80%;
+  height: 94%;
+  object-fit: contain;
+  object-position: left center;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.5));
+  transition: transform 0.45s var(--ease-spring);
+}
+#view-shop .sealed-stack {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+}
+#view-shop .sealed-stack > span {
+  display: block;
+  width: 44px;
+  margin: 0 -10px;
+  transform-origin: bottom center;
+}
+#view-shop .sealed-stack > span:nth-child(1) { transform: rotate(-10deg) translateY(3px); }
+#view-shop .sealed-stack > span:nth-child(2) { z-index: 1; }
+#view-shop .sealed-stack > span:nth-child(3) { transform: rotate(10deg) translateY(3px); }
+#view-shop .sealed-stack picture { display: contents; }
+#view-shop .sealed-stack img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.55));
+  transition: transform 0.45s var(--ease-spring);
+}
+/* A booster box or bundle has no photo: its packs stand on their own. The
+   fan leans right a little so the outer pack never runs past the gutter. */
+#view-shop .no-box .sealed-stack { left: 4px; right: 0; justify-content: center; }
+#view-shop .no-box .sealed-stack > span { width: 52px; margin: 0 -12px; }
+#view-shop .no-box .sealed-stack > span:nth-child(1) { transform: rotate(-8deg) translateY(3px); }
+#view-shop .no-box .sealed-stack > span:nth-child(3) { transform: rotate(8deg) translateY(3px); }
+
+#view-shop .sealed-copy { min-width: 0; }
+#view-shop .sealed-copy h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  font-variation-settings: normal;
+  text-wrap: balance;
+}
+#view-shop .sealed-copy p { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
+#view-shop .sealed-copy .promo-real { margin-top: 2px; font-size: 12px; opacity: 0.85; }
+#view-shop .sealed-copy .promo-worth {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+#view-shop .sealed-copy .price-trend { margin-top: 8px; }
+#view-shop .sealed-card .pack-meta {
+  grid-column: 2;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+}
+#view-shop .sealed-card .buy { width: auto; min-height: 40px; padding: 8px 14px; font-size: 14px; }
+
+/* Promo products: the box photo with its promo cards fanned in front. Each
+   card can be inspected. Faces mount only near the screen (windowFaces), so
+   an empty holder keeps the card's shape. */
+#view-shop .promo-fan {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+}
+#view-shop .promo-face {
+  display: block;
+  width: 52px;
+  aspect-ratio: 63 / 88;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  transform-origin: bottom center;
+  transition: transform 0.35s var(--ease-spring);
+}
+#view-shop .promo-face:empty { border-radius: 3.97% / 2.84%; background: rgba(255, 255, 255, 0.03); }
+#view-shop .promo-face .tcg img { filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.6)); }
+#view-shop .promo-face:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: var(--r-sm); }
+#view-shop .promo-fan.count-1 .promo-face { width: 60px; transform: rotate(5deg); }
+#view-shop .promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-5deg) translateX(12px); }
+#view-shop .promo-fan.count-2 .promo-face:nth-child(2) { transform: rotate(6deg); z-index: 1; }
+#view-shop .promo-fan.count-3 .promo-face { width: 46px; }
+#view-shop .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(22px, 3px); }
+#view-shop .promo-fan.count-3 .promo-face:nth-child(2) { transform: translateX(11px); z-index: 1; }
+#view-shop .promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(8deg) translateY(3px); z-index: 2; }
+#view-shop .promo-fan.count-4 .promo-face { width: 40px; }
+#view-shop .promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-10deg) translate(33px, 5px); }
+#view-shop .promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-3deg) translate(22px, 1px); z-index: 1; }
+#view-shop .promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(4deg) translate(11px, 1px); z-index: 2; }
+#view-shop .promo-fan.count-4 .promo-face:nth-child(4) { transform: rotate(11deg) translateY(5px); z-index: 3; }
+/* An event promo has no box: the card stands on its own, centred. */
+#view-shop .promo-product.no-box .promo-fan { left: 0; justify-content: center; }
+#view-shop .promo-product.no-box .promo-fan.count-1 .promo-face { width: 78px; transform: rotate(3deg); }
+#view-shop .promo-note {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  font-family: var(--font);
+}
+@media (hover: hover) {
+  #view-shop .promo-product:hover .promo-box { transform: translateY(-50%) translateY(-5px); }
+  #view-shop .promo-product:hover .promo-fan.count-1 .promo-face { transform: rotate(2deg) translateY(-6px); }
+  #view-shop .promo-product:hover .promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(8px, -5px); }
+  #view-shop .promo-product:hover .promo-fan.count-2 .promo-face:nth-child(2) { transform: rotate(8deg) translateY(-6px); }
+  #view-shop .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-11deg) translate(18px, -2px); }
+  #view-shop .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(2) { transform: translate(11px, -6px); }
+  #view-shop .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(11deg) translateY(-2px); }
+  #view-shop .promo-product:hover .promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-13deg) translate(30px, 1px); }
+  #view-shop .promo-product:hover .promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-4deg) translate(21px, -4px); }
+  #view-shop .promo-product:hover .promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(5deg) translate(11px, -4px); }
+  #view-shop .promo-product:hover .promo-fan.count-4 .promo-face:nth-child(4) { transform: rotate(14deg) translateY(1px); }
+  #view-shop .sealed-card:hover .sealed-stack > span:nth-child(1) img { transform: translate(-5px, -3px) rotate(-3deg); }
+  #view-shop .sealed-card:hover .sealed-stack > span:nth-child(2) img { transform: translateY(-7px); }
+  #view-shop .sealed-card:hover .sealed-stack > span:nth-child(3) img { transform: translate(5px, -3px) rotate(3deg); }
+}
+
+/* ---- The set notice ---------------------------------------------------------
+   A /packs/<id> link that can't open says why, above the set showing instead. */
+#view-shop .set-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin: 0 0 22px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+}
+#view-shop .set-notice-copy { flex: 1 1 260px; min-width: 0; }
+#view-shop .set-notice-copy b { display: block; font-size: 15px; font-weight: 650; color: var(--ink); }
+#view-shop .set-notice-copy p { margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: var(--muted); }
+#view-shop .set-notice-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---- All expansions ----------------------------------------------------------
+   Eras as <details>, each set a row: symbol, name, date, a green dot when it
+   is live. Below the products on a phone; a quiet sticky column on a laptop. */
+#view-shop .shop-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+#view-shop .shop-rail {
+  position: static;
+  max-height: none;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+#view-shop .shop-rail-head { margin: 0 0 6px; padding: 0; }
+#view-shop .shop-rail-head h2 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; line-height: 1.1; }
+#view-shop .shop-rail-head p { margin: 0 0 12px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+#view-shop .set-switcher { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
+#view-shop .rail-era {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: none;
+  overflow: visible;
+}
+#view-shop .rail-era[open] { background: none; }
+#view-shop .rail-era summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 0;
+  cursor: pointer;
+  list-style: none;
+}
+#view-shop .rail-era summary::-webkit-details-marker { display: none; }
+#view-shop .rail-era summary::marker { content: ""; }
+#view-shop .rail-era-title { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+#view-shop .rail-era-title b {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+#view-shop .rail-era-title small, #view-shop .rail-era-count {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+#view-shop .rail-era-count { flex: none; }
+#view-shop .rail-era summary::after {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin-left: 2px;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
+  rotate: 45deg;
+  translate: 0 -2px;
+  transition: rotate 0.16s ease, translate 0.16s ease;
+}
+#view-shop .rail-era[open] > summary::after { rotate: 225deg; translate: 0 2px; }
+#view-shop .rail-sets { display: flex; flex-direction: column; gap: 2px; padding: 0 0 12px; }
+#view-shop .rail-set {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: calc(100% + 16px);
+  min-height: 46px;
+  margin: 0 -8px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+  opacity: 1;
+  transition: background 0.15s ease;
+}
+#view-shop .rail-set:hover { background: var(--surface-2); border-color: transparent; }
+#view-shop .rail-set.active { background: var(--surface-3); border-color: transparent; }
+#view-shop .rail-set.active b { color: var(--ink); }
+#view-shop .rail-set.is-queued { cursor: default; opacity: 0.6; }
+#view-shop .rail-set.is-queued:hover { background: transparent; }
+#view-shop .rail-set:disabled { opacity: 0.45; cursor: default; }
+/* The symbol sits in a fixed slot so rows stay aligned when a set has none. */
+#view-shop .rail-symbol-slot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 20px;
+}
+#view-shop .rail-symbol { width: 100%; height: 100%; object-fit: contain; filter: none; opacity: 0.9; }
+#view-shop .rail-set-copy { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+#view-shop .rail-set-copy b {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#view-shop .rail-set-copy small {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+/* Live is the dot alone; the word stays for screen readers. */
+#view-shop .rail-set .live-tag { flex: none; gap: 0; padding: 0; font-size: 0; line-height: 0; }
+#view-shop .rail-set .live-tag::before { width: 7px; height: 7px; }
+#view-shop .rail-set .soon { flex: none; padding: 2px 8px; font-size: 11px; }
+
+/* ---- Laptop ------------------------------------------------------------------ */
+@media (min-width: 721px) {
+  #view-shop .pack-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px 20px; }
+  #view-shop .shop-wrapper img { max-width: 220px; }
+  #view-shop .pack-meta { flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; }
+  #view-shop .buy { width: auto; min-height: 40px; padding: 8px 16px; font-size: 14px; }
+  #view-shop .section-head { grid-template-columns: minmax(0, 1fr) auto; }
+  #view-shop .pack-head-side { flex-direction: column; align-items: flex-end; justify-self: end; gap: 6px; text-align: right; }
+}
+@media (min-width: 861px) {
+  #view-shop .sealed-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 28px; }
+  #view-shop .sealed-card {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    row-gap: 14px;
+    padding: 20px 0 8px;
+  }
+  #view-shop .sealed-stage, #view-shop .promo-stage { grid-row: auto; width: 100%; height: 190px; }
+  #view-shop .sealed-box, #view-shop .promo-box { width: 72%; height: 100%; }
+  #view-shop .sealed-stack > span { width: 66px; margin: 0 -15px; }
+  #view-shop .no-box .sealed-stack { left: 0; }
+  #view-shop .no-box .sealed-stack > span { width: 90px; margin: 0 -22px; }
+  #view-shop .no-box .sealed-stack > span:nth-child(1) { transform: rotate(-10deg) translateY(3px); }
+  #view-shop .no-box .sealed-stack > span:nth-child(3) { transform: rotate(10deg) translateY(3px); }
+  #view-shop .promo-face { width: 88px; }
+  #view-shop .promo-fan.count-1 .promo-face { width: 104px; }
+  #view-shop .promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-5deg) translateX(18px); }
+  #view-shop .promo-fan.count-3 .promo-face { width: 76px; }
+  #view-shop .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(34px, 4px); }
+  #view-shop .promo-fan.count-3 .promo-face:nth-child(2) { transform: translateX(16px); }
+  #view-shop .promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(8deg) translateY(4px); }
+  #view-shop .promo-fan.count-4 .promo-face { width: 68px; }
+  #view-shop .promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-10deg) translate(54px, 8px); }
+  #view-shop .promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-3deg) translate(36px, 2px); }
+  #view-shop .promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(4deg) translate(18px, 2px); }
+  #view-shop .promo-fan.count-4 .promo-face:nth-child(4) { transform: rotate(11deg) translateY(8px); }
+  #view-shop .promo-product.no-box .promo-fan.count-1 .promo-face { width: 120px; }
+  #view-shop .sealed-card .pack-meta { grid-column: auto; }
+  #view-shop .sealed-copy .price-trend { margin-top: 10px; }
+}
+@media (hover: hover) and (min-width: 861px) {
+  #view-shop .promo-product:hover .promo-fan.count-2 .promo-face:nth-child(1) { transform: rotate(-8deg) translate(12px, -6px); }
+  #view-shop .promo-product:hover .promo-fan.count-2 .promo-face:nth-child(2) { transform: rotate(8deg) translateY(-8px); }
+  #view-shop .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(1) { transform: rotate(-11deg) translate(28px, -2px); }
+  #view-shop .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(2) { transform: translate(16px, -8px); }
+  #view-shop .promo-product:hover .promo-fan.count-3 .promo-face:nth-child(3) { transform: rotate(11deg) translateY(-2px); }
+  #view-shop .promo-product:hover .promo-fan.count-4 .promo-face:nth-child(1) { transform: rotate(-13deg) translate(50px, 2px); }
+  #view-shop .promo-product:hover .promo-fan.count-4 .promo-face:nth-child(2) { transform: rotate(-4deg) translate(34px, -6px); }
+  #view-shop .promo-product:hover .promo-fan.count-4 .promo-face:nth-child(3) { transform: rotate(5deg) translate(18px, -6px); }
+  #view-shop .promo-product:hover .promo-fan.count-4 .promo-face:nth-child(4) { transform: rotate(14deg) translateY(2px); }
+}
+@media (min-width: 961px) {
+  #view-shop .shop-layout { grid-template-columns: minmax(0, 1fr) 264px; gap: 64px; }
+  #view-shop .shop-rail {
+    position: sticky;
+    top: 78px;
+    max-height: calc(100vh - 100px);
+    overflow: auto;
+    padding: 0 6px 40px 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  }
+  #view-shop .shop-rail-head h2 { font-size: 20px; }
+  #view-shop .shop-rail-head p { font-size: 13px; }
+  #view-shop .rail-set { min-height: 42px; }
+  #view-shop .hero { grid-template-columns: minmax(0, 1fr) 380px; gap: 40px; padding-bottom: 28px; margin-bottom: 40px; }
+  #view-shop .hero-art { display: block; position: relative; height: 340px; }
+  #view-shop .float-card {
+    position: absolute;
+    width: 150px;
+    filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.55));
+    animation: shop-float 7s ease-in-out infinite;
+  }
+  #view-shop .float-card:nth-child(1) { left: 6%; top: 4%; transform: rotate(-9deg); }
+  #view-shop .float-card:nth-child(2) { right: 8%; top: 10%; transform: rotate(7deg); }
+  #view-shop .float-card:nth-child(3) { left: 33%; bottom: 0; width: 136px; transform: rotate(2deg); }
+  #view-shop .float-card:nth-child(4) { right: 0; bottom: 8%; width: 118px; transform: rotate(-5deg); }
+}
+@media (min-width: 1200px) {
+  #view-shop .hero { grid-template-columns: minmax(0, 1fr) 420px; }
+  #view-shop .hero-art { height: 360px; }
+  #view-shop .float-card { width: 160px; }
+}
+@keyframes shop-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #view-shop .float-card { animation: none; }
+  #view-shop .shop-wrapper img, #view-shop .sealed-stack img, #view-shop .sealed-box,
+  #view-shop .promo-box, #view-shop .promo-face { transition: none; }
+}
+body.no-motion #view-shop .float-card { animation: none; }
+body.no-motion #view-shop .shop-wrapper img, body.no-motion #view-shop .sealed-stack img,
+body.no-motion #view-shop .sealed-box, body.no-motion #view-shop .promo-box,
+body.no-motion #view-shop .promo-face { transition: none; }
+
+/* ---- Small phones ------------------------------------------------------------ */
+@media (max-width: 400px) {
+  #view-shop .pack-grid { gap: 28px 12px; }
+  #view-shop .sealed-card { grid-template-columns: 108px minmax(0, 1fr); column-gap: 14px; }
+  #view-shop .sealed-stage, #view-shop .promo-stage { width: 108px; height: 124px; }
+  #view-shop .no-box .sealed-stack > span { width: 48px; }
+  #view-shop .stats { gap: 8px 20px; }
+}

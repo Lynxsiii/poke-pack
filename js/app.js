@@ -859,7 +859,7 @@ function renderHeader() {
 function renderSetChrome() {
   const wrapCount = liveSet.wrappers.length;
   const month = liveSet.released.replace(/ \d+,/, "");
-  if (els.shopKicker) els.shopKicker.textContent = `${liveSet.edition} · ${month}`;
+  if (els.shopKicker) els.shopKicker.textContent = `${liveSet.edition}, ${month}`;
   if (els.shopTitle) els.shopTitle.textContent = `${liveSet.name}.`;
   if (els.shopLede) els.shopLede.textContent = liveSet.lede || liveSet.blurb;
   if (els.shopPackTitle) els.shopPackTitle.textContent = `${liveSet.name} boosters`;
@@ -920,7 +920,7 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
           const { symbol } = setIdentity(set);
           if (!live) {
             return `<button type="button" class="rail-set is-queued" data-soon="${esc(set.name)}">
-              <img class="rail-symbol" src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
+              <span class="rail-symbol-slot"><img class="rail-symbol" src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" /></span>
               <span class="rail-set-copy">
                 <b>${esc(set.name)}</b>
                 <small>${esc(shortReleased(set))}</small>
@@ -932,7 +932,7 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
           return `<button type="button" class="rail-set ${on}" data-set="${esc(set.id)}" ${
             ripping ? "disabled" : ""
           }>
-            <img class="rail-symbol" src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
+            <span class="rail-symbol-slot"><img class="rail-symbol" src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" /></span>
             <span class="rail-set-copy">
               <b>${esc(set.name)}</b>
               <small>${esc(owned)}</small>
@@ -949,7 +949,7 @@ function eraSwitcherHtml({ withOwned = false } = {}) {
           </span>
           <span class="rail-era-count">${
             liveCount && liveCount !== block.sets.length
-              ? `${liveCount} live · ${block.sets.length}`
+              ? `${liveCount} of ${block.sets.length} live`
               : liveCount
                 ? `${liveCount} live`
                 : `${block.sets.length} sets`
@@ -980,26 +980,31 @@ function renderShop() {
   renderSetChrome();
   renderSwitcher();
   const quickSets = document.getElementById("shop-quick-sets");
-  if (quickSets) quickSets.innerHTML = PLAYABLE_SETS.map((set) => `
-    <button type="button" class="shop-quick-set${set.id === liveSet.id ? " active" : ""}"
-      data-quick-set="${esc(set.id)}" aria-pressed="${set.id === liveSet.id}">${esc(set.name)}</button>`).join("");
+  if (quickSets) {
+    quickSets.innerHTML = PLAYABLE_SETS.map((set) => {
+      const on = set.id === liveSet.id;
+      return `<button type="button" class="shop-quick-set${on ? " active" : ""}"
+        data-quick-set="${esc(set.id)}" aria-pressed="${on}">
+        <img class="qs-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="18" height="18" loading="lazy" decoding="async" />
+        <span>${esc(set.name)}</span>
+      </button>`;
+    }).join("");
+    centerQuickSet();
+  }
   const signed = Boolean(activeTrainer());
   els.packGrid.innerHTML = liveSet.wrappers
     .map((wrap) => {
       const affordable = signed && state.coins >= liveSet.cost;
       const label = !signed ? "Sign in to rip" : affordable ? "Rip pack" : "Need coins";
       return `<article class="pack-card" data-wrapper="${wrap.id}">
-        <div class="pack-tag">${wrap.tag}</div>
-        <div class="shop-wrapper">
-          ${packPicture(wrap)}
+        <div class="shop-wrapper">${packPicture(wrap)}</div>
+        <div class="pack-copy">
+          <h3>${esc(wrap.name)} pack</h3>
+          <p class="pack-tag">${esc(wrap.tag)}</p>
         </div>
-        <h3>${wrap.name} pack</h3>
-        <p class="blurb">${liveSet.blurb}</p>
         <div class="pack-meta">
           <span class="cost">✦ ${coin(liveSet.cost)}</span>
-          <button class="buy" ${signed && !affordable ? "disabled" : ""}>
-            ${label}
-          </button>
+          <button class="buy" ${signed && !affordable ? "disabled" : ""}>${label}</button>
         </div>
       </article>`;
     })
@@ -1008,6 +1013,18 @@ function renderShop() {
   if (els.shopPackTrend) els.shopPackTrend.innerHTML = trendButton("boosterPack", `${liveSet.name} booster pack`);
   renderSealed();
   loadShopTrends();
+}
+
+/**
+ * The set chips scroll sideways and hold more sets than fit on a phone, so
+ * the chosen one is brought to the middle of the row. Nothing to measure
+ * while the shop is hidden; setView calls this again when it shows.
+ */
+function centerQuickSet() {
+  const row = document.getElementById("shop-quick-sets");
+  const on = row?.querySelector(".shop-quick-set.active");
+  if (!on || !row.clientWidth) return;
+  row.scrollLeft = on.offsetLeft - (row.clientWidth - on.offsetWidth) / 2;
 }
 
 /** Sets whose price history has loaded for the shop's trend buttons. */
@@ -1082,7 +1099,7 @@ function promoNames(ids, pick = 0) {
   for (const card of cards) counts.set(card.name, (counts.get(card.name) || 0) + 1);
   const names = [...counts].map(([name, n]) => (n > 1 ? `${n} ${name}` : name));
   const list = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names[0];
-  return `${list} promo${cards.length > 1 ? "s" : ""}`;
+  return `the ${list} promo${cards.length > 1 ? "s" : ""}`;
 }
 
 /** Booster boxes, ETBs and bundles for the live set, priced from data/sealed.json. */
@@ -1092,20 +1109,24 @@ function renderSealed() {
   els.sealedBlock.classList.toggle("hidden", !offers.length || !liveSet.wrappers.length);
   const single = Number(liveSet.cost) || 0;
   const stack = [0, 1, 2].map((i) => liveSet.wrappers[i % liveSet.wrappers.length]).filter(Boolean);
+  // The ETB has a box photo in data/products.json; the box and bundle show their packs alone.
+  const boxArt = Object.fromEntries((productList[liveSet.id] || []).map((item) => [item.id, item.image || ""]));
   els.sealedGrid.innerHTML = offers
     .map((offer) => {
       const each = offer.price / offer.packs;
       const vsSingle = single ? Math.round((1 - each / single) * 100) : 0;
       const deal =
-        vsSingle >= 1 ? `${vsSingle}% under single packs` : vsSingle <= -1 ? `${-vsSingle}% over single packs` : "Same as single packs";
+        vsSingle >= 1 ? `${vsSingle}% under single packs` : vsSingle <= -1 ? `${-vsSingle}% over single packs` : "the same as single packs";
       const promo = promoNames(offer.promos, offer.pick);
-      return `<article class="sealed-card" data-sealed="${esc(offer.id)}">
-        <div class="sealed-stack" aria-hidden="true">
-          ${stack.map((wrap) => `<span>${packPicture(wrap, " ")}</span>`).join("")}
+      const image = boxArt[offer.id];
+      return `<article class="sealed-card${image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
+        <div class="sealed-stage" aria-hidden="true">
+          ${image ? `<img class="sealed-box" src="${esc(image)}" alt="" loading="lazy" decoding="async" />` : ""}
+          <div class="sealed-stack">${stack.map((wrap) => `<span>${packPicture(wrap, " ")}</span>`).join("")}</div>
         </div>
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
-          <p>${offer.packs} packs${promo ? ` + ${esc(promo)}` : ""} · ✦ ${coin(each)} each · ${esc(deal)}</p>
+          <p>${offer.packs} packs${promo ? ` with ${esc(promo)}` : ""}. ✦ ${coin(each)} a pack, ${esc(deal)}.</p>
           ${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}
         </div>
         <div class="pack-meta">
@@ -1223,7 +1244,7 @@ function renderPromoProducts() {
         })
         .join("");
       const contents = productContents(offer);
-      const lines = [contents, offer.kind === "event" ? "" : promoNames(offer.promos, offer.pick)].filter(Boolean);
+      const inside = [contents, offer.kind === "event" ? "" : promoNames(offer.promos, offer.pick)].filter(Boolean).join(" with ");
       return `${head}<article class="sealed-card promo-product${offer.image ? "" : " no-box"}" data-sealed="${esc(offer.id)}">
         <div class="promo-stage">
           ${offer.image ? `<img class="promo-box" src="${esc(offer.image)}" alt="" loading="lazy" decoding="async" />` : ""}
@@ -1232,7 +1253,7 @@ function renderPromoProducts() {
         </div>
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
-          <p>${esc(lines.join(" · "))}</p>
+          <p>${esc(inside)}</p>
           ${offer.note && offer.kind !== "event" ? `<p class="promo-real">${esc(offer.note)}</p>` : ""}
           <p class="promo-worth">${worth}</p>
           ${trendButton(offer.id, offer.name)}
@@ -3527,6 +3548,7 @@ const VIEW_RENDER = {
     renderHome();
     refreshLounge();
   },
+  shop: () => centerQuickSet(),
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
@@ -6293,12 +6315,17 @@ function hideBrokenSetArt(e) {
   if (!(img instanceof HTMLImageElement)) return;
   if (img.classList.contains("catalog-logo")) {
     img.closest(".catalog-art")?.classList.add("no-logo");
-  } else if (img.classList.contains("catalog-symbol") || img.classList.contains("rail-symbol")) {
+  } else if (
+    img.classList.contains("catalog-symbol") ||
+    img.classList.contains("rail-symbol") ||
+    img.classList.contains("qs-symbol")
+  ) {
     img.remove();
   }
 }
 els.catalogEras.addEventListener("error", hideBrokenSetArt, true);
 els.setSwitcher.addEventListener("error", hideBrokenSetArt, true);
+document.getElementById("shop-quick-sets")?.addEventListener("error", hideBrokenSetArt, true);
 els.bulkSets?.addEventListener("error", hideBrokenSetArt, true);
 
 document.addEventListener("keydown", (e) => {
