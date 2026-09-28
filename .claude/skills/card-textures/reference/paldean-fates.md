@@ -69,13 +69,19 @@ scan is white where the silver is, so the silver has to darken it: `.foil`
 multiplies onto the card.
 
 - `.foil` (rest and held), bottom up: a silver radial centred on the
-  pointer (97% under the lamp, 88% at a quarter, `--pf-lo` 74% far off,
-  which is what reads as a mirror); the sun-pillar bands, pastel and
-  translucent (`--pf-a` 0.62, so over the silver they come out as tinted
-  silver, not paint; `--pf-w` 9% every 30%); the etch map soft-lit on top,
-  which at card size is grain, not lines. Rest: saturate 0.6, opacity 0.85.
-  The SUR (`.foil-ultra.foil-shiny`) widens the bands to 13% every 26%,
-  `--pf-a` 0.85, `--pf-lo` 68%.
+  pointer (97% under the lamp, 92% at a quarter, `--pf-lo` 85% far off:
+  a mirror reads from the hot spot, not from a dark far side); the
+  sun-pillar bands, pastel and translucent (`--pf-a` 0.62, so over the
+  silver they come out as tinted silver, not paint; `--pf-w` 9% every
+  30%); the etch map soft-lit on top, which at card size is grain, not
+  lines. Rest: saturate 0.6, opacity 0.85. The SUR (`.foil-ultra.foil-shiny`)
+  widens the bands to 13% every 26%, `--pf-a` 0.85, `--pf-lo` 81%.
+  Until 2026-09-28 the far side was 74% (SUR 68%) under a glare that went
+  to 30% black: with a thumb low on the text box, where a phone is held,
+  the whole art window multiplied down to grey while the glare's white
+  lifted the matte text box, and Murkrow 181 came out washed and muddy in
+  the reveal (Noah). The photos show the silver bright wherever the lamp
+  is not.
 - `::before` (held): the same bands, saturated, screened at `--pf-screen`
   (0.38, SUR 0.5), so a band that crosses the Pokémon's ink lightens it
   with colour.
@@ -94,8 +100,10 @@ multiplies onto the card.
   whorl (`--pf-q: mod(calc(var(--pf-p) + 0.5), 1)`), the same difference
   trick multiplied in at 0.45: the dark half of the same ripples. Browsers
   without `mod()` drop the rule and lose only the dark half.
-- `.glare`: a white overlay highlight, 0.75 under the lamp, a shade darker
-  away.
+- `.glare`: a white overlay highlight, 0.55 under the lamp, 0.18 at a
+  quarter, 12% black far off, at 0.7 (was 0.75 / 0.25 / 30% black at 0.8:
+  the white doubled the matte ink's darks where the thumb sat and the
+  black dimmed the art).
 
 Stamped shinies (svp072-stamp, svp073-stamp) cut the Paldean Fates logo out
 of the map: [promos.md](promos.md).
@@ -104,16 +112,26 @@ of the map: [promos.md](promos.md).
 
 Same hard-light group.
 
-- `.foil`: grey 76% with the etch in white, times a silver ramp; the glitter
-  tile (`assets/foil/glitter-flecks.webp`, from
-  `scripts/make_glitter_flecks.py`, seeded, 26 KB) twice, once
-  difference-blended at an offset (grains near black) and once screened
-  (grains that sparkle), so flecks show on bright gold as well as teal; a
-  wide band at 176deg on a 100% x 300% layer that rolls with
-  `--background-y`.
-- `::before`: glitter times glitter at another scale, one copy moving with
-  the pointer, `brightness(6)`: only grains that line up light, so the
-  flecks wink one at a time as the card turns.
+- `.foil` (rebuilt 2026-09-28, Noah's Chien-Pao ex "speaks for itself"
+  screenshot: a flat gold silhouette on speckled teal): white, the etch
+  difference-blended onto it (dark where the line art and the hatch on the
+  gold fills are, the engraved grooves the photos show as darker gold), a
+  30% floor screened on so a full line stops at 30%, the light pool
+  multiplied in (56% at the pointer, 44% far: plain foil sits at
+  hard-light's neutral), then the glitter tile
+  (`assets/foil/glitter-flecks.webp`, from `scripts/make_glitter_flecks.py`,
+  seeded, 26 KB) twice at 96 and 112 px, once screened (grains that
+  sparkle) and once difference-blended at an offset (grains near black),
+  and the wide band at 176deg on a 100% x 300% layer that rolls with
+  `--background-y`. The official scan is flat gold fills on teal, so the
+  etch is the only line detail the Pokémon has: it has to read at rest.
+  Rest is opacity 0.6 with the band at `--pf-a: 0.3` and saturate 0.5.
+  Before this the etch was white over 76% grey: a relief that vanished at
+  the old 0.3 rest opacity and on a phone.
+- `::before`: glitter times glitter at 96 and 121 px, one copy moving with
+  the pointer, `brightness(3.5)` at 0.6: only grains that line up light, so
+  the flecks wink one at a time as the card turns (was 6 at 0.9: gold
+  speckle noise on a phone).
 - `::after` and `.glare::after`: the raised line. The etch map twice as a
   mask, one copy nudged up to 1.5 px towards the light, composited with
   `mask-composite: subtract` (`-webkit-mask-composite: source-out`): what is

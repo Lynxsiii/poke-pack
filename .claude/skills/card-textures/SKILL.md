@@ -59,9 +59,12 @@ cure"). The surface gloss throws a soft highlight.
   `foil-gold`, `foil-future`, ...), a layout (`foil-evo`, `foil-owner`,
   `foil-trainer`, `foil-energy`) and `data-finish` for special stock. The
   scan is inline as `--art`. `js/foil-maps.js` adds the per-card data:
-  `has-foil-map` (`--foil-map`), `has-etch-map`, `has-etch-bins`,
+  `has-foil-map` (`--foil-map`), `has-etch-map`, `has-etch-tile`, `has-etch-bins`,
   `has-foil-rgb`, `has-stamp` and `cure-<kind>` (which also adds the
-  `.cure` span).
+  `.cure` span). A full-art finish (Illustration Rare, Special
+  Illustration Rare, Ultra Rare, Hyper Rare, Mega Hyper Rare) with no map
+  gets `has-foil-map` with the all-white `assets/foil/maps/full.webp`, so
+  the map recipes paint it edge to edge instead of the older no-map ones.
 - **New finishes ride on a second class** next to the old pattern class
   (`foil-holo foil-rainbow`, `foil-ex foil-sunpillar`), so the Classic
   engine, which keys on the old classes, is untouched. The new rules then
@@ -105,7 +108,10 @@ cure"). The surface gloss throws a soft highlight.
    the mask from geometry, consensus (`scripts/find_overlay.py` finds any
    printed mark on every card of a set) or the scan (masks.md). A
    Futuristic Rare TCG Live has not published yet gets both maps drawn from
-   its scan by `scripts/make_futuristic_maps.py`. A stamped print (Pokémon
+   its scan by `scripts/make_futuristic_maps.py`. A full-art print TCG Live
+   has no map for at all (the Mega Evolution sets, Black Bolt, White Flare,
+   the ME Black Star promos) needs nothing: `foilExtras()` gives it the
+   all-white map and the same recipe as the mapped prints. A stamped print (Pokémon
    Center, set logo, Prerelease, store stamp) gets its stamp cut out by
    `scripts/stamp_knockout.py` ([reference/promos.md](reference/promos.md)).
 3. **Pick the upstream recipe** (finish-catalog §3) and read it in
@@ -120,10 +126,20 @@ cure"). The surface gloss throws a soft highlight.
    zoomed on what you changed ([reference/verify.md](reference/verify.md)).
    `scripts/foil_probe.mjs` takes the screenshots; `--styles` shows which
    rule won.
-6. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
+6. **Sweep the set at phone size**:
+   `scripts/sweep_finishes.py --set <set>` (`--all` after touching a shared
+   sheet or `js/foil-maps.js`) first refuses to run while any `css/holo/`
+   sheet holds the same rule twice, then renders one card of every finish
+   at rest, lit from the top left and with a thumb low on the text box, at
+   220 px x 3, one sheet per set. Read every sheet against the table of
+   failure signs in [reference/verify.md](reference/verify.md) (rings, flat
+   full arts, speckle, a silhouette at rest, a card gone grey under the
+   thumb). Nothing merges without it: on 2026-09-28 eight cards Noah
+   screenshotted on his phone had passed the lab at desktop size.
+7. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
-7. **Ship**: move the rules into `css/holo/`, masks into `assets/masks/`,
+8. **Ship**: move the rules into `css/holo/`, masks into `assets/masks/`,
    per-card data into `data/<set>.json`, update `NOTICE.md`, bump the
    `?v=` of every sheet and script you changed in `index.html`, and record
    what you learned in the finish's catalogue entry.
@@ -173,6 +189,54 @@ cure"). The surface gloss throws a soft highlight.
   is the plain print's. `scripts/stamp_knockout.py` cuts the stamp out
   ([reference/promos.md](reference/promos.md)); name stamped prints
   `<base id>-<suffix>` so it finds them.
+- **Never let a full art fall to the no-map recipes.** realism.css's
+  `foil-sir`, `foil-ex` and `foil-ultra` recipes are upstream's fallback for
+  unmapped cards: they stretch the op-art textures `illusion.png` and
+  `illusion2.png` over the whole card. In headless Chromium that reads as a
+  faint texture; on a phone it is hard concentric rings across the art and
+  text (Espeon ex MEP 108 and White Flare's Keldeo ex, 2026-09-28). A new
+  finish or set without TCG Live maps must still get `has-foil-map`, via
+  the white fallback map in `js/foil-maps.js`, and judge its look on a
+  phone or at `--scale 2`, not only in the lab at desktop size.
+- **The thumb sits on the text box, not on the art.** On a phone the
+  pointer is wherever the card is held, usually low on the card, so every
+  finish is judged with the light there too (`50:78` in the sweep). A
+  multiply ramp on `.foil` that falls to 70% away from the pointer turns
+  the art window grey, and a glare whose white end is 0.75 doubles the
+  matte ink's darks under the thumb while its 30% black end dims the art:
+  Murkrow 181's Shiny Rare came out washed and muddy in the reveal
+  (2026-09-28). Real silver stays bright wherever the lamp is not, so a
+  multiply floor stays at 80% or above, a glare's white under 0.6 and its
+  black end under 0.15 (`shiny-vault.css`).
+- **One copy of every rule.** An edit that pastes a sheet's old text after
+  the new rules leaves the later copy painting, and the change "does
+  nothing" while the lab and the live site agree with each other: PR #55's
+  Paldean Fates gold fix shipped that way and never showed. The sweep
+  script checks every `css/holo/` sheet for a rule defined twice at the top
+  level before it renders (`--check-only` runs just that), and an
+  identical copy stops it. `foil_probe.mjs --styles` shows which rule won.
+- **A Special Illustration Rare is engraved edge to edge.** Photos of the
+  real cards (Latias ex, Charizard ex 151, Erika's Invitation, Mew ex PAF):
+  fine etched lines run over the whole face, frame, text box and Pokémon
+  included, and they are what catches the light, under a sand of glitter
+  and a broad pastel rainbow. A recipe that only masks a glare hot spot
+  with the etch, or gates the rainbow to two narrow light bars, leaves the
+  art flat and the card reads as an Illustration Rare (Team Rocket's Mewtwo
+  ex and Cynthia's Garchomp ex, 2026-09-28). The shared recipe
+  (`celebration.css`, `.foil-sir.has-foil-map`) therefore cuts `.foil` to
+  the etch (art, map, etch with a 45% floor, `mask-composite: intersect,
+  intersect, add, add`), lights the lines over the whole card on
+  `.glare::after` inside a hard-light glare, and lays two glitter tiles on
+  `.foil::after`. Prints without a Live etch get `has-etch-tile` and the
+  drawn `assets/foil/sir-etch.webp` (`scripts/make_sir_etch.py`), held at a
+  flat 45% in the map's place. The same holds for the other etched full
+  arts: full-art Ultra Rares and golds light their etch over the whole card
+  at every pose (`sv-fullart.css`) and take the tile when Live has no etch
+  for them. Details: [reference/sv-fullart.md](reference/sv-fullart.md).
+  Where the scan itself is flat (Paldean Fates' Scodix golds: gold fills on
+  teal, the line art only in the etch), the etch has to read at rest too,
+  so it is drawn on `.foil` dark and the rest opacity is raised
+  ([reference/paldean-fates.md](reference/paldean-fates.md)).
 - **The lab must mirror the site.** It had no `foilLook()` and did not
   load `promos.css`, so promos looked nothing like the site; a recipe
   judged there was judged on the wrong render. Check `lab/index.html`'s
@@ -252,12 +316,14 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `reference/<set>.md` | One note per shipped set (the list above) |
 | `lab/` | The foil lab page, proof recipes (`lab.css`), stamp masks |
 | `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost |
+| `scripts/sweep_finishes.py` | One card of every finish a set prints, at phone size, at rest, lit from the top left and under a thumb on the text box, one sheet per set, after a check that no `css/holo/` sheet defines a rule twice: the check before merging (verify.md) |
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
 | `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets (with RGB channel masks and `--etch-bins`) |
 | `scripts/ship_stamp.py` | Ship a mark found by `find_overlay.py`: mask into `assets/masks/stamp/`, placements into `data/<set>.json` |
 | `scripts/make_futuristic_maps.py` | Draw a Futuristic Rare's foil map, etch and etch bins from its scan when TCG Live has none (hints in `lab/masks/futuristic/`) |
 | `scripts/stamp_knockout.py` | Cut a stamped print's stamp (Pokémon Center, set logo, Prerelease, store) out of its foil map: difference of the two scans, template match, or a box from `scripts/stamp_boxes.json`; draws a window-and-frame map when a window holo's plain print has none (a full-art print needs its TCG Live map fetched first) |
 | `scripts/make_pixel_cosmos.py` | Draws the pixel cosmos texture in `assets/foil/promo/` (seeded) |
+| `scripts/make_sir_etch.py` | Draws the SIR engraving tile `assets/foil/sir-etch.webp` (diagonal hatch, seamless) |
 | `scripts/check_foil_maps.py` | Flag foil maps that may be swapped between cards |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
 
@@ -267,6 +333,8 @@ On the site side:
 |---|---|
 | `js/foil-maps.js` | Per-card map, etch, stamp and cast-and-cure classes and variables for `tcgFace()` (shared with the lab) |
 | `css/holo/maps.css` | Foil maps as the mask, the stamp knockout, the `.cure` layer |
+| `assets/foil/maps/full.webp` | The all-white map full-art prints without a TCG Live map fall back to |
+| `assets/foil/sir-etch.webp` | The engraving tile an etched full art (SIR, Ultra Rare, gold) without a TCG Live etch map uses (`has-etch-tile`) |
 | `css/holo/celebration.css` | The 30th Celebration finishes, and the shared SV holo Rare, Double Rare, IR and SIR map recipes |
 | `css/holo/promos.css` | Cosmos, smooth and pixel (`foil-cosmos`, `cosmos-pixel`) |
 | `css/holo/shiny-vault.css` | Shiny Rare, Shiny Ultra Rare and Scodix gold |

@@ -72,6 +72,23 @@ Pokémon Center promos, Illustration Rares) is foil where the drawing is
 not, so `stamp_knockout.py` skips it until its TCG Live map is fetched
 (`fetch_foil_maps.py --set <set> --cards <plain number> --ship --write-data`).
 
+## Full-art promos with no map (Espeon ex MEP 108 and friends)
+
+TCG Live has no maps for the Mega Evolution Black Star promos (MEP 037-063
+starters, MEP 102-110 30th prints), nor for the Mega Evolution sets, Black
+Bolt or White Flare. Until 2026-09-28 those full arts fell to realism.css's
+no-map recipes, which stretch upstream's `illusion2.png` (concentric op-art
+rings) over the card as `.foil::before`: on a phone the rings covered the
+art and the text (Noah's Espeon ex MEP 108 and Keldeo ex screenshots).
+`foilExtras()` now gives every Illustration Rare, Special Illustration
+Rare, Ultra Rare, Hyper Rare and Mega Hyper Rare without a map the
+all-white `assets/foil/maps/full.webp`, so celebration.css's and
+sv-fullart.css's map recipes paint them edge to edge (the Pokémon and the
+text box included, which the real maps would exclude; a Live map, when one
+appears, wins automatically). Double Rares and Mega Attack Rares keep the
+older recipes: their `illusion.png` tile at 33% reads as etch texture, not
+rings.
+
 ## Shiny Rare and Shiny Ultra Rare (`css/holo/shiny-vault.css`)
 
 Rewritten; the recipe is in [paldean-fates.md](paldean-fates.md). The

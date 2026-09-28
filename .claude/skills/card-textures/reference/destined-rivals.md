@@ -68,6 +68,11 @@ python3 .claude/skills/card-textures/scripts/check_foil_maps.py --set sv10
   strength and the etch carries the detail. The SIR etches have a few solid
   bright regions (Team Rocket's Mewtwo ex SIR: parts of Giovanni) over the
   fine texture.
+  Noah's Team Rocket's Mewtwo ex and Cynthia's Garchomp ex screenshots
+  (2026-09-28, "looks like an ar card") drove the shared SIR recipe's
+  rebuild: the foil is now cut to the etch and the lines are lit over the
+  whole card. Nothing set-specific here; the rules are in
+  [sv-fullart.md](sv-fullart.md), "Special Illustration Rare".
 
 ## Promo variants
 
