@@ -126,10 +126,18 @@ cure"). The surface gloss throws a soft highlight.
    zoomed on what you changed ([reference/verify.md](reference/verify.md)).
    `scripts/foil_probe.mjs` takes the screenshots; `--styles` shows which
    rule won.
-6. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
+6. **Sweep the set at phone size**:
+   `scripts/sweep_finishes.py --set <set>` (`--all` after touching a shared
+   sheet or `js/foil-maps.js`) renders one card of every finish at rest and
+   lit at 220 px x 3, one sheet per set. Read every sheet against the
+   table of failure signs in [reference/verify.md](reference/verify.md)
+   (rings, flat full arts, speckle, a silhouette at rest). Nothing merges
+   without it: on 2026-09-28 seven cards Noah screenshotted on his phone had
+   passed the lab at desktop size.
+7. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
-7. **Ship**: move the rules into `css/holo/`, masks into `assets/masks/`,
+8. **Ship**: move the rules into `css/holo/`, masks into `assets/masks/`,
    per-card data into `data/<set>.json`, update `NOTICE.md`, bump the
    `?v=` of every sheet and script you changed in `index.html`, and record
    what you learned in the finish's catalogue entry.
@@ -289,6 +297,7 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `reference/<set>.md` | One note per shipped set (the list above) |
 | `lab/` | The foil lab page, proof recipes (`lab.css`), stamp masks |
 | `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost |
+| `scripts/sweep_finishes.py` | One card of every finish a set prints, at phone size, rest and lit, one sheet per set: the check before merging (verify.md) |
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
 | `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets (with RGB channel masks and `--etch-bins`) |
 | `scripts/ship_stamp.py` | Ship a mark found by `find_overlay.py`: mask into `assets/masks/stamp/`, placements into `data/<set>.json` |

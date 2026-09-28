@@ -109,13 +109,42 @@ exist before the view shows them) to open the inspector, move the mouse over
 `dialog[open] .tcg` to light it, and toggle `no-shine` / `fx-classic` on
 `body` between screenshots.
 
+## The sweep (before merging)
+
+Every finish a set prints, one card each, at phone size, at rest and lit,
+on one sheet per set:
+
+```
+python3 .claude/skills/card-textures/scripts/sweep_finishes.py --set <set>     # the set you touched
+python3 .claude/skills/card-textures/scripts/sweep_finishes.py --all           # after touching a shared sheet or js/foil-maps.js
+```
+
+Read every sheet. Noah found four kinds of failure on 2026-09-28 that the
+lab at desktop size had hidden (Espeon ex MEP 108, Keldeo ex, Team
+Rocket's Mewtwo ex, Cynthia's Garchomp ex, Iron Crown ex, Chien-Pao ex,
+Chi-Yu ex); each has a sign on the sheet, a cause and a fix:
+
+| Sign on the sheet | Cause | Fix |
+|---|---|---|
+| Concentric rings or op-art waves over a full art | The card fell to realism.css's no-map recipes (`illusion.png`, `illusion2.png` stretched over the card) | It needs `has-foil-map`: a TCG Live map, or the all-white fallback `foilExtras()` gives every IR, SIR, UR, HR and MHR |
+| A SIR, UR or gold with no relief: flat art, a glittery frame, reads like an Illustration Rare | The etch only masks a glare hot spot, or is gated to the light bars | The etch cuts `.foil` and lights the lines over the whole card at every pose (celebration.css SIR, sv-fullart.css UR and gold); no Live etch means `has-etch-tile` |
+| Gold speckle noise, coarse dots on a phone | Glitter tiles too large or the winking copy too bright | Tiles at 96 to 128 px, `brightness` under 4, opacity under 0.7 (shiny-vault.css Scodix) |
+| A Pokémon that is a flat silhouette at rest | The scan itself is flat (Paldean Fates' Scodix golds) and the etch, the only line detail, was a lit-only relief | Draw the etch on `.foil` dark with a floor, and raise the rest opacity so it reads in any light |
+| Rings on a Shiny, stripes on a reverse, a white disc in a glare | Wrong map variant, tile pitch or hot-spot size | The finish's own note in `reference/` |
+
+The sheet is 220 CSS px at 3x by default: a phone. A desktop-size lab
+render (`w=380`, scale 1) averages a 1 px etch to grey and a 2 px glitter
+grain to nothing, which is exactly how every one of those shipped.
+
 ## Before calling it done
 
 1. Screenshots at rest and three poses, proof next to site, zoomed on the
    change.
-2. `--idle` clean on the lab and on the app page that shows the card.
-3. Settings above checked.
-4. `NOTICE.md` updated if anything came from upstream or a new texture file
+2. The sweep above, for the set you touched, or `--all` after a shared
+   sheet or `js/foil-maps.js` changed. Every sheet read, none of the signs.
+3. `--idle` clean on the lab and on the app page that shows the card.
+4. Settings above checked.
+5. `NOTICE.md` updated if anything came from upstream or a new texture file
    was added.
-5. The finish's entry in `reference/finish-catalog.md` updated with what you
+6. The finish's entry in `reference/finish-catalog.md` updated with what you
    learned, so the next agent starts from it.
