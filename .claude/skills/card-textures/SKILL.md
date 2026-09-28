@@ -12,6 +12,29 @@ card does. The bar is Simon Goellner's
 of both are in `upstream/`, and the site's foil engine (`css/holo/`) is
 already derived from the first.
 
+## Rule zero: realism
+
+Noah, 2026-09-28: "remember we're trying to go for realism here." Every
+texture is judged beside a photo of the real card, at phone size (220 px
+wide, three device pixels per CSS pixel), before it merges. Flashy is not
+the bar; the photo is. Three tells that a recipe has drifted from it:
+
+- **Glitter you notice first.** On the real cards the grain is under the
+  sheen, noticed second (the Mew ex SIR macros). Turn it down until the
+  etch and the art lead.
+- **A texture that ignores the drawing.** A real etch follows the line
+  art, and no two cards share one: TCG Live's map, or one drawn from the
+  card's own scan, never a tile.
+- **Light that does not behave like foil.** One pool around the pointer
+  and a band that slides with the tilt, brightest at grazing angles,
+  matte ink staying matte. A wash over the whole face, or a hot spot that
+  paints the text box, is not foil.
+
+Photos live in the project's shared folder (`paldean-fates/texture-refs/`,
+`30th-celebration/`, per-set folders); the reference notes say which ones
+each recipe was judged against. When there is no photo, find one before
+tuning.
+
 ## What makes a texture look real
 
 In order of how much they matter:
