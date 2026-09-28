@@ -122,21 +122,23 @@
       <section id="view-home" class="home-page">
         <div class="home-hero">
           <div class="home-copy">
-            <h1>There’s a pull<br />in this pack.</h1>
-            <p class="lede">
-              Pick a real Pokémon TCG set. Tear open a virtual booster, flip
-              through the cards, and keep what you find. Printed odds, real
-              scans, virtual coins. No checkout.
-            </p>
-            <div class="home-cta">
-              <button class="solid" id="home-rip" type="button">Open featured pack</button>
-              <button class="ghost" type="button" data-goto="shop">Browse all packs</button>
+            <div class="home-words">
+              <h1 class="home-title" id="home-title"><span>Pitch Black</span></h1>
+              <p class="home-meta" id="home-meta">Mega Evolution, July 2026, 150 cards</p>
+              <p class="home-pitch">
+                A booster simulator with the real pull rates and real card scans.
+                Coins are virtual; nothing here costs real money.
+              </p>
+              <div class="home-cta">
+                <button class="solid" id="home-rip" type="button">Rip a pack</button>
+                <button class="text-btn" type="button" data-goto="shop">All packs</button>
+              </div>
+              <div class="home-pulse" id="home-pulse"></div>
             </div>
-            <div class="home-set-picker" id="home-set-picker" aria-label="Featured set"></div>
-            <div class="home-pulse" id="home-pulse"></div>
+            <div class="home-stage bleed" id="home-stage"></div>
           </div>
-          <div class="home-stage" id="home-stage"></div>
         </div>
+        <div class="home-shelf bleed" id="home-set-picker" role="group" aria-label="Featured set"></div>
         <div id="home-body"></div>
         <div class="home-lounge" id="home-lounge">
           <div class="lounge-panel">
@@ -154,7 +156,7 @@
             <div class="chat-log" id="home-chat-log"></div>
             <form class="chat-form" id="home-chat-form">
               <input name="body" maxlength="180" placeholder="Say something" autocomplete="off" />
-              <button class="solid" type="submit">Send</button>
+              <button class="ghost" type="submit">Send</button>
             </form>
           </div>
         </div>
