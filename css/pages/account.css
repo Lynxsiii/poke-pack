@@ -734,6 +734,11 @@
 }
 .friends > * { pointer-events: auto; }
 body.on-social .friends, body.on-auth .friends { display: none; }
+/* While theme.css fades the dock out at the top of the phone home page, its
+   children would still take taps through .friends > * { pointer-events: auto }. */
+@media (max-width: 720px) {
+  body.on-home.at-top .friends:not(.is-open) > * { pointer-events: none; }
+}
 .friends .friends-peek {
   position: relative; display: grid; place-items: center; width: 52px; height: 52px; padding: 0;
   border: 1px solid var(--line-2); border-radius: 50%; overflow: visible;
