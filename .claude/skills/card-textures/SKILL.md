@@ -275,7 +275,11 @@ cure"). The surface gloss throws a soft highlight.
   (`sv-fullart.css`) and take the drawn map the same way. Details: [reference/sv-fullart.md](reference/sv-fullart.md).
   Where the scan itself is flat (Paldean Fates' Scodix golds: gold fills on
   teal, the line art only in the etch), the etch has to read at rest too,
-  so it is drawn on `.foil` dark and the rest opacity is raised
+  so it is drawn on `.foil` dark and the rest opacity is raised, and it is
+  drawn soft (`etchSoft`, `scripts/soften_etch.py`: the etch blurred so
+  the hatch on the fills is a satin tone and only the line art stays dark),
+  because a sharp 3 px hatch difference-blended at full strength aliases
+  into speckle at viewer size (Chien-Pao ex, 2026-09-28)
   ([reference/paldean-fates.md](reference/paldean-fates.md)).
 - **No two cards share a texture.** A real SIR, full-art Ultra Rare or
   gold is engraved along its own drawing, so one tile repeated over two
@@ -292,7 +296,10 @@ cure"). The surface gloss throws a soft highlight.
   contrast 2.2, opacity 0.3 + 0.45 from-center, was the first thing seen on
   a phone (Noah, 2026-09-28: "a little overpowering"); it sits at 1.35 /
   1.9 / 0.16 + 0.3 now. When a glitter layer leads at phone size, turn it
-  down until the etch does.
+  down until the etch does. Never lay a glitter copy difference-blended
+  over a text box: the Scodix golds did, and it read as dark grain over the
+  rules text; one screened copy of the sparse tile
+  (`assets/foil/glitter-fine.webp`) is the grain the photos show.
 - **The lab must mirror the site.** It had no `foilLook()` and did not
   load `promos.css`, so promos looked nothing like the site; a recipe
   judged there was judged on the wrong render. Check `lab/index.html`'s
@@ -381,6 +388,8 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/make_pixel_cosmos.py` | Draws the pixel cosmos texture in `assets/foil/promo/` (seeded) |
 | `scripts/make_card_etch.py` | Draws a per-card etch map from the scan for an etched print TCG Live has no map for (`--all --ship --write-data`; `--compare` beside a Live map) |
 | `scripts/make_sir_etch.py` | Draws the fallback engraving tile `assets/foil/sir-etch.webp` (diagonal hatch, seamless), for a print nobody has drawn yet |
+| `scripts/soften_etch.py` | Draws a gold print's soft engraving `assets/foil/maps/<set>/<n>-etch-soft.webp` from its etch map (blurred, curved) and sets `etchSoft` (`--set <set> --all`: every `finish: "scodix"` print) |
+| `scripts/make_glitter_flecks.py` | Draws a seeded glitter tile (`glitter-flecks.webp` dense, `glitter-fine.webp` sparse: `--density 0.03 --seed 4242`) |
 | `scripts/check_foil_maps.py` | Flag foil maps that may be swapped between cards |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
 
@@ -393,6 +402,7 @@ On the site side:
 | `assets/foil/maps/full.webp` | The all-white map full-art prints without a TCG Live map fall back to |
 | `assets/foil/maps/<set>/<n>-etch.webp` | An etched print's etch map: TCG Live's, or drawn from the card (`etchDrawn`, `has-etch-drawn`) |
 | `assets/foil/sir-etch.webp` | The fallback engraving tile for an etched full art with no etch map at all (`has-etch-tile`); the sweep fails on such a print |
+| `assets/foil/maps/<set>/<n>-etch-soft.webp` | A Scodix gold's soft engraving (`etchSoft`, `--etch-soft`): the line art dark, the hatch a satin tone |
 | `css/holo/celebration.css` | The 30th Celebration finishes, and the shared SV holo Rare, Double Rare, IR and SIR map recipes |
 | `css/holo/promos.css` | Cosmos, smooth and pixel (`foil-cosmos`, `cosmos-pixel`) |
 | `css/holo/shiny-vault.css` | Shiny Rare, Shiny Ultra Rare and Scodix gold |
