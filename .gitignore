@@ -30,3 +30,6 @@ desktop.ini
 
 # local worker secrets
 .dev.vars
+
+scripts/.tmp-serve.mjs
+.claude/worktrees/
