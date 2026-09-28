@@ -49,6 +49,16 @@ export function pixelCosmos(card) {
   return Boolean(svp && Number(svp[1]) >= 140);
 }
 
+/**
+ * Full-art finishes are foil edge to edge, so a print TCG Live has no map for
+ * (the Mega Evolution sets, Black Bolt and White Flare, the ME Black Star
+ * promos) takes an all-white map and the same recipe as the mapped prints.
+ * Without it the card fell to the older no-map recipe in realism.css, which
+ * stretches an op-art ring texture over the whole card.
+ */
+const FULL_ART = new Set(["Illustration Rare", "Special Illustration Rare", "Ultra Rare", "Hyper Rare", "Mega Hyper Rare"]);
+const FULL_MAP = "assets/foil/maps/full.webp";
+
 /** A stable 0..1 pair per card, so tiled glitter never lines up the same way twice. */
 function seed(id) {
   let h = 2166136261;
@@ -118,6 +128,7 @@ export function foilExtras(card, url, reverseKind) {
     vars.push(`${name}:url('${url(path)}')`);
   };
   if (card.foilMap) add("has-foil-map", "--foil-map", card.foilMap);
+  else if (FULL_ART.has(card.rarity)) add("has-foil-map", "--foil-map", FULL_MAP);
   if (card.foilMapR && card.foilMapB) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);
     add("", "--foil-map-b", card.foilMapB);
