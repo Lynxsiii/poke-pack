@@ -179,8 +179,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.f
   mix-blend-mode: exclusion;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .glare {
+  /* The far end was 10% lightness: hard-light with near-black halved the
+     side of the card away from the lamp, and the etch lines there read as
+     dark dots (Noah, 2026-09-28). Silver away from a lamp is duller, not
+     dark: the far end now sits at a third. */
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 75%) 5%, hsl(200, 5%, 35%) 70%, hsl(320, 40%, 10%) 150%);
+    hsl(0, 0%, 75%) 5%, hsl(200, 5%, 42%) 70%, hsl(320, 20%, 32%) 150%);
   background-size: 120% 150%;
   background-position: center;
   mix-blend-mode: hard-light;

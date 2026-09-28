@@ -185,7 +185,7 @@ def check_sheets(holo_dir=os.path.join(ROOT, "css", "holo")):
     return bad
 
 
-def sweep(set_id, out_dir, poses, w, scale, per_row, only_stamped=False):
+def sweep(set_id, out_dir, poses, w, scale, per_row, only_stamped=False, specks=True):
     cards = load(set_id)
     boxes = hand_boxes()
     rc = 1 if (check_promos(set_id, cards, boxes) + check_etched(set_id, cards)) else 0
@@ -211,6 +211,17 @@ def sweep(set_id, out_dir, poses, w, scale, per_row, only_stamped=False):
         except ImportError:
             out = png
         print(f"{set_id} sheet {n}/{len(sheets)}: {', '.join(chunk)} -> {out}")
+    if specks:
+        # Glitter never darkens (Noah, 2026-09-28: black speckles "make it
+        # look glitchy"): the same picks rendered with and without their
+        # foil, and any card the foil dotted dark fails the sweep.
+        cmd = [sys.executable, os.path.join(HERE, "dark_specks.py"), "--set", set_id, "--cards", ",".join(ids),
+               "--poses", poses, "--w", str(w), "--out", out_dir]
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        lines = [l for l in r.stdout.splitlines() if "over budget" in l or l.startswith(("FAIL", "ok", "marked"))]
+        print(f"{set_id} dark dots: " + ("\n  ".join(lines) if lines else r.stderr.strip()[-300:] or "no output"))
+        if r.returncode:
+            rc = 1
     return rc
 
 
@@ -227,6 +238,8 @@ def main():
     ap.add_argument("--scale", type=int, default=3, help="device pixels per CSS px (default 3, a phone)")
     ap.add_argument("--per-row", type=int, default=6, help="cards per sheet (a set gets several sheets)")
     ap.add_argument("--out-dir", default=os.path.join(tempfile.gettempdir(), "foil-sweep"))
+    ap.add_argument("--no-specks", action="store_true",
+                    help="skip the dark-dot check (dark_specks.py renders every pick twice more)")
     a = ap.parse_args()
     dup = check_sheets()
     if dup:
@@ -244,7 +257,7 @@ def main():
     os.makedirs(a.out_dir, exist_ok=True)
     rc = 0
     for s in sets:
-        rc |= sweep(s, a.out_dir, a.poses, a.w, a.scale, a.per_row, a.stamped)
+        rc |= sweep(s, a.out_dir, a.poses, a.w, a.scale, a.per_row, a.stamped, specks=not a.no_specks)
     return rc
 
 

@@ -130,6 +130,20 @@ thumb low on the text box. `--stamped` sheets every stamped print instead
 of one card per finish: the stamp sweep, after any change to
 `stamp_knockout.py`, `stamp_boxes.json`, a card photo or `windows.css`.
 
+It then runs `scripts/dark_specks.py` on the same picks: every card
+rendered once as the site draws it and once with its foil layers hidden,
+compared pixel by pixel inside the card. A dark dot is a blob of up to
+about 3 CSS px that the foil made more than 40 luminance levels darker
+than the bare print, on flat print (not on an edge of the drawing, and
+not where the print itself already dips: fine lettering and sketch lines
+that a foil shaded are a feature of the print, not a dot the foil made),
+and darker than its own surroundings. More than 40 on one card at one pose
+fails the sweep (exit 1) and the dots are boxed red on
+`<out-dir>/<set>-<n>-specks.png`. Glitter never darkens (Noah,
+2026-09-28); a shadow that belongs to an engraving is drawn on `.foil` as
+a soft etch, not left to a texture. `--no-specks` skips it while iterating
+on something else.
+
 Read every sheet. Noah found four kinds of failure on 2026-09-28 that the
 lab at desktop size had hidden (Espeon ex MEP 108, Keldeo ex, Team
 Rocket's Mewtwo ex, Cynthia's Garchomp ex, Iron Crown ex, Chien-Pao ex,
@@ -147,6 +161,8 @@ Chi-Yu ex); each has a sign on the sheet, a cause and a fix:
 | The whole card grey and washed in the thumb-on-the-text-box pose, fine in the others | A multiply ramp on `.foil` that falls to 70% far from the pointer, under a glare whose white lifts the matte ink and whose black end darkens the art | Keep a multiply floor at 80% or above (real silver stays bright away from the lamp), the glare's white under 0.6 and its black end under 0.15 (shiny-vault.css Shiny Rare, 2026-09-28) |
 | A stamp or logo printed in the art with foil bands streaking over it and a hard edge cutting through it | A promo the site draws as a window holo (`foilAs: "Rare"`, Cosmos, a holo rarity) with no foil map: the old window recipe clips the art window through the logo | A TCG Live map, or a hand box for its plain id in `stamp_boxes.json` and `stamp_knockout.py` (Sprigatito svp191, 2026-09-28); the sweep lists such promos and exits 1 |
 | A cosmos promo with a green or teal wash over the whole card, text box included, the art bleached and the Pokémon hard to make out | The cosmos specks and glints were masked only by the galaxy textures, not the foil map, so they covered the text box and the Pokémon; and the drawn window-and-frame map foiled the whole art window at full alpha (Live paints the art background at about half) | `promos.css` masks `::before` and `::after` with the map (`.has-foil-map`); `cosmos_window_maps.py --all` redraws the box maps at Live strength with the badge cut out, and from the plain print's Live map when it has one (Hop's Dubwool 136/159, 2026-09-28) |
+| A diagonal line screen over the whole card of a drawn-etch SIR, UR or gold, the art greyed under it, at phone size and in the viewer tilted (Espeon ex MEP 108, Noah 2026-09-28: "wtf") | The drawn etch was a perfectly regular grating (one frequency: fft peak/mean about 200 against about 30 for a TCG Live map), which the browser's scaling aliases into a screen; a Live etch is a soft, wandering hatch | `make_card_etch.py` bends every line with a smooth random field (`WOBBLE`), draws a soft profile (`DEPTH`, `SOFTEN`) and adds grain, so the map measures like Live's (mid-tone share about 0.55, no peak); `--all --force --ship` redraws a set's drawn maps |
+| Dark dots or black speckle across the card, on the print and the text: it reads as dirt or a glitchy render (Chien-Pao ex, Illustration Rares, Noah 2026-09-28: "makes it look glitchy") | A layer that darkens in specks: a glitter or grain tile through `difference`, `exclusion`, `multiply`, `hard-light` or `overlay` (dark texels darken the print), a glare whose far end is black, or a sharp etch difference-blended at full strength | Glitter never darkens: a fleck catches the light or does nothing, so a glitter or grain tile only ever rides `screen`, `color-dodge`, `lighten` or `plus-lighter`, a glare's far end stays above 30% grey, and shadow belongs to the engraving alone (a soft etch on `.foil`). `scripts/dark_specks.py` renders the picks with and without their foil and counts the dots the foil adds; the sweep runs it and fails on any card over budget |
 | A recipe change that does nothing, or the old look back after a merge | The sheet holds the same rule twice at the top level and the later copy wins: PR #55 pasted the pre-change sheet after the new rules | `sweep_finishes.py` refuses to run while a sheet holds an identical rule twice (`--check-only` runs just that check); delete the stale copy |
 
 The sheet is 220 CSS px at 3x by default: a phone. A desktop-size lab
@@ -158,7 +174,8 @@ grain to nothing, which is exactly how every one of those shipped.
 1. Screenshots at rest and three poses, proof next to site, zoomed on the
    change.
 2. The sweep above, for the set you touched, or `--all` after a shared
-   sheet or `js/foil-maps.js` changed. Every sheet read, none of the signs.
+   sheet or `js/foil-maps.js` changed. Every sheet read, none of the signs,
+   and the dark-dot check it runs green.
 3. `--idle` clean on the lab and on the app page that shows the card.
 4. Settings above checked.
 5. `NOTICE.md` updated if anything came from upstream or a new texture file
