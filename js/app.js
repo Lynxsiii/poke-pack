@@ -508,7 +508,7 @@ function foilClass(card) {
   if (!card) return "";
   if (card.reverse || card.pattern) return "rare-glow";
   // Sword & Shield's plain Rare is not a foil card.
-  if (isSwsh(card) && !card.foilAs && swshPattern(card) === "foil-none") return "";
+  if (isSwsh(card) && (!card.foilAs || card.era === "swsh") && swshPattern(card) === "foil-none") return "";
   if (HIT_RARITIES.has(card.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
@@ -573,8 +573,10 @@ function foilPattern(card) {
     if (kind === "galaxy") return "foil-reverse foil-cosmos";
     return kind ? `foil-reverse foil-rev-${kind}` : "foil-reverse";
   }
-  // Sword & Shield era prints (js/foil-maps.js, shared with the lab).
-  if (isSwsh(card) && !card.foilAs) {
+  // Sword & Shield era prints (js/foil-maps.js, shared with the lab). A
+  // reprint in a later product names its finish through foilAs (foilLook has
+  // already made it the rarity here).
+  if (isSwsh(card) && (!card.foilAs || card.era === "swsh")) {
     const swsh = swshPattern(card);
     if (swsh) return swsh;
   }

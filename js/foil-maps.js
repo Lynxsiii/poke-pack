@@ -83,9 +83,13 @@ const SWSH_ETCHED = new Set([
 /** Classic Collection reprints: the rule-box cards got full-card foil originally. */
 const CLASSIC_FULL_FOIL = /(^Shining |(-?EX|-?GX|\bV|VMAX|VSTAR|LV\.X|BREAK|LEGEND|★)$)/i;
 
-/** A Sword & Shield era print (the numbered sets, the special sets, the promos). */
+/**
+ * A Sword & Shield era print: the numbered sets, the special sets, the
+ * promos, and a Sword & Shield card reprinted in a later product (Trick or
+ * Trade 2023's Lost Origin ghosts), which carries `era: "swsh"` itself.
+ */
 export function isSwsh(card) {
-  return /^(swsh|cel25|pgo)/.test(String(card?.id || ""));
+  return card?.era === "swsh" || /^(swsh|cel25|pgo)/.test(String(card?.id || ""));
 }
 
 /**
@@ -175,7 +179,7 @@ export function reverseFinish(card, kind = card?.reverseKind) {
   const sv = /^sv\d/.test(set);
   // Sword & Shield's chevron sheet (assets/foil/swsh-reverse/, one per type,
   // scripts/make_swsh_reverse.py in the card-textures skill).
-  if (/^(swsh|cel25|pgo)/.test(set)) {
+  if (isSwsh(card)) {
     if (card.supertype === "Trainer") return "swsh-trainer";
     if (card.supertype === "Energy" || card.energy) return "";
     const type = String(card.types?.[0] || "").toLowerCase();
