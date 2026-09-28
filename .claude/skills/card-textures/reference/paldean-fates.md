@@ -122,9 +122,14 @@ broad level rainbow band.
   white, the **soft engraving** difference-blended onto it, a 40% floor
   screened on so a solid outline stops at 40%, the light pool multiplied in
   (56% at the pointer, 44% far: plain foil sits at hard-light's neutral),
-  **one** copy of the fine glitter tile screened on at 170 px, and the wide
-  band at 176deg (`--pf-a` 0.62) on a 100% x 300% layer that rolls with
-  `--background-y`. Rest is opacity 0.6, band 0.22, saturate 0.55: the
+  **one** copy of the fine glitter tile screened on at 170 px, and the
+  band at 176deg (`--pf-a` 0.55) on a 100% x 300% layer that rolls with
+  `--background-y`: one level pillar 12.5% of the layer tall (about a
+  third of the card, the Chien-Pao ex photo's pillar), never a wash. At
+  15% and 0.8 it recoloured the teal like a plain rainbow holo, and at 28%
+  it washed the whole card when the card was tilted sideways in the
+  viewer (Noah's second screenshot). Rest is opacity 0.6, band 0.2,
+  saturate 0.55: the
   official scan is flat gold fills on teal, so the engraving is the only
   line detail the Pokémon has and it must read in any light.
 - The soft engraving is `etchSoft` on the card (`--etch-soft` from

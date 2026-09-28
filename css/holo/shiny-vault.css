@@ -261,7 +261,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
   --pf-ly: calc((var(--pointer-from-top, 0.5) - 0.5) * 3px);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil {
-  --pf-a: 0.62;
+  --pf-a: 0.55;
   /* Bottom up: white; the soft engraving difference-blended onto it (the
      etch blurred a little, `--etch-soft`, scripts/soften_etch.py: the thick
      line art stays dark, the fine hatch on the gold fills averages to a
@@ -270,7 +270,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
      pool multiplied in (56% at the pointer, 44% far: plain foil sits at
      hard-light's neutral); one copy of the fine glitter screened on
      (sparse pinpoints, the grain in the Ting-Lu ex photo); the rainbow
-     band on top, broad and translucent.
+     band on top: one level pillar about a third of the card tall (12.5% of
+     the 300% layer), translucent, the way the Chien-Pao ex photo shows it.
+     It was 15% of the layer at 0.8 and then, briefly, 28% at 0.62: the
+     first recoloured the teal like a plain rainbow holo, the second washed
+     the whole card at some tilts (Noah's second screenshot, 20:12).
      Rebuilt 2026-09-28 (second time): the sharp etch at full strength plus
      two dense glitter copies (one of them difference-blended to near black)
      came out as a rough speckle over the gold and the text at viewer size
@@ -279,14 +283,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
      finely shimmering teal. */
   background-image:
     linear-gradient(176deg,
-      transparent 34%,
-      hsla(0, 95%, 60%, var(--pf-a)) 39%,
-      hsla(30, 100%, 58%, var(--pf-a)) 42.5%,
-      hsla(55, 100%, 58%, var(--pf-a)) 46%,
-      hsla(110, 85%, 55%, var(--pf-a)) 49.5%,
+      transparent 44.5%,
+      hsla(0, 95%, 60%, var(--pf-a)) 47%,
+      hsla(30, 100%, 58%, var(--pf-a)) 48.5%,
+      hsla(55, 100%, 58%, var(--pf-a)) 50%,
+      hsla(110, 85%, 55%, var(--pf-a)) 51.5%,
       hsla(180, 90%, 55%, var(--pf-a)) 53%,
-      hsla(225, 90%, 62%, var(--pf-a)) 56.5%,
-      transparent 62%),
+      hsla(225, 90%, 62%, var(--pf-a)) 54.5%,
+      transparent 57%),
     var(--pf-glitter-fine),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsl(0, 0%, 56%) 0%, hsl(0, 0%, 50%) 40%, hsl(0, 0%, 44%) 100%),
@@ -306,7 +310,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
    is visible in any light: Ting-Lu ex in flat light); the band drops to a
    hint. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map:not(.lit):not(.settling) .foil {
-  --pf-a: 0.22;
+  --pf-a: 0.2;
   filter: saturate(0.55);
   opacity: calc(0.6 * var(--foil-strength, 1));
 }
