@@ -242,16 +242,34 @@ cure"). The surface gloss throws a soft highlight.
   the etch (art, map, etch with a 45% floor, `mask-composite: intersect,
   intersect, add, add`), lights the lines over the whole card on
   `.glare::after` inside a hard-light glare, and lays two glitter tiles on
-  `.foil::after`. Prints without a Live etch get `has-etch-tile` and the
-  drawn `assets/foil/sir-etch.webp` (`scripts/make_sir_etch.py`), held at a
-  flat 45% in the map's place. The same holds for the other etched full
-  arts: full-art Ultra Rares and golds light their etch over the whole card
-  at every pose (`sv-fullart.css`) and take the tile when Live has no etch
-  for them. Details: [reference/sv-fullart.md](reference/sv-fullart.md).
+  `.foil::after`. Prints without a Live etch carry a map drawn from their
+  own art (`etchMap` + `etchDrawn`, `scripts/make_card_etch.py`, class
+  `has-etch-map has-etch-drawn`), held at a flat 45% in the map's place;
+  the shared tile (`has-etch-tile`, `assets/foil/sir-etch.webp`) is only
+  the fallback for a print nobody has drawn yet, and the sweep fails on it.
+  The same holds for the other etched full arts: full-art Ultra Rares and
+  golds light their etch over the whole card at every pose
+  (`sv-fullart.css`) and take the drawn map the same way. Details: [reference/sv-fullart.md](reference/sv-fullart.md).
   Where the scan itself is flat (Paldean Fates' Scodix golds: gold fills on
   teal, the line art only in the etch), the etch has to read at rest too,
   so it is drawn on `.foil` dark and the rest opacity is raised
   ([reference/paldean-fates.md](reference/paldean-fates.md)).
+- **No two cards share a texture.** A real SIR, full-art Ultra Rare or
+  gold is engraved along its own drawing, so one tile repeated over two
+  hundred prints reads as wallpaper (Noah, 2026-09-28: "I want every
+  texture to be unique to each card"). Every etched print needs its own
+  etch map: TCG Live's, or one drawn from the scan by
+  `scripts/make_card_etch.py` (facets of straight hatch along the art's
+  edges, the ink left smooth; judge it with `--compare` beside Live's
+  sv4pt5 232 Mew ex and 234 Charizard ex maps). `sweep_finishes.py` fails
+  on a print left on the tile.
+- **Glitter is a grain under the sheen, not a sparkle over it.** The Mew ex
+  photos (`paldean-fates/texture-refs/`) show pinpoint glitter you notice
+  second, after the etch and the rainbow. The SIR sand at brightness 1.5
+  contrast 2.2, opacity 0.3 + 0.45 from-center, was the first thing seen on
+  a phone (Noah, 2026-09-28: "a little overpowering"); it sits at 1.35 /
+  1.9 / 0.16 + 0.3 now. When a glitter layer leads at phone size, turn it
+  down until the etch does.
 - **The lab must mirror the site.** It had no `foilLook()` and did not
   load `promos.css`, so promos looked nothing like the site; a recipe
   judged there was judged on the wrong render. Check `lab/index.html`'s
@@ -338,7 +356,8 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/make_futuristic_maps.py` | Draw a Futuristic Rare's foil map, etch and etch bins from its scan when TCG Live has none (hints in `lab/masks/futuristic/`) |
 | `scripts/stamp_knockout.py` | Cut a stamped print's stamp (Pokémon Center, set logo, Prerelease, store) out of its foil map: difference of the two scans, template match, or a box from `scripts/stamp_boxes.json` (a list of boxes for a crest over a wordmark; a plain id with a box is a print whose only copy is the stamped one); draws a window-and-frame map when a window holo's plain print has none (a full-art print needs its TCG Live map fetched first) |
 | `scripts/make_pixel_cosmos.py` | Draws the pixel cosmos texture in `assets/foil/promo/` (seeded) |
-| `scripts/make_sir_etch.py` | Draws the SIR engraving tile `assets/foil/sir-etch.webp` (diagonal hatch, seamless) |
+| `scripts/make_card_etch.py` | Draws a per-card etch map from the scan for an etched print TCG Live has no map for (`--all --ship --write-data`; `--compare` beside a Live map) |
+| `scripts/make_sir_etch.py` | Draws the fallback engraving tile `assets/foil/sir-etch.webp` (diagonal hatch, seamless), for a print nobody has drawn yet |
 | `scripts/check_foil_maps.py` | Flag foil maps that may be swapped between cards |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
 
@@ -349,7 +368,8 @@ On the site side:
 | `js/foil-maps.js` | Per-card map, etch, stamp and cast-and-cure classes and variables for `tcgFace()` (shared with the lab) |
 | `css/holo/maps.css` | Foil maps as the mask, the stamp knockout, the `.cure` layer |
 | `assets/foil/maps/full.webp` | The all-white map full-art prints without a TCG Live map fall back to |
-| `assets/foil/sir-etch.webp` | The engraving tile an etched full art (SIR, Ultra Rare, gold) without a TCG Live etch map uses (`has-etch-tile`) |
+| `assets/foil/maps/<set>/<n>-etch.webp` | An etched print's etch map: TCG Live's, or drawn from the card (`etchDrawn`, `has-etch-drawn`) |
+| `assets/foil/sir-etch.webp` | The fallback engraving tile for an etched full art with no etch map at all (`has-etch-tile`); the sweep fails on such a print |
 | `css/holo/celebration.css` | The 30th Celebration finishes, and the shared SV holo Rare, Double Rare, IR and SIR map recipes |
 | `css/holo/promos.css` | Cosmos, smooth and pixel (`foil-cosmos`, `cosmos-pixel`) |
 | `css/holo/shiny-vault.css` | Shiny Rare, Shiny Ultra Rare and Scodix gold |

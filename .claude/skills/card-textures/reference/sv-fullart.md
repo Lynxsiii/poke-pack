@@ -85,9 +85,11 @@ pointer, 0.28 at 25%, 0.16 at 60%, 0.1 at the edge; opacity 0.5 + 0.5
 from-center), so the relief shows at every pose, as the SIR's does, but
 softer: nine tenths of a full art is etched and the hard-light glare already
 lifts it. Ultra Rares and golds with no Live etch (the ME sets, Black Bolt,
-White Flare) get `has-etch-tile` and the drawn `assets/foil/sir-etch.webp`
+White Flare) got `has-etch-tile` and the drawn `assets/foil/sir-etch.webp`
 (`--fa-etch` / `--fa-etch-size` / `--fa-etch-pos` / `--fa-etch-repeat`
-pick the map or the tile) on the `::before` etch pass and on `.glare::after`.
+pick the map or the tile) on the `::before` etch pass and on `.glare::after`;
+since 2026-09-28 they carry per-card drawn maps instead (`has-etch-map`,
+below under Drawn prints), through the same variables.
 Before this they were a smooth rainbow with no relief at all (Kyurem ex and
 Serperior ex UR, White Flare).
 
@@ -158,21 +160,35 @@ fallback-map ME, Black Bolt and White Flare prints).
   so the far corners dim rather than go black, which is what the old pair
   of narrow bars did (`#000` outside them gated the rainbow off).
 - **Sand** (`.foil::after`, plus-lighter): `--holo-glitter` twice, 26% and
-  15%, drifting against each other by 4px with the pointer; brightness 1.5
-  contrast 2.2; opacity 0.3 + 0.45 from-center.
+  15%, drifting against each other by 4px with the pointer; brightness 1.35
+  contrast 1.9; opacity 0.16 + 0.3 from-center (was 1.5 / 2.2 / 0.3 + 0.45
+  until 2026-09-28: the Mew ex photos show a pinpoint grain under the
+  sheen, and Noah found the sand "a little overpowering").
 - **Glare** (`.glare`, hard-light, 0.85 card-opacity): 62% at the pointer,
   47% at 55%, 34% far. Hard-light, not multiply, so the lit lines below
   brighten the card.
 - **Lines** (`.glare::after`, masked by `--sir-etch`, whole card): white at
   0.7 under the pointer, 0.4 at 25%, 0.2 at 60%, 0.12 at the far edge.
   Never off, so the relief shows at every pose, over the Pokémon too.
-- **Tile prints** (`has-etch-tile`, `js/foil-maps.js`): the ME sets, Black
-  Bolt, White Flare and the ME Black Star promos have no Live etch.
-  `assets/foil/sir-etch.webp` (`scripts/make_sir_etch.py`) is a seamless
-  diagonal hatch that waves gently and thins in patches, with a fainter
-  crossing family in cells. No whorls: closed rings read as op-art on a
-  phone, the fault PR 50 removed. Judge it at `--scale 2`; at desktop
-  size in the lab the lines vanish into grey.
+- **Drawn prints** (`has-etch-map has-etch-drawn`, `js/foil-maps.js`): the
+  ME sets, Black Bolt, White Flare and the ME Black Star promos have no
+  Live etch, so each of their 202 etched prints carries a map drawn from
+  its own scan by `scripts/make_card_etch.py` (2026-09-28, Noah: "every
+  texture unique to each card"): a structure tensor gives the direction of
+  the drawing's edges, eased into a slow seeded sweep where the art is
+  flat; the direction is quantised into twelve facets and each facet is
+  hatched with a straight 3.5 px grating along it, so the hatch runs
+  parallel to every outline and meets itself in seams between shapes as
+  Live's maps do; thin near-neutral ink (outlines, lettering) is left
+  smooth, wide dark fills are hatched like colour. 400 px wide, white with
+  the etch as alpha, about 46 KB each. The recipe keeps the flat 45% in
+  the Live map's place, as the tile had, since the foil map is the white
+  fallback. `assets/foil/sir-etch.webp` (`scripts/make_sir_etch.py`, a
+  seamless diagonal hatch) remains only as the `has-etch-tile` fallback for
+  a print nobody has drawn yet; `sweep_finishes.py` fails on one. No
+  whorls in either: closed rings read as op-art on a phone, the fault PR 50
+  removed. Judge at `--scale 3`, `w=220`; at desktop size in the lab the
+  lines vanish into grey.
 - **Neighbours untouched**: the generic etch glare
   (`.tcg.has-etch-map.has-etch-map .glare::after`) still serves the
   Futuristic Rares and gold Hyper Rares; the SIR rules win on specificity.
@@ -193,7 +209,7 @@ etch with a 40% floor; `--fa-etch` picks the Live map or the tile), with
 brightness 0.62 lit and 0.6 at rest to pay for the cut. The sheen and the
 two glitter tiles then follow the engraving, and the relief shows at rest
 as well. The UR light pool and the gold glare2 are unchanged. ME Mega
-Hyper Rares (no Live etch) come along through `has-etch-tile`. Photos:
+Hyper Rares (no Live etch) come along through their drawn maps. Photos:
 Paldean Fates' Koraidon ex macro (glitter dots over a fine gold line
 texture) and Chien-Pao ex (crinkle texture under the glitter).
 

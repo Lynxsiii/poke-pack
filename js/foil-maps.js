@@ -61,8 +61,10 @@ const FULL_MAP = "assets/foil/maps/full.webp";
 // The etched full arts (TCG Live's ETCHED masks: Special Illustration Rare,
 // full-art Ultra Rare, gold Hyper Rare) are engraved edge to edge; their
 // recipes cut the foil to the etch and light the lines (celebration.css,
-// sv-fullart.css). Where TCG Live has no etch map, a drawn engraving tile
-// stands in, seeded per card.
+// sv-fullart.css). Where TCG Live has no etch map, the card carries one
+// drawn from its own art (`etchMap` + `etchDrawn`, make_card_etch.py); the
+// shared engraving tile below is only the fallback for a print nobody has
+// drawn yet.
 const ETCHED = new Set(["Special Illustration Rare", "Ultra Rare", "Hyper Rare", "Mega Hyper Rare"]);
 const ETCH_TILE = "assets/foil/sir-etch.webp";
 
@@ -140,8 +142,13 @@ export function foilExtras(card, url, reverseKind) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);
     add("", "--foil-map-b", card.foilMapB);
   }
-  if (card.etchMap) add("has-etch-map", "--etch-map", card.etchMap);
-  else if (ETCHED.has(card.rarity)) add("has-etch-tile", "--etch-tile", ETCH_TILE);
+  if (card.etchMap) {
+    add("has-etch-map", "--etch-map", card.etchMap);
+    // Drawn from the card's own art because Live has no etch for it
+    // (scripts/make_card_etch.py): the SIR recipe keeps the flat background
+    // weight the tile had, since the print's foil map is the white fallback.
+    if (card.etchDrawn) classes.push("has-etch-drawn");
+  } else if (ETCHED.has(card.rarity)) add("has-etch-tile", "--etch-tile", ETCH_TILE);
   if (card.etchMapH && card.etchMapV) {
     add("has-etch-bins", "--etch-map-h", card.etchMapH);
     add("", "--etch-map-v", card.etchMapV);

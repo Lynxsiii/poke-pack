@@ -477,7 +477,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map.has-etch-map {
 }
 /* No Live map either (the all-white fallback, js/foil-maps.js): Live's SIR
    maps hold the background at a third to a half and the Pokémon at nothing,
-   so the tile prints take a flat 45% in the map's place. */
+   so a print with a drawn etch (`has-etch-drawn`, its own map from
+   scripts/make_card_etch.py) or the old tile takes a flat 45% in the map's
+   place. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map.has-etch-map.has-etch-drawn {
+  --sir-map: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+}
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map.has-etch-tile {
   --sir-map: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
   --sir-etch: var(--etch-tile);
@@ -500,7 +505,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::before {
   mix-blend-mode: hard-light;
 }
 /* The sand: two glitter tiles at different scales, the fine one drifting
-   against the coarse one with the tilt. */
+   against the coarse one with the tilt. Held back so the etch and the art
+   lead: the Mew ex photos show a pinpoint grain under the sheen, not a
+   sparkle over it (was brightness 1.5 contrast 2.2 at 0.3 + 0.45
+   from-center; Noah, 2026-09-28: "the glitter is a little overpowering"). */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::after {
   --shift: 4px;
   background-image: var(--holo-glitter), var(--holo-glitter);
@@ -509,9 +517,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::after {
     calc(50% + var(--pointer-from-left) * var(--shift)) calc(50% + var(--pointer-from-top) * var(--shift)),
     calc(20% - var(--pointer-from-left) * var(--shift)) calc(70% - var(--pointer-from-top) * var(--shift));
   background-blend-mode: screen;
-  filter: brightness(1.5) contrast(2.2) saturate(1.2);
+  filter: brightness(1.35) contrast(1.9) saturate(1.1);
   mix-blend-mode: plus-lighter;
-  opacity: calc(0.3 + var(--pointer-from-center) * 0.45);
+  opacity: calc(0.16 + var(--pointer-from-center) * 0.3);
 }
 /* Hard-light glare, as the Ultra Rares: brighter than mid grey near the
    light, darker far from it, so the lines lit by `::after` below brighten
