@@ -625,8 +625,10 @@
 }
 
 /* The burst above the card: a fixed handful of sparks, one or two rings.
-   Pieces wait out their delay unseen so nothing sits on the card before the
-   face turns. Every spark is a small pre-rendered disc; no shadows. */
+   Pieces wait out their delay unseen (fill-mode forwards, never both: a
+   backwards fill would paint the first keyframe on the card back through the
+   whole delay) so nothing sits on the card before the face turns. Every
+   spark is a small pre-rendered disc; no shadows. */
 .hit-fx { z-index: 4; }
 .hit-spark {
   position: absolute;
@@ -639,7 +641,7 @@
   background: radial-gradient(closest-side, #fff 30%, rgba(255, 232, 170, 0.9) 55%, rgba(255, 220, 140, 0) 100%);
   opacity: 0;
   pointer-events: none;
-  animation: opSpark 0.95s cubic-bezier(0.16, 0.84, 0.3, 1) var(--dly, 0ms) both;
+  animation: opSpark 0.95s cubic-bezier(0.16, 0.84, 0.3, 1) var(--dly, 0ms) forwards;
 }
 .hit-spark.t1 { background: radial-gradient(closest-side, #fff 30%, rgba(155, 231, 255, 0.9) 55%, rgba(120, 210, 255, 0) 100%); }
 .hit-spark.t3 { width: 10px; height: 10px; margin: -5px; }
@@ -672,7 +674,7 @@
   border: 2px solid rgba(255, 255, 255, 0.85);
   opacity: 0;
   pointer-events: none;
-  animation: opHitRing 0.72s cubic-bezier(0.1, 0.7, 0.3, 1) var(--dly, 0ms) both;
+  animation: opHitRing 0.72s cubic-bezier(0.1, 0.7, 0.3, 1) var(--dly, 0ms) forwards;
 }
 .hit-ring.t1 { border-color: rgba(155, 231, 255, 0.8); }
 .hit-ring.t3 { border-width: 3px; }
