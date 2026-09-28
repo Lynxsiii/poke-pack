@@ -2048,6 +2048,56 @@ function cheapestPackCost() {
   return costs.length ? Math.min(...costs) : liveSet.cost;
 }
 
+/** "July 17, 2026" reads as "July 2026" under the set name; the day is noise there. */
+function releaseMonth(set) {
+  return String(set?.released || "").replace(/\s+\d{1,2},\s*/, " ").trim();
+}
+
+/** The shelf under the stage: the newest sets, plus the featured one if it sits further back. */
+function shelfSets(limit = 10) {
+  const sets = PLAYABLE_SETS.filter((set) => !set.promoSet).slice(0, limit);
+  if (!sets.some((set) => set.id === liveSet.id)) sets.push(liveSet);
+  return sets;
+}
+
+/** A wrapper picture that waits until it is near the screen. */
+function lazyPackPicture(wrap, set) {
+  return packPicture(wrap, "", set).replace("<img ", '<img loading="lazy" decoding="async" ');
+}
+
+/* The set name is the biggest type on the page, so it is set by hand: two
+   balanced lines when it has two or more words, and the widest line measured
+   in em so the CSS can let the type grow until that line would meet the
+   column's edge. Widths are cached once the display font is really in. */
+const titleWidths = new Map();
+function titleWidthEm(host, text) {
+  if (titleWidths.has(text)) return titleWidths.get(text);
+  const probe = document.createElement("span");
+  probe.textContent = text;
+  probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap;font-size:100px;pointer-events:none";
+  host.appendChild(probe);
+  const em = probe.getBoundingClientRect().width / 100 || text.length * 0.5;
+  probe.remove();
+  if (document.fonts?.check?.('800 100px "Bricolage Grotesque"')) titleWidths.set(text, em);
+  return em;
+}
+function titleLines(host, name) {
+  const words = String(name).split(/\s+/).filter(Boolean);
+  if (words.length < 2) return { lines: [name], widest: titleWidthEm(host, name) };
+  let best = null;
+  for (let k = 1; k < words.length; k++) {
+    const lines = [words.slice(0, k).join(" "), words.slice(k).join(" ")];
+    const widest = Math.max(...lines.map((line) => titleWidthEm(host, line)));
+    if (!best || widest < best.widest) best = { lines, widest };
+  }
+  return best;
+}
+
+/* The stage only plays its entrance when the featured set actually changes;
+   renderHome() also runs after a rip, a sale or a chat line, and the pack
+   should not jump each time. */
+let homeStageSetId = null;
+
 function renderHome() {
   const { owned, total } = siteCompletion();
   const recent = historyCards(state.history, 8);
@@ -2067,92 +2117,126 @@ function renderHome() {
   const floorCost = cheapestPackCost();
   const pnl = state.granted == null ? null : money(worth - state.granted);
   const pnlDir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
+  const changed = homeStageSetId !== liveSet.id;
+  homeStageSetId = liveSet.id;
 
-  if (els.homePulse) {
-    els.homePulse.innerHTML = `
-      <div class="home-pulse-stat"><b>✦ ${coin(state.coins)}</b><span>Coins ready</span></div>
-      <div class="home-pulse-stat"><b>${owned} / ${total}</b><span>Cards found</span></div>
-      <div class="home-pulse-stat"><b>${num(state.packsOpened)}</b><span>Packs opened</span></div>`;
+  // The name, the stage and the shelf are rebuilt only when the set changes;
+  // the figures under them refresh on every render.
+  const homeTitle = document.getElementById("home-title");
+  if (homeTitle) {
+    const { lines, widest } = titleLines(homeTitle, liveSet.name);
+    homeTitle.style.setProperty("--name-em", widest.toFixed(3));
+    if (changed || !homeTitle.firstElementChild) {
+      const word = document.createElement("span");
+      lines.forEach((line, i) => {
+        if (i) word.appendChild(document.createElement("br"));
+        word.appendChild(document.createTextNode(line));
+      });
+      if (changed) word.className = "is-new";
+      homeTitle.replaceChildren(word);
+    }
   }
-
-  const homeSetPicker = document.getElementById("home-set-picker");
-  if (homeSetPicker) {
-    const featuredSets = PLAYABLE_SETS.slice(0, 4);
-    if (!featuredSets.some((set) => set.id === liveSet.id)) featuredSets[3] = liveSet;
-    homeSetPicker.innerHTML = `<span>Featured set</span><div class="home-set-options">${featuredSets
-      .map((set) => `<button type="button" class="home-set-option${set.id === liveSet.id ? " active" : ""}"
-        data-feature-set="${esc(set.id)}" aria-pressed="${set.id === liveSet.id}">${esc(set.name)}</button>`)
-      .join("")}</div>`;
+  const homeMeta = document.getElementById("home-meta");
+  if (homeMeta) {
+    homeMeta.textContent = [liveSet.era || liveSet.edition, releaseMonth(liveSet), liveSet.totalCount ? `${liveSet.totalCount} cards` : ""]
+      .filter(Boolean)
+      .join(", ");
   }
   const homeRip = document.getElementById("home-rip");
   if (homeRip) {
-    homeRip.textContent = liveSet.promoSet ? `Shop ${liveSet.name}` : `Open ${liveSet.name} · ✦ ${coin(liveSet.cost)}`;
+    homeRip.textContent = liveSet.promoSet ? `Shop ${liveSet.name}` : `Rip a pack ✦ ${coin(liveSet.cost)}`;
+  }
+
+  if (els.homePulse) {
+    els.homePulse.innerHTML = `
+      <div class="home-pulse-stat coins"><b>✦ ${coin(state.coins)}</b><span>Coins</span></div>
+      <div class="home-pulse-stat"><b>${num(owned)} / ${num(total)}</b><span>Cards found</span></div>
+      <div class="home-pulse-stat"><b>${num(state.packsOpened)}</b><span>Packs opened</span></div>`;
   }
 
   if (els.homeStage) {
     const wrap = liveSet.wrappers?.[0];
     const featureCard = liveSet.heroIds.map((id) => byId[id]).find(Boolean);
-    els.homeStage.innerHTML = `<div class="home-feature-top">
-        <span>On the press table</span><span>${esc(liveSet.edition)}</span>
-      </div>
-      <div class="home-feature-art">
-        <span class="home-sparks" aria-hidden="true"></span>
-        ${featureCard ? `<div class="home-feature-card">${tcgFace(featureCard, { small: true })}</div>` : ""}
-        ${wrap ? `<div class="home-feature-pack">${packPicture(wrap, "", liveSet)}<span class="home-feature-glint" aria-hidden="true"></span></div>` : ""}
-      </div>
-      <div class="home-feature-bottom">
-        <div><strong>${esc(liveSet.name)}</strong><span>${esc(liveSet.released)} · ${liveSet.totalCount} cards</span></div>
-        <b>${liveSet.promoSet ? "Promos" : `✦ ${coin(liveSet.cost)}`}</b>
-      </div>
-      <p class="home-feature-odds">${esc(liveSet.oddsLine)}</p>`;
-    tintFrom(els.homeStage.querySelector(".home-feature-pack img"), els.homeStage.querySelector(".home-feature-pack"));
+    const cardHtml = featureCard
+      ? `<div class="home-feature-card" aria-hidden="true">${tcgFace(featureCard, { small: true, stamp: false })}</div>`
+      : "";
+    const scene = els.homeStage.querySelector(".home-stage-scene");
+    if (changed || !scene) {
+      els.homeStage.innerHTML = `<div class="home-stage-scene${changed ? " is-new" : ""}">
+        ${cardHtml}
+        ${wrap ? `<button type="button" class="home-feature-pack" aria-label="Rip a ${esc(liveSet.name)} pack">${packPicture(wrap, "", liveSet)}<span class="home-feature-glint" aria-hidden="true"></span></button>` : ""}
+      </div>`;
+      tintFrom(els.homeStage.querySelector(".home-feature-pack img"), els.homeStage.querySelector(".home-feature-glint"));
+      // Tapping the pack itself does what the coral button does.
+      els.homeStage.querySelector(".home-feature-pack")?.addEventListener("click", () => homeRip?.click());
+    } else if (cardHtml && !scene.querySelector(".home-feature-card")) {
+      // The set's cards arrived after the stage was drawn: slip the card in
+      // behind the pack without disturbing the pack.
+      scene.insertAdjacentHTML("afterbegin", cardHtml);
+    }
   }
 
-  const setTiles = PLAYABLE_SETS.slice(0, 6).map((set) => {
+  const shelf = document.getElementById("home-set-picker");
+  if (shelf && (changed || !shelf.childElementCount)) {
+    const wasDrawn = shelf.childElementCount > 0;
+    shelf.innerHTML = shelfSets()
+      .map((set) => {
+        const wrap = set.wrappers?.[0];
+        const on = set.id === liveSet.id;
+        return `<button type="button" class="home-shelf-set${on ? " is-on" : ""}" data-feature-set="${esc(set.id)}"
+          aria-pressed="${on}" title="${esc(set.name)}">
+          <span class="home-shelf-pack">${wrap ? lazyPackPicture(wrap, set) : ""}</span>
+          <span class="home-shelf-name">${esc(set.name)}</span>
+        </button>`;
+      })
+      .join("");
+    // Keep the featured set in view without moving the page.
+    const on = shelf.querySelector(".is-on");
+    if (on && shelf.clientWidth) {
+      const left = on.offsetLeft - (shelf.clientWidth - on.offsetWidth) / 2;
+      shelf.scrollTo({ left: Math.max(0, left), behavior: wasDrawn && changed ? "smooth" : "auto" });
+    }
+  }
+
+  const setTiles = PLAYABLE_SETS.filter((set) => !set.promoSet).slice(0, 8).map((set, i) => {
     const have = ownedInSet(set);
     const pctSet = set.totalCount ? Math.round((have / set.totalCount) * 100) : 0;
     const fan = set.wrappers
       .slice(0, 3)
-      .map((wrap) => `<div class="home-set-pack">${packPicture(wrap, "", set)}</div>`)
+      .map((wrap) => `<span class="home-set-pack">${i < 2 ? packPicture(wrap, "", set) : lazyPackPicture(wrap, set)}</span>`)
       .join("");
     return `<button type="button" class="home-set" data-play-set="${esc(set.id)}" data-set="${esc(set.id)}">
-      <div class="home-set-fan">${fan}</div>
-      <div class="home-set-copy">
-        <span class="live-tag">Live</span>
-        <h3>${esc(set.name)}</h3>
-        <p>${esc(set.edition)} · ${esc(set.released)}</p>
-        <div class="home-set-meta"><span>Binder</span><b>${have} / ${set.totalCount}</b></div>
-        <div class="dex-bar"><span style="width:${pctSet}%"></span></div>
-      </div>
+      <span class="home-set-fan">${fan}</span>
+      <span class="home-set-copy">
+        <b>${esc(set.name)}</b>
+        <span class="home-set-era">${esc(set.era || set.edition)}, ${esc(releaseMonth(set))}</span>
+        <span class="home-set-meta"><span class="dex-bar"><span style="width:${pctSet}%"></span></span><small>${have} / ${set.totalCount}</small></span>
+      </span>
     </button>`;
   }).join("");
 
-  /*
-   * One block instead of two near-identical filmstrips. The best pull is
-   * promoted to a feature card with its rarity and what it is actually worth —
-   * a single card sitting alone in a wide flex row just read as a layout bug,
-   * and neither row said why any pull mattered.
-   */
+  // The best pull is featured with what it is actually worth; the latest
+  // pulls run as a strip beside it. Before the first rip, the priciest art on
+  // the site stands in as the chase.
   const best = bestHistoryPull();
   const pullsBlock = best
-    ? `<div class="home-block">
+    ? `<section class="home-block">
         <div class="home-block-head">
           <div>
             <h2>Your pulls</h2>
             <p>${num(state.pulls)} card${state.pulls === 1 ? "" : "s"} pulled from ${num(state.packsOpened)} pack${state.packsOpened === 1 ? "" : "s"}.</p>
           </div>
-          <button type="button" class="text-btn" data-goto="collection">Binder →</button>
+          <button type="button" class="text-btn" data-goto="collection">Collection</button>
         </div>
         <div class="home-pulls">
           <article class="home-hit">
             <button type="button" class="home-hit-art" ${inspectAttrs(best.card)}
               aria-label="${esc(best.card.name)}">${tcgFace(best.card, { small: true, stamp: false })}</button>
             <div class="home-hit-copy">
-              <h3>${esc(best.card.name)}</h3>
               <span class="home-hit-label">Best pull so far</span>
-              <p>${rarityPips(best.card.rarity)} ${esc(rarityLine(best.card))}${
-                best.entry?.at ? ` · ${esc(formatWhen(best.entry.at))}` : ""
-              }</p>
+              <h3>${esc(best.card.name)}</h3>
+              <p>${rarityPips(best.card.rarity)} ${esc(rarityLine(best.card))}</p>
+              ${best.entry?.at ? `<p>Pulled ${esc(formatWhen(best.entry.at))}</p>` : ""}
               <div class="home-hit-value">✦ ${coin(sellValue(best.card))}</div>
             </div>
           </article>
@@ -2161,16 +2245,16 @@ function renderHome() {
             ${miniCardRow(recent, "", "home-film")}
           </div>
         </div>
-      </div>`
-    : `<div class="home-block">
+      </section>`
+    : `<section class="home-block">
         <div class="home-block-head">
           <div>
             <h2>On the hunt</h2>
-            <p>The priciest art on the site. Rip a pack to start the binder.</p>
+            <p>The priciest art on the site. Rip a pack to start your binder.</p>
           </div>
         </div>
         ${miniCardRow(chase, "Load a set to see the chase.", "home-film")}
-      </div>`;
+      </section>`;
 
   const upcomingChips = upcoming
     .map((set) => `<span class="home-chip">${esc(set.name)}</span>`)
@@ -2180,31 +2264,31 @@ function renderHome() {
     : "";
 
   els.homeBody.innerHTML = `
-    <div class="home-block">
+    <section class="home-block">
       <div class="home-block-head">
         <div>
           <h2>Live now</h2>
-          <p>${PLAYABLE_SETS.length} playable sets · same 11-card math on every wrapper.</p>
+          <p>${PLAYABLE_SETS.length} playable sets, the same 11-card pack on every wrapper.</p>
         </div>
-        <button type="button" class="text-btn" data-goto="shop">All packs →</button>
+        <button type="button" class="text-btn" data-goto="shop">All packs</button>
       </div>
       <div class="home-sets">${setTiles}</div>
-    </div>
+    </section>
 
     ${pullsBlock}
 
-    <div class="home-block">
+    <section class="home-block">
       <div class="home-block-head">
         <div>
           <h2>The market</h2>
-          <p>Market-based card values help you decide what to keep or sell.</p>
+          <p>Every card carries its market value, so you know what to keep and what to sell.</p>
         </div>
-        <button type="button" class="text-btn" data-goto="collection">Binder →</button>
+        <button type="button" class="text-btn" data-goto="binder">Binder</button>
       </div>
       <div class="home-market">
         <article class="home-worth">
+          <span class="home-worth-label">Coins and collection</span>
           <b>✦ ${coin(worth)}</b>
-          <span class="home-worth-label">Collection value and coins</span>
           <p class="home-pnl ${pnlDir}">
             ${pnl == null
               ? `Coins plus every card you hold, across every set.`
@@ -2215,12 +2299,9 @@ function renderHome() {
           <div class="home-worth-chart" id="home-worth-chart"></div>
           <p class="home-worth-note">${
             binder
-              ? `✦ ${coin(binder)} sitting in the binder across ${PLAYABLE_SETS.length} live sets.`
+              ? `✦ ${coin(binder)} of that is cards, across ${PLAYABLE_SETS.length} live sets.`
               : `Nothing in the binder yet. Boosters start at ✦ ${coin(floorCost)}.`
           }</p>
-          <div class="home-worth-cta">
-            <button type="button" class="solid" data-goto="shop">Rip a pack · from ✦ ${coin(floorCost)}</button>
-          </div>
         </article>
         <article class="home-board">
           <div class="home-board-head">
@@ -2250,18 +2331,18 @@ function renderHome() {
           </ol>
         </article>
       </div>
-    </div>
+    </section>
 
-    <div class="home-block">
+    <section class="home-block">
       <div class="home-block-head">
         <div>
           <h2>The long game</h2>
-          <p>${PLAYABLE_SETS.length} live · ${queued} queued, newest first, all the way to Base Set.</p>
+          <p>${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.</p>
         </div>
-        <button type="button" class="text-btn" data-goto="catalog">Full catalog →</button>
+        <button type="button" class="text-btn" data-goto="catalog">Full catalog</button>
       </div>
       <div class="home-road">${upcomingChips}${originChip}</div>
-    </div>`;
+    </section>`;
 
   const worthChart = els.homeBody.querySelector("#home-worth-chart");
   if (worthChart) renderWorthChart(worthChart, state.worthLog, state.granted);
