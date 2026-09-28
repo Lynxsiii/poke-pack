@@ -124,6 +124,37 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos .foil::before {
   mix-blend-mode: screen;
   opacity: calc(var(--card-opacity) * var(--cosmos-specks));
 }
+/* With a foil map, the specks and the glints stay where the foil is: the
+   galaxy textures alone let them cover the Pokémon and the text box, which
+   read as a green wash over the whole card (Hop's Dubwool 136/159, Noah
+   2026-09-28). The map is the first mask layer, intersected with the union
+   of the textures beneath it. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos.has-foil-map .foil::after {
+  -webkit-mask-image: var(--foil-map), var(--cosmos-middle), var(--cosmos-top);
+  mask-image: var(--foil-map), var(--cosmos-middle), var(--cosmos-top);
+  -webkit-mask-size: 100% 100%, 200% 200%, 200% 200%;
+  mask-size: 100% 100%, 200% 200%, 200% 200%;
+  -webkit-mask-position: center, var(--cosmos-pos), var(--cosmos-pos);
+  mask-position: center, var(--cosmos-pos), var(--cosmos-pos);
+  -webkit-mask-repeat: no-repeat, repeat, repeat;
+  mask-repeat: no-repeat, repeat, repeat;
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-composite: intersect, add, add;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos.cosmos-pixel.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos.cosmos-pixel.has-foil-map .foil::after {
+  -webkit-mask-image: var(--foil-map), var(--cosmos-pixel);
+  mask-image: var(--foil-map), var(--cosmos-pixel);
+  -webkit-mask-size: 100% 100%, 125% auto;
+  mask-size: 100% 100%, 125% auto;
+  -webkit-mask-position: center, var(--cosmos-pos);
+  mask-position: center, var(--cosmos-pos);
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+}
 body.fx-holo.fx-holo.fx-holo .tcg.foil-cosmos.cosmos-pixel .foil::before {
   -webkit-mask-image: var(--cosmos-pixel);
   mask-image: var(--cosmos-pixel);

@@ -27,7 +27,12 @@
 #overlay .rip-stage { z-index: 1; }
 
 /* ---- Ambient room --------------------------------------------------------
-   Fixed layers the size of the screen. They fade, they never loop. */
+   Fixed layers the size of the screen. They fade, they never loop. The glow,
+   the rays and the tear flash are promoted for the whole opening: Safari
+   rasterises a layer on the main thread the moment it is promoted, and all
+   three used to be promoted by their fades in the same frame the wrapper
+   came off, which was the hitch between the pack and the first card. Built
+   once when the overlay opens, they only fade afterwards. */
 .op-ambient {
   position: fixed;
   inset: 0;
@@ -36,6 +41,7 @@
   pointer-events: none;
 }
 .op-ambient > * { position: absolute; display: block; }
+.op-glow, .op-rays, .op-flash { will-change: opacity; }
 .op-glow {
   inset: 0;
   background:
@@ -53,9 +59,10 @@
 .op-rays {
   left: 50%;
   top: 44%;
-  width: 120vmin;
-  height: 120vmin;
-  margin: -60vmin 0 0 -60vmin;
+  width: min(120vmin, 880px);
+  height: min(120vmin, 880px);
+  margin: 0;
+  translate: -50% -50%;
   border-radius: 50%;
   background: repeating-conic-gradient(
     from 8deg,
@@ -127,23 +134,29 @@
 #overlay.charged .op-dim { opacity: 1; transition-duration: 0.5s; }
 #overlay.hit-flash .op-dim { opacity: 0; transition: opacity 0.55s ease-out; }
 
-/* Tear flash: a bloom and a shockwave from the torn edge. */
+/* Tear flash: a bloom and a shockwave from the torn edge. The bloom is a
+   fixed-size disc painted once and slid to the torn edge by transform, so
+   the burst itself rasterises nothing. */
 .op-flash {
-  inset: 0;
+  left: 0;
+  top: 0;
+  width: 640px;
+  height: 640px;
   opacity: 0;
+  translate: calc(var(--burst-x, 50vw) - 50%) calc(var(--burst-y, 30vh) - 50%);
   background: radial-gradient(
-    circle at var(--burst-x, 50%) var(--burst-y, 30%),
+    circle closest-side,
     rgba(255, 255, 255, 0.85),
-    rgb(var(--pack-glow) / 0.5) 9%,
-    rgb(var(--pack-glow) / 0.12) 24%,
-    transparent 46%
+    rgb(var(--pack-glow) / 0.5) 58px,
+    rgb(var(--pack-glow) / 0.12) 150px,
+    transparent 296px
   );
 }
 .op-flash::after {
   content: "";
   position: absolute;
-  left: var(--burst-x, 50%);
-  top: var(--burst-y, 30%);
+  left: 50%;
+  top: 50%;
   width: 80px;
   height: 80px;
   margin: -40px 0 0 -40px;
