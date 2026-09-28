@@ -29,7 +29,8 @@
     "market": 0.21,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515675_in_1000x1000.jpg",
     "printedNumber": "089/202",
-    "tcgplayerId": 515675
+    "tcgplayerId": 515675,
+    "era": "swsh"
   },
   {
     "id": "tot23-2",
@@ -72,7 +73,8 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515676_in_1000x1000.jpg",
     "printedNumber": "090/202",
     "tcgplayerId": 515676,
-    "foilAs": "Common"
+    "foilAs": "Common",
+    "era": "swsh"
   },
   {
     "id": "tot23-3",
@@ -159,7 +161,8 @@
     "market": 0.15,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515649_in_1000x1000.jpg",
     "printedNumber": "019/185",
-    "tcgplayerId": 515649
+    "tcgplayerId": 515649,
+    "era": "swsh"
   },
   {
     "id": "tot23-5",
@@ -191,7 +194,8 @@
     "market": 0.13,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515662_in_1000x1000.jpg",
     "printedNumber": "069/185",
-    "tcgplayerId": 515662
+    "tcgplayerId": 515662,
+    "era": "swsh"
   },
   {
     "id": "tot23-6",
@@ -234,7 +238,8 @@
     "market": 0.19,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515663_in_1000x1000.jpg",
     "printedNumber": "070/185",
-    "tcgplayerId": 515663
+    "tcgplayerId": 515663,
+    "era": "swsh"
   },
   {
     "id": "tot23-7",
@@ -277,9 +282,10 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515664_in_1000x1000.jpg",
     "printedNumber": "071/185",
     "holo": true,
-    "foilAs": "Rare",
+    "foilAs": "Rare Holo",
     "tcgplayerId": 515664,
-    "foilMap": "assets/foil/maps/tot23/7.webp"
+    "foilMap": "assets/foil/maps/tot23/7.webp",
+    "era": "swsh"
   },
   {
     "id": "tot23-8",
@@ -322,7 +328,8 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515655_in_1000x1000.jpg",
     "printedNumber": "095/185",
     "tcgplayerId": 515655,
-    "foilAs": "Common"
+    "foilAs": "Common",
+    "era": "swsh"
   },
   {
     "id": "tot23-9",
@@ -364,9 +371,10 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515673_in_1000x1000.jpg",
     "printedNumber": "080/203",
     "holo": true,
-    "foilAs": "Rare",
+    "foilAs": "Rare Holo",
     "tcgplayerId": 515673,
-    "foilMap": "assets/foil/maps/tot23/9.webp"
+    "foilMap": "assets/foil/maps/tot23/9.webp",
+    "era": "swsh"
   },
   {
     "id": "tot23-10",
@@ -398,7 +406,8 @@
     "market": 0.16,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515647_in_1000x1000.jpg",
     "printedNumber": "016/196",
-    "tcgplayerId": 515647
+    "tcgplayerId": 515647,
+    "era": "swsh"
   },
   {
     "id": "tot23-11",
@@ -441,9 +450,10 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515648_in_1000x1000.jpg",
     "printedNumber": "017/196",
     "holo": true,
-    "foilAs": "Rare",
+    "foilAs": "Rare Holo",
     "tcgplayerId": 515648,
-    "foilMap": "assets/foil/maps/tot23/11.webp"
+    "foilMap": "assets/foil/maps/tot23/11.webp",
+    "era": "swsh"
   },
   {
     "id": "tot23-12",
@@ -475,7 +485,8 @@
     "market": 0.19,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515651_in_1000x1000.jpg",
     "printedNumber": "024/196",
-    "tcgplayerId": 515651
+    "tcgplayerId": 515651,
+    "era": "swsh"
   },
   {
     "id": "tot23-13",
@@ -508,7 +519,8 @@
     "market": 0.14,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515652_in_1000x1000.jpg",
     "printedNumber": "025/196",
-    "tcgplayerId": 515652
+    "tcgplayerId": 515652,
+    "era": "swsh"
   },
   {
     "id": "tot23-14",
@@ -550,9 +562,10 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515653_in_1000x1000.jpg",
     "printedNumber": "026/196",
     "holo": true,
-    "foilAs": "Rare",
+    "foilAs": "Rare Holo",
     "tcgplayerId": 515653,
-    "foilMap": "assets/foil/maps/tot23/14.webp"
+    "foilMap": "assets/foil/maps/tot23/14.webp",
+    "era": "swsh"
   },
   {
     "id": "tot23-15",
@@ -584,7 +597,8 @@
     "market": 0.16,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515659_in_1000x1000.jpg",
     "printedNumber": "064/196",
-    "tcgplayerId": 515659
+    "tcgplayerId": 515659,
+    "era": "swsh"
   },
   {
     "id": "tot23-16",
@@ -617,7 +631,8 @@
     "market": 0.19,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515660_in_1000x1000.jpg",
     "printedNumber": "065/196",
-    "tcgplayerId": 515660
+    "tcgplayerId": 515660,
+    "era": "swsh"
   },
   {
     "id": "tot23-17",
@@ -658,9 +673,10 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515661_in_1000x1000.jpg",
     "printedNumber": "066/196",
     "holo": true,
-    "foilAs": "Rare",
+    "foilAs": "Rare Holo",
     "tcgplayerId": 515661,
-    "foilMap": "assets/foil/maps/tot23/17.webp"
+    "foilMap": "assets/foil/maps/tot23/17.webp",
+    "era": "swsh"
   },
   {
     "id": "tot23-18",
@@ -702,7 +718,8 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515666_in_1000x1000.jpg",
     "printedNumber": "073/196",
     "tcgplayerId": 515666,
-    "foilAs": "Common"
+    "foilAs": "Common",
+    "era": "swsh"
   },
   {
     "id": "tot23-19",
@@ -745,9 +762,10 @@
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515674_in_1000x1000.jpg",
     "printedNumber": "081/196",
     "holo": true,
-    "foilAs": "Rare",
+    "foilAs": "Rare Holo",
     "tcgplayerId": 515674,
-    "foilMap": "assets/foil/maps/tot23/19.webp"
+    "foilMap": "assets/foil/maps/tot23/19.webp",
+    "era": "swsh"
   },
   {
     "id": "tot23-20",
@@ -779,7 +797,8 @@
     "market": 0.14,
     "imageRemote": "https://tcgplayer-cdn.tcgplayer.com/product/515679_in_1000x1000.jpg",
     "printedNumber": "103/195",
-    "tcgplayerId": 515679
+    "tcgplayerId": 515679,
+    "era": "swsh"
   },
   {
     "id": "tot23-21",
