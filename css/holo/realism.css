@@ -142,7 +142,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sir .foil::before {
 /* ---- Glare: a real hot spot on every foil --------------------------------- */
 body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ex, .foil-ultra) .glare {
   background: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 75%) 5%, hsl(200, 5%, 35%) 60%, hsl(320, 40%, 10%) 150%);
+    /* 2026-09-28: far end was hsl(320, 40%, 10%); hard-light with a near-black
+       end shaded the far half and dotted fine print (Mega Absol/Venusaur ex).
+       Glitter never darkens: keep the far end above ~25% lightness. */
+    hsl(0, 0%, 75%) 5%, hsl(200, 5%, 38%) 60%, hsl(320, 25%, 24%) 150%);
   background-size: 120% 150%;
   background-position: center center;
   mix-blend-mode: hard-light;

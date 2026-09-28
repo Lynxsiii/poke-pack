@@ -56,6 +56,11 @@ INK = 40          # luma under which near-neutral print is ink and stays smooth
 CHROMA = 40       # max-min of RGB above which a dark pixel is colour, not ink
 INK_WIDTH = 11    # a dark neutral patch wider than this in every direction is a fill, not ink
 BINS = 12         # hatch facets over a half turn (15 deg each)
+WOBBLE = 2.2      # radians of smooth phase wander that bends the lines (0 = straight grating)
+WOBBLE_SCALE = 7  # px: how gently the wander changes across the card
+DEPTH = 0.44      # line amplitude either side of 0.5 (Live's maps: two thirds mid-tone)
+GRAIN = 0.06      # per-pixel grain on top, the pinpoint sparkle
+SOFTEN = 0.5      # px: final blur, so a line is a ridge, not a step
 
 
 def seed_of(card_id: str) -> np.random.Generator:
@@ -126,6 +131,15 @@ def etch_from(scan: Image.Image, card_id: str) -> tuple[np.ndarray, np.ndarray]:
         b = votes.argmax(axis=0)
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
     phases = rng.uniform(0, 2 * np.pi, BINS).astype(np.float32)
+    # Engraved lines wobble: a smooth random field bends every line a little
+    # and slides its phase, so no two lines stay parallel for long and the
+    # grating has no single frequency to alias into a screen when the
+    # browser scales it (a perfectly regular grating did exactly that on
+    # Espeon ex MEP 108, Noah 2026-09-28: a diagonal line screen over the
+    # whole card). Live's maps have no such peak (fft peak/mean ~30 against
+    # ~200 for a straight grating); WOBBLE keeps ours in that range.
+    warp = ndimage.gaussian_filter(rng.normal(size=(h, w)).astype(np.float32), WOBBLE_SCALE)
+    warp *= WOBBLE / (warp.std() + 1e-6)
     ridge = np.zeros((h, w), np.float32)
     for k in range(BINS):
         m = b == k
@@ -133,9 +147,17 @@ def etch_from(scan: Image.Image, card_id: str) -> tuple[np.ndarray, np.ndarray]:
             continue
         along = (k + 0.5) / BINS * np.pi
         nx, ny = -np.sin(along), np.cos(along)     # the grating's normal
-        ridge[m] = np.cos(2 * np.pi * (xx[m] * nx + yy[m] * ny) / PITCH + phases[k])
-    cut = np.cos(np.pi * COVERAGE)                 # duty cycle -> threshold
-    etch = np.clip((ridge - cut) / 0.35 + 0.5, 0, 1)
+        ridge[m] = np.cos(2 * np.pi * (xx[m] * nx + yy[m] * ny) / PITCH + phases[k] + warp[m])
+    # A soft line profile, not a hard cut: Live's maps are two thirds
+    # mid-tone (0.25..0.75), a tonal relief with fine structure, and read as
+    # a sandy sheen at phone size; a binary grating reads as lines. The
+    # centre sits at COVERAGE so the etched share matches Live's, the
+    # amplitude keeps the lines clear of 0 and 1, and a pinch of per-pixel
+    # grain gives the pinpoint sparkle under the glare.
+    cut = np.cos(np.pi * COVERAGE)
+    etch = 0.5 + DEPTH * np.clip((ridge - cut) / (1 + abs(cut)), -1, 1)
+    etch += rng.normal(0, GRAIN, size=(h, w)).astype(np.float32)
+    etch = ndimage.gaussian_filter(np.clip(etch, 0, 1), SOFTEN)
     # Ink stays smooth: outlines, lettering, the rule box, with a hair of margin.
     keep = ndimage.binary_dilation(ink_of(rgb, gray), iterations=1)
     keep = ndimage.gaussian_filter(keep.astype(np.float32), 0.6)
