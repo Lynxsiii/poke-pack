@@ -4082,8 +4082,12 @@ function replayClass(el, cls, ms) {
 function tearBurst() {
   if (!hitFxOk()) return;
   const rect = els.packBody.getBoundingClientRect();
-  els.overlay.style.setProperty("--burst-x", `${Math.round(rect.left + rect.width / 2)}px`);
-  els.overlay.style.setProperty("--burst-y", `${Math.round(rect.top + rect.height * 0.07)}px`);
+  // The position lives on the flash layer, not on the overlay: a custom
+  // property set on the overlay would restyle everything inside it at the
+  // one moment the wrapper is flying apart.
+  const flash = els.overlay.querySelector(".op-flash") || els.overlay;
+  flash.style.setProperty("--burst-x", `${Math.round(rect.left + rect.width / 2)}px`);
+  flash.style.setProperty("--burst-y", `${Math.round(rect.top + rect.height * 0.07)}px`);
   replayClass(els.overlay, "tear-burst", 900);
 }
 
@@ -5191,6 +5195,27 @@ function presentPack(wrapper, pulled, set = liveSet) {
   syncBoxProgress();
   syncActions();
   openDialog(els.overlay, els.stepBtn);
+  warmPullImages();
+}
+
+/**
+ * Fetch the pack's card faces while the wrapper is still on. Without this the
+ * first card's photo is requested the instant it lands, and the decode and the
+ * repaint fall inside its own deal animation. The first face is decoded now;
+ * the rest only need to be in the cache before their flip.
+ */
+function warmPullImages() {
+  const faces = [];
+  for (const card of currentPulls) {
+    if (card.image) faces.push(card.image);
+    if (card.imageSmall) faces.push(card.imageSmall);
+  }
+  faces.forEach((src, i) => {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
+    if (i === 0) img.decode().catch(() => {});
+  });
 }
 
 function clearHandoff() {

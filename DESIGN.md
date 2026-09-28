@@ -64,14 +64,18 @@ components:
     backgroundColor: "{colors.surface-2}"
     textColor: "{colors.ink}"
     rounded: "{rounded.control}"
-  chip:
-    backgroundColor: "{colors.surface-2}"
-    rounded: "{rounded.pill}"
-    selected: "ink fill, black text"
+  picker-word:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink-2}"
+    selected: "ink text, 2px ink line under the word"
+  picker-tile:
+    backgroundColor: "{colors.surface}"
+    rounded: "{rounded.control}"
+    selected: "{colors.surface-3} fill, {colors.line-2} border"
   segmented:
     track: "{colors.well}"
     selected: "{colors.surface-3}"
-    rounded: "{rounded.pill}"
+    rounded: "{rounded.control}"
   panel:
     backgroundColor: "{colors.surface}"
     borderColor: "{colors.line}"
@@ -116,8 +120,8 @@ after the theme. The holo sheets (`css/holo/*`), the tear (`css/tear.css`,
   screen, coral fill. Everything else is a secondary (`surface-2` fill) or a
   text link.
 - **Gold is money.** Coins, prices, values, the daily claim. Nowhere else.
-- **Ink is selection.** The active tab, a chosen chip, a switch that is on, the
-  focus ring.
+- **Ink is selection.** The active tab, a chosen picker word, a switch that is
+  on, the focus ring.
 - **Green only means live**, red only means a loss.
 - Hover changes fill, never position; only objects (packs, cards) move.
 
@@ -137,8 +141,13 @@ after the theme. The holo sheets (`css/holo/*`), the tear (`css/tear.css`,
 ## Shape and depth
 
 - Three radii with jobs: 8px controls, 14px surfaces, 22px stages (the featured
-  pack, dialogs). Chips, segmented controls, the coins pill and the tab bar's
-  menu are pills.
+  pack, dialogs). Only the coins pill, the claim button, small badges ("New",
+  "Promo") and the tab bar's menu are pills.
+- No walls of pills. A picker or a filter is a row of words with a 2px ink line
+  under the chosen one (`.bulk-era`, `.shop-quick-set`, `.rarity-chip`), a shelf
+  of flat 8px tiles that carry information (`.bulk-set`, with its progress
+  bar), or a square segmented control. A row of same-shaped rounded chips
+  reads as generated.
 - Panels are flat and translucent. Shadows belong to objects and floating
   menus only. A real object (a binder page, a stage, the price chart) sits in a
   `well`, a shade darker than the page, so it reads as a thing on the table.
