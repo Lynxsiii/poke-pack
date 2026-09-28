@@ -429,8 +429,9 @@ body::before {
    (js/fx.js keeps body.at-top current). */
 @media (max-width: 720px) {
   body.on-home.at-top .friends:not(.is-open), body.on-home.at-top .radio:not(.is-open) {
-    opacity: 0; pointer-events: none; transform: translateY(10px);
+    opacity: 0; transform: translateY(10px);
   }
+  body.on-home.at-top .friends:not(.is-open) > *, body.on-home.at-top .radio:not(.is-open) > * { pointer-events: none; }
 }
 .radio-peek, .friends-peek { border-radius: 50%; border-color: var(--line-2); }
 
