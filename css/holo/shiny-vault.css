@@ -35,6 +35,7 @@
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map {
   --pf-glitter: url("/assets/foil/glitter-flecks.webp");
+  --pf-glitter-fine: url("/assets/foil/glitter-fine.webp");
 }
 
 /* Shared shape: the map is the mask (restated from maps.css at this
@@ -242,16 +243,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.ha
    rolls up and down the card as it tips.
 
    Same hard-light group as the shinies. `.foil`, bottom up:
-   - grey with the etch drawn over it in white (the hatch on the gold fills
-     and the solid line art), multiplied by a gentle silver ramp;
-   - the glitter twice, one copy difference-blended (its flecks drop to
-     near black: the grains facing away) and one screened on (they rise
-     above half and sparkle), so flecks show on the bright gold as well as
-     on the teal;
+   - white with the soft engraving difference-blended dark onto it (the
+     line art as darker gold outlines, the hatch as a satin tone), the
+     light pool multiplied in;
+   - the fine glitter screened on once: sparse pinpoints on the teal and
+     the gold alike, the grain of the real card, never a speckle;
    - the rainbow band, which recolours whatever it crosses.
-   `::before` winks: the glitter multiplied by itself at another scale, one
-   copy moving with the pointer, so only the flecks that line up light, and
-   which ones changes as the card turns.
+   `::before` winks: the fine glitter multiplied by itself at another
+   scale, one copy moving with the pointer, so only the grains that line up
+   light, and which ones changes as the card turns.
    `::after` is the lit edge of the raised line art: the etch, nudged a pixel
    or two towards the light, minus the etch where it is, leaves a sliver on
    the side facing the lamp. `.glare::after` is the same sliver on the far
@@ -261,65 +261,77 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
   --pf-ly: calc((var(--pointer-from-top, 0.5) - 0.5) * 3px);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil {
-  --pf-a: 0.8;
-  /* Bottom up: white; the etch difference-blended onto it (dark where the
-     line art and the hatch on the gold fills are: the engraved grooves,
-     which the photos show as darker gold); a 30% floor screened on so a
-     full line stops at 30%, not black; the light pool multiplied in (56%
-     at the pointer, 44% far, so plain foil sits at hard-light's neutral
-     50%); the glitter twice at two fine pitches, one screened (grains that
-     sparkle) and one difference-blended (grains facing away, near black);
-     the rainbow band on top. Rebuilt 2026-09-28: the etch used to be white
-     over grey, a relief that vanished at rest and on a phone, which left
-     Chien-Pao ex a flat gold silhouette (Noah). */
+  --pf-a: 0.55;
+  /* Bottom up: white; the soft engraving difference-blended onto it (the
+     etch blurred a little, `--etch-soft`, scripts/soften_etch.py: the thick
+     line art stays dark, the fine hatch on the gold fills averages to a
+     satin tone, which is what the photos show at arm's length); a 40%
+     floor screened on so an outline stops at 40%, not black; the light
+     pool multiplied in (56% at the pointer, 44% far: plain foil sits at
+     hard-light's neutral); one copy of the fine glitter screened on
+     (sparse pinpoints, the grain in the Ting-Lu ex photo); the rainbow
+     band on top: one level pillar about a third of the card tall (12.5% of
+     the 300% layer), translucent, the way the Chien-Pao ex photo shows it.
+     It was 15% of the layer at 0.8 and then, briefly, 28% at 0.62: the
+     first recoloured the teal like a plain rainbow holo, the second washed
+     the whole card at some tilts (Noah's second screenshot, 20:12).
+     Rebuilt 2026-09-28 (second time): the sharp etch at full strength plus
+     two dense glitter copies (one of them difference-blended to near black)
+     came out as a rough speckle over the gold and the text at viewer size
+     (Chien-Pao ex 242, Noah: "I really hope this isnt the one it pushed").
+     The real card is smooth satin gold with darker gold outlines on a
+     finely shimmering teal. */
   background-image:
     linear-gradient(176deg,
-      transparent 41%,
-      hsla(0, 95%, 60%, var(--pf-a)) 43.5%,
-      hsla(30, 100%, 58%, var(--pf-a)) 45.5%,
-      hsla(55, 100%, 58%, var(--pf-a)) 47.5%,
-      hsla(110, 85%, 55%, var(--pf-a)) 49.5%,
-      hsla(180, 90%, 55%, var(--pf-a)) 51.5%,
-      hsla(225, 90%, 62%, var(--pf-a)) 53.5%,
-      transparent 56%),
-    var(--pf-glitter),
-    var(--pf-glitter),
+      transparent 44.5%,
+      hsla(0, 95%, 60%, var(--pf-a)) 47%,
+      hsla(30, 100%, 58%, var(--pf-a)) 48.5%,
+      hsla(55, 100%, 58%, var(--pf-a)) 50%,
+      hsla(110, 85%, 55%, var(--pf-a)) 51.5%,
+      hsla(180, 90%, 55%, var(--pf-a)) 53%,
+      hsla(225, 90%, 62%, var(--pf-a)) 54.5%,
+      transparent 57%),
+    var(--pf-glitter-fine),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsl(0, 0%, 56%) 0%, hsl(0, 0%, 50%) 40%, hsl(0, 0%, 44%) 100%),
-    linear-gradient(hsl(0, 0%, 30%), hsl(0, 0%, 30%)),
-    var(--etch-map, linear-gradient(transparent, transparent)),
+    linear-gradient(hsl(0, 0%, 40%), hsl(0, 0%, 40%)),
+    var(--etch-soft, var(--etch-map, linear-gradient(transparent, transparent))),
     linear-gradient(#fff, #fff);
-  background-size: 100% 300%, 96px 96px, 112px 112px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-size: 100% 300%, 170px 170px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   background-position:
     center calc((var(--background-y) - 50%) * 2.5 + 50%),
-    center, 37px 71px, center, center, center, center;
-  background-repeat: no-repeat, repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-  background-blend-mode: normal, screen, difference, multiply, screen, difference, normal;
+    center, center, center, center, center;
+  background-repeat: no-repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-blend-mode: normal, screen, multiply, screen, difference, normal;
   filter: saturate(0.9);
   mix-blend-mode: hard-light;
 }
-/* Resting, the engraving and the grain still show (the real card's line art
-   is visible in any light); the band drops to a hint. */
+/* Resting, the outlines and the grain still show (the real card's line art
+   is visible in any light: Ting-Lu ex in flat light); the band drops to a
+   hint. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map:not(.lit):not(.settling) .foil {
-  --pf-a: 0.3;
-  filter: saturate(0.5);
+  --pf-a: 0.2;
+  filter: saturate(0.55);
   opacity: calc(0.6 * var(--foil-strength, 1));
 }
+/* Winks: the fine glitter multiplied by itself at two scales, one copy
+   moving with the pointer, so only the grains that line up light and which
+   ones changes as the card turns. Held low: a few points, not a speckle. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil::before {
-  background-image: var(--pf-glitter), var(--pf-glitter);
-  background-size: 96px 96px, 121px 121px;
+  background-image: var(--pf-glitter-fine), var(--pf-glitter-fine);
+  background-size: 170px 170px, 214px 214px;
   background-position: center,
     calc(50% + var(--pointer-from-left, 0.5) * 90px) calc(50% + var(--pointer-from-top, 0.5) * 70px);
   background-blend-mode: multiply, normal;
-  filter: brightness(3.5) saturate(1.3);
+  filter: brightness(3) saturate(1.2);
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * 0.6);
+  opacity: calc(var(--card-opacity) * 0.4);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsl(50, 100%, 96%) 0%, hsl(45, 80%, 80%) 35%, hsl(40, 50%, 60%) 100%);
-  -webkit-mask-image: var(--etch-map), var(--etch-map);
-  mask-image: var(--etch-map), var(--etch-map);
+  -webkit-mask-image: var(--etch-soft, var(--etch-map)), var(--etch-soft, var(--etch-map));
+  mask-image: var(--etch-soft, var(--etch-map)), var(--etch-soft, var(--etch-map));
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -329,7 +341,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
   -webkit-mask-composite: source-out;
   mask-composite: subtract;
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * 0.9);
+  opacity: calc(var(--card-opacity) * 0.55);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
@@ -342,8 +354,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .glare::after {
   background: hsl(35, 60%, 18%);
-  -webkit-mask-image: var(--etch-map), var(--etch-map);
-  mask-image: var(--etch-map), var(--etch-map);
+  -webkit-mask-image: var(--etch-soft, var(--etch-map)), var(--etch-soft, var(--etch-map));
+  mask-image: var(--etch-soft, var(--etch-map)), var(--etch-soft, var(--etch-map));
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
@@ -353,5 +365,5 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
   -webkit-mask-composite: source-out;
   mask-composite: subtract;
   mix-blend-mode: multiply;
-  opacity: calc(var(--card-opacity) * 0.55);
+  opacity: calc(var(--card-opacity) * 0.35);
 }

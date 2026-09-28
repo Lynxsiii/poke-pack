@@ -249,6 +249,9 @@ export function foilExtras(card, url, reverseKind) {
   } else if (ETCHED.has(card.rarity) || (swsh && SWSH_ETCHED.has(card.rarity) && card.gallery !== "cc")) {
     add("has-etch-tile", "--etch-tile", ETCH_TILE);
   }
+  // A gold print's soft engraving (the etch blurred a little, soften_etch.py):
+  // the dark line art without the hatch aliasing into speckle.
+  if (card.etchSoft) add("", "--etch-soft", card.etchSoft);
   if (card.etchMapH && card.etchMapV) {
     add("has-etch-bins", "--etch-map-h", card.etchMapH);
     add("", "--etch-map-v", card.etchMapV);
