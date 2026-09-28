@@ -120,7 +120,7 @@ def pick(set_id, cards):
         if c.get("reverse") or c in copies:
             continue
         key = (("promo", c.get("foilAs")) if c.get("promo")
-               else (c.get("rarity"), c.get("variant"), c.get("finish")))
+               else (c.get("rarity"), c.get("foilAs"), c.get("era"), c.get("variant"), c.get("finish")))
         if key in seen:
             continue
         seen.add(key)

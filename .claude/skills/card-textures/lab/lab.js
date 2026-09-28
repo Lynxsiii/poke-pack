@@ -23,7 +23,7 @@
 import { createCardMotion } from "/js/card-motion.js";
 import { HIT_RARITIES } from "/js/engine.js";
 import { rarityKey } from "/js/catalog.js";
-import { foilExtras } from "/js/foil-maps.js";
+import { foilExtras, isSwsh, swshPattern } from "/js/foil-maps.js";
 
 const params = new URLSearchParams(location.search);
 const setId = params.get("set") || "me55";
@@ -38,7 +38,8 @@ const allFoil = (c) => ALL_FOIL.has(setId) && !c.energy && c.supertype !== "Ener
 
 function foilClass(c) {
   if (c.reverse || c.pattern) return "rare-glow";
-  if (HIT_RARITIES.has(c.rarity) || ["Rare", "Pikachu Rare", "Cosmos"].includes(c.rarity) || allFoil(c)) return "holo";
+  if (isSwsh(c) && (!c.foilAs || c.era === "swsh") && swshPattern(c) === "foil-none") return "";
+  if (HIT_RARITIES.has(c.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos"].includes(c.rarity) || allFoil(c)) return "holo";
   return "";
 }
 function foilLayout(c) {
@@ -52,6 +53,7 @@ function foilPattern(c) {
   if (c.reverse) return c.reverseKind && c.reverseKind !== "cosmos" ? `foil-reverse foil-rev-${c.reverseKind}` : "foil-reverse";
   const r = c.rarity;
   if (c.pattern) return `foil-reverse foil-rev-${c.pattern} foil-prism`;
+  if (isSwsh(c) && (!c.foilAs || c.era === "swsh") && swshPattern(c)) return swshPattern(c);
   if (r === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
   if (r === "Shiny Rare") return "foil-holo foil-shiny";
   if (c.finish === "scodix") return "foil-gold foil-scodix";
@@ -108,10 +110,11 @@ async function foilMaps(list) {
 
 const abs = (path) => new URL(path, location.href).href;
 
-// Promo cards borrow another rarity's finish (foilLook() in js/app.js): the
+// A card that borrows another rarity's finish (foilLook() in js/app.js:
+// promos, and the holo prints of Trick or Trade and McDonald's packs): the
 // classes come from the borrowed rarity, the caption keeps the card's own.
 function foilLook(c) {
-  if (!c?.promo || !c.foilAs || c.reverse) return c;
+  if (!c?.foilAs || c.reverse) return c;
   if (c.foilAs === "Frame") return { ...c, rarity: "Common", reverse: true, reverseKind: "cosmos" };
   return { ...c, rarity: c.foilAs };
 }
