@@ -122,7 +122,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.f
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic):not(.lit):not(.settling) .foil {
   filter: brightness(0.5) contrast(2.5) saturate(0.35);
 }
-body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map.has-etch-map:not(.foil-tera):not(.foil-classic) .foil::before {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile):not(.foil-tera):not(.foil-classic) .foil::before {
   background-image:
     linear-gradient(#fff, #fff),
     linear-gradient(#fff, #fff),
@@ -130,12 +130,29 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map.has-etch-map:not(.foil
   background-size: cover, cover, 200% 700%, 200% 100%, 200% 100%;
   background-position: center, center, var(--fa-pos);
   background-blend-mode: soft-light, soft-light, color, hard-light, normal;
-  -webkit-mask-image: var(--etch-map);
-  mask-image: var(--etch-map);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+  -webkit-mask-image: var(--fa-etch);
+  mask-image: var(--fa-etch);
+  -webkit-mask-size: var(--fa-etch-size);
+  mask-size: var(--fa-etch-size);
+  -webkit-mask-position: var(--fa-etch-pos);
+  mask-position: var(--fa-etch-pos);
+  -webkit-mask-repeat: var(--fa-etch-repeat);
+  mask-repeat: var(--fa-etch-repeat);
+}
+/* The etch: TCG Live's map, or the drawn engraving tile on prints Live has
+   no etch for (the ME sets, Black Bolt, White Flare; js/foil-maps.js gives
+   them `has-etch-tile`). Same tile as the SIRs, celebration.css. */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ultra, .foil-gold).has-foil-map.has-etch-map {
+  --fa-etch: var(--etch-map);
+  --fa-etch-size: 100% 100%;
+  --fa-etch-pos: center;
+  --fa-etch-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-ultra, .foil-gold).has-foil-map.has-etch-tile {
+  --fa-etch: var(--etch-tile);
+  --fa-etch-size: 100% auto;
+  --fa-etch-pos: var(--seed-pos, center);
+  --fa-etch-repeat: repeat;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.foil-classic) .foil::after {
   /* Restated so the ramp picks up this layer's rotated sunpillar colours
@@ -170,22 +187,25 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:not(.foil-tera):not(.f
   filter: brightness(0.8) contrast(1) saturate(1);
   opacity: var(--card-opacity);
 }
-/* The etched lines under the light. Nine tenths of a full art is etched, so
-   the hot spot celebration.css gives every etched card would be a white disc
-   in this hard-light glare; kept small and soft here. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map.has-etch-map:not(.foil-tera):not(.foil-classic) .glare::after {
+/* The etched lines under the light, over the whole card and never off, as
+   the real cards' relief shows at every angle (SIR rebuild, 2026-09-28);
+   softer than the SIR's because nine tenths of a full art is etched and the
+   hard-light glare already lifts it. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile):not(.foil-tera):not(.foil-classic) .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.15) 18%, hsla(0, 0%, 100%, 0) 40%);
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.28) 25%, hsla(0, 0%, 100%, 0.16) 60%, hsla(0, 0%, 100%, 0.1) 100%);
   background-size: 100% 100%;
-  -webkit-mask-image: var(--etch-map);
-  mask-image: var(--etch-map);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+  -webkit-mask-image: var(--fa-etch);
+  mask-image: var(--fa-etch);
+  -webkit-mask-size: var(--fa-etch-size);
+  mask-size: var(--fa-etch-size);
+  -webkit-mask-position: var(--fa-etch-pos);
+  mask-position: var(--fa-etch-pos);
+  -webkit-mask-repeat: var(--fa-etch-repeat);
+  mask-repeat: var(--fa-etch-repeat);
   mix-blend-mode: normal;
   filter: none;
-  opacity: calc(0.3 + var(--pointer-from-center) * 0.4);
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.5);
 }
 
 /* ---- Hyper Rare: gold, SV_ULTRA / ETCHED ------------------------------------
@@ -243,16 +263,18 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:not(.foil-tera):not(.fo
 }
 /* Upstream's glare2: the etch lit across the whole card, brightest under the
    light. In the hard-light glare, the white lines lift the gold under them. */
-body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map.has-etch-map:not(.foil-tera):not(.foil-classic) .glare::after {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-gold.has-foil-map:is(.has-etch-map, .has-etch-tile):not(.foil-tera):not(.foil-classic) .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 100%, 0.95) 0%, hsla(0, 0%, 100%, 0.55) 30%, hsla(0, 0%, 100%, 0.3) 80%);
   background-size: 100% 100%;
-  -webkit-mask-image: var(--etch-map);
-  mask-image: var(--etch-map);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+  -webkit-mask-image: var(--fa-etch);
+  mask-image: var(--fa-etch);
+  -webkit-mask-size: var(--fa-etch-size);
+  mask-size: var(--fa-etch-size);
+  -webkit-mask-position: var(--fa-etch-pos);
+  mask-position: var(--fa-etch-pos);
+  -webkit-mask-repeat: var(--fa-etch-repeat);
+  mask-repeat: var(--fa-etch-repeat);
   mix-blend-mode: normal;
   filter: none;
   opacity: calc(0.6 + var(--pointer-from-center) * 0.4);

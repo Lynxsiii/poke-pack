@@ -202,8 +202,10 @@ cure"). The surface gloss throws a soft highlight.
   `.glare::after` inside a hard-light glare, and lays two glitter tiles on
   `.foil::after`. Prints without a Live etch get `has-etch-tile` and the
   drawn `assets/foil/sir-etch.webp` (`scripts/make_sir_etch.py`), held at a
-  flat 45% in the map's place. Details:
-  [reference/sv-fullart.md](reference/sv-fullart.md).
+  flat 45% in the map's place. The same holds for the other etched full
+  arts: full-art Ultra Rares and golds light their etch over the whole card
+  at every pose (`sv-fullart.css`) and take the tile when Live has no etch
+  for them. Details: [reference/sv-fullart.md](reference/sv-fullart.md).
 - **The lab must mirror the site.** It had no `foilLook()` and did not
   load `promos.css`, so promos looked nothing like the site; a recipe
   judged there was judged on the wrong render. Check `lab/index.html`'s
@@ -300,7 +302,7 @@ On the site side:
 | `js/foil-maps.js` | Per-card map, etch, stamp and cast-and-cure classes and variables for `tcgFace()` (shared with the lab) |
 | `css/holo/maps.css` | Foil maps as the mask, the stamp knockout, the `.cure` layer |
 | `assets/foil/maps/full.webp` | The all-white map full-art prints without a TCG Live map fall back to |
-| `assets/foil/sir-etch.webp` | The engraving tile a Special Illustration Rare without a TCG Live etch map is cut to (`has-etch-tile`) |
+| `assets/foil/sir-etch.webp` | The engraving tile an etched full art (SIR, Ultra Rare, gold) without a TCG Live etch map uses (`has-etch-tile`) |
 | `css/holo/celebration.css` | The 30th Celebration finishes, and the shared SV holo Rare, Double Rare, IR and SIR map recipes |
 | `css/holo/promos.css` | Cosmos, smooth and pixel (`foil-cosmos`, `cosmos-pixel`) |
 | `css/holo/shiny-vault.css` | Shiny Rare, Shiny Ultra Rare and Scodix gold |
