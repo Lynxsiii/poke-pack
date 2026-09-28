@@ -103,6 +103,27 @@ try {
   await page.screenshot({ path: out, fullPage: true });
   console.log(`wrote ${out}`);
 
+  if (args.boxes) {
+    // One line of JSON per lab cell: where its card sits in the screenshot
+    // (CSS px, page coordinates), which pose row it is in and its caption, so
+    // a script can cut the sheet up and judge each card on its own
+    // (scripts/dark_specks.py does).
+    const boxes = await page.evaluate(() => [...document.querySelectorAll(".lab-row")].flatMap((row) =>
+      [...row.querySelectorAll(".lab-cell")].map((cell) => {
+        const r = cell.querySelector(".tcg").getBoundingClientRect();
+        return {
+          pose: row.dataset.pose, cell: cell.className.replace("lab-cell", "").trim(),
+          card: cell.querySelector(".tcg").className, finish: cell.querySelector(".tcg").dataset.finish || "",
+          caption: cell.querySelector("figcaption").textContent.replace(/\s+/g, " ").trim(),
+          x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height,
+        };
+      })));
+    const boxesOut = out.replace(/\.png$/, "") + ".boxes.json";
+    const { writeFileSync } = await import("node:fs");
+    writeFileSync(boxesOut, JSON.stringify(boxes));
+    console.log(`wrote ${boxesOut} (${boxes.length} cells)`);
+  }
+
   if (args.styles) {
     const layers = await page.evaluate(() => {
       const keys = ["display", "opacity", "mix-blend-mode", "filter", "background-blend-mode", "background-size",

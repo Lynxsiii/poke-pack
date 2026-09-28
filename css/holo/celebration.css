@@ -115,8 +115,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-rainbow .foil::after {
 /* The gloss on the varnish for the two background-only holos: soft, so a
    pale Pokémon is not bleached by it. */
 body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-rainbow, .foil-svholo) .glare {
+  /* Black end under 0.15 (verify.md): nothing darkens the art away from
+     the band (was 0.3, which mottled the far side dark, 2026-09-28). */
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.6) 5%, hsla(0, 0%, 100%, 0.22) 28%, hsla(0, 0%, 0%, 0.3) 95%);
+    hsla(0, 0%, 100%, 0.6) 5%, hsla(0, 0%, 100%, 0.22) 28%, hsla(0, 0%, 0%, 0.14) 95%);
   mix-blend-mode: overlay;
   filter: none;
   opacity: calc(var(--card-opacity) * 0.7);
@@ -174,7 +176,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo .foil::before {
 /* A soft hot spot under the light, the foil a little duller away from it. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0) 35%, hsla(0, 0%, 0%, 0.2) 100%);
+    hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0) 35%, hsla(0, 0%, 0%, 0.12) 100%);
 }
 
 /* ---- Double Rare: SUN_PILLAR / HOLO ----------------------------------------
@@ -222,8 +224,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::before {
   mix-blend-mode: multiply;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .glare {
+  /* Far end was 20% grey at 0.9: it darkened the side away from the lamp
+     and the streaks there read as dark dots (2026-09-28). */
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 92%) 8%, hsla(0, 0%, 60%, 0.5) 45%, hsla(0, 0%, 20%, 0.9) 120%);
+    hsl(0, 0%, 92%) 8%, hsla(0, 0%, 60%, 0.5) 45%, hsla(0, 0%, 36%, 0.7) 120%);
   mix-blend-mode: overlay;
   filter: none;
   opacity: calc(var(--card-opacity) * 0.75);
@@ -337,7 +341,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.cure-rings .cure {
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-pikachu .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(50, 100%, 96%, 0.85) 6%, hsla(0, 0%, 60%, 0.4) 40%, hsla(0, 0%, 10%, 0.8) 110%);
+    hsla(50, 100%, 96%, 0.85) 6%, hsla(0, 0%, 60%, 0.4) 40%, hsla(0, 0%, 32%, 0.6) 110%);
   mix-blend-mode: overlay;
   filter: none;
   opacity: calc(var(--card-opacity) * 0.7);
@@ -379,7 +383,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .foil::after {
   background-position: center, 0% var(--background-y),
     calc(var(--background-x) * -1) calc(var(--background-y) * -1), var(--background-x) var(--background-y);
   background-size: 140px 100%, 200% 400%, 195% 100%, 200% 100%;
-  filter: brightness(1) contrast(2.5) saturate(1.5);
+  /* Was contrast 2.5 saturate 1.5: the grain came through as a harsh
+     green-and-black speckle in the far corner of the card (Noah,
+     2026-09-28: black speckles "make it look glitchy"). The real IR is a
+     soft sheen with a paper-tooth grain seen second. */
+  filter: brightness(1) contrast(1.6) saturate(1.2);
   mix-blend-mode: soft-light;
   opacity: 1;
 }
@@ -388,8 +396,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .foil::before {
   opacity: 0;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .glare {
+  /* The far end was black: overlay with black halves the print, so the
+     corner away from the light went dark and its grain read as dots. A
+     lamp leaves the far corner plain, not dark; 34% grey keeps the light
+     side and only dims the far side a little. */
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 0%) 100%);
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 34%) 100%);
   mix-blend-mode: overlay;
   filter: brightness(0.9) contrast(1.2);
   opacity: calc(var(--card-opacity) * 0.8);

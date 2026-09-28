@@ -144,7 +144,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse .glare {
     farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 100%, 0.8) 10%,
     hsla(0, 0%, 100%, 0.5) 20%,
-    hsla(0, 0%, 0%, 0.75) 90%
+    /* 2026-09-28: was black 0.75. The glare is not masked, so the far end
+       sat on the matte photo and darkened it by ~78 levels at the far pose
+       (Eevee 116-blister). Glitter never darkens: dull the far side, don't
+       shade it. */
+    hsla(0, 0%, 0%, 0.3) 90%
   );
   filter: brightness(0.7) contrast(1.5);
 }
@@ -599,8 +603,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-future .glare::after {
     farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsl(180, 100%, 95%) 5%,
     hsla(0, 0%, 39%, 0.25) 55%,
-    hsla(0, 0%, 0%, 0.36) 110%
+    hsla(0, 0%, 0%, 0.18) 110%
   );
+  /* Far end was black at 0.36: under contrast(3) it went to black over the
+     half of the card away from the lamp, and on the Mega Evolution Rares
+     and Double Rares (no foil map, so this generic recipe) the print there
+     broke into dark dots at the thumb pose (2026-09-28). */
   mix-blend-mode: overlay;
   filter: brightness(0.6) contrast(3);
 }

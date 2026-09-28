@@ -156,11 +156,14 @@ cure"). The surface gloss throws a soft highlight.
    rule twice, lists every window holo promo without a map (exit 1), then
    renders one card of every finish
    at rest, lit from the top left and with a thumb low on the text box, at
-   220 px x 3, one sheet per set. Read every sheet against the table of
+   220 px x 3, one sheet per set, and then runs `scripts/dark_specks.py`
+   on the same picks (each card with and without its foil; any card the
+   foil dotted dark fails the sweep). Read every sheet against the table of
    failure signs in [reference/verify.md](reference/verify.md) (rings, flat
-   full arts, speckle, a silhouette at rest, a card gone grey under the
-   thumb). Nothing merges without it: on 2026-09-28 eight cards Noah
-   screenshotted on his phone had passed the lab at desktop size.
+   full arts, speckle, a line screen, dark dots, a silhouette at rest, a
+   card gone grey under the thumb). Nothing merges without it: on
+   2026-09-28 eight cards Noah screenshotted on his phone had passed the
+   lab at desktop size.
 7. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
@@ -281,6 +284,26 @@ cure"). The surface gloss throws a soft highlight.
   because a sharp 3 px hatch difference-blended at full strength aliases
   into speckle at viewer size (Chien-Pao ex, 2026-09-28)
   ([reference/paldean-fates.md](reference/paldean-fates.md)).
+- **Glitter never darkens.** A fleck catches the light or does nothing;
+  it never leaves a dark dot. A glitter or grain tile through
+  `difference`, `exclusion`, `multiply`, `hard-light` or `overlay` darkens
+  the print wherever the tile is dark and reads as dirt at phone size
+  (Chien-Pao ex; the Illustration Rare grain with its glare's black end,
+  Noah 2026-09-28: black speckles "make it look glitchy"). Tiles ride
+  `screen`, `color-dodge`, `lighten` or `plus-lighter` only; a glare's far
+  end stays above about 25% grey (or black under 0.3 alpha), and a glare
+  that is not masked to the foil also sits on the matte photo of a reverse
+  or window holo, so its far end must not shade it; shadow belongs to the
+  engraving, drawn soft on `.foil`. `scripts/dark_specks.py` counts the
+  dots a foil adds and the sweep fails on them (verify.md).
+- **A drawn etch must wander.** A straight grating, however fine, has one
+  frequency, and the browser's scaling turns it into a diagonal line screen
+  over the whole card (Espeon ex MEP 108 and every drawn-etch print,
+  2026-09-28). Live's etch is a soft hatch that bends: `make_card_etch.py`
+  warps every line with a smooth random field, draws a soft profile and
+  adds grain (`WOBBLE`, `DEPTH`, `SOFTEN`, `GRAIN`), and a map is judged by
+  numbers before its look: no fft peak above about 60 times the mean, a
+  mid-tone share near Live's 0.55-0.65.
 - **No two cards share a texture.** A real SIR, full-art Ultra Rare or
   gold is engraved along its own drawing, so one tile repeated over two
   hundred prints reads as wallpaper (Noah, 2026-09-28: "I want every
@@ -378,7 +401,7 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `reference/promos.md` | Cosmos promos, shiny promos, stamped prints |
 | `reference/<set>.md` | One note per shipped set (the list above) |
 | `lab/` | The foil lab page, proof recipes (`lab.css`), stamp masks |
-| `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost |
+| `scripts/foil_probe.mjs` | Headless screenshots, computed styles, idle cost; `--boxes` writes each lab cell's card rectangle and caption as JSON beside the PNG |
 | `scripts/sweep_finishes.py` | One card of every finish a set prints (`--stamped`: every stamped print), at phone size, at rest, lit from the top left and under a thumb on the text box, one sheet per set, after checking that no `css/holo/` sheet defines a rule twice and no window holo promo lacks a map: the check before merging (verify.md) |
 | `scripts/find_overlay.py` | Recover a printed mark and place it on every card |
 | `scripts/fetch_foil_maps.py` | TCG Live foil and etch maps: into the lab cache, or shipped as site assets (with RGB channel masks and `--etch-bins`) |
@@ -386,7 +409,8 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/make_futuristic_maps.py` | Draw a Futuristic Rare's foil map, etch and etch bins from its scan when TCG Live has none (hints in `lab/masks/futuristic/`) |
 | `scripts/stamp_knockout.py` | Cut a stamped print's stamp (Pokémon Center, set logo, Prerelease, store) out of its foil map: difference of the two scans, template match, or a box from `scripts/stamp_boxes.json` (a list of boxes for a crest over a wordmark; a plain id with a box is a print whose only copy is the stamped one); draws a window-and-frame map when a window holo's plain print has none (a full-art print needs its TCG Live map fetched first) |
 | `scripts/make_pixel_cosmos.py` | Draws the pixel cosmos texture in `assets/foil/promo/` (seeded) |
-| `scripts/make_card_etch.py` | Draws a per-card etch map from the scan for an etched print TCG Live has no map for (`--all --ship --write-data`; `--compare` beside a Live map) |
+| `scripts/make_card_etch.py` | Draws a per-card etch map from the scan for an etched print TCG Live has no map for (`--all --ship --write-data`; `--all --force --ship` redraws a set's drawn maps; `--compare` beside a Live map): hatch along the drawing, bent by a smooth wander, soft, with grain |
+| `scripts/dark_specks.py` | Glitter never darkens: renders a set's picks with and without their foil, counts the dark dots the foil adds per card and pose, boxes them red on `<out>/<set>-<n>-specks.png`, exits 1 over budget; the sweep runs it |
 | `scripts/make_sir_etch.py` | Draws the fallback engraving tile `assets/foil/sir-etch.webp` (diagonal hatch, seamless), for a print nobody has drawn yet |
 | `scripts/cosmos_window_maps.py` | Redraws the cosmos promos' drawn window-and-frame maps at TCG Live strength (window at alpha 130, frame full, owner badge cut, the plain print's Live window when it has one); `--all` or `--set <set> --cards <n>` |
 | `scripts/soften_etch.py` | Draws a gold print's soft engraving `assets/foil/maps/<set>/<n>-etch-soft.webp` from its etch map (blurred, curved) and sets `etchSoft` (`--set <set> --all`: every `finish: "scodix"` print) |
