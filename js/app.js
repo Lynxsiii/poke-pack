@@ -1638,34 +1638,32 @@ function renderCollection({ refreshSets = true } = {}) {
   );
 }
 
+/* One set on the catalog wall: its logo, the symbol printed on its cards, its
+   name, month and state. Live sets are links into Packs (the document click
+   handler turns a /packs/<id> link into playSet); queued sets are plain tiles.
+   The symbol files are 15-40px rasters, so the symbol stays small and crisp
+   and the logo carries the tile. */
 function catalogCard(set, { live = false } = {}) {
-  const { logo, symbol } = setIdentity(set);
-  const eager = live ? `fetchpriority="high"` : `loading="lazy"`;
-  const released = set.released;
-  const count = live ? set.totalCount : set.cards;
-  const note = live
-    ? set.promoSet
-      ? `${set.edition} · promos in their boxes`
-      : `${set.edition} · ${set.packSize}-card boosters`
-    : set.note || "Queued for poke-pack.rip";
-  return `<article class="catalog-card ${live ? "live" : ""}">
-    <div class="catalog-head">
-      <img class="catalog-symbol" src="${esc(symbol)}" alt="" width="24" height="24"
-        loading="lazy" decoding="async" />
-      ${live ? `<span class="live-tag">Live</span>` : `<span class="soon">Coming</span>`}
-    </div>
-    <div class="catalog-art">
-      <img class="catalog-logo" src="${esc(logo)}" alt="${esc(set.name)} set logo"
-        ${eager} decoding="async" />
-      <span class="logo-fallback">${esc(set.name)}</span>
-    </div>
-    <h3>${esc(set.name)}</h3>
-    <div class="catalog-meta">
-      <span>${esc(released)}</span>
-      <span>${count === "—" ? "Count TBA" : `${esc(count)} cards`}</span>
-    </div>
-    <p class="catalog-note">${esc(note)}</p>
-  </article>`;
+  const { symbol, logo } = setIdentity(set);
+  const body = `
+    <span class="catalog-top">
+      <span class="catalog-art"><img class="catalog-logo" src="${esc(logo)}" alt="" loading="lazy" decoding="async" /></span>
+      <span class="catalog-mark"><img class="catalog-symbol" src="${esc(symbol)}" alt="" width="24" height="24" loading="lazy" decoding="async" /></span>
+    </span>
+    <span class="catalog-copy">
+      <b class="catalog-name">${esc(set.name)}</b>
+      <span class="catalog-meta">${live ? `<span class="live-tag">Live</span>` : `<span class="catalog-soon">Coming</span>`}<span>${esc(shortReleased(set))}</span></span>
+    </span>`;
+  return live
+    ? `<a class="catalog-card live" href="/packs/${esc(set.id)}">${body}</a>`
+    : `<article class="catalog-card">${body}</article>`;
+}
+
+/* ROADMAP names a span of eras with arrows ("Sun & Moon → XY → BW"); on the
+   catalog they read as a plain list. */
+function eraTitle(name) {
+  const parts = String(name).split(/\s*→\s*/).filter(Boolean);
+  return parts.length > 1 ? `${parts.slice(0, -1).join(", ")} and ${parts.at(-1)}` : String(name);
 }
 
 /* ---- Binder: the showcase --------------------------------------------------
@@ -1804,24 +1802,24 @@ function renderBinder() {
 function renderCatalog() {
   const eras = erasWithSets();
   const queued = eras.reduce((total, block) => total + block.queued.length, 0);
-  const summary = `<div class="catalog-summary">
-    <span class="now"><b>${PLAYABLE_SETS.length}</b> playable now</span>
-    <span><b>${queued}</b> sets queued</span>
-    <span><b>${eras.length}</b> eras</span>
-  </div>`;
+  const summary = `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`;
 
   const blocks = eras
     .map((block) => {
       const live = block.live.map((set) => catalogCard(set, { live: true })).join("");
       const rest = block.queued.map((set) => catalogCard(set)).join("");
-      const count = block.sets.length;
+      const count = block.live.length + block.queued.length;
+      const sets = `${count} set${count === 1 ? "" : "s"}`;
+      const state = !block.queued.length
+        ? `${sets}, ${count === 1 ? "" : "all "}live`
+        : !block.live.length
+          ? `${sets} on the way`
+          : `${sets}, ${block.live.length} live`;
       return `<section class="era-block">
-      <div class="era-head">
-        <h3>${esc(block.era)}</h3>
-        <span class="era-span">${eraYears(block.sets)}</span>
-        <span class="era-rule"></span>
-        <span class="era-count">${count} set${count === 1 ? "" : "s"}</span>
-      </div>
+      <header class="era-head">
+        <h3>${esc(eraTitle(block.era))}</h3>
+        <p><span class="era-span">${esc(eraYears(block.sets))}</span> <span class="era-count">${state}</span></p>
+      </header>
       <div class="catalog-grid">${live}${rest}</div>
     </section>`;
     })
@@ -3288,7 +3286,7 @@ const SETTING_GROUPS = [
         key: "fx",
         type: "choice",
         label: "Card effects",
-        note: "Holo is the newer foil engine — springier, glossier, closer to a card under a lamp. Classic is the original, which reads the printed holo windows more literally.",
+        note: "Holo is the newer, glossier foil. Classic is the original, closer to the printed holo windows.",
         options: [
           ["holo", "Holo"],
           ["classic", "Classic"],
@@ -3296,7 +3294,7 @@ const SETTING_GROUPS = [
       },
       { key: "shine", type: "toggle", label: "Card shine", note: "Gloss highlight that follows your cursor across a card." },
       { key: "tilt", type: "toggle", label: "Card tilt", note: "Cards lean toward your finger or cursor in 3D." },
-      { key: "stamps", type: "toggle", label: "Rarity stamps", note: "Off by default. Small rarity mark in the corner of each card." },
+      { key: "stamps", type: "toggle", label: "Rarity stamps", note: "A small rarity mark in the corner of each card." },
       { key: "motion", type: "toggle", label: "Idle shimmer", note: "Slow shimmer on foiled cards when you're not touching them." },
       {
         key: "foil",
@@ -3406,32 +3404,39 @@ function updateSettingsSummary() {
   if (reset) reset.disabled = !changed;
 }
 
+/* Settings read as a spec sheet on the open page: each group is a title and a
+   line on the left, its rows on the right (stacked on a phone). No panels. */
 function renderSettings() {
   const changed = changedSettingCount();
 
-  const groups = SETTING_GROUPS.map(
-    (group) => `<section class="panel set-panel">
-      <div class="set-panel-head">
-        <h3>${esc(group.title)}</h3>
-        <p>${esc(group.note)}</p>
-      </div>
-      <div class="set-list">${group.rows.map(settingRow).join("")}</div>
-    </section>`
-  ).join("");
+  const group = (title, note, rows, extra = "") => `<section class="set-group${extra}">
+      <header class="set-group-head">
+        <h3>${esc(title)}</h3>
+        <p>${esc(note)}</p>
+      </header>
+      <div class="set-list">${rows}</div>
+    </section>`;
+
+  const groups = SETTING_GROUPS.map((g) => group(g.title, g.note, g.rows.map(settingRow).join(""))).join("");
+  const progress = group(
+    "Progress",
+    "Your coins, binder and pull history.",
+    `<div class="set-row">
+        <span class="set-copy">
+          <b>Reset progress</b>
+          <small>Clears coins, binder and history on this account. Settings stay. This can't be undone.</small>
+        </span>
+        <button class="ghost danger-btn" id="reset-progress" type="button">Reset everything</button>
+      </div>`,
+    " set-danger"
+  );
 
   els.settingsBody.innerHTML = `
     <div class="set-bar">
       <p>${esc(settingsSummaryText(changed))}</p>
-      <button class="ghost" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
+      <button class="ghost sm" id="reset-settings" type="button" ${changed ? "" : "disabled"}>Restore defaults</button>
     </div>
-    <div class="set-groups">${groups}</div>
-    <section class="panel danger set-danger">
-      <div class="set-panel-head">
-        <h3>Reset progress</h3>
-        <p>Clears coins, binder, and history on this account. Settings stay. This cannot be undone.</p>
-      </div>
-      <button class="ghost danger-btn" id="reset-progress" type="button">Reset everything</button>
-    </section>`;
+    <div class="set-groups">${groups}${progress}</div>`;
 }
 
 function applySettings() {
@@ -3452,21 +3457,21 @@ function applySettings() {
 function formatNoteDate(value) {
   const at = new Date(`${value}T00:00:00`);
   if (Number.isNaN(at.getTime())) return value;
-  return at.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  return at.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
 }
 
 function renderNotes() {
   if (!els.notesBody) return;
   if (!patchNotes.length) {
-    els.notesBody.innerHTML = `<p class="notes-empty">No notes yet. The next site push will land here.</p>`;
+    els.notesBody.innerHTML = `<p class="notes-empty">No notes yet. The next update will be listed here.</p>`;
     return;
   }
   els.notesBody.innerHTML = `<div class="notes-list">${patchNotes
     .map(
       (note) => `<article class="notes-entry">
         <header>
-          <h3>${esc(note.title)}</h3>
           <time datetime="${esc(note.date)}">${esc(formatNoteDate(note.date))}</time>
+          <h3>${esc(note.title)}</h3>
         </header>
         <ul>${(note.items || []).map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
       </article>`
@@ -3538,7 +3543,7 @@ const VIEW_TITLES = {
   shop: "Packs — poke-pack.rip",
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
-  catalog: "Catalog — poke-pack.rip",
+  catalog: "All sets — poke-pack.rip",
   account: "Account — poke-pack.rip",
   profile: "Trainer — poke-pack.rip",
   auth: "Sign in — poke-pack.rip",
@@ -5009,20 +5014,22 @@ function inspectSellRow(card) {
   const value = sellValue(card);
   if (!activeTrainer()) {
     return `<div class="pc-sell">
-      <span class="pc-own">Sign in to own and sell cards</span>
+      <span class="pc-own">Sign in to keep and sell cards.</span>
     </div>`;
   }
   if (count < 1) {
     return `<div class="pc-sell">
-      <span class="pc-own">Unpulled — still hunting this one</span>
+      <span class="pc-own">Not in your collection yet.</span>
     </div>`;
   }
   return `<div class="pc-sell">
-    <span class="pc-own">You own ×${count}</span>
-    <button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
-      Sell one · +${coin(value)}
-    </button>
-    ${inspectShowcaseBtn(card)}
+    <span class="pc-own">You own ${count === 1 ? "one copy" : `${num(count)} copies`}.</span>
+    <span class="pc-actions">
+      <button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
+        Sell one for <span class="pc-sell-value">✦ ${coin(value)}</span>
+      </button>
+      ${inspectShowcaseBtn(card)}
+    </span>
   </div>`;
 }
 
@@ -5156,13 +5163,18 @@ function openInspect(id, reverse = false, reverseKind = "") {
   inspectRange = "30d";
   inspectOpenedAt = Date.now();
   els.inspectArt.innerHTML = tcgFace(card);
+  const set = setForCard(card);
+  const type = [card.supertype, ...(card.subtypes || []), card.hp ? `${card.hp} HP` : ""]
+    .filter((part, i, all) => part && all.indexOf(part) === i)
+    .join(" · ");
   els.inspectInfo.innerHTML = `
-    <p class="kicker">${esc(numberLine(card))} · <span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span> · ${esc(card.supertype)}</p>
+    <p class="inspect-set"><img class="inspect-set-symbol" src="${esc(setIdentity(set).symbol)}" alt="" width="24" height="24" decoding="async" /><span>${esc(set.name)}</span></p>
     <h2>${esc(card.name)}</h2>
-    <p>${esc(card.subtypes?.join(" · ") || "")}${card.hp ? ` · ${esc(card.hp)} HP` : ""}${card.evolvesFrom ? ` · Evolves from ${esc(card.evolvesFrom)}` : ""}</p>
+    <p class="inspect-rarity">${esc(numberLine(card))} · <span class="kicker-rarity">${rarityPips(card.rarity)} ${esc(rarityLine(card))}</span></p>
+    <p class="inspect-type">${esc(type)}${card.evolvesFrom ? `<br />Evolves from ${esc(card.evolvesFrom)}` : ""}</p>
     <div class="price-card" id="inspect-chart"></div>
     <div id="inspect-sell"></div>
-    <p class="artist">Illus. ${esc(card.artist || "Unknown")}</p>`;
+    <p class="artist">Illustrated by ${esc(card.artist || "an unknown artist")}</p>`;
   paintInspect(card);
   openDialog(els.inspect, els.inspectClose);
 }
@@ -6020,7 +6032,7 @@ function openPriceDialog(key, name) {
     : wrap
       ? packPicture(wrap, " ")
       : "";
-  els.priceKicker.textContent = `${liveSet.name} · Market price`;
+  els.priceKicker.textContent = liveSet.name;
   els.priceTitle.textContent = key === "boosterPack" ? "Booster pack" : offer?.name || name;
   els.priceNote.textContent =
     `TCGplayer market price in US dollars, recorded once a day.` +
@@ -6322,12 +6334,14 @@ function hideBrokenSetArt(e) {
   } else if (
     img.classList.contains("catalog-symbol") ||
     img.classList.contains("rail-symbol") ||
-    img.classList.contains("qs-symbol")
+    img.classList.contains("qs-symbol") ||
+    img.classList.contains("inspect-set-symbol")
   ) {
     img.remove();
   }
 }
 els.catalogEras.addEventListener("error", hideBrokenSetArt, true);
+els.inspectInfo.addEventListener("error", hideBrokenSetArt, true);
 els.setSwitcher.addEventListener("error", hideBrokenSetArt, true);
 document.getElementById("shop-quick-sets")?.addEventListener("error", hideBrokenSetArt, true);
 els.bulkSets?.addEventListener("error", hideBrokenSetArt, true);

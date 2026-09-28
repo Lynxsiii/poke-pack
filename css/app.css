@@ -1463,153 +1463,7 @@ select.filter option {
 }
 
 /* ---- Catalog -------------------------------------------------------------
-   Set symbol and status badge live in their own header row. Previously they
-   were absolutely positioned over the logo, so wide logos ran under them. */
-.catalog-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 0 0 28px;
-}
-.catalog-summary span {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  padding: 8px 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
-}
-.catalog-summary b { color: var(--ink); font-size: 15px; }
-.catalog-summary .now b { color: var(--gold); }
-
-.era-block { margin-bottom: 38px; }
-.era-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 16px;
-}
-.era-head h3 {
-  margin: 0;
-  font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch);
-  font-size: 20px;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-}
-.era-span,
-.era-count {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-  font-family: var(--mono);
-}
-.era-rule { flex: 1; height: 1px; background: var(--line); }
-
-.catalog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 14px;
-}
-.catalog-card {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-}
-.catalog-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.055);
-}
-.catalog-card.live {
-  border-color: rgb(var(--hl) / 0.45);
-  background: linear-gradient(180deg, rgb(var(--hl) / 0.08), rgba(255, 255, 255, 0.02));
-}
-
-.catalog-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  min-height: 26px;
-  margin: 0 0 10px;
-}
-.catalog-symbol {
-  width: 24px;
-  height: 24px;
-  flex: none;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
-}
-
-.catalog-art {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 74px;
-  margin: 0 0 12px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.catalog-logo {
-  /* Absolute cap, not a percentage: set logos vary wildly in aspect ratio, and
-     a percentage max-height resolves against a content-sized row that has
-     already grown to the image's natural height, so it never clamps. */
-  max-width: 100%;
-  max-height: 74px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.45));
-}
-/* Shown only when the logo 404s, so the tile still names the set. */
-.logo-fallback {
-  display: none;
-  font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch);
-  font-size: 15px;
-  line-height: 1.2;
-  color: var(--muted);
-  text-align: center;
-}
-.catalog-art.no-logo .catalog-logo { display: none; }
-.catalog-art.no-logo .logo-fallback { display: block; }
-
-.catalog-card h3 {
-  margin: 0 0 8px;
-  font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch);
-  font-size: 16px;
-  letter-spacing: -0.01em;
-}
-.catalog-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0 0 10px;
-}
-.catalog-meta span {
-  padding: 3px 8px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 600;
-}
-.catalog-note {
-  margin: auto 0 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
+   Styled in css/pages/extras.css. */
 .soon { color: var(--muted); border-color: var(--line); background: transparent; }
 
 /* ---- Home / Account / Settings ------------------------------------------- */
@@ -2482,48 +2336,8 @@ select.filter option {
 }
 
 /* ---- Settings page --------------------------------------------------------
-   Panels sit in a responsive grid; each row is copy on the left and its control
-   on the right, collapsing to stacked on narrow screens. */
-.set-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-  padding: 12px 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: rgba(255, 255, 255, 0.02);
-}
-.set-bar p { margin: 0; color: var(--muted); font-size: 13px; }
-.set-bar button:disabled { opacity: 0.4; cursor: default; }
-.set-bar button:disabled:hover { background: transparent; }
-
-.set-groups {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 16px;
-  align-items: start;
-}
-.set-panel { padding: 20px 22px 8px; }
-.set-panel-head { margin-bottom: 4px; }
-.set-panel-head h3 { margin: 0 0 4px; }
-.set-panel-head p { margin: 0 0 10px; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
-.set-list { display: flex; flex-direction: column; }
-.set-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 0;
-  border-top: 1px solid var(--line);
-}
-.set-list .set-row:first-child { border-top: 0; padding-top: 0; }
-.set-row:last-child { padding-bottom: 18px; }
-.set-copy { display: block; flex: 1; min-width: 0; }
-.set-copy b { display: block; font-size: 14px; font-weight: 600; }
-.set-copy small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; line-height: 1.5; }
-
+   Laid out in css/pages/extras.css. The segmented control below is shared
+   with the collection page. */
 /* Segmented control for the pick-one settings. */
 .seg {
   display: inline-flex;
@@ -2553,13 +2367,7 @@ select.filter option {
 }
 .seg-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
-.set-danger { margin-top: 16px; padding-bottom: 20px; }
-.set-danger .set-panel-head p { max-width: 62ch; }
-
 @media (max-width: 620px) {
-  .set-groups { grid-template-columns: 1fr; }
-  .set-row { align-items: flex-start; flex-direction: column; gap: 10px; }
-  .set-row.toggle-row { flex-direction: row; align-items: center; }
   .seg { width: 100%; }
   .seg-btn { flex: 1; text-align: center; }
 }
@@ -4035,26 +3843,7 @@ body:has(#price-dialog:not(.hidden)) .radio {
   .radio-panel { width: min(292px, calc(100vw - 24px)); }
 }
 
-.notes-list { display: grid; gap: 14px; }
-.notes-entry {
-  padding: 18px 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  background: rgba(255, 255, 255, 0.03);
-}
-.notes-entry header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-.notes-entry h3 { margin: 0; font-size: 18px; }
-.notes-entry time { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--mono); }
-.notes-entry ul { margin: 0; padding: 0 0 0 18px; color: #cbbfae; font-size: 14px; line-height: 1.55; }
-.notes-entry li { margin: 0 0 6px; }
-.notes-empty { color: var(--muted); }
+/* Patch notes are styled in css/pages/extras.css. */
 
 /*
  * Phone pack-open is a normal scrolling column. Stretch-to-viewport and
