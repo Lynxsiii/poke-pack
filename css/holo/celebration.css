@@ -421,53 +421,127 @@ body.fx-holo.fx-holo.fx-holo .tcg.has-etch-map.has-etch-map .glare::after {
 }
 
 /* ---- Special Illustration Rare: SV_ULTRA / ETCHED, with a map ----------------
-   The standard SIR; what the 30th Celebration adds is TCG Live's map and etch
-   for every one, so the foil stops at the Pokémon and the stamp and each
-   painting's own contour lines catch the light (the etch glare above).
-   pokemon-cards-151's special illustration rare: a soft 15deg rainbow that
-   only shows inside two light bars crossing with the tilt, fine glitter, and
-   a multiply glare that dims the card away from the light. */
+   The standard SIR, on every SV, ME and 30th print with a TCG Live map.
+   Photos of the real cards (the skill's reference/sv-fullart.md, "Special
+   Illustration Rare"): the foil is the whole face, frame and text box
+   included; fine engraved lines (the etch) run edge to edge and are what
+   catches the light, so under a lamp the card reads as sandy, glittering
+   relief with a broad pastel rainbow drifting over it; the Pokémon is matte
+   ink over that relief, with the lines still crossing it.
+
+   So the etch is not only the glare's mask here: `.foil` (the rainbow and
+   its glitter) is cut to the etched lines, with a floor between them, and
+   `.glare::after` lights the lines over the whole card, the Pokémon too.
+   Prints without a Live etch (the ME sets, Black Bolt, White Flare, the ME
+   promos) carry a drawn engraving tile instead (`has-etch-tile`,
+   assets/foil/sir-etch.webp, js/foil-maps.js).
+   pokemon-cards-151's SIR gave the 15deg rainbow and the multiply glare; its
+   two narrow light bars gated everything else, which left the art flat away
+   from them: now one broad pool around the pointer with one sweeping band. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil {
   background-image: repeating-linear-gradient(15deg, var(--spectrum), var(--spectrum), var(--spectrum));
   background-size: 240% 240%;
   background-position: var(--background-x) var(--background-y);
   background-blend-mode: normal;
-  filter: brightness(0.55) contrast(1.5) saturate(1);
+  filter: brightness(0.68) contrast(1.5) saturate(1);
   mix-blend-mode: color-dodge;
 }
 /* Resting, the silver frame stays silver rather than taking the rainbow's
    colour at the centre. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map:not(.lit):not(.settling) .foil {
-  filter: brightness(0.55) contrast(1.5) saturate(0.4);
+  filter: brightness(0.7) contrast(1.5) saturate(0.4);
 }
+/* The foil cut to the etched lines: art, Live map, then the etch with a
+   floor between the lines (source-over on a 45% grey), so the relief reads
+   at rest and under the light alike. Every layer inside `.foil` (the light
+   pool and the glitter) is cut the same way. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map:is(.has-etch-map, .has-etch-tile) .foil {
+  --sir-floor: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  -webkit-mask-image: var(--art), var(--sir-map), var(--sir-etch), var(--sir-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--sir-map), var(--sir-etch), var(--sir-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, var(--sir-etch-size), 100% 100%;
+  mask-size: contain, 100% 100%, var(--sir-etch-size), 100% 100%;
+  -webkit-mask-position: center, center, var(--sir-etch-pos), center;
+  mask-position: center, center, var(--sir-etch-pos), center;
+  -webkit-mask-repeat: no-repeat, no-repeat, var(--sir-etch-repeat), no-repeat;
+  mask-repeat: no-repeat, no-repeat, var(--sir-etch-repeat), no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map.has-etch-map {
+  --sir-map: var(--foil-map);
+  --sir-etch: var(--etch-map);
+  --sir-etch-size: 100% 100%;
+  --sir-etch-pos: center;
+  --sir-etch-repeat: no-repeat;
+}
+/* No Live map either (the all-white fallback, js/foil-maps.js): Live's SIR
+   maps hold the background at a third to a half and the Pokémon at nothing,
+   so the tile prints take a flat 45% in the map's place. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map.has-etch-tile {
+  --sir-map: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  --sir-etch: var(--etch-tile);
+  --sir-etch-size: 100% auto;
+  --sir-etch-pos: var(--seed-pos);
+  --sir-etch-repeat: repeat;
+}
+/* Where the light is: a pool around the pointer (hard-light, so the far
+   corners dim rather than vanish) with one broad band sweeping through it
+   as the card tilts. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::before {
   background-image:
-    linear-gradient(calc(var(--rotate-x) * -0.25), #000 24%, #797979 30%, #000 36%),
-    linear-gradient(calc(var(--rotate-x) * 0.25), #000 24%, #797979 30%, #000 36%);
-  background-size: 300% 300%;
-  background-position: 50% calc(var(--background-y) * 1.7), 50% calc(var(--background-y) * -1.3);
-  background-blend-mode: exclusion;
-  filter: contrast(0.75);
+    linear-gradient(calc(var(--rotate-x) * -0.25 + 100deg), #000 14%, #9c9c9c 32%, #000 50%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #8e8e8e 0%, #6c6c6c 45%, #3c3c3c 100%);
+  background-size: 300% 300%, 100% 100%;
+  background-position: 50% calc(var(--background-y) * 1.7), center;
+  background-blend-mode: screen;
+  filter: contrast(0.9);
   mix-blend-mode: hard-light;
 }
+/* The sand: two glitter tiles at different scales, the fine one drifting
+   against the coarse one with the tilt. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .foil::after {
-  --shift: 3px;
-  background-image: var(--holo-glitter);
-  background-size: 25% auto;
-  background-position: calc(50% + var(--pointer-from-left) * var(--shift))
-    calc(50% + var(--pointer-from-top) * var(--shift));
-  filter: brightness(1.4) contrast(2) saturate(1.2);
+  --shift: 4px;
+  background-image: var(--holo-glitter), var(--holo-glitter);
+  background-size: 26% auto, 15% auto;
+  background-position:
+    calc(50% + var(--pointer-from-left) * var(--shift)) calc(50% + var(--pointer-from-top) * var(--shift)),
+    calc(20% - var(--pointer-from-left) * var(--shift)) calc(70% - var(--pointer-from-top) * var(--shift));
+  background-blend-mode: screen;
+  filter: brightness(1.5) contrast(2.2) saturate(1.2);
   mix-blend-mode: plus-lighter;
-  opacity: calc(0.2 + var(--pointer-from-center) * 0.5);
+  opacity: calc(0.3 + var(--pointer-from-center) * 0.45);
 }
+/* Hard-light glare, as the Ultra Rares: brighter than mid grey near the
+   light, darker far from it, so the lines lit by `::after` below brighten
+   the card instead of only escaping a multiply. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 88%) 10%, hsl(0, 0%, 60%) 70%);
+    hsl(0, 0%, 62%) 5%, hsl(0, 0%, 47%) 55%, hsl(0, 0%, 34%) 130%);
   background-size: cover;
   background-position: center;
-  mix-blend-mode: multiply;
-  filter: contrast(1.5);
-  opacity: calc(var(--card-opacity) * 0.8);
+  mix-blend-mode: hard-light;
+  filter: contrast(1.1);
+  opacity: calc(var(--card-opacity) * 0.85);
+}
+/* The engraved lines under the light, over the whole card (the Pokémon
+   included): white on the etch, strongest at the pointer, never off. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-sir.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.7) 0%, hsla(0, 0%, 100%, 0.4) 25%, hsla(0, 0%, 100%, 0.2) 60%, hsla(0, 0%, 100%, 0.12) 100%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--sir-etch);
+  mask-image: var(--sir-etch);
+  -webkit-mask-size: var(--sir-etch-size);
+  mask-size: var(--sir-etch-size);
+  -webkit-mask-position: var(--sir-etch-pos);
+  mask-position: var(--sir-etch-pos);
+  -webkit-mask-repeat: var(--sir-etch-repeat);
+  mask-repeat: var(--sir-etch-repeat);
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
 }
 
 /* ---- Futuristic Rare: SV_ULTRA / ETCHED, the op-art plate --------------------

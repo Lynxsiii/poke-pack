@@ -1,4 +1,4 @@
-# Full-art Ultra Rare and gold Hyper Rare (shared Scarlet & Violet finishes)
+# Full-art Ultra Rare, gold Hyper Rare and Special Illustration Rare (shared Scarlet & Violet finishes)
 
 Built once for every Scarlet & Violet and Mega Evolution set with TCG Live
 foil maps (2026-09-27, from the Paradox Rift thread). Rules:
@@ -107,6 +107,68 @@ is the SIR's foil under gold ink.
   and sv5 (found by the SV base thread; see its `scarlet-violet.md`).
 - **Before this**, the old gold recipe (`rarities.css`, conic gradient plus
   `--holo-metal`) drew horizontal scanlines on mapped cards.
+
+## Special Illustration Rare
+
+Rebuilt 2026-09-28 (Noah: "sir are supposed to have texture yet this looks
+like an ar card", Team Rocket's Mewtwo ex and Cynthia's Garchomp ex, Destined
+Rivals). Rules: `css/holo/celebration.css`, `.foil-sir.has-foil-map`, on
+every SIR of every set with `has-foil-map` (all SV sets, the 30th, and the
+fallback-map ME, Black Bolt and White Flare prints).
+
+- **What the real card does** (photos in `/mnt/project-files/*/texture-refs/`:
+  151's Charizard ex macro, Surging Sparks' Latias ex and Milotic ex
+  close-ups, Paldean Fates' Charizard ex and Mew ex, 151's Erika's
+  Invitation in hand): the whole face is foil, frame and text box included.
+  Fine engraved lines follow the painting edge to edge and cross the
+  Pokémon; they are what lights up as the card turns. Over that, a sand of
+  fine glitter, and a broad pastel rainbow that drifts across the whole
+  card rather than two bars. The Pokémon is matte ink with less sheen (TCG
+  Live's map holds it at nothing and the background at a third to a half).
+- **Where** (foil map): Live's SIR maps are dark on the Pokémon and on
+  figures (Giovanni), a third to a half on the background, full on the
+  frame. Left alone that made the frame glitter and the art flat.
+- **Foil** (`.foil`, the rest layer): the 15deg `--spectrum` rainbow at
+  240%, color-dodge, brightness 0.68 contrast 1.5 (saturate 0.4 at rest,
+  so the frame rests silver). Its mask is `var(--art), var(--sir-map),
+  var(--sir-etch), var(--sir-floor)` with `mask-composite: intersect,
+  intersect, add, add`: the etch, with a 45% floor between the lines, cuts
+  the rainbow and everything inside `.foil` to the relief. `--sir-map` is
+  the Live map, or a flat 45% on tile prints; `--sir-etch` is `--etch-map`
+  at `100% 100%`, or `--etch-tile` at `100% auto`, repeating, from
+  `--seed-pos`.
+- **Light** (`.foil::before`, hard-light): one broad band
+  (`calc(var(--rotate-x) * -0.25 + 100deg)`, 300%, sliding with
+  `--background-y`) screened over a radial pool at the pointer (#8e 0%,
+  #6c 45%, #3c 100%), contrast 0.9. Hard-light with mid grey is neutral,
+  so the far corners dim rather than go black, which is what the old pair
+  of narrow bars did (`#000` outside them gated the rainbow off).
+- **Sand** (`.foil::after`, plus-lighter): `--holo-glitter` twice, 26% and
+  15%, drifting against each other by 4px with the pointer; brightness 1.5
+  contrast 2.2; opacity 0.3 + 0.45 from-center.
+- **Glare** (`.glare`, hard-light, 0.85 card-opacity): 62% at the pointer,
+  47% at 55%, 34% far. Hard-light, not multiply, so the lit lines below
+  brighten the card.
+- **Lines** (`.glare::after`, masked by `--sir-etch`, whole card): white at
+  0.7 under the pointer, 0.4 at 25%, 0.2 at 60%, 0.12 at the far edge.
+  Never off, so the relief shows at every pose, over the Pokémon too.
+- **Tile prints** (`has-etch-tile`, `js/foil-maps.js`): the ME sets, Black
+  Bolt, White Flare and the ME Black Star promos have no Live etch.
+  `assets/foil/sir-etch.webp` (`scripts/make_sir_etch.py`) is a seamless
+  diagonal hatch that waves gently and thins in patches, with a fainter
+  crossing family in cells. No whorls: closed rings read as op-art on a
+  phone, the fault PR 50 removed. Judge it at `--scale 2`; at desktop
+  size in the lab the lines vanish into grey.
+- **Neighbours untouched**: the generic etch glare
+  (`.tcg.has-etch-map.has-etch-map .glare::after`) still serves the
+  Futuristic Rares and gold Hyper Rares; the SIR rules win on specificity.
+  Double Rares and Mega Attack Rares keep their own recipes.
+- **Verify**: `--idle` reports 0 ms and no running animations (2026-09-28).
+  `set=sv10&cards=231,232`, `set=sv4pt5&cards=232,234` (against the PAF
+  photos), `set=sv3pt5&cards=199,203`, `set=zsv10pt5&cards=167,164` and
+  `set=me1&cards=177` (tile), `set=me55&cards=147,158` (SIR beside a
+  Futuristic), all with `&proof=off&maps=1&w=300&poses=rest,30:25,70:60`
+  and `--width 700 --scale 2`.
 
 ## Verify
 

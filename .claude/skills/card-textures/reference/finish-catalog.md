@@ -135,11 +135,14 @@ tiles (`iri-7/8/9.webp`) with opposite `--shift` parallax, masked by the etch
 map in luminance mode, and a white glare2 masked by the foil map. The site's
 per-card etch maps (`assets/foil/etch/`, `scripts/make_etch_maps.py`) stand in
 for the etch. With a TCG Live map (`.foil-sir.has-foil-map`, celebration.css)
-the port is close to upstream: 15deg rainbow on `.foil`, the crossing tilt
-bars on `::before` in hard-light (the rainbow only shows inside them),
-glitter on `::after` in plus-lighter, a multiply glare, and the etch map on
-`.glare::after` as glare2. realism.css's no-map SIR looks grey over a map,
-because its hard-light glare darkens everything the map leaves out.
+the recipe started as that port (15deg rainbow, the crossing tilt bars
+gating it, glitter, a multiply glare, the etch on `.glare::after`) and was
+rebuilt on 2026-09-28 because it left the art flat: now `.foil` itself is
+cut to the etch, one broad light pool replaces the bars, the glare is
+hard-light and the lit lines cover the whole card; prints without a Live
+etch take the drawn tile (`has-etch-tile`). See
+[sv-fullart.md](sv-fullart.md), "Special Illustration Rare". realism.css's
+no-map SIR is never used on a full art any more (the white fallback map).
 
 **Hyper Rare, gold (`SV_ULTRA` / `ETCHED`)** and **Mega Hyper Rare
 (`ULTRA_GOLD_RAINBOW`)**. The gold is printed; the foil adds etch texture,
