@@ -21,8 +21,7 @@ choice, not an accident — the effects were worth it.
 | Layer recipes in `css/holo/sv-fullart.css` (the Scarlet & Violet full-art Ultra Rare and gold Hyper Rare), following the ex-full-art and hyper-rare cards | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
 | The pointer radial, diagonal streak and color-dodge of the Scarlet & Violet reverse holo in `css/holo/sv-reverse.css`, following the reverse-holo card | [Simon Goellner](https://github.com/simeydotme), [pokemon-cards-151](https://github.com/simeydotme/pokemon-cards-151) | GPL-3.0 |
 | Galaxy / cosmos holo sheet, the basis for the cosmos pattern | [aschefield101](https://www.deviantart.com/aschefield101/art/HoloSheet-2012-313543843) | see source |
-| Archivo font in `assets/fonts/archivo-*.woff2` | Omnibus-Type, via Google Fonts | SIL Open Font License 1.1 |
-| IBM Plex Mono font in `assets/fonts/plex-mono-*.woff2` | IBM, via Google Fonts | SIL Open Font License 1.1 |
+| Bricolage Grotesque font in `assets/fonts/bricolage-*.woff2` | Mathieu Triay (Atelier Triay), via Google Fonts | SIL Open Font License 1.1 |
 
 `css/holo/realism.css` follows upstream's full-art, rainbow-alt and glare layers most closely.
 

@@ -3620,7 +3620,7 @@ function applyView(next, hist) {
     els[key]?.classList.toggle("hidden", view !== name);
   }
   paintNav(view);
-  document.querySelector(".nav-more")?.removeAttribute("open");
+  document.querySelectorAll(".nav-more").forEach((more) => more.removeAttribute("open"));
   if (view !== "shop") hideSetNotice();
   VIEW_RENDER[view]?.();
   document.body.classList.toggle("on-home", view === "home");
