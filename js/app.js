@@ -2326,9 +2326,9 @@ function achievementStats() {
   };
 }
 
-function colorPicks(selected, attr = "data-color") {
-  return `<div class="color-picks" role="radiogroup" aria-label="Avatar color">${AVATAR_COLORS.map(
-    (c) => `<button type="button" class="color-pick${c.id === selected ? " on" : ""}" ${attr}="${esc(c.id)}" style="--swatch:${esc(c.hex)}" title="${esc(c.label)}" aria-label="${esc(c.label)}"></button>`
+function colorPicks(selected, attr = "data-color", label = "Avatar colour") {
+  return `<div class="color-picks" role="radiogroup" aria-label="${esc(label)}">${AVATAR_COLORS.map(
+    (c) => `<button type="button" role="radio" aria-checked="${c.id === selected}" class="color-pick${c.id === selected ? " on" : ""}" ${attr}="${esc(c.id)}" style="--swatch:${esc(c.hex)}" title="${esc(c.label)}" aria-label="${esc(c.label)}"></button>`
   ).join("")}</div>`;
 }
 
@@ -2338,26 +2338,30 @@ function avatarMark(trainer, extraClass = "trainer-mark") {
   return `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
 }
 
-/** The career ribbon under the hero — the numbers, not the chrome. */
+/** The career figures under the hero: plain numbers with a caption each. */
 function careerTiles() {
   const worth = netWorth();
   const pnl = state.granted == null ? null : money(worth - state.granted);
   const dir = pnl == null || Math.abs(pnl) < 0.005 ? "flat" : pnl > 0 ? "up" : "down";
-  const tiles = [
-    ["✦ " + coin(state.coins), "Coins"],
-    ["✦ " + coin(worth), "Net worth"],
+  const figures = [
+    ["✦ " + coin(state.coins), "Coins", "money"],
+    ["✦ " + coin(worth), "Net worth", "money"],
     [num(state.packsOpened), "Packs ripped"],
     [num(state.pulls), "Cards pulled"],
     [num(uniqueOwned()), "Unique cards"],
     [num(reverseOwned()), "Reverse holos"],
   ];
-  const pnlTile =
-    pnl == null
-      ? ""
-      : `<div class="acct-tile pnl ${dir}"><b>${pnl > 0 ? "+" : pnl < 0 ? "−" : ""}✦ ${coin(Math.abs(pnl))}</b><span>Up or down</span></div>`;
-  return `<div class="acct-tiles">${tiles
-    .map(([value, label]) => `<div class="acct-tile"><b>${esc(value)}</b><span>${esc(label)}</span></div>`)
-    .join("")}${pnlTile}</div>`;
+  if (pnl != null) {
+    // The caption says which way; a sign beside ✦ reads as a second star.
+    figures.push([
+      `✦ ${coin(Math.abs(pnl))}`,
+      dir === "down" ? "Down overall" : dir === "up" ? "Up overall" : "Break even",
+      `pnl ${dir}`,
+    ]);
+  }
+  return `<dl class="acct-figures">${figures
+    .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
+    .join("")}</dl>`;
 }
 
 function busyPack() {
@@ -2395,24 +2399,25 @@ async function hydrateAfterAccountChange() {
 function renderAuth() {
   const signed = activeTrainer();
   const keepDefault = !signed && guestHasProgress();
+  const signin = authTab === "signin";
   const signupForm = `
-    <form id="signup-form" autocomplete="on">
+    <form id="signup-form" class="auth-form" autocomplete="on">
       <label class="field">
         <span>Trainer name</span>
-        <input name="name" maxlength="24" required placeholder="Ash Ketchum" />
+        <input name="name" minlength="2" maxlength="24" required placeholder="Ash Ketchum" autocomplete="nickname" />
       </label>
       <label class="field">
         <span>Handle</span>
-        <input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" />
-        <span class="hint">3–16 letters, numbers, or underscores. Unique on the site.</span>
+        <span class="field-at"><input name="handle" minlength="3" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
+        <span class="hint">3 to 16 letters, numbers or underscores. Nobody else can have it.</span>
       </label>
       <label class="field">
         <span>Password</span>
         <input name="password" type="password" minlength="6" maxlength="64" required placeholder="At least 6 characters" autocomplete="new-password" />
-        <span class="hint">Needed to sign in on another device. Trading later uses this account.</span>
+        <span class="hint">You need it to sign in on another device.</span>
       </label>
       <div class="field">
-        <span>Avatar color</span>
+        <span>Avatar colour</span>
         ${colorPicks(signupColor, "data-signup-color")}
       </div>
       ${
@@ -2420,49 +2425,52 @@ function renderAuth() {
           ? `<label class="check-row"><input type="checkbox" name="keep" checked /> Bring the packs and cards already on this browser</label>`
           : ""
       }
-      <p class="form-error" id="auth-error"></p>
+      <p class="form-error" id="auth-error" role="alert"></p>
       <button class="solid" type="submit">Create account</button>
     </form>`;
 
-  const signinForm = `<form id="signin-form" autocomplete="on">
+  const signinForm = `<form id="signin-form" class="auth-form" autocomplete="on">
       <label class="field">
         <span>Handle</span>
-        <input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" />
+        <span class="field-at"><input name="handle" maxlength="16" required placeholder="ripper" autocapitalize="off" spellcheck="false" autocomplete="username" /></span>
       </label>
       <label class="field">
         <span>Password</span>
         <input name="password" type="password" maxlength="64" required autocomplete="current-password" />
       </label>
-      <p class="form-error" id="auth-error"></p>
+      <p class="form-error" id="auth-error" role="alert"></p>
       <button class="solid" type="submit">Sign in</button>
     </form>`;
 
   els.authBody.innerHTML = `
     <div class="auth-page">
       <div class="auth-copy">
-        <p class="kicker">Cloud accounts</p>
-        <h1>${authTab === "signin" ? "Welcome back." : "Make it yours."}</h1>
-        <p class="lede">
-          Rips, coins, and the binder live on your account so they can follow you —
-          and so trading can be honest later. Browse Home, Packs, and Catalog without signing in.
-        </p>
-        <ul class="auth-points">
-          <li>Handle + password. No email required.</li>
-          <li>Opening a pack, claiming hourly coins, selling, and the binder need an account.</li>
-          <li>If this browser already has a local collection, you can claim it once when you sign up.</li>
-        </ul>
+        <img class="auth-mark" src="assets/mark.png?v=35" width="256" height="256" alt="" />
+        <h1>${signin ? "Welcome back" : "Make a trainer"}</h1>
+        <p class="lede">${
+          signin
+            ? "Sign in with your handle to pick up your cards, coins and binder."
+            : "Your cards, coins and binder live on your account, so they follow you to any device. No email needed."
+        }</p>
       </div>
       <div class="auth-card">
-        <div class="auth-tabs">
-          <button type="button" class="auth-tab${authTab === "signup" ? " on" : ""}" data-auth-tab="signup">Create</button>
-          <button type="button" class="auth-tab${authTab === "signin" ? " on" : ""}" data-auth-tab="signin">Sign in</button>
+        <div class="auth-tabs" role="tablist" aria-label="Sign in or create an account">
+          <button type="button" role="tab" aria-selected="${signin}" class="auth-tab${signin ? " on" : ""}" data-auth-tab="signin">Sign in</button>
+          <button type="button" role="tab" aria-selected="${!signin}" class="auth-tab${signin ? "" : " on"}" data-auth-tab="signup">Create account</button>
         </div>
-        ${authTab === "signin" ? signinForm : signupForm}
+        ${signin ? signinForm : signupForm}
+      </div>
+      <div class="auth-foot">
         ${
           signed
-            ? `<button class="ghost auth-guest" type="button" data-goto="account">Back to account</button>`
-            : `<button class="ghost auth-guest" type="button" data-continue-guest>Keep browsing</button>`
+            ? `<button class="text-btn auth-guest" type="button" data-goto="account">Back to your account</button>`
+            : `<button class="text-btn auth-guest" type="button" data-continue-guest>Keep browsing without an account</button>`
         }
+        <ul class="auth-points">
+          <li>Home, Packs and the Catalog are open to everyone.</li>
+          <li>Opening packs, hourly coins, selling and the binder need an account.</li>
+          ${signin ? "" : `<li>Cards already on this browser can come with you once, when you sign up.</li>`}
+        </ul>
       </div>
     </div>`;
 }
@@ -2515,158 +2523,190 @@ function renderAccount() {
 }
 
 function signedOutAccount() {
-  const preview = ACHIEVEMENTS.slice(0, 8)
+  const preview = ACHIEVEMENTS.slice(0, 10)
     .map(
-      (row) => `<div class="ach-tile t${row.tier} is-locked">
+      (row) => `<article class="ach-tile t${row.tier} is-locked">
         <div class="ach-badge" style="--pct:0"><span>${esc(row.mark)}</span></div>
         <div class="ach-tile-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
         <div class="ach-reward"><span class="ach-coin">&#10022; ${num(row.coins)}</span></div>
-      </div>`
+      </article>`
     )
     .join("");
   return `
-    <div class="acct-hero signed-out">
-      <div class="acct-banner banner-wash" data-motion="aurora" style="--b1:#f0c14b;--b2:#9b6dff"></div>
+    <header class="acct-hero signed-out">
+      <div class="acct-banner banner-wash" data-motion="aurora" style="--b1:#9b6dff;--b2:#5fd4ff"></div>
       <div class="acct-hero-body">
         <img class="brand-logo lg" src="assets/mark.png?v=35" width="256" height="256" alt="" />
         <div class="acct-copy">
-          <p class="account-title">Signed out</p>
-          <h2>Make a trainer</h2>
-          <p class="acct-meta">Coins, cards, badges, and the binder live on your account &mdash; not this browser.</p>
+          <h1 class="acct-name">Make a trainer</h1>
+          <p class="acct-meta">Your coins, cards, badges and binder live on your account, not in this browser.</p>
         </div>
         <div class="acct-hero-actions">
           <button class="solid" type="button" data-open-auth="signup">Create account</button>
           <button class="ghost" type="button" data-open-auth="signin">Sign in</button>
         </div>
       </div>
-    </div>
-    <div class="panel">
-      <div class="panel-head">
-        <h3>${ACHIEVEMENTS.length} achievements waiting</h3>
-        <p class="panel-note">Every one pays coins, and thirteen hand over a title nobody can earn any other way.</p>
+    </header>
+    <section class="acct-sec">
+      <div class="acct-sec-head">
+        <div>
+          <h2>${ACHIEVEMENTS.length} badges to earn</h2>
+          <p>Every one pays coins, and some hand over a title you can't get any other way.</p>
+        </div>
       </div>
       <div class="ach-grid preview">${preview}</div>
-    </div>`;
+    </section>`;
 }
 
 function accountHero(trainer, stats) {
   const banner = bannerVars(trainer.banner);
-  const joined = trainer.createdAt ? `joined ${formatWhen(trainer.createdAt)}` : "";
-  return `<div class="acct-hero">
+  const ready = stats.ready.length;
+  return `<header class="acct-hero">
     <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
     <div class="acct-hero-body">
       ${avatarMark(trainer, "trainer-mark acct-face")}
       <div class="acct-copy">
-        <p class="account-title">${esc(trainer.title || "Rookie")}</p>
-        <h2>${esc(trainer.name)}</h2>
+        <h1 class="acct-name">${esc(trainer.name)}</h1>
         <p class="acct-meta">
           <span class="account-handle">@${esc(trainer.handle)}</span>
-          <span class="acct-code">${esc(trainerCode(trainer.id))}</span>
-          ${joined ? `<span>${esc(joined)}</span>` : ""}
+          ${trainer.createdAt ? `<span>Joined ${esc(joinedOn(trainer.createdAt))}</span>` : ""}
+        </p>
+        <p class="acct-chips">
+          <span class="account-title">${esc(trainer.title || "Rookie")}</span>
+          <span class="acct-code" title="Your trainer code">${esc(trainerCode(trainer.id))}</span>
         </p>
         ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
       </div>
       <div class="acct-hero-actions">
         <a class="ghost" href="/u/${esc(trainer.handle)}">Public profile</a>
         <button class="ghost" type="button" id="copy-profile-link">Copy link</button>
-        <button class="ghost" type="button" id="sign-out">Sign out</button>
+        <button class="text-btn acct-signout" type="button" id="sign-out">Sign out</button>
       </div>
     </div>
     ${careerTiles()}
-    <div class="acct-progress">
-      <div class="acct-progress-copy">
-        <b>${stats.claimed.size} / ${stats.total} achievements claimed</b>
+    <div class="acct-progress${ready ? " has-ready" : ""}">
+      <p class="acct-progress-copy">
+        <b>${stats.claimed.size} of ${stats.total} badges claimed</b>
         <span>${
-          stats.ready.length
-            ? `${stats.ready.length} ready to cash in`
+          ready
+            ? `${ready} ready to claim`
             : stats.done < stats.total
-              ? `${stats.total - stats.done} still locked`
-              : "every badge on the wall"
+              ? `${stats.total - stats.done} still to earn`
+              : "Every badge on the wall"
         }</span>
-      </div>
-      <div class="dex-bar slim"><span style="width:${stats.pct}%"></span></div>
+      </p>
+      <div class="dex-bar slim" role="progressbar" aria-label="Badges claimed" aria-valuemin="0" aria-valuemax="${stats.total}" aria-valuenow="${stats.claimed.size}"><span style="width:${stats.pct}%"></span></div>
       ${
-        stats.ready.length
-          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim &#10022; ${num(stats.waiting)}</button>`
+        ready
+          ? `<button class="solid claim-cta" type="button" data-acct-tab="achievements">Claim <span class="claim-amt">&#10022; ${num(stats.waiting)}</span></button>`
           : ""
       }
     </div>
-  </div>`;
+  </header>`;
 }
 
 /* ---- Overview ----------------------------------------------------------- */
 
+function setRingHtml(row) {
+  const { symbol } = setIdentity(row.set);
+  return `<button type="button" class="set-ring${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
+    title="Open ${esc(row.set.name)} collection">
+    <span class="home-ring" style="--pct:${row.pct}"><span><b>${row.pct}%</b><small>set</small></span></span>
+    <span class="set-ring-copy">
+      <img src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
+      <b>${esc(row.set.name)}</b>
+      <small>${num(row.owned)} of ${num(row.total)} cards</small>
+    </span>
+  </button>`;
+}
+
+/** Sets with a card in them first; the untouched ones fold away underneath. */
 function setRings() {
-  return `<div class="set-rings">${setCompletionRows()
-    .map((row) => {
-      const { symbol } = setIdentity(row.set);
-      return `<button type="button" class="set-ring${row.pct >= 100 ? " done" : ""}" data-jump-set="${esc(row.set.id)}"
-        title="Open ${esc(row.set.name)} collection">
-        <span class="home-ring" style="--pct:${row.pct}"><span><b>${row.pct}%</b><small>set</small></span></span>
-        <span class="set-ring-copy">
-          <img src="${esc(symbol)}" alt="" width="22" height="22" loading="lazy" decoding="async" />
-          <b>${esc(row.set.name)}</b>
-          <small>${num(row.owned)} / ${num(row.total)} cards</small>
-        </span>
-      </button>`;
-    })
-    .join("")}</div>`;
+  const rows = setCompletionRows();
+  const started = rows.filter((row) => row.owned > 0);
+  const rest = rows.filter((row) => row.owned < 1);
+  const list = (items) => `<div class="set-rings">${items.map(setRingHtml).join("")}</div>`;
+  return `${started.length ? list(started) : `<p class="panel-empty">Rip a pack and your first set starts filling in here.</p>`}
+    ${
+      rest.length
+        ? `<details class="set-rest"${started.length ? "" : " open"}>
+            <summary>${num(rest.length)} ${rest.length === 1 ? "set" : "sets"} not started</summary>
+            ${list(rest)}
+          </details>`
+        : ""
+    }`;
 }
 
 function overviewTab(trainer, stats) {
   const history = state.history || [];
-  const recent = historyCards(history, 6);
+  const recent = historyCards(history, 8);
   const nextUp = ACHIEVEMENTS.filter((row) => !stats.claimed.has(row.id) && !isAchievementDone(row, stats.ctx))
     .map((row) => ({ row, p: achievementProgress(row, stats.ctx) }))
     .sort((a, b) => b.p.pct - a.p.pct)
     .slice(0, 3);
 
-  return `<div class="acct-grid">
-    <div class="panel span-2">
-      <div class="panel-head">
-        <h3>Net worth</h3>
-        <p class="panel-note">Coins plus every card at today's market, sampled on each rip and sale.</p>
+  return `<div class="acct-overview">
+    <section class="acct-sec acct-worth">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Net worth</h2>
+          <p>Coins plus every card at today's market, sampled on each rip and sale.</p>
+        </div>
       </div>
       <div class="acct-chart" id="acct-worth-chart"></div>
-    </div>
-    <div class="panel">
-      <div class="panel-head">
-        <h3>Pull history</h3>
-        <button class="ghost sm" type="button" id="open-history">Open</button>
-      </div>
-      ${miniCardRow(recent, "Rip a pack and the last cards land here.", "tight")}
-      <p class="panel-note tail">${
-        history.length
-          ? `Last ${history.length} card${history.length === 1 ? "" : "s"} off the top of a pack.`
-          : "Nothing pulled yet."
-      }</p>
-    </div>
-    <div class="panel">
-      <div class="panel-head">
-        <h3>Closest badges</h3>
+    </section>
+    <section class="acct-sec acct-next">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Closest badges</h2>
+          <p>The ones you are nearest to earning.</p>
+        </div>
         <button class="ghost sm" type="button" data-acct-tab="achievements">All ${stats.total}</button>
       </div>
       ${
         nextUp.length
-          ? `<div class="next-list">${nextUp
+          ? `<ol class="next-list">${nextUp
               .map(
-                ({ row, p }) => `<div class="next-row">
-                  <div class="next-head"><b>${esc(row.name)}</b><span>${num(p.at)} / ${num(p.goal)}</span></div>
-                  <div class="ach-bar"><span style="width:${p.pct}%"></span></div>
-                  <small>${esc(row.note)} &middot; &#10022; ${num(row.coins)}${row.title ? ` &middot; title ${esc(row.title)}` : ""}</small>
-                </div>`
+                ({ row, p }) => `<li class="next-row t${row.tier}">
+                  <div class="ach-badge" style="--pct:${p.pct}"><span>${esc(row.mark)}</span></div>
+                  <div class="next-copy">
+                    <div class="next-head"><b>${esc(row.name)}</b><span class="ach-coin">&#10022; ${num(row.coins)}</span></div>
+                    <div class="ach-bar"><span style="width:${p.pct}%"></span></div>
+                    <small>${esc(row.note)} ${num(p.at)} of ${num(p.goal)} so far.${row.title ? ` Unlocks the ${esc(row.title)} title.` : ""}</small>
+                  </div>
+                </li>`
               )
-              .join("")}</div>`
-          : `<p class="panel-empty">Every achievement is done. Ridiculous.</p>`
+              .join("")}</ol>`
+          : `<p class="panel-empty">Every badge is earned. Nothing left but bragging.</p>`
       }
-    </div>
-    <div class="panel span-full">
-      <div class="panel-head">
-        <h3>Set completion</h3>
-        <p class="panel-note">Select a set to open its collection.</p>
+    </section>
+    <section class="acct-sec acct-pulls">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Pull history</h2>
+          <p>${
+            history.length
+              ? `The last ${num(history.length)} card${history.length === 1 ? "" : "s"} off the top of a pack.`
+              : "Nothing pulled yet. Rip a pack and your cards land here."
+          }</p>
+        </div>
+        ${history.length ? `<button class="ghost sm" type="button" id="open-history">See all</button>` : ""}
+      </div>
+      ${
+        recent.length
+          ? miniCardRow(recent, "", "acct-pull-row")
+          : `<button class="ghost" type="button" data-goto="shop">Rip a pack</button>`
+      }
+    </section>
+    <section class="acct-sec acct-sets">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Set completion</h2>
+          <p>Select a set to open its collection.</p>
+        </div>
       </div>
       ${setRings()}
-    </div>
+    </section>
   </div>`;
 }
 
@@ -2688,18 +2728,18 @@ function achTile(row, ctx, claimed) {
   const action = isClaimed
     ? `<span class="ach-done">Claimed</span>`
     : ready
-      ? `<button class="solid sm" type="button" data-claim="${esc(row.id)}">Claim</button>`
-      : `<span class="ach-progress">${num(p.at)} / ${num(p.goal)}</span>`;
+      ? `<button class="ghost sm ach-claim" type="button" data-claim="${esc(row.id)}">Claim</button>`
+      : `<span class="ach-progress">${num(p.at)} of ${num(p.goal)}</span>`;
   return `<article class="ach-tile t${row.tier} ${cls}">
     <div class="ach-badge" style="--pct:${p.pct}"><span>${esc(row.mark)}</span></div>
     <div class="ach-tile-copy">
       <b>${esc(row.name)}</b>
       <p>${esc(row.note)}</p>
-      ${p.done ? "" : `<div class="ach-bar"><span style="width:${p.pct}%"></span></div>`}
+      ${row.title ? `<span class="ach-title-tag">${isClaimed ? "Won" : "Unlocks"} the ${esc(row.title)} title</span>` : ""}
     </div>
+    ${p.done ? "" : `<div class="ach-bar" aria-hidden="true"><span style="width:${p.pct}%"></span></div>`}
     <div class="ach-reward">
       <span class="ach-coin">&#10022; ${num(row.coins)}</span>
-      ${row.title ? `<span class="ach-title-tag">Title &middot; ${esc(row.title)}</span>` : ""}
       ${action}
     </div>
   </article>`;
@@ -2718,28 +2758,38 @@ function achievementsTab(stats) {
     if (achFilter === "locked") return !claimed.has(row.id) && !isAchievementDone(row, ctx);
     return row.cat === achFilter;
   });
+  const counts = { ready: stats.ready.length, claimed: claimed.size, locked: stats.total - stats.done };
+  const empty = {
+    ready: "Nothing is ready to claim yet. Keep ripping and the next badge lands here.",
+    claimed: "Nothing claimed yet. Finished badges wait under Ready.",
+    locked: "Every badge is earned. Nothing left to chase.",
+  };
 
   return `<div class="ach-wall">
     <div class="ach-head">
-      <div class="ach-summary">
-        <div><b>${stats.claimed.size} / ${stats.total}</b><span>Claimed</span></div>
-        <div><b>&#10022; ${num(stats.banked)}</b><span>Banked so far</span></div>
-        <div class="${stats.waiting ? "hot" : ""}"><b>&#10022; ${num(stats.waiting)}</b><span>Waiting for you</span></div>
-        <div><b>${titlesFromClaims(claimed)}</b><span>Titles won</span></div>
-      </div>
-      <button class="solid" type="button" id="claim-all" ${stats.ready.length ? "" : "disabled"}>
-        ${stats.ready.length ? `Claim all &middot; &#10022; ${num(stats.waiting)}` : "Nothing to claim"}
-      </button>
+      <dl class="acct-figures ach-summary">
+        <div class="acct-fig"><dt>Claimed</dt><dd>${stats.claimed.size} of ${stats.total}</dd></div>
+        <div class="acct-fig money"><dt>Banked so far</dt><dd>&#10022; ${num(stats.banked)}</dd></div>
+        <div class="acct-fig money"><dt>Waiting for you</dt><dd>&#10022; ${num(stats.waiting)}</dd></div>
+        <div class="acct-fig"><dt>Titles won</dt><dd>${titlesFromClaims(claimed)}</dd></div>
+      </dl>
+      ${
+        stats.ready.length
+          ? `<button class="solid claim-cta" type="button" id="claim-all">Claim all <span class="claim-amt">&#10022; ${num(stats.waiting)}</span></button>`
+          : `<p class="ach-none">Nothing to claim yet.</p>`
+      }
     </div>
-    <div class="ach-filters" role="group" aria-label="Filter achievements">
+    <div class="ach-filters chip-row" role="group" aria-label="Filter badges">
       ${ACH_FILTERS.map(
-        (f) => `<button type="button" class="pick-chip${f.id === achFilter ? " on" : ""}" data-ach-filter="${esc(f.id)}">${esc(f.name)}</button>`
+        (f) => `<button type="button" class="pick-chip${f.id === achFilter ? " on" : ""}" data-ach-filter="${esc(f.id)}" aria-pressed="${f.id === achFilter}">${esc(f.name)}${
+          counts[f.id] != null ? ` <span class="chip-count">${num(counts[f.id])}</span>` : ""
+        }</button>`
       ).join("")}
     </div>
     ${
       rows.length
         ? `<div class="ach-grid">${rows.map((row) => achTile(row, ctx, claimed)).join("")}</div>`
-        : `<p class="panel-empty">Nothing in that filter yet.</p>`
+        : `<p class="panel-empty">${esc(empty[achFilter] || "Nothing in that filter yet.")}</p>`
     }
   </div>`;
 }
@@ -2780,32 +2830,38 @@ function historySheet() {
             <div class="pull-copy">
               <b>${esc(entry.name)}</b>
               <span>${esc(RARITY_LABEL[entry.rarity] || entry.rarity || "Card")}${set ? ` &middot; ${esc(set.name)}` : ""}</span>
+              <span class="pull-tags">
+                ${entry.wasNew ? `<span class="tag new">New</span>` : ""}
+                ${entry.reverse ? `<span class="tag rev">Reverse holo</span>` : ""}
+              </span>
             </div>
-            <div class="pull-tags">
-              ${entry.wasNew ? `<span class="tag new">New</span>` : ""}
-              ${entry.reverse ? `<span class="tag rev">Reverse</span>` : ""}
+            <div class="pull-end">
+              <span class="pull-value">${card ? `&#10022; ${coin(sellValue(card))}` : "&mdash;"}</span>
+              <time>${esc(formatWhen(entry.at))}</time>
             </div>
-            <div class="pull-value">${card ? `&#10022; ${coin(sellValue(card))}` : "&mdash;"}</div>
-            <time>${esc(formatWhen(entry.at))}</time>
           </div>`;
         })
         .join("")}</div>`
-    : `<p class="panel-empty">Nothing matches that filter.</p>`;
+    : `<p class="panel-empty">${
+        all.length ? "No pulls match that filter. Try Everything." : "Nothing pulled yet. Rip a pack and your cards land here."
+      }</p>`;
 
   return `<div class="sheet-backdrop" data-history-close></div>
-    <div class="sheet" role="dialog" aria-modal="true" aria-label="Pull history">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="history-title">
       <div class="sheet-head">
         <div>
-          <h3>Pull history</h3>
+          <h2 id="history-title">Pull history</h2>
           <p>The last ${num(all.length)} cards off the top of a pack, newest first.</p>
         </div>
-        <button class="ghost" type="button" data-history-close>Close</button>
+        <button class="ghost sm" type="button" data-history-close>Close</button>
       </div>
       <div class="sheet-filters">
-        ${HISTORY_FILTERS.map(
-          (f) => `<button type="button" class="pick-chip${f.id === historyFilter ? " on" : ""}" data-history-filter="${esc(f.id)}">${esc(f.name)}</button>`
-        ).join("")}
-        <span class="sheet-total">${num(rows.length)} shown &middot; &#10022; ${coin(worth)}</span>
+        <div class="chip-row" role="group" aria-label="Filter pulls">
+          ${HISTORY_FILTERS.map(
+            (f) => `<button type="button" class="pick-chip${f.id === historyFilter ? " on" : ""}" data-history-filter="${esc(f.id)}" aria-pressed="${f.id === historyFilter}">${esc(f.name)}</button>`
+          ).join("")}
+        </div>
+        <span class="sheet-total">${num(rows.length)} shown, worth <b>&#10022; ${coin(worth)}</b></span>
       </div>
       <div class="sheet-body">${list}</div>
     </div>`;
@@ -2827,53 +2883,59 @@ function profileTab(trainer) {
       const face = tcgFace(slot.reverse ? { ...card, reverse: true } : card, { small: true, stamp: false, lazy: true });
       return `<div class="pin-slot">
         <button type="button" class="mini-card" ${inspectAttrs(card)} aria-label="${esc(card.name)}">${face}</button>
-        <button type="button" class="pin-drop" data-unpin="${esc(card.id)}">Unpin</button>
+        <button type="button" class="pin-drop" data-unpin="${esc(card.id)}" aria-label="Unpin ${esc(card.name)}">Unpin</button>
       </div>`;
     })
     .join("");
 
-  return `<div class="acct-grid">
-    <div class="panel">
-      <div class="panel-head">
-        <h3>Identity</h3>
-        <p class="panel-note">Your name and handle show anywhere you appear &mdash; chat, walls, the friends dock.</p>
+  return `<div class="acct-cols">
+    <section class="acct-sec">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Name and bio</h2>
+          <p>These show wherever you appear: chat, profile walls and the friends dock.</p>
+        </div>
       </div>
-      <form id="profile-form">
-        <label class="field"><span>Trainer name</span><input name="name" maxlength="24" value="${esc(trainer.name)}" required /></label>
-        <label class="field"><span>Handle</span><input name="handle" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" />
-          <span class="hint">Your profile lives at /u/${esc(trainer.handle)}.</span>
+      <form id="profile-form" class="acct-form">
+        <label class="field"><span>Trainer name</span><input name="name" minlength="2" maxlength="24" value="${esc(trainer.name)}" required /></label>
+        <label class="field"><span>Handle</span><span class="field-at"><input name="handle" minlength="3" maxlength="16" value="${esc(trainer.handle)}" required autocapitalize="off" spellcheck="false" /></span>
+          <span class="hint">Your profile lives at poke-pack.rip/u/${esc(trainer.handle)}.</span>
         </label>
         <label class="field"><span>Bio</span><textarea name="bio" maxlength="160" placeholder="What are you chasing?">${esc(trainer.bio || "")}</textarea></label>
-        <p class="form-error" id="profile-error"></p>
+        <p class="form-error" id="profile-error" role="alert"></p>
         <button class="solid" type="submit">Save profile</button>
       </form>
-    </div>
-    <div class="panel">
-      <div class="panel-head">
-        <h3>What the public sees</h3>
-        <p class="panel-note">Tick the numbers you are happy for anyone to read on your profile.</p>
+    </section>
+    <section class="acct-sec">
+      <div class="acct-sec-head">
+        <div>
+          <h2>What the public sees</h2>
+          <p>Choose the numbers anyone can read on your profile.</p>
+        </div>
       </div>
       <div class="stat-toggles">${STAT_KEYS.map(
         (key) => `<label><input type="checkbox" data-stat-toggle="${key}" ${shown.has(key) ? "checked" : ""} /> ${esc(statLabel(key))}</label>`
       ).join("")}</div>
       <div class="share-row">
-        <code>poke-pack.rip/u/${esc(trainer.handle)}</code>
-        <button class="ghost sm" type="button" id="copy-profile-link-2">Copy</button>
+        <span class="share-url">poke-pack.rip/u/${esc(trainer.handle)}</span>
+        <button class="ghost sm" type="button" id="copy-profile-link-2">Copy link</button>
       </div>
-      <a class="ghost wide" href="/u/${esc(trainer.handle)}">Open my public profile</a>
-    </div>
-    <div class="panel span-full">
-      <div class="panel-head">
-        <h3>Showcase &middot; ${showcase.length}/${SHOWCASE_MAX}</h3>
-        <p class="panel-note">Six pinned cards sit at the top of your public profile. Pin one from any card's inspect view.</p>
+      <a class="text-btn share-open" href="/u/${esc(trainer.handle)}">Open your public profile</a>
+    </section>
+  </div>
+  <section class="acct-sec acct-pins">
+    <div class="acct-sec-head">
+      <div>
+        <h2>Showcase</h2>
+        <p>${showcase.length} of ${SHOWCASE_MAX} pinned. These sit at the top of your public profile, in this order.</p>
       </div>
-      ${
-        pinned
-          ? `<div class="pin-row">${pinned}</div>`
-          : `<p class="panel-empty">Nothing pinned. Open a card, then use Pin to showcase.</p>`
-      }
     </div>
-  </div>`;
+    ${
+      pinned
+        ? `<div class="pin-row">${pinned}</div>`
+        : `<p class="panel-empty">Nothing pinned yet. Open any card you own and choose Pin to showcase.</p>`
+    }
+  </section>`;
 }
 
 /* ---- Look --------------------------------------------------------------- */
@@ -2884,51 +2946,53 @@ function lookTab(trainer, stats) {
   const style = avatarStyle(trainer.avatarStyle);
   const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities() });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
+  const won = titlesFromClaims(stats.claimed);
 
   const titleChips = TITLES.map((row) => {
     const open = unlocked.has(row.name);
     const on = trainer.title === row.name;
     return `<button type="button" class="title-chip${on ? " on" : ""}${open ? "" : " locked"}"
-      ${open ? `data-set-title="${esc(row.name)}"` : "disabled"} title="${esc(row.note)}">
+      ${open ? `data-set-title="${esc(row.name)}"` : "disabled"} aria-pressed="${on}" title="${esc(row.note)}">
       <b>${esc(row.name)}</b><small>${esc(row.note)}</small>
-      ${row.award ? `<i class="title-award">reward</i>` : ""}
+      ${row.award ? `<i class="title-award">Badge reward</i>` : ""}
     </button>`;
   }).join("");
 
   return `<div class="look-layout">
-    <aside class="look-preview">
-      <p class="look-cap">Live preview</p>
+    <aside class="look-preview" aria-label="Preview">
       <div class="look-card">
         <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(bannerVars(trainer.banner).style)}"></div>
         <div class="look-id">
           ${avatarMark(trainer, "trainer-mark look-face")}
-          <p class="account-title">${esc(trainer.title || "Rookie")}</p>
           <b>${esc(trainer.name)}</b>
           <small>@${esc(trainer.handle)}</small>
+          <span class="account-title">${esc(trainer.title || "Rookie")}</span>
         </div>
       </div>
       <div class="look-actions">
         <button class="ghost sm" type="button" id="look-random">Surprise me</button>
-        <button class="ghost sm" type="button" id="look-swap">Swap colours</button>
+        <button class="ghost sm" type="button" id="look-swap">Swap banner colours</button>
       </div>
-      <p class="panel-note">${
-        titlesFromClaims(stats.claimed)
-          ? `${titlesFromClaims(stats.claimed)} of your titles came from achievements.`
-          : "Claim achievements to unlock titles nobody can earn any other way."
+      <p class="look-note">${
+        won
+          ? `${won} of your titles came from badges.`
+          : "Claim badges to unlock titles you can't get any other way."
       }</p>
     </aside>
     <div class="look-controls">
-      <div class="panel">
-        <div class="panel-head">
-          <h3>Picture</h3>
-          <p class="panel-note">A Pokemon still, in full art or as a pixel sprite. Custom pictures and GIFs stay premium for later.</p>
+      <section class="acct-sec">
+        <div class="acct-sec-head">
+          <div>
+            <h2>Picture</h2>
+            <p>A Pokémon in full art or as a pixel sprite.</p>
+          </div>
+          <div class="seg style-picks" role="group" aria-label="Picture style">
+            <button type="button" class="seg-btn${style === "art" ? " on" : ""}" data-set-style="art" aria-pressed="${style === "art"}">Full art</button>
+            <button type="button" class="seg-btn${style === "pixel" ? " on" : ""}" data-set-style="pixel" aria-pressed="${style === "pixel"}">Pixel</button>
+          </div>
         </div>
-        <div class="style-picks">
-          <button type="button" class="pick-chip${style === "art" ? " on" : ""}" data-set-style="art">High quality</button>
-          <button type="button" class="pick-chip${style === "pixel" ? " on" : ""}" data-set-style="pixel">Pixel</button>
-        </div>
-        <label class="field"><span>Search a Pokemon</span>
-          <input id="avatar-search" value="${esc(avatarQuery)}" placeholder="Pikachu, 25, Darkrai" />
+        <label class="field avatar-search"><span>Search Pokémon</span>
+          <input id="avatar-search" type="search" value="${esc(avatarQuery)}" placeholder="Pikachu, 25, Darkrai" autocomplete="off" />
         </label>
         <div class="avatar-grid">${avatars
           .map(
@@ -2938,26 +3002,30 @@ function lookTab(trainer, stats) {
           </button>`
           )
           .join("")}</div>
-        <div class="field"><span>Ring colour</span>${colorPicks(trainer.color, "data-profile-color")}</div>
-      </div>
-      <div class="panel">
-        <div class="panel-head">
-          <h3>Banner</h3>
-          <p class="panel-note">No photos &mdash; a motion and two colours, mixed live behind your profile.</p>
+        <div class="field"><span>Ring colour</span>${colorPicks(trainer.color, "data-profile-color", "Ring colour")}</div>
+      </section>
+      <section class="acct-sec">
+        <div class="acct-sec-head">
+          <div>
+            <h2>Banner</h2>
+            <p>Two colours and a motion, mixed live behind your name.</p>
+          </div>
         </div>
-        <div class="style-picks">${BANNER_MOTIONS.map(
-          (row) => `<button type="button" class="pick-chip${banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}">${esc(row.name)}</button>`
+        <div class="chip-row style-picks" role="group" aria-label="Banner motion">${BANNER_MOTIONS.map(
+          (row) => `<button type="button" class="pick-chip${banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${banner.motion === row.id}">${esc(row.name)}</button>`
         ).join("")}</div>
-        <div class="field"><span>Colour A</span>${colorPicks(banner.colors[0], "data-banner-a")}</div>
-        <div class="field"><span>Colour B</span>${colorPicks(banner.colors[1], "data-banner-b")}</div>
-      </div>
-      <div class="panel">
-        <div class="panel-head">
-          <h3>Title &middot; ${unlocked.size}/${TITLES.length}</h3>
-          <p class="panel-note">Sits above your name everywhere. Greyed-out ones are still locked.</p>
+        <div class="field"><span>First colour</span>${colorPicks(banner.colors[0], "data-banner-a", "First banner colour")}</div>
+        <div class="field"><span>Second colour</span>${colorPicks(banner.colors[1], "data-banner-b", "Second banner colour")}</div>
+      </section>
+      <section class="acct-sec">
+        <div class="acct-sec-head">
+          <div>
+            <h2>Title</h2>
+            <p>${unlocked.size} of ${TITLES.length} unlocked. Your title sits under your name everywhere.</p>
+          </div>
         </div>
         <div class="title-wall">${titleChips}</div>
-      </div>
+      </section>
     </div>
   </div>`;
 }
@@ -2965,26 +3033,32 @@ function lookTab(trainer, stats) {
 /* ---- Security ----------------------------------------------------------- */
 
 function securityTab(trainer) {
-  return `<div class="acct-grid">
-    <div class="panel">
-      <div class="panel-head">
-        <h3>Password</h3>
-        <p class="panel-note">Change the password for this account. You'll need the current one.</p>
+  return `<div class="acct-cols">
+    <section class="acct-sec">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Password</h2>
+          <p>Change the password for @${esc(trainer.handle)}. You need the current one.</p>
+        </div>
       </div>
-      <form id="password-form">
+      <form id="password-form" class="acct-form">
         <label class="field"><span>Current password</span><input name="current" type="password" maxlength="64" required autocomplete="current-password" /></label>
-        <label class="field"><span>New password</span><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" /></label>
-        <p class="form-error" id="password-error"></p>
-        <button class="ghost" type="submit">Update password</button>
+        <label class="field"><span>New password</span><input name="password" type="password" minlength="6" maxlength="64" required autocomplete="new-password" />
+          <span class="hint">At least 6 characters.</span>
+        </label>
+        <p class="form-error" id="password-error" role="alert"></p>
+        <button class="solid" type="submit">Update password</button>
       </form>
-    </div>
-    <div class="panel danger">
-      <div class="panel-head">
-        <h3>Delete account</h3>
-        <p class="panel-note">Removes @${esc(trainer.handle)}, every card, every badge, and the binder. There is no undo.</p>
+    </section>
+    <section class="acct-sec acct-danger">
+      <div class="acct-sec-head">
+        <div>
+          <h2>Delete account</h2>
+          <p>Removes @${esc(trainer.handle)}, every card, every badge and the binder. There is no undo.</p>
+        </div>
       </div>
       <button class="ghost danger-btn" type="button" id="delete-trainer">Delete ${esc(trainer.name)}</button>
-    </div>
+    </section>
   </div>`;
 }
 
@@ -2992,10 +3066,10 @@ async function renderProfile() {
   const handle = profileHandle;
   if (!els.profileBody) return;
   if (!handle) {
-    els.profileBody.innerHTML = `<div class="panel"><p class="panel-empty">No trainer here.</p></div>`;
+    els.profileBody.innerHTML = `<p class="panel-empty profile-missing">There is no trainer at this address. Check the handle in the link.</p>`;
     return;
   }
-  els.profileBody.innerHTML = `<div class="panel"><p class="panel-empty">Loading @${esc(handle)}…</p></div>`;
+  els.profileBody.innerHTML = `<p class="panel-empty profile-loading">Loading @${esc(handle)}…</p>`;
   try {
     const data = await api(`/api/u/${encodeURIComponent(handle)}`);
     if (profileHandle !== handle) return;
@@ -3021,7 +3095,7 @@ async function renderProfile() {
         : mine
           ? `<a class="ghost" href="/account">Edit profile</a>`
           : data.relation === "friends"
-            ? `<button class="ghost" type="button" data-open-dm="${esc(user.handle)}">Message</button><button class="ghost" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
+            ? `<button class="ghost" type="button" data-open-dm="${esc(user.handle)}">Message</button><button class="text-btn" type="button" data-friend-remove="${esc(user.handle)}">Unfriend</button>`
             : data.relation === "pending-out"
               ? `<button class="ghost" type="button" disabled>Request sent</button>`
               : data.relation === "pending-in"
@@ -3046,70 +3120,92 @@ async function renderProfile() {
 
     const comments = (data.comments || [])
       .map(
-        (row) => `<div class="comment-item">
-          <a href="/u/${esc(row.user.handle)}">${faceHtml(row.user, "sm")}</a>
+        (row) => `<li class="comment-item">
+          <a href="/u/${esc(row.user.handle)}" aria-label="${esc(row.user.name)}">${faceHtml(row.user, "sm")}</a>
           <div>
-            <a href="/u/${esc(row.user.handle)}"><b>${esc(row.user.name)}</b></a>
-            <time>${esc(formatWhen(row.at))}</time>
+            <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
             <p>${esc(row.body)}</p>
           </div>
-        </div>`
+        </li>`
       )
       .join("");
+
+    const figures = [
+      stats.packs != null ? [num(stats.packs), "Packs ripped"] : null,
+      stats.pulls != null ? [num(stats.pulls), "Cards pulled"] : null,
+      stats.unique != null ? [num(stats.unique), "Unique cards"] : null,
+      stats.coins != null ? [`✦ ${coin(stats.coins)}`, "Coins", "money"] : null,
+      user.createdAt ? [joinedOn(user.createdAt), "Collecting since"] : null,
+    ].filter(Boolean);
+    const friends = Number(data.friends || 0);
 
     const banner = bannerVars(user.banner);
     els.profileBody.innerHTML = `
       <div class="profile-page">
-        <div class="profile-hero">
-          <div class="profile-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
-          <div class="profile-id">
+        <header class="acct-hero profile-hero">
+          <div class="acct-banner profile-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
+          <div class="acct-hero-body profile-id">
             ${faceHtml({ ...user, online: data.online }, "lg")}
-            <div class="profile-copy">
-              <p class="account-title">${esc(user.title || "Rookie")}${data.online ? " · online" : ""}</p>
-              <h1>${esc(user.name)}</h1>
-              <p>@${esc(user.handle)} · ${num(data.friends || 0)} friends</p>
+            <div class="acct-copy profile-copy">
+              <h1 class="acct-name">${esc(user.name)}</h1>
+              <p class="acct-meta">
+                <span class="account-handle">@${esc(user.handle)}</span>
+                <span>${num(friends)} ${friends === 1 ? "friend" : "friends"}</span>
+                ${data.online ? `<span class="live-tag">Online now</span>` : ""}
+              </p>
+              <p class="acct-chips"><span class="account-title">${esc(user.title || "Rookie")}</span></p>
               ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
             </div>
-            <div class="profile-actions">${friendBtn}</div>
+            <div class="acct-hero-actions profile-actions">${friendBtn}</div>
           </div>
-          <div class="profile-stats">
-            ${stats.packs != null ? `<div><b>${num(stats.packs)}</b><span>Packs ripped</span></div>` : ""}
-            ${stats.pulls != null ? `<div><b>${num(stats.pulls)}</b><span>Cards pulled</span></div>` : ""}
-            ${stats.unique != null ? `<div><b>${num(stats.unique)}</b><span>Unique cards</span></div>` : ""}
-            ${stats.coins != null ? `<div><b>✦ ${coin(stats.coins)}</b><span>Coins</span></div>` : ""}
-            ${user.createdAt ? `<div><b>${esc(joinedOn(user.createdAt))}</b><span>Collecting since</span></div>` : ""}
-          </div>
-        </div>
-        <div class="panel profile-showcase">
-          <h3>Showcase${pinned.length ? ` <small>${pinned.length} pinned</small>` : ""}</h3>
           ${
-            showcase
-              ? `<div class="showcase-row">${showcase}</div>`
-              : `<p class="panel-empty">${mine ? "Pin your best pulls from the binder." : "No cards pinned yet."}</p>`
+            figures.length
+              ? `<dl class="acct-figures">${figures
+                  .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
+                  .join("")}</dl>`
+              : ""
           }
-        </div>
-        ${profileBinderPagesHtml()}
-        <div class="profile-grid">
-          <div class="panel">
-            <h3>Wall</h3>
-            <div class="comment-list">${comments || `<p class="panel-empty">No comments yet.</p>`}</div>
-            ${
-              signed
-                ? `<form class="comment-form" id="comment-form">
-                    <textarea name="body" maxlength="220" placeholder="Leave a note"></textarea>
-                    <button class="solid" type="submit">Comment</button>
-                  </form>`
-                : `<p class="panel-note">Sign in to comment.</p>`
-            }
+        </header>
+        <section class="profile-showcase">
+          <div class="acct-sec-head">
+            <div>
+              <h2>Showcase</h2>
+              <p>${
+                pinned.length
+                  ? `${pinned.length} ${pinned.length === 1 ? "card" : "cards"} ${esc(user.name)} picked to show off.`
+                  : mine
+                    ? "Open any card you own and choose Pin to showcase. Up to six sit here."
+                    : `${esc(user.name)} hasn't pinned any cards yet.`
+              }</p>
+            </div>
           </div>
-        </div>
+          ${showcase ? `<div class="showcase-stage"><div class="showcase-row">${showcase}</div></div>` : ""}
+        </section>
+        ${profileBinderPagesHtml()}
+        <section class="acct-sec profile-wall">
+          <div class="acct-sec-head">
+            <div>
+              <h2>Wall</h2>
+              <p>${mine ? "Notes other trainers left you." : `Leave ${esc(user.name)} a note.`}</p>
+            </div>
+          </div>
+          ${comments ? `<ol class="comment-list">${comments}</ol>` : `<p class="panel-empty">No notes yet.${signed && !mine ? " Be the first." : ""}</p>`}
+          ${
+            signed
+              ? `<form class="comment-form" id="comment-form">
+                  <textarea name="body" maxlength="220" placeholder="${mine ? "Write on your own wall" : `Leave a note for ${esc(user.name)}`}" aria-label="Your note"></textarea>
+                  <button class="ghost" type="submit">Post note</button>
+                </form>`
+              : `<p class="panel-note"><button class="text-btn" type="button" data-open-auth="signin">Sign in</button> to leave a note.</p>`
+          }
+        </section>
       </div>`;
     if (profilePageScroll) {
       profilePageScroll = false;
       els.profileBody.querySelector(".profile-binder")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" });
     }
   } catch (err) {
-    els.profileBody.innerHTML = `<div class="panel"><p class="panel-empty">${esc(err.message || "Trainer not found.")}</p></div>`;
+    els.profileBody.innerHTML = `<p class="panel-empty profile-missing">${esc(err.message || "Trainer not found.")} Check the handle in the link.</p>`;
   }
 }
 
@@ -3118,10 +3214,13 @@ async function renderSocial() {
   if (!body) return;
   const trainer = activeTrainer();
   if (!trainer) {
-    body.innerHTML = `<div class="panel">
-      <h3>Social</h3>
-      <p class="panel-note">Sign in to DM friends. Trading lands here next.</p>
-      <button class="solid" type="button" data-open-auth="signin">Sign in</button>
+    body.innerHTML = `<div class="social-gate">
+      <h2>Social</h2>
+      <p>Sign in to add friends and message them. Card trading opens here next.</p>
+      <div class="social-gate-actions">
+        <button class="solid" type="button" data-open-auth="signin">Sign in</button>
+        <button class="ghost" type="button" data-open-auth="signup">Create account</button>
+      </div>
     </div>`;
     return;
   }
@@ -3137,13 +3236,15 @@ async function renderSocial() {
         thread = { error: err.message || "Couldn't open that thread." };
       }
     }
+    const online = new Set(currentFriends().friends.filter((row) => row.online).map((row) => row.handle));
     const list = threads
       .map((row) => {
         const on = dmHandle === row.user.handle;
-        const preview = row.last ? esc(row.last.body) : "No messages yet";
-        return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}">
-          ${faceHtml(row.user, "sm")}
+        const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "No messages yet";
+        return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
+          ${faceHtml({ ...row.user, online: online.has(row.user.handle) }, "sm")}
           <span><b>${esc(row.user.name)}</b><small>${preview}</small></span>
+          ${row.last ? `<time>${esc(formatWhen(row.last.at))}</time>` : ""}
         </a>`;
       })
       .join("");
@@ -3151,10 +3252,10 @@ async function renderSocial() {
     const incomingRows = incoming
       .map(
         (row) => `<div class="friends-row">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>@${esc(row.handle)}</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>@${esc(row.handle)} wants to be friends</small></span></a>
           <div class="friends-row-actions">
-            <button type="button" class="solid" data-friend-accept="${esc(row.handle)}">Accept</button>
-            <button type="button" class="ghost" data-friend-deny="${esc(row.handle)}">No</button>
+            <button type="button" class="ghost sm" data-friend-accept="${esc(row.handle)}">Accept</button>
+            <button type="button" class="text-btn" data-friend-deny="${esc(row.handle)}">Decline</button>
           </div>
         </div>`
       )
@@ -3162,55 +3263,75 @@ async function renderSocial() {
     const outgoingRows = outgoing
       .map(
         (row) => `<div class="friends-row dim">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>pending</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>Request sent</small></span></a>
         </div>`
       )
       .join("");
     const requests =
-      (incomingRows ? `<p class="friends-label">Requests</p><div class="dm-threads">${incomingRows}</div>` : "") +
-      (outgoingRows ? `<p class="friends-label">Sent</p><div class="dm-threads">${outgoingRows}</div>` : "");
+      (incomingRows ? `<p class="friends-label">Requests</p><div class="social-requests">${incomingRows}</div>` : "") +
+      (outgoingRows ? `<p class="friends-label">Waiting on them</p><div class="social-requests">${outgoingRows}</div>` : "");
+    const messages = (thread?.messages || [])
+      .map(
+        (msg) => `<div class="dm-line${msg.mine ? " mine" : ""}"><span>${esc(msg.body)}</span><time>${esc(formatWhen(msg.at))}</time></div>`
+      )
+      .join("");
     const pane = thread?.error
       ? `<p class="panel-empty">${esc(thread.error)}</p>`
       : thread
         ? `<div class="dm-head">
-            <a href="/u/${esc(thread.user.handle)}">${faceHtml(thread.user, "sm")}</a>
-            <div>
-              <b>${esc(thread.user.name)}</b>
-              <small>@${esc(thread.user.handle)}</small>
-            </div>
+            <a class="dm-back" href="/social" aria-label="Back to all friends">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+            </a>
+            <a class="dm-who" href="/u/${esc(thread.user.handle)}">
+              ${faceHtml({ ...thread.user, online: online.has(thread.user.handle) }, "sm")}
+              <span><b>${esc(thread.user.name)}</b><small>${online.has(thread.user.handle) ? "Online now" : `@${esc(thread.user.handle)}`}</small></span>
+            </a>
+            <a class="text-btn dm-profile" href="/u/${esc(thread.user.handle)}">Profile</a>
           </div>
           <div class="dm-log" id="dm-log">${
-            (thread.messages || [])
-              .map(
-                (msg) => `<div class="dm-line${msg.mine ? " mine" : ""}"><span>${esc(msg.body)}</span><time>${esc(formatWhen(msg.at))}</time></div>`
-              )
-              .join("") || `<p class="lounge-empty">Say hi.</p>`
+            messages || `<p class="dm-empty">No messages yet. Say hi to ${esc(thread.user.name)}.</p>`
           }</div>
           <form class="dm-form" id="dm-form">
-            <input name="body" maxlength="220" placeholder="Message @${esc(thread.user.handle)}" autocomplete="off" />
+            <input name="body" maxlength="220" placeholder="Message ${esc(thread.user.name)}" autocomplete="off" aria-label="Message ${esc(thread.user.name)}" />
             <button class="solid" type="submit">Send</button>
           </form>`
-        : `<p class="panel-empty">Pick a friend to start a DM. Trading will live on this tab next.</p>`;
+        : `<div class="dm-idle">
+            <p><b>Pick a friend to open your messages.</b></p>
+            <p>Messages stay between the two of you.</p>
+          </div>`;
     body.innerHTML = `
-      <div class="section-head">
+      <div class="section-head social-head">
         <div>
           <h2>Social</h2>
-          <p>Friends, DMs, and soon trading — all in one tab.</p>
+          <p>Your friends and your messages. Card trading opens here next.</p>
         </div>
       </div>
-      <div class="social-grid">
-        <div class="panel">
-          <h3>Friends</h3>
+      <div class="social-grid${thread && !thread.error ? " has-thread" : ""}">
+        <aside class="social-friends" aria-label="Friends">
+          <form class="friends-add social-add" id="social-add">
+            <input name="handle" maxlength="17" placeholder="Add a friend by @handle" autocapitalize="off" spellcheck="false" aria-label="Add a friend by handle" />
+            <button class="ghost" type="submit">Add</button>
+          </form>
           ${requests}
-          ${requests && list ? `<p class="friends-label">Friends</p>` : ""}
-          <div class="dm-threads">${list || `<p class="panel-empty">No friends yet. Use the Friends button in the bottom-left corner to add a trainer by handle.</p>`}</div>
-        </div>
-        <div class="panel dm-pane">${pane}</div>
+          ${requests ? `<p class="friends-label">Friends</p>` : ""}
+          <nav class="dm-threads" aria-label="Messages">${
+            list || `<p class="panel-empty">No friends yet. Add a trainer by their handle above, or tap a name in the chat on Home.</p>`
+          }</nav>
+        </aside>
+        <section class="dm-pane" aria-label="Messages">${pane}</section>
       </div>
-      <div class="panel">
-        <h3>Trading</h3>
-        <p class="panel-note">Card-for-card trades land here after DMs feel solid. Friends first.</p>
-      </div>`;
+      <section class="trade-soon" aria-labelledby="trade-title">
+        <div class="trade-copy">
+          <h2 id="trade-title">Trading <span class="soon">Soon</span></h2>
+          <p>Card-for-card trades with friends open here next. Keep the cards you'd swap in your binder so friends can see what you have.</p>
+          <a class="text-btn" href="/binder">Open your binder</a>
+        </div>
+        <div class="trade-slips" aria-hidden="true">
+          <span class="trade-slot"></span>
+          <svg viewBox="0 0 24 24"><path d="M7 7h11l-3-3M17 17H6l3 3" /></svg>
+          <span class="trade-slot"></span>
+        </div>
+      </section>`;
     const log = body.querySelector("#dm-log");
     if (log) log.scrollTop = log.scrollHeight;
     const form = body.querySelector("#dm-form");
@@ -3227,8 +3348,26 @@ async function renderSocial() {
         toast(err.message || "Couldn't send.");
       }
     });
+    body.querySelector("#social-add")?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const field = e.target.handle;
+      const handle = String(field.value || "").replace(/^@/, "").trim();
+      if (handle.length < 3) {
+        toast("Handles are at least 3 characters.");
+        return;
+      }
+      try {
+        const data = await api("/api/friends/request", { method: "POST", body: JSON.stringify({ handle }) });
+        field.value = "";
+        toast(data.status === "accepted" ? `You and @${handle} are friends.` : `Request sent to @${handle}.`);
+        await notifySignedIn();
+        renderSocial();
+      } catch (err) {
+        toast(err.message || "Couldn't send that request.");
+      }
+    });
   } catch (err) {
-    body.innerHTML = `<div class="panel"><p class="panel-empty">${esc(err.message || "Couldn't load social.")}</p></div>`;
+    body.innerHTML = `<p class="panel-empty">${esc(err.message || "Couldn't load your messages.")} Refresh the page to try again.</p>`;
   }
 }
 
@@ -5048,30 +5187,47 @@ async function sellOwnedCard(card, { extra = false } = {}) {
   }
 }
 
+/** "in 5 hours", "in 3 days": how long until a quest period rolls over. */
+function resetIn(at) {
+  const ms = Math.max(0, Number(at) - Date.now());
+  const hours = Math.round(ms / 3_600_000);
+  if (hours < 1) return "in under an hour";
+  if (hours < 48) return `in ${hours} hour${hours === 1 ? "" : "s"}`;
+  return `in ${Math.round(hours / 24)} days`;
+}
+
 function questsTab() {
   const summary = state.quests;
-  if (!summary || summary.unavailable) return `<p class="panel-empty">Quests are being prepared. Check back shortly.</p>`;
+  if (!summary || summary.unavailable) return `<p class="panel-empty">Quests are being set up. Check back in a minute.</p>`;
   const claimed = new Set(summary.claimed || []);
-  const section = (period, title, reset) => `<section class="ach-wall">
-    <div class="ach-head"><div><h2>${title}</h2><p class="panel-note">Resets ${new Date(reset).toLocaleString()} · UTC schedule</p></div></div>
-    <div class="ach-grid">${QUESTS.filter(row => row.period === period).map(row => {
+  const section = (period, title, reset) => `<section class="acct-sec quest-sec">
+    <div class="acct-sec-head">
+      <div>
+        <h2>${title}</h2>
+        <p>Resets ${esc(resetIn(reset))}.</p>
+      </div>
+    </div>
+    <div class="quest-list">${QUESTS.filter(row => row.period === period).map(row => {
       const at = Math.min(row.goal, Number(summary.progress?.[row.id] || 0));
       const done = at >= row.goal;
       const paid = claimed.has(row.id);
-      return `<article class="ach-tile ${paid ? "is-claimed" : done ? "is-ready" : "is-locked"}">
-        <div class="ach-badge" style="--pct:${Math.round(at / row.goal * 100)}"><span>${period === "daily" ? "D" : "W"}</span></div>
-        <div class="ach-tile-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p>
-          ${done ? "" : `<div class="ach-bar"><span style="width:${Math.round(at / row.goal * 100)}%"></span></div>`}
-        </div>
+      const pct = Math.round(at / row.goal * 100);
+      return `<article class="ach-tile quest ${paid ? "is-claimed" : done ? "is-ready" : "is-locked"}">
+        <div class="ach-badge" style="--pct:${pct}"><span>${num(row.goal)}</span></div>
+        <div class="ach-tile-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
+        ${done ? "" : `<div class="ach-bar" aria-hidden="true"><span style="width:${pct}%"></span></div>`}
         <div class="ach-reward"><span class="ach-coin">&#10022; ${num(row.coins)}</span>
-          ${paid ? `<span class="ach-done">Claimed</span>` : done ? `<button class="solid sm" type="button" data-quest-claim="${esc(row.id)}">Claim</button>` : `<span class="ach-progress">${at} / ${row.goal}</span>`}
+          ${paid ? `<span class="ach-done">Claimed</span>` : done ? `<button class="ghost sm ach-claim" type="button" data-quest-claim="${esc(row.id)}">Claim</button>` : `<span class="ach-progress">${num(at)} of ${num(row.goal)}</span>`}
         </div>
       </article>`;
     }).join("")}</div>
   </section>`;
-  return `<div class="ach-wall"><p class="panel-note">Earn extra coins through play. Rewards are checked on your account when you claim them.</p>
-    ${section("daily", "Daily quests", Number(summary.periods.daily) + 86_400_000)}
-    ${section("weekly", "Weekly quests", Number(summary.periods.weekly) + 7 * 86_400_000)}
+  return `<div class="acct-quests">
+    <p class="acct-lede">Extra coins for playing. Progress is checked on your account when you claim.</p>
+    <div class="acct-cols">
+      ${section("daily", "Daily quests", Number(summary.periods.daily) + 86_400_000)}
+      ${section("weekly", "Weekly quests", Number(summary.periods.weekly) + 7 * 86_400_000)}
+    </div>
   </div>`;
 }
 
@@ -5595,11 +5751,8 @@ async function claimAchievements(body, label) {
     renderAccount();
     rewardFlash(data.rewards || [], data.coins || 0);
     const titles = data.titles || [];
-    toast(
-      titles.length
-        ? `${label} · +✦ ${num(data.coins)} · title unlocked: ${titles.join(", ")}`
-        : `${label} · +✦ ${num(data.coins)}`
-    );
+    const won = titles.length === 1 ? ` and the ${titles[0]} title` : titles.length ? ` and ${titles.length} new titles` : "";
+    toast(`${label}: ✦ ${num(data.coins)} banked${won}.`);
   } catch (err) {
     toast(err.message || "Couldn't claim that.");
     renderAccount();
@@ -5615,9 +5768,9 @@ function rewardFlash(rewards, coins) {
   el.className = "reward-flash";
   el.setAttribute("role", "status");
   el.innerHTML = `
-    <b>+✦ ${num(coins)}</b>
+    <b>✦ ${num(coins)}</b>
     <span>${rewards.length === 1 ? esc(rewards[0].name) : `${rewards.length} achievements claimed`}</span>
-    ${titles.length ? `<i>Title unlocked · ${titles.map((row) => esc(row.title)).join(", ")}</i>` : ""}`;
+    ${titles.length ? `<i>${titles.length === 1 ? "New title" : "New titles"}: ${titles.map((row) => esc(row.title)).join(", ")}</i>` : ""}`;
   document.body.appendChild(el);
   requestAnimationFrame(() => el.classList.add("show"));
   window.setTimeout(() => {
