@@ -216,6 +216,9 @@
 .claim-cta { display: inline-flex; align-items: center; gap: 10px; animation: none; }
 /* On the badge wall, Claim all does this job; one coral action per screen. */
 #view-account:has(.acct-tab.on[data-acct-tab="achievements"]) .acct-progress .claim-cta { display: none; }
+/* Without the claim, the bar runs to the edge. */
+.acct-progress:not(:has(.claim-cta)),
+#view-account:has(.acct-tab.on[data-acct-tab="achievements"]) .acct-progress { grid-template-columns: minmax(0, auto) minmax(120px, 1fr); }
 .claim-amt {
   display: inline-flex; align-items: center; padding: 3px 10px; min-height: 26px; border-radius: 999px;
   background: rgba(12, 5, 3, 0.86); color: var(--gold-2);

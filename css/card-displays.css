@@ -36,7 +36,6 @@ body.fx-holo .tcg, body.fx-holo .tcg.lit, body.fx-holo .tcg.settling { transitio
 .page-share:disabled { cursor: default; }
 .profile-binder { margin: 24px 0; padding: 24px; }
 .profile-section-head { margin-bottom: 22px; }
-.profile-section-head .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 7px; }
 .profile-section-head h3 { margin: 0; color: var(--ink); }
 .profile-section-head > span { color: var(--muted); font-size: 12px; }
 .profile-binder-pages { max-width: 600px; margin: 0 auto; }
