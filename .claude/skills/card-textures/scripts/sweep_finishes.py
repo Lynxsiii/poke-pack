@@ -11,6 +11,9 @@ change to a foil recipe or a shared sheet (reference/verify.md, "The sweep").
 Also lists every promo the site draws as a window holo that has no foil
 map (it falls to the old window recipe, which clips through a stamp printed
 in the art and streaks over it: Sprigatito svp191, 2026-09-28) and exits 1.
+Also lists every etched full art (SIR, full-art Ultra Rare, gold) with no
+etch map of its own (it shares the engraving tile with every other such
+print, and no two real cards share a texture: Noah, 2026-09-28) and exits 1.
 `--stamped` sheets every stamped print instead of one card per finish.
 First checks every sheet in css/holo/ for a rule defined twice at the top
 level (PR #55 pasted a stale copy of shiny-vault.css after the new rules,
@@ -85,6 +88,25 @@ def check_promos(set_id, cards, boxes):
         if look in HOLO_LOOKS:
             print(f"{set_id}: {c['id']} ({c.get('name')}, {look}) is a window holo promo with no foil map: "
                   f"old window recipe; give it a Live map or a hand box and run stamp_knockout.py")
+            n += 1
+    return n
+
+
+ETCHED_LOOKS = {"Special Illustration Rare", "Ultra Rare", "Hyper Rare", "Mega Hyper Rare"}
+
+
+def check_etched(set_id, cards):
+    """Every etched full art (SIR, full-art Ultra Rare, gold) carries its own
+    etch map: TCG Live's, or one drawn from the card's art by
+    make_card_etch.py. A print left on the shared engraving tile shares its
+    texture with every other tile print, and no two real cards do (Noah,
+    2026-09-28: "I want every texture to be unique to each card")."""
+    n = 0
+    for c in cards:
+        look = c.get("foilAs") or c.get("rarity")
+        if look in ETCHED_LOOKS and c.get("image") and not c.get("etchMap"):
+            print(f"{set_id}: {c['id']} ({c.get('name')}, {look}) has no etch map: shared tile; "
+                  f"fetch Live's (fetch_foil_maps.py) or draw one (make_card_etch.py --set {set_id} --all --ship --write-data)")
             n += 1
     return n
 
@@ -166,7 +188,7 @@ def check_sheets(holo_dir=os.path.join(ROOT, "css", "holo")):
 def sweep(set_id, out_dir, poses, w, scale, per_row, only_stamped=False):
     cards = load(set_id)
     boxes = hand_boxes()
-    rc = 1 if check_promos(set_id, cards, boxes) else 0
+    rc = 1 if (check_promos(set_id, cards, boxes) + check_etched(set_id, cards)) else 0
     ids = stamped(cards, boxes) if only_stamped else pick(set_id, cards)
     if not ids:
         return rc

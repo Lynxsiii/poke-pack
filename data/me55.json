@@ -7266,7 +7266,9 @@
     "printedNumber": "MEP 108",
     "tcgplayerId": 713258,
     "promo": true,
-    "foilAs": "Special Illustration Rare"
+    "foilAs": "Special Illustration Rare",
+    "etchMap": "assets/foil/maps/me55/mep108-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "me55-mep109",
@@ -7352,6 +7354,8 @@
     "printedNumber": "MEP 110",
     "tcgplayerId": 713259,
     "promo": true,
-    "foilAs": "Special Illustration Rare"
+    "foilAs": "Special Illustration Rare",
+    "etchMap": "assets/foil/maps/me55/mep110-etch.webp",
+    "etchDrawn": true
   }
 ]
