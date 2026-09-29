@@ -199,7 +199,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::after {
   background-size: 120px 120px, 200% 200%, 300% 300%, cover;
   background-position:
     center,
-    calc(var(--background-x) * 1.6) calc(var(--background-y) * 0.8),
+    min(100%, calc(var(--background-x) * 1.6)) calc(var(--background-y) * 0.8),
     calc(var(--background-x) + (var(--background-y) * 0.2)) var(--background-y),
     center;
   background-blend-mode: soft-light, hard-light, hard-light;
@@ -210,8 +210,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::after {
 body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar .foil::after {
   background-position:
     center,
-    calc(var(--background-x) * -1.2) calc(var(--background-y) * -0.6),
-    calc((var(--background-x) + (var(--background-y) * 0.2)) * -1) calc(var(--background-y) * -1),
+    calc(100% - (var(--background-x) * 1.2)) calc(100% - (var(--background-y) * 0.6)),
+    calc(100% - (var(--background-x) + (var(--background-y) * 0.2))) calc(100% - var(--background-y)),
     center;
   background-size: 120px 120px, 190% 190%, 280% 280%, cover;
   filter: brightness(calc(0.8 + var(--pointer-from-center) * 0.4)) contrast(1.4) saturate(1.2);

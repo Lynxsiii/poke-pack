@@ -30,7 +30,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-sunpillar.era-sv .foil {
       hsl(285, 100%, 60%) 9.4%, #000 9.7%);
   background-size: 200% 200%;
   background-position:
-    calc(var(--background-x) * 1.5) calc(var(--background-y) * 1.5);
+    min(100%, calc(var(--background-x) * 1.5)) min(100%, calc(var(--background-y) * 1.5));
   background-repeat: repeat;
   background-blend-mode: normal;
   filter: brightness(calc(1 + var(--pointer-from-center) * 0.3)) contrast(1.15) saturate(1.5);
