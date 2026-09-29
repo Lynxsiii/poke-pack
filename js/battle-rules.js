@@ -1,5 +1,7 @@
 // Shared definitions only; randomness, balances and awards belong to the Worker.
 export const BATTLE_LIMITS = { players: [2, 3, 4], maxPacks: 72, maxRounds: 96, maxCardsPerPlayer: 1200 };
+// startsAt = start + introMs (the 3-2-1); round i is revealed at startsAt + i * roundMs.
+export const BATTLE_TIMING = { introMs: 3500, roundMs: 6000, fastRoundMs: 2600 };
 export function battleSettings(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('Choose valid battle settings.');
   for (const key of ['teams', 'fast', 'skipCommons', 'private']) {

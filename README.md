@@ -38,7 +38,7 @@ scripts/              python builders that generate data/ and crop wrapper art
 
 `/battles` lists public tables. Players can build a mixed lineup from the same
 booster, sealed and promo offers as the shop, reserve 2–4 seats, invite other
-players, or pay to call bots. Unlisted tables are accessible by invite link.
+players, or call bots. Unlisted tables are accessible by invite link.
 The host starts a full table; leaving or cancelling an unstarted table refunds
 the entry. Unstarted tables expire after 24 hours.
 
@@ -47,7 +47,16 @@ distributes them across everyone. Scoring can use total value, the final round,
 or the best single card. Four-seat battles can use two teams. Ties, team wins
 and Shared mode distribute indivisible cards by a deterministic deal that
 balances their frozen pull values. Bots can win; their allocation is discarded.
-The host pays each bot's full entry cost.
+
+Bots are free. A bot takes a random persona (`BOT_PERSONAS` in
+`js/battle-rules.js`, distinct within a table), pays no entry and refunds
+nothing. The host calls one into a seat (`/bot {seat}`), fills every empty seat
+at once (`/bot {fill: true}`) or removes one before the start (`/unbot {seat}`).
+Creating with `quick: true` seats the host, fills the table with bots and starts
+in one request, idempotent on `requestId` like any create. A player alone with
+bots can `/skip`: every round is revealed at once and the battle settles in
+that request, through the same exactly-once settlement record as a natural
+finish. Rounds are 6 s (2.6 s with Fast) after a 3.5 s countdown.
 
 Fast and Skip commons affect reveals only. Every generated card contributes to
 scores and rewards, and the receipt includes the complete pulls. Refreshing a
@@ -57,9 +66,18 @@ by database transactions and unique records.
 Apply `worker/migrations/0012_pack_battles.sql` to D1 **before deploying** the
 battle code. Existing accounts and collections are preserved. The existing
 Worker schedule also expires lobbies and settles completed battles.
+`worker/migrations/0013_free_bots.sql` (free bots) needs no manual step: the
+Worker checks the seat triggers in `sqlite_master` once per isolate and, if they
+predate it, rewrites them in one atomic D1 batch (`ensureBattleSchema` in
+`worker/battles.js`, which holds the same DDL as the file). New bot seats pay
+with the sentinel `payer_id = 'free'`, which the triggers never charge or
+refund; bots paid for under 0012 still refund the host once when removed,
+cancelled or expired. Running `migrations apply` later replays the same
+statements harmlessly.
 
 Run `node scripts/test-battles.mjs` for the transactional API/rule regression
-suite. `node scripts/preview-battles.mjs` starts four disposable, in-memory
+suite (it also upgrades a 0012-only database at runtime with paid bots in live
+lobbies). `node scripts/preview-battles.mjs` starts four disposable, in-memory
 accounts on ports 5175–5178; the first two are a host and a real-player rival.
 It does not write production data or browser account saves back to production.
 

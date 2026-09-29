@@ -1,12 +1,121 @@
 import { PLAYABLE_SETS, sealedOffers, promoOffers, offerPackSets, money, sellValue } from '../js/catalog.js';
 import { ripPack, drawPromos } from '../js/engine.js';
-import { BATTLE_LIMITS, battleSettings, battleResult, roundScores } from '../js/battle-rules.js';
+import { BATTLE_LIMITS, BATTLE_TIMING, BOT_PERSONAS, battleSettings, battleResult, roundScores } from '../js/battle-rules.js';
+import { avatarId, avatarStyle } from '../js/cosmetics.js';
 
 const error = (message, status = 400) => { throw Object.assign(new Error(message), { status }); };
 const parse = value => value ? JSON.parse(value) : null;
 const getRow = (env, id) => env.DB.prepare('SELECT * FROM battles WHERE id = ?').bind(id).first();
-const seatRecord = s => ({ seat: s.seat, userId: s.user_id, payerId: s.payer_id, name: s.name, handle: s.handle, color: s.color, bot: Boolean(s.bot) });
-const getSeats = async (env, id) => ((await env.DB.prepare('SELECT * FROM battle_seats WHERE battle_id = ? ORDER BY seat').bind(id).all()).results || []).map(seatRecord);
+const seatRecord = s => ({ seat: s.seat, userId: s.user_id, payerId: s.payer_id, name: s.name, handle: s.handle, color: s.color, bot: Boolean(s.bot),
+  avatar: s.bot ? null : avatarId(s.avatar), avatarStyle: s.bot ? null : avatarStyle(s.avatar_style) });
+// users.avatar_style is added at runtime by ensureSocialSchema (called before any battle query).
+const SEAT_SELECT = `SELECT s.*, u.avatar, u.avatar_style FROM battle_seats s LEFT JOIN users u ON u.id = s.user_id`;
+const getSeats = async (env, id) => ((await env.DB.prepare(`${SEAT_SELECT} WHERE s.battle_id = ? ORDER BY s.seat`).bind(id).all()).results || []).map(seatRecord);
+
+// Bots are free (migration 0013). New bot seats store this sentinel payer, which
+// no account can have (user ids are 16 hex digits): the seat triggers skip the
+// coin check, the debit and the refund for it. Bot seats paid under 0012 keep
+// the host as payer and still refund the host when deleted.
+const FREE_PAYER = 'free';
+// The same DDL as worker/migrations/0013_free_bots.sql. Nobody can run remote
+// migrations, so the Worker applies it to itself once: one D1 batch is one
+// transaction, so every isolate sees either the old triggers or all new ones.
+// Replaying it (a second isolate, or migrations apply later) rewrites identical
+// triggers. Refund goes first so a non-atomic replay can only withhold coins.
+export const FREE_BOT_DDL = [
+  'DROP TRIGGER IF EXISTS battle_seat_refund',
+  `CREATE TRIGGER battle_seat_refund AFTER DELETE ON battle_seats
+WHEN OLD.payer_id != 'free' AND (SELECT status FROM battles WHERE id = OLD.battle_id) IN ('lobby','cancelled') BEGIN
+  UPDATE profiles SET coins = ROUND(coins + (SELECT entry_cost FROM battles WHERE id = OLD.battle_id), 2)
+  WHERE user_id = OLD.payer_id;
+END`,
+  'DROP TRIGGER IF EXISTS battle_seat_validate',
+  `CREATE TRIGGER battle_seat_validate BEFORE INSERT ON battle_seats BEGIN
+  SELECT (CASE WHEN NOT EXISTS (
+    SELECT 1 FROM battles b WHERE b.id = NEW.battle_id AND b.status = 'lobby'
+    AND b.expires_at > CAST((julianday('now') - 2440587.5) * 86400000 AS INTEGER)
+    AND NEW.seat < json_extract(b.settings, '$.players')
+  ) THEN RAISE(ABORT, 'Battle is no longer accepting players.') END);
+  SELECT (CASE WHEN (NEW.payer_id = 'free') != (NEW.bot = 1)
+  THEN RAISE(ABORT, 'Bots play free and players pay their own entry.') END);
+  SELECT (CASE WHEN NEW.payer_id != 'free' AND NOT EXISTS (
+    SELECT 1 FROM profiles p JOIN battles b ON b.id = NEW.battle_id
+    WHERE p.user_id = NEW.payer_id AND p.coins >= b.entry_cost
+  ) THEN RAISE(ABORT, 'Not enough coins.') END);
+END`,
+  'DROP TRIGGER IF EXISTS battle_seat_debit',
+  `CREATE TRIGGER battle_seat_debit AFTER INSERT ON battle_seats
+WHEN NEW.payer_id != 'free' BEGIN
+  UPDATE profiles SET coins = ROUND(coins - (SELECT entry_cost FROM battles WHERE id = NEW.battle_id), 2)
+  WHERE user_id = NEW.payer_id;
+END`,
+  `CREATE UNIQUE INDEX IF NOT EXISTS battle_bot_persona ON battle_seats(battle_id, handle)
+WHERE bot = 1 AND payer_id = 'free'`,
+];
+const FREE_BOT_OBJECTS = ['battle_seat_refund', 'battle_seat_validate', 'battle_seat_debit', 'battle_bot_persona'];
+let battleSchemaReady = false;
+/** Tests only: forget the per-isolate cache so another database is checked. */
+export const resetBattleSchemaCache = () => { battleSchemaReady = false; };
+/**
+ * Bring the seat triggers to 0013 once per isolate (one cheap sqlite_master
+ * read after that the flag short-circuits). Only the presence of the 'free'
+ * rule is checked, never exact text, so a later migration that rewrites these
+ * triggers (keeping the rule) is never reverted. Resolves false while the 0012
+ * tables are missing or the upgrade failed; the caller then refuses bots.
+ */
+export async function ensureBattleSchema(env) {
+  if (battleSchemaReady) return true;
+  try {
+    const rows = (await env.DB.prepare(`SELECT name, sql FROM sqlite_master WHERE type IN ('trigger','index')
+      AND name IN (${FREE_BOT_OBJECTS.map(() => '?').join(',')})`).bind(...FREE_BOT_OBJECTS).all()).results || [];
+    if (!rows.some(r => r.name === 'battle_seat_validate')) return false; // 0012 not applied yet
+    const current = FREE_BOT_OBJECTS.every(name => rows.some(r => r.name === name && String(r.sql).includes(`'${FREE_PAYER}'`)));
+    if (!current) await env.DB.batch(FREE_BOT_DDL.map(sql => env.DB.prepare(sql)));
+    battleSchemaReady = true;
+    return true;
+  } catch (err) {
+    console.error('ensureBattleSchema', err);
+    return false;
+  }
+}
+const requireFreeBots = async env => {
+  if (!await ensureBattleSchema(env)) error('Bots are waiting for the database update.', 503);
+};
+const shuffled = list => {
+  const out = [...list];
+  for (let i = out.length - 1; i > 0; i--) { const j = crypto.getRandomValues(new Uint32Array(1))[0] % (i + 1); [out[i], out[j]] = [out[j], out[i]]; }
+  return out;
+};
+function botInsert(env, id, seat, persona) {
+  return env.DB.prepare(`INSERT INTO battle_seats(battle_id, seat, user_id, payer_id, name, handle, color, bot)
+    VALUES(?, ?, NULL, ?, ?, ?, ?, 1)`).bind(id, seat, FREE_PAYER, persona.name, `bot:${persona.id}`, persona.color);
+}
+/** Bot statements for `targets`, each a random persona no seat in `seats` uses. */
+function botInserts(env, id, seats, targets) {
+  // Legacy bots count as the persona their view shows, which then stays stable.
+  const used = new Set(presentLegacyBots(seats).filter(s => s.bot).map(s => s.handle));
+  const personas = shuffled(BOT_PERSONAS.filter(p => !used.has(`bot:${p.id}`)));
+  return targets.map((seat, i) => botInsert(env, id, seat, personas[i]));
+}
+const personaClash = err => /UNIQUE constraint failed: battle_seats\.battle_id, battle_seats\.handle/.test(err?.message || '');
+const seatClash = err => /UNIQUE constraint failed: battle_seats\.battle_id, battle_seats\.seat/.test(err?.message || '');
+/**
+ * Seat free bots in the seats `pick(currentSeats)` returns, in one batch. Two
+ * concurrent calls can draw the same persona (the partial unique index rejects
+ * the loser) or race for a seat (primary key); the loser re-reads the table and
+ * picks again, so a double-tapped call is idempotent.
+ */
+async function seatBots(env, id, pick) {
+  await requireFreeBots(env);
+  for (let attempt = 0; ; attempt++) {
+    const seats = await getSeats(env, id);
+    const targets = pick(seats);
+    if (!targets.length) return;
+    try { await env.DB.batch(botInserts(env, id, seats, targets)); return; }
+    catch (err) { if (attempt < 3 && (personaClash(err) || seatClash(err))) continue; throw err; }
+  }
+}
+const emptySeats = (seats, players) => Array.from({ length: players }, (_, i) => i).filter(i => !seats.some(s => s.seat === i));
 
 export async function battleCatalog(env, request, helpers) {
   const sealed = await helpers.loadSealed(env, request);
@@ -78,6 +187,9 @@ function expandLineup(lineup, products) {
 // durable even if everyone closes their tab; the unique settlement is the award gate.
 export async function maintainBattles(env, now = Date.now()) {
   try {
+    // Free-bot triggers first, so no delete below runs under the 0012 rules.
+    // (Under 0012 a 'free' payer has no profile: nothing is paid or refunded.)
+    await ensureBattleSchema(env);
     // Three statements regardless of backlog size. The batch and per-row
     // triggers preserve the same exactly-once refund/award gates as actions.
     // Bound settlement work to ten games; GET detail also settles its own game.
@@ -102,12 +214,24 @@ async function settleBattle(env, id, now) {
   await env.DB.prepare(`INSERT OR IGNORE INTO battle_settlements(battle_id, at)
     SELECT id, ? FROM battles WHERE id = ? AND status = 'running' AND ends_at <= ?`).bind(now, id, now).run();
 }
+// Bots seated before 0013 are stored as "Bot 2" / practice-bot. Views show them
+// as the first personas no other bot at the table uses (the rows stay as they are).
+function presentLegacyBots(seats) {
+  const used = new Set(seats.filter(s => s.bot).map(s => s.handle));
+  const spare = BOT_PERSONAS.filter(p => !used.has(`bot:${p.id}`));
+  return seats.map(s => {
+    if (!s.bot || s.handle.startsWith('bot:')) return s;
+    const persona = spare.shift();
+    return persona ? { ...s, name: persona.name, handle: `bot:${persona.id}`, color: persona.color } : s;
+  });
+}
 async function viewBattle(env, id, now = Date.now(), summaryRow = null, summarySeats = null) {
   if (!summaryRow) await settleBattle(env, id, now);
   const row = summaryRow || await getRow(env, id);
   if (!row) error('Battle not found.', 404);
   const settings = parse(row.settings); const plan = parse(row.plan);
-  const seats = (summarySeats || await getSeats(env, id)).map(({ payerId, ...seat }) => ({ ...seat, team: settings.teams ? Math.floor(seat.seat / 2) : null }));
+  const seats = presentLegacyBots(summarySeats || await getSeats(env, id))
+    .map(({ payerId, ...seat }) => ({ ...seat, team: settings.teams ? Math.floor(seat.seat / 2) : null }));
   const revealedRounds = row.status === 'finished' ? plan.length : row.status === 'running'
     ? Math.min(plan.length, Math.max(0, Math.floor((now - row.starts_at) / row.round_ms))) : 0;
   const outcomes = summaryRow ? [] : parse(row.outcomes) || [];
@@ -117,6 +241,7 @@ async function viewBattle(env, id, now = Date.now(), summaryRow = null, summaryS
     entryCost: row.entry_cost, lineup: parse(row.lineup), plan: plan.map(({ _offer, specialKey, ...r }) => r), seats, rounds,
     revealedRounds, roundCount: plan.length, createdAt: row.created_at, expiresAt: row.expires_at,
     startsAt: row.starts_at, endsAt: row.ends_at, roundMs: row.round_ms,
+    soloHuman: seats.filter(s => !s.bot).length === 1,
     winners: result?.winners ?? null, result: result ? { winners: result.winners, scores: result.scores,
       allocations: result.allocations.map(({ seat, cardCount, value }) => ({ seat, cardCount, value })) } : null };
 }
@@ -151,7 +276,8 @@ async function startBattle(env, request, row, helpers) {
   const outcomeJSON = JSON.stringify(outcomes); const resultJSON = JSON.stringify(persistedResult);
   const payloadBytes = new TextEncoder().encode(outcomeJSON + resultJSON + row.plan + row.lineup + row.settings).length;
   if (payloadBytes > 1750000) error('This lineup has too many cards for one battle. Remove a product or reduce players.');
-  const startsAt = Date.now() + 3000; const roundMs = settings.fast ? 1600 : 4600;
+  const startsAt = Date.now() + BATTLE_TIMING.introMs;
+  const roundMs = settings.fast ? BATTLE_TIMING.fastRoundMs : BATTLE_TIMING.roundMs;
   // Compare the exact seat snapshot as well as status: someone may leave/rejoin
   // during catalog loading. A failed CAS awards nothing and asks for a fresh start.
   const seatSnapshot = JSON.stringify(seats.map(s => [s.seat, s.userId, s.payerId, s.name, Number(s.bot)]));
@@ -166,12 +292,17 @@ async function startBattle(env, request, row, helpers) {
   }
 }
 
+const ACTIONS = 'join|bot|unbot|start|leave|cancel|skip';
+const HOST_ACTIONS = ['bot', 'unbot', 'start', 'cancel'];
+
 export async function handleBattles(path, method, request, env, helpers) {
   if (!path.startsWith('/api/battles')) return null;
   try {
     if (path === '/api/battles/catalog' && method === 'GET') {
       return helpers.json({ products: (await battleCatalog(env, request, helpers)).map(publicProduct), limits: BATTLE_LIMITS, serverNow: Date.now() });
     }
+    // Seats carry avatars: users.avatar_style comes from the social runtime schema.
+    if (helpers.ensureSocialSchema) await helpers.ensureSocialSchema(env);
     await maintainBattles(env);
     if (path === '/api/battles' && method === 'GET') {
       const rows = (await env.DB.prepare(`SELECT id,host_id,status,settings,lineup,plan,entry_cost,created_at,expires_at,starts_at,ends_at,round_ms
@@ -179,13 +310,13 @@ export async function handleBattles(path, method, request, env, helpers) {
         AND json_extract(settings, '$.private') = 0 ORDER BY created_at DESC LIMIT 40`).all()).results || [];
       const seatsByBattle = new Map(rows.map(row => [row.id, []]));
       if (rows.length) {
-        const seats = (await env.DB.prepare(`SELECT * FROM battle_seats WHERE battle_id IN (${rows.map(() => '?').join(',')})
-          ORDER BY battle_id, seat`).bind(...rows.map(row => row.id)).all()).results || [];
+        const seats = (await env.DB.prepare(`${SEAT_SELECT} WHERE s.battle_id IN (${rows.map(() => '?').join(',')})
+          ORDER BY s.battle_id, s.seat`).bind(...rows.map(row => row.id)).all()).results || [];
         for (const seat of seats) seatsByBattle.get(seat.battle_id).push(seatRecord(seat));
       }
       return helpers.json({ battles: await Promise.all(rows.map(r => viewBattle(env, r.id, Date.now(), r, seatsByBattle.get(r.id)))), serverNow: Date.now() });
     }
-    const match = path.match(/^\/api\/battles\/([a-zA-Z0-9-]{1,80})(?:\/(join|bot|start|leave|cancel))?$/);
+    const match = path.match(new RegExp(`^/api/battles/([a-zA-Z0-9-]{1,80})(?:/(${ACTIONS}))?$`));
     if (match && !match[2] && method === 'GET') return helpers.json({ battle: await viewBattle(env, match[1]), serverNow: Date.now() });
     if (method !== 'POST' || (path !== '/api/battles' && !match?.[2])) return helpers.json({ error: 'Not found.' }, 404);
     const origin = request.headers.get('origin');
@@ -196,50 +327,52 @@ export async function handleBattles(path, method, request, env, helpers) {
     const user = auth.user; const body = await helpers.readJson(request);
     if (!body || typeof body !== 'object') error('Expected JSON.');
     let id = match?.[1];
-    if (path === '/api/battles') {
-      const requestId = String(body.requestId || '');
-      if (!/^[a-zA-Z0-9-]{8,80}$/.test(requestId)) error('Provide a unique requestId.');
-      const existing = await env.DB.prepare('SELECT id FROM battles WHERE host_id = ? AND request_id = ?').bind(user.id, requestId).first();
-      if (existing) id = existing.id;
-      else {
-        const settings = battleSettings(body.settings); const products = await battleCatalog(env, request, helpers);
-        const build = expandLineup(body.lineup, products); id = crypto.randomUUID(); const now = Date.now();
-        try {
-          await env.DB.batch([
-            env.DB.prepare(`INSERT INTO battles(id, host_id, request_id, settings, lineup, plan, entry_cost, created_at, expires_at)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`).bind(id, user.id, requestId, JSON.stringify(settings), JSON.stringify(build.lineup), JSON.stringify(build.plan), build.entryCost, now, now + 24 * 3600000),
-            seatInsert(env, id, 0, user, user.id, false),
-          ]);
-        } catch (err) {
-          const raced = await env.DB.prepare('SELECT id FROM battles WHERE host_id = ? AND request_id = ?').bind(user.id, requestId).first();
-          if (!raced) throw err;
-          id = raced.id;
-        }
-      }
-    } else {
+    if (path === '/api/battles') id = await createBattle(env, request, helpers, user, body);
+    else {
       const row = await getRow(env, id); if (!row) error('Battle not found.', 404);
       const action = match[2]; const host = row.host_id === user.id;
-      if (['bot', 'start', 'cancel'].includes(action) && !host) error('Only the host can do that.', 403);
+      if (HOST_ACTIONS.includes(action) && !host) error('Only the host can do that.', 403);
+      const settings = parse(row.settings);
       const seats = await getSeats(env, id); const own = seats.find(s => s.userId === user.id);
-      if (action === 'join' || action === 'bot') {
-        if (action === 'bot' && body.seat === undefined) error('Choose an explicit seat for your bot.');
+      if (action === 'join') {
         if (row.status !== 'lobby') error('Battle is no longer accepting players.', 409);
-        if (action === 'join' && own) { /* retry: the user already paid */ }
-        else {
-          const settings = parse(row.settings);
-          const seat = body.seat === undefined ? Array.from({ length: settings.players }, (_, i) => i).find(i => !seats.some(s => s.seat === i)) : Number(body.seat);
+        if (!own) { /* a retry finds its own seat: the user already paid */
+          const seat = body.seat === undefined ? emptySeats(seats, settings.players)[0] : Number(body.seat);
           if (!Number.isInteger(seat) || seat < 0 || seat >= settings.players) error('Choose an empty seat.');
-          const occupied = seats.find(s => s.seat === seat);
-          if (action === 'bot' && occupied?.bot) { /* idempotent seat retry */ }
-          else {
-            if (occupied) error('That seat was taken.', 409);
-            const bot = action === 'bot';
-            await seatInsert(env, id, seat, bot ? { id: null, name: `Bot ${seat + 1}`, handle: 'practice-bot', color: 'silver' } : user, user.id, bot).run();
-          }
+          if (seats.some(s => s.seat === seat)) error('That seat was taken.', 409);
+          await seatInsert(env, id, seat, user, user.id, false).run();
         }
+      } else if (action === 'bot') {
+        if (row.status !== 'lobby') error('Battle is no longer accepting players.', 409);
+        if (body.fill === true) await seatBots(env, id, current => emptySeats(current, settings.players));
+        else {
+          if (body.seat === undefined) error('Choose an explicit seat for your bot.');
+          const seat = Number(body.seat);
+          if (!Number.isInteger(seat) || seat < 0 || seat >= settings.players) error('Choose an empty seat.');
+          await seatBots(env, id, current => {
+            const occupied = current.find(s => s.seat === seat);
+            if (occupied && !occupied.bot) error('That seat was taken.', 409);
+            return occupied ? [] : [seat]; // a bot already there: idempotent retry
+          });
+        }
+      } else if (action === 'unbot') {
+        const seat = Number(body.seat);
+        if (!Number.isInteger(seat) || seat < 0 || seat >= settings.players) error('Choose a bot seat.');
+        if (row.status !== 'lobby') error('Bots can only be removed before the battle starts.', 409);
+        const occupied = seats.find(s => s.seat === seat);
+        if (occupied && !occupied.bot) error('That seat has a player, not a bot.', 409);
+        // Free bots refund nothing; a bot paid for under the old rules refunds its payer once.
+        if (occupied) await env.DB.prepare(`DELETE FROM battle_seats WHERE battle_id = ? AND seat = ? AND bot = 1
+          AND EXISTS(SELECT 1 FROM battles WHERE id = ? AND status = 'lobby')`).bind(id, seat, id).run();
       } else if (action === 'start') {
         if (row.status === 'cancelled') error('That battle was cancelled.', 409);
         if (row.status === 'lobby') await startBattle(env, request, row, helpers);
+      } else if (action === 'skip') {
+        if (!own) error('Only a seated player can skip.', 403);
+        if (seats.filter(s => !s.bot).length !== 1) error('Skipping is only for battles against bots.', 403);
+        if (row.status === 'lobby') error('Start the battle first.', 409);
+        if (row.status === 'cancelled') error('That battle was cancelled.', 409);
+        if (row.status === 'running') await skipBattle(env, row, user);
       } else if (action === 'cancel' || (action === 'leave' && host)) {
         if (row.status === 'running' || row.status === 'finished') error('A started battle cannot be cancelled.', 409);
         await env.DB.batch([
@@ -256,12 +389,83 @@ export async function handleBattles(path, method, request, env, helpers) {
   } catch (err) {
     if (/no such table: (battles|battle_seats)/.test(err.message)) return helpers.json({ error: 'Battles are waiting for the database update.' }, 503);
     if (/Not enough coins|no longer accepting|cannot be left|Fill every|active battles/.test(err.message)) return helpers.json({ error: err.message }, 409);
+    if (personaClash(err)) return helpers.json({ error: 'Too many bots were called at once. Try again.' }, 409);
     if (/UNIQUE constraint failed: battle_seats/.test(err.message)) return helpers.json({ error: 'That seat was taken. Refresh the lobby.' }, 409);
     if (err.status) return helpers.json({ error: err.message }, err.status);
     if (/Choose|Unknown battle|Unknown scoring|Teams need/.test(err.message)) return helpers.json({ error: err.message }, 400);
     throw err;
   }
 }
+
+/**
+ * POST /api/battles. Idempotent on (host, requestId). `quick: true` also seats
+ * a free bot in every other seat in the same transaction and starts at once; a
+ * retry of a quick create that stopped short (still a lobby) finishes the job.
+ */
+async function createBattle(env, request, helpers, user, body) {
+  const requestId = String(body.requestId || '');
+  if (!/^[a-zA-Z0-9-]{8,80}$/.test(requestId)) error('Provide a unique requestId.');
+  if (body.quick !== undefined && typeof body.quick !== 'boolean') error('Choose true or false for quick.');
+  const quick = body.quick === true;
+  const findExisting = () => env.DB.prepare('SELECT id FROM battles WHERE host_id = ? AND request_id = ?').bind(user.id, requestId).first();
+  let id = (await findExisting())?.id;
+  if (!id) {
+    const settings = battleSettings(body.settings); const products = await battleCatalog(env, request, helpers);
+    const build = expandLineup(body.lineup, products); id = crypto.randomUUID(); const now = Date.now();
+    if (quick) await requireFreeBots(env);
+    const bots = quick ? botInserts(env, id, [], emptySeats([{ seat: 0 }], settings.players)) : [];
+    try {
+      await env.DB.batch([
+        env.DB.prepare(`INSERT INTO battles(id, host_id, request_id, settings, lineup, plan, entry_cost, created_at, expires_at)
+          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`).bind(id, user.id, requestId, JSON.stringify(settings), JSON.stringify(build.lineup), JSON.stringify(build.plan), build.entryCost, now, now + 24 * 3600000),
+        seatInsert(env, id, 0, user, user.id, false),
+        ...bots,
+      ]);
+    } catch (err) {
+      const raced = await findExisting();
+      if (!raced) throw err;
+      id = raced.id;
+    }
+  }
+  if (!quick) return id;
+  let row = await getRow(env, id);
+  if (row.status !== 'lobby') return id;
+  const players = parse(row.settings).players;
+  await seatBots(env, id, current => emptySeats(current, players));
+  try { await startBattle(env, request, row, helpers); }
+  catch (err) {
+    // A lineup too large to persist never can start: refund the host now
+    // instead of holding the entry in a lobby nobody opened for 24 hours.
+    if (/too many cards/.test(err.message)) {
+      await env.DB.batch([
+        env.DB.prepare("UPDATE battles SET status = 'cancelled' WHERE id = ? AND status = 'lobby'").bind(id),
+        env.DB.prepare("DELETE FROM battle_seats WHERE battle_id = ? AND EXISTS(SELECT 1 FROM battles WHERE id = ? AND status = 'cancelled')").bind(id, id),
+      ]);
+    }
+    row = await getRow(env, id);
+    if (row.status !== 'running') throw err; // a concurrent retry may have started it
+  }
+  return id;
+}
+
+/**
+ * Solo player vs bots: reveal every round now and settle in this request.
+ * Outcomes were fixed at start, so skipping changes timing only. starts_at
+ * moves back so startsAt + roundCount * roundMs = endsAt still holds. The
+ * settlement row is the same exactly-once award gate as a natural finish.
+ */
+async function skipBattle(env, row, user) {
+  const now = Date.now(); const rounds = parse(row.plan).length;
+  await env.DB.batch([
+    env.DB.prepare(`UPDATE battles SET starts_at = ?, ends_at = ? WHERE id = ? AND status = 'running' AND ends_at > ?
+      AND (SELECT COUNT(*) FROM battle_seats WHERE battle_id = ? AND bot = 0) = 1
+      AND EXISTS(SELECT 1 FROM battle_seats WHERE battle_id = ? AND user_id = ?)`)
+      .bind(now - rounds * row.round_ms, now, row.id, now, row.id, row.id, user.id),
+    env.DB.prepare(`INSERT OR IGNORE INTO battle_settlements(battle_id, at)
+      SELECT id, ? FROM battles WHERE id = ? AND status = 'running' AND ends_at <= ?`).bind(now, row.id, now),
+  ]);
+}
+
 function seatInsert(env, id, seat, user, payer, bot) {
   return env.DB.prepare(`INSERT INTO battle_seats(battle_id, seat, user_id, payer_id, name, handle, color, bot)
     VALUES(?, ?, ?, ?, ?, ?, ?, ?)`).bind(id, seat, user.id, payer, user.name, user.handle, user.color, Number(bot));

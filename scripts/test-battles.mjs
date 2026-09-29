@@ -2,53 +2,82 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
-import { battleResult, battleSettings } from '../js/battle-rules.js';
+import { battleResult, battleSettings, BOT_PERSONAS, botPersona } from '../js/battle-rules.js';
+import { resetBattleSchemaCache } from '../worker/battles.js';
 
-const db = new DatabaseSync(':memory:');
-let queryCount = 0;
-db.exec('PRAGMA foreign_keys = ON');
-for (const file of readdirSync(new URL('../worker/migrations/', import.meta.url)).sort())
-  db.exec(readFileSync(new URL('../worker/migrations/' + file, import.meta.url), 'utf8'));
-const DB = {
-  exec: async sql => { db.exec(sql); return {}; },
-  prepare(sql) {
-    let params = [];
-    const s = {
-      bind(...values) { assert.ok(values.length <= 100, 'D1 parameter ceiling'); params = values; return s; },
-      async all() { queryCount++; return { results: db.prepare(sql).all(...params) }; },
-      async first(column) { queryCount++; const row = db.prepare(sql).get(...params); return column ? row?.[column] : row || null; },
-      execute() { queryCount++; const r = db.prepare(sql).run(...params); return { success: true, meta: { changes: Number(r.changes) } }; },
-      async run() { return s.execute(); },
-    }; return s;
-  },
-  async batch(statements) {
-    db.exec('BEGIN');
-    try { const results = statements.map(s => s.execute()); db.exec('COMMIT'); return results; }
-    catch (err) { db.exec('ROLLBACK'); throw err; }
-  },
-};
+const migrationFiles = readdirSync(new URL('../worker/migrations/', import.meta.url)).sort();
+const migrationSql = file => readFileSync(new URL('../worker/migrations/' + file, import.meta.url), 'utf8');
+let queryCount = 0; let batchCount = 0;
+function makeDb(files) {
+  const db = new DatabaseSync(':memory:');
+  db.exec('PRAGMA foreign_keys = ON');
+  for (const file of files) db.exec(migrationSql(file));
+  const DB = {
+    exec: async sql => { db.exec(sql); return {}; },
+    prepare(sql) {
+      let params = [];
+      const s = {
+        bind(...values) { assert.ok(values.length <= 100, 'D1 parameter ceiling'); params = values; return s; },
+        async all() { queryCount++; return { results: db.prepare(sql).all(...params) }; },
+        async first(column) { queryCount++; const row = db.prepare(sql).get(...params); return column ? row?.[column] : row || null; },
+        execute() { queryCount++; const r = db.prepare(sql).run(...params); return { success: true, meta: { changes: Number(r.changes) } }; },
+        async run() { return s.execute(); },
+      }; return s;
+    },
+    async batch(statements) {
+      batchCount++;
+      db.exec('BEGIN');
+      try { const results = statements.map(s => s.execute()); db.exec('COMMIT'); return results; }
+      catch (err) { db.exec('ROLLBACK'); throw err; }
+    },
+  };
+  return { db, DB };
+}
+const { db, DB } = makeDb(migrationFiles);
 const realNow = Date.now; let now = realNow(); Date.now = () => now;
-for (const [id, balance] of [['host', 100000], ['rival', 100000], ['third', 100000], ['poor', 0]]) {
+function addUser(db, id, balance) {
   db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)')
     .run(id, id, id, 'unused', 'gold', now, now);
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, balance, balance, now, '[]');
   db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
 }
-const env = { DB, ASSETS: { fetch: async request => {
+for (const [id, balance] of [['host', 100000], ['rival', 100000], ['third', 100000], ['poor', 0]]) addUser(db, id, balance);
+const ASSETS = { fetch: async request => {
   const path = new URL(request.url).pathname;
   try { return new Response(readFileSync(new URL('..' + path, import.meta.url)), { headers: { 'content-type': 'application/json' } }); }
   catch { return new Response('', { status: 404 }); }
-} } };
-async function api(path, method = 'GET', body, user = 'host', extraHeaders = {}) {
+} };
+const env = { DB, ASSETS };
+async function apiOn(target, path, method = 'GET', body, user = 'host', extraHeaders = {}) {
   const response = await worker.fetch(new Request('https://poke-pack.rip' + path, { method,
     headers: { 'content-type': 'application/json', origin: 'https://poke-pack.rip', ...(user ? { cookie: `pp_sid=${user}` } : {}), ...extraHeaders },
-    ...(body === undefined ? {} : { body: JSON.stringify(body) }) }), env);
+    ...(body === undefined ? {} : { body: JSON.stringify(body) }) }), target);
   return { status: response.status, ...await response.json() };
 }
-const coins = user => Math.round(db.prepare('SELECT coins FROM profiles WHERE user_id = ?').get(user).coins * 100);
+const api = (...args) => apiOn(env, ...args);
+const coinsIn = (db, user) => Math.round(db.prepare('SELECT coins FROM profiles WHERE user_id = ?').get(user).coins * 100);
+const coins = user => coinsIn(db, user);
 const owned = user => db.prepare('SELECT COALESCE(SUM(qty),0) n FROM cards WHERE user_id = ?').get(user).n;
-const create = (settings = {}, lineup = [{ key: 'me5:boosterPack', quantity: 2 }], user = 'host', requestId = crypto.randomUUID()) =>
-  api('/api/battles', 'POST', { requestId, settings, lineup }, user);
+const create = (settings = {}, lineup = [{ key: 'me5:boosterPack', quantity: 2 }], user = 'host', requestId = crypto.randomUUID(), extra = {}) =>
+  api('/api/battles', 'POST', { requestId, settings, lineup, ...extra }, user);
+const quick = (settings = {}, lineup = [{ key: 'me5:boosterPack', quantity: 2 }], user = 'host', requestId = crypto.randomUUID()) =>
+  create(settings, lineup, user, requestId, { quick: true });
+const cents = value => Math.round(value * 100);
+const act = (battleId, action, body = {}, user = 'host') => api(`/api/battles/${battleId}/${action}`, 'POST', body, user);
+const assertPersonas = battle => {
+  const bots = battle.seats.filter(s => s.bot);
+  assert.equal(new Set(bots.map(s => s.handle)).size, bots.length, 'bot personas are distinct within a battle');
+  for (const seat of bots) {
+    const persona = botPersona(seat);
+    assert.ok(persona, `bot handle ${seat.handle} names a persona`);
+    assert.equal(seat.handle, `bot:${persona.id}`); assert.equal(seat.name, persona.name); assert.equal(seat.color, persona.color);
+    assert.equal(seat.userId, null); assert.equal(seat.avatar, null); assert.equal(seat.avatarStyle, null);
+  }
+  for (const seat of battle.seats.filter(s => !s.bot)) {
+    assert.match(seat.avatar, /^\d+$/, 'human seats carry an avatar'); assert.ok(['art', 'pixel'].includes(seat.avatarStyle));
+  }
+  assert.equal(battle.soloHuman, battle.seats.filter(s => !s.bot).length === 1);
+};
 
 const catalog = await api('/api/battles/catalog', 'GET', undefined, null);
 assert.equal(catalog.status, 200);
@@ -100,20 +129,125 @@ assert.equal(db.prepare("SELECT COUNT(*) n FROM pack_log WHERE user_id IN ('host
 assert.equal(db.prepare("SELECT SUM(pulls) n FROM profiles WHERE user_id IN ('host','rival')").get().n, cardsGenerated);
 const oldCount = owned('host') + owned('rival'); await api(`/api/battles/${id}`); assert.equal(owned('host') + owned('rival'), oldCount);
 
-// Bots cost host real coins; cancelling refunds every payment once.
-const botBefore = coins('host'); const lobby = await create({ players: 3, private: true }); const bid = lobby.battle.id;
-const botEntry = Math.round(lobby.battle.entryCost * 100);
-assert.equal((await api(`/api/battles/${bid}/bot`, 'POST', { seat: 1 }, 'rival')).status, 403);
-assert.equal((await api(`/api/battles/${bid}/bot`, 'POST', {})).status, 400, 'bot retries require explicit seat');
-await Promise.all([api(`/api/battles/${bid}/bot`, 'POST', { seat: 1 }), api(`/api/battles/${bid}/bot`, 'POST', { seat: 1 })]);
-assert.equal(coins('host'), botBefore - 2 * botEntry);
-await api(`/api/battles/${bid}/join`, 'POST', { seat: 2 }, 'rival');
+// Bots are free in every path: explicit seat, fill, unbot, cancel. Only the
+// host's own entry ever moves, and cancelling refunds exactly that once.
+const botBefore = coins('host'); const lobby = await create({ players: 4, private: true }); const bid = lobby.battle.id;
+const botEntry = cents(lobby.battle.entryCost);
+assert.equal(coins('host'), botBefore - botEntry);
+assertPersonas(lobby.battle); assert.equal(lobby.battle.soloHuman, true);
+assert.equal((await act(bid, 'bot', { seat: 1 }, 'rival')).status, 403);
+assert.equal((await act(bid, 'bot', {})).status, 400, 'bot retries require explicit seat');
+assert.equal((await act(bid, 'bot', { seat: 9 })).status, 400);
+const botPair = await Promise.all([act(bid, 'bot', { seat: 1 }), act(bid, 'bot', { seat: 1 })]);
+assert.ok(botPair.every(r => r.status === 200), JSON.stringify(botPair.map(r => r.error)));
+assert.equal(coins('host'), botBefore - botEntry, 'calling a bot is free');
+assert.equal((await act(bid, 'unbot', { seat: 1 }, 'rival')).status, 403);
+await Promise.all([act(bid, 'unbot', { seat: 1 }), act(bid, 'unbot', { seat: 1 })]);
+let botView = (await api(`/api/battles/${bid}`)).battle;
+assert.ok(!botView.seats.some(s => s.seat === 1), 'unbot empties the seat');
+assert.equal(coins('host'), botBefore - botEntry, 'removing a free bot refunds nothing');
+assert.equal((await act(bid, 'unbot', { seat: 0 })).status, 409, 'unbot never removes a player');
+const filled = await act(bid, 'bot', { fill: true });
+assert.equal(filled.status, 200); assert.equal(filled.battle.seats.length, 4); assertPersonas(filled.battle);
+assert.equal(coins('host'), botBefore - botEntry, 'filling with bots is free');
+assert.equal((await act(bid, 'bot', { fill: true })).battle.seats.length, 4, 'fill on a full table is a no-op');
+assert.equal(db.prepare("SELECT COUNT(*) n FROM battle_seats WHERE battle_id=? AND bot=1 AND payer_id='free'").get(bid).n, 3);
+await act(bid, 'unbot', { seat: 3 });
+assert.equal((await act(bid, 'join', { seat: 3 }, 'rival')).status, 200);
+botView = (await api(`/api/battles/${bid}`, 'GET', undefined, null)).battle;
+assertPersonas(botView); assert.equal(botView.soloHuman, false);
+assert.equal(botView.seats.find(s => s.seat === 0).avatar, '25', 'default avatar for a fresh account');
 const listing = await api('/api/battles', 'GET', undefined, null);
 assert.ok(!listing.battles.some(b => b.id === bid), 'unlisted omitted from lobby feed');
 assert.equal((await api(`/api/battles/${bid}`, 'GET', undefined, null)).status, 200, 'share link allows spectating');
-await Promise.all([api(`/api/battles/${bid}/cancel`, 'POST', {}), api(`/api/battles/${bid}/cancel`, 'POST', {})]);
-assert.equal(coins('host'), botBefore, 'host and bot refunded once');
+assert.throws(() => db.prepare('DELETE FROM profiles WHERE user_id=?').run('host'), /active battles/, 'account delete still blocked by a lobby');
+await Promise.all([act(bid, 'cancel'), act(bid, 'cancel')]);
+assert.equal(coins('host'), botBefore, 'host refunded its own entry once, bots refund nothing');
 assert.equal(coins('rival'), 10000000 - entry, 'rival refunded once');
+assert.equal(db.prepare("SELECT COUNT(*) n FROM profiles WHERE user_id='free'").get().n, 0);
+// The database itself refuses paid bots and free players.
+assert.throws(() => db.prepare('INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)')
+  .run(id, 1, null, 'host', 'Bot', 'bot:x', 'gold', 1), /no longer accepting|Bots play free/);
+const guard = await create({ players: 3 });
+assert.throws(() => db.prepare('INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)')
+  .run(guard.battle.id, 1, null, 'host', 'Bot', 'bot:x', 'gold', 1), /Bots play free/);
+assert.throws(() => db.prepare('INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)')
+  .run(guard.battle.id, 1, 'rival', 'free', 'rival', 'rival', 'gold', 0), /Bots play free/);
+// Host leave (the cancel path) with bots seated.
+await act(guard.battle.id, 'bot', { fill: true }); await act(guard.battle.id, 'leave');
+assert.equal((await api(`/api/battles/${guard.battle.id}`)).battle.status, 'cancelled');
+assert.equal(coins('host'), botBefore, 'host leave refunds the host only');
+// 24h expiry with bots seated.
+const expiring = await create({ players: 4 }); await act(expiring.battle.id, 'bot', { fill: true });
+db.prepare('UPDATE battles SET expires_at=? WHERE id=?').run(realNow() - 1, expiring.battle.id);
+await api('/api/battles'); assert.equal((await api(`/api/battles/${expiring.battle.id}`)).battle.status, 'cancelled');
+assert.equal(coins('host'), botBefore, 'expiry refunds the host only');
+
+// Concurrent bot calls on different seats never share a persona (the index
+// rejects a clash and the loser draws again).
+for (let i = 0; i < 12; i++) {
+  const race = await create({ players: 4, private: true });
+  const calls = await Promise.all([1, 2, 3].map(seat => act(race.battle.id, 'bot', { seat })));
+  assert.ok(calls.every(r => r.status === 200), JSON.stringify(calls.map(r => r.error)));
+  const raced = (await api(`/api/battles/${race.battle.id}`)).battle;
+  assert.equal(raced.seats.length, 4); assertPersonas(raced);
+  await act(race.battle.id, 'cancel');
+}
+assert.equal(coins('host'), botBefore);
+
+// Timing: a 3.5 s intro, 6 s rounds (2.6 s fast).
+const timed = await create({}, [{ key: 'me5:boosterPack', quantity: 1 }]); await act(timed.battle.id, 'bot', { seat: 1 });
+const timedStart = (await act(timed.battle.id, 'start')).battle;
+assert.equal(timedStart.startsAt, now + 3500); assert.equal(timedStart.roundMs, 6000);
+assert.equal(timedStart.endsAt, timedStart.startsAt + 6000);
+
+// Quick battle: one request creates, seats free bots and starts. Retries are idempotent.
+const quickBefore = coins('host'); const quickKey = crypto.randomUUID();
+const [q1, q2] = await Promise.all([quick({ players: 3, fast: true }, undefined, 'host', quickKey), quick({ players: 3, fast: true }, undefined, 'host', quickKey)]);
+assert.equal(q1.status, 200, JSON.stringify(q1)); assert.equal(q2.status, 200, JSON.stringify(q2));
+assert.equal(q1.battle.id, q2.battle.id);
+const qb = q1.battle;
+assert.equal(qb.status, 'running'); assert.equal(qb.seats.length, 3); assertPersonas(qb); assert.equal(qb.soloHuman, true);
+assert.equal(qb.roundMs, 2600); assert.equal(qb.startsAt, now + 3500); assert.equal(qb.rounds.length, 0, 'no round leaks at start');
+assert.equal(coins('host'), quickBefore - cents(qb.entryCost), 'quick battle charges only the host entry');
+const qRetry = await quick({ players: 3, fast: true }, undefined, 'host', quickKey);
+assert.equal(qRetry.battle.id, qb.id); assert.equal(qRetry.battle.startsAt, qb.startsAt, 'retry keeps outcome/time');
+assert.equal(coins('host'), quickBefore - cents(qb.entryCost));
+assert.equal((await quick({}, undefined, 'poor')).status, 409);
+assert.equal(db.prepare("SELECT COUNT(*) n FROM battles WHERE host_id='poor'").get().n, 0, 'failed quick create rolls back');
+assert.equal((await create({}, undefined, 'host', crypto.randomUUID(), { quick: 'yes' })).status, 400);
+// A quick create interrupted before starting (still a lobby) is finished by its retry.
+const halfKey = crypto.randomUUID(); const half = await create({ players: 2 }, undefined, 'host', halfKey);
+const resumed = await quick({ players: 2 }, undefined, 'host', halfKey);
+assert.equal(resumed.battle.id, half.battle.id); assert.equal(resumed.battle.status, 'running'); assertPersonas(resumed.battle);
+assert.equal(coins('host'), quickBefore - cents(qb.entryCost) - cents(half.battle.entryCost), 'resuming charges nothing more');
+
+// Skip: only the single human at a running table, and it settles at once, exactly once.
+assert.equal((await act(qb.id, 'skip', {}, 'rival')).status, 403, 'a spectator cannot skip');
+const skipCardsBefore = owned('host'); const skipCoinsBefore = coins('host');
+const skips = await Promise.all([act(qb.id, 'skip'), act(qb.id, 'skip')]);
+assert.ok(skips.every(r => r.status === 200), JSON.stringify(skips.map(r => r.error)));
+const skipped = skips[0].battle;
+assert.equal(skipped.status, 'finished'); assert.equal(skipped.revealedRounds, skipped.roundCount);
+assert.equal(skipped.rounds.length, skipped.roundCount); assert.ok(skipped.result);
+assert.ok(skipped.endsAt <= now && skipped.startsAt + skipped.roundCount * skipped.roundMs === skipped.endsAt);
+assert.equal(db.prepare('SELECT COUNT(*) n FROM battle_settlements WHERE battle_id=?').get(qb.id).n, 1);
+const hostAlloc = skipped.result.allocations.find(a => a.seat === 0)?.cardCount || 0;
+assert.equal(owned('host') - skipCardsBefore, hostAlloc, 'skip awards exactly once');
+assert.equal((await act(qb.id, 'skip')).battle.status, 'finished', 'skip retry is a no-op');
+assert.equal(owned('host') - skipCardsBefore, hostAlloc);
+assert.equal(coins('host'), skipCoinsBefore, 'settling never pays coins, whoever wins');
+const lobbySkip = await create(); await act(lobbySkip.battle.id, 'bot', { seat: 1 });
+assert.equal((await act(lobbySkip.battle.id, 'skip')).status, 409, 'cannot skip a lobby');
+const duo = await create({}, [{ key: 'me5:boosterPack', quantity: 1 }]); await act(duo.battle.id, 'join', {}, 'rival');
+await act(duo.battle.id, 'start');
+assert.equal((await act(duo.battle.id, 'skip')).status, 403, 'two humans cannot skip');
+assert.equal((await act(duo.battle.id, 'skip', {}, 'rival')).status, 403);
+const duoView = (await api(`/api/battles/${duo.battle.id}`)).battle;
+assert.equal(duoView.status, 'running'); assert.equal(duoView.rounds.length, 0, 'failed skip reveals nothing');
+assert.equal((await act(lobbySkip.battle.id, 'unbot', { seat: 1 })).status, 200);
+assert.equal((await act(qb.id, 'unbot', { seat: 1 })).status, 409, 'cannot remove a bot after the start');
+await act(lobbySkip.battle.id, 'cancel');
 
 // Nonhost leave retries refund once; expiry uses identical cancellation path.
 const leaving = await create(); await api(`/api/battles/${leaving.battle.id}/join`, 'POST', {}, 'third');
@@ -197,10 +331,13 @@ const raceAward = raceFinished.battle.result.allocations.find(a => a.seat === 0)
 assert.equal(owned('third'), raceBefore + raceAward + ripOne.cards.length + ripTwo.cards.length, 'stale upsert cannot overwrite battle award or another rip');
 
 // Duplicate liquidation compares each card snapshot and pays once, even with many priced rows.
+// Seed one sure duplicate: random pulls alone sometimes leave none to sell.
+db.prepare('INSERT INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,?,?) ON CONFLICT(user_id,card_id) DO UPDATE SET qty=cards.qty+2')
+  .run('third', 'me5-1', 2, 0);
 const duplicateBefore = coins('third');
 const duplicates = await Promise.all([api('/api/cards/sell-duplicates', 'POST', { setId: 'me5' }, 'third'),
   api('/api/cards/sell-duplicates', 'POST', { setId: 'me5' }, 'third')]);
-assert.equal(duplicates.filter(r => r.status === 200).length, 1);
+assert.equal(duplicates.filter(r => r.status === 200).length, 1, JSON.stringify(duplicates.map(r => [r.status, r.error])));
 assert.equal(coins('third') - duplicateBefore, Math.round(duplicates.find(r => r.status === 200).value * 100));
 assert.equal(db.prepare("SELECT COUNT(*) n FROM cards WHERE user_id='third' AND card_id LIKE 'me5-%' AND qty>1").get().n, 0);
 
@@ -233,7 +370,7 @@ for (let i = 0; i < 115; i++) {
   db.prepare('INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)')
     .run(fid, 0, 'host', 'host', 'host', 'host', 'gold', 0);
   db.prepare('INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)')
-    .run(fid, 1, null, 'host', 'Bot 2', 'practice-bot', 'silver', 1);
+    .run(fid, 1, null, 'free', 'Sparky', 'bot:sparky', 'gold', 1);
   if (i < 40) db.prepare(`UPDATE battles SET status='running',starts_at=?,ends_at=?,round_ms=1600,outcomes=?,result=? WHERE id=?`)
     .run(now - 2000, now - 1, fixtureOutcomes, fixtureResult, fid);
   else db.prepare('UPDATE battles SET expires_at=? WHERE id=?').run(realNow() - 1, fid);
@@ -246,12 +383,74 @@ assert.ok(backlogFeed.battles.every(b => b.seats.length === 2 && b.rounds.length
 assert.equal(feedQueries, 5, `Full feed and backlog used ${feedQueries} D1 statements`);
 assert.equal(db.prepare("SELECT COUNT(*) n FROM battles WHERE id LIKE 'query-fixture-%' AND status='cancelled'").get().n, 75);
 assert.equal(db.prepare("SELECT COUNT(*) n FROM battles WHERE id LIKE 'query-fixture-%' AND status='finished'").get().n, 10);
-assert.equal(coins('host') - beforeBacklogCoins, 150, 'set-based expiry refunds both paid seats once');
+assert.equal(coins('host') - beforeBacklogCoins, 75, 'set-based expiry refunds the paid seat once, free bots nothing');
 assert.equal(owned('host') - beforeBacklogCards, 10, 'bounded set-based settlement awards exactly once');
 // Later ticks finish the remaining backlog without expanding the query count.
 for (let tick = 0; tick < 3; tick++) { queryCount = 0; await api('/api/battles'); assert.equal(queryCount, 5); }
 assert.equal(db.prepare("SELECT COUNT(*) n FROM battles WHERE id LIKE 'query-fixture-%' AND status='finished'").get().n, 40);
-assert.equal(owned('host') - beforeBacklogCards, 40); assert.equal(coins('host') - beforeBacklogCoins, 150);
+assert.equal(owned('host') - beforeBacklogCards, 40); assert.equal(coins('host') - beforeBacklogCoins, 75);
+
+// Production upgrade: a database at 0012 (nobody can run remote migrations)
+// with lobbies whose bots the host paid for under the old rules. The Worker
+// rewrites its own triggers once, atomically; paid bots still refund their
+// payer once, new bots are free, and the result matches 0013 exactly.
+const freeObjects = db => db.prepare(`SELECT type, name, tbl_name, sql FROM sqlite_master WHERE name IN
+  ('battle_seat_refund','battle_seat_validate','battle_seat_debit','battle_bot_persona') ORDER BY name`).all();
+const legacy = makeDb(migrationFiles.filter(file => file < '0013'));
+assert.ok(freeObjects(legacy.db).every(o => !o.sql.includes("'free'")));
+legacy.db.exec("ALTER TABLE users ADD COLUMN avatar_style TEXT NOT NULL DEFAULT 'art'"); // added in production by social.js
+for (const [uid, balance] of [['host', 100000], ['rival', 100000]]) addUser(legacy.db, uid, balance);
+const legacyEnv = { DB: legacy.DB, ASSETS };
+const legacyApi = (...args) => apiOn(legacyEnv, ...args);
+const legacyCoins = user => coinsIn(legacy.db, user);
+const legacyPlan = JSON.stringify([{ index: 0, kind: 'pack', setId: 'me5', setName: 'Perfect Order',
+  productKey: 'me5:boosterPack', productName: 'Booster pack', wrapperId: 'fixture', image: '' }]);
+const legacyLobby = (lid, players, bots) => {
+  legacy.db.prepare(`INSERT INTO battles(id,host_id,request_id,settings,lineup,plan,entry_cost,created_at,expires_at)
+    VALUES(?,?,?,?,?,?,?,?,?)`).run(lid, 'host', lid, JSON.stringify(battleSettings({ players })), '[]', legacyPlan, 5, now, realNow() + 86400000);
+  const insert = legacy.db.prepare('INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)');
+  insert.run(lid, 0, 'host', 'host', 'host', 'host', 'gold', 0);
+  for (const seat of bots) insert.run(lid, seat, null, 'host', `Bot ${seat + 1}`, 'practice-bot', 'silver', 1);
+};
+const legacyStart = legacyCoins('host');
+legacyLobby('legacy-cancel', 4, [1, 2]); legacyLobby('legacy-unbot', 3, [1, 2]); legacyLobby('legacy-expire', 2, [1]);
+assert.equal(legacyCoins('host'), legacyStart - 8 * 500, 'the 0012 triggers charged the host for each bot');
+resetBattleSchemaCache(); batchCount = 0; queryCount = 0;
+const upgraded = await Promise.all([legacyApi('/api/battles/legacy-cancel'), legacyApi('/api/battles/legacy-cancel')]);
+assert.ok(upgraded.every(r => r.status === 200));
+assert.deepEqual(freeObjects(legacy.db), freeObjects(db), 'runtime step and 0013 file produce the same schema');
+const legacyView = upgraded[0].battle;
+assertPersonas(legacyView); assert.equal(legacyView.soloHuman, true);
+assert.equal(legacy.db.prepare("SELECT COUNT(*) n FROM battle_seats WHERE handle='practice-bot'").get().n, 5, 'legacy rows are not rewritten');
+// Mixed table: two paid legacy bots plus one new free bot, then cancel.
+const mixed = await legacyApi('/api/battles/legacy-cancel/bot', 'POST', { fill: true });
+assert.equal(mixed.status, 200); assertPersonas(mixed.battle);
+assert.deepEqual(mixed.battle.seats.filter(s => s.seat < 3).map(s => s.handle), legacyView.seats.map(s => s.handle), 'legacy bots keep their shown persona');
+assert.equal(legacyCoins('host'), legacyStart - 8 * 500, 'new bot on an upgraded database is free');
+await Promise.all([legacyApi('/api/battles/legacy-cancel/cancel', 'POST', {}), legacyApi('/api/battles/legacy-cancel/cancel', 'POST', {})]);
+assert.equal(legacyCoins('host'), legacyStart - 5 * 500, 'cancel refunds the host seat and both paid bots once');
+// Unbot a paid legacy bot: refunds its payer once.
+await Promise.all([legacyApi('/api/battles/legacy-unbot/unbot', 'POST', { seat: 1 }), legacyApi('/api/battles/legacy-unbot/unbot', 'POST', { seat: 1 })]);
+assert.equal(legacyCoins('host'), legacyStart - 4 * 500, 'unbot refunds a paid legacy bot once');
+await legacyApi('/api/battles/legacy-unbot/bot', 'POST', { seat: 1 });
+await legacyApi('/api/battles/legacy-unbot/unbot', 'POST', { seat: 1 });
+assert.equal(legacyCoins('host'), legacyStart - 4 * 500, 'a free bot in the same seat refunds nothing');
+// Replaying 0013 (someone runs migrations apply later) changes nothing.
+legacy.db.exec(migrationSql('0013_free_bots.sql'));
+assert.deepEqual(freeObjects(legacy.db), freeObjects(db));
+// Expiry of a paid legacy bot refunds it through the set-based maintenance path.
+legacy.db.prepare('UPDATE battles SET expires_at=? WHERE id=?').run(realNow() - 1, 'legacy-expire');
+await legacyApi('/api/battles');
+assert.equal(legacyCoins('host'), legacyStart - 2 * 500, 'expiry refunds host seat and paid legacy bot once');
+await legacyApi('/api/battles/legacy-unbot/cancel', 'POST', {});
+assert.equal(legacyCoins('host'), legacyStart, 'every legacy payment came back exactly once');
+// A database that already ran 0013 is detected with one read and left alone.
+resetBattleSchemaCache(); batchCount = 0; queryCount = 0;
+const beforeCheck = JSON.stringify(freeObjects(db));
+await api('/api/battles', 'GET', undefined, null);
+assert.equal(batchCount, 1, 'only maintenance batches; no schema rewrite'); assert.equal(JSON.stringify(freeObjects(db)), beforeCheck);
+assert.equal(queryCount, 6, 'one sqlite_master read on top of the usual five statements');
+queryCount = 0; await api('/api/battles', 'GET', undefined, null); assert.equal(queryCount, 5, 'cached after the first request');
 
 Date.now = realNow;
-console.log(`Pack battles: ${catalog.products.length} real products; escrow, retries, races, timed secrecy, awards, bots, promos, mixed sets, rules, concurrent sells/rips, ${rowBytes}-byte maximum lineup and ${feedQueries}-query full feed/backlog passed.`);
+console.log(`Pack battles: ${catalog.products.length} real products; escrow, retries, races, timed secrecy, awards, free bots (fill, unbot, quick, skip, personas, legacy paid-bot refunds, runtime 0013 upgrade), promos, mixed sets, rules, concurrent sells/rips, ${rowBytes}-byte maximum lineup and ${feedQueries}-query full feed/backlog passed.`);
