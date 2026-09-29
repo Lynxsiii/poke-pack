@@ -45,7 +45,7 @@ full-art family reuses the Scarlet & Violet Ultra Rare and gold recipes in
 | Trainer Gallery Rare Holo (TG, GG) | yes | yes | `foil-ex swsh-tg` |
 | Radiant Rare | yes | no | `foil-holo swsh-radiant` |
 | Amazing Rare | window | no | `foil-holo swsh-amazing` |
-| Rare Shiny (Shiny Vault) | yes | yes | `swsh-shiny` + the holo, V or VMAX classes |
+| Rare Shiny (Shiny Vault, SV001-SV120) | yes | yes (native, `etchHd`) | `foil-holo sf-shiny`, `foil-ex sf-shiny sf-v`, `foil-ex sf-shiny sf-vmax` (shiny-vault.css, no swsh-* class) |
 | Celebrations 001-025 Rare / Rare Holo | dropped (whole face) | no | `foil-holo swsh-holo swsh-cel` |
 | Classic Collection (cel25) | none (whole face) | drawn for cc15-here, cc15-rockets | `foil-holo swsh-holo swsh-classic[ swsh-classic-full]` |
 | Reverse (C, U, R, Rare Holo) | tile per type | no | `foil-reverse rev-swsh rev-<type>` |
@@ -137,7 +137,19 @@ art out at 30:25.
   card: the cracked-ice tile at 44% with a 45° rainbow, an exclusion twin
   and drifting bands.
 - **Shiny Vault**: silver with fine sparkle etch and a rainbow wash; the
-  babies also carry a silver frame.
+  babies also carry a silver frame. Since 2026-09-29 the shinies are drawn
+  by `css/holo/shiny-vault.css` (`sf-shiny`, the "Shiny and promo holos"
+  thread): a port of upstream's `shiny-rare.css`, `shiny-v.css` and
+  `shiny-vmax.css` onto the site's layers, over TCG Live's etch at its
+  native 733 px (`<n>-etch-hd.webp`, `--etch-hd`) soft-lit on a dark
+  ground so only the rings catch the colour dodge. `swshPattern()` gives
+  them no `swsh-*` class, so the era-only rules in swsh.css (the vars, the
+  `.foil-ultra.has-foil-map` filters) stay out of them, and swsh.css's
+  `.swsh-shiny` block is dead. Measured at the same flat pose (mean, std,
+  high-frequency energy, saturation) they sit within a few levels of the
+  demo; the VMAX glares stop at 25% grey instead of upstream's black
+  because the black dotted Charizard's ink (`dark_specks.py`, 138 on
+  SV107).
 - **Reverse**: chevron tiles per type, `assets/foil/swsh-reverse/`.
 
 ## Benchmark: poke-holo.simey.me (2026-09-29)
