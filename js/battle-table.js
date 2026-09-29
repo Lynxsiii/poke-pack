@@ -7,6 +7,7 @@
    owns every pull and the clock: a round appears in `battle.rounds` only once
    the server has revealed it, and its animation plays until the next one is due. */
 import { api } from "./api.js";
+import { tintFrom } from "./fx.js";
 import { createReveal } from "./battle-reveal.js";
 import { esc, coins, coinTag, icon, wrapperArt, seatAvatar, hitTier } from "./battle-kit.js";
 // Same specifier as the router, so this is the same module instance (the
@@ -54,6 +55,13 @@ export function createTable(ctx) {
   const html = new Map();          // last HTML per region, so polls don't churn the DOM
   let laneKey = "", bestCards = [], inviteOpen = false;
   const refreshed = new Set();
+  // Every response is stamped; one that lands after a newer one was accepted
+  // (a poll in flight while Start or Skip went out) is dropped.
+  let reqSeq = 0, acceptedSeq = 0;
+  // The page takes its light from the wrapper on the table, as the hall does,
+  // and hands the previous light back when the table goes.
+  let ambientBefore = null, ambientSrc = "";
+  const RESOLVE_MS = 2500;
 
   /* ---- Small helpers ---------------------------------------------------- */
   const alive = (g) => g === gen && visible;
@@ -92,6 +100,8 @@ export function createTable(ctx) {
   function show(nextId) {
     hide();
     visible = true;
+    ambientBefore = document.body.style.getPropertyValue("--ambient");
+    ambientSrc = "";
     id = String(nextId || "");
     battle = null; view = "loading"; loadError = null; netError = false; busy = false;
     shownRound = -1; stale = false; playing = null; finishing = false; finaleDone = false; sawLive = false;
@@ -124,7 +134,42 @@ export function createTable(ctx) {
     timers.clear();
     replayToken++; stageToken++;
     playing = null; finishing = false;
+    cancelAnimationFrame(floatRaf); floatRaf = 0;
     R("stop");
+    if (ambientBefore !== null) {
+      if (ambientBefore) document.body.style.setProperty("--ambient", ambientBefore);
+      else document.body.style.removeProperty("--ambient");
+      ambientBefore = null;
+    }
+    ambientSrc = "";
+  }
+
+  /** Light the page from the wrapper (or box) on the table right now. */
+  function tintTable() {
+    if (!battle || !visible) return;
+    const index = ["intro", "live", "replay"].includes(view) ? Math.max(0, shownRound) : 0;
+    const plan = planAt(index);
+    const first = battle.lineup?.[0];
+    const src = plan.image || wrapperArt(plan.setId) || first?.image || wrapperArt(first?.setId) || "";
+    if (!src || src === ambientSrc) return;
+    ambientSrc = src;
+    const g = gen;
+    const img = new Image();
+    img.decoding = "async";
+    const apply = () => { if (alive(g) && ambientSrc === src) tintFrom(img); };
+    img.addEventListener("load", apply, { once: true });
+    img.src = src;
+    if (img.complete && img.naturalWidth) apply();
+  }
+
+  /** Card records for the reveal, never waiting on set data for long. */
+  function resolveSoon(cards) {
+    const raw = cards || [];
+    if (!ctx.resolveCards) return Promise.resolve(raw);
+    let timer = 0;
+    const late = new Promise((resolve) => { timer = setTimeout(() => resolve(raw), RESOLVE_MS); });
+    return Promise.race([Promise.resolve(ctx.resolveCards(raw)).then((r) => r || raw, () => raw), late])
+      .finally(() => clearTimeout(timer));
   }
 
   function measureHeader() {
@@ -137,9 +182,12 @@ export function createTable(ctx) {
     clearTimeout(pollTimer);
     if (!visible || !id) return;
     const g = gen;
+    const seq = ++reqSeq;
     try {
       const data = await api(`/api/battles/${encodeURIComponent(id)}`);
       if (!alive(g)) return;
+      if (seq < acceptedSeq) { schedulePoll(); return; }
+      acceptedSeq = seq;
       ctx.clock?.sync?.(data.serverNow);
       if (data.save) ctx.applySave?.(data.save);
       netError = false; loadError = null;
@@ -179,8 +227,15 @@ export function createTable(ctx) {
     battle.roundMs = Number(battle.roundMs) || (battle.settings?.fast ? 2600 : 6000);
     const now = Number(serverNow) || ctx.clock.now();
     if (battle.status === "running" && now >= battle.startsAt && battle.revealedRounds < battle.roundCount) {
-      const elapsed = Math.floor((now - battle.startsAt) / battle.roundMs);
-      roundBase = Math.max(0, Math.min(1, battle.revealedRounds - elapsed));
+      // The spec reveals round i at startsAt + i*roundMs (base 1). An older
+      // server revealed it one round later (base 0); only believe that when
+      // the gap is a whole round, well away from a round boundary.
+      const since = now - battle.startsAt;
+      const elapsed = Math.floor(since / battle.roundMs);
+      const into = since - elapsed * battle.roundMs;
+      const gap = battle.revealedRounds - elapsed;
+      if (gap >= 1) roundBase = 1;
+      else if (gap <= 0 && into > 500 && into < battle.roundMs - 500) roundBase = 0;
     }
     update();
   }
@@ -208,9 +263,11 @@ export function createTable(ctx) {
     const g = gen;
     busy = true; syncBusy();
     clearTimeout(pollTimer);
+    const seq = ++reqSeq;
     try {
       const data = await api(`/api/battles/${encodeURIComponent(battle.id)}/${action}`, { method: "POST", body: JSON.stringify(body) });
       if (!alive(g)) return null;
+      acceptedSeq = Math.max(acceptedSeq, seq);
       ctx.clock?.sync?.(data.serverNow);
       if (data.save) ctx.applySave?.(data.save);
       busy = false;
@@ -622,7 +679,7 @@ export function createTable(ctx) {
   async function laneData(roundIndex, cardsFor) {
     const plan = planAt(roundIndex);
     const lanes = laneEls();
-    const resolved = await Promise.all(lanes.map((l) => Promise.resolve(ctx.resolveCards?.(cardsFor(l.seat)) ?? cardsFor(l.seat)).catch(() => cardsFor(l.seat))));
+    const resolved = await Promise.all(lanes.map((l) => resolveSoon(cardsFor(l.seat))));
     return lanes.map((l, k) => ({
       seat: l.seat, el: l.el, cards: resolved[k] || [],
       value: (resolved[k] || []).reduce((t, c) => t + Number(c.value || 0), 0),
@@ -698,12 +755,14 @@ export function createTable(ctx) {
     const job = onTime && motion() && left > Math.min(1400, battle.roundMs * 0.5) && !document.hidden
       ? playRoundAt(target, left - 120)
       : showRoundAt(target);
-    playing = job.finally(() => {
-      if (!alive(g)) return;
+    const mine = job.finally(() => {
+      // A job the page gave up on (hidden tab) must not clear a newer one.
+      if (!alive(g) || playing !== mine) return;
       playing = null;
       if (battle.status === "finished" && !finishing && view === "live") runFinish();
       else syncRounds();
     });
+    playing = mine;
   }
 
   /* ---- Intro: 3-2-1 over the table --------------------------------------- */
@@ -724,7 +783,7 @@ export function createTable(ctx) {
   }
 
   function ensureTicker() {
-    const want = ["intro", "live", "replay"].includes(view) && visible;
+    const want = ["intro", "live", "replay"].includes(view) && visible && !document.hidden;
     if (want && !tickTimer) tickTimer = setInterval(tick, 200);
     if (!want && tickTimer) { clearInterval(tickTimer); tickTimer = 0; }
   }
@@ -961,7 +1020,7 @@ export function createTable(ctx) {
   async function fillBestPulls() {
     const g = gen;
     const top = allPulls().sort((a, b) => cents(b.card.value) - cents(a.card.value) || a.round - b.round).slice(0, 6);
-    const resolved = await Promise.resolve(ctx.resolveCards?.(top.map((t) => t.card)) ?? top.map((t) => t.card)).catch(() => top.map((t) => t.card));
+    const resolved = await resolveSoon(top.map((t) => t.card));
     if (!alive(g) || view !== "result") return;
     bestCards = top.map((t, k) => ({ ...t, card: resolved[k] || t.card }));
     const el = host.querySelector('[data-region="best"]');
@@ -1072,9 +1131,12 @@ export function createTable(ctx) {
     if (busy || !battle) return;
     const g = gen;
     busy = true; syncBusy();
+    clearTimeout(pollTimer);
+    const seq = ++reqSeq;
     try {
       const data = await api(`/api/battles/${encodeURIComponent(battle.id)}/bot`, { method: "POST", body: JSON.stringify({ fill: true }) });
       if (!alive(g)) return;
+      acceptedSeq = Math.max(acceptedSeq, seq);
       ctx.clock?.sync?.(data.serverNow);
       if (data.save) ctx.applySave?.(data.save);
       busy = false;
@@ -1212,6 +1274,7 @@ export function createTable(ctx) {
     if (!visible || !battle) return;
     if (document.hidden) {
       clearTimeout(pollTimer);
+      ensureTicker();
       if (view === "live" && (playing || shownRound >= 0)) {
         // The reveal can't keep time in a hidden tab: stop it and jump to the
         // server's newest round on return.
@@ -1224,6 +1287,7 @@ export function createTable(ctx) {
     }
     measureHeader();
     if (view === "live" && !finishing) stale = true;
+    ensureTicker();
     poll();
   });
   addEventListener("resize", () => { if (visible) { measureHeader(); updateFloats(); } }, { passive: true });
