@@ -626,34 +626,40 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .glare {
 }
 
 /* ---- RGB Mew: RGB / ETCHED ---------------------------------------------------
-   Coloured transparent ink on mirror foil, a foil type of its own. TCG Live
-   packs three regions into the map's channels: G is the whole card (Mew at
-   half strength), B the sunburst streaks where no ink covers the silver, R
-   Mew's highlights and the frame lines, bare silver with fine diagonal
-   ridges. Under the light the colours go luminous and the streaks blaze
-   white; at a glancing angle a milky sheen washes over.
-   The silver runs under the whole card, frame and text box included, and
-   sparkles all over in hand, so the base layer ignores the map (whose G
-   channel dims Mew and the text box) and covers the card; the channel masks
-   still pick out the streaks and ridges. */
+   Transparent coloured ink over a mirror foil, a foil type of its own
+   (rebuilt 2026-09-29 from the PokeBeach and PayPay photos, at phone size).
+   What the photos show: at rest the card is simply its colour, glossy. Tilt
+   it and one broad mirror reflection sweeps across the whole card, frame and
+   text box included; under it the ink goes luminous (the red turns to
+   orange-salmon, the blue Mew to periwinkle) while the bare-silver parts
+   blaze white: the sunburst streaks behind Mew (TCG Live's B channel) and
+   Mew's belly, eye and tail highlights plus the frame lines (the R channel),
+   which are striped chrome. Over everything a fingerprint-like relief field
+   catches the light as a satin sheen; Mew and the frame are smooth.
+   Not on the card: glitter, and hairline stripes (the 1px ridges the first
+   recipe drew aliased into a line screen over Mew on a phone). */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil {
-  --shift: 3px;
+  /* The mirror: one reflection band that slides with the tilt, and the pool
+     under the pointer. Mostly black, so the dodge lights only the band. The
+     peak stays under white: a 1.0 channel colour-dodged over dark ink draws
+     as blocks in WebKit. */
   background-image:
-    var(--holo-glitter),
+    linear-gradient(115deg,
+      #000 36%, hsl(0, 0%, 18%) 43%, hsl(330, 10%, 46%) 48%, hsl(330, 12%, 54%) 50%,
+      hsl(330, 10%, 46%) 52%, hsl(0, 0%, 18%) 57%, #000 64%),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 62%) 0%, hsl(0, 0%, 46%) 20%, hsl(0, 0%, 24%) 60%, hsl(0, 0%, 12%) 100%),
-    linear-gradient(hsla(0, 0%, 100%, calc(var(--pointer-from-center) * 0.16)),
-      hsla(0, 0%, 100%, calc(var(--pointer-from-center) * 0.16)));
-  background-size: 25% auto, cover, cover;
+      hsl(0, 0%, 36%) 0%, hsl(0, 0%, 16%) 16%, #000 42%);
+  background-size: 300% 300%, cover;
   background-position:
-    calc(50% + (var(--pointer-from-left) - 0.5) * var(--shift)) calc(50% + (var(--pointer-from-top) - 0.5) * var(--shift)),
-    center,
+    calc(((50% - var(--background-x)) * 3) + 50%) calc(((50% - var(--background-y)) * 1.6) + 50%),
     center;
-  background-blend-mode: overlay, screen;
-  filter: brightness(calc(0.72 + var(--pointer-from-center) * 0.18)) contrast(1.25) saturate(1.4);
+  background-blend-mode: screen;
+  filter: brightness(calc(0.6 + var(--pointer-from-center) * 0.3));
   mix-blend-mode: color-dodge;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb.has-foil-map .foil {
+  /* The silver runs under the whole card, so the base ignores the map (its
+     G channel dims Mew and the text box) and takes only the card's shape. */
   -webkit-mask-image: var(--art);
   -webkit-mask-composite: source-over;
   mask-image: var(--art);
@@ -661,9 +667,19 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb.has-foil-map .foil {
   -webkit-mask-size: contain;
   mask-size: contain;
 }
+/* The sunburst streaks: bare silver, so they blaze white wherever the
+   reflection reaches, with a faint prism at its edge. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::before {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #fff 0%, hsl(200, 30%, 88%) 22%, hsl(260, 15%, 42%) 55%, #1a1a1a 100%);
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, hsl(0, 0%, 88%) 8%, hsl(210, 18%, 40%) 28%, hsl(250, 12%, 8%) 55%, #000 80%),
+    linear-gradient(115deg,
+      #000 38%, hsl(45, 30%, 45%) 46%, hsl(0, 0%, 92%) 50%, hsl(200, 40%, 50%) 54%, #000 62%);
+  background-size: cover, 300% 300%;
+  background-position:
+    center,
+    calc(((50% - var(--background-x)) * 3) + 50%) calc(((50% - var(--background-y)) * 1.6) + 50%);
+  background-blend-mode: screen;
   -webkit-mask-image: var(--foil-map-b);
   mask-image: var(--foil-map-b);
   -webkit-mask-size: 100% 100%;
@@ -671,29 +687,56 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::before {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   mix-blend-mode: screen;
+  filter: brightness(calc(0.55 + var(--pointer-from-center) * 0.4));
 }
+/* Mew's highlights and the frame lines: striped chrome. Soft, wide
+   striations (a 7px period at low contrast, never hairlines) over a rainbow
+   that slides along the ridges, lit from the pointer. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::after {
   background-image:
-    repeating-linear-gradient(45deg, #fff 0px, #fff 1px, #000 1.5px, #000 3px),
-    linear-gradient(125deg, var(--spectrum));
-  background-size: auto, 300% 300%;
-  background-position: center, calc(((50% - var(--background-x)) * 3) + 50%) calc(((50% - var(--background-y)) * 3) + 50%);
-  background-blend-mode: multiply;
+    repeating-linear-gradient(45deg, hsl(0, 0%, 100%) 0px, hsl(0, 0%, 66%) 3.5px, hsl(0, 0%, 100%) 7px),
+    linear-gradient(125deg, var(--spectrum)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, hsl(0, 0%, 70%) 25%, hsl(0, 0%, 20%) 60%, #000 100%);
+  background-size: auto, 300% 300%, cover;
+  background-position:
+    center,
+    calc(((50% - var(--background-x)) * 3) + 50%) calc(((50% - var(--background-y)) * 3) + 50%),
+    center;
+  background-blend-mode: overlay, soft-light;
   -webkit-mask-image: var(--foil-map-r);
   mask-image: var(--foil-map-r);
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  mix-blend-mode: screen;
-  filter: brightness(1.2) saturate(1.3);
+  mix-blend-mode: soft-light;
+  filter: brightness(calc(0.75 + var(--pointer-from-center) * 0.5)) saturate(1.15);
 }
+/* The gloss, and the milky sheen that washes over at a glancing angle. The
+   far end stays a mid grey so nothing goes black. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.8) 4%, hsla(0, 0%, 60%, 0.4) 30%, hsla(0, 0%, 10%, 0.85) 100%);
+    hsla(0, 0%, 100%, 0.6) 4%, hsla(0, 0%, 85%, 0.25) 30%, hsla(0, 0%, 40%, 0.4) 100%);
   mix-blend-mode: overlay;
   filter: none;
-  opacity: calc(var(--card-opacity) * 0.7);
+  opacity: calc(var(--card-opacity) * 0.5);
+}
+/* The relief: the fingerprint field (the etch map blurred to satin,
+   --etch-soft) lifts where the light falls; Mew and the frame are cut out
+   of it, so they stay smooth against the textured field. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb.has-etch-map .glare::after {
+  background: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 60%) 20%, hsl(0, 0%, 15%) 55%, #000 100%);
+  -webkit-mask-image: var(--etch-soft, var(--etch-map));
+  mask-image: var(--etch-soft, var(--etch-map));
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: none;
+  opacity: 0.28;
 }
 
 /* ---- Classic Collection --------------------------------------------------------
@@ -751,14 +794,4 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-classic .glare {
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-classic .glare::after {
   background: none;
-}
-
-/* ---- Phones ---------------------------------------------------------------
-   Fine repeating stripes alias at phone widths; open them up. */
-@media (max-width: 900px) {
-  body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::after {
-    background-image:
-      repeating-linear-gradient(45deg, #fff 0px, #fff 1px, #000 2px, #000 4px),
-      linear-gradient(125deg, var(--spectrum));
-  }
 }
