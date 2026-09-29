@@ -66,12 +66,22 @@ is a 2 to 3 px pitch at the map's 400 px width, the gold and full-art line
 art carries a fine hatch. Drawn as a hard mask under the lit layers, that
 screen aliases into a wavy line pattern over the whole card on a phone
 (Surfing Pikachu VMAX cel25 9, Meowth VMAX SWSH005). Every etch map of the
-era (1,022 of them, `swshp` included) now ships as `<n>-etch-v2.webp`, the
-original blurred by 1.5 px at map size (`soften_era_etch.py --set <id>`,
-which also repoints `etchMap`), so the grain's density still follows the
-drawing but no screen survives. The originals are gone from the tree
-(assets are served immutable, so a new name was the only way). A new set
-of this era runs the script after `fetch_foil_maps.py`.
+era (1,022 of them, `swshp` included) now ships as `<n>-etch-v3.webp`
+(`soften_era_etch.py --set <id>`, which also repoints `etchMap`): the
+original blurred by 1.5 px at map size, so the grain's density still
+follows the drawing but no screen survives, then multiplied by a wandering
+grain (a smooth random field with 2 to 3 px features, seeded per card) so
+the relief still reads as texture at desktop and phone size. The plain
+blur alone (v2, a few hours earlier) left the full arts looking untextured
+to Noah, and the hairline original was a line screen. The originals are
+gone from the tree (assets are served immutable, so a new name was the
+only way). A new set of this era runs the script after `fetch_foil_maps.py`.
+
+Whole-card finishes (the V and the full-art family) carry a 40% foil floor
+under Live's map (`--swsh-floor`): Live shades the silver frame and the
+copyright band dark, so under the light the lit frame stopped in a hard
+line at the bottom-left corner (Charizard V SWSH260, Noah's desktop shot).
+A V is foil edge to edge, so nothing on it is matte.
 
 ## Dodge-safe filters (2026-09-29)
 

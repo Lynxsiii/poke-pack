@@ -494,6 +494,28 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
 }
 
+/* ---- Whole-card foil: no edge to the map ------------------------------------
+   A V or full art is foil edge to edge, silver frame included, but TCG
+   Live's map shades the frame and the copyright band dark, so under the
+   light the lit frame stopped in a hard line at the bottom-left corner
+   (Charizard V SWSH260, Noah's desktop shot, 2026-09-29). A floor of foil
+   under the map: the map still says where it is brightest, and nothing on
+   the card is matte. Layers compose bottom-up: art ∩ light ∩ (map ∪ floor). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-v.has-foil-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-ultra.has-foil-map .foil {
+  --swsh-floor: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  -webkit-mask-image: var(--art), var(--v-light, var(--fa-light)), var(--foil-map), var(--swsh-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--v-light, var(--fa-light)), var(--foil-map), var(--swsh-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
 /* ---- Trainer Gallery character rares ----------------------------------------
    Photos (Altaria SIT TG11 on stone, Milotic TG02, Hoothoot ASR TG12): the
    whole card is foil, text box included; a soft, even pearlescent rainbow
