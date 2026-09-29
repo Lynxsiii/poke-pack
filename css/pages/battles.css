@@ -1,1 +1,21 @@
-/* stub */
+/* Pack battles. The first block is the kit every battle module uses (money
+   figures, icons, seat avatars); the hall and builder follow it. The table
+   lives in css/battle-table.css and the reveal in css/battle-reveal.css. */
+
+/* ---- Kit ------------------------------------------------------------------ */
+.bt-coins { color: var(--gold); font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bt-icon { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
+.bt-avatar {
+  --size: 40px;
+  position: relative; display: inline-grid; place-items: center; flex: none;
+  width: var(--size); height: var(--size); border-radius: 50%;
+  background: color-mix(in oklab, var(--avatar, var(--gold)) 26%, var(--black));
+  box-shadow: inset 0 0 0 2px var(--avatar, var(--gold));
+  overflow: hidden;
+}
+.bt-avatar img { width: 112%; height: 112%; object-fit: contain; }
+.bt-avatar.pixel img { image-rendering: pixelated; }
+.bt-avatar.is-open {
+  background: var(--well); box-shadow: inset 0 0 0 1.5px var(--line-2); color: var(--faint);
+}
+.bt-avatar.is-open .bt-icon { width: 45%; height: 45%; }
