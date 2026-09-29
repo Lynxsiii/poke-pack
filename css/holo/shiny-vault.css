@@ -30,10 +30,16 @@
  * Rest state (PR 5): a resting card paints `.foil` alone, so the silver, the
  * fingerprint and a hint of colour all live on `.foil`; the pseudo layers and
  * `.glare` only exist while a card is held or settling.
+ *
+ * Shining Fates' Shiny Vault (swsh45 SV001-SV120, `sf-shiny` with `sf-v` /
+ * `sf-vmax`, routed by swshPattern() in js/foil-maps.js) is drawn here too,
+ * at the end: upstream's Sword & Shield shiny recipes on our layers, with the
+ * card's own TCG Live etch at native size as the texture (`--etch-hd`).
  */
 
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map,
-body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map,
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map {
   --pf-glitter: url("/assets/foil/glitter-flecks.webp");
   --pf-glitter-fine: url("/assets/foil/glitter-fine.webp");
 }
@@ -42,7 +48,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
    specificity, since the older full-art and gold rules set their own), the
    shine rises with the light, and the older recipes' layers are cleared. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map .foil,
-body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil {
   clip-path: none;
   border-radius: 0;
   -webkit-mask-image: var(--art), var(--foil-map);
@@ -62,7 +69,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map .foil::after,
 body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil::before,
-body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil::after {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil::after {
   background-image: none;
   background-size: auto;
   background-position: center;
@@ -76,7 +85,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
   opacity: 1;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map .glare::after,
-body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .glare::after {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .glare::after,
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .glare::after {
   background: none;
   -webkit-mask-image: none;
   mask-image: none;
@@ -85,7 +95,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
   opacity: 1;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map .glare,
-body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .glare {
+body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodix.has-foil-map .glare,
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .glare {
   clip-path: none;
   border-radius: 0;
 }
@@ -366,4 +377,237 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-scodix.foil-scodix.foil-scodix.foil-scodi
   mask-composite: subtract;
   mix-blend-mode: multiply;
   opacity: calc(var(--card-opacity) * 0.35);
+}
+
+/* ---- Shining Fates' Shiny Vault: sf-shiny ------------------------------------
+   Photos (texture-refs/shiny-vault: Inteleon SV027 and Dottler SV008 in
+   hand, Boltund SV040 flat, Charizard VMAX SV107 on marble): a baby shiny
+   is silver in the art window plus its silver frame, the text matte; a
+   shiny V or VMAX is silver edge to edge. The silver carries TCG Live's
+   fingerprint etch (fine rings round the Pokémon, a hatch over it) and a
+   dense sparkle, and in hand it flashes white and prismatic with a soft
+   rainbow wash; the Pokémon's printed colours stay. Upstream's demo
+   (poke-holo.simey.me, "Shiny Vault") is the look Noah wants (2026-09-29),
+   so this is upstream's rare shiny / rare shiny v / rare shiny vmax on
+   our layers, judged beside it card for card at the same poses.
+
+   The texture is the card's own etch at Live's native size (`--etch-hd`,
+   733 px, a luminance image: dark ground, bright rings), not the 400 px
+   blurred copy the era's other recipes mask with. Its dark ground matters:
+   soft-lit over the pillar and bars it squares the stack down everywhere
+   except on the rings, so after the colour dodge the rings are what catch
+   the light. The era's earlier shiny recipe (swsh.css, superseded) put a
+   white radial into the dodge and blew the whole window to paper.
+
+   Baby shiny and shiny V, `.foil` (upstream's shine), bottom up: a faint
+   pointer-centred dim, the 133deg light bars (hard-light), the sun pillar
+   (hue: it recolours the bars), the etch (soft-light). Brightness rises
+   with the tilt (0.4 head-on to 0.8 at the edge), then contrast 1.4 and
+   saturate 2.25; the closing brightness(0.92) keeps every channel under
+   0.92 (the leading brightness carries the 1/0.92 back), since a channel
+   at 1.0 under the dodge divides dark ink to pure colour in Safari
+   (blocks). A closing contrast() would do it too, but it lifts the black
+   floor, and a floor of 0.1 under the dodge brightens the whole window a
+   tenth and flattens the rings. `::after` is the exclusion twin, sliding the other
+   way: the pastel tint on the white areas. `::before` is the white pool at
+   the pointer, overlaid. `.glare` multiplies a white-to-dark radial in,
+   scaled by the tilt: the silver goes dark away from the lamp. */
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map {
+  --sf-space: 5%;
+  --sf-angle: 133deg;
+  /* Upstream's masks are weaker than our floor-stretched maps (their window
+     sits near 0.69 where ours is 0.82, measured on Minccino SV093, Lapras V
+     SV110 and Charizard VMAX SV107), and the dodge over a white window is
+     sensitive to that: at full map strength the rings and the tint flatten
+     towards paper. The map is scaled down to match. */
+  --sf-mask: 0.78;
+  --sf-etch: var(--etch-hd, linear-gradient(#000, #000));
+  --sf-bars: repeating-linear-gradient(var(--sf-angle),
+    #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%, hsl(180, 10%, 60%) 5.2%,
+    #0e152e 10%, #0e152e 12%);
+  --sf-dim: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
+}
+/* The pillar is declared per layer so each takes its own rotated palette
+   (base.css turns the ramp on the pseudo layers). */
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil::after {
+  --sf-pillar: repeating-linear-gradient(0deg,
+    var(--sunpillar-clr-1) calc(var(--sf-space) * 1),
+    var(--sunpillar-clr-2) calc(var(--sf-space) * 2),
+    var(--sunpillar-clr-3) calc(var(--sf-space) * 3),
+    var(--sunpillar-clr-4) calc(var(--sf-space) * 4),
+    var(--sunpillar-clr-5) calc(var(--sf-space) * 5),
+    var(--sunpillar-clr-6) calc(var(--sf-space) * 6),
+    var(--sunpillar-clr-1) calc(var(--sf-space) * 7));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil {
+  -webkit-mask-image: var(--art), var(--foil-map), linear-gradient(rgba(0, 0, 0, var(--sf-mask)), rgba(0, 0, 0, var(--sf-mask)));
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), linear-gradient(rgba(0, 0, 0, var(--sf-mask)), rgba(0, 0, 0, var(--sf-mask)));
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  background-image: var(--sf-etch), var(--sf-pillar), var(--sf-bars), var(--sf-dim);
+  background-size: 100% 100%, 200% 700%, 300% 100%, 200% 100%;
+  background-position: center,
+    0% var(--background-y),
+    calc(var(--background-x) + (var(--background-y) * 0.2)) var(--background-y),
+    var(--background-x) var(--background-y);
+  background-repeat: no-repeat, repeat, repeat, no-repeat;
+  background-blend-mode: soft-light, hue, hard-light, normal;
+  filter: brightness(calc((var(--pointer-from-center) * 0.435) + 0.435)) contrast(1.4) saturate(2.25) brightness(0.92);
+  mix-blend-mode: color-dodge;
+}
+/* Resting: the rings and a little silver, no colour to speak of. */
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.67) contrast(1.4) saturate(0.8) brightness(0.92);
+  opacity: calc(0.45 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil::after {
+  background-image: var(--sf-etch), var(--sf-pillar), var(--sf-bars), var(--sf-dim);
+  background-size: 100% 100%, 200% 400%, 195% 100%, 200% 100%;
+  background-position: center,
+    0% var(--background-y),
+    calc((var(--background-x) + (var(--background-y) * 0.2)) * -1) calc(var(--background-y) * -1),
+    var(--background-x) var(--background-y);
+  background-repeat: no-repeat, repeat, repeat, no-repeat;
+  background-blend-mode: soft-light, hue, hard-light, normal;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.8)) contrast(1.5) saturate(1.25);
+  mix-blend-mode: exclusion;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil::before {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsla(0, 0%, 0%, 0) 40%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: overlay;
+  opacity: 0.75;
+  z-index: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(320, 5%, 15%) 150%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  filter: brightness(1.2) contrast(1) saturate(0.7);
+  opacity: calc(var(--card-opacity) * var(--pointer-from-center));
+}
+/* Shiny V (edge to edge): the same shine, a darker, tighter glare. */
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-v.has-foil-map {
+  --sf-mask: 0.82;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-v.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 90%) 5%, hsl(200, 5%, 45%) 80%, hsl(320, 40%, 10%) 150%);
+  background-size: 120% 140%;
+  mix-blend-mode: darken;
+  filter: brightness(0.88) contrast(2.25) saturate(0.7);
+  opacity: calc(var(--card-opacity) * var(--pointer-from-center) * 0.75);
+}
+
+/* Shiny VMAX (upstream's rare shiny vmax, the swsecret glitter): the whole
+   card is a glitter foil under a printed rainbow. `.foil`: two copies of
+   the glitter, a seven-colour rainbow at -30deg (400%, sliding 1.5x), a
+   colour-burn radial dark at the pointer and white far off. `::before`: the
+   etch as light (colour-burned with a pointer pool, lightened on, 0.35).
+   `::after`: the pillar in hue, dimming towards the edge. `.glare` and its
+   `::after` (masked to the foil) are soft overlays. */
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-vmax.has-foil-map {
+  --sf-angle: -30deg;
+  --sf-mask: 0.7;
+  --sf-r1: hsl(0, 57%, 37%);
+  --sf-r2: hsl(40, 53%, 39%);
+  --sf-r3: hsl(90, 60%, 35%);
+  --sf-r4: hsl(180, 60%, 35%);
+  --sf-r5: hsl(180, 60%, 35%);
+  --sf-r6: hsl(210, 57%, 39%);
+  --sf-r7: hsl(280, 55%, 31%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-vmax.has-foil-map .foil {
+  background-image:
+    var(--holo-glitter),
+    var(--holo-glitter),
+    linear-gradient(var(--sf-angle),
+      var(--sf-r1), var(--sf-r2), var(--sf-r3), var(--sf-r4), var(--sf-r5), var(--sf-r6), var(--sf-r7),
+      var(--sf-r1), var(--sf-r2), var(--sf-r3), var(--sf-r4), var(--sf-r5), var(--sf-r6), var(--sf-r7),
+      var(--sf-r1), var(--sf-r2), var(--sf-r3), var(--sf-r4), var(--sf-r5), var(--sf-r6), var(--sf-r7),
+      var(--sf-r1)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(248, 5%, 10%, 1) 10%, hsla(206, 5%, 80%, 0.1) 50%, hsla(0, 0%, 95%, 0.98) 90%);
+  background-size: var(--glittersize) var(--glittersize), var(--glittersize) var(--glittersize), 400% 400%, cover;
+  background-position: 40% 45%, 55% 55%,
+    calc(var(--background-x) * 1.5) calc(var(--background-y) * 1.5), center;
+  background-repeat: repeat, repeat, no-repeat, no-repeat;
+  background-blend-mode: soft-light, overlay, color-burn, normal;
+  filter: brightness(1.087) contrast(1) saturate(0.85) brightness(0.92);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-vmax.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.87) contrast(1) saturate(0.5) brightness(0.92);
+  opacity: calc(0.35 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-vmax.has-foil-map .foil::before {
+  background-image:
+    var(--sf-etch),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(248, 5%, 91%, 0.95) 10%, hsla(206, 5%, 68%, 0.5) 50%, hsl(0, 0%, 0%) 120%);
+  background-size: 100% 100%, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: color-burn, normal;
+  mix-blend-mode: lighten;
+  filter: brightness(1) contrast(1) saturate(0.4);
+  opacity: 0.35;
+  z-index: auto;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-vmax.has-foil-map .foil::after {
+  background-image: repeating-linear-gradient(var(--sf-angle),
+    var(--sunpillar-clr-1) calc(var(--sf-space) * 1),
+    var(--sunpillar-clr-2) calc(var(--sf-space) * 2),
+    var(--sunpillar-clr-3) calc(var(--sf-space) * 3),
+    var(--sunpillar-clr-4) calc(var(--sf-space) * 4),
+    var(--sunpillar-clr-5) calc(var(--sf-space) * 5),
+    var(--sunpillar-clr-6) calc(var(--sf-space) * 6),
+    var(--sunpillar-clr-1) calc(var(--sf-space) * 7));
+  background-size: 400% 800%;
+  background-position: calc(50% + (50% - var(--background-x)) * 3) calc(50% + (50% - var(--background-y)) * 3);
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  filter: brightness(calc(0.75 - (var(--pointer-from-center) * 0.5))) contrast(1) saturate(1);
+  mix-blend-mode: hue;
+}
+/* Upstream's VMAX glares run to black (0.33 and 0.75 alpha) through overlay,
+   which stretches the light greys of Charizard's ink into dark dots away from
+   the pointer (dark_specks.py: 138 on SV107). Their far ends sit at 25% grey
+   here, the most the speck gate allows; the VMAX reads a little lighter far
+   from the light than the demo and keeps its ink clean. */
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-vmax.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(248, 5%, 90%, 0.45) 0%, hsla(206, 5%, 35%, 0.45) 45%, hsla(0, 0%, 25%, 0.3) 120%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  filter: brightness(1) contrast(1.25);
+  opacity: var(--card-opacity);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.sf-vmax.has-foil-map .glare::after {
+  background: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(248, 5%, 90%, 0.75) 0%, hsla(206, 5%, 35%, 0.6) 45%, hsla(0, 0%, 25%, 0.55) 100%);
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: overlay;
+  filter: brightness(1) contrast(1.25);
+  opacity: 1;
 }

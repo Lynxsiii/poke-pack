@@ -15,6 +15,8 @@
 //   rev=chain             reverse kind for cards listed as r<number>
 //   w=240                 card width in px
 //   poses=rest,50:50,...  one row per pose, pinned (x:y in 0-100, or "rest").
+//   tilt=0                pin the poses without the tilt and lift, for a flat
+//                         render to lay beside another site's at the same pose
 //                         Without it the cards follow the pointer.
 //   maps=1                proof cells use TCG Live's foil map for the card as
 //                         their mask: the site's shipped copy in
@@ -222,7 +224,7 @@ async function render() {
     const p = row.dataset.pose;
     if (p === "rest" || p === "live") continue;
     const [x, y] = p.split(":").map(Number);
-    pose(x, y, { root: row });
+    pose(x, y, { root: row, tilt: params.get("tilt") !== "0" });
   }
   await Promise.all([...document.images].map((img) => img.decode().catch(() => {})));
   document.body.dataset.ready = "1";
