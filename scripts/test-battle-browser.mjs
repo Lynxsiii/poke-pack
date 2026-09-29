@@ -41,14 +41,18 @@ try {
     if (!process.env.BATTLE_CAPTURE_DIR) return;
     await mkdir(process.env.BATTLE_CAPTURE_DIR, { recursive: true });
     await page.evaluate(async () => {
-      const visible = Array.from(document.querySelectorAll('#view-battles img')).filter(img => {
-        const rect = img.getBoundingClientRect();
-        return rect.width && rect.height && rect.top < innerHeight && rect.bottom > 0;
-      });
-      await Promise.race([Promise.all(visible.map(img => img.decode().catch(() => {}))),
-        new Promise(resolve => setTimeout(resolve, 1500))]);
+      const images = Array.from(document.querySelectorAll('#view-battles img'));
+      images.forEach(img => { img.loading = 'eager'; });
+      await Promise.race([Promise.all(images.map(img => img.decode().catch(() => {}))),
+        new Promise(resolve => setTimeout(resolve, 4000))]);
     });
     await page.screenshot({ path: `${process.env.BATTLE_CAPTURE_DIR}/${name}.png`, fullPage: true });
+    await page.screenshot({ path: `${process.env.BATTLE_CAPTURE_DIR}/${name}-viewport.png` });
+    if (name === 'builder-mobile') {
+      await page.locator('#battle-settings-heading').scrollIntoViewIfNeeded();
+      await page.screenshot({ path: `${process.env.BATTLE_CAPTURE_DIR}/${name}-settings-viewport.png` });
+      await page.evaluate(() => window.scrollTo(0, 0));
+    }
   };
   await page.goto(hostURL + '/battles');
   await page.locator('#view-battles [data-battle-action="builder"]').first().waitFor();
