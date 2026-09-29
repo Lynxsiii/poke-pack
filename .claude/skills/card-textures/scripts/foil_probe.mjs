@@ -83,8 +83,13 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const url = args.page ? base + args.page : `${base}${LAB}?${args.query || ""}`;
 const out = resolve(typeof args.out === "string" ? args.out : "foil-probe.png");
 
-const { chromium } = await loadPlaywright();
-const browser = await chromium.launch();
+// --browser webkit renders with Safari's engine (Playwright WebKit installed
+// under PLAYWRIGHT_BROWSERS_PATH, see the poke-pack-webkit-testing note):
+// on 2026-09-29 the VMAX etch and the gold's exclusion twin looked fine in
+// Chromium and glitched on Noah's iPhone.
+const pw = await loadPlaywright();
+const engine = pw[args.browser === "webkit" ? "webkit" : args.browser === "firefox" ? "firefox" : "chromium"];
+const browser = await engine.launch();
 try {
   const page = await browser.newPage({
     viewport: { width: Number(args.width) || 1600, height: 900 },

@@ -37,7 +37,7 @@ full-art family reuses the Scarlet & Violet Ultra Rare and gold recipes in
 | Rarity | Foil map | Etch map | Classes (`swshPattern()` in `js/foil-maps.js`) |
 |---|---|---|---|
 | Rare Holo | window | no | `foil-holo swsh-holo` |
-| Rare Holo V | whole card | no | `foil-ex swsh-v` |
+| Rare Holo V | whole card | no (an etched one, the alt-art promos, is `foil-ultra swsh-vfa`) | `foil-ex swsh-v` |
 | Rare Holo VMAX / VSTAR | yes | yes | `foil-ultra swsh-vmax` / `swsh-vstar` |
 | Rare Ultra (full-art V, VMAX alt, Trainer) | yes | yes | `foil-ultra swsh-vfa` / `swsh-vmax swsh-alt` / `swsh-tfa` |
 | Rare Rainbow | yes | yes | `foil-ir swsh-rainbow` |
@@ -53,6 +53,36 @@ full-art family reuses the Scarlet & Violet Ultra Rare and gold recipes in
 A full-art rarity with no map on the CDN falls to a white whole-card map
 and the shared etch tile, so nothing in the family ever hits the illusion
 rings of `realism.css`.
+
+Shining Fates' two golds (Eternatus V SV121, VMAX SV122) are numbered in
+the Shiny Vault but are `Rare Secret`: `swshPattern()` checks the rarity
+before the `sv` gallery, or they take the shiny V recipe and its colour
+dodge blows the black ink up blue (Noah's phone, 2026-09-29).
+
+## The etch maps are softened (2026-09-29)
+
+Live's etch maps for the era are hairline screens: the VMAX and VSTAR grain
+is a 2 to 3 px pitch at the map's 400 px width, the gold and full-art line
+art carries a fine hatch. Drawn as a hard mask under the lit layers, that
+screen aliases into a wavy line pattern over the whole card on a phone
+(Surfing Pikachu VMAX cel25 9, Meowth VMAX SWSH005). Every etch map of the
+era (1,022 of them, `swshp` included) now ships as `<n>-etch-v2.webp`, the
+original blurred by 1.5 px at map size (`soften_era_etch.py --set <id>`,
+which also repoints `etchMap`), so the grain's density still follows the
+drawing but no screen survives. The originals are gone from the tree
+(assets are served immutable, so a new name was the only way). A new set
+of this era runs the script after `fetch_foil_maps.py`.
+
+## Dodge-safe filters (2026-09-29)
+
+Every finish here that colour-dodges its `.foil` onto the scan ends its
+filter chain in `contrast(0.8)` when the chain would otherwise pin channels
+at 1.0 (the V recipe and the whole full-art family, gold included). Colour
+dodge divides the backdrop by (1 - source): at 1.0 the near-black ink of a
+gold card or a VMAX's text bars becomes pure blue or red, and Safari draws
+the singularity as jagged pixel blocks (Noah's Eternatus V and Surfing
+Pikachu VMAX shots). Capped at 0.9 the gain is tenfold at most, so ink stays
+ink. Keep the cap when retuning a filter.
 
 Celebrations is its own case (2026-09-29, after Noah called its holos bad):
 photos of Lugia 022 and Lunala 015 show every card of the 25 foil over the
@@ -103,8 +133,15 @@ art out at 30:25.
 ## Checks before merging
 
 - `sweep_finishes.py --set swsh9 --poses rest,30:25,75:65` at 220px x3,
-  then swsh45 (shiny, amazing), swsh10 (radiant, TG), cel25 (classic),
+  then swsh45 (shiny, amazing, gold), swsh10 (radiant, TG), cel25 (classic),
   swsh12pt5 (GG), swsh7 (VMAX alt, full-art Trainer).
+- Noah browses on an iPhone, and Safari is where the line screens and the
+  dodge blow-ups showed while Chromium looked fine. Render the etched
+  finishes with `foil_probe.mjs --browser webkit` too (Playwright's WebKit;
+  [[poke-pack-webkit-testing]] in memory has the install), and read the
+  shots at native pixels: a downscaled composite invents its own moiré.
+- Count saturated pixels over dark ink: a gold or a VMAX's text bars at
+  30:25 should have no pure-blue or pure-red pixels (`b > 250 and r < 100`).
 - A gallery card whose foil lights a different Pokémon's silhouette has
   the wrong map: check the key and offset above, not the recipe.
 - A gallery scan that is the card back has the wrong scrydex id (Lost Origin's
