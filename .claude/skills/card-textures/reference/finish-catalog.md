@@ -140,7 +140,7 @@ gating it, glitter, a multiply glare, the etch on `.glare::after`) and was
 rebuilt on 2026-09-28 because it left the art flat: now `.foil` itself is
 cut to the etch, one broad light pool replaces the bars, the glare is
 hard-light and the lit lines cover the whole card; prints without a Live
-etch take a map drawn from their own art (`has-etch-drawn`, `scripts/make_card_etch.py`: hatch along the drawing's edges, each line bent by a smooth random wander and drawn soft since 2026-09-28, because a straight grating aliased into a diagonal line screen in the viewer). See
+etch take a map drawn from their own art (`has-etch-drawn`, `scripts/make_card_etch.py`: a fingerprint of short ridges steered by the drawing's edges, since 2026-09-29, because every straight-grating draw (regular, wobbled, per-cell) still aliased into a diagonal line screen in the viewer). See
 [sv-fullart.md](sv-fullart.md), "Special Illustration Rare". realism.css's
 no-map SIR is never used on a full art any more (the white fallback map).
 
