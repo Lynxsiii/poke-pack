@@ -236,7 +236,7 @@ async function viewBattle(env, id, now = Date.now(), summaryRow = null, summaryS
     ? Math.min(plan.length, Math.max(0, Math.floor((now - row.starts_at) / row.round_ms))) : 0;
   const outcomes = summaryRow ? [] : parse(row.outcomes) || [];
   const rounds = outcomes.slice(0, revealedRounds).map((round, i) => ({ ...round, scores: roundScores(outcomes, settings, i + 1) }));
-  const result = !summaryRow && row.status === 'finished' ? parse(row.result) : null;
+  const result = row.status !== 'finished' ? null : summaryRow ? parse(row.result_summary) : parse(row.result);
   return { id: row.id, hostId: row.host_id, status: row.status, settings,
     entryCost: row.entry_cost, lineup: parse(row.lineup), plan: plan.map(({ _offer, specialKey, ...r }) => r), seats, rounds,
     revealedRounds, roundCount: plan.length, createdAt: row.created_at, expiresAt: row.expires_at,
@@ -305,7 +305,12 @@ export async function handleBattles(path, method, request, env, helpers) {
     if (helpers.ensureSocialSchema) await helpers.ensureSocialSchema(env);
     await maintainBattles(env);
     if (path === '/api/battles' && method === 'GET') {
-      const rows = (await env.DB.prepare(`SELECT id,host_id,status,settings,lineup,plan,entry_cost,created_at,expires_at,starts_at,ends_at,round_ms
+      // Finished rows carry only the result's summary; the allocation card
+      // lists can run to megabytes and belong to the detail view.
+      const rows = (await env.DB.prepare(`SELECT id,host_id,status,settings,lineup,plan,entry_cost,created_at,expires_at,starts_at,ends_at,round_ms,
+        CASE WHEN status = 'finished' THEN json_object('winners', json_extract(result, '$.winners'), 'scores', json_extract(result, '$.scores'),
+          'allocations', (SELECT json_group_array(json_object('seat', json_extract(a.value, '$.seat'), 'cardCount', json_extract(a.value, '$.cardCount'),
+            'value', json_extract(a.value, '$.value'))) FROM json_each(battles.result, '$.allocations') a)) END AS result_summary
         FROM battles WHERE status IN ('lobby','running','finished')
         AND json_extract(settings, '$.private') = 0 ORDER BY created_at DESC LIMIT 40`).all()).results || [];
       const seatsByBattle = new Map(rows.map(row => [row.id, []]));

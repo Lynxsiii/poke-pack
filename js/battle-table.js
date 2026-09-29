@@ -243,11 +243,17 @@ export function createTable(ctx) {
 
   /* ---- Views ------------------------------------------------------------ */
   function setView(next) {
+    const prev = view;
     if (view !== next) {
       view = next;
       host.dataset.view = next;
     }
     render();
+    // Start pressed from the dock at the bottom: bring the table up for the 3-2-1.
+    if (prev === "lobby" && (next === "intro" || next === "live")) {
+      const top = region("head")?.getBoundingClientRect().top ?? 0;
+      if (top < 0 || top > innerHeight * 0.4) region("head").scrollIntoView({ behavior: motion() ? "smooth" : "auto", block: "start" });
+    }
     if (next === "lobby" || next === "intro") ensurePacks(0);
     ensureTicker();
   }
@@ -265,6 +271,42 @@ export function createTable(ctx) {
     paintHeads();
     paintIntro();
     syncBusy();
+    updateFloats();
+  }
+
+  /* The page scrolls inside a body that clips overflow, so position: sticky
+     never engages here. The round header and the lobby's action dock float
+     (position: fixed) once their place scrolls out of view. */
+  let floatRaf = 0;
+  function onScroll() {
+    if (visible && !floatRaf) floatRaf = requestAnimationFrame(updateFloats);
+  }
+  function updateFloats() {
+    floatRaf = 0;
+    if (!visible || !host.isConnected) return;
+    const siteHeader = document.querySelector(".site-header")?.getBoundingClientRect();
+    const top = Math.max(0, siteHeader ? siteHeader.bottom : 0);
+    host.style.setProperty("--tb-top", `${Math.round(top)}px`);
+    const head = region("head");
+    if (head) {
+      const round = head.querySelector(".tb-round");
+      const table = region("table")?.getBoundingClientRect();
+      const r = head.getBoundingClientRect();
+      const float = Boolean(round) && r.top < top - 1 && (!table || table.bottom > top + 120);
+      if (float && !head.classList.contains("is-float")) head.style.height = `${head.offsetHeight}px`;
+      if (!float) head.style.height = "";
+      head.classList.toggle("is-float", float);
+    }
+    const slot = host.querySelector(".tb-dock-slot");
+    if (slot) {
+      const bar = document.querySelector(".tabbar");
+      const barTop = bar && getComputedStyle(bar).display !== "none" ? bar.getBoundingClientRect().top : innerHeight;
+      const r = slot.getBoundingClientRect();
+      const float = matchMedia("(max-width: 720px)").matches && r.bottom > barTop - 12;
+      if (float && !slot.classList.contains("is-float")) slot.style.height = `${slot.offsetHeight}px`;
+      if (!float) slot.style.height = "";
+      slot.classList.toggle("is-float", float);
+    }
   }
 
   function renderSkeleton() {
@@ -394,12 +436,12 @@ export function createTable(ctx) {
     const shown = items.slice(0, 6);
     const art = shown.map((p, i) => {
       const src = p.image || wrapperArt(p.setId);
-      return `<span class="tb-pot-item" style="--i:${i}" title="${esc(`${p.quantity} x ${p.name}`)}">
-        ${src ? `<img src="${esc(src)}" alt="${esc(p.name)}" decoding="async" />` : ""}
+      return `<span class="tb-pot-item" style="--r:${((i - (shown.length - 1) / 2) * 5).toFixed(1)}deg" title="${esc(`${p.quantity} x ${p.name}`)}">
+        ${src ? `<img src="${esc(src)}" data-full="${esc(wrapperArt(p.setId))}" alt="${esc(p.name)}" decoding="async" />` : ""}
         ${p.quantity > 1 ? `<span class="tb-qty">×${p.quantity}</span>` : ""}</span>`;
     }).join("");
     const more = items.length > shown.length ? `<span class="tb-pot-more">+${items.length - shown.length}</span>` : "";
-    const names = items.map((p) => `${p.quantity > 1 ? `${p.quantity} ` : ""}${p.name}`).join(", ");
+    const names = items.map((p) => `${p.name}${p.quantity > 1 ? ` ×${p.quantity}` : ""}`).join(", ");
     setHTML("pot", `<div class="tb-pot-art">${art}${more}</div>
       <div class="tb-pot-copy">
         <span class="tb-pot-label">The pot</span>
@@ -488,7 +530,7 @@ export function createTable(ctx) {
         </span>
         ${unbot}
       </header>
-      <div class="tb-stage-slot" data-seat="${i}"></div>
+      <div class="tb-stage-frame"><div class="tb-stage-slot" data-seat="${i}"></div><span class="tb-ring" aria-hidden="true"></span></div>
     </section>`;
   }
 
@@ -679,7 +721,6 @@ export function createTable(ctx) {
     if (digit === introDigit) return;
     introDigit = digit;
     el.innerHTML = digit ? `<span class="tb-intro-n${motion() ? " is-anim" : ""}" aria-label="Starting in ${digit}">${digit}</span>` : "";
-    if (digit && motion()) ctx.buzz?.(8);
   }
 
   function ensureTicker() {
@@ -826,7 +867,7 @@ export function createTable(ctx) {
       || b.rounds.reduce((t, r) => t + r.pulls.reduce((u, p) => u + Number(p.value || 0), 0), 0);
     const count = (b.result?.allocations || []).reduce((t, a) => t + Number(a.cardCount || 0), 0) || allPulls().length;
     return `<div class="tb-result">
-      <p class="tb-eyebrow">${plural(Number(b.roundCount || b.rounds.length), "round")}, a pot of ${plural(count, "card")} worth ${coinTag(total)}</p>
+      <p class="tb-eyebrow">${MODE_NAME[b.settings?.mode] || "Standard"} battle, ${plural(Number(b.roundCount || b.rounds.length), "round")}, ${plural(count, "card")} worth ${coinTag(total)}</p>
       <h1 class="page-title">${esc(headline())}</h1>
       <div class="tb-pot-lines">${potLines()}</div>
       <div class="tb-row tb-result-actions">
@@ -858,7 +899,7 @@ export function createTable(ctx) {
         if (!afford) links = `<span class="tb-quiet">You need ${coinTag(b.entryCost - (ctx.coins?.() || 0))} more to join.</span>`;
       }
       const note = isHost() && open > 0 ? `<p class="tb-quiet">Bots are free. Their winnings go back to the shop.</p>` : "";
-      setHTML("below", `${dock ? `<div class="tb-dock">${dock}</div>` : ""}${note}${links ? `<div class="tb-links">${links}</div>` : ""}`);
+      setHTML("below", `${dock ? `<div class="tb-dock-slot"><div class="tb-dock">${dock}</div></div>` : ""}${note}${links ? `<div class="tb-links">${links}</div>` : ""}`);
       return;
     }
     if (view === "cancelled") {
@@ -891,8 +932,8 @@ export function createTable(ctx) {
       const note = s.mode === "shared" ? (a ? `${plural(a.cardCount, "card")}` : "") : win.has(seat.seat) ? "Takes the pot" : "";
       return `<li class="${win.has(seat.seat) ? "is-win" : ""}${isMe(seat) ? " is-me" : ""}">
         <span class="tb-rank">${rank}</span>${seatAvatar(seat)}
-        <span class="tb-st-name"><b>${esc(seat.name)}</b>${isMe(seat) ? "<small>You</small>" : seat.bot ? "<small>Bot</small>" : ""}</span>
-        <span class="tb-st-note">${note}</span>${coinTag(final[seat.seat] || 0)}</li>`;
+        <span class="tb-st-name"><b><span>${esc(seat.name)}</span>${isMe(seat) ? "<small>You</small>" : seat.bot ? "<small>Bot</small>" : ""}</b>${note ? `<span>${note}</span>` : ""}</span>
+        ${coinTag(final[seat.seat] || 0)}</li>`;
     };
     const ranked = (list) => {
       const sorted = [...list].sort((a, b) => dir * (cents(final[a.seat]) - cents(final[b.seat])) || a.seat - b.seat);
@@ -930,7 +971,7 @@ export function createTable(ctx) {
       const face = ctx.cardFace ? ctx.cardFace(t.card, { small: true, lazy: true }) : `<img src="${esc(smallImage(t.card))}" alt="${esc(t.card.name)}" />`;
       return `<figure class="tb-best-card" style="--k:${k}">
         <button class="tb-best-face" data-inspect-best="${k}" aria-label="Inspect ${esc(t.card.name)}">${face}</button>
-        <figcaption><b>${esc(t.card.name)}</b><span>${esc(seat?.name || "")}, round ${t.round + 1}</span>${coinTag(t.card.value)}</figcaption>
+        <figcaption><b>${esc(t.card.name)}</b><span>${esc(seat?.name || "")}</span><span class="tb-best-val">${coinTag(t.card.value)} <small>round ${t.round + 1}</small></span></figcaption>
       </figure>`;
     }).join("");
   }
@@ -1038,7 +1079,7 @@ export function createTable(ctx) {
       if (data.save) ctx.applySave?.(data.save);
       busy = false;
       if (data.battle) accept(data.battle, data.serverNow);
-      if (battle.seats.length >= players()) return;
+      if (battle.seats.length >= players()) { syncBusy(); schedulePoll(); return; }
     } catch { /* an older server wants one seat per call */ }
     if (!alive(g)) return;
     busy = false; syncBusy();
@@ -1185,7 +1226,8 @@ export function createTable(ctx) {
     if (view === "live" && !finishing) stale = true;
     poll();
   });
-  addEventListener("resize", () => { if (visible) measureHeader(); }, { passive: true });
+  addEventListener("resize", () => { if (visible) { measureHeader(); updateFloats(); } }, { passive: true });
+  addEventListener("scroll", onScroll, { passive: true, capture: true });
 
   return { show, hide };
 }

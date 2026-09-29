@@ -314,7 +314,10 @@ assert.ok(JSON.parse(maxRow.result).allocations.every(a => a.cards.every(c => Ob
 now = maxRunning.battle.endsAt;
 assert.equal((await api(`/api/battles/${maxBattle.battle.id}`)).battle.status, 'finished');
 const leanList = await api('/api/battles');
-assert.ok(leanList.battles.every(b => b.rounds.length === 0 && b.result === null), 'list never fetches/discloses pull payloads');
+assert.ok(leanList.battles.every(b => b.rounds.length === 0), 'list never discloses pull payloads');
+assert.ok(leanList.battles.every(b => b.status === 'finished'
+  ? b.result.allocations.every(a => Object.keys(a).sort().join() === 'cardCount,seat,value') && Array.isArray(b.winners)
+  : b.result === null), 'list carries only the result summary of finished battles');
 
 // Concurrent ordinary rips and battle settlement preserve both sets of awards.
 const raceBattle = await create({ mode: 'shared', fast: true }, [{ key: 'me5:boosterPack', quantity: 2 }], 'third');

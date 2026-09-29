@@ -1,1 +1,357 @@
-/* Battle reveal: pack tear and card deal per lane (js/battle-reveal.js). */
+/* Battle reveal: pack tear and card deal per lane (js/battle-reveal.js).
+
+   Everything inside a lane's stage. Positions are written by the engine as
+   2D transforms; while a round plays, only transform and opacity animate
+   (Web Animations API). Nothing here restyles the card faces (.tcg), the
+   holo layers or the site's own tear. */
+
+.rv-root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --rv-tint: 255 255 255;
+}
+.rv-deck,
+.rv-leaving {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.rv-leaving { z-index: 0; }
+
+/* ---- Cards ------------------------------------------------------------------
+   A card is a positioned box centred on its pose. .rv-turn is the one layer
+   that rotates in a flip; its faces swap at the edge-on moment, and the face
+   is pre-mirrored so it reads the right way round once the turn is done. */
+.rv-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--cw, 100px);
+  height: var(--ch, 140px);
+  margin: calc(var(--ch, 140px) / -2) 0 0 calc(var(--cw, 100px) / -2);
+  transform-origin: 50% 50%;
+}
+.rv-turn {
+  position: absolute;
+  inset: 0;
+}
+.rv-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 4.2% / 3%;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.42), 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+.rv-face > .tcg {
+  width: 100%;
+  height: 100%;
+}
+.rv-front {
+  opacity: 0;
+  transform: scaleX(-1);
+}
+.rv-card.up .rv-front {
+  opacity: 1;
+  transform: none;
+}
+.rv-root.settled .rv-card {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Light sweeping over a rare or better once it has turned: a masked window
+   and a band three cards wide, moved by transform. */
+.rv-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 4.2% / 3%;
+  overflow: hidden;
+  pointer-events: none;
+}
+.rv-sweep > i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300%;
+  opacity: 0;
+  transform: translateX(-66.7%);
+  background: linear-gradient(112deg, transparent 42%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.34) 50%, rgba(255, 255, 255, 0) 55%, transparent 58%);
+}
+.rv-sweep.t3 > i {
+  background: linear-gradient(112deg, transparent 40%, rgba(255, 255, 255, 0) 43.5%, rgba(255, 255, 255, 0.62) 49%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 56.5%, transparent 60%);
+}
+
+/* ---- Hit light ----------------------------------------------------------------
+   A soft disc behind the card (white at the core, the card's own colour at the
+   rim), one or two rings and a handful of sparks. All pre-rendered, only
+   scaled and faded. */
+.rv-halo {
+  position: absolute;
+  z-index: 36;
+  width: calc(var(--cw, 100px) * 2.3);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.78), rgb(var(--rv-tint) / 0.42) 34%, rgb(var(--rv-tint) / 0.12) 56%, transparent 72%);
+}
+.rv-halo.rest {
+  opacity: 0.3;
+  transform: translate(-50%, -50%) scale(1.02);
+}
+.rv-hitfx {
+  position: absolute;
+  z-index: 90;
+  width: 0;
+  height: 0;
+}
+.rv-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--cw, 100px);
+  height: var(--cw, 100px);
+  margin: calc(var(--cw, 100px) / -2) 0 0 calc(var(--cw, 100px) / -2);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 10px rgb(var(--rv-tint) / 0.75), inset 0 0 8px rgb(var(--rv-tint) / 0.5);
+  opacity: 0;
+}
+.rv-ring.r2 { border-width: 1.5px; }
+.rv-spark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  margin: -3px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #fff 35%, rgb(var(--rv-tint) / 0.8) 60%, rgb(var(--rv-tint) / 0) 100%);
+  opacity: 0;
+}
+.rv-hitfx.t3 .rv-spark {
+  width: 8px;
+  height: 8px;
+  margin: -4px;
+}
+
+/* ---- The sealed pack -------------------------------------------------------- */
+.rv-pack {
+  position: absolute;
+  z-index: 2;
+}
+.rv-pack-shadow {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -3%;
+  height: 7%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+}
+.rv-bob,
+.rv-shake {
+  position: absolute;
+  inset: 0;
+}
+.rv-pack.idle .rv-bob { animation: rvBob 5.2s ease-in-out infinite; }
+@keyframes rvBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.rv-body {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* The top strip: three hinged pieces of the same wrapper art, the right one
+   holding the middle, the middle holding the left. Each piece carries the
+   printed side, the silver inside, and a pale rim along its torn edge. */
+.rv-lid {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 100% 30%;
+}
+.rv-seg {
+  position: absolute;
+  top: 0;
+}
+.rv-seg-art,
+.rv-seg-silver,
+.rv-seg-rim {
+  position: absolute;
+  top: 0;
+  display: block;
+}
+.rv-seg-art {
+  background-repeat: no-repeat;
+}
+.rv-seg-silver {
+  opacity: 0;
+  background:
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0 1px, rgba(0, 0, 0, 0.1) 1px 2px),
+    linear-gradient(100deg, #9198a0 0%, #dde1e6 22%, #a3a9b1 40%, #f4f6f8 54%, #aab0b8 68%, #e0e3e8 84%, #8c929a 100%);
+}
+.rv-seg-rim {
+  opacity: 0;
+  background: #e8ecf0;
+}
+
+/* The torn edge on the body, uncovered behind the tear front by a sliding
+   window (the window moves one way, its content the other). */
+.rv-edge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  transform: translateX(-100%);
+}
+.rv-edge-in {
+  position: absolute;
+  inset: 0;
+  transform: translateX(100%);
+}
+.rv-edge svg,
+.rv-flash {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.rv-edge path,
+.rv-flash path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.rv-edge-shade {
+  stroke: rgba(4, 3, 8, 0.55);
+  stroke-width: 3px;
+}
+.rv-edge-lit {
+  stroke: rgba(236, 240, 244, 0.92);
+  stroke-width: 1.1px;
+}
+/* One bright flash along the tear as the strip comes away. */
+.rv-flash {
+  opacity: 0;
+  transform-origin: 50% 8.2%;
+}
+.rv-flash .w { stroke: rgba(255, 255, 255, 0.2); stroke-width: 10px; }
+.rv-flash .m { stroke: rgba(255, 255, 255, 0.55); stroke-width: 3.5px; }
+.rv-flash .c { stroke: #fff; stroke-width: 1.4px; }
+.rv-burst {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.3);
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.34) 38%, rgba(255, 255, 255, 0) 72%);
+}
+.rv-glints {
+  position: absolute;
+  inset: 0;
+}
+.rv-glint {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px;
+  border-radius: 1px;
+  opacity: 0;
+  background: linear-gradient(135deg, #fff 0%, #d5dbe2 50%, #8b929b 100%);
+}
+
+/* ---- A promo's sleeve ---------------------------------------------------------- */
+.rv-sleeve-card {
+  position: absolute;
+  left: 4.55%;
+  right: 4.55%;
+  top: 3.27%;
+  bottom: 3.27%;
+}
+.rv-sleeve-card > .tcg {
+  width: 100%;
+  height: 100%;
+}
+.rv-sleeve-body {
+  position: absolute;
+  inset: 0;
+  border-radius: 6% / 4.4%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04) 38%, rgba(255, 255, 255, 0.02) 62%, rgba(255, 255, 255, 0.09));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+.rv-sleeve-body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 6%;
+  border-radius: inherit;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+}
+.rv-sleeve-glint {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 6% / 4.4%;
+}
+.rv-sleeve-glint > i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300%;
+  transform: translateX(-66.7%);
+  background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 55%, transparent 58%);
+}
+
+/* ---- Money landing ------------------------------------------------------------ */
+.rv-gain {
+  position: absolute;
+  z-index: 3;
+  opacity: 0;
+  color: var(--gold, #f2c14e);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7), 0 0 8px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+.rv-gain.big { font-size: 16px; font-weight: 750; }
+.rv-gain > span {
+  font-size: 0.78em;
+  margin: 0 0.14em 0 0.06em;
+  vertical-align: 0.06em;
+}
+
+/* ---- Finale: cards in flight between stages ------------------------------------- */
+.rv-fly {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* ---- Kill-switches -------------------------------------------------------------- */
+body.no-motion .rv-pack.idle .rv-bob { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .rv-pack.idle .rv-bob { animation: none; }
+}

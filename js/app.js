@@ -6847,6 +6847,7 @@ const battles = initBattles({
   user: () => cloudUser,
   coins: () => Number(state.coins || 0),
   settings: () => state.settings,
+  featuredSetId: () => liveSet?.id || state.activeSetId,
   applySave: (save) => {
     if (!cloudUser || !save) return;
     applyCloudSave(save);

@@ -9,6 +9,7 @@ import { api } from "./api.js";
 import { esc, coins, coinTag, icon, wrapperArt, setById, seatAvatar } from "./battle-kit.js";
 import { setIdentity } from "./catalog.js";
 import { tintFrom } from "./fx.js";
+import { BOT_PERSONAS } from "./battle-rules.js";
 
 const POLL_MS = 5000;
 const PAGE = 36;
@@ -210,6 +211,7 @@ export function createHall(ctx) {
     stopMotion();
     if (ambient === null) ambient = document.body.style.getPropertyValue("--ambient");
     document.body.classList.toggle("hl-building", mode === "builder");
+    document.body.classList.toggle("hl-in-hall", mode === "list");
     if (mode === "builder") {
       if (pendingPrefill) {
         shelf.q = "";
@@ -249,7 +251,7 @@ export function createHall(ctx) {
     gen++;
     stopPoll();
     stopMotion();
-    document.body.classList.remove("hl-building");
+    document.body.classList.remove("hl-building", "hl-in-hall");
     // The quick-battle pack lit the page; hand the room back as it was.
     if (ambient !== null) {
       if (ambient) document.body.style.setProperty("--ambient", ambient);
@@ -279,7 +281,7 @@ export function createHall(ctx) {
     root.innerHTML = `<div class="hl-hall">
       <header class="hl-head">
         <h1 class="page-title">Pack battles</h1>
-        <p class="hl-lede">Everyone opens the same packs. The best pulls take the lot.</p>
+        <p class="hl-lede">Same packs for everyone. Best pulls take the lot.</p>
       </header>
       <section class="hl-quick bleed" aria-labelledby="hl-quick-name">
         <div class="hl-quick-inner">
@@ -289,12 +291,14 @@ export function createHall(ctx) {
             <button type="button" class="hl-arrow is-prev" data-hall="prev" aria-label="Previous pack">${icon("back")}</button>
             <div class="hl-pack" data-key="${esc(p?.key || "")}">${stagePack(p)}</div>
             <button type="button" class="hl-arrow is-next" data-hall="next" aria-label="Next pack">${icon("back")}</button>
+            <span class="hl-you" aria-hidden="true">${youFace()}</span>
+            <span class="hl-bots" aria-label="${quick.bots} ${quick.bots === 1 ? "bot" : "bots"}">${botFaces()}</span>
           </div>
           <div class="hl-quick-body">
             <div class="hl-quick-copy">${quickCopy(p)}</div>
             <div class="hl-quick-row">
               <div class="hl-field">
-                <span id="hl-opp-label">Opponents</span>
+                <span id="hl-opp-label">Free bots</span>
                 <div class="hl-seg" role="radiogroup" aria-labelledby="hl-opp-label">
                   ${[1, 2, 3].map((n) => `<button type="button" role="radio" aria-checked="${quick.bots === n}" class="${quick.bots === n ? "on" : ""}" data-hall="bots" data-n="${n}">${n}</button>`).join("")}
                 </div>
@@ -337,6 +341,12 @@ export function createHall(ctx) {
     return `<h2 id="hl-quick-name" class="hl-quick-name">${esc(productTitle(p))}</h2>
       <p class="hl-quick-meta">${symbolOf(p.setId) ? img(symbolOf(p.setId), "hl-sym") : ""}<span>${esc(kind === "pack" ? p.setName : what)}</span>${kind === "pack" ? `<span>${what}</span>` : ""}</p>`;
   }
+  function youFace() {
+    const u = user();
+    return u ? seatAvatar({ seat: 0, userId: u.id, name: u.name, color: u.color, avatar: u.avatar, avatarStyle: u.avatarStyle, bot: false }, "bt-avatar hl-duel") : seatAvatar(null, "bt-avatar hl-duel");
+  }
+  const botFaces = () =>
+    BOT_PERSONAS.slice(0, quick.bots).map((p, i) => seatAvatar({ seat: i + 1, bot: true, handle: `bot:${p.id}`, name: p.name, color: p.color }, "bt-avatar hl-duel")).join("");
   const quickLabel = () => (quick.busy ? "Dealing you in" : quick.bots === 1 ? "Battle a bot" : `Battle ${quick.bots} bots`);
 
   /** Point the stage's glint at the wrapper's outline and let it light the page. */
@@ -417,6 +427,16 @@ export function createHall(ctx) {
       b.classList.toggle("on", on);
       b.setAttribute("aria-checked", String(on));
     });
+    const bots = root.querySelector(".hl-bots");
+    if (bots && bots.children.length !== quick.bots) {
+      const before = bots.children.length;
+      bots.innerHTML = botFaces();
+      bots.setAttribute("aria-label", `${quick.bots} ${quick.bots === 1 ? "bot" : "bots"}`);
+      if (motion()) {
+        [...bots.children].slice(before).forEach((el, i) =>
+          track(el.animate([{ transform: "translateY(10px) scale(0.6)", opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 380, delay: i * 60, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)", fill: "backwards" })));
+      }
+    }
     paintQuickMsg();
   }
   function paintQuickMsg() {
@@ -660,7 +680,7 @@ export function createHall(ctx) {
     const shared = b.settings?.mode === "shared";
     let who;
     if (shared) who = `${seatsHtml(b)}<span class="hl-winner-copy">Split between everyone</span>`;
-    else if (!winners.length) who = `${seatsHtml(b)}<span class="hl-winner-copy">Finished</span>`;
+    else if (!winners.length) who = `${seatsHtml(b)}<span class="hl-winner-copy">See who won</span>`;
     else {
       const seats = winners.map((i) => seatOf(b, i)).filter(Boolean);
       const names = seats.map((s) => s.name || "A trainer");
@@ -709,7 +729,7 @@ export function createHall(ctx) {
       <a class="hl-back" href="/battles" data-hall-link>${icon("back")}Battles</a>
       <header class="hl-head">
         <h1 class="page-title">Build a battle</h1>
-        <p class="hl-lede">Pick the packs everyone opens. Same lineup, same odds, one table.</p>
+        <p class="hl-lede">Pick what everyone opens. Same lineup, same odds.</p>
       </header>
       <nav class="hl-words hl-steps" aria-label="Builder steps">
         <button type="button" class="hl-word${step === "shelf" ? " on" : ""}" data-hall="step" data-step="shelf" aria-current="${step === "shelf" ? "step" : "false"}">Lineup${count ? ` <span class="hl-step-n">${count}</span>` : ""}</button>
@@ -729,8 +749,8 @@ export function createHall(ctx) {
     return `<div class="hl-shelf-tools">
         <label class="hl-search">${icon("search")}<input class="search" type="search" aria-label="Search products" placeholder="Search packs, boxes and sets" value="${esc(shelf.q)}" data-hall="search" autocomplete="off" enterkeyhint="search" /></label>
         <div class="hl-sets" role="tablist" aria-label="Filter by set">
-          <button type="button" role="tab" class="hl-set${shelf.set === "all" ? " on" : ""}" aria-selected="${shelf.set === "all"}" data-hall="set" data-set="all"><span class="hl-set-sym is-all">${icon("search")}</span><b>All sets</b><small>${catalog.products.length} products</small></button>
-          ${catalog.sets.map((s) => `<button type="button" role="tab" class="hl-set${shelf.set === s.id ? " on" : ""}" aria-selected="${shelf.set === s.id}" data-hall="set" data-set="${esc(s.id)}"><span class="hl-set-sym">${symbolOf(s.id) ? img(symbolOf(s.id)) : ""}</span><b>${esc(s.name)}</b><small>${s.pack ? `Pack ${coinTag(s.pack.price)}` : `${catalog.products.filter((p) => p.setId === s.id).length} products`}</small></button>`).join("")}
+          <button type="button" role="tab" class="hl-set${shelf.set === "all" ? " on" : ""}" aria-selected="${shelf.set === "all"}" data-hall="set" data-set="all"><span class="hl-set-sym is-all">${icon("search")}<b>All sets</b></span><small>${catalog.products.length} products</small></button>
+          ${catalog.sets.map((s) => `<button type="button" role="tab" class="hl-set${shelf.set === s.id ? " on" : ""}" aria-selected="${shelf.set === s.id}" data-hall="set" data-set="${esc(s.id)}"><span class="hl-set-sym">${symbolOf(s.id) ? img(symbolOf(s.id)) : ""}<b>${esc(s.name)}</b></span><small>${s.pack ? `Pack ${coinTag(s.pack.price)}` : `${catalog.products.filter((p) => p.setId === s.id).length} products`}</small></button>`).join("")}
         </div>
         <div class="hl-types">
           <div class="hl-words" role="tablist" aria-label="Filter by type">
@@ -776,8 +796,8 @@ export function createHall(ctx) {
     const t = totals();
     const rules = builder.step === "rules" && builder.lineup.length;
     const summary = builder.lineup.length
-      ? `<span class="hl-tray-count"><b data-tray="items">${t.items} ${t.items === 1 ? "product" : "products"}</b><span data-tray="rounds">${roundsWord(t.rounds)}</span></span>
-         <span class="hl-tray-entry">Entry <span data-tray="entry">${coinTag(t.entry)}</span></span>`
+      ? `<span class="hl-tray-entry"><span data-tray="entry">${coinTag(t.entry)}</span> <small>entry</small></span>
+         <span class="hl-tray-count"><b data-tray="items">${t.items} ${t.items === 1 ? "product" : "products"}</b><span data-tray="rounds">${roundsWord(t.rounds)}</span></span>`
       : `<span class="hl-tray-count"><b>Your lineup is empty</b><span>Tap a product to add it</span></span>`;
     const note = trayNote || (!signedIn() && rules ? "Sign in to take your seat." : "");
     return `<div class="hl-tray-inner${rules ? " is-rules" : ""}">
