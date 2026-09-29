@@ -10,7 +10,13 @@ wrapper pinches in between the crimps.
 Every modern wrapper render has the same silhouette, so this script takes it
 from the packs that do have alpha (REFERENCES), fits it to each opaque image's
 own white margin row by row, and pulls the white out of the edge pixels.
-It writes the .avif and the .png fallback next to each other, in place.
+It writes the .avif and the .png fallback next to each other.
+
+/assets/ is cached as immutable for a year, so a file that is already
+committed (and so maybe live) is never overwritten: the cleaned art goes to
+the next free -vN name (pack-0.avif -> pack-0-v2.avif) and the script prints
+the new names for js/catalog.js to point at. A fresh download that git
+doesn't track yet is cleaned in place.
 
     python3 scripts/clean_pack_art.py assets/packs/sv8/pack-0.avif ...
     python3 scripts/clean_pack_art.py --all      # every opaque pack under assets/packs
@@ -21,6 +27,8 @@ Packs that already have transparent margins are left alone, so reruns are safe.
 from __future__ import annotations
 
 import argparse
+import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -129,6 +137,24 @@ def clean(path: Path) -> Image.Image:
     return Image.fromarray(out, "RGBA")
 
 
+def is_tracked(path: Path) -> bool:
+    return subprocess.run(
+        ["git", "ls-files", "--error-unmatch", str(path)],
+        cwd=ROOT, capture_output=True,
+    ).returncode == 0
+
+
+def next_version(path: Path) -> Path:
+    """pack-0.avif -> pack-0-v2.avif, pack-0-v2.avif -> pack-0-v3.avif."""
+    base = re.sub(r"-v\d+$", "", path.stem)
+    taken = [1] + [
+        int(m.group(1))
+        for sibling in path.parent.glob(f"{base}-v*{path.suffix}")
+        if (m := re.fullmatch(re.escape(base) + r"-v(\d+)", sibling.stem))
+    ]
+    return path.with_name(f"{base}-v{max(taken) + 1}{path.suffix}")
+
+
 def targets(args: argparse.Namespace) -> list[Path]:
     if args.files:
         return [Path(f).resolve() for f in args.files]
@@ -156,9 +182,13 @@ def main() -> int:
             print(f"opaque  {rel}")
             continue
         img = clean(path)
-        img.save(path, "AVIF", quality=AVIF_QUALITY)
-        img.save(path.with_suffix(".png"), "PNG", optimize=True)
-        print(f"cleaned {rel} ({path.stat().st_size // 1024} KB avif)")
+        dest = next_version(path) if is_tracked(path) else path
+        img.save(dest, "AVIF", quality=AVIF_QUALITY)
+        img.save(dest.with_suffix(".png"), "PNG", optimize=True)
+        if dest == path:
+            print(f"cleaned {rel} in place ({dest.stat().st_size // 1024} KB avif)")
+        else:
+            print(f"cleaned {rel} -> {dest.relative_to(ROOT)} (point js/catalog.js at the new name)")
     if not opaque:
         print("no opaque packs")
     return 1 if args.check and opaque else 0
