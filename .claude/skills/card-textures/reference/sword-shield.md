@@ -140,6 +140,19 @@ art out at 30:25.
   babies also carry a silver frame.
 - **Reverse**: chevron tiles per type, `assets/foil/swsh-reverse/`.
 
+## Benchmark: poke-holo.simey.me (2026-09-29)
+
+Noah asked that ours "look the same if not better than that site". Every
+SWSH finish was rendered next to the demo, same card, tilts 30:25 and
+75:65 (sheet in /mnt/project-files/sword-shield/simey-compare/). Only the
+regular V fell short (dim between the tinsel bars, small lit pool): #84
+widened the lit bars, raised the V foil's base brightness/saturation and
+opened `--v-light`. Keep the realism rules on top of the benchmark: their
+full arts wash the whole card in one tile; ours follow the print's map.
+Re-run the comparison with `scratchpad g/simey-shots.mjs` style shots
+(their demo opens a card on click; click `.card__rotator` again to close)
+when a recipe changes.
+
 ## Checks before merging
 
 - `sweep_finishes.py --set swsh9 --poses rest,30:25,75:65` at 220px x3,
