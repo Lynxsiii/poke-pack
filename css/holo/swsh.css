@@ -423,28 +423,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh:is(.swsh-vmax, .swsh-vstar, .swsh-tfa) {
   --swsh-streak-size: 100% auto;
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-vmax.foil-ultra.has-foil-map:not(.swsh-alt):not(.swsh-shiny) .foil {
-  --fa-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 30%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.35) 100%);
-  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.5)) contrast(2.2) saturate(1.3);
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-vstar.foil-ultra.has-foil-map .foil {
-  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.55)) contrast(1.9) saturate(0.85);
-}
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-vstar.foil-ultra.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(195, 60%, 88%) 5%, hsl(300, 3%, 55%) 60%, hsl(350, 0%, 20%) 150%);
-  filter: brightness(0.85) contrast(1.4);
-  opacity: calc(var(--card-opacity) * 0.85);
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-tfa.foil-ultra.has-foil-map .foil {
-  filter: brightness(calc((var(--pointer-from-center) * 0.15) + 0.65)) contrast(1.9) saturate(1);
+    hsl(195, 60%, 78%) 5%, hsl(300, 3%, 52%) 60%, hsl(350, 0%, 32%) 150%);
+  filter: brightness(0.9) contrast(1.3);
+  opacity: calc(var(--card-opacity) * 0.45);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-tfa.foil-ultra.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsl(0, 0%, 80%) 5%, hsl(200, 5%, 45%) 65%, hsl(320, 20%, 15%) 150%);
   filter: brightness(0.9) contrast(1.1);
-  opacity: calc(var(--card-opacity) * 0.7);
+  opacity: calc(var(--card-opacity) * 0.4);
 }
 /* The streaks on the lit lines, with the etch. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh:is(.swsh-vmax:not(.swsh-alt), .swsh-vstar, .swsh-tfa).foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
@@ -479,13 +468,18 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.2) saturate(1) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-vmax.foil-ultra.has-foil-map:not(.swsh-alt):not(.swsh-shiny) .foil {
-  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.5)) contrast(2.2) saturate(1.3) contrast(0.8);
+  --fa-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 30%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.35) 100%);
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.4)) contrast(2) saturate(0.85) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-vstar.foil-ultra.has-foil-map .foil {
   filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.55)) contrast(1.9) saturate(0.85) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-tfa.foil-ultra.has-foil-map .foil {
-  filter: brightness(calc((var(--pointer-from-center) * 0.15) + 0.65)) contrast(1.9) saturate(1) contrast(0.8);
+  filter: brightness(calc((var(--pointer-from-center) * 0.15) + 0.5)) contrast(1.9) saturate(1) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-vfa.foil-ultra.has-foil-map .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.4)) contrast(2) saturate(0.85) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
   filter: brightness(0.5) contrast(2.5) saturate(0.35) contrast(0.8);
@@ -495,6 +489,30 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
   filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
+}
+
+/* ---- A gentler glare over the full-art family -------------------------------
+   sv-fullart.css's hard-light glare runs at the card's full opacity, which
+   over a saturated painting is a milky veil at one tilt (Charizard VSTAR,
+   Umbreon VMAX, Marnie beside poke-holo.simey.me, 2026-09-29): the art
+   loses its darks and the rainbow has nothing to sit on. About half keeps
+   the sheen and the contrast. The VSTAR and full-art Trainer set their own,
+   above. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-ultra.has-foil-map:not(.swsh-vstar):not(.swsh-tfa) .glare {
+  opacity: calc(var(--card-opacity) * 0.5);
+}
+
+/* ---- The etched twin, held back -----------------------------------------------
+   `.foil::before` is the same stack again under the etch map, a step
+   brighter (sv-fullart.css). With TCG Live's native etch (era maps -v4) the
+   lit lines cover most of a painted Pokémon, so the twin at full strength
+   turned Gyarados VMAX's pink mouth magenta at one tilt and yellow-green at
+   the other; poke-holo.simey.me keeps the art's own colours and lets the
+   rainbow ride over them. A third of the strength keeps the lines and the
+   colours. The full-art Trainer is silver over flat colour: there the twin
+   is the brushed streak the reference shows, so it stays whole. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-ultra.has-foil-map:not(.swsh-tfa):is(.has-etch-map, .has-etch-tile) .foil::before {
+  opacity: 0.35;
 }
 
 /* ---- Whole-card foil: no edge to the map ------------------------------------
@@ -699,6 +717,26 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
   mask-repeat: no-repeat;
 }
 
+/* Amazing Rare's window is the loudest foil of the era: the paint splash
+   printed under it goes saturated blue, red, green and gold, with white
+   bursts where the light lands (Rayquaza VIV 138 beside poke-holo.simey.me,
+   2026-09-29). The shared glitter recipe above left it pastel, so the
+   window's own grain runs at full colour and the sheen rides on overlay. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-amazing .foil {
+  filter: brightness(calc(1 + var(--pointer-from-center) * 0.45)) contrast(2.7) saturate(2.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-amazing .foil::after {
+  mix-blend-mode: overlay;
+  filter: saturate(3) contrast(1.5);
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-amazing .foil::before {
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-amazing:not(.lit):not(.settling) .foil {
+  filter: brightness(0.9) contrast(1.4) saturate(0.3);
+}
+
 /* ---- Radiant Rare: the cracked-ice mosaic ---------------------------------------
    Photos (Radiant Steelix LOR 124, Radiant Gardevoir LOR 69): the whole
    card, frame and text box included, is a mosaic of large angular facets,
@@ -707,7 +745,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
    colour as the card tilts rather than sweep. Faintly visible flat on.
    The flakes: the cracked-ice tile at facet size, each flake taking its
    colour from a rainbow sliding under it (exclusion), a second copy
-   counter-shifting so flakes wink; the light a wide pool. */
+   counter-shifting so flakes wink; the light a wide pool. Held to a silver
+   with a hint of colour: at full saturation colour-dodge turned the black
+   text and the silver Charizard green, cyan and purple (Radiant Charizard
+   PGO 11 beside poke-holo.simey.me, 2026-09-29). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-radiant .foil {
   background-image:
     var(--swsh-ice),
@@ -719,7 +760,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
   background-size: 44% auto, 260% 260%, cover;
   background-position: var(--seed-pos), var(--background-x) var(--background-y), center;
   background-blend-mode: exclusion, multiply;
-  filter: brightness(calc(0.62 + var(--pointer-from-center) * 0.28)) contrast(1.8) saturate(1.2);
+  filter: brightness(calc(0.45 + var(--pointer-from-center) * 0.25)) contrast(1.5) saturate(0.35) contrast(0.8);
   mix-blend-mode: color-dodge;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-radiant:not(.lit):not(.settling) .foil {
@@ -734,7 +775,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
     calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top) - 0.5) * 10px);
   mix-blend-mode: difference;
   filter: brightness(0.8) contrast(1.3);
-  opacity: 0.35;
+  opacity: 0.15;
 }
 /* The drifts: brighter diagonal bands across the mosaic. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-radiant .foil::after {
@@ -749,7 +790,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
     hsla(0, 0%, 100%, 0.4) 0%, hsl(0, 0%, 25%) 110%);
   mix-blend-mode: hard-light;
   filter: brightness(1) contrast(1.4);
-  opacity: calc(var(--card-opacity) * 0.7);
+  opacity: calc(var(--card-opacity) * 0.45);
   clip-path: none;
   border-radius: 0;
 }
