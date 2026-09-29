@@ -116,8 +116,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
       var(--bar-bg) calc(var(--bars) * 3.5), var(--bar-color) calc(var(--bars) * 4),
       var(--bar-bg) calc(var(--bars) * 5), var(--bar-bg) calc(var(--bars) * 10));
   background-position:
-    calc((((50% - var(--background-x)) * 1.65) + 50%) + (var(--background-y) * 0.5)) var(--background-x),
-    calc((((50% - var(--background-x)) * -0.9) + 50%) - (var(--background-y) * 0.75)) var(--background-y);
+    clamp(0%, calc((((50% - var(--background-x)) * 1.65) + 50%) + (var(--background-y) * 0.5)), 100%) var(--background-x),
+    clamp(0%, calc((((50% - var(--background-x)) * -0.9) + 50%) - (var(--background-y) * 0.75)), 100%) var(--background-y);
   background-size: 200% 200%, 200% 200%;
   background-blend-mode: screen;
   filter: brightness(1.15) contrast(1.1);

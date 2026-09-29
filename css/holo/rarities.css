@@ -83,9 +83,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-holo .foil::before {
       var(--bar-bg) calc(var(--bars) * 10)
     );
   background-position:
-    calc((((50% - var(--background-x)) * 1.65) + 50%) + (var(--background-y) * 0.5))
+    clamp(0%, calc((((50% - var(--background-x)) * 1.65) + 50%) + (var(--background-y) * 0.5)), 100%)
       var(--background-x),
-    calc((((50% - var(--background-x)) * -0.9) + 50%) - (var(--background-y) * 0.75))
+    clamp(0%, calc((((50% - var(--background-x)) * -0.9) + 50%) - (var(--background-y) * 0.75)), 100%)
       var(--background-y);
   background-size: 200% 200%, 200% 200%;
   background-blend-mode: screen;
