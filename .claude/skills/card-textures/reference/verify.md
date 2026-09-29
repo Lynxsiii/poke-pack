@@ -175,7 +175,11 @@ grain to nothing, which is exactly how every one of those shipped.
    change.
 2. The sweep above, for the set you touched, or `--all` after a shared
    sheet or `js/foil-maps.js` changed. Every sheet read, none of the signs,
-   and the dark-dot check it runs green.
+   the dark-dot check it runs green, and its last line
+   (`check_asset_overwrites.py`) green: no file under `assets/` changed in
+   place, because `/assets/*` is cached for a year under its name and a
+   phone that saw the old map never asks again (Espeon ex MEP 108 after #73).
+   A changed asset ships under a new `-vN` name with the data pointing at it.
 3. `--idle` clean on the lab and on the app page that shows the card.
 4. Settings above checked.
 5. `NOTICE.md` updated if anything came from upstream or a new texture file

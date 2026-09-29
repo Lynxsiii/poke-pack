@@ -30,7 +30,9 @@ seeded sweep and grating phases keep even similar art apart.
 --all takes every SIR, UR, HR and MHR of the set (and any `foilAs` of
 those) that has no etchMap yet; --ship writes assets/foil/maps/<set>/
 <n>-etch.webp (400 px wide, white with the etch as alpha, like the Live
-maps) and --write-data points the card's `etchMap` at it and marks it
+maps; a redraw of a shipped map goes to the next <n>-etch-vN.webp, since
+/assets/* is cached for a year under its name) and --write-data points the
+card's `etchMap` at it and marks it
 `etchDrawn`, after which js/foil-maps.js gives the print `has-etch-map`
 instead of the shared tile. --debug writes a contact sheet (scan, facets,
 etch) to scripts/_debug/etch/. --compare, on cards that have a Live map, puts
@@ -38,6 +40,8 @@ Live's map beside the drawn one on the sheet, for tuning against sv4pt5 232
 Mew ex, sv3pt5 199 Charizard ex and co.
 """
 import argparse
+import os
+import io
 import hashlib
 import json
 import sys
@@ -45,6 +49,9 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from check_asset_overwrites import ever_existed, fresh_name  # noqa: E402
 from scipy import ndimage
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -222,12 +229,25 @@ def main() -> int:
             note += f"; Live covers {float((live > 0.5).mean()):.0%}"
         print(note)
         if a.ship:
-            out = ROOT / "assets" / "foil" / "maps" / a.set / f"{c['number']}-etch.webp"
-            out.parent.mkdir(parents=True, exist_ok=True)
             alpha = (etch * 255).astype(np.uint8)
             rgba = np.dstack([np.full_like(alpha, 255)] * 3 + [alpha])
-            Image.fromarray(rgba, "RGBA").save(out, "WEBP", quality=80, alpha_quality=80, method=6)
-            rel = str(out.relative_to(ROOT)).replace("\\", "/")
+            buf = io.BytesIO()
+            Image.fromarray(rgba, "RGBA").save(buf, "WEBP", quality=80, alpha_quality=80, method=6)
+            # /assets/* is cached for a year under its name (_headers), so a
+            # redraw never lands on a filename that ever existed: the card's
+            # current drawn map is kept if the bytes are the same, otherwise
+            # the map ships under the next -vN name and the data follows.
+            current = c.get("etchMap") if c.get("etchDrawn") else None
+            if current and (ROOT / current).exists() and (ROOT / current).read_bytes() == buf.getvalue():
+                rel = current
+            else:
+                rel = f"assets/foil/maps/{a.set}/{c['number']}-etch.webp"
+                if ever_existed(rel) or current:
+                    rel = fresh_name(current or rel)
+                out = ROOT / rel
+                out.parent.mkdir(parents=True, exist_ok=True)
+                out.write_bytes(buf.getvalue())
+                print(f"    -> {rel}")
             if a.write_data and (c.get("etchMap") != rel or not c.get("etchDrawn")):
                 c["etchMap"] = rel
                 c["etchDrawn"] = True
