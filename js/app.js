@@ -86,6 +86,7 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
+import { initBattles } from "./battles.js";
 
 const state = loadState();
 let cloudUser = null;
@@ -99,6 +100,8 @@ let avatarQuery = "";
 const CLOUD_SEEN_KEY = "poke-pack-rip-cloud-seen";
 let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgress(state);
 let ripLock = false;
+let battleReturnPath = "";
+let battlePath = "/battles";
 
 function snapshotIfProgress(save) {
   if (!save) return null;
@@ -301,6 +304,7 @@ const els = {
   statPulls: document.getElementById("stat-pulls"),
   viewHome: document.getElementById("view-home"),
   viewShop: document.getElementById("view-shop"),
+  viewBattles: document.getElementById("view-battles"),
   viewCollection: document.getElementById("view-collection"),
   viewBinder: document.getElementById("view-binder"),
   binderBody: document.getElementById("binder-body"),
@@ -2494,8 +2498,17 @@ function busyPack() {
 
 function openAuth(tab) {
   if (busyPack()) return;
+  if (view === "battles") battleReturnPath = battlePath;
   authTab = tab === "signin" ? "signin" : tab === "signup" ? "signup" : "signup";
   setView("auth");
+}
+
+function returnAfterAuth() {
+  if (battleReturnPath) {
+    battlePath = battleReturnPath;
+    battleReturnPath = "";
+    setView("battles");
+  } else setView("account");
 }
 
 async function hydrateAfterAccountChange() {
@@ -3728,6 +3741,7 @@ function buzz(pattern) {
 const VIEW_SECTIONS = {
   home: "viewHome",
   shop: "viewShop",
+  battles: "viewBattles",
   collection: "viewCollection",
   binder: "viewBinder",
   catalog: "viewCatalog",
@@ -3742,6 +3756,7 @@ const VIEW_SECTIONS = {
 const VIEW_PATHS = {
   home: "/home",
   shop: "/packs",
+  battles: "/battles",
   collection: "/bulk",
   binder: "/binder",
   catalog: "/catalog",
@@ -3758,6 +3773,7 @@ const PATH_VIEWS = {
   "/home": "home",
   "/index.html": "home",
   "/packs": "shop",
+  "/battles": "battles",
   "/shop": "shop",
   "/bulk": "collection",
   "/collection": "collection",
@@ -3777,6 +3793,7 @@ const PATH_VIEWS = {
 const VIEW_TITLES = {
   home: "poke-pack.rip — rip packs, fill the binder",
   shop: "Packs — poke-pack.rip",
+  battles: "Pack battles — poke-pack.rip",
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
   catalog: "All sets — poke-pack.rip",
@@ -3794,6 +3811,7 @@ const VIEW_RENDER = {
     refreshLounge();
   },
   shop: () => centerQuickSet(),
+  battles: () => battles.show(battlePath),
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
@@ -3812,6 +3830,10 @@ function normalizePath(pathname) {
 
 function viewFromPath(pathname) {
   const path = normalizePath(pathname);
+  if (/^\/battles(?:\/[a-zA-Z0-9_-]+)?$/.test(path)) {
+    battlePath = path;
+    return "battles";
+  }
   if (PATH_VIEWS[path]) {
     if (PATH_VIEWS[path] === "social") dmHandle = "";
     return PATH_VIEWS[path];
@@ -3861,6 +3883,7 @@ function viewTitle() {
 }
 
 function pathForView(name) {
+  if (name === "battles") return battlePath;
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
@@ -3882,6 +3905,8 @@ function paintNav(current) {
 }
 
 function applyView(next, hist) {
+  if (next !== "battles") battles.hide();
+  if (next !== "auth" && next !== "battles") battleReturnPath = "";
   view = next;
   for (const [name, key] of Object.entries(VIEW_SECTIONS)) {
     els[key]?.classList.toggle("hidden", view !== name);
@@ -3895,6 +3920,7 @@ function applyView(next, hist) {
   document.body.classList.toggle("on-collection", view === "collection");
   document.body.classList.toggle("on-auth", view === "auth");
   document.body.classList.toggle("on-social", view === "social");
+  document.body.classList.toggle("on-battles", view === "battles");
   document.title = viewTitle();
   if (!document.body.classList.contains("is-booting")) {
     window.scrollTo(0, 0);
@@ -5520,6 +5546,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
     e.preventDefault();
+    if (btn.dataset.view === "battles") battlePath = "/battles";
     setView(btn.dataset.view);
   });
 });
@@ -5558,6 +5585,7 @@ function onEraToggle(e) {
 }
 
 document.addEventListener("click", (e) => {
+  if (e.defaultPrevented) return;
   const quickSet = e.target.closest("[data-quick-set]");
   if (quickSet) {
     activateSet(quickSet.dataset.quickSet);
@@ -6269,7 +6297,7 @@ els.authBody?.addEventListener("submit", async (e) => {
       localStorage.setItem(CLOUD_SEEN_KEY, "1");
       applyCloudSave(result.save);
       await hydrateAfterAccountChange();
-      setView("account");
+      returnAfterAuth();
       toast(keep ? `Welcome, ${result.user.name}. This binder is yours.` : `Welcome, ${result.user.name}.`);
     } catch (error) {
       if (err) err.textContent = error.message;
@@ -6296,7 +6324,7 @@ els.authBody?.addEventListener("submit", async (e) => {
     localStorage.setItem(CLOUD_SEEN_KEY, "1");
     applyCloudSave(result.save);
     await hydrateAfterAccountChange();
-    setView("account");
+    returnAfterAuth();
     toast(`Signed in as ${result.user.name}.`);
   } catch (error) {
     if (err) err.textContent = error.message;
@@ -6813,6 +6841,28 @@ async function routeFromLocation() {
   }
   setView("home", { history: "none" });
 }
+
+const battles = initBattles({
+  root: els.viewBattles,
+  getUser: () => cloudUser,
+  getState: () => state,
+  onSave: (save) => {
+    if (!cloudUser) return;
+    applyCloudSave(save);
+    renderHeader();
+  },
+  onRefreshSave: async () => {
+    await refreshSession();
+    renderHeader();
+  },
+  onNavigate: (path) => {
+    if (!/^\/battles(?:\/[a-zA-Z0-9_-]+)?$/.test(path)) return;
+    battlePath = path;
+    setView("battles");
+  },
+  onSignIn: () => openAuth("signin"),
+  toast,
+});
 
 async function boot() {
   try {
