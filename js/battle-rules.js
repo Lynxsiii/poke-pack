@@ -48,3 +48,25 @@ export function battleResult(rounds, settings, seats) {
   }
   return { winners, scores, allocations: allocations.map(a => ({ ...a, cardCount: a.cards.length, value: a.cents / 100 })) };
 }
+
+// Bot seats. Calling one is always free: a bot pays no entry and its winnings
+// are discarded. A seat stores the persona's name, `bot:<id>` as its handle
+// and the persona's ring colour; the avatar is looked up here by id.
+export const BOT_PERSONAS = [
+  { id: 'sparky', name: 'Sparky', avatar: '25', color: 'gold' },
+  { id: 'cinder', name: 'Cinder', avatar: '4', color: 'ember' },
+  { id: 'tide', name: 'Tide', avatar: '7', color: 'aqua' },
+  { id: 'sprout', name: 'Sprout', avatar: '1', color: 'lime' },
+  { id: 'haunt', name: 'Haunt', avatar: '94', color: 'ghost' },
+  { id: 'nova', name: 'Nova', avatar: '151', color: 'fairy' },
+  { id: 'onyx', name: 'Onyx', avatar: '197', color: 'night' },
+  { id: 'volt', name: 'Volt', avatar: '135', color: 'thunder' },
+  { id: 'drake', name: 'Drake', avatar: '149', color: 'dragon' },
+  { id: 'frost', name: 'Frost', avatar: '144', color: 'ice' },
+  { id: 'blade', name: 'Blade', avatar: '212', color: 'flame' },
+  { id: 'psy', name: 'Psy', avatar: '150', color: 'violet' },
+];
+export const botPersona = seat => {
+  const id = String(seat?.handle || '').replace(/^bot:/, '');
+  return BOT_PERSONAS.find(p => p.id === id) || null;
+};
