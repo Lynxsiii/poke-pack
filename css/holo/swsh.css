@@ -370,7 +370,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
   background-size: cover, cover, 200% 400%, 130% 100%, 200% 100%;
   background-position: center, center,
     0% var(--background-y),
-    calc((var(--background-x) + (var(--background-y) * 0.2)) * -1) calc(var(--background-y) * -1),
+    calc(100% - (var(--background-x) + (var(--background-y) * 0.2))) calc(var(--background-y) * -1),
     var(--background-x) var(--background-y);
   background-blend-mode: soft-light, soft-light, color, hard-light, normal;
   filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(1.66) saturate(1);
