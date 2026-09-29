@@ -20,6 +20,7 @@ import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
 import { QUESTS, questPeriods } from "../js/quests.js";
+import { handleBattles, maintainBattles } from "./battles.js";
 import {
   achievementById,
   achievementContext,
@@ -73,7 +74,8 @@ export default {
       return await handleApi(request, env, url);
     } catch (err) {
       const message = err?.message || "Server error.";
-      const status = err.status && Number.isInteger(err.status) ? err.status : 500;
+      const status = err.status && Number.isInteger(err.status) ? err.status
+        : /active battles before (deleting|resetting)/.test(message) ? 409 : 500;
       if (status >= 500) console.error(err);
       return json({ error: status >= 500 ? "Server error." : message }, status);
     }
@@ -82,6 +84,7 @@ export default {
   // Every 10 minutes (wrangler.toml [triggers]): one small step of recording
   // each set's market prices once a UTC day into D1. See worker/prices.js.
   async scheduled(controller, env, ctx) {
+    ctx.waitUntil(maintainBattles(env).catch(err => console.error('battle maintenance', err)));
     ctx.waitUntil(
       recordDailyPrices(env).then(
         (result) => console.log("daily prices", JSON.stringify(result)),
@@ -94,6 +97,11 @@ export default {
 export async function handleApi(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   const method = request.method.toUpperCase();
+  if (path.startsWith('/api/battles')) {
+    return handleBattles(path, method, request, env, {
+      json, requireUser, readJson, loadSave, loadSetCards, loadSealed, loadProducts, packCost,
+    });
+  }
 
   if (path === "/api/health" && method === "GET") {
     return json({ ok: true });
@@ -573,8 +581,10 @@ async function openPacks(env, userId, live, packs, cost, promos = []) {
     stmts.push(
       env.DB.prepare(
         `INSERT INTO cards (user_id, card_id, qty, reverse_qty) VALUES (?, ?, ?, ?)
-         ON CONFLICT(user_id, card_id) DO UPDATE SET qty = excluded.qty, reverse_qty = excluded.reverse_qty`
-      ).bind(userId, id, qty[id], reverseQty[id] || 0)
+         ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + excluded.qty,
+           reverse_qty = cards.reverse_qty + excluded.reverse_qty`
+      ).bind(userId, id, qty[id] - (existing.find(row => row.card_id === id)?.qty || 0),
+        (reverseQty[id] || 0) - (existing.find(row => row.card_id === id)?.reverse_qty || 0))
     );
   }
   // History only keeps 24 rows, so a box records its best 24 cards, in pull order.
@@ -792,23 +802,18 @@ async function sell(request, env) {
     [cardId]: nextQty,
   });
 
-  const stmts = [
-    env.DB.prepare("UPDATE profiles SET coins = coins + ? WHERE user_id = ?").bind(value, auth.user.id),
-    env.DB.prepare("UPDATE profiles SET binder = ? WHERE user_id = ?").bind(JSON.stringify(binder), auth.user.id),
-  ];
-  if (nextQty <= 0) {
-    stmts.push(env.DB.prepare("DELETE FROM cards WHERE user_id = ? AND card_id = ?").bind(auth.user.id, cardId));
-  } else {
-    stmts.push(
-      env.DB.prepare("UPDATE cards SET qty = ?, reverse_qty = ? WHERE user_id = ? AND card_id = ?").bind(
-        nextQty,
-        nextReverse,
-        auth.user.id,
-        cardId
-      )
-    );
-  }
-  await env.DB.batch(stmts);
+  // Awarding a battle can change this row between the read and write. Compare
+  // its exact snapshot before paying; D1 batch is the credit/decrement transaction.
+  const results = await env.DB.batch([
+    env.DB.prepare(`UPDATE profiles SET coins = coins + ?,
+      binder = CASE WHEN binder IS ? THEN ? ELSE binder END WHERE user_id = ?
+      AND EXISTS(SELECT 1 FROM cards WHERE user_id = ? AND card_id = ? AND qty = ? AND reverse_qty = ?)`)
+      .bind(value, profile?.binder ?? null, JSON.stringify(binder), auth.user.id, auth.user.id, cardId, owned.qty, owned.reverse_qty),
+    env.DB.prepare(`UPDATE cards SET qty = qty - 1, reverse_qty = MAX(reverse_qty - 1, 0)
+      WHERE user_id = ? AND card_id = ? AND changes() = 1`).bind(auth.user.id, cardId),
+    env.DB.prepare('DELETE FROM cards WHERE user_id = ? AND card_id = ? AND qty = 0').bind(auth.user.id, cardId),
+  ]);
+  if (!results[0]?.meta?.changes) return json({ error: 'Collection changed. Try again.' }, 409);
 
   if (owned.qty > 1) await recordQuestEvent(env, auth.user.id, "sold", 1);
   const save = await loadSave(env, auth.user.id);
@@ -824,7 +829,7 @@ async function sellDuplicates(request, env) {
   if (!set) return json({ error: "Unknown set." }, 400);
 
   const owned = (await env.DB.prepare(
-    "SELECT card_id, qty FROM cards WHERE user_id = ? AND card_id LIKE ? AND qty > 1"
+    "SELECT card_id, qty, reverse_qty FROM cards WHERE user_id = ? AND card_id LIKE ? AND qty > 1"
   ).bind(auth.user.id, `${setId}-%`).all()).results || [];
   if (!owned.length) return json({ error: "No duplicates to sell in this set." }, 400);
 
@@ -834,23 +839,27 @@ async function sellDuplicates(request, env) {
   const value = money(rows.reduce((sum, row) => sum + (row.qty - 1) * sellValue(catalog.get(row.card_id)), 0));
   const copies = rows.reduce((sum, row) => sum + row.qty - 1, 0);
   const ids = rows.map(row => row.card_id);
-  const marks = ids.map(() => "?").join(",");
   const collection = (await inventoryMap(env, auth.user.id)).collection;
   for (const id of ids) collection[id] = 1;
   const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?")
     .bind(auth.user.id).first();
   const binder = reconcileBinder(parseJson(profile?.binder, emptyBinder()), collection);
-  // The profile update checks the inventory snapshot so a second concurrent
-  // request cannot receive the same coins. Both statements run in one D1 batch.
+  // Compare every priced row, not just aggregate copies (different cards have
+  // different values). JSON keeps arbitrarily large sets below D1's bind limit.
+  const snapshot = JSON.stringify(rows);
   const results = await env.DB.batch([
     env.DB.prepare(
-      `UPDATE profiles SET coins = coins + ?, binder = ? WHERE user_id = ?
-       AND (SELECT SUM(qty - 1) FROM cards WHERE user_id = ? AND card_id IN (${marks}) AND qty > 1) = ?`
-    ).bind(value, JSON.stringify(binder), auth.user.id, auth.user.id, ...ids, copies),
+      `UPDATE profiles SET coins = coins + ?, binder = CASE WHEN binder IS ? THEN ? ELSE binder END WHERE user_id = ?
+       AND NOT EXISTS(SELECT 1 FROM json_each(?) s LEFT JOIN cards c
+         ON c.user_id = ? AND c.card_id = json_extract(s.value, '$.card_id')
+         WHERE c.qty IS NULL OR c.qty != json_extract(s.value, '$.qty')
+           OR c.reverse_qty != json_extract(s.value, '$.reverse_qty'))`
+    ).bind(value, profile?.binder ?? null, JSON.stringify(binder), auth.user.id, snapshot, auth.user.id),
     env.DB.prepare(
       `UPDATE cards SET qty = 1, reverse_qty = MIN(reverse_qty, 1)
-       WHERE user_id = ? AND card_id IN (${marks}) AND qty > 1 AND changes() = 1`
-    ).bind(auth.user.id, ...ids),
+       WHERE user_id = ? AND card_id IN (SELECT json_extract(value, '$.card_id') FROM json_each(?))
+         AND qty > 1 AND changes() = 1`
+    ).bind(auth.user.id, snapshot),
   ]);
   if (!results[0]?.meta?.changes) return json({ error: "Collection changed. Try again." }, 409);
   await recordQuestEvent(env, auth.user.id, "sold", copies);

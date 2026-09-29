@@ -34,6 +34,41 @@ assets/packs/<set>/   booster wrapper art (avif with png fallback)
 scripts/              python builders that generate data/ and crop wrapper art
 ```
 
+## Pack battles
+
+`/battles` lists public tables. Players can build a mixed lineup from the same
+booster, sealed and promo offers as the shop, reserve 2–4 seats, invite other
+players, or pay to call bots. Unlisted tables are accessible by invite link.
+The host starts a full table; leaving or cancelling an unstarted table refunds
+the entry. Unstarted tables expire after 24 hours.
+
+Standard gives the cards to the highest score, Crazy to the lowest, and Shared
+distributes them across everyone. Scoring can use total value, the final round,
+or the best single card. Four-seat battles can use two teams. Ties, team wins
+and Shared mode distribute indivisible cards by a deterministic deal that
+balances their frozen pull values. Bots can win; their allocation is discarded.
+The host pays each bot's full entry cost.
+
+Fast and Skip commons affect reveals only. Every generated card contributes to
+scores and rewards, and the receipt includes the complete pulls. Refreshing a
+battle restores its server-timed progress. Settlement and refunds are guarded
+by database transactions and unique records.
+
+Apply `worker/migrations/0012_pack_battles.sql` to D1 **before deploying** the
+battle code. Existing accounts and collections are preserved. The existing
+Worker schedule also expires lobbies and settles completed battles.
+
+Run `node scripts/test-battles.mjs` for the transactional API/rule regression
+suite. `node scripts/preview-battles.mjs` starts four disposable, in-memory
+accounts on ports 5175–5178; the first two are a host and a real-player rival.
+It does not write production data or browser account saves back to production.
+
+For automated WebKit checks, install Playwright in your development environment,
+run `npx playwright install webkit`, then
+`node scripts/test-battle-browser.mjs`. `PLAYWRIGHT_MODULE` can point to an
+existing Playwright installation. These checks exercise WebKit; native Safari
+on macOS/iOS should also be checked before merging.
+
 ## Brand assets
 
 `py scripts/make_avatar.py` renders the square profile icon into

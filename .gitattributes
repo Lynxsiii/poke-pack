@@ -1,0 +1,2 @@
+# D1 trigger migrations must retain LF endings on Windows checkouts.
+worker/migrations/0012_pack_battles.sql text eol=lf
