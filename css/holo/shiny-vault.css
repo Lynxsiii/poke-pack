@@ -464,12 +464,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-m
   filter: brightness(0.67) contrast(1.4) saturate(0.8) brightness(0.92);
   opacity: calc(0.45 * var(--foil-strength, 1));
 }
+/* The twin's bars slide the opposite way. Upstream puts them at a negative
+   position, which on a 195%-wide tile drops its edge inside the card and the
+   wrapped copy draws a hard vertical seam that moves with the tilt (#87 on
+   the V cards); mirroring as 100% - position keeps the same direction and
+   speed and the tile over the whole card. */
 body.fx-holo.fx-holo.fx-holo .tcg.sf-shiny.sf-shiny.sf-shiny.sf-shiny.has-foil-map .foil::after {
   background-image: var(--sf-etch), var(--sf-pillar), var(--sf-bars), var(--sf-dim);
   background-size: 100% 100%, 200% 400%, 195% 100%, 200% 100%;
   background-position: center,
     0% var(--background-y),
-    calc((var(--background-x) + (var(--background-y) * 0.2)) * -1) calc(var(--background-y) * -1),
+    calc(100% - (var(--background-x) + (var(--background-y) * 0.2))) calc(var(--background-y) * -1),
     var(--background-x) var(--background-y);
   background-repeat: no-repeat, repeat, repeat, no-repeat;
   background-blend-mode: soft-light, hue, hard-light, normal;
