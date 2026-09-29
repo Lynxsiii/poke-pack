@@ -19,9 +19,125 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp154": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp168": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp169": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp170": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp171": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp172": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp173": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp174": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp175": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp176": {
+      "foilAs": "Rare Holo V"
+    }
+  },
+  "products": [
+    {
+      "id": "pc-etb",
+      "name": "Fusion Strike Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 247673,
+      "packs": 10,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 247659,
+      "packs": 4,
+      "promos": [
+        "swshp168",
+        "swshp169",
+        "swshp170",
+        "swshp171"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "tepig-single-blister",
+      "name": "Tepig Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 247669,
+      "packs": 1,
+      "promos": [
+        "swshp172"
+      ]
+    },
+    {
+      "id": "blitzle-single-blister",
+      "name": "Blitzle Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 247670,
+      "packs": 1,
+      "promos": [
+        "swshp173"
+      ]
+    },
+    {
+      "id": "espeon-3-pack-blister",
+      "name": "Espeon 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 247668,
+      "packs": 3,
+      "promos": [
+        "swshp174"
+      ]
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 247667,
+      "packs": 3,
+      "promos": [
+        "swshp175"
+      ]
+    },
+    {
+      "id": "dragonite-v-box",
+      "name": "Dragonite V Box",
+      "kind": "collection",
+      "tcgplayerId": 245876,
+      "packs": 4,
+      "promos": [
+        "swshp154"
+      ]
+    },
+    {
+      "id": "hoopa-v-box",
+      "name": "Hoopa V Box",
+      "kind": "collection",
+      "tcgplayerId": 247817,
+      "packs": 4,
+      "promos": [
+        "swshp176"
+      ]
+    }
+  ]
 }

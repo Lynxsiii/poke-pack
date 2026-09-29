@@ -26,9 +26,113 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp269": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp270": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp271": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp272": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp273": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp274": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp275": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp276": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 285860,
+      "packs": 10,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 285776,
+      "packs": 4,
+      "promos": [
+        "swshp269",
+        "swshp270",
+        "swshp271",
+        "swshp272"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "buildBattleStadium",
+      "name": "Build & Battle Stadium",
+      "kind": "battle",
+      "tcgplayerId": 285042,
+      "packs": 12,
+      "promos": [
+        "swshp269",
+        "swshp270",
+        "swshp271",
+        "swshp272"
+      ],
+      "pick": 2
+    },
+    {
+      "id": "togetic-3-pack-blister",
+      "name": "Togetic 3-Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 283393,
+      "packs": 3,
+      "promos": [
+        "swshp276"
+      ]
+    },
+    {
+      "id": "manaphy-3-pack-blister",
+      "name": "Manaphy 3-Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 283394,
+      "packs": 3,
+      "promos": [
+        "swshp275"
+      ]
+    },
+    {
+      "id": "basculin-single-pack-blister",
+      "name": "Hisuian Basculin Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 285780,
+      "packs": 1,
+      "promos": [
+        "swshp273"
+      ]
+    },
+    {
+      "id": "cranidos-single-pack-blister",
+      "name": "Cranidos Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 285781,
+      "packs": 1,
+      "promos": [
+        "swshp274"
+      ]
+    }
+  ]
 }

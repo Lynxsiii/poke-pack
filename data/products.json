@@ -1,5 +1,204 @@
 {
-  "_fetchedAt": "2026-09-27",
+  "_fetchedAt": "2026-09-29",
+  "cel25": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "cel25-swshp144"
+      ],
+      "price": 359.03,
+      "tcgplayerId": 242811,
+      "image": "assets/products/cel25/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Celebrations Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 13,
+      "promos": [
+        "cel25-swshp144"
+      ],
+      "price": 529.46,
+      "tcgplayerId": 251199,
+      "image": "assets/products/cel25/pc-etb.webp"
+    },
+    {
+      "id": "dragapult-prime-collection",
+      "name": "Celebrations Collection Dragapult Prime",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "cel25-swshp132"
+      ],
+      "price": 78.62,
+      "tcgplayerId": 242807,
+      "image": "assets/products/cel25/dragapult-prime-collection.webp"
+    },
+    {
+      "id": "lances-charizard-v-collection",
+      "name": "Celebrations Collection Lance's Charizard V",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "cel25-swshp133"
+      ],
+      "price": 153.87,
+      "tcgplayerId": 242808,
+      "image": "assets/products/cel25/lances-charizard-v-collection.webp"
+    },
+    {
+      "id": "dark-sylveon-v-collection",
+      "name": "Celebrations Collection Dark Sylveon V",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "cel25-swshp134"
+      ],
+      "price": 163.65,
+      "tcgplayerId": 242809,
+      "image": "assets/products/cel25/dark-sylveon-v-collection.webp"
+    },
+    {
+      "id": "zacian-lv-x-deluxe-pin-collection",
+      "name": "Celebrations Deluxe Pin Collection Zacian LV.X",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "cel25-swshp135"
+      ],
+      "price": 136.91,
+      "tcgplayerId": 242810,
+      "image": "assets/products/cel25/zacian-lv-x-deluxe-pin-collection.webp"
+    },
+    {
+      "id": "pikachu-v-union-special-collection",
+      "name": "Celebrations Special Collection Pikachu V-UNION",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "cel25-swshp139",
+        "cel25-swshp140",
+        "cel25-swshp141",
+        "cel25-swshp142"
+      ],
+      "price": 201.21,
+      "tcgplayerId": 244726,
+      "image": "assets/products/cel25/pikachu-v-union-special-collection.webp"
+    },
+    {
+      "id": "pikachu-v-union-premium-playmat-collection",
+      "name": "Celebrations Premium Playmat Collection Pikachu V-UNION",
+      "kind": "collection",
+      "packs": 6,
+      "promos": [
+        "cel25-swshp139",
+        "cel25-swshp140",
+        "cel25-swshp141",
+        "cel25-swshp142"
+      ],
+      "price": 239.45,
+      "tcgplayerId": 251217,
+      "image": "assets/products/cel25/pikachu-v-union-premium-playmat-collection.webp"
+    },
+    {
+      "id": "collector-chest",
+      "name": "Celebrations Collector Chest",
+      "kind": "collection",
+      "packs": 6,
+      "promos": [
+        "cel25-swshp136",
+        "cel25-swshp137",
+        "cel25-swshp138"
+      ],
+      "price": 206.82,
+      "tcgplayerId": 244727,
+      "released": "2021-10-22",
+      "image": "assets/products/cel25/collector-chest.webp"
+    },
+    {
+      "id": "pikachu-vmax-premium-figure-collection",
+      "name": "Celebrations Premium Figure Collection Pikachu VMAX",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "cel25-swshp062",
+        "cel25-swshp143"
+      ],
+      "price": 301.4,
+      "tcgplayerId": 245139,
+      "released": "2021-10-22",
+      "image": "assets/products/cel25/pikachu-vmax-premium-figure-collection.webp"
+    },
+    {
+      "id": "ultra-premium-collection",
+      "name": "Celebrations Ultra-Premium Collection",
+      "kind": "premium",
+      "packs": 17,
+      "promos": [
+        "cel25-swshp145",
+        "cel25-swshp146"
+      ],
+      "price": 1226.14,
+      "tcgplayerId": 245140,
+      "released": "2021-10-22",
+      "image": "assets/products/cel25/ultra-premium-collection.webp"
+    },
+    {
+      "id": "v-memories-special-collection",
+      "name": "Celebrations Special Collection V Memories",
+      "kind": "collection",
+      "packs": 6,
+      "promos": [
+        "cel25-swshp133",
+        "cel25-swshp134"
+      ],
+      "price": 199.79,
+      "tcgplayerId": 247470,
+      "image": "assets/products/cel25/v-memories-special-collection.webp"
+    },
+    {
+      "id": "prime-collection",
+      "name": "Celebrations Prime Collection",
+      "kind": "collection",
+      "packs": 9,
+      "promos": [
+        "cel25-swshp132",
+        "cel25-swshp136",
+        "cel25-swshp137",
+        "cel25-swshp138"
+      ],
+      "price": 351.95,
+      "tcgplayerId": 252416,
+      "image": "assets/products/cel25/prime-collection.webp"
+    },
+    {
+      "id": "lances-charizard-v-tin",
+      "name": "Celebrations Tin Lance's Charizard V",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "cel25-swshp133"
+      ],
+      "price": 187.73,
+      "tcgplayerId": 251986,
+      "image": "assets/products/cel25/lances-charizard-v-tin.webp"
+    },
+    {
+      "id": "dark-sylveon-v-tin",
+      "name": "Celebrations Tin Dark Sylveon V",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "cel25-swshp134"
+      ],
+      "price": 173.99,
+      "tcgplayerId": 251989,
+      "image": "assets/products/cel25/dark-sylveon-v-tin.webp"
+    }
+  ],
   "me1": [
     {
       "id": "eliteTrainerBox",
@@ -1740,6 +1939,228 @@
       "image": "assets/products/me55/deck-umbreon.webp"
     }
   ],
+  "pgo": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Pokémon GO Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "pgo-swshp229"
+      ],
+      "price": 170.47,
+      "tcgplayerId": 270708,
+      "released": "2022-07-01",
+      "image": "assets/products/pgo/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon GO Pokémon Center Elite Trainer Box Plus",
+      "kind": "etb",
+      "packs": 12,
+      "promos": [
+        "pgo-swshp229"
+      ],
+      "price": 235.31,
+      "tcgplayerId": 270709,
+      "released": "2022-07-29",
+      "image": "assets/products/pgo/pc-etb.webp"
+    },
+    {
+      "id": "mewtwo-v-battle-deck",
+      "name": "Pokémon GO V Battle Deck: Mewtwo V",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "pgo-swshp223"
+      ],
+      "price": 28.19,
+      "tcgplayerId": 270710,
+      "released": "2022-07-01",
+      "image": "assets/products/pgo/mewtwo-v-battle-deck.webp"
+    },
+    {
+      "id": "melmetal-v-battle-deck",
+      "name": "Pokémon GO V Battle Deck: Melmetal V",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "pgo-swshp224"
+      ],
+      "price": 13.95,
+      "tcgplayerId": 270711,
+      "released": "2022-07-01",
+      "image": "assets/products/pgo/melmetal-v-battle-deck.webp"
+    },
+    {
+      "id": "mewtwo-melmetal-v-battle-deck-bundle",
+      "name": "Pokémon GO V Battle Deck Bundle: Mewtwo V and Melmetal V",
+      "kind": "deck",
+      "packs": 2,
+      "promos": [
+        "pgo-swshp223",
+        "pgo-swshp224"
+      ],
+      "price": 44.98,
+      "tcgplayerId": 270712,
+      "image": "assets/products/pgo/mewtwo-melmetal-v-battle-deck-bundle.webp"
+    },
+    {
+      "id": "team-instinct-special-collection",
+      "name": "Pokémon GO Special Collection: Team Instinct",
+      "kind": "collection",
+      "packs": 6,
+      "promos": [
+        "pgo-swshp226"
+      ],
+      "price": 85.27,
+      "tcgplayerId": 270713,
+      "released": "2022-07-01",
+      "image": "assets/products/pgo/team-instinct-special-collection.webp"
+    },
+    {
+      "id": "team-mystic-special-collection",
+      "name": "Pokémon GO Special Collection: Team Mystic",
+      "kind": "collection",
+      "packs": 6,
+      "promos": [
+        "pgo-swshp227"
+      ],
+      "price": 117.55,
+      "tcgplayerId": 270714,
+      "released": "2022-07-01",
+      "image": "assets/products/pgo/team-mystic-special-collection.webp"
+    },
+    {
+      "id": "team-valor-special-collection",
+      "name": "Pokémon GO Special Collection: Team Valor",
+      "kind": "collection",
+      "packs": 6,
+      "promos": [
+        "pgo-swshp228"
+      ],
+      "price": 92.97,
+      "tcgplayerId": 270715,
+      "released": "2022-07-01",
+      "image": "assets/products/pgo/team-valor-special-collection.webp"
+    },
+    {
+      "id": "alolan-exeggutor-v-collection",
+      "name": "Pokémon GO Alolan Exeggutor V Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "pgo-swshp225"
+      ],
+      "price": 52.67,
+      "tcgplayerId": 270716,
+      "released": "2022-07-01",
+      "image": "assets/products/pgo/alolan-exeggutor-v-collection.webp"
+    },
+    {
+      "id": "radiant-eevee-premium-collection",
+      "name": "Pokémon GO Radiant Eevee Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "pgo-swshp230"
+      ],
+      "price": 166.99,
+      "tcgplayerId": 270717,
+      "released": "2022-07-01",
+      "image": "assets/products/pgo/radiant-eevee-premium-collection.webp"
+    },
+    {
+      "id": "blissey-tin",
+      "name": "Pokémon GO Tin: Blissey",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "pgo-swshp234"
+      ],
+      "price": 49.36,
+      "tcgplayerId": 270725,
+      "image": "assets/products/pgo/blissey-tin.webp"
+    },
+    {
+      "id": "pikachu-tin",
+      "name": "Pokémon GO Tin: Pikachu",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "pgo-swshp234"
+      ],
+      "price": 71.6,
+      "tcgplayerId": 270726,
+      "released": "2022-07-15",
+      "image": "assets/products/pgo/pikachu-tin.webp"
+    },
+    {
+      "id": "snorlax-tin",
+      "name": "Pokémon GO Tin: Snorlax",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "pgo-swshp234"
+      ],
+      "price": 71.63,
+      "tcgplayerId": 270727,
+      "image": "assets/products/pgo/snorlax-tin.webp"
+    },
+    {
+      "id": "bulbasaur-pin-collection",
+      "name": "Pokémon GO Pin Collection: Bulbasaur",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "pgo-swshp231"
+      ],
+      "price": 53.43,
+      "tcgplayerId": 275825,
+      "released": "2022-09-02",
+      "image": "assets/products/pgo/bulbasaur-pin-collection.webp"
+    },
+    {
+      "id": "charmander-pin-collection",
+      "name": "Pokémon GO Pin Collection: Charmander",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "pgo-swshp232"
+      ],
+      "price": 73.91,
+      "tcgplayerId": 275826,
+      "released": "2022-09-02",
+      "image": "assets/products/pgo/charmander-pin-collection.webp"
+    },
+    {
+      "id": "squirtle-pin-collection",
+      "name": "Pokémon GO Pin Collection: Squirtle",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "pgo-swshp233"
+      ],
+      "price": 60.67,
+      "tcgplayerId": 275827,
+      "released": "2022-09-02",
+      "image": "assets/products/pgo/squirtle-pin-collection.webp"
+    },
+    {
+      "id": "dragonite-vstar-premier-deck-holder-collection",
+      "name": "Pokémon GO Premier Deck Holder Collection: Dragonite VSTAR",
+      "kind": "collection",
+      "packs": 9,
+      "promos": [
+        "pgo-swshp235",
+        "pgo-swshp236"
+      ],
+      "price": 105.2,
+      "tcgplayerId": 275842,
+      "released": "2022-09-30",
+      "image": "assets/products/pgo/dragonite-vstar-premier-deck-holder-collection.webp"
+    }
+  ],
   "rsv10pt5": [
     {
       "id": "eliteTrainerBox",
@@ -2297,6 +2718,268 @@
       "image": "assets/products/sv3/blister-wooper.webp"
     }
   ],
+  "sv3pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv3pt5-svp051"
+      ],
+      "price": 468.81,
+      "tcgplayerId": 503313,
+      "image": "assets/products/sv3pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv3pt5-svp051-pc",
+        "sv3pt5-svp051"
+      ],
+      "price": 1264.45,
+      "tcgplayerId": 501999,
+      "image": "assets/products/sv3pt5/pc-etb.webp"
+    },
+    {
+      "id": "upc",
+      "name": "Ultra-Premium Collection",
+      "kind": "premium",
+      "packs": 16,
+      "promos": [
+        "sv3pt5-svp053",
+        "sv3pt5-svp052",
+        "sv3pt5-205-metal"
+      ],
+      "price": 881.05,
+      "tcgplayerId": 502005,
+      "image": "assets/products/sv3pt5/upc.webp"
+    },
+    {
+      "id": "box-alakazam",
+      "name": "Alakazam ex Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv3pt5-svp050",
+        "sv3pt5-64-cosmos",
+        "sv3pt5-63-cosmos"
+      ],
+      "price": 118.31,
+      "tcgplayerId": 502006,
+      "released": "2023-10-06",
+      "image": "assets/products/sv3pt5/box-alakazam.webp"
+    },
+    {
+      "id": "box-zapdos",
+      "name": "Zapdos ex Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv3pt5-svp049",
+        "sv3pt5-125-cosmos"
+      ],
+      "price": 120.89,
+      "tcgplayerId": 502007,
+      "released": "2023-10-06",
+      "image": "assets/products/sv3pt5/box-zapdos.webp"
+    },
+    {
+      "id": "poster",
+      "name": "Poster Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sv3pt5-svp046",
+        "sv3pt5-svp047",
+        "sv3pt5-svp048"
+      ],
+      "price": 85.9,
+      "tcgplayerId": 502001,
+      "released": "2023-09-22",
+      "image": "assets/products/sv3pt5/poster.webp"
+    },
+    {
+      "id": "tins-samsclub",
+      "name": "Sam's Club Mini Tin Bundle",
+      "kind": "tin",
+      "packs": 8,
+      "promos": [
+        "sv3pt5-26-cosmos",
+        "sv3pt5-68-cosmos",
+        "sv3pt5-94-cosmos",
+        "sv3pt5-149-cosmos"
+      ],
+      "price": 214.64,
+      "tcgplayerId": 662302,
+      "image": "assets/products/sv3pt5/tins-samsclub.webp"
+    },
+    {
+      "id": "tins-costco-meowth",
+      "name": "Costco Mini Tin 5-Pack (Meowth)",
+      "kind": "tin",
+      "packs": 10,
+      "promos": [
+        "sv3pt5-25-costco",
+        "sv3pt5-1-costco",
+        "sv3pt5-4-costco",
+        "sv3pt5-7-costco"
+      ],
+      "price": 277.0,
+      "tcgplayerId": 587746,
+      "image": "assets/products/sv3pt5/tins-costco-meowth.webp"
+    },
+    {
+      "id": "tins-costco-magneton",
+      "name": "Costco Mini Tin 5-Pack (Magneton)",
+      "kind": "tin",
+      "packs": 10,
+      "promos": [
+        "sv3pt5-25-costco",
+        "sv3pt5-1-costco",
+        "sv3pt5-4-costco",
+        "sv3pt5-7-costco"
+      ],
+      "price": 279.31,
+      "tcgplayerId": 587747,
+      "image": "assets/products/sv3pt5/tins-costco-magneton.webp"
+    }
+  ],
+  "sv4": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "sv4-svp065",
+        "sv4-svp066"
+      ],
+      "pick": 1,
+      "price": 138.96,
+      "tcgplayerId": 512815,
+      "image": "assets/products/sv4/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb-roaring-moon",
+      "name": "Pokémon Center Elite Trainer Box: Roaring Moon",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv4-svp065-pc",
+        "sv4-svp065"
+      ],
+      "price": 222.52,
+      "tcgplayerId": 512809,
+      "image": "assets/products/sv4/pc-etb-roaring-moon.webp"
+    },
+    {
+      "id": "pc-etb-iron-valiant",
+      "name": "Pokémon Center Elite Trainer Box: Iron Valiant",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "sv4-svp066-pc",
+        "sv4-svp066"
+      ],
+      "price": 191.19,
+      "tcgplayerId": 512801,
+      "image": "assets/products/sv4/pc-etb-iron-valiant.webp"
+    },
+    {
+      "id": "roaring-moon-box",
+      "name": "Roaring Moon ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv4-svp067"
+      ],
+      "price": 46.6,
+      "tcgplayerId": 516577,
+      "released": "2023-11-17",
+      "image": "assets/products/sv4/roaring-moon-box.webp"
+    },
+    {
+      "id": "iron-valiant-box",
+      "name": "Iron Valiant ex Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sv4-svp068"
+      ],
+      "price": 43.73,
+      "tcgplayerId": 516578,
+      "released": "2023-11-17",
+      "image": "assets/products/sv4/iron-valiant-box.webp"
+    },
+    {
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sv4-svp057",
+        "sv4-svp058",
+        "sv4-svp059",
+        "sv4-svp060"
+      ],
+      "pick": 1,
+      "price": 43.23,
+      "tcgplayerId": 514068,
+      "image": "assets/products/sv4/build-battle.webp"
+    },
+    {
+      "id": "blister3-arctibax",
+      "name": "3 Pack Blister: Arctibax",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv4-svp064"
+      ],
+      "price": 31.0,
+      "tcgplayerId": 513433,
+      "image": "assets/products/sv4/blister3-arctibax.webp"
+    },
+    {
+      "id": "blister3-cetitan",
+      "name": "3 Pack Blister: Cetitan",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sv4-svp063"
+      ],
+      "price": 29.61,
+      "tcgplayerId": 513434,
+      "image": "assets/products/sv4/blister3-cetitan.webp"
+    },
+    {
+      "id": "blister-sinistea",
+      "name": "Single Pack Blister: Sinistea",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv4-svp062"
+      ],
+      "price": 10.91,
+      "tcgplayerId": 514223,
+      "image": "assets/products/sv4/blister-sinistea.webp"
+    },
+    {
+      "id": "blister-pineco",
+      "name": "Single Pack Blister: Pineco",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sv4-svp061"
+      ],
+      "price": 11.02,
+      "tcgplayerId": 514224,
+      "image": "assets/products/sv4/blister-pineco.webp"
+    }
+  ],
   "sv4pt5": [
     {
       "id": "eliteTrainerBox",
@@ -2603,138 +3286,6 @@
       "image": "assets/products/sv5/blister-bellibolt.webp"
     }
   ],
-  "sv4": [
-    {
-      "id": "eliteTrainerBox",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 9,
-      "promos": [
-        "sv4-svp065",
-        "sv4-svp066"
-      ],
-      "pick": 1,
-      "price": 138.96,
-      "tcgplayerId": 512815,
-      "image": "assets/products/sv4/eliteTrainerBox.webp"
-    },
-    {
-      "id": "pc-etb-roaring-moon",
-      "name": "Pokémon Center Elite Trainer Box: Roaring Moon",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "sv4-svp065-pc",
-        "sv4-svp065"
-      ],
-      "price": 222.52,
-      "tcgplayerId": 512809,
-      "image": "assets/products/sv4/pc-etb-roaring-moon.webp"
-    },
-    {
-      "id": "pc-etb-iron-valiant",
-      "name": "Pokémon Center Elite Trainer Box: Iron Valiant",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "sv4-svp066-pc",
-        "sv4-svp066"
-      ],
-      "price": 191.19,
-      "tcgplayerId": 512801,
-      "image": "assets/products/sv4/pc-etb-iron-valiant.webp"
-    },
-    {
-      "id": "roaring-moon-box",
-      "name": "Roaring Moon ex Box",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "sv4-svp067"
-      ],
-      "price": 46.6,
-      "tcgplayerId": 516577,
-      "released": "2023-11-17",
-      "image": "assets/products/sv4/roaring-moon-box.webp"
-    },
-    {
-      "id": "iron-valiant-box",
-      "name": "Iron Valiant ex Box",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "sv4-svp068"
-      ],
-      "price": 43.73,
-      "tcgplayerId": 516578,
-      "released": "2023-11-17",
-      "image": "assets/products/sv4/iron-valiant-box.webp"
-    },
-    {
-      "id": "build-battle",
-      "name": "Build & Battle Box",
-      "kind": "battle",
-      "packs": 4,
-      "promos": [
-        "sv4-svp057",
-        "sv4-svp058",
-        "sv4-svp059",
-        "sv4-svp060"
-      ],
-      "pick": 1,
-      "price": 43.23,
-      "tcgplayerId": 514068,
-      "image": "assets/products/sv4/build-battle.webp"
-    },
-    {
-      "id": "blister3-arctibax",
-      "name": "3 Pack Blister: Arctibax",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "sv4-svp064"
-      ],
-      "price": 31.0,
-      "tcgplayerId": 513433,
-      "image": "assets/products/sv4/blister3-arctibax.webp"
-    },
-    {
-      "id": "blister3-cetitan",
-      "name": "3 Pack Blister: Cetitan",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "sv4-svp063"
-      ],
-      "price": 29.61,
-      "tcgplayerId": 513434,
-      "image": "assets/products/sv4/blister3-cetitan.webp"
-    },
-    {
-      "id": "blister-sinistea",
-      "name": "Single Pack Blister: Sinistea",
-      "kind": "blister",
-      "packs": 1,
-      "promos": [
-        "sv4-svp062"
-      ],
-      "price": 10.91,
-      "tcgplayerId": 514223,
-      "image": "assets/products/sv4/blister-sinistea.webp"
-    },
-    {
-      "id": "blister-pineco",
-      "name": "Single Pack Blister: Pineco",
-      "kind": "blister",
-      "packs": 1,
-      "promos": [
-        "sv4-svp061"
-      ],
-      "price": 11.02,
-      "tcgplayerId": 514224,
-      "image": "assets/products/sv4/blister-pineco.webp"
-    }
-  ],
   "sv6": [
     {
       "id": "eliteTrainerBox",
@@ -3037,224 +3588,6 @@
       "image": "assets/products/sv7/blister-porygon2.webp"
     }
   ],
-  "sv9": [
-    {
-      "id": "eliteTrainerBox",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 9,
-      "promos": [
-        "sv9-svp189"
-      ],
-      "price": 136.43,
-      "tcgplayerId": 610930,
-      "image": "assets/products/sv9/eliteTrainerBox.webp"
-    },
-    {
-      "id": "pc-etb",
-      "name": "Pokémon Center Elite Trainer Box",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "sv9-svp189-pc",
-        "sv9-svp189"
-      ],
-      "price": 195.25,
-      "tcgplayerId": 610929,
-      "image": "assets/products/sv9/pc-etb.webp"
-    },
-    {
-      "id": "enhanced-box",
-      "name": "Enhanced Booster Box",
-      "kind": "collection",
-      "packs": 36,
-      "promos": [
-        "sv9-167-stamped"
-      ],
-      "price": 253.18,
-      "tcgplayerId": 623628,
-      "released": "2025-03-28",
-      "image": "assets/products/sv9/enhanced-box.webp"
-    },
-    {
-      "id": "premium-bellibolt",
-      "name": "Iono's Bellibolt ex Premium Collection",
-      "kind": "premium",
-      "packs": 6,
-      "promos": [
-        "sv9-svp194",
-        "sv9-52-cosmos"
-      ],
-      "price": 57.75,
-      "tcgplayerId": 616304,
-      "released": "2025-04-11",
-      "image": "assets/products/sv9/premium-bellibolt.webp"
-    },
-    {
-      "id": "ptc-lillie",
-      "name": "Lillie Premium Tournament Collection",
-      "kind": "premium",
-      "packs": 6,
-      "promos": [
-        "sv9-svp195",
-        "sv9-151-cosmos"
-      ],
-      "price": 78.71,
-      "tcgplayerId": 626605,
-      "image": "assets/products/sv9/ptc-lillie.webp"
-    },
-    {
-      "id": "box-zacian",
-      "name": "Hop's Zacian ex Box",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "sv9-svp193",
-        "sv9-135-cosmos",
-        "sv9-136-cosmos"
-      ],
-      "price": 33.94,
-      "tcgplayerId": 616303,
-      "released": "2025-03-28",
-      "image": "assets/products/sv9/box-zacian.webp"
-    },
-    {
-      "id": "build-battle",
-      "name": "Build & Battle Box",
-      "kind": "battle",
-      "packs": 4,
-      "promos": [
-        "sv9-svp181",
-        "sv9-svp182",
-        "sv9-svp183",
-        "sv9-svp184"
-      ],
-      "pick": 1,
-      "price": 39.07,
-      "tcgplayerId": 610954,
-      "released": "2025-04-11",
-      "image": "assets/products/sv9/build-battle.webp"
-    },
-    {
-      "id": "blister3-yanmega",
-      "name": "3 Pack Blister: Yanmega",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "sv9-svp187"
-      ],
-      "price": 23.94,
-      "tcgplayerId": 610940,
-      "image": "assets/products/sv9/blister3-yanmega.webp"
-    },
-    {
-      "id": "blister3-scrafty",
-      "name": "3 Pack Blister: Scrafty",
-      "kind": "blister",
-      "packs": 3,
-      "promos": [
-        "sv9-svp188"
-      ],
-      "price": 26.78,
-      "tcgplayerId": 610948,
-      "image": "assets/products/sv9/blister3-scrafty.webp"
-    },
-    {
-      "id": "blister-yanma",
-      "name": "Single Pack Blister: Yanma",
-      "kind": "blister",
-      "packs": 1,
-      "promos": [
-        "sv9-svp185"
-      ],
-      "price": 11.38,
-      "tcgplayerId": 610950,
-      "image": "assets/products/sv9/blister-yanma.webp"
-    },
-    {
-      "id": "blister-scraggy",
-      "name": "Single Pack Blister: Scraggy",
-      "kind": "blister",
-      "packs": 1,
-      "promos": [
-        "sv9-svp186"
-      ],
-      "price": 10.17,
-      "tcgplayerId": 610949,
-      "image": "assets/products/sv9/blister-scraggy.webp"
-    }
-  ],
-  "zsv10pt5": [
-    {
-      "id": "eliteTrainerBox",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 9,
-      "promos": [
-        "zsv10pt5-svp209"
-      ],
-      "price": 161.32,
-      "tcgplayerId": 630686,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
-    },
-    {
-      "id": "pc-etb",
-      "name": "Pokémon Center Elite Trainer Box",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "zsv10pt5-svp209-pc",
-        "zsv10pt5-svp209"
-      ],
-      "price": 271.77,
-      "tcgplayerId": 630687,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/pc-etb.webp"
-    },
-    {
-      "id": "victini-collection",
-      "name": "Unova Victini Illustration Collection",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "zsv10pt5-svp208",
-        "zsv10pt5-12-pokeball"
-      ],
-      "price": 71.86,
-      "tcgplayerId": 630615,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/victini-collection.webp"
-    },
-    {
-      "id": "tech-reuniclus",
-      "name": "Tech Sticker Collection: Reuniclus",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "zsv10pt5-svp212"
-      ],
-      "price": 50.44,
-      "tcgplayerId": 630614,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
-    },
-    {
-      "id": "heavy-hitters",
-      "name": "Unova Heavy Hitters Premium Collection",
-      "kind": "premium",
-      "packs": 12,
-      "promos": [
-        "zsv10pt5-12-stamp",
-        "zsv10pt5-34-stamp",
-        "zsv10pt5-wht020-stamp",
-        "zsv10pt5-wht062-stamp"
-      ],
-      "price": 180.68,
-      "tcgplayerId": 668632,
-      "image": "assets/products/zsv10pt5/heavy-hitters.webp"
-    }
-  ],
   "sv8": [
     {
       "id": "eliteTrainerBox",
@@ -3503,18 +3836,18 @@
       "image": "assets/products/sv8pt5/blister2-eevee.webp"
     }
   ],
-  "sv3pt5": [
+  "sv9": [
     {
       "id": "eliteTrainerBox",
       "name": "Elite Trainer Box",
       "kind": "etb",
       "packs": 9,
       "promos": [
-        "sv3pt5-svp051"
+        "sv9-svp189"
       ],
-      "price": 468.81,
-      "tcgplayerId": 503313,
-      "image": "assets/products/sv3pt5/eliteTrainerBox.webp"
+      "price": 136.43,
+      "tcgplayerId": 610930,
+      "image": "assets/products/sv9/eliteTrainerBox.webp"
     },
     {
       "id": "pc-etb",
@@ -3522,115 +3855,132 @@
       "kind": "etb",
       "packs": 11,
       "promos": [
-        "sv3pt5-svp051-pc",
-        "sv3pt5-svp051"
+        "sv9-svp189-pc",
+        "sv9-svp189"
       ],
-      "price": 1264.45,
-      "tcgplayerId": 501999,
-      "image": "assets/products/sv3pt5/pc-etb.webp"
+      "price": 195.25,
+      "tcgplayerId": 610929,
+      "image": "assets/products/sv9/pc-etb.webp"
     },
     {
-      "id": "upc",
-      "name": "Ultra-Premium Collection",
+      "id": "enhanced-box",
+      "name": "Enhanced Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "promos": [
+        "sv9-167-stamped"
+      ],
+      "price": 253.18,
+      "tcgplayerId": 623628,
+      "released": "2025-03-28",
+      "image": "assets/products/sv9/enhanced-box.webp"
+    },
+    {
+      "id": "premium-bellibolt",
+      "name": "Iono's Bellibolt ex Premium Collection",
       "kind": "premium",
-      "packs": 16,
+      "packs": 6,
       "promos": [
-        "sv3pt5-svp053",
-        "sv3pt5-svp052",
-        "sv3pt5-205-metal"
+        "sv9-svp194",
+        "sv9-52-cosmos"
       ],
-      "price": 881.05,
-      "tcgplayerId": 502005,
-      "image": "assets/products/sv3pt5/upc.webp"
+      "price": 57.75,
+      "tcgplayerId": 616304,
+      "released": "2025-04-11",
+      "image": "assets/products/sv9/premium-bellibolt.webp"
     },
     {
-      "id": "box-alakazam",
-      "name": "Alakazam ex Collection",
+      "id": "ptc-lillie",
+      "name": "Lillie Premium Tournament Collection",
+      "kind": "premium",
+      "packs": 6,
+      "promos": [
+        "sv9-svp195",
+        "sv9-151-cosmos"
+      ],
+      "price": 78.71,
+      "tcgplayerId": 626605,
+      "image": "assets/products/sv9/ptc-lillie.webp"
+    },
+    {
+      "id": "box-zacian",
+      "name": "Hop's Zacian ex Box",
       "kind": "collection",
       "packs": 4,
       "promos": [
-        "sv3pt5-svp050",
-        "sv3pt5-64-cosmos",
-        "sv3pt5-63-cosmos"
+        "sv9-svp193",
+        "sv9-135-cosmos",
+        "sv9-136-cosmos"
       ],
-      "price": 118.31,
-      "tcgplayerId": 502006,
-      "released": "2023-10-06",
-      "image": "assets/products/sv3pt5/box-alakazam.webp"
+      "price": 33.94,
+      "tcgplayerId": 616303,
+      "released": "2025-03-28",
+      "image": "assets/products/sv9/box-zacian.webp"
     },
     {
-      "id": "box-zapdos",
-      "name": "Zapdos ex Collection",
-      "kind": "collection",
+      "id": "build-battle",
+      "name": "Build & Battle Box",
+      "kind": "battle",
       "packs": 4,
       "promos": [
-        "sv3pt5-svp049",
-        "sv3pt5-125-cosmos"
+        "sv9-svp181",
+        "sv9-svp182",
+        "sv9-svp183",
+        "sv9-svp184"
       ],
-      "price": 120.89,
-      "tcgplayerId": 502007,
-      "released": "2023-10-06",
-      "image": "assets/products/sv3pt5/box-zapdos.webp"
+      "pick": 1,
+      "price": 39.07,
+      "tcgplayerId": 610954,
+      "released": "2025-04-11",
+      "image": "assets/products/sv9/build-battle.webp"
     },
     {
-      "id": "poster",
-      "name": "Poster Collection",
-      "kind": "collection",
+      "id": "blister3-yanmega",
+      "name": "3 Pack Blister: Yanmega",
+      "kind": "blister",
       "packs": 3,
       "promos": [
-        "sv3pt5-svp046",
-        "sv3pt5-svp047",
-        "sv3pt5-svp048"
+        "sv9-svp187"
       ],
-      "price": 85.9,
-      "tcgplayerId": 502001,
-      "released": "2023-09-22",
-      "image": "assets/products/sv3pt5/poster.webp"
+      "price": 23.94,
+      "tcgplayerId": 610940,
+      "image": "assets/products/sv9/blister3-yanmega.webp"
     },
     {
-      "id": "tins-samsclub",
-      "name": "Sam's Club Mini Tin Bundle",
-      "kind": "tin",
-      "packs": 8,
+      "id": "blister3-scrafty",
+      "name": "3 Pack Blister: Scrafty",
+      "kind": "blister",
+      "packs": 3,
       "promos": [
-        "sv3pt5-26-cosmos",
-        "sv3pt5-68-cosmos",
-        "sv3pt5-94-cosmos",
-        "sv3pt5-149-cosmos"
+        "sv9-svp188"
       ],
-      "price": 214.64,
-      "tcgplayerId": 662302,
-      "image": "assets/products/sv3pt5/tins-samsclub.webp"
+      "price": 26.78,
+      "tcgplayerId": 610948,
+      "image": "assets/products/sv9/blister3-scrafty.webp"
     },
     {
-      "id": "tins-costco-meowth",
-      "name": "Costco Mini Tin 5-Pack (Meowth)",
-      "kind": "tin",
-      "packs": 10,
+      "id": "blister-yanma",
+      "name": "Single Pack Blister: Yanma",
+      "kind": "blister",
+      "packs": 1,
       "promos": [
-        "sv3pt5-25-costco",
-        "sv3pt5-1-costco",
-        "sv3pt5-4-costco",
-        "sv3pt5-7-costco"
+        "sv9-svp185"
       ],
-      "price": 277.0,
-      "tcgplayerId": 587746,
-      "image": "assets/products/sv3pt5/tins-costco-meowth.webp"
+      "price": 11.38,
+      "tcgplayerId": 610950,
+      "image": "assets/products/sv9/blister-yanma.webp"
     },
     {
-      "id": "tins-costco-magneton",
-      "name": "Costco Mini Tin 5-Pack (Magneton)",
-      "kind": "tin",
-      "packs": 10,
+      "id": "blister-scraggy",
+      "name": "Single Pack Blister: Scraggy",
+      "kind": "blister",
+      "packs": 1,
       "promos": [
-        "sv3pt5-25-costco",
-        "sv3pt5-1-costco",
-        "sv3pt5-4-costco",
-        "sv3pt5-7-costco"
+        "sv9-svp186"
       ],
-      "price": 279.31,
-      "tcgplayerId": 587747,
-      "image": "assets/products/sv3pt5/tins-costco-magneton.webp"
+      "price": 10.17,
+      "tcgplayerId": 610949,
+      "image": "assets/products/sv9/blister-scraggy.webp"
     }
   ],
   "svp": [
@@ -3679,9 +4029,9 @@
         "sv5": 2,
         "sv4": 1,
         "sv3": 1,
-        "sv1": 2
+        "sv1": 1,
+        "swsh11": 1
       },
-      "note": "The real box held 1 Lost Origin pack from Sword & Shield, which isn't on the site yet, so it opens as Scarlet & Violet here.",
       "promos": [
         "svp-svp124"
       ],
@@ -3759,7 +4109,7 @@
       "promos": [
         "svp-svp196"
       ],
-      "price": 60.81,
+      "price": 60.77,
       "tcgplayerId": 616305,
       "image": "assets/products/svp/charizard-ex-special.webp"
     },
@@ -3787,9 +4137,9 @@
       "kind": "premium",
       "packs": 4,
       "from": {
-        "sv1": 4
+        "swsh12": 2,
+        "swsh9": 2
       },
-      "note": "The real box held 2 Silver Tempest and 2 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp001"
       ],
@@ -3804,9 +4154,9 @@
       "kind": "premium",
       "packs": 4,
       "from": {
-        "sv1": 4
+        "swsh12": 2,
+        "swsh9": 2
       },
-      "note": "The real box held 2 Silver Tempest and 2 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp002"
       ],
@@ -3821,9 +4171,9 @@
       "kind": "premium",
       "packs": 4,
       "from": {
-        "sv1": 4
+        "swsh12": 2,
+        "swsh9": 2
       },
-      "note": "The real box held 2 Silver Tempest and 2 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp003"
       ],
@@ -3867,7 +4217,7 @@
         "svp-svp222",
         "svp-svp223"
       ],
-      "price": 40.84,
+      "price": 40.81,
       "tcgplayerId": 653203,
       "released": "2025-10-24",
       "image": "assets/products/svp/trainers-toolkit-2025.webp"
@@ -3878,9 +4228,10 @@
       "kind": "collection",
       "packs": 4,
       "from": {
-        "sv1": 4
+        "swsh12": 2,
+        "swsh9": 1,
+        "swsh8": 1
       },
-      "note": "The real box held 2 Silver Tempest, 1 Brilliant Stars and 1 Fusion Strike packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp004"
       ],
@@ -3895,9 +4246,10 @@
       "kind": "collection",
       "packs": 4,
       "from": {
-        "sv1": 4
+        "sv1": 2,
+        "swsh12": 1,
+        "swsh11": 1
       },
-      "note": "The real box held 1 Silver Tempest and 1 Lost Origin packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp018"
       ],
@@ -3913,13 +4265,13 @@
       "packs": 4,
       "from": {
         "sv2": 2,
-        "sv1": 2
+        "sv1": 1,
+        "swsh11": 1
       },
-      "note": "The real box held 1 Lost Origin pack from Sword & Shield, which isn't on the site yet, so it opens as Scarlet & Violet here.",
       "promos": [
         "svp-svp032"
       ],
-      "price": 51.87,
+      "price": 53.14,
       "tcgplayerId": 497177,
       "released": "2023-07-14",
       "image": "assets/products/svp/annihilape-ex-box.webp"
@@ -3990,7 +4342,7 @@
       "promos": [
         "svp-svp162"
       ],
-      "price": 43.9,
+      "price": 44.06,
       "tcgplayerId": 561521,
       "released": "2024-10-04",
       "image": "assets/products/svp/houndstone-ex-box.webp"
@@ -4020,9 +4372,10 @@
       "packs": 5,
       "from": {
         "sv2": 2,
-        "sv1": 3
+        "sv1": 1,
+        "swsh12": 1,
+        "swsh9": 1
       },
-      "note": "The real box held 1 Silver Tempest and 1 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp028"
       ],
@@ -4037,9 +4390,10 @@
       "packs": 5,
       "from": {
         "sv2": 2,
-        "sv1": 3
+        "sv1": 1,
+        "swsh12": 1,
+        "swsh9": 1
       },
-      "note": "The real box held 1 Silver Tempest and 1 Brilliant Stars packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp029"
       ],
@@ -4054,9 +4408,10 @@
       "packs": 5,
       "from": {
         "sv3": 2,
-        "sv1": 3
+        "sv1": 1,
+        "swsh12": 1,
+        "swsh10": 1
       },
-      "note": "The real box held 1 Silver Tempest and 1 Astral Radiance packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp033"
       ],
@@ -4071,9 +4426,10 @@
       "packs": 5,
       "from": {
         "sv3": 2,
-        "sv1": 3
+        "sv1": 1,
+        "swsh12": 1,
+        "swsh10": 1
       },
-      "note": "The real box held 1 Silver Tempest and 1 Astral Radiance packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp034"
       ],
@@ -4088,9 +4444,10 @@
       "packs": 5,
       "from": {
         "sv3": 2,
-        "sv1": 3
+        "sv1": 1,
+        "swsh12": 1,
+        "swsh10": 1
       },
-      "note": "The real box held 1 Silver Tempest and 1 Astral Radiance packs from Sword & Shield, which isn't on the site yet, so they open as Scarlet & Violet here.",
       "promos": [
         "svp-svp035"
       ],
@@ -4188,7 +4545,7 @@
       "promos": [
         "svp-svp178"
       ],
-      "price": 46.37,
+      "price": 46.58,
       "tcgplayerId": 616292,
       "released": "2025-02-21",
       "image": "assets/products/svp/azure-legends-kyogre.webp"
@@ -4245,7 +4602,7 @@
       "promos": [
         "svp-svp197"
       ],
-      "price": 35.93,
+      "price": 35.69,
       "tcgplayerId": 623647,
       "image": "assets/products/svp/slashing-legends-koraidon.webp"
     },
@@ -4263,7 +4620,7 @@
       "promos": [
         "svp-svp198"
       ],
-      "price": 36.14,
+      "price": 36.28,
       "tcgplayerId": 623648,
       "image": "assets/products/svp/slashing-legends-zacian.webp"
     },
@@ -4393,7 +4750,7 @@
       "promos": [
         "svp-svp206"
       ],
-      "price": 60.79,
+      "price": 60.99,
       "tcgplayerId": 623014,
       "released": "2025-05-16",
       "image": "assets/products/svp/rival-deck-marnie.webp"
@@ -4406,7 +4763,7 @@
       "promos": [
         "svp-svp207"
       ],
-      "price": 34.36,
+      "price": 34.12,
       "tcgplayerId": 623015,
       "released": "2025-05-16",
       "image": "assets/products/svp/rival-deck-steven.webp"
@@ -4444,7 +4801,7 @@
       "promos": [
         "svp-svp085"
       ],
-      "price": 1048.43,
+      "price": 1031.27,
       "tcgplayerId": 518861
     },
     {
@@ -4504,7 +4861,7 @@
       "promos": [
         "svp-svp102"
       ],
-      "price": 6.66,
+      "price": 6.7,
       "tcgplayerId": 525293
     },
     {
@@ -4516,7 +4873,7 @@
       "promos": [
         "svp-svp190"
       ],
-      "price": 10.25,
+      "price": 10.19,
       "tcgplayerId": 562088
     },
     {
@@ -4528,7 +4885,7 @@
       "promos": [
         "svp-svp225"
       ],
-      "price": 7.2,
+      "price": 7.01,
       "tcgplayerId": 648631
     },
     {
@@ -4540,7 +4897,7 @@
       "promos": [
         "svp-svp213"
       ],
-      "price": 3.88,
+      "price": 3.71,
       "tcgplayerId": 620104
     },
     {
@@ -4564,8 +4921,2528 @@
       "promos": [
         "svp-svp215"
       ],
-      "price": 1.03,
+      "price": 0.95,
       "tcgplayerId": 620107
+    }
+  ],
+  "swsh1": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh1-swshp006",
+        "swsh1-swshp007",
+        "swsh1-swshp008",
+        "swsh1-swshp009"
+      ],
+      "pick": 1,
+      "price": 103.17,
+      "tcgplayerId": 206040,
+      "released": "2020-02-07",
+      "image": "assets/products/swsh1/buildBattleBox.webp"
+    },
+    {
+      "id": "gossifleur-single-pack-blister",
+      "name": "Gossifleur Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh1-swshp010"
+      ],
+      "price": 14.99,
+      "tcgplayerId": 206032,
+      "released": "2020-02-07",
+      "image": "assets/products/swsh1/gossifleur-single-pack-blister.webp"
+    },
+    {
+      "id": "wooloo-single-pack-blister",
+      "name": "Wooloo Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh1-swshp011"
+      ],
+      "price": 18.49,
+      "tcgplayerId": 206031,
+      "released": "2020-02-07",
+      "image": "assets/products/swsh1/wooloo-single-pack-blister.webp"
+    },
+    {
+      "id": "morpeko-3-pack-blister",
+      "name": "Morpeko 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh1-swshp012"
+      ],
+      "price": 64.99,
+      "tcgplayerId": 206029,
+      "image": "assets/products/swsh1/morpeko-3-pack-blister.webp"
+    },
+    {
+      "id": "morpeko-pin-collection",
+      "name": "Morpeko Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh1-swshp031"
+      ],
+      "price": 60.16,
+      "tcgplayerId": 210577,
+      "released": "2020-04-03",
+      "image": "assets/products/swsh1/morpeko-pin-collection.webp"
+    },
+    {
+      "id": "snorlax-pin-collection",
+      "name": "Snorlax Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh1-swshp032"
+      ],
+      "price": 160.0,
+      "tcgplayerId": 210576,
+      "released": "2020-04-03",
+      "image": "assets/products/swsh1/snorlax-pin-collection.webp"
+    }
+  ],
+  "swsh10": [
+    {
+      "id": "pc-etb",
+      "name": "Astral Radiance Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [],
+      "price": 197.06,
+      "tcgplayerId": 265528,
+      "image": "assets/products/swsh10/pc-etb.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh10-swshp205",
+        "swsh10-swshp206",
+        "swsh10-swshp207",
+        "swsh10-swshp208"
+      ],
+      "pick": 1,
+      "price": 46.52,
+      "tcgplayerId": 265529,
+      "released": "2022-05-27",
+      "image": "assets/products/swsh10/buildBattleBox.webp"
+    },
+    {
+      "id": "toxel-single-blister",
+      "name": "Toxel Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh10-swshp209"
+      ],
+      "price": 14.88,
+      "tcgplayerId": 265522,
+      "image": "assets/products/swsh10/toxel-single-blister.webp"
+    },
+    {
+      "id": "oricorio-single-blister",
+      "name": "Oricorio Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh10-swshp210"
+      ],
+      "price": 13.39,
+      "tcgplayerId": 265523,
+      "released": "2022-05-27",
+      "image": "assets/products/swsh10/oricorio-single-blister.webp"
+    },
+    {
+      "id": "sylveon-3-pack-blister",
+      "name": "Sylveon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh10-swshp211"
+      ],
+      "price": 38.65,
+      "tcgplayerId": 265525,
+      "released": "2022-05-27",
+      "image": "assets/products/swsh10/sylveon-3-pack-blister.webp"
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh10-swshp212"
+      ],
+      "price": 43.28,
+      "tcgplayerId": 265524,
+      "released": "2022-05-27",
+      "image": "assets/products/swsh10/eevee-3-pack-blister.webp"
+    }
+  ],
+  "swsh11": [
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [],
+      "price": 380.0,
+      "tcgplayerId": 277336,
+      "image": "assets/products/swsh11/pc-etb.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh11-swshp240",
+        "swsh11-swshp241",
+        "swsh11-swshp242",
+        "swsh11-swshp243"
+      ],
+      "pick": 1,
+      "price": 80.32,
+      "tcgplayerId": 277345,
+      "released": "2022-09-09",
+      "image": "assets/products/swsh11/buildBattleBox.webp"
+    },
+    {
+      "id": "buildBattleStadium",
+      "name": "Build & Battle Stadium",
+      "kind": "battle",
+      "packs": 12,
+      "promos": [
+        "swsh11-swshp240",
+        "swsh11-swshp241",
+        "swsh11-swshp242",
+        "swsh11-swshp243"
+      ],
+      "pick": 2,
+      "price": 225.58,
+      "tcgplayerId": 277346,
+      "image": "assets/products/swsh11/buildBattleStadium.webp"
+    },
+    {
+      "id": "regigigas-3-pack-blister",
+      "name": "Regigigas 3-Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh11-swshp247"
+      ],
+      "price": 63.31,
+      "tcgplayerId": 277329,
+      "released": "2022-09-09",
+      "image": "assets/products/swsh11/regigigas-3-pack-blister.webp"
+    },
+    {
+      "id": "weavile-3-pack-blister",
+      "name": "Weavile 3-Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh11-swshp246"
+      ],
+      "price": 65.79,
+      "tcgplayerId": 277330,
+      "released": "2022-09-09",
+      "image": "assets/products/swsh11/weavile-3-pack-blister.webp"
+    },
+    {
+      "id": "croagunk-single-pack-blister",
+      "name": "Croagunk Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh11-swshp245"
+      ],
+      "price": 17.06,
+      "tcgplayerId": 277327,
+      "released": "2022-09-09",
+      "image": "assets/products/swsh11/croagunk-single-pack-blister.webp"
+    },
+    {
+      "id": "scorbunny-single-pack-blister",
+      "name": "Scorbunny Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh11-swshp244"
+      ],
+      "price": 19.41,
+      "tcgplayerId": 277328,
+      "released": "2022-09-09",
+      "image": "assets/products/swsh11/scorbunny-single-pack-blister.webp"
+    },
+    {
+      "id": "infernape-v-box",
+      "name": "Infernape V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh11-swshp252"
+      ],
+      "price": 67.68,
+      "tcgplayerId": 277568,
+      "released": "2022-09-09",
+      "image": "assets/products/swsh11/infernape-v-box.webp"
+    }
+  ],
+  "swsh12": [
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [],
+      "price": 394.1,
+      "tcgplayerId": 285860,
+      "released": "2022-11-11",
+      "image": "assets/products/swsh12/pc-etb.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh12-swshp269",
+        "swsh12-swshp270",
+        "swsh12-swshp271",
+        "swsh12-swshp272"
+      ],
+      "pick": 1,
+      "price": 58.52,
+      "tcgplayerId": 285776,
+      "image": "assets/products/swsh12/buildBattleBox.webp"
+    },
+    {
+      "id": "buildBattleStadium",
+      "name": "Build & Battle Stadium",
+      "kind": "battle",
+      "packs": 12,
+      "promos": [
+        "swsh12-swshp269",
+        "swsh12-swshp270",
+        "swsh12-swshp271",
+        "swsh12-swshp272"
+      ],
+      "pick": 2,
+      "price": 147.39,
+      "tcgplayerId": 285042,
+      "image": "assets/products/swsh12/buildBattleStadium.webp"
+    },
+    {
+      "id": "togetic-3-pack-blister",
+      "name": "Togetic 3-Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh12-swshp276"
+      ],
+      "price": 50.42,
+      "tcgplayerId": 283393,
+      "image": "assets/products/swsh12/togetic-3-pack-blister.webp"
+    },
+    {
+      "id": "manaphy-3-pack-blister",
+      "name": "Manaphy 3-Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh12-swshp275"
+      ],
+      "price": 47.78,
+      "tcgplayerId": 283394,
+      "image": "assets/products/swsh12/manaphy-3-pack-blister.webp"
+    },
+    {
+      "id": "basculin-single-pack-blister",
+      "name": "Hisuian Basculin Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh12-swshp273"
+      ],
+      "price": 14.67,
+      "tcgplayerId": 285780,
+      "image": "assets/products/swsh12/basculin-single-pack-blister.webp"
+    },
+    {
+      "id": "cranidos-single-pack-blister",
+      "name": "Cranidos Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh12-swshp274"
+      ],
+      "price": 14.67,
+      "tcgplayerId": 285781,
+      "image": "assets/products/swsh12/cranidos-single-pack-blister.webp"
+    }
+  ],
+  "swsh12pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "swsh12pt5-swshp291"
+      ],
+      "price": 305.13,
+      "tcgplayerId": 453470,
+      "image": "assets/products/swsh12pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box Plus",
+      "kind": "etb",
+      "packs": 12,
+      "promos": [
+        "swsh12pt5-swshp291"
+      ],
+      "price": 538.42,
+      "tcgplayerId": 454246,
+      "released": "2023-01-20",
+      "image": "assets/products/swsh12pt5/pc-etb.webp"
+    },
+    {
+      "id": "regieleki-v-collection",
+      "name": "Regieleki V Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh12pt5-swshp280"
+      ],
+      "price": 109.03,
+      "tcgplayerId": 453467,
+      "released": "2023-01-20",
+      "image": "assets/products/swsh12pt5/regieleki-v-collection.webp"
+    },
+    {
+      "id": "regidrago-v-collection",
+      "name": "Regidrago V Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh12pt5-swshp281"
+      ],
+      "price": 103.05,
+      "tcgplayerId": 453468,
+      "released": "2023-01-20",
+      "image": "assets/products/swsh12pt5/regidrago-v-collection.webp"
+    },
+    {
+      "id": "pikachu-vmax-special-collection",
+      "name": "Pikachu VMAX Special Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh12pt5-swshp285",
+        "swsh12pt5-swshp286"
+      ],
+      "price": 158.03,
+      "tcgplayerId": 454452,
+      "released": "2023-02-17",
+      "image": "assets/products/swsh12pt5/pikachu-vmax-special-collection.webp"
+    },
+    {
+      "id": "pikachu-vmax-premium-collection",
+      "name": "Pikachu VMAX Premium Collection",
+      "kind": "premium",
+      "packs": 7,
+      "promos": [
+        "swsh12pt5-swshp285",
+        "swsh12pt5-swshp286"
+      ],
+      "price": 219.65,
+      "tcgplayerId": 527796,
+      "image": "assets/products/swsh12pt5/pikachu-vmax-premium-collection.webp"
+    },
+    {
+      "id": "rillaboom-pin-collection",
+      "name": "Rillaboom Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh12pt5-swshp277"
+      ],
+      "price": 85.61,
+      "tcgplayerId": 475619,
+      "released": "2023-04-14",
+      "image": "assets/products/swsh12pt5/rillaboom-pin-collection.webp"
+    },
+    {
+      "id": "cinderace-pin-collection",
+      "name": "Cinderace Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh12pt5-swshp278"
+      ],
+      "price": 85.55,
+      "tcgplayerId": 475617,
+      "released": "2023-04-14",
+      "image": "assets/products/swsh12pt5/cinderace-pin-collection.webp"
+    },
+    {
+      "id": "inteleon-pin-collection",
+      "name": "Inteleon Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh12pt5-swshp279"
+      ],
+      "price": 85.83,
+      "tcgplayerId": 475618,
+      "released": "2023-04-14",
+      "image": "assets/products/swsh12pt5/inteleon-pin-collection.webp"
+    },
+    {
+      "id": "galarian-articuno-tin",
+      "name": "Galarian Articuno Tin",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "swsh12pt5-swshp282"
+      ],
+      "price": 148.01,
+      "tcgplayerId": 475628,
+      "released": "2023-03-17",
+      "image": "assets/products/swsh12pt5/galarian-articuno-tin.webp"
+    },
+    {
+      "id": "galarian-zapdos-tin",
+      "name": "Galarian Zapdos Tin",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "swsh12pt5-swshp283"
+      ],
+      "price": 137.67,
+      "tcgplayerId": 475630,
+      "released": "2023-03-17",
+      "image": "assets/products/swsh12pt5/galarian-zapdos-tin.webp"
+    },
+    {
+      "id": "galarian-moltres-tin",
+      "name": "Galarian Moltres Tin",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "swsh12pt5-swshp284"
+      ],
+      "price": 156.64,
+      "tcgplayerId": 475629,
+      "released": "2023-03-17",
+      "image": "assets/products/swsh12pt5/galarian-moltres-tin.webp"
+    },
+    {
+      "id": "morpeko-v-union-playmat-premium-collection",
+      "name": "Morpeko V-UNION Playmat Premium Collection",
+      "kind": "premium",
+      "packs": 5,
+      "promos": [
+        "swsh12pt5-swshp287",
+        "swsh12pt5-swshp288",
+        "swsh12pt5-swshp289",
+        "swsh12pt5-swshp290"
+      ],
+      "price": 139.31,
+      "tcgplayerId": 475644,
+      "released": "2023-04-14",
+      "image": "assets/products/swsh12pt5/morpeko-v-union-playmat-premium-collection.webp"
+    },
+    {
+      "id": "morpeko-v-union-premium-treasures-collection",
+      "name": "Morpeko V-UNION Premium Treasures Collection",
+      "kind": "premium",
+      "packs": 7,
+      "promos": [
+        "swsh12pt5-swshp287",
+        "swsh12pt5-swshp288",
+        "swsh12pt5-swshp289",
+        "swsh12pt5-swshp290"
+      ],
+      "price": 208.57,
+      "tcgplayerId": 516939,
+      "image": "assets/products/swsh12pt5/morpeko-v-union-premium-treasures-collection.webp"
+    },
+    {
+      "id": "shiny-zacian-premium-figure-collection",
+      "name": "Shiny Zacian Premium Figure Collection",
+      "kind": "premium",
+      "packs": 11,
+      "promos": [
+        "swsh12pt5-swshp292"
+      ],
+      "price": 346.06,
+      "tcgplayerId": 475647,
+      "released": "2023-05-05",
+      "image": "assets/products/swsh12pt5/shiny-zacian-premium-figure-collection.webp"
+    },
+    {
+      "id": "shiny-zamazenta-premium-figure-collection",
+      "name": "Shiny Zamazenta Premium Figure Collection",
+      "kind": "premium",
+      "packs": 11,
+      "promos": [
+        "swsh12pt5-swshp293"
+      ],
+      "price": 337.8,
+      "tcgplayerId": 475646,
+      "released": "2023-05-05",
+      "image": "assets/products/swsh12pt5/shiny-zamazenta-premium-figure-collection.webp"
+    },
+    {
+      "id": "unown-v-lugia-v-special-collection",
+      "name": "Unown V & Lugia V Special Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh12pt5-swshp300",
+        "swsh12pt5-swshp301"
+      ],
+      "price": 172.5,
+      "tcgplayerId": 505916,
+      "released": "2023-08-04",
+      "image": "assets/products/swsh12pt5/unown-v-lugia-v-special-collection.webp"
+    }
+  ],
+  "swsh2": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh2-swshp022",
+        "swsh2-swshp023",
+        "swsh2-swshp024",
+        "swsh2-swshp025"
+      ],
+      "pick": 1,
+      "price": 74.97,
+      "tcgplayerId": 212821,
+      "released": "2020-05-01",
+      "image": "assets/products/swsh2/buildBattleBox.webp"
+    },
+    {
+      "id": "noctowl-single-pack-blister",
+      "name": "Noctowl Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh2-swshp027"
+      ],
+      "price": 20.0,
+      "tcgplayerId": 210565,
+      "released": "2020-05-01",
+      "image": "assets/products/swsh2/noctowl-single-pack-blister.webp"
+    },
+    {
+      "id": "duraludon-3-pack-blister",
+      "name": "Duraludon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh2-swshp028"
+      ],
+      "price": 59.0,
+      "tcgplayerId": 210567,
+      "released": "2020-05-01",
+      "image": "assets/products/swsh2/duraludon-3-pack-blister.webp"
+    },
+    {
+      "id": "rayquaza-3-pack-blister",
+      "name": "Rayquaza 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh2-swshp029"
+      ],
+      "price": 45.99,
+      "tcgplayerId": 210568,
+      "released": "2020-05-01",
+      "image": "assets/products/swsh2/rayquaza-3-pack-blister.webp"
+    }
+  ],
+  "swsh3": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh3-swshp035",
+        "swsh3-swshp036",
+        "swsh3-swshp037",
+        "swsh3-swshp038"
+      ],
+      "pick": 1,
+      "price": 58.21,
+      "tcgplayerId": 216861,
+      "image": "assets/products/swsh3/buildBattleBox.webp"
+    },
+    {
+      "id": "hatenna-single-pack-blister",
+      "name": "Hatenna Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh3-swshp040"
+      ],
+      "price": 13.64,
+      "tcgplayerId": 216859,
+      "released": "2020-08-14",
+      "image": "assets/products/swsh3/hatenna-single-pack-blister.webp"
+    },
+    {
+      "id": "pikachu-single-pack-blister",
+      "name": "Pikachu Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh3-swshp039"
+      ],
+      "price": 35.21,
+      "tcgplayerId": 216860,
+      "released": "2020-08-14",
+      "image": "assets/products/swsh3/pikachu-single-pack-blister.webp"
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh3-swshp042"
+      ],
+      "price": 41.49,
+      "tcgplayerId": 216857,
+      "released": "2020-08-14",
+      "image": "assets/products/swsh3/eevee-3-pack-blister.webp"
+    },
+    {
+      "id": "flareon-3-pack-blister",
+      "name": "Flareon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh3-swshp041"
+      ],
+      "price": 47.17,
+      "tcgplayerId": 216858,
+      "released": "2020-08-14",
+      "image": "assets/products/swsh3/flareon-3-pack-blister.webp"
+    }
+  ],
+  "swsh35": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "swsh35-swshp050"
+      ],
+      "price": 216.12,
+      "tcgplayerId": 218791,
+      "released": "2020-09-25",
+      "image": "assets/products/swsh35/eliteTrainerBox.webp"
+    },
+    {
+      "id": "hatterene-v-collection",
+      "name": "Hatterene V Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh35-swshp055"
+      ],
+      "price": 56.55,
+      "tcgplayerId": 218804,
+      "released": "2020-10-23",
+      "image": "assets/products/swsh35/hatterene-v-collection.webp"
+    },
+    {
+      "id": "dubwool-v-collection",
+      "name": "Dubwool V Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh35-swshp049"
+      ],
+      "price": 63.47,
+      "tcgplayerId": 218806,
+      "released": "2020-09-25",
+      "image": "assets/products/swsh35/dubwool-v-collection.webp"
+    },
+    {
+      "id": "marnie-premium-collection",
+      "name": "Marnie Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "swsh35-swshp056",
+        "swsh35-swshp057"
+      ],
+      "price": 138.52,
+      "tcgplayerId": 218807,
+      "released": "2020-10-23",
+      "image": "assets/products/swsh35/marnie-premium-collection.webp"
+    },
+    {
+      "id": "turffield-gym-pin-collection",
+      "name": "Eldegoss Turffield Gym Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh35-swshp046"
+      ],
+      "price": 59.94,
+      "tcgplayerId": 218797,
+      "released": "2020-09-25",
+      "image": "assets/products/swsh35/turffield-gym-pin-collection.webp"
+    },
+    {
+      "id": "hulbury-gym-pin-collection",
+      "name": "Drednaw Hulbury Gym Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh35-swshp047"
+      ],
+      "price": 59.71,
+      "tcgplayerId": 218794,
+      "released": "2020-09-25",
+      "image": "assets/products/swsh35/hulbury-gym-pin-collection.webp"
+    },
+    {
+      "id": "motostoke-gym-pin-collection",
+      "name": "Centiskorch Motostoke Gym Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh35-swshp048"
+      ],
+      "price": 62.75,
+      "tcgplayerId": 218796,
+      "released": "2020-09-25",
+      "image": "assets/products/swsh35/motostoke-gym-pin-collection.webp"
+    },
+    {
+      "id": "ballonlea-gym-pin-collection",
+      "name": "Alcremie Ballonlea Gym Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh35-swshp058"
+      ],
+      "price": 54.48,
+      "tcgplayerId": 218799,
+      "released": "2020-11-13",
+      "image": "assets/products/swsh35/ballonlea-gym-pin-collection.webp"
+    },
+    {
+      "id": "spikemuth-gym-pin-collection",
+      "name": "Galarian Obstagoon Spikemuth Gym Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh35-swshp059"
+      ],
+      "price": 56.99,
+      "tcgplayerId": 218800,
+      "released": "2020-11-13",
+      "image": "assets/products/swsh35/spikemuth-gym-pin-collection.webp"
+    },
+    {
+      "id": "hammerlocke-gym-pin-collection",
+      "name": "Duraludon Hammerlocke Gym Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh35-swshp060"
+      ],
+      "price": 47.75,
+      "tcgplayerId": 218798,
+      "image": "assets/products/swsh35/hammerlocke-gym-pin-collection.webp"
+    },
+    {
+      "id": "stow-on-side-special-pin-collection",
+      "name": "Machamp & Gengar Stow-on-Side Special Pin Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh35-swshp052",
+        "swsh35-swshp053"
+      ],
+      "price": 272.63,
+      "tcgplayerId": 218802,
+      "released": "2020-10-02",
+      "image": "assets/products/swsh35/stow-on-side-special-pin-collection.webp"
+    },
+    {
+      "id": "circhester-special-pin-collection",
+      "name": "Lapras & Coalossal Circhester Special Pin Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh35-swshp051",
+        "swsh35-swshp054"
+      ],
+      "price": 76.64,
+      "tcgplayerId": 218803,
+      "released": "2020-10-02",
+      "image": "assets/products/swsh35/circhester-special-pin-collection.webp"
+    }
+  ],
+  "swsh4": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh4-swshp066",
+        "swsh4-swshp067",
+        "swsh4-swshp068",
+        "swsh4-swshp069"
+      ],
+      "pick": 1,
+      "price": 58.15,
+      "tcgplayerId": 221748,
+      "image": "assets/products/swsh4/buildBattleBox.webp"
+    },
+    {
+      "id": "orbeetle-v-box",
+      "name": "Orbeetle V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh4-swshp078"
+      ],
+      "price": 68.34,
+      "tcgplayerId": 226137,
+      "released": "2020-11-20",
+      "image": "assets/products/swsh4/orbeetle-v-box.webp"
+    },
+    {
+      "id": "alakazam-v-box",
+      "name": "Alakazam V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh4-swshp083"
+      ],
+      "price": 60.71,
+      "tcgplayerId": 228979,
+      "released": "2021-01-08",
+      "image": "assets/products/swsh4/alakazam-v-box.webp"
+    },
+    {
+      "id": "sobble-3-pack-blister",
+      "name": "Sobble 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh4-swshp073"
+      ],
+      "price": 43.65,
+      "tcgplayerId": 221744,
+      "released": "2020-11-13",
+      "image": "assets/products/swsh4/sobble-3-pack-blister.webp"
+    },
+    {
+      "id": "vaporeon-3-pack-blister",
+      "name": "Vaporeon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh4-swshp072"
+      ],
+      "price": 42.77,
+      "tcgplayerId": 221745,
+      "released": "2020-11-13",
+      "image": "assets/products/swsh4/vaporeon-3-pack-blister.webp"
+    },
+    {
+      "id": "grookey-single-pack-blister",
+      "name": "Grookey Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh4-swshp070"
+      ],
+      "price": 17.36,
+      "tcgplayerId": 221746,
+      "released": "2020-11-13",
+      "image": "assets/products/swsh4/grookey-single-pack-blister.webp"
+    },
+    {
+      "id": "scorbunny-single-pack-blister",
+      "name": "Scorbunny Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh4-swshp071"
+      ],
+      "price": 16.75,
+      "tcgplayerId": 221747,
+      "released": "2020-11-13",
+      "image": "assets/products/swsh4/scorbunny-single-pack-blister.webp"
+    }
+  ],
+  "swsh45": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "swsh45-swshp087"
+      ],
+      "price": 139.81,
+      "tcgplayerId": 228821,
+      "released": "2021-02-19",
+      "image": "assets/products/swsh45/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pikachu-v-box",
+      "name": "Pikachu V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh45-swshp061"
+      ],
+      "price": 65.65,
+      "tcgplayerId": 228825,
+      "image": "assets/products/swsh45/pikachu-v-box.webp"
+    },
+    {
+      "id": "eldegoss-v-tin",
+      "name": "Eldegoss V Tin",
+      "kind": "tin",
+      "packs": 6,
+      "promos": [
+        "swsh45-swshp084"
+      ],
+      "price": 68.36,
+      "tcgplayerId": 228822,
+      "image": "assets/products/swsh45/eldegoss-v-tin.webp"
+    },
+    {
+      "id": "boltund-v-tin",
+      "name": "Boltund V Tin",
+      "kind": "tin",
+      "packs": 6,
+      "promos": [
+        "swsh45-swshp085"
+      ],
+      "price": 70.29,
+      "tcgplayerId": 228823,
+      "image": "assets/products/swsh45/boltund-v-tin.webp"
+    },
+    {
+      "id": "cramorant-v-tin",
+      "name": "Cramorant V Tin",
+      "kind": "tin",
+      "packs": 6,
+      "promos": [
+        "swsh45-swshp086"
+      ],
+      "price": 70.88,
+      "tcgplayerId": 228824,
+      "image": "assets/products/swsh45/cramorant-v-tin.webp"
+    },
+    {
+      "id": "shiny-eldegoss-v-box",
+      "name": "Shiny Eldegoss V Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh45-swshp084"
+      ],
+      "price": 62.74,
+      "tcgplayerId": 240192,
+      "image": "assets/products/swsh45/shiny-eldegoss-v-box.webp"
+    },
+    {
+      "id": "shiny-boltund-v-box",
+      "name": "Shiny Boltund V Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh45-swshp085"
+      ],
+      "price": 68.19,
+      "tcgplayerId": 240191,
+      "image": "assets/products/swsh45/shiny-boltund-v-box.webp"
+    },
+    {
+      "id": "shiny-cramorant-v-box",
+      "name": "Shiny Cramorant V Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh45-swshp086"
+      ],
+      "price": 63.99,
+      "tcgplayerId": 240190,
+      "image": "assets/products/swsh45/shiny-cramorant-v-box.webp"
+    },
+    {
+      "id": "galarian-mr-rime-mad-party-pin-collection",
+      "name": "Galarian Mr. Rime Mad Party Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh45-swshp079"
+      ],
+      "price": 56.7,
+      "tcgplayerId": 228828,
+      "image": "assets/products/swsh45/galarian-mr-rime-mad-party-pin-collection.webp"
+    },
+    {
+      "id": "dedenne-mad-party-pin-collection",
+      "name": "Dedenne Mad Party Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh45-swshp080"
+      ],
+      "price": 57.64,
+      "tcgplayerId": 228827,
+      "image": "assets/products/swsh45/dedenne-mad-party-pin-collection.webp"
+    },
+    {
+      "id": "polteageist-mad-party-pin-collection",
+      "name": "Polteageist Mad Party Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh45-swshp081"
+      ],
+      "price": 53.59,
+      "tcgplayerId": 228829,
+      "image": "assets/products/swsh45/polteageist-mad-party-pin-collection.webp"
+    },
+    {
+      "id": "bunnelby-mad-party-pin-collection",
+      "name": "Bunnelby Mad Party Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "swsh45-swshp082"
+      ],
+      "price": 53.27,
+      "tcgplayerId": 228826,
+      "image": "assets/products/swsh45/bunnelby-mad-party-pin-collection.webp"
+    },
+    {
+      "id": "shiny-dragapult-vmax-premium-collection",
+      "name": "Shiny Dragapult VMAX Premium Collection",
+      "kind": "premium",
+      "packs": 7,
+      "promos": [
+        "swsh45-swshp096",
+        "swsh45-swshp097"
+      ],
+      "price": 125.65,
+      "tcgplayerId": 230392,
+      "image": "assets/products/swsh45/shiny-dragapult-vmax-premium-collection.webp"
+    },
+    {
+      "id": "shiny-crobat-vmax-premium-collection",
+      "name": "Shiny Crobat VMAX Premium Collection",
+      "kind": "premium",
+      "packs": 7,
+      "promos": [
+        "swsh45-swshp098",
+        "swsh45-swshp099"
+      ],
+      "price": 105.14,
+      "tcgplayerId": 230391,
+      "image": "assets/products/swsh45/shiny-crobat-vmax-premium-collection.webp"
+    }
+  ],
+  "swsh5": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh5-swshp088",
+        "swsh5-swshp089",
+        "swsh5-swshp090",
+        "swsh5-swshp091"
+      ],
+      "pick": 1,
+      "price": 49.23,
+      "tcgplayerId": 229278,
+      "image": "assets/products/swsh5/buildBattleBox.webp"
+    },
+    {
+      "id": "charmander-single-pack-blister",
+      "name": "Charmander Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh5-swshp092"
+      ],
+      "price": 24.99,
+      "tcgplayerId": 229280,
+      "released": "2021-03-19",
+      "image": "assets/products/swsh5/charmander-single-pack-blister.webp"
+    },
+    {
+      "id": "arrokuda-single-pack-blister",
+      "name": "Arrokuda Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh5-swshp093"
+      ],
+      "price": 11.05,
+      "tcgplayerId": 229281,
+      "image": "assets/products/swsh5/arrokuda-single-pack-blister.webp"
+    },
+    {
+      "id": "jolteon-3-pack-blister",
+      "name": "Jolteon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh5-swshp094"
+      ],
+      "price": 39.48,
+      "tcgplayerId": 229282,
+      "released": "2021-03-19",
+      "image": "assets/products/swsh5/jolteon-3-pack-blister.webp"
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh5-swshp095"
+      ],
+      "price": 28.32,
+      "tcgplayerId": 229283,
+      "released": "2021-03-19",
+      "image": "assets/products/swsh5/eevee-3-pack-blister.webp"
+    },
+    {
+      "id": "single-strike-urshifu-v-box",
+      "name": "Single Strike Urshifu V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh5-swshp106"
+      ],
+      "price": 39.77,
+      "tcgplayerId": 231297,
+      "released": "2021-03-19",
+      "image": "assets/products/swsh5/single-strike-urshifu-v-box.webp"
+    },
+    {
+      "id": "rapid-strike-urshifu-v-box",
+      "name": "Rapid Strike Urshifu V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh5-swshp107"
+      ],
+      "price": 43.08,
+      "tcgplayerId": 231296,
+      "released": "2021-03-19",
+      "image": "assets/products/swsh5/rapid-strike-urshifu-v-box.webp"
+    },
+    {
+      "id": "galarian-rapidash-v-box",
+      "name": "Galarian Rapidash V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh5-swshp111"
+      ],
+      "price": 92.69,
+      "tcgplayerId": 233359,
+      "released": "2021-05-07",
+      "image": "assets/products/swsh5/galarian-rapidash-v-box.webp"
+    },
+    {
+      "id": "tyranitar-v-strikers-tin",
+      "name": "Tyranitar V Strikers Tin",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "swsh5-swshp109"
+      ],
+      "price": 101.32,
+      "tcgplayerId": 236377,
+      "image": "assets/products/swsh5/tyranitar-v-strikers-tin.webp"
+    },
+    {
+      "id": "empoleon-v-strikers-tin",
+      "name": "Empoleon V Strikers Tin",
+      "kind": "tin",
+      "packs": 5,
+      "promos": [
+        "swsh5-swshp108"
+      ],
+      "price": 88.98,
+      "tcgplayerId": 236378,
+      "image": "assets/products/swsh5/empoleon-v-strikers-tin.webp"
+    }
+  ],
+  "swsh6": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh6-swshp112",
+        "swsh6-swshp113",
+        "swsh6-swshp114",
+        "swsh6-swshp115"
+      ],
+      "pick": 1,
+      "price": 58.78,
+      "tcgplayerId": 236265,
+      "released": "2021-06-18",
+      "image": "assets/products/swsh6/buildBattleBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [],
+      "price": 203.55,
+      "tcgplayerId": 247281,
+      "image": "assets/products/swsh6/pc-etb.webp"
+    },
+    {
+      "id": "morpeko-single-pack-blister",
+      "name": "Morpeko Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh6-swshp116"
+      ],
+      "price": 22.24,
+      "tcgplayerId": 236273,
+      "released": "2021-06-18",
+      "image": "assets/products/swsh6/morpeko-single-pack-blister.webp"
+    },
+    {
+      "id": "phanpy-single-pack-blister",
+      "name": "Phanpy Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh6-swshp117"
+      ],
+      "price": 22.29,
+      "tcgplayerId": 236272,
+      "released": "2021-06-18",
+      "image": "assets/products/swsh6/phanpy-single-pack-blister.webp"
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh6-swshp118"
+      ],
+      "price": 52.67,
+      "tcgplayerId": 236268,
+      "released": "2021-06-18",
+      "image": "assets/products/swsh6/eevee-3-pack-blister.webp"
+    },
+    {
+      "id": "snorlax-3-pack-blister",
+      "name": "Snorlax 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh6-swshp119"
+      ],
+      "price": 64.71,
+      "tcgplayerId": 236269,
+      "released": "2021-06-18",
+      "image": "assets/products/swsh6/snorlax-3-pack-blister.webp"
+    }
+  ],
+  "swsh7": [
+    {
+      "id": "pc-etb",
+      "name": "Evolving Skies Pokémon Center Elite Trainer Box (Glaceon/Vaporeon/Sylveon/Espeon)",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [],
+      "price": 1045.99,
+      "tcgplayerId": 245352,
+      "image": "assets/products/swsh7/pc-etb.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh7-swshp122",
+        "swsh7-swshp123",
+        "swsh7-swshp124",
+        "swsh7-swshp125"
+      ],
+      "pick": 1,
+      "price": 333.0,
+      "tcgplayerId": 242449,
+      "released": "2021-08-27",
+      "image": "assets/products/swsh7/buildBattleBox.webp"
+    },
+    {
+      "id": "galarian-slowpoke-single-blister",
+      "name": "Galarian Slowpoke Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh7-swshp126"
+      ],
+      "price": 75.34,
+      "tcgplayerId": 242448,
+      "released": "2021-08-27",
+      "image": "assets/products/swsh7/galarian-slowpoke-single-blister.webp"
+    },
+    {
+      "id": "eevee-single-blister",
+      "name": "Eevee Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh7-swshp127"
+      ],
+      "price": 79.74,
+      "tcgplayerId": 242447,
+      "released": "2021-08-27",
+      "image": "assets/products/swsh7/eevee-single-blister.webp"
+    },
+    {
+      "id": "eiscue-3-pack-blister",
+      "name": "Eiscue 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh7-swshp128"
+      ],
+      "price": 222.7,
+      "tcgplayerId": 242435,
+      "released": "2021-08-27",
+      "image": "assets/products/swsh7/eiscue-3-pack-blister.webp"
+    },
+    {
+      "id": "umbreon-3-pack-blister",
+      "name": "Umbreon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh7-swshp129"
+      ],
+      "price": 247.31,
+      "tcgplayerId": 242444,
+      "released": "2021-08-27",
+      "image": "assets/products/swsh7/umbreon-3-pack-blister.webp"
+    },
+    {
+      "id": "greninja-v-union-special-collection",
+      "name": "Greninja V-UNION Special Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh7-swshp155",
+        "swsh7-swshp156",
+        "swsh7-swshp157",
+        "swsh7-swshp158",
+        "swsh7-swshp167"
+      ],
+      "price": 132.38,
+      "tcgplayerId": 245878,
+      "image": "assets/products/swsh7/greninja-v-union-special-collection.webp"
+    },
+    {
+      "id": "mewtwo-v-union-special-collection",
+      "name": "Mewtwo V-UNION Special Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh7-swshp159",
+        "swsh7-swshp160",
+        "swsh7-swshp161",
+        "swsh7-swshp162",
+        "swsh7-swshp167"
+      ],
+      "price": 183.61,
+      "tcgplayerId": 245877,
+      "image": "assets/products/swsh7/mewtwo-v-union-special-collection.webp"
+    },
+    {
+      "id": "zacian-v-union-special-collection",
+      "name": "Zacian V-UNION Special Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh7-swshp163",
+        "swsh7-swshp164",
+        "swsh7-swshp165",
+        "swsh7-swshp166",
+        "swsh7-swshp167"
+      ],
+      "price": 118.02,
+      "tcgplayerId": 245879,
+      "image": "assets/products/swsh7/zacian-v-union-special-collection.webp"
+    }
+  ],
+  "swsh8": [
+    {
+      "id": "pc-etb",
+      "name": "Fusion Strike Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [],
+      "price": 476.75,
+      "tcgplayerId": 247673,
+      "image": "assets/products/swsh8/pc-etb.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh8-swshp168",
+        "swsh8-swshp169",
+        "swsh8-swshp170",
+        "swsh8-swshp171"
+      ],
+      "pick": 1,
+      "price": 104.04,
+      "tcgplayerId": 247659,
+      "image": "assets/products/swsh8/buildBattleBox.webp"
+    },
+    {
+      "id": "tepig-single-blister",
+      "name": "Tepig Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh8-swshp172"
+      ],
+      "price": 28.68,
+      "tcgplayerId": 247669,
+      "image": "assets/products/swsh8/tepig-single-blister.webp"
+    },
+    {
+      "id": "blitzle-single-blister",
+      "name": "Blitzle Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh8-swshp173"
+      ],
+      "price": 29.74,
+      "tcgplayerId": 247670,
+      "image": "assets/products/swsh8/blitzle-single-blister.webp"
+    },
+    {
+      "id": "espeon-3-pack-blister",
+      "name": "Espeon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh8-swshp174"
+      ],
+      "price": 81.96,
+      "tcgplayerId": 247668,
+      "image": "assets/products/swsh8/espeon-3-pack-blister.webp"
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh8-swshp175"
+      ],
+      "price": 80.85,
+      "tcgplayerId": 247667,
+      "image": "assets/products/swsh8/eevee-3-pack-blister.webp"
+    },
+    {
+      "id": "dragonite-v-box",
+      "name": "Dragonite V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh8-swshp154"
+      ],
+      "price": 162.82,
+      "tcgplayerId": 245876,
+      "released": "2021-11-17",
+      "image": "assets/products/swsh8/dragonite-v-box.webp"
+    },
+    {
+      "id": "hoopa-v-box",
+      "name": "Hoopa V Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh8-swshp176"
+      ],
+      "price": 91.36,
+      "tcgplayerId": 247817,
+      "released": "2021-11-17",
+      "image": "assets/products/swsh8/hoopa-v-box.webp"
+    }
+  ],
+  "swsh9": [
+    {
+      "id": "pc-etb",
+      "name": "Brilliant Stars Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [],
+      "price": 227.68,
+      "tcgplayerId": 256140,
+      "image": "assets/products/swsh9/pc-etb.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "swsh9-swshp185",
+        "swsh9-swshp186",
+        "swsh9-swshp187",
+        "swsh9-swshp188"
+      ],
+      "pick": 1,
+      "price": 64.06,
+      "tcgplayerId": 256137,
+      "released": "2022-02-25",
+      "image": "assets/products/swsh9/buildBattleBox.webp"
+    },
+    {
+      "id": "flapple-single-blister",
+      "name": "Flapple Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh9-swshp189"
+      ],
+      "price": 16.07,
+      "tcgplayerId": 256128,
+      "released": "2022-02-25",
+      "image": "assets/products/swsh9/flapple-single-blister.webp"
+    },
+    {
+      "id": "eevee-single-blister",
+      "name": "Eevee Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "swsh9-swshp190"
+      ],
+      "price": 25.6,
+      "tcgplayerId": 256129,
+      "released": "2022-02-25",
+      "image": "assets/products/swsh9/eevee-single-blister.webp"
+    },
+    {
+      "id": "leafeon-3-pack-blister",
+      "name": "Leafeon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh9-swshp191"
+      ],
+      "price": 53.69,
+      "tcgplayerId": 256130,
+      "released": "2022-02-25",
+      "image": "assets/products/swsh9/leafeon-3-pack-blister.webp"
+    },
+    {
+      "id": "glaceon-3-pack-blister",
+      "name": "Glaceon 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "swsh9-swshp192"
+      ],
+      "price": 52.67,
+      "tcgplayerId": 256132,
+      "released": "2022-02-25",
+      "image": "assets/products/swsh9/glaceon-3-pack-blister.webp"
+    },
+    {
+      "id": "leafeon-vstar-special-collection",
+      "name": "Leafeon VSTAR Special Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh9-swshp194",
+        "swsh9-swshp195"
+      ],
+      "price": 119.94,
+      "tcgplayerId": 256147,
+      "released": "2022-01-28",
+      "image": "assets/products/swsh9/leafeon-vstar-special-collection.webp"
+    },
+    {
+      "id": "glaceon-vstar-special-collection",
+      "name": "Glaceon VSTAR Special Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "swsh9-swshp196",
+        "swsh9-swshp197"
+      ],
+      "price": 136.39,
+      "tcgplayerId": 256146,
+      "released": "2022-01-28",
+      "image": "assets/products/swsh9/glaceon-vstar-special-collection.webp"
+    },
+    {
+      "id": "arceus-v-figure-collection",
+      "name": "Arceus V Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "swsh9-swshp204"
+      ],
+      "price": 149.61,
+      "tcgplayerId": 265251,
+      "released": "2022-05-06",
+      "image": "assets/products/swsh9/arceus-v-figure-collection.webp"
+    }
+  ],
+  "swshp": [
+    {
+      "id": "meowth-vmax-special-collection",
+      "name": "Meowth VMAX Special Collection",
+      "kind": "collection",
+      "packs": 0,
+      "note": "The real box also held 5 Sun & Moon and XY packs, which aren't on the site, so it opens as the promos alone.",
+      "promos": [
+        "swshp-swshp004",
+        "swshp-swshp005"
+      ],
+      "price": 285.78,
+      "tcgplayerId": 205464,
+      "released": "2020-01-03",
+      "image": "assets/products/swshp/meowth-vmax-special-collection.webp"
+    },
+    {
+      "id": "zacian-v-legends-of-galar-tin",
+      "name": "Zacian V Legends of Galar Tin",
+      "kind": "tin",
+      "packs": 3,
+      "from": {
+        "swsh2": 2,
+        "swsh1": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp018"
+      ],
+      "price": 63.63,
+      "tcgplayerId": 214230,
+      "released": "2020-05-22",
+      "image": "assets/products/swshp/zacian-v-legends-of-galar-tin.webp"
+    },
+    {
+      "id": "zamazenta-v-legends-of-galar-tin",
+      "name": "Zamazenta V Legends of Galar Tin",
+      "kind": "tin",
+      "packs": 3,
+      "from": {
+        "swsh2": 2,
+        "swsh1": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp019"
+      ],
+      "price": 68.72,
+      "tcgplayerId": 214231,
+      "released": "2020-05-22",
+      "image": "assets/products/swshp/zamazenta-v-legends-of-galar-tin.webp"
+    },
+    {
+      "id": "pikachu-sword-shield-figure-collection",
+      "name": "Pikachu Sword & Shield Figure Collection",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "swsh2": 2,
+        "swsh1": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp020"
+      ],
+      "price": 241.63,
+      "tcgplayerId": 210566,
+      "released": "2020-05-01",
+      "image": "assets/products/swshp/pikachu-sword-shield-figure-collection.webp"
+    },
+    {
+      "id": "copperajah-v-box",
+      "name": "Copperajah V Box",
+      "kind": "collection",
+      "packs": 2,
+      "from": {
+        "swsh2": 2
+      },
+      "promos": [
+        "swshp-swshp030"
+      ],
+      "price": 102.95,
+      "tcgplayerId": 214227,
+      "released": "2020-06-05",
+      "image": "assets/products/swshp/copperajah-v-box.webp"
+    },
+    {
+      "id": "galar-partners-box-cinderace-v",
+      "name": "Cinderace V Galar Partners Box",
+      "kind": "collection",
+      "packs": 2,
+      "from": {
+        "swsh1": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp015"
+      ],
+      "price": 162.73,
+      "tcgplayerId": 220750,
+      "image": "assets/products/swshp/galar-partners-box-cinderace-v.webp"
+    },
+    {
+      "id": "galar-partners-box-inteleon-v",
+      "name": "Inteleon V Galar Partners Box",
+      "kind": "collection",
+      "packs": 2,
+      "from": {
+        "swsh1": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp016"
+      ],
+      "price": 166.5,
+      "tcgplayerId": 220752,
+      "image": "assets/products/swshp/galar-partners-box-inteleon-v.webp"
+    },
+    {
+      "id": "galarian-sirfetchd-v-box",
+      "name": "Galarian Sirfetch'd V Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "swsh3": 2,
+        "swsh1": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp043"
+      ],
+      "price": 90.41,
+      "tcgplayerId": 220272,
+      "released": "2020-09-25",
+      "image": "assets/products/swshp/galarian-sirfetchd-v-box.webp"
+    },
+    {
+      "id": "eternatus-vmax-premium-collection",
+      "name": "Eternatus VMAX Premium Collection",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "swsh3": 3,
+        "swsh1": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp044",
+        "swshp-swshp045"
+      ],
+      "price": 205.2,
+      "tcgplayerId": 220277,
+      "released": "2020-09-04",
+      "image": "assets/products/swshp/eternatus-vmax-premium-collection.webp"
+    },
+    {
+      "id": "true-steel-zacian-premium-collection",
+      "name": "True Steel Zacian Premium Collection",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "swsh3": 3,
+        "swsh1": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp033"
+      ],
+      "price": 323.32,
+      "tcgplayerId": 218839,
+      "released": "2020-08-14",
+      "image": "assets/products/swshp/true-steel-zacian-premium-collection.webp"
+    },
+    {
+      "id": "zacian-elite-trainer-box-plus",
+      "name": "Sword & Shield Elite Trainer Box Plus (Zacian)",
+      "kind": "etb",
+      "packs": 12,
+      "from": {
+        "swsh1": 3,
+        "swsh2": 3,
+        "swsh3": 3,
+        "swsh4": 3
+      },
+      "promos": [
+        "swshp-swshp076"
+      ],
+      "price": 243.37,
+      "tcgplayerId": 222987,
+      "image": "assets/products/swshp/zacian-elite-trainer-box-plus.webp"
+    },
+    {
+      "id": "zamazenta-elite-trainer-box-plus",
+      "name": "Sword & Shield Elite Trainer Box Plus (Zamazenta)",
+      "kind": "etb",
+      "packs": 12,
+      "from": {
+        "swsh1": 3,
+        "swsh2": 3,
+        "swsh3": 3,
+        "swsh4": 3
+      },
+      "promos": [
+        "swshp-swshp077"
+      ],
+      "price": 232.52,
+      "tcgplayerId": 222986,
+      "image": "assets/products/swshp/zamazenta-elite-trainer-box-plus.webp"
+    },
+    {
+      "id": "ice-rider-calyrex-v-box",
+      "name": "Ice Rider Calyrex V Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh6": 2,
+        "swsh3": 1,
+        "swsh2": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp130"
+      ],
+      "price": 51.14,
+      "tcgplayerId": 240975,
+      "released": "2021-08-06",
+      "image": "assets/products/swshp/ice-rider-calyrex-v-box.webp"
+    },
+    {
+      "id": "shadow-rider-calyrex-v-box",
+      "name": "Shadow Rider Calyrex V Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh6": 2,
+        "swsh3": 1,
+        "swsh2": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp131"
+      ],
+      "price": 50.0,
+      "tcgplayerId": 240977,
+      "released": "2021-08-06",
+      "image": "assets/products/swshp/shadow-rider-calyrex-v-box.webp"
+    },
+    {
+      "id": "marnie-premium-tournament-collection",
+      "name": "Marnie Premium Tournament Collection",
+      "kind": "premium",
+      "packs": 7,
+      "from": {
+        "swsh6": 3,
+        "swsh5": 2,
+        "swsh4": 1,
+        "swsh3": 1
+      },
+      "promos": [
+        "swshp-swshp120",
+        "swshp-swshp121"
+      ],
+      "price": 128.7,
+      "tcgplayerId": 241093,
+      "released": "2021-08-06",
+      "image": "assets/products/swshp/marnie-premium-tournament-collection.webp"
+    },
+    {
+      "id": "trainers-toolkit-2021",
+      "name": "Trainer's Toolkit (2021)",
+      "kind": "premium",
+      "packs": 4,
+      "from": {
+        "swsh6": 2,
+        "swsh4": 1,
+        "swsh1": 1
+      },
+      "promos": [
+        "swshp-swshp110"
+      ],
+      "price": 39.04,
+      "tcgplayerId": 241109,
+      "released": "2021-08-06",
+      "image": "assets/products/swshp/trainers-toolkit-2021.webp"
+    },
+    {
+      "id": "victini-v-battle-deck",
+      "name": "Victini V Battle Deck",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "swshp-swshp104"
+      ],
+      "price": 13.89,
+      "tcgplayerId": 233356,
+      "image": "assets/products/swshp/victini-v-battle-deck.webp"
+    },
+    {
+      "id": "gardevoir-v-battle-deck",
+      "name": "Gardevoir V Battle Deck",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "swshp-swshp105"
+      ],
+      "price": 17.28,
+      "tcgplayerId": 233357,
+      "image": "assets/products/swshp/gardevoir-v-battle-deck.webp"
+    },
+    {
+      "id": "hisuian-electrode-v-box",
+      "name": "Hisuian Electrode V Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh9": 2,
+        "swsh10": 1,
+        "swsh11": 1
+      },
+      "promos": [
+        "swshp-swshp294"
+      ],
+      "price": 51.78,
+      "tcgplayerId": 282721,
+      "released": "2022-11-04",
+      "image": "assets/products/swshp/hisuian-electrode-v-box.webp"
+    },
+    {
+      "id": "lucario-vstar-premium-collection",
+      "name": "Lucario VSTAR Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "swsh6": 1,
+        "swsh8": 3,
+        "swsh9": 2
+      },
+      "promos": [
+        "swshp-swshp213",
+        "swshp-swshp214"
+      ],
+      "price": 101.63,
+      "tcgplayerId": 262637,
+      "image": "assets/products/swshp/lucario-vstar-premium-collection.webp"
+    },
+    {
+      "id": "heavy-hitters-premium-collection",
+      "name": "Lucario V & Tyranitar V Heavy Hitters Premium Collection",
+      "kind": "premium",
+      "packs": 14,
+      "from": {
+        "swsh10": 4,
+        "swsh9": 4,
+        "swsh8": 4,
+        "swsh3": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [],
+      "price": 292.14,
+      "tcgplayerId": 279598,
+      "image": "assets/products/swshp/heavy-hitters-premium-collection.webp"
+    },
+    {
+      "id": "spring-2022-collector-chest",
+      "name": "Spring 2022 Collector Chest",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "swsh9": 2,
+        "swsh8": 2,
+        "swsh7": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp220",
+        "swshp-swshp221",
+        "swshp-swshp222"
+      ],
+      "price": 83.58,
+      "tcgplayerId": 265252,
+      "image": "assets/products/swshp/spring-2022-collector-chest.webp"
+    },
+    {
+      "id": "spring-2022-collector-bundle",
+      "name": "Spring 2022 Collector Bundle",
+      "kind": "collection",
+      "packs": 7,
+      "from": {
+        "swsh9": 3,
+        "swsh8": 2,
+        "swsh7": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp220",
+        "swshp-swshp221",
+        "swshp-swshp222"
+      ],
+      "price": 105.76,
+      "tcgplayerId": 261779,
+      "released": "2022-04-08",
+      "image": "assets/products/swshp/spring-2022-collector-bundle.webp"
+    },
+    {
+      "id": "trainers-toolkit-2022",
+      "name": "Trainer's Toolkit 2022",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh7": 1,
+        "swsh9": 1,
+        "swsh10": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp250"
+      ],
+      "price": 69.61,
+      "tcgplayerId": 275938,
+      "image": "assets/products/swshp/trainers-toolkit-2022.webp"
+    },
+    {
+      "id": "trainers-toolkit-2023",
+      "name": "Trainer's Toolkit 2023",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh12": 1,
+        "sv1": 1,
+        "sv2": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp306",
+        "swshp-swshp307"
+      ],
+      "price": 52.98,
+      "tcgplayerId": 497380,
+      "released": "2023-06-09",
+      "image": "assets/products/swshp/trainers-toolkit-2023.webp"
+    },
+    {
+      "id": "boltund-v-box",
+      "name": "Boltund V Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh9": 2,
+        "swsh8": 1,
+        "swsh7": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp219"
+      ],
+      "price": 77.22,
+      "tcgplayerId": 262968,
+      "released": "2022-04-22",
+      "image": "assets/products/swshp/boltund-v-box.webp"
+    },
+    {
+      "id": "morpeko-v-union-special-collection",
+      "name": "Morpeko V-UNION Special Collection",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh9": 2,
+        "swsh8": 1,
+        "swsh7": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp215",
+        "swshp-swshp216",
+        "swshp-swshp217",
+        "swshp-swshp218"
+      ],
+      "price": 72.98,
+      "tcgplayerId": 262646,
+      "released": "2022-04-08",
+      "image": "assets/products/swshp/morpeko-v-union-special-collection.webp"
+    },
+    {
+      "id": "virizion-v-box",
+      "name": "Virizion V Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh11": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp295"
+      ],
+      "price": 63.49,
+      "tcgplayerId": 280847,
+      "released": "2022-10-14",
+      "image": "assets/products/swshp/virizion-v-box.webp"
+    },
+    {
+      "id": "hidden-potential-tin-rotom",
+      "name": "Hidden Potential Tin: Rotom V",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "swsh11": 2,
+        "swsh7": 2,
+        "swsh8": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp257"
+      ],
+      "price": 94.99,
+      "tcgplayerId": 281981,
+      "released": "2022-10-14",
+      "image": "assets/products/swshp/hidden-potential-tin-rotom.webp"
+    },
+    {
+      "id": "hidden-potential-tin-gallade",
+      "name": "Hidden Potential Tin: Gallade V",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "swsh11": 2,
+        "swsh7": 2,
+        "swsh8": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp258"
+      ],
+      "price": 79.9,
+      "tcgplayerId": 281982,
+      "released": "2022-10-14",
+      "image": "assets/products/swshp/hidden-potential-tin-gallade.webp"
+    },
+    {
+      "id": "hidden-potential-tin-giratina",
+      "name": "Hidden Potential Tin: Giratina V",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "swsh11": 2,
+        "swsh7": 2,
+        "swsh8": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp259"
+      ],
+      "price": 146.29,
+      "tcgplayerId": 281984,
+      "released": "2022-10-14",
+      "image": "assets/products/swshp/hidden-potential-tin-giratina.webp"
+    },
+    {
+      "id": "divergent-powers-tin-samurott",
+      "name": "Divergent Powers Tin: Hisuian Samurott V",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh7": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp239"
+      ],
+      "price": 102.4,
+      "tcgplayerId": 271939,
+      "released": "2022-06-17",
+      "image": "assets/products/swshp/divergent-powers-tin-samurott.webp"
+    },
+    {
+      "id": "divergent-powers-tin-typhlosion",
+      "name": "Divergent Powers Tin: Hisuian Typhlosion V",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh7": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp237"
+      ],
+      "price": 105.36,
+      "tcgplayerId": 271940,
+      "released": "2022-06-17",
+      "image": "assets/products/swshp/divergent-powers-tin-typhlosion.webp"
+    },
+    {
+      "id": "divergent-powers-tin-decidueye",
+      "name": "Divergent Powers Tin: Hisuian Decidueye V",
+      "kind": "tin",
+      "packs": 5,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh7": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp238"
+      ],
+      "price": 101.83,
+      "tcgplayerId": 271941,
+      "released": "2022-06-17",
+      "image": "assets/products/swshp/divergent-powers-tin-decidueye.webp"
+    },
+    {
+      "id": "deoxys-vmax-vstar-battle-box",
+      "name": "Deoxys VMAX & VSTAR Battle Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh11": 2,
+        "swsh10": 1,
+        "swsh9": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp266",
+        "swshp-swshp267",
+        "swshp-swshp268"
+      ],
+      "price": 101.83,
+      "tcgplayerId": 282002,
+      "released": "2022-10-14",
+      "image": "assets/products/swshp/deoxys-vmax-vstar-battle-box.webp"
+    },
+    {
+      "id": "zeraora-vmax-vstar-battle-box",
+      "name": "Zeraora VMAX & VSTAR Battle Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh11": 2,
+        "swsh10": 1,
+        "swsh9": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp263",
+        "swshp-swshp264",
+        "swshp-swshp265"
+      ],
+      "price": 100.94,
+      "tcgplayerId": 282003,
+      "released": "2022-10-14",
+      "image": "assets/products/swshp/zeraora-vmax-vstar-battle-box.webp"
+    },
+    {
+      "id": "kleavor-vstar-premium-collection",
+      "name": "Kleavor VSTAR Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "swsh9": 2,
+        "swsh10": 2,
+        "swsh8": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp248",
+        "swshp-swshp249"
+      ],
+      "price": 89.11,
+      "tcgplayerId": 270478,
+      "released": "2022-05-27",
+      "image": "assets/products/swshp/kleavor-vstar-premium-collection.webp"
+    },
+    {
+      "id": "kleavor-vstar-special-collection",
+      "name": "Kleavor VSTAR Special Collection",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh8": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp248",
+        "swshp-swshp249"
+      ],
+      "price": 63.84,
+      "tcgplayerId": 532560,
+      "image": "assets/products/swshp/kleavor-vstar-special-collection.webp"
+    },
+    {
+      "id": "holiday-calendar-2022",
+      "name": "Holiday Calendar 2022",
+      "kind": "collection",
+      "packs": 6,
+      "from": {
+        "swsh9": 2,
+        "swsh8": 2,
+        "swsh10": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp153"
+      ],
+      "price": 199.45,
+      "tcgplayerId": 282250,
+      "released": "2022-09-01",
+      "image": "assets/products/swshp/holiday-calendar-2022.webp"
+    },
+    {
+      "id": "origin-forme-dialga-vstar-premium-collection",
+      "name": "Origin Forme Dialga VSTAR Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "swsh11": 2,
+        "swsh10": 2,
+        "swsh8": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp255",
+        "swshp-swshp256"
+      ],
+      "price": 119.26,
+      "tcgplayerId": 282000,
+      "released": "2022-10-07",
+      "image": "assets/products/swshp/origin-forme-dialga-vstar-premium-collection.webp"
+    },
+    {
+      "id": "origin-forme-palkia-vstar-premium-collection",
+      "name": "Origin Forme Palkia VSTAR Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "swsh11": 2,
+        "swsh10": 2,
+        "swsh8": 2
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp253",
+        "swshp-swshp254"
+      ],
+      "price": 117.81,
+      "tcgplayerId": 282001,
+      "released": "2022-10-07",
+      "image": "assets/products/swshp/origin-forme-palkia-vstar-premium-collection.webp"
+    },
+    {
+      "id": "hisuian-zoroark-vstar-premium-collection",
+      "name": "Hisuian Zoroark VSTAR Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "from": {
+        "swsh11": 3,
+        "swsh9": 3
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp297",
+        "swshp-swshp298"
+      ],
+      "price": 179.07,
+      "tcgplayerId": 282402,
+      "released": "2022-10-28",
+      "image": "assets/products/swshp/hisuian-zoroark-vstar-premium-collection.webp"
+    },
+    {
+      "id": "sword-shield-ultra-premium-collection-charizard",
+      "name": "Sword & Shield Ultra-Premium Collection: Charizard",
+      "kind": "premium",
+      "packs": 16,
+      "from": {
+        "swsh3": 1,
+        "swsh4": 1,
+        "swsh7": 3,
+        "swsh8": 3,
+        "swsh9": 2,
+        "swsh10": 2,
+        "swsh6": 2,
+        "swsh5": 1,
+        "swsh11": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "swshp-swshp260",
+        "swshp-swshp261",
+        "swshp-swshp262"
+      ],
+      "price": 562.87,
+      "tcgplayerId": 282401,
+      "released": "2022-10-28",
+      "image": "assets/products/swshp/sword-shield-ultra-premium-collection-charizard.webp"
     }
   ],
   "tot23": [
@@ -4600,6 +7477,77 @@
       "price": 181.32,
       "tcgplayerId": 591211,
       "image": "assets/products/tot24/booster-bundle-120.webp"
+    }
+  ],
+  "zsv10pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "zsv10pt5-svp209"
+      ],
+      "price": 161.32,
+      "tcgplayerId": 630686,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "zsv10pt5-svp209-pc",
+        "zsv10pt5-svp209"
+      ],
+      "price": 271.77,
+      "tcgplayerId": 630687,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/pc-etb.webp"
+    },
+    {
+      "id": "victini-collection",
+      "name": "Unova Victini Illustration Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "zsv10pt5-svp208",
+        "zsv10pt5-12-pokeball"
+      ],
+      "price": 71.86,
+      "tcgplayerId": 630615,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/victini-collection.webp"
+    },
+    {
+      "id": "tech-reuniclus",
+      "name": "Tech Sticker Collection: Reuniclus",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "zsv10pt5-svp212"
+      ],
+      "price": 50.44,
+      "tcgplayerId": 630614,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
+    },
+    {
+      "id": "heavy-hitters",
+      "name": "Unova Heavy Hitters Premium Collection",
+      "kind": "premium",
+      "packs": 12,
+      "promos": [
+        "zsv10pt5-12-stamp",
+        "zsv10pt5-34-stamp",
+        "zsv10pt5-wht020-stamp",
+        "zsv10pt5-wht062-stamp"
+      ],
+      "price": 180.68,
+      "tcgplayerId": 668632,
+      "image": "assets/products/zsv10pt5/heavy-hitters.webp"
     }
   ]
 }

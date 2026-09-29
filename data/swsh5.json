@@ -6518,5 +6518,611 @@
     "tcgplayerId": 234109,
     "market": 2.08,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh5-183/large"
+  },
+  {
+    "id": "swsh5-swshp088",
+    "name": "Cherrim",
+    "number": "swshp088",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Tika Matsuno",
+    "flavorText": "The faint scent that emanates from its full blossom entices bug Pokémon to it.",
+    "evolvesFrom": "Cherubi",
+    "image": "assets/cards/swsh5/swshp088.webp",
+    "imageSmall": "assets/cards/swsh5/swshp088-sm.webp",
+    "attacks": [
+      {
+        "name": "Seed Bomb",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Spring Bloom",
+        "text": "As often as you like during your turn, you may attach a Grass Energy card from your hand to 1 of your Pokémon that doesn't have a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH088/large",
+    "printedNumber": "SWSH 088",
+    "tcgplayerId": 234276,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 17.36,
+    "foilMap": "assets/foil/maps/swsh5/swshp088.webp"
+  },
+  {
+    "id": "swsh5-swshp089",
+    "name": "Octillery",
+    "number": "swshp089",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "KIYOTAKA OSHIYAMA",
+    "flavorText": "It traps enemies with its suction-cupped tentacles, then smashes them with its rock-hard head.",
+    "evolvesFrom": "Remoraid",
+    "image": "assets/cards/swsh5/swshp089.webp",
+    "imageSmall": "assets/cards/swsh5/swshp089-sm.webp",
+    "attacks": [
+      {
+        "name": "Waterfall",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rapid Strike Search",
+        "text": "Once during your turn, you may search your deck for a Rapid Strike card, reveal it, and put it into your hand. Then, shuffle your deck. You can't use more than 1 Rapid Strike Search Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH089/large",
+    "printedNumber": "SWSH 089",
+    "tcgplayerId": 234277,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.82,
+    "foilMap": "assets/foil/maps/swsh5/swshp089.webp"
+  },
+  {
+    "id": "swsh5-swshp090",
+    "name": "Houndoom",
+    "number": "swshp090",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Single Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Uta",
+    "flavorText": "Identifiable by its eerie howls, people a long time ago thought it was the grim reaper and feared it.",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/swsh5/swshp090.webp",
+    "imageSmall": "assets/cards/swsh5/swshp090-sm.webp",
+    "attacks": [
+      {
+        "name": "Darkness Fang",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Single Strike Roar",
+        "text": "Once during your turn, you may search your deck for a Single Strike Energy card and attach it to 1 of your Single Strike Pokémon. Then, shuffle your deck. If you attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH090/large",
+    "printedNumber": "SWSH 090",
+    "tcgplayerId": 234278,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 14.72,
+    "foilMap": "assets/foil/maps/swsh5/swshp090.webp"
+  },
+  {
+    "id": "swsh5-swshp091",
+    "name": "Bronzong",
+    "number": "swshp091",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "110",
+    "artist": "Atsushi Furusawa",
+    "flavorText": "Many scientists suspect that this Pokémon originated outside the Galar region, based on the patterns on its body.",
+    "evolvesFrom": "Bronzor",
+    "image": "assets/cards/swsh5/swshp091.webp",
+    "imageSmall": "assets/cards/swsh5/swshp091-sm.webp",
+    "attacks": [
+      {
+        "name": "Zen Headbutt",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Metal Transfer",
+        "text": "As often as you like during your turn, you may move a Metal Energy from 1 of your Pokémon to another of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH091/large",
+    "printedNumber": "SWSH 091",
+    "tcgplayerId": 234279,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.15,
+    "foilMap": "assets/foil/maps/swsh5/swshp091.webp"
+  },
+  {
+    "id": "swsh5-swshp092",
+    "name": "Charmander",
+    "number": "swshp092",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Uta",
+    "flavorText": "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
+    "image": "assets/cards/swsh5/swshp092.webp",
+    "imageSmall": "assets/cards/swsh5/swshp092-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH092/large",
+    "printedNumber": "SWSH 092",
+    "tcgplayerId": 234282,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.99,
+    "foilMap": "assets/foil/maps/swsh5/swshp092.webp"
+  },
+  {
+    "id": "swsh5-swshp093",
+    "name": "Arrokuda",
+    "number": "swshp093",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "tetsuya koizumi",
+    "flavorText": "If it sees any movement around it, this Pokémon charges for it straightaway, leading with its sharply pointed jaw. It's very proud of that jaw.",
+    "image": "assets/cards/swsh5/swshp093.webp",
+    "imageSmall": "assets/cards/swsh5/swshp093-sm.webp",
+    "attacks": [
+      {
+        "name": "Flock",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Arrokuda and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Peck",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH093/large",
+    "printedNumber": "SWSH 093",
+    "tcgplayerId": 234283,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.34,
+    "foilMap": "assets/foil/maps/swsh5/swshp093.webp"
+  },
+  {
+    "id": "swsh5-swshp094",
+    "name": "Jolteon",
+    "number": "swshp094",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Yuu Nishida",
+    "flavorText": "If it is angered or startled, the fur all over its body bristles like sharp needles that pierce foes.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/swsh5/swshp094.webp",
+    "imageSmall": "assets/cards/swsh5/swshp094-sm.webp",
+    "attacks": [
+      {
+        "name": "Energize",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Attach a Lightning Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH094/large",
+    "printedNumber": "SWSH 094",
+    "tcgplayerId": 234284,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.36,
+    "foilMap": "assets/foil/maps/swsh5/swshp094.webp"
+  },
+  {
+    "id": "swsh5-swshp095",
+    "name": "Eevee",
+    "number": "swshp095",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Naoki Saito",
+    "flavorText": "It has the ability to alter the composition of its body to suit its surrounding environment.",
+    "image": "assets/cards/swsh5/swshp095.webp",
+    "imageSmall": "assets/cards/swsh5/swshp095-sm.webp",
+    "attacks": [
+      {
+        "name": "First Step",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Tail Whap",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH095/large",
+    "printedNumber": "SWSH 095",
+    "tcgplayerId": 234287,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.79,
+    "foilMap": "assets/foil/maps/swsh5/swshp095.webp"
+  },
+  {
+    "id": "swsh5-swshp106",
+    "name": "Single Strike Urshifu V",
+    "number": "swshp106",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Single Strike"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh5/swshp106.webp",
+    "imageSmall": "assets/cards/swsh5/swshp106-sm.webp",
+    "attacks": [
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Brawny Knuckle",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "180",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH106/large",
+    "printedNumber": "SWSH 106",
+    "tcgplayerId": 234296,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.01,
+    "foilMap": "assets/foil/maps/swsh5/swshp106.webp"
+  },
+  {
+    "id": "swsh5-swshp107",
+    "name": "Rapid Strike Urshifu V",
+    "number": "swshp107",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh5/swshp107.webp",
+    "imageSmall": "assets/cards/swsh5/swshp107-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Kick",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Sonic Legs",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack also does 20 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH107/large",
+    "printedNumber": "SWSH 107",
+    "tcgplayerId": 234297,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.99,
+    "foilMap": "assets/foil/maps/swsh5/swshp107.webp"
+  },
+  {
+    "id": "swsh5-swshp108",
+    "name": "Empoleon V",
+    "number": "swshp108",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/swsh5/swshp108.webp",
+    "imageSmall": "assets/cards/swsh5/swshp108-sm.webp",
+    "attacks": [
+      {
+        "name": "Swirling Slice",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Emperor's Eyes",
+        "text": "As long as this Pokémon is in the Active Spot, your opponent's Basic Pokémon in play have no Abilities, except for Pokémon with a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH108/large",
+    "printedNumber": "SWSH 108",
+    "tcgplayerId": 238555,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.88,
+    "foilMap": "assets/foil/maps/swsh5/swshp108.webp"
+  },
+  {
+    "id": "swsh5-swshp109",
+    "name": "Tyranitar V",
+    "number": "swshp109",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Single Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "230",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swsh5/swshp109.webp",
+    "imageSmall": "assets/cards/swsh5/swshp109-sm.webp",
+    "attacks": [
+      {
+        "name": "Cragalanche",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Discard the top 2 cards of your opponent's deck."
+      },
+      {
+        "name": "Single Strike Crush",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "Discard the top 4 cards of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH109/large",
+    "printedNumber": "SWSH 109",
+    "tcgplayerId": 238553,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.84,
+    "foilMap": "assets/foil/maps/swsh5/swshp109.webp"
+  },
+  {
+    "id": "swsh5-swshp111",
+    "name": "Galarian Rapidash V",
+    "number": "swshp111",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/swsh5/swshp111.webp",
+    "imageSmall": "assets/cards/swsh5/swshp111-sm.webp",
+    "attacks": [
+      {
+        "name": "Libra Horn",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put damage counters on 1 of your opponent's Pokémon until its remaining HP is 100."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "60+",
+        "text": "This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH111/large",
+    "printedNumber": "SWSH 111",
+    "tcgplayerId": 236054,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 3.29,
+    "foilMap": "assets/foil/maps/swsh5/swshp111.webp"
   }
 ]

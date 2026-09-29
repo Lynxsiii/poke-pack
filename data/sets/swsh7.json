@@ -19,9 +19,180 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp122": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp123": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp124": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp125": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp126": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp127": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp128": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp129": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp155": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp156": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp157": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp158": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp159": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp160": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp161": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp162": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp163": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp164": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp165": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp166": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp167": {
+      "notes": "Professor Burnet, non-holo supporter"
+    }
+  },
+  "products": [
+    {
+      "id": "pc-etb",
+      "name": "Evolving Skies Pokémon Center Elite Trainer Box (Glaceon/Vaporeon/Sylveon/Espeon)",
+      "kind": "etb",
+      "tcgplayerId": 245352,
+      "packs": 10,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 242449,
+      "packs": 4,
+      "promos": [
+        "swshp122",
+        "swshp123",
+        "swshp124",
+        "swshp125"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "galarian-slowpoke-single-blister",
+      "name": "Galarian Slowpoke Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 242448,
+      "packs": 1,
+      "promos": [
+        "swshp126"
+      ]
+    },
+    {
+      "id": "eevee-single-blister",
+      "name": "Eevee Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 242447,
+      "packs": 1,
+      "promos": [
+        "swshp127"
+      ]
+    },
+    {
+      "id": "eiscue-3-pack-blister",
+      "name": "Eiscue 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 242435,
+      "packs": 3,
+      "promos": [
+        "swshp128"
+      ]
+    },
+    {
+      "id": "umbreon-3-pack-blister",
+      "name": "Umbreon 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 242444,
+      "packs": 3,
+      "promos": [
+        "swshp129"
+      ]
+    },
+    {
+      "id": "greninja-v-union-special-collection",
+      "name": "Greninja V-UNION Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 245878,
+      "packs": 4,
+      "promos": [
+        "swshp155",
+        "swshp156",
+        "swshp157",
+        "swshp158",
+        "swshp167"
+      ]
+    },
+    {
+      "id": "mewtwo-v-union-special-collection",
+      "name": "Mewtwo V-UNION Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 245877,
+      "packs": 4,
+      "promos": [
+        "swshp159",
+        "swshp160",
+        "swshp161",
+        "swshp162",
+        "swshp167"
+      ]
+    },
+    {
+      "id": "zacian-v-union-special-collection",
+      "name": "Zacian V-UNION Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 245879,
+      "packs": 4,
+      "promos": [
+        "swshp163",
+        "swshp164",
+        "swshp165",
+        "swshp166",
+        "swshp167"
+      ]
+    }
+  ]
 }

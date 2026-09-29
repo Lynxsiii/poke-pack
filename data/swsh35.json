@@ -2637,5 +2637,699 @@
     "imageRemote": "https://images.scrydex.com/pokemon/swsh35-80/large",
     "tcgplayerId": 223079,
     "market": 1.13
+  },
+  {
+    "id": "swsh35-swshp046",
+    "name": "Eldegoss",
+    "number": "swshp046",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Mina Nakai",
+    "flavorText": "The cotton on the head of this Pokémon can be spun into a glossy, gorgeous yarn—a Galar regional specialty.",
+    "evolvesFrom": "Gossifleur",
+    "image": "assets/cards/swsh35/swshp046.webp",
+    "imageSmall": "assets/cards/swsh35/swshp046-sm.webp",
+    "attacks": [
+      {
+        "name": "Blessing of Fluff",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Grass Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck."
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH046/large",
+    "printedNumber": "SWSH 046",
+    "tcgplayerId": 223751,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.2,
+    "foilMap": "assets/foil/maps/swsh35/swshp046.webp"
+  },
+  {
+    "id": "swsh35-swshp047",
+    "name": "Drednaw",
+    "number": "swshp047",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "This Pokémon rapidly extends its retractable neck to sink its sharp fangs into distant enemies and take them down.",
+    "evolvesFrom": "Chewtle",
+    "image": "assets/cards/swsh35/swshp047.webp",
+    "imageSmall": "assets/cards/swsh35/swshp047-sm.webp",
+    "attacks": [
+      {
+        "name": "Vise Bite",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 30 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      },
+      {
+        "name": "Jaw Lock",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH047/large",
+    "printedNumber": "SWSH 047",
+    "tcgplayerId": 223750,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.65,
+    "foilMap": "assets/foil/maps/swsh35/swshp047.webp"
+  },
+  {
+    "id": "swsh35-swshp048",
+    "name": "Centiskorch",
+    "number": "swshp048",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "nagimiso",
+    "flavorText": "When it heats up, its body temperature reaches about 1,500 degrees Fahrenheit. It lashes its body like a whip and launches itself at enemies.",
+    "evolvesFrom": "Sizzlipede",
+    "image": "assets/cards/swsh35/swshp048.webp",
+    "imageSmall": "assets/cards/swsh35/swshp048-sm.webp",
+    "attacks": [
+      {
+        "name": "Hundred Foot Flames",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "For each Fire Energy attached to this Pokémon, discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH048/large",
+    "printedNumber": "SWSH 048",
+    "tcgplayerId": 223749,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.27,
+    "foilMap": "assets/foil/maps/swsh35/swshp048.webp"
+  },
+  {
+    "id": "swsh35-swshp049",
+    "name": "Dubwool V",
+    "number": "swshp049",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh35/swshp049.webp",
+    "imageSmall": "assets/cards/swsh35/swshp049-sm.webp",
+    "attacks": [
+      {
+        "name": "Revenge Blast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "This attack does 30 more damage for each Prize card your opponent has taken."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Soft Wool",
+        "text": "This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH049/large",
+    "printedNumber": "SWSH 049",
+    "tcgplayerId": 223752,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.64,
+    "foilMap": "assets/foil/maps/swsh35/swshp049.webp"
+  },
+  {
+    "id": "swsh35-swshp050",
+    "name": "Charizard V",
+    "number": "swshp050",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh35/swshp050.webp",
+    "imageSmall": "assets/cards/swsh35/swshp050-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      },
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH050/large",
+    "printedNumber": "SWSH 050",
+    "tcgplayerId": 223754,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 12.44,
+    "foilMap": "assets/foil/maps/swsh35/swshp050.webp",
+    "etchMap": "assets/foil/maps/swsh35/swshp050-etch.webp"
+  },
+  {
+    "id": "swsh35-swshp051",
+    "name": "Lapras",
+    "number": "swshp051",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Megumi Higuchi",
+    "flavorText": "A smart and kindhearted Pokémon, it glides across the surface of the sea while its beautiful song echoes around it.",
+    "image": "assets/cards/swsh35/swshp051.webp",
+    "imageSmall": "assets/cards/swsh35/swshp051-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Wash",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "70",
+        "text": "You may put 2 Energy attached to your opponent's Active Pokémon into their hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH051/large",
+    "printedNumber": "SWSH 051",
+    "tcgplayerId": 222071,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 7.76,
+    "foilMap": "assets/foil/maps/swsh35/swshp051.webp"
+  },
+  {
+    "id": "swsh35-swshp052",
+    "name": "Gengar",
+    "number": "swshp052",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Shibuzoh.",
+    "flavorText": "On the night of a full moon, if shadows move on their own and laugh, it must be Gengar's doing.",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/swsh35/swshp052.webp",
+    "imageSmall": "assets/cards/swsh35/swshp052-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnoblast",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Life Shaker",
+        "text": "As often as you like during your turn, you may move 1 damage counter from 1 of your Psychic Pokémon to another of your Psychic Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH052/large",
+    "printedNumber": "SWSH 052",
+    "tcgplayerId": 222072,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 125.87,
+    "foilMap": "assets/foil/maps/swsh35/swshp052.webp"
+  },
+  {
+    "id": "swsh35-swshp053",
+    "name": "Machamp",
+    "number": "swshp053",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "170",
+    "artist": "SATOSHI NAKAI",
+    "flavorText": "It quickly swings its four arms to rock its opponents with ceaseless punches and chops from all angles.",
+    "evolvesFrom": "Machoke",
+    "image": "assets/cards/swsh35/swshp053.webp",
+    "imageSmall": "assets/cards/swsh35/swshp053-sm.webp",
+    "attacks": [
+      {
+        "name": "Macho Revenge",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Fighting Pokémon in your discard pile."
+      },
+      {
+        "name": "Dynamite Punch",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon also does 50 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH053/large",
+    "printedNumber": "SWSH 053",
+    "tcgplayerId": 222073,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.87,
+    "foilMap": "assets/foil/maps/swsh35/swshp053.webp"
+  },
+  {
+    "id": "swsh35-swshp054",
+    "name": "Coalossal",
+    "number": "swshp054",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "160",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It's usually peaceful, but the vandalism of mines enrages it. Offenders will be incinerated with flames that reach 2,700 degrees Fahrenheit.",
+    "evolvesFrom": "Carkol",
+    "image": "assets/cards/swsh35/swshp054.webp",
+    "imageSmall": "assets/cards/swsh35/swshp054-sm.webp",
+    "attacks": [
+      {
+        "name": "Flaming Avalanche",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tar Generator",
+        "text": "Once during your turn, you may attach a Fire Energy card, a Fighting Energy card, or 1 of each from your discard pile to your Pokémon in any way you like.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH054/large",
+    "printedNumber": "SWSH 054",
+    "tcgplayerId": 222074,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.29,
+    "foilMap": "assets/foil/maps/swsh35/swshp054.webp"
+  },
+  {
+    "id": "swsh35-swshp055",
+    "name": "Hatterene V",
+    "number": "swshp055",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "200",
+    "artist": "PLANETA Igarashi",
+    "image": "assets/cards/swsh35/swshp055.webp",
+    "imageSmall": "assets/cards/swsh35/swshp055-sm.webp",
+    "attacks": [
+      {
+        "name": "Confounding Pulse",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. The new Active Pokémon is now Confused."
+      },
+      {
+        "name": "Mental Crush",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "If your opponent's Active Pokémon is Confused, this attack does 90 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH055/large",
+    "printedNumber": "SWSH 055",
+    "tcgplayerId": 223755,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.77,
+    "foilMap": "assets/foil/maps/swsh35/swshp055.webp"
+  },
+  {
+    "id": "swsh35-swshp056",
+    "name": "Morpeko V",
+    "number": "swshp056",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh35/swshp056.webp",
+    "imageSmall": "assets/cards/swsh35/swshp056-sm.webp",
+    "attacks": [
+      {
+        "name": "Spark",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Electro Wheel",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard an Energy from this Pokémon. If you do, switch it with 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH056/large",
+    "printedNumber": "SWSH 056",
+    "tcgplayerId": 223757,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.81,
+    "foilMap": "assets/foil/maps/swsh35/swshp056.webp"
+  },
+  {
+    "id": "swsh35-swshp057",
+    "name": "Grimmsnarl V",
+    "number": "swshp057",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh35/swshp057.webp",
+    "imageSmall": "assets/cards/swsh35/swshp057-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Spiky Knuckle",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "200",
+        "text": "Put 2 Darkness Energy attached to this Pokémon into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH057/large",
+    "printedNumber": "SWSH 057",
+    "tcgplayerId": 223758,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.06,
+    "foilMap": "assets/foil/maps/swsh35/swshp057.webp"
+  },
+  {
+    "id": "swsh35-swshp058",
+    "name": "Alcremie",
+    "number": "swshp058",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "sui",
+    "flavorText": "When it trusts a Trainer, it will treat them to berries it's decorated with cream.",
+    "evolvesFrom": "Milcery",
+    "image": "assets/cards/swsh35/swshp058.webp",
+    "imageSmall": "assets/cards/swsh35/swshp058-sm.webp",
+    "attacks": [
+      {
+        "name": "Decorate",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach any number of basic Energy cards from your hand to your Pokémon in any way you like."
+      },
+      {
+        "name": "Draining Kiss",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH058/large",
+    "printedNumber": "SWSH 058",
+    "tcgplayerId": 227029,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 11.01,
+    "foilMap": "assets/foil/maps/swsh35/swshp058.webp"
+  },
+  {
+    "id": "swsh35-swshp059",
+    "name": "Galarian Obstagoon",
+    "number": "swshp059",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "160",
+    "artist": "Hasuno",
+    "flavorText": "It evolved after experiencing numerous fights. While crossing its arms, it lets out a shout that would make any opponent flinch.",
+    "evolvesFrom": "Galarian Linoone",
+    "image": "assets/cards/swsh35/swshp059.webp",
+    "imageSmall": "assets/cards/swsh35/swshp059-sm.webp",
+    "attacks": [
+      {
+        "name": "Obstruct",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Untamed Shout",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put 3 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH059/large",
+    "printedNumber": "SWSH 059",
+    "tcgplayerId": 227030,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.84,
+    "foilMap": "assets/foil/maps/swsh35/swshp059.webp"
+  },
+  {
+    "id": "swsh35-swshp060",
+    "name": "Duraludon",
+    "number": "swshp060",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Kazuma Koda",
+    "flavorText": "Its body resembles polished metal, and it's both lightweight and strong. The only drawback is that it rusts easily.",
+    "image": "assets/cards/swsh35/swshp060.webp",
+    "imageSmall": "assets/cards/swsh35/swshp060-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Sharpener",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Attach a Metal Energy card from your discard pile to 1 of your Pokémon."
+      },
+      {
+        "name": "Power Beam",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH060/large",
+    "printedNumber": "SWSH 060",
+    "tcgplayerId": 227031,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.85,
+    "foilMap": "assets/foil/maps/swsh35/swshp060.webp"
   }
 ]

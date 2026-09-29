@@ -1960,5 +1960,756 @@
     "tcgplayerId": 250335,
     "market": 5.58,
     "imageRemote": "https://images.scrydex.com/pokemon/cel25c-145_A/large"
+  },
+  {
+    "id": "cel25-swshp062",
+    "name": "Pikachu VMAX",
+    "number": "swshp062",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "310",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Pikachu V",
+    "image": "assets/cards/cel25/swshp062.webp",
+    "imageSmall": "assets/cards/cel25/swshp062-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Volt Tackle",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "120+",
+        "text": "You may discard all Energy from this Pokémon. If you do, this attack does 150 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH062/large",
+    "printedNumber": "SWSH 062",
+    "tcgplayerId": 251086,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 15.67,
+    "foilMap": "assets/foil/maps/cel25/swshp062.webp",
+    "etchMap": "assets/foil/maps/cel25/swshp062-etch.webp"
+  },
+  {
+    "id": "cel25-swshp132",
+    "name": "Dragapult",
+    "number": "swshp132",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Prime"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "150",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Drakloak",
+    "image": "assets/cards/cel25/swshp132.webp",
+    "imageSmall": "assets/cards/cel25/swshp132-sm.webp",
+    "attacks": [
+      {
+        "name": "Mach Turn",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "60",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Diving Swipe",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH132/large",
+    "printedNumber": "SWSH 132",
+    "tcgplayerId": 251088,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 10.74,
+    "foilMap": "assets/foil/maps/cel25/swshp132.webp"
+  },
+  {
+    "id": "cel25-swshp133",
+    "name": "Lance's Charizard V",
+    "number": "swshp133",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "220",
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/cel25/swshp133.webp",
+    "imageSmall": "assets/cards/cel25/swshp133-sm.webp",
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH133/large",
+    "printedNumber": "SWSH 133",
+    "tcgplayerId": 251089,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 6.88,
+    "foilMap": "assets/foil/maps/cel25/swshp133.webp"
+  },
+  {
+    "id": "cel25-swshp134",
+    "name": "Dark Sylveon V",
+    "number": "swshp134",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "180",
+    "artist": "Ryuta Fuse",
+    "image": "assets/cards/cel25/swshp134.webp",
+    "imageSmall": "assets/cards/cel25/swshp134-sm.webp",
+    "attacks": [
+      {
+        "name": "Disarming Voice",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Tricky Ribbon",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH134/large",
+    "printedNumber": "SWSH 134",
+    "tcgplayerId": 251090,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 6.61,
+    "foilMap": "assets/foil/maps/cel25/swshp134.webp"
+  },
+  {
+    "id": "cel25-swshp135",
+    "name": "Zacian LV.X",
+    "number": "swshp135",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "160",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Zacian",
+    "image": "assets/cards/cel25/swshp135.webp",
+    "imageSmall": "assets/cards/cel25/swshp135-sm.webp",
+    "attacks": [
+      {
+        "name": "Brave Blade",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bladed Armament",
+        "text": "Damage from this Pokémon's attacks isn't affected by any effects on your opponent's Active Pokémon.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH135/large",
+    "printedNumber": "SWSH 135",
+    "tcgplayerId": 251091,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.79,
+    "foilMap": "assets/foil/maps/cel25/swshp135.webp"
+  },
+  {
+    "id": "cel25-swshp136",
+    "name": "Mimikyu δ",
+    "number": "swshp136",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Hasuno",
+    "image": "assets/cards/cel25/swshp136.webp",
+    "imageSmall": "assets/cards/cel25/swshp136-sm.webp",
+    "attacks": [
+      {
+        "name": "Filch",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Draw 2 cards."
+      },
+      {
+        "name": "Wet Claw",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Put an Energy attached to your opponent's Active Pokémon into their hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH136/large",
+    "printedNumber": "SWSH 136",
+    "tcgplayerId": 251092,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 14.15,
+    "foilMap": "assets/foil/maps/cel25/swshp136.webp"
+  },
+  {
+    "id": "cel25-swshp137",
+    "name": "Light Toxtricity",
+    "number": "swshp137",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Naoyo Kimura",
+    "flavorText": "When this Pokémon sounds as if it's strumming a guitar, it's actually clawing at the protrusions on its chest to generate electricity.",
+    "evolvesFrom": "Toxel",
+    "image": "assets/cards/cel25/swshp137.webp",
+    "imageSmall": "assets/cards/cel25/swshp137-sm.webp",
+    "attacks": [
+      {
+        "name": "Slow Ballad",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from both Active Pokémon."
+      },
+      {
+        "name": "Beatdown Smash",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "During your next turn, this Pokémon can't use Beatdown Smash."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH137/large",
+    "printedNumber": "SWSH 137",
+    "tcgplayerId": 251093,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.74,
+    "foilMap": "assets/foil/maps/cel25/swshp137.webp"
+  },
+  {
+    "id": "cel25-swshp138",
+    "name": "Hydreigon C",
+    "number": "swshp138",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "SP"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "kawayoo",
+    "image": "assets/cards/cel25/swshp138.webp",
+    "imageSmall": "assets/cards/cel25/swshp138-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Berserker Blade",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack also does 20 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH138/large",
+    "printedNumber": "SWSH 138",
+    "tcgplayerId": 251094,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.96,
+    "foilMap": "assets/foil/maps/cel25/swshp138.webp"
+  },
+  {
+    "id": "cel25-swshp139",
+    "name": "Pikachu V-UNION",
+    "number": "swshp139",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "300",
+    "artist": "Multiple Artists",
+    "image": "assets/cards/cel25/swshp139.webp",
+    "imageSmall": "assets/cards/cel25/swshp139-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Lightning Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Shocking Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Disconnect",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, they can't play any Item cards from their hand."
+      },
+      {
+        "name": "Electro Ball Together",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH139/large",
+    "printedNumber": "SWSH 139",
+    "tcgplayerId": 251095,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 6.95,
+    "foilMap": "assets/foil/maps/cel25/swshp139.webp"
+  },
+  {
+    "id": "cel25-swshp140",
+    "name": "Pikachu V-UNION",
+    "number": "swshp140",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "300",
+    "image": "assets/cards/cel25/swshp140.webp",
+    "imageSmall": "assets/cards/cel25/swshp140-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Lightning Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Shocking Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Disconnect",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, they can't play any Item cards from their hand."
+      },
+      {
+        "name": "Electro Ball Together",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH140/large",
+    "printedNumber": "SWSH 140",
+    "tcgplayerId": 251096,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 6.44,
+    "foilMap": "assets/foil/maps/cel25/swshp140.webp"
+  },
+  {
+    "id": "cel25-swshp141",
+    "name": "Pikachu V-UNION",
+    "number": "swshp141",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "300",
+    "image": "assets/cards/cel25/swshp141.webp",
+    "imageSmall": "assets/cards/cel25/swshp141-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Lightning Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Shocking Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Disconnect",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, they can't play any Item cards from their hand."
+      },
+      {
+        "name": "Electro Ball Together",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH141/large",
+    "printedNumber": "SWSH 141",
+    "tcgplayerId": 251097,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 9.17,
+    "foilMap": "assets/foil/maps/cel25/swshp141.webp"
+  },
+  {
+    "id": "cel25-swshp142",
+    "name": "Pikachu V-UNION",
+    "number": "swshp142",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "300",
+    "image": "assets/cards/cel25/swshp142.webp",
+    "imageSmall": "assets/cards/cel25/swshp142-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Lightning Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Shocking Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Disconnect",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, they can't play any Item cards from their hand."
+      },
+      {
+        "name": "Electro Ball Together",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH142/large",
+    "printedNumber": "SWSH 142",
+    "tcgplayerId": 251098,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 8.25,
+    "foilMap": "assets/foil/maps/cel25/swshp142.webp"
+  },
+  {
+    "id": "cel25-swshp143",
+    "name": "Pikachu V",
+    "number": "swshp143",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "HYOGONOSUKE",
+    "image": "assets/cards/cel25/swshp143.webp",
+    "imageSmall": "assets/cards/cel25/swshp143-sm.webp",
+    "attacks": [
+      {
+        "name": "Volt Tackle",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH143/large",
+    "printedNumber": "SWSH 143",
+    "tcgplayerId": 251101,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 13.22,
+    "foilMap": "assets/foil/maps/cel25/swshp143.webp"
+  },
+  {
+    "id": "cel25-swshp144",
+    "name": "Greninja ★",
+    "number": "swshp144",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Star"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "130",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/cel25/swshp144.webp",
+    "imageSmall": "assets/cards/cel25/swshp144-sm.webp",
+    "attacks": [
+      {
+        "name": "Mist Slash",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack's damage isn't affected by Weakness or Resistance, or by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shadow Knife",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may put 1 damage counter on 1 of your opponent's Pokémon.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH144/large",
+    "printedNumber": "SWSH 144",
+    "tcgplayerId": 248731,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 19.66,
+    "foilMap": "assets/foil/maps/cel25/swshp144.webp"
+  },
+  {
+    "id": "cel25-swshp145",
+    "name": "Pikachu V",
+    "number": "swshp145",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/cel25/swshp145.webp",
+    "imageSmall": "assets/cards/cel25/swshp145-sm.webp",
+    "attacks": [
+      {
+        "name": "Volt Tackle",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH145/large",
+    "printedNumber": "SWSH 145",
+    "tcgplayerId": 251102,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Secret",
+    "market": 110.79,
+    "foilMap": "assets/foil/maps/cel25/swshp145.webp",
+    "etchMap": "assets/foil/maps/cel25/swshp145-etch.webp"
+  },
+  {
+    "id": "cel25-swshp146",
+    "name": "Poké Ball",
+    "number": "swshp146",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/cel25/swshp146.webp",
+    "imageSmall": "assets/cards/cel25/swshp146-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH146/large",
+    "printedNumber": "SWSH 146",
+    "tcgplayerId": 251103,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Secret",
+    "market": 49.89,
+    "foilMap": "assets/foil/maps/cel25/swshp146.webp",
+    "etchMap": "assets/foil/maps/cel25/swshp146-etch.webp"
   }
 ]

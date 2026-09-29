@@ -1748,6 +1748,37 @@ export const SV_PROMOS = {
 };
 
 /**
+ * Sword & Shield Black Star Promos. Like the SV Black Star Promos there is no
+ * booster: each card comes in a product that holds packs from several sets
+ * (a tin, a V box, a premium collection), sold with `from` naming those
+ * sets, or on its own at an event. The promos one set's own boxes carry (its
+ * ETB, Build & Battle Box and V boxes) stay filed under that set, and this
+ * page lists them too.
+ */
+export const SWSH_PROMOS = {
+  id: "swshp",
+  tcgId: "swshp",
+  name: "SWSH Black Star Promos",
+  edition: "Sword & Shield",
+  era: "Sword & Shield",
+  released: "November 15, 2019",
+  live: true,
+  promoSet: true,
+  promoPrefix: "SWSH ",
+  totalCount: 60,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/swshp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Sword & Shield, 2019 to 2023. The black star promos from tins, V boxes, premium collections and battle decks.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Sword & Shield black star promo that isn't in a set's own boxes: the tins, V boxes, premium and special collections, each with its real packs.",
+  slots: [],
+  heroIds: ["swshp-swshp261", "swshp-swshp262", "swshp-swshp005", "swshp-swshp121"],
+  wrappers: [],
+};
+
+/**
  * The Scarlet & Violet side sets: packs sold outside the expansions, filled
  * by print rather than by rarity (the `holo` and `plain` pools in
  * js/engine.js). Each card keeps the rarity symbol printed on it; `holo` says
@@ -1767,7 +1798,7 @@ export const CROWN_ZENITH = {
   released: "January 20, 2023",
   live: true,
   printedTotal: 159,
-  totalCount: 230,
+  totalCount: 249,
   packSize: 11,
   cost: 25.65,
   dataFile: "data/swsh12pt5.json",
@@ -1794,7 +1825,7 @@ export const SILVER_TEMPEST = {
   released: "November 11, 2022",
   live: true,
   printedTotal: 195,
-  totalCount: 245,
+  totalCount: 253,
   packSize: 11,
   cost: 15.05,
   dataFile: "data/swsh12.json",
@@ -1824,7 +1855,7 @@ export const LOST_ORIGIN = {
   released: "September 9, 2022",
   live: true,
   printedTotal: 196,
-  totalCount: 247,
+  totalCount: 256,
   packSize: 11,
   cost: 19.56,
   dataFile: "data/swsh11.json",
@@ -1854,7 +1885,7 @@ export const POKEMON_GO = {
   released: "July 1, 2022",
   live: true,
   printedTotal: 78,
-  totalCount: 88,
+  totalCount: 102,
   packSize: 11,
   cost: 14.5,
   dataFile: "data/pgo.json",
@@ -1881,7 +1912,7 @@ export const ASTRAL_RADIANCE = {
   released: "May 27, 2022",
   live: true,
   printedTotal: 189,
-  totalCount: 246,
+  totalCount: 254,
   packSize: 11,
   cost: 10.61,
   dataFile: "data/swsh10.json",
@@ -1912,7 +1943,7 @@ export const BRILLIANT_STARS = {
   released: "February 25, 2022",
   live: true,
   printedTotal: 172,
-  totalCount: 216,
+  totalCount: 229,
   packSize: 11,
   cost: 16.96,
   dataFile: "data/swsh9.json",
@@ -1942,7 +1973,7 @@ export const FUSION_STRIKE = {
   released: "November 12, 2021",
   live: true,
   printedTotal: 264,
-  totalCount: 284,
+  totalCount: 294,
   packSize: 11,
   cost: 18.83,
   dataFile: "data/swsh8.json",
@@ -1972,7 +2003,7 @@ export const CELEBRATIONS = {
   released: "October 8, 2021",
   live: true,
   printedTotal: 25,
-  totalCount: 50,
+  totalCount: 66,
   packSize: 4,
   cost: 33.85,
   dataFile: "data/cel25.json",
@@ -1999,7 +2030,7 @@ export const EVOLVING_SKIES = {
   released: "August 27, 2021",
   live: true,
   printedTotal: 203,
-  totalCount: 237,
+  totalCount: 258,
   packSize: 11,
   cost: 45.52,
   dataFile: "data/swsh7.json",
@@ -2029,7 +2060,7 @@ export const CHILLING_REIGN = {
   released: "June 18, 2021",
   live: true,
   printedTotal: 198,
-  totalCount: 233,
+  totalCount: 241,
   packSize: 11,
   cost: 12.52,
   dataFile: "data/swsh6.json",
@@ -2060,7 +2091,7 @@ export const BATTLE_STYLES = {
   released: "March 19, 2021",
   live: true,
   printedTotal: 163,
-  totalCount: 183,
+  totalCount: 196,
   packSize: 11,
   cost: 9.57,
   dataFile: "data/swsh5.json",
@@ -2090,7 +2121,7 @@ export const SHINING_FATES = {
   released: "February 19, 2021",
   live: true,
   printedTotal: 72,
-  totalCount: 195,
+  totalCount: 208,
   packSize: 11,
   cost: 16.44,
   dataFile: "data/swsh45.json",
@@ -2120,7 +2151,7 @@ export const VIVID_VOLTAGE = {
   released: "November 13, 2020",
   live: true,
   printedTotal: 185,
-  totalCount: 203,
+  totalCount: 213,
   packSize: 11,
   cost: 11.09,
   dataFile: "data/swsh4.json",
@@ -2150,7 +2181,7 @@ export const CHAMPIONS_PATH = {
   released: "September 25, 2020",
   live: true,
   printedTotal: 73,
-  totalCount: 80,
+  totalCount: 95,
   packSize: 11,
   cost: 19.54,
   dataFile: "data/swsh35.json",
@@ -2180,7 +2211,7 @@ export const DARKNESS_ABLAZE = {
   released: "August 14, 2020",
   live: true,
   printedTotal: 189,
-  totalCount: 201,
+  totalCount: 209,
   packSize: 11,
   cost: 9.85,
   dataFile: "data/swsh3.json",
@@ -2210,7 +2241,7 @@ export const REBEL_CLASH = {
   released: "May 1, 2020",
   live: true,
   printedTotal: 192,
-  totalCount: 209,
+  totalCount: 216,
   packSize: 11,
   cost: 12.28,
   dataFile: "data/swsh2.json",
@@ -2240,7 +2271,7 @@ export const SWORD_SHIELD = {
   released: "February 7, 2020",
   live: true,
   printedTotal: 202,
-  totalCount: 216,
+  totalCount: 225,
   packSize: 11,
   cost: 11.09,
   dataFile: "data/swsh1.json",
@@ -2264,7 +2295,7 @@ export const SWORD_SHIELD = {
 function printSlots(plain, holo = 1) {
   return [
     { pool: "plain", count: plain },
-    { pool: "holo", count: holo },
+    { pool: "printedHolo", count: holo },
   ];
 }
 
@@ -2415,6 +2446,7 @@ export const PLAYABLE_SETS = [
   DARKNESS_ABLAZE,
   REBEL_CLASH,
   SWORD_SHIELD,
+  SWSH_PROMOS,
   MCDONALDS_2024,
   TRICK_OR_TRADE_2024,
   MCDONALDS_2023,
@@ -2592,6 +2624,7 @@ const POKESYMBOLS_SLUG = {
   zsv10pt5: "black-bolt",
   rsv10pt5: "white-flare",
   svp: "_promo",
+  swshp: "_promo",
   sve: "scarlet-and-violet-energies",
   mcd23: "mcdonalds-collection-2023",
   mcd24: "mcdonalds-collection-dragon-discovery-2024",

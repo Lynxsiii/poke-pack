@@ -26,9 +26,131 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp240": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp241": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp242": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp243": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp244": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo"
+    },
+    "swshp245": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo"
+    },
+    "swshp246": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo"
+    },
+    "swshp247": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo"
+    },
+    "swshp252": {
+      "foilAs": "Rare Holo V"
+    }
+  },
+  "products": [
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 277336,
+      "packs": 10,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 277345,
+      "packs": 4,
+      "promos": [
+        "swshp240",
+        "swshp241",
+        "swshp242",
+        "swshp243"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "buildBattleStadium",
+      "name": "Build & Battle Stadium",
+      "kind": "battle",
+      "tcgplayerId": 277346,
+      "packs": 12,
+      "promos": [
+        "swshp240",
+        "swshp241",
+        "swshp242",
+        "swshp243"
+      ],
+      "pick": 2
+    },
+    {
+      "id": "regigigas-3-pack-blister",
+      "name": "Regigigas 3-Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 277329,
+      "packs": 3,
+      "promos": [
+        "swshp247"
+      ]
+    },
+    {
+      "id": "weavile-3-pack-blister",
+      "name": "Weavile 3-Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 277330,
+      "packs": 3,
+      "promos": [
+        "swshp246"
+      ]
+    },
+    {
+      "id": "croagunk-single-pack-blister",
+      "name": "Croagunk Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 277327,
+      "packs": 1,
+      "promos": [
+        "swshp245"
+      ]
+    },
+    {
+      "id": "scorbunny-single-pack-blister",
+      "name": "Scorbunny Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 277328,
+      "packs": 1,
+      "promos": [
+        "swshp244"
+      ]
+    },
+    {
+      "id": "infernape-v-box",
+      "name": "Infernape V Box",
+      "kind": "collection",
+      "tcgplayerId": 277568,
+      "packs": 4,
+      "promos": [
+        "swshp252"
+      ],
+      "tcgplayerGroup": 2374
+    }
+  ]
 }

@@ -7830,5 +7830,369 @@
     "imageRemote": "https://images.scrydex.com/pokemon/swsh6-233/large",
     "tcgplayerId": 241880,
     "market": 12.18
+  },
+  {
+    "id": "swsh6-swshp112",
+    "name": "Cinderace",
+    "number": "swshp112",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Single Strike"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "It's skilled at both offense and defense, and it gets pumped up when cheered on. But if it starts showboating, it could put itself in a tough spot.",
+    "evolvesFrom": "Raboot",
+    "image": "assets/cards/swsh6/swshp112.webp",
+    "imageSmall": "assets/cards/swsh6/swshp112-sm.webp",
+    "attacks": [
+      {
+        "name": "Fireball Shot",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Crisis Power",
+        "text": "This Pokémon's attacks do 30 more damage to your opponent's Active Pokémon for each Prize card your opponent has taken (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH112/large",
+    "printedNumber": "SWSH 112",
+    "tcgplayerId": 240891,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.1,
+    "foilMap": "assets/foil/maps/swsh6/swshp112.webp"
+  },
+  {
+    "id": "swsh6-swshp113",
+    "name": "Inteleon",
+    "number": "swshp113",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "AKIRA EGAWA",
+    "flavorText": "Its nictitating membranes let it pick out foes' weak points so it can precisely blast them with water that shoots from its fingertips at Mach 3.",
+    "evolvesFrom": "Drizzile",
+    "image": "assets/cards/swsh6/swshp113.webp",
+    "imageSmall": "assets/cards/swsh6/swshp113-sm.webp",
+    "attacks": [
+      {
+        "name": "Waterfall",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Quick Shooting",
+        "text": "Once during your turn, you may put 2 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH113/large",
+    "printedNumber": "SWSH 113",
+    "tcgplayerId": 240892,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.25,
+    "foilMap": "assets/foil/maps/swsh6/swshp113.webp"
+  },
+  {
+    "id": "swsh6-swshp114",
+    "name": "Cresselia",
+    "number": "swshp114",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Those who sleep holding Cresselia's feather are assured of joyful dreams. It is said to represent the crescent moon.",
+    "image": "assets/cards/swsh6/swshp114.webp",
+    "imageSmall": "assets/cards/swsh6/swshp114-sm.webp",
+    "attacks": [
+      {
+        "name": "Crescent Glow",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Psychic Energy card and attach it to 1 of your Pokémon. If you go second and it's your first turn, instead search for up to 3 Psychic Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Photon Laser",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30+",
+        "text": "If you have at least 5 Energy in play, this attack does 90 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH114/large",
+    "printedNumber": "SWSH 114",
+    "tcgplayerId": 240893,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.66,
+    "foilMap": "assets/foil/maps/swsh6/swshp114.webp"
+  },
+  {
+    "id": "swsh6-swshp115",
+    "name": "Passimian",
+    "number": "swshp115",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Teeziro",
+    "flavorText": "Passimian live in groups of about 20, with each member performing an assigned role. Through cooperation, the group survives.",
+    "image": "assets/cards/swsh6/swshp115.webp",
+    "imageSmall": "assets/cards/swsh6/swshp115-sm.webp",
+    "attacks": [
+      {
+        "name": "Fling",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Throwing Coach",
+        "text": "Your Rapid Strike Pokémon's attacks do 30 more damage to your opponent's Benched Pokémon V and Benched Pokémon-GX (before applying Weakness and Resistance). You can't apply more than 1 Throwing Coach Ability at a time.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH115/large",
+    "printedNumber": "SWSH 115",
+    "tcgplayerId": 240894,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.95,
+    "foilMap": "assets/foil/maps/swsh6/swshp115.webp"
+  },
+  {
+    "id": "swsh6-swshp116",
+    "name": "Morpeko",
+    "number": "swshp116",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Atsushi Furusawa",
+    "flavorText": "As it eats the seeds stored up in its pocket-like pouches, this Pokémon is not just satisfying its constant hunger. It's also generating electricity.",
+    "image": "assets/cards/swsh6/swshp116.webp",
+    "imageSmall": "assets/cards/swsh6/swshp116-sm.webp",
+    "attacks": [
+      {
+        "name": "Famished",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH116/large",
+    "printedNumber": "SWSH 116",
+    "tcgplayerId": 241881,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.36,
+    "foilMap": "assets/foil/maps/swsh6/swshp116.webp"
+  },
+  {
+    "id": "swsh6-swshp117",
+    "name": "Phanpy",
+    "number": "swshp117",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It is strong despite its compact size. It can easily pick up and carry an adult human on its back.",
+    "image": "assets/cards/swsh6/swshp117.webp",
+    "imageSmall": "assets/cards/swsh6/swshp117-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Strike Back",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH117/large",
+    "printedNumber": "SWSH 117",
+    "tcgplayerId": 241882,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.48,
+    "foilMap": "assets/foil/maps/swsh6/swshp117.webp"
+  },
+  {
+    "id": "swsh6-swshp118",
+    "name": "Eevee",
+    "number": "swshp118",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Yuu Nishida",
+    "flavorText": "It has the ability to alter the composition of its body to suit its surrounding environment.",
+    "image": "assets/cards/swsh6/swshp118.webp",
+    "imageSmall": "assets/cards/swsh6/swshp118-sm.webp",
+    "attacks": [
+      {
+        "name": "Signs of Evolution",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from Eevee, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Wild Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH118/large",
+    "printedNumber": "SWSH 118",
+    "tcgplayerId": 241883,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.74,
+    "foilMap": "assets/foil/maps/swsh6/swshp118.webp"
+  },
+  {
+    "id": "swsh6-swshp119",
+    "name": "Snorlax",
+    "number": "swshp119",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Single Strike"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "140",
+    "artist": "Yuya Oka",
+    "flavorText": "This Pokémon's stomach is so strong, even eating moldy or rotten food will not affect it.",
+    "image": "assets/cards/swsh6/swshp119.webp",
+    "imageSmall": "assets/cards/swsh6/swshp119-sm.webp",
+    "attacks": [
+      {
+        "name": "Slap Push",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Single Strike Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon also does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH119/large",
+    "printedNumber": "SWSH 119",
+    "tcgplayerId": 241884,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.21,
+    "foilMap": "assets/foil/maps/swsh6/swshp119.webp"
   }
 ]

@@ -1,0 +1,909 @@
+{
+  "id": "swshp",
+  "name": "SWSH Black Star Promos",
+  "series": "sword-shield",
+  "slug": "swsh-black-star-promos",
+  "scrydexId": "swshp",
+  "tcgplayerGroup": 2374,
+  "promoSeries": {
+    "swshp": {
+      "series": "sword-shield",
+      "slug": "swsh-black-star-promos",
+      "scrydex": "swshp",
+      "tcgplayerGroup": 2545,
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
+    }
+  },
+  "promoCards": {
+    "swshp004": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp005": {
+      "foilAs": "Rare Holo VMAX"
+    },
+    "swshp015": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp016": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp018": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp019": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp020": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp030": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp033": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp043": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp044": {
+      "foilAs": "Rare Ultra"
+    },
+    "swshp045": {
+      "foilAs": "Rare Holo VMAX"
+    },
+    "swshp076": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp077": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp104": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp105": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp110": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp120": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp121": {
+      "foilAs": "Rare Ultra"
+    },
+    "swshp130": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp131": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp153": {
+      "foilAs": "Rare Holo",
+      "notes": "Holiday Calendar stamped Pikachu"
+    },
+    "swshp213": {
+      "foilAs": "Rare Holo V",
+      "notes": "etched"
+    },
+    "swshp214": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched"
+    },
+    "swshp215": {
+      "foilAs": "Rare Holo V",
+      "notes": "V-UNION piece"
+    },
+    "swshp216": {
+      "foilAs": "Rare Holo V",
+      "notes": "V-UNION piece"
+    },
+    "swshp217": {
+      "foilAs": "Rare Holo V",
+      "notes": "V-UNION piece"
+    },
+    "swshp218": {
+      "foilAs": "Rare Holo V",
+      "notes": "V-UNION piece"
+    },
+    "swshp219": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp220": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo in the Chest, regular holo in the Bundle"
+    },
+    "swshp221": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo in the Chest, regular holo in the Bundle"
+    },
+    "swshp222": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo in the Chest, regular holo in the Bundle"
+    },
+    "swshp237": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp238": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp239": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp248": {
+      "foilAs": "Rare Ultra",
+      "notes": "etched full-art V"
+    },
+    "swshp249": {
+      "foilAs": "Rare Holo VSTAR"
+    },
+    "swshp250": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp253": {
+      "foilAs": "Rare Holo V",
+      "notes": "etched foil"
+    },
+    "swshp254": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched foil"
+    },
+    "swshp255": {
+      "foilAs": "Rare Holo V",
+      "notes": "etched foil"
+    },
+    "swshp256": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched foil"
+    },
+    "swshp257": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp258": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp259": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp260": {
+      "foilAs": "Rare Holo V",
+      "notes": "etched foil"
+    },
+    "swshp261": {
+      "foilAs": "Rare Holo VMAX",
+      "notes": "etched foil"
+    },
+    "swshp262": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched foil"
+    },
+    "swshp263": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp264": {
+      "foilAs": "Rare Holo VMAX",
+      "notes": "etched foil"
+    },
+    "swshp265": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched foil"
+    },
+    "swshp266": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp267": {
+      "foilAs": "Rare Holo VMAX",
+      "notes": "etched foil"
+    },
+    "swshp268": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched foil"
+    },
+    "swshp294": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp295": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp297": {
+      "foilAs": "Rare Holo V",
+      "notes": "etched foil"
+    },
+    "swshp298": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched foil"
+    },
+    "swshp306": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp307": {
+      "foilAs": "Rare Holo VSTAR"
+    }
+  },
+  "products": [
+    {
+      "id": "meowth-vmax-special-collection",
+      "name": "Meowth VMAX Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 205464,
+      "tcgplayerGroup": 2374,
+      "promos": [
+        "swshp004",
+        "swshp005"
+      ],
+      "note": "The real box also held 5 Sun & Moon and XY packs, which aren't on the site, so it opens as the promos alone."
+    },
+    {
+      "id": "zacian-v-legends-of-galar-tin",
+      "name": "Zacian V Legends of Galar Tin",
+      "kind": "tin",
+      "tcgplayerId": 214230,
+      "tcgplayerGroup": 2626,
+      "from": {
+        "swsh2": 2,
+        "swsh1": 1
+      },
+      "promos": [
+        "swshp018"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "zamazenta-v-legends-of-galar-tin",
+      "name": "Zamazenta V Legends of Galar Tin",
+      "kind": "tin",
+      "tcgplayerId": 214231,
+      "tcgplayerGroup": 2626,
+      "from": {
+        "swsh2": 2,
+        "swsh1": 1
+      },
+      "promos": [
+        "swshp019"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "pikachu-sword-shield-figure-collection",
+      "name": "Pikachu Sword & Shield Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 210566,
+      "tcgplayerGroup": 2626,
+      "from": {
+        "swsh2": 2,
+        "swsh1": 1
+      },
+      "promos": [
+        "swshp020"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "copperajah-v-box",
+      "name": "Copperajah V Box",
+      "kind": "collection",
+      "tcgplayerId": 214227,
+      "tcgplayerGroup": 2626,
+      "from": {
+        "swsh2": 2
+      },
+      "promos": [
+        "swshp030"
+      ]
+    },
+    {
+      "id": "galar-partners-box-cinderace-v",
+      "name": "Cinderace V Galar Partners Box",
+      "kind": "collection",
+      "tcgplayerId": 220750,
+      "tcgplayerGroup": 2585,
+      "from": {
+        "swsh1": 2
+      },
+      "promos": [
+        "swshp015"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "galar-partners-box-inteleon-v",
+      "name": "Inteleon V Galar Partners Box",
+      "kind": "collection",
+      "tcgplayerId": 220752,
+      "tcgplayerGroup": 2585,
+      "from": {
+        "swsh1": 2
+      },
+      "promos": [
+        "swshp016"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "galarian-sirfetchd-v-box",
+      "name": "Galarian Sirfetch'd V Box",
+      "kind": "collection",
+      "tcgplayerId": 220272,
+      "tcgplayerGroup": 2675,
+      "from": {
+        "swsh3": 2,
+        "swsh1": 1
+      },
+      "promos": [
+        "swshp043"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "eternatus-vmax-premium-collection",
+      "name": "Eternatus VMAX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 220277,
+      "tcgplayerGroup": 2675,
+      "from": {
+        "swsh3": 3,
+        "swsh1": 1
+      },
+      "promos": [
+        "swshp044",
+        "swshp045"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "true-steel-zacian-premium-collection",
+      "name": "True Steel Zacian Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 218839,
+      "tcgplayerGroup": 2675,
+      "from": {
+        "swsh3": 3,
+        "swsh1": 1
+      },
+      "promos": [
+        "swshp033"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "zacian-elite-trainer-box-plus",
+      "name": "Sword & Shield Elite Trainer Box Plus (Zacian)",
+      "kind": "etb",
+      "tcgplayerId": 222987,
+      "tcgplayerGroup": 2701,
+      "from": {
+        "swsh1": 3,
+        "swsh2": 3,
+        "swsh3": 3,
+        "swsh4": 3
+      },
+      "promos": [
+        "swshp076"
+      ]
+    },
+    {
+      "id": "zamazenta-elite-trainer-box-plus",
+      "name": "Sword & Shield Elite Trainer Box Plus (Zamazenta)",
+      "kind": "etb",
+      "tcgplayerId": 222986,
+      "tcgplayerGroup": 2701,
+      "from": {
+        "swsh1": 3,
+        "swsh2": 3,
+        "swsh3": 3,
+        "swsh4": 3
+      },
+      "promos": [
+        "swshp077"
+      ]
+    },
+    {
+      "id": "ice-rider-calyrex-v-box",
+      "name": "Ice Rider Calyrex V Box",
+      "kind": "collection",
+      "tcgplayerId": 240975,
+      "tcgplayerGroup": 2807,
+      "from": {
+        "swsh6": 2,
+        "swsh3": 1,
+        "swsh2": 1
+      },
+      "promos": [
+        "swshp130"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "shadow-rider-calyrex-v-box",
+      "name": "Shadow Rider Calyrex V Box",
+      "kind": "collection",
+      "tcgplayerId": 240977,
+      "tcgplayerGroup": 2807,
+      "from": {
+        "swsh6": 2,
+        "swsh3": 1,
+        "swsh2": 1
+      },
+      "promos": [
+        "swshp131"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "marnie-premium-tournament-collection",
+      "name": "Marnie Premium Tournament Collection",
+      "kind": "premium",
+      "tcgplayerId": 241093,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh6": 3,
+        "swsh5": 2,
+        "swsh4": 1,
+        "swsh3": 1
+      },
+      "promos": [
+        "swshp120",
+        "swshp121"
+      ]
+    },
+    {
+      "id": "trainers-toolkit-2021",
+      "name": "Trainer's Toolkit (2021)",
+      "kind": "premium",
+      "tcgplayerId": 241109,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh6": 2,
+        "swsh4": 1,
+        "swsh1": 1
+      },
+      "promos": [
+        "swshp110"
+      ]
+    },
+    {
+      "id": "victini-v-battle-deck",
+      "name": "Victini V Battle Deck",
+      "kind": "deck",
+      "tcgplayerId": 233356,
+      "tcgplayerGroup": 2374,
+      "promos": [
+        "swshp104"
+      ]
+    },
+    {
+      "id": "gardevoir-v-battle-deck",
+      "name": "Gardevoir V Battle Deck",
+      "kind": "deck",
+      "tcgplayerId": 233357,
+      "tcgplayerGroup": 2374,
+      "promos": [
+        "swshp105"
+      ]
+    },
+    {
+      "id": "hisuian-electrode-v-box",
+      "name": "Hisuian Electrode V Box",
+      "kind": "collection",
+      "tcgplayerId": 282721,
+      "tcgplayerGroup": 2906,
+      "from": {
+        "swsh9": 2,
+        "swsh10": 1,
+        "swsh11": 1
+      },
+      "promos": [
+        "swshp294"
+      ]
+    },
+    {
+      "id": "lucario-vstar-premium-collection",
+      "name": "Lucario VSTAR Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 262637,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh6": 1,
+        "swsh8": 3,
+        "swsh9": 2
+      },
+      "promos": [
+        "swshp213",
+        "swshp214"
+      ]
+    },
+    {
+      "id": "heavy-hitters-premium-collection",
+      "name": "Lucario V & Tyranitar V Heavy Hitters Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 279598,
+      "tcgplayerGroup": 3040,
+      "from": {
+        "swsh10": 4,
+        "swsh9": 4,
+        "swsh8": 4,
+        "swsh3": 2
+      },
+      "promos": [],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "spring-2022-collector-chest",
+      "name": "Spring 2022 Collector Chest",
+      "kind": "tin",
+      "tcgplayerId": 265252,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh9": 2,
+        "swsh8": 2,
+        "swsh7": 1
+      },
+      "promos": [
+        "swshp220",
+        "swshp221",
+        "swshp222"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "spring-2022-collector-bundle",
+      "name": "Spring 2022 Collector Bundle",
+      "kind": "collection",
+      "tcgplayerId": 261779,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh9": 3,
+        "swsh8": 2,
+        "swsh7": 2
+      },
+      "promos": [
+        "swshp220",
+        "swshp221",
+        "swshp222"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "trainers-toolkit-2022",
+      "name": "Trainer's Toolkit 2022",
+      "kind": "collection",
+      "tcgplayerId": 275938,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh7": 1,
+        "swsh9": 1,
+        "swsh10": 2
+      },
+      "promos": [
+        "swshp250"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "trainers-toolkit-2023",
+      "name": "Trainer's Toolkit 2023",
+      "kind": "collection",
+      "tcgplayerId": 497380,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh12": 1,
+        "sv1": 1,
+        "sv2": 2
+      },
+      "promos": [
+        "swshp306",
+        "swshp307"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "boltund-v-box",
+      "name": "Boltund V Box",
+      "kind": "collection",
+      "tcgplayerId": 262968,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh9": 2,
+        "swsh8": 1,
+        "swsh7": 1
+      },
+      "promos": [
+        "swshp219"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "morpeko-v-union-special-collection",
+      "name": "Morpeko V-UNION Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 262646,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh9": 2,
+        "swsh8": 1,
+        "swsh7": 1
+      },
+      "promos": [
+        "swshp215",
+        "swshp216",
+        "swshp217",
+        "swshp218"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "virizion-v-box",
+      "name": "Virizion V Box",
+      "kind": "collection",
+      "tcgplayerId": 280847,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh11": 1
+      },
+      "promos": [
+        "swshp295"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "hidden-potential-tin-rotom",
+      "name": "Hidden Potential Tin: Rotom V",
+      "kind": "tin",
+      "tcgplayerId": 281981,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh11": 2,
+        "swsh7": 2,
+        "swsh8": 1
+      },
+      "promos": [
+        "swshp257"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "hidden-potential-tin-gallade",
+      "name": "Hidden Potential Tin: Gallade V",
+      "kind": "tin",
+      "tcgplayerId": 281982,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh11": 2,
+        "swsh7": 2,
+        "swsh8": 1
+      },
+      "promos": [
+        "swshp258"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "hidden-potential-tin-giratina",
+      "name": "Hidden Potential Tin: Giratina V",
+      "kind": "tin",
+      "tcgplayerId": 281984,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh11": 2,
+        "swsh7": 2,
+        "swsh8": 1
+      },
+      "promos": [
+        "swshp259"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "divergent-powers-tin-samurott",
+      "name": "Divergent Powers Tin: Hisuian Samurott V",
+      "kind": "tin",
+      "tcgplayerId": 271939,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh7": 2
+      },
+      "promos": [
+        "swshp239"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "divergent-powers-tin-typhlosion",
+      "name": "Divergent Powers Tin: Hisuian Typhlosion V",
+      "kind": "tin",
+      "tcgplayerId": 271940,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh7": 2
+      },
+      "promos": [
+        "swshp237"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "divergent-powers-tin-decidueye",
+      "name": "Divergent Powers Tin: Hisuian Decidueye V",
+      "kind": "tin",
+      "tcgplayerId": 271941,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh7": 2
+      },
+      "promos": [
+        "swshp238"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "deoxys-vmax-vstar-battle-box",
+      "name": "Deoxys VMAX & VSTAR Battle Box",
+      "kind": "collection",
+      "tcgplayerId": 282002,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh11": 2,
+        "swsh10": 1,
+        "swsh9": 1
+      },
+      "promos": [
+        "swshp266",
+        "swshp267",
+        "swshp268"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "zeraora-vmax-vstar-battle-box",
+      "name": "Zeraora VMAX & VSTAR Battle Box",
+      "kind": "collection",
+      "tcgplayerId": 282003,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh11": 2,
+        "swsh10": 1,
+        "swsh9": 1
+      },
+      "promos": [
+        "swshp263",
+        "swshp264",
+        "swshp265"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "kleavor-vstar-premium-collection",
+      "name": "Kleavor VSTAR Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 270478,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh9": 2,
+        "swsh10": 2,
+        "swsh8": 2
+      },
+      "promos": [
+        "swshp248",
+        "swshp249"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "kleavor-vstar-special-collection",
+      "name": "Kleavor VSTAR Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 532560,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh10": 2,
+        "swsh9": 1,
+        "swsh8": 1
+      },
+      "promos": [
+        "swshp248",
+        "swshp249"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "holiday-calendar-2022",
+      "name": "Holiday Calendar 2022",
+      "kind": "collection",
+      "tcgplayerId": 282250,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh9": 2,
+        "swsh8": 2,
+        "swsh10": 2
+      },
+      "promos": [
+        "swshp153"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "origin-forme-dialga-vstar-premium-collection",
+      "name": "Origin Forme Dialga VSTAR Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 282000,
+      "tcgplayerGroup": 3118,
+      "from": {
+        "swsh11": 2,
+        "swsh10": 2,
+        "swsh8": 2
+      },
+      "promos": [
+        "swshp255",
+        "swshp256"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "origin-forme-palkia-vstar-premium-collection",
+      "name": "Origin Forme Palkia VSTAR Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 282001,
+      "tcgplayerGroup": 3118,
+      "from": {
+        "swsh11": 2,
+        "swsh10": 2,
+        "swsh8": 2
+      },
+      "promos": [
+        "swshp253",
+        "swshp254"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "hisuian-zoroark-vstar-premium-collection",
+      "name": "Hisuian Zoroark VSTAR Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 282402,
+      "tcgplayerGroup": 3118,
+      "from": {
+        "swsh11": 3,
+        "swsh9": 3
+      },
+      "promos": [
+        "swshp297",
+        "swshp298"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "sword-shield-ultra-premium-collection-charizard",
+      "name": "Sword & Shield Ultra-Premium Collection: Charizard",
+      "kind": "premium",
+      "tcgplayerId": 282401,
+      "tcgplayerGroup": 3118,
+      "from": {
+        "swsh3": 1,
+        "swsh4": 1,
+        "swsh7": 3,
+        "swsh8": 3,
+        "swsh9": 2,
+        "swsh10": 2,
+        "swsh6": 2,
+        "swsh5": 1,
+        "swsh11": 1
+      },
+      "promos": [
+        "swshp260",
+        "swshp261",
+        "swshp262"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    }
+  ]
+}

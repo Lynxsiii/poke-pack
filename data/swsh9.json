@@ -7749,5 +7749,596 @@
     "market": 4.06,
     "foilMap": "assets/foil/maps/swsh9/TG30.webp",
     "etchMap": "assets/foil/maps/swsh9/TG30-etch.webp"
+  },
+  {
+    "id": "swsh9-swshp185",
+    "name": "Moltres",
+    "number": "swshp185",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Shinji Kanda",
+    "flavorText": "It's one of the legendary bird Pokémon. When Moltres flaps its flaming wings, they glimmer with a dazzling red glow.",
+    "image": "assets/cards/swsh9/swshp185.webp",
+    "imageSmall": "assets/cards/swsh9/swshp185-sm.webp",
+    "attacks": [
+      {
+        "name": "Inferno Wings",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon has any damage counters on it, this attack does 70 more. This attack's damage isn't affected by Weakness."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH185/large",
+    "printedNumber": "SWSH 185",
+    "tcgplayerId": 264277,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 16.36,
+    "foilMap": "assets/foil/maps/swsh9/swshp185.webp"
+  },
+  {
+    "id": "swsh9-swshp186",
+    "name": "Lucario",
+    "number": "swshp186",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "NC Empire",
+    "flavorText": "It controls waves known as auras, which are powerful enough to pulverize huge rocks. It uses these waves to take down its prey.",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/swsh9/swshp186.webp",
+    "imageSmall": "assets/cards/swsh9/swshp186-sm.webp",
+    "attacks": [
+      {
+        "name": "Aura Sphere Volley",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "10+",
+        "text": "Discard all Fighting Energy from this Pokémon. This attack does 60 more damage for each card you discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Roaring Resolve",
+        "text": "Once during your turn, you may put 2 damage counters on this Pokémon. If you do, search your deck for a Fighting Energy card and attach it to this Pokémon. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH186/large",
+    "printedNumber": "SWSH 186",
+    "tcgplayerId": 264278,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.92,
+    "foilMap": "assets/foil/maps/swsh9/swshp186.webp"
+  },
+  {
+    "id": "swsh9-swshp187",
+    "name": "Liepard",
+    "number": "swshp187",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "saino misaki",
+    "flavorText": "Don't be fooled by its gorgeous fur and elegant figure. This is a moody and vicious Pokémon.",
+    "evolvesFrom": "Purrloin",
+    "image": "assets/cards/swsh9/swshp187.webp",
+    "imageSmall": "assets/cards/swsh9/swshp187-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Trade",
+        "text": "You must discard a card from your hand in order to use this Ability. Once during your turn, you may draw 2 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH187/large",
+    "printedNumber": "SWSH 187",
+    "tcgplayerId": 264279,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.22,
+    "foilMap": "assets/foil/maps/swsh9/swshp187.webp"
+  },
+  {
+    "id": "swsh9-swshp188",
+    "name": "Bibarel",
+    "number": "swshp188",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Misa Tsutsui",
+    "flavorText": "It makes its nest by damming streams with bark and mud. It is known as an industrious worker.",
+    "evolvesFrom": "Bidoof",
+    "image": "assets/cards/swsh9/swshp188.webp",
+    "imageSmall": "assets/cards/swsh9/swshp188-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Smash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Industrious Incisors",
+        "text": "Once during your turn, you may draw cards until you have 5 cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH188/large",
+    "printedNumber": "SWSH 188",
+    "tcgplayerId": 264280,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.16,
+    "foilMap": "assets/foil/maps/swsh9/swshp188.webp"
+  },
+  {
+    "id": "swsh9-swshp189",
+    "name": "Flapple",
+    "number": "swshp189",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "nagimiso",
+    "flavorText": "It flies on wings of apple skin and spits a powerful acid. It can also change its shape into that of an apple.",
+    "evolvesFrom": "Applin",
+    "image": "assets/cards/swsh9/swshp189.webp",
+    "imageSmall": "assets/cards/swsh9/swshp189-sm.webp",
+    "attacks": [
+      {
+        "name": "Flight Up",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Attach up to 3 basic Energy cards from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Corrosive Acid",
+        "cost": [
+          "Grass",
+          "Fire"
+        ],
+        "damage": "70",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH189/large",
+    "printedNumber": "SWSH 189",
+    "tcgplayerId": 264282,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.42,
+    "foilMap": "assets/foil/maps/swsh9/swshp189.webp"
+  },
+  {
+    "id": "swsh9-swshp190",
+    "name": "Eevee",
+    "number": "swshp190",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "OKACHEKE",
+    "flavorText": "Thanks to its unstable genetic makeup, this special Pokémon conceals many different possible evolutions.",
+    "image": "assets/cards/swsh9/swshp190.webp",
+    "imageSmall": "assets/cards/swsh9/swshp190-sm.webp",
+    "attacks": [
+      {
+        "name": "Be Prepared",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach a basic Energy card from your hand to this Pokémon."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH190/large",
+    "printedNumber": "SWSH 190",
+    "tcgplayerId": 264283,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.59,
+    "foilMap": "assets/foil/maps/swsh9/swshp190.webp"
+  },
+  {
+    "id": "swsh9-swshp191",
+    "name": "Leafeon",
+    "number": "swshp191",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "OKACHEKE",
+    "flavorText": "This Pokémon's tail is blade sharp, with a fantastic cutting edge that can slice right though large trees.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/swsh9/swshp191.webp",
+    "imageSmall": "assets/cards/swsh9/swshp191-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Guard",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Grass Knot",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 30 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH191/large",
+    "printedNumber": "SWSH 191",
+    "tcgplayerId": 264284,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.01,
+    "foilMap": "assets/foil/maps/swsh9/swshp191.webp"
+  },
+  {
+    "id": "swsh9-swshp192",
+    "name": "Glaceon",
+    "number": "swshp192",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "OKACHEKE",
+    "flavorText": "The coldness emanating from Glaceon causes powdery snow to form, making it quite a popular Pokémon at ski resorts.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/swsh9/swshp192.webp",
+    "imageSmall": "assets/cards/swsh9/swshp192-sm.webp",
+    "attacks": [
+      {
+        "name": "Hail",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Frosty Typhoon",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "During your next turn, this Pokémon can't use Frosty Typhoon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH192/large",
+    "printedNumber": "SWSH 192",
+    "tcgplayerId": 264285,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.9,
+    "foilMap": "assets/foil/maps/swsh9/swshp192.webp"
+  },
+  {
+    "id": "swsh9-swshp194",
+    "name": "Leafeon V",
+    "number": "swshp194",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "210",
+    "artist": "PLANETA Yamashita",
+    "image": "assets/cards/swsh9/swshp194.webp",
+    "imageSmall": "assets/cards/swsh9/swshp194-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Guard",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Slashing Strike",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your next turn, this Pokémon can't use Slashing Strike."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH194/large",
+    "printedNumber": "SWSH 194",
+    "tcgplayerId": 262563,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.65,
+    "foilMap": "assets/foil/maps/swsh9/swshp194.webp"
+  },
+  {
+    "id": "swsh9-swshp195",
+    "name": "Leafeon VSTAR",
+    "number": "swshp195",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Leafeon V",
+    "image": "assets/cards/swsh9/swshp195.webp",
+    "imageSmall": "assets/cards/swsh9/swshp195-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Guard",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ivy Star",
+        "text": "During your turn, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon. (You can't use more than 1 VSTAR Power in a game.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH195/large",
+    "printedNumber": "SWSH 195",
+    "tcgplayerId": 262566,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 2.66,
+    "foilMap": "assets/foil/maps/swsh9/swshp195.webp",
+    "etchMap": "assets/foil/maps/swsh9/swshp195-etch.webp"
+  },
+  {
+    "id": "swsh9-swshp196",
+    "name": "Glaceon V",
+    "number": "swshp196",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "PLANETA Yamashita",
+    "image": "assets/cards/swsh9/swshp196.webp",
+    "imageSmall": "assets/cards/swsh9/swshp196-sm.webp",
+    "attacks": [
+      {
+        "name": "Frost Charge",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Search your deck for a Water Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Freezing Wind",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH196/large",
+    "printedNumber": "SWSH 196",
+    "tcgplayerId": 262571,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.95,
+    "foilMap": "assets/foil/maps/swsh9/swshp196.webp"
+  },
+  {
+    "id": "swsh9-swshp197",
+    "name": "Glaceon VSTAR",
+    "number": "swshp197",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "260",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Glaceon V",
+    "image": "assets/cards/swsh9/swshp197.webp",
+    "imageSmall": "assets/cards/swsh9/swshp197-sm.webp",
+    "attacks": [
+      {
+        "name": "Icicle Shot",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Crystal Star",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "During your opponent's next turn, prevent all damage from and effects of attacks done to this Pokémon. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH197/large",
+    "printedNumber": "SWSH 197",
+    "tcgplayerId": 262569,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 3.36,
+    "foilMap": "assets/foil/maps/swsh9/swshp197.webp",
+    "etchMap": "assets/foil/maps/swsh9/swshp197-etch.webp"
+  },
+  {
+    "id": "swsh9-swshp204",
+    "name": "Arceus V",
+    "number": "swshp204",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "220",
+    "artist": "Atsushi Furusawa",
+    "image": "assets/cards/swsh9/swshp204.webp",
+    "imageSmall": "assets/cards/swsh9/swshp204-sm.webp",
+    "attacks": [
+      {
+        "name": "Trinity Charge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 basic Energy cards and attach them to your Pokémon V in any way you like. Then, shuffle your deck."
+      },
+      {
+        "name": "Power Edge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH204/large",
+    "printedNumber": "SWSH 204",
+    "tcgplayerId": 271837,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 24.14,
+    "foilMap": "assets/foil/maps/swsh9/swshp204.webp"
   }
 ]

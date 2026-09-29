@@ -8750,5 +8750,360 @@
     "imageRemote": "https://images.scrydex.com/pokemon/swsh12tg-TG30/large",
     "foilMap": "assets/foil/maps/swsh12/TG30.webp",
     "etchMap": "assets/foil/maps/swsh12/TG30-etch.webp"
+  },
+  {
+    "id": "swsh12-swshp269",
+    "name": "Sunflora",
+    "number": "swshp269",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It gets energy from warm sunlight and is known for its habit of moving in pursuit of it.",
+    "evolvesFrom": "Sunkern",
+    "image": "assets/cards/swsh12/swshp269.webp",
+    "imageSmall": "assets/cards/swsh12/swshp269-sm.webp",
+    "attacks": [
+      {
+        "name": "Bright Beam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "You may discard up to 3 Energy cards from your hand. This attack does 70 more damage for each card you discarded in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH269/large",
+    "printedNumber": "SWSH 269",
+    "tcgplayerId": 451844,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.12,
+    "foilMap": "assets/foil/maps/swsh12/swshp269.webp"
+  },
+  {
+    "id": "swsh12-swshp270",
+    "name": "Rapidash",
+    "number": "swshp270",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "aoki",
+    "flavorText": "This Pokémon can be seen galloping through fields at speeds of up to 150 mph, its fiery mane fluttering in the wind.",
+    "evolvesFrom": "Ponyta",
+    "image": "assets/cards/swsh12/swshp270.webp",
+    "imageSmall": "assets/cards/swsh12/swshp270-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Mane",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Heat Boost",
+        "text": "Once during your turn, you may discard a Fire Energy card from your hand in order to use this Ability. During this turn, your Fire Pokémon's attacks do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH270/large",
+    "printedNumber": "SWSH 270",
+    "tcgplayerId": 451845,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.76,
+    "foilMap": "assets/foil/maps/swsh12/swshp270.webp"
+  },
+  {
+    "id": "swsh12-swshp271",
+    "name": "Kirlia",
+    "number": "swshp271",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Taira Akitsu",
+    "flavorText": "If its Trainer becomes happy, it overflows with energy, dancing joyously while spinning about.",
+    "evolvesFrom": "Ralts",
+    "image": "assets/cards/swsh12/swshp271.webp",
+    "imageSmall": "assets/cards/swsh12/swshp271-sm.webp",
+    "attacks": [
+      {
+        "name": "Slap",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Refinement",
+        "text": "You must discard a card from your hand in order to use this Ability. Once during your turn, you may draw 2 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH271/large",
+    "printedNumber": "SWSH 271",
+    "tcgplayerId": 451846,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.08,
+    "foilMap": "assets/foil/maps/swsh12/swshp271.webp"
+  },
+  {
+    "id": "swsh12-swshp272",
+    "name": "Archeops",
+    "number": "swshp272",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "Nisota Niso",
+    "flavorText": "It needs a running start to take off. If Archeops wants to fly, it first needs to run nearly 25 mph, building speed over a course of about 2.5 miles.",
+    "evolvesFrom": "Archen",
+    "image": "assets/cards/swsh12/swshp272.webp",
+    "imageSmall": "assets/cards/swsh12/swshp272-sm.webp",
+    "attacks": [
+      {
+        "name": "Speed Wing",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Primal Turbo",
+        "text": "Once during your turn, you may search your deck for up to 2 Special Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH272/large",
+    "printedNumber": "SWSH 272",
+    "tcgplayerId": 451847,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.45,
+    "foilMap": "assets/foil/maps/swsh12/swshp272.webp"
+  },
+  {
+    "id": "swsh12-swshp273",
+    "name": "Hisuian Basculin",
+    "number": "swshp273",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Though it differs from other Basculin in several respects, including demeanor - this one is gentle - I have categorized it as a regional form given the vast array of shared qualities.",
+    "image": "assets/cards/swsh12/swshp273.webp",
+    "imageSmall": "assets/cards/swsh12/swshp273-sm.webp",
+    "attacks": [
+      {
+        "name": "Submerge Silently",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "You can use this attack only if you go second, and only during your first turn. During your opponent's next turn, prevent all damage done to this Pokémon by attacks."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH273/large",
+    "printedNumber": "SWSH 273",
+    "tcgplayerId": 454228,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.36,
+    "foilMap": "assets/foil/maps/swsh12/swshp273.webp"
+  },
+  {
+    "id": "swsh12-swshp274",
+    "name": "Cranidos",
+    "number": "swshp274",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "GIDORA",
+    "flavorText": "Its hard skull is its distinguishing feature. It snapped trees by headbutting them, and then it fed on their ripe berries.",
+    "evolvesFrom": "Unidentified Fossil",
+    "image": "assets/cards/swsh12/swshp274.webp",
+    "imageSmall": "assets/cards/swsh12/swshp274-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Stone Edge",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH274/large",
+    "printedNumber": "SWSH 274",
+    "tcgplayerId": 454227,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.36,
+    "foilMap": "assets/foil/maps/swsh12/swshp274.webp"
+  },
+  {
+    "id": "swsh12-swshp275",
+    "name": "Manaphy",
+    "number": "swshp275",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "NC Empire",
+    "flavorText": "It starts life with a wondrous power that permits it to bond with any kind of Pokémon.",
+    "image": "assets/cards/swsh12/swshp275.webp",
+    "imageSmall": "assets/cards/swsh12/swshp275-sm.webp",
+    "attacks": [
+      {
+        "name": "Pulling Currents",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals their hand. Put up to 2 Basic Pokémon you find there onto your opponent's Bench."
+      },
+      {
+        "name": "Aqua Bullet",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH275/large",
+    "printedNumber": "SWSH 275",
+    "tcgplayerId": 454226,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.05,
+    "foilMap": "assets/foil/maps/swsh12/swshp275.webp"
+  },
+  {
+    "id": "swsh12-swshp276",
+    "name": "Togetic",
+    "number": "swshp276",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Narumi Sato",
+    "flavorText": "They say that it will appear before kindhearted, caring people and shower them with happiness.",
+    "evolvesFrom": "Togepi",
+    "image": "assets/cards/swsh12/swshp276.webp",
+    "imageSmall": "assets/cards/swsh12/swshp276-sm.webp",
+    "attacks": [
+      {
+        "name": "Fairy Wind",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Voice of Happiness",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may heal 30 damage from your Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH276/large",
+    "printedNumber": "SWSH 276",
+    "tcgplayerId": 454225,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.51,
+    "foilMap": "assets/foil/maps/swsh12/swshp276.webp"
   }
 ]

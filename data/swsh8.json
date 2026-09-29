@@ -10264,5 +10264,452 @@
     "foilMap": "assets/foil/maps/swsh8/284.webp",
     "etchMap": "assets/foil/maps/swsh8/284-etch.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/swsh8-284/large"
+  },
+  {
+    "id": "swsh8-swshp154",
+    "name": "Dragonite V",
+    "number": "swshp154",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "230",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/swsh8/swshp154.webp",
+    "imageSmall": "assets/cards/swsh8/swshp154-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Dragon Gale",
+        "cost": [
+          "Water",
+          "Water",
+          "Lightning"
+        ],
+        "damage": "250",
+        "text": "This attack also does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH154/large",
+    "printedNumber": "SWSH 154",
+    "tcgplayerId": 247298,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 6.57,
+    "foilMap": "assets/foil/maps/swsh8/swshp154.webp"
+  },
+  {
+    "id": "swsh8-swshp168",
+    "name": "Oricorio",
+    "number": "swshp168",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Fusion Strike"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "otumami",
+    "flavorText": "This Oricorio has drunk red nectar. If its Trainer gives the wrong order, this passionate Pokémon becomes fiercely angry.",
+    "image": "assets/cards/swsh8/swshp168.webp",
+    "imageSmall": "assets/cards/swsh8/swshp168-sm.webp",
+    "attacks": [
+      {
+        "name": "Glistening Droplets",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 5 damage counters on your opponent's Pokémon in any way you like."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Lesson in Zeal",
+        "text": "All of your Fusion Strike Pokémon take 20 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance). You can't apply more than 1 Lesson in Zeal Ability at a time.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH168/large",
+    "printedNumber": "SWSH 168",
+    "tcgplayerId": 253404,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.8,
+    "foilMap": "assets/foil/maps/swsh8/swshp168.webp"
+  },
+  {
+    "id": "swsh8-swshp169",
+    "name": "Pyukumuku",
+    "number": "swshp169",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Narumi Sato",
+    "flavorText": "It's covered in a slime that keeps its skin moist, allowing it to stay on land for days without drying up.",
+    "image": "assets/cards/swsh8/swshp169.webp",
+    "imageSmall": "assets/cards/swsh8/swshp169-sm.webp",
+    "attacks": [
+      {
+        "name": "Knuckle Punch",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pitch a Pyukumuku",
+        "text": "Once during your turn, if this Pokémon is in your hand, you may reveal it and put it on the bottom of your deck. If you do, draw a card. You can't use more than 1 Pitch a Pyukumuku Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH169/large",
+    "printedNumber": "SWSH 169",
+    "tcgplayerId": 253405,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.82,
+    "foilMap": "assets/foil/maps/swsh8/swshp169.webp"
+  },
+  {
+    "id": "swsh8-swshp170",
+    "name": "Deoxys",
+    "number": "swshp170",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Fusion Strike",
+      "Single Strike",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "DNA from a space virus mutated and became a Pokémon. It appears where auroras are seen.",
+    "image": "assets/cards/swsh8/swshp170.webp",
+    "imageSmall": "assets/cards/swsh8/swshp170-sm.webp",
+    "attacks": [
+      {
+        "name": "Photon Boost",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon has any Fusion Strike Energy attached, this attack does 80 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH170/large",
+    "printedNumber": "SWSH 170",
+    "tcgplayerId": 253406,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.62,
+    "foilMap": "assets/foil/maps/swsh8/swshp170.webp"
+  },
+  {
+    "id": "swsh8-swshp171",
+    "name": "Latias",
+    "number": "swshp171",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Fusion Strike"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "takuyoa",
+    "flavorText": "It can telepathically communicate with people. It changes its appearance using its down that refracts light.",
+    "image": "assets/cards/swsh8/swshp171.webp",
+    "imageSmall": "assets/cards/swsh8/swshp171-sm.webp",
+    "attacks": [
+      {
+        "name": "Dyna Barrier",
+        "cost": [
+          "Fire",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon VMAX."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Red Assist",
+        "text": "Once during your turn, you may attach a Psychic Energy card from your hand to 1 of your Latios.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH171/large",
+    "printedNumber": "SWSH 171",
+    "tcgplayerId": 253407,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.84,
+    "foilMap": "assets/foil/maps/swsh8/swshp171.webp"
+  },
+  {
+    "id": "swsh8-swshp172",
+    "name": "Tepig",
+    "number": "swshp172",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Single Strike"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Eri Yamaki",
+    "flavorText": "It loves to eat roasted berries, but sometimes it gets too excited and burns them to a crisp.",
+    "image": "assets/cards/swsh8/swshp172.webp",
+    "imageSmall": "assets/cards/swsh8/swshp172-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH172/large",
+    "printedNumber": "SWSH 172",
+    "tcgplayerId": 253408,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.71,
+    "foilMap": "assets/foil/maps/swsh8/swshp172.webp"
+  },
+  {
+    "id": "swsh8-swshp173",
+    "name": "Blitzle",
+    "number": "swshp173",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Rapid Strike"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Oswaldo KATO",
+    "flavorText": "Its mane shines when it discharges electricity. They use the frequency and rhythm of these flashes to communicate.",
+    "image": "assets/cards/swsh8/swshp173.webp",
+    "imageSmall": "assets/cards/swsh8/swshp173-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Spear",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "This attack does 10 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH173/large",
+    "printedNumber": "SWSH 173",
+    "tcgplayerId": 253409,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.35,
+    "foilMap": "assets/foil/maps/swsh8/swshp173.webp"
+  },
+  {
+    "id": "swsh8-swshp174",
+    "name": "Espeon",
+    "number": "swshp174",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Tika Matsuno",
+    "flavorText": "It unleashes psychic power from the orb on its forehead. When its power is exhausted, the orb grows dull and dark.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/swsh8/swshp174.webp",
+    "imageSmall": "assets/cards/swsh8/swshp174-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Bolt",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 40 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH174/large",
+    "printedNumber": "SWSH 174",
+    "tcgplayerId": 253410,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 15.47,
+    "foilMap": "assets/foil/maps/swsh8/swshp174.webp"
+  },
+  {
+    "id": "swsh8-swshp175",
+    "name": "Eevee",
+    "number": "swshp175",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Tika Matsuno",
+    "flavorText": "Thanks to its unstable genetic makeup, this special Pokémon conceals many different possible evolutions.",
+    "image": "assets/cards/swsh8/swshp175.webp",
+    "imageSmall": "assets/cards/swsh8/swshp175-sm.webp",
+    "attacks": [
+      {
+        "name": "Be Prepared",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach a basic Energy card from your hand to this Pokémon."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH175/large",
+    "printedNumber": "SWSH 175",
+    "tcgplayerId": 253413,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.57,
+    "foilMap": "assets/foil/maps/swsh8/swshp175.webp"
+  },
+  {
+    "id": "swsh8-swshp176",
+    "name": "Hoopa V",
+    "number": "swshp176",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V",
+      "Fusion Strike"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "220",
+    "artist": "takuyoa",
+    "image": "assets/cards/swsh8/swshp176.webp",
+    "imageSmall": "assets/cards/swsh8/swshp176-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Impact",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "170",
+        "text": "Put 3 damage counters on 1 of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Two-Faced",
+        "text": "As long as this Pokémon is in play, it is Psychic and Darkness type.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH176/large",
+    "printedNumber": "SWSH 176",
+    "tcgplayerId": 253412,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.89,
+    "foilMap": "assets/foil/maps/swsh8/swshp176.webp"
   }
 ]

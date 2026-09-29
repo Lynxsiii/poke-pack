@@ -1289,7 +1289,7 @@ function renderPromoProducts() {
 function renderPromoElsewhere() {
   const block = els.promoElsewhere;
   if (!block) return;
-  const prefix = liveSet.promoSet ? `${String(liveSet.id).toUpperCase()} ` : "";
+  const prefix = liveSet.promoSet ? liveSet.promoPrefix || `${String(liveSet.id).toUpperCase()} ` : "";
   const groups = prefix
     ? PLAYABLE_SETS.filter((set) => set.id !== liveSet.id)
         .map((set) => ({

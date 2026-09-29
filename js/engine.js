@@ -164,7 +164,7 @@ export function poolsFrom(cards, set) {
     shinyUltra: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Ultra Rare"),
     // Trick or Trade and McDonald's packs are filled by print, not rarity:
     // a set number of holo cards, the rest non-holo (data/sets/<set>.json).
-    holo: pokemonOrTrainer.filter((c) => c.holo),
+    printedHolo: pokemonOrTrainer.filter((c) => c.holo),
     plain: pokemonOrTrainer.filter((c) => !c.holo),
     reversePool,
     pokeballPool,
@@ -222,7 +222,9 @@ export function ripPack(set, cards) {
       if (god?.length && GOD_SLOTS.has(slot.pool)) {
         pulls.push(god.shift());
       } else if (slot.pool === "rare-slot") {
-        pulls.push(pick(pools[rollTable(slot.table)], used));
+        // A set with none of the rolled print (Champion's Path prints no plain Rare) deals its holo.
+        const rolled = pools[rollTable(slot.table)];
+        pulls.push(pick(rolled?.length ? rolled : pools.holo, used));
       } else if (slot.pool === "art-slot") {
         const key = rollTable(slot.table);
         if (key === "reverse" || key === "pokeball" || key === "masterball") {

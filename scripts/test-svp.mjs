@@ -47,7 +47,7 @@ for(const offer of offers){
   else {
     assert.ok(offer.from,`${offer.id} names the sets its packs come from`);
     assert.equal(offer.packs,Object.values(offer.from).reduce((a,b)=>a+b,0));
-    for(const id of Object.keys(offer.from)) assert.match(id,/^(sv\d+(pt5)?|me\d+)$/,`${offer.id}: ${id} is a Scarlet & Violet or Mega Evolution set`);
+    for(const id of Object.keys(offer.from)) assert.match(id,/^(sv\d+(pt5)?|me\d+|swsh\d+(pt5)?)$/,`${offer.id}: ${id} is a Scarlet & Violet, Sword & Shield or Mega Evolution set`);
     if(!offer.image) assert.fail(`${offer.id} has a box photo`);
     else assert.ok(existsSync(new URL(offer.image,root)),`${offer.image} exists`);
   }

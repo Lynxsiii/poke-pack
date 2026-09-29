@@ -8576,5 +8576,1266 @@
     "tcgplayerId": 246812,
     "market": 11.69,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh7-237/large"
+  },
+  {
+    "id": "swsh7-swshp122",
+    "name": "Flaaffy",
+    "number": "swshp122",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Pani Kobayashi",
+    "flavorText": "It stores electricity in its fluffy fleece. If it stores up too much, it will start to go bald in those patches.",
+    "evolvesFrom": "Mareep",
+    "image": "assets/cards/swsh7/swshp122.webp",
+    "imageSmall": "assets/cards/swsh7/swshp122-sm.webp",
+    "attacks": [
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dynamotor",
+        "text": "Once during your turn (before your attack), you may attach a Lightning Energy card from your discard pile to 1 of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH122/large",
+    "printedNumber": "SWSH 122",
+    "tcgplayerId": 246931,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.41,
+    "foilMap": "assets/foil/maps/swsh7/swshp122.webp"
+  },
+  {
+    "id": "swsh7-swshp123",
+    "name": "Galarian Articuno",
+    "number": "swshp123",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Known as Articuno, this Pokémon fires beams that can immobilize opponents as if they had been frozen solid.",
+    "image": "assets/cards/swsh7/swshp123.webp",
+    "imageSmall": "assets/cards/swsh7/swshp123-sm.webp",
+    "attacks": [
+      {
+        "name": "Psylaser",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Psychic Energy from this Pokémon. This attack does 120 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cruel Charge",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may attach up to 2 Psychic Energy cards from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH123/large",
+    "printedNumber": "SWSH 123",
+    "tcgplayerId": 246927,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 10.47,
+    "foilMap": "assets/foil/maps/swsh7/swshp123.webp"
+  },
+  {
+    "id": "swsh7-swshp124",
+    "name": "Galarian Zapdos",
+    "number": "swshp124",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Oswaldo KATO",
+    "flavorText": "One kick from its powerful legs will pulverize a dump truck. Supposedly, this Pokémon runs through the mountains at over 180 mph.",
+    "image": "assets/cards/swsh7/swshp124.webp",
+    "imageSmall": "assets/cards/swsh7/swshp124-sm.webp",
+    "attacks": [
+      {
+        "name": "Zapper Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "You may discard all Energy from this Pokémon. If you do, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Strong Legs Charge",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may attach up to 2 Fighting Energy cards from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH124/large",
+    "printedNumber": "SWSH 124",
+    "tcgplayerId": 246933,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 10.29,
+    "foilMap": "assets/foil/maps/swsh7/swshp124.webp"
+  },
+  {
+    "id": "swsh7-swshp125",
+    "name": "Galarian Moltres",
+    "number": "swshp125",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "KEIICHIRO ITO",
+    "flavorText": "The sinister aura that blazes like molten fire around this Pokémon is what inspired the name Moltres.",
+    "image": "assets/cards/swsh7/swshp125.webp",
+    "imageSmall": "assets/cards/swsh7/swshp125-sm.webp",
+    "attacks": [
+      {
+        "name": "Fiery Wrath",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 50 more damage for each Prize card your opponent has taken."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Malevolent Charge",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may attach up to 2 Darkness Energy cards from your hand to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH125/large",
+    "printedNumber": "SWSH 125",
+    "tcgplayerId": 246929,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 13.89,
+    "foilMap": "assets/foil/maps/swsh7/swshp125.webp"
+  },
+  {
+    "id": "swsh7-swshp126",
+    "name": "Galarian Slowpoke",
+    "number": "swshp126",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "sowsow",
+    "flavorText": "Because Galarian Slowpoke eat the seeds of a plant that grows only in Galar, their tails have developed a spicy flavor.",
+    "image": "assets/cards/swsh7/swshp126.webp",
+    "imageSmall": "assets/cards/swsh7/swshp126-sm.webp",
+    "attacks": [
+      {
+        "name": "Everyone Laze Around",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 10 damage from each of your Pokémon."
+      },
+      {
+        "name": "Tail Whap",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH126/large",
+    "printedNumber": "SWSH 126",
+    "tcgplayerId": 247290,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 6.92,
+    "foilMap": "assets/foil/maps/swsh7/swshp126.webp"
+  },
+  {
+    "id": "swsh7-swshp127",
+    "name": "Eevee",
+    "number": "swshp127",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "Thanks to its unstable genetic makeup, this special Pokémon conceals many different possible evolutions.",
+    "image": "assets/cards/swsh7/swshp127.webp",
+    "imageSmall": "assets/cards/swsh7/swshp127-sm.webp",
+    "attacks": [
+      {
+        "name": "Be Prepared",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach a basic Energy card from your hand to this Pokémon."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH127/large",
+    "printedNumber": "SWSH 127",
+    "tcgplayerId": 247291,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.56,
+    "foilMap": "assets/foil/maps/swsh7/swshp127.webp"
+  },
+  {
+    "id": "swsh7-swshp128",
+    "name": "Eiscue",
+    "number": "swshp128",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "kirisAki",
+    "flavorText": "This Pokémon keeps its heat-sensitive head cool with ice. It fishes for its food, dangling its single hair into the sea to lure in prey.",
+    "image": "assets/cards/swsh7/swshp128.webp",
+    "imageSmall": "assets/cards/swsh7/swshp128-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Bonus",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Discard a Water Energy card from your hand. If you do, draw 3 cards."
+      },
+      {
+        "name": "Headbutt Bounce",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH128/large",
+    "printedNumber": "SWSH 128",
+    "tcgplayerId": 247292,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.63,
+    "foilMap": "assets/foil/maps/swsh7/swshp128.webp"
+  },
+  {
+    "id": "swsh7-swshp129",
+    "name": "Umbreon",
+    "number": "swshp129",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "On the night of a full moon, or when it gets excited, the ring patterns on its body glow yellow.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/swsh7/swshp129.webp",
+    "imageSmall": "assets/cards/swsh7/swshp129-sm.webp",
+    "attacks": [
+      {
+        "name": "Blindside",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "This attack does 60 damage to 1 of your opponent's Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Moon Mirage",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH129/large",
+    "printedNumber": "SWSH 129",
+    "tcgplayerId": 247294,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 19.67,
+    "foilMap": "assets/foil/maps/swsh7/swshp129.webp"
+  },
+  {
+    "id": "swsh7-swshp155",
+    "name": "Greninja V-UNION",
+    "number": "swshp155",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "Shin Nagasawa",
+    "image": "assets/cards/swsh7/swshp155.webp",
+    "imageSmall": "assets/cards/swsh7/swshp155-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Water Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Twister Shuriken",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Waterfall Blind",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ninja Body",
+        "text": "Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.",
+        "type": "Ability"
+      },
+      {
+        "name": "Antidote Jutsu",
+        "text": "This Pokémon can't be Poisoned.",
+        "type": "Ability"
+      },
+      {
+        "name": "Feel the Way",
+        "text": "Once during your turn, you may have your opponent reveal their hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH155/large",
+    "printedNumber": "SWSH 155",
+    "tcgplayerId": 248887,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 5.93,
+    "foilMap": "assets/foil/maps/swsh7/swshp155.webp"
+  },
+  {
+    "id": "swsh7-swshp156",
+    "name": "Greninja V-UNION",
+    "number": "swshp156",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "Shin Nagasawa",
+    "image": "assets/cards/swsh7/swshp156.webp",
+    "imageSmall": "assets/cards/swsh7/swshp156-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Water Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Twister Shuriken",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Waterfall Blind",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ninja Body",
+        "text": "Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.",
+        "type": "Ability"
+      },
+      {
+        "name": "Antidote Jutsu",
+        "text": "This Pokémon can't be Poisoned.",
+        "type": "Ability"
+      },
+      {
+        "name": "Feel the Way",
+        "text": "Once during your turn, you may have your opponent reveal their hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH156/large",
+    "printedNumber": "SWSH 156",
+    "tcgplayerId": 248888,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 6.17,
+    "foilMap": "assets/foil/maps/swsh7/swshp156.webp"
+  },
+  {
+    "id": "swsh7-swshp157",
+    "name": "Greninja V-UNION",
+    "number": "swshp157",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "Shin Nagasawa",
+    "image": "assets/cards/swsh7/swshp157.webp",
+    "imageSmall": "assets/cards/swsh7/swshp157-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Water Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Twister Shuriken",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Waterfall Blind",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ninja Body",
+        "text": "Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.",
+        "type": "Ability"
+      },
+      {
+        "name": "Antidote Jutsu",
+        "text": "This Pokémon can't be Poisoned.",
+        "type": "Ability"
+      },
+      {
+        "name": "Feel the Way",
+        "text": "Once during your turn, you may have your opponent reveal their hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH157/large",
+    "printedNumber": "SWSH 157",
+    "tcgplayerId": 248889,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 11.95,
+    "foilMap": "assets/foil/maps/swsh7/swshp157.webp"
+  },
+  {
+    "id": "swsh7-swshp158",
+    "name": "Greninja V-UNION",
+    "number": "swshp158",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "300",
+    "artist": "Shin Nagasawa",
+    "image": "assets/cards/swsh7/swshp158.webp",
+    "imageSmall": "assets/cards/swsh7/swshp158-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Water Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Twister Shuriken",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Waterfall Blind",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ninja Body",
+        "text": "Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.",
+        "type": "Ability"
+      },
+      {
+        "name": "Antidote Jutsu",
+        "text": "This Pokémon can't be Poisoned.",
+        "type": "Ability"
+      },
+      {
+        "name": "Feel the Way",
+        "text": "Once during your turn, you may have your opponent reveal their hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH158/large",
+    "printedNumber": "SWSH 158",
+    "tcgplayerId": 248890,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 7.79,
+    "foilMap": "assets/foil/maps/swsh7/swshp158.webp"
+  },
+  {
+    "id": "swsh7-swshp159",
+    "name": "Mewtwo V-UNION",
+    "number": "swshp159",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "310",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/swsh7/swshp159.webp",
+    "imageSmall": "assets/cards/swsh7/swshp159-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Psychic Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Super Regeneration",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 200 damage from this Pokémon."
+      },
+      {
+        "name": "Psysplosion",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 16 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Final Burn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Photon Barrier",
+        "text": "Prevent all effects of attacks from your opponent's Pokémon done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH159/large",
+    "printedNumber": "SWSH 159",
+    "tcgplayerId": 248891,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 10.43,
+    "foilMap": "assets/foil/maps/swsh7/swshp159.webp"
+  },
+  {
+    "id": "swsh7-swshp160",
+    "name": "Mewtwo V-UNION",
+    "number": "swshp160",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "300",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/swsh7/swshp160.webp",
+    "imageSmall": "assets/cards/swsh7/swshp160-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Psychic Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Super Regeneration",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 200 damage from this Pokémon."
+      },
+      {
+        "name": "Psysplosion",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 16 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Final Burn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Photon Barrier",
+        "text": "Prevent all effects of attacks from your opponent's Pokémon done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH160/large",
+    "printedNumber": "SWSH 160",
+    "tcgplayerId": 248892,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 17.69,
+    "foilMap": "assets/foil/maps/swsh7/swshp160.webp"
+  },
+  {
+    "id": "swsh7-swshp161",
+    "name": "Mewtwo V-UNION",
+    "number": "swshp161",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "300",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/swsh7/swshp161.webp",
+    "imageSmall": "assets/cards/swsh7/swshp161-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Psychic Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Super Regeneration",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 200 damage from this Pokémon."
+      },
+      {
+        "name": "Psysplosion",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 16 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Final Burn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Photon Barrier",
+        "text": "Prevent all effects of attacks from your opponent's Pokémon done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH161/large",
+    "printedNumber": "SWSH 161",
+    "tcgplayerId": 248893,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 10.83,
+    "foilMap": "assets/foil/maps/swsh7/swshp161.webp"
+  },
+  {
+    "id": "swsh7-swshp162",
+    "name": "Mewtwo V-UNION",
+    "number": "swshp162",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "300",
+    "artist": "AKIRA EGAWA",
+    "image": "assets/cards/swsh7/swshp162.webp",
+    "imageSmall": "assets/cards/swsh7/swshp162-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Psychic Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Super Regeneration",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 200 damage from this Pokémon."
+      },
+      {
+        "name": "Psysplosion",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 16 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Final Burn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Photon Barrier",
+        "text": "Prevent all effects of attacks from your opponent's Pokémon done to this Pokémon. (Damage is not an effect.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH162/large",
+    "printedNumber": "SWSH 162",
+    "tcgplayerId": 248894,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 11.82,
+    "foilMap": "assets/foil/maps/swsh7/swshp162.webp"
+  },
+  {
+    "id": "swsh7-swshp163",
+    "name": "Zacian V-UNION",
+    "number": "swshp163",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "320",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swsh7/swshp163.webp",
+    "imageSmall": "assets/cards/swsh7/swshp163-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Metal Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Dance of the Crowned Sword",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 150 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Steel Cut",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": ""
+      },
+      {
+        "name": "Master Blade",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "340",
+        "text": "Discard 3 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH163/large",
+    "printedNumber": "SWSH 163",
+    "tcgplayerId": 247364,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.9,
+    "foilMap": "assets/foil/maps/swsh7/swshp163.webp"
+  },
+  {
+    "id": "swsh7-swshp164",
+    "name": "Zacian V-UNION",
+    "number": "swshp164",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "320",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swsh7/swshp164.webp",
+    "imageSmall": "assets/cards/swsh7/swshp164-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Metal Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Dance of the Crowned Sword",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 150 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Steel Cut",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": ""
+      },
+      {
+        "name": "Master Blade",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "340",
+        "text": "Discard 3 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH164/large",
+    "printedNumber": "SWSH 164",
+    "tcgplayerId": 247365,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 3.08,
+    "foilMap": "assets/foil/maps/swsh7/swshp164.webp"
+  },
+  {
+    "id": "swsh7-swshp165",
+    "name": "Zacian V-UNION",
+    "number": "swshp165",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "320",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swsh7/swshp165.webp",
+    "imageSmall": "assets/cards/swsh7/swshp165-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Metal Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Dance of the Crowned Sword",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 150 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Steel Cut",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": ""
+      },
+      {
+        "name": "Master Blade",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "340",
+        "text": "Discard 3 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH165/large",
+    "printedNumber": "SWSH 165",
+    "tcgplayerId": 247366,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 3.05,
+    "foilMap": "assets/foil/maps/swsh7/swshp165.webp"
+  },
+  {
+    "id": "swsh7-swshp166",
+    "name": "Zacian V-UNION",
+    "number": "swshp166",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "320",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swsh7/swshp166.webp",
+    "imageSmall": "assets/cards/swsh7/swshp166-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Metal Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Dance of the Crowned Sword",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 150 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Steel Cut",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": ""
+      },
+      {
+        "name": "Master Blade",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "340",
+        "text": "Discard 3 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH166/large",
+    "printedNumber": "SWSH 166",
+    "tcgplayerId": 247367,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 5.72,
+    "foilMap": "assets/foil/maps/swsh7/swshp166.webp"
+  },
+  {
+    "id": "swsh7-swshp167",
+    "name": "Professor Burnet",
+    "number": "swshp167",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ryuta Fuse",
+    "image": "assets/cards/swsh7/swshp167.webp",
+    "imageSmall": "assets/cards/swsh7/swshp167-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH167/large",
+    "printedNumber": "SWSH 167",
+    "tcgplayerId": 247299,
+    "era": "swsh",
+    "promo": true,
+    "market": 0.29
   }
 ]

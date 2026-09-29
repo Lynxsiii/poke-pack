@@ -19,9 +19,104 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp006": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp007": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp008": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp009": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp010": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp011": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp012": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp031": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp032": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 206040,
+      "packs": 4,
+      "promos": [
+        "swshp006",
+        "swshp007",
+        "swshp008",
+        "swshp009"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "gossifleur-single-pack-blister",
+      "name": "Gossifleur Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 206032,
+      "packs": 1,
+      "promos": [
+        "swshp010"
+      ]
+    },
+    {
+      "id": "wooloo-single-pack-blister",
+      "name": "Wooloo Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 206031,
+      "packs": 1,
+      "promos": [
+        "swshp011"
+      ]
+    },
+    {
+      "id": "morpeko-3-pack-blister",
+      "name": "Morpeko 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 206029,
+      "packs": 3,
+      "promos": [
+        "swshp012"
+      ]
+    },
+    {
+      "id": "morpeko-pin-collection",
+      "name": "Morpeko Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 210577,
+      "packs": 3,
+      "promos": [
+        "swshp031"
+      ]
+    },
+    {
+      "id": "snorlax-pin-collection",
+      "name": "Snorlax Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 210576,
+      "packs": 3,
+      "promos": [
+        "swshp032"
+      ]
+    }
+  ]
 }
