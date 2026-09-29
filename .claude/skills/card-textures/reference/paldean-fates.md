@@ -183,3 +183,33 @@ and carry their own `etchSoft`.
 - **Stamped promo prints** (Premium Collection stamps) are filed under
   TCGplayer's Miscellaneous group 2374; `build_products.py` now takes a
   per-promo `tcgplayerGroup`.
+
+## Why the shinies are not on Shining Fates' `sf-shiny` recipe (2026-09-29)
+
+Shining Fates' Shiny Vault was rebuilt on 2026-09-29 (PR #86,
+[sword-shield.md](sword-shield.md)) as a port of upstream's shiny recipes
+over TCG Live's native 733 px etch, and the same recipe was tried here on
+Oddish 92, Murkrow 181, Pikachu 131, Forretress ex 212 and Gardevoir ex
+217 (`foil-holo sf-shiny` / `foil-ex sf-shiny sf-v`, `etchHd` from
+`scripts/make_etch_hd.py`). It does not carry over: the art window blew
+to paper and the rings vanished. Two reasons, both in the print's data,
+not the recipe:
+
+- The Paldean Fates scans have a WHITE window where the Shining Fates
+  scans show the silver as grey (the pitfall "Silver on a white scan must
+  darken it" in SKILL.md). `sf-shiny` is a colour-dodge group over the
+  scan, and a dodge leaves white white; the soft-lit etch inside the group
+  cannot darken the base either. `.foil-shiny` multiplies its
+  pointer-centred silver ramp onto the scan first, which is why it works.
+- TCG Live's Paldean Fates maps are full strength over the whole window,
+  Pokémon included (131: p50 0.99; SV093: 0.86 with the Pokémon cut
+  lower), so the dodge also washed Pikachu's orange, which the photo keeps
+  saturated (`shiny-rare_131-pikachu_inhand-*`).
+
+So the Paldean Fates shinies (and the promos filed as Shiny Rare / Shiny
+Ultra Rare) stay on `.foil-shiny`. If they are ever moved, the recipe
+needs the multiply silver ramp under the dodge group and a per-card
+attenuation of the map over the Pokémon; the native etch is cached in
+`lab/cache/sv4pt5/` for all 149 (fetched 2026-09-29) and
+`make_etch_hd.py --set sv4pt5 --rarity "Shiny Rare,Shiny Ultra Rare"
+--write-data` ships it in one go.
