@@ -515,6 +515,30 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
   opacity: 0.35;
 }
 
+/* ---- Reverse holo: the chevron sheet, deeper ---------------------------------
+   sv-reverse.css lights the sheet with a colour-dodge at brightness 0.55,
+   which on a yellow or orange print lifted the chevrons to a pale wash
+   (Pikachu SIT 49 beside poke-holo.simey.me, 2026-09-29: the real card is a
+   deeper gold with the chevrons darker than the ground). Less light in, more
+   contrast out. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-reverse.rev-swsh.rev-sv .foil {
+  filter: brightness(0.42) contrast(1.6) saturate(1.1);
+}
+
+/* ---- Plain cards: a glare that reads -------------------------------------------
+   base.css leaves a non-foil card a faint varnish (0.5 white); poke-holo.simey.me
+   gives the same card the standard overlay glare, a visible lift under the
+   pointer. Whites as the standard glare, the dark end kept at 0.3 so the
+   thumb pose does not shade the card. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-none.era-swsh .glare {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%,
+    hsla(0, 0%, 100%, 0.65) 20%,
+    hsla(0, 0%, 0%, 0.3) 90%
+  );
+}
+
 /* ---- Whole-card foil: no edge to the map ------------------------------------
    A V or full art is foil edge to edge, silver frame included, but TCG
    Live's map shades the frame and the copyright band dark, so under the

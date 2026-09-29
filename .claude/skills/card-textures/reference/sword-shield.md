@@ -154,16 +154,48 @@ art out at 30:25.
 
 ## Benchmark: poke-holo.simey.me (2026-09-29)
 
-Noah asked that ours "look the same if not better than that site". Every
-SWSH finish was rendered next to the demo, same card, tilts 30:25 and
-75:65 (sheet in /mnt/project-files/sword-shield/simey-compare/). Only the
-regular V fell short (dim between the tinsel bars, small lit pool): #84
-widened the lit bars, raised the V foil's base brightness/saturation and
-opened `--v-light`. Keep the realism rules on top of the benchmark: their
-full arts wash the whole card in one tile; ours follow the print's map.
-Re-run the comparison with `scratchpad g/simey-shots.mjs` style shots
-(their demo opens a card on click; click `.card__rotator` again to close)
-when a recipe changes.
+Noah asked that ours "look the same if not better than that site". The
+first pass (#84) only looked at the regular V and called everything else
+matched; that was wrong. The coordinator's independent benchmark
+(/mnt/project-files/holo-benchmark/index.md) found the full-art family
+worse, and a second pass fixed it (#92, #93 and the follow-up). What the
+comparison taught, in the order it mattered:
+
+- **Texture first.** The `-etch-v3` maps (400 px, blurred, grained) read as
+  camouflage blotches beside the demo's fine engraved lines. `-etch-v4`
+  is TCG Live's native etch (733x1024, swsh1-3 367x512), blur sigma 0.6,
+  no grain (`scripts/native_era_etch.py`). Cards with no cached Live etch
+  stay on v3.
+- **Then the veil.** sv-fullart.css's hard-light glare runs at the card's
+  full opacity; over a saturated painting that is a milky wash at one tilt
+  (VSTAR, alt arts). About half strength, and the VSTAR and full-art
+  Trainer set their own.
+- **The etched twin.** `.foil::before` (the etch-masked copy of the stack)
+  covers most of a painted Pokemon once the etch is native, and turned a
+  pink mouth magenta then yellow-green. It runs at 35%, except on the
+  full-art Trainer, where it is the brushed streak and stays whole.
+- **Colour per finish.** VMAX and full-art V filters: brightness
+  `p*0.4+0.4`, contrast 2, saturate 0.85. Amazing Rare needs the opposite
+  (saturate 2.8, contrast 2.7, overlay sheen): its window is the loudest
+  foil of the era. Radiant is silver with a hint of colour (saturate
+  0.35, closing `contrast(0.8)`); at full saturation colour-dodge turned
+  the Pokemon purple and the text green.
+- **Small ones.** Reverse holo deeper (brightness 0.42, contrast 1.6),
+  plain-card glare as the standard overlay glare (dark end 0.3), Crown
+  Zenith's showcase Pikachu (`swsh12pt5-160`, filed "Rare Secret") routed
+  to the rainbow recipe instead of the gold one.
+- **Not changed, on purpose.** Professor's Research swsh45-60 is a plain
+  Rare in the pack; the cosmos holo is a Theme Deck exclusive, so the pack
+  copy is correct as filed. Holo Rare's white art window at tilt 1 is on the
+  demo too.
+
+To re-run: `simey-shots.mjs`-style captures (their demo opens a card on
+click at `.card__rotator`; Trainer Gallery cards are set `swsh11tg`, number
+`tg16`), ours through `foil_probe.mjs` (`cards=r49` draws card 49 as a
+reverse holo), tilts 30:25 and 75:65, at 275 px x2, in Chromium and WebKit.
+Sheets: /mnt/project-files/sword-shield/simey-compare/round2/. Keep the
+realism rules on top of the benchmark: their full arts wash the whole card
+in one tile; ours follow the print's map.
 
 ## Checks before merging
 

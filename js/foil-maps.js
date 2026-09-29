@@ -127,6 +127,10 @@ export function swshPattern(card) {
   }
   switch (card.rarity) {
     case "Rare Secret":
+      // Crown Zenith's showcase Pikachu (160) is a full-colour etched art,
+      // not a gold: poke-holo.simey.me draws it as a rainbow rare, the glitter
+      // foil under the printed colour (2026-09-29).
+      if (card.id === "swsh12pt5-160") return "foil-ir swsh-rainbow";
       return "foil-gold swsh-gold";
     case "Rare Rainbow":
       return "foil-ir swsh-rainbow";
