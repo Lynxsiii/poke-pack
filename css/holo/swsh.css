@@ -313,7 +313,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
   background-size: cover, cover, 200% 700%, 200% 100%, 200% 100%;
   background-position: center, center, var(--v-pos);
   background-blend-mode: soft-light, soft-light, color, hard-light, normal;
-  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.2) saturate(1.1);
+  /* Closing contrast(0.8): dodge-safe, see the full-art family below. */
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.2) saturate(1.1) contrast(0.8);
   mix-blend-mode: color-dodge;
 }
 /* Where the light is: a pool around the pointer, as the full arts. */
@@ -459,6 +460,38 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh:i
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-tfa.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 100%, 0.7) 0%, hsla(0, 0%, 100%, 0.4) 25%, hsla(0, 0%, 100%, 0.22) 60%, hsla(0, 0%, 100%, 0.14) 100%);
+}
+
+/* ---- Dodge-safe: no channel at 1.0 under the colour-dodge ----------------
+   The family's `.foil` is colour-dodged onto the scan, and its filters end
+   in contrast(2.2) to 2.5, which pins whole bands of the sun pillar at
+   channel 1.0. Dodge divides the backdrop by (1 - source): at 1.0 the dark
+   ink of a gold card or a VMAX's text bars, never quite black in a scan,
+   blows up into pure blue and red, and Safari draws the singularity as
+   jagged pixel blocks (Eternatus V / VMAX SV121-122, Surfing Pikachu VMAX
+   cel25 9, Meowth VMAX SWSH005; Noah 2026-09-29). A closing contrast(0.8)
+   keeps every channel at or under 0.9, a tenfold gain at most, so ink stays
+   ink. Restated per finish because filter is one property. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-ultra.has-foil-map .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.2) saturate(1) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-vmax.foil-ultra.has-foil-map:not(.swsh-alt):not(.swsh-shiny) .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.5)) contrast(2.2) saturate(1.3) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-vstar.foil-ultra.has-foil-map .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.55)) contrast(1.9) saturate(0.85) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-tfa.foil-ultra.has-foil-map .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.15) + 0.65)) contrast(1.9) saturate(1) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.5) contrast(2.5) saturate(0.35) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-gold.has-foil-map .foil {
+  filter: brightness(0.62) contrast(1.5) saturate(0.45) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
 }
 
 /* ---- Trainer Gallery character rares ----------------------------------------

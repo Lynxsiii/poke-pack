@@ -115,7 +115,9 @@ export function swshPattern(card) {
   if (String(card.id || "").startsWith("cel25-") && (card.rarity === "Rare" || card.rarity === "Rare Holo")) {
     return "foil-holo swsh-holo swsh-cel";
   }
-  if (card.gallery === "sv") {
+  if (card.gallery === "sv" && card.rarity !== "Rare Secret") {
+    // Shining Fates' two golds (Eternatus V SV121, VMAX SV122) are numbered
+    // in the Shiny Vault but are gold secret rares, not shinies.
     if (is("VMAX")) return "foil-ultra swsh-vmax swsh-shiny";
     if (is("V")) return "foil-ex swsh-v swsh-shiny";
     return "foil-holo swsh-holo swsh-shiny";
@@ -134,6 +136,10 @@ export function swshPattern(card) {
     case "Rare Holo VSTAR":
       return "foil-ultra swsh-vstar";
     case "Rare Holo V":
+      // A V with a Live etch map is a full art (the alternate-art Black Star
+      // promos such as Charizard V SWSH260, filed as "Rare Holo V" by
+      // foilAs): the regular V has no etch and takes the streak tile.
+      if (card.etchMap) return "foil-ultra swsh-vfa";
       return "foil-ex swsh-v";
     case "Amazing Rare":
       return "foil-holo swsh-amazing";
