@@ -296,14 +296,25 @@ cure"). The surface gloss throws a soft highlight.
   or window holo, so its far end must not shade it; shadow belongs to the
   engraving, drawn soft on `.foil`. `scripts/dark_specks.py` counts the
   dots a foil adds and the sweep fails on them (verify.md).
-- **A drawn etch must wander.** A straight grating, however fine, has one
-  frequency, and the browser's scaling turns it into a diagonal line screen
-  over the whole card (Espeon ex MEP 108 and every drawn-etch print,
-  2026-09-28). Live's etch is a soft hatch that bends: `make_card_etch.py`
-  warps every line with a smooth random field, draws a soft profile and
-  adds grain (`WOBBLE`, `DEPTH`, `SOFTEN`, `GRAIN`), and a map is judged by
-  numbers before its look: no fft peak above about 60 times the mean, a
-  mid-tone share near Live's 0.55-0.65.
+- **A drawn etch is a fingerprint, not a grating.** Any straight grating,
+  however fine or bent, has one frequency and one direction over a patch,
+  and the browser's scaling turns it into a diagonal line screen over the
+  card. Espeon ex MEP 108 was redrawn three times (a regular grating, a
+  soft-wobble grating, a grating per Voronoi cell) and Noah still saw it
+  ("still broken", 2026-09-29): a painterly print has little edge
+  structure, so the drawn direction collapsed to two or three facets, each
+  a fixed pitch. Live's etch and the real engraving are short, curving,
+  breaking ridges (the macro photos in `paldean-fates/texture-refs/`,
+  `shiny-ultra-rare_217-gardevoir-ex_macro-fingerprint-etch-over-pokemon`),
+  so `make_card_etch.py` now band-passes white noise to one fine ridge
+  pitch in 24 orientations and mixes the ones near the drawing's direction
+  (`PITCH`, `RADIAL_BW`, `ANGLE_BW`, `STEER`, `GAIN`). Contour rings
+  (distance to the drawing's edges) were tried and read as a swirled
+  fingerprint blob field on a flat body. Judge a map by
+  `scripts/etch_metrics.py` (direction coherence `coh` 0.3 to 0.6 like
+  Live's, not 0.7; `lb` under about 18) and then by a WebKit render at 220
+  and 340 CSS px x 3 beside a Live-etch print; the 204 drawn maps were all
+  redrawn as `-v3` on 2026-09-29.
 - **An asset changed under its old name is invisible for a year.** `_headers`
   serves `/assets/*` as `immutable, max-age=31536000`, so a phone that has
   seen a map, scan or tile keeps that copy and never asks again. Espeon ex
@@ -322,7 +333,7 @@ cure"). The surface gloss throws a soft highlight.
   hundred prints reads as wallpaper (Noah, 2026-09-28: "I want every
   texture to be unique to each card"). Every etched print needs its own
   etch map: TCG Live's, or one drawn from the scan by
-  `scripts/make_card_etch.py` (facets of straight hatch along the art's
+  `scripts/make_card_etch.py` (fingerprint ridges steered by the art's
   edges, the ink left smooth; judge it with `--compare` beside Live's
   sv4pt5 232 Mew ex and 234 Charizard ex maps). `sweep_finishes.py` fails
   on a print left on the tile.
@@ -422,7 +433,8 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/make_futuristic_maps.py` | Draw a Futuristic Rare's foil map, etch and etch bins from its scan when TCG Live has none (hints in `lab/masks/futuristic/`) |
 | `scripts/stamp_knockout.py` | Cut a stamped print's stamp (Pokémon Center, set logo, Prerelease, store) out of its foil map: difference of the two scans, template match, or a box from `scripts/stamp_boxes.json` (a list of boxes for a crest over a wordmark; a plain id with a box is a print whose only copy is the stamped one); draws a window-and-frame map when a window holo's plain print has none (a full-art print needs its TCG Live map fetched first) |
 | `scripts/make_pixel_cosmos.py` | Draws the pixel cosmos texture in `assets/foil/promo/` (seeded) |
-| `scripts/make_card_etch.py` | Draws a per-card etch map from the scan for an etched print TCG Live has no map for (`--all --ship --write-data`; `--all --force --ship` redraws a set's drawn maps; `--compare` beside a Live map): hatch along the drawing, bent by a smooth wander, soft, with grain |
+| `scripts/make_card_etch.py` | Draws a per-card etch map from the scan for an etched print TCG Live has no map for (`--all --ship --write-data`; `--all --force --ship` redraws a set's drawn maps; `--compare` beside a Live map): a fine fingerprint of short ridges steered by the drawing's edges, soft, with grain |
+| `scripts/etch_metrics.py` | Line-screen numbers for etch maps (`lb`, `ori`, `mid`, direction coherence `coh`); Live's maps are the range to sit in |
 | `scripts/dark_specks.py` | Glitter never darkens: renders a set's picks with and without their foil, counts the dark dots the foil adds per card and pose, boxes them red on `<out>/<set>-<n>-specks.png`, exits 1 over budget; the sweep runs it |
 | `scripts/make_sir_etch.py` | Draws the fallback engraving tile `assets/foil/sir-etch.webp` (diagonal hatch, seamless), for a print nobody has drawn yet |
 | `scripts/make_etch_hd.py` | Ships TCG Live's etch at its native 733 px as `<n>-etch-hd.webp` (`etchHd`), for a recipe that draws the rings as an image (Shining Fates' `sf-shiny`); never overwrites, `--suffix` for a redraw |
