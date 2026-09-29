@@ -637,7 +637,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-future.has-etch-bins .glare {
    which are striped chrome. Over everything a fingerprint-like relief field
    catches the light as a satin sheen; Mew and the frame are smooth.
    Not on the card: glitter, and hairline stripes (the 1px ridges the first
-   recipe drew aliased into a line screen over Mew on a phone). */
+   recipe drew aliased into a line screen over Mew on a phone).
+   The reflection reaches every part of the card (Noah, 2026-09-29: "have
+   the mew holo go around the whole card as it does in the real photos"):
+   the band is wide with a lit floor at its ends and the pools fall to a
+   grey, never black, so the streaks and relief shimmer edge to edge and
+   only blaze under the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil {
   /* The mirror: one reflection band that slides with the tilt, and the pool
      under the pointer. Mostly black, so the dodge lights only the band. The
@@ -645,10 +650,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil {
      as blocks in WebKit. */
   background-image:
     linear-gradient(115deg,
-      #000 36%, hsl(0, 0%, 18%) 43%, hsl(330, 10%, 46%) 48%, hsl(330, 12%, 54%) 50%,
-      hsl(330, 10%, 46%) 52%, hsl(0, 0%, 18%) 57%, #000 64%),
+      hsl(0, 0%, 14%) 16%, hsl(0, 0%, 26%) 34%, hsl(330, 10%, 46%) 46%, hsl(330, 12%, 54%) 50%,
+      hsl(330, 10%, 46%) 54%, hsl(0, 0%, 26%) 66%, hsl(0, 0%, 14%) 84%),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsl(0, 0%, 36%) 0%, hsl(0, 0%, 16%) 16%, #000 42%);
+      hsl(0, 0%, 36%) 0%, hsl(0, 0%, 20%) 25%, hsl(0, 0%, 8%) 60%, #000 100%);
   background-size: 300% 300%, cover;
   background-position:
     calc(((50% - var(--background-x)) * 3) + 50%) calc(((50% - var(--background-y)) * 1.6) + 50%),
@@ -672,9 +677,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb.has-foil-map .foil {
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::before {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #fff 0%, hsl(0, 0%, 88%) 8%, hsl(210, 18%, 40%) 28%, hsl(250, 12%, 8%) 55%, #000 80%),
+      #fff 0%, hsl(0, 0%, 88%) 10%, hsl(210, 18%, 52%) 32%, hsl(250, 12%, 30%) 65%, hsl(250, 10%, 22%) 100%),
     linear-gradient(115deg,
-      #000 38%, hsl(45, 30%, 45%) 46%, hsl(0, 0%, 92%) 50%, hsl(200, 40%, 50%) 54%, #000 62%);
+      hsl(0, 0%, 10%) 18%, hsl(45, 30%, 45%) 42%, hsl(0, 0%, 92%) 50%, hsl(200, 40%, 50%) 58%, hsl(0, 0%, 10%) 82%);
   background-size: cover, 300% 300%;
   background-position:
     center,
@@ -697,7 +702,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .foil::after {
     repeating-linear-gradient(45deg, hsl(0, 0%, 100%) 0px, hsl(0, 0%, 66%) 3.5px, hsl(0, 0%, 100%) 7px),
     linear-gradient(125deg, var(--spectrum)),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #fff 0%, hsl(0, 0%, 70%) 25%, hsl(0, 0%, 20%) 60%, #000 100%);
+      #fff 0%, hsl(0, 0%, 75%) 30%, hsl(0, 0%, 40%) 70%, hsl(0, 0%, 28%) 100%);
   background-size: auto, 300% 300%, cover;
   background-position:
     center,
@@ -727,7 +732,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb .glare {
    of it, so they stay smooth against the textured field. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-rgb.has-etch-map .glare::after {
   background: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 60%) 20%, hsl(0, 0%, 15%) 55%, #000 100%);
+    hsl(0, 0%, 100%) 0%, hsl(0, 0%, 62%) 25%, hsl(0, 0%, 30%) 65%, hsl(0, 0%, 18%) 100%);
   -webkit-mask-image: var(--etch-soft, var(--etch-map));
   mask-image: var(--etch-soft, var(--etch-map));
   -webkit-mask-size: 100% 100%;
