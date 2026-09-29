@@ -81,11 +81,15 @@ lobbies). `node scripts/preview-battles.mjs` starts four disposable, in-memory
 accounts on ports 5175–5178; the first two are a host and a real-player rival.
 It does not write production data or browser account saves back to production.
 
-For automated WebKit checks, install Playwright in your development environment,
-run `npx playwright install webkit`, then
-`node scripts/test-battle-browser.mjs`. `PLAYWRIGHT_MODULE` can point to an
-existing Playwright installation. These checks exercise WebKit; native Safari
-on macOS/iOS should also be checked before merging.
+For a browser smoke test, keep the preview running, install Playwright's WebKit
+(`npx playwright install webkit`), then run `node scripts/test-battle-browser.mjs`
+(`webkit` or `chromium`). It plays a quick battle against one free bot from the
+hall to the result at iPhone size. `PLAYWRIGHT_MODULE` can point to an existing
+Playwright installation. Native Safari on iOS should also be checked.
+
+The client is split by screen: `js/battles.js` routes, `js/battle-hall.js` is
+the hall and builder, `js/battle-table.js` the lobby, arena and result, and
+`js/battle-reveal.js` the pack tear and card deal inside each lane.
 
 ## Brand assets
 
