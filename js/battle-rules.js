@@ -32,7 +32,10 @@ export function roundScores(rounds, settings, count = rounds.length) {
   }
   return scores.map(n => n / 100);
 }
-export function battleResult(rounds, settings, seats) {
+// `rank` breaks ties in the deal. The Worker passes a random order: a fixed one
+// (lowest seat first) would hand the host, always seat 0, the single best card
+// of every shared or tied pot, and with free bots that beats a solo rip.
+export function battleResult(rounds, settings, seats, rank = seat => seat) {
   const scores = roundScores(rounds, settings);
   const groups = settings.teams ? [[0, 1], [2, 3]] : seats.map(s => [s.seat]);
   const groupScores = groups.map(group => group.reduce((n, seat) => n + Math.round(scores[seat] * 100), 0));
@@ -40,12 +43,12 @@ export function battleResult(rounds, settings, seats) {
   const winners = settings.mode === 'shared' ? [] : groups.flatMap((g, i) => groupScores[i] === target ? g : []);
   const recipients = settings.mode === 'shared' ? seats.map(s => s.seat) : winners;
   const allocations = recipients.map(seat => ({ seat, userId: seats.find(s => s.seat === seat)?.userId || null, cards: [], cents: 0 }));
-  // Cards are indivisible. A stable descending-value, least-value-first deal
-  // balances shared pots, tied seats and teammates without favouring a human over a bot.
+  // Cards are indivisible. A descending-value, least-value-first deal balances
+  // shared pots, tied seats and teammates; `rank` decides who is dealt first.
   const cards = rounds.flatMap(r => r.pulls.flatMap(p => p.cards)).map((card, order) => ({ card, order }))
     .sort((a, b) => cardCents(b.card) - cardCents(a.card) || a.order - b.order);
   for (const { card } of cards) {
-    const next = [...allocations].sort((a, b) => a.cents - b.cents || a.cards.length - b.cards.length || a.seat - b.seat)[0];
+    const next = [...allocations].sort((a, b) => a.cents - b.cents || a.cards.length - b.cards.length || rank(a.seat) - rank(b.seat))[0];
     next.cards.push(card); next.cents += cardCents(card);
   }
   return { winners, scores, allocations: allocations.map(a => ({ ...a, cardCount: a.cards.length, value: a.cents / 100 })) };

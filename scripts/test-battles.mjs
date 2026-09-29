@@ -294,6 +294,24 @@ assert.deepEqual(battleResult(rounds, battleSettings({ players: 4, scoring: 'bes
 const allShared = battleResult(rounds, battleSettings({ players: 4, mode: 'shared', skipCommons: true }), seats);
 assert.equal(allShared.allocations.reduce((n, a) => n + a.cardCount, 0), 8);
 assert.equal(allShared.allocations.reduce((n, a) => n + a.value, 0), 240);
+// The deal's tie-break decides who gets the pot's best card. A fixed seat
+// order would always favour the host (seat 0); the Worker draws it at random.
+const reversed = battleResult(rounds, battleSettings({ players: 4, mode: 'shared' }), seats, seat => -seat);
+const topCard = rounds.flatMap(r => r.pulls.flatMap(p => p.cards)).sort((a, b) => b.value - a.value)[0];
+assert.ok(reversed.allocations.find(a => a.seat === 3).cards.includes(topCard), 'rank decides the first deal');
+{
+  let hostTop = 0; const runs = 24;
+  for (let i = 0; i < runs; i++) {
+    const b = (await quick({ players: 4, mode: 'shared', fast: true }, [{ key: 'me5:boosterPack', quantity: 1 }])).battle;
+    const row = JSON.parse(db.prepare('SELECT outcomes, result FROM battles WHERE id = ?').get(b.id).result);
+    const all = JSON.parse(db.prepare('SELECT outcomes FROM battles WHERE id = ?').get(b.id).outcomes).flatMap(r => r.pulls.flatMap(p => p.cards));
+    const best = Math.max(...all.map(c => c.value));
+    const hostCards = row.allocations.find(a => a.seat === 0).cards.map(c => all.find(x => x.id === c.id && x.reverse === c.reverse)?.value ?? 0);
+    if (hostCards.includes(best)) hostTop++;
+    await act(b.id, 'skip');
+  }
+  assert.ok(hostTop < runs, `the host does not always take a shared pot's best card (${hostTop}/${runs})`);
+}
 
 // Concurrent sells cannot pay the same last copy twice.
 db.prepare('INSERT INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,?,?) ON CONFLICT(user_id,card_id) DO UPDATE SET qty=1,reverse_qty=0')

@@ -269,7 +269,8 @@ async function startBattle(env, request, row, helpers) {
     });
     outcomes.push({ index: round.index, pulls });
   }
-  const result = battleResult(outcomes, settings, seats);
+  const order = new Uint32Array(settings.players); crypto.getRandomValues(order);
+  const result = battleResult(outcomes, settings, seats, seat => order[seat]);
   // Award receipts only need IDs and finish flags; do not duplicate scan metadata
   // in the persisted pot. D1 limits an entire row to 2 MB.
   const persistedResult = { ...result, allocations: result.allocations.map(a => ({ seat: a.seat, userId: a.userId,
@@ -323,7 +324,9 @@ export async function handleBattles(path, method, request, env, helpers) {
       return helpers.json({ battles: await Promise.all(rows.map(r => viewBattle(env, r.id, Date.now(), r, seatsByBattle.get(r.id)))), serverNow: Date.now() });
     }
     const match = path.match(new RegExp(`^/api/battles/([a-zA-Z0-9-]{1,80})(?:/(${ACTIONS}))?$`));
-    if (match && !match[2] && method === 'GET') return helpers.json({ battle: await viewBattle(env, match[1]), serverNow: Date.now() });
+    // serverNow is the instant the view was computed at, so a client never sees
+    // a round boundary fall between revealedRounds and its clock.
+    if (match && !match[2] && method === 'GET') { const at = Date.now(); return helpers.json({ battle: await viewBattle(env, match[1], at), serverNow: at }); }
     if (method !== 'POST' || (path !== '/api/battles' && !match?.[2])) return helpers.json({ error: 'Not found.' }, 404);
     const origin = request.headers.get('origin');
     if (origin && origin !== new URL(request.url).origin) error('Use this site to manage battles.', 403);
@@ -391,7 +394,8 @@ export async function handleBattles(path, method, request, env, helpers) {
         await env.DB.prepare("DELETE FROM battle_seats WHERE battle_id = ? AND user_id = ? AND EXISTS(SELECT 1 FROM battles WHERE id = ? AND status IN ('lobby','cancelled'))").bind(id, user.id, id).run();
       }
     }
-    return helpers.json({ battle: await viewBattle(env, id), save: await helpers.loadSave(env, user.id), serverNow: Date.now() });
+    const at = Date.now();
+    return helpers.json({ battle: await viewBattle(env, id, at), save: await helpers.loadSave(env, user.id), serverNow: at });
   } catch (err) {
     if (/no such table: (battles|battle_seats)/.test(err.message)) return helpers.json({ error: 'Battles are waiting for the database update.' }, 503);
     if (/Not enough coins|no longer accepting|cannot be left|Fill every|active battles/.test(err.message)) return helpers.json({ error: err.message }, 409);
@@ -440,9 +444,10 @@ async function createBattle(env, request, helpers, user, body) {
   await seatBots(env, id, current => emptySeats(current, players));
   try { await startBattle(env, request, row, helpers); }
   catch (err) {
-    // A lineup too large to persist never can start: refund the host now
-    // instead of holding the entry in a lobby nobody opened for 24 hours.
-    if (/too many cards/.test(err.message)) {
+    // A quick battle either starts or refunds: the player never saw this
+    // lobby, so don't hold their entry in it for 24 hours. The cancel only
+    // lands while it is still a lobby, so a concurrent retry that started it wins.
+    {
       await env.DB.batch([
         env.DB.prepare("UPDATE battles SET status = 'cancelled' WHERE id = ? AND status = 'lobby'").bind(id),
         env.DB.prepare("DELETE FROM battle_seats WHERE battle_id = ? AND EXISTS(SELECT 1 FROM battles WHERE id = ? AND status = 'cancelled')").bind(id, id),
