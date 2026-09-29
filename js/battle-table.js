@@ -968,7 +968,7 @@ export function createTable(ctx) {
     if (!el) return;
     el.innerHTML = bestCards.map((t, k) => {
       const seat = seatAt(t.seat);
-      const face = ctx.cardFace ? ctx.cardFace(t.card, { small: true, lazy: true }) : `<img src="${esc(smallImage(t.card))}" alt="${esc(t.card.name)}" />`;
+      const face = ctx.cardFace ? ctx.cardFace(t.card, { small: true }) : `<img src="${esc(smallImage(t.card))}" alt="${esc(t.card.name)}" />`;
       return `<figure class="tb-best-card" style="--k:${k}">
         <button class="tb-best-face" data-inspect-best="${k}" aria-label="Inspect ${esc(t.card.name)}">${face}</button>
         <figcaption><b>${esc(t.card.name)}</b><span>${esc(seat?.name || "")}</span><span class="tb-best-val">${coinTag(t.card.value)} <small>round ${t.round + 1}</small></span></figcaption>

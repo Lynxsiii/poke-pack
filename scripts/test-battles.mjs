@@ -114,7 +114,10 @@ assert.equal(start.battle.result, null); assert.equal(start.battle.winners, null
 assert.equal((await api(`/api/battles/${id}/leave`, 'POST', {}, 'rival')).status, 409);
 assert.equal((await api('/api/me/reset', 'POST', {}, 'rival')).status, 409);
 assert.throws(() => db.prepare('DELETE FROM profiles WHERE user_id=?').run('rival'), /active battles/);
-now = start.battle.startsAt + start.battle.roundMs;
+now = start.battle.startsAt - 1;
+assert.equal((await api(`/api/battles/${id}`, 'GET', undefined, null)).battle.rounds.length, 0, 'nothing before the intro ends');
+// Round i is revealed at startsAt + i * roundMs and plays until the next one.
+now = start.battle.startsAt + start.battle.roundMs - 1;
 const mid = await api(`/api/battles/${id}`, 'GET', undefined, null);
 assert.equal(mid.battle.revealedRounds, 1); assert.equal(mid.battle.rounds.length, 1);
 assert.equal(mid.battle.result, null, 'no future winner leaked');

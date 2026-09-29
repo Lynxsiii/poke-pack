@@ -233,7 +233,8 @@ async function viewBattle(env, id, now = Date.now(), summaryRow = null, summaryS
   const seats = presentLegacyBots(summarySeats || await getSeats(env, id))
     .map(({ payerId, ...seat }) => ({ ...seat, team: settings.teams ? Math.floor(seat.seat / 2) : null }));
   const revealedRounds = row.status === 'finished' ? plan.length : row.status === 'running'
-    ? Math.min(plan.length, Math.max(0, Math.floor((now - row.starts_at) / row.round_ms))) : 0;
+    // Round i is revealed at starts_at + i * round_ms and plays until the next one.
+    ? (now < row.starts_at ? 0 : Math.min(plan.length, Math.floor((now - row.starts_at) / row.round_ms) + 1)) : 0;
   const outcomes = summaryRow ? [] : parse(row.outcomes) || [];
   const rounds = outcomes.slice(0, revealedRounds).map((round, i) => ({ ...round, scores: roundScores(outcomes, settings, i + 1) }));
   const result = row.status !== 'finished' ? null : summaryRow ? parse(row.result_summary) : parse(row.result);

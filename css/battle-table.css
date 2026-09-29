@@ -142,7 +142,8 @@
 }
 .tb-team-head b { font-weight: 650; }
 .tb-team-score { margin-left: auto; }
-.tb-team-head .tb-crown { position: static; width: 16px; height: 16px; translate: none; }
+.tb-team-head .tb-crown { position: static; display: none; width: 16px; height: 16px; translate: none; }
+.tb-team.is-leader > .tb-team-head .tb-crown, .tb-team.is-winner > .tb-team-head .tb-crown { display: block; }
 .tb-team.is-loser .tb-team-head { opacity: 0.45; }
 
 .tb-vs {
