@@ -46,14 +46,25 @@ full-art family reuses the Scarlet & Violet Ultra Rare and gold recipes in
 | Radiant Rare | yes | no | `foil-holo swsh-radiant` |
 | Amazing Rare | window | no | `foil-holo swsh-amazing` |
 | Rare Shiny (Shiny Vault) | yes | yes | `swsh-shiny` + the holo, V or VMAX classes |
-| Classic Collection (cel25) | none | none | `foil-holo swsh-holo swsh-classic[ swsh-classic-full]` |
+| Celebrations 001-025 Rare / Rare Holo | dropped (whole face) | no | `foil-holo swsh-holo swsh-cel` |
+| Classic Collection (cel25) | none (whole face) | drawn for cc15-here, cc15-rockets | `foil-holo swsh-holo swsh-classic[ swsh-classic-full]` |
 | Reverse (C, U, R, Rare Holo) | tile per type | no | `foil-reverse rev-swsh rev-<type>` |
 
 A full-art rarity with no map on the CDN falls to a white whole-card map
 and the shared etch tile, so nothing in the family ever hits the illusion
-rings of `realism.css`. The Classic Collection's full-foil reprints (ex,
-GX, Shining, ★, LV.X, BREAK, LEGEND) get `swsh-classic-full`, which drops
-the window mask.
+rings of `realism.css`.
+
+Celebrations is its own case (2026-09-29, after Noah called its holos bad):
+photos of Lugia 022 and Lunala 015 show every card of the 25 foil over the
+whole face inside the yellow frame, a soft pearl with no brushed lines, so
+`swsh-cel` drops Live's window map and cuts the face with an inset. The
+Classic Collection (Charizard 4/102 is graded "Confetti Holofoil") is a
+dense galaxy of light flecks over the whole face, strongest in the window,
+so `swsh-classic` masks to the card art, not the window, with the frame
+inset kept matte; two copies of the cosmos tile at different scales move
+against each other so flecks wink. Both are colour-dodge over a dark base
+at low opacity: the first two passes at 0.65 to 0.95 opacity whited the
+art out at 30:25.
 
 ## What the photos say (texture-refs in the project files)
 
@@ -91,4 +102,6 @@ the window mask.
   swsh12pt5 (GG), swsh7 (VMAX alt, full-art Trainer).
 - A gallery card whose foil lights a different Pokémon's silhouette has
   the wrong map: check the key and offset above, not the recipe.
-- A gallery scan that is the card back has the wrong scrydex id.
+- A gallery scan that is the card back has the wrong scrydex id (Lost Origin's
+  30 TG scans shipped that way on 2026-09-28; `imageRemote` must use the
+  `swsh11tg-` id). Check with a hash count: 30 identical scans is the back.
