@@ -74,10 +74,15 @@ art out at 30:25.
   counter-tracked bar families, a luminosity hot spot. At phone size it
   needs brightness 1.3 and a broad hot spot or it vanishes.
 - **Pokémon V**: the whole card is foil with etched streaks at 55° rising
-  to the right and strong rainbow flashes. `assets/foil/swsh-streaks.webp`
+  to the right and strong rainbow flashes. `assets/foil/swsh-streaks-v2.webp`
   (512px seamless, from `make_swsh_streaks.py`) carries the streaks; they
   are masked into a brighter copy of the pillar stack and lit again in the
-  glare.
+  glare. The first tile had 63 hairlines across the card (a 3.5 px pitch on
+  a phone) and Noah saw a diagonal line screen over Surfing Pikachu V
+  (2026-09-29); v2 has 16 broad soft rays that wander, as the Glaceon V
+  photo shows, and the recipe's tinsel bars widened from a 4.5% to a 12%
+  pitch for the same reason. A tile is a grating too: verify.md's line
+  screen row applies to it.
 - **Full-art V, VMAX, VSTAR, full-art Trainer**: the etch follows the art,
   with a rainbow wash over the whole card. VMAX runs hotter and wider,
   VSTAR paler and cooler with its white frame, the Trainer flatter with

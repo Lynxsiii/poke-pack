@@ -26,7 +26,7 @@
  */
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh {
-  --swsh-streaks: url("/assets/foil/swsh-streaks.webp");
+  --swsh-streaks: url("/assets/foil/swsh-streaks-v2.webp");
   --swsh-glitter: url("/assets/foil/glitter.png");
   --swsh-flecks: url("/assets/foil/glitter-flecks.webp");
   --swsh-ice: url("/assets/foil/celebration/cracked-ice.webp");
@@ -294,9 +294,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
     var(--sunpillar-clr-6) calc(var(--v-space) * 6),
     var(--sunpillar-clr-1) calc(var(--v-space) * 7));
   /* The tinsel bars run with the streaks. */
+  /* Broad soft bands, not a grating: a grating at this pitch became a
+     second line screen at phone size (Surfing Pikachu V, 2026-09-29). */
   --v-bars: repeating-linear-gradient(145deg,
-    #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%,
-    hsl(180, 10%, 60%) 5.2%, #0e152e 14%, #0e152e 16%);
+    #0e152e 0%, hsl(180, 10%, 52%) 9%, hsl(180, 29%, 64%) 12%,
+    hsl(180, 10%, 52%) 15%, #0e152e 26%, #0e152e 34%);
   --v-dim: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
   --v-pos: 0% var(--background-y),
