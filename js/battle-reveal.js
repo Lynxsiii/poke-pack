@@ -86,9 +86,9 @@ function geometry(W, H) {
 
 /** Slot k of m in the fan behind the front card. */
 function fanPose(g, k, m) {
-  if (m <= 1) return pose(g.heroX, g.fanY, 0, g.fanS);
-  const spread = Math.min(g.maxA, 2.4 * (m - 1));
-  const a = -spread + (2 * spread * k) / (m - 1);
+  // A short fan (a promo's two cards) still opens enough to read behind the front card.
+  const spread = Math.min(g.maxA, Math.max(2.4 * (m - 1), 9));
+  const a = m <= 1 ? spread : -spread + (2 * spread * k) / (m - 1);
   const rad = (a * Math.PI) / 180;
   return pose(g.heroX + g.R * Math.sin(rad), g.fanY + g.R * (1 - Math.cos(rad)), a, g.fanS);
 }
@@ -286,15 +286,21 @@ export function createReveal(ctx) {
       const x1 = cuts[i + 1];
       const parentX0 = i < 2 ? cuts[i + 1] : 0;
       const left = i < 2 ? x0 - parentX0 : x0;
-      const artClip = poly([[x0 - ov, 0], [x1 + ov, 0], ...lineBetween(line, x1 + ov, x0 - ov, below)]);
-      const rimClip = poly([[x0 - ov, 0], [x1 + ov, 0], ...lineBetween(line, x1 + ov, x0 - ov, below + rim)]);
+      // Each layer is only as big as its piece of the strip (plus a hair of
+      // overlap), with the wrapper art offset inside it.
+      const lx = x0 - ov;
+      const lw = x1 - x0 + 2 * ov;
+      const lh = stripH + rim + below;
+      const local = (pts) => pts.map(([x, y]) => [x - lx, y]);
+      const artClip = poly(local([[x0 - ov, 0], [x1 + ov, 0], ...lineBetween(line, x1 + ov, x0 - ov, below)]));
+      const rimClip = poly(local([[x0 - ov, 0], [x1 + ov, 0], ...lineBetween(line, x1 + ov, x0 - ov, below + rim)]));
       const layer = (cls, clip, bg) =>
-        `<i class="${cls}" style="left:${r2(-x0)}px;width:${r2(pw)}px;height:${r2(ph)}px;clip-path:${clip};-webkit-clip-path:${clip}${bg}"></i>`;
+        `<i class="${cls}" style="left:${r2(-ov)}px;width:${r2(lw)}px;height:${r2(lh)}px;clip-path:${clip};-webkit-clip-path:${clip}${bg}"></i>`;
       return `<div class="rv-seg" data-seg="${i}" style="left:${r2(left)}px;width:${r2(x1 - x0)}px;height:${r2(stripH)}px;transform-origin:100% ${r2(ph * 0.045)}px">${layer(
         "rv-seg-rim",
         rimClip,
         ""
-      )}${layer("rv-seg-silver", artClip, "")}${layer("rv-seg-art", artClip, `;background-image:${url};background-size:${r2(pw)}px ${r2(ph)}px`)}${i > 0 ? segHtml(i - 1) : ""}</div>`;
+      )}${layer("rv-seg-silver", artClip, "")}${layer("rv-seg-art", artClip, `;background-image:${url};background-size:${r2(pw)}px ${r2(ph)}px;background-position:${r2(-lx)}px 0px`)}${i > 0 ? segHtml(i - 1) : ""}</div>`;
     };
     const bodyClip = poly([...lineBetween(line, 0, pw), [pw, ph], [0, ph]]);
     const edge = pathD(lineBetween(line, 0, pw));
@@ -511,11 +517,12 @@ export function createReveal(ctx) {
   /* Animations are queued with their start time and only created a moment
      before they begin (LEAD ms), so a card becomes a compositor layer when it
      is about to move, not all forty of them in the round's first frame. */
-  const LEAD = 260;
+  const LEAD = 320;
+  const GRID = 50; // timed style changes land together, on a 50ms grid
   const timelineNow = () => document.timeline?.currentTime ?? performance.now();
 
   function newRun(duration) {
-    const run = { anims: [], timers: [], at: [], queue: [], done: false, resolve: null, stopped: false, duration, t0: timelineNow() + 16 };
+    const run = { anims: [], timers: [], at: [], queue: [], live: new Map(), retireQ: [], done: false, resolve: null, stopped: false, duration, t0: timelineNow() + 16 };
     run.promise = new Promise((resolve) => (run.resolve = resolve));
     rounds.add(run);
     return run;
@@ -524,6 +531,44 @@ export function createReveal(ctx) {
   function A(run, el, frames, delay, duration, easing = EASE.out, extra) {
     if (!el) return;
     run.queue.push({ el, frames, delay: Math.max(0, delay), duration: Math.max(1, duration), easing, extra });
+    const rec = run.live.get(el) || { left: 0, anims: [] };
+    rec.left += 1;
+    run.live.set(el, rec);
+  }
+
+  /* An element whose last animation of the round has finished is retired:
+     its final value is written as plain style and the animations go, so it
+     stops being a compositor layer while the rest of the round plays. A
+     turned card is flattened: the back goes and the face sits in 2D. */
+  function retire(run, el, rec) {
+    if (run.stopped) return;
+    if (el.classList.contains("rv-turn")) {
+      flatten(el.parentElement);
+      return;
+    }
+    if (el.classList.contains("rv-front") || el.classList.contains("rv-back")) return;
+    for (const a of rec.anims) {
+      try {
+        a.commitStyles();
+      } catch {
+        /* not rendered any more */
+      }
+    }
+    for (const a of rec.anims) a.cancel();
+    rec.anims = [];
+  }
+
+  function flushRetire(run) {
+    const q = run.retireQ;
+    run.retireQ = [];
+    for (const [el, rec] of q) retire(run, el, rec);
+  }
+
+  function flatten(card) {
+    if (!card) return;
+    card.classList.add("up");
+    card.querySelectorAll(".rv-turn, .rv-front, .rv-back").forEach((el) => el.getAnimations().forEach((a) => a.cancel()));
+    card.querySelector(".rv-back")?.remove();
   }
 
   function create(run, spec) {
@@ -531,6 +576,16 @@ export function createReveal(ctx) {
     const late = timelineNow() - run.t0;
     const a = spec.el.animate(spec.frames, { delay: spec.delay - late, duration: spec.duration, easing: spec.easing, fill: "forwards", ...spec.extra });
     run.anims.push(a);
+    const rec = run.live.get(spec.el);
+    if (!rec) return;
+    rec.anims.push(a);
+    a.finished.then(
+      () => {
+        rec.left -= 1;
+        if (rec.left === 0) run.retireQ.push([spec.el, rec]);
+      },
+      () => {}
+    );
   }
 
   /** Call fn at time t on the run's clock (the timeline the animations share). */
@@ -544,21 +599,40 @@ export function createReveal(ctx) {
     for (const spec of run.queue) {
       if (spec.delay < LEAD) create(run, spec);
       else {
-        const key = Math.floor((spec.delay - LEAD) / 40) * 40;
+        const key = Math.floor((spec.delay - LEAD) / 100) * 100;
         if (!buckets.has(key)) buckets.set(key, []);
         buckets.get(key).push(spec);
       }
     }
     run.queue = [];
     for (const [t, specs] of buckets) run.at.push([t, () => specs.forEach((spec) => create(run, spec))]);
-    const now = timelineNow();
+    // Every timed style change snaps to a shared grid, so the browser restyles
+    // a few times a second instead of on nearly every frame.
+    const slots = new Map();
     for (const [t, fn] of run.at) {
-      const id = setTimeout(() => {
-        if (!run.stopped) fn();
-      }, Math.max(0, run.t0 + t - now));
-      run.timers.push(id);
+      const key = Math.max(0, Math.round(t / GRID) * GRID);
+      if (!slots.has(key)) slots.set(key, []);
+      slots.get(key).push(fn);
     }
     run.at = [];
+    // Slots run in order. When the page stalls (a big image decode, a busy
+    // main thread), the first timer to fire runs every slot already due, so
+    // the round catches up at once and still ends inside its window.
+    const order = [...slots].sort((a, b) => a[0] - b[0]);
+    let next = 0;
+    const drain = (key) => {
+      if (run.stopped) return;
+      // The timeline clock only moves once a frame; never run less than this timer's own slot.
+      const due = Math.max(key, timelineNow() - run.t0);
+      flushRetire(run);
+      while (next < order.length && order[next][0] <= due) {
+        const fns = order[next][1];
+        next += 1;
+        for (const fn of fns) if (!run.stopped) fn();
+      }
+    };
+    const now = timelineNow();
+    for (const [key] of order) run.timers.push(setTimeout(() => drain(key), Math.max(0, run.t0 + key - now)));
   }
 
   function finishRun(run, value) {
@@ -622,7 +696,7 @@ export function createReveal(ctx) {
       const g = st.g;
       const el = document.createElement("span");
       el.className = `rv-gain${big ? " big" : ""}`;
-      el.innerHTML = `+<span aria-hidden="true">✦</span>${coins(value)}`;
+      el.textContent = `+${coins(value)}`;
       el.style.left = `${r2(g.heroX)}px`;
       el.style.top = `${r2(Math.max(10, g.fanY - (g.ch * g.fanS) / 2 - 4))}px`;
       st.root.appendChild(el);
@@ -661,7 +735,7 @@ export function createReveal(ctx) {
     });
     const rings = fx.querySelectorAll(".rv-ring");
     rings.forEach((ring, i) =>
-      A(run, ring, [{ opacity: 0.95, transform: "scale(0.35)" }, { opacity: 0.4, offset: 0.55 }, { opacity: 0, transform: `scale(${tier >= 3 ? 3.4 : 2.6})` }], t + i * 150, 700, EASE.snap)
+      A(run, ring, [{ opacity: 0.95, transform: "scale(0.35)" }, { opacity: 0.4, offset: 0.55 }, { opacity: 0, transform: `scale(${tier >= 3 ? 2.9 : 2.3})` }], t + i * 150, 700, EASE.snap)
     );
     fx.querySelectorAll(".rv-spark").forEach((spark, i) => {
       const ang = (Math.PI * 2 * i) / sparks + rand(-0.25, 0.25);
@@ -771,9 +845,9 @@ export function createReveal(ctx) {
       run,
       pack.lid,
       [
-        { transform: "perspective(420px) translate(0px, 0px) rotate(0deg) rotateX(0deg)", opacity: 1 },
-        { transform: `perspective(420px) translate(${r2(g.pw * 0.12)}px, ${r2(-g.ph * 0.1)}px) rotate(10deg) rotateX(-70deg)`, opacity: 1, offset: 0.38 },
-        { transform: `perspective(420px) translate(${r2(g.pw * 0.38)}px, ${r2(-g.ph * 0.26)}px) rotate(24deg) rotateX(-160deg)`, opacity: 0 },
+        { transform: "translate(0px, 0px) rotate(0deg) scaleY(1)", opacity: 1 },
+        { transform: `translate(${r2(g.pw * 0.14)}px, ${r2(-g.ph * 0.11)}px) rotate(11deg) scaleY(0)`, opacity: 1, offset: 0.45 },
+        { transform: `translate(${r2(g.pw * 0.38)}px, ${r2(-g.ph * 0.25)}px) rotate(24deg) scaleY(-0.85)`, opacity: 0 },
       ],
       q0,
       qd,
@@ -783,8 +857,8 @@ export function createReveal(ctx) {
     pack.segs.forEach((seg) => {
       const artEl = seg.querySelector(":scope > .rv-seg-art");
       const silverEl = seg.querySelector(":scope > .rv-seg-silver");
-      A(run, artEl, [{ opacity: 1 }, { opacity: 1, offset: 0.44 }, { opacity: 0, offset: 0.46 }, { opacity: 0 }], q0, qd, EASE.out);
-      A(run, silverEl, [{ opacity: 0 }, { opacity: 0, offset: 0.44 }, { opacity: 1, offset: 0.46 }, { opacity: 1 }], q0, qd, EASE.out);
+      A(run, artEl, [{ opacity: 1 }, { opacity: 1, offset: 0.45 }, { opacity: 0, offset: 0.45 }, { opacity: 0 }], q0, qd, EASE.out);
+      A(run, silverEl, [{ opacity: 0 }, { opacity: 0, offset: 0.45 }, { opacity: 1, offset: 0.45 }, { opacity: 1 }], q0, qd, EASE.out);
     });
     if (flash) {
       A(
@@ -849,7 +923,7 @@ export function createReveal(ctx) {
     A(
       run,
       pack.el,
-      [{ transform: "none", opacity: 1 }, { transform: `translateY(${r2(g.ph * 0.16)}px) rotate(2deg)`, opacity: 1, offset: 0.35 }, { transform: `translateY(${r2(g.ph * 0.5)}px) rotate(5deg)`, opacity: 0 }],
+      [{ transform: "none", opacity: 1 }, { transform: `translateY(${r2(g.ph * 0.1)}px) rotate(1.5deg)`, opacity: 1, offset: 0.3 }, { transform: `translateY(${r2(g.ph * 0.3)}px) rotate(4deg) scale(0.96)`, opacity: 0 }],
       d0,
       dd,
       EASE.in
@@ -899,9 +973,9 @@ export function createReveal(ctx) {
       const hit = tier >= 2 && flashOk();
       const row = {
         charge: hit ? (tier >= 3 ? [950, 560] : [560, 340]) : j === last && m > 2 ? [260, 120] : [0, 0],
-        turn: s.kind === "group" ? [440, 280] : tier >= 2 ? [440, 300] : tier === 1 ? [380 * ramp, 240] : [300 * ramp, 170],
+        turn: s.kind === "group" ? [420, 280] : tier >= 2 ? [440, 300] : tier === 1 ? [340 * ramp, 220] : [230 * ramp, 150],
         pop: hit ? (tier >= 3 ? [760, 480] : [540, 360]) : [0, 0],
-        hold: s.kind === "group" ? [220, 90] : hit ? [420, 160] : tier === 1 ? [240 * ramp, 90] : [70 * ramp, 10],
+        hold: s.kind === "group" ? [260, 110] : hit ? [440, 180] : tier === 1 ? [300 * ramp, 120] : [150 * ramp, 60],
       };
       return row;
     });
@@ -1165,10 +1239,14 @@ export function createReveal(ctx) {
       const el = parts.els.get(plan.best);
       const L = liftPose(g);
       const from = deckPose(g, 0);
-      const charge = hit ? (tier >= 3 ? 520 : 340) * k : 160 * k;
-      const turn = 360 * k;
-      const pop = hit ? (tier >= 3 ? 560 : 420) * k : 240 * k;
       const start = Math.max(T0 + waveDur * 0.55, waveEnd - 140 * k);
+      let charge = hit ? (tier >= 3 ? 520 : 340) * k : 160 * k;
+      let turn = 360 * k;
+      let pop = hit ? (tier >= 3 ? 560 : 420) * k : 240 * k;
+      const fit = clamp((windowEnd - start) / (charge + turn + pop), 0.45, 1);
+      charge *= fit;
+      turn *= fit;
+      pop *= fit;
       const C = hit ? pose(g.heroX, g.heroY - g.ch * 0.07, 0, 1.07) : L;
       if (hit) {
         const amp = tier >= 3 ? 2.4 : 1.4;
@@ -1348,7 +1426,7 @@ export function createReveal(ctx) {
       s.sum = res.running;
       lastFinal = Math.max(lastFinal, res.finalAt);
     }
-    const endAt = Math.min(D, lastFinal + 40);
+    const endAt = Math.min(D - 40, lastFinal + 40);
     for (const s of setups) {
       at(run, Math.min(endAt, s.final + 40), () => settleLane(s, totalOf(s.lane)));
     }
@@ -1398,6 +1476,7 @@ export function createReveal(ctx) {
       }
       parts.deck.querySelectorAll(".rv-hitfx").forEach((fx) => fx.remove());
       parts.halo.style.opacity = "";
+      parts.halo.style.transform = "";
       restHalo(parts.halo, plan);
       if (plan.n && Math.abs((s.sum ?? 0) - total) > 0.001) tick(s.lane, total);
     }
@@ -1436,7 +1515,7 @@ export function createReveal(ctx) {
       // The pile sits behind the winner's front card, low and a little to the side.
       const side = k % 2 ? 1 : -1;
       const dest = pose(g.heroX + side * rand(g.cw * 0.12, g.cw * 0.3), g.heroY + g.ch * 0.08 - Math.min(k, 12) * 0.9, side * rand(4, 14), 0.78);
-      const z = 40 + Math.min(k, 30);
+      const z = 40 + Math.min(k, 30); // under the winner's front card (80)
       const fromRect = f.from.el.getBoundingClientRect();
       const toRect = st.el.getBoundingClientRect();
       const cur = parsePose(f.el.style.transform);
@@ -1490,6 +1569,19 @@ export function createReveal(ctx) {
         run.anims.push(settle);
       });
       endAt = Math.max(endAt, when + dur + 240);
+    });
+    // The losers' stages go dark: their resting light leaves with the cards.
+    lose.forEach((st) => {
+      const halo = st.root.querySelector(".rv-halo");
+      if (!halo) return;
+      if (!animate) {
+        halo.style.opacity = "0";
+        return;
+      }
+      at(run, 0, () => {
+        const a = halo.animate([{ opacity: getComputedStyle(halo).opacity }, { opacity: 0 }], { duration: 500, easing: EASE.out, fill: "forwards" });
+        a.finished.then(() => { halo.style.opacity = "0"; a.cancel(); }, () => {});
+      });
     });
     if (!animate) {
       finishRun(run, { moved: flying.length });

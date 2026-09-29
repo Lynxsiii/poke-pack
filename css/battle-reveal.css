@@ -95,11 +95,11 @@
   border-radius: 50%;
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.5);
-  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.78), rgb(var(--rv-tint) / 0.42) 34%, rgb(var(--rv-tint) / 0.12) 56%, transparent 72%);
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.9), rgb(var(--rv-tint) / 0.55) 30%, rgb(var(--rv-tint) / 0.18) 54%, transparent 72%);
 }
 .rv-halo.rest {
-  opacity: 0.3;
-  transform: translate(-50%, -50%) scale(1.02);
+  opacity: 0.22;
+  transform: translate(-50%, -50%) scale(0.92);
 }
 .rv-hitfx {
   position: absolute;
@@ -336,11 +336,6 @@
   pointer-events: none;
 }
 .rv-gain.big { font-size: 16px; font-weight: 750; }
-.rv-gain > span {
-  font-size: 0.78em;
-  margin: 0 0.14em 0 0.06em;
-  vertical-align: 0.06em;
-}
 
 /* ---- Finale: cards in flight between stages ------------------------------------- */
 .rv-fly {
