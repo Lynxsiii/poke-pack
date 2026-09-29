@@ -218,7 +218,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ex .foil::after {
   background-position:
     center center,
     0% var(--background-y),
-    calc((var(--background-x) + (var(--background-y) * 0.2)) * -1)
+    calc(100% - (var(--background-x) + (var(--background-y) * 0.2)))
       calc(var(--background-y) * -1),
     var(--background-x) var(--background-y);
   background-size: 220px 220px, 200% 400%, 195% 100%, 200% 100%;

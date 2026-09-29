@@ -381,7 +381,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .foil::after {
 }
 body.fx-holo.fx-holo.fx-holo .tcg.foil-ir.has-foil-map .foil::after {
   background-position: center, 0% var(--background-y),
-    calc(var(--background-x) * -1) calc(var(--background-y) * -1), var(--background-x) var(--background-y);
+    calc(100% - var(--background-x)) calc(var(--background-y) * -1), var(--background-x) var(--background-y);
   background-size: 140px 100%, 200% 400%, 195% 100%, 200% 100%;
   /* Was contrast 2.5 saturate 1.5: the grain came through as a harsh
      green-and-black speckle in the far corner of the card (Noah,
