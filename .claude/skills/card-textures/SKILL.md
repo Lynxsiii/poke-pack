@@ -304,6 +304,19 @@ cure"). The surface gloss throws a soft highlight.
   adds grain (`WOBBLE`, `DEPTH`, `SOFTEN`, `GRAIN`), and a map is judged by
   numbers before its look: no fft peak above about 60 times the mean, a
   mid-tone share near Live's 0.55-0.65.
+- **An asset changed under its old name is invisible for a year.** `_headers`
+  serves `/assets/*` as `immutable, max-age=31536000`, so a phone that has
+  seen a map, scan or tile keeps that copy and never asks again. Espeon ex
+  MEP 108 stayed screened on Noah's phone after PR #73 redrew its etch map
+  in place (2026-09-29), and 109 stamp and cosmos maps from #44 and #68 had
+  been stale the same way. A changed asset gets a new filename (`-v2`,
+  `-v3`: a name that never existed, since an old name may be cached with
+  its old bytes) and the data points at it; `scripts/make_card_etch.py
+  --ship` does this by itself, `scripts/check_asset_overwrites.py` lists
+  every in-place change against master (`--fix` renames and rewrites the
+  references) and the sweep fails on one. Only `css/`, `js/`, `data/` and
+  the pages are `no-cache`; a changed sheet still needs its `?v=` bump in
+  index.html.
 - **No two cards share a texture.** A real SIR, full-art Ultra Rare or
   gold is engraved along its own drawing, so one tile repeated over two
   hundred prints reads as wallpaper (Noah, 2026-09-28: "I want every
@@ -415,6 +428,7 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/cosmos_window_maps.py` | Redraws the cosmos promos' drawn window-and-frame maps at TCG Live strength (window at alpha 130, frame full, owner badge cut, the plain print's Live window when it has one); `--all` or `--set <set> --cards <n>` |
 | `scripts/soften_etch.py` | Draws a gold print's soft engraving `assets/foil/maps/<set>/<n>-etch-soft.webp` from its etch map (blurred, curved) and sets `etchSoft` (`--set <set> --all`: every `finish: "scodix"` print) |
 | `scripts/make_glitter_flecks.py` | Draws a seeded glitter tile (`glitter-flecks.webp` dense, `glitter-fine.webp` sparse: `--density 0.03 --seed 4242`) |
+| `scripts/check_asset_overwrites.py` | Lists every file under `assets/` changed in place against master (cached for a year under that name); `--fix` renames each to the next never-used `-vN` and rewrites the references in data, js, css and index.html. The sweep runs it last. |
 | `scripts/check_foil_maps.py` | Flag foil maps that may be swapped between cards |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
 

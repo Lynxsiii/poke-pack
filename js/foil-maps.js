@@ -104,9 +104,16 @@ export function swshPattern(card) {
   const is = (sub) => subs.includes(sub);
   const trainer = card.supertype === "Trainer";
   if (card.gallery === "cc") {
-    // No TCG Live map: the window holo keeps the layout's window clip, the
-    // whole-card holos (Gold Star, Shining, the ex and LV.X reprints) drop it.
+    // No TCG Live map. Photos (Charizard 4/102 in its "Confetti Holofoil"
+    // slab, Blastoise 2/102, Venusaur 15/102): the confetti covers the whole
+    // card face, frame and text box included, not only the window.
     return `foil-holo swsh-holo swsh-classic${CLASSIC_FULL_FOIL.test(card.name || "") ? " swsh-classic-full" : ""}`;
+  }
+  // Celebrations 001-025: every card is foil over the whole face inside the
+  // yellow frame (Lugia 022, Lunala 015 photos), a soft pearl sheen rather
+  // than the brushed window holo, whatever Live's map says.
+  if (String(card.id || "").startsWith("cel25-") && (card.rarity === "Rare" || card.rarity === "Rare Holo")) {
+    return "foil-holo swsh-holo swsh-cel";
   }
   if (card.gallery === "sv") {
     if (is("VMAX")) return "foil-ultra swsh-vmax swsh-shiny";
@@ -139,11 +146,8 @@ export function swshPattern(card) {
     default:
       break;
   }
-  // Celebrations prints every card as a holo; its Rares are holos. In every
-  // other set the plain Rare is not foil at all.
-  if (card.rarity === "Rare") {
-    return String(card.id || "").startsWith("cel25-") ? "foil-holo swsh-holo" : "foil-none";
-  }
+  // Outside Celebrations (handled above) the plain Rare is not foil at all.
+  if (card.rarity === "Rare") return "foil-none";
   return "";
 }
 

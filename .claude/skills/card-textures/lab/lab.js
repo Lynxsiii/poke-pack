@@ -100,6 +100,9 @@ async function foilMaps(list) {
   if (!params.get("maps")) return {};
   const exists = (url) => fetch(url, { method: "HEAD" }).then((r) => r.ok, () => false);
   const found = await Promise.all(list.map(async (c) => {
+    // A card that ships a map names it in the data (a -vN name once it has
+    // been redrawn: /assets/* is cached for a year), so no guessing then.
+    if (c.foilMap) return [c.id, { url: "/" + c.foilMap, lum: false }];
     const shipped = `/assets/foil/maps/${setId}/${c.number}.webp`;
     if (await exists(shipped)) return [c.id, { url: shipped, lum: false }];
     const raw = `./cache/${setId}/${c.number}.foil.png`;

@@ -258,6 +258,12 @@ def main():
     rc = 0
     for s in sets:
         rc |= sweep(s, a.out_dir, a.poses, a.w, a.scale, a.per_row, a.stamped, specks=not a.no_specks)
+    # An asset changed under its old name is cached for a year on every phone
+    # that saw it (Espeon ex MEP 108 after #73): the sweep fails on it too.
+    r = subprocess.run([sys.executable, os.path.join(HERE, "check_asset_overwrites.py")], cwd=ROOT,
+                       capture_output=True, text=True)
+    print(r.stdout.strip())
+    rc |= r.returncode
     return rc
 
 
