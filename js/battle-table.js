@@ -100,7 +100,6 @@ export function createTable(ctx) {
   function show(nextId) {
     hide();
     visible = true;
-    ambientBefore = document.body.style.getPropertyValue("--ambient");
     ambientSrc = "";
     id = String(nextId || "");
     battle = null; view = "loading"; loadError = null; netError = false; busy = false;
@@ -156,7 +155,13 @@ export function createTable(ctx) {
     const g = gen;
     const img = new Image();
     img.decoding = "async";
-    const apply = () => { if (alive(g) && ambientSrc === src) tintFrom(img); };
+    const apply = () => {
+      if (!alive(g) || ambientSrc !== src) return;
+      // Remember the light we found only now, so a tint the site applied
+      // while we loaded is the one handed back.
+      if (ambientBefore === null) ambientBefore = document.body.style.getPropertyValue("--ambient");
+      tintFrom(img);
+    };
     img.addEventListener("load", apply, { once: true });
     img.src = src;
     if (img.complete && img.naturalWidth) apply();
@@ -307,11 +312,16 @@ export function createTable(ctx) {
     }
     render();
     // Start pressed from the dock at the bottom: bring the table up for the 3-2-1.
-    if (prev === "lobby" && (next === "intro" || next === "live")) {
+    if (prev === "lobby" && (next === "intro" || next === "live") && players() <= 2) {
       const top = region("head")?.getBoundingClientRect().top ?? 0;
       if (top < 0 || top > innerHeight * 0.4) region("head").scrollIntoView({ behavior: motion() ? "smooth" : "auto", block: "start" });
     }
     if (next === "lobby" || next === "intro") ensurePacks(0);
+    if ((next === "intro" || next === "live") && prev !== next && players() > 2) bringTableUp();
+    // The table shrinks to a note when it is cancelled: start from the top.
+    if (next === "cancelled" && prev !== "cancelled" && prev !== "loading" && (region("head")?.getBoundingClientRect().top ?? 0) < 0) {
+      window.scrollTo({ top: 0, behavior: motion() ? "smooth" : "auto" });
+    }
     ensureTicker();
   }
 
@@ -329,6 +339,7 @@ export function createTable(ctx) {
     paintIntro();
     syncBusy();
     updateFloats();
+    tintTable();
   }
 
   /* The page scrolls inside a body that clips overflow, so position: sticky
@@ -359,7 +370,7 @@ export function createTable(ctx) {
       const bar = document.querySelector(".tabbar");
       const barTop = bar && getComputedStyle(bar).display !== "none" ? bar.getBoundingClientRect().top : innerHeight;
       const r = slot.getBoundingClientRect();
-      const float = matchMedia("(max-width: 720px)").matches && r.bottom > barTop - 12;
+      const float = r.bottom > barTop - 12;
       if (float && !slot.classList.contains("is-float")) slot.style.height = `${slot.offsetHeight}px`;
       if (!float) slot.style.height = "";
       slot.classList.toggle("is-float", float);
@@ -472,6 +483,7 @@ export function createTable(ctx) {
       <div class="tb-track" aria-hidden="true">${segs}</div>
     </div>`);
     paintCountdown();
+    tintTable();
   }
 
   function paintCountdown() {
@@ -637,7 +649,9 @@ export function createTable(ctx) {
     rafId = 0;
     if (!visible) return;
     for (const [i, tw] of tweens) {
-      const f = Math.min(1, (t - tw.start) / tw.ms);
+      // A frame's timestamp can be a little older than the tween's start:
+      // clamp, or the ease runs backwards and a score dips below zero.
+      const f = Math.max(0, Math.min(1, (t - tw.start) / tw.ms));
       disp[i] = tw.from + (tw.to - tw.from) * (1 - Math.pow(1 - f, 3));
       if (f >= 1) { disp[i] = tw.to; tweens.delete(i); }
     }
@@ -772,14 +786,49 @@ export function createTable(ctx) {
     if (view !== "intro" || !battle) {
       if (introDigit) { introDigit = ""; el.innerHTML = ""; }
       el.classList.remove("is-on");
+      host.classList.remove("is-counting");
       return;
     }
     const left = battle.startsAt - ctx.clock.now();
     const digit = left > 0 ? String(Math.min(3, Math.ceil(left / 1000))) : "";
     el.classList.toggle("is-on", Boolean(digit));
+    host.classList.toggle("is-counting", Boolean(digit));
+    if (digit) placeIntro(el);
     if (digit === introDigit) return;
     introDigit = digit;
     el.innerHTML = digit ? `<span class="tb-intro-n${motion() ? " is-anim" : ""}" aria-label="Starting in ${digit}">${digit}</span>` : "";
+  }
+
+  /* The numeral sits in the middle of the part of the table on screen, not
+     the middle of a 2x2 table that runs under the tab bar. */
+  function placeIntro(el) {
+    const table = region("table")?.getBoundingClientRect();
+    if (!table) return;
+    const head = host.querySelector(".tb-head.is-float .tb-round")?.getBoundingClientRect();
+    const top = Math.max(table.top, head ? head.bottom : Math.max(0, document.querySelector(".site-header")?.getBoundingClientRect().bottom || 0));
+    const bar = document.querySelector(".tabbar");
+    const barTop = bar && getComputedStyle(bar).display !== "none" ? bar.getBoundingClientRect().top : innerHeight;
+    const bottom = Math.min(table.bottom, barTop, innerHeight);
+    const y = bottom > top ? (top + bottom) / 2 - table.top : table.height / 2;
+    el.style.setProperty("--intro-y", `${Math.round(Math.max(60, Math.min(table.height - 60, y)))}px`);
+  }
+
+  /* 3 and 4 player tables are taller than a phone: once the battle starts,
+     bring the whole table on screen (under the floating round header). */
+  let broughtUp = "";
+  function bringTableUp() {
+    if (!battle || broughtUp === battle.id || !matchMedia("(max-width: 720px)").matches) return;
+    const table = region("table");
+    if (!table) return;
+    broughtUp = battle.id;
+    const r = table.getBoundingClientRect();
+    const bar = document.querySelector(".tabbar");
+    const barTop = bar && getComputedStyle(bar).display !== "none" ? bar.getBoundingClientRect().top : innerHeight;
+    if (r.bottom <= barTop - 4 && r.top >= 0) return;
+    // The round header floats at the top once the page scrolls (about its own height plus padding).
+    const headH = (region("head")?.querySelector(".tb-round")?.offsetHeight || 55) + 18;
+    const y = scrollY + r.top - headH - 6;
+    if (Math.abs(y - scrollY) > 24) window.scrollTo({ top: Math.max(0, y), behavior: motion() ? "smooth" : "auto" });
   }
 
   function ensureTicker() {
@@ -853,10 +902,19 @@ export function createTable(ctx) {
       if (w.length && lose.length) {
         await Promise.race([Promise.resolve(R("playFinale", { winners: w, losers: lose })).catch(() => {}), wait(6000)]);
         if (!alive(g)) return;
+        leaveGhosts(lanes.filter((l) => !win.has(l.seat)).map((l) => l.seat));
       }
     }
     finaleDone = true;
+    // The result heading is taller than the round header: slide the table
+    // down to its new place instead of letting it jump under the reader.
+    const tableEl = region("table");
+    const before = tableEl?.getBoundingClientRect().top;
     render();
+    const shift = before - (tableEl?.getBoundingClientRect().top ?? before);
+    if (!direct && motion() && Math.abs(shift) > 4 && tableEl?.animate) {
+      tableEl.animate([{ transform: `translateY(${Math.round(shift)}px)` }, { transform: "none" }], { duration: 650, easing: "cubic-bezier(0.2, 0.8, 0.2, 1)" });
+    }
     host.classList.toggle("is-entering", !direct && motion());
     if (!direct && motion()) {
       const t = setTimeout(() => { timers.delete(t); host.classList.remove("is-entering"); }, 1200);
@@ -870,7 +928,32 @@ export function createTable(ctx) {
     }
   }
 
+  /* After the finale a losing stage is empty: keep a ghost of its best pull
+     and say where the cards went, so the result reads as a result. */
+  function leaveGhosts(seats) {
+    const w = winners();
+    const s = settings();
+    const to = s.teams && players() === 4 && new Set(w.map(teamOf)).size === 1
+      ? `Team ${teamOf(w[0]) + 1}`
+      : w.length === 1 ? (isMe(seatAt(w[0])) ? "you" : seatAt(w[0])?.name || "the winner") : "the winners";
+    const all = allPulls();
+    for (const seat of seats) {
+      const frame = host.querySelector(`.tb-lane[data-seat="${seat}"] .tb-stage-frame`);
+      if (!frame || frame.querySelector(".tb-gone")) continue;
+      const mine = all.filter((p) => p.seat === seat);
+      const best = mine.reduce((b, p) => (!b || cents(p.card.value) > cents(b.card.value) ? p : b), null);
+      const who = isMe(seatAt(seat)) ? "Your" : "";
+      const el = document.createElement("div");
+      el.className = `tb-gone${motion() ? " is-anim" : ""}`;
+      el.innerHTML = `${best ? `<img src="${esc(smallImage(best.card))}" data-full="${esc(best.card.image || "")}" alt="" decoding="async" />` : ""}
+        <p>${who ? `${who} ${plural(mine.length, "card").replace(/^1 card$/, "card")}` : plural(mine.length, "card")} went to ${esc(to)}</p>`;
+      frame.appendChild(el);
+    }
+  }
+  const clearGhosts = () => host.querySelectorAll(".tb-gone").forEach((el) => el.remove());
+
   async function showHaul() {
+    clearGhosts();
     const token = ++stageToken;
     const g = gen;
     const all = allPulls();

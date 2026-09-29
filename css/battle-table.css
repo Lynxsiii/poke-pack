@@ -41,7 +41,7 @@
   text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
 }
 .tb-link-btn:hover span, .tb-text-link:hover { text-decoration-color: var(--ink); }
-.tb-top .ghost.sm { gap: 6px; display: inline-flex; align-items: center; min-height: 38px; }
+.tb-top .ghost.sm { gap: 6px; display: inline-flex; align-items: center; min-height: 44px; }
 .tb-invite-field { flex-basis: 100%; display: grid; gap: 4px; padding-bottom: 6px; }
 .tb-invite-field input {
   min-height: 44px; padding: 0 12px; border-radius: var(--r-sm);
@@ -64,7 +64,7 @@
 .tb-head.is-float .tb-round {
   position: fixed; top: var(--tb-top, 0px); left: 0; right: 0; z-index: 25;
   padding: 8px max(var(--gutter), calc((100vw - 1100px) / 2)) 10px;
-  background: color-mix(in oklab, var(--bg) 94%, transparent);
+  background: var(--bg);
   box-shadow: 0 1px 0 var(--line), 0 12px 24px -12px rgb(0 0 0 / 0.6);
 }
 .tb-dock-slot.is-float .tb-dock {
@@ -115,7 +115,8 @@
   display: grid; place-items: center; min-width: 24px; height: 22px; padding: 0 6px; border-radius: 999px;
   background: var(--ink); color: var(--black); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
 }
-.tb-qty { position: absolute; z-index: 2; right: -6px; bottom: -4px; }
+/* Bottom left: the next item in the fan overlaps this one's right edge. */
+.tb-qty { position: absolute; z-index: 2; left: -6px; bottom: -4px; }
 .tb-pot-more { align-self: center; margin-left: 8px; background: var(--surface-3); color: var(--ink); }
 .tb-pot-copy { display: grid; gap: 2px; min-width: 0; line-height: 1.3; }
 .tb-pot-label { font-size: 13px; color: var(--muted); }
@@ -170,7 +171,7 @@
 .tb-lane-sub { font-size: 13px; color: var(--muted); }
 .tb-score { font-size: 15px; line-height: 1.3; }
 .tb-unbot {
-  display: grid; place-items: center; flex: none; width: 40px; height: 40px; margin: -4px -8px -4px 0;
+  display: grid; place-items: center; flex: none; width: 44px; height: 44px; margin: -6px -10px -6px 0;
   border: 0; border-radius: var(--r-sm); background: none; color: var(--muted); cursor: pointer;
 }
 .tb-unbot:hover { color: var(--ink); background: var(--surface-2); }
@@ -208,7 +209,27 @@
 
 /* The result: winners lift, everyone else steps back. */
 .tb-lane.is-winner { transform: translateY(-6px); }
-.tb-lane.is-loser { opacity: 0.45; }
+.tb-lane-head, .tb-stage { transition: opacity 0.5s ease; }
+.tb-lane.is-loser .tb-lane-head { opacity: 0.55; }
+.tb-lane.is-loser .tb-stage { opacity: 0.45; }
+
+/* A losing stage after the finale: a ghost of its best pull and where the
+   cards went (js/battle-table.js leaveGhosts). */
+.tb-gone {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; align-items: center;
+  padding: 14% 10px 12px; border-radius: var(--r); box-shadow: inset 0 0 0 1px var(--line);
+}
+.tb-gone img {
+  width: 52%; max-height: 100%; aspect-ratio: 63 / 88; object-fit: cover; border-radius: 4.5% / 3.2%;
+  opacity: 0.32; filter: grayscale(0.7); transform: rotate(-4deg);
+}
+.tb-gone p {
+  margin: 10px 0 0; max-width: 100%; text-align: center; text-wrap: balance;
+  font-size: 13px; line-height: 1.3; color: var(--ink-2);
+}
+.tb-gone.is-anim { animation: tb-gone-in 0.6s var(--ease-out) both; }
+@keyframes tb-gone-in { from { opacity: 0; transform: translateY(8px); } }
 
 /* Open seat, the same size as a stage. */
 .tb-lane.is-open .tb-lane-name { color: var(--ink-2); }
@@ -228,10 +249,11 @@
 
 /* 3-2-1 over the table. */
 .tb-intro {
-  position: absolute; inset: 0; z-index: 6; display: grid; place-items: center;
+  position: absolute; inset: 0; z-index: 6;
   pointer-events: none; border-radius: inherit;
 }
 .tb-intro-n {
+  position: absolute; left: 50%; top: var(--intro-y, 50%); translate: -50% -50%;
   font-size: clamp(110px, 34vw, 190px); font-weight: 800; font-variation-settings: "opsz" 96;
   line-height: 1; letter-spacing: -0.04em; color: var(--ink); font-variant-numeric: tabular-nums;
   text-shadow: 0 12px 48px rgb(0 0 0 / 0.7), 0 2px 6px rgb(0 0 0 / 0.5);
@@ -242,6 +264,11 @@
   28% { opacity: 1; transform: scale(1); }
   100% { opacity: 0.92; transform: scale(0.9); }
 }
+
+/* While the numerals count down, the sealed packs wait a step back so the
+   figure reads cleanly; they come forward as the first pack opens. */
+.tb-lanes { transition: opacity 0.45s ease; }
+.tb.is-counting .tb-lanes { opacity: 0.5; }
 
 /* Rules, actions under the table. */
 .tb-rules { margin: 12px 4px 0; font-size: 13px; color: var(--muted); }
@@ -353,6 +380,37 @@
   .tb-dock .solid { min-width: 0; }
   .tb-result-actions .solid, .tb-result-actions .ghost { flex: 1 1 0; }
   .tb-result-actions .tb-text-link { flex-basis: 100%; justify-content: center; }
+
+  /* Three and four seats: a 2x2 table has to fit between the floating round
+     header and the tab bar, so every lane's reveal is on screen at once. */
+  .tb-lanes-grid.p3, .tb-lanes-grid.p4, .tb-lanes-grid.teams { row-gap: 10px; }
+  .tb-lanes-grid.p3 .tb-lane, .tb-lanes-grid.p4 .tb-lane, .tb-lanes-grid.teams .tb-lane { gap: 6px; }
+  .tb-lanes-grid.p3 .tb-stage, .tb-lanes-grid.p4 .tb-stage,
+  .tb-lanes-grid.p3 .tb-seat-open, .tb-lanes-grid.p4 .tb-seat-open {
+    aspect-ratio: auto;
+    height: clamp(160px, calc((100vh - var(--tabbar) - 205px) / 2), 250px);
+    height: clamp(160px, calc((100svh - var(--tabbar) - 205px) / 2), 250px);
+  }
+  .tb-lanes-grid.teams { gap: 6px; }
+  .tb-lanes-grid.teams > .tb-vs { display: none; }
+  .tb-team { gap: 4px; }
+  .tb-lanes-grid.teams .tb-stage, .tb-lanes-grid.teams .tb-seat-open {
+    aspect-ratio: auto;
+    height: clamp(150px, calc((100vh - var(--tabbar) - 270px) / 2), 250px);
+    height: clamp(150px, calc((100svh - var(--tabbar) - 270px) / 2), 250px);
+  }
+}
+
+/* Wider screens: the lobby's actions float as a small bar at the foot of
+   the window while their place is below the fold. */
+@media (min-width: 721px) {
+  .tb-dock-slot.is-float .tb-dock {
+    left: 50%; right: auto; bottom: 20px; width: min(520px, calc(100vw - 48px)); translate: -50% 0;
+    padding: 8px; border-radius: var(--r);
+    background: color-mix(in oklab, var(--bg) 90%, white);
+    box-shadow: 0 0 0 1px var(--line-2), 0 16px 32px -12px rgb(0 0 0 / 0.7);
+  }
+  .tb-dock-slot.is-float .tb-dock > * { flex: 1 1 0; min-width: 0; }
 }
 
 /* ---- Wider screens: lanes in a row, bigger stages ---------------------- */

@@ -797,6 +797,9 @@ export function createReveal(ctx) {
     pk.style.willChange = "transform, opacity";
     if (T.packIn) {
       A(run, pk, [{ opacity: 0, transform: `translateY(${r2(g.ph * 0.28)}px) scale(0.9)` }, { opacity: 1, transform: "none" }], 0, T.packIn, EASE.spring);
+      // The new stack waits inside the pack; while the pack is still fading
+      // in it would show through, so it stays hidden until the pack is solid.
+      A(run, parts.deck, [{ opacity: 0 }, { opacity: 0, offset: 0.98 }, { opacity: 1 }], 0, T.packIn, EASE.lin);
     }
     // Tremble: small, quickening shivers, the last one settling.
     const [t0, td] = T.tremble;

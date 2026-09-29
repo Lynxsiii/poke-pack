@@ -48,6 +48,8 @@
   color: var(--muted); font-size: 14px; font-weight: 600; line-height: 1.2; white-space: nowrap;
   scroll-snap-align: start; cursor: pointer; transition: color 0.15s ease;
 }
+/* Short words ("All") still get a thumb-sized target, reaching into the gap. */
+#view-battles .hl-word::before { content: ""; position: absolute; inset: 0 -11px; }
 #view-battles .hl-word:hover:not(:disabled) { color: var(--ink); }
 #view-battles .hl-word:disabled { color: var(--faint); cursor: default; }
 #view-battles .hl-word.on { color: var(--ink); }
@@ -74,6 +76,7 @@
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
 }
 #view-battles .hl-seg.is-wide { display: flex; width: 100%; }
+@media (max-width: 720px) { #view-battles .hl-seg button { min-height: 44px; } }
 #view-battles .hl-seg.is-wide button { padding: 6px 4px; white-space: nowrap; font-size: 13.5px; }
 
 /* Skeleton lines while something loads. */
@@ -150,8 +153,8 @@
   font-size: 13px; font-weight: 600; color: var(--ink-2);
 }
 #view-battles .hl-change {
-  position: absolute; right: 8px; top: 6px; z-index: 2;
-  min-height: 40px; padding: 8px 8px; border: 0; background: none;
+  position: absolute; right: 8px; top: 4px; z-index: 2;
+  min-height: 44px; padding: 8px 8px; border: 0; background: none;
   color: var(--ink); font-size: 13px; font-weight: 600;
   text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
   cursor: pointer;
@@ -418,7 +421,7 @@
 #view-battles .hl-builder { padding-bottom: 96px; }
 #view-battles .hl-builder[data-step="rules"] { padding-bottom: 150px; }
 #view-battles .hl-back {
-  display: inline-flex; align-items: center; gap: 4px; min-height: 40px; margin: -8px 0 6px -6px; padding: 0 6px;
+  display: inline-flex; align-items: center; gap: 4px; min-height: 44px; margin: -10px 0 4px -6px; padding: 0 6px;
   border-radius: var(--r-sm); color: var(--muted); font-size: 14px; font-weight: 600; text-decoration: none;
 }
 #view-battles .hl-back:hover { color: var(--ink); }
@@ -554,6 +557,13 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
 @media (max-width: 720px) {
   body.hl-in-hall.at-top .friends:not(.is-open), body.hl-in-hall.at-top .radio:not(.is-open) { opacity: 0; transform: translateY(10px); }
   body.hl-in-hall.at-top .friends:not(.is-open) > *, body.hl-in-hall.at-top .radio:not(.is-open) > * { pointer-events: none; }
+}
+
+/* On a battle table the docks would sit on the arena, the rules and the
+   lobby's action bar; they step aside there (an open one stays put). */
+@media (max-width: 1239px) {
+  body.on-battle-table .friends:not(.is-open), body.on-battle-table .radio:not(.is-open) { opacity: 0; transform: translateY(10px); }
+  body.on-battle-table .friends:not(.is-open) > *, body.on-battle-table .radio:not(.is-open) > * { pointer-events: none; }
 }
 
 #view-battles .hl-fly, .hl-fly {

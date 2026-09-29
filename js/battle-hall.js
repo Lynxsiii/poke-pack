@@ -209,7 +209,6 @@ export function createHall(ctx) {
     gen++;
     stopPoll();
     stopMotion();
-    if (ambient === null) ambient = document.body.style.getPropertyValue("--ambient");
     document.body.classList.toggle("hl-building", mode === "builder");
     document.body.classList.toggle("hl-in-hall", mode === "list");
     if (mode === "builder") {
@@ -355,8 +354,19 @@ export function createHall(ctx) {
     if (!art) return;
     const first = art.querySelector("img");
     const glint = art.querySelector(".hl-glint");
-    if (first && glint && art.querySelector(".is-pack")) tintFrom(first, glint);
-    else if (first) tintFrom(first);
+    const pack = Boolean(glint && art.querySelector(".is-pack"));
+    // Take the light once the art is in, and only then remember the page's
+    // own light (a tint the site applied while the art loaded is kept).
+    const tint = () => {
+      if (!visible || !first.isConnected) return;
+      if (ambient === null) ambient = document.body.style.getPropertyValue("--ambient");
+      if (pack) tintFrom(first, glint);
+      else tintFrom(first);
+    };
+    if (first) {
+      if (first.complete && first.naturalWidth) tint();
+      else first.addEventListener("load", tint, { once: true });
+    }
     if (!entrance || !motion()) root.querySelector(".hl-stage")?.classList.remove("is-entering");
   }
 
@@ -542,9 +552,13 @@ export function createHall(ctx) {
   };
 
   // ---- Tables ----------------------------------------------------------------
+  // One poll chain at a time: a fetch in flight owns the next timer.
+  let listInFlight = 0;
   async function fetchList() {
     const token = gen;
     stopPoll();
+    if (listInFlight === token) return;
+    listInFlight = token;
     try {
       const data = await api("/api/battles");
       if (token !== gen || !visible || mode !== "list") return;
@@ -556,8 +570,14 @@ export function createHall(ctx) {
       listError = listing ? "" : "The tables did not load. They will try again in a moment.";
       if (!listing) listing = null;
     }
+    finally {
+      if (listInFlight === token) listInFlight = 0;
+    }
     paintTables();
-    if (token === gen && visible && mode === "list") pollTimer = setTimeout(tick, POLL_MS);
+    if (token === gen && visible && mode === "list") {
+      stopPoll();
+      pollTimer = setTimeout(tick, POLL_MS);
+    }
   }
   function tick() {
     pollTimer = 0;
@@ -900,7 +920,7 @@ export function createHall(ctx) {
     const dur = 460;
     const frame = (now) => {
       rafs.delete(id);
-      const k = Math.min(1, (now - start) / dur);
+      const k = Math.max(0, Math.min(1, (now - start) / dur));
       const eased = 1 - Math.pow(1 - k, 3);
       if (!el.isConnected) return;
       el.innerHTML = `<span aria-hidden="true">✦</span> ${coins(from + (to - from) * eased)}`;
