@@ -216,7 +216,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.ha
   opacity: calc(var(--card-opacity) * 0.9);
 }
 /* The ridges facing away from the lamp, half a turn round the whorl, as
-   the dark half of the same ripples. */
+   the dark half of the same ripples. The half turn wraps (`mod`), so where
+   the pointer crosses the middle of the card (--pf-p = 0.5) the direction it
+   asks for jumps from the last grey of the map to the first, and the whole
+   layer flashed light and dark as you moved across the card (Noah,
+   2026-09-29, Safari). The layer fades out towards that line instead, so
+   the jump happens while it is invisible. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map.has-etch-angle .glare::after {
   --pf-q: mod(calc(var(--pf-p) + 0.5), 1);
   background-image:
@@ -234,7 +239,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.ha
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   mix-blend-mode: multiply;
-  opacity: calc(var(--card-opacity) * 0.45);
+  opacity: calc(var(--card-opacity) * 0.45 * min(1, abs(calc(var(--pf-p) - 0.5)) * 6.25));
 }
 /* The mirror's highlight: near-white under the lamp, a shade darker away. */
 body.fx-holo.fx-holo.fx-holo .tcg.foil-shiny.foil-shiny.foil-shiny.foil-shiny.has-foil-map .glare {
