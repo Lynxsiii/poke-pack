@@ -117,10 +117,13 @@ export function swshPattern(card) {
   }
   if (card.gallery === "sv" && card.rarity !== "Rare Secret") {
     // Shining Fates' two golds (Eternatus V SV121, VMAX SV122) are numbered
-    // in the Shiny Vault but are gold secret rares, not shinies.
-    if (is("VMAX")) return "foil-ultra swsh-vmax swsh-shiny";
-    if (is("V")) return "foil-ex swsh-v swsh-shiny";
-    return "foil-holo swsh-holo swsh-shiny";
+    // in the Shiny Vault but are gold secret rares, not shinies. The
+    // shinies are drawn by css/holo/shiny-vault.css (`sf-shiny`, the "Shiny
+    // and promo holos" thread), not by the era's V and VMAX recipes: they
+    // carry no swsh-* class, so nothing in swsh.css touches them.
+    if (is("VMAX")) return "foil-ex sf-shiny sf-vmax";
+    if (is("V")) return "foil-ex sf-shiny sf-v";
+    return "foil-holo sf-shiny";
   }
   switch (card.rarity) {
     case "Rare Secret":
@@ -267,6 +270,10 @@ export function foilExtras(card, url, reverseKind) {
     add("", "--etch-map-v", card.etchMapV);
   }
   if (card.etchAngle) add("has-etch-angle", "--etch-angle", card.etchAngle);
+  // TCG Live's etch at its native size as a luminance texture (Shining
+  // Fates' Shiny Vault, shiny-vault.css): the fingerprint rings drawn as an
+  // image, not a mask, so they need their dark ground.
+  if (card.etchHd) add("has-etch-hd", "--etch-hd", card.etchHd);
   if (card.stampPos && card.stampSize && !card.foilMap) {
     classes.push("has-stamp");
     vars.push(`--stamp-pos:${card.stampPos}`, `--stamp-size:${card.stampSize}`);

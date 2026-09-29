@@ -440,6 +440,7 @@ On the site side:
 | `css/holo/maps.css` | Foil maps as the mask, the stamp knockout, the `.cure` layer |
 | `assets/foil/maps/full.webp` | The all-white map full-art prints without a TCG Live map fall back to |
 | `assets/foil/maps/<set>/<n>-etch.webp` | An etched print's etch map: TCG Live's, or drawn from the card (`etchDrawn`, `has-etch-drawn`) |
+| `assets/foil/maps/<set>/<n>-etch-hd.webp` | TCG Live's etch at its native 733 px as a luminance texture (`etchHd`, `--etch-hd`, `has-etch-hd`), for a recipe that draws the rings as an image rather than a mask (Shining Fates' `sf-shiny`) |
 | `assets/foil/sir-etch.webp` | The fallback engraving tile for an etched full art with no etch map at all (`has-etch-tile`); the sweep fails on such a print |
 | `assets/foil/maps/<set>/<n>-etch-soft.webp` | A Scodix gold's soft engraving (`etchSoft`, `--etch-soft`): the line art dark, the hatch a satin tone |
 | `css/holo/celebration.css` | The 30th Celebration finishes, and the shared SV holo Rare, Double Rare, IR and SIR map recipes |

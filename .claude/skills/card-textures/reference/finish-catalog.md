@@ -156,6 +156,10 @@ confirm on photos before adding one.
 shinies: an etched sun-pillar foil (per TCG Live); the look is a silvery,
 textured background.
 `swsh/shiny-rare.css` (illusion texture, clipped window) and `swsh/shiny-v.css`.
+On the site: Paldean Fates draws `foil-shiny` (shiny-vault.css, the
+silver fingerprint recipe of 2026-09-27); Shining Fates' Shiny Vault draws
+`sf-shiny` in the same sheet, the upstream recipes ported over TCG Live's
+native-size etch (`etchHd`), see [sword-shield.md](sword-shield.md).
 
 **Black White Rare (`RAINBOW` / `ETCHED`)**. Monochrome stock, pearl or
 silver etch. White stock cannot be dodged brighter, so relief has to be

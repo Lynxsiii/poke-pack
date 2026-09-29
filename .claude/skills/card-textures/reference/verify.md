@@ -61,6 +61,9 @@ Read the PNG and look. Useful habits:
   (`.tcg .glare{display:none!important}`) to see what each one adds.
 - `proof=off` in the query hides the proof column, for a site-only sheet
   once a finish has shipped.
+- `tilt=0` in the query poses the cards flat (pointer variables set, no
+  rotation), to measure a render against another engine's at the same
+  light without perspective in the way (the poke-holo.simey.me benchmark).
 - `--scale 2` for fine textures (glitter, etch).
 - `--page "/"` screenshots a page of the app instead of the lab.
 
