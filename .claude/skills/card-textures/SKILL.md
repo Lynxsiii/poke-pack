@@ -148,7 +148,13 @@ cure"). The surface gloss throws a soft highlight.
 5. **Tune against the photos** in the lab: rest plus at least three poses,
    zoomed on what you changed ([reference/verify.md](reference/verify.md)).
    `scripts/foil_probe.mjs` takes the screenshots; `--styles` shows which
-   rule won.
+   rule won. Also render the same finish on poke-holo.simey.me at the same
+   tilt (30:25 and 75:65, about 275 px x 2): ours matches or beats it, with
+   our realism rules on top (Noah, 2026-09-29: "make sure our cards look
+   the same if not better than that site"). Judge the whole family of
+   finishes, not only the card that was reported: the first Sword and Shield
+   pass called everything matched after looking at one V, and the full arts
+   were still worse ([reference/sword-shield.md](reference/sword-shield.md)).
 6. **Sweep the set at phone size**:
    `scripts/sweep_finishes.py --set <set>` (`--all` after touching a shared
    sheet or `js/foil-maps.js`; `--stamped` after touching stamps, boxes or
@@ -163,14 +169,21 @@ cure"). The surface gloss throws a soft highlight.
    full arts, speckle, a line screen, dark dots, a silhouette at rest, a
    card gone grey under the thumb). Nothing merges without it: on
    2026-09-28 eight cards Noah screenshotted on his phone had passed the
-   lab at desktop size.
+   lab at desktop size. The sweep renders in Chromium, so then render every
+   etched or colour-dodged finish again in Safari's engine
+   (`foil_probe.mjs --browser webkit`; the install is in the
+   poke-pack-webkit-testing memory note): Noah's iPhone showed hairline line
+   screens and colour-dodge pixel blocks that Chromium never drew (#79).
 7. **Check the cost and the settings**: `foil_probe.mjs --idle` clean, and
    foil strength, reduced motion, tilt off, shine off, Classic, phone width
    (verify.md).
 8. **Ship**: move the rules into `css/holo/`, masks into `assets/masks/`,
    per-card data into `data/<set>.json`, update `NOTICE.md`, bump the
-   `?v=` of every sheet and script you changed in `index.html`, and record
-   what you learned in the finish's catalogue entry.
+   `?v=` of every sheet and script you changed in `index.html` (every CSS or
+   JS change, however small: Cloudflare's edge kept serving a stylesheet under
+   its unchanged tag and Noah saw #79's fixed glitches six hours late, #80),
+   run `node .claude/skills/card-textures/scripts/foil_coverage.mjs <sets>` (it must print nothing), and
+   record what you learned in the finish's catalogue entry.
 
 ## Pitfalls
 
@@ -296,14 +309,25 @@ cure"). The surface gloss throws a soft highlight.
   or window holo, so its far end must not shade it; shadow belongs to the
   engraving, drawn soft on `.foil`. `scripts/dark_specks.py` counts the
   dots a foil adds and the sweep fails on them (verify.md).
-- **A drawn etch must wander.** A straight grating, however fine, has one
-  frequency, and the browser's scaling turns it into a diagonal line screen
-  over the whole card (Espeon ex MEP 108 and every drawn-etch print,
-  2026-09-28). Live's etch is a soft hatch that bends: `make_card_etch.py`
-  warps every line with a smooth random field, draws a soft profile and
-  adds grain (`WOBBLE`, `DEPTH`, `SOFTEN`, `GRAIN`), and a map is judged by
-  numbers before its look: no fft peak above about 60 times the mean, a
-  mid-tone share near Live's 0.55-0.65.
+- **A drawn etch is a fingerprint, not a grating.** Any straight grating,
+  however fine or bent, has one frequency and one direction over a patch,
+  and the browser's scaling turns it into a diagonal line screen over the
+  card. Espeon ex MEP 108 was redrawn three times (a regular grating, a
+  soft-wobble grating, a grating per Voronoi cell) and Noah still saw it
+  ("still broken", 2026-09-29): a painterly print has little edge
+  structure, so the drawn direction collapsed to two or three facets, each
+  a fixed pitch. Live's etch and the real engraving are short, curving,
+  breaking ridges (the macro photos in `paldean-fates/texture-refs/`,
+  `shiny-ultra-rare_217-gardevoir-ex_macro-fingerprint-etch-over-pokemon`),
+  so `make_card_etch.py` now band-passes white noise to one fine ridge
+  pitch in 24 orientations and mixes the ones near the drawing's direction
+  (`PITCH`, `RADIAL_BW`, `ANGLE_BW`, `STEER`, `GAIN`). Contour rings
+  (distance to the drawing's edges) were tried and read as a swirled
+  fingerprint blob field on a flat body. Judge a map by
+  `scripts/etch_metrics.py` (direction coherence `coh` 0.3 to 0.6 like
+  Live's, not 0.7; `lb` under about 18) and then by a WebKit render at 220
+  and 340 CSS px x 3 beside a Live-etch print; the 204 drawn maps were all
+  redrawn as `-v3` on 2026-09-29.
 - **An asset changed under its old name is invisible for a year.** `_headers`
   serves `/assets/*` as `immutable, max-age=31536000`, so a phone that has
   seen a map, scan or tile keeps that copy and never asks again. Espeon ex
@@ -317,12 +341,49 @@ cure"). The surface gloss throws a soft highlight.
   references) and the sweep fails on one. Only `css/`, `js/`, `data/` and
   the pages are `no-cache`; a changed sheet still needs its `?v=` bump in
   index.html.
+- **A hairline texture aliases into a line screen at phone size.** Any
+  streak, hatch or etch whose pitch is 2 to 4 px at the map's width beats
+  against the browser's scaling and shows as a wavy or diagonal screen over
+  the whole card (Espeon ex, Surfing Pikachu VMAX, Meowth VMAX). Read shots
+  at native pixels, since a downscaled composite invents its own moiré. A
+  *drawn* etch is fixed by drawing it as a fingerprint (above); a *TCG
+  Live* etch is never softened, blurred or grained: use it at its native
+  size (`scripts/native_era_etch.py`, 733 x 1024, sigma 0.6). The 400 px
+  blurred and grained maps killed the screen and the engraving with it, and
+  read as camouflage blotches beside the demo's fine lines (#92).
+- **A tile narrower than its own pointer travel wraps into a seam.** A
+  repeating layer whose `background-size` is smaller than the range its
+  `background-position` is driven over (a negative position, or over 100%)
+  drops the tile's edge inside the card, and it draws as a hard vertical
+  line that moves with the tilt (V, VMAX, VSTAR, ultra and IR, Double
+  Rares, holo bars, gold, Tera, Classic Collection; #87, #90, #91). Keep
+  every oversized layer's position within 0 to 100%, mirrored as `100% -
+  position` where it ran backwards. `scripts/foil_coverage.mjs` renders
+  the lab at six pinned poses and prints every layer that fails; run it
+  over the sets you touched.
+- **Colour-dodge divides by (1 - source), and Safari draws the divide by
+  zero.** A dodged `.foil` whose filter chain pins a channel at 1.0 turns
+  near-black ink (gold's line art, a VMAX's text bars) into pure blue or
+  red, drawn as jagged pixel blocks in WebKit only. End the chain in
+  `contrast(0.8)` (or a closing `brightness(0.92)`) so the gain stays
+  finite, and keep the cap when retuning
+  ([reference/sword-shield.md](reference/sword-shield.md)).
+- **A colour wash is a stack of layers, so bisect before touching a
+  number.** Hide the layers one at a time (`foil_probe.mjs --css
+  ".glare{display:none}"`, then `.foil::before`, then `.foil`), find the
+  one that carries the cast, and turn that one down. The Sword and Shield
+  full arts were three layers, each fine alone: a full-opacity hard-light
+  glare, the etch-masked twin covering the painting once the etch went
+  native, and saturation tuned for the old blotches (#92 to #94). Compare
+  with the reference for what the art does, not for how bright the rainbow
+  is: the demo keeps the art's own colours and lets the rainbow ride over
+  them.
 - **No two cards share a texture.** A real SIR, full-art Ultra Rare or
   gold is engraved along its own drawing, so one tile repeated over two
   hundred prints reads as wallpaper (Noah, 2026-09-28: "I want every
   texture to be unique to each card"). Every etched print needs its own
   etch map: TCG Live's, or one drawn from the scan by
-  `scripts/make_card_etch.py` (facets of straight hatch along the art's
+  `scripts/make_card_etch.py` (fingerprint ridges steered by the art's
   edges, the ink left smooth; judge it with `--compare` beside Live's
   sv4pt5 232 Mew ex and 234 Charizard ex maps). `sweep_finishes.py` fails
   on a print left on the tile.
@@ -422,10 +483,14 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/make_futuristic_maps.py` | Draw a Futuristic Rare's foil map, etch and etch bins from its scan when TCG Live has none (hints in `lab/masks/futuristic/`) |
 | `scripts/stamp_knockout.py` | Cut a stamped print's stamp (Pokémon Center, set logo, Prerelease, store) out of its foil map: difference of the two scans, template match, or a box from `scripts/stamp_boxes.json` (a list of boxes for a crest over a wordmark; a plain id with a box is a print whose only copy is the stamped one); draws a window-and-frame map when a window holo's plain print has none (a full-art print needs its TCG Live map fetched first) |
 | `scripts/make_pixel_cosmos.py` | Draws the pixel cosmos texture in `assets/foil/promo/` (seeded) |
-| `scripts/make_card_etch.py` | Draws a per-card etch map from the scan for an etched print TCG Live has no map for (`--all --ship --write-data`; `--all --force --ship` redraws a set's drawn maps; `--compare` beside a Live map): hatch along the drawing, bent by a smooth wander, soft, with grain |
+| `scripts/make_card_etch.py` | Draws a per-card etch map from the scan for an etched print TCG Live has no map for (`--all --ship --write-data`; `--all --force --ship` redraws a set's drawn maps; `--compare` beside a Live map): a fine fingerprint of short ridges steered by the drawing's edges, soft, with grain |
+| `scripts/etch_metrics.py` | Line-screen numbers for etch maps (`lb`, `ori`, `mid`, direction coherence `coh`); Live's maps are the range to sit in |
 | `scripts/dark_specks.py` | Glitter never darkens: renders a set's picks with and without their foil, counts the dark dots the foil adds per card and pose, boxes them red on `<out>/<set>-<n>-specks.png`, exits 1 over budget; the sweep runs it |
 | `scripts/make_sir_etch.py` | Draws the fallback engraving tile `assets/foil/sir-etch.webp` (diagonal hatch, seamless), for a print nobody has drawn yet |
 | `scripts/make_etch_hd.py` | Ships TCG Live's etch at its native 733 px as `<n>-etch-hd.webp` (`etchHd`), for a recipe that draws the rings as an image (Shining Fates' `sf-shiny`); never overwrites, `--suffix` for a redraw |
+| `scripts/native_era_etch.py` | Ships TCG Live's etch for a Sword and Shield era set at its native size (`<n>-etch-v4.webp`, sigma 0.6, no grain); never soften a Live etch |
+| `scripts/soften_era_etch.py` | The older blurred and grained era etch (`-etch-v3`), kept for a card with no cached Live etch |
+| `scripts/foil_coverage.mjs` | Finds every oversized repeating layer whose position lets its tile edge into the card (the moving vertical seam); prints nothing when clean; `BATCH=60` for every card of a set |
 | `scripts/cosmos_window_maps.py` | Redraws the cosmos promos' drawn window-and-frame maps at TCG Live strength (window at alpha 130, frame full, owner badge cut, the plain print's Live window when it has one); `--all` or `--set <set> --cards <n>` |
 | `scripts/soften_etch.py` | Draws a gold print's soft engraving `assets/foil/maps/<set>/<n>-etch-soft.webp` from its etch map (blurred, curved) and sets `etchSoft` (`--set <set> --all`: every `finish: "scodix"` print) |
 | `scripts/make_glitter_flecks.py` | Draws a seeded glitter tile (`glitter-flecks.webp` dense, `glitter-fine.webp` sparse: `--density 0.03 --seed 4242`) |

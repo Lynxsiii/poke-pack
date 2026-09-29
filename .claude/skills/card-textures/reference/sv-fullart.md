@@ -176,12 +176,13 @@ fallback-map ME, Black Bolt and White Flare prints).
   its own scan by `scripts/make_card_etch.py` (2026-09-28, Noah: "every
   texture unique to each card"): a structure tensor gives the direction of
   the drawing's edges, eased into a slow seeded sweep where the art is
-  flat; the direction is quantised into twelve facets and each facet is
-  hatched with a straight 3.5 px grating along it, so the hatch runs
-  parallel to every outline and meets itself in seams between shapes as
-  Live's maps do; thin near-neutral ink (outlines, lettering) is left
+  flat; that direction only steers a fingerprint of short, curving 2.6 px
+  ridges (white noise band-passed in 24 orientations, mixed near the
+  drawing's direction), redrawn as `-v3` on 2026-09-29 after the straight
+  facet gratings of the first draw still read as a diagonal screen on
+  Espeon ex MEP 108; thin near-neutral ink (outlines, lettering) is left
   smooth, wide dark fills are hatched like colour. 400 px wide, white with
-  the etch as alpha, about 46 KB each. The recipe keeps the flat 45% in
+  the etch as alpha, about 165 KB each. The recipe keeps the flat 45% in
   the Live map's place, as the tile had, since the foil map is the white
   fallback. `assets/foil/sir-etch.webp` (`scripts/make_sir_etch.py`, a
   seamless diagonal hatch) remains only as the `has-etch-tile` fallback for

@@ -14,15 +14,29 @@ every texture to be unique to each card").
 
 How: the scan at 400 px wide -> a structure tensor gives the direction of
 the drawing's edges at every pixel, easing into a slow seeded sweep where
-the art is flat -> that direction is quantised into BINS facets and each
-facet is hatched with a straight grating of PITCH px along it, so the hatch
-runs parallel to every outline, turns round every shape in facets, and meets
-itself in seams between shapes, exactly as Live's maps do (look at the sky
-and the moon on sv4pt5 232 Mew ex) -> the printed black ink (near-neutral,
-darker than INK and thin: outlines, lettering) is left un-etched, also like
-Live's; dark colour and wide dark fills are hatched like any colour. The direction
-comes from the card's own art, so no two cards share a pattern, and the
-seeded sweep and grating phases keep even similar art apart.
+the art is flat -> that direction, smoothed, only STEERS a fingerprint: the
+etch is white noise band-passed to one fine ridge pitch (PITCH px) in
+ORIENT_BINS orientations, and each pixel mixes the orientations near the
+drawing's direction there. The ridges are short, curve and break like the
+fingerprint whorls on a real engraved card (the macro photos in
+paldean-fates/texture-refs), lean along the outlines, and have no long
+straight run and no single direction over a patch -> the printed black ink
+(near-neutral, darker than INK and thin: outlines, lettering) is left
+un-etched, like Live's; dark colour and wide dark fills are hatched like
+any colour. The direction comes from the card's own art and the noise is
+seeded by the card id, so no two cards share a pattern.
+
+Why not a straight grating per direction facet (what this script drew until
+2026-09-29): a painterly print has little edge structure, the quantised
+direction collapses to two or three facets and each is one fixed-pitch
+grating, so the browser's scaling turns the card into a diagonal line screen
+(Espeon ex MEP 108, Noah: "still broken"). Measured with the structure
+tensor at sigma 8, the drawn maps sat at direction coherence 0.70 (0.58 to
+0.78) where Live's own maps sit at 0.34 to 0.59; the fingerprint sits at
+0.30 to 0.45. The soft-wobble and Voronoi-cell gratings tried in between
+still read as hatching at 340 px, and contour rings (distance to the
+drawing's edges) read as a swirled fingerprint blob field; the band-passed
+noise is the one that reads as a fine sheen.
 
     python3 .claude/skills/card-textures/scripts/make_card_etch.py --set me1 --cards 177,178 --debug
     python3 .claude/skills/card-textures/scripts/make_card_etch.py --set me1 --all --ship --write-data
@@ -34,8 +48,8 @@ maps; a redraw of a shipped map goes to the next <n>-etch-vN.webp, since
 /assets/* is cached for a year under its name) and --write-data points the
 card's `etchMap` at it and marks it
 `etchDrawn`, after which js/foil-maps.js gives the print `has-etch-map`
-instead of the shared tile. --debug writes a contact sheet (scan, facets,
-etch) to scripts/_debug/etch/. --compare, on cards that have a Live map, puts
+instead of the shared tile. --debug writes a contact sheet (scan, steering
+direction, etch) to scripts/_debug/etch/. --compare, on cards that have a Live map, puts
 Live's map beside the drawn one on the sheet, for tuning against sv4pt5 232
 Mew ex, sv3pt5 199 Charizard ex and co.
 """
@@ -57,17 +71,19 @@ from scipy import ndimage
 ROOT = Path(__file__).resolve().parents[4]
 WIDTH = 400
 ETCHED = ("Special Illustration Rare", "Ultra Rare", "Hyper Rare", "Mega Hyper Rare")
-COVERAGE = 0.5    # share of the un-inked card that is etched line (Live's SIRs: 46% to 64%)
-PITCH = 3.5       # line spacing in px at 400 px wide (Live: 3 to 4 px)
+PITCH = 2.6       # ridge spacing in px at 400 px wide (Live's etches: 2 to 3 px)
 INK = 40          # luma under which near-neutral print is ink and stays smooth
 CHROMA = 40       # max-min of RGB above which a dark pixel is colour, not ink
 INK_WIDTH = 11    # a dark neutral patch wider than this in every direction is a fill, not ink
-BINS = 12         # hatch facets over a half turn (15 deg each)
-WOBBLE = 2.2      # radians of smooth phase wander that bends the lines (0 = straight grating)
-WOBBLE_SCALE = 7  # px: how gently the wander changes across the card
-DEPTH = 0.44      # line amplitude either side of 0.5 (Live's maps: two thirds mid-tone)
+ORIENT_BINS = 24  # oriented band-pass noises mixed over a half turn (7.5 deg apart)
+RADIAL_BW = 0.18  # ridge-pitch bandwidth as a share of the pitch frequency (narrower = longer ridges)
+ANGLE_BW = 0.35   # radians: how far a ridge strays from its bin's direction (wider = shorter, more broken ridges)
+STEER = 2.2       # how strongly the drawing's direction picks the orientation mix (0 = isotropic fingerprint)
+FLOW_SIGMA = 10   # px: smoothing of the steering direction, so the whorls lean, not jitter
+GAIN = 3.0        # ridge contrast into tanh: higher = crisper ridges, lower = more mid-tone
+AMP = 0.374       # ridge amplitude either side of 0.5 (Live's maps: two thirds mid-tone)
 GRAIN = 0.06      # per-pixel grain on top, the pinpoint sparkle
-SOFTEN = 0.5      # px: final blur, so a line is a ridge, not a step
+SOFTEN = 0.5      # px: final blur, so a ridge is a ridge, not a step
 
 
 def seed_of(card_id: str) -> np.random.Generator:
@@ -123,53 +139,49 @@ def flow(gray: np.ndarray, rng: np.random.Generator) -> tuple[np.ndarray, np.nda
 
 
 def etch_from(scan: Image.Image, card_id: str) -> tuple[np.ndarray, np.ndarray]:
-    """The etch (0..1) and the facet weight image, at WIDTH px wide."""
+    """The etch (0..1) and the steering direction image, at WIDTH px wide."""
     w = WIDTH
     h = round(scan.height * w / scan.width)
     rgb = np.asarray(scan.convert("RGB").resize((w, h), Image.LANCZOS)).astype(np.float32)
     gray = 0.299 * rgb[..., 0] + 0.587 * rgb[..., 1] + 0.114 * rgb[..., 2]
     rng = seed_of(card_id)
-    theta, wgt = flow(gray, rng)
-    # Facets: the direction quantised, specks voted away, then each facet
-    # hatched with a straight grating along its own angle.
-    b = np.floor(theta / np.pi * BINS).astype(np.int32) % BINS
-    for _ in range(2):
-        votes = np.stack([ndimage.uniform_filter((b == k).astype(np.float32), 9) for k in range(BINS)])
-        b = votes.argmax(axis=0)
-    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
-    phases = rng.uniform(0, 2 * np.pi, BINS).astype(np.float32)
-    # Engraved lines wobble: a smooth random field bends every line a little
-    # and slides its phase, so no two lines stay parallel for long and the
-    # grating has no single frequency to alias into a screen when the
-    # browser scales it (a perfectly regular grating did exactly that on
-    # Espeon ex MEP 108, Noah 2026-09-28: a diagonal line screen over the
-    # whole card). Live's maps have no such peak (fft peak/mean ~30 against
-    # ~200 for a straight grating); WOBBLE keeps ours in that range.
-    warp = ndimage.gaussian_filter(rng.normal(size=(h, w)).astype(np.float32), WOBBLE_SCALE)
-    warp *= WOBBLE / (warp.std() + 1e-6)
-    ridge = np.zeros((h, w), np.float32)
-    for k in range(BINS):
-        m = b == k
-        if not m.any():
-            continue
-        along = (k + 0.5) / BINS * np.pi
-        nx, ny = -np.sin(along), np.cos(along)     # the grating's normal
-        ridge[m] = np.cos(2 * np.pi * (xx[m] * nx + yy[m] * ny) / PITCH + phases[k] + warp[m])
-    # A soft line profile, not a hard cut: Live's maps are two thirds
-    # mid-tone (0.25..0.75), a tonal relief with fine structure, and read as
-    # a sandy sheen at phone size; a binary grating reads as lines. The
-    # centre sits at COVERAGE so the etched share matches Live's, the
-    # amplitude keeps the lines clear of 0 and 1, and a pinch of per-pixel
-    # grain gives the pinpoint sparkle under the glare.
-    cut = np.cos(np.pi * COVERAGE)
-    etch = 0.5 + DEPTH * np.clip((ridge - cut) / (1 + abs(cut)), -1, 1)
+    theta, _ = flow(gray, rng)
+    c2 = ndimage.gaussian_filter(np.cos(2 * theta), FLOW_SIGMA)
+    s2 = ndimage.gaussian_filter(np.sin(2 * theta), FLOW_SIGMA)
+    steer = 0.5 * np.arctan2(s2, c2)               # the direction the ridges lean along
+    # One white noise, band-passed to a ring at the ridge pitch and to a wedge
+    # around each of ORIENT_BINS ridge directions; every pixel takes the mix
+    # of the wedges near the drawing's direction there. Each wedge alone is a
+    # patch of parallel short ridges; the mix bends and breaks them.
+    spec = np.fft.rfft2(rng.normal(size=(h, w)).astype(np.float32))
+    fy, fx = np.fft.fftfreq(h)[:, None], np.fft.rfftfreq(w)[None, :]
+    fr, fang = np.hypot(fx, fy), np.arctan2(fy, fx)
+    f0 = 1.0 / PITCH
+    radial = np.exp(-0.5 * ((fr - f0) / (RADIAL_BW * f0)) ** 2)
+    acc = np.zeros((h, w), np.float32)
+    norm = np.zeros((h, w), np.float32)
+    for k in range(ORIENT_BINS):
+        along = np.pi * k / ORIENT_BINS                          # this wedge's ridge direction
+        d = np.angle(np.exp(2j * (fang - (along + np.pi / 2)))) / 2   # wave vector is across the ridge
+        band = np.fft.irfft2(spec * radial * np.exp(-0.5 * (d / ANGLE_BW) ** 2), s=(h, w)).astype(np.float32)
+        band /= band.std() + 1e-6
+        wk = np.exp(STEER * np.cos(2 * (steer - along))).astype(np.float32)
+        acc += wk * band
+        norm += wk * wk
+    n = acc / np.sqrt(norm + 1e-6)
+    n /= n.std() + 1e-6
+    # A soft ridge profile, not a hard cut: Live's maps are two thirds
+    # mid-tone (0.25..0.75) and read as a sandy sheen at phone size; a binary
+    # grating reads as lines. A pinch of per-pixel grain gives the pinpoint
+    # sparkle under the glare.
+    etch = 0.5 + AMP * np.tanh(GAIN * n) / np.tanh(GAIN)
     etch += rng.normal(0, GRAIN, size=(h, w)).astype(np.float32)
     etch = ndimage.gaussian_filter(np.clip(etch, 0, 1), SOFTEN)
     # Ink stays smooth: outlines, lettering, the rule box, with a hair of margin.
     keep = ndimage.binary_dilation(ink_of(rgb, gray), iterations=1)
     keep = ndimage.gaussian_filter(keep.astype(np.float32), 0.6)
     etch = etch * (1 - keep)
-    facets = (b.astype(np.float32) / BINS)
+    facets = (np.mod(steer, np.pi) / np.pi).astype(np.float32)
     return etch.astype(np.float32), facets
 
 
@@ -219,8 +231,7 @@ def main() -> int:
         scan = Image.open(ROOT / c["image"])
         etch, facets = etch_from(scan, c["id"])
         cover = float((etch > 0.5).mean())
-        seams = float((ndimage.sobel(facets, 0) ** 2 + ndimage.sobel(facets, 1) ** 2 > 0).mean())
-        note = f"  {c['id']} {c.get('name')}: {cover:.0%} etched, seams on {seams:.0%}"
+        note = f"  {c['id']} {c.get('name')}: {cover:.0%} etched"
         live = None
         if a.compare and c.get("etchMap") and not c.get("etchDrawn"):
             live = np.asarray(Image.open(ROOT / c["etchMap"]).convert("RGBA"))[..., 3].astype(np.float32) / 255
