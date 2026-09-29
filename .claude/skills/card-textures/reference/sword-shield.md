@@ -189,6 +189,68 @@ comparison taught, in the order it mattered:
   copy is correct as filed. Holo Rare's white art window at tilt 1 is on the
   demo too.
 
+### Why the native etch beats the v3 maps
+
+TCG Live's etch is a 733x1024 luminance image (swsh1-3: 367x512) whose
+"not etched" floor is 22/255. The site's maps are white with the etch as
+alpha. v3 downscaled that to 400 px and then blurred it (sigma 1.5) and
+added wandering grain, to kill the line screens that hairlines make at
+phone size. It killed the engraving too: the etch became soft patches, and
+at card size the lit lines read as camouflage blotches where the demo shows
+fine lines and brushed streaks (Scizor V, Gyarados VMAX, Marnie, gold).
+v4 keeps the native resolution with only sigma 0.6 and no grain
+(`scripts/native_era_etch.py`, WEBP quality 75, alpha quality 50, about
+200 KB a card). At native size the lines are real relief that follow the
+drawing, so the "hairline grating" worry does not apply: WebKit at phone
+size showed no moire on swsh1/2/3 (367 px), a busy VMAX or Moltres V. The
+rule of thumb: soften a *drawn* etch, never a *Live* one.
+
+### What caused the colour washes
+
+Three layers stacked, each fine alone:
+
+1. the hard-light glare at the card's full opacity (a pale end near 90%
+   lightness lifts everything toward white: the milky veil at tilt 1);
+2. the etch-masked twin `.foil::before` at full strength, which with the
+   native etch covers most of a painting (colour shifts at both tilts);
+3. sun-pillar saturation and brightness that were tuned for the v3
+   blotches.
+
+Bisect first (`foil_probe.mjs --css` with `.glare{display:none}`,
+`.foil::before{display:none}`, `.foil{display:none}`), then turn down the
+layer that carries the cast. Compare against the reference for what the art
+does, not for how bright the rainbow is: the demo keeps the art's own
+colours and lets the rainbow ride over them.
+
+### Scorecard against poke-holo.simey.me (after #92-#94)
+
+| Finish (card) | Before | Now |
+|---|---|---|
+| Pokemon V (Lugia V swsh12-138) | milky wash, green cast | match |
+| V full art (Scizor V swsh3-183) | blotchy | match |
+| VMAX (Gyarados swsh7-29) | dark blotches, yellow-green | close, art colours kept |
+| VMAX alt (Umbreon swsh7-215) | haze flattened the night | match |
+| VSTAR (Charizard swsh9-18) | beige veil | match |
+| Trainer full art (Marnie swsh1-200) | blotches, too light | brushed streaks, close |
+| Rainbow (Pikachu VMAX swsh4-188) | cloudy | match |
+| Gold (Ultra Ball swsh9-186) | coarse grain | close (warmer, a little paler) |
+| TG V and VMAX (Pikachu TG16/TG17) | pastel wash, green patch | close (a little more pink at tilt 1) |
+| TG gold (Mew VMAX TG30) | lemon, blotchy | close (no glitter on the black) |
+| Crown Zenith Pikachu (swsh12pt5-160) | milky, gold recipe | vivid, rainbow recipe (frame a little dull) |
+| Amazing Rare (Rayquaza swsh4-138) | pale | richer, still less blown-out white |
+| Radiant (Charizard pgo-11) | purple Pokemon, tinted text | silver, text untouched |
+| Holo Rare (Gengar swsh1-85) | equal | equal (white window at tilt 1 is on the demo too) |
+| Reverse holo (Pikachu swsh12-49) | pale chevrons | deeper gold |
+| Common | glare faint | standard overlay glare |
+| Shiny Vault | equal | equal (shiny thread's recipe) |
+| Cosmos (swsh45-60) | "missing" | correct: the cosmos copy is a Theme Deck exclusive |
+
+Lessons for the next era, in one line each: judge every finish, not only
+the one that was reported (the first pass missed the whole full-art family);
+never soften a Live etch; bisect layers before touching numbers; keep the
+dodge-safe closing `contrast(0.8)` on any colour-dodged `.foil`; compare in
+WebKit at phone size before saying "match".
+
 To re-run: `simey-shots.mjs`-style captures (their demo opens a card on
 click at `.card__rotator`; Trainer Gallery cards are set `swsh11tg`, number
 `tg16`), ours through `foil_probe.mjs` (`cards=r49` draws card 49 as a
