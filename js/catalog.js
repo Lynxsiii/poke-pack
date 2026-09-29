@@ -710,14 +710,19 @@ function shinyVaultSlots({ double, ultra, shiny, shinyUltra, ir, sir, hyper }) {
   ];
 }
 
-function boosterWrappers(setId, faces) {
+/**
+ * `version` is the -vN suffix of wrapper art that was redrawn after it went
+ * live. /assets/ is cached as immutable, so changed art ships under a new name.
+ */
+function boosterWrappers(setId, faces, version) {
+  const suffix = version ? `-v${version}` : "";
   return faces.map((face, i) => ({
     id: face.id,
     name: face.name,
     cardId: face.cardId,
     tag: face.tag,
-    art: `assets/packs/${setId}/pack-${i}.avif`,
-    artFallback: `assets/packs/${setId}/pack-${i}.png`,
+    art: `assets/packs/${setId}/pack-${i}${suffix}.avif`,
+    artFallback: `assets/packs/${setId}/pack-${i}${suffix}.png`,
   }));
 }
 
@@ -759,8 +764,8 @@ export const CELEBRATION_30TH = {
         id: "classic",
         name: "Classic Collection",
         tag: "3 classics",
-        art: "assets/packs/me55/classic.avif",
-        artFallback: "assets/packs/me55/classic.png",
+        art: "assets/packs/me55/classic-v2.avif",
+        artFallback: "assets/packs/me55/classic-v2.png",
       },
     },
   },
@@ -1389,7 +1394,7 @@ export const PRISMATIC_EVOLUTIONS = {
     // Umbreon ex's Special Illustration Rare is the set's chase card.
     { id: "umbreon", name: "Umbreon", cardId: "sv8pt5-161", tag: "The chase" },
     { id: "glaceon", name: "Glaceon", cardId: "sv8pt5-150", tag: "Leafeon" },
-  ]),
+  ], 2),
 };
 
 export const SURGING_SPARKS = {
@@ -1418,7 +1423,7 @@ export const SURGING_SPARKS = {
     { id: "latias", name: "Latias", cardId: "sv8-239", tag: "Eon" },
     { id: "archaludon", name: "Archaludon", cardId: "sv8-241", tag: "Bridge" },
     { id: "exeggutor", name: "Exeggutor", cardId: "sv8-242", tag: "Alola" },
-  ]),
+  ], 2),
 };
 
 export const STELLAR_CROWN = {
@@ -1450,7 +1455,7 @@ export const STELLAR_CROWN = {
     { id: "lapras", name: "Lapras", cardId: "sv7-32", tag: "Ferry" },
     { id: "galvantula", name: "Galvantula", cardId: "sv7-51", tag: "Electroweb" },
     { id: "cinderace", name: "Cinderace", cardId: "sv7-28", tag: "Pyro ball" },
-  ]),
+  ], 2),
 };
 
 export const SHROUDED_FABLE = {
@@ -1481,7 +1486,7 @@ export const SHROUDED_FABLE = {
     { id: "munkidori", name: "Munkidori", cardId: "sv6pt5-91", tag: "Three" },
     { id: "fezandipiti", name: "Fezandipiti", cardId: "sv6pt5-92", tag: "Toxic chain" },
     { id: "pecharunt", name: "Pecharunt", cardId: "sv6pt5-93", tag: "The chase" },
-  ]),
+  ], 2),
 };
 
 export const TWILIGHT_MASQUERADE = {
@@ -1514,7 +1519,7 @@ export const TWILIGHT_MASQUERADE = {
     { id: "ogerpon", name: "Ogerpon", cardId: "sv6-211", tag: "Teal mask" },
     { id: "dragapult", name: "Dragapult", cardId: "sv6-200", tag: "Phantom dive" },
     { id: "ursaluna", name: "Ursaluna", cardId: "sv6-216", tag: "Bloodmoon" },
-  ]),
+  ], 2),
 };
 
 /**
@@ -1546,7 +1551,7 @@ export const TEMPORAL_FORCES = {
     { id: "raging-bolt", name: "Raging Bolt", cardId: "sv5-208", tag: "Ancient" },
     { id: "iron-leaves", name: "Iron Leaves", cardId: "sv5-203", tag: "Future" },
     { id: "iron-crown", name: "Iron Crown", cardId: "sv5-206", tag: "Paradox" },
-  ]),
+  ], 2),
 };
 
 export const PALDEAN_FATES = {
@@ -1582,32 +1587,32 @@ export const PALDEAN_FATES = {
       name: "Pikachu",
       cardId: "sv4pt5-131",
       tag: "The chase",
-      art: "assets/packs/sv4pt5/pikachu.avif",
-      artFallback: "assets/packs/sv4pt5/pikachu.png",
+      art: "assets/packs/sv4pt5/pikachu-v2.avif",
+      artFallback: "assets/packs/sv4pt5/pikachu-v2.png",
     },
     {
       id: "tinkaton",
       name: "Tinkaton",
       cardId: "sv4pt5-167",
       tag: "Big hammer",
-      art: "assets/packs/sv4pt5/tinkaton.avif",
-      artFallback: "assets/packs/sv4pt5/tinkaton.png",
+      art: "assets/packs/sv4pt5/tinkaton-v2.avif",
+      artFallback: "assets/packs/sv4pt5/tinkaton-v2.png",
     },
     {
       id: "dondozo",
       name: "Dondozo",
       cardId: "sv4pt5-126",
       tag: "Deep sea",
-      art: "assets/packs/sv4pt5/dondozo.avif",
-      artFallback: "assets/packs/sv4pt5/dondozo.png",
+      art: "assets/packs/sv4pt5/dondozo-v2.avif",
+      artFallback: "assets/packs/sv4pt5/dondozo-v2.png",
     },
     {
       id: "ceruledge",
       name: "Ceruledge",
       cardId: "sv4pt5-162",
       tag: "Blue flame",
-      art: "assets/packs/sv4pt5/ceruledge.avif",
-      artFallback: "assets/packs/sv4pt5/ceruledge.png",
+      art: "assets/packs/sv4pt5/ceruledge-v2.avif",
+      artFallback: "assets/packs/sv4pt5/ceruledge-v2.png",
     },
   ],
 };
@@ -1647,8 +1652,8 @@ export const OBSIDIAN_FLAMES = {
     name,
     cardId,
     tag,
-    art: `assets/packs/sv3/${id}.avif`,
-    artFallback: `assets/packs/sv3/${id}.png`,
+    art: `assets/packs/sv3/${id}-v2.avif`,
+    artFallback: `assets/packs/sv3/${id}-v2.png`,
   })),
 };
 
@@ -1682,7 +1687,7 @@ export const PALDEA_EVOLVED = {
     { id: "quaquaval", name: "Quaquaval", cardId: "sv2-260", tag: "Water starter" },
     { id: "meowscarada", name: "Meowscarada", cardId: "sv2-256", tag: "Grass starter" },
     { id: "chien-pao", name: "Chien-Pao", cardId: "sv2-261", tag: "Ruinous" },
-  ]),
+  ], 2),
 };
 
 export const SCARLET_VIOLET = {
@@ -1709,7 +1714,7 @@ export const SCARLET_VIOLET = {
     { id: "miraidon", name: "Miraidon", cardId: "sv1-244", tag: "Violet" },
     { id: "gyarados", name: "Gyarados", cardId: "sv1-225", tag: "Tera" },
     { id: "koraidon", name: "Koraidon", cardId: "sv1-247", tag: "Scarlet" },
-  ]),
+  ], 2),
 };
 
 /**
