@@ -508,19 +508,29 @@ export function createReveal(ctx) {
 
   /* -- Round runner: every animation of a round goes through here -- */
 
+  /* Animations are queued with their start time and only created a moment
+     before they begin (LEAD ms), so a card becomes a compositor layer when it
+     is about to move, not all forty of them in the round's first frame. */
+  const LEAD = 260;
+  const timelineNow = () => document.timeline?.currentTime ?? performance.now();
+
   function newRun(duration) {
-    const run = { anims: [], timers: [], at: [], done: false, resolve: null, clock: null, stopped: false, duration };
+    const run = { anims: [], timers: [], at: [], queue: [], done: false, resolve: null, stopped: false, duration, t0: timelineNow() + 16 };
     run.promise = new Promise((resolve) => (run.resolve = resolve));
     rounds.add(run);
     return run;
   }
 
   function A(run, el, frames, delay, duration, easing = EASE.out, extra) {
-    if (!el) return null;
-    const a = el.animate(frames, { delay: Math.max(0, delay), duration: Math.max(1, duration), easing, fill: "forwards", ...extra });
+    if (!el) return;
+    run.queue.push({ el, frames, delay: Math.max(0, delay), duration: Math.max(1, duration), easing, extra });
+  }
+
+  function create(run, spec) {
+    if (run.stopped || !spec.el.isConnected) return;
+    const late = timelineNow() - run.t0;
+    const a = spec.el.animate(spec.frames, { delay: spec.delay - late, duration: spec.duration, easing: spec.easing, fill: "forwards", ...spec.extra });
     run.anims.push(a);
-    if (!run.clock) run.clock = a;
-    return a;
   }
 
   /** Call fn at time t on the run's clock (the timeline the animations share). */
@@ -529,20 +539,26 @@ export function createReveal(ctx) {
   }
 
   function startTimers(run) {
-    const arm = () => {
-      if (run.stopped) return;
-      const t0 = run.clock?.startTime ?? document.timeline?.currentTime ?? performance.now();
-      const now = document.timeline?.currentTime ?? performance.now();
-      for (const [t, fn] of run.at) {
-        const id = setTimeout(() => {
-          if (!run.stopped) fn();
-        }, Math.max(0, t0 + t - now));
-        run.timers.push(id);
+    // Queue: anything starting soon is created now, the rest in 40ms buckets ahead of time.
+    const buckets = new Map();
+    for (const spec of run.queue) {
+      if (spec.delay < LEAD) create(run, spec);
+      else {
+        const key = Math.floor((spec.delay - LEAD) / 40) * 40;
+        if (!buckets.has(key)) buckets.set(key, []);
+        buckets.get(key).push(spec);
       }
-      run.at = [];
-    };
-    if (run.clock?.ready) run.clock.ready.then(arm, arm);
-    else arm();
+    }
+    run.queue = [];
+    for (const [t, specs] of buckets) run.at.push([t, () => specs.forEach((spec) => create(run, spec))]);
+    const now = timelineNow();
+    for (const [t, fn] of run.at) {
+      const id = setTimeout(() => {
+        if (!run.stopped) fn();
+      }, Math.max(0, run.t0 + t - now));
+      run.timers.push(id);
+    }
+    run.at = [];
   }
 
   function finishRun(run, value) {
@@ -972,7 +988,6 @@ export function createReveal(ctx) {
       if (row.charge > 1) {
         const C = hit ? pose(g.heroX, g.heroY - g.ch * 0.07, 0, 1.07) : L;
         els.forEach((el, q) => {
-          el.style.willChange = "transform";
           if (hit) {
             const amp = tier >= 3 ? 2.6 : 1.6;
             const frames = [{ transform: tf(from[q]) }];
@@ -997,7 +1012,6 @@ export function createReveal(ctx) {
       // Turn: lift and flip on top of the stack; a hit rises and swells as it lands.
       const fromTurn = row.charge > 1 ? (hit ? pose(g.heroX, g.heroY - g.ch * 0.07, 0, 1.07) : L) : null;
       els.forEach((el, q) => {
-        el.style.willChange = "transform";
         const f0 = fromTurn || from[q];
         if (hit) {
           const P = pose(g.heroX, g.heroY - g.ch * (tier >= 3 ? 0.11 : 0.09), 0, tier >= 3 ? 1.2 : 1.15);
@@ -1075,7 +1089,6 @@ export function createReveal(ctx) {
             const dest = layout.get(i);
             tuck(el, L, dest.p, dest.z, when, tk);
           }
-          at(run, when + tk + 20, () => (el.style.willChange = ""));
         });
         t = next;
       } else {
@@ -1102,7 +1115,6 @@ export function createReveal(ctx) {
     if (heroEl && heroAt) {
       const dest = layout.get(plan.best);
       const up = pose(g.heroX, heroAt.y - g.ch * 0.16, 0, 0.92);
-      heroEl.style.willChange = "transform";
       A(run, heroEl, [{ transform: tf(heroAt) }, { transform: tf(up), offset: 0.35, easing: EASE.inOut }, { transform: tf(dest.p) }], endAt + beat * 0.2, beat, EASE.out);
       at(run, endAt + beat * 0.2 + beat * 0.35, () => (heroEl.style.zIndex = String(dest.z)));
     }
@@ -1133,11 +1145,9 @@ export function createReveal(ctx) {
       const from = deckPose(g, q);
       const when = T0 + q * stagger;
       const mid = pose(lerp(from.x, dest.p.x, 0.5), Math.min(from.y, dest.p.y) - g.ch * 0.16, dest.p.a * 0.5, lerp(1.02, dest.p.s, 0.5));
-      el.style.willChange = "transform";
       A(run, el, [{ transform: tf(from) }, { transform: tf(mid), offset: 0.45 }, { transform: tf(dest.p) }], when, waveDur, EASE.out);
       flip(run, el, when, waveDur * 0.7);
       at(run, when + waveDur * 0.45, () => (el.style.zIndex = String(dest.z)));
-      at(run, when + waveDur + 20, () => (el.style.willChange = ""));
     });
     // The skipped and hidden cards count too; their value lands with the wave.
     plan.cards.forEach((c, i) => {
@@ -1160,7 +1170,6 @@ export function createReveal(ctx) {
       const pop = hit ? (tier >= 3 ? 560 : 420) * k : 240 * k;
       const start = Math.max(T0 + waveDur * 0.55, waveEnd - 140 * k);
       const C = hit ? pose(g.heroX, g.heroY - g.ch * 0.07, 0, 1.07) : L;
-      el.style.willChange = "transform";
       if (hit) {
         const amp = tier >= 3 ? 2.4 : 1.4;
         const frames = [{ transform: tf(from) }];
@@ -1361,10 +1370,6 @@ export function createReveal(ctx) {
       run.anims = [];
       finishRun(run, { stopped: false });
     });
-    if (!run.clock) {
-      // Nothing animated (empty lanes): still honour the clock.
-      run.clock = setups[0]?.st.root.animate([{ opacity: 1 }, { opacity: 1 }], { duration: 1 }) || null;
-    }
     startTimers(run);
     return run.promise;
 
@@ -1490,7 +1495,6 @@ export function createReveal(ctx) {
       finishRun(run, { moved: flying.length });
       return run.promise;
     }
-    run.clock = document.body.animate([{ opacity: 1 }, { opacity: 1 }], { duration: 1 });
     at(run, endAt, () => {
       run.anims.forEach((a) => a.cancel());
       run.anims = [];
