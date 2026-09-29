@@ -6844,24 +6844,46 @@ async function routeFromLocation() {
 
 const battles = initBattles({
   root: els.viewBattles,
-  getUser: () => cloudUser,
-  getState: () => state,
-  onSave: (save) => {
-    if (!cloudUser) return;
+  user: () => cloudUser,
+  coins: () => Number(state.coins || 0),
+  settings: () => state.settings,
+  featuredSetId: () => liveSet?.id || state.activeSetId,
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
     applyCloudSave(save);
     renderHeader();
   },
-  onRefreshSave: async () => {
+  refreshSave: async () => {
     await refreshSession();
     renderHeader();
   },
-  onNavigate: (path) => {
+  navigate: (path) => {
     if (!/^\/battles(?:\/[a-zA-Z0-9_-]+)?$/.test(path)) return;
     battlePath = path;
     setView("battles");
   },
-  onSignIn: () => openAuth("signin"),
+  signIn: () => openAuth("signin"),
   toast,
+  buzz,
+  // Card faces use the same holo component as the pack opening; the
+  // document-wide card motion (createCardMotion) tilts any .tcg on the page.
+  cardFace: (card, opts) => tcgFace(card, opts),
+  cardBack: (setId) => {
+    const set = ALL_SETS.find((s) => s.id === setId) || liveSet;
+    return `<div class="tcg back"><img src="${esc(set.cardBack || liveSet.cardBack)}" alt="Pokémon TCG card back" draggable="false" /></div>`;
+  },
+  // Battle pulls carry only what scoring needs; the face wants the full
+  // catalog record (foil maps, subtypes, small scan). Fetches each set once.
+  resolveCards: async (cards) => {
+    const sets = new Set((cards || []).map((c) => setForCardId(c.id)).filter(Boolean));
+    await Promise.all([...sets].map((set) => loadSetData(set).catch(() => null)));
+    return (cards || []).map((c) => {
+      const full = findCard(c.id);
+      if (!full) return c;
+      return { ...full, reverse: Boolean(c.reverse), ...(c.reverseKind ? { reverseKind: c.reverseKind } : {}), value: c.value };
+    });
+  },
+  inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
 });
 
 async function boot() {

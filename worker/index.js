@@ -99,7 +99,7 @@ export async function handleApi(request, env, url) {
   const method = request.method.toUpperCase();
   if (path.startsWith('/api/battles')) {
     return handleBattles(path, method, request, env, {
-      json, requireUser, readJson, loadSave, loadSetCards, loadSealed, loadProducts, packCost,
+      json, requireUser, readJson, loadSave, loadSetCards, loadSealed, loadProducts, packCost, ensureSocialSchema,
     });
   }
 
