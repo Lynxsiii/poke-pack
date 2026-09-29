@@ -7545,5 +7545,579 @@
     "imageRemote": "https://images.scrydex.com/pokemon/swsh45sv-SV122/large",
     "foilMap": "assets/foil/maps/swsh45/SV122.webp",
     "etchMap": "assets/foil/maps/swsh45/SV122-etch.webp"
+  },
+  {
+    "id": "swsh45-swshp061",
+    "name": "Pikachu V",
+    "number": "swshp061",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swsh45/swshp061.webp",
+    "imageSmall": "assets/cards/swsh45/swshp061-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Lightning Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH061/large",
+    "printedNumber": "SWSH 061",
+    "tcgplayerId": 232434,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.11,
+    "foilMap": "assets/foil/maps/swsh45/swshp061.webp"
+  },
+  {
+    "id": "swsh45-swshp079",
+    "name": "Galarian Mr. Rime",
+    "number": "swshp079",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "KEIICHIRO ITO",
+    "flavorText": "It's highly skilled at tap-dancing. It waves its cane of ice in time with its graceful movements.",
+    "evolvesFrom": "Galarian Mr. Mime",
+    "image": "assets/cards/swsh45/swshp079.webp",
+    "imageSmall": "assets/cards/swsh45/swshp079-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Party",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shuffle Dance",
+        "text": "Once during your turn, you may switch 1 of your opponent's face-down Prize cards with the top card of their deck. (The cards stay face down.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH079/large",
+    "printedNumber": "SWSH 079",
+    "tcgplayerId": 232450,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.98,
+    "foilMap": "assets/foil/maps/swsh45/swshp079.webp"
+  },
+  {
+    "id": "swsh45-swshp080",
+    "name": "Dedenne",
+    "number": "swshp080",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Yuu Nishida",
+    "flavorText": "Its upper whiskers are sensors that survey its surroundings. Its lower whiskers are organs that shoot electricity.",
+    "image": "assets/cards/swsh45/swshp080.webp",
+    "imageSmall": "assets/cards/swsh45/swshp080-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Party",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH080/large",
+    "printedNumber": "SWSH 080",
+    "tcgplayerId": 232453,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.54,
+    "foilMap": "assets/foil/maps/swsh45/swshp080.webp"
+  },
+  {
+    "id": "swsh45-swshp081",
+    "name": "Polteageist",
+    "number": "swshp081",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Misa Tsutsui",
+    "flavorText": "This species lives in antique teapots. Most pots are forgeries, but on rare occasions, an authentic work is found.",
+    "evolvesFrom": "Sinistea",
+    "image": "assets/cards/swsh45/swshp081.webp",
+    "imageSmall": "assets/cards/swsh45/swshp081-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Party",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tea Break",
+        "text": "You must discard a Pokémon that has the Mad Party attack from your hand in order to use this Ability. Once during your turn, you may draw 2 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH081/large",
+    "printedNumber": "SWSH 081",
+    "tcgplayerId": 232458,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.75,
+    "foilMap": "assets/foil/maps/swsh45/swshp081.webp"
+  },
+  {
+    "id": "swsh45-swshp082",
+    "name": "Bunnelby",
+    "number": "swshp082",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "sowsow",
+    "flavorText": "It excels at digging holes. Using its ears, it can dig a nest 33 feet deep in one night.",
+    "image": "assets/cards/swsh45/swshp082.webp",
+    "imageSmall": "assets/cards/swsh45/swshp082-sm.webp",
+    "attacks": [
+      {
+        "name": "Mad Party",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH082/large",
+    "printedNumber": "SWSH 082",
+    "tcgplayerId": 232461,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.71,
+    "foilMap": "assets/foil/maps/swsh45/swshp082.webp"
+  },
+  {
+    "id": "swsh45-swshp084",
+    "name": "Eldegoss V",
+    "number": "swshp084",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh45/swshp084.webp",
+    "imageSmall": "assets/cards/swsh45/swshp084-sm.webp",
+    "attacks": [
+      {
+        "name": "Float Up",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "You may shuffle this Pokémon and all attached cards into your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Happy Match",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may put a Supporter card from your discard pile into your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH084/large",
+    "printedNumber": "SWSH 084",
+    "tcgplayerId": 232481,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.74,
+    "foilMap": "assets/foil/maps/swsh45/swshp084.webp",
+    "etchMap": "assets/foil/maps/swsh45/swshp084-etch.webp"
+  },
+  {
+    "id": "swsh45-swshp085",
+    "name": "Boltund V",
+    "number": "swshp085",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "200",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swsh45/swshp085.webp",
+    "imageSmall": "assets/cards/swsh45/swshp085-sm.webp",
+    "attacks": [
+      {
+        "name": "Electrify",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Lightning Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck."
+      },
+      {
+        "name": "Bolt Storm",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 30 more damage for each Lightning Energy attached to all of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH085/large",
+    "printedNumber": "SWSH 085",
+    "tcgplayerId": 232499,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.94,
+    "foilMap": "assets/foil/maps/swsh45/swshp085.webp",
+    "etchMap": "assets/foil/maps/swsh45/swshp085-etch.webp"
+  },
+  {
+    "id": "swsh45-swshp086",
+    "name": "Cramorant V",
+    "number": "swshp086",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "200",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swsh45/swshp086.webp",
+    "imageSmall": "assets/cards/swsh45/swshp086-sm.webp",
+    "attacks": [
+      {
+        "name": "Beak Catch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Spit Shot",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Energy from this Pokémon. This attack does 160 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH086/large",
+    "printedNumber": "SWSH 086",
+    "tcgplayerId": 232503,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.07,
+    "foilMap": "assets/foil/maps/swsh45/swshp086.webp",
+    "etchMap": "assets/foil/maps/swsh45/swshp086-etch.webp"
+  },
+  {
+    "id": "swsh45-swshp087",
+    "name": "Eevee VMAX",
+    "number": "swshp087",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "300",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Eevee V",
+    "image": "assets/cards/swsh45/swshp087.webp",
+    "imageSmall": "assets/cards/swsh45/swshp087-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Cuddle",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "During your opponent's next turn, if the Defending Pokémon tries to attack, your opponent flips a coin. If tails, that attack doesn't happen."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH087/large",
+    "printedNumber": "SWSH 087",
+    "tcgplayerId": 232611,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 3.8,
+    "foilMap": "assets/foil/maps/swsh45/swshp087.webp",
+    "etchMap": "assets/foil/maps/swsh45/swshp087-etch.webp"
+  },
+  {
+    "id": "swsh45-swshp096",
+    "name": "Dragapult V",
+    "number": "swshp096",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swsh45/swshp096.webp",
+    "imageSmall": "assets/cards/swsh45/swshp096-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Jet Assault",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "60+",
+        "text": "If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 80 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH096/large",
+    "printedNumber": "SWSH 096",
+    "tcgplayerId": 232610,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.64,
+    "foilMap": "assets/foil/maps/swsh45/swshp096.webp",
+    "etchMap": "assets/foil/maps/swsh45/swshp096-etch.webp"
+  },
+  {
+    "id": "swsh45-swshp097",
+    "name": "Dragapult VMAX",
+    "number": "swshp097",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "320",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Dragapult V",
+    "image": "assets/cards/swsh45/swshp097.webp",
+    "imageSmall": "assets/cards/swsh45/swshp097-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "60",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Max Phantom",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130",
+        "text": "Put 5 damage counters on your opponent's Benched Pokémon in any way you like."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH097/large",
+    "printedNumber": "SWSH 097",
+    "tcgplayerId": 232608,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 3.34,
+    "foilMap": "assets/foil/maps/swsh45/swshp097.webp",
+    "etchMap": "assets/foil/maps/swsh45/swshp097-etch.webp"
+  },
+  {
+    "id": "swsh45-swshp098",
+    "name": "Crobat V",
+    "number": "swshp098",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/swsh45/swshp098.webp",
+    "imageSmall": "assets/cards/swsh45/swshp098-sm.webp",
+    "attacks": [
+      {
+        "name": "Venomous Fang",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Asset",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may draw cards until you have 6 cards in your hand. You can't use more than 1 Dark Asset Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH098/large",
+    "printedNumber": "SWSH 098",
+    "tcgplayerId": 232612,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.55,
+    "foilMap": "assets/foil/maps/swsh45/swshp098.webp",
+    "etchMap": "assets/foil/maps/swsh45/swshp098-etch.webp"
+  },
+  {
+    "id": "swsh45-swshp099",
+    "name": "Crobat VMAX",
+    "number": "swshp099",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "300",
+    "artist": "PLANETA Tsuji",
+    "evolvesFrom": "Crobat V",
+    "image": "assets/cards/swsh45/swshp099.webp",
+    "imageSmall": "assets/cards/swsh45/swshp099-sm.webp",
+    "attacks": [
+      {
+        "name": "Stealth Poison",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Your opponent's Active Pokémon is now Poisoned. Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Max Cutter",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH099/large",
+    "printedNumber": "SWSH 099",
+    "tcgplayerId": 232613,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 2.31,
+    "foilMap": "assets/foil/maps/swsh45/swshp099.webp",
+    "etchMap": "assets/foil/maps/swsh45/swshp099-etch.webp"
   }
 ]

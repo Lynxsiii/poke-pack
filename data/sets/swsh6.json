@@ -20,9 +20,99 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp112": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp113": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp114": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp115": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp116": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp117": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp118": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp119": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 236265,
+      "packs": 4,
+      "promos": [
+        "swshp112",
+        "swshp113",
+        "swshp114",
+        "swshp115"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 247281,
+      "packs": 10,
+      "promos": []
+    },
+    {
+      "id": "morpeko-single-pack-blister",
+      "name": "Morpeko Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 236273,
+      "packs": 1,
+      "promos": [
+        "swshp116"
+      ]
+    },
+    {
+      "id": "phanpy-single-pack-blister",
+      "name": "Phanpy Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 236272,
+      "packs": 1,
+      "promos": [
+        "swshp117"
+      ]
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 236268,
+      "packs": 3,
+      "promos": [
+        "swshp118"
+      ]
+    },
+    {
+      "id": "snorlax-3-pack-blister",
+      "name": "Snorlax 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 236269,
+      "packs": 3,
+      "promos": [
+        "swshp119"
+      ]
+    }
+  ]
 }

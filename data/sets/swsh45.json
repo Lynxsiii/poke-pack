@@ -26,9 +26,198 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp061": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp079": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp080": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp081": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp082": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp084": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp085": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp086": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp087": {
+      "foilAs": "Rare Holo VMAX"
+    },
+    "swshp096": {
+      "foilAs": "Rare Holo V",
+      "notes": "etched shiny V"
+    },
+    "swshp097": {
+      "foilAs": "Rare Holo VMAX",
+      "notes": "etched shiny VMAX"
+    },
+    "swshp098": {
+      "foilAs": "Rare Holo V",
+      "notes": "etched shiny V"
+    },
+    "swshp099": {
+      "foilAs": "Rare Holo VMAX",
+      "notes": "etched shiny VMAX"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 228821,
+      "packs": 10,
+      "promos": [
+        "swshp087"
+      ]
+    },
+    {
+      "id": "pikachu-v-box",
+      "name": "Pikachu V Box",
+      "kind": "collection",
+      "tcgplayerId": 228825,
+      "packs": 4,
+      "promos": [
+        "swshp061"
+      ]
+    },
+    {
+      "id": "eldegoss-v-tin",
+      "name": "Eldegoss V Tin",
+      "kind": "tin",
+      "tcgplayerId": 228822,
+      "packs": 6,
+      "promos": [
+        "swshp084"
+      ]
+    },
+    {
+      "id": "boltund-v-tin",
+      "name": "Boltund V Tin",
+      "kind": "tin",
+      "tcgplayerId": 228823,
+      "packs": 6,
+      "promos": [
+        "swshp085"
+      ]
+    },
+    {
+      "id": "cramorant-v-tin",
+      "name": "Cramorant V Tin",
+      "kind": "tin",
+      "tcgplayerId": 228824,
+      "packs": 6,
+      "promos": [
+        "swshp086"
+      ]
+    },
+    {
+      "id": "shiny-eldegoss-v-box",
+      "name": "Shiny Eldegoss V Collection",
+      "kind": "collection",
+      "tcgplayerId": 240192,
+      "packs": 5,
+      "promos": [
+        "swshp084"
+      ]
+    },
+    {
+      "id": "shiny-boltund-v-box",
+      "name": "Shiny Boltund V Collection",
+      "kind": "collection",
+      "tcgplayerId": 240191,
+      "packs": 5,
+      "promos": [
+        "swshp085"
+      ]
+    },
+    {
+      "id": "shiny-cramorant-v-box",
+      "name": "Shiny Cramorant V Collection",
+      "kind": "collection",
+      "tcgplayerId": 240190,
+      "packs": 5,
+      "promos": [
+        "swshp086"
+      ]
+    },
+    {
+      "id": "galarian-mr-rime-mad-party-pin-collection",
+      "name": "Galarian Mr. Rime Mad Party Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 228828,
+      "packs": 3,
+      "promos": [
+        "swshp079"
+      ]
+    },
+    {
+      "id": "dedenne-mad-party-pin-collection",
+      "name": "Dedenne Mad Party Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 228827,
+      "packs": 3,
+      "promos": [
+        "swshp080"
+      ]
+    },
+    {
+      "id": "polteageist-mad-party-pin-collection",
+      "name": "Polteageist Mad Party Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 228829,
+      "packs": 3,
+      "promos": [
+        "swshp081"
+      ]
+    },
+    {
+      "id": "bunnelby-mad-party-pin-collection",
+      "name": "Bunnelby Mad Party Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 228826,
+      "packs": 3,
+      "promos": [
+        "swshp082"
+      ]
+    },
+    {
+      "id": "shiny-dragapult-vmax-premium-collection",
+      "name": "Shiny Dragapult VMAX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 230392,
+      "packs": 7,
+      "promos": [
+        "swshp096",
+        "swshp097"
+      ]
+    },
+    {
+      "id": "shiny-crobat-vmax-premium-collection",
+      "name": "Shiny Crobat VMAX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 230391,
+      "packs": 7,
+      "promos": [
+        "swshp098",
+        "swshp099"
+      ]
+    }
+  ]
 }

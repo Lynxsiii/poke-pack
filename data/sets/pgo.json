@@ -16,9 +16,233 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp223": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp224": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp225": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp226": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art Supporter"
+    },
+    "swshp227": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art Supporter"
+    },
+    "swshp228": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art Supporter"
+    },
+    "swshp229": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art Mewtwo V"
+    },
+    "swshp230": {
+      "foilAs": "Rare Holo",
+      "notes": "Radiant card"
+    },
+    "swshp231": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp232": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp233": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp234": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp235": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp236": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched foil VSTAR"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Pokémon GO Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 270708,
+      "packs": 10,
+      "promos": [
+        "swshp229"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon GO Pokémon Center Elite Trainer Box Plus",
+      "kind": "etb",
+      "tcgplayerId": 270709,
+      "packs": 12,
+      "promos": [
+        "swshp229"
+      ]
+    },
+    {
+      "id": "mewtwo-v-battle-deck",
+      "name": "Pokémon GO V Battle Deck: Mewtwo V",
+      "kind": "deck",
+      "tcgplayerId": 270710,
+      "packs": 0,
+      "promos": [
+        "swshp223"
+      ]
+    },
+    {
+      "id": "melmetal-v-battle-deck",
+      "name": "Pokémon GO V Battle Deck: Melmetal V",
+      "kind": "deck",
+      "tcgplayerId": 270711,
+      "packs": 0,
+      "promos": [
+        "swshp224"
+      ]
+    },
+    {
+      "id": "mewtwo-melmetal-v-battle-deck-bundle",
+      "name": "Pokémon GO V Battle Deck Bundle: Mewtwo V and Melmetal V",
+      "kind": "deck",
+      "tcgplayerId": 270712,
+      "packs": 2,
+      "promos": [
+        "swshp223",
+        "swshp224"
+      ]
+    },
+    {
+      "id": "team-instinct-special-collection",
+      "name": "Pokémon GO Special Collection: Team Instinct",
+      "kind": "collection",
+      "tcgplayerId": 270713,
+      "packs": 6,
+      "promos": [
+        "swshp226"
+      ]
+    },
+    {
+      "id": "team-mystic-special-collection",
+      "name": "Pokémon GO Special Collection: Team Mystic",
+      "kind": "collection",
+      "tcgplayerId": 270714,
+      "packs": 6,
+      "promos": [
+        "swshp227"
+      ]
+    },
+    {
+      "id": "team-valor-special-collection",
+      "name": "Pokémon GO Special Collection: Team Valor",
+      "kind": "collection",
+      "tcgplayerId": 270715,
+      "packs": 6,
+      "promos": [
+        "swshp228"
+      ]
+    },
+    {
+      "id": "alolan-exeggutor-v-collection",
+      "name": "Pokémon GO Alolan Exeggutor V Collection",
+      "kind": "collection",
+      "tcgplayerId": 270716,
+      "packs": 4,
+      "promos": [
+        "swshp225"
+      ]
+    },
+    {
+      "id": "radiant-eevee-premium-collection",
+      "name": "Pokémon GO Radiant Eevee Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 270717,
+      "packs": 8,
+      "promos": [
+        "swshp230"
+      ]
+    },
+    {
+      "id": "blissey-tin",
+      "name": "Pokémon GO Tin: Blissey",
+      "kind": "tin",
+      "tcgplayerId": 270725,
+      "packs": 4,
+      "promos": [
+        "swshp234"
+      ]
+    },
+    {
+      "id": "pikachu-tin",
+      "name": "Pokémon GO Tin: Pikachu",
+      "kind": "tin",
+      "tcgplayerId": 270726,
+      "packs": 4,
+      "promos": [
+        "swshp234"
+      ]
+    },
+    {
+      "id": "snorlax-tin",
+      "name": "Pokémon GO Tin: Snorlax",
+      "kind": "tin",
+      "tcgplayerId": 270727,
+      "packs": 4,
+      "promos": [
+        "swshp234"
+      ]
+    },
+    {
+      "id": "bulbasaur-pin-collection",
+      "name": "Pokémon GO Pin Collection: Bulbasaur",
+      "kind": "collection",
+      "tcgplayerId": 275825,
+      "packs": 3,
+      "promos": [
+        "swshp231"
+      ]
+    },
+    {
+      "id": "charmander-pin-collection",
+      "name": "Pokémon GO Pin Collection: Charmander",
+      "kind": "collection",
+      "tcgplayerId": 275826,
+      "packs": 3,
+      "promos": [
+        "swshp232"
+      ]
+    },
+    {
+      "id": "squirtle-pin-collection",
+      "name": "Pokémon GO Pin Collection: Squirtle",
+      "kind": "collection",
+      "tcgplayerId": 275827,
+      "packs": 3,
+      "promos": [
+        "swshp233"
+      ]
+    },
+    {
+      "id": "dragonite-vstar-premier-deck-holder-collection",
+      "name": "Pokémon GO Premier Deck Holder Collection: Dragonite VSTAR",
+      "kind": "collection",
+      "tcgplayerId": 275842,
+      "packs": 9,
+      "promos": [
+        "swshp235",
+        "swshp236"
+      ]
+    }
+  ]
 }

@@ -378,12 +378,15 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         prefix, n = parts
         ser = series[prefix]
         base_url = f"https://www.pkmn.gg/series/{ser['series']}/{ser['slug']}"
-        detail = page_data(fetch(f"{base_url}/{n}", f"pkmngg-{prefix}-{n}.html", refresh))
+        # pkmn.gg files the Sword & Shield promos under their printed key (SWSH001).
+        page_key = ser.get("pkmnKey", "{n}").format(n=n)
+        detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
         record["printedNumber"] = f"{ser['printed']} {n:03d}"
-        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{n}/large"
-        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{n}/small"
+        # scrydex answers a bare number with the card back for the Sword & Shield promos.
+        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/large"
+        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/small"
         remote = record["image"]
         if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
@@ -398,6 +401,10 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     # pkmn.gg pads some names ("Alakazam  ") and curls some apostrophes
     # ("Iono’s Bellibolt ex"), which the set's own cards spell straight.
     record["name"] = str(record.get("name", "")).strip().replace("’", "'")
+    # A Sword & Shield promo takes the era's finishes (js/foil-maps.js swshPattern).
+    parts = split_number(number, series)
+    if parts and not spec.get("like") and series[parts[0]].get("era"):
+        record["era"] = series[parts[0]]["era"]
     record["rarity"] = "Promo"
     record["promo"] = True
     # `foilMap`: a hand-made map for a print TCG Live has none for.

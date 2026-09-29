@@ -3239,5 +3239,565 @@
     "tcgplayerId": 277026,
     "market": 2.29,
     "imageRemote": "https://images.scrydex.com/pokemon/pgo-88/large"
+  },
+  {
+    "id": "pgo-swshp223",
+    "name": "Mewtwo V",
+    "number": "swshp223",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "220",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/pgo/swshp223.webp",
+    "imageSmall": "assets/cards/pgo/swshp223-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Transfer Break",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH223/large",
+    "printedNumber": "SWSH 223",
+    "tcgplayerId": 270718,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 8.62,
+    "foilMap": "assets/foil/maps/pgo/swshp223.webp"
+  },
+  {
+    "id": "pgo-swshp224",
+    "name": "Melmetal V",
+    "number": "swshp224",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "sadaji",
+    "image": "assets/cards/pgo/swshp224.webp",
+    "imageSmall": "assets/cards/pgo/swshp224-sm.webp",
+    "attacks": [
+      {
+        "name": "Arm Charge",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "50",
+        "text": "You may attach a Metal Energy card from your hand to this Pokémon."
+      },
+      {
+        "name": "Mega Punch",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH224/large",
+    "printedNumber": "SWSH 224",
+    "tcgplayerId": 270719,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.05,
+    "foilMap": "assets/foil/maps/pgo/swshp224.webp"
+  },
+  {
+    "id": "pgo-swshp225",
+    "name": "Alolan Exeggutor V",
+    "number": "swshp225",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "240",
+    "artist": "MUGENUP",
+    "image": "assets/cards/pgo/swshp225.webp",
+    "imageSmall": "assets/cards/pgo/swshp225-sm.webp",
+    "attacks": [
+      {
+        "name": "Growing Tall",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for up to 5 Grass Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck."
+      },
+      {
+        "name": "Head Swing",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon for each Grass Energy attached to this Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH225/large",
+    "printedNumber": "SWSH 225",
+    "tcgplayerId": 270723,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.86,
+    "foilMap": "assets/foil/maps/pgo/swshp225.webp"
+  },
+  {
+    "id": "pgo-swshp226",
+    "name": "Spark",
+    "number": "swshp226",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/pgo/swshp226.webp",
+    "imageSmall": "assets/cards/pgo/swshp226-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH226/large",
+    "printedNumber": "SWSH 226",
+    "tcgplayerId": 270720,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 1.73,
+    "foilMap": "assets/foil/maps/pgo/swshp226.webp",
+    "etchMap": "assets/foil/maps/pgo/swshp226-etch.webp"
+  },
+  {
+    "id": "pgo-swshp227",
+    "name": "Blanche",
+    "number": "swshp227",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Anesaki Dynamic",
+    "image": "assets/cards/pgo/swshp227.webp",
+    "imageSmall": "assets/cards/pgo/swshp227-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH227/large",
+    "printedNumber": "SWSH 227",
+    "tcgplayerId": 270721,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 2.64,
+    "foilMap": "assets/foil/maps/pgo/swshp227.webp",
+    "etchMap": "assets/foil/maps/pgo/swshp227-etch.webp"
+  },
+  {
+    "id": "pgo-swshp228",
+    "name": "Candela",
+    "number": "swshp228",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ryuta Fuse",
+    "image": "assets/cards/pgo/swshp228.webp",
+    "imageSmall": "assets/cards/pgo/swshp228-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH228/large",
+    "printedNumber": "SWSH 228",
+    "tcgplayerId": 270722,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 2.21,
+    "foilMap": "assets/foil/maps/pgo/swshp228.webp",
+    "etchMap": "assets/foil/maps/pgo/swshp228-etch.webp"
+  },
+  {
+    "id": "pgo-swshp229",
+    "name": "Mewtwo V",
+    "number": "swshp229",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "220",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/pgo/swshp229.webp",
+    "imageSmall": "assets/cards/pgo/swshp229-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Transfer Break",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH229/large",
+    "printedNumber": "SWSH 229",
+    "tcgplayerId": 277040,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 6.69,
+    "foilMap": "assets/foil/maps/pgo/swshp229.webp",
+    "etchMap": "assets/foil/maps/pgo/swshp229-etch.webp"
+  },
+  {
+    "id": "pgo-swshp230",
+    "name": "Radiant Eevee",
+    "number": "swshp230",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Radiant"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "It has the ability to alter the composition of its body to suit its surrounding environment.",
+    "image": "assets/cards/pgo/swshp230.webp",
+    "imageSmall": "assets/cards/pgo/swshp230-sm.webp",
+    "attacks": [
+      {
+        "name": "Twinkle Gathering",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a number of cards up to the number of different types of Pokémon you have in play and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Boost Dash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH230/large",
+    "printedNumber": "SWSH 230",
+    "tcgplayerId": 270724,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 23.13,
+    "foilMap": "assets/foil/maps/pgo/swshp230.webp",
+    "etchMap": "assets/foil/maps/pgo/swshp230-etch.webp"
+  },
+  {
+    "id": "pgo-swshp231",
+    "name": "Bulbasaur",
+    "number": "swshp231",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Shibuzoh",
+    "flavorText": "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.",
+    "image": "assets/cards/pgo/swshp231.webp",
+    "imageSmall": "assets/cards/pgo/swshp231-sm.webp",
+    "attacks": [
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH231/large",
+    "printedNumber": "SWSH 231",
+    "tcgplayerId": 275828,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 11.73,
+    "foilMap": "assets/foil/maps/pgo/swshp231.webp"
+  },
+  {
+    "id": "pgo-swshp232",
+    "name": "Charmander",
+    "number": "swshp232",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Saya Tsuruta",
+    "flavorText": "It has a preference for hot things. When it rains, steam is said to spout from the tip of its tail.",
+    "image": "assets/cards/pgo/swshp232.webp",
+    "imageSmall": "assets/cards/pgo/swshp232-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail on Fire",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": "Search your deck for a Fire Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH232/large",
+    "printedNumber": "SWSH 232",
+    "tcgplayerId": 275829,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 17.89,
+    "foilMap": "assets/foil/maps/pgo/swshp232.webp"
+  },
+  {
+    "id": "pgo-swshp233",
+    "name": "Squirtle",
+    "number": "swshp233",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "kurumitsu",
+    "flavorText": "When it retracts its long neck into its shell, it squirts out water with vigorous force.",
+    "image": "assets/cards/pgo/swshp233.webp",
+    "imageSmall": "assets/cards/pgo/swshp233-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH233/large",
+    "printedNumber": "SWSH 233",
+    "tcgplayerId": 275830,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 16.92,
+    "foilMap": "assets/foil/maps/pgo/swshp233.webp"
+  },
+  {
+    "id": "pgo-swshp234",
+    "name": "Pikachu",
+    "number": "swshp234",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Ryota Murayama",
+    "flavorText": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy",
+    "image": "assets/cards/pgo/swshp234.webp",
+    "imageSmall": "assets/cards/pgo/swshp234-sm.webp",
+    "attacks": [
+      {
+        "name": "Gift Delivery",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for an Item card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Pika Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH234/large",
+    "printedNumber": "SWSH 234",
+    "tcgplayerId": 277039,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.43,
+    "foilMap": "assets/foil/maps/pgo/swshp234.webp"
+  },
+  {
+    "id": "pgo-swshp235",
+    "name": "Dragonite V",
+    "number": "swshp235",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "230",
+    "artist": "kawayoo",
+    "image": "assets/cards/pgo/swshp235.webp",
+    "imageSmall": "assets/cards/pgo/swshp235-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Beam",
+        "cost": [
+          "Water",
+          "Lightning"
+        ],
+        "damage": "60",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Buster Tail",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH235/large",
+    "printedNumber": "SWSH 235",
+    "tcgplayerId": 275844,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 6.15,
+    "foilMap": "assets/foil/maps/pgo/swshp235.webp"
+  },
+  {
+    "id": "pgo-swshp236",
+    "name": "Dragonite VSTAR",
+    "number": "swshp236",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "280",
+    "artist": "PLANETA Mochizuki",
+    "evolvesFrom": "Dragonite V",
+    "image": "assets/cards/pgo/swshp236.webp",
+    "imageSmall": "assets/cards/pgo/swshp236-sm.webp",
+    "attacks": [
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "During your next turn, this Pokémon can't attack."
+      },
+      {
+        "name": "Draconic Star",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 12 cards of your deck and attach any number of Water or Lightning Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH236/large",
+    "printedNumber": "SWSH 236",
+    "tcgplayerId": 275843,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 4.9,
+    "foilMap": "assets/foil/maps/pgo/swshp236.webp",
+    "etchMap": "assets/foil/maps/pgo/swshp236-etch.webp"
   }
 ]

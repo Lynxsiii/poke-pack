@@ -7481,5 +7481,400 @@
     "market": 11.38,
     "foilMap": "assets/foil/maps/swsh1/216.webp",
     "etchMap": "assets/foil/maps/swsh1/216-etch.webp"
+  },
+  {
+    "id": "swsh1-swshp006",
+    "name": "Rillaboom",
+    "number": "swshp006",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "170",
+    "artist": "Kouki Saitou",
+    "flavorText": "By drumming, it taps into the power of its special tree stump. The roots of the stump follow its direction in battle.",
+    "evolvesFrom": "Thwackey",
+    "image": "assets/cards/swsh1/swshp006.webp",
+    "imageSmall": "assets/cards/swsh1/swshp006-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Voltage Beat",
+        "text": "Once during your turn, you may search your deck for up to 2 Grass Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH006/large",
+    "printedNumber": "SWSH 006",
+    "tcgplayerId": 208261,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.97,
+    "foilMap": "assets/foil/maps/swsh1/swshp006.webp"
+  },
+  {
+    "id": "swsh1-swshp007",
+    "name": "Frosmoth",
+    "number": "swshp007",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "kirisAki",
+    "flavorText": "It shows no mercy to any who desecrate fields and mountains. It will fly around on its icy wings, causing a blizzard to chase offenders away.",
+    "evolvesFrom": "Snom",
+    "image": "assets/cards/swsh1/swshp007.webp",
+    "imageSmall": "assets/cards/swsh1/swshp007-sm.webp",
+    "attacks": [
+      {
+        "name": "Aurora Beam",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ice Dance",
+        "text": "As often as you like during your turn, you may attach a Water Energy card from your hand to 1 of your Benched Water Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH007/large",
+    "printedNumber": "SWSH 007",
+    "tcgplayerId": 208262,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 6.56,
+    "foilMap": "assets/foil/maps/swsh1/swshp007.webp"
+  },
+  {
+    "id": "swsh1-swshp008",
+    "name": "Galarian Perrserker",
+    "number": "swshp008",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "120",
+    "artist": "Akira Komayama",
+    "flavorText": "What appears to be an iron helmet is actually hardened hair. This Pokémon lives for the thrill of battle.",
+    "evolvesFrom": "Galarian Meowth",
+    "image": "assets/cards/swsh1/swshp008.webp",
+    "imageSmall": "assets/cards/swsh1/swshp008-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Steely Spirit",
+        "text": "Your Metal Pokémon's attacks do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH008/large",
+    "printedNumber": "SWSH 008",
+    "tcgplayerId": 208265,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.93,
+    "foilMap": "assets/foil/maps/swsh1/swshp008.webp"
+  },
+  {
+    "id": "swsh1-swshp009",
+    "name": "Cinccino",
+    "number": "swshp009",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Shibuzoh.",
+    "flavorText": "Its body secrets oil that this Pokémon spreads over its nest as a coating to protect it from dust. Cinccino won't tolerate even a speck of the stuff.",
+    "evolvesFrom": "Minccino",
+    "image": "assets/cards/swsh1/swshp009.webp",
+    "imageSmall": "assets/cards/swsh1/swshp009-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Assist",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Make Do",
+        "text": "You must discard a card from your hand in order to use this Ability. Once during your turn, you may draw 2 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH009/large",
+    "printedNumber": "SWSH 009",
+    "tcgplayerId": 208266,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 31.47,
+    "foilMap": "assets/foil/maps/swsh1/swshp009.webp"
+  },
+  {
+    "id": "swsh1-swshp010",
+    "name": "Gossifleur",
+    "number": "swshp010",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Naoki Saito",
+    "flavorText": "It anchors itself in the ground with its single leg, then basks in the sun. After absorbing enough sunlight, its petals spread as it blooms brilliantly.",
+    "image": "assets/cards/swsh1/swshp010.webp",
+    "imageSmall": "assets/cards/swsh1/swshp010-sm.webp",
+    "attacks": [
+      {
+        "name": "Sing",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH010/large",
+    "printedNumber": "SWSH 010",
+    "tcgplayerId": 206429,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.49,
+    "foilMap": "assets/foil/maps/swsh1/swshp010.webp"
+  },
+  {
+    "id": "swsh1-swshp011",
+    "name": "Wooloo",
+    "number": "swshp011",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "Its curly fleece is such an effective cushion that this Pokémon could fall off a cliff and stand right back up at the bottom, unharmed.",
+    "image": "assets/cards/swsh1/swshp011.webp",
+    "imageSmall": "assets/cards/swsh1/swshp011-sm.webp",
+    "attacks": [
+      {
+        "name": "Defense Curl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent's next turn."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH011/large",
+    "printedNumber": "SWSH 011",
+    "tcgplayerId": 206427,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.47,
+    "foilMap": "assets/foil/maps/swsh1/swshp011.webp"
+  },
+  {
+    "id": "swsh1-swshp012",
+    "name": "Morpeko",
+    "number": "swshp012",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "As it eats the seeds stored up in its pocket-like pouches, this Pokémon is not just satisfying its constant hunger. It's also generating electricity.",
+    "image": "assets/cards/swsh1/swshp012.webp",
+    "imageSmall": "assets/cards/swsh1/swshp012-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH012/large",
+    "printedNumber": "SWSH 012",
+    "tcgplayerId": 206428,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.8,
+    "foilMap": "assets/foil/maps/swsh1/swshp012.webp"
+  },
+  {
+    "id": "swsh1-swshp031",
+    "name": "Morpeko",
+    "number": "swshp031",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "As it eats the seeds stored up in its pocket-like pouches, this Pokémon is not just satisfying its constant hunger. It's also generating electricity.",
+    "image": "assets/cards/swsh1/swshp031.webp",
+    "imageSmall": "assets/cards/swsh1/swshp031-sm.webp",
+    "attacks": [
+      {
+        "name": "Famished",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH031/large",
+    "printedNumber": "SWSH 031",
+    "tcgplayerId": 210579,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.8,
+    "foilMap": "assets/foil/maps/swsh1/swshp031.webp"
+  },
+  {
+    "id": "swsh1-swshp032",
+    "name": "Snorlax",
+    "number": "swshp032",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "Tika Matsuno",
+    "flavorText": "It is not satisfied unless it eats over 880 pounds of food every day. When it is done eating, it goes promptly to sleep.",
+    "image": "assets/cards/swsh1/swshp032.webp",
+    "imageSmall": "assets/cards/swsh1/swshp032-sm.webp",
+    "attacks": [
+      {
+        "name": "Rolling Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      },
+      {
+        "name": "Heavy Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH032/large",
+    "printedNumber": "SWSH 032",
+    "tcgplayerId": 210578,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 32.74,
+    "foilMap": "assets/foil/maps/swsh1/swshp032.webp"
   }
 ]

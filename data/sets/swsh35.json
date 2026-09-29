@@ -19,9 +19,184 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp046": {
+      "foilAs": "Rare Holo",
+      "notes": "galaxy/cosmos holo per pkmn.gg"
+    },
+    "swshp047": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp048": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp049": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp050": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art Charizard V"
+    },
+    "swshp051": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp052": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp053": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp054": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp055": {
+      "foilAs": "Rare Holo V",
+      "notes": "assumed regular-art V (unverified)"
+    },
+    "swshp056": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp057": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp058": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp059": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp060": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 218791,
+      "packs": 10,
+      "promos": [
+        "swshp050"
+      ]
+    },
+    {
+      "id": "hatterene-v-collection",
+      "name": "Hatterene V Collection",
+      "kind": "collection",
+      "tcgplayerId": 218804,
+      "packs": 4,
+      "promos": [
+        "swshp055"
+      ]
+    },
+    {
+      "id": "dubwool-v-collection",
+      "name": "Dubwool V Collection",
+      "kind": "collection",
+      "tcgplayerId": 218806,
+      "packs": 4,
+      "promos": [
+        "swshp049"
+      ]
+    },
+    {
+      "id": "marnie-premium-collection",
+      "name": "Marnie Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 218807,
+      "packs": 8,
+      "promos": [
+        "swshp056",
+        "swshp057"
+      ]
+    },
+    {
+      "id": "turffield-gym-pin-collection",
+      "name": "Eldegoss Turffield Gym Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 218797,
+      "packs": 3,
+      "promos": [
+        "swshp046"
+      ]
+    },
+    {
+      "id": "hulbury-gym-pin-collection",
+      "name": "Drednaw Hulbury Gym Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 218794,
+      "packs": 3,
+      "promos": [
+        "swshp047"
+      ]
+    },
+    {
+      "id": "motostoke-gym-pin-collection",
+      "name": "Centiskorch Motostoke Gym Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 218796,
+      "packs": 3,
+      "promos": [
+        "swshp048"
+      ]
+    },
+    {
+      "id": "ballonlea-gym-pin-collection",
+      "name": "Alcremie Ballonlea Gym Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 218799,
+      "packs": 3,
+      "promos": [
+        "swshp058"
+      ]
+    },
+    {
+      "id": "spikemuth-gym-pin-collection",
+      "name": "Galarian Obstagoon Spikemuth Gym Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 218800,
+      "packs": 3,
+      "promos": [
+        "swshp059"
+      ]
+    },
+    {
+      "id": "hammerlocke-gym-pin-collection",
+      "name": "Duraludon Hammerlocke Gym Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 218798,
+      "packs": 3,
+      "promos": [
+        "swshp060"
+      ]
+    },
+    {
+      "id": "stow-on-side-special-pin-collection",
+      "name": "Machamp & Gengar Stow-on-Side Special Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 218802,
+      "packs": 5,
+      "promos": [
+        "swshp052",
+        "swshp053"
+      ]
+    },
+    {
+      "id": "circhester-special-pin-collection",
+      "name": "Lapras & Coalossal Circhester Special Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 218803,
+      "packs": 5,
+      "promos": [
+        "swshp051",
+        "swshp054"
+      ]
+    }
+  ]
 }

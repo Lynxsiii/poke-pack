@@ -19,9 +19,157 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp088": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp089": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp090": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp091": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp092": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp093": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp094": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp095": {
+      "foilAs": "Rare Holo",
+      "notes": "possibly cosmos holo (3-pack blister); unverified"
+    },
+    "swshp106": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp107": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp108": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp109": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp111": {
+      "foilAs": "Rare Holo V"
+    }
+  },
+  "products": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 229278,
+      "packs": 4,
+      "promos": [
+        "swshp088",
+        "swshp089",
+        "swshp090",
+        "swshp091"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "charmander-single-pack-blister",
+      "name": "Charmander Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 229280,
+      "packs": 1,
+      "promos": [
+        "swshp092"
+      ]
+    },
+    {
+      "id": "arrokuda-single-pack-blister",
+      "name": "Arrokuda Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 229281,
+      "packs": 1,
+      "promos": [
+        "swshp093"
+      ]
+    },
+    {
+      "id": "jolteon-3-pack-blister",
+      "name": "Jolteon 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 229282,
+      "packs": 3,
+      "promos": [
+        "swshp094"
+      ]
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 229283,
+      "packs": 3,
+      "promos": [
+        "swshp095"
+      ]
+    },
+    {
+      "id": "single-strike-urshifu-v-box",
+      "name": "Single Strike Urshifu V Box",
+      "kind": "collection",
+      "tcgplayerId": 231297,
+      "packs": 4,
+      "promos": [
+        "swshp106"
+      ]
+    },
+    {
+      "id": "rapid-strike-urshifu-v-box",
+      "name": "Rapid Strike Urshifu V Box",
+      "kind": "collection",
+      "tcgplayerId": 231296,
+      "packs": 4,
+      "promos": [
+        "swshp107"
+      ]
+    },
+    {
+      "id": "galarian-rapidash-v-box",
+      "name": "Galarian Rapidash V Box",
+      "kind": "collection",
+      "tcgplayerId": 233359,
+      "packs": 4,
+      "promos": [
+        "swshp111"
+      ]
+    },
+    {
+      "id": "tyranitar-v-strikers-tin",
+      "name": "Tyranitar V Strikers Tin",
+      "kind": "tin",
+      "tcgplayerId": 236377,
+      "packs": 5,
+      "promos": [
+        "swshp109"
+      ]
+    },
+    {
+      "id": "empoleon-v-strikers-tin",
+      "name": "Empoleon V Strikers Tin",
+      "kind": "tin",
+      "tcgplayerId": 236378,
+      "packs": 5,
+      "promos": [
+        "swshp108"
+      ]
+    }
+  ]
 }

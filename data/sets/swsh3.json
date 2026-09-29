@@ -19,9 +19,93 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp035": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp036": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp037": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp038": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp039": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp040": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp041": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo"
+    },
+    "swshp042": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holo"
+    }
+  },
+  "products": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 216861,
+      "packs": 4,
+      "promos": [
+        "swshp035",
+        "swshp036",
+        "swshp037",
+        "swshp038"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "hatenna-single-pack-blister",
+      "name": "Hatenna Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 216859,
+      "packs": 1,
+      "promos": [
+        "swshp040"
+      ]
+    },
+    {
+      "id": "pikachu-single-pack-blister",
+      "name": "Pikachu Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 216860,
+      "packs": 1,
+      "promos": [
+        "swshp039"
+      ]
+    },
+    {
+      "id": "eevee-3-pack-blister",
+      "name": "Eevee 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 216857,
+      "packs": 3,
+      "promos": [
+        "swshp042"
+      ]
+    },
+    {
+      "id": "flareon-3-pack-blister",
+      "name": "Flareon 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 216858,
+      "packs": 3,
+      "promos": [
+        "swshp041"
+      ]
+    }
+  ]
 }

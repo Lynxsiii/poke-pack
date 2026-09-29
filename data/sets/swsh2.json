@@ -19,9 +19,79 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp022": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp023": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp024": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp025": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp027": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp028": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp029": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos/pixel-cosmos holo print (3-pack blister); Sea & Sky version is a separate print"
+    }
+  },
+  "products": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 212821,
+      "packs": 4,
+      "promos": [
+        "swshp022",
+        "swshp023",
+        "swshp024",
+        "swshp025"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "noctowl-single-pack-blister",
+      "name": "Noctowl Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 210565,
+      "packs": 1,
+      "promos": [
+        "swshp027"
+      ]
+    },
+    {
+      "id": "duraludon-3-pack-blister",
+      "name": "Duraludon 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 210567,
+      "packs": 3,
+      "promos": [
+        "swshp028"
+      ]
+    },
+    {
+      "id": "rayquaza-3-pack-blister",
+      "name": "Rayquaza 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 210568,
+      "packs": 3,
+      "promos": [
+        "swshp029"
+      ]
+    }
+  ]
 }

@@ -26,9 +26,148 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp185": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp186": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp187": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp188": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp189": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp190": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp191": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp192": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp194": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp195": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched"
+    },
+    "swshp196": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp197": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched"
+    },
+    "swshp204": {
+      "foilAs": "Rare Holo V"
+    }
+  },
+  "products": [
+    {
+      "id": "pc-etb",
+      "name": "Brilliant Stars Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 256140,
+      "packs": 10,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 256137,
+      "packs": 4,
+      "promos": [
+        "swshp185",
+        "swshp186",
+        "swshp187",
+        "swshp188"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "flapple-single-blister",
+      "name": "Flapple Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 256128,
+      "packs": 1,
+      "promos": [
+        "swshp189"
+      ]
+    },
+    {
+      "id": "eevee-single-blister",
+      "name": "Eevee Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 256129,
+      "packs": 1,
+      "promos": [
+        "swshp190"
+      ]
+    },
+    {
+      "id": "leafeon-3-pack-blister",
+      "name": "Leafeon 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 256130,
+      "packs": 3,
+      "promos": [
+        "swshp191"
+      ]
+    },
+    {
+      "id": "glaceon-3-pack-blister",
+      "name": "Glaceon 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 256132,
+      "packs": 3,
+      "promos": [
+        "swshp192"
+      ]
+    },
+    {
+      "id": "leafeon-vstar-special-collection",
+      "name": "Leafeon VSTAR Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 256147,
+      "packs": 5,
+      "promos": [
+        "swshp194",
+        "swshp195"
+      ]
+    },
+    {
+      "id": "glaceon-vstar-special-collection",
+      "name": "Glaceon VSTAR Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 256146,
+      "packs": 5,
+      "promos": [
+        "swshp196",
+        "swshp197"
+      ]
+    },
+    {
+      "id": "arceus-v-figure-collection",
+      "name": "Arceus V Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 265251,
+      "packs": 4,
+      "promos": [
+        "swshp204"
+      ]
+    }
+  ]
 }

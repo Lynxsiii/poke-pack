@@ -7242,5 +7242,452 @@
     "tcgplayerId": 226536,
     "market": 1.8,
     "imageRemote": "https://images.scrydex.com/pokemon/swsh4-203/large"
+  },
+  {
+    "id": "swsh4-swshp066",
+    "name": "Charizard",
+    "number": "swshp066",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "NC Empire",
+    "flavorText": "It spits fire that is hot enough to melt boulders. It may cause forest fires by blowing flames.",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/swsh4/swshp066.webp",
+    "imageSmall": "assets/cards/swsh4/swshp066-sm.webp",
+    "attacks": [
+      {
+        "name": "Royal Blaze",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "100+",
+        "text": "This attack does 50 more damage for each Leon card in your discard pile."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Battle Sense",
+        "text": "Once during your turn, you may look at the top 3 cards of your deck and put 1 of them into your hand. Discard the other cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH066/large",
+    "printedNumber": "SWSH 066",
+    "tcgplayerId": 224365,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 104.54,
+    "foilMap": "assets/foil/maps/swsh4/swshp066.webp"
+  },
+  {
+    "id": "swsh4-swshp067",
+    "name": "Donphan",
+    "number": "swshp067",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Eri Yamaki",
+    "flavorText": "The longer and bigger its tusks, the higher its rank in its herd. The tusks take long to grow.",
+    "evolvesFrom": "Phanpy",
+    "image": "assets/cards/swsh4/swshp067.webp",
+    "imageSmall": "assets/cards/swsh4/swshp067-sm.webp",
+    "attacks": [
+      {
+        "name": "Earthquake",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "120",
+        "text": "This attack also does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Heavy Impact",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH067/large",
+    "printedNumber": "SWSH 067",
+    "tcgplayerId": 224368,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.23,
+    "foilMap": "assets/foil/maps/swsh4/swshp067.webp"
+  },
+  {
+    "id": "swsh4-swshp068",
+    "name": "Snorlax",
+    "number": "swshp068",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Narumi Sato",
+    "flavorText": "It is not satisfied unless it eats over 880 pounds of food every day. When it is done eating, it goes promptly to sleep.",
+    "image": "assets/cards/swsh4/swshp068.webp",
+    "imageSmall": "assets/cards/swsh4/swshp068-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Gormandize",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may draw cards until you have 7 cards in your hand. If you use this Ability, your turn ends.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH068/large",
+    "printedNumber": "SWSH 068",
+    "tcgplayerId": 224361,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 47.55,
+    "foilMap": "assets/foil/maps/swsh4/swshp068.webp"
+  },
+  {
+    "id": "swsh4-swshp069",
+    "name": "Lugia",
+    "number": "swshp069",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "kodama",
+    "flavorText": "It is said to be the guardian of the seas. It is rumored to have been seen on the night of a storm.",
+    "image": "assets/cards/swsh4/swshp069.webp",
+    "imageSmall": "assets/cards/swsh4/swshp069-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Wind Pressure",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "If your opponent has 5 or fewer cards in their hand, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH069/large",
+    "printedNumber": "SWSH 069",
+    "tcgplayerId": 224364,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 43.51,
+    "foilMap": "assets/foil/maps/swsh4/swshp069.webp"
+  },
+  {
+    "id": "swsh4-swshp070",
+    "name": "Grookey",
+    "number": "swshp070",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "When it uses its special stick to strike up a beat, the sound waves produced carry revitalizing energy to the plants and flowers in the area.",
+    "image": "assets/cards/swsh4/swshp070.webp",
+    "imageSmall": "assets/cards/swsh4/swshp070-sm.webp",
+    "attacks": [
+      {
+        "name": "Full On",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH070/large",
+    "printedNumber": "SWSH 070",
+    "tcgplayerId": 227028,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.67,
+    "foilMap": "assets/foil/maps/swsh4/swshp070.webp"
+  },
+  {
+    "id": "swsh4-swshp071",
+    "name": "Scorbunny",
+    "number": "swshp071",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "A warm-up of running around gets fire energy coursing through this Pokémon's body. Once that happens, it's ready to fight at full power.",
+    "image": "assets/cards/swsh4/swshp071.webp",
+    "imageSmall": "assets/cards/swsh4/swshp071-sm.webp",
+    "attacks": [
+      {
+        "name": "Me First",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH071/large",
+    "printedNumber": "SWSH 071",
+    "tcgplayerId": 227027,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.27,
+    "foilMap": "assets/foil/maps/swsh4/swshp071.webp"
+  },
+  {
+    "id": "swsh4-swshp072",
+    "name": "Vaporeon",
+    "number": "swshp072",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "so-taro",
+    "flavorText": "When Vaporeon's fins begin to vibrate, it is a sign that rain will come within a few hours.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/swsh4/swshp072.webp",
+    "imageSmall": "assets/cards/swsh4/swshp072-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Watery Shroud",
+        "text": "As long as this Pokémon is on your Bench, prevent all damage done to this Pokémon by attacks (both yours and your opponent's).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH072/large",
+    "printedNumber": "SWSH 072",
+    "tcgplayerId": 221753,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 6.74,
+    "foilMap": "assets/foil/maps/swsh4/swshp072.webp"
+  },
+  {
+    "id": "swsh4-swshp073",
+    "name": "Sobble",
+    "number": "swshp073",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "When scared, this Pokémon cries. Its tears pack the chemical punch of 100 onions, and attacks won't be able to resist weeping.",
+    "image": "assets/cards/swsh4/swshp073.webp",
+    "imageSmall": "assets/cards/swsh4/swshp073-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 20 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH073/large",
+    "printedNumber": "SWSH 073",
+    "tcgplayerId": 221754,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 5.82,
+    "foilMap": "assets/foil/maps/swsh4/swshp073.webp"
+  },
+  {
+    "id": "swsh4-swshp078",
+    "name": "Orbeetle V",
+    "number": "swshp078",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swsh4/swshp078.webp",
+    "imageSmall": "assets/cards/swsh4/swshp078-sm.webp",
+    "attacks": [
+      {
+        "name": "Strafe",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Mysterious Wave",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH078/large",
+    "printedNumber": "SWSH 078",
+    "tcgplayerId": 227025,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.79,
+    "foilMap": "assets/foil/maps/swsh4/swshp078.webp"
+  },
+  {
+    "id": "swsh4-swshp083",
+    "name": "Alakazam V",
+    "number": "swshp083",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "190",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/swsh4/swshp083.webp",
+    "imageSmall": "assets/cards/swsh4/swshp083-sm.webp",
+    "attacks": [
+      {
+        "name": "Zen Spoon",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 3 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Mind Ruler",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each card in your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH083/large",
+    "printedNumber": "SWSH 083",
+    "tcgplayerId": 228980,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.36,
+    "foilMap": "assets/foil/maps/swsh4/swshp083.webp"
   }
 ]

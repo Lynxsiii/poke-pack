@@ -23,9 +23,260 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp277": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp278": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp279": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp280": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp281": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp282": {
+      "foilAs": "Rare Ultra",
+      "notes": "full art"
+    },
+    "swshp283": {
+      "foilAs": "Rare Ultra",
+      "notes": "full art"
+    },
+    "swshp284": {
+      "foilAs": "Rare Ultra",
+      "notes": "full art"
+    },
+    "swshp285": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp286": {
+      "foilAs": "Rare Holo VMAX",
+      "notes": "etched foil VMAX"
+    },
+    "swshp287": {
+      "foilAs": "Rare Holo V",
+      "notes": "V-UNION piece; etched in the Playmat/Treasures collections"
+    },
+    "swshp288": {
+      "foilAs": "Rare Holo V",
+      "notes": "V-UNION piece; etched in the Playmat/Treasures collections"
+    },
+    "swshp289": {
+      "foilAs": "Rare Holo V",
+      "notes": "V-UNION piece; etched in the Playmat/Treasures collections"
+    },
+    "swshp290": {
+      "foilAs": "Rare Holo V",
+      "notes": "V-UNION piece; etched in the Playmat/Treasures collections"
+    },
+    "swshp291": {
+      "foilAs": "Rare Holo VSTAR",
+      "notes": "etched foil VSTAR"
+    },
+    "swshp292": {
+      "foilAs": "Rare Ultra",
+      "notes": "Shiny etched foil V"
+    },
+    "swshp293": {
+      "foilAs": "Rare Ultra",
+      "notes": "Shiny etched foil V"
+    },
+    "swshp300": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp301": {
+      "foilAs": "Rare Holo V"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 453470,
+      "packs": 10,
+      "promos": [
+        "swshp291"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box Plus",
+      "kind": "etb",
+      "tcgplayerId": 454246,
+      "packs": 12,
+      "promos": [
+        "swshp291"
+      ]
+    },
+    {
+      "id": "regieleki-v-collection",
+      "name": "Regieleki V Collection",
+      "kind": "collection",
+      "tcgplayerId": 453467,
+      "packs": 4,
+      "promos": [
+        "swshp280"
+      ]
+    },
+    {
+      "id": "regidrago-v-collection",
+      "name": "Regidrago V Collection",
+      "kind": "collection",
+      "tcgplayerId": 453468,
+      "packs": 4,
+      "promos": [
+        "swshp281"
+      ]
+    },
+    {
+      "id": "pikachu-vmax-special-collection",
+      "name": "Pikachu VMAX Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 454452,
+      "packs": 5,
+      "promos": [
+        "swshp285",
+        "swshp286"
+      ]
+    },
+    {
+      "id": "pikachu-vmax-premium-collection",
+      "name": "Pikachu VMAX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 527796,
+      "packs": 7,
+      "promos": [
+        "swshp285",
+        "swshp286"
+      ]
+    },
+    {
+      "id": "rillaboom-pin-collection",
+      "name": "Rillaboom Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 475619,
+      "packs": 3,
+      "promos": [
+        "swshp277"
+      ]
+    },
+    {
+      "id": "cinderace-pin-collection",
+      "name": "Cinderace Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 475617,
+      "packs": 3,
+      "promos": [
+        "swshp278"
+      ]
+    },
+    {
+      "id": "inteleon-pin-collection",
+      "name": "Inteleon Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 475618,
+      "packs": 3,
+      "promos": [
+        "swshp279"
+      ]
+    },
+    {
+      "id": "galarian-articuno-tin",
+      "name": "Galarian Articuno Tin",
+      "kind": "tin",
+      "tcgplayerId": 475628,
+      "packs": 5,
+      "promos": [
+        "swshp282"
+      ]
+    },
+    {
+      "id": "galarian-zapdos-tin",
+      "name": "Galarian Zapdos Tin",
+      "kind": "tin",
+      "tcgplayerId": 475630,
+      "packs": 5,
+      "promos": [
+        "swshp283"
+      ]
+    },
+    {
+      "id": "galarian-moltres-tin",
+      "name": "Galarian Moltres Tin",
+      "kind": "tin",
+      "tcgplayerId": 475629,
+      "packs": 5,
+      "promos": [
+        "swshp284"
+      ]
+    },
+    {
+      "id": "morpeko-v-union-playmat-premium-collection",
+      "name": "Morpeko V-UNION Playmat Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 475644,
+      "packs": 5,
+      "promos": [
+        "swshp287",
+        "swshp288",
+        "swshp289",
+        "swshp290"
+      ]
+    },
+    {
+      "id": "morpeko-v-union-premium-treasures-collection",
+      "name": "Morpeko V-UNION Premium Treasures Collection",
+      "kind": "premium",
+      "tcgplayerId": 516939,
+      "packs": 7,
+      "promos": [
+        "swshp287",
+        "swshp288",
+        "swshp289",
+        "swshp290"
+      ]
+    },
+    {
+      "id": "shiny-zacian-premium-figure-collection",
+      "name": "Shiny Zacian Premium Figure Collection",
+      "kind": "premium",
+      "tcgplayerId": 475647,
+      "packs": 11,
+      "promos": [
+        "swshp292"
+      ]
+    },
+    {
+      "id": "shiny-zamazenta-premium-figure-collection",
+      "name": "Shiny Zamazenta Premium Figure Collection",
+      "kind": "premium",
+      "tcgplayerId": 475646,
+      "packs": 11,
+      "promos": [
+        "swshp293"
+      ]
+    },
+    {
+      "id": "unown-v-lugia-v-special-collection",
+      "name": "Unown V & Lugia V Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 505916,
+      "packs": 5,
+      "promos": [
+        "swshp300",
+        "swshp301"
+      ]
+    }
+  ]
 }

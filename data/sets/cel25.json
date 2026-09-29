@@ -24,9 +24,230 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp062": {
+      "foilAs": "Rare Holo VMAX",
+      "notes": "etched"
+    },
+    "swshp132": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp133": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp134": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp135": {
+      "foilAs": "Rare Holo",
+      "notes": "Zacian LV.X"
+    },
+    "swshp136": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp137": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp138": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp139": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp140": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp141": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp142": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp143": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp144": {
+      "foilAs": "Rare Holo",
+      "notes": "Greninja gold star special foil"
+    },
+    "swshp145": {
+      "foilAs": "Rare Secret",
+      "notes": "gold etched Pikachu V"
+    },
+    "swshp146": {
+      "foilAs": "Rare Secret",
+      "notes": "gold etched Poke Ball"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 242811,
+      "packs": 10,
+      "promos": [
+        "swshp144"
+      ]
+    },
+    {
+      "id": "pc-etb",
+      "name": "Celebrations Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 251199,
+      "packs": 13,
+      "promos": [
+        "swshp144"
+      ]
+    },
+    {
+      "id": "dragapult-prime-collection",
+      "name": "Celebrations Collection Dragapult Prime",
+      "kind": "collection",
+      "tcgplayerId": 242807,
+      "packs": 2,
+      "promos": [
+        "swshp132"
+      ]
+    },
+    {
+      "id": "lances-charizard-v-collection",
+      "name": "Celebrations Collection Lance's Charizard V",
+      "kind": "collection",
+      "tcgplayerId": 242808,
+      "packs": 4,
+      "promos": [
+        "swshp133"
+      ]
+    },
+    {
+      "id": "dark-sylveon-v-collection",
+      "name": "Celebrations Collection Dark Sylveon V",
+      "kind": "collection",
+      "tcgplayerId": 242809,
+      "packs": 4,
+      "promos": [
+        "swshp134"
+      ]
+    },
+    {
+      "id": "zacian-lv-x-deluxe-pin-collection",
+      "name": "Celebrations Deluxe Pin Collection Zacian LV.X",
+      "kind": "collection",
+      "tcgplayerId": 242810,
+      "packs": 4,
+      "promos": [
+        "swshp135"
+      ]
+    },
+    {
+      "id": "pikachu-v-union-special-collection",
+      "name": "Celebrations Special Collection Pikachu V-UNION",
+      "kind": "collection",
+      "tcgplayerId": 244726,
+      "packs": 4,
+      "promos": [
+        "swshp139",
+        "swshp140",
+        "swshp141",
+        "swshp142"
+      ]
+    },
+    {
+      "id": "pikachu-v-union-premium-playmat-collection",
+      "name": "Celebrations Premium Playmat Collection Pikachu V-UNION",
+      "kind": "collection",
+      "tcgplayerId": 251217,
+      "packs": 6,
+      "promos": [
+        "swshp139",
+        "swshp140",
+        "swshp141",
+        "swshp142"
+      ]
+    },
+    {
+      "id": "collector-chest",
+      "name": "Celebrations Collector Chest",
+      "kind": "collection",
+      "tcgplayerId": 244727,
+      "packs": 6,
+      "promos": [
+        "swshp136",
+        "swshp137",
+        "swshp138"
+      ]
+    },
+    {
+      "id": "pikachu-vmax-premium-figure-collection",
+      "name": "Celebrations Premium Figure Collection Pikachu VMAX",
+      "kind": "premium",
+      "tcgplayerId": 245139,
+      "packs": 8,
+      "promos": [
+        "swshp062",
+        "swshp143"
+      ]
+    },
+    {
+      "id": "ultra-premium-collection",
+      "name": "Celebrations Ultra-Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 245140,
+      "packs": 17,
+      "promos": [
+        "swshp145",
+        "swshp146"
+      ]
+    },
+    {
+      "id": "v-memories-special-collection",
+      "name": "Celebrations Special Collection V Memories",
+      "kind": "collection",
+      "tcgplayerId": 247470,
+      "packs": 6,
+      "promos": [
+        "swshp133",
+        "swshp134"
+      ]
+    },
+    {
+      "id": "prime-collection",
+      "name": "Celebrations Prime Collection",
+      "kind": "collection",
+      "tcgplayerId": 252416,
+      "packs": 9,
+      "promos": [
+        "swshp132",
+        "swshp136",
+        "swshp137",
+        "swshp138"
+      ]
+    },
+    {
+      "id": "lances-charizard-v-tin",
+      "name": "Celebrations Tin Lance's Charizard V",
+      "kind": "tin",
+      "tcgplayerId": 251986,
+      "packs": 4,
+      "promos": [
+        "swshp133"
+      ]
+    },
+    {
+      "id": "dark-sylveon-v-tin",
+      "name": "Celebrations Tin Dark Sylveon V",
+      "kind": "tin",
+      "tcgplayerId": 251989,
+      "packs": 4,
+      "promos": [
+        "swshp134"
+      ]
+    }
+  ]
 }

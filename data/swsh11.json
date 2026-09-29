@@ -8801,5 +8801,403 @@
     "imageRemote": "https://images.scrydex.com/pokemon/swsh11-TG30/large",
     "foilMap": "assets/foil/maps/swsh11/TG30.webp",
     "etchMap": "assets/foil/maps/swsh11/TG30-etch.webp"
+  },
+  {
+    "id": "swsh11-swshp240",
+    "name": "Finneon",
+    "number": "swshp240",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "OKACHEKE",
+    "flavorText": "It lures in prey with its shining tail fins. It stays near the surface during the day and moves to the depths when night falls.",
+    "image": "assets/cards/swsh11/swshp240.webp",
+    "imageSmall": "assets/cards/swsh11/swshp240-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Oceanic Accompaniment",
+        "text": "As often as you like during your turn, you may attach a Water Energy card from your hand to 1 of your Pokémon that has the Swim Freely attack.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH240/large",
+    "printedNumber": "SWSH 240",
+    "tcgplayerId": 285254,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.92,
+    "foilMap": "assets/foil/maps/swsh11/swshp240.webp"
+  },
+  {
+    "id": "swsh11-swshp241",
+    "name": "Gengar",
+    "number": "swshp241",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Uta",
+    "flavorText": "On the night of a full moon, if shadows move on their own and laugh, it must be Gengar's doing.",
+    "evolvesFrom": "Haunter",
+    "image": "assets/cards/swsh11/swshp241.webp",
+    "imageSmall": "assets/cards/swsh11/swshp241-sm.webp",
+    "attacks": [
+      {
+        "name": "Screaming Circle",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 2 damage counters on your opponent's Active Pokémon for each of your opponent's Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Netherworld Gate",
+        "text": "Once during your turn, if this Pokémon is in your discard pile, you may put it onto your Bench. If you do, put 3 damage counters on this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH241/large",
+    "printedNumber": "SWSH 241",
+    "tcgplayerId": 285257,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 27.39,
+    "foilMap": "assets/foil/maps/swsh11/swshp241.webp"
+  },
+  {
+    "id": "swsh11-swshp242",
+    "name": "Comfey",
+    "number": "swshp242",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Teeziro",
+    "flavorText": "Comfey picks flowers with its vine and decorates itself with them. For some reason, flowers won't wither once they're attached to a Comfey.",
+    "image": "assets/cards/swsh11/swshp242.webp",
+    "imageSmall": "assets/cards/swsh11/swshp242-sm.webp",
+    "attacks": [
+      {
+        "name": "Spinning Attack",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flower Selecting",
+        "text": "Once during your turn, if this Pokémon is in the Active Spot, you may look at the top 2 cards of your deck and put 1 of them into your hand. Put the other card in the Lost Zone.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH242/large",
+    "printedNumber": "SWSH 242",
+    "tcgplayerId": 285253,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.46,
+    "foilMap": "assets/foil/maps/swsh11/swshp242.webp"
+  },
+  {
+    "id": "swsh11-swshp243",
+    "name": "Machamp",
+    "number": "swshp243",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "GOSSAN",
+    "flavorText": "It quickly swings its four arms to rock its opponents with ceaseless punches and chops from all angles.",
+    "evolvesFrom": "Machoke",
+    "image": "assets/cards/swsh11/swshp243.webp",
+    "imageSmall": "assets/cards/swsh11/swshp243-sm.webp",
+    "attacks": [
+      {
+        "name": "Strong-Arm Lariat",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "100+ damage. You may do 100 more",
+        "text": "If you do, during your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Crisis Muscles",
+        "text": "If your opponent has 3 or fewer Prize cards remaining, this Pokémon gets +150 HP.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH243/large",
+    "printedNumber": "SWSH 243",
+    "tcgplayerId": 285251,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.92,
+    "foilMap": "assets/foil/maps/swsh11/swshp243.webp"
+  },
+  {
+    "id": "swsh11-swshp244",
+    "name": "Scorbunny",
+    "number": "swshp244",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Taira Akitsu",
+    "flavorText": "It has special pads on the backs of its feet, and one on its nose. Once it's raring to fight, these pads radiate tremendous heat.",
+    "image": "assets/cards/swsh11/swshp244.webp",
+    "imageSmall": "assets/cards/swsh11/swshp244-sm.webp",
+    "attacks": [
+      {
+        "name": "Flaring Dash",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Flip a coin until you get tails. For each heads, draw a card."
+      },
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH244/large",
+    "printedNumber": "SWSH 244",
+    "tcgplayerId": 285264,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.64,
+    "foilMap": "assets/foil/maps/swsh11/swshp244.webp"
+  },
+  {
+    "id": "swsh11-swshp245",
+    "name": "Croagunk",
+    "number": "swshp245",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Yuya Oka",
+    "flavorText": "Once diluted, its poison becomes medicinal. This Pokémon came into popularity after a pharmaceutical company chose it as a mascot.",
+    "image": "assets/cards/swsh11/swshp245.webp",
+    "imageSmall": "assets/cards/swsh11/swshp245-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH245/large",
+    "printedNumber": "SWSH 245",
+    "tcgplayerId": 285259,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.43,
+    "foilMap": "assets/foil/maps/swsh11/swshp245.webp"
+  },
+  {
+    "id": "swsh11-swshp246",
+    "name": "Weavile",
+    "number": "swshp246",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "Shin Nagasawa",
+    "flavorText": "They attack their quarry in packs. Prey as large as Mamoswine easily fall to the teamwork of a group of Weavile.",
+    "evolvesFrom": "Sneasel",
+    "image": "assets/cards/swsh11/swshp246.webp",
+    "imageSmall": "assets/cards/swsh11/swshp246-sm.webp",
+    "attacks": [
+      {
+        "name": "Pursuit Claw",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon for each damage counter on that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH246/large",
+    "printedNumber": "SWSH 246",
+    "tcgplayerId": 285262,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.65,
+    "foilMap": "assets/foil/maps/swsh11/swshp246.webp"
+  },
+  {
+    "id": "swsh11-swshp247",
+    "name": "Regigigas",
+    "number": "swshp247",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "GOSSAN",
+    "flavorText": "There is an enduring legend that states this Pokémon towed continents with ropes.",
+    "image": "assets/cards/swsh11/swshp247.webp",
+    "imageSmall": "assets/cards/swsh11/swshp247-sm.webp",
+    "attacks": [
+      {
+        "name": "Limber Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Attach a basic Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Double Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120×",
+        "text": "Flip 2 coins. This attack does 120 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH247/large",
+    "printedNumber": "SWSH 247",
+    "tcgplayerId": 285258,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.81,
+    "foilMap": "assets/foil/maps/swsh11/swshp247.webp"
+  },
+  {
+    "id": "swsh11-swshp252",
+    "name": "Infernape V",
+    "number": "swshp252",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "200",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/swsh11/swshp252.webp",
+    "imageSmall": "assets/cards/swsh11/swshp252-sm.webp",
+    "attacks": [
+      {
+        "name": "Meteor Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage for each heads."
+      },
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH252/large",
+    "printedNumber": "SWSH 252",
+    "tcgplayerId": 283369,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.87,
+    "foilMap": "assets/foil/maps/swsh11/swshp252.webp"
   }
 ]

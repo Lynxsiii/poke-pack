@@ -7585,5 +7585,333 @@
     "imageRemote": "https://images.scrydex.com/pokemon/swsh2-209/large",
     "tcgplayerId": 213286,
     "market": 3.64
+  },
+  {
+    "id": "swsh2-swshp022",
+    "name": "Flapple",
+    "number": "swshp022",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "It ate a sour apple, and that induced its evolution. In its cheeks, it stores an acid capable of causing chemical burns.",
+    "evolvesFrom": "Applin",
+    "image": "assets/cards/swsh2/swshp022.webp",
+    "imageSmall": "assets/cards/swsh2/swshp022-sm.webp",
+    "attacks": [
+      {
+        "name": "Acid Spray",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Apple Drop",
+        "text": "Once during your turn, you may put 2 damage counters on 1 of your opponent's Pokémon. If you placed any damage counters in this way, shuffle this Pokémon and all attached cards into your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH022/large",
+    "printedNumber": "SWSH 022",
+    "tcgplayerId": 213096,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.41,
+    "foilMap": "assets/foil/maps/swsh2/swshp022.webp"
+  },
+  {
+    "id": "swsh2-swshp023",
+    "name": "Luxray",
+    "number": "swshp023",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "160",
+    "artist": "Megumi Higuchi",
+    "flavorText": "Luxray's ability to see through objects comes in handy when it's scouting for danger.",
+    "evolvesFrom": "Luxio",
+    "image": "assets/cards/swsh2/swshp023.webp",
+    "imageSmall": "assets/cards/swsh2/swshp023-sm.webp",
+    "attacks": [
+      {
+        "name": "Raid",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "60+",
+        "text": "If this Pokémon evolved from Luxio during this turn, this attack does 100 more damage."
+      },
+      {
+        "name": "Head Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH023/large",
+    "printedNumber": "SWSH 023",
+    "tcgplayerId": 213144,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 12.43,
+    "foilMap": "assets/foil/maps/swsh2/swshp023.webp"
+  },
+  {
+    "id": "swsh2-swshp024",
+    "name": "Coalossal",
+    "number": "swshp024",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "160",
+    "artist": "Kouki Saitou",
+    "flavorText": "It's usually peaceful, but the vandalism of mines enrages it. Offenders will be incinerated with flames that reach 2,700 degrees Fahrenheit.",
+    "evolvesFrom": "Carkol",
+    "image": "assets/cards/swsh2/swshp024.webp",
+    "imageSmall": "assets/cards/swsh2/swshp024-sm.webp",
+    "attacks": [
+      {
+        "name": "Flaming Avalanche",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Tar Generator",
+        "text": "Once during your turn, you may attach a Fire Energy card, a Fighting Energy card, or 1 of each from your discard pile to your Pokémon in any way you like.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH024/large",
+    "printedNumber": "SWSH 024",
+    "tcgplayerId": 213196,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.15,
+    "foilMap": "assets/foil/maps/swsh2/swshp024.webp"
+  },
+  {
+    "id": "swsh2-swshp025",
+    "name": "Garbodor",
+    "number": "swshp025",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "tetsuya koizumi",
+    "flavorText": "This Pokémon eats trash, which turns into poison inside its body. The main component of the poison depends on what sort of trash was eaten.",
+    "evolvesFrom": "Trubbish",
+    "image": "assets/cards/swsh2/swshp025.webp",
+    "imageSmall": "assets/cards/swsh2/swshp025-sm.webp",
+    "attacks": [
+      {
+        "name": "Sludge Bomb",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Poisonous Puddle",
+        "text": "Once during your turn, if a Stadium is in play, you may make your opponent's Active Pokémon Poisoned.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH025/large",
+    "printedNumber": "SWSH 025",
+    "tcgplayerId": 213211,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 7.21,
+    "foilMap": "assets/foil/maps/swsh2/swshp025.webp"
+  },
+  {
+    "id": "swsh2-swshp027",
+    "name": "Noctowl",
+    "number": "swshp027",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Misa Tsutsui",
+    "flavorText": "When it needs to think, it rotates its head 180 degrees to sharpen its intellectual power.",
+    "evolvesFrom": "Hoothoot",
+    "image": "assets/cards/swsh2/swshp027.webp",
+    "imageSmall": "assets/cards/swsh2/swshp027-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Carry Off",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Benched Pokémon. They shuffle that Pokémon and all attached cards into their deck. Then, shuffle this Pokémon and all attached cards into your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH027/large",
+    "printedNumber": "SWSH 027",
+    "tcgplayerId": 214238,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.41,
+    "foilMap": "assets/foil/maps/swsh2/swshp027.webp"
+  },
+  {
+    "id": "swsh2-swshp028",
+    "name": "Duraludon",
+    "number": "swshp028",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Ryuta Fuse",
+    "flavorText": "Its body resembles polished metal, and it's both lightweight and strong. The only drawback is that it rusts easily.",
+    "image": "assets/cards/swsh2/swshp028.webp",
+    "imageSmall": "assets/cards/swsh2/swshp028-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Steel Beam",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "This Pokémon also does 40 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH028/large",
+    "printedNumber": "SWSH 028",
+    "tcgplayerId": 214239,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.49,
+    "foilMap": "assets/foil/maps/swsh2/swshp028.webp"
+  },
+  {
+    "id": "swsh2-swshp029",
+    "name": "Rayquaza",
+    "number": "swshp029",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "so-taro",
+    "flavorText": "It flies in the ozone layer, way up high in the sky. Until recently, no one had ever seen it.",
+    "image": "assets/cards/swsh2/swshp029.webp",
+    "imageSmall": "assets/cards/swsh2/swshp029-sm.webp",
+    "attacks": [
+      {
+        "name": "Jaw Lock",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      },
+      {
+        "name": "Power Blast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH029/large",
+    "printedNumber": "SWSH 029",
+    "tcgplayerId": 214240,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.43,
+    "foilMap": "assets/foil/maps/swsh2/swshp029.webp"
   }
 ]

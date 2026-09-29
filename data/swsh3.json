@@ -7299,5 +7299,371 @@
     "market": 2.73,
     "foilMap": "assets/foil/maps/swsh3/201.webp",
     "etchMap": "assets/foil/maps/swsh3/201-etch.webp"
+  },
+  {
+    "id": "swsh3-swshp035",
+    "name": "Decidueye",
+    "number": "swshp035",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "As if wielding a bow, it launches the arrow quills hidden among the feathers of its wings. Decidueye's shots never miss.",
+    "evolvesFrom": "Dartrix",
+    "image": "assets/cards/swsh3/swshp035.webp",
+    "imageSmall": "assets/cards/swsh3/swshp035-sm.webp",
+    "attacks": [
+      {
+        "name": "Splitting Arrow",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack also does 20 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Deep Forest Camo",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon V and Pokémon-GX.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH035/large",
+    "printedNumber": "SWSH 035",
+    "tcgplayerId": 218579,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 6.38,
+    "foilMap": "assets/foil/maps/swsh3/swshp035.webp"
+  },
+  {
+    "id": "swsh3-swshp036",
+    "name": "Arctozolt",
+    "number": "swshp036",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "Hasuno",
+    "flavorText": "The shaking of its freezing upper half is what generates its electricity. It has a hard time walking around.",
+    "evolvesFrom": "Rare Fossil",
+    "image": "assets/cards/swsh3/swshp036.webp",
+    "imageSmall": "assets/cards/swsh3/swshp036-sm.webp",
+    "attacks": [
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Biting Whirlpool",
+        "text": "Whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 2 damage counters on that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH036/large",
+    "printedNumber": "SWSH 036",
+    "tcgplayerId": 218580,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 9.5,
+    "foilMap": "assets/foil/maps/swsh3/swshp036.webp"
+  },
+  {
+    "id": "swsh3-swshp037",
+    "name": "Hydreigon",
+    "number": "swshp037",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "160",
+    "artist": "Taira Akitsu",
+    "flavorText": "There are a slew of stories about villages that were destroyed by Hydreigon. It bites anything that moves.",
+    "evolvesFrom": "Zweilous",
+    "image": "assets/cards/swsh3/swshp037.webp",
+    "imageSmall": "assets/cards/swsh3/swshp037-sm.webp",
+    "attacks": [
+      {
+        "name": "Pitch-Black Fangs",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Squall",
+        "text": "As often as you like during your turn, you may attach a Darkness Energy card from your hand to 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH037/large",
+    "printedNumber": "SWSH 037",
+    "tcgplayerId": 218583,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.88,
+    "foilMap": "assets/foil/maps/swsh3/swshp037.webp"
+  },
+  {
+    "id": "swsh3-swshp038",
+    "name": "Kangaskhan",
+    "number": "swshp038",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "HYOGONOSUKE",
+    "flavorText": "You shouldn't get close to the child when it's playing outside its mother's pouch. Its mother is always nearby watching over it.",
+    "image": "assets/cards/swsh3/swshp038.webp",
+    "imageSmall": "assets/cards/swsh3/swshp038-sm.webp",
+    "attacks": [
+      {
+        "name": "Rally Back",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If any of your Pokémon were Knocked Out by damage from an attack from your opponent's Pokémon during their last turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH038/large",
+    "printedNumber": "SWSH 038",
+    "tcgplayerId": 218574,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 11.62,
+    "foilMap": "assets/foil/maps/swsh3/swshp038.webp"
+  },
+  {
+    "id": "swsh3-swshp039",
+    "name": "Pikachu",
+    "number": "swshp039",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
+    "image": "assets/cards/swsh3/swshp039.webp",
+    "imageSmall": "assets/cards/swsh3/swshp039-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Whip",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, during your opponent's next turn, the Defending Pokémon can't attack."
+      },
+      {
+        "name": "Pika Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH039/large",
+    "printedNumber": "SWSH 039",
+    "tcgplayerId": 220268,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 11.0,
+    "foilMap": "assets/foil/maps/swsh3/swshp039.webp"
+  },
+  {
+    "id": "swsh3-swshp040",
+    "name": "Hatenna",
+    "number": "swshp040",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Misa Tsutsui",
+    "flavorText": "Via the protrusion on its head, it senses other creatures' emotions. If you don't have a calm disposition, it will never warm up to you.",
+    "image": "assets/cards/swsh3/swshp040.webp",
+    "imageSmall": "assets/cards/swsh3/swshp040-sm.webp",
+    "attacks": [
+      {
+        "name": "Find a Friend",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Psyshot",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH040/large",
+    "printedNumber": "SWSH 040",
+    "tcgplayerId": 220269,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.45,
+    "foilMap": "assets/foil/maps/swsh3/swshp040.webp"
+  },
+  {
+    "id": "swsh3-swshp041",
+    "name": "Flareon",
+    "number": "swshp041",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "You Iribi",
+    "flavorText": "Once it has stored up enough heat, this Pokémon's body temperature can reach up to 1,700 degrees Fahrenheit.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/swsh3/swshp041.webp",
+    "imageSmall": "assets/cards/swsh3/swshp041-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Kindle",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH041/large",
+    "printedNumber": "SWSH 041",
+    "tcgplayerId": 220270,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.43,
+    "foilMap": "assets/foil/maps/swsh3/swshp041.webp"
+  },
+  {
+    "id": "swsh3-swshp042",
+    "name": "Eevee",
+    "number": "swshp042",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "You Iribi",
+    "flavorText": "It has the ability to alter the composition of its body to suit its surrounding environment.",
+    "image": "assets/cards/swsh3/swshp042.webp",
+    "imageSmall": "assets/cards/swsh3/swshp042-sm.webp",
+    "attacks": [
+      {
+        "name": "Signs of Evolution",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from Eevee, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Wild Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH042/large",
+    "printedNumber": "SWSH 042",
+    "tcgplayerId": 220271,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 12.02,
+    "foilMap": "assets/foil/maps/swsh3/swshp042.webp"
   }
 ]

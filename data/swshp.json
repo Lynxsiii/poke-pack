@@ -1,0 +1,2772 @@
+[
+  {
+    "id": "swshp-swshp004",
+    "name": "Meowth V",
+    "number": "swshp004",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "180",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swshp/swshp004.webp",
+    "imageSmall": "assets/cards/swshp/swshp004-sm.webp",
+    "attacks": [
+      {
+        "name": "Pay Day",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH004/large",
+    "printedNumber": "SWSH 004",
+    "tcgplayerId": 205465,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 4.48,
+    "foilMap": "assets/foil/maps/swshp/swshp004.webp"
+  },
+  {
+    "id": "swshp-swshp005",
+    "name": "Meowth VMAX",
+    "number": "swshp005",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "300",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Meowth V",
+    "image": "assets/cards/swshp/swshp005.webp",
+    "imageSmall": "assets/cards/swshp/swshp005-sm.webp",
+    "attacks": [
+      {
+        "name": "G-Max Gold Rush",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Draw 3 cards."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH005/large",
+    "printedNumber": "SWSH 005",
+    "tcgplayerId": 205466,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 9.09,
+    "foilMap": "assets/foil/maps/swshp/swshp005.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp005-etch.webp"
+  },
+  {
+    "id": "swshp-swshp015",
+    "name": "Cinderace V",
+    "number": "swshp015",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp015.webp",
+    "imageSmall": "assets/cards/swshp/swshp015-sm.webp",
+    "attacks": [
+      {
+        "name": "Crimson Legs",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Field Runner",
+        "text": "If a Stadium is in play, this Pokémon has no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH015/large",
+    "printedNumber": "SWSH 015",
+    "tcgplayerId": 206419,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.84,
+    "foilMap": "assets/foil/maps/swshp/swshp015.webp"
+  },
+  {
+    "id": "swshp-swshp016",
+    "name": "Inteleon V",
+    "number": "swshp016",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp016.webp",
+    "imageSmall": "assets/cards/swshp/swshp016-sm.webp",
+    "attacks": [
+      {
+        "name": "Snipe Shot",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 40 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Aqua Report",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Your opponent reveals their hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH016/large",
+    "printedNumber": "SWSH 016",
+    "tcgplayerId": 206418,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.91,
+    "foilMap": "assets/foil/maps/swshp/swshp016.webp"
+  },
+  {
+    "id": "swshp-swshp018",
+    "name": "Zacian V",
+    "number": "swshp018",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp018.webp",
+    "imageSmall": "assets/cards/swshp/swshp018-sm.webp",
+    "attacks": [
+      {
+        "name": "Brave Blade",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "230",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Intrepid Sword",
+        "text": "Once during your turn, you may look at the top 3 cards of your deck and attach any number of Metal Energy cards you find there to this Pokémon. Put the other cards into your hand. If you use this Ability, your turn ends.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH018/large",
+    "printedNumber": "SWSH 018",
+    "tcgplayerId": 214233,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.13,
+    "foilMap": "assets/foil/maps/swshp/swshp018.webp"
+  },
+  {
+    "id": "swshp-swshp019",
+    "name": "Zamazenta V",
+    "number": "swshp019",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "230",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swshp/swshp019.webp",
+    "imageSmall": "assets/cards/swshp/swshp019-sm.webp",
+    "attacks": [
+      {
+        "name": "Assault Tackle",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard a Special Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dauntless Shield",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon VMAX.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH019/large",
+    "printedNumber": "SWSH 019",
+    "tcgplayerId": 214234,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.89,
+    "foilMap": "assets/foil/maps/swshp/swshp019.webp"
+  },
+  {
+    "id": "swshp-swshp020",
+    "name": "Pikachu",
+    "number": "swshp020",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Hideki Ishikawa",
+    "flavorText": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
+    "image": "assets/cards/swshp/swshp020.webp",
+    "imageSmall": "assets/cards/swshp/swshp020-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Tail",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage for each heads."
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH020/large",
+    "printedNumber": "SWSH 020",
+    "tcgplayerId": 214241,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 109.34,
+    "foilMap": "assets/foil/maps/swshp/swshp020.webp"
+  },
+  {
+    "id": "swshp-swshp030",
+    "name": "Copperajah V",
+    "number": "swshp030",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp030.webp",
+    "imageSmall": "assets/cards/swshp/swshp030-sm.webp",
+    "attacks": [
+      {
+        "name": "Adamantine Press",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Wrack Down",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH030/large",
+    "printedNumber": "SWSH 030",
+    "tcgplayerId": 214228,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.97,
+    "foilMap": "assets/foil/maps/swshp/swshp030.webp"
+  },
+  {
+    "id": "swshp-swshp033",
+    "name": "Zacian",
+    "number": "swshp033",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "Kouki Saitou",
+    "flavorText": "Now armed with a weapon it used in ancient times, this Pokémon needs only a single strike to fell even Gigantamax Pokémon.",
+    "image": "assets/cards/swshp/swshp033.webp",
+    "imageSmall": "assets/cards/swshp/swshp033-sm.webp",
+    "attacks": [
+      {
+        "name": "Crunch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Metal Blade",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "Discard 3 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH033/large",
+    "printedNumber": "SWSH 033",
+    "tcgplayerId": 220313,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.22,
+    "foilMap": "assets/foil/maps/swshp/swshp033.webp"
+  },
+  {
+    "id": "swshp-swshp043",
+    "name": "Galarian Sirfetch'd V",
+    "number": "swshp043",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "210",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swshp/swshp043.webp",
+    "imageSmall": "assets/cards/swshp/swshp043-sm.webp",
+    "attacks": [
+      {
+        "name": "Meteor Smash",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Resolute Spear",
+        "text": "Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may move any amount of Fighting Energy from your other Pokémon to it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH043/large",
+    "printedNumber": "SWSH 043",
+    "tcgplayerId": 220273,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.18,
+    "foilMap": "assets/foil/maps/swshp/swshp043.webp"
+  },
+  {
+    "id": "swshp-swshp044",
+    "name": "Eternatus V",
+    "number": "swshp044",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp044.webp",
+    "imageSmall": "assets/cards/swshp/swshp044-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Accelerator",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "You may attach a Darkness Energy card from your hand to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Dynamax Cannon",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "If your opponent's Active Pokémon is a Pokémon VMAX, this attack does 120 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH044/large",
+    "printedNumber": "SWSH 044",
+    "tcgplayerId": 220279,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 2.96,
+    "foilMap": "assets/foil/maps/swshp/swshp044.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp044-etch.webp"
+  },
+  {
+    "id": "swshp-swshp045",
+    "name": "Eternatus VMAX",
+    "number": "swshp045",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "340",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eternatus V",
+    "image": "assets/cards/swshp/swshp045.webp",
+    "imageSmall": "assets/cards/swshp/swshp045-sm.webp",
+    "attacks": [
+      {
+        "name": "Dread End",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each of your Darkness Pokémon in play."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Eternal Zone",
+        "text": "If all of your Pokémon in play are Darkness type, you can have up to 8 Pokémon on your Bench, and you can't put non-Darkness Pokémon into play. (If this Ability stops working, discard Pokémon from your Bench until you have 5.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH045/large",
+    "printedNumber": "SWSH 045",
+    "tcgplayerId": 220281,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 2.62,
+    "foilMap": "assets/foil/maps/swshp/swshp045.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp045-etch.webp"
+  },
+  {
+    "id": "swshp-swshp076",
+    "name": "Zacian V",
+    "number": "swshp076",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp076.webp",
+    "imageSmall": "assets/cards/swshp/swshp076-sm.webp",
+    "attacks": [
+      {
+        "name": "Brave Blade",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "230",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Intrepid Sword",
+        "text": "Once during your turn, you may look at the top 3 cards of your deck and attach any number of Metal Energy cards you find there to this Pokémon. Put the other cards into your hand. If you use this Ability, your turn ends.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH076/large",
+    "printedNumber": "SWSH 076",
+    "tcgplayerId": 228595,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 11.77,
+    "foilMap": "assets/foil/maps/swshp/swshp076.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp076-etch.webp"
+  },
+  {
+    "id": "swshp-swshp077",
+    "name": "Zamazenta V",
+    "number": "swshp077",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "230",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swshp/swshp077.webp",
+    "imageSmall": "assets/cards/swshp/swshp077-sm.webp",
+    "attacks": [
+      {
+        "name": "Assault Tackle",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard a Special Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dauntless Shield",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon VMAX.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH077/large",
+    "printedNumber": "SWSH 077",
+    "tcgplayerId": 228596,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 8.68,
+    "foilMap": "assets/foil/maps/swshp/swshp077.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp077-etch.webp"
+  },
+  {
+    "id": "swshp-swshp104",
+    "name": "Victini V",
+    "number": "swshp104",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp104.webp",
+    "imageSmall": "assets/cards/swshp/swshp104-sm.webp",
+    "attacks": [
+      {
+        "name": "Spreading Flames",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 3 Fire Energy cards from your discard pile to your Pokémon in any way you like."
+      },
+      {
+        "name": "Energy Burst",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy attached to both Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH104/large",
+    "printedNumber": "SWSH 104",
+    "tcgplayerId": 238546,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.45,
+    "foilMap": "assets/foil/maps/swshp/swshp104.webp"
+  },
+  {
+    "id": "swshp-swshp105",
+    "name": "Gardevoir V",
+    "number": "swshp105",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp105.webp",
+    "imageSmall": "assets/cards/swshp/swshp105-sm.webp",
+    "attacks": [
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Swelling Pulse",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "If this Pokémon was healed during this turn, this attack does 80 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH105/large",
+    "printedNumber": "SWSH 105",
+    "tcgplayerId": 238545,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.07,
+    "foilMap": "assets/foil/maps/swshp/swshp105.webp"
+  },
+  {
+    "id": "swshp-swshp110",
+    "name": "Crobat V",
+    "number": "swshp110",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/swshp/swshp110.webp",
+    "imageSmall": "assets/cards/swshp/swshp110-sm.webp",
+    "attacks": [
+      {
+        "name": "Venomous Fang",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Asset",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may draw cards until you have 6 cards in your hand. You can't use more than 1 Dark Asset Ability each turn.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH110/large",
+    "printedNumber": "SWSH 110",
+    "tcgplayerId": 245875,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.12,
+    "foilMap": "assets/foil/maps/swshp/swshp110.webp"
+  },
+  {
+    "id": "swshp-swshp120",
+    "name": "Marnie",
+    "number": "swshp120",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Sanosuke Sakuma",
+    "image": "assets/cards/swshp/swshp120.webp",
+    "imageSmall": "assets/cards/swshp/swshp120-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH120/large",
+    "printedNumber": "SWSH 120",
+    "tcgplayerId": 245871,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.63,
+    "foilMap": "assets/foil/maps/swshp/swshp120.webp"
+  },
+  {
+    "id": "swshp-swshp121",
+    "name": "Marnie",
+    "number": "swshp121",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/swshp/swshp121.webp",
+    "imageSmall": "assets/cards/swshp/swshp121-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH121/large",
+    "printedNumber": "SWSH 121",
+    "tcgplayerId": 245872,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 30.03,
+    "foilMap": "assets/foil/maps/swshp/swshp121.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp121-etch.webp"
+  },
+  {
+    "id": "swshp-swshp130",
+    "name": "Ice Rider Calyrex V",
+    "number": "swshp130",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp130.webp",
+    "imageSmall": "assets/cards/swshp/swshp130-sm.webp",
+    "attacks": [
+      {
+        "name": "Blizzard",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This attack also does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Frost Stamp",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH130/large",
+    "printedNumber": "SWSH 130",
+    "tcgplayerId": 245868,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.17,
+    "foilMap": "assets/foil/maps/swshp/swshp130.webp"
+  },
+  {
+    "id": "swshp-swshp131",
+    "name": "Shadow Rider Calyrex V",
+    "number": "swshp131",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp131.webp",
+    "imageSmall": "assets/cards/swshp/swshp131-sm.webp",
+    "attacks": [
+      {
+        "name": "Cloak in Shadows",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Attach a Psychic Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Hollow Binding",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "During your opponent's next turn, the Defending Pokémon can't retreat."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH131/large",
+    "printedNumber": "SWSH 131",
+    "tcgplayerId": 245867,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.23,
+    "foilMap": "assets/foil/maps/swshp/swshp131.webp"
+  },
+  {
+    "id": "swshp-swshp153",
+    "name": "Pikachu",
+    "number": "swshp153",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "sowsow",
+    "flavorText": "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
+    "image": "assets/cards/swshp/swshp153.webp",
+    "imageSmall": "assets/cards/swshp/swshp153-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH153/large",
+    "printedNumber": "SWSH 153",
+    "tcgplayerId": 283301,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 48.62,
+    "foilMap": "assets/foil/maps/swshp/swshp153.webp"
+  },
+  {
+    "id": "swshp-swshp213",
+    "name": "Lucario V",
+    "number": "swshp213",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "210",
+    "artist": "takuyoa",
+    "image": "assets/cards/swshp/swshp213.webp",
+    "imageSmall": "assets/cards/swshp/swshp213-sm.webp",
+    "attacks": [
+      {
+        "name": "Crushing Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard a Special Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Cyclone Kick",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH213/large",
+    "printedNumber": "SWSH 213",
+    "tcgplayerId": 268306,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.86,
+    "foilMap": "assets/foil/maps/swshp/swshp213.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp213-etch.webp"
+  },
+  {
+    "id": "swshp-swshp214",
+    "name": "Lucario VSTAR",
+    "number": "swshp214",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "270",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Lucario V",
+    "image": "assets/cards/swshp/swshp214.webp",
+    "imageSmall": "assets/cards/swshp/swshp214-sm.webp",
+    "attacks": [
+      {
+        "name": "Fighting Knuckle",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "If your opponent's Active Pokémon is a Pokémon V, this attack does 120 more damage."
+      },
+      {
+        "name": "Aura Star",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70×",
+        "text": "This attack does 70 damage for each Energy attached to all of your opponent's Pokémon. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH214/large",
+    "printedNumber": "SWSH 214",
+    "tcgplayerId": 268304,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 2.93,
+    "foilMap": "assets/foil/maps/swshp/swshp214.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp214-etch.webp"
+  },
+  {
+    "id": "swshp-swshp215",
+    "name": "Morpeko V-UNION",
+    "number": "swshp215",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "310",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/swshp/swshp215.webp",
+    "imageSmall": "assets/cards/swshp/swshp215-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Lightning Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "All You Can Eat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw cards until you have 10 cards in your hand."
+      },
+      {
+        "name": "Burst Wheel",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100×",
+        "text": "Discard all energy from this Pokémon. This attack does 100 damage for each card you discarded in this way."
+      },
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH215/large",
+    "printedNumber": "SWSH 215",
+    "tcgplayerId": 268444,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.33,
+    "foilMap": "assets/foil/maps/swshp/swshp215.webp"
+  },
+  {
+    "id": "swshp-swshp216",
+    "name": "Morpeko V-UNION",
+    "number": "swshp216",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "310",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/swshp/swshp216.webp",
+    "imageSmall": "assets/cards/swshp/swshp216-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Lightning Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "All You Can Eat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw cards until you have 10 cards in your hand."
+      },
+      {
+        "name": "Burst Wheel",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100×",
+        "text": "Discard all energy from this Pokémon. This attack does 100 damage for each card you discarded in this way."
+      },
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH216/large",
+    "printedNumber": "SWSH 216",
+    "tcgplayerId": 268445,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.2,
+    "foilMap": "assets/foil/maps/swshp/swshp216.webp"
+  },
+  {
+    "id": "swshp-swshp217",
+    "name": "Morpeko V-UNION",
+    "number": "swshp217",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "310",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/swshp/swshp217.webp",
+    "imageSmall": "assets/cards/swshp/swshp217-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Lightning Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "All You Can Eat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw cards until you have 10 cards in your hand."
+      },
+      {
+        "name": "Burst Wheel",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100×",
+        "text": "Discard all energy from this Pokémon. This attack does 100 damage for each card you discarded in this way."
+      },
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH217/large",
+    "printedNumber": "SWSH 217",
+    "tcgplayerId": 268446,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.47,
+    "foilMap": "assets/foil/maps/swshp/swshp217.webp"
+  },
+  {
+    "id": "swshp-swshp218",
+    "name": "Morpeko V-UNION",
+    "number": "swshp218",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "V-UNION"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "310",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/swshp/swshp218.webp",
+    "imageSmall": "assets/cards/swshp/swshp218-sm.webp",
+    "attacks": [
+      {
+        "name": "Union Gain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Lightning Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "All You Can Eat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw cards until you have 10 cards in your hand."
+      },
+      {
+        "name": "Burst Wheel",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100×",
+        "text": "Discard all energy from this Pokémon. This attack does 100 damage for each card you discarded in this way."
+      },
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH218/large",
+    "printedNumber": "SWSH 218",
+    "tcgplayerId": 268447,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.68,
+    "foilMap": "assets/foil/maps/swshp/swshp218.webp"
+  },
+  {
+    "id": "swshp-swshp219",
+    "name": "Boltund V",
+    "number": "swshp219",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "200",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/swshp/swshp219.webp",
+    "imageSmall": "assets/cards/swshp/swshp219-sm.webp",
+    "attacks": [
+      {
+        "name": "Smash Turn",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Electrobullet",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This attack also does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH219/large",
+    "printedNumber": "SWSH 219",
+    "tcgplayerId": 270468,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.94,
+    "foilMap": "assets/foil/maps/swshp/swshp219.webp"
+  },
+  {
+    "id": "swshp-swshp220",
+    "name": "Rowlet",
+    "number": "swshp220",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "sowsow",
+    "flavorText": "Flies noiselessly on delicate wings. It has mastered the art of deftly launching dagger-sharp feathers from those same wings.",
+    "image": "assets/cards/swshp/swshp220.webp",
+    "imageSmall": "assets/cards/swshp/swshp220-sm.webp",
+    "attacks": [
+      {
+        "name": "Jump On",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH220/large",
+    "printedNumber": "SWSH 220",
+    "tcgplayerId": 268705,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.54,
+    "foilMap": "assets/foil/maps/swshp/swshp220.webp"
+  },
+  {
+    "id": "swshp-swshp221",
+    "name": "Cyndaquil",
+    "number": "swshp221",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Teeziro",
+    "flavorText": "Hails from the Johto region. Though usually curled into a ball due to its timid disposition, it harbors tremendous firepower.",
+    "image": "assets/cards/swshp/swshp221.webp",
+    "imageSmall": "assets/cards/swshp/swshp221-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge Energy",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Live Coal",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH221/large",
+    "printedNumber": "SWSH 221",
+    "tcgplayerId": 268706,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.6,
+    "foilMap": "assets/foil/maps/swshp/swshp221.webp"
+  },
+  {
+    "id": "swshp-swshp222",
+    "name": "Oshawott",
+    "number": "swshp222",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "kurumitsu",
+    "flavorText": "This Pokémon from the Unova region uses the shell on its belly as a weapon to cut down its foes. Thus, I've conferred upon this shell the name “scalchop.”",
+    "image": "assets/cards/swshp/swshp222.webp",
+    "imageSmall": "assets/cards/swshp/swshp222-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH222/large",
+    "printedNumber": "SWSH 222",
+    "tcgplayerId": 268707,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.61,
+    "foilMap": "assets/foil/maps/swshp/swshp222.webp"
+  },
+  {
+    "id": "swshp-swshp237",
+    "name": "Hisuian Typhlosion V",
+    "number": "swshp237",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp237.webp",
+    "imageSmall": "assets/cards/swshp/swshp237-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Petrifying Flame",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH237/large",
+    "printedNumber": "SWSH 237",
+    "tcgplayerId": 275167,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.35,
+    "foilMap": "assets/foil/maps/swshp/swshp237.webp"
+  },
+  {
+    "id": "swshp-swshp238",
+    "name": "Hisuian Decidueye V",
+    "number": "swshp238",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp238.webp",
+    "imageSmall": "assets/cards/swshp/swshp238-sm.webp",
+    "attacks": [
+      {
+        "name": "Mountain Hunt",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Close-Quarters Shooting",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH238/large",
+    "printedNumber": "SWSH 238",
+    "tcgplayerId": 275166,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.96,
+    "foilMap": "assets/foil/maps/swshp/swshp238.webp"
+  },
+  {
+    "id": "swshp-swshp239",
+    "name": "Hisuian Samurott V",
+    "number": "swshp239",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp239.webp",
+    "imageSmall": "assets/cards/swshp/swshp239-sm.webp",
+    "attacks": [
+      {
+        "name": "Basket Crash",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Discard up to 2 Pokémon Tools from your opponent's Pokémon."
+      },
+      {
+        "name": "Shadow Slash",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "180",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH239/large",
+    "printedNumber": "SWSH 239",
+    "tcgplayerId": 275165,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.01,
+    "foilMap": "assets/foil/maps/swshp/swshp239.webp"
+  },
+  {
+    "id": "swshp-swshp248",
+    "name": "Kleavor V",
+    "number": "swshp248",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp248.webp",
+    "imageSmall": "assets/cards/swshp/swshp248-sm.webp",
+    "attacks": [
+      {
+        "name": "Cut",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Axe Slash",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH248/large",
+    "printedNumber": "SWSH 248",
+    "tcgplayerId": 273938,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 0.97,
+    "foilMap": "assets/foil/maps/swshp/swshp248.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp248-etch.webp"
+  },
+  {
+    "id": "swshp-swshp249",
+    "name": "Kleavor VSTAR",
+    "number": "swshp249",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "270",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Kleavor V",
+    "image": "assets/cards/swshp/swshp249.webp",
+    "imageSmall": "assets/cards/swshp/swshp249-sm.webp",
+    "attacks": [
+      {
+        "name": "Axe Break",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This attack also does 60 damage to 1 of your opponent's Benched Pokémon V. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Rampaging Star",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Pokémon in your discard pile. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH249/large",
+    "printedNumber": "SWSH 249",
+    "tcgplayerId": 273939,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 0.96,
+    "foilMap": "assets/foil/maps/swshp/swshp249.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp249-etch.webp"
+  },
+  {
+    "id": "swshp-swshp250",
+    "name": "Lumineon V",
+    "number": "swshp250",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "PLANETA Tsuji",
+    "image": "assets/cards/swshp/swshp250.webp",
+    "imageSmall": "assets/cards/swshp/swshp250-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Return",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Shuffle this Pokémon and all attached cards into your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Luminous Sign",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH250/large",
+    "printedNumber": "SWSH 250",
+    "tcgplayerId": 279141,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.85,
+    "foilMap": "assets/foil/maps/swshp/swshp250.webp"
+  },
+  {
+    "id": "swshp-swshp253",
+    "name": "Origin Forme Palkia V",
+    "number": "swshp253",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "220",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swshp/swshp253.webp",
+    "imageSmall": "assets/cards/swshp/swshp253-sm.webp",
+    "attacks": [
+      {
+        "name": "Rule the Region",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Stadium card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Hydro Break",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH253/large",
+    "printedNumber": "SWSH 253",
+    "tcgplayerId": 449512,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.96,
+    "foilMap": "assets/foil/maps/swshp/swshp253.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp253-etch.webp"
+  },
+  {
+    "id": "swshp-swshp254",
+    "name": "Origin Forme Palkia VSTAR",
+    "number": "swshp254",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "280",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Origin Forme Palkia V",
+    "image": "assets/cards/swshp/swshp254.webp",
+    "imageSmall": "assets/cards/swshp/swshp254-sm.webp",
+    "attacks": [
+      {
+        "name": "Subspace Swell",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage for each Benched Pokémon (both yours and your opponent's)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Star Portal",
+        "text": "During your turn, you may attach up to 3 Water Energy cards from your discard pile to your Water Pokémon in any way you like. (You can't use more than 1 VSTAR Power in a game.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH254/large",
+    "printedNumber": "SWSH 254",
+    "tcgplayerId": 449511,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 1.52,
+    "foilMap": "assets/foil/maps/swshp/swshp254.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp254-etch.webp"
+  },
+  {
+    "id": "swshp-swshp255",
+    "name": "Origin Forme Dialga V",
+    "number": "swshp255",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp255.webp",
+    "imageSmall": "assets/cards/swshp/swshp255-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Coating",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach up to 2 Metal Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Temporal Rupture",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH255/large",
+    "printedNumber": "SWSH 255",
+    "tcgplayerId": 449510,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 3.63,
+    "foilMap": "assets/foil/maps/swshp/swshp255.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp255-etch.webp"
+  },
+  {
+    "id": "swshp-swshp256",
+    "name": "Origin Forme Dialga VSTAR",
+    "number": "swshp256",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Origin Forme Dialga V",
+    "image": "assets/cards/swshp/swshp256.webp",
+    "imageSmall": "assets/cards/swshp/swshp256-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Blast",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage for each Metal Energy attached to this Pokémon."
+      },
+      {
+        "name": "Star Chronos",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "220",
+        "text": "Take another turn after this one. (Skip Pokémon Checkup.) (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH256/large",
+    "printedNumber": "SWSH 256",
+    "tcgplayerId": 449509,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 2.01,
+    "foilMap": "assets/foil/maps/swshp/swshp256.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp256-etch.webp"
+  },
+  {
+    "id": "swshp-swshp257",
+    "name": "Rotom V",
+    "number": "swshp257",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp257.webp",
+    "imageSmall": "assets/cards/swshp/swshp257-sm.webp",
+    "attacks": [
+      {
+        "name": "Lost Hack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put a Special Energy attached to 1 of your opponent's Pokémon in the Lost Zone."
+      },
+      {
+        "name": "Extreme Current",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH257/large",
+    "printedNumber": "SWSH 257",
+    "tcgplayerId": 450653,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.86,
+    "foilMap": "assets/foil/maps/swshp/swshp257.webp"
+  },
+  {
+    "id": "swshp-swshp258",
+    "name": "Gallade V",
+    "number": "swshp258",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "220",
+    "artist": "Ryota Murayama",
+    "image": "assets/cards/swshp/swshp258.webp",
+    "imageSmall": "assets/cards/swshp/swshp258-sm.webp",
+    "attacks": [
+      {
+        "name": "Rising Sword",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 50 more damage for each Prize card you have taken."
+      },
+      {
+        "name": "Buster Swing",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH258/large",
+    "printedNumber": "SWSH 258",
+    "tcgplayerId": 450656,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.98,
+    "foilMap": "assets/foil/maps/swshp/swshp258.webp"
+  },
+  {
+    "id": "swshp-swshp259",
+    "name": "Giratina V",
+    "number": "swshp259",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "220",
+    "artist": "PLANETA Mochizuki",
+    "image": "assets/cards/swshp/swshp259.webp",
+    "imageSmall": "assets/cards/swshp/swshp259-sm.webp",
+    "attacks": [
+      {
+        "name": "Abyss Seeking",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 4 cards of your deck and put 2 of them into your hand. Put the other cards in the Lost Zone."
+      },
+      {
+        "name": "Shred",
+        "cost": [
+          "Grass",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH259/large",
+    "printedNumber": "SWSH 259",
+    "tcgplayerId": 450657,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.67,
+    "foilMap": "assets/foil/maps/swshp/swshp259.webp"
+  },
+  {
+    "id": "swshp-swshp260",
+    "name": "Charizard V",
+    "number": "swshp260",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "220",
+    "artist": "Oswaldo KATO",
+    "image": "assets/cards/swshp/swshp260.webp",
+    "imageSmall": "assets/cards/swshp/swshp260-sm.webp",
+    "attacks": [
+      {
+        "name": "Incinerate",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Before doing damage, discard all Pokémon Tools from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Heat Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH260/large",
+    "printedNumber": "SWSH 260",
+    "tcgplayerId": 285384,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 47.17,
+    "foilMap": "assets/foil/maps/swshp/swshp260.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp260-etch.webp"
+  },
+  {
+    "id": "swshp-swshp261",
+    "name": "Charizard VMAX",
+    "number": "swshp261",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "330",
+    "artist": "Shiburingaru",
+    "evolvesFrom": "Charizard V",
+    "image": "assets/cards/swshp/swshp261.webp",
+    "imageSmall": "assets/cards/swshp/swshp261-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      },
+      {
+        "name": "G-Max Wildfire",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH261/large",
+    "printedNumber": "SWSH 261",
+    "tcgplayerId": 285378,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 40.24,
+    "foilMap": "assets/foil/maps/swshp/swshp261.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp261-etch.webp"
+  },
+  {
+    "id": "swshp-swshp262",
+    "name": "Charizard VSTAR",
+    "number": "swshp262",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "280",
+    "artist": "KIYOTAKA OSHIYAMA",
+    "evolvesFrom": "Charizard V",
+    "image": "assets/cards/swshp/swshp262.webp",
+    "imageSmall": "assets/cards/swshp/swshp262-sm.webp",
+    "attacks": [
+      {
+        "name": "Explosive Fire",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "If this Pokémon has any damage counters on it, this attack does 100 more damage."
+      },
+      {
+        "name": "Star Blaze",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "320",
+        "text": "Discard 2 Energy from this Pokémon. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH262/large",
+    "printedNumber": "SWSH 262",
+    "tcgplayerId": 285396,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 70.69,
+    "foilMap": "assets/foil/maps/swshp/swshp262.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp262-etch.webp"
+  },
+  {
+    "id": "swshp-swshp263",
+    "name": "Zeraora V",
+    "number": "swshp263",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "210",
+    "artist": "N-DESIGN Inc.",
+    "image": "assets/cards/swshp/swshp263.webp",
+    "imageSmall": "assets/cards/swshp/swshp263-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Thunderous Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH263/large",
+    "printedNumber": "SWSH 263",
+    "tcgplayerId": 449518,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.25,
+    "foilMap": "assets/foil/maps/swshp/swshp263.webp"
+  },
+  {
+    "id": "swshp-swshp264",
+    "name": "Zeraora VMAX",
+    "number": "swshp264",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "320",
+    "artist": "N-DESIGN Inc.",
+    "evolvesFrom": "Zeraora V",
+    "image": "assets/cards/swshp/swshp264.webp",
+    "imageSmall": "assets/cards/swshp/swshp264-sm.webp",
+    "attacks": [
+      {
+        "name": "Reactive Pulse",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each of your opponent's Pokémon in play that has an Ability."
+      },
+      {
+        "name": "Max Fist",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "Discard 2 Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH264/large",
+    "printedNumber": "SWSH 264",
+    "tcgplayerId": 449519,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 5.14,
+    "foilMap": "assets/foil/maps/swshp/swshp264.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp264-etch.webp"
+  },
+  {
+    "id": "swshp-swshp265",
+    "name": "Zeraora VSTAR",
+    "number": "swshp265",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "270",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Zeraora V",
+    "image": "assets/cards/swshp/swshp265.webp",
+    "imageSmall": "assets/cards/swshp/swshp265-sm.webp",
+    "attacks": [
+      {
+        "name": "Crushing Beat",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "You may discard a Stadium in play."
+      },
+      {
+        "name": "Lightning Storm Star",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon 4 times. (You can choose the same Pokémon more than once.) For each time you chose a Pokémon, do 60 damage to it. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH265/large",
+    "printedNumber": "SWSH 265",
+    "tcgplayerId": 449520,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 3.56,
+    "foilMap": "assets/foil/maps/swshp/swshp265.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp265-etch.webp"
+  },
+  {
+    "id": "swshp-swshp266",
+    "name": "Deoxys V",
+    "number": "swshp266",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "artist": "N-DESIGN Inc.",
+    "image": "assets/cards/swshp/swshp266.webp",
+    "imageSmall": "assets/cards/swshp/swshp266-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "This attack does 30 more damage for each Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Power Edge",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH266/large",
+    "printedNumber": "SWSH 266",
+    "tcgplayerId": 449521,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 2.49,
+    "foilMap": "assets/foil/maps/swshp/swshp266.webp"
+  },
+  {
+    "id": "swshp-swshp267",
+    "name": "Deoxys VMAX",
+    "number": "swshp267",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "330",
+    "artist": "N-DESIGN Inc.",
+    "evolvesFrom": "Deoxys V",
+    "image": "assets/cards/swshp/swshp267.webp",
+    "imageSmall": "assets/cards/swshp/swshp267-sm.webp",
+    "attacks": [
+      {
+        "name": "Max Drain",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Protective DNA",
+        "text": "All of your Pokémon take 30 less damage from attacks from your opponent's Pokémon VSTAR (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH267/large",
+    "printedNumber": "SWSH 267",
+    "tcgplayerId": 449522,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VMAX",
+    "market": 6.63,
+    "foilMap": "assets/foil/maps/swshp/swshp267.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp267-etch.webp"
+  },
+  {
+    "id": "swshp-swshp268",
+    "name": "Deoxys VSTAR",
+    "number": "swshp268",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "270",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Deoxys V",
+    "image": "assets/cards/swshp/swshp268.webp",
+    "imageSmall": "assets/cards/swshp/swshp268-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Javelin",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "190",
+        "text": "This attack also does 60 damage to 1 of your opponent's Benched Pokémon V. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Star Force",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "60×",
+        "text": "This attack does 60 damage for each Energy attached to both Active Pokémon. (You can't use more than 1 VSTAR Power in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH268/large",
+    "printedNumber": "SWSH 268",
+    "tcgplayerId": 449523,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 7.14,
+    "foilMap": "assets/foil/maps/swshp/swshp268.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp268-etch.webp"
+  },
+  {
+    "id": "swshp-swshp294",
+    "name": "Hisuian Electrode V",
+    "number": "swshp294",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp294.webp",
+    "imageSmall": "assets/cards/swshp/swshp294-sm.webp",
+    "attacks": [
+      {
+        "name": "Tantrum Blast",
+        "damage": "100×",
+        "text": "This attack does 100 damage for each Special Condition affecting this Pokémon."
+      },
+      {
+        "name": "Solar Shot",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH294/large",
+    "printedNumber": "SWSH 294",
+    "tcgplayerId": 451115,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.01,
+    "foilMap": "assets/foil/maps/swshp/swshp294.webp"
+  },
+  {
+    "id": "swshp-swshp295",
+    "name": "Virizion V",
+    "number": "swshp295",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "200",
+    "artist": "Saki Hayashiro",
+    "image": "assets/cards/swshp/swshp295.webp",
+    "imageSmall": "assets/cards/swshp/swshp295-sm.webp",
+    "attacks": [
+      {
+        "name": "Emerald Blade",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "During your next turn, this Pokémon can't attack."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Verdant Wind",
+        "text": "Each of your Pokémon that has any Grass Energy attached to it can't be affected by any Special Conditions. (Remove any Special Conditions affecting those Pokémon.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH295/large",
+    "printedNumber": "SWSH 295",
+    "tcgplayerId": 449515,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 0.83,
+    "foilMap": "assets/foil/maps/swshp/swshp295.webp"
+  },
+  {
+    "id": "swshp-swshp297",
+    "name": "Hisuian Zoroark V",
+    "number": "swshp297",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "210",
+    "artist": "aky CG Works",
+    "image": "assets/cards/swshp/swshp297.webp",
+    "imageSmall": "assets/cards/swshp/swshp297-sm.webp",
+    "attacks": [
+      {
+        "name": "Void Return",
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Shadow Cyclone",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH297/large",
+    "printedNumber": "SWSH 297",
+    "tcgplayerId": 449526,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 1.69,
+    "foilMap": "assets/foil/maps/swshp/swshp297.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp297-etch.webp"
+  },
+  {
+    "id": "swshp-swshp298",
+    "name": "Hisuian Zoroark VSTAR",
+    "number": "swshp298",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "270",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Hisuian Zoroark V",
+    "image": "assets/cards/swshp/swshp298.webp",
+    "imageSmall": "assets/cards/swshp/swshp298-sm.webp",
+    "attacks": [
+      {
+        "name": "Ticking Curse",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each of your Pokémon that has any damage counters on it."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Phantom Star",
+        "text": "During your turn, you may discard your hand and draw 7 cards. (You can't use more than 1 VSTAR Power in a game.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH298/large",
+    "printedNumber": "SWSH 298",
+    "tcgplayerId": 449527,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 1.47,
+    "foilMap": "assets/foil/maps/swshp/swshp298.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp298-etch.webp"
+  },
+  {
+    "id": "swshp-swshp306",
+    "name": "Arceus V",
+    "number": "swshp306",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/swshp/swshp306.webp",
+    "imageSmall": "assets/cards/swshp/swshp306-sm.webp",
+    "attacks": [
+      {
+        "name": "Trinity Charge",
+        "cost": [
+          "colorless",
+          "colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 basic Energy cards and attach them to your Pokémon V in any way you like. Then, shuffle your deck."
+      },
+      {
+        "name": "Power Edge",
+        "cost": [
+          "colorless",
+          "colorless",
+          "colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH306/large",
+    "printedNumber": "SWSH 306",
+    "tcgplayerId": 499989,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo V",
+    "market": 4.76,
+    "foilMap": "assets/foil/maps/swshp/swshp306.webp"
+  },
+  {
+    "id": "swshp-swshp307",
+    "name": "Arceus VSTAR",
+    "number": "swshp307",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "VSTAR"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "280",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Arceus V",
+    "image": "assets/cards/swshp/swshp307.webp",
+    "imageSmall": "assets/cards/swshp/swshp307-sm.webp",
+    "attacks": [
+      {
+        "name": "Trinity Nova",
+        "cost": [
+          "colorless",
+          "colorless",
+          "colorless"
+        ],
+        "damage": "200",
+        "text": "Search your deck for up to 3 basic Energy cards and attach them to your Pokémon V in any way you like. Then, shuffle your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Starbirth",
+        "text": "During your turn, you may search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck. (You can't use more than 1 VSTAR Power in a game.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH307/large",
+    "printedNumber": "SWSH 307",
+    "tcgplayerId": 499984,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo VSTAR",
+    "market": 7.09,
+    "foilMap": "assets/foil/maps/swshp/swshp307.webp",
+    "etchMap": "assets/foil/maps/swshp/swshp307-etch.webp"
+  }
+]

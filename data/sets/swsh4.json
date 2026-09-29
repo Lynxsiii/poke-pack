@@ -19,9 +19,117 @@
       "slug": "swsh-black-star-promos",
       "scrydex": "swshp",
       "tcgplayerGroup": 2545,
-      "printed": "SWSH"
+      "printed": "SWSH",
+      "pkmnKey": "SWSH{n:03d}",
+      "era": "swsh"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "swshp066": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp067": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp068": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp069": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp070": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp071": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp072": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp073": {
+      "foilAs": "Rare Holo"
+    },
+    "swshp078": {
+      "foilAs": "Rare Holo V"
+    },
+    "swshp083": {
+      "foilAs": "Rare Holo V"
+    }
+  },
+  "products": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 221748,
+      "packs": 4,
+      "promos": [
+        "swshp066",
+        "swshp067",
+        "swshp068",
+        "swshp069"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "orbeetle-v-box",
+      "name": "Orbeetle V Box",
+      "kind": "collection",
+      "tcgplayerId": 226137,
+      "packs": 4,
+      "promos": [
+        "swshp078"
+      ]
+    },
+    {
+      "id": "alakazam-v-box",
+      "name": "Alakazam V Box",
+      "kind": "collection",
+      "tcgplayerId": 228979,
+      "packs": 4,
+      "promos": [
+        "swshp083"
+      ]
+    },
+    {
+      "id": "sobble-3-pack-blister",
+      "name": "Sobble 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 221744,
+      "packs": 3,
+      "promos": [
+        "swshp073"
+      ]
+    },
+    {
+      "id": "vaporeon-3-pack-blister",
+      "name": "Vaporeon 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 221745,
+      "packs": 3,
+      "promos": [
+        "swshp072"
+      ]
+    },
+    {
+      "id": "grookey-single-pack-blister",
+      "name": "Grookey Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 221746,
+      "packs": 1,
+      "promos": [
+        "swshp070"
+      ]
+    },
+    {
+      "id": "scorbunny-single-pack-blister",
+      "name": "Scorbunny Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 221747,
+      "packs": 1,
+      "promos": [
+        "swshp071"
+      ]
+    }
+  ]
 }

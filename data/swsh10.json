@@ -8671,5 +8671,374 @@
     "imageRemote": "https://images.scrydex.com/pokemon/swsh10tg-TG30/large",
     "foilMap": "assets/foil/maps/swsh10/TG30.webp",
     "etchMap": "assets/foil/maps/swsh10/TG30-etch.webp"
+  },
+  {
+    "id": "swsh10-swshp205",
+    "name": "Hisuian Basculegion",
+    "number": "swshp205",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Pani Kobayashi",
+    "flavorText": "Clads itself in the souls of comrades that perished before fulfilling their goals of journeying upstream. No other species throughout all Hisui's rivers is Basculegion's equal.",
+    "evolvesFrom": "Hisuian Basculin",
+    "image": "assets/cards/swsh10/swshp205.webp",
+    "imageSmall": "assets/cards/swsh10/swshp205-sm.webp",
+    "attacks": [
+      {
+        "name": "Grudge Dive",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30+",
+        "text": "If any of your Pokémon were Knocked Out by damage from an attack from your opponent's Pokémon during their last turn, this attack does 90 more damage, and your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Jet Headbutt",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH205/large",
+    "printedNumber": "SWSH 205",
+    "tcgplayerId": 273154,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.44,
+    "foilMap": "assets/foil/maps/swsh10/swshp205.webp"
+  },
+  {
+    "id": "swsh10-swshp206",
+    "name": "Wyrdeer",
+    "number": "swshp206",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Eri Yamaki",
+    "flavorText": "The black orbs shine with an uncanny light when the Pokémon is erecting invisible barriers. The fur shed from its beard retains heat well and is a highly useful material for winter clothing.",
+    "evolvesFrom": "Stantler",
+    "image": "assets/cards/swsh10/swshp206.webp",
+    "imageSmall": "assets/cards/swsh10/swshp206-sm.webp",
+    "attacks": [
+      {
+        "name": "Extrasensory",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "If you have the same number of cards in your hand as your opponent, this attack does 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hurried Gait",
+        "text": "Once during your turn, you may draw a card.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH206/large",
+    "printedNumber": "SWSH 206",
+    "tcgplayerId": 273155,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.09,
+    "foilMap": "assets/foil/maps/swsh10/swshp206.webp"
+  },
+  {
+    "id": "swsh10-swshp207",
+    "name": "Hisuian Samurott",
+    "number": "swshp207",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "Oswaldo KATO",
+    "flavorText": "Hard of heart and deft of blade, this rare form of Samurott is a product of the Pokémon's evolution in the region of Hisui. Its turbulent blows crash into foes like ceaseless pounding waves.",
+    "evolvesFrom": "Dewott",
+    "image": "assets/cards/swsh10/swshp207.webp",
+    "imageSmall": "assets/cards/swsh10/swshp207-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Mastery",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage for each Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wily Stance",
+        "text": "You must discard a card from your hand in order to use this Ability. Once during your turn, you may draw 3 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH207/large",
+    "printedNumber": "SWSH 207",
+    "tcgplayerId": 273156,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.07,
+    "foilMap": "assets/foil/maps/swsh10/swshp207.webp"
+  },
+  {
+    "id": "swsh10-swshp208",
+    "name": "Magnezone",
+    "number": "swshp208",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "150",
+    "artist": "zig",
+    "flavorText": "Some say that Magnezone receives signals from space via the antenna on its head and that it's being controlled by some mysterious being.",
+    "evolvesFrom": "Magneton",
+    "image": "assets/cards/swsh10/swshp208.webp",
+    "imageSmall": "assets/cards/swsh10/swshp208-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Beam",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Giga Magnet",
+        "text": "Once during your turn, you may look at the top 6 cards of your deck and attach any number of Metal Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH208/large",
+    "printedNumber": "SWSH 208",
+    "tcgplayerId": 273158,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.1,
+    "foilMap": "assets/foil/maps/swsh10/swshp208.webp"
+  },
+  {
+    "id": "swsh10-swshp209",
+    "name": "Toxel",
+    "number": "swshp209",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Fusion Strike"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Souichirou Gunjima",
+    "flavorText": "It manipulates the chemical makeup of its poison to produce electricity. The voltage is weak, but it can cause a tingling paralysis.",
+    "image": "assets/cards/swsh10/swshp209.webp",
+    "imageSmall": "assets/cards/swsh10/swshp209-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, the Defending Pokémon's attacks do 30 less damage (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Tiny Bolt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH209/large",
+    "printedNumber": "SWSH 209",
+    "tcgplayerId": 273583,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.5,
+    "foilMap": "assets/foil/maps/swsh10/swshp209.webp"
+  },
+  {
+    "id": "swsh10-swshp210",
+    "name": "Oricorio",
+    "number": "swshp210",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Fusion Strike"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Ryuta Fuse",
+    "flavorText": "This Oricorio has sipped purple nectar. Some dancers use its graceful, elegant dancing as inspiration.",
+    "image": "assets/cards/swsh10/swshp210.webp",
+    "imageSmall": "assets/cards/swsh10/swshp210-sm.webp",
+    "attacks": [
+      {
+        "name": "Mixed Call",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Pokémon and a Supporter card, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Razor Wing",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH210/large",
+    "printedNumber": "SWSH 210",
+    "tcgplayerId": 273585,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.47,
+    "foilMap": "assets/foil/maps/swsh10/swshp210.webp"
+  },
+  {
+    "id": "swsh10-swshp211",
+    "name": "Sylveon",
+    "number": "swshp211",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Mizue",
+    "flavorText": "There's a Galarian fairy tale that describes a beautiful Sylveon vanquishing a dreadful dragon Pokémon.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/swsh10/swshp211.webp",
+    "imageSmall": "assets/cards/swsh10/swshp211-sm.webp",
+    "attacks": [
+      {
+        "name": "Time Out Kick",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "You may put an Energy attached to your opponent's Active Pokémon into their hand."
+      },
+      {
+        "name": "Symphony Whip",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "If you played a Supporter card from your hand during this turn, this attack does 70 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH211/large",
+    "printedNumber": "SWSH 211",
+    "tcgplayerId": 273588,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 7.55,
+    "foilMap": "assets/foil/maps/swsh10/swshp211.webp"
+  },
+  {
+    "id": "swsh10-swshp212",
+    "name": "Eevee",
+    "number": "swshp212",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Mizue",
+    "flavorText": "Thanks to its unstable genetic makeup, this special Pokémon conceals many different possible evolutions.",
+    "image": "assets/cards/swsh10/swshp212.webp",
+    "imageSmall": "assets/cards/swsh10/swshp212-sm.webp",
+    "attacks": [
+      {
+        "name": "Be Prepared",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Attach a basic Energy card from your hand to this Pokémon."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/swshp-SWSH212/large",
+    "printedNumber": "SWSH 212",
+    "tcgplayerId": 273590,
+    "era": "swsh",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.94,
+    "foilMap": "assets/foil/maps/swsh10/swshp212.webp"
   }
 ]
