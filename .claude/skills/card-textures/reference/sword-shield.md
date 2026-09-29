@@ -66,12 +66,22 @@ is a 2 to 3 px pitch at the map's 400 px width, the gold and full-art line
 art carries a fine hatch. Drawn as a hard mask under the lit layers, that
 screen aliases into a wavy line pattern over the whole card on a phone
 (Surfing Pikachu VMAX cel25 9, Meowth VMAX SWSH005). Every etch map of the
-era (1,022 of them, `swshp` included) now ships as `<n>-etch-v2.webp`, the
-original blurred by 1.5 px at map size (`soften_era_etch.py --set <id>`,
-which also repoints `etchMap`), so the grain's density still follows the
-drawing but no screen survives. The originals are gone from the tree
-(assets are served immutable, so a new name was the only way). A new set
-of this era runs the script after `fetch_foil_maps.py`.
+era (1,022 of them, `swshp` included) now ships as `<n>-etch-v3.webp`
+(`soften_era_etch.py --set <id>`, which also repoints `etchMap`): the
+original blurred by 1.5 px at map size, so the grain's density still
+follows the drawing but no screen survives, then multiplied by a wandering
+grain (a smooth random field with 2 to 3 px features, seeded per card) so
+the relief still reads as texture at desktop and phone size. The plain
+blur alone (v2, a few hours earlier) left the full arts looking untextured
+to Noah, and the hairline original was a line screen. The originals are
+gone from the tree (assets are served immutable, so a new name was the
+only way). A new set of this era runs the script after `fetch_foil_maps.py`.
+
+Whole-card finishes (the V and the full-art family) carry a 40% foil floor
+under Live's map (`--swsh-floor`): Live shades the silver frame and the
+copyright band dark, so under the light the lit frame stopped in a hard
+line at the bottom-left corner (Charizard V SWSH260, Noah's desktop shot).
+A V is foil edge to edge, so nothing on it is matte.
 
 ## Dodge-safe filters (2026-09-29)
 
@@ -129,6 +139,19 @@ art out at 30:25.
 - **Shiny Vault**: silver with fine sparkle etch and a rainbow wash; the
   babies also carry a silver frame.
 - **Reverse**: chevron tiles per type, `assets/foil/swsh-reverse/`.
+
+## Benchmark: poke-holo.simey.me (2026-09-29)
+
+Noah asked that ours "look the same if not better than that site". Every
+SWSH finish was rendered next to the demo, same card, tilts 30:25 and
+75:65 (sheet in /mnt/project-files/sword-shield/simey-compare/). Only the
+regular V fell short (dim between the tinsel bars, small lit pool): #84
+widened the lit bars, raised the V foil's base brightness/saturation and
+opened `--v-light`. Keep the realism rules on top of the benchmark: their
+full arts wash the whole card in one tile; ours follow the print's map.
+Re-run the comparison with `scratchpad g/simey-shots.mjs` style shots
+(their demo opens a card on click; click `.card__rotator` again to close)
+when a recipe changes.
 
 ## Checks before merging
 

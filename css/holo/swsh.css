@@ -296,9 +296,12 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
   /* The tinsel bars run with the streaks. */
   /* Broad soft bands, not a grating: a grating at this pitch became a
      second line screen at phone size (Surfing Pikachu V, 2026-09-29). */
+  /* Tuned 2026-09-29 against poke-holo.simey.me's V: the lit bars a
+     little wider and paler, the dark gap shorter, so more of the card
+     carries the rainbow at any tilt. */
   --v-bars: repeating-linear-gradient(145deg,
-    #0e152e 0%, hsl(180, 10%, 52%) 9%, hsl(180, 29%, 64%) 12%,
-    hsl(180, 10%, 52%) 15%, #0e152e 26%, #0e152e 34%);
+    #0e152e 0%, hsl(180, 10%, 54%) 7%, hsl(185, 32%, 68%) 12%,
+    hsl(180, 10%, 54%) 17%, #0e152e 24%, #0e152e 29%);
   --v-dim: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
   --v-pos: 0% var(--background-y),
@@ -314,13 +317,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
   background-position: center, center, var(--v-pos);
   background-blend-mode: soft-light, soft-light, color, hard-light, normal;
   /* Closing contrast(0.8): dodge-safe, see the full-art family below. */
-  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(2.2) saturate(1.1) contrast(0.8);
+  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.62)) contrast(2.2) saturate(1.25) contrast(0.8);
   mix-blend-mode: color-dodge;
 }
 /* Where the light is: a pool around the pointer, as the full arts. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-v.has-foil-map .foil {
   --v-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    #000 0%, #000 25%, rgba(0, 0, 0, 0.45) 60%, rgba(0, 0, 0, 0.25) 100%);
+    #000 0%, #000 30%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.4) 100%);
   clip-path: none;
   border-radius: 0;
   -webkit-mask-image: var(--art), var(--foil-map), var(--v-light);
@@ -492,6 +495,28 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.f
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
   filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
+}
+
+/* ---- Whole-card foil: no edge to the map ------------------------------------
+   A V or full art is foil edge to edge, silver frame included, but TCG
+   Live's map shades the frame and the copyright band dark, so under the
+   light the lit frame stopped in a hard line at the bottom-left corner
+   (Charizard V SWSH260, Noah's desktop shot, 2026-09-29). A floor of foil
+   under the map: the map still says where it is brightest, and nothing on
+   the card is matte. Layers compose bottom-up: art ∩ light ∩ (map ∪ floor). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-v.has-foil-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.foil-ultra.has-foil-map .foil {
+  --swsh-floor: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  -webkit-mask-image: var(--art), var(--v-light, var(--fa-light)), var(--foil-map), var(--swsh-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--v-light, var(--fa-light)), var(--foil-map), var(--swsh-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
 /* ---- Trainer Gallery character rares ----------------------------------------
