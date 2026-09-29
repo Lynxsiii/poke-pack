@@ -31,7 +31,7 @@ firework rings, cracked ice, confetti, puffy stars, grid glitter) are our own,
 drawn by `scripts/make_celebration_textures.py`.
 
 The Sword & Shield foil textures are our own too: the etched diagonal streaks
-of Pokémon V in `assets/foil/swsh-streaks.webp` (drawn by
+of Pokémon V in `assets/foil/swsh-streaks-v2.webp` (drawn by
 `.claude/skills/card-textures/scripts/make_swsh_streaks.py`) and the chevron
 reverse-holo tiles per type in `assets/foil/swsh-reverse/` (drawn by
 `.claude/skills/card-textures/scripts/make_swsh_reverse.py`).

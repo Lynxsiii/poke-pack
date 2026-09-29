@@ -26,7 +26,7 @@
  */
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh {
-  --swsh-streaks: url("/assets/foil/swsh-streaks.webp");
+  --swsh-streaks: url("/assets/foil/swsh-streaks-v2.webp");
   --swsh-glitter: url("/assets/foil/glitter.png");
   --swsh-flecks: url("/assets/foil/glitter-flecks.webp");
   --swsh-ice: url("/assets/foil/celebration/cracked-ice.webp");
@@ -139,45 +139,133 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
   opacity: calc(var(--card-opacity) * 0.8);
 }
 
-/* Celebrations' Classic Collection: no TCG Live map. The window holo keeps
-   the layout's window (rarities.css); the reprints of whole-card holos
-   (Umbreon Gold Star, Shining Magikarp, the ex and LV.X cards) drop it. The
-   foil is the 1999-2010 stock those cards had: a galaxy of soft cosmos
-   specks that flash one by one, under the same sliding bands. */
-body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil {
-  background-image:
-    var(--swsh-cosmos),
-    repeating-linear-gradient(110deg,
-      var(--violet), var(--blue), var(--green), var(--yellow), var(--red),
-      var(--violet), var(--blue), var(--green), var(--yellow), var(--red),
-      var(--violet), var(--blue), var(--green), var(--yellow), var(--red)),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      #d8d8d8 0%, #7a7a7a 40%, #2a2a2a 100%);
-  background-position:
-    var(--seed-pos),
-    calc(((50% - var(--background-x)) * 2.6) + 50%) calc(((50% - var(--background-y)) * 3.5) + 50%),
-    center;
-  background-size: 45% auto, 400% 400%, cover;
-  background-blend-mode: screen, multiply;
-  filter: brightness(calc(0.6 + var(--pointer-from-center) * 0.2)) contrast(1.3) saturate(1.1);
-  mix-blend-mode: color-dodge;
-  opacity: calc(var(--card-opacity) * 0.85);
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil::before {
-  background-image: none;
-}
-body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic-full .foil,
-body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic-full .glare {
-  clip-path: none;
+/* ---- Celebrations 001-025: whole-face pearl holo ---------------------------
+   Photos (Lugia 022, Lunala 015, flat and lit): every card of the 25 is foil
+   over the whole face inside the yellow frame, text box included. The sheen
+   is a soft pearl, pale rainbow patches drifting over a fine galaxy of
+   specks, with no brushed lines and no bars; the 25th logo and the text
+   stay matte print. Live's maps give the Rares a window only, so the map
+   is dropped and the face is cut with an inset. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-cel .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-cel .glare {
+  clip-path: inset(3.4% 3.8% 3.4% 3.8% round 2.2% / 1.6%);
   border-radius: 0;
   -webkit-mask-image: var(--art);
   mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-position: center;
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-cel .foil {
+  background-image:
+    var(--swsh-cosmos),
+    radial-gradient(ellipse 60% 45% at calc(var(--pointer-x) * 0.6 + 20%) calc(var(--pointer-y) * 0.5 + 25%),
+      hsla(330, 70%, 80%, 0.9) 0%, hsla(330, 70%, 80%, 0) 70%),
+    radial-gradient(ellipse 55% 50% at calc(100% - var(--pointer-x) * 0.6) calc(var(--pointer-y) * 0.7 + 15%),
+      hsla(160, 60%, 78%, 0.9) 0%, hsla(160, 60%, 78%, 0) 70%),
+    radial-gradient(ellipse 65% 40% at calc(var(--pointer-x) * 0.4 + 30%) calc(100% - var(--pointer-y) * 0.6),
+      hsla(210, 70%, 80%, 0.9) 0%, hsla(210, 70%, 80%, 0) 70%),
+    radial-gradient(ellipse 50% 45% at calc(100% - var(--pointer-x) * 0.5) calc(100% - var(--pointer-y) * 0.4),
+      hsla(50, 80%, 80%, 0.9) 0%, hsla(50, 80%, 80%, 0) 70%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #8c8c8c 0%, #3c3c3c 45%, #101010 100%);
+  background-position: var(--seed-pos), center, center, center, center, center;
+  background-size: 34% auto, cover, cover, cover, cover, cover;
+  background-blend-mode: screen, normal, normal, normal, normal, multiply;
+  filter: brightness(calc(0.55 + var(--pointer-from-center) * 0.3)) contrast(1.15) saturate(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc(var(--card-opacity) * 0.45 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-cel:not(.lit):not(.settling) .foil {
+  filter: brightness(0.8) contrast(1.1) saturate(0.6);
+  opacity: calc(0.2 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-cel .foil::before {
+  background-image: none;
+}
+/* Only the pearl near the light shows; the far side goes grey, never dark. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-cel .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 95%, 0.9) 0%, hsla(0, 0%, 75%, 0.6) 45%, hsla(0, 0%, 40%, 0.9) 100%);
+  background-size: cover;
+  mix-blend-mode: luminosity;
+  filter: brightness(0.85) contrast(1.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-cel .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 96%) 5%, hsla(0, 0%, 45%, 0.2) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.85) contrast(1.3);
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+
+/* ---- Celebrations' Classic Collection: confetti holofoil --------------------
+   No TCG Live map. Photos (Charizard 4/102, graded "Confetti Holofoil";
+   Blastoise 2/102, Venusaur 15/102 flat): the whole card face is a dense
+   galaxy of tiny light flecks, strongest in the window, faint on the yellow
+   frame, each fleck flashing white or a pale colour on its own as the card
+   turns. No bands, no wash: the colour lives in the flecks. Two copies of
+   the galaxy at different scales move against each other, so flecks wink. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .glare {
+  clip-path: inset(3.4% 3.8% 3.4% 3.8% round 2.2% / 1.6%);
+  border-radius: 0;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil {
+  background-image:
+    var(--swsh-cosmos),
+    var(--swsh-cosmos),
+    repeating-linear-gradient(115deg,
+      var(--violet), var(--blue), var(--green), var(--yellow), var(--red),
+      var(--violet), var(--blue), var(--green), var(--yellow), var(--red)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #9a9a9a 0%, #444 40%, #141414 100%);
+  background-position:
+    calc(var(--seed-x, 0.5) * 100% + (50% - var(--background-x)) * 0.35) calc(var(--seed-y, 0.5) * 100% + (50% - var(--background-y)) * 0.35),
+    calc(var(--seed-y, 0.5) * 100% - (50% - var(--background-x)) * 0.5) calc(var(--seed-x, 0.5) * 100% - (50% - var(--background-y)) * 0.5),
+    calc(((50% - var(--background-x)) * 2) + 50%) calc(((50% - var(--background-y)) * 2.5) + 50%),
+    center;
+  background-size: 24% auto, 31% auto, 700% 700%, cover;
+  background-blend-mode: screen, multiply, multiply;
+  filter: brightness(calc(0.6 + var(--pointer-from-center) * 0.35)) contrast(1.7) saturate(0.6);
+  mix-blend-mode: color-dodge;
+  opacity: calc(var(--card-opacity) * 0.6 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic:not(.lit):not(.settling) .foil {
+  filter: brightness(0.9) contrast(1.5) saturate(0.5);
+  opacity: calc(0.28 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil::before {
+  background-image: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 98%, 0.9) 0%, hsla(0, 0%, 70%, 0.6) 40%, hsla(0, 0%, 35%, 0.9) 100%);
+  background-size: cover;
+  mix-blend-mode: luminosity;
+  filter: brightness(0.8) contrast(1.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.swsh-classic .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 97%) 5%, hsla(0, 0%, 45%, 0.2) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.85) contrast(1.3);
+  opacity: calc(var(--card-opacity) * 0.7);
 }
 
 /* ---- Pokémon V: the textured foil with diagonal streaks ---------------------
@@ -206,9 +294,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-swsh.era-swsh.era-swsh.era-swsh.era-swsh.s
     var(--sunpillar-clr-6) calc(var(--v-space) * 6),
     var(--sunpillar-clr-1) calc(var(--v-space) * 7));
   /* The tinsel bars run with the streaks. */
+  /* Broad soft bands, not a grating: a grating at this pitch became a
+     second line screen at phone size (Surfing Pikachu V, 2026-09-29). */
   --v-bars: repeating-linear-gradient(145deg,
-    #0e152e 0%, hsl(180, 10%, 60%) 3.8%, hsl(180, 29%, 66%) 4.5%,
-    hsl(180, 10%, 60%) 5.2%, #0e152e 14%, #0e152e 16%);
+    #0e152e 0%, hsl(180, 10%, 52%) 9%, hsl(180, 29%, 64%) 12%,
+    hsl(180, 10%, 52%) 15%, #0e152e 26%, #0e152e 34%);
   --v-dim: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
   --v-pos: 0% var(--background-y),
