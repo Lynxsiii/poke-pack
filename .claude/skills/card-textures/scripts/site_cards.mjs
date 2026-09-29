@@ -18,6 +18,7 @@
 //   --w      card width in px (default 260); --vw viewport width (default 1600)
 //   --scale  device pixel ratio (default 1)
 //   --css    extra CSS injected after layout, to isolate a layer
+//   --browser webkit to render with Safari's engine (default chromium)
 //
 // Prints each card's class list, so you can see which recipe won. It serves
 // the repo itself on a free port (the app's routes fall back to index.html).
@@ -78,8 +79,9 @@ async function loadPlaywright() {
     return createRequire(join(globalRoot, "noop.js"))("playwright");
   }
 }
-const { chromium } = await loadPlaywright();
-const browser = await chromium.launch();
+// --browser webkit renders with Safari's engine (see foil_probe.mjs).
+const pw = await loadPlaywright();
+const browser = await pw[args.browser === "webkit" ? "webkit" : "chromium"].launch();
 try {
   const page = await browser.newPage({
     viewport: { width: Number(args.vw) || 1600, height: 900 },
