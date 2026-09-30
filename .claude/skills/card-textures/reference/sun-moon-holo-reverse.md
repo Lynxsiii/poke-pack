@@ -15,9 +15,15 @@ Evidence is YouTube thumbnails of handheld clips (two channels) plus two flat se
 
 **Early Rare Holo (`foil-holo sm-holo`).** `.foil` = two copies of `celebration/cracked-ice.webp` (the facets) sliding against each other, multiplied/screened over a 300% 115deg rainbow whose position is clamped to 0-100%, `mix-blend-mode: color-dodge`, filter `brightness(0.58) contrast(1.5) saturate(1.8) contrast(0.8)`. `::before` = `glitter-fine.webp` screened at 0.25 to 0.55 opacity (light only). `::after` = grey luminosity pool under the pointer, centre lightness 62% (not 95%). `.glare` = overlay radial at 0.45 x card opacity. The map (TCG Live `std.foil`) limits all of it to the art window and keeps the Pokémon matte.
 
-**Late Rare Holo (`sm-late`, sm8 to sm12, det1).** Black base, a pink (`hsl(330 60% 30%)`) and a green (`hsl(150 50% 28%)`) radial pool that move opposite ways with the pointer, `screen` blend. No ice tile, no dodge, so pale art cannot white out. Faint sparkle.
+**Late Rare Holo (`sm-late`: sm8 to sm12, det1, mcd19, Black Star promos from SM120).** `smLate(card)` in js/sm-foil.js picks it by id (set prefix, `smp` number >= 120). Black base, one broad soft green band (115deg, `hsl(150 50% 24%)`, slides with the pointer) and a small dim pink pool (`hsl(330 55% 15%)`), `screen` blend; no ice tile, no dodge, no luminosity pool (that one pulled dark art up to grey), sparkle at 0.05 to 0.13, glare at 0.35. Mean change of the art window against the no-foil render is 12 to 19 levels at 30:25 (Chandelure sm11-30 was 62), the same order as the photos' "nearly unchanged, one soft green band".
 
 **Reverse (`rev-sv rev-sm rev-<type>`).** `sv-reverse.css` supplies the mask (`--art` window knock-out, `--rev-pattern`). The tile is the per-pixel median of a dozen TCG Live reverse maps of that type across sets (grey = pattern, alpha = where the card is foil), text residue cleaned for darkness, metal and trainer. `.foil` = tile multiplied over a -52deg pink/yellow/green/cyan/violet streak (190%, pointer driven) over a pointer radial, `brightness(0.6) contrast(1.25) saturate(1.1) contrast(0.8)`. `::before` = the same band pale and multiplied, so it tints white and pale print (Trumbeak's text box, Trainers) where dodge has nothing to lift. Trainers use `sm-trainer` (Poké Ball tiling); Energy gets no reverse finish.
+
+**Holo reprints with no TCG Live map** (`foilAs: "Rare Holo"`: sm1-101a, sm2-19a/21a/51a, sm3-18a/92a, sm4-84a, sm6-2a, sm7-10a, sm35-28h, det1 holos). `smSafeMap()` hands them `assets/foil/maps/sm-holo-safe.webp`, the per-pixel median of the 222 shipped holo maps (`make_sm_window_map.py`): the window with a typical Pokémon matte knocked out, blurred 3 px, the Ultra Beast banner corner cut. Without it the holo paints the whole card and bleaches the Pokémon (sm2-21a Alolan Vulpix).
+
+**Trainer reverse.** Colour-dodge flattens the brushed-silver text box to white and the pale multiplied band greens the text, so `rev-trainer` uses `overlay` (`contrast(1.1) saturate(0.6)`) and a nearly-off band (0.1): the silver stays, the Poké Ball tiling reads as lighter and darker balls, a little pastel rides the band.
+
+**Basic Energy reverse (`rev-energy`, the sm35 pack Energy).** `smReverseFinish` returns `sm-<type>` for Energy; foil-maps.js adds `rev-energy` and `--energy-tile`. The mask is the card minus the central orb (ellipse) and the title and footer bars, not a Pokémon's tile; the symbols are a 45 x 123 px seamless cell of the type's own tile (`make_sm_energy_reverse.py`, `assets/foil/sm-reverse/energy-<type>.webp`, 8 files of 2 to 5 KB) repeated over the whole field, under the same spectrum band and dodge. No hard edge (the legacy recipe had one at 62% height).
 
 **Plain card glare.** `.tcg.foil-none.era-sm .glare`: overlay radial, white 0.8 to 0.65 near the pointer, dark end held at 0.3 (same call as swsh.css, so the thumb pose does not shade the card).
 
@@ -34,6 +40,10 @@ Evidence is YouTube thumbnails of handheld clips (two channels) plus two flat se
 ## Verification
 
 Chromium and WebKit contact sheets (rest, 30:25, -30:-20, 50:78) for early holo (sm1, sm7), late holo (sm9, sm12), plain glare (sm10) and reverse (sm1, sm9, sm12: grass, water, metal, colorless, darkness, trainer). `foil_coverage.mjs` over sm1 to sm12, sm115, sm75, det1 prints nothing. `sweep_finishes.py` for sm1, sm9, sm12 passes the dark-speck gate and the asset-overwrite check; sm7 fails only on Jirachi Prism Star (not this family) and sm12 only lists the `smp` window-holo promos with no map (promos are another family). No asset under `assets/` was overwritten; 12 new tiles, 220 KB.
+
+## Review round (2026-09-30, independent reviewer)
+
+Fixed: app.js ?v= bump with every import-tag change (#80 failure); holo prints with no map now take the window map; Trainer reverse keeps its silver; reverse basic Energy has its own finish; late holo no longer hazes dark art; late-era promos (smp157, smp190, mcd19) take the late look. Left as is, said plainly: the sm7/sm75 (shards) versus sm8 (satin) boundary rests on one channel's clips (Pokemon Holo), so treat set boundaries as a good guess; the early holo is faint away from the top-left light (5 to 8 levels at the 50:78 thumb pose, 20 at 30:25) because the light leaves the window, raising it whitens pale art.
 
 ## Still off
 
