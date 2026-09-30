@@ -78,10 +78,10 @@ def norm(name: str) -> str:
     # Special Energy by type letter ("Speed L Energy" for Speed Lightning Energy).
     name = re.sub(r"\b([GRWLPFDMNC]) Energy$", lambda m: {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "C": "Colorless"}[m.group(1)] + " Energy", name)
     # Sun & Moon: Prism Stars print a diamond ("Celebi ◇", TCGplayer says "Celebi
-    # Prism Star"), and the Fairy Charm Energy carries its type as one letter
-    # ("Fairy Charm O" is Dragon).
+    # Prism Star"), and the Fairy Charm tools carry their type as one letter
+    # ("Fairy Charm L" is Lightning, "Fairy Charm O" is Dragon).
     name = name.replace("◇", " Prism Star")
-    name = re.sub(r"^(Fairy Charm) ([GRWLPFDMON])$", lambda m: m.group(1) + " " + {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "O": "Dragon", "N": "Dragon"}[m.group(2)], name)
+    name = re.sub(r"\b(Fairy Charm) ([GRWLPFDMNCO])$", lambda m: m.group(1) + " " + {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "O": "Dragon", "C": "Colorless"}[m.group(2)], name)
     # TCGplayer spells Nidoran's symbols out ("Nidoran F"); our data keeps ♀/♂.
     name = name.replace("♀", " F").replace("♂", " M").replace("’", "'")
     # Classic Collection reprints: "M Rayquaza-EX" vs "M Rayquaza EX",
