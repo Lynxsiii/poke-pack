@@ -14,15 +14,21 @@
     "swsh2/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/swsh-a/swsha-rect-220674.png"
+    "file": "refs/cleanup-swsha/swsh2__eliteTrainerBox__sleeve__magicmadhouse.jpg"
    },
-   "crop": null,
-   "v": 1,
+   "crop": [
+    161,
+    103,
+    427,
+    473
+   ],
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/220674",
     "https://moonshotgamestore.com/products/rebel-clash-elite-trainer-box",
-    "https://www.kasecollect.com/products/pokemon-rebel-clash-elite-trainer-box"
+    "https://www.kasecollect.com/products/pokemon-rebel-clash-elite-trainer-box",
+    "https://magicmadhouse.co.uk/pokemon-rebel-clash-copperajah-sleeves-65"
    ]
   },
   {
@@ -39,15 +45,34 @@
     "swsh3/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/swsh-a/swsha-rect-220675.png"
+    "tcgplayer": 220675
    },
    "crop": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/220675",
     "https://facetofacegames.com/en-us/products/pokemon-tcg-sword-shield-darkness-ablaze-elite-trainer-box"
-   ]
+   ],
+   "quad": [
+    [
+     295,
+     223
+    ],
+    [
+     537,
+     180
+    ],
+    [
+     599,
+     509
+    ],
+    [
+     358,
+     553
+    ]
+   ],
+   "snap": false
   },
   {
    "kind": "sleeve",
@@ -63,16 +88,35 @@
     "swsh35/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/swsh-a/swsha-rect-224095.png"
+    "tcgplayer": 224095
    },
    "crop": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/224095",
     "https://toywiz.com/pokemon-trading-card-game-champions-path-elite-trainer-box/",
     "https://facetofacegames.com/en-us/collections/pokemon-sealed/products/pokemon-tcg-champions-path-elite-trainer-box"
-   ]
+   ],
+   "quad": [
+    [
+     456,
+     278
+    ],
+    [
+     872,
+     197
+    ],
+    [
+     982,
+     766
+    ],
+    [
+     566,
+     846
+    ]
+   ],
+   "snap": false
   },
   {
    "kind": "sleeve",
@@ -88,19 +132,15 @@
     "swsh4/eliteTrainerBox"
    ],
    "src": {
-    "tcgplayer": 227647
+    "file": "refs/cleanup-swsha/swsh4__eliteTrainerBox__sleeve__toywiz.jpg"
    },
-   "crop": [
-    2,
-    2,
-    296,
-    397
-   ],
-   "v": 1,
+   "crop": null,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/227647",
-    "https://toywiz.com/pokemon-trading-card-game-sword-shield-vivid-voltage-elite-trainer-box/"
+    "https://toywiz.com/pokemon-trading-card-game-sword-shield-vivid-voltage-elite-trainer-box/",
+    "https://toywiz.com/pokemon-sword-shield-vivid-voltage-gigantamax-pikachu-card-sleeves-65-count/"
    ]
   },
   {
@@ -117,16 +157,35 @@
     "swsh45/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/swsh-a/swsha-rect-232635.png"
+    "tcgplayer": 232635
    },
    "crop": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/232635",
     "https://marriland.com/updates/shining-fates-elite-trainer-box-review/",
     "https://facetofacegames.com/en-us/products/pokemon-tcg-shining-fates-elite-trainer-box"
-   ]
+   ],
+   "quad": [
+    [
+     370,
+     288
+    ],
+    [
+     665,
+     221
+    ],
+    [
+     743,
+     621
+    ],
+    [
+     448,
+     687
+    ]
+   ],
+   "snap": false
   },
   {
    "kind": "sleeve",
@@ -142,383 +201,395 @@
     "swsh6/pc-etb"
    ],
    "src": {
-    "file": "refs/swsh-a/swsha-rect-248790.png"
+    "tcgplayer": 248790
    },
    "crop": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/248790",
     "https://www.pokeguardian.com/639913_sword-shield-chilling-reign-product-line-up-revealed",
     "https://pack-fresh.com/products/chilling-reign-pokemon-center-elite-trainer-box-ice-calyrex"
-   ]
+   ],
+   "quad": [
+    [
+     414,
+     354
+    ],
+    [
+     796,
+     281
+    ],
+    [
+     895,
+     802
+    ],
+    [
+     513,
+     875
+    ]
+   ],
+   "snap": false
   },
   {
    "kind": "coin",
    "id": "swsha-swsh1-1pack-coin",
-   "name": "Sword & Shield 1-pack blister coin",
+   "name": "Silver Hydreigon coin",
    "sets": [
     "swsh1"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round silver-tone coin with black line art of two Pokemon heads side by side, coin that comes in the single-pack blisters of this set.",
+   "subject": "Hydreigon",
+   "blurb": "A silver mirror-foil plastic coin with black line art of Hydreigon's three heads, one of several coins found at random in Sword & Shield single-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh1/gossifleur-single-pack-blister",
     "swsh1/wooloo-single-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh1__wooloo-single-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/a/a0/CIN_Silver_Hydreigon_Coin.png"
    },
    "crop": null,
-   "circle": [
-    175,
-    176,
-    90
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/206032",
-    "https://www.tcgplayer.com/product/206031"
+    "https://www.tcgplayer.com/product/206031",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/a/a0/CIN_Silver_Hydreigon_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh1-3pack-coin",
-   "name": "Sword & Shield 3-pack blister coin",
+   "name": "Gold Garchomp coin",
    "sets": [
     "swsh1"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round pale-gold coin with black line art of a fanged, curl-horned dragon-like head, coin that comes in the 3-pack blisters of this set.",
+   "subject": "Garchomp",
+   "blurb": "A gold mirror-foil plastic coin with black line art of Garchomp's fanged head, the coin in the Sword & Shield Morpeko 3-pack blister.",
    "material": "plastic",
    "products": [
     "swsh1/morpeko-3-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh1__morpeko-3-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/5/55/TPDK_Gold_Garchomp_Coin.png"
    },
    "crop": null,
-   "circle": [
-    213,
-    178,
-    77
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
-    "https://www.tcgplayer.com/product/206029"
+    "https://www.tcgplayer.com/product/206029",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/5/55/TPDK_Gold_Garchomp_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh2-1pack-coin",
-   "name": "Rebel Clash 1-pack blister coin",
+   "name": "Gold Kommo-o coin",
    "sets": [
     "swsh2"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round gold coin with black line art of a crested, owl-like creature, coin that comes in the single-pack blisters of this set.",
+   "subject": "Kommo-o",
+   "blurb": "A gold mirror-foil plastic coin with black line art of Kommo-o's scaled head and crest, one of the coins found at random in Rebel Clash single-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh2/noctowl-single-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh2__noctowl-single-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/9/9f/CIN_Gold_Kommo-o_Coin.png"
    },
    "crop": null,
-   "circle": [
-    175,
-    172,
-    85
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
-    "https://www.tcgplayer.com/product/210565"
+    "https://www.tcgplayer.com/product/210565",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/9/9f/CIN_Gold_Kommo-o_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh2-3pack-coin",
-   "name": "Rebel Clash 3-pack blister coin",
+   "name": "Light gold Lycanroc coin",
    "sets": [
-    "swsh2"
+    "swsh1"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round pale-gold coin with black line art of a maned, wolf-like head in profile, coin that comes in the 3-pack blisters of this set.",
+   "subject": "Lycanroc",
+   "blurb": "A pale gold mirror-foil plastic coin with black line art of Lycanroc's maned head, one of several coins found at random in Sword & Shield single-pack blisters.",
    "material": "plastic",
    "products": [
-    "swsh2/duraludon-3-pack-blister",
-    "swsh2/rayquaza-3-pack-blister"
+    "swsh1/gossifleur-single-pack-blister",
+    "swsh1/wooloo-single-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh2__duraludon-3-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/c/c5/FLI_Light_Gold_Lycanroc_Coin.png"
    },
    "crop": null,
-   "circle": [
-    220,
-    191,
-    80
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
-   "evidence": "verified",
+   "v": 2,
+   "evidence": "confirmed",
    "sources": [
-    "https://www.tcgplayer.com/product/210567",
-    "https://www.tcgplayer.com/product/210568"
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/c/c5/FLI_Light_Gold_Lycanroc_Coin.png",
+    "https://www.youtube.com/watch?v=qh2iLrZYmrU",
+    "https://www.youtube.com/watch?v=d7cT1-6RKZc",
+    "https://www.youtube.com/watch?v=leHJVmk8HZU"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh3-1pack-coin",
-   "name": "Darkness Ablaze 1-pack blister coin",
+   "name": "Emerald Shaymin coin",
    "sets": [
     "swsh3"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round green coin with a yellow-to-orange five-petal flower face in the centre, coin that comes in the single-pack blisters of this set.",
+   "subject": "Shaymin",
+   "blurb": "An emerald green rainbow-foil plastic coin with Shaymin's yellow flower and face in black line art, the coin in Darkness Ablaze single-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh3/hatenna-single-pack-blister",
     "swsh3/pikachu-single-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh3__hatenna-single-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/0/07/DAABL_Green_Shaymin_Coin.png"
    },
    "crop": null,
-   "circle": [
-    160,
-    156,
-    70
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/216859",
-    "https://www.tcgplayer.com/product/216860"
+    "https://www.tcgplayer.com/product/216860",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/0/07/DAABL_Green_Shaymin_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh3-3pack-coin",
-   "name": "Darkness Ablaze 3-pack blister coin",
+   "name": "Teal Manaphy coin",
    "sets": [
     "swsh3"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round iridescent pale-blue coin with a small round-headed creature with big black eyes and drooping antennae, coin that comes in the 3-pack blisters of this set.",
+   "subject": "Manaphy",
+   "blurb": "A teal rainbow-foil plastic coin with black line art of Manaphy's round head and big eyes, the coin in Darkness Ablaze 3-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh3/eevee-3-pack-blister",
     "swsh3/flareon-3-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh3__eevee-3-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/1/10/DAABL_Teal_Manaphy_Coin.png"
    },
    "crop": null,
-   "circle": [
-    220,
-    171,
-    83
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/216857",
-    "https://www.tcgplayer.com/product/216858"
+    "https://www.tcgplayer.com/product/216858",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/1/10/DAABL_Teal_Manaphy_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh4-1pack-coin",
-   "name": "Vivid Voltage 1-pack blister coin",
+   "name": "Blue Empoleon coin",
    "sets": [
     "swsh4"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round blue coin with a cyan line-art armoured head on dark blue, coin that comes in the single-pack blisters of this set.",
+   "subject": "Empoleon",
+   "blurb": "A blue sheen-foil plastic coin with black line art of Empoleon's crested head, the coin in Vivid Voltage single-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh4/grookey-single-pack-blister",
     "swsh4/scorbunny-single-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh4__grookey-single-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/6/65/UPR_Blue_Empoleon_Coin.png"
    },
    "crop": null,
-   "circle": [
-    172,
-    168,
-    85
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/221746",
-    "https://www.tcgplayer.com/product/221747"
+    "https://www.tcgplayer.com/product/221747",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/6/65/UPR_Blue_Empoleon_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh4-3pack-coin",
-   "name": "Vivid Voltage 3-pack blister coin",
+   "name": "Silver Kommo-o coin",
    "sets": [
     "swsh4"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round silver-grey coin with dense dark line art of a large horned, dinosaur-like beast head, coin that comes in the 3-pack blisters of this set.",
+   "subject": "Kommo-o",
+   "blurb": "A silver cracked-ice foil plastic coin with black line art of Kommo-o's scaled head, one of three coins found at random in Vivid Voltage 3-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh4/sobble-3-pack-blister",
     "swsh4/vaporeon-3-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh4__sobble-3-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/a/a0/VIVBL_Silver_Kommo-o_Coin.png"
    },
    "crop": null,
-   "circle": [
-    215,
-    186,
-    80
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/221744",
-    "https://www.tcgplayer.com/product/221745"
+    "https://www.tcgplayer.com/product/221745",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/a/a0/VIVBL_Silver_Kommo-o_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh5-1pack-coin",
-   "name": "Battle Styles 1-pack blister coin",
+   "name": "Orange Volcanion coin",
    "sets": [
-    "swsh5"
+    "swsh5",
+    "swsh6"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round orange-red gradient coin with dark line art of a pointed, beaked head, coin that comes in the single-pack blisters of this set.",
+   "subject": "Volcanion",
+   "blurb": "An orange rainbow-foil plastic coin with black line art of Volcanion's head and arm, one of the coins found at random in Battle Styles and Chilling Reign single-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh5/charmander-single-pack-blister",
-    "swsh5/arrokuda-single-pack-blister"
+    "swsh5/arrokuda-single-pack-blister",
+    "swsh6/morpeko-single-pack-blister",
+    "swsh6/phanpy-single-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh5__arrokuda-single-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/f/f8/PBT_Orange_Volcanion_Coin.png"
    },
    "crop": null,
-   "circle": [
-    170,
-    168,
-    86
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/229280",
-    "https://www.tcgplayer.com/product/229281"
+    "https://www.tcgplayer.com/product/229281",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/f/f8/PBT_Orange_Volcanion_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh5-3pack-coin",
-   "name": "Battle Styles 3-pack blister coin",
+   "name": "Green Shaymin coin",
    "sets": [
     "swsh5"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round yellow-green coin with a rainbow-tinted five-petal flower face in the centre, coin that comes in the 3-pack blisters of this set.",
+   "subject": "Shaymin",
+   "blurb": "A yellow-green rainbow-foil plastic coin with Shaymin's flower and face in black line art, the coin in Battle Styles 3-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh5/jolteon-3-pack-blister",
     "swsh5/eevee-3-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh5__eevee-3-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/e/e1/CINBL_Green_Shaymin_Coin.png"
    },
    "crop": null,
-   "circle": [
-    218,
-    173,
-    80
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/229282",
-    "https://www.tcgplayer.com/product/229283"
+    "https://www.tcgplayer.com/product/229283",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/e/e1/CINBL_Green_Shaymin_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh6-1pack-coin",
-   "name": "Chilling Reign 1-pack blister coin",
+   "name": "Purple Genesect coin",
    "sets": [
     "swsh6"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round purple coin with dark line art of an armoured, rectangular head with a triangle on the forehead, coin that comes in the single-pack blisters of this set.",
+   "subject": "Genesect",
+   "blurb": "A purple rainbow-foil plastic coin with black line art of Genesect's armoured head, one of the coins found at random in Chilling Reign single-pack and 3-pack blisters.",
    "material": "plastic",
    "products": [
     "swsh6/morpeko-single-pack-blister",
-    "swsh6/phanpy-single-pack-blister"
+    "swsh6/phanpy-single-pack-blister",
+    "swsh6/eevee-3-pack-blister",
+    "swsh6/snorlax-3-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh6__morpeko-single-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/7/7f/CREBL_Purple_Genesect_Coin.png"
    },
    "crop": null,
-   "circle": [
-    185,
-    184,
-    88
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/236273",
-    "https://www.tcgplayer.com/product/236272"
+    "https://www.tcgplayer.com/product/236272",
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/7/7f/CREBL_Purple_Genesect_Coin.png"
    ]
   },
   {
    "kind": "coin",
    "id": "swsha-swsh6-3pack-coin",
-   "name": "Chilling Reign 3-pack blister coin",
+   "name": "Pink Mew coin",
    "sets": [
-    "swsh6"
+    "swsh5"
    ],
-   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
-   "blurb": "A round iridescent purple-pink coin with a small round-headed creature with big black eyes and long ears, coin that comes in the 3-pack blisters of this set.",
+   "subject": "Mew",
+   "blurb": "A pink rainbow-foil plastic coin with black line art of Mew's round head and big eyes, one of three coins found at random in Battle Styles single-pack blisters.",
    "material": "plastic",
    "products": [
-    "swsh6/eevee-3-pack-blister",
-    "swsh6/snorlax-3-pack-blister"
+    "swsh5/charmander-single-pack-blister",
+    "swsh5/arrokuda-single-pack-blister"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh6__eevee-3-pack-blister__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/5/51/F2019CC_Pink_Mew_Coin.png"
    },
    "crop": null,
-   "circle": [
-    222,
-    200,
-    83
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
-   "evidence": "verified",
+   "v": 2,
+   "evidence": "confirmed",
    "sources": [
-    "https://www.tcgplayer.com/product/236268",
-    "https://www.tcgplayer.com/product/236269"
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/5/51/F2019CC_Pink_Mew_Coin.png",
+    "https://www.youtube.com/watch?v=0F3mAvJTu90",
+    "https://www.youtube.com/watch?v=iIpqx0AFeEM"
    ]
   },
   {
@@ -529,26 +600,24 @@
     "swsh6"
    ],
    "subject": "Ice Rider Calyrex",
-   "blurb": "A mirror-silver metal coin with blue line art of Ice Rider Calyrex, included in the Pokemon Center Chilling Reign Elite Trainer Box.",
-   "material": "metal",
+   "blurb": "A jumbo silver cracked-ice foil plastic coin with blue line art of Ice Rider Calyrex, included in the Pokemon Center Chilling Reign Elite Trainer Box.",
+   "material": "plastic",
    "products": [
     "swsh6/pc-etb"
    ],
    "src": {
-    "file": "refs/swsh-a/swsh6__pc-etb__coin-front.jpg"
+    "url": "https://archives.bulbagarden.net/media/upload/9/94/CREETB_Blue_Calyrex_Coin.png"
    },
    "crop": null,
-   "circle": [
-    268,
-    254,
-    230
-   ],
+   "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/247281/pokemon-swsh06-chilling-reign-chilling-reign-pokemon-center-elite-trainer-box-ice-rider-calyrex-exclusive",
-    "https://www.pokeguardian.com/639913_sword-shield-chilling-reign-product-line-up-revealed"
+    "https://www.pokeguardian.com/639913_sword-shield-chilling-reign-product-line-up-revealed",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/9/94/CREETB_Blue_Calyrex_Coin.png"
    ]
   },
   {
@@ -559,26 +628,24 @@
     "swsh45"
    ],
    "subject": "Dragapult",
-   "blurb": "A teal-blue metal coin embossed with Dragapult on a dark recessed background, included in the Shining Fates Shiny Dragapult VMAX Premium Collection.",
-   "material": "metal",
+   "blurb": "A jumbo blue cracked-ice foil plastic coin with black line art of Dragapult, included in the Shining Fates Shiny Dragapult VMAX Premium Collection.",
+   "material": "plastic",
    "products": [
     "swsh45/shiny-dragapult-vmax-premium-collection"
    ],
    "src": {
-    "render": {
-     "dex": 887,
-     "finish": "blue",
-     "holo": false
-    }
+    "url": "https://archives.bulbagarden.net/media/upload/d/d3/SHFPC_Blue_Dragapult_Coin.png"
    },
    "crop": null,
    "circle": null,
    "backSrc": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/230392/pokemon-shining-fates-shining-fates-premium-collection-shiny-dragapult",
-    "https://facetofacegames.com/en-us/products/pokemon-tcg-shining-fates-premium-collection-shiny-dragapult-vmax"
+    "https://facetofacegames.com/en-us/products/pokemon-tcg-shining-fates-premium-collection-shiny-dragapult-vmax",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/d/d3/SHFPC_Blue_Dragapult_Coin.png"
    ]
   },
   {
@@ -589,28 +656,479 @@
     "swsh45"
    ],
    "subject": "Crobat",
-   "blurb": "A pink-plum metal coin embossed with Crobat and spread wings on a dark recessed background, included in the Shining Fates Shiny Crobat VMAX Premium Collection.",
-   "material": "metal",
+   "blurb": "A jumbo pink cracked-ice foil plastic coin with black line art of Crobat and its spread wings, included in the Shining Fates Shiny Crobat VMAX Premium Collection.",
+   "material": "plastic",
    "products": [
     "swsh45/shiny-crobat-vmax-premium-collection"
    ],
    "src": {
-    "render": {
-     "dex": 169,
-     "finish": "pink",
-     "holo": false
-    }
+    "url": "https://archives.bulbagarden.net/media/upload/6/6b/SHFPC_Pink_Crobat_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 2,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/230391/pokemon-shining-fates-shining-fates-premium-collection-shiny-crobat",
+    "https://obsidia-tcg.store/products/pokemon-tcg-shinning-fates-premium-collection-shiny-crobat-vmax",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/6/6b/SHFPC_Pink_Crobat_Coin.png"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-blue-lucario-coin",
+   "name": "Blue Lucario coin",
+   "sets": [
+    "swsh1"
+   ],
+   "subject": "Lucario",
+   "blurb": "A blue rainbow-foil plastic coin with black line art of Lucario's head, one of several coins found at random in Sword & Shield single-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh1/gossifleur-single-pack-blister",
+    "swsh1/wooloo-single-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/7/70/BSHBL_Blue_Lucario_Coin.png"
    },
    "crop": null,
    "circle": null,
    "backSrc": null,
    "v": 1,
-   "evidence": "verified",
+   "evidence": "confirmed",
    "sources": [
-    "https://www.tcgplayer.com/product/230391/pokemon-shining-fates-shining-fates-premium-collection-shiny-crobat",
-    "https://obsidia-tcg.store/products/pokemon-tcg-shinning-fates-premium-collection-shiny-crobat-vmax"
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/7/70/BSHBL_Blue_Lucario_Coin.png",
+    "https://www.youtube.com/watch?v=FndkEV-c2NE",
+    "https://www.youtube.com/watch?v=ISK8psduXiE",
+    "https://www.youtube.com/watch?v=8-pgXtWgUpQ"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-green-sceptile-coin",
+   "name": "Green Sceptile coin",
+   "sets": [
+    "swsh1"
+   ],
+   "subject": "Sceptile",
+   "blurb": "A green rainbow-foil plastic coin with black line art of Sceptile's head, one of several coins found at random in Sword & Shield single-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh1/gossifleur-single-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/d/d6/CES_Green_Sceptile_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/d/d6/CES_Green_Sceptile_Coin.png",
+    "https://www.youtube.com/watch?v=6xhTQqsamSk"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-orange-lycanroc-coin",
+   "name": "Orange Lycanroc coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Lycanroc",
+   "blurb": "An orange frosted-foil plastic coin with black line art of Lycanroc's maned head, one of the coins found at random in Rebel Clash single-pack and 3-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh2/noctowl-single-pack-blister",
+    "swsh2/duraludon-3-pack-blister",
+    "swsh2/rayquaza-3-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/1/1a/BSH_Orange_Lycanroc_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/1/1a/BSH_Orange_Lycanroc_Coin.png",
+    "https://www.youtube.com/watch?v=m7w123cJIoI",
+    "https://www.youtube.com/watch?v=L4xnw7icVUs",
+    "https://www.youtube.com/watch?v=Afdd_ke2l-s",
+    "https://www.youtube.com/watch?v=gc-xTOU9-O8",
+    "https://www.youtube.com/watch?v=OzOwh1xhKHM",
+    "https://www.youtube.com/watch?v=bqnxYotIRt8"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-purple-espeon-coin",
+   "name": "Purple Espeon coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Espeon",
+   "blurb": "A purple rainbow-foil plastic coin with black line art of Espeon's head, one of several coins found at random in Rebel Clash 3-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh2/duraludon-3-pack-blister",
+    "swsh2/rayquaza-3-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/1/1f/EPC_Purple_Espeon_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/1/1f/EPC_Purple_Espeon_Coin.png",
+    "https://www.youtube.com/watch?v=ZwmvgfIdZ2M",
+    "https://www.youtube.com/watch?v=AlbJHDsiQQY"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-gray-umbreon-coin",
+   "name": "Gray Umbreon coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Umbreon",
+   "blurb": "A gray rainbow-foil plastic coin with black line art of Umbreon's head, one of several coins found at random in Rebel Clash 3-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh2/duraludon-3-pack-blister",
+    "swsh2/rayquaza-3-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/9/93/UPC_Gray_Umbreon_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/9/93/UPC_Gray_Umbreon_Coin.png",
+    "https://www.youtube.com/watch?v=_5m3RvGyDdg",
+    "https://www.youtube.com/watch?v=HW7ZyiUbQqE",
+    "https://www.youtube.com/watch?v=z23Fs7fcoew"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-purple-mewtwo-coin",
+   "name": "Purple Mewtwo coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Mewtwo",
+   "blurb": "A purple mirror-foil plastic coin with black line art of Mewtwo, one of several coins found at random in Rebel Clash 3-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh2/duraludon-3-pack-blister",
+    "swsh2/rayquaza-3-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/d/d4/UNB_Purple_Mewtwo_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/d/d4/UNB_Purple_Mewtwo_Coin.png",
+    "https://www.youtube.com/watch?v=Hv_HQG8X7J0",
+    "https://www.youtube.com/watch?v=mM0HU3uM6Wk"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-gold-zeraora-coin",
+   "name": "Light gold Zeraora coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Zeraora",
+   "blurb": "A pale gold mirror-foil plastic coin with black line art of Zeraora's spiky head, one of several coins found at random in Rebel Clash 3-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh2/duraludon-3-pack-blister",
+    "swsh2/rayquaza-3-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/5/59/UNB_Light_Gold_Zeraora_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/5/59/UNB_Light_Gold_Zeraora_Coin.png",
+    "https://www.youtube.com/watch?v=bZTTdqDkjk4",
+    "https://www.youtube.com/watch?v=7H0sKmdTrWw",
+    "https://www.youtube.com/watch?v=_exitKNpr-E"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-gold-raichu-coin",
+   "name": "Gold Raichu coin",
+   "sets": [
+    "swsh2",
+    "swsh4",
+    "swsh6"
+   ],
+   "subject": "Raichu",
+   "blurb": "A gold cracked-ice foil plastic coin with black line art of Raichu, one of the coins found at random in Rebel Clash and Vivid Voltage 3-pack blisters and Chilling Reign single-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh2/duraludon-3-pack-blister",
+    "swsh2/rayquaza-3-pack-blister",
+    "swsh4/sobble-3-pack-blister",
+    "swsh4/vaporeon-3-pack-blister",
+    "swsh6/morpeko-single-pack-blister",
+    "swsh6/phanpy-single-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/d/d2/RCLBL_Gold_Raichu_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/d/d2/RCLBL_Gold_Raichu_Coin.png",
+    "https://www.youtube.com/watch?v=pHTgot4VZUk",
+    "https://www.youtube.com/watch?v=dgUl7AlKMVA",
+    "https://www.youtube.com/watch?v=vt8isGbCiQM",
+    "https://www.youtube.com/watch?v=PHjUZETg88I",
+    "https://www.youtube.com/watch?v=xNYuYKe-T_I",
+    "https://www.youtube.com/watch?v=oMQCSxRBtEk"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-silver-lugia-coin",
+   "name": "Silver Lugia coin",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Lugia",
+   "blurb": "A silver cracked-ice foil plastic coin with black line art of Lugia, one of three coins found at random in Vivid Voltage 3-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh4/sobble-3-pack-blister",
+    "swsh4/vaporeon-3-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/8/87/LOTBL_Silver_Lugia_Coin.png"
+   },
+   "crop": null,
+   "circle": [
+    110,
+    109,
+    109
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/8/87/LOTBL_Silver_Lugia_Coin.png",
+    "https://www.youtube.com/watch?v=0K5S-0OGCnc",
+    "https://www.youtube.com/watch?v=eTx9wtytKTI",
+    "https://www.youtube.com/watch?v=CPF1S1BPF8w"
+   ],
+   "snap": false,
+   "inset": 0.02
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-cracked-ice-mewtwo-coin",
+   "name": "Cracked ice Mewtwo coin",
+   "sets": [
+    "swsh5"
+   ],
+   "subject": "Mewtwo",
+   "blurb": "A purple cracked-ice foil plastic coin with black line art of Mewtwo, one of three coins found at random in Battle Styles single-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh5/charmander-single-pack-blister",
+    "swsh5/arrokuda-single-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/c/c1/BSTBL_Purple_Mewtwo_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/c/c1/BSTBL_Purple_Mewtwo_Coin.png",
+    "https://www.youtube.com/watch?v=wh8h0XPyiQg",
+    "https://www.youtube.com/watch?v=f8HQX4XT0YI",
+    "https://www.youtube.com/watch?v=yXOq-J0SLSg"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-green-rayquaza-coin",
+   "name": "Green Rayquaza coin",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Rayquaza",
+   "blurb": "A green sheen-foil plastic coin with black line art of Rayquaza's head, one of the coins found at random in Chilling Reign single-pack and 3-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh6/morpeko-single-pack-blister",
+    "swsh6/phanpy-single-pack-blister",
+    "swsh6/eevee-3-pack-blister",
+    "swsh6/snorlax-3-pack-blister"
+   ],
+   "src": {
+    "url": "https://archives.bulbagarden.net/media/upload/3/33/CREBL_Green_Rayquaza_Coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/3/33/CREBL_Green_Rayquaza_Coin.png",
+    "https://www.youtube.com/watch?v=xLYdpOZBB8k",
+    "https://www.youtube.com/watch?v=qXa8pB-jYvQ",
+    "https://www.youtube.com/watch?v=fceNwKVfjMw",
+    "https://www.youtube.com/watch?v=caEevOmrTAI",
+    "https://www.youtube.com/watch?v=Nly5q9ezOVk"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-silver-lucario-coin",
+   "name": "Silver Lucario coin",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Lucario",
+   "blurb": "A silver rainbow-foil plastic coin with black line art of Lucario's head, one of three coins found at random in Chilling Reign 3-pack blisters.",
+   "material": "plastic",
+   "products": [
+    "swsh6/eevee-3-pack-blister"
+   ],
+   "src": {
+    "file": "refs/cleanup-swsha/swsh6__3pack__lucario-silver-coin__bulbapedia-aspectfixed.png"
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "confirmed",
+   "sources": [
+    "https://bulbapedia.bulbagarden.net/wiki/Sword_%26_Shield_TCG_Series_merchandise",
+    "https://bulbapedia.bulbagarden.net/wiki/Coin_(TCG)/Generations_VII-VIII",
+    "https://archives.bulbagarden.net/media/upload/8/88/CREBL_Silver_Lucario_Coin.jpg",
+    "https://www.youtube.com/watch?v=4lABV3v0WO0"
    ]
   }
  ],
- "productRules": {}
+ "productRules": {
+  "swsh1/gossifleur-single-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh1/wooloo-single-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh2/noctowl-single-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh2/duraludon-3-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh2/rayquaza-3-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh4/sobble-3-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh4/vaporeon-3-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh5/charmander-single-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh5/arrokuda-single-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh6/morpeko-single-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh6/phanpy-single-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh6/eevee-3-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  },
+  "swsh6/snorlax-3-pack-blister": {
+   "pick": {
+    "coins": 1
+   }
+  }
+ }
 }

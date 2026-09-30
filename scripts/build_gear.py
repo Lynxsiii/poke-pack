@@ -17,7 +17,16 @@ A spec file is {"items": [...], "productRules": {...}}. An item:
          | { "url": "https://..." }
          | { "render": { "dex": 143, "finish": "bronze", "holo": false } },   # coins only
     "crop": [x0, y0, x1, y1] | null,   # pixels in the source image
-    "circle": [cx, cy, r] | null,      # coins photographed with a busy background
+    "quad": "auto" | [[x,y],[x,y],[x,y],[x,y]] | null,   # sleeves: "auto" finds the front sleeve of a
+                                       # fanned stack on white by itself; else the four corners TL TR BR BL of the
+                                       # sleeve in the photo; it is straightened (perspective) and
+                                       # snapped to the nearest edge (set "snap": false to keep the
+                                       # exact points). Replaces crop. scripts/gear_grid.py helps.
+    "rotate": 0,                       # sleeves: degrees counter-clockwise, for a tilted flat scan
+    "circle": [cx, cy, r] | null,      # coins photographed with a busy background; the circle is
+                                       # snapped to the coin's rim unless "snap": false
+    "inset": 0.02,                     # coins: trim this fraction of the radius off the rim when
+                                       # background leaks in around a photographed coin
     "backSrc": same shapes as src | null,   # a real photo of the reverse, when one exists
     "v": 1,                            # bump when the picture changes (assets are immutable)
     "evidence": "verified|single-source|inferred", "sources": ["https://..."] }
@@ -70,7 +79,14 @@ def open_src(src: dict) -> Image.Image:
 
 def build_sleeve(item: dict) -> tuple[Image.Image, str]:
     im = open_src(item["src"])
-    card = g.sleeve_card(im, item.get("crop"))
+    quad = item.get("quad")
+    if quad == "auto":
+        quad = g.auto_quad(im)
+        if not quad:
+            raise ValueError("auto quad found no sleeve; give the four corners")
+    if quad and item.get("snap", True):
+        quad = g.refine_quad(im, quad)
+    card = g.sleeve_card(im, item.get("crop"), quad=quad, rotate=float(item.get("rotate") or 0))
     return card, g.dominant_tint(card)
 
 
@@ -87,10 +103,12 @@ def build_coin(item: dict) -> tuple[Image.Image, str, bool]:
             photo = photo.crop(tuple(item["crop"]))
         if item.get("circle"):
             cx, cy, rad = item["circle"]
-            photo = photo.convert("RGBA").crop((cx - rad, cy - rad, cx + rad, cy + rad))
-            face = g.coin_face(photo.convert("RGBA"))
+            if item.get("snap", True):
+                cx, cy, rad = g.find_circle(photo, cx, cy, rad)
+            photo = photo.convert("RGBA").crop((round(cx - rad), round(cy - rad), round(cx + rad), round(cy + rad)))
+            face = g.coin_face(photo.convert("RGBA"), inset=float(item.get("inset") or 0))
         else:
-            face = g.coin_face(photo)
+            face = g.coin_face(photo, inset=float(item.get("inset") or 0))
         rendered = False
     back = None
     if item.get("backSrc"):
@@ -168,7 +186,7 @@ def main() -> int:
             g.save_webp(img, path, q)
         else:
             # Never overwrite a published asset with different pixels.
-            probe = ROOT / ".gear-probe.webp"
+            probe = ROOT / f".gear-probe-{os.getpid()}.webp"
             g.save_webp(img, probe, q)
             same = probe.read_bytes() == path.read_bytes()
             probe.unlink()
