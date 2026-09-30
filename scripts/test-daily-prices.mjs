@@ -93,7 +93,7 @@ function tcgcsv(base, { down = [] } = {}) {
 /** Run steps until a day is done or stops moving. */
 async function runDay(when, fetcher, e = env) {
   const steps = [];
-  for (let i = 0; i < 40; i += 1) {
+  for (let i = 0; i < 80; i += 1) {
     const result = await recordDailyPrices(e, when, fetcher);
     steps.push(result);
     if (!result.waiting || (!result.fetched.length && !result.recorded.length)) break;
@@ -174,7 +174,7 @@ assert.equal(db.prepare("SELECT count(*) AS n FROM price_days").get().n, sets.le
 
 // The cron entry point runs the same job, one step per call.
 globalThis.fetch = tcgcsv(40);
-for (let i = 0; i < 20; i += 1) {
+for (let i = 0; i < 60; i += 1) {
   const waits = [];
   await worker.scheduled({ cron: "*/10 * * * *" }, env, { waitUntil: (p) => waits.push(p) });
   await Promise.all(waits);
