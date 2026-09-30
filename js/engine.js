@@ -57,6 +57,12 @@ export const HIT_RARITIES = new Set([
   "Radiant Rare",
   "Trainer Gallery Rare Holo",
   "Rare Shiny",
+  // Sun & Moon: a GX (Tag Team included), a Prism Star and Hidden Fates'
+  // shiny GX. The holo Rare is the rare slot's ordinary card; Rare Ultra,
+  // Rainbow and Secret are listed above.
+  "Rare Holo GX",
+  "Rare Prism Star",
+  "Rare Shiny GX",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -139,6 +145,12 @@ export function poolsFrom(cards, set) {
     shinyV: gallery("sv").filter((c) => c.rarity === "Rare Holo V"),
     shinyVMAX: gallery("sv").filter((c) => c.rarity === "Rare Holo VMAX"),
     shinyGold: gallery("sv").filter((c) => c.rarity === "Rare Secret"),
+    // Sun & Moon (smSlots in js/catalog.js): a GX, a Prism Star, and Hidden
+    // Fates' Shiny Vault tiers (shiny GX, the full-art shiny Ultra).
+    gx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo GX"),
+    prismStar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Prism Star"),
+    shinyGX: gallery("sv").filter((c) => c.rarity === "Rare Shiny GX"),
+    shinyUltra: gallery("sv").filter((c) => c.rarity === "Rare Ultra"),
     classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),

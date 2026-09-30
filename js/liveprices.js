@@ -41,6 +41,9 @@ const TCGDEX_SET = {
   swsh1: "swsh1", swsh2: "swsh2", swsh3: "swsh3", swsh35: "swsh3.5", swsh4: "swsh4", swsh45: "swsh4.5",
   swsh5: "swsh5", swsh6: "swsh6", swsh7: "swsh7", cel25: "cel25", swsh8: "swsh8", swsh9: "swsh9",
   swsh10: "swsh10", pgo: "pgo", swsh11: "swsh11", swsh12: "swsh12", swsh12pt5: "swsh12.5",
+  // Sun & Moon: TCGdex's ids (the half sets use a dot; Shiny Vault rides Hidden Fates).
+  sm1: "sm1", sm2: "sm2", sm3: "sm3", sm35: "sm3.5", sm4: "sm4", sm5: "sm5", sm6: "sm6", sm7: "sm7", sm75: "sm7.5",
+  sm8: "sm8", sm9: "sm9", det1: "det1", sm10: "sm10", sm11: "sm11", sm115: "sm11.5", sm12: "sm12", smp: "smp",
 };
 
 /** pokemontcg.io is flaky on new sets; one 5xx and we stop asking for this session. */
