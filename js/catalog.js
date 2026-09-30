@@ -681,14 +681,19 @@ function swshSlots({ holo, v, vmax = 0, vstar = 0, ultra, rainbow = 0, secret = 
  * Star, a full art (`Rare Ultra`: full-art GX, Tag Team or Supporter), a
  * rainbow or a gold. `reverseSpecial` names the reverse-slot replacements a
  * set has, as [pool, rate] pairs: Hidden Fates' Shiny Vault tiers (shinyBaby,
- * shinyGX, shinyUltra, shinyGold) or the Shiny Vault of Shining Legends.
+ * shinyGX, shinyUltra, shinyGold), Prism Stars (`["prismStar", rate]`: they
+ * replace the reverse holo, research in /mnt/project-files/sun-moon/research)
+ * or a reverse basic Energy (`["reverseEnergy", rate]`). `prism` is the rare
+ * slot's Prism Star rate and is not used by any real pack. Shining Legends'
+ * Shining Pokémon (`shining`) fill its rare slot.
  */
-function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, ultra = 0, rainbow = 0, secret = 0, reverseSpecial = [] }) {
+function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, ultra = 0, rainbow = 0, secret = 0, shining = 0, reverseSpecial = [] }) {
   const reverse = reverseSpecial.filter(([, p]) => p > 0);
   const special = reverse.reduce((sum, [, p]) => sum + p, 0);
   const rare = [
     ["gx", gx],
     ["prismStar", prism],
+    ["shining", shining],
     ["rareUltra", ultra],
     ["rainbow", rainbow],
     ["secret", secret],
