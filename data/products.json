@@ -199,6 +199,141 @@
       "image": "assets/products/cel25/dark-sylveon-v-tin.webp"
     }
   ],
+  "det1": [
+    {
+      "id": "case-file",
+      "name": "Detective Pikachu Case File",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Also holds 1 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp194"
+      ],
+      "price": 94.33,
+      "tcgplayerId": 185245,
+      "released": "2019-04-05",
+      "image": "assets/products/det1/case-file.webp"
+    },
+    {
+      "id": "charizard-gx-case-file",
+      "name": "Detective Pikachu: Charizard-GX Case File",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp195"
+      ],
+      "price": 195.78,
+      "tcgplayerId": 185242,
+      "image": "assets/products/det1/charizard-gx-case-file.webp"
+    },
+    {
+      "id": "charizard-gx-special-case-file",
+      "name": "Detective Pikachu: Charizard-GX Special Case File",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp195"
+      ],
+      "price": 499.99,
+      "tcgplayerId": 237678,
+      "image": "assets/products/det1/charizard-gx-special-case-file.webp"
+    },
+    {
+      "id": "mewtwo-gx-case-file",
+      "name": "Detective Pikachu: Mewtwo-GX Case File",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp196"
+      ],
+      "price": 168.5,
+      "tcgplayerId": 190324,
+      "image": "assets/products/det1/mewtwo-gx-case-file.webp"
+    },
+    {
+      "id": "greninja-gx-case-file",
+      "name": "Detective Pikachu: Greninja-GX Case File",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp197"
+      ],
+      "price": 176.99,
+      "tcgplayerId": 185243,
+      "image": "assets/products/det1/greninja-gx-case-file.webp"
+    },
+    {
+      "id": "collector-chest",
+      "name": "Detective Pikachu: Collector Chest",
+      "kind": "collection",
+      "packs": 7,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [],
+      "price": 372.33,
+      "tcgplayerId": 185244,
+      "released": "2019-04-05",
+      "image": "assets/products/det1/collector-chest.webp"
+    },
+    {
+      "id": "charizard-tin",
+      "name": "Detective Pikachu Tin (Charizard)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp195"
+      ],
+      "price": 169.91,
+      "tcgplayerId": 502477,
+      "image": "assets/products/det1/charizard-tin.webp"
+    },
+    {
+      "id": "mewtwo-tin",
+      "name": "Detective Pikachu Tin (Mewtwo)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp196"
+      ],
+      "price": 149.97,
+      "tcgplayerId": 502478,
+      "image": "assets/products/det1/mewtwo-tin.webp"
+    },
+    {
+      "id": "cafe-figure-collection",
+      "name": "Detective Pikachu Cafe Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp170"
+      ],
+      "price": 487.5,
+      "tcgplayerId": 264420,
+      "image": "assets/products/det1/cafe-figure-collection.webp"
+    },
+    {
+      "id": "on-the-case-figure-collection",
+      "name": "Detective Pikachu On the Case Figure Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp170",
+        "det1-smp198",
+        "det1-smp199",
+        "det1-smp200"
+      ],
+      "price": 329.96,
+      "tcgplayerId": 197563,
+      "image": "assets/products/det1/on-the-case-figure-collection.webp"
+    }
+  ],
   "me1": [
     {
       "id": "eliteTrainerBox",
@@ -2511,6 +2646,262 @@
       "tcgplayerId": 198528,
       "released": "2019-10-18",
       "image": "assets/products/sm11/pale-moon-gx-box.webp"
+    }
+  ],
+  "sm115": [
+    {
+      "id": "pin-mew",
+      "name": "Mew Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm115-smp215"
+      ],
+      "price": 274.99,
+      "tcgplayerId": 193439,
+      "released": "2019-08-23",
+      "image": "assets/products/sm115/pin-mew.webp"
+    },
+    {
+      "id": "pin-mewtwo",
+      "name": "Mewtwo Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm115-smp214"
+      ],
+      "price": 240.0,
+      "tcgplayerId": 193440,
+      "released": "2019-08-23",
+      "image": "assets/products/sm115/pin-mewtwo.webp"
+    },
+    {
+      "id": "tin-charizard-gx",
+      "name": "Charizard-GX Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "sm115-smp211"
+      ],
+      "price": 173.21,
+      "tcgplayerId": 193437,
+      "released": "2019-09-06",
+      "image": "assets/products/sm115/tin-charizard-gx.webp"
+    },
+    {
+      "id": "tin-gyarados-gx",
+      "name": "Gyarados-GX Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "sm115-smp212"
+      ],
+      "price": 167.34,
+      "tcgplayerId": 193436,
+      "released": "2019-09-06",
+      "image": "assets/products/sm115/tin-gyarados-gx.webp"
+    },
+    {
+      "id": "tin-raichu-gx",
+      "name": "Raichu-GX Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "sm115-smp213"
+      ],
+      "price": 178.11,
+      "tcgplayerId": 193438,
+      "released": "2019-09-06",
+      "image": "assets/products/sm115/tin-raichu-gx.webp"
+    },
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "sm115-smp210"
+      ],
+      "price": 564.69,
+      "tcgplayerId": 194729,
+      "released": "2019-09-20",
+      "image": "assets/products/sm115/elite-trainer-box.webp"
+    },
+    {
+      "id": "premium-powers-collection",
+      "name": "Premium Powers Collection",
+      "kind": "premium",
+      "packs": 7,
+      "promos": [
+        "sm115-smp103a",
+        "sm115-smp104a"
+      ],
+      "price": 751.66,
+      "tcgplayerId": 206302,
+      "image": "assets/products/sm115/premium-powers-collection.webp"
+    },
+    {
+      "id": "ultra-premium-collection",
+      "name": "Ultra-Premium Collection",
+      "kind": "premium",
+      "packs": 15,
+      "promos": [
+        "sm115-smp103a",
+        "sm115-smp104a"
+      ],
+      "price": 1350.0,
+      "tcgplayerId": 199466,
+      "released": "2019-11-22",
+      "image": "assets/products/sm115/ultra-premium-collection.webp"
+    },
+    {
+      "id": "collection-charizard-gx",
+      "name": "Charizard-GX Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm115-smp211"
+      ],
+      "price": 201.99,
+      "tcgplayerId": 205159,
+      "image": "assets/products/sm115/collection-charizard-gx.webp"
+    },
+    {
+      "id": "collection-gyarados-gx",
+      "name": "Gyarados-GX Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm115-smp212"
+      ],
+      "price": 182.13,
+      "tcgplayerId": 205160,
+      "image": "assets/products/sm115/collection-gyarados-gx.webp"
+    },
+    {
+      "id": "collection-raichu-gx",
+      "name": "Raichu-GX Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm115-smp213"
+      ],
+      "price": 182.33,
+      "tcgplayerId": 205161,
+      "image": "assets/products/sm115/collection-raichu-gx.webp"
+    }
+  ],
+  "sm12": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 1874.5,
+      "tcgplayerId": 199308,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/elite-trainer-box.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sm12-smp218",
+        "sm12-smp219",
+        "sm12-smp220",
+        "sm12-smp221"
+      ],
+      "pick": 1,
+      "price": 499.99,
+      "tcgplayerId": 199310,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/buildBattleBox.webp"
+    },
+    {
+      "id": "celebi-3-pack-blister",
+      "name": "3 Pack Blister (Celebi)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm12-smp224"
+      ],
+      "price": 400.0,
+      "tcgplayerId": 199767,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/celebi-3-pack-blister.webp"
+    },
+    {
+      "id": "mismagius-single-pack-blister",
+      "name": "Single Pack Blister (Mismagius)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm12-smp222"
+      ],
+      "price": 187.8,
+      "tcgplayerId": 199768,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/mismagius-single-pack-blister.webp"
+    },
+    {
+      "id": "terrakion-single-pack-blister",
+      "name": "Single Pack Blister (Terrakion)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm12-smp223"
+      ],
+      "price": 130.49,
+      "tcgplayerId": 199769,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/terrakion-single-pack-blister.webp"
+    },
+    {
+      "id": "tag-team-generations-premium-collection",
+      "name": "TAG TEAM Generations Premium Collection",
+      "kind": "premium",
+      "packs": 7,
+      "note": "Pack mix approximate: TCGplayer says 7 Pokemon TCG booster packs without naming the sets.",
+      "promos": [
+        "sm12-smp229",
+        "sm12-smp230"
+      ],
+      "price": 1815.0,
+      "tcgplayerId": 200172,
+      "released": "2019-11-22",
+      "image": "assets/products/sm12/tag-team-generations-premium-collection.webp"
+    },
+    {
+      "id": "fall-2019-collectors-chest",
+      "name": "Fall 2019 Collector's Chest",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Pack mix approximate: TCGplayer says 5 Pokemon TCG booster packs without naming the sets.",
+      "promos": [
+        "sm12-smp226",
+        "sm12-smp227",
+        "sm12-smp228"
+      ],
+      "price": 1499.99,
+      "tcgplayerId": 200142,
+      "image": "assets/products/sm12/fall-2019-collectors-chest.webp"
+    },
+    {
+      "id": "small-but-mighty-premium-collection",
+      "name": "Small But Mighty Premium Collection",
+      "kind": "premium",
+      "packs": 10,
+      "note": "Pack mix approximate: TCGplayer says 10 booster packs without naming the set.",
+      "promos": [
+        "sm12-143a"
+      ],
+      "price": 749.88,
+      "tcgplayerId": 226128,
+      "released": "2020-11-01",
+      "image": "assets/products/sm12/small-but-mighty-premium-collection.webp"
     }
   ],
   "sm6": [

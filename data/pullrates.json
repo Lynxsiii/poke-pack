@@ -413,5 +413,48 @@
       "secret": 0.0102,
       "prismStar": 0.0562
     }
+  },
+  "sm115": {
+    "name": "Hidden Fates",
+    "printedTotal": 68,
+    "released": "2019-08-23",
+    "updated": "2026-09-30",
+    "source": "burpies, Elite Fourum 'Pull Rates in Sun & Moon - Sword & Shield Sets' (https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220), YouTube/Twitch box openings, 1,580 English packs, 95% CI: Rare Shiny 21.20% ±2.02, Rare Shiny GX 10.19% ±1.49 (the post's '1 in 8.81' is a typo for 1 in 9.8, the percentage is used), Rare Holo GX 15.06% ±1.76, Rare Ultra 4.87% ±1.06 (3 main-set full arts plus 6 Shiny Vault full-art Trainers; split 3.73% / 1.14% by ThePriceDex's ratio), Rare Rainbow 1.71% ±0.64, Shiny Vault gold Secret 1.77% ±0.65. Cross-checked against ThePriceDex's modelled table (https://www.thepricedex.com/set/sm115/hidden-fates/pull-rates: shiny 1 in 4.7, shiny GX 1 in 10.6, GX 1 in 6.7, rainbow 1 in 91, gold 1 in 63), which agrees within a point but is probably fitted to the same videos and is not independent; it is the only source for the holo Rare rate (1 in 5, 20%, single source). The Shiny Vault takes the reverse-holo slot (Bulbapedia on the Japanese parent set: a parallel foil is included unless the pack holds a regular Shiny Pokémon; the four vault tiers sum to 34.3%, about one pack in three, which fits one slot; Shining Fates precedent). Hidden Fates packs were never sold separately, only inside tins, pins, boxes and the ETB (pokemon.com via pocketmonsters.net/news/3686; Bulbapedia). Reverse-holo Energy (ThePriceDex 1 in 20, single source) is not modelled.",
+    "rates": {
+      "holo": 0.2,
+      "gx": 0.1506,
+      "ultra": 0.0373,
+      "rainbow": 0.0171,
+      "shinyBaby": 0.212,
+      "shinyGX": 0.1019,
+      "shinyUltra": 0.0114,
+      "shinyGold": 0.0177
+    }
+  },
+  "sm12": {
+    "name": "Cosmic Eclipse",
+    "printedTotal": 236,
+    "released": "2019-11-01",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum: sturzflugbombardieru's own box tallies, 3,024 packs (https://www.elitefourum.com/t/39762/140, box table read from the image; also /157 on the Character Rares) pooled with burpies' 3,136 packs, 95% CI (https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220): Rare Holo GX 12.37% (1 in 8), Rare Ultra full arts 3.74% (1 in 27; burpies 3.67% ±0.66), rainbow 1.50% ±0.43 (burpies only), gold Trainer/Energy 0.89% ±0.33 (burpies only), Character Rare 10.35% (sturzflug 3.90 per 36 packs, burpies 3.56), Rare Holo 14.31% (sturzflug only, single source). ThePriceDex (https://www.thepricedex.com/set/sm12/cosmic-eclipse/pull-rates) restates sturzflug's sheet model and is not independent; its values (GX 1 in 7.8, Ultra 1 in 26.2, rainbow 1 in 71.4, gold 1 in 111.1, character 1 in 10) agree within a pack or two. The twelve Character Rares (pkmn.gg files them as Rare Secret with the nine gold Trainers and the Energy) sit in the reverse slot (sturzflug: 'inserted separately' in the reverse sheets; ThePriceDex's reverse table sums to 1.007 only with them there). Danny Phantump's GX figure (https://www.youtube.com/watch?v=4TCjfoHoUqk) is an outlier and was not pooled.",
+    "rates": {
+      "holo": 0.1431,
+      "gx": 0.1237,
+      "ultra": 0.0374,
+      "rainbow": 0.015,
+      "secret": 0.0089,
+      "character": 0.1035
+    }
+  },
+  "det1": {
+    "name": "Detective Pikachu",
+    "printedTotal": 18,
+    "released": "2019-04-05",
+    "updated": "2026-09-30",
+    "source": "Four holofoil cards per pack, three Common Holo and one Rare Holo (Bulbapedia https://bulbapedia.bulbagarden.net/wiki/Detective_Pikachu_(TCG): every card is holo, packs could not be bought singly; sturzflugbombardieru, Elite Fourum https://www.elitefourum.com/t/39762/152, states the 3 + 1 split; ThePriceDex https://www.thepricedex.com/set/det1/detective-pikachu/pull-rates agrees but is a model). The rare slot is uniform over the ten Rares: sturzflugbombardieru's 75 rare pulls (Arcanine 11, Detective Pikachu 11, Ludicolo 10, Slaking 9, Charizard 7, Mr. Mime 7, Machamp 7, Ditto 7, Greninja 4, Mewtwo 2) give chi-square 10.2 on 9 degrees of freedom, no sign of short prints. burpies' 240-pack 'rare holo 37.08%' (Elite Fourum 25220) is not a per-pack rate and was not used. pkmn.gg's Rare / Rare Ultra labels are price tiers, not rarities.",
+    "rates": {
+      "commonHolo": 3,
+      "rareHolo": 1
+    }
   }
 }

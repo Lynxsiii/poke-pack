@@ -114,6 +114,8 @@ GALLERY_KEY = {
     ("swsh12", "TG"): ("swsh12a", 0),
     ("swsh45", "SV"): ("swsh4-5", 73),
     ("swsh12pt5", "GG"): ("swsh12-5a", 0),
+    # Hidden Fates' Shiny Vault SV1 is sm11-5 070, after the 69 of the main set.
+    ("sm115", "SV"): ("sm11-5", 69),
 }
 
 # TCG Live's print variants (the code in each print's longFormID) -> the

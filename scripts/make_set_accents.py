@@ -91,6 +91,9 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "tot24": ("#ff8f2e", "#9866ff"),     # Trick or Trade 2024: pumpkin to violet
     "mcd23": ("#ff4a3d", "#ffc72c"),     # Match Battle: fries red and gold
     "tot23": ("#8fdc4a", "#ff6fae"),     # Trick or Trade 2023: slime green to pink
+    "sm115": ("#e0a93a", "#7f7cff"),  # Hidden Fates: gold logo to shiny violet
+    "sm12": ("#3fc5d8", "#ff9f3f"),  # Cosmic Eclipse: eclipse teal to sun orange
+    "det1": ("#f4c531", "#e0413f"),  # Detective Pikachu: Pikachu yellow to Poke Ball red
     "sm10": ("#f2b632", "#8a78e6"),     # Unbroken Bonds: bond yellow to Marshadow violet
     "sm11": ("#c15bf0", "#59c8f0"),     # Unified Minds: Mewtwo purple to Espeon cyan
     "sm6": ("#a45cff", "#f2b84a"),       # Forbidden Light: Necrozma violet to gold

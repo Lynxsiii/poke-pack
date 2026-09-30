@@ -497,7 +497,9 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
                 str(r.get("number")): round(float(r["sortPrice"]), 2)
                 for r in rows if isinstance(r.get("sortPrice"), (int, float)) and r["sortPrice"] > 0
             }
-        return listings[prefix].get(str(n))
+        ser = cfg["promoSeries"][prefix]
+        key = ser.get("scrydexKey", "{n}").format(n=n)
+        return listings[prefix].get(str(n)) or listings[prefix].get(key)
 
     for number, spec in (cfg.get("promoCards") or {}).items():
         if number not in sold:
@@ -506,7 +508,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         if prices_only and card_id in cards:
             record, price = dict(cards[card_id]), None
             parts = split_number(number, cfg.get("promoSeries", {}))
-            if parts and not spec.get("like"):
+            if parts and not spec.get("like") and not number[-1].isalpha():
                 price = listed_price(*parts)
         else:
             record, price, remote = promo_record(cfg, number, spec, cards, refresh)
