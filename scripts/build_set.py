@@ -361,9 +361,9 @@ def build(set_id: str, refresh: bool) -> int:
             key = str(row.get("numberKey") or number).strip()
             if not number or key in seen:
                 continue
-            # `excludeNumbers`: league/promo reprints pkmn.gg files under the set
-            # (Lost Thunder 172a, Team Up 152a) that no booster pack holds.
-            if number in (cfg.get("excludeNumbers") or []):
+            # Prize reprints the checklist lists beside the set (182a League
+            # Cup Pokégear 3.0) are not in its packs or its printed total.
+            if number in (cfg.get("skipNumbers") or []):
                 continue
             seen.add(key)
             detail = page_data(fetch(f"{base}/{key}", f"{tag}-{key}", refresh))

@@ -2220,6 +2220,17 @@
   ],
   "sm8": [
     {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 681.55,
+      "tcgplayerId": 175511,
+      "released": "2018-11-02",
+      "image": "assets/products/sm8/elite-trainer-box.webp"
+    },
+    {
       "id": "buildBattleBox",
       "name": "Build & Battle Box",
       "kind": "battle",
@@ -2317,6 +2328,17 @@
     }
   ],
   "sm9": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 4000.0,
+      "tcgplayerId": 181704,
+      "released": "2019-02-01",
+      "image": "assets/products/sm9/elite-trainer-box.webp"
+    },
     {
       "id": "buildBattleBox",
       "name": "Build & Battle Box",

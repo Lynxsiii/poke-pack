@@ -13,6 +13,10 @@
     "pack-3"
   ],
   "tcgplayerGroup": 2377,
+  "skipNumbers": [
+    "152a",
+    "152b"
+  ],
   "promoSeries": {
     "smp": {
       "series": "sun-moon",
@@ -25,10 +29,6 @@
       "era": "sm"
     }
   },
-  "excludeNumbers": [
-    "152a",
-    "152b"
-  ],
   "promoCards": {
     "smp158": {
       "foilAs": "Rare Holo"
@@ -79,6 +79,14 @@
     }
   },
   "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 181704,
+      "packs": 8,
+      "promos": []
+    },
     {
       "id": "buildBattleBox",
       "name": "Build & Battle Box",

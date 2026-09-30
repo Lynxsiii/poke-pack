@@ -306,5 +306,37 @@
       "energyFoil": 0.2483,
       "demigod": 0.000769
     }
+  },
+  "sm8": {
+    "name": "Lost Thunder",
+    "printedTotal": 214,
+    "released": "2018-11-02",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum tallies, English, per pack, all reaching us through one forum: burpies 'Pull Rates in Sun & Moon - Sword & Shield Sets' https://www.elitefourum.com/t/25220 (YouTube/Twitch box openings) and sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/140 (box-ratio tables per set, pooling his own full-box data with Derium and Danny Phantump https://www.youtube.com/watch?v=4TCjfoHoUqk); set post https://www.elitefourum.com/t/39762/150. Prism Star cards replace the reverse holo in some packs (E2 'special cards inserted in the reverse slot'; PrimetimePokemon http://primetimepokemon.blogspot.com/2018/02/prism-star-cards-pokemon-tcg.html; Dripshop 'appear in the reverse holo slot'), so they are a reverse-slot roll, never the rare slot. The rare slot holds a plain Rare unless it rolls a holo Rare, a GX (no TAG TEAM in this set), a full art (Rare Ultra: full-art GX, alternate art or Trainer), a rainbow or a gold. Pack: 1 Energy, 5 Common, 3 Uncommon, 1 reverse, 1 rare slot (TCGplayer product text '10 cards and 1 basic Energy', Bulbapedia Booster pack (TCG)). Cross-check only (not independent): ThePriceDex https://www.thepricedex.com/set/sm8/lost-thunder/pull-rates. Pooled over 5,450 packs (sturzflug 3,168, burpies 1,274, Derium 1,008): GX 10.17% (1 in 9.8), full art 4.40% (1 in 22.7), holo Rare 16.67% (1 in 6, sturzflug's own packs, the only tally; ThePriceDex also says 1 in 6), Prism Star 12.46% (1 in 8, n=4,442: burpies 12.17%, sturzflug 12.58%). Rainbow 1.25% and gold 0.92% from E2's per-card counts (51 rainbow + 37 gold in 4,176 packs) pooled with burpies' split (1.33% / 1.02%, n=1,274).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/150",
+    "rates": {
+      "holo": 0.1667,
+      "gx": 0.1017,
+      "ultra": 0.044,
+      "rainbow": 0.0125,
+      "secret": 0.0092,
+      "prismStar": 0.1246
+    }
+  },
+  "sm9": {
+    "name": "Team Up",
+    "printedTotal": 181,
+    "released": "2019-02-01",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum tallies, English, per pack, all reaching us through one forum: burpies 'Pull Rates in Sun & Moon - Sword & Shield Sets' https://www.elitefourum.com/t/25220 (YouTube/Twitch box openings) and sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/140 (box-ratio tables per set, pooling his own full-box data with Derium and Danny Phantump https://www.youtube.com/watch?v=4TCjfoHoUqk); set post https://www.elitefourum.com/t/39762/151. Prism Star cards replace the reverse holo in some packs (E2 'special cards inserted in the reverse slot'; PrimetimePokemon http://primetimepokemon.blogspot.com/2018/02/prism-star-cards-pokemon-tcg.html; Dripshop 'appear in the reverse holo slot'), so they are a reverse-slot roll, never the rare slot. The rare slot holds a plain Rare unless it rolls a holo Rare, a GX (TAG TEAM included), a full art (Rare Ultra: full-art GX, TAG TEAM and its alternate arts, alternate art or Trainer), a rainbow or a gold. Pack: 1 Energy, 5 Common, 3 Uncommon, 1 reverse, 1 rare slot (TCGplayer product text '10 cards and 1 basic Energy', Bulbapedia Booster pack (TCG)). Cross-check only (not independent): ThePriceDex https://www.thepricedex.com/set/sm9/team-up/pull-rates. Pooled over 5,887 packs (sturzflug 2,016, burpies 872, Derium 2,999, Danny Phantump): GX 10.20% (1 in 9.8), full art 4.25% (1 in 23.5), holo Rare 16.67% (1 in 6, sturzflug's own packs, the only tally), Prism Star 5.62% (1 in 17.8; burpies 5.97%, sturzflug 5.69%, Derium 5.47%). Rainbow 1.36% and gold 1.02% from E2's per-card counts (71 rainbow + 54 gold in 5,015 packs) pooled with burpies' split (1.03% / 0.69%, n=872). burpies is the low outlier on secrets (1.72% total against 2.3 to 2.7% elsewhere). No source splits TAG TEAM from single GX in measured pulls, so the GX roll is uniform over the 11 cards (5 TAG TEAM).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/151",
+    "rates": {
+      "holo": 0.1667,
+      "gx": 0.102,
+      "ultra": 0.0425,
+      "rainbow": 0.0136,
+      "secret": 0.0102,
+      "prismStar": 0.0562
+    }
   }
 }

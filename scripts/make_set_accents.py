@@ -91,6 +91,8 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "tot24": ("#ff8f2e", "#9866ff"),     # Trick or Trade 2024: pumpkin to violet
     "mcd23": ("#ff4a3d", "#ffc72c"),     # Match Battle: fries red and gold
     "tot23": ("#8fdc4a", "#ff6fae"),     # Trick or Trade 2023: slime green to pink
+    "sm8": ("#ffb02e", "#8a5cff"),     # Lost Thunder: thunder yellow to storm violet
+    "sm9": ("#5aa9ff", "#ff5c8a"),     # Team Up: team blue to logo pink
 }
 
 # Used when a set has no art at all and no override.
