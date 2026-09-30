@@ -31,6 +31,7 @@ export const SM_ETCHED = new Set(["Rare Ultra", "Rare Rainbow", "Rare Secret"]);
  * measured from the maps: scripts/sm_alt_art.py in the card-textures skill.
  */
 export const SM_ALT_ART = new Set([
+  "sm35-78", // Shining Legends' full-colour secret Mewtwo-GX: foil on Mewtwo and the frame, scenery matte
   "sm9-161", "sm9-165", "sm9-170",
   "sm10-192", "sm10-197", "sm10-199", "sm10-201", "sm10-205",
   "sm11-218", "sm11-221", "sm11-226",
@@ -57,7 +58,7 @@ export function smPattern(card) {
     case "Rare Secret":
       // Gold: Trainers, Energy and GX. A Pokémon that is not a GX is Cosmic
       // Eclipse's full-colour alternate art, foil on its scenery, not gold.
-      if (card.supertype === "Pokémon" && !is("GX")) return "foil-ultra sm-fa sm-alt";
+      if (SM_ALT_ART.has(card.id) || (card.supertype === "Pokémon" && !is("GX"))) return "foil-ultra sm-fa sm-alt";
       return "foil-gold sm-gold";
     case "Rare Rainbow":
       return "foil-ir sm-rainbow";
