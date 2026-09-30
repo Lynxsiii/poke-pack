@@ -22,7 +22,7 @@
  * Shared with the card-textures lab so the lab draws what the site draws.
  */
 
-import { isSm, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=6";
+import { isSm, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=7";
 
 export { isSm, smPattern };
 
@@ -234,6 +234,18 @@ export function foilExtras(card, url, reverseKind) {
     const finish = reverseFinish(card, reverseKind);
     if (finish === "mirror") return { classes: "rev-mirror", style: "", cure: false };
     if (!finish) return { classes: "", style: "", cure: false };
+    if (finish.startsWith("sm-")) {
+      const type = finish.slice(3);
+      const energy = card.supertype === "Energy" || card.energy;
+      // An Energy's foil is the whole field, so its symbols come as a repeating cell
+      // (make_sm_energy_reverse.py); a Pokémon's are the one-piece tile.
+      const tile = energy ? `assets/foil/sm-reverse/energy-${type}.webp` : "";
+      return {
+        classes: `rev-sv rev-sm rev-${type}${energy ? " rev-energy" : ""}`,
+        style: `--rev-pattern:url('${url(`assets/foil/sm-reverse/${type}.webp`)}')${tile ? `;--energy-tile:url('${url(tile)}')` : ""}`,
+        cure: false,
+      };
+    }
     if (finish.startsWith("swsh-")) {
       const type = finish.slice(5);
       return {

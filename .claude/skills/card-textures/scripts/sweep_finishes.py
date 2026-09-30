@@ -85,6 +85,10 @@ def check_promos(set_id, cards, boxes):
         if not c.get("promo") or c.get("foilMap"):
             continue
         look = c.get("foilAs") or c.get("rarity")
+        # A Sun & Moon Pokémon takes smSafeMap()'s window map (js/sm-foil.js,
+        # make_sm_window_map.py): a window with a typical Pokémon matte.
+        if c.get("supertype") == "Pokémon" and (c.get("era") == "sm" or re.match(r"(sm\d|sma|det1|smp|mcd1[789])", str(c.get("id", "")))):
+            continue
         if look in HOLO_LOOKS:
             print(f"{set_id}: {c['id']} ({c.get('name')}, {look}) is a window holo promo with no foil map: "
                   f"old window recipe; give it a Live map or a hand box and run stamp_knockout.py")
