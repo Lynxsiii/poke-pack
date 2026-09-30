@@ -1,0 +1,259 @@
+/* RIP Grading: /grading, /grading/send, /grading/send/<card>, /grading/<slab>.
+   Loads after css/theme.css and css/slab.css. Same rules as the rest of the
+   site: ink and hairlines, gold is only money, coral is the one action on a
+   screen, real objects (a card, a slab) sit in a well, pickers are flat tiles
+   or square segments and never a row of pills. The slab itself is css/slab.css. */
+
+#view-grading { padding-bottom: 32px; }
+.gd-page { position: relative; min-width: 0; }
+.gd-page a { text-decoration: none; }
+
+/* ---- The mark and the head ------------------------------------------------- */
+.gd-mark {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  margin: 0 0 14px; color: var(--ink); line-height: 1;
+}
+.gd-mark b { font-size: 30px; font-weight: 800; letter-spacing: -0.07em; font-variation-settings: "opsz" 96; }
+.gd-mark span { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-2); }
+.gd-mark.small { margin-bottom: 8px; }
+.gd-mark.small b { font-size: 22px; }
+.gd-mark.small span { font-size: 14px; }
+.gd-head { margin: 0 0 22px; }
+.gd-head .page-title { margin: 0 0 10px; }
+.gd-lede, .gd-sub { margin: 0; max-width: 54ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.gd-sub { margin: 0 0 14px; font-size: 14px; color: var(--muted); }
+.gd-fine { margin: 12px 0 0; max-width: 60ch; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.gd-back {
+  display: inline-block; margin: -4px 0 14px; padding: 8px 0;
+  color: var(--ink-2); font-size: 14px; font-weight: 600;
+  text-decoration: underline !important; text-underline-offset: 4px; text-decoration-color: var(--faint) !important;
+}
+.gd-back:hover { color: var(--ink); text-decoration-color: var(--ink) !important; }
+.gd-h {
+  display: flex; align-items: baseline; gap: 10px;
+  margin: 0 0 10px; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;
+}
+.gd-h span { color: var(--muted); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.gd-section { margin-top: 40px; }
+.gd-empty { margin: 0; padding: 22px 0; color: var(--muted); font-size: 14px; line-height: 1.5; max-width: 46ch; }
+.gd-error { margin: 12px 0 0; color: var(--bad); font-size: 14px; line-height: 1.45; }
+.gd-error[hidden] { display: none; }
+.gd-reason { display: block; margin: 8px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.4; }
+.gd-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.gd-actions .solid, .gd-actions .ghost { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.gd-actions a.solid, .gd-actions a.ghost { text-decoration: none; }
+
+/* ---- How it works ------------------------------------------------------------ */
+.gd-how { padding: 18px 20px 20px; }
+.gd-panel-h { margin: 0 0 12px; font-size: 17px; font-weight: 700; letter-spacing: -0.015em; }
+.gd-lines { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.gd-lines li { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.gd-lines b { color: var(--ink); font-weight: 650; }
+.gd-how .gd-actions .solid { min-width: 180px; }
+
+/* ---- Your slabs: a shelf of slabs; room for the tilt ------------------------- */
+.gd-slabs {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px;
+  padding: 8px 4px 12px; overflow: visible;
+}
+.gd-slab-tile { display: grid; gap: 10px; min-width: 0; color: inherit; }
+.gd-slab-tile:has(.lit), .gd-slab-tile:has(.settling) { position: relative; z-index: 5; }
+.gd-slab-holder { display: block; aspect-ratio: 3 / 5; }
+.gd-slab-caption { display: grid; gap: 2px; padding: 0 2px; line-height: 1.3; }
+.gd-slab-caption b { font-size: 14px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gd-slab-caption small { color: var(--muted); font-size: 12.5px; }
+.gd-slab-tile:hover .gd-slab-caption b { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
+
+/* ---- The guard shop: flat tiles with a live preview ------------------------- */
+.gd-guards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.gd-gshop {
+  display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 16px; align-items: start;
+  padding: 14px; border-radius: var(--r-sm); background: var(--surface);
+}
+.gd-gshop-preview { padding: 6px 4px; overflow: visible; }
+.gd-gshop-copy { display: grid; gap: 4px; min-width: 0; }
+.gd-gshop-copy > b { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.gd-gshop-blurb { color: var(--ink-2); font-size: 14px; }
+.gd-gshop-line { color: var(--muted); font-size: 13px; }
+.gd-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
+.gd-buy .ghost { flex: 1 1 140px; }
+.gd-qty {
+  display: inline-grid; grid-template-columns: 40px 44px 40px; align-items: stretch;
+  height: 44px; border-radius: var(--r-sm); background: var(--well); overflow: hidden;
+}
+.gd-qty button {
+  padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--ink);
+  font-size: 20px; font-weight: 500; line-height: 1; cursor: pointer;
+}
+.gd-qty button:hover:not(:disabled) { background: var(--surface-2); }
+.gd-qty button:disabled { color: var(--faint); cursor: default; }
+.gd-qty output {
+  display: grid; place-items: center; background: var(--surface-3);
+  font-weight: 650; font-variant-numeric: tabular-nums; font-size: 15px;
+}
+
+/* ---- The picker: owned cards as thumbnails ---------------------------------- */
+.gd-pick-tools { display: grid; gap: 12px; margin: 0 0 16px; }
+.gd-search input {
+  width: 100%; min-height: 44px; padding: 8px 14px;
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--surface); color: var(--ink); font: inherit; font-size: 15px;
+}
+.gd-search input:focus { outline: none; border-color: var(--line-2); background: var(--surface-2); }
+.gd-words { display: flex; gap: 20px; }
+.gd-words button {
+  position: relative; padding: 8px 0; border: 0; background: none;
+  color: var(--muted); font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.gd-words button.on { color: var(--ink); }
+.gd-words button.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 2px; background: var(--ink); }
+.gd-pick-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 12px; }
+.gd-pick-card { display: grid; gap: 4px; min-width: 0; color: inherit; line-height: 1.3; }
+.gd-pick-card img { display: block; width: 100%; aspect-ratio: 63 / 88; border-radius: 4.5% / 3.2%; background: var(--well); }
+.gd-pick-card b { font-size: 13px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 4px; }
+.gd-pick-card small { color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gd-pick-fee { color: var(--ink-2); font-size: 12.5px; }
+.gd-pick-card:hover img { filter: brightness(1.08); }
+.gd-more { grid-column: 1 / -1; justify-self: center; margin-top: 8px; }
+
+/* ---- The send page ---------------------------------------------------------- */
+.gd-send { display: grid; gap: 22px; }
+.gd-send-card {
+  display: grid; place-items: center; padding: 28px 20px;
+  border-radius: var(--r); background: var(--well); overflow: visible;
+}
+.gd-send-face { width: min(64vw, 280px); overflow: visible; }
+.gd-send-face .tcg { width: 100%; }
+.gd-send-copy { min-width: 0; }
+.gd-send-h, .gd-slab-h {
+  margin: 0 0 6px; font-size: clamp(30px, 7vw, 44px); font-weight: 800;
+  line-height: 0.98; letter-spacing: -0.03em; font-variation-settings: "opsz" 96;
+}
+.gd-cardline { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+.gd-seg {
+  display: inline-grid; grid-auto-flow: column; gap: 2px; margin: 0 0 18px; padding: 3px;
+  border-radius: var(--r-sm); background: var(--well);
+}
+.gd-seg button {
+  min-height: 40px; padding: 6px 14px; border: 0; border-radius: 6px; background: transparent;
+  color: var(--muted); font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.gd-seg button small { margin-left: 4px; font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.gd-seg button.on { background: var(--surface-3); color: var(--ink); }
+.gd-facts {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px;
+  margin: 0 0 22px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.gd-facts div { min-width: 0; }
+.gd-facts dt { margin: 0 0 2px; color: var(--muted); font-size: 12.5px; font-weight: 500; }
+.gd-facts dd { margin: 0; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.gd-facts dd small { display: block; color: var(--muted); font-size: 12.5px; font-weight: 500; }
+.gd-facts dd .bt-coins { font-weight: 650; }
+.gd-odds { margin: 0 0 14px; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.gd-odds li {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink-2);
+}
+.gd-odds li b { display: inline-block; min-width: 22px; color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+.gd-odds output { font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums; }
+.gd-expect, .gd-worth, .gd-policy { margin: 0 0 10px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.gd-policy { color: var(--muted); }
+.gd-send-btn { width: 100%; margin-top: 16px; min-height: 48px; font-size: 16px; }
+.gd-send-btn .bt-coins { color: inherit; }
+
+/* ---- The reveal --------------------------------------------------------------- */
+.gd-reveal { display: grid; gap: 22px; justify-items: center; padding-top: 6px; }
+.gd-reveal-stage {
+  display: grid; place-items: center; width: 100%; padding: 30px 20px;
+  border-radius: var(--r); background: var(--well); overflow: visible;
+}
+.gd-reveal-stage .slab { width: min(66vw, 300px); }
+.gd-result { display: grid; justify-items: center; gap: 6px; text-align: center; opacity: 0; transform: translateY(8px); }
+.gd-result.is-shown { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.5s var(--ease-out, ease); }
+.gd-result-label { margin: 0; color: var(--muted); font-size: 14px; }
+.gd-result-grade { display: flex; align-items: baseline; gap: 10px; margin: 0; line-height: 1; }
+.gd-result-grade b { font-size: 64px; font-weight: 800; letter-spacing: -0.05em; font-variation-settings: "opsz" 96; }
+.gd-result-grade span { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.gd-result-line { margin: 0; font-size: 15px; color: var(--ink-2); }
+.gd-result .gd-actions { justify-content: center; }
+
+/* ---- One slab ----------------------------------------------------------------- */
+.gd-slab-layout { display: grid; gap: 22px; }
+.gd-slab-stage {
+  display: grid; place-items: center; padding: 28px 20px;
+  border-radius: var(--r); background: var(--well); overflow: visible;
+}
+.gd-slab-stage .slab { width: min(74vw, 340px); }
+.gd-slab-copy { min-width: 0; }
+.gd-facts-slab { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.gd-guardbox { margin: 4px 0 0; }
+.gd-gtiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.gd-gtile {
+  display: grid; justify-items: start; gap: 4px; min-height: 0; padding: 10px 10px 9px;
+  border: 1px solid transparent; border-radius: var(--r-sm); background: var(--surface);
+  color: var(--ink-2); text-align: left; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease;
+}
+.gd-gtile:hover { background: var(--surface-2); color: var(--ink); }
+.gd-gtile.on { background: var(--surface-3); border-color: var(--line-2); color: var(--ink); }
+.gd-gtile b { font-size: 13.5px; font-weight: 650; color: var(--ink); }
+.gd-gtile small { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gd-gtile.is-current small { color: var(--ink-2); }
+.gd-gtile:disabled { cursor: default; opacity: 0.7; }
+.gd-swatch {
+  display: block; width: 30px; height: 18px; margin-bottom: 4px;
+  border-radius: 5px; background: var(--guard-swatch, #2a2c30);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+.gd-swatch.none { background: transparent; box-shadow: inset 0 0 0 1px var(--line-2); }
+.gd-swatch[data-guard="guard-onyx"] { --guard-swatch: #2a2c30; }
+.gd-swatch[data-guard="guard-cherry"] { --guard-swatch: linear-gradient(180deg, #d8404f, #b3202e); }
+.gd-swatch[data-guard="guard-cobalt"] { --guard-swatch: linear-gradient(180deg, #3b5fd1, #1f3f9e); }
+.gd-swatch[data-guard="guard-rose"] { --guard-swatch: linear-gradient(180deg, #e4a3ae, #b9707c); }
+.gd-swatch[data-guard="guard-frost"] { --guard-swatch: linear-gradient(180deg, rgba(221, 230, 245, 0.55), rgba(221, 230, 245, 0.3)); }
+.gd-swatch[data-guard="guard-gilt"] { --guard-swatch: linear-gradient(180deg, #e2c476, #a8843a 60%, #6e5320); }
+.gd-guard-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
+.gd-guard-actions .ghost { min-width: 160px; }
+.gd-guard-actions .gd-reason { flex: 1 1 200px; margin: 0; }
+.gd-slab-actions { margin-top: 22px; }
+.gd-slab-actions .ghost { flex: 1 1 160px; white-space: nowrap; }
+
+/* ---- The confirm sheet (the gear page's dialog) -------------------------------- */
+.gd-sheet .gd-sheet-body { padding-top: 26px; }
+.gd-sheet h2 { margin: 0 32px 0 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.gd-sheet-copy { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+.gd-sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.gd-sheet-actions button { min-height: 46px; }
+.gd-sheet .bt-coins { color: inherit; }
+.gd-sheet .solid .bt-coins { color: inherit; }
+
+/* ---- Money in a coral button reads in the button's ink ------------------------- */
+.solid .bt-coins { color: inherit; }
+
+/* ---- Larger screens ----------------------------------------------------------- */
+@media (min-width: 560px) {
+  .gd-slabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gd-pick-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .gd-gtiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 720px) {
+  .gd-guards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gd-pick-tools { grid-template-columns: minmax(0, 360px) auto; align-items: center; justify-content: space-between; }
+  .gd-pick-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+  .gd-slabs { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .gd-send { grid-template-columns: minmax(260px, 380px) minmax(0, 1fr); gap: 36px; align-items: start; }
+  .gd-send-card { position: sticky; top: 84px; padding: 36px 28px; }
+  .gd-send-face { width: min(100%, 300px); }
+  .gd-slab-layout { grid-template-columns: minmax(280px, 420px) minmax(0, 1fr); gap: 36px; align-items: start; }
+  .gd-slab-stage { position: sticky; top: 84px; padding: 36px 28px; }
+  .gd-slab-stage .slab { width: min(100%, 340px); }
+  .gd-gtiles { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); }
+  .gd-reveal-stage { padding: 40px; }
+  .gd-reveal-stage .slab { width: 300px; }
+}
+@media (min-width: 1100px) {
+  .gd-guards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-result, .gd-result.is-shown { transition: none; transform: none; }
+}
+body.no-motion .gd-result, body.no-motion .gd-result.is-shown { transition: none; transform: none; }
