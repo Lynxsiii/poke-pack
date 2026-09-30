@@ -7,10 +7,12 @@
      coinStageHTML({ heads, tails, size })  coin + table shadow, ready to drop in
      coinHTML({ heads, tails, size, rest }) the bare 3D coin (.cf-coin)
      coinFaceHTML(coin, label)              one flat face, for lists and chips
+     houseFaceSVG("heads"|"tails")          the house coin's face art alone (the gear page)
      flipCoin(coinEl, "heads"|"tails", { ms, motion })  -> Promise<boolean>
      restCoin(coinEl, "heads"|"tails")      instant resting pose
 
-   `coin` is null (the house coin) or { id, name, image } for a promo coin. */
+   `coin` is null (the house coin: Meowth, see HOUSE_COIN_ART) or
+   { id, name, image } for a promo coin. */
 
 const esc = (value = "") =>
   String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -19,50 +21,40 @@ let uid = 0;
 
 /* ---------- faces ---------- */
 
-// Emblems are drawn three times (shadow, highlight, body) instead of filtered, so
-// the emboss survives 3D transforms in every engine and stays cheap.
-const PACK = `
-  <rect x="73" y="56" width="54" height="90" rx="3.5"/>
-  <path d="M100 82 116 100 100 118 84 100z" class="cf-cut"/>
-  <path d="M100 90 108 100 100 110 92 100z"/>`;
-const PACK_CRIMP = `<path d="M73 56h54v9H73zM73 137h54v9H73z" class="cf-cut"/>`;
-const BOLT = `<path d="M110 48 76 106h21l-8 46 35-60h-22z"/>`;
-
-function emboss(shape, extra = "") {
-  return `
-    <g class="cf-em-sh" transform="translate(1.7 2.1)">${shape}</g>
-    <g class="cf-em-hi" transform="translate(-1.2 -1.5)">${shape}</g>
-    <g class="cf-em-body">${shape}${extra}</g>`;
-}
+// The house coin is Meowth's: Pay Day, the Pokémon that makes coins. Heads is
+// Meowth struck in relief, tails the three koban charms it scatters. The
+// emblems are one transparent sheet (heads left, tails right, 512px a face,
+// rendered by scripts/build_house_coin.py) laid over the CSS field; the rim,
+// beads and legends stay vector so they are crisp at 60px and at 240px.
+export const HOUSE_COIN_ART = "assets/casino/house-coin-v1.webp";
 
 function houseFace(kind, label) {
   const n = ++uid;
   const top = `cf-t${n}`;
   const bot = `cf-b${n}`;
+  const clip = `cf-c${n}`;
   const heads = kind !== "tails";
-  const art = heads
-    ? emboss(PACK, PACK_CRIMP) +
-      `<g class="cf-em-sh" transform="translate(1.4 1.8)"><path d="m49 100 3 3-3 3-3-3zM151 100l3 3-3 3-3-3z"/></g>
-       <g class="cf-em-body"><path d="m49 100 3 3-3 3-3-3zM151 100l3 3-3 3-3-3z"/></g>`
-    : emboss(BOLT) +
-      `<circle class="cf-ring-sh" cx="100" cy="100" r="47" transform="translate(1.4 1.8)"/>
-       <circle class="cf-ring" cx="100" cy="100" r="47"/>`;
   const words = label ? esc(String(label).toUpperCase()) : heads ? "HEADS" : "TAILS";
   return `<svg class="cf-art-svg" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
     <defs>
       <path id="${top}" d="M100 100m-69 0a69 69 0 1 1 138 0"/>
       <path id="${bot}" d="M100 100m-76 0a76 76 0 0 0 152 0"/>
+      <clipPath id="${clip}"><circle cx="100" cy="100" r="64"/></clipPath>
     </defs>
-    <circle class="cf-inner-ring" cx="100" cy="100" r="57"/>
+    <circle class="cf-inner-ring" cx="100" cy="100" r="61"/>
     <circle class="cf-beads-sh" cx="101" cy="101.2" r="86"/>
     <circle class="cf-beads" cx="100" cy="100" r="86"/>
     <text class="cf-legend cf-legend-sh" dy="2" dx="0.8"><textPath href="#${top}" startOffset="50%" text-anchor="middle">POKE-PACK.RIP</textPath></text>
     <text class="cf-legend"><textPath href="#${top}" startOffset="50%" text-anchor="middle">POKE-PACK.RIP</textPath></text>
     <text class="cf-legend cf-legend-low cf-legend-sh" dy="2" dx="0.8"><textPath href="#${bot}" startOffset="50%" text-anchor="middle">${words}</textPath></text>
     <text class="cf-legend cf-legend-low"><textPath href="#${bot}" startOffset="50%" text-anchor="middle">${words}</textPath></text>
-    ${art}
+    <image class="cf-emblem" href="${HOUSE_COIN_ART}" x="${heads ? 0 : -200}" y="0" width="400" height="200" clip-path="url(#${clip})" decoding="async"/>
   </svg>`;
 }
+
+/** The house coin's face as a standalone SVG (the gear page shows the same
+    coin flat). `kind` is "heads" or "tails". */
+export const houseFaceSVG = (kind = "heads") => houseFace(kind === "tails" ? "tails" : "heads", "");
 
 /** One flat face. `coin` null = the house coin (the emblem follows `label`
     "tails", anything else is heads); { image } = a promo coin. `label` is also
@@ -196,7 +188,7 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
   for (let i = 1; i <= 200; i++) cum.push(cum[i - 1] + vel(i / 200));
   const spin = (p) => cum[Math.round(clamp(p, 0, 1) * 200)] / cum[200];
 
-  const body = [], shadow = [], sheenF = [], sheenB = [], shadeF = [], shadeB = [];
+  const body = [], shadow = [], sheenF = [], sheenB = [], shadeF = [], shadeB = [], faceF = [], faceB = [];
   for (let i = 0; i <= N; i++) {
     const u = i / N;
     let h = 0, ang, wy, wz, dx;
@@ -244,6 +236,12 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
     const dark = +(0.04 + 0.5 * Math.pow(1 - Math.abs(c), 1.3)).toFixed(3);
     shadeF.push({ offset: u, opacity: dark });
     shadeB.push({ offset: u, opacity: dark });
+    // The face turned away is also switched off outright, so the coin reads
+    // right even where an engine flattens the 3D (no backface culling): at
+    // rest the stylesheet does this from data-rest, in the air the keyframes do.
+    const frontUp = c >= 0;
+    faceF.push({ offset: u, visibility: frontUp ? "visible" : "hidden" });
+    faceB.push({ offset: u, visibility: frontUp ? "hidden" : "visible" });
   }
 
   const easing = "linear"; // the samples already carry the physics
@@ -258,6 +256,10 @@ export function flipCoin(coinEl, result = "heads", opts = {}) {
   s.back.forEach((el) => anims.push(el.animate(sheenB, timing)));
   s.frontShade.forEach((el) => anims.push(el.animate(shadeF, timing)));
   s.backShade.forEach((el) => anims.push(el.animate(shadeB, timing)));
+  const front = coinEl.querySelector(":scope > .cf-front");
+  const back = coinEl.querySelector(":scope > .cf-back");
+  if (front) anims.push(front.animate(faceF, timing));
+  if (back) anims.push(back.animate(faceB, timing));
   coinEl._cfAnim = main;
   coinEl._cfAnims = anims;
 

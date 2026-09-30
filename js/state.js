@@ -247,8 +247,15 @@ export function binderHeld(state, id) {
  * Copies free to place: what you own minus what is already showcased, so the
  * same card can't be slotted twice from a single copy.
  */
+/** Copies a pocket may draw on: raw ones plus any sitting in a grading slab. */
+export function ownedFor(state, id) {
+  const raw = state.collection?.[id] || 0;
+  const graded = Array.isArray(state.graded) ? state.graded.reduce((n, slab) => n + (slab?.cardId === id ? 1 : 0), 0) : 0;
+  return raw + graded;
+}
+
 export function spareFor(state, id) {
-  return Math.max(0, (state.collection[id] || 0) - binderHeld(state, id));
+  return Math.max(0, ownedFor(state, id) - binderHeld(state, id));
 }
 
 export function placeInBinder(state, index, id, reverse = false) {
@@ -286,7 +293,7 @@ export function reconcileBinder(state) {
   let changed = false;
   slots.forEach((slot, i) => {
     if (!slot) return;
-    const owned = state.collection[slot.id] || 0;
+    const owned = ownedFor(state, slot.id);
     budget[slot.id] = (budget[slot.id] || 0) + 1;
     if (budget[slot.id] > owned) {
       slots[i] = null;

@@ -114,11 +114,14 @@ for (const row of AWARD_TITLES) {
 }
 
 export function titleContext(save, { signed = true, rarities = null, findCard = null } = {}) {
-  const collection = save?.collection || {};
+  // Raw copies plus graded ones: a card sitting in a slab is still owned.
+  const collection = ownedMap(save);
   const reverses = save?.reverses || {};
   const counts = rarities || rarityCounts(collection, findCard);
   const unique = Object.values(collection).filter((n) => n > 0).length;
-  const reverseCount = Object.values(reverses).reduce((n, v) => n + (v > 0 ? 1 : 0), 0);
+  const gradedReverse = new Set((Array.isArray(save?.graded) ? save.graded : []).filter((s) => s && s.reverse).map((s) => s.cardId));
+  let reverseCount = Object.values(reverses).reduce((n, v) => n + (v > 0 ? 1 : 0), 0);
+  for (const id of gradedReverse) if (!(reverses[id] > 0)) reverseCount += 1;
   let hits = 0;
   for (const rarity of HIT_RARITIES) hits += counts[rarity] || 0;
   return {
@@ -199,4 +202,21 @@ export function isTitleUnlocked(name, ctx) {
   } catch {
     return row.id === "rookie";
   }
+}
+
+/**
+ * Every copy a player owns as `{ cardId: qty }`: the raw sellable counts in
+ * save.collection plus one per active slab in save.graded (a graded copy left
+ * `cards` for its case but is still theirs). The client and the Worker both
+ * count completion, rarities and achievements from this map.
+ */
+export function ownedMap(save) {
+  const owned = {};
+  for (const [id, n] of Object.entries(save?.collection || {})) {
+    if (n > 0) owned[id] = n;
+  }
+  for (const slab of Array.isArray(save?.graded) ? save.graded : []) {
+    if (slab?.cardId) owned[slab.cardId] = (owned[slab.cardId] || 0) + 1;
+  }
+  return owned;
 }
