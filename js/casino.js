@@ -9,12 +9,10 @@
 
    Every game settles in the Worker (worker/casino.js, worker/battles.js). These
    modules present what it returns. */
-import { api, esc, coins, coinTag, icon, casinoIcon, plural, playerName, emptyLine, seatAvatar } from "./casino-kit.js";
-import { wrapperArt } from "./battle-kit.js";
+import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML } from "./casino-kit.js";
 import { createStakePicker } from "./stake-picker.js";
-import { createCoinflip } from "./coinflip.js?v=1";
+import { createCoinflip } from "./coinflip.js?v=2";
 import { createJackpot } from "./jackpot.js?v=1";
-import { coinHTML } from "./coin.js?v=1";
 
 const HUB_POLL_MS = 8000;
 const ROUTE = /^\/casino(?:\/(coinflip|jackpot)(?:\/([a-zA-Z0-9-]{1,80}))?)?$/;
@@ -110,19 +108,19 @@ export function initCasino(deps = {}) {
           href: "/casino/coinflip", key: "coinflip", title: "Coinflip",
           line: "Put up cards, a player matches the value, one toss takes both piles. Or call a free bot.",
           status: hubData ? `${plural(open.length, "open flip")}${rec ? `, you have won ${rec.won} of ${rec.played}` : ""}` : "&nbsp;",
-          art: coinHTML({ heads: null, tails: null, size: 76, rest: "heads" }),
+          art: coinArtHTML({ size: 76 }),
         })}
         ${tile({
           href: "/casino/jackpot", key: "jackpot", title: "Jackpot",
           line: "Three to ten players toss cards into one pot. One entry is drawn, weighted by value, and takes all.",
           status: jackData ? `${plural((jackData.open || []).length, "open pot")}${jackData.record ? `, you have won ${jackData.record.won} of ${jackData.record.played}` : ""}` : "&nbsp;",
-          art: `<span class="cs-tile-pot">${casinoIcon("pot")}</span>`,
+          art: potArtHTML({ size: 76 }),
         })}
         ${tile({
           href: "/battles", key: "battles", title: "Pack battles",
           line: "Rip the same packs side by side. The best pulls take every card in the pot.",
           status: "Free bots, quick battles",
-          art: `<img class="cs-tile-pack" src="${esc(wrapperArt(featured))}" alt="" loading="lazy" decoding="async" />`,
+          art: battlesArtHTML({ setId: featured, size: 76 }),
         })}
       </div>
       <section class="cs-section" aria-labelledby="cs-live">

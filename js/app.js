@@ -41,6 +41,7 @@ import {
   SHOWCASE_MAX,
 } from "./cosmetics.js";
 import { unlockedTitles, titleContext, TITLES, isTitleUnlocked, ownedPerSet } from "./titles.js";
+import { slabHTML } from "./slab.js?v=1";
 import {
   ACHIEVEMENTS,
   ACH_CATEGORIES,
@@ -93,9 +94,12 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { normalizeGear } from "./gear.js";
-import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=4";
-import { initBattles } from "./battles.js?v=2";
+import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=5";
+import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js";
+// grading
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=1";
+import { coinTag } from "./battle-kit.js";
 
 const state = loadState();
 let cloudUser = null;
@@ -113,6 +117,7 @@ let battleReturnPath = "";
 let battlePath = "/battles";
 let casinoReturnPath = "";
 let casinoPath = "/casino";
+let gradingPath = "/grading"; // grading
 
 function snapshotIfProgress(save) {
   if (!save) return null;
@@ -145,6 +150,7 @@ function applyCloudSave(save) {
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   state.gear = normalizeGear(save.gear);
+  state.graded = Array.isArray(save.graded) ? save.graded : []; // grading: slabs ride along with the save
   if (save.createdAt) state.createdAt = save.createdAt;
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
@@ -153,6 +159,7 @@ function applyCloudSave(save) {
 
 function wipeProgressMemory() {
   state.coins = 0;
+  state.graded = [];
   state.collection = {};
   state.reverses = {};
   state.lastDaily = null;
@@ -168,6 +175,7 @@ function wipeProgressMemory() {
   state.worthLog = [];
   state.binder = [];
   state.gear = normalizeGear(null);
+  state.graded = []; // grading
   // Screen memory belongs to the account that is gone: a secret revealed for one
   // trainer must not stay revealed for the next.
   achFilter = "all";
@@ -338,6 +346,7 @@ const els = {
   viewBattles: document.getElementById("view-battles"),
   viewGear: document.getElementById("view-gear"),
   viewCasino: document.getElementById("view-casino"),
+  viewGrading: document.getElementById("view-grading"), // grading
   casinoBar: document.getElementById("casino-bar"),
   viewCollection: document.getElementById("view-collection"),
   viewBinder: document.getElementById("view-binder"),
@@ -817,7 +826,7 @@ function cardBack() {
 }
 
 function setOwned() {
-  return ownedCount(state, setCards);
+  return ownedCount({ collection: ownedMapNow() }, setCards);
 }
 
 function numberLine(card) {
@@ -1361,7 +1370,7 @@ function renderPromoElsewhere() {
   }
   const faces = [];
   const total = groups.reduce((n, group) => n + group.cards.length, 0);
-  const owned = groups.reduce((n, group) => n + group.cards.filter((card) => state.collection[card.id] > 0).length, 0);
+  const owned = groups.reduce((n, group) => n + group.cards.filter((card) => ownedQty(card.id) > 0).length, 0);
   block.innerHTML = `<div class="section-head">
       <div>
         <h2>In the sets' own boxes</h2>
@@ -1370,7 +1379,7 @@ function renderPromoElsewhere() {
     </div>
     ${groups
       .map(({ set, cards: list }) => {
-        const have = list.filter((card) => state.collection[card.id] > 0).length;
+        const have = list.filter((card) => ownedQty(card.id) > 0).length;
         return `<section class="elsewhere-set">
           <header>
             <b>${esc(set.name)}</b>
@@ -1380,7 +1389,7 @@ function renderPromoElsewhere() {
           <div class="elsewhere-cards">${list
             .map((card) => {
               faces.push(card);
-              const missing = !(state.collection[card.id] > 0);
+              const missing = !(ownedQty(card.id) > 0);
               return `<button type="button" class="elsewhere-card${missing ? " missing" : ""}" data-face="${faces.length - 1}"
                 ${inspectAttrs(card)} title="${esc(card.name)} · ${esc(numberLine(card))}" aria-label="Inspect ${esc(card.name)}"></button>`;
             })
@@ -1481,6 +1490,48 @@ async function activateSet(id, force = false, quiet = false) {
     throw err;
   }
   return true;
+}
+
+/* ---- Graded copies (RIP Grading). A slab leaves the raw `collection` counts,
+   because a graded copy can't be sold or staked as a raw card, but it still
+   counts as owned for completion, value and the collection grid. ---- */
+let gradedIndexFor = null;
+let gradedIndexMap = new Map();
+function gradedIndex() {
+  const list = Array.isArray(state.graded) ? state.graded : [];
+  if (gradedIndexFor !== list) {
+    gradedIndexMap = new Map();
+    for (const slab of list) {
+      if (!slab?.cardId) continue;
+      const arr = gradedIndexMap.get(slab.cardId);
+      if (arr) arr.push(slab);
+      else gradedIndexMap.set(slab.cardId, [slab]);
+    }
+    gradedIndexFor = list;
+  }
+  return gradedIndexMap;
+}
+function gradedSlabs(cardId) {
+  return gradedIndex().get(cardId) || [];
+}
+/** Raw copies plus graded ones: what "owned" means everywhere but sell and stake. */
+function ownedQty(cardId) {
+  return (state.collection[cardId] || 0) + gradedSlabs(cardId).length;
+}
+function ownedMapNow() {
+  const map = { ...(state.collection || {}) };
+  for (const [id, slabs] of gradedIndex()) map[id] = (map[id] || 0) + slabs.length;
+  return map;
+}
+function bestGrade(cardId) {
+  return gradedSlabs(cardId).reduce((best, slab) => Math.max(best, Number(slab.grade) || 0), 0);
+}
+function gradeBadge(cardId) {
+  const slabs = gradedSlabs(cardId);
+  if (!slabs.length) return "";
+  const best = bestGrade(cardId);
+  const title = `${slabs.length === 1 ? "One graded copy" : `${slabs.length} graded copies`}, best grade ${best}`;
+  return `<span class="grade-badge grade-${best}" title="${title}"><i>RIP</i>${best}</span>`;
 }
 
 function spareCopies(set = liveSet) {
@@ -1639,11 +1690,12 @@ function renderCollection({ refreshSets = true } = {}) {
   if (refreshSets) renderBulkSets();
 
   const list = cards.filter((card) => {
-    const count = state.collection[card.id] || 0;
+    const raw = state.collection[card.id] || 0;
+    const count = ownedQty(card.id);
     if (rarity !== "all" && card.rarity !== rarity) return false;
     if (ownedMode === "owned" && count < 1) return false;
     if (ownedMode === "missing" && count > 0) return false;
-    if (ownedMode === "dupes" && count < 2) return false;
+    if (ownedMode === "dupes" && raw < 2) return false;
     if (card.energy && !card.reverse && count < 1) return false;
     if (
       q &&
@@ -1675,21 +1727,26 @@ function renderCollection({ refreshSets = true } = {}) {
     return;
   }
 
-  const faces = list.map((card) => ((state.collection[card.id] || 0) < 1 ? card : withOwnedFoil(card)));
+  const faces = list.map((card) => (ownedQty(card.id) < 1 ? card : ownedFace(card)));
   els.dexGrid.innerHTML = list
     .map((card, i) => {
-      const count = state.collection[card.id] || 0;
+      const raw = state.collection[card.id] || 0;
+      const slabs = gradedSlabs(card.id);
+      const count = raw + slabs.length;
       const missing = count < 1;
       const face = faces[i];
       const sell = !activeTrainer()
         ? `<span class="slot-miss">Sign in</span>`
-        : count > 0
+        : raw > 0
         ? `<button type="button" class="sell-btn" data-sell="${card.id}">Sell${
-            count > 1 ? " extra" : ""
+            raw > 1 ? " extra" : ""
           }</button>`
+        : slabs.length
+        ? `<a class="slot-miss slot-graded" href="/grading/${esc(String(slabs[0].id))}">Graded</a>`
         : `<span class="slot-miss">Unpulled</span>`;
       return `<article class="binder-slot bulk-card ${missing ? "missing" : ""}">
-        ${count > 1 ? `<span class="count-badge">×${count}</span>` : ""}
+        ${raw > 1 ? `<span class="count-badge">×${raw}</span>` : ""}
+        ${gradeBadge(card.id)}
         <button type="button" class="slot-face" data-face="${i}" ${inspectAttrs(face)} aria-label="${esc(card.name)}"></button>
         <div class="slot-meta">
           <b>${esc(card.name)}</b>
@@ -1944,6 +2001,18 @@ function withOwnedFoil(card) {
   return kind ? { ...card, reverse: true, reverseKind: kind } : { ...card, reverse: true };
 }
 
+/** The face a collection tile shows: raw copies decide the foil; a card held
+    only as slabs shows a reverse face when every slab is a reverse print. */
+function ownedFace(card) {
+  if ((state.collection[card.id] || 0) > 0) return withOwnedFoil(card);
+  const slabs = gradedSlabs(card.id);
+  if (slabs.length && slabs.every((slab) => slab.reverse)) {
+    const kind = setForCard(card)?.reverseFoil;
+    return kind ? { ...card, reverse: true, reverseKind: kind } : { ...card, reverse: true };
+  }
+  return card;
+}
+
 function inspectAttrs(card) {
   const rev = card.reverse ? ` data-reverse="1"` : "";
   return `data-inspect="${esc(card.id)}"${rev}${card.reverseKind ? ` data-reverse-kind="${esc(card.reverseKind)}"` : ""}`;
@@ -1972,7 +2041,7 @@ function miniCardRow(cards, emptyNote, rowClass = "") {
 
 function ownedInSet(set) {
   const prefix = `${set.id}-`;
-  return Object.entries(state.collection || {}).reduce(
+  return Object.entries(ownedMapNow()).reduce(
     (n, [id, count]) => n + (count > 0 && id.startsWith(prefix) ? 1 : 0),
     0
   );
@@ -2019,6 +2088,15 @@ function binderValue(set) {
     copies += count;
     if (!best || each > best.each) best = { card, each };
   }
+  for (const slab of state.graded || []) {
+    if (!String(slab.cardId || "").startsWith(prefix)) continue;
+    const card = findCard(slab.cardId);
+    if (!card) continue;
+    const each = Number(slab.value) > 0 ? Number(slab.value) : sellValue(card);
+    value += each;
+    copies += 1;
+    if (!best || each > best.each) best = { card, each };
+  }
   return { value: money(value), copies, best };
 }
 
@@ -2033,6 +2111,10 @@ function totalBinderValue() {
     if (!count) continue;
     const card = findCard(id);
     if (card) value += sellValue(card) * count;
+  }
+  for (const slab of state.graded || []) {
+    const card = findCard(slab.cardId);
+    if (card) value += Number(slab.value) > 0 ? Number(slab.value) : sellValue(card);
   }
   return money(value);
 }
@@ -2444,7 +2526,7 @@ function joinedOn(ts) {
 }
 
 function uniqueOwned() {
-  return Object.values(state.collection || {}).filter((n) => n > 0).length;
+  return Object.values(ownedMapNow()).filter((n) => n > 0).length;
 }
 
 function reverseOwned() {
@@ -2459,7 +2541,7 @@ function guestHasProgress() {
 }
 
 function setCompletionRows() {
-  const perSet = ownedPerSet(state.collection);
+  const perSet = ownedPerSet(ownedMapNow());
   return PLAYABLE_SETS.map((set) => {
     const owned = perSet.get(set.id) || 0;
     const total = set.totalCount || 1;
@@ -2469,7 +2551,7 @@ function setCompletionRows() {
 
 function ownedRarities() {
   const counts = {};
-  for (const [id, n] of Object.entries(state.collection || {})) {
+  for (const [id, n] of Object.entries(ownedMapNow())) {
     if (!n) continue;
     const card = findCard(id);
     if (!card) continue;
@@ -3856,6 +3938,7 @@ const VIEW_SECTIONS = {
   battles: "viewBattles",
   gear: "viewGear",
   casino: "viewCasino",
+  grading: "viewGrading", // grading
   collection: "viewCollection",
   binder: "viewBinder",
   catalog: "viewCatalog",
@@ -3873,6 +3956,7 @@ const VIEW_PATHS = {
   battles: "/battles",
   gear: "/gear",
   casino: "/casino",
+  grading: "/grading", // grading
   collection: "/bulk",
   binder: "/binder",
   catalog: "/catalog",
@@ -3894,6 +3978,7 @@ const PATH_VIEWS = {
   "/sleeves": "gear",
   "/coins": "gear",
   "/casino": "casino",
+  "/grading": "grading", // grading
   "/shop": "shop",
   "/bulk": "collection",
   "/collection": "collection",
@@ -3916,6 +4001,7 @@ const VIEW_TITLES = {
   battles: "Pack battles — poke-pack.rip",
   gear: "Sleeves & coins — poke-pack.rip",
   casino: "Casino — poke-pack.rip",
+  grading: "Grading — poke-pack.rip", // grading
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
   catalog: "All sets — poke-pack.rip",
@@ -3936,6 +4022,7 @@ const VIEW_RENDER = {
   battles: () => battles.show(battlePath),
   gear: () => gearPage.show(),
   casino: () => casino.show(casinoPath),
+  grading: () => grading.show(gradingPath), // grading
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
@@ -3961,6 +4048,11 @@ function viewFromPath(pathname) {
   if (/^\/casino(?:\/[a-z]+(?:\/[a-zA-Z0-9-]+)?)?$/.test(path)) {
     casinoPath = path;
     return "casino";
+  }
+  // grading: /grading, /grading/send, /grading/send/<cardId>, /grading/<slabId>
+  if (GRADING_ROUTE.test(path)) {
+    gradingPath = path;
+    return "grading";
   }
   if (PATH_VIEWS[path]) {
     if (PATH_VIEWS[path] === "social") dmHandle = "";
@@ -4013,6 +4105,7 @@ function viewTitle() {
 function pathForView(name) {
   if (name === "battles") return battlePath;
   if (name === "casino") return casinoPath;
+  if (name === "grading") return gradingPath; // grading
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
@@ -4036,6 +4129,7 @@ function paintNav(current) {
 function applyView(next, hist) {
   if (next !== "battles") battles.hide();
   if (next !== "casino") casino.hide();
+  if (next !== "grading") grading.hide(); // grading
   if (next !== "auth" && next !== "battles") battleReturnPath = "";
   if (next !== "auth" && next !== "casino") casinoReturnPath = "";
   view = next;
@@ -5546,25 +5640,54 @@ let inspectOpenedAt = 0;
 
 function inspectSellRow(card) {
   const count = state.collection[card.id] || 0;
+  const slabs = gradedSlabs(card.id);
   const value = sellValue(card);
   if (!activeTrainer()) {
     return `<div class="pc-sell">
       <span class="pc-own">Sign in to keep and sell cards.</span>
     </div>`;
   }
-  if (count < 1) {
+  if (count < 1 && !slabs.length) {
     return `<div class="pc-sell">
       <span class="pc-own">Not in your collection yet.</span>
     </div>`;
   }
+  const gradedNote = slabs.length ? ` and ${slabs.length === 1 ? "one graded copy" : `${num(slabs.length)} graded copies`}` : "";
+  const own = count < 1
+    ? `You own ${slabs.length === 1 ? "one graded copy" : `${num(slabs.length)} graded copies`} and no raw copy.`
+    : `You own ${count === 1 ? "one copy" : `${num(count)} copies`}${gradedNote}.`;
+  const gradeHref = `/grading/send/${encodeURIComponent(card.id)}${card.reverse ? "?reverse=1" : ""}`;
   return `<div class="pc-sell">
-    <span class="pc-own">You own ${count === 1 ? "one copy" : `${num(count)} copies`}.</span>
+    <span class="pc-own">${own}</span>
     <span class="pc-actions">
-      <button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
+      ${count > 0 ? `<button type="button" class="solid pc-sell-btn" data-inspect-sell="${esc(card.id)}">
         Sell one for <span class="pc-sell-value">✦ ${coin(value)}</span>
       </button>
+      <a class="ghost pc-grade-btn" href="${esc(gradeHref)}">Send for grading</a>` : ""}
       ${inspectShowcaseBtn(card)}
     </span>
+  </div>${inspectGradedRow(card, slabs)}`;
+}
+
+/** The player's slabs of this card, as small cases that open on the grading page. */
+function inspectGradedRow(card, slabs) {
+  if (!slabs.length) return "";
+  const set = setForCard(card);
+  const list = [...slabs].sort((a, b) => b.grade - a.grade || b.gradedAt - a.gradedAt);
+  return `<div class="pc-graded">
+    <span class="pc-own">Graded ${list.length === 1 ? "copy" : "copies"}</span>
+    <div class="pc-slabs">${list
+      .map((slab) => {
+        const face = slab.reverse ? { ...card, reverse: true, ...(set?.reverseFoil ? { reverseKind: set.reverseFoil } : {}) } : { ...card, reverse: false };
+        return `<a class="pc-slab" href="/grading/${esc(String(slab.id))}" aria-label="${esc(card.name)} graded ${esc(String(slab.grade))}, ${esc(String(slab.cert || ""))}">${slabHTML({
+          face: tcgFace(face, { small: true }),
+          card,
+          slab,
+          set,
+          size: "grid",
+        })}</a>`;
+      })
+      .join("")}</div>
   </div>`;
 }
 
@@ -5692,6 +5815,11 @@ function openInspect(id, reverse = false, reverseKind = "") {
 }
 
 els.inspectInfo.addEventListener("click", (e) => {
+  // Grading links leave the inspector; the document handler routes them.
+  if (e.target.closest('a[href^="/grading"]')) {
+    closeDialog(els.inspect);
+    return;
+  }
   const range = e.target.closest("[data-range]");
   if (range && inspectCard) {
     inspectRange = range.dataset.range;
@@ -5715,6 +5843,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
     e.preventDefault();
     if (btn.dataset.view === "battles") battlePath = "/battles";
     if (btn.dataset.view === "casino") casinoPath = "/casino";
+    if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
     setView(btn.dataset.view);
   });
 });
@@ -6860,6 +6989,7 @@ els.dexGrid.addEventListener("click", (e) => {
     sellOwnedCard(byId[sellBtn.dataset.sell], { extra: true });
     return;
   }
+  if (e.target.closest("a[href]")) return;
   inspectFromEl(e.target);
 });
 
@@ -7200,6 +7330,31 @@ const casino = initCasino({
     const coin = getGearCatalog().coins?.[id];
     return coin ? { id: coin.id, name: coin.name, image: coin.front } : null;
   },
+});
+
+// grading: RIP Grading pages (js/grading-page.js). Money and cards move only through
+// its POSTs, each answered with a save that applyCloudSave takes as-is.
+const grading = initGrading({
+  root: els.viewGrading,
+  api,
+  user: () => cloudUser,
+  getSave: () => state,
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    applyCloudSave(save);
+    renderHeader();
+  },
+  cardFace: (card, opts) => tcgFace(card, opts),
+  findCard,
+  loadSetData,
+  inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
+  toast,
+  navigate: (path) => {
+    if (!GRADING_ROUTE.test(path)) return;
+    gradingPath = path;
+    setView("grading");
+  },
+  coinTag,
 });
 
 async function boot() {

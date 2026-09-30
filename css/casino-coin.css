@@ -69,6 +69,10 @@
 }
 .cf-front { transform: translateZ(calc(var(--cf-t) / 2)); }
 .cf-back { transform: rotateX(180deg) translateZ(calc(var(--cf-t) / 2)); }
+/* The face turned away is switched off as well as culled, so a coin at rest
+   is right even where the 3D is flattened (a toss animates this per frame). */
+.cf-coin[data-rest="heads"] > .cf-back,
+.cf-coin[data-rest="tails"] > .cf-front { visibility: hidden; }
 
 /* ---------- edge: a ring of reeded facets ---------- */
 .cf-edge {
@@ -145,7 +149,10 @@
     inset -2px -3px 3px rgb(30 16 2 / 0.4);
 }
 
-/* ---------- house coin artwork ---------- */
+/* ---------- house coin artwork: Meowth, struck (js/coin.js houseFace) ----------
+   The beads, rings and legends are vector; the emblem is the relief sheet
+   assets/casino/house-coin-v1.webp (heads left, tails right), clipped to the
+   field and laid over it. */
 .cf-art-svg {
   position: absolute;
   inset: 0;
@@ -153,7 +160,7 @@
   height: 100%;
   overflow: visible;
 }
-.cf-beads, .cf-beads-sh, .cf-inner-ring, .cf-ring, .cf-ring-sh { fill: none; }
+.cf-beads, .cf-beads-sh, .cf-inner-ring { fill: none; }
 .cf-beads, .cf-beads-sh {
   stroke-width: 3.1;
   stroke-linecap: round;
@@ -162,8 +169,6 @@
 .cf-beads { stroke: #f4d97f; }
 .cf-beads-sh { stroke: rgb(58 32 4 / 0.7); }
 .cf-inner-ring { stroke: rgb(70 42 6 / 0.5); stroke-width: 1.1; }
-.cf-ring { stroke: #e6bd58; stroke-width: 5; }
-.cf-ring-sh { stroke: rgb(50 28 3 / 0.6); stroke-width: 5; }
 .cf-legend {
   font-family: var(--font, "Bricolage Grotesque", system-ui, sans-serif);
   font-weight: 800;
@@ -173,11 +178,7 @@
 }
 .cf-legend-low { font-size: 12.5px; letter-spacing: 3.2px; }
 .cf-legend-sh { fill: rgb(255 240 178 / 0.75); }
-.cf-em-sh { fill: rgb(50 28 3 / 0.62); }
-.cf-em-hi { fill: rgb(255 245 200 / 0.9); }
-.cf-em-body { fill: #e0b54e; }
-.cf-em-body .cf-cut { fill: #b48328; }
-.cf-em-sh .cf-cut, .cf-em-hi .cf-cut { fill: inherit; }
+.cf-emblem { pointer-events: none; }
 
 /* ---------- promo coin: real art in a machined rim ---------- */
 .cf-art {

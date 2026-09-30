@@ -70,7 +70,7 @@ const stakeAfter = (collection, stake) => {
 /** Statement that drops binder slots for cards that just left the collection (same compare-and-set as selling). */
 export async function binderStatement(env, helpers, userId, collection, stake, guard) {
   const profile = await env.DB.prepare('SELECT binder FROM profiles WHERE user_id = ?').bind(userId).first();
-  const binder = helpers.reconcileBinder(helpers.parseJson(profile?.binder, []), stakeAfter(collection, stake));
+  const binder = helpers.reconcileBinder(helpers.parseJson(profile?.binder, []), await helpers.ownedWithSlabs(env, userId, stakeAfter(collection, stake)));
   return env.DB.prepare(`UPDATE profiles SET binder = CASE WHEN binder IS ? THEN ? ELSE binder END WHERE user_id = ? ${guard.sql}`)
     .bind(profile?.binder ?? null, JSON.stringify(binder), userId, ...guard.args);
 }

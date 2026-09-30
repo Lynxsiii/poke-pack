@@ -6,7 +6,8 @@
  * cannot decide it has earned one. `at(ctx)` returns raw progress against
  * `goal`, which is what draws the bar and what the claim check compares.
  */
-import { titleContext, ownedPerSet } from "./titles.js";
+import { titleContext, ownedPerSet, ownedMap } from "./titles.js";
+import { RARITY_ORDER } from "./catalog.js";
 import { nameHas, tokens, setIdOfCard, isTagTeamName } from "./achievement-kit.js";
 import { SET_INFO, RARITIES_IN_PRINT } from "./achievement-eras.js";
 import { RIP, CHASE, COLLECT, WEALTH, TRAINER } from "./achievement-core.js";
@@ -108,7 +109,7 @@ function ownedCards(save, opts) {
   if (Array.isArray(opts.cards)) {
     list = opts.cards;
   } else if (typeof opts.findCard === "function") {
-    for (const [id, n] of Object.entries(save?.collection || {})) {
+    for (const [id, n] of Object.entries(ownedMap(save))) {
       if (!(n > 0)) continue;
       const card = opts.findCard(id);
       if (card) list.push({ ...card, id: card.id || id });
@@ -166,7 +167,7 @@ export function achievementContext(save, options = {}) {
     for (const card of cards) if (card.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
   }
   const base = titleContext(save, { ...opts, rarities });
-  const collection = save?.collection || {};
+  const collection = ownedMap(save); // raw copies plus slabs
   const stats = save?.stats && typeof save.stats === "object" ? save.stats : {};
   const counters = stats.counters && typeof stats.counters === "object" ? stats.counters : {};
   const packsBySet = stats.setPacks && typeof stats.setPacks === "object" ? stats.setPacks : {};

@@ -11,6 +11,7 @@
      giftHtml(granted, gear)      the "in the box" strip on the opening spread */
 import { ALL_SETS } from "./catalog.js";
 import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, normalizeGear, ownedItems } from "./gear.js";
+import { houseFaceSVG } from "./coin.js?v=2";
 
 let catalog = { sleeves: {}, coins: {}, products: {} };
 
@@ -39,8 +40,9 @@ const abs = (path) => {
 
 const MATERIALS = { metal: "Metal coin", plastic: "Plastic coin", foil: "Foil coin", unknown: "Coin" };
 
-/** The Poké Ball on the house coin, drawn rather than shipped. */
-const HOUSE_FACE = `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="33" fill="none" stroke="currentColor" stroke-width="5"/><path d="M17 50h66" stroke="currentColor" stroke-width="5"/><circle cx="50" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="5"/></svg>`;
+/** The house coin's faces are the casino coin's own (js/coin.js): Meowth on
+    heads, its koban charms on tails, laid over the brass disc in css/pages/gear.css. */
+const HOUSE_FACE = (kind) => houseFaceSVG(kind).replace("<svg ", '<svg style="width:100%;height:100%" ');
 
 /**
  * A coin. The image holds both faces side by side (obverse left), so one file
@@ -52,7 +54,7 @@ export function coinHtml(coin, { side = "front", cls = "", label = "" } = {}) {
   const name = label || c.name || "Coin";
   if (c.house || !c.front) {
     return `<span class="gcoin is-house${flipped} ${cls}" role="img" aria-label="${esc(name)}">
-      <span class="gcoin-in"><span class="gcoin-face front">${HOUSE_FACE}</span><span class="gcoin-face back">${HOUSE_FACE}</span></span></span>`;
+      <span class="gcoin-in"><span class="gcoin-face front">${HOUSE_FACE("heads")}</span><span class="gcoin-face back">${HOUSE_FACE("tails")}</span></span></span>`;
   }
   return `<span class="gcoin${flipped} ${cls}" role="img" aria-label="${esc(name)}" style="--coin:url('${esc(abs(c.front))}');--tint:${esc(c.tint || "#b8a06a")}">
     <span class="gcoin-in"><span class="gcoin-face front"></span><span class="gcoin-face back"></span></span></span>`;
@@ -188,7 +190,7 @@ export function initGear(deps) {
     const note =
       kind === "coin"
         ? item.house
-          ? "The house coin, until you choose another."
+          ? item.blurb || "The house coin, until you choose another."
           : item.subject || ""
         : item
           ? `${item.count || 65} sleeves`
