@@ -1,5 +1,5 @@
 {
-  "_fetchedAt": "2026-09-29",
+  "_fetchedAt": "2026-09-30",
   "cel25": [
     {
       "id": "eliteTrainerBox",
@@ -2216,6 +2216,325 @@
       "tcgplayerId": 630612,
       "released": "2025-07-18",
       "image": "assets/products/rsv10pt5/unova-poster.webp"
+    }
+  ],
+  "sm6": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 686.16,
+      "tcgplayerId": 164303,
+      "released": "2018-05-04",
+      "image": "assets/products/sm6/eliteTrainerBox.webp"
+    },
+    {
+      "id": "forces-of-nature-gx-premium-collection",
+      "name": "Forces of Nature GX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "promos": [
+        "sm6-smp133",
+        "sm6-smp134"
+      ],
+      "price": 265.0,
+      "tcgplayerId": 169414,
+      "released": "2018-07-06",
+      "image": "assets/products/sm6/forces-of-nature-gx-premium-collection.webp"
+    },
+    {
+      "id": "alolan-exeggutor-2a",
+      "name": "Alolan Exeggutor 2a/131 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm6-2a"
+      ],
+      "price": 3.15,
+      "tcgplayerId": 180514
+    },
+    {
+      "id": "beast-ring-102a",
+      "name": "Beast Ring 102a/131 (League Cup)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm6-102a"
+      ],
+      "price": 0.9,
+      "tcgplayerId": 191904
+    },
+    {
+      "id": "metal-frying-pan-112a",
+      "name": "Metal Frying Pan 112a/131 (Pokemon League)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm6-112a"
+      ],
+      "price": 0.86,
+      "tcgplayerId": 189779
+    },
+    {
+      "id": "mysterious-treasure-113a",
+      "name": "Mysterious Treasure 113a/131 (Pokemon League)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm6-113a"
+      ],
+      "price": 2.22,
+      "tcgplayerId": 198227
+    }
+  ],
+  "sm7": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 2091.3,
+      "tcgplayerId": 170277,
+      "released": "2018-08-03",
+      "image": "assets/products/sm7/eliteTrainerBox.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sm7-smp129",
+        "sm7-smp130",
+        "sm7-smp131",
+        "sm7-smp132"
+      ],
+      "pick": 1,
+      "price": 730.0,
+      "tcgplayerId": 170280,
+      "image": "assets/products/sm7/buildBattleBox.webp"
+    },
+    {
+      "id": "celestial-storm-single-pack-blister-tapu-bulu",
+      "name": "Celestial Storm Single Pack Blister [Tapu Bulu]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm7-smp61"
+      ],
+      "price": 89.99,
+      "tcgplayerId": 177898,
+      "image": "assets/products/sm7/celestial-storm-single-pack-blister-tapu-bulu.webp"
+    },
+    {
+      "id": "celestial-storm-single-pack-blister-tapu-fini",
+      "name": "Celestial Storm Single Pack Blister [Tapu Fini]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm7-smp92"
+      ],
+      "price": 89.99,
+      "tcgplayerId": 177899,
+      "image": "assets/products/sm7/celestial-storm-single-pack-blister-tapu-fini.webp"
+    },
+    {
+      "id": "solgaleo-gx-box",
+      "name": "Solgaleo GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm7-smp104"
+      ],
+      "price": 699.99,
+      "tcgplayerId": 175558,
+      "released": "2018-10-05",
+      "image": "assets/products/sm7/solgaleo-gx-box.webp"
+    },
+    {
+      "id": "lunala-gx-box",
+      "name": "Lunala GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm7-smp103"
+      ],
+      "price": 289.85,
+      "tcgplayerId": 175559,
+      "released": "2018-10-05",
+      "image": "assets/products/sm7/lunala-gx-box.webp"
+    },
+    {
+      "id": "evolution-celebration-tin-glaceon-gx",
+      "name": "Evolution Celebration Tin [Glaceon GX]",
+      "kind": "tin",
+      "packs": 2,
+      "promos": [
+        "sm7-smp147"
+      ],
+      "price": 148.62,
+      "tcgplayerId": 175555,
+      "image": "assets/products/sm7/evolution-celebration-tin-glaceon-gx.webp"
+    },
+    {
+      "id": "evolution-celebration-tin-leafeon-gx",
+      "name": "Evolution Celebration Tin [Leafeon GX]",
+      "kind": "tin",
+      "packs": 2,
+      "promos": [
+        "sm7-smp146"
+      ],
+      "price": 156.15,
+      "tcgplayerId": 175556,
+      "image": "assets/products/sm7/evolution-celebration-tin-leafeon-gx.webp"
+    },
+    {
+      "id": "sceptile-10a",
+      "name": "Sceptile 10a/168 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm7-10a"
+      ],
+      "price": 4.85,
+      "tcgplayerId": 189786
+    },
+    {
+      "id": "acro-bike-123a",
+      "name": "Acro Bike 123a/168 (Pokemon League)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm7-123a"
+      ],
+      "price": 0.86,
+      "tcgplayerId": 202639
+    },
+    {
+      "id": "tate-liza-148a",
+      "name": "Tate & Liza 148a/168 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm7-148a"
+      ],
+      "price": 11.42,
+      "tcgplayerId": 200203
+    },
+    {
+      "id": "rayquaza-gx-177a",
+      "name": "Rayquaza GX 177a/168 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm7-177a"
+      ],
+      "price": 191.07,
+      "tcgplayerId": 202638
+    }
+  ],
+  "sm75": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "sm75-smp125"
+      ],
+      "price": 1256.49,
+      "tcgplayerId": 173393,
+      "released": "2018-09-21",
+      "image": "assets/products/sm75/eliteTrainerBox.webp"
+    },
+    {
+      "id": "latios-pin-collection",
+      "name": "Dragon Majesty Pin Collection [Latios]",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm75-smp136"
+      ],
+      "price": 450.0,
+      "tcgplayerId": 175063,
+      "released": "2018-09-07",
+      "image": "assets/products/sm75/latios-pin-collection.webp"
+    },
+    {
+      "id": "super-premium-collection",
+      "name": "Dragon Majesty Super-Premium Collection",
+      "kind": "premium",
+      "packs": 10,
+      "promos": [
+        "sm75-smp155",
+        "sm75-smp156"
+      ],
+      "price": 1699.99,
+      "tcgplayerId": 175560,
+      "image": "assets/products/sm75/super-premium-collection.webp"
+    },
+    {
+      "id": "ultra-necrozma-gx-figure-collection",
+      "name": "Ultra Necrozma GX Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm75-smp126"
+      ],
+      "price": 541.99,
+      "tcgplayerId": 179038,
+      "image": "assets/products/sm75/ultra-necrozma-gx-figure-collection.webp"
+    },
+    {
+      "id": "salamence-gx-special-collection",
+      "name": "Dragon Majesty Special Collection: Salamence GX",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "sm75-smp139",
+        "sm75-smp140"
+      ],
+      "price": 999.99,
+      "tcgplayerId": 180522,
+      "image": "assets/products/sm75/salamence-gx-special-collection.webp"
+    },
+    {
+      "id": "white-kyurem-gx-special-collection",
+      "name": "Dragon Majesty Special Collection: White Kyurem GX",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "sm75-smp141",
+        "sm75-smp142"
+      ],
+      "price": 588.97,
+      "tcgplayerId": 180526,
+      "image": "assets/products/sm75/white-kyurem-gx-special-collection.webp"
+    },
+    {
+      "id": "altaria-40a",
+      "name": "Altaria 40a/70 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm75-40a"
+      ],
+      "price": 4.7,
+      "tcgplayerId": 184219
+    },
+    {
+      "id": "fiery-flint-60a",
+      "name": "Fiery Flint 60a/70 (Pokemon League)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm75-60a"
+      ],
+      "price": 0.52,
+      "tcgplayerId": 206298
     }
   ],
   "sv1": [

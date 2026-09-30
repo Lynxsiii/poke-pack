@@ -378,43 +378,6 @@
     "market": 3.95
   },
   {
-    "id": "sm7-10a",
-    "name": "Sceptile",
-    "number": "10a",
-    "rarity": "Rare Holo",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Stage 2"
-    ],
-    "types": [
-      "Grass"
-    ],
-    "hp": "140",
-    "artist": "Hitoshi Ariga",
-    "flavorText": "It agilely leaps about the jungle and uses the sharp leaves on its arms to strike its prey.",
-    "evolvesFrom": "Grovyle",
-    "image": "assets/cards/sm7/10a.webp",
-    "imageSmall": "assets/cards/sm7/10a-sm.webp",
-    "attacks": [
-      {
-        "name": "Powerful Storm",
-        "cost": [
-          "Grass"
-        ],
-        "damage": "20×",
-        "text": "This attack does 20 damage times the amount of Energy attached to all of your Pokémon."
-      }
-    ],
-    "abilities": [
-      {
-        "name": "Power of Nature",
-        "text": "Prevent all damage done to your Pokémon that have any Grass Energy attached to them by attacks from your opponent's Ultra Beasts.",
-        "type": "Ability"
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/sm7-10a/large"
-  },
-  {
     "id": "sm7-11",
     "name": "Seedot",
     "number": "11",
@@ -4867,20 +4830,6 @@
     "market": 0.62
   },
   {
-    "id": "sm7-123a",
-    "name": "Acro Bike",
-    "number": "123a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "Toyste Beach",
-    "image": "assets/cards/sm7/123a.webp",
-    "imageSmall": "assets/cards/sm7/123a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm7-123a/large"
-  },
-  {
     "id": "sm7-124",
     "name": "Apricorn Maker",
     "number": "124",
@@ -5280,20 +5229,6 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm7-148/large",
     "tcgplayerId": 171009,
     "market": 0.62
-  },
-  {
-    "id": "sm7-148a",
-    "name": "Tate & Liza",
-    "number": "148a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Supporter"
-    ],
-    "artist": "You Iribi",
-    "image": "assets/cards/sm7/148a.webp",
-    "imageSmall": "assets/cards/sm7/148a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm7-148a/large"
   },
   {
     "id": "sm7-149",
@@ -6409,52 +6344,6 @@
     "etchMap": "assets/foil/maps/sm7/177-etch.webp"
   },
   {
-    "id": "sm7-177a",
-    "name": "Rayquaza-GX",
-    "number": "177a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "GX"
-    ],
-    "types": [
-      "Dragon"
-    ],
-    "hp": "180",
-    "artist": "5ban Graphics",
-    "image": "assets/cards/sm7/177a.webp",
-    "imageSmall": "assets/cards/sm7/177a-sm.webp",
-    "attacks": [
-      {
-        "name": "Dragon Break",
-        "cost": [
-          "Grass",
-          "Lightning",
-          "Colorless"
-        ],
-        "damage": "30×",
-        "text": "This attack does 30 damage times the amount of basic Grass and basic Lightning Energy attached to your Pokémon."
-      },
-      {
-        "name": "Tempest-GX",
-        "cost": [
-          "Grass"
-        ],
-        "damage": "",
-        "text": "Discard your hand and draw 10 cards. (You can't use more than 1 GX attack in a game.)"
-      }
-    ],
-    "abilities": [
-      {
-        "name": "Stormy Winds",
-        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may discard the top 3 cards of your deck. If you do, attach a basic Energy card from your discard pile to this Pokémon.",
-        "type": "Ability"
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/sm7-177a/large"
-  },
-  {
     "id": "sm7-178",
     "name": "Acro Bike",
     "number": "178",
@@ -6560,5 +6449,629 @@
     "market": 42.06,
     "foilMap": "assets/foil/maps/sm7/183.webp",
     "etchMap": "assets/foil/maps/sm7/183-etch.webp"
+  },
+  {
+    "id": "sm7-10a",
+    "name": "Sceptile",
+    "number": "10a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "It agilely leaps about the jungle and uses the sharp leaves on its arms to strike its prey.",
+    "evolvesFrom": "Grovyle",
+    "image": "assets/cards/sm7/10a.webp",
+    "imageSmall": "assets/cards/sm7/10a-sm.webp",
+    "attacks": [
+      {
+        "name": "Powerful Storm",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage times the amount of Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Power of Nature",
+        "text": "Prevent all damage done to your Pokémon that have any Grass Energy attached to them by attacks from your opponent's Ultra Beasts.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm7-10a/large",
+    "printedNumber": "10a/168",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 189786,
+    "market": 4.85
+  },
+  {
+    "id": "sm7-123a",
+    "name": "Acro Bike",
+    "number": "123a",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sm7/123a.webp",
+    "imageSmall": "assets/cards/sm7/123a-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm7-123a/large",
+    "printedNumber": "123a/168",
+    "promo": true,
+    "tcgplayerId": 202639,
+    "market": 0.86
+  },
+  {
+    "id": "sm7-148a",
+    "name": "Tate & Liza",
+    "number": "148a",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "You Iribi",
+    "image": "assets/cards/sm7/148a.webp",
+    "imageSmall": "assets/cards/sm7/148a-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm7-148a/large",
+    "printedNumber": "148a/168",
+    "promo": true,
+    "tcgplayerId": 200203,
+    "market": 11.42
+  },
+  {
+    "id": "sm7-177a",
+    "name": "Rayquaza-GX",
+    "number": "177a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm7/177a.webp",
+    "imageSmall": "assets/cards/sm7/177a-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Break",
+        "cost": [
+          "Grass",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage times the amount of basic Grass and basic Lightning Energy attached to your Pokémon."
+      },
+      {
+        "name": "Tempest-GX",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Discard your hand and draw 10 cards. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Stormy Winds",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may discard the top 3 cards of your deck. If you do, attach a basic Energy card from your discard pile to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm7-177a/large",
+    "printedNumber": "177a/168",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "tcgplayerId": 202638,
+    "market": 191.07
+  },
+  {
+    "id": "sm7-smp103",
+    "name": "Lunala-GX",
+    "number": "smp103",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "230",
+    "artist": "PLANETA",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/sm7/smp103.webp",
+    "imageSmall": "assets/cards/sm7/smp103-sm.webp",
+    "attacks": [
+      {
+        "name": "Glide",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Lunar Javelin",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Psychic Energy from this Pokémon."
+      },
+      {
+        "name": "Requiem-GX",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM103/large",
+    "printedNumber": "SM 103",
+    "tcgplayerId": 177710,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 13.83,
+    "foilMap": "assets/foil/maps/sm7/smp103.webp"
+  },
+  {
+    "id": "sm7-smp104",
+    "name": "Solgaleo-GX",
+    "number": "smp104",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "250",
+    "artist": "PLANETA",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/sm7/smp104.webp",
+    "imageSmall": "assets/cards/sm7/smp104-sm.webp",
+    "attacks": [
+      {
+        "name": "Turbo Strike",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Prominence-GX",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shining Mane",
+        "text": "Your Pokémon in play have no Weakness.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM104/large",
+    "printedNumber": "SM 104",
+    "tcgplayerId": 177900,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 15.47,
+    "foilMap": "assets/foil/maps/sm7/smp104.webp"
+  },
+  {
+    "id": "sm7-smp129",
+    "name": "Kyogre",
+    "number": "smp129",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "It is said to have widened the seas by causing downpours. It had been asleep in a marine trench.",
+    "image": "assets/cards/sm7/smp129.webp",
+    "imageSmall": "assets/cards/sm7/smp129-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Grand Wave",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon can't use Grand Wave during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM129/large",
+    "printedNumber": "SM 129",
+    "tcgplayerId": 172930,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 34.48,
+    "foilMap": "assets/foil/maps/sm7/smp129.webp"
+  },
+  {
+    "id": "sm7-smp130",
+    "name": "Manectric",
+    "number": "smp130",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "Ryota Murayama",
+    "flavorText": "It discharges electricity from its mane. It creates a thundercloud overhead to drop lightning bolts.",
+    "evolvesFrom": "Electrike",
+    "image": "assets/cards/sm7/smp130.webp",
+    "imageSmall": "assets/cards/sm7/smp130-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Charge",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "40",
+        "text": "You may attach up to 2 basic Energy cards from your hand to 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Electric Start",
+        "text": "If you go second, and if this Pokémon is in your hand when you are setting up to play, you may put it face down as your Active Pokémon or on your Bench.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM130/large",
+    "printedNumber": "SM 130",
+    "tcgplayerId": 172933,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 7.72,
+    "foilMap": "assets/foil/maps/sm7/smp130.webp"
+  },
+  {
+    "id": "sm7-smp131",
+    "name": "Celesteela",
+    "number": "smp131",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "One kind of Ultra Beast. Witnesses have seen it burn down a forest by expelling gas from its two arms.",
+    "image": "assets/cards/sm7/smp131.webp",
+    "imageSmall": "assets/cards/sm7/smp131-sm.webp",
+    "attacks": [
+      {
+        "name": "Moon Raker",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "If the total of both players' remaining Prize cards is exactly 6, this attack can be used for Metal."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM131/large",
+    "printedNumber": "SM 131",
+    "tcgplayerId": 172935,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 6.75,
+    "foilMap": "assets/foil/maps/sm7/smp131.webp"
+  },
+  {
+    "id": "sm7-smp132",
+    "name": "Delcatty",
+    "number": "smp132",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "0313",
+    "flavorText": "It is highly popular among female Trainers for its sublime fur. It does not keep a nest.",
+    "evolvesFrom": "Skitty",
+    "image": "assets/cards/sm7/smp132.webp",
+    "imageSmall": "assets/cards/sm7/smp132-sm.webp",
+    "attacks": [
+      {
+        "name": "Cat Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Search for Friends",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put 2 Supporter cards from your discard pile into your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM132/large",
+    "printedNumber": "SM 132",
+    "tcgplayerId": 172937,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.54,
+    "foilMap": "assets/foil/maps/sm7/smp132.webp"
+  },
+  {
+    "id": "sm7-smp146",
+    "name": "Leafeon-GX",
+    "number": "smp146",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm7/smp146.webp",
+    "imageSmall": "assets/cards/sm7/smp146-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Beam",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      },
+      {
+        "name": "Grand Bloom-GX",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "For each of your Benched Basic Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Breath of the Leaves",
+        "text": "If this Pokémon is your Active Pokémon, once during your turn (before your attack), you may heal 50 damage from 1 of your Pokémon that has any Energy attached to it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM146/large",
+    "printedNumber": "SM 146",
+    "tcgplayerId": 177112,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 6.51,
+    "foilMap": "assets/foil/maps/sm7/smp146.webp"
+  },
+  {
+    "id": "sm7-smp147",
+    "name": "Glaceon-GX",
+    "number": "smp147",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm7/smp147.webp",
+    "imageSmall": "assets/cards/sm7/smp147-sm.webp",
+    "attacks": [
+      {
+        "name": "Frost Bullet",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Polar Spear-GX",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each damage counter on your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Freezing Gaze",
+        "text": "As long as this Pokémon is your Active Pokémon, your opponent's Pokémon-GX and Pokémon-EX in play, in their hand, and in their discard pile have no Abilities, except for Freezing Gaze.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM147/large",
+    "printedNumber": "SM 147",
+    "tcgplayerId": 177111,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 8.61,
+    "foilMap": "assets/foil/maps/sm7/smp147.webp"
+  },
+  {
+    "id": "sm7-smp61",
+    "name": "Tapu Bulu",
+    "number": "smp61",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Megumi Mizutani",
+    "flavorText": "It pulls large trees up by the roots and swings them around. It causes vegetation to grow, and then it absorbs energy from the growth.",
+    "image": "assets/cards/sm7/smp61.webp",
+    "imageSmall": "assets/cards/sm7/smp61-sm.webp",
+    "attacks": [
+      {
+        "name": "Horn Leech",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Calm Strike",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If you have used your GX attack, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM61/large",
+    "printedNumber": "SM 061",
+    "tcgplayerId": 173382,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 1.29,
+    "foilMap": "assets/foil/maps/sm7/smp61.webp"
+  },
+  {
+    "id": "sm7-smp92",
+    "name": "Tapu Fini",
+    "number": "smp92",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "The dense fog it creates brings the downfall and destruction of its confused enemies. Ocean currents are the source of its energy.",
+    "image": "assets/cards/sm7/smp92.webp",
+    "imageSmall": "assets/cards/sm7/smp92-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Shining Current",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If any of your Water Pokémon was healed during this turn, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM92/large",
+    "printedNumber": "SM 092",
+    "tcgplayerId": 173383,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 2.23,
+    "foilMap": "assets/foil/maps/sm7/smp92.webp"
   }
 ]

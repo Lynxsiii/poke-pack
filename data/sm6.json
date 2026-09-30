@@ -63,36 +63,6 @@
     "market": 0.57
   },
   {
-    "id": "sm6-2a",
-    "name": "Alolan Exeggutor",
-    "number": "2a",
-    "rarity": "Rare Holo",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Stage 1"
-    ],
-    "types": [
-      "Grass"
-    ],
-    "hp": "160",
-    "artist": "kawayoo",
-    "flavorText": "As it grew taller and taller, it outgrew its reliance on psychic powers, while within it awakened the power of the sleeping dragon.",
-    "evolvesFrom": "Exeggcute",
-    "image": "assets/cards/sm6/2a.webp",
-    "imageSmall": "assets/cards/sm6/2a-sm.webp",
-    "attacks": [
-      {
-        "name": "Tropical Shake",
-        "cost": [
-          "Grass"
-        ],
-        "damage": "20+",
-        "text": "This attack does 20 more damage for each type of basic Energy card in your discard pile. You can't add more than 100 damage in this way."
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/sm6-2a/large"
-  },
-  {
     "id": "sm6-3",
     "name": "Snover",
     "number": "3",
@@ -4040,20 +4010,6 @@
     "market": 0.66
   },
   {
-    "id": "sm6-102a",
-    "name": "Beast Ring",
-    "number": "102a",
-    "rarity": "Rare",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "5ban Graphics",
-    "image": "assets/cards/sm6/102a.webp",
-    "imageSmall": "assets/cards/sm6/102a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm6-102a/large"
-  },
-  {
     "id": "sm6-103",
     "name": "Bonnie",
     "number": "103",
@@ -4217,20 +4173,6 @@
     "market": 0.32
   },
   {
-    "id": "sm6-112a",
-    "name": "Metal Frying Pan",
-    "number": "112a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Pokémon Tool"
-    ],
-    "artist": "Ryo Ueda",
-    "image": "assets/cards/sm6/112a.webp",
-    "imageSmall": "assets/cards/sm6/112a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm6-112a/large"
-  },
-  {
     "id": "sm6-113",
     "name": "Mysterious Treasure",
     "number": "113",
@@ -4245,20 +4187,6 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm6-113/large",
     "tcgplayerId": 165789,
     "market": 3.59
-  },
-  {
-    "id": "sm6-113a",
-    "name": "Mysterious Treasure",
-    "number": "113a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "Eske Yoshinob",
-    "image": "assets/cards/sm6/113a.webp",
-    "imageSmall": "assets/cards/sm6/113a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm6-113a/large"
   },
   {
     "id": "sm6-114",
@@ -5469,5 +5397,207 @@
     "etchMap": "assets/foil/maps/sm6/146-etch.webp",
     "tcgplayerId": 165791,
     "market": 23.86
+  },
+  {
+    "id": "sm6-102a",
+    "name": "Beast Ring",
+    "number": "102a",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm6/102a.webp",
+    "imageSmall": "assets/cards/sm6/102a-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm6-102a/large",
+    "printedNumber": "102a/131",
+    "promo": true,
+    "tcgplayerId": 191904,
+    "market": 0.9
+  },
+  {
+    "id": "sm6-112a",
+    "name": "Metal Frying Pan",
+    "number": "112a",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/sm6/112a.webp",
+    "imageSmall": "assets/cards/sm6/112a-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm6-112a/large",
+    "printedNumber": "112a/131",
+    "promo": true,
+    "tcgplayerId": 189779,
+    "market": 0.86
+  },
+  {
+    "id": "sm6-113a",
+    "name": "Mysterious Treasure",
+    "number": "113a",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/sm6/113a.webp",
+    "imageSmall": "assets/cards/sm6/113a-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm6-113a/large",
+    "printedNumber": "113a/131",
+    "promo": true,
+    "tcgplayerId": 198227,
+    "market": 2.22
+  },
+  {
+    "id": "sm6-2a",
+    "name": "Alolan Exeggutor",
+    "number": "2a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "160",
+    "artist": "kawayoo",
+    "flavorText": "As it grew taller and taller, it outgrew its reliance on psychic powers, while within it awakened the power of the sleeping dragon.",
+    "evolvesFrom": "Exeggcute",
+    "image": "assets/cards/sm6/2a.webp",
+    "imageSmall": "assets/cards/sm6/2a-sm.webp",
+    "attacks": [
+      {
+        "name": "Tropical Shake",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each type of basic Energy card in your discard pile. You can't add more than 100 damage in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm6-2a/large",
+    "printedNumber": "2a/131",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 180514,
+    "market": 3.15
+  },
+  {
+    "id": "sm6-smp133",
+    "name": "Thundurus-GX",
+    "number": "smp133",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm6/smp133.webp",
+    "imageSmall": "assets/cards/sm6/smp133-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Lightning Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Electric Ball",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "140",
+        "text": ""
+      },
+      {
+        "name": "Thundering Hurricane-GX",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "100×",
+        "text": "Flip 4 coins. This attack does 100 damage for each heads. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM133/large",
+    "printedNumber": "SM 133",
+    "tcgplayerId": 170032,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 3.71,
+    "foilMap": "assets/foil/maps/sm6/smp133.webp"
+  },
+  {
+    "id": "sm6-smp134",
+    "name": "Tornadus-GX",
+    "number": "smp134",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm6/smp134.webp",
+    "imageSmall": "assets/cards/sm6/smp134-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Wild Fury",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      },
+      {
+        "name": "Destructive Cyclone-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard all Energy from your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM134/large",
+    "printedNumber": "SM 134",
+    "tcgplayerId": 170033,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 3.12,
+    "foilMap": "assets/foil/maps/sm6/smp134.webp"
   }
 ]

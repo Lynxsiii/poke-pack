@@ -21,7 +21,172 @@
       "tcgplayerGroup": 1861,
       "printed": "SM",
       "pkmnKey": "SM{n:03d}",
-      "era": "sm"
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
     }
-  }
+  },
+  "promoCards": {
+    "smp125": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp126": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp135": {
+      "foilAs": "Rare Holo"
+    },
+    "smp136": {
+      "foilAs": "Rare Holo"
+    },
+    "smp137": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp138": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp139": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp140": {
+      "foilAs": "Rare Holo"
+    },
+    "smp141": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp142": {
+      "foilAs": "Rare Holo"
+    },
+    "smp155": {
+      "foilAs": "Rare Rainbow"
+    },
+    "smp156": {
+      "foilAs": "Rare Rainbow"
+    },
+    "40a": {
+      "like": "40a",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "printedNumber": "40a/70",
+      "tcgplayerId": 184219,
+      "tcgplayerGroup": 1938,
+      "foilMap": "assets/foil/maps/sm75/40.webp"
+    },
+    "60a": {
+      "like": "60a",
+      "keepScan": true,
+      "keepMaps": true,
+      "printedNumber": "60a/70",
+      "tcgplayerId": 206298,
+      "tcgplayerGroup": 1539
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 173393,
+      "packs": 10,
+      "promos": [
+        "smp125"
+      ]
+    },
+    {
+      "id": "latias-pin-collection",
+      "name": "Dragon Majesty Pin Collection [Latias]",
+      "kind": "collection",
+      "tcgplayerId": 175062,
+      "packs": 3,
+      "promos": [
+        "smp135"
+      ]
+    },
+    {
+      "id": "latios-pin-collection",
+      "name": "Dragon Majesty Pin Collection [Latios]",
+      "kind": "collection",
+      "tcgplayerId": 175063,
+      "packs": 3,
+      "promos": [
+        "smp136"
+      ]
+    },
+    {
+      "id": "super-premium-collection",
+      "name": "Dragon Majesty Super-Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 175560,
+      "packs": 10,
+      "promos": [
+        "smp155",
+        "smp156"
+      ]
+    },
+    {
+      "id": "legends-of-unova-gx-premium-collection",
+      "name": "Legends of Unova GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 179033,
+      "packs": 6,
+      "promos": [
+        "smp137",
+        "smp138"
+      ]
+    },
+    {
+      "id": "ultra-necrozma-gx-figure-collection",
+      "name": "Ultra Necrozma GX Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 179038,
+      "packs": 4,
+      "promos": [
+        "smp126"
+      ]
+    },
+    {
+      "id": "salamence-gx-special-collection",
+      "name": "Dragon Majesty Special Collection: Salamence GX",
+      "kind": "collection",
+      "tcgplayerId": 180522,
+      "packs": 5,
+      "promos": [
+        "smp139",
+        "smp140"
+      ]
+    },
+    {
+      "id": "white-kyurem-gx-special-collection",
+      "name": "Dragon Majesty Special Collection: White Kyurem GX",
+      "kind": "collection",
+      "tcgplayerId": 180526,
+      "packs": 5,
+      "promos": [
+        "smp141",
+        "smp142"
+      ]
+    },
+    {
+      "id": "altaria-40a",
+      "name": "Altaria 40a/70 (Alternate Art Promo)",
+      "kind": "event",
+      "tcgplayerId": 184219,
+      "packs": 0,
+      "promos": [
+        "40a"
+      ],
+      "tcgplayerGroup": 1938
+    },
+    {
+      "id": "fiery-flint-60a",
+      "name": "Fiery Flint 60a/70 (Pokemon League)",
+      "kind": "event",
+      "tcgplayerId": 206298,
+      "packs": 0,
+      "promos": [
+        "60a"
+      ],
+      "tcgplayerGroup": 1539
+    }
+  ]
 }

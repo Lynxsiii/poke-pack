@@ -306,5 +306,50 @@
       "energyFoil": 0.2483,
       "demigod": 0.000769
     }
+  },
+  "sm6": {
+    "name": "Forbidden Light",
+    "printedTotal": 131,
+    "released": "2018-05-04",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum, burpies, 'Pull Rates in Sun & Moon - Sword & Shield Sets' (https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220), English packs opened on video, 95% intervals, n=1,264 packs (one empirical source; ThePriceDex https://www.thepricedex.com/set/sm6/forbidden-light/pull-rates and Pokecompare repeat it and are not independent): GX 7.44% (1 in 13.5), Prism Star 7.91% (1 in 12.6), full art 3.56% (1 in 28.1), rainbow 1.34% (1 in 74), gold 0.71% (1 in 140). Corroboration is qualitative only: an Elite Fourum post of 2018-06-07 (https://www.elitefourum.com/t/official-pull-rates/20546) says Forbidden Light pulls fewer Ultra Rares than Ultra Prism. Prism Stars sit in the reverse-holo slot, not the rare slot (Elite Fourum rarity guide https://www.elitefourum.com/t/39762/140 'special cards inserted in the reverse slot'; PrimetimePokemon http://primetimepokemon.blogspot.com/2018/02/prism-star-cards-pokemon-tcg.html; Dripshop 'appear in the reverse holo slot'), so the Prism rate replaces reverse holos at that rate per pack. Pack: 1 basic Energy, 5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot; wrapper 'ADDITIONAL 10 GAME CARDS' plus the Energy (Face to Face Games, ToyWiz and GoNintendo product text; Bulbapedia 'Booster pack (TCG)'). Holo share of the rare slot is not measured for this set: plain Rare is taken as two thirds of the slot and holo as one third minus the hits, the ratio the Lost Thunder to Unified Minds research measured (Elite Fourum https://www.elitefourum.com/t/39762/150 and /151, /153, /154). Gold is Trainers and Energy only.",
+    "rates": {
+      "holo": 0.2028,
+      "gx": 0.0744,
+      "ultra": 0.0356,
+      "rainbow": 0.0134,
+      "secret": 0.0071,
+      "prismStar": 0.0791
+    }
+  },
+  "sm7": {
+    "name": "Celestial Storm",
+    "printedTotal": 168,
+    "released": "2018-08-03",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum, burpies, 'Pull Rates in Sun & Moon - Sword & Shield Sets' (https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220), English packs opened on video, 95% intervals, n=1,480 packs, pooled with a PokeBeach shop owner's 12 boxes, n=432 packs (https://www.pokebeach.com/forums/threads/celestial-storm-pull-rates.147911/, counts read from search excerpts): GX 10.67% (1 in 9.4), Prism Star 5.49% (1 in 18.2), full art 3.66% (1 in 27), rainbow 1.26% (1 in 79), gold 0.94% (1 in 106); the two samples agree within their intervals on every line. Prism Stars sit in the reverse-holo slot, not the rare slot (Elite Fourum rarity guide https://www.elitefourum.com/t/39762/140 'special cards inserted in the reverse slot'; PrimetimePokemon http://primetimepokemon.blogspot.com/2018/02/prism-star-cards-pokemon-tcg.html; Dripshop 'appear in the reverse holo slot'), so the Prism rate replaces reverse holos at that rate per pack. Pack: 1 basic Energy, 5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot; wrapper 'ADDITIONAL 10 GAME CARDS' plus the Energy (Face to Face Games, ToyWiz and GoNintendo product text; Bulbapedia 'Booster pack (TCG)'). Holo share of the rare slot is not measured for this set: plain Rare is taken as two thirds of the slot and holo as one third minus the hits, the ratio the Lost Thunder to Unified Minds research measured (Elite Fourum https://www.elitefourum.com/t/39762/150 and /151, /153, /154). Gold is Trainers and Energy only.",
+    "rates": {
+      "holo": 0.168,
+      "gx": 0.1067,
+      "ultra": 0.0366,
+      "rainbow": 0.0126,
+      "secret": 0.0094,
+      "prismStar": 0.0549
+    }
+  },
+  "sm75": {
+    "name": "Dragon Majesty",
+    "printedTotal": 70,
+    "released": "2018-09-07",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum, burpies, 'Pull Rates in Sun & Moon - Sword & Shield Sets' (https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220), English packs opened on video, 95% intervals, n=389 packs (one source and a small sample, which Elite Fourum itself flags for special sets): GX 15.42% (1 in 6.5), Prism Star 10.8% (1 in 9.3), full art 6.94% (1 in 14.4), rainbow 2.31% (1 in 43), gold 0.77% (1 in 130). Structure: the set has no plain Rare, so the rare slot is always a Rare Holo or better (Flipside Gaming Collector's Dossier https://flipsidegaming.com/blogs/pokemon-blog/sun-and-moon-dragon-majesty-collectors-dossier 'at least one holographic rare card and there are no non-holo rares'), holo = 1 minus the hits. Prism Stars sit in the reverse-holo slot, not the rare slot (Elite Fourum rarity guide https://www.elitefourum.com/t/39762/140 'special cards inserted in the reverse slot'; PrimetimePokemon http://primetimepokemon.blogspot.com/2018/02/prism-star-cards-pokemon-tcg.html; Dripshop 'appear in the reverse holo slot'), so the Prism rate replaces reverse holos at that rate per pack. Pack: 1 basic Energy, 5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot; wrapper 'ADDITIONAL 10 GAME CARDS' plus the Energy (Face to Face Games, ToyWiz and GoNintendo product text; Bulbapedia 'Booster pack (TCG)'). No booster box was printed; packs sold loose and in the Elite Trainer Box and collections.",
+    "rates": {
+      "holo": 0.7456,
+      "gx": 0.1542,
+      "ultra": 0.0694,
+      "rainbow": 0.0231,
+      "secret": 0.0077,
+      "prismStar": 0.108
+    }
   }
 }

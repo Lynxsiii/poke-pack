@@ -21,7 +21,228 @@
       "tcgplayerGroup": 1861,
       "printed": "SM",
       "pkmnKey": "SM{n:03d}",
-      "era": "sm"
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
     }
-  }
+  },
+  "promoCards": {
+    "smp30a": {
+      "foilAs": "Rare Holo"
+    },
+    "smp45": {
+      "foilAs": "Rare Holo"
+    },
+    "smp61": {
+      "foilAs": "Rare Holo"
+    },
+    "smp92": {
+      "foilAs": "Rare Holo"
+    },
+    "smp129": {
+      "foilAs": "Rare Holo"
+    },
+    "smp130": {
+      "foilAs": "Rare Holo"
+    },
+    "smp131": {
+      "foilAs": "Rare Holo"
+    },
+    "smp132": {
+      "foilAs": "Rare Holo"
+    },
+    "smp103": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp104": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp146": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp147": {
+      "foilAs": "Rare Holo GX"
+    },
+    "10a": {
+      "like": "10a",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "printedNumber": "10a/168",
+      "tcgplayerId": 189786,
+      "tcgplayerGroup": 1938
+    },
+    "123a": {
+      "like": "123a",
+      "keepScan": true,
+      "keepMaps": true,
+      "printedNumber": "123a/168",
+      "tcgplayerId": 202639,
+      "tcgplayerGroup": 1539
+    },
+    "148a": {
+      "like": "148a",
+      "keepScan": true,
+      "keepMaps": true,
+      "printedNumber": "148a/168",
+      "tcgplayerId": 200203,
+      "tcgplayerGroup": 1938
+    },
+    "177a": {
+      "like": "177a",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Ultra",
+      "printedNumber": "177a/168",
+      "tcgplayerId": 202638,
+      "tcgplayerGroup": 1938
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 170277,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 170280,
+      "packs": 4,
+      "promos": [
+        "smp129",
+        "smp130",
+        "smp131",
+        "smp132"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "celestial-storm-3-pack-blister-tapu-koko",
+      "name": "Celestial Storm 3 Pack Booster Blister [Tapu Koko]",
+      "kind": "blister",
+      "tcgplayerId": 170275,
+      "packs": 3,
+      "promos": [
+        "smp30a"
+      ]
+    },
+    {
+      "id": "celestial-storm-3-pack-blister-tapu-lele",
+      "name": "Celestial Storm 3 Pack Booster Blister [Tapu Lele]",
+      "kind": "blister",
+      "tcgplayerId": 170276,
+      "packs": 3,
+      "promos": [
+        "smp45"
+      ]
+    },
+    {
+      "id": "celestial-storm-single-pack-blister-tapu-bulu",
+      "name": "Celestial Storm Single Pack Blister [Tapu Bulu]",
+      "kind": "blister",
+      "tcgplayerId": 177898,
+      "packs": 1,
+      "promos": [
+        "smp61"
+      ]
+    },
+    {
+      "id": "celestial-storm-single-pack-blister-tapu-fini",
+      "name": "Celestial Storm Single Pack Blister [Tapu Fini]",
+      "kind": "blister",
+      "tcgplayerId": 177899,
+      "packs": 1,
+      "promos": [
+        "smp92"
+      ]
+    },
+    {
+      "id": "solgaleo-gx-box",
+      "name": "Solgaleo GX Box",
+      "kind": "collection",
+      "tcgplayerId": 175558,
+      "packs": 4,
+      "promos": [
+        "smp104"
+      ]
+    },
+    {
+      "id": "lunala-gx-box",
+      "name": "Lunala GX Box",
+      "kind": "collection",
+      "tcgplayerId": 175559,
+      "packs": 4,
+      "promos": [
+        "smp103"
+      ]
+    },
+    {
+      "id": "evolution-celebration-tin-glaceon-gx",
+      "name": "Evolution Celebration Tin [Glaceon GX]",
+      "kind": "tin",
+      "tcgplayerId": 175555,
+      "packs": 2,
+      "promos": [
+        "smp147"
+      ]
+    },
+    {
+      "id": "evolution-celebration-tin-leafeon-gx",
+      "name": "Evolution Celebration Tin [Leafeon GX]",
+      "kind": "tin",
+      "tcgplayerId": 175556,
+      "packs": 2,
+      "promos": [
+        "smp146"
+      ]
+    },
+    {
+      "id": "sceptile-10a",
+      "name": "Sceptile 10a/168 (Alternate Art Promo)",
+      "kind": "event",
+      "tcgplayerId": 189786,
+      "packs": 0,
+      "promos": [
+        "10a"
+      ],
+      "tcgplayerGroup": 1938
+    },
+    {
+      "id": "acro-bike-123a",
+      "name": "Acro Bike 123a/168 (Pokemon League)",
+      "kind": "event",
+      "tcgplayerId": 202639,
+      "packs": 0,
+      "promos": [
+        "123a"
+      ],
+      "tcgplayerGroup": 1539
+    },
+    {
+      "id": "tate-liza-148a",
+      "name": "Tate & Liza 148a/168 (Alternate Art Promo)",
+      "kind": "event",
+      "tcgplayerId": 200203,
+      "packs": 0,
+      "promos": [
+        "148a"
+      ],
+      "tcgplayerGroup": 1938
+    },
+    {
+      "id": "rayquaza-gx-177a",
+      "name": "Rayquaza GX 177a/168 (Alternate Art Promo)",
+      "kind": "event",
+      "tcgplayerId": 202638,
+      "packs": 0,
+      "promos": [
+        "177a"
+      ],
+      "tcgplayerGroup": 1938
+    }
+  ]
 }

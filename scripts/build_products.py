@@ -237,7 +237,8 @@ def foil_from_tcgl(card: dict) -> str:
 
 
 def split_number(number: str, series: dict) -> tuple[str, int] | None:
-    match = re.fullmatch(r"([a-z]+)(\d+)", number)
+    # A trailing letter (smp30a, smp103a) is pkmn.gg's second print of a number.
+    match = re.fullmatch(r"([a-z]+)(\d+)[a-z]?", number)
     if match and match.group(1) in series:
         return match.group(1), int(match.group(2))
     return None
@@ -379,14 +380,17 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         ser = series[prefix]
         base_url = f"https://www.pkmn.gg/series/{ser['series']}/{ser['slug']}"
         # pkmn.gg files the Sword & Shield promos under their printed key (SWSH001).
-        page_key = ser.get("pkmnKey", "{n}").format(n=n)
-        detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}.html", refresh))
+        suffix = re.sub(r"^[a-z]+\d+", "", number)
+        page_key = ser.get("pkmnKey", "{n}").format(n=n) + suffix
+        detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}{suffix}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
-        record["printedNumber"] = f"{ser['printed']} {n:03d}"
+        record["printedNumber"] = f"{ser['printed']} {n:03d}{suffix}"
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
-        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/large"
-        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/small"
+        # Sun & Moon's promos are smp-SM01 there but SM001 on pkmn.gg: `scrydexKey`.
+        scry_key = ser.get("scrydexKey", "{n}").format(n=n) + suffix if ser.get("scrydexKey") else page_key
+        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scry_key}/large"
+        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scry_key}/small"
         remote = record["image"]
         if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
