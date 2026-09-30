@@ -12,7 +12,7 @@ Names: pkmn.gg writes "Unit Energy GrassFireWater"; the cards say and TCGplayer 
 
 ## `a` prints
 `119a` Cynthia, `122a` Escape Board, `125a` Lillie, `135a` Volkner and `153a` Lusamine are Regional Championship and League Challenge prize prints: no product holds
-them, left out (scans removed; a rebuild from pkmn.gg brings them back unless data/sets/sm5.json lists them in `skipNumbers` once build_set.py has that key).
+them, left out (scans removed; `skipNumbers` in data/sets/sm5.json keeps a rebuild from bringing them back).
 `sm5-10a` is Shining Legends' Entei-GX 10a (sm35-10a) as the Legends of Johto boxes' second promo (`like: "sm35:10a"`, `keepScan`, shares the scan).
 
 ## Maps

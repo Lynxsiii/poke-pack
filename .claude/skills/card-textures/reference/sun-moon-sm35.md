@@ -17,7 +17,7 @@ The rainbow/gold split is E2's raw per-card counts (22 : 11, own + Derium) and b
 
 ## `a` prints
 pkmn.gg files `10a` Entei-GX, `68a` Ultra Ball and `77a` Zoroark-GX beside the set. `68a` is a League Cup prize with no
-product anywhere: left out (scans removed). `10a` (Legends of Johto box, used by sm5 through `like: "sm35:10a"`) and `77a` (Hidden Fates' Poké Ball
+product anywhere: left out (scans removed, `skipNumbers` in data/sets/sm35.json). `10a` (Legends of Johto box, used by sm5 through `like: "sm35:10a"`) and `77a` (Hidden Fates' Poké Ball
 Collection [Shiny Zoroark], sm115.md) stay with `promo: true` (out of the pools), `era: "sm"`, `foilAs` = their rarity, `market` copied from the
 base card (TCGplayer lists no separate print) and no foil map. No product of sm35 itself holds them, so they are unobtainable in this
 set's own boxes: mastery of sm35 needs them (lead's call, see the report).
