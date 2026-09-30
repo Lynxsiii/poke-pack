@@ -82,6 +82,9 @@ def norm(name: str) -> str:
     # Classic Collection reprints: "M Rayquaza-EX" vs "M Rayquaza EX",
     # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
     name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "")
+    # Sun & Moon's Prism Stars: pkmn.gg spells the printed diamond ("Giratina ◇"),
+    # TCGplayer the words ("Giratina Prism Star").
+    name = name.replace("◇", " Prism Star").replace("\u25c7", " Prism Star")
     name = re.sub(r"_+", "_", name)
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
