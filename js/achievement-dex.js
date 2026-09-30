@@ -5,6 +5,7 @@
  * ex, Radiant Charizard, Lance's Charizard V and Mega Charizard X ex alike.
  */
 import { ach, EEVEELUTIONS } from "./achievement-kit.js";
+import { hasSets } from "./achievement-eras.js";
 
 const say = (list) => {
   if (list.length <= 2) return list.join(" and ");
@@ -56,6 +57,18 @@ export const LEGEND_GROUPS = {
   paradox: ["Koraidon", "Miraidon"],
 };
 export const ALL_LEGENDS = Object.values(LEGEND_GROUPS).flat();
+
+/** Sun & Moon's Ultra Beasts. Not part of LEGEND_GROUPS: that list sets the goal of a shipped achievement. */
+export const ULTRA_BEASTS = [
+  "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana",
+  "Guzzlord", "Necrozma", "Poipole", "Naganadel", "Stakataka", "Blacephalon",
+];
+
+/** Shining Legends' six Shining Pokémon. */
+export const SHINING_SIX = ["Shining Genesect", "Shining Volcanion", "Shining Mew", "Shining Jirachi", "Shining Rayquaza", "Shining Arceus"];
+
+/** Rows that need cards from particular sets appear once those sets are playable. */
+const when = (ok, rows) => (ok ? rows : []);
 
 export const MYTHICALS = [
   "Mew", "Celebi", "Jirachi", "Manaphy", "Victini", "Darkrai", "Shaymin",
@@ -195,6 +208,30 @@ export const DEX = [
   pile(1, "galarian-10", "Galar tour", "Galarian", 10, 80, { note: "Own 10 different Galarian forms." }),
   pile(2, "galarian-40", "Galar native", "Galarian", 40, 300, { note: "Own 40 different Galarian forms." }),
   pile(1, "alolan-10", "Alola trip", "Alolan", 10, 100, { note: "Own 10 different Alolan forms." }),
+  ...when(hasSets("sm2", "sm4", "sm9", "sm11"), [
+    pile(2, "alolan-40", "Alola native", "Alolan", 40, 300, { note: "Own 40 different Alolan forms." }),
+  ]),
+  group(2, "ultra-beast-6", "Beast hunter", ULTRA_BEASTS, 200, {
+    goal: 6,
+    note: "Own 6 different Ultra Beasts, Nihilego to Blacephalon.",
+  }),
+  ...when(hasSets("sm4"), [
+    group(3, "ultra-beast-all", "Beast keeper", ULTRA_BEASTS, 600, {
+      note: "Own every Ultra Beast, Nihilego to Blacephalon, all twelve.",
+      mark: "12",
+    }),
+  ]),
+  ...when(hasSets("sm1"), [
+    group(2, "alola-finals", "Alola finals", ["Decidueye", "Incineroar", "Primarina"], 120),
+    group(3, "alola-lines", "Alola lines", ["Rowlet", "Dartrix", "Decidueye", "Litten", "Torracat", "Incineroar", "Popplio", "Brionne", "Primarina"], 350, {
+      note: "Own every stage of all three Alola starter lines, nine Pokémon in all.",
+    }),
+  ]),
+  ...when(hasSets("sm35"), [
+    group(3, "shining-six", "Shining six", SHINING_SIX, 400, {
+      note: "Own all six Shining Pokémon of Shining Legends: Genesect, Volcanion, Mew, Jirachi, Rayquaza and Arceus.",
+    }),
+  ]),
   pile(1, "paldean-10", "Paldea trip", "Paldean", 10, 100, { note: "Own 10 different Paldean forms." }),
   pile(2, "hisuian-20", "Hisui trek", "Hisuian", 20, 200, { note: "Own 20 different Hisuian forms." }),
   pile(1, "mega-10", "Mega debut", "Mega", 10, 100, { note: "Own 10 different Mega cards." }),

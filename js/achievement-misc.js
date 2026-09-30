@@ -5,6 +5,7 @@
  * keeps in save.stats (ctx.stat, ctx.friends).
  */
 import { ach } from "./achievement-kit.js";
+import { hasSets, anySets, RARITIES_IN_PRINT } from "./achievement-eras.js";
 
 /** One row per finish the older tables do not already cover. */
 function finish(tier, id, rarity, mark, name, note, coins, extra = {}) {
@@ -16,14 +17,33 @@ function depth(tier, id, rarity, name, goal, coins, noun) {
   return ach("rarity", tier, id, name, `Own ${goal} different ${noun}.`, goal, (c) => c.count(rarity), coins);
 }
 
+/**
+ * Rows that need cards only some sets print appear once those sets are
+ * playable: `when` is hasSets(...) or anySets(...), so the table never asks
+ * for a card the catalog cannot give (test-achievements checks it).
+ */
+const when = (ok, rows) => (ok ? rows : []);
+
 export const RARITY = [
   // One of each finish
   finish(1, "rare-holo", "Rare Holo", "★", "Holo rare", "Own a Rare Holo.", 30),
   finish(1, "promo", "Promo", "P", "Black star", "Own a black star promo.", 30),
+  // Sun & Moon
+  finish(2, "rare-gx", "Rare Holo GX", "GX", "Pokémon-GX", "Own a Pokémon-GX.", 50),
+  ach("rarity", 2, "tag-team", "Tag team", "Own a Tag Team GX, two Pokémon on one card.", 1, (c) => c.tagTeams, 120, { mark: "TAG" }),
+  ...when(anySets("sm5", "sm6", "sm7", "sm75", "sm8", "sm9"), [
+    finish(3, "prism-star", "Rare Prism Star", "◇", "Prism Star", "Own a Prism Star.", 200),
+  ]),
+  ...when(anySets("sm35"), [
+    finish(3, "rare-shining", "Rare Shining", "SH", "Shining Pokémon", "Own a Shining Pokémon from Shining Legends.", 250),
+  ]),
+  ...when(anySets("sm115"), [
+    finish(3, "shiny-gx", "Rare Shiny GX", "SGX", "Shiny GX", "Own a Shiny Vault GX from Hidden Fates.", 350),
+  ]),
   finish(2, "rare-v", "Rare Holo V", "V", "Pokémon V", "Own a Pokémon V.", 50),
   finish(2, "rare-vmax", "Rare Holo VMAX", "VMAX", "Max power", "Own a Pokémon VMAX.", 90),
   finish(2, "rare-vstar", "Rare Holo VSTAR", "VSTAR", "Star power", "Own a Pokémon VSTAR.", 90),
-  finish(2, "rare-ultra", "Rare Ultra", "☆", "Full art", "Own a Rare Ultra, the full art of the Sword & Shield years.", 120),
+  finish(2, "rare-ultra", "Rare Ultra", "☆", "Full art", "Own a Rare Ultra, the full art of the Sword & Shield and Sun & Moon years.", 120),
   finish(2, "pikachu-rare", "Pikachu Rare", "PK", "Pika print", "Own a Pikachu Rare.", 100),
   finish(2, "poke-ball", "Poké Ball", "◓", "Poké Ball print", "Own a Poké Ball pattern card.", 80),
   finish(2, "shiny-rare", "Shiny Rare", "☆", "Shiny", "Own a Shiny Rare.", 150),
@@ -47,6 +67,13 @@ export const RARITY = [
   depth(2, "double-10", "Double Rare", "Double trouble", 10, 200, "Double Rares"),
   depth(3, "double-50", "Double Rare", "Twin towers", 50, 600, "Double Rares"),
   depth(2, "v-25", "Rare Holo V", "V collection", 25, 300, "Pokémon V cards"),
+  depth(2, "gx-25", "Rare Holo GX", "GX collection", 25, 300, "Pokémon-GX cards"),
+  ...when(hasSets("sm1", "sm2", "sm3", "sm8"), [depth(3, "gx-75", "Rare Holo GX", "GX armory", 75, 800, "Pokémon-GX cards")]),
+  ach("rarity", 2, "tag-team-10", "Tag team roster", "Own 10 different Tag Team GX cards.", 10, (c) => c.tagTeams, 250),
+  ach("rarity", 3, "tag-team-25", "Tag team league", "Own 25 different Tag Team GX cards.", 25, (c) => c.tagTeams, 600),
+  ...when(hasSets("sm9", "sm12"), [ach("rarity", 4, "tag-team-75", "Tag team dynasty", "Own 75 different Tag Team GX cards.", 75, (c) => c.tagTeams, 1500)]),
+  ...when(hasSets("sm5", "sm6"), [depth(3, "prism-10", "Rare Prism Star", "Prism collection", 10, 500, "Prism Star cards")]),
+  ...when(anySets("sm115"), [depth(3, "shiny-gx-10", "Rare Shiny GX", "Shiny GX hunter", 10, 400, "Shiny Vault GX cards")]),
   depth(3, "ultra-10", "Ultra Rare", "Ultra stack", 10, 350, "Ultra Rares"),
   depth(2, "illustration-10", "Illustration Rare", "Gallery wall", 10, 250, "Illustration Rares"),
   depth(3, "illustration-25", "Illustration Rare", "Gallery wing", 25, 600, "Illustration Rares"),
@@ -68,6 +95,9 @@ export const RARITY = [
   ach("rarity", 3, "finishes-20", "Twenty finishes", "Own cards of 20 different rarities.", 20, (c) => c.raritiesOwned, 900),
   ach("rarity", 4, "finishes-25", "Twenty five finishes", "Own cards of 25 different rarities.", 25, (c) => c.raritiesOwned, 1600),
   ach("rarity", 4, "finishes-30", "Thirty finishes", "Own cards of 30 different rarities.", 30, (c) => c.raritiesOwned, 2500, { title: "Finish Line" }),
+  ...when(RARITIES_IN_PRINT.length >= 35, [
+    ach("rarity", 4, "finishes-35", "Thirty five finishes", "Own cards of 35 different rarities.", 35, (c) => c.raritiesOwned, 3200),
+  ]),
 ];
 
 export const MARKET = [

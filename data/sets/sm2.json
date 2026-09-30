@@ -1,0 +1,355 @@
+{
+  "id": "sm2",
+  "name": "Guardians Rising",
+  "series": "sun-moon",
+  "slug": "guardians-rising",
+  "scrydexId": "sm2",
+  "era": "sm",
+  "artSlug": "guardians-rising",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1919,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Guardians Rising Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 129890,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Guardians Rising Prerelease Kit",
+      "kind": "battle",
+      "tcgplayerId": 131273,
+      "packs": 4,
+      "promos": [
+        "smp018",
+        "smp019",
+        "smp020",
+        "smp021"
+      ],
+      "pick": 1,
+      "note": "Event kit; one promo per kit."
+    },
+    {
+      "id": "lurantis-single-pack-blister",
+      "name": "Guardians Rising Single Pack Blister [Lurantis]",
+      "kind": "blister",
+      "tcgplayerId": 184341,
+      "packs": 1,
+      "promos": [
+        "smp025"
+      ]
+    },
+    {
+      "id": "tsareena-single-pack-blister",
+      "name": "Guardians Rising Single Pack Blister [Tsareena]",
+      "kind": "blister",
+      "tcgplayerId": 184342,
+      "packs": 1,
+      "promos": [
+        "smp026"
+      ]
+    },
+    {
+      "id": "turtonator-3-pack-blister",
+      "name": "Guardians Rising 3 Pack Blister [Turtonator]",
+      "kind": "blister",
+      "tcgplayerId": 184340,
+      "packs": 3,
+      "promos": [
+        "smp027"
+      ]
+    },
+    {
+      "id": "vikavolt-3-pack-blister",
+      "name": "Guardians Rising 3 Pack Blister [Vikavolt]",
+      "kind": "blister",
+      "tcgplayerId": 184339,
+      "packs": 3,
+      "promos": [
+        "smp028"
+      ]
+    },
+    {
+      "id": "crobat-single-pack-blister",
+      "name": "Guardians Rising Single Pack Blister [Crobat]",
+      "kind": "blister",
+      "tcgplayerId": 242963,
+      "packs": 1,
+      "promos": [],
+      "note": "No SM number (Sun & Moon 56 Cosmos Holofoil)."
+    },
+    {
+      "id": "alolan-persian-single-pack-blister",
+      "name": "Guardians Rising Single Pack Blister [Alolan Persian]",
+      "kind": "blister",
+      "tcgplayerId": 242964,
+      "packs": 1,
+      "promos": [],
+      "note": "No SM number (Sun & Moon 79 Cosmos Holofoil)."
+    },
+    {
+      "id": "tapu-koko-figure-collection",
+      "name": "Tapu Koko Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 131734,
+      "packs": 4,
+      "promos": [
+        "smp030"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "tapu-koko-pin-collection",
+      "name": "Tapu Koko Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 132237,
+      "packs": 3,
+      "promos": [
+        "smp031"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "island-guardians-tin-tapu-koko",
+      "name": "Island Guardians Tin [Tapu Koko GX]",
+      "kind": "tin",
+      "tcgplayerId": 131725,
+      "packs": 4,
+      "promos": [
+        "smp033"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "island-guardians-tin-tapu-bulu",
+      "name": "Island Guardians Tin [Tapu Bulu GX]",
+      "kind": "tin",
+      "tcgplayerId": 131726,
+      "packs": 4,
+      "promos": [
+        "smp032"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "bewear-gx-box",
+      "name": "Bewear GX Box",
+      "kind": "collection",
+      "tcgplayerId": 132238,
+      "packs": 4,
+      "promos": [
+        "smp034"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "decidueye-gx-premium-collection",
+      "name": "Decidueye GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 133806,
+      "packs": 6,
+      "promos": [
+        "smp037"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "incineroar-gx-premium-collection",
+      "name": "Incineroar GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 133807,
+      "packs": 6,
+      "promos": [
+        "smp038"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "primarina-gx-premium-collection",
+      "name": "Primarina GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 133805,
+      "packs": 6,
+      "promos": [
+        "smp039"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "espeon-gx-premium-collection",
+      "name": "Espeon GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 137523,
+      "packs": 6,
+      "promos": [
+        "smp035"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "umbreon-gx-premium-collection",
+      "name": "Umbreon GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 137524,
+      "packs": 6,
+      "promos": [
+        "smp036"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "shiny-tapu-koko-gx-box",
+      "name": "Shiny Tapu Koko GX Box",
+      "kind": "collection",
+      "tcgplayerId": 137872,
+      "packs": 4,
+      "promos": [
+        "smp050"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "triple-effect-tin-flareon",
+      "name": "Triple Effect Tin [Flareon]",
+      "kind": "tin",
+      "tcgplayerId": 177868,
+      "packs": 3,
+      "promos": [],
+      "note": "No SM number. Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "triple-effect-tin-jolteon",
+      "name": "Triple Effect Tin [Jolteon]",
+      "kind": "tin",
+      "tcgplayerId": 177869,
+      "packs": 3,
+      "promos": [],
+      "note": "No SM number. Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "triple-effect-tin-vaporeon",
+      "name": "Triple Effect Tin [Vaporeon]",
+      "kind": "tin",
+      "tcgplayerId": 177870,
+      "packs": 3,
+      "promos": [],
+      "note": "No SM number. Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "solgaleo-gx-challenge-box",
+      "name": "Solgaleo GX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 218327,
+      "packs": 2,
+      "promos": [],
+      "note": "No SM number. Bulbapedia also lists a June 7 2019 Solgaleo-GX Challenge Box with a jumbo SM1 89; TCGplayer text matches the Walmart version."
+    },
+    {
+      "id": "lunala-gx-challenge-box",
+      "name": "Lunala GX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 218328,
+      "packs": 2,
+      "promos": [],
+      "note": "No SM number."
+    }
+  ],
+  "promoCards": {
+    "smp018": {
+      "foilAs": "Rare Holo",
+      "notes": "Alolan Sandslash"
+    },
+    "smp019": {
+      "foilAs": "Rare Holo",
+      "notes": "Oricorio"
+    },
+    "smp020": {
+      "foilAs": "Rare Holo",
+      "notes": "Mudsdale"
+    },
+    "smp021": {
+      "foilAs": "Rare Holo",
+      "notes": "Drampa"
+    },
+    "smp025": {
+      "foilAs": "Rare Holo",
+      "notes": "Lurantis"
+    },
+    "smp026": {
+      "foilAs": "Rare Holo",
+      "notes": "Tsareena"
+    },
+    "smp027": {
+      "foilAs": "Rare Holo",
+      "notes": "Turtonator"
+    },
+    "smp028": {
+      "foilAs": "Rare Holo",
+      "notes": "Vikavolt"
+    },
+    "smp030": {
+      "foilAs": "Rare Holo",
+      "notes": "Tapu Koko"
+    },
+    "smp031": {
+      "foilAs": "Rare Holo",
+      "notes": "Tapu Koko"
+    },
+    "smp032": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Tapu Bulu-GX"
+    },
+    "smp033": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Tapu Koko-GX"
+    },
+    "smp034": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Bewear-GX"
+    },
+    "smp035": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Espeon-GX"
+    },
+    "smp036": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Umbreon-GX"
+    },
+    "smp037": {
+      "foilAs": "Rare Ultra",
+      "notes": "Decidueye-GX"
+    },
+    "smp038": {
+      "foilAs": "Rare Ultra",
+      "notes": "Incineroar-GX"
+    },
+    "smp039": {
+      "foilAs": "Rare Ultra",
+      "notes": "Primarina-GX"
+    },
+    "smp050": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Tapu Koko-GX"
+    }
+  }
+}

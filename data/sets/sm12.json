@@ -1,0 +1,214 @@
+{
+  "id": "sm12",
+  "name": "Cosmic Eclipse",
+  "series": "sun-moon",
+  "slug": "cosmic-eclipse",
+  "scrydexId": "sm12",
+  "era": "sm",
+  "artSlug": "cosmic-eclipse",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2534,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
+    }
+  },
+  "promoCards": {
+    "smp218": {
+      "foilAs": "Rare Holo"
+    },
+    "smp219": {
+      "foilAs": "Rare Holo"
+    },
+    "smp220": {
+      "foilAs": "Rare Holo"
+    },
+    "smp221": {
+      "foilAs": "Rare Holo"
+    },
+    "smp222": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holofoil"
+    },
+    "smp223": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holofoil"
+    },
+    "smp224": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holofoil"
+    },
+    "smp225": {
+      "foilAs": "Rare Holo",
+      "notes": "cosmos holofoil"
+    },
+    "smp226": {
+      "foilAs": "Rare Holo"
+    },
+    "smp227": {
+      "foilAs": "Rare Holo"
+    },
+    "smp228": {
+      "foilAs": "Rare Holo"
+    },
+    "smp229": {
+      "foilAs": "Rare Ultra",
+      "notes": "special full art"
+    },
+    "smp230": {
+      "foilAs": "Rare Ultra",
+      "notes": "special full art"
+    },
+    "smp232": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp233": {
+      "foilAs": "Rare Ultra",
+      "notes": "full art"
+    },
+    "smp234": {
+      "foilAs": "Rare Holo"
+    },
+    "smp235": {
+      "foilAs": "Rare Holo"
+    },
+    "143a": {
+      "like": "143a",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Ultra",
+      "variant": "Small But Mighty Premium Collection",
+      "notes": "Yellow A alternate art full art, not in boosters"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 199308,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 199310,
+      "packs": 4,
+      "promos": [
+        "smp218",
+        "smp219",
+        "smp220",
+        "smp221"
+      ],
+      "pick": 1
+    },
+    {
+      "id": "victini-3-pack-blister",
+      "name": "3 Pack Blister (Victini)",
+      "kind": "blister",
+      "tcgplayerId": 199766,
+      "packs": 3,
+      "promos": [
+        "smp225"
+      ]
+    },
+    {
+      "id": "celebi-3-pack-blister",
+      "name": "3 Pack Blister (Celebi)",
+      "kind": "blister",
+      "tcgplayerId": 199767,
+      "packs": 3,
+      "promos": [
+        "smp224"
+      ]
+    },
+    {
+      "id": "mismagius-single-pack-blister",
+      "name": "Single Pack Blister (Mismagius)",
+      "kind": "blister",
+      "tcgplayerId": 199768,
+      "packs": 1,
+      "promos": [
+        "smp222"
+      ]
+    },
+    {
+      "id": "terrakion-single-pack-blister",
+      "name": "Single Pack Blister (Terrakion)",
+      "kind": "blister",
+      "tcgplayerId": 199769,
+      "packs": 1,
+      "promos": [
+        "smp223"
+      ]
+    },
+    {
+      "id": "pikachu-eevee-gx-special-collection",
+      "name": "Pikachu-GX & Eevee-GX Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 199772,
+      "packs": 4,
+      "promos": [
+        "smp232",
+        "smp233",
+        "smp234",
+        "smp235"
+      ],
+      "note": "Pack mix approximate: TCGplayer says 4 Pokemon TCG booster packs without naming the sets."
+    },
+    {
+      "id": "tag-team-generations-premium-collection",
+      "name": "TAG TEAM Generations Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 200172,
+      "packs": 7,
+      "promos": [
+        "smp229",
+        "smp230"
+      ],
+      "note": "Pack mix approximate: TCGplayer says 7 Pokemon TCG booster packs without naming the sets.",
+      "tcgplayerGroup": 2374
+    },
+    {
+      "id": "fall-2019-collectors-chest",
+      "name": "Fall 2019 Collector's Chest",
+      "kind": "collection",
+      "tcgplayerId": 200142,
+      "packs": 5,
+      "promos": [
+        "smp226",
+        "smp227",
+        "smp228"
+      ],
+      "note": "Pack mix approximate: TCGplayer says 5 Pokemon TCG booster packs without naming the sets.",
+      "tcgplayerGroup": 2374
+    },
+    {
+      "id": "small-but-mighty-premium-collection",
+      "name": "Small But Mighty Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 226128,
+      "packs": 10,
+      "promos": [
+        "143a"
+      ],
+      "tcgplayerGroup": 2374,
+      "note": "Pack mix approximate: TCGplayer says 10 booster packs without naming the set."
+    }
+  ],
+  "printedTotal": 236
+}

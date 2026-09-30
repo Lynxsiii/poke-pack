@@ -1,0 +1,21 @@
+# Lost Thunder (sm8), built 2026-09-30
+
+English, 2 November 2018. 214 printed, 236 cards in packs (21 Rare Holo, 13 GX, 7 Prism Star, 20 full art, 13 rainbow, 9 gold), plus the 10 promo cards of its sealed products (totalCount 246, as the other sets count). Research: /mnt/project-files/sun-moon/research/sm8.md.
+
+## Data
+- Cards: pkmn.gg `sun-moon/lost-thunder`, scans scrydex `sm8-<n>`. pkmn.gg lists 240; the four extras are prize reprints (172a Electropower, 187a Net Ball, 188a Professor Elm's Lecture, 189a Sightseer: Pokémon League and Battle Arena Deck stamps, Bulbapedia Lost Thunder (TCG) set list), which no pack holds and the printed total does not count. `skipNumbers` in data/sets/sm8.json keeps them out. The research's "236 total" (pokemontcg.io, tcgdex) agrees.
+- Wrappers: pokesymbols `lost-thunder-pack-0..3` (Celebi, Blacephalon, Zeraora, Lugia), opaque, shipped as `pack-N-v2` after clean_pack_art.py.
+- Foil maps: TCG Live key `sm8`, numbers match. 83 of 83 holo prints have a map (21 Rare Holo, 13 GX, 7 Prism Star, 20 full art, 13 rainbow, 9 gold); etch maps on the 42 full art, rainbow and gold cards. Plain Rares have none (not foil). Promo maps from `smbsp`: all 10, no etch. check_foil_maps.py flagged only rainbow and full-art pairs of the same Pokemon (same drawing, near tie) and no mutual swap.
+- Prices: tcgcsv group 2328, 236 of 236 singles. `norm()` in fetch_tcgplayer_prices.py reads the Prism Star diamond ("Celebi ◇" is TCGplayer's "Celebi Prism Star") and the one-letter Fairy Charm Energy ("Fairy Charm O" is Dragon).
+- Energy print: `sm17` (2017 design). The 2019 redesign starts with Team Up (Bulbapedia Basic Fire Energy (TCG); TCGplayer files "2019 Unnumbered" Energy only under Team Up, group 2377).
+
+## Odds (per pack)
+`smSlots({ holo: 0.1659, gx: 0.1017, ultra: 0.044, rainbow: 0.0125, secret: 0.0092, reverseSpecial: [["prismStar", 0.1246]] })`, Energy 1, 5 Common, 3 Uncommon, reverse 1 (a Prism Star replaces it 1 pack in 8), rare slot 1. Sources (one forum, separate tallies): Elite Fourum burpies https://www.elitefourum.com/t/25220 (1,274 packs) and sturzflugbombardieru https://www.elitefourum.com/t/39762/150 (own 3,168 full-box packs, pooled with Derium 1,008 and Danny Phantump): 5,450 packs. Prism Stars sit in the reverse slot (Elite Fourum's sheet model, PrimetimePokemon, Dripshop). Prism Star 12.46% is measured (burpies 12.17%, sturzflug 12.58%), not the "2 to 3 per box" of older guides. Holo is 1/3 minus the hits (plain Rare is 2 packs in 3 in every Sun & Moon main set: sturzflugbombardieru's direct counts, 66.5 to 67.0% over 1,296 to 4,968 packs per set, plus the mappable-box and code-card reports; see research/second-source-check.md), which lands within 0.2 points of his own holo count. Pack shape: TCGplayer booster box text, Bulbapedia Booster pack (TCG). Full text and every number in data/pullrates.json.
+
+## Products (Elite Trainer Box and 6 more built)
+ETB is 8 packs, filed as `elite-trainer-box` (kind etb, TCGplayer 175511), `eliteTrainerBox` left out of the sealed.json row. Build & Battle Box (smp149 to 152, pick 1, TCGplayer 179423, the Prerelease Kit), Salandit (smp154) and Rowlet (smp153) single blisters, Island Guardians GX Premium Collection and Premium Pin Collection (8 packs, no SM-numbered promo), Flareon GX (smp171, smp174) and Jolteon GX (smp173, smp176) Special Collections. Configured but left out by build_products.py because TCGplayer has no market price: Altaria and Alolan Exeggutor 3 Pack Blisters, Fall 2018 Collector Chest (smp143 to 145), Vaporeon GX Special Collection (smp172, smp175); they appear the day a price exists and the script is re-run. Pack counts of the boxes whose mix is undocumented (Island Guardians, Collector Chest) are the set's own packs: "pack mix approximate". The Eeveelution collections' mix (2 Lost Thunder + Celestial Storm, Guardians Rising, XY Evolutions) is one retailer excerpt, so it is not used.
+Promo finish (`foilAs`): the B&B Box, blister and chest Pokémon `Rare Holo`; Flareon, Jolteon and Eevee GX promos are full arts (checked on the scans), so `Rare Ultra`.
+
+## Oddities
+- Research's `from` for the Eeveelution collections was dropped (one source); Altaria and Exeggutor reprints have no SM number.
+- Prices are TCGplayer's: a Lost Thunder pack is $59.36, the box $1,568.33.
