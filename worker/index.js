@@ -84,7 +84,7 @@ export default {
   // Every 10 minutes (wrangler.toml [triggers]): one small step of recording
   // each set's market prices once a UTC day into D1. See worker/prices.js.
   async scheduled(controller, env, ctx) {
-    ctx.waitUntil(maintainBattles(env).catch(err => console.error('battle maintenance', err)));
+    ctx.waitUntil(maintainBattles(env, Date.now(), { settleLimit: 10 }).catch(err => console.error('battle maintenance', err)));
     ctx.waitUntil(
       recordDailyPrices(env).then(
         (result) => console.log("daily prices", JSON.stringify(result)),
