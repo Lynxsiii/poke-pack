@@ -22,6 +22,155 @@
       "scrydexKey": "SM{n:02d}"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "smp194": {
+      "foilAs": "Rare Holo"
+    },
+    "smp195": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp196": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp197": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp170": {
+      "foilAs": "Rare Holo"
+    },
+    "smp198": {
+      "foilAs": "Rare Holo"
+    },
+    "smp199": {
+      "foilAs": "Rare Holo"
+    },
+    "smp200": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "case-file",
+      "name": "Detective Pikachu Case File",
+      "kind": "collection",
+      "tcgplayerId": 185245,
+      "packs": 2,
+      "promos": [
+        "smp194"
+      ],
+      "note": "Also holds 1 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "special-case-file",
+      "name": "Detective Pikachu Special Case File",
+      "kind": "collection",
+      "tcgplayerId": 190325,
+      "packs": 2,
+      "promos": [
+        "smp194"
+      ],
+      "note": "Also holds 1 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "charizard-gx-case-file",
+      "name": "Detective Pikachu: Charizard-GX Case File",
+      "kind": "collection",
+      "tcgplayerId": 185242,
+      "packs": 4,
+      "promos": [
+        "smp195"
+      ],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "charizard-gx-special-case-file",
+      "name": "Detective Pikachu: Charizard-GX Special Case File",
+      "kind": "collection",
+      "tcgplayerId": 237678,
+      "packs": 5,
+      "promos": [
+        "smp195"
+      ],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "mewtwo-gx-case-file",
+      "name": "Detective Pikachu: Mewtwo-GX Case File",
+      "kind": "collection",
+      "tcgplayerId": 190324,
+      "packs": 4,
+      "promos": [
+        "smp196"
+      ],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "greninja-gx-case-file",
+      "name": "Detective Pikachu: Greninja-GX Case File",
+      "kind": "collection",
+      "tcgplayerId": 185243,
+      "packs": 5,
+      "promos": [
+        "smp197"
+      ],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "collector-chest",
+      "name": "Detective Pikachu: Collector Chest",
+      "kind": "collection",
+      "tcgplayerId": 185244,
+      "packs": 7,
+      "promos": [],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "charizard-tin",
+      "name": "Detective Pikachu Tin (Charizard)",
+      "kind": "tin",
+      "tcgplayerId": 502477,
+      "packs": 4,
+      "promos": [
+        "smp195"
+      ],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "mewtwo-tin",
+      "name": "Detective Pikachu Tin (Mewtwo)",
+      "kind": "tin",
+      "tcgplayerId": 502478,
+      "packs": 4,
+      "promos": [
+        "smp196"
+      ],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "cafe-figure-collection",
+      "name": "Detective Pikachu Cafe Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 264420,
+      "packs": 4,
+      "promos": [
+        "smp170"
+      ],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    },
+    {
+      "id": "on-the-case-figure-collection",
+      "name": "Detective Pikachu On the Case Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 197563,
+      "packs": 3,
+      "promos": [
+        "smp170",
+        "smp198",
+        "smp199",
+        "smp200"
+      ],
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated."
+    }
+  ],
+  "printedTotal": 18
 }

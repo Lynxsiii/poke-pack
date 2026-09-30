@@ -105,6 +105,11 @@ TCGL_INDEX = "https://cdn.malie.io/file/malie-io/tcgl/export/index.json"
 TCGL_PRINT = "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/{path}{kind}.png"
 # TCG Live's key for each promo series prefix.
 TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
+# How a promo series keys its numbers, whatever a set's promoSeries says. The
+# SM Black Star Promos: scrydex files the scan as smp-SM01 under 100 and
+# smp-SM179 above (smp-SM001 is the card back), while pkmn.gg's page key is
+# always three digits (SM001; SM01 is a 404).
+PROMO_FORMATS = {"smp": {"pkmnKey": "SM{n:03d}", "scrydexKey": "SM{n:02d}"}}
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
 MISC = 2374
@@ -237,7 +242,7 @@ def foil_from_tcgl(card: dict) -> str:
 
 
 def split_number(number: str, series: dict) -> tuple[str, int] | None:
-    # An "a" print of a promo (Sun & Moon's smp103a, the gold Lunala-GX) shares its number.
+    # A trailing letter (smp30a, smp103a) is pkmn.gg's second print of a number.
     match = re.fullmatch(r"([a-z]+)(\d+)[a-z]?", number)
     if match and match.group(1) in series:
         return match.group(1), int(match.group(2))
@@ -380,17 +385,18 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         ser = series[prefix]
         base_url = f"https://www.pkmn.gg/series/{ser['series']}/{ser['slug']}"
         # pkmn.gg files the Sword & Shield promos under their printed key (SWSH001).
-        suffix = number[-1] if number[-1].isalpha() else ""
-        page_key = ser.get("pkmnKey", "{n}").format(n=n) + suffix
+        suffix = re.sub(r"^[a-z]+\d+", "", number)
+        fmt = {**ser, **PROMO_FORMATS.get(ser["scrydex"], {})}
+        page_key = fmt.get("pkmnKey", "{n}").format(n=n) + suffix
         detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}{suffix}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
         record["printedNumber"] = f"{ser['printed']} {n:03d}{suffix}"
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
-        # Sun & Moon's pkmn.gg page key is SM001 but scrydex files the card as smp-SM01 (`scrydexKey`).
-        scrydex_key = ser.get("scrydexKey", ser.get("pkmnKey", "{n}")).format(n=n) + suffix
-        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scrydex_key}/large"
-        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scrydex_key}/small"
+        # Sun & Moon's promos are smp-SM01 there but SM001 on pkmn.gg: `scrydexKey`.
+        scry_key = fmt["scrydexKey"].format(n=n) + suffix if fmt.get("scrydexKey") else page_key
+        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scry_key}/large"
+        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scry_key}/small"
         remote = record["image"]
         if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
@@ -525,7 +531,15 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         cards[card_id] = record
 
     promo_ids = {f"{set_id}-{n}" for n in (cfg.get("promoCards") or {}) if n in sold}
-    ordered_records = [cards[c["id"]] for c in records if c["id"] not in promo_ids and not c.get("promo")]
+    # A promo-only print the set's own checklist carries (Crimson Invasion 63a, the
+    # alternate-art Guzzlord-GX) has a real rarity and `promo: true`; it stays.
+    # A set's own box-only reprints ("a" numbers: sm2 60a) are kept with promo: true.
+    ordered_records = [
+        cards[c["id"]]
+        for c in records
+        if c["id"] not in promo_ids
+        and (not c.get("promo") or c.get("rarity") != "Promo" or re.fullmatch(r"\d+a", str(c.get("number"))))
+    ]
     ordered_records += [cards[i] for i in sorted(promo_ids, key=lambda i: cards[i]["number"])]
     data_path.write_text(json.dumps(ordered_records, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     price_history.record(set_id, "cards", card_prices, today)

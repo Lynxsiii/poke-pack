@@ -1,0 +1,220 @@
+{
+  "id": "sm9",
+  "name": "Team Up",
+  "series": "sun-moon",
+  "slug": "team-up",
+  "scrydexId": "sm9",
+  "era": "sm",
+  "artSlug": "team-up",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2377,
+  "skipNumbers": [
+    "152a",
+    "152b"
+  ],
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
+    }
+  },
+  "promoCards": {
+    "smp158": {
+      "foilAs": "Rare Holo"
+    },
+    "smp159": {
+      "foilAs": "Rare Holo"
+    },
+    "smp160": {
+      "foilAs": "Rare Holo"
+    },
+    "smp161": {
+      "foilAs": "Rare Holo"
+    },
+    "smp162": {
+      "foilAs": "Rare Holo"
+    },
+    "smp163": {
+      "foilAs": "Rare Holo"
+    },
+    "smp164": {
+      "foilAs": "Rare Holo"
+    },
+    "smp165": {
+      "foilAs": "Rare Holo"
+    },
+    "smp166": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp167": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp168": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp169": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp177": {
+      "foilAs": "Rare Holo"
+    },
+    "smp178": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 181704,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 183975,
+      "packs": 4,
+      "promos": [
+        "smp158",
+        "smp159",
+        "smp160",
+        "smp161"
+      ],
+      "pick": 1,
+      "note": "Also sold as the Team Up Prerelease Kit (TCGplayer 183975)."
+    },
+    {
+      "id": "deoxys-3-pack-blister",
+      "name": "Deoxys 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 181700,
+      "packs": 3,
+      "promos": [
+        "smp164"
+      ]
+    },
+    {
+      "id": "ultra-necrozma-3-pack-blister",
+      "name": "Ultra Necrozma 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 181701,
+      "packs": 3,
+      "promos": [
+        "smp165"
+      ]
+    },
+    {
+      "id": "mimikyu-single-pack-blister",
+      "name": "Mimikyu Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 181702,
+      "packs": 1,
+      "promos": [
+        "smp163"
+      ]
+    },
+    {
+      "id": "pikachu-single-pack-blister",
+      "name": "Pikachu Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 181703,
+      "packs": 1,
+      "promos": [
+        "smp162"
+      ]
+    },
+    {
+      "id": "gyarados-premium-checklane-blister",
+      "name": "Gyarados Premium Checklane Blister",
+      "kind": "blister",
+      "tcgplayerId": 624521,
+      "packs": 1,
+      "promos": [],
+      "note": "Its two reprint cards (Magikarp, cosmos-holo Gyarados) are not simulated; no SM promo."
+    },
+    {
+      "id": "raichu-premium-checklane-blister",
+      "name": "Raichu Premium Checklane Blister",
+      "kind": "blister",
+      "tcgplayerId": 624522,
+      "packs": 1,
+      "promos": [],
+      "note": "Its two reprint cards (Pikachu, cosmos-holo Raichu) are not simulated; no SM promo."
+    },
+    {
+      "id": "towering-splash-gx-box",
+      "name": "Towering Splash-GX Box",
+      "kind": "collection",
+      "tcgplayerId": 181693,
+      "packs": 4,
+      "promos": [
+        "smp166"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "melmetal-gx-box",
+      "name": "Melmetal-GX Box",
+      "kind": "collection",
+      "tcgplayerId": 185246,
+      "packs": 4,
+      "promos": [
+        "smp177",
+        "smp178"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "tag-team-tin-celebi-venusaur",
+      "name": "TAG TEAM Tin (Celebi & Venusaur-GX)",
+      "kind": "tin",
+      "tcgplayerId": 185256,
+      "packs": 4,
+      "promos": [
+        "smp167"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "tag-team-tin-pikachu-zekrom",
+      "name": "TAG TEAM Tin (Pikachu & Zekrom-GX)",
+      "kind": "tin",
+      "tcgplayerId": 185258,
+      "packs": 4,
+      "promos": [
+        "smp168"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "tag-team-tin-eevee-snorlax",
+      "name": "TAG TEAM Tin (Eevee & Snorlax-GX)",
+      "kind": "tin",
+      "tcgplayerId": 185257,
+      "packs": 4,
+      "promos": [
+        "smp169"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    }
+  ]
+}
