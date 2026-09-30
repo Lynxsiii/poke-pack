@@ -121,6 +121,15 @@ export default {
   },
 };
 
+/**
+ * The casino module reports what a player did through this helper. Selling
+ * winnings is selling cards, so it feeds the same "sold" event and lifetime
+ * counter the market sell does.
+ */
+function recordQuestEvent(env, userId, kind, amount = 1, at = Date.now()) {
+  return recordActivity(env, userId, { event: kind, counter: kind === "sold" ? "sold" : null, amount, at });
+}
+
 export async function handleApi(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   const method = request.method.toUpperCase();
