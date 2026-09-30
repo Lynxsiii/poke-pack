@@ -161,6 +161,14 @@ silver fingerprint recipe of 2026-09-27); Shining Fates' Shiny Vault draws
 `sf-shiny` in the same sheet, the upstream recipes ported over TCG Live's
 native-size etch (`etchHd`), see [sword-shield.md](sword-shield.md).
 
+**Sun & Moon Pokémon-GX, TAG TEAM GX, Prism Star**. The GX and Tag Team
+print their foil over the whole face minus the Pokémon and the rules text
+(TCG Live's map), under a fine "orange peel" relief and a silver border that
+flashes first; Prism Star is a dead black frame with foil only in the art
+window, the rules strip and the diamond (multiplied on, so the strip's text
+stays black). No etch map exists for either. `sm-gx.css`, see
+[sun-moon-gx.md](sun-moon-gx.md).
+
 **Black White Rare (`RAINBOW` / `ETCHED`)**. Monochrome stock, pearl or
 silver etch. White stock cannot be dodged brighter, so relief has to be
 multiplied in (`finishes.css` pearl and ruby).

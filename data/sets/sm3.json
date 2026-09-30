@@ -1,0 +1,274 @@
+{
+  "id": "sm3",
+  "name": "Burning Shadows",
+  "series": "sun-moon",
+  "slug": "burning-shadows",
+  "scrydexId": "sm3",
+  "era": "sm",
+  "artSlug": "burning-shadows",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1957,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Burning Shadows Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 133776,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Burning Shadows Prerelease Kit",
+      "kind": "battle",
+      "tcgplayerId": 139888,
+      "packs": 4,
+      "promos": [
+        "smp046",
+        "smp047",
+        "smp048",
+        "smp049"
+      ],
+      "pick": 1,
+      "note": "Event kit; one promo per kit."
+    },
+    {
+      "id": "jangmo-o-single-pack-blister",
+      "name": "Burning Shadows Single Pack Blister [Jangmo-o]",
+      "kind": "blister",
+      "tcgplayerId": 136597,
+      "packs": 1,
+      "promos": [
+        "smp040"
+      ]
+    },
+    {
+      "id": "komala-single-pack-blister",
+      "name": "Burning Shadows Single Pack Blister [Komala]",
+      "kind": "blister",
+      "tcgplayerId": 136598,
+      "packs": 1,
+      "promos": [
+        "smp041"
+      ]
+    },
+    {
+      "id": "cosmog-3-pack-blister",
+      "name": "Burning Shadows 3 Pack Blister [Cosmog]",
+      "kind": "blister",
+      "tcgplayerId": 136600,
+      "packs": 3,
+      "promos": [
+        "smp042"
+      ]
+    },
+    {
+      "id": "alolan-meowth-3-pack-blister",
+      "name": "Burning Shadows 3 Pack Blister [Alolan Meowth]",
+      "kind": "blister",
+      "tcgplayerId": 136599,
+      "packs": 3,
+      "promos": [
+        "smp043"
+      ]
+    },
+    {
+      "id": "tsareena-gx-box",
+      "name": "Tsareena GX Box",
+      "kind": "collection",
+      "tcgplayerId": 141243,
+      "packs": 4,
+      "promos": [
+        "smp056"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "kommo-o-gx-box",
+      "name": "Kommo-o GX Box",
+      "kind": "collection",
+      "tcgplayerId": 153454,
+      "packs": 4,
+      "promos": [
+        "smp071"
+      ]
+    },
+    {
+      "id": "charizard-gx-premium-collection",
+      "name": "Charizard GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 148154,
+      "packs": 6,
+      "promos": [
+        "smp060"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "team-skull-pin-collection",
+      "name": "Team Skull Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 148417,
+      "packs": 5,
+      "promos": [
+        "smp062",
+        "smp063"
+      ]
+    },
+    {
+      "id": "mysterious-powers-tin-ho-oh",
+      "name": "Mysterious Powers Tin [Ho-Oh GX]",
+      "kind": "tin",
+      "tcgplayerId": 148418,
+      "packs": 4,
+      "promos": [
+        "smp057"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "mysterious-powers-tin-necrozma",
+      "name": "Mysterious Powers Tin [Necrozma GX]",
+      "kind": "tin",
+      "tcgplayerId": 148419,
+      "packs": 4,
+      "promos": [
+        "smp058"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "mysterious-powers-tin-marshadow",
+      "name": "Mysterious Powers Tin [Marshadow GX]",
+      "kind": "tin",
+      "tcgplayerId": 148420,
+      "packs": 4,
+      "promos": [
+        "smp059"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "alolan-raichu-figure-collection",
+      "name": "Alolan Raichu Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 155504,
+      "packs": 4,
+      "promos": [
+        "smp065"
+      ],
+      "note": "Filed under Burning Shadows by TCGplayer though it launched with Crimson Invasion; pack set undocumented. Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "alolan-ninetales-gx-challenge-box",
+      "name": "Alolan Ninetales GX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 218320,
+      "packs": 2,
+      "promos": [],
+      "note": "No SM number."
+    },
+    {
+      "id": "lycanroc-gx-challenge-box",
+      "name": "Lycanroc GX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 218321,
+      "packs": 2,
+      "promos": [
+        "smp014"
+      ],
+      "note": "SM14 also ships in the SM1 Lycanroc GX Box."
+    }
+  ],
+  "promoCards": {
+    "smp014": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Lycanroc-GX"
+    },
+    "smp040": {
+      "foilAs": "Rare Holo",
+      "notes": "Jangmo-o"
+    },
+    "smp041": {
+      "foilAs": "Rare Holo",
+      "notes": "Komala"
+    },
+    "smp042": {
+      "foilAs": "Rare Holo",
+      "notes": "Cosmog"
+    },
+    "smp043": {
+      "foilAs": "Rare Holo",
+      "notes": "Alolan Meowth"
+    },
+    "smp046": {
+      "foilAs": "Rare Holo",
+      "notes": "Seviper"
+    },
+    "smp047": {
+      "foilAs": "Rare Holo",
+      "notes": "Crabominable"
+    },
+    "smp048": {
+      "foilAs": "Rare Holo",
+      "notes": "Zygarde"
+    },
+    "smp049": {
+      "foilAs": "Rare Holo",
+      "notes": "Bewear"
+    },
+    "smp056": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Tsareena-GX"
+    },
+    "smp057": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Ho-Oh-GX"
+    },
+    "smp058": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Necrozma-GX"
+    },
+    "smp059": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Marshadow-GX"
+    },
+    "smp060": {
+      "foilAs": "Rare Ultra",
+      "notes": "Charizard-GX"
+    },
+    "smp062": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Golisopod-GX"
+    },
+    "smp063": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Salazzle-GX"
+    },
+    "smp065": {
+      "foilAs": "Rare Holo",
+      "notes": "Alolan Raichu"
+    },
+    "smp071": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Kommo-o-GX"
+    }
+  }
+}

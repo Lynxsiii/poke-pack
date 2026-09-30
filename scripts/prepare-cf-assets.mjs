@@ -2,7 +2,7 @@
  * Copy only the public site into dist/ so Wrangler does not upload
  * .git (the 123 MiB pack file that failed the first Cloudflare deploy).
  *
- * Cloudflare Workers static assets take at most 20,000 files per deploy.
+ * Cloudflare Workers static assets take at most 20,000 files per deploy on the free plan and 100,000 on Workers Paid (upgraded 2026-09-30).
  * With the Sword & Shield era the public tree passed 24,000, so the small
  * card thumbnails (assets/cards/<set>/<n>-sm.webp, one per scan) stay out
  * of the upload: worker/index.js answers a "-sm.webp" request with the full
@@ -15,7 +15,7 @@ import { join } from "node:path";
 const dest = "dist";
 const publicPaths = ["index.html", "_headers", "css", "js", "data", "assets"];
 const SMALL_SCAN = /(^|[\\/])assets[\\/]cards[\\/].*-sm\.webp$/;
-const MAX_FILES = 20000;
+const MAX_FILES = 100000;
 
 let copied = 0;
 let skipped = 0;

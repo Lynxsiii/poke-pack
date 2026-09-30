@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isSm, isSwsh, smPattern, swshPattern } from "./foil-maps.js?v=3";
+import { foilExtras, isSm, isSwsh, smPattern, swshPattern } from "./foil-maps.js?v=9";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
@@ -956,8 +956,8 @@ function eraYears(sets) {
     .map((set) => String(set.released).match(/\d{4}/)?.[0])
     .filter(Boolean);
   if (!years.length) return "";
-  const newest = years[0];
-  const oldest = years[years.length - 1];
+  const newest = years.reduce((a, b) => (b > a ? b : a));
+  const oldest = years.reduce((a, b) => (b < a ? b : a));
   return newest === oldest ? newest : `${oldest}–${newest}`;
 }
 

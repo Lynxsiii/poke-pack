@@ -1,0 +1,211 @@
+{
+  "id": "sm11",
+  "name": "Unified Minds",
+  "series": "sun-moon",
+  "slug": "unified-minds",
+  "scrydexId": "sm11",
+  "era": "sm",
+  "artSlug": "unified-minds",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2464,
+  "skipNumbers": [
+    "79a",
+    "191a",
+    "206a"
+  ],
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm"
+    }
+  },
+  "promoCards": {
+    "smp191": {
+      "foilAs": "Rare Ultra"
+    },
+    "smp192": {
+      "foilAs": "Rare Ultra"
+    },
+    "smp193": {
+      "foilAs": "Rare Ultra"
+    },
+    "smp202": {
+      "foilAs": "Rare Holo"
+    },
+    "smp203": {
+      "foilAs": "Rare Holo"
+    },
+    "smp204": {
+      "foilAs": "Rare Holo"
+    },
+    "smp205": {
+      "foilAs": "Rare Holo"
+    },
+    "smp206": {
+      "foilAs": "Rare Holo"
+    },
+    "smp207": {
+      "foilAs": "Rare Holo"
+    },
+    "smp208": {
+      "foilAs": "Rare Holo"
+    },
+    "smp209": {
+      "foilAs": "Rare Holo"
+    },
+    "smp216": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp217": {
+      "foilAs": "Rare Holo GX"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 193052,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 195612,
+      "packs": 4,
+      "promos": [
+        "smp202",
+        "smp203",
+        "smp204",
+        "smp205"
+      ],
+      "pick": 1,
+      "note": "One of four prerelease promos, picked at random. The real box also held a 23-card evolution pack, which isn't simulated."
+    },
+    {
+      "id": "stakataka-3-pack-blister",
+      "name": "3 Pack Blister (Stakataka)",
+      "kind": "blister",
+      "tcgplayerId": 191884,
+      "packs": 3,
+      "promos": [
+        "smp209"
+      ]
+    },
+    {
+      "id": "vikavolt-3-pack-blister",
+      "name": "3 Pack Blister (Vikavolt)",
+      "kind": "blister",
+      "tcgplayerId": 191885,
+      "packs": 3,
+      "promos": [
+        "smp208"
+      ]
+    },
+    {
+      "id": "pikachu-single-pack-blister",
+      "name": "Single Pack Blister (Pikachu)",
+      "kind": "blister",
+      "tcgplayerId": 191886,
+      "packs": 1,
+      "promos": [
+        "smp206"
+      ]
+    },
+    {
+      "id": "sudowoodo-single-pack-blister",
+      "name": "Single Pack Blister (Sudowoodo)",
+      "kind": "blister",
+      "tcgplayerId": 191887,
+      "packs": 1,
+      "promos": [
+        "smp207"
+      ]
+    },
+    {
+      "id": "umbreon-premium-checklane-blister",
+      "name": "Premium Checklane Blister (Umbreon)",
+      "kind": "blister",
+      "tcgplayerId": 229579,
+      "packs": 1,
+      "promos": [],
+      "note": "Two reprint cards: a Cosmos holo Lost Thunder Umbreon and an Ultra Prism Eevee (which of the two prints isn't documented)."
+    },
+    {
+      "id": "espeon-premium-checklane-blister",
+      "name": "Premium Checklane Blister (Espeon)",
+      "kind": "blister",
+      "tcgplayerId": 229580,
+      "packs": 1,
+      "promos": [],
+      "note": "Two reprint cards: a Cosmos holo Lost Thunder Espeon and an Ultra Prism Eevee (which of the two prints isn't documented)."
+    },
+    {
+      "id": "power-partnership-tin-mewtwo-mew",
+      "name": "Power Partnership Tin (Mewtwo & Mew-GX)",
+      "kind": "tin",
+      "tcgplayerId": 194735,
+      "packs": 4,
+      "promos": [
+        "smp191"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "power-partnership-tin-lucario-melmetal",
+      "name": "Power Partnership Tin (Lucario & Melmetal-GX)",
+      "kind": "tin",
+      "tcgplayerId": 194736,
+      "packs": 4,
+      "promos": [
+        "smp192"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "power-partnership-tin-garchomp-giratina",
+      "name": "Power Partnership Tin (Garchomp & Giratina-GX)",
+      "kind": "tin",
+      "tcgplayerId": 194737,
+      "packs": 4,
+      "promos": [
+        "smp193"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "porygon-z-gx-box",
+      "name": "Porygon-Z-GX Box",
+      "kind": "collection",
+      "tcgplayerId": 198521,
+      "packs": 4,
+      "promos": [
+        "smp216"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "pale-moon-gx-box",
+      "name": "Pale Moon-GX Box",
+      "kind": "collection",
+      "tcgplayerId": 198528,
+      "packs": 4,
+      "promos": [
+        "smp217"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    }
+  ]
+}
