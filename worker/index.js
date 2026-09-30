@@ -41,7 +41,7 @@ import { handleBattles, maintainBattles } from "./battles.js";
 import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
-import { ensureGradingSchema, gradedSlabs, handleGrading } from "./grading.js";
+import { ensureGradingSchema, gradedCounts, gradedSlabs, handleGrading } from "./grading.js";
 import {
   achievementById,
   achievementContext,
@@ -146,7 +146,7 @@ export async function handleApi(request, env, url) {
 
   if (path.startsWith('/api/casino')) {
     return handleCasino(path, method, request, env, {
-      json, requireUser, readJson, loadSave, loadSetCards, findCatalogCard, inventoryMap, reconcileBinder, parseJson, ensureSocialSchema, recordQuestEvent,
+      json, requireUser, readJson, loadSave, loadSetCards, findCatalogCard, inventoryMap, reconcileBinder, ownedWithSlabs, parseJson, ensureSocialSchema, recordQuestEvent,
     });
   }
 
@@ -1014,10 +1014,10 @@ async function sell(request, env) {
   const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?")
     .bind(auth.user.id)
     .first();
-  const binder = reconcileBinder(parseJson(profile?.binder, emptyBinder()), {
+  const binder = reconcileBinder(parseJson(profile?.binder, emptyBinder()), await ownedWithSlabs(env, auth.user.id, {
     ...((await inventoryMap(env, auth.user.id)).collection),
     [cardId]: nextQty,
-  });
+  }));
 
   // Awarding a battle can change this row between the read and write. Compare
   // its exact snapshot before paying; D1 batch is the credit/decrement transaction.
@@ -1060,7 +1060,7 @@ async function sellDuplicates(request, env) {
   for (const id of ids) collection[id] = 1;
   const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?")
     .bind(auth.user.id).first();
-  const binder = reconcileBinder(parseJson(profile?.binder, emptyBinder()), collection);
+  const binder = reconcileBinder(parseJson(profile?.binder, emptyBinder()), await ownedWithSlabs(env, auth.user.id, collection));
   // Compare every priced row, not just aggregate copies (different cards have
   // different values). JSON keeps arbitrarily large sets below D1's bind limit.
   const snapshot = JSON.stringify(rows);
@@ -1090,7 +1090,7 @@ async function putBinder(request, env) {
   if (!Array.isArray(body?.binder)) return json({ error: "Binder must be a list of pockets." }, 400);
   if (body.binder.length > BINDER_MAX_SLOTS) return json({ error: "Binder is too large." }, 400);
 
-  const { collection } = await inventoryMap(env, auth.user.id);
+  const collection = await ownedWithSlabs(env, auth.user.id, (await inventoryMap(env, auth.user.id)).collection);
   const binder = normalizeBinder(body.binder);
   const held = {};
   for (const slot of binder) {
@@ -1469,6 +1469,13 @@ function normalizeBinder(raw) {
     if (!slot || typeof slot !== "object" || !safeCardId(slot.id)) return null;
     return { id: String(slot.id), reverse: Boolean(slot.reverse) };
   });
+}
+
+/** A raw collection map plus one per active slab: what a binder pocket may hold. */
+async function ownedWithSlabs(env, userId, collection) {
+  const merged = { ...(collection || {}) };
+  for (const [id, n] of Object.entries(await gradedCounts(env, userId))) merged[id] = (merged[id] || 0) + n;
+  return merged;
 }
 
 function reconcileBinder(binder, collection) {

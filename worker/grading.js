@@ -160,6 +160,18 @@ export async function gradedSlabs(env, userId, deps) {
   }
 }
 
+/** Active slabs per card id, for anything that budgets a binder pocket against
+    what a player owns: a copy in a slab is still theirs. */
+export async function gradedCounts(env, userId) {
+  await ensureGradingSchema(env);
+  const res = await env.DB.prepare(
+    `SELECT card_id AS id, COUNT(*) AS n FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' GROUP BY card_id`
+  ).bind(userId).all();
+  const out = {};
+  for (const row of res.results || []) out[row.id] = Number(row.n) || 0;
+  return out;
+}
+
 /** Guard stock: owned units per guard (user_gear) and how many active slabs wear each. */
 export async function guardSummary(env, userId) {
   await ensureGearSchema(env);
