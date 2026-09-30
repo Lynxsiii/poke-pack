@@ -1,0 +1,28 @@
+{
+  "id": "sm4",
+  "name": "Crimson Invasion",
+  "series": "sun-moon",
+  "slug": "crimson-invasion",
+  "scrydexId": "sm4",
+  "era": "sm",
+  "artSlug": "crimson-invasion",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2071,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "scanKey": "SM{n:02d}",
+      "era": "sm"
+    }
+  }
+}
