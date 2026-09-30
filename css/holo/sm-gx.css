@@ -1,20 +1,351 @@
 /*
- * Sun & Moon era: GX, TAG TEAM GX and Prism Star.
+ * Sun & Moon era: Pokémon-GX, TAG TEAM GX and Prism Star.
  *
- * Draws: sm-gx (`foil-ex sm-gx`), sm-tag (TAG TEAM, rides on sm-gx or sm-fa) and sm-prism (`foil-holo sm-prism`).
- * Classes come from smPattern() in js/sm-foil.js; `era-sm` marks every
- * Sun & Moon print (js/foil-maps.js). Research and photos live in
- * .claude/skills/card-textures/reference/sun-moon.md and
- * /mnt/project-files/sun-moon/texture-refs. Follow SKILL.md: realism first,
- * TCG Live foil maps, no outline or box-shadow on `.tcg`, cap any colour
- * dodge with a closing contrast(0.8), and run foil_coverage.mjs plus a
- * WebKit render at phone size before merging.
+ * Draws: sm-gx (`foil-ex sm-gx`, the regular-frame GX), sm-tag (TAG TEAM,
+ * rides on sm-gx; the full-art Tag Team `sm-fa sm-tag` belongs to
+ * sm-fullart.css and is never matched here) and sm-prism (`foil-holo
+ * sm-prism`). A Hidden Fates shiny GX is `sm-shiny sm-gx`: sm-shiny.css owns
+ * it, so every rule below says :not(.sm-shiny).
  *
- * Specificity: repeat `era-sm` five times in every selector, like swsh.css
- * (body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo .foil),
- * so the rule beats the shared sheets; a resting card paints `.foil` alone.
- * Bump this sheet's ?v= tag in index.html on every change.
+ * Photos (/mnt/project-files/sun-moon/texture-refs/gx-tag-prism, SOURCES.txt;
+ * write-up in .claude/skills/card-textures/reference/sun-moon-gx.md):
+ * - GX and TAG TEAM GX: the whole face is foil (frame and art, text and the
+ *   Pokémon excepted: TCG Live's map is black there), under a crumpled
+ *   "orange peel" relief of irregular dimples with no direction. A broad
+ *   rainbow beam rising to the right sweeps the art and the silver border
+ *   flashes the loudest colour; a specular pool with the dimples lit sits
+ *   around the lamp. There is no etch map for any of it: the texture is the
+ *   foil itself, so it is drawn as a soft facet tile (assets/foil/sm-peel.webp,
+ *   make_sm_peel.py) that only adds light, never a grating.
+ * - Prism Star: dead black frame; foil only in the art window behind the
+ *   Pokémon, the rules strip, and the big diamond in the text box (its star
+ *   cut-out matte). The diamond is a silver sheet with broad straight
+ *   rainbow bars at about 60 degrees; the window is the wavy gold and
+ *   rainbow foil. TCG Live's map draws exactly those areas.
  *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
+ * Follows swsh.css's Pokémon V: a colour-dodged sun-pillar stack masked by
+ * the card's art and TCG Live foil map, closing contrast(0.8) on every
+ * dodged chain (Safari divides by zero otherwise), hairline-free. `era-sm`
+ * is repeated five times so a rule carries ten classes; a resting card
+ * paints `.foil` alone. Bump this sheet's ?v= in index.html on every change.
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-gx:not(.sm-shiny), .sm-prism) {
+  --smg-peel: url("/assets/foil/sm-peel.webp");
+  --smg-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* ---- Shared shape ---------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-gx:not(.sm-shiny), .sm-prism) .foil {
+  background-repeat: repeat;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-gx:not(.sm-shiny), .sm-prism):not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-gx:not(.sm-shiny), .sm-prism) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-gx:not(.sm-shiny), .sm-prism) .foil::after {
+  /* Clear what the older recipes put here; each finish sets its own. */
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-gx:not(.sm-shiny), .sm-prism) .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Pokémon-GX and TAG TEAM GX ---------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny) {
+  --g-space: 5%;
+  --g-pillar: repeating-linear-gradient(0deg,
+    var(--sunpillar-clr-1) calc(var(--g-space) * 1),
+    var(--sunpillar-clr-2) calc(var(--g-space) * 2),
+    var(--sunpillar-clr-3) calc(var(--g-space) * 3),
+    var(--sunpillar-clr-4) calc(var(--g-space) * 4),
+    var(--sunpillar-clr-5) calc(var(--g-space) * 5),
+    var(--sunpillar-clr-6) calc(var(--g-space) * 6),
+    var(--sunpillar-clr-1) calc(var(--g-space) * 7));
+  /* Broad beams rising to the right, about one and a half to a card: the
+     Espeon-GX photo shows one major beam and a paler second, never a hatch. */
+  --g-beams: repeating-linear-gradient(150deg,
+    #0e152e 0%, hsl(180, 10%, 54%) 9%, hsl(185, 32%, 68%) 16%,
+    hsl(180, 10%, 54%) 23%, #0e152e 32%, #0e152e 46%);
+  --g-dim: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 0%, 0.1) 12%, hsla(0, 0%, 0%, 0.15) 20%, hsla(0, 0%, 0%, 0.25) 120%);
+  --g-floor: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  --g-pos: 0% var(--background-y),
+    calc(var(--background-x) + (var(--background-y) * 0.2)) var(--background-y),
+    var(--background-x) var(--background-y);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny) .foil {
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(#000, #000),
+    var(--g-pillar), var(--g-beams), var(--g-dim);
+  background-size: cover, cover, 200% 700%, 200% 100%, 200% 100%;
+  background-position: center, center, var(--g-pos);
+  background-blend-mode: soft-light, soft-light, color, hard-light, normal;
+  /* Closing contrast(0.8): dodge-safe (Safari divides by zero at 1.0). */
+  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.72)) contrast(2.3) saturate(1.8) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* With TCG Live's map: the Pokémon and the rules text stay matte, and the
+   light pool scales the rest (floor 40%, so the far corner still shines). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny).has-foil-map .foil {
+  --g-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 30%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.4) 100%);
+  -webkit-mask-image: var(--art), var(--foil-map), var(--g-light);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--g-light);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny):not(.lit):not(.settling) .foil {
+  filter: brightness(0.5) contrast(2.5) saturate(0.35);
+}
+/* The second copy sliding the other way, exclusion: colour flips where the
+   two cross, so the rainbow is not one ramp sliding past. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny) .foil::after {
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(#000, #000),
+    var(--g-pillar), var(--g-beams), var(--g-dim);
+  background-size: cover, cover, 200% 400%, 130% 100%, 200% 100%;
+  background-position: center, center,
+    0% var(--background-y),
+    calc(100% - (var(--background-x) + (var(--background-y) * 0.2))) calc(var(--background-y) * -1),
+    var(--background-x) var(--background-y);
+  background-blend-mode: soft-light, soft-light, color, hard-light, normal;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(1.66) saturate(1);
+  mix-blend-mode: exclusion;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsla(210, 3%, 54%, 0.33) 45%, hsla(0, 0%, 20%, 0.9) 130%);
+  background-size: 120% 150%;
+  background-position: center;
+  mix-blend-mode: hard-light;
+  filter: brightness(0.9) contrast(1.6);
+  opacity: calc(var(--card-opacity) * 0.55);
+  clip-path: none;
+  border-radius: 0;
+}
+/* The varnish sits on the foil, not on the rules text or the Pokémon: the
+   map (floor 30% so the ink still takes a little gloss) cuts it. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny).has-foil-map .glare {
+  -webkit-mask-image: var(--art), var(--foil-map), var(--g-floor);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--g-floor);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* The peel: the crumpled foil's dimples, lit where the lamp is. Light only
+   (normal blend of white), over the card, the Pokémon's gloss included. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.3) 28%, hsla(0, 0%, 100%, 0.08) 65%, hsla(0, 0%, 100%, 0.02) 100%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--smg-peel);
+  mask-image: var(--smg-peel);
+  -webkit-mask-size: 55% auto;
+  mask-size: 55% auto;
+  -webkit-mask-position: var(--smg-seed);
+  mask-position: var(--smg-seed);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.5);
+}
+/* The silver border: the loudest colour on the real card (Espeon-GX and
+   Solgaleo & Lunala-GX photos flash rainbow along the rim first). A ring
+   about 3.4% wide, cut from the card by an inset box, carrying the stack at
+   a hotter setting. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny) .foil::before {
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(#000, #000),
+    var(--g-pillar), var(--g-beams), var(--g-dim);
+  background-size: cover, cover, 200% 500%, 200% 100%, 200% 100%;
+  background-position: center, center,
+    0% calc(var(--background-y) * 1.4),
+    calc(100% - var(--background-x)) var(--background-y),
+    var(--background-x) var(--background-y);
+  background-blend-mode: soft-light, soft-light, color, hard-light, normal;
+  filter: brightness(1.15) contrast(1.4) saturate(1.6);
+  /* The ring is an even-odd polygon (outer box, inner box): gradient layers
+     composited into a ring were ignored by Playwright's WebKit, a clip-path
+     holds in both engines. The scan's alpha still rounds the corners. */
+  clip-path: polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%, 0 0, 3.4% 2.4%, 96.6% 2.4%, 96.6% 97.6%, 3.4% 97.6%, 3.4% 2.4%);
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* ---- Prism Star ------------------------------------------------------------------
+   Foil only where TCG Live's map says: the art window behind the Pokémon,
+   the rules strip and the diamond in the text box (its star cut out). The
+   black frame is matte in every photo (Celebi, Ditto, Lunala), though the
+   map marks the card's outer 3.5% as foil, so an inset box cuts it.
+   The window and strip are dodged rainbow foil (.foil, the top of the card
+   down to the gate). The diamond is a silver sheet with broad straight
+   rainbow bars at about 60 degrees, hues side by side (Ditto and Celebi:
+   blue, green, magenta, orange); its scan is pale silver, where a colour
+   dodge can only reach white, so its bars are multiplied on instead
+   (.glare, below the gate) and the white specular rides on top.
+   The gate is the row where the strip ends: 51% on a Pokémon, 52.6% on a
+   Trainer, 64.6% on an Energy (measured on the maps, 2026-09-30). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism {
+  --p-space: 3.6%;
+  --p-hues: repeating-linear-gradient(150deg,
+    var(--sunpillar-clr-1) calc(var(--p-space) * 1),
+    var(--sunpillar-clr-2) calc(var(--p-space) * 2),
+    var(--sunpillar-clr-3) calc(var(--p-space) * 3),
+    var(--sunpillar-clr-4) calc(var(--p-space) * 4),
+    var(--sunpillar-clr-5) calc(var(--p-space) * 5),
+    var(--sunpillar-clr-6) calc(var(--p-space) * 6),
+    var(--sunpillar-clr-1) calc(var(--p-space) * 7));
+  --p-bars: repeating-linear-gradient(150deg,
+    #0e152e 0%, hsl(180, 10%, 54%) 6%, hsl(185, 32%, 70%) 10%,
+    hsl(180, 10%, 54%) 14%, #0e152e 20%, #0e152e 34%);
+  --p-dim: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 0%, 0.05) 12%, hsla(0, 0%, 0%, 0.12) 25%, hsla(0, 0%, 0%, 0.25) 120%);
+  --p-gate: 51%;
+  --p-floor: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  --p-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, #000 30%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.55) 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.foil-trainer { --p-gate: 52.6%; }
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.foil-energy { --p-gate: 64.6%; }
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .foil {
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(#000, #000),
+    var(--p-hues), var(--p-bars), var(--p-dim);
+  background-size: cover, cover, 300% 300%, 220% 220%, 200% 100%;
+  background-position: center, center,
+    var(--background-x) var(--background-y),
+    calc(100% - var(--background-x)) calc(100% - var(--background-y)),
+    var(--background-x) var(--background-y);
+  background-blend-mode: soft-light, soft-light, color, hard-light, normal;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.64)) contrast(2.2) saturate(1.2) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  /* Above the gate, inside the frame: clip-path, because gradient layers
+     composited into the mask were ignored by Playwright's WebKit. */
+  clip-path: inset(2.6% 3.6% calc(100% - var(--p-gate)) 3.6%);
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--p-light);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--art), var(--foil-map), var(--p-light);
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism:not(.lit):not(.settling) .foil {
+  filter: brightness(0.55) contrast(2.4) saturate(0.4);
+}
+/* The same ramp sliding the other way: the hues flip where the two cross. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .foil::after {
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(#000, #000),
+    var(--p-hues), var(--p-bars), var(--p-dim);
+  background-size: cover, cover, 260% 260%, 180% 180%, 200% 100%;
+  background-position: center, center,
+    calc(100% - var(--background-x)) var(--background-y),
+    var(--background-x) calc(100% - var(--background-y)),
+    var(--background-x) var(--background-y);
+  background-blend-mode: soft-light, soft-light, color, hard-light, normal;
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(1.66) saturate(1);
+  mix-blend-mode: exclusion;
+}
+/* The diamond: multiplied rainbow bars, only below the gate, inside the
+   map. Bars lighten towards the lamp (the sheet is brightest where it
+   faces the light) and stay at 60% or above elsewhere, so the silver never
+   goes grey. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .glare {
+  background-image: var(--p-hues);
+  background-size: 300% 300%;
+  background-position: var(--background-x) var(--background-y);
+  background-repeat: repeat;
+  mix-blend-mode: multiply;
+  filter: saturate(1.3) brightness(1.22);
+  opacity: calc(var(--card-opacity) * 0.85);
+  clip-path: inset(var(--p-gate) 3.6% 2.6% 3.6%);
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* Sparkle in the foil (the window's gold grain) and the diamond's white
+   specular, lit near the lamp, only on the foil the map names. Light only. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.3) 28%, hsla(0, 0%, 100%, 0.08) 65%, hsla(0, 0%, 100%, 0.02) 100%);
+  background-size: 100% 100%;
+  clip-path: inset(2.6% 3.6%);
+  -webkit-mask-image: var(--smg-peel), var(--foil-map);
+  mask-image: var(--smg-peel), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-size: 55% auto, 100% 100%;
+  mask-size: 55% auto, 100% 100%;
+  -webkit-mask-position: var(--smg-seed), center;
+  mask-position: var(--smg-seed), center;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  mask-mode: alpha;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.5);
+}
