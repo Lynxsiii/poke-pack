@@ -135,7 +135,7 @@ export function createStakePicker(ctx) {
       meter.dataset.state = total ? "in" : "low";
       const w = total ? matchWindow(total) : null;
       meter.innerHTML = `<div class="cs-meter-fig">${fig}</div>
-        <p class="cs-meter-note">${w ? `A challenger can match between ${coins(w.min / 100)} and ${coins(w.max / 100)}.` : "Tap cards to put them up. The cards leave your collection until the flip is over."}</p>`;
+        <p class="cs-meter-note">${state.hint ? state.hint(total / 100) : w ? `A challenger can match between ${coins(w.min / 100)} and ${coins(w.max / 100)}.` : `Tap cards to put them up. The cards leave your collection until the ${state.noun} is over.`}</p>`;
     }
     const ok = t ? total >= cents(t.min) && total <= cents(t.max) : total >= (state.minValue || 10);
     const btn = root.querySelector("[data-confirm]");
@@ -181,7 +181,7 @@ export function createStakePicker(ctx) {
     paintMeter();
     setError("");
     try {
-      await state.onConfirm([...state.picked].map(([id, qty]) => ({ id, qty })), totalCents() / 100);
+      await state.onConfirm([...state.picked].map(([id, qty]) => ({ id, qty })), totalCents() / 100, { ...state.choices });
       close();
     } catch (err) {
       state.busy = false;
@@ -198,7 +198,6 @@ export function createStakePicker(ctx) {
     let out = attempt((e) => Math.max(0, e.owned - 1));
     if (!out.ok) out = attempt((e) => e.owned);
     state.picked = out.picked;
-    state.scope = state.scope === "picked" ? "picked" : state.scope;
     state.shown = PAGE;
     paintTools();
     paintGrid();
@@ -211,7 +210,8 @@ export function createStakePicker(ctx) {
     returnFocus = document.activeElement;
     state = {
       target: opts.target || null, minValue: opts.minValue || 10, confirmLabel: opts.confirmLabel || (() => "Confirm"),
-      busyLabel: opts.busyLabel, onConfirm: opts.onConfirm, entries: [], byId: new Map(), picked: new Map(),
+      busyLabel: opts.busyLabel, onConfirm: opts.onConfirm, hint: opts.hint || null, noun: opts.noun || "flip", entries: [], byId: new Map(), picked: new Map(),
+      choices: Object.fromEntries((opts.options || []).map((o) => [o.key, o.value])),
       scope: "dupes", sort: "value", query: "", shown: PAGE, loading: true, busy: false,
     };
     root = document.createElement("div");
@@ -224,6 +224,7 @@ export function createStakePicker(ctx) {
         </header>
         <div class="cs-meter" data-state="low"></div>
         <div class="cs-tools">
+          ${(opts.options || []).map((o) => `<div class="cs-opt"><span>${esc(o.label)}</span><div class="cs-seg" role="group" aria-label="${esc(o.label)}" data-option="${esc(o.key)}">${o.values.map((v) => `<button type="button" data-optval="${esc(v)}" class="${String(v) === String(o.value) ? "on" : ""}">${esc(v)}</button>`).join("")}</div></div>`).join("")}
           <label class="cs-search">${icon("search")}<input type="search" inputmode="search" placeholder="Search your cards" autocomplete="off" enterkeyhint="search" /></label>
           <div class="cs-seg" role="group" aria-label="Which cards">
             <button type="button" data-scope="dupes">Duplicates</button><button type="button" data-scope="all">Everything</button><button type="button" data-scope="picked">Picked</button>
@@ -252,6 +253,13 @@ export function createStakePicker(ctx) {
       if (add) return change(add.dataset.add, 1);
       const less = e.target.closest("[data-less]");
       if (less) return change(less.dataset.less, -1);
+      const optval = e.target.closest("[data-optval]");
+      if (optval) {
+        const group = optval.closest("[data-option]");
+        state.choices[group.dataset.option] = optval.dataset.optval;
+        group.querySelectorAll("[data-optval]").forEach((b) => b.classList.toggle("on", b === optval));
+        return;
+      }
       const scope = e.target.closest("[data-scope]");
       if (scope) { state.scope = scope.dataset.scope; state.shown = PAGE; paintTools(); paintGrid(); return; }
       const sort = e.target.closest("[data-sort]");
