@@ -1,0 +1,34 @@
+{
+  "id": "sm8",
+  "name": "Lost Thunder",
+  "series": "sun-moon",
+  "slug": "lost-thunder",
+  "scrydexId": "sm8",
+  "era": "sm",
+  "artSlug": "lost-thunder",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2328,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "scanKey": "SM{n:02d}",
+      "era": "sm"
+    }
+  },
+  "excludeNumbers": [
+    "172a",
+    "187a",
+    "188a",
+    "189a"
+  ]
+}

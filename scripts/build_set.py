@@ -361,6 +361,10 @@ def build(set_id: str, refresh: bool) -> int:
             key = str(row.get("numberKey") or number).strip()
             if not number or key in seen:
                 continue
+            # `excludeNumbers`: league/promo reprints pkmn.gg files under the set
+            # (Lost Thunder 172a, Team Up 152a) that no booster pack holds.
+            if number in (cfg.get("excludeNumbers") or []):
+                continue
             seen.add(key)
             detail = page_data(fetch(f"{base}/{key}", f"{tag}-{key}", refresh))
             if isinstance(detail, list):  # a listing page came back; skip rather than guess
