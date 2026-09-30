@@ -53,24 +53,76 @@ END`,
 WHERE bot = 1 AND payer_id = 'free'`,
 ];
 const FREE_BOT_OBJECTS = ['battle_seat_refund', 'battle_seat_validate', 'battle_seat_debit', 'battle_bot_persona'];
+// The same DDL as worker/migrations/0014_fast_settlement.sql: the award trigger
+// with each JSON value read once. 0012's version re-parsed every allocation per
+// card and joined every round to every round, which production D1 refused for
+// a big battle (SQLITE_NOMEM, 2026-09-30). Applied like FREE_BOT_DDL: one atomic batch, once per isolate,
+// recognised by the LIMIT -1 subqueries.
+export const AWARD_DDL = [
+  'DROP TRIGGER IF EXISTS battle_settle_award',
+  `CREATE TRIGGER battle_settle_award AFTER INSERT ON battle_settlements BEGIN
+  UPDATE battles SET status = 'finished' WHERE id = NEW.battle_id;
+  INSERT INTO cards(user_id, card_id, qty, reverse_qty)
+  SELECT al.uid, json_extract(c.value, '$.id'), COUNT(*), SUM(COALESCE(json_extract(c.value, '$.reverse'), 0))
+  FROM (SELECT json_extract(a.value, '$.userId') AS uid, json_extract(a.value, '$.cards') AS cards
+    FROM battles b, json_each(b.result, '$.allocations') a WHERE b.id = NEW.battle_id LIMIT -1) al,
+    json_each(al.cards) c
+  WHERE al.uid IS NOT NULL
+  GROUP BY al.uid, json_extract(c.value, '$.id')
+  ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + excluded.qty,
+    reverse_qty = cards.reverse_qty + excluded.reverse_qty;
+  UPDATE profiles SET packs_opened = packs_opened + (
+    SELECT COUNT(*) FROM battles b, json_each(b.plan) r
+    WHERE b.id = NEW.battle_id AND json_extract(r.value, '$.kind') = 'pack'
+  ), pulls = pulls + COALESCE((
+    SELECT SUM(pu.n) FROM (SELECT json_extract(p.value, '$.seat') AS seat, json_array_length(p.value, '$.cards') AS n
+      FROM battles b, json_each(b.outcomes) r, json_each(r.value, '$.pulls') p WHERE b.id = NEW.battle_id LIMIT -1) pu,
+      battle_seats s
+    WHERE s.battle_id = NEW.battle_id AND s.user_id = profiles.user_id AND s.seat = pu.seat
+  ), 0)
+  WHERE user_id IN (SELECT user_id FROM battle_seats WHERE battle_id = NEW.battle_id AND bot = 0);
+  INSERT INTO pack_log(user_id, set_id, wrapper_id, cost, cards, at)
+  SELECT s.user_id, pl.set_id, pl.wrapper_id, 0, pu.cards, NEW.at
+  FROM (SELECT json_extract(plan.value, '$.index') AS idx, json_extract(plan.value, '$.setId') AS set_id,
+      json_extract(plan.value, '$.wrapperId') AS wrapper_id
+    FROM battles b, json_each(b.plan) plan
+    WHERE b.id = NEW.battle_id AND json_extract(plan.value, '$.kind') = 'pack' LIMIT -1) pl,
+    (SELECT json_extract(r.value, '$.index') AS idx, json_extract(p.value, '$.seat') AS seat,
+      json_extract(p.value, '$.cards') AS cards
+    FROM battles b, json_each(b.outcomes) r, json_each(r.value, '$.pulls') p WHERE b.id = NEW.battle_id LIMIT -1) pu,
+    battle_seats s
+  WHERE pu.idx = pl.idx AND s.battle_id = NEW.battle_id AND s.seat = pu.seat AND s.bot = 0;
+  UPDATE users SET last_played = NEW.at WHERE id IN
+    (SELECT user_id FROM battle_seats WHERE battle_id = NEW.battle_id AND bot = 0);
+END`,
+];
+const AWARD_MARK = 'LIMIT -1';
 let battleSchemaReady = false;
 /** Tests only: forget the per-isolate cache so another database is checked. */
 export const resetBattleSchemaCache = () => { battleSchemaReady = false; };
 /**
- * Bring the seat triggers to 0013 once per isolate (one cheap sqlite_master
- * read after that the flag short-circuits). Only the presence of the 'free'
- * rule is checked, never exact text, so a later migration that rewrites these
- * triggers (keeping the rule) is never reverted. Resolves false while the 0012
+ * Bring the seat triggers to 0013 and the award trigger to 0014 once per
+ * isolate (one cheap sqlite_master read; after that the flag short-circuits).
+ * Only the presence of the 'free' rule and the LIMIT -1 mark is checked, never
+ * exact text, so a later migration that rewrites these triggers (keeping them)
+ * is never reverted. Resolves false while the 0012
  * tables are missing or the upgrade failed; the caller then refuses bots.
  */
 export async function ensureBattleSchema(env) {
   if (battleSchemaReady) return true;
   try {
+    const names = [...FREE_BOT_OBJECTS, 'battle_settle_award'];
     const rows = (await env.DB.prepare(`SELECT name, sql FROM sqlite_master WHERE type IN ('trigger','index')
-      AND name IN (${FREE_BOT_OBJECTS.map(() => '?').join(',')})`).bind(...FREE_BOT_OBJECTS).all()).results || [];
+      AND name IN (${names.map(() => '?').join(',')})`).bind(...names).all()).results || [];
     if (!rows.some(r => r.name === 'battle_seat_validate')) return false; // 0012 not applied yet
     const current = FREE_BOT_OBJECTS.every(name => rows.some(r => r.name === name && String(r.sql).includes(`'${FREE_PAYER}'`)));
     if (!current) await env.DB.batch(FREE_BOT_DDL.map(sql => env.DB.prepare(sql)));
+    const award = rows.find(r => r.name === 'battle_settle_award');
+    // Bots don't depend on this one: a failure is logged and retried next isolate.
+    if (!award || !String(award.sql).includes(AWARD_MARK)) {
+      try { await env.DB.batch(AWARD_DDL.map(sql => env.DB.prepare(sql))); }
+      catch (err) { console.error('ensureBattleSchema: award trigger', err); }
+    }
     battleSchemaReady = true;
     return true;
   } catch (err) {
