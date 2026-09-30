@@ -86,7 +86,7 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
-import { initBattles } from "./battles.js";
+import { initBattles } from "./battles.js?v=2";
 import { initCasino } from "./casino.js";
 
 const state = loadState();
