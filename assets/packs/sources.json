@@ -807,6 +807,69 @@
           "file": "sm75/pack-3-v2.avif"
         }
       ]
+    },
+    "sm115": {
+      "name": "Hidden Fates",
+      "slug": "hidden-fates",
+      "packs": [
+        {
+          "id": "mew",
+          "remote": "hidden-fates-pack-0.avif",
+          "file": "sm115/pack-0.avif"
+        },
+        {
+          "id": "legendary-birds",
+          "remote": "hidden-fates-pack-1.avif",
+          "file": "sm115/pack-1.avif"
+        },
+        {
+          "id": "shiny-mewtwo",
+          "remote": "hidden-fates-pack-2.avif",
+          "file": "sm115/pack-2.avif"
+        },
+        {
+          "id": "shiny-charizard",
+          "remote": "hidden-fates-pack-3.avif",
+          "file": "sm115/pack-3.avif"
+        }
+      ]
+    },
+    "sm12": {
+      "name": "Cosmic Eclipse",
+      "slug": "cosmic-eclipse",
+      "packs": [
+        {
+          "id": "togepi-cleffa-igglybuff",
+          "remote": "cosmic-eclipse-pack-0.avif",
+          "file": "sm12/pack-0.avif"
+        },
+        {
+          "id": "solgaleo-lunala",
+          "remote": "cosmic-eclipse-pack-1.avif",
+          "file": "sm12/pack-1.avif"
+        },
+        {
+          "id": "blastoise-piplup",
+          "remote": "cosmic-eclipse-pack-2.avif",
+          "file": "sm12/pack-2.avif"
+        },
+        {
+          "id": "arceus-dialga-palkia",
+          "remote": "cosmic-eclipse-pack-3.avif",
+          "file": "sm12/pack-3.avif"
+        }
+      ]
+    },
+    "det1": {
+      "name": "Detective Pikachu",
+      "slug": "detective-pikachu",
+      "packs": [
+        {
+          "id": "poke-ball",
+          "remote": "detective-pikachu-pack-0.avif",
+          "file": "det1/pack-0.avif"
+        }
+      ]
     }
   }
 }
