@@ -2325,7 +2325,9 @@
     "foilMap": "assets/foil/maps/sm115/SV1.webp",
     "etchMap": "assets/foil/maps/sm115/SV1-etch.webp",
     "tcgplayerId": 197738,
-    "market": 9.92
+    "market": 9.92,
+    "etchAngle": "assets/foil/maps/sm115/SV1-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV1-etch-arc.webp"
   },
   {
     "id": "sm115-SV2",
@@ -2368,7 +2370,9 @@
     "foilMap": "assets/foil/maps/sm115/SV2.webp",
     "etchMap": "assets/foil/maps/sm115/SV2-etch.webp",
     "tcgplayerId": 197739,
-    "market": 6.98
+    "market": 6.98,
+    "etchAngle": "assets/foil/maps/sm115/SV2-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV2-etch-arc.webp"
   },
   {
     "id": "sm115-SV3",
@@ -2413,7 +2417,9 @@
     "foilMap": "assets/foil/maps/sm115/SV3.webp",
     "etchMap": "assets/foil/maps/sm115/SV3-etch.webp",
     "tcgplayerId": 197740,
-    "market": 2.78
+    "market": 2.78,
+    "etchAngle": "assets/foil/maps/sm115/SV3-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV3-etch-arc.webp"
   },
   {
     "id": "sm115-SV4",
@@ -2456,7 +2462,9 @@
     "foilMap": "assets/foil/maps/sm115/SV4.webp",
     "etchMap": "assets/foil/maps/sm115/SV4-etch.webp",
     "tcgplayerId": 197741,
-    "market": 2.69
+    "market": 2.69,
+    "etchAngle": "assets/foil/maps/sm115/SV4-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV4-etch-arc.webp"
   },
   {
     "id": "sm115-SV5",
@@ -2501,7 +2509,9 @@
     "foilMap": "assets/foil/maps/sm115/SV5.webp",
     "etchMap": "assets/foil/maps/sm115/SV5-etch.webp",
     "tcgplayerId": 197743,
-    "market": 10.35
+    "market": 10.35,
+    "etchAngle": "assets/foil/maps/sm115/SV5-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV5-etch-arc.webp"
   },
   {
     "id": "sm115-SV6",
@@ -2536,7 +2546,9 @@
     "foilMap": "assets/foil/maps/sm115/SV6.webp",
     "etchMap": "assets/foil/maps/sm115/SV6-etch.webp",
     "tcgplayerId": 197744,
-    "market": 31.28
+    "market": 31.28,
+    "etchAngle": "assets/foil/maps/sm115/SV6-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV6-etch-arc.webp"
   },
   {
     "id": "sm115-SV7",
@@ -2580,7 +2592,9 @@
     "foilMap": "assets/foil/maps/sm115/SV7.webp",
     "etchMap": "assets/foil/maps/sm115/SV7-etch.webp",
     "tcgplayerId": 197745,
-    "market": 16.9
+    "market": 16.9,
+    "etchAngle": "assets/foil/maps/sm115/SV7-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV7-etch-arc.webp"
   },
   {
     "id": "sm115-SV8",
@@ -2620,7 +2634,9 @@
     "foilMap": "assets/foil/maps/sm115/SV8.webp",
     "etchMap": "assets/foil/maps/sm115/SV8-etch.webp",
     "tcgplayerId": 197762,
-    "market": 13.31
+    "market": 13.31,
+    "etchAngle": "assets/foil/maps/sm115/SV8-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV8-etch-arc.webp"
   },
   {
     "id": "sm115-SV9",
@@ -2663,7 +2679,9 @@
     "foilMap": "assets/foil/maps/sm115/SV9.webp",
     "etchMap": "assets/foil/maps/sm115/SV9-etch.webp",
     "tcgplayerId": 197763,
-    "market": 24.7
+    "market": 24.7,
+    "etchAngle": "assets/foil/maps/sm115/SV9-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV9-etch-arc.webp"
   },
   {
     "id": "sm115-SV10",
@@ -2707,7 +2725,9 @@
     "foilMap": "assets/foil/maps/sm115/SV10.webp",
     "etchMap": "assets/foil/maps/sm115/SV10-etch.webp",
     "tcgplayerId": 197764,
-    "market": 18.5
+    "market": 18.5,
+    "etchAngle": "assets/foil/maps/sm115/SV10-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV10-etch-arc.webp"
   },
   {
     "id": "sm115-SV11",
@@ -2749,7 +2769,9 @@
     "foilMap": "assets/foil/maps/sm115/SV11.webp",
     "etchMap": "assets/foil/maps/sm115/SV11-etch.webp",
     "tcgplayerId": 197765,
-    "market": 9.42
+    "market": 9.42,
+    "etchAngle": "assets/foil/maps/sm115/SV11-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV11-etch-arc.webp"
   },
   {
     "id": "sm115-SV12",
@@ -2791,7 +2813,9 @@
     "foilMap": "assets/foil/maps/sm115/SV12.webp",
     "etchMap": "assets/foil/maps/sm115/SV12-etch.webp",
     "tcgplayerId": 197766,
-    "market": 6.84
+    "market": 6.84,
+    "etchAngle": "assets/foil/maps/sm115/SV12-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV12-etch-arc.webp"
   },
   {
     "id": "sm115-SV13",
@@ -2833,7 +2857,9 @@
     "foilMap": "assets/foil/maps/sm115/SV13.webp",
     "etchMap": "assets/foil/maps/sm115/SV13-etch.webp",
     "tcgplayerId": 197767,
-    "market": 4.08
+    "market": 4.08,
+    "etchAngle": "assets/foil/maps/sm115/SV13-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV13-etch-arc.webp"
   },
   {
     "id": "sm115-SV14",
@@ -2878,7 +2904,9 @@
     "foilMap": "assets/foil/maps/sm115/SV14.webp",
     "etchMap": "assets/foil/maps/sm115/SV14-etch.webp",
     "tcgplayerId": 197768,
-    "market": 5.33
+    "market": 5.33,
+    "etchAngle": "assets/foil/maps/sm115/SV14-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV14-etch-arc.webp"
   },
   {
     "id": "sm115-SV15",
@@ -2921,7 +2949,9 @@
     "foilMap": "assets/foil/maps/sm115/SV15.webp",
     "etchMap": "assets/foil/maps/sm115/SV15-etch.webp",
     "tcgplayerId": 197769,
-    "market": 2.33
+    "market": 2.33,
+    "etchAngle": "assets/foil/maps/sm115/SV15-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV15-etch-arc.webp"
   },
   {
     "id": "sm115-SV16",
@@ -2964,7 +2994,9 @@
     "foilMap": "assets/foil/maps/sm115/SV16.webp",
     "etchMap": "assets/foil/maps/sm115/SV16-etch.webp",
     "tcgplayerId": 197771,
-    "market": 4.41
+    "market": 4.41,
+    "etchAngle": "assets/foil/maps/sm115/SV16-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV16-etch-arc.webp"
   },
   {
     "id": "sm115-SV17",
@@ -2998,7 +3030,9 @@
     "foilMap": "assets/foil/maps/sm115/SV17.webp",
     "etchMap": "assets/foil/maps/sm115/SV17-etch.webp",
     "tcgplayerId": 197772,
-    "market": 2.61
+    "market": 2.61,
+    "etchAngle": "assets/foil/maps/sm115/SV17-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV17-etch-arc.webp"
   },
   {
     "id": "sm115-SV18",
@@ -3042,7 +3076,9 @@
     "foilMap": "assets/foil/maps/sm115/SV18.webp",
     "etchMap": "assets/foil/maps/sm115/SV18-etch.webp",
     "tcgplayerId": 197773,
-    "market": 2.74
+    "market": 2.74,
+    "etchAngle": "assets/foil/maps/sm115/SV18-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV18-etch-arc.webp"
   },
   {
     "id": "sm115-SV19",
@@ -3086,7 +3122,9 @@
     "foilMap": "assets/foil/maps/sm115/SV19.webp",
     "etchMap": "assets/foil/maps/sm115/SV19-etch.webp",
     "tcgplayerId": 197775,
-    "market": 6.68
+    "market": 6.68,
+    "etchAngle": "assets/foil/maps/sm115/SV19-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV19-etch-arc.webp"
   },
   {
     "id": "sm115-SV20",
@@ -3128,7 +3166,9 @@
     "foilMap": "assets/foil/maps/sm115/SV20.webp",
     "etchMap": "assets/foil/maps/sm115/SV20-etch.webp",
     "tcgplayerId": 197777,
-    "market": 4.51
+    "market": 4.51,
+    "etchAngle": "assets/foil/maps/sm115/SV20-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV20-etch-arc.webp"
   },
   {
     "id": "sm115-SV21",
@@ -3170,7 +3210,9 @@
     "foilMap": "assets/foil/maps/sm115/SV21.webp",
     "etchMap": "assets/foil/maps/sm115/SV21-etch.webp",
     "tcgplayerId": 197778,
-    "market": 12.14
+    "market": 12.14,
+    "etchAngle": "assets/foil/maps/sm115/SV21-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV21-etch-arc.webp"
   },
   {
     "id": "sm115-SV22",
@@ -3213,7 +3255,9 @@
     "foilMap": "assets/foil/maps/sm115/SV22.webp",
     "etchMap": "assets/foil/maps/sm115/SV22-etch.webp",
     "tcgplayerId": 197779,
-    "market": 22.12
+    "market": 22.12,
+    "etchAngle": "assets/foil/maps/sm115/SV22-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV22-etch-arc.webp"
   },
   {
     "id": "sm115-SV23",
@@ -3248,7 +3292,9 @@
     "foilMap": "assets/foil/maps/sm115/SV23.webp",
     "etchMap": "assets/foil/maps/sm115/SV23-etch.webp",
     "tcgplayerId": 197781,
-    "market": 5.39
+    "market": 5.39,
+    "etchAngle": "assets/foil/maps/sm115/SV23-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV23-etch-arc.webp"
   },
   {
     "id": "sm115-SV24",
@@ -3293,7 +3339,9 @@
     "foilMap": "assets/foil/maps/sm115/SV24.webp",
     "etchMap": "assets/foil/maps/sm115/SV24-etch.webp",
     "tcgplayerId": 197783,
-    "market": 3.79
+    "market": 3.79,
+    "etchAngle": "assets/foil/maps/sm115/SV24-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV24-etch-arc.webp"
   },
   {
     "id": "sm115-SV25",
@@ -3336,7 +3384,9 @@
     "foilMap": "assets/foil/maps/sm115/SV25.webp",
     "etchMap": "assets/foil/maps/sm115/SV25-etch.webp",
     "tcgplayerId": 197784,
-    "market": 14.01
+    "market": 14.01,
+    "etchAngle": "assets/foil/maps/sm115/SV25-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV25-etch-arc.webp"
   },
   {
     "id": "sm115-SV26",
@@ -3374,7 +3424,9 @@
     "foilMap": "assets/foil/maps/sm115/SV26.webp",
     "etchMap": "assets/foil/maps/sm115/SV26-etch.webp",
     "tcgplayerId": 197786,
-    "market": 5.96
+    "market": 5.96,
+    "etchAngle": "assets/foil/maps/sm115/SV26-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV26-etch-arc.webp"
   },
   {
     "id": "sm115-SV27",
@@ -3416,7 +3468,9 @@
     "foilMap": "assets/foil/maps/sm115/SV27.webp",
     "etchMap": "assets/foil/maps/sm115/SV27-etch.webp",
     "tcgplayerId": 197788,
-    "market": 2.84
+    "market": 2.84,
+    "etchAngle": "assets/foil/maps/sm115/SV27-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV27-etch-arc.webp"
   },
   {
     "id": "sm115-SV28",
@@ -3461,7 +3515,9 @@
     "foilMap": "assets/foil/maps/sm115/SV28.webp",
     "etchMap": "assets/foil/maps/sm115/SV28-etch.webp",
     "tcgplayerId": 197790,
-    "market": 5.46
+    "market": 5.46,
+    "etchAngle": "assets/foil/maps/sm115/SV28-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV28-etch-arc.webp"
   },
   {
     "id": "sm115-SV29",
@@ -3506,7 +3562,9 @@
     "foilMap": "assets/foil/maps/sm115/SV29.webp",
     "etchMap": "assets/foil/maps/sm115/SV29-etch.webp",
     "tcgplayerId": 197792,
-    "market": 3.01
+    "market": 3.01,
+    "etchAngle": "assets/foil/maps/sm115/SV29-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV29-etch-arc.webp"
   },
   {
     "id": "sm115-SV30",
@@ -3540,7 +3598,9 @@
     "foilMap": "assets/foil/maps/sm115/SV30.webp",
     "etchMap": "assets/foil/maps/sm115/SV30-etch.webp",
     "tcgplayerId": 197793,
-    "market": 3.14
+    "market": 3.14,
+    "etchAngle": "assets/foil/maps/sm115/SV30-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV30-etch-arc.webp"
   },
   {
     "id": "sm115-SV31",
@@ -3585,7 +3645,9 @@
     "foilMap": "assets/foil/maps/sm115/SV31.webp",
     "etchMap": "assets/foil/maps/sm115/SV31-etch.webp",
     "tcgplayerId": 197794,
-    "market": 5.61
+    "market": 5.61,
+    "etchAngle": "assets/foil/maps/sm115/SV31-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV31-etch-arc.webp"
   },
   {
     "id": "sm115-SV32",
@@ -3624,7 +3686,9 @@
     "foilMap": "assets/foil/maps/sm115/SV32.webp",
     "etchMap": "assets/foil/maps/sm115/SV32-etch.webp",
     "tcgplayerId": 197796,
-    "market": 5.52
+    "market": 5.52,
+    "etchAngle": "assets/foil/maps/sm115/SV32-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV32-etch-arc.webp"
   },
   {
     "id": "sm115-SV33",
@@ -3660,7 +3724,9 @@
     "foilMap": "assets/foil/maps/sm115/SV33.webp",
     "etchMap": "assets/foil/maps/sm115/SV33-etch.webp",
     "tcgplayerId": 197798,
-    "market": 4.24
+    "market": 4.24,
+    "etchAngle": "assets/foil/maps/sm115/SV33-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV33-etch-arc.webp"
   },
   {
     "id": "sm115-SV34",
@@ -3694,7 +3760,9 @@
     "foilMap": "assets/foil/maps/sm115/SV34.webp",
     "etchMap": "assets/foil/maps/sm115/SV34-etch.webp",
     "tcgplayerId": 197799,
-    "market": 6.27
+    "market": 6.27,
+    "etchAngle": "assets/foil/maps/sm115/SV34-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV34-etch-arc.webp"
   },
   {
     "id": "sm115-SV35",
@@ -3738,7 +3806,9 @@
     "foilMap": "assets/foil/maps/sm115/SV35.webp",
     "etchMap": "assets/foil/maps/sm115/SV35-etch.webp",
     "tcgplayerId": 197801,
-    "market": 6.31
+    "market": 6.31,
+    "etchAngle": "assets/foil/maps/sm115/SV35-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV35-etch-arc.webp"
   },
   {
     "id": "sm115-SV36",
@@ -3781,7 +3851,9 @@
     "foilMap": "assets/foil/maps/sm115/SV36.webp",
     "etchMap": "assets/foil/maps/sm115/SV36-etch.webp",
     "tcgplayerId": 197802,
-    "market": 5.67
+    "market": 5.67,
+    "etchAngle": "assets/foil/maps/sm115/SV36-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV36-etch-arc.webp"
   },
   {
     "id": "sm115-SV37",
@@ -3824,7 +3896,9 @@
     "foilMap": "assets/foil/maps/sm115/SV37.webp",
     "etchMap": "assets/foil/maps/sm115/SV37-etch.webp",
     "tcgplayerId": 197804,
-    "market": 7.44
+    "market": 7.44,
+    "etchAngle": "assets/foil/maps/sm115/SV37-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV37-etch-arc.webp"
   },
   {
     "id": "sm115-SV38",
@@ -3858,7 +3932,9 @@
     "foilMap": "assets/foil/maps/sm115/SV38.webp",
     "etchMap": "assets/foil/maps/sm115/SV38-etch.webp",
     "tcgplayerId": 197805,
-    "market": 7.2
+    "market": 7.2,
+    "etchAngle": "assets/foil/maps/sm115/SV38-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV38-etch-arc.webp"
   },
   {
     "id": "sm115-SV39",
@@ -3902,7 +3978,9 @@
     "foilMap": "assets/foil/maps/sm115/SV39.webp",
     "etchMap": "assets/foil/maps/sm115/SV39-etch.webp",
     "tcgplayerId": 197807,
-    "market": 6.36
+    "market": 6.36,
+    "etchAngle": "assets/foil/maps/sm115/SV39-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV39-etch-arc.webp"
   },
   {
     "id": "sm115-SV40",
@@ -3948,7 +4026,9 @@
     "foilMap": "assets/foil/maps/sm115/SV40.webp",
     "etchMap": "assets/foil/maps/sm115/SV40-etch.webp",
     "tcgplayerId": 197809,
-    "market": 12.02
+    "market": 12.02,
+    "etchAngle": "assets/foil/maps/sm115/SV40-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV40-etch-arc.webp"
   },
   {
     "id": "sm115-SV41",
@@ -3989,7 +4069,9 @@
     "foilMap": "assets/foil/maps/sm115/SV41.webp",
     "etchMap": "assets/foil/maps/sm115/SV41-etch.webp",
     "tcgplayerId": 197811,
-    "market": 50.43
+    "market": 50.43,
+    "etchAngle": "assets/foil/maps/sm115/SV41-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV41-etch-arc.webp"
   },
   {
     "id": "sm115-SV42",
@@ -4032,7 +4114,9 @@
     "foilMap": "assets/foil/maps/sm115/SV42.webp",
     "etchMap": "assets/foil/maps/sm115/SV42-etch.webp",
     "tcgplayerId": 197813,
-    "market": 6.43
+    "market": 6.43,
+    "etchAngle": "assets/foil/maps/sm115/SV42-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV42-etch-arc.webp"
   },
   {
     "id": "sm115-SV43",
@@ -4066,7 +4150,9 @@
     "foilMap": "assets/foil/maps/sm115/SV43.webp",
     "etchMap": "assets/foil/maps/sm115/SV43-etch.webp",
     "tcgplayerId": 197815,
-    "market": 4.75
+    "market": 4.75,
+    "etchAngle": "assets/foil/maps/sm115/SV43-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV43-etch-arc.webp"
   },
   {
     "id": "sm115-SV44",
@@ -4109,7 +4195,9 @@
     "foilMap": "assets/foil/maps/sm115/SV44.webp",
     "etchMap": "assets/foil/maps/sm115/SV44-etch.webp",
     "tcgplayerId": 197817,
-    "market": 2.21
+    "market": 2.21,
+    "etchAngle": "assets/foil/maps/sm115/SV44-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV44-etch-arc.webp"
   },
   {
     "id": "sm115-SV45",
@@ -4154,7 +4242,9 @@
     "foilMap": "assets/foil/maps/sm115/SV45.webp",
     "etchMap": "assets/foil/maps/sm115/SV45-etch.webp",
     "tcgplayerId": 197819,
-    "market": 5.59
+    "market": 5.59,
+    "etchAngle": "assets/foil/maps/sm115/SV45-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV45-etch-arc.webp"
   },
   {
     "id": "sm115-SV46",
@@ -4206,7 +4296,9 @@
     "foilMap": "assets/foil/maps/sm115/SV46.webp",
     "etchMap": "assets/foil/maps/sm115/SV46-etch.webp",
     "tcgplayerId": 197770,
-    "market": 75.31
+    "market": 75.31,
+    "etchAngle": "assets/foil/maps/sm115/SV46-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV46-etch-arc.webp"
   },
   {
     "id": "sm115-SV47",
@@ -4258,7 +4350,9 @@
     "foilMap": "assets/foil/maps/sm115/SV47.webp",
     "etchMap": "assets/foil/maps/sm115/SV47-etch.webp",
     "tcgplayerId": 197774,
-    "market": 19.91
+    "market": 19.91,
+    "etchAngle": "assets/foil/maps/sm115/SV47-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV47-etch-arc.webp"
   },
   {
     "id": "sm115-SV48",
@@ -4313,7 +4407,9 @@
     "foilMap": "assets/foil/maps/sm115/SV48.webp",
     "etchMap": "assets/foil/maps/sm115/SV48-etch.webp",
     "tcgplayerId": 197776,
-    "market": 10.89
+    "market": 10.89,
+    "etchAngle": "assets/foil/maps/sm115/SV48-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV48-etch-arc.webp"
   },
   {
     "id": "sm115-SV49",
@@ -4372,7 +4468,9 @@
     "foilMap": "assets/foil/maps/sm115/SV49.webp",
     "etchMap": "assets/foil/maps/sm115/SV49-etch.webp",
     "tcgplayerId": 197780,
-    "market": 768.1
+    "market": 768.1,
+    "etchAngle": "assets/foil/maps/sm115/SV49-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV49-etch-arc.webp"
   },
   {
     "id": "sm115-SV50",
@@ -4429,7 +4527,9 @@
     "foilMap": "assets/foil/maps/sm115/SV50.webp",
     "etchMap": "assets/foil/maps/sm115/SV50-etch.webp",
     "tcgplayerId": 197782,
-    "market": 37.67
+    "market": 37.67,
+    "etchAngle": "assets/foil/maps/sm115/SV50-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV50-etch-arc.webp"
   },
   {
     "id": "sm115-SV51",
@@ -4485,7 +4585,9 @@
     "foilMap": "assets/foil/maps/sm115/SV51.webp",
     "etchMap": "assets/foil/maps/sm115/SV51-etch.webp",
     "tcgplayerId": 197785,
-    "market": 58.11
+    "market": 58.11,
+    "etchAngle": "assets/foil/maps/sm115/SV51-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV51-etch-arc.webp"
   },
   {
     "id": "sm115-SV52",
@@ -4538,7 +4640,9 @@
     "foilMap": "assets/foil/maps/sm115/SV52.webp",
     "etchMap": "assets/foil/maps/sm115/SV52-etch.webp",
     "tcgplayerId": 197787,
-    "market": 8.41
+    "market": 8.41,
+    "etchAngle": "assets/foil/maps/sm115/SV52-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV52-etch-arc.webp"
   },
   {
     "id": "sm115-SV53",
@@ -4593,7 +4697,9 @@
     "foilMap": "assets/foil/maps/sm115/SV53.webp",
     "etchMap": "assets/foil/maps/sm115/SV53-etch.webp",
     "tcgplayerId": 197789,
-    "market": 53.89
+    "market": 53.89,
+    "etchAngle": "assets/foil/maps/sm115/SV53-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV53-etch-arc.webp"
   },
   {
     "id": "sm115-SV54",
@@ -4644,7 +4750,9 @@
     "foilMap": "assets/foil/maps/sm115/SV54.webp",
     "etchMap": "assets/foil/maps/sm115/SV54-etch.webp",
     "tcgplayerId": 197791,
-    "market": 46.85
+    "market": 46.85,
+    "etchAngle": "assets/foil/maps/sm115/SV54-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV54-etch-arc.webp"
   },
   {
     "id": "sm115-SV55",
@@ -4698,7 +4806,9 @@
     "foilMap": "assets/foil/maps/sm115/SV55.webp",
     "etchMap": "assets/foil/maps/sm115/SV55-etch.webp",
     "tcgplayerId": 197795,
-    "market": 57.55
+    "market": 57.55,
+    "etchAngle": "assets/foil/maps/sm115/SV55-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV55-etch-arc.webp"
   },
   {
     "id": "sm115-SV56",
@@ -4752,7 +4862,9 @@
     "foilMap": "assets/foil/maps/sm115/SV56.webp",
     "etchMap": "assets/foil/maps/sm115/SV56-etch.webp",
     "tcgplayerId": 197797,
-    "market": 114.38
+    "market": 114.38,
+    "etchAngle": "assets/foil/maps/sm115/SV56-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV56-etch-arc.webp"
   },
   {
     "id": "sm115-SV57",
@@ -4804,7 +4916,9 @@
     "foilMap": "assets/foil/maps/sm115/SV57.webp",
     "etchMap": "assets/foil/maps/sm115/SV57-etch.webp",
     "tcgplayerId": 197800,
-    "market": 14.91
+    "market": 14.91,
+    "etchAngle": "assets/foil/maps/sm115/SV57-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV57-etch-arc.webp"
   },
   {
     "id": "sm115-SV58",
@@ -4856,7 +4970,9 @@
     "foilMap": "assets/foil/maps/sm115/SV58.webp",
     "etchMap": "assets/foil/maps/sm115/SV58-etch.webp",
     "tcgplayerId": 197803,
-    "market": 16.87
+    "market": 16.87,
+    "etchAngle": "assets/foil/maps/sm115/SV58-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV58-etch-arc.webp"
   },
   {
     "id": "sm115-SV59",
@@ -4909,7 +5025,9 @@
     "foilMap": "assets/foil/maps/sm115/SV59.webp",
     "etchMap": "assets/foil/maps/sm115/SV59-etch.webp",
     "tcgplayerId": 197806,
-    "market": 137.72
+    "market": 137.72,
+    "etchAngle": "assets/foil/maps/sm115/SV59-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV59-etch-arc.webp"
   },
   {
     "id": "sm115-SV60",
@@ -4964,7 +5082,9 @@
     "foilMap": "assets/foil/maps/sm115/SV60.webp",
     "etchMap": "assets/foil/maps/sm115/SV60-etch.webp",
     "tcgplayerId": 197808,
-    "market": 134.09
+    "market": 134.09,
+    "etchAngle": "assets/foil/maps/sm115/SV60-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV60-etch-arc.webp"
   },
   {
     "id": "sm115-SV61",
@@ -5014,7 +5134,9 @@
     "foilMap": "assets/foil/maps/sm115/SV61.webp",
     "etchMap": "assets/foil/maps/sm115/SV61-etch.webp",
     "tcgplayerId": 197810,
-    "market": 11.77
+    "market": 11.77,
+    "etchAngle": "assets/foil/maps/sm115/SV61-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV61-etch-arc.webp"
   },
   {
     "id": "sm115-SV62",
@@ -5068,7 +5190,9 @@
     "foilMap": "assets/foil/maps/sm115/SV62.webp",
     "etchMap": "assets/foil/maps/sm115/SV62-etch.webp",
     "tcgplayerId": 197812,
-    "market": 20.53
+    "market": 20.53,
+    "etchAngle": "assets/foil/maps/sm115/SV62-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV62-etch-arc.webp"
   },
   {
     "id": "sm115-SV63",
@@ -5124,7 +5248,9 @@
     "foilMap": "assets/foil/maps/sm115/SV63.webp",
     "etchMap": "assets/foil/maps/sm115/SV63-etch.webp",
     "tcgplayerId": 197814,
-    "market": 14.88
+    "market": 14.88,
+    "etchAngle": "assets/foil/maps/sm115/SV63-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV63-etch-arc.webp"
   },
   {
     "id": "sm115-SV64",
@@ -5178,7 +5304,9 @@
     "foilMap": "assets/foil/maps/sm115/SV64.webp",
     "etchMap": "assets/foil/maps/sm115/SV64-etch.webp",
     "tcgplayerId": 197816,
-    "market": 85.89
+    "market": 85.89,
+    "etchAngle": "assets/foil/maps/sm115/SV64-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV64-etch-arc.webp"
   },
   {
     "id": "sm115-SV65",
@@ -5235,7 +5363,9 @@
     "foilMap": "assets/foil/maps/sm115/SV65.webp",
     "etchMap": "assets/foil/maps/sm115/SV65-etch.webp",
     "tcgplayerId": 197818,
-    "market": 38.44
+    "market": 38.44,
+    "etchAngle": "assets/foil/maps/sm115/SV65-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV65-etch-arc.webp"
   },
   {
     "id": "sm115-SV66",
@@ -5288,7 +5418,9 @@
     "foilMap": "assets/foil/maps/sm115/SV66.webp",
     "etchMap": "assets/foil/maps/sm115/SV66-etch.webp",
     "tcgplayerId": 197820,
-    "market": 14.2
+    "market": 14.2,
+    "etchAngle": "assets/foil/maps/sm115/SV66-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV66-etch-arc.webp"
   },
   {
     "id": "sm115-SV67",
@@ -5340,7 +5472,9 @@
     "foilMap": "assets/foil/maps/sm115/SV67.webp",
     "etchMap": "assets/foil/maps/sm115/SV67-etch.webp",
     "tcgplayerId": 197821,
-    "market": 20.69
+    "market": 20.69,
+    "etchAngle": "assets/foil/maps/sm115/SV67-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV67-etch-arc.webp"
   },
   {
     "id": "sm115-SV68",
@@ -5395,7 +5529,9 @@
     "foilMap": "assets/foil/maps/sm115/SV68.webp",
     "etchMap": "assets/foil/maps/sm115/SV68-etch.webp",
     "tcgplayerId": 197822,
-    "market": 12.4
+    "market": 12.4,
+    "etchAngle": "assets/foil/maps/sm115/SV68-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV68-etch-arc.webp"
   },
   {
     "id": "sm115-SV69",
@@ -5449,7 +5585,9 @@
     "foilMap": "assets/foil/maps/sm115/SV69.webp",
     "etchMap": "assets/foil/maps/sm115/SV69-etch.webp",
     "tcgplayerId": 197823,
-    "market": 321.0
+    "market": 321.0,
+    "etchAngle": "assets/foil/maps/sm115/SV69-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV69-etch-arc.webp"
   },
   {
     "id": "sm115-SV70",
@@ -5502,7 +5640,9 @@
     "foilMap": "assets/foil/maps/sm115/SV70.webp",
     "etchMap": "assets/foil/maps/sm115/SV70-etch.webp",
     "tcgplayerId": 197824,
-    "market": 102.82
+    "market": 102.82,
+    "etchAngle": "assets/foil/maps/sm115/SV70-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV70-etch-arc.webp"
   },
   {
     "id": "sm115-SV71",
@@ -5561,7 +5701,9 @@
     "foilMap": "assets/foil/maps/sm115/SV71.webp",
     "etchMap": "assets/foil/maps/sm115/SV71-etch.webp",
     "tcgplayerId": 197825,
-    "market": 16.51
+    "market": 16.51,
+    "etchAngle": "assets/foil/maps/sm115/SV71-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV71-etch-arc.webp"
   },
   {
     "id": "sm115-SV72",
@@ -5614,7 +5756,9 @@
     "foilMap": "assets/foil/maps/sm115/SV72.webp",
     "etchMap": "assets/foil/maps/sm115/SV72-etch.webp",
     "tcgplayerId": 197826,
-    "market": 72.75
+    "market": 72.75,
+    "etchAngle": "assets/foil/maps/sm115/SV72-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV72-etch-arc.webp"
   },
   {
     "id": "sm115-SV73",
@@ -5666,7 +5810,9 @@
     "foilMap": "assets/foil/maps/sm115/SV73.webp",
     "etchMap": "assets/foil/maps/sm115/SV73-etch.webp",
     "tcgplayerId": 197827,
-    "market": 8.69
+    "market": 8.69,
+    "etchAngle": "assets/foil/maps/sm115/SV73-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV73-etch-arc.webp"
   },
   {
     "id": "sm115-SV74",
@@ -5720,7 +5866,9 @@
     "foilMap": "assets/foil/maps/sm115/SV74.webp",
     "etchMap": "assets/foil/maps/sm115/SV74-etch.webp",
     "tcgplayerId": 197828,
-    "market": 12.64
+    "market": 12.64,
+    "etchAngle": "assets/foil/maps/sm115/SV74-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV74-etch-arc.webp"
   },
   {
     "id": "sm115-SV75",
@@ -5770,7 +5918,9 @@
     "foilMap": "assets/foil/maps/sm115/SV75.webp",
     "etchMap": "assets/foil/maps/sm115/SV75-etch.webp",
     "tcgplayerId": 197829,
-    "market": 86.05
+    "market": 86.05,
+    "etchAngle": "assets/foil/maps/sm115/SV75-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV75-etch-arc.webp"
   },
   {
     "id": "sm115-SV76",
@@ -5825,7 +5975,9 @@
     "foilMap": "assets/foil/maps/sm115/SV76.webp",
     "etchMap": "assets/foil/maps/sm115/SV76-etch.webp",
     "tcgplayerId": 197830,
-    "market": 222.59
+    "market": 222.59,
+    "etchAngle": "assets/foil/maps/sm115/SV76-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV76-etch-arc.webp"
   },
   {
     "id": "sm115-SV77",
@@ -5880,7 +6032,9 @@
     "foilMap": "assets/foil/maps/sm115/SV77.webp",
     "etchMap": "assets/foil/maps/sm115/SV77-etch.webp",
     "tcgplayerId": 197831,
-    "market": 26.46
+    "market": 26.46,
+    "etchAngle": "assets/foil/maps/sm115/SV77-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV77-etch-arc.webp"
   },
   {
     "id": "sm115-SV78",
@@ -5936,7 +6090,9 @@
     "foilMap": "assets/foil/maps/sm115/SV78.webp",
     "etchMap": "assets/foil/maps/sm115/SV78-etch.webp",
     "tcgplayerId": 197832,
-    "market": 17.87
+    "market": 17.87,
+    "etchAngle": "assets/foil/maps/sm115/SV78-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV78-etch-arc.webp"
   },
   {
     "id": "sm115-SV79",
@@ -5990,7 +6146,9 @@
     "foilMap": "assets/foil/maps/sm115/SV79.webp",
     "etchMap": "assets/foil/maps/sm115/SV79-etch.webp",
     "tcgplayerId": 197833,
-    "market": 13.53
+    "market": 13.53,
+    "etchAngle": "assets/foil/maps/sm115/SV79-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV79-etch-arc.webp"
   },
   {
     "id": "sm115-SV80",
@@ -6042,7 +6200,9 @@
     "foilMap": "assets/foil/maps/sm115/SV80.webp",
     "etchMap": "assets/foil/maps/sm115/SV80-etch.webp",
     "tcgplayerId": 197834,
-    "market": 11.52
+    "market": 11.52,
+    "etchAngle": "assets/foil/maps/sm115/SV80-etch-angle.webp",
+    "etchSoft": "assets/foil/maps/sm115/SV80-etch-arc.webp"
   },
   {
     "id": "sm115-SV81",
