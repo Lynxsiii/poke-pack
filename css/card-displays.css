@@ -19,7 +19,8 @@
 .profile-pocket:has(.lit), .profile-pocket:has(.settling),
 .mini-card:has(.lit), .mini-card:has(.settling),
 .picker-card:has(.lit), .picker-card:has(.settling),
-.pin-slot:has(.lit), .pin-slot:has(.settling) { position: relative; z-index: 5; }
+.pin-slot:has(.lit), .pin-slot:has(.settling),
+.slab:has(.lit), .slab:has(.settling) { position: relative; z-index: 5; }
 /* Scrollable strips retain scrolling, with generous room inside the clip. */
 .home-film { padding: 26px 18px 30px; margin-inline: -12px; gap: 20px; }
 .showcase-picks { padding: 18px; gap: 14px; }
