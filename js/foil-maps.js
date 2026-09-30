@@ -22,6 +22,10 @@
  * Shared with the card-textures lab so the lab draws what the site draws.
  */
 
+import { isSm, smPattern, smReverseFinish, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=1";
+
+export { isSm, smPattern };
+
 export function cureOf(card) {
   if (card?.rarity === "Pikachu Rare") return "rings";
   // SouthernCross is TCG Live's name for the Double Rare star coat. Only cards
@@ -196,6 +200,8 @@ export function reverseFinish(card, kind = card?.reverseKind) {
   const sv = /^sv\d/.test(set);
   // Sword & Shield's chevron sheet (assets/foil/swsh-reverse/, one per type,
   // scripts/make_swsh_reverse.py in the card-textures skill).
+  // Sun & Moon's reverse (js/sm-foil.js).
+  if (isSm(card)) return smReverseFinish(card);
   if (isSwsh(card)) {
     if (card.supertype === "Trainer") return "swsh-trainer";
     if (card.supertype === "Energy" || card.energy) return "";
@@ -249,8 +255,9 @@ export function foilExtras(card, url, reverseKind) {
     vars.push(`${name}:url('${url(path)}')`);
   };
   const swsh = isSwsh(card);
+  const sm = isSm(card);
   if (card.foilMap) add("has-foil-map", "--foil-map", card.foilMap);
-  else if (FULL_ART.has(card.rarity) || (swsh && SWSH_FULL_ART.has(card.rarity) && card.gallery !== "cc")) {
+  else if (FULL_ART.has(card.rarity) || (swsh && SWSH_FULL_ART.has(card.rarity) && card.gallery !== "cc") || (sm && SM_FULL_ART.has(card.rarity))) {
     add("has-foil-map", "--foil-map", FULL_MAP);
   }
   if (card.foilMapR && card.foilMapB) {
@@ -263,7 +270,7 @@ export function foilExtras(card, url, reverseKind) {
     // (scripts/make_card_etch.py): the SIR recipe keeps the flat background
     // weight the tile had, since the print's foil map is the white fallback.
     if (card.etchDrawn) classes.push("has-etch-drawn");
-  } else if (ETCHED.has(card.rarity) || (swsh && SWSH_ETCHED.has(card.rarity) && card.gallery !== "cc")) {
+  } else if (ETCHED.has(card.rarity) || (swsh && SWSH_ETCHED.has(card.rarity) && card.gallery !== "cc") || (sm && SM_ETCHED.has(card.rarity))) {
     add("has-etch-tile", "--etch-tile", ETCH_TILE);
   }
   // A gold print's soft engraving (the etch blurred a little, soften_etch.py):
@@ -296,8 +303,11 @@ export function foilExtras(card, url, reverseKind) {
   // Sword & Shield prints (css/holo/swsh.css): the numbered sets, Champion's
   // Path, Shining Fates, Celebrations, Pokémon GO, Crown Zenith, the promos.
   if (/^(swsh|cel25|pgo)/.test(String(card.id || ""))) classes.push("era-swsh");
+  // Sun & Moon prints (css/holo/sm.css and its siblings): the numbered sets,
+  // Shiny Vault, Detective Pikachu, the promos.
+  if (sm) classes.push("era-sm");
   // Tiled or galaxy textures start somewhere different on every card.
-  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh) {
+  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh || sm) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }

@@ -93,6 +93,12 @@ SETS = {
     "cel25": ("swsh7-5", {}),
     "pgo": ("swsh10-5", {}),
     "swsh12pt5": ("swsh12-5", {}),
+    # Sun & Moon: the numbered sets use their own id (sm1, sm2... as key, only
+    # holo prints have maps), the half sets take the dashed form (probed
+    # 2026-09-30).
+    "sm35": ("sm3-5", {}),
+    "sm75": ("sm7-5", {}),
+    "sm115": ("sm11-5", {}),
 }
 
 # A set's sub-gallery is filed on TCG Live either under its own key (the
@@ -140,13 +146,13 @@ def curl(url: str, dest: Path) -> bool:
 
 # Black star promos sold with a set are filed in it as <prefix><number>, with
 # an optional -suffix for a stamped print of the same card (mep101-pc).
-PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp"}
+PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp", "smp": "smbsp"}
 
 
 def source(set_id: str, key: str | None, number: str) -> tuple[str, int] | None:
     main, extra = SETS.get(set_id, (None, {}))
     # The numbered Sword & Shield sets use the site's own id as their key.
-    if main is None and re.fullmatch(r"swsh\d+", set_id):
+    if main is None and re.fullmatch(r"(swsh|sm)\d+", set_id):
         main = set_id
     if number in extra:
         return extra[number]

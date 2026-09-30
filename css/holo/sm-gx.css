@@ -1,0 +1,20 @@
+/*
+ * Sun & Moon era: GX, TAG TEAM GX and Prism Star.
+ *
+ * Draws: sm-gx (`foil-ex sm-gx`), sm-tag (TAG TEAM, rides on sm-gx or sm-fa) and sm-prism (`foil-holo sm-prism`).
+ * Classes come from smPattern() in js/sm-foil.js; `era-sm` marks every
+ * Sun & Moon print (js/foil-maps.js). Research and photos live in
+ * .claude/skills/card-textures/reference/sun-moon.md and
+ * /mnt/project-files/sun-moon/texture-refs. Follow SKILL.md: realism first,
+ * TCG Live foil maps, no outline or box-shadow on `.tcg`, cap any colour
+ * dodge with a closing contrast(0.8), and run foil_coverage.mjs plus a
+ * WebKit render at phone size before merging.
+ *
+ * Specificity: repeat `era-sm` five times in every selector, like swsh.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ * Empty until the finish thread for this family draws it; until then the
+ * cards fall back to the Classic engine's generic finish.
+ */

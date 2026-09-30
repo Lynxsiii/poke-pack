@@ -669,6 +669,43 @@ function swshSlots({ holo, v, vmax = 0, vstar = 0, ultra, rainbow = 0, secret = 
 }
 
 /**
+ * Sun & Moon era pack. Each set fills in what its research says (commons,
+ * whether the pack carries a basic Energy, which slot its specials replace),
+ * so the counts are arguments; the rates are per pack. The rare slot holds a
+ * plain Rare unless it rolls a holo Rare, a GX (Tag Team GX included, a Prism
+ * Star, a full art (`Rare Ultra`: full-art GX, Tag Team or Supporter), a
+ * rainbow or a gold. `reverseSpecial` names the reverse-slot replacements a
+ * set has, as [pool, rate] pairs: Hidden Fates' Shiny Vault tiers (shinyBaby,
+ * shinyGX, shinyUltra, shinyGold) or the Shiny Vault of Shining Legends.
+ */
+function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, ultra = 0, rainbow = 0, secret = 0, reverseSpecial = [] }) {
+  const reverse = reverseSpecial.filter(([, p]) => p > 0);
+  const special = reverse.reduce((sum, [, p]) => sum + p, 0);
+  const rare = [
+    ["gx", gx],
+    ["prismStar", prism],
+    ["rareUltra", ultra],
+    ["rainbow", rainbow],
+    ["secret", secret],
+  ].filter(([, p]) => p > 0);
+  const hits = rare.reduce((sum, [, p]) => sum + p, 0);
+  const plain = Math.max(0, 1 - hits - holo);
+  return [
+    ...(energy ? [{ pool: "energy", count: energy }] : []),
+    { pool: "common", count: commons },
+    { pool: "uncommon", count: uncommons },
+    special
+      ? { pool: "reverse", count: 1, table: [["reverse", 1 - special], ...reverse] }
+      : { pool: "reverse", count: 1 },
+    {
+      pool: "rare-slot",
+      count: 1,
+      table: [...(plain > 0.0005 ? [["rare", plain]] : []), ["holo", Math.min(holo, 1 - hits)], ...rare],
+    },
+  ];
+}
+
+/**
  * Celebrations: four holo cards, no Energy and no reverse. Each slot can
  * be a Classic Collection reprint, a V, a VMAX or the one full-art Trainer;
  * otherwise one of the 25 (all holo; pkmn.gg files 12 as `Rare` and 6 as
