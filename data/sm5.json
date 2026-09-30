@@ -4659,20 +4659,6 @@
     "market": 0.71
   },
   {
-    "id": "sm5-119a",
-    "name": "Cynthia",
-    "number": "119a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Supporter"
-    ],
-    "artist": "Hideki Ishikawa",
-    "image": "assets/cards/sm5/119a.webp",
-    "imageSmall": "assets/cards/sm5/119a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm5-119a/large"
-  },
-  {
     "id": "sm5-120",
     "name": "Cyrus ◇",
     "number": "120",
@@ -4723,20 +4709,6 @@
     "market": 0.12
   },
   {
-    "id": "sm5-122a",
-    "name": "Escape Board",
-    "number": "122a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Pokémon Tool"
-    ],
-    "artist": "Toyste Beach",
-    "image": "assets/cards/sm5/122a.webp",
-    "imageSmall": "assets/cards/sm5/122a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm5-122a/large"
-  },
-  {
     "id": "sm5-123",
     "name": "Fire Memory",
     "number": "123",
@@ -4783,20 +4755,6 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm5-125/large",
     "tcgplayerId": 157742,
     "market": 0.35
-  },
-  {
-    "id": "sm5-125a",
-    "name": "Lillie",
-    "number": "125a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Supporter"
-    ],
-    "artist": "Mana Ibe",
-    "image": "assets/cards/sm5/125a.webp",
-    "imageSmall": "assets/cards/sm5/125a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm5-125a/large"
   },
   {
     "id": "sm5-126",
@@ -4958,20 +4916,6 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm5-135/large",
     "tcgplayerId": 157751,
     "market": 0.47
-  },
-  {
-    "id": "sm5-135a",
-    "name": "Volkner",
-    "number": "135a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Supporter"
-    ],
-    "artist": "Hideki Ishikawa",
-    "image": "assets/cards/sm5/135a.webp",
-    "imageSmall": "assets/cards/sm5/135a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm5-135a/large"
   },
   {
     "id": "sm5-136",
@@ -5612,20 +5556,6 @@
     "etchMap": "assets/foil/maps/sm5/153-etch.webp",
     "tcgplayerId": 157769,
     "market": 163.81
-  },
-  {
-    "id": "sm5-153a",
-    "name": "Lusamine",
-    "number": "153a",
-    "rarity": "Rare Ultra",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Supporter"
-    ],
-    "artist": "Mana Ibe",
-    "image": "assets/cards/sm5/153a.webp",
-    "imageSmall": "assets/cards/sm5/153a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm5-153a/large"
   },
   {
     "id": "sm5-154",
@@ -6376,5 +6306,174 @@
     "etchMap": "assets/foil/maps/sm5/173-etch.webp",
     "tcgplayerId": 157789,
     "market": 60.88
+  },
+  {
+    "id": "sm5-10a",
+    "name": "Entei-GX",
+    "number": "10a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm35/10a.webp",
+    "imageSmall": "assets/cards/sm35/10a-sm.webp",
+    "attacks": [
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Brave Burn-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 150 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm35-10a/large",
+    "printedNumber": "10a/73",
+    "promo": true,
+    "era": "sm",
+    "foilAs": "Rare Holo GX"
+  },
+  {
+    "id": "sm5-smp101",
+    "name": "Dawn Wings Necrozma-GX",
+    "number": "smp101",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm5/smp101.webp",
+    "imageSmall": "assets/cards/sm5/smp101-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Flash",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "120",
+        "text": "This attack's damage isn't affected by Resistance."
+      },
+      {
+        "name": "Moon's Eclipse-GX",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "180",
+        "text": "You can use this attack only if you have more Prize cards remaining than your opponent. Prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Invasion",
+        "text": "Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch it with your Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 5.49,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM101/large",
+    "printedNumber": "SM101",
+    "tcgplayerId": 162460,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm5/smp101.webp"
+  },
+  {
+    "id": "sm5-smp121",
+    "name": "Raikou-GX",
+    "number": "smp121",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm5/smp121.webp",
+    "imageSmall": "assets/cards/sm5/smp121-sm.webp",
+    "attacks": [
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Flip a coin. If tails, this Pokémon does 50 damage to itself."
+      },
+      {
+        "name": "Thunderous Rain-GX",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to each of your opponent's Pokémon that has any Energy attached to it. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 10.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM121/large",
+    "printedNumber": "SM121",
+    "tcgplayerId": 164233,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm5/smp121.webp"
   }
 ]

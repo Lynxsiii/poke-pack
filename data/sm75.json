@@ -1,0 +1,3473 @@
+[
+  {
+    "id": "sm75-1",
+    "name": "Charmander",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "tetsuya koizumi",
+    "flavorText": "From the time it is born, a flame burns at the tip of its tail. Its life would end if the flame were to go out.",
+    "image": "assets/cards/sm75/1.webp",
+    "imageSmall": "assets/cards/sm75/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-1/large",
+    "tcgplayerId": 175263,
+    "market": 5.21
+  },
+  {
+    "id": "sm75-2",
+    "name": "Charmeleon",
+    "number": "2",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "kodama",
+    "flavorText": "When it swings its burning tail, it elevates the air temperature to unbearably high levels.",
+    "evolvesFrom": "Charmander",
+    "image": "assets/cards/sm75/2.webp",
+    "imageSmall": "assets/cards/sm75/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Burning Fighter",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may discard the top 5 cards of your deck. If any of those cards are Fire Energy cards, attach them to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-2/large",
+    "tcgplayerId": 175269,
+    "market": 1.05
+  },
+  {
+    "id": "sm75-3",
+    "name": "Charizard",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "160",
+    "artist": "Ryota Murayama",
+    "flavorText": "Its wings can carry this Pokémon close to an altitude of 4,600 feet. It blows out fire at very high temperatures.",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/sm75/3.webp",
+    "imageSmall": "assets/cards/sm75/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Fiery Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Resolute Flame",
+        "text": "This Pokémon's attacks do 30 more damage to your opponent's Active Pokémon for each of their Pokémon-GX and Pokémon-EX in play.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/3.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-3/large",
+    "tcgplayerId": 175270,
+    "market": 14.77
+  },
+  {
+    "id": "sm75-4",
+    "name": "Torchic",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "A fire burns inside, so it feels very warm to hug. It launches fireballs of 1,800 degrees Fahrenheit.",
+    "image": "assets/cards/sm75/4.webp",
+    "imageSmall": "assets/cards/sm75/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-4/large",
+    "tcgplayerId": 175272,
+    "market": 0.36
+  },
+  {
+    "id": "sm75-5",
+    "name": "Combusken",
+    "number": "5",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "During a battle, the hot flame in its body increases. Its kicks have outstanding destructive power.",
+    "evolvesFrom": "Torchic",
+    "image": "assets/cards/sm75/5.webp",
+    "imageSmall": "assets/cards/sm75/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Natural Cure",
+        "text": "Whenever you attach an Energy card from your hand to this Pokémon, remove all Special Conditions from it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-5/large",
+    "tcgplayerId": 175273,
+    "market": 0.28
+  },
+  {
+    "id": "sm75-6",
+    "name": "Blaziken",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "150",
+    "artist": "Kouki Saitou",
+    "flavorText": "When facing a tough foe, it looses flames from its wrists. Its powerful legs let it jump clear over buildings.",
+    "evolvesFrom": "Combusken",
+    "image": "assets/cards/sm75/6.webp",
+    "imageSmall": "assets/cards/sm75/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Stream",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard a Fire Energy from this Pokémon. This attack does 20 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Firestarter",
+        "text": "Once during your turn (before your attack), you may attach a Fire Energy card from your discard pile to 1 of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/6.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-6/large",
+    "tcgplayerId": 175274,
+    "market": 2.94
+  },
+  {
+    "id": "sm75-7",
+    "name": "Victini ◇",
+    "number": "7",
+    "rarity": "Rare Prism Star",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Prism Star"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "Shin Nagasawa",
+    "flavorText": "When it shares the infinite energy it creates, that being's entire body will be overflowing with power.",
+    "image": "assets/cards/sm75/7.webp",
+    "imageSmall": "assets/cards/sm75/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Infinity",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each basic Energy card in your discard pile. Then, shuffle those cards into your deck."
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/7.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-7/large",
+    "tcgplayerId": 175275,
+    "market": 9.21
+  },
+  {
+    "id": "sm75-8",
+    "name": "Darumaka",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "When it sleeps, it pulls its limbs into its body and its internal fire goes down to 1,100 degrees Fahrenheit.",
+    "image": "assets/cards/sm75/8.webp",
+    "imageSmall": "assets/cards/sm75/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Damage Rush",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-8/large",
+    "tcgplayerId": 175276,
+    "market": 0.19
+  },
+  {
+    "id": "sm75-9",
+    "name": "Darmanitan",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its internal fire burns at 2,500 degrees Fahrenheit, making enough power that it can destroy a dump truck with one punch.",
+    "evolvesFrom": "Darumaka",
+    "image": "assets/cards/sm75/9.webp",
+    "imageSmall": "assets/cards/sm75/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Heat Assist",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Attach up to 3 Fire Energy cards from your hand to your Pokémon in any way you like."
+      },
+      {
+        "name": "Darmani-Hands",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip 4 coins. This attack does 50 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-9/large",
+    "tcgplayerId": 175277,
+    "market": 0.26
+  },
+  {
+    "id": "sm75-10",
+    "name": "Heatmor",
+    "number": "10",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "Ken Sugimori",
+    "flavorText": "It draws in air through its tail, transforms it into fire, and uses it like a tongue. It melts Durant and eats them.",
+    "image": "assets/cards/sm75/10.webp",
+    "imageSmall": "assets/cards/sm75/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Charring Breath",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "120",
+        "text": "If your opponent's Active Pokémon isn't Burned, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-10/large",
+    "tcgplayerId": 175312,
+    "market": 0.29
+  },
+  {
+    "id": "sm75-11",
+    "name": "Reshiram-GX",
+    "number": "11",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Otani",
+    "image": "assets/cards/sm75/11.webp",
+    "imageSmall": "assets/cards/sm75/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Fire Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Scorching Column",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Vermilion-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "You may attach up to 5 Fire Energy cards from your hand to your Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/11.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-11/large",
+    "tcgplayerId": 175347,
+    "market": 9.96
+  },
+  {
+    "id": "sm75-12",
+    "name": "Litten",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Ryota Murayama",
+    "flavorText": "While grooming itself, it builds up fur inside its stomach. It sets the fur alight and spews fiery attacks, which change based on how it coughs.",
+    "image": "assets/cards/sm75/12.webp",
+    "imageSmall": "assets/cards/sm75/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-12/large",
+    "tcgplayerId": 175348,
+    "market": 0.39
+  },
+  {
+    "id": "sm75-13",
+    "name": "Salandit",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "MAHOU",
+    "flavorText": "Volcanoes or dry, craggy places are its home. It emanates a sweet-smelling poisonous gas that attracts bug Pokémon, then attacks them.",
+    "image": "assets/cards/sm75/13.webp",
+    "imageSmall": "assets/cards/sm75/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-13/large",
+    "tcgplayerId": 175365,
+    "market": 0.27
+  },
+  {
+    "id": "sm75-14",
+    "name": "Salazzle",
+    "number": "14",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "Naoki Saito",
+    "flavorText": "Filled with pheromones, its poisonous gas can be diluted to use in the production of luscious perfumes.",
+    "evolvesFrom": "Salandit",
+    "image": "assets/cards/sm75/14.webp",
+    "imageSmall": "assets/cards/sm75/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Ring of Fire",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Burned. It can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-14/large",
+    "tcgplayerId": 175366,
+    "market": 0.24
+  },
+  {
+    "id": "sm75-15",
+    "name": "Horsea",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "40",
+    "artist": "Yukiko Baba",
+    "flavorText": "It makes its nest in the shade of corals. If it senses danger, it spits murky ink and flees.",
+    "image": "assets/cards/sm75/15.webp",
+    "imageSmall": "assets/cards/sm75/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Splatter",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-15/large",
+    "tcgplayerId": 175369,
+    "market": 0.27
+  },
+  {
+    "id": "sm75-16",
+    "name": "Horsea",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Mizue",
+    "flavorText": "It makes its nest in the shade of corals. If it senses danger, it spits murky ink and flees.",
+    "image": "assets/cards/sm75/16.webp",
+    "imageSmall": "assets/cards/sm75/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 10 more damage times the amount of Water Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-16/large",
+    "tcgplayerId": 175371,
+    "market": 0.28
+  },
+  {
+    "id": "sm75-17",
+    "name": "Seadra",
+    "number": "17",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Yumi",
+    "flavorText": "It is capable of swimming backwards by rapidly flapping its winglike pectoral fins and stout tail.",
+    "evolvesFrom": "Horsea",
+    "image": "assets/cards/sm75/17.webp",
+    "imageSmall": "assets/cards/sm75/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 20 more damage times the amount of Water Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-17/large",
+    "tcgplayerId": 175379,
+    "market": 0.36
+  },
+  {
+    "id": "sm75-18",
+    "name": "Kingdra-GX",
+    "number": "18",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Seadra",
+    "image": "assets/cards/sm75/18.webp",
+    "imageSmall": "assets/cards/sm75/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 50 more damage times the amount of Water Energy attached to this Pokémon."
+      },
+      {
+        "name": "Reverse Thrust",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Maelstrom-GX",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 40 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/18.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-18/large",
+    "tcgplayerId": 175380,
+    "market": 4.43
+  },
+  {
+    "id": "sm75-19",
+    "name": "Magikarp",
+    "number": "19",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Sekio",
+    "flavorText": "Its reckless leaps make it easy pickings for predators. On the bright side, many Pokémon enjoy longer life spans, thanks to Magikarp.",
+    "image": "assets/cards/sm75/19.webp",
+    "imageSmall": "assets/cards/sm75/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-19/large",
+    "tcgplayerId": 175381,
+    "market": 0.65
+  },
+  {
+    "id": "sm75-20",
+    "name": "Gyarados",
+    "number": "20",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "kawayoo",
+    "flavorText": "There are people who swear that any place Gyarados appears is fated for destruction.",
+    "evolvesFrom": "Magikarp",
+    "image": "assets/cards/sm75/20.webp",
+    "imageSmall": "assets/cards/sm75/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Wild Tail",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "You may discard any Stadium card in play."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Commotion",
+        "text": "If this Pokémon is your Active Pokémon and is damaged by an opponent's attack (even if this Pokémon is Knocked Out), put 2 damage counters on each of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/20.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-20/large",
+    "tcgplayerId": 175382,
+    "market": 3.13
+  },
+  {
+    "id": "sm75-21",
+    "name": "Lapras",
+    "number": "21",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Saya Tsuruta",
+    "flavorText": "These Pokémon were once near extinction due to poaching. Following protective regulations, there is now an overabundance of them.",
+    "image": "assets/cards/sm75/21.webp",
+    "imageSmall": "assets/cards/sm75/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Bullet",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "This attack does 10 more damage times the amount of Water Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-21/large",
+    "tcgplayerId": 175383,
+    "market": 0.55
+  },
+  {
+    "id": "sm75-22",
+    "name": "Totodile",
+    "number": "22",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Hironobu Yoshida",
+    "flavorText": "Its powerful, well-developed jaws are capable of crushing anything. Even its Trainer must be careful.",
+    "image": "assets/cards/sm75/22.webp",
+    "imageSmall": "assets/cards/sm75/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Leer",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-22/large",
+    "tcgplayerId": 175384,
+    "market": 0.49
+  },
+  {
+    "id": "sm75-23",
+    "name": "Croconaw",
+    "number": "23",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Ken Sugimori",
+    "flavorText": "Once it bites down, it won't let go until it loses its fangs. New fangs quickly grow into place.",
+    "evolvesFrom": "Totodile",
+    "image": "assets/cards/sm75/23.webp",
+    "imageSmall": "assets/cards/sm75/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Sweep Away",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard the top 3 cards of your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-23/large",
+    "tcgplayerId": 175385,
+    "market": 0.44
+  },
+  {
+    "id": "sm75-24",
+    "name": "Feraligatr",
+    "number": "24",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "160",
+    "artist": "Ken Sugimori",
+    "flavorText": "When it bites with its massive and powerful jaws, it shakes its head and savagely tears its victim up.",
+    "evolvesFrom": "Croconaw",
+    "image": "assets/cards/sm75/24.webp",
+    "imageSmall": "assets/cards/sm75/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Riptide",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "This attack does 20 more damage for each Water Energy card in your discard pile. Then, shuffle those cards into your deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Downpour",
+        "text": "As often as you like during your turn (before your attack), you may discard a Water Energy card from your hand.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/24.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-24/large",
+    "tcgplayerId": 175386,
+    "market": 2.72
+  },
+  {
+    "id": "sm75-25",
+    "name": "Wooper",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Shibuzoh.",
+    "flavorText": "When the temperature cools in the evening, they emerge from water to seek food along the shore.",
+    "image": "assets/cards/sm75/25.webp",
+    "imageSmall": "assets/cards/sm75/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-25/large",
+    "tcgplayerId": 175387,
+    "market": 2.85
+  },
+  {
+    "id": "sm75-26",
+    "name": "Quagsire",
+    "number": "26",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Ken Sugimori",
+    "flavorText": "This carefree Pokémon has an easygoing nature. While swimming, it always bumps into boat hulls.",
+    "evolvesFrom": "Wooper",
+    "image": "assets/cards/sm75/26.webp",
+    "imageSmall": "assets/cards/sm75/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage times the amount of Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wash Out",
+        "text": "As often as you like during your turn (before your attack), you may move a Water Energy from 1 of your Benched Pokémon to your Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-26/large",
+    "tcgplayerId": 175392,
+    "market": 2.49
+  },
+  {
+    "id": "sm75-27",
+    "name": "Corsola",
+    "number": "27",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Pursued by Mareanie for the branches on its head, this Pokémon will sometimes snap its own branches off as a diversion while it escapes.",
+    "image": "assets/cards/sm75/27.webp",
+    "imageSmall": "assets/cards/sm75/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble Shoot",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage times the amount of Water Energy attached to this Pokémon to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-27/large",
+    "tcgplayerId": 175400,
+    "market": 0.34
+  },
+  {
+    "id": "sm75-28",
+    "name": "Feebas",
+    "number": "28",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Although unattractive and unpopular, this Pokémon's marvelous vitality has made it a subject of research.",
+    "image": "assets/cards/sm75/28.webp",
+    "imageSmall": "assets/cards/sm75/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Submerge",
+        "text": "As long as this Pokémon is on your Bench, prevent all damage done to this Pokémon by attacks (both yours and your opponent's).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-28/large",
+    "tcgplayerId": 175403,
+    "market": 0.42
+  },
+  {
+    "id": "sm75-29",
+    "name": "Milotic",
+    "number": "29",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "hatachu",
+    "flavorText": "It lives at the bottom of clear lakes. In times of war, it shows itself, which soothes people's minds and hearts.",
+    "evolvesFrom": "Feebas",
+    "image": "assets/cards/sm75/29.webp",
+    "imageSmall": "assets/cards/sm75/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Aurora Wave",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Aqua Split",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "40",
+        "text": "This attack does 40 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-29/large",
+    "tcgplayerId": 175412,
+    "market": 0.48
+  },
+  {
+    "id": "sm75-30",
+    "name": "Phione",
+    "number": "30",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "kawayoo",
+    "flavorText": "It drifts in warm seas. It always returns to where it was born, no matter how far it may have drifted.",
+    "image": "assets/cards/sm75/30.webp",
+    "imageSmall": "assets/cards/sm75/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Murmurs of the Sea",
+        "text": "Your Water Pokémon can't be Confused. If those Pokémon are already Confused, remove that Special Condition.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-30/large",
+    "tcgplayerId": 175416,
+    "market": 0.41
+  },
+  {
+    "id": "sm75-31",
+    "name": "Wishiwashi",
+    "number": "31",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Kouki Saitou",
+    "flavorText": "It's awfully weak and notably tasty, so everyone is always out to get it. As it happens, anyone trying to bully it receives a painful lesson.",
+    "image": "assets/cards/sm75/31.webp",
+    "imageSmall": "assets/cards/sm75/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Meet Up",
+        "text": "Your Wishiwashi-GX in play get +20 HP, and their attacks do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-31/large",
+    "tcgplayerId": 175417,
+    "market": 0.25
+  },
+  {
+    "id": "sm75-32",
+    "name": "Trapinch",
+    "number": "32",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Naoyo Kimura",
+    "flavorText": "As it digs through the sand, its giant jaws crush any rocks that obstruct its path. It builds a funnel-shaped nest.",
+    "image": "assets/cards/sm75/32.webp",
+    "imageSmall": "assets/cards/sm75/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Mini Earthquake",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-32/large",
+    "tcgplayerId": 175425,
+    "market": 0.26
+  },
+  {
+    "id": "sm75-33",
+    "name": "Hydreigon",
+    "number": "33",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "160",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "The heads on their arms do not have brains. They use all three heads to consume and destroy everything.",
+    "evolvesFrom": "Zweilous",
+    "image": "assets/cards/sm75/33.webp",
+    "imageSmall": "assets/cards/sm75/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Destruction",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "You may discard an Energy from this Pokémon. If you do, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Weed Out",
+        "text": "Once during your turn (before your attack), you may choose 3 of your Benched Pokémon. Then, discard your other Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/33.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-33/large",
+    "tcgplayerId": 175431,
+    "market": 0.61
+  },
+  {
+    "id": "sm75-34",
+    "name": "Dratini",
+    "number": "34",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "60",
+    "artist": "Ayaka Yoshida",
+    "flavorText": "After a 10-hour struggle, a fisherman was able to pull one up and confirm its existence.",
+    "image": "assets/cards/sm75/34.webp",
+    "imageSmall": "assets/cards/sm75/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Wrap",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-34/large",
+    "tcgplayerId": 175438,
+    "market": 0.44
+  },
+  {
+    "id": "sm75-35",
+    "name": "Dratini",
+    "number": "35",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "70",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "After a 10-hour struggle, a fisherman was able to pull one up and confirm its existence.",
+    "image": "assets/cards/sm75/35.webp",
+    "imageSmall": "assets/cards/sm75/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Whap",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-35/large",
+    "tcgplayerId": 175439,
+    "market": 0.57
+  },
+  {
+    "id": "sm75-36",
+    "name": "Dragonair",
+    "number": "36",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "sui",
+    "flavorText": "From time immemorial, it has been venerated by agricultural peoples as an entity able to control the weather.",
+    "evolvesFrom": "Dratini",
+    "image": "assets/cards/sm75/36.webp",
+    "imageSmall": "assets/cards/sm75/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Tail",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60×",
+        "text": "Flip 2 coins. This attack does 60 damage for each heads."
+      },
+      {
+        "name": "Waterfall",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-36/large",
+    "tcgplayerId": 175441,
+    "market": 0.64
+  },
+  {
+    "id": "sm75-37",
+    "name": "Dragonite-GX",
+    "number": "37",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/sm75/37.webp",
+    "imageSmall": "assets/cards/sm75/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon can't attack during your next turn."
+      },
+      {
+        "name": "Dragonporter-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 3 Dragon Pokémon from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/37.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-37/large",
+    "tcgplayerId": 175450,
+    "market": 26.45
+  },
+  {
+    "id": "sm75-38",
+    "name": "Vibrava",
+    "number": "38",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "To help make its wings grow, it dissolves quantities of prey in its digestive juices and guzzles them down every day.",
+    "evolvesFrom": "Trapinch",
+    "image": "assets/cards/sm75/38.webp",
+    "imageSmall": "assets/cards/sm75/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-38/large",
+    "tcgplayerId": 175451,
+    "market": 0.22
+  },
+  {
+    "id": "sm75-39",
+    "name": "Flygon",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "140",
+    "artist": "Shigenori Negishi",
+    "flavorText": "This Pokémon hides in the heart of sandstorms it creates and seldom appears where people can see it.",
+    "evolvesFrom": "Vibrava",
+    "image": "assets/cards/sm75/39.webp",
+    "imageSmall": "assets/cards/sm75/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Tomb",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Guard",
+        "text": "Prevent all effects of your opponent's attacks, except damage, done to your Dragon Pokémon. (Existing effects are not removed.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-39/large",
+    "tcgplayerId": 175456,
+    "market": 0.49
+  },
+  {
+    "id": "sm75-40",
+    "name": "Altaria",
+    "number": "40",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "On sunny days, it flies freely through the sky and blends into the clouds. It sings in a beautiful soprano.",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/sm75/40.webp",
+    "imageSmall": "assets/cards/sm75/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fight Song",
+        "text": "Your Dragon Pokémon's attacks do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/40.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-40/large",
+    "tcgplayerId": 175459,
+    "market": 3.37
+  },
+  {
+    "id": "sm75-41",
+    "name": "Altaria-GX",
+    "number": "41",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/sm75/41.webp",
+    "imageSmall": "assets/cards/sm75/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Bright Tone",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Water",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Euphoria-GX",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep. Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/41.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-41/large",
+    "tcgplayerId": 175467,
+    "market": 4.56
+  },
+  {
+    "id": "sm75-42",
+    "name": "Bagon",
+    "number": "42",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "With its steel-hard stone head, it headbutts indiscriminately. This is because of the stress it feels at being unable to fly.",
+    "image": "assets/cards/sm75/42.webp",
+    "imageSmall": "assets/cards/sm75/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Risky Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      },
+      {
+        "name": "Dragon Eye",
+        "cost": [
+          "Fire",
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-42/large",
+    "tcgplayerId": 175468,
+    "market": 0.34
+  },
+  {
+    "id": "sm75-43",
+    "name": "Shelgon",
+    "number": "43",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "Yuka Morii",
+    "flavorText": "They lurk deep within caves—motionless, neither eating nor drinking. Why they don't die is not known.",
+    "evolvesFrom": "Bagon",
+    "image": "assets/cards/sm75/43.webp",
+    "imageSmall": "assets/cards/sm75/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Guard",
+        "text": "If this Pokémon has any basic Energy attached to it, it takes 20 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-43/large",
+    "tcgplayerId": 175469,
+    "market": 2.19
+  },
+  {
+    "id": "sm75-44",
+    "name": "Salamence-GX",
+    "number": "44",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Shelgon",
+    "image": "assets/cards/sm75/44.webp",
+    "imageSmall": "assets/cards/sm75/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pokémon."
+      },
+      {
+        "name": "Flame Jet-GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 120 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Lift",
+        "text": "Your Pokémon in play have no Retreat Cost, except Pokémon-GX and Pokémon-EX.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/44.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-44/large",
+    "tcgplayerId": 175472,
+    "market": 10.35
+  },
+  {
+    "id": "sm75-45",
+    "name": "Druddigon",
+    "number": "45",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "110",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It warms its body by absorbing sunlight with its wings. When its body temperature falls, it can no longer move.",
+    "image": "assets/cards/sm75/45.webp",
+    "imageSmall": "assets/cards/sm75/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rough Skin",
+        "text": "If this Pokémon is your Active Pokémon and is damaged by an opponent's attack (even if this Pokémon is Knocked Out), put 3 damage counters on the Attacking Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-45/large",
+    "tcgplayerId": 175473,
+    "market": 0.32
+  },
+  {
+    "id": "sm75-46",
+    "name": "Zekrom",
+    "number": "46",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Hasuno",
+    "flavorText": "Concealing itself in lightning clouds, it flies throughout the Unova region. It creates electricity in its tail.",
+    "image": "assets/cards/sm75/46.webp",
+    "imageSmall": "assets/cards/sm75/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Bolt Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Flip a coin. If tails, this Pokémon does 50 damage to itself."
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/46.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-46/large",
+    "tcgplayerId": 175476,
+    "market": 1.42
+  },
+  {
+    "id": "sm75-47",
+    "name": "Kyurem",
+    "number": "47",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "TOKIYA",
+    "flavorText": "It generates a powerful, freezing energy inside itself, but its body became frozen when the energy leaked out.",
+    "image": "assets/cards/sm75/47.webp",
+    "imageSmall": "assets/cards/sm75/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Frost Spear",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/47.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-47/large",
+    "tcgplayerId": 175477,
+    "market": 0.67
+  },
+  {
+    "id": "sm75-48",
+    "name": "White Kyurem-GX",
+    "number": "48",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm75/48.webp",
+    "imageSmall": "assets/cards/sm75/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Raging Blade",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon has any damage counters on it, this attack does 80 more damage."
+      },
+      {
+        "name": "Dragon Nova-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Your opponent's Active Pokémon is now Burned and Paralyzed. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/48.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-48/large",
+    "tcgplayerId": 175478,
+    "market": 5.84
+  },
+  {
+    "id": "sm75-49",
+    "name": "Zygarde",
+    "number": "49",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Misa Tsutsui",
+    "flavorText": "It's thought to be monitoring the ecosystem. There are rumors that even greater power lies hidden within it.",
+    "image": "assets/cards/sm75/49.webp",
+    "imageSmall": "assets/cards/sm75/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Rumble",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Raging Blade",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If this Pokémon has any damage counters on it, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-49/large",
+    "tcgplayerId": 175479,
+    "market": 0.41
+  },
+  {
+    "id": "sm75-50",
+    "name": "Turtonator",
+    "number": "50",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "110",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It gushes fire and poisonous gases from its nostrils. Its dung is an explosive substance and can be put to various uses.",
+    "image": "assets/cards/sm75/50.webp",
+    "imageSmall": "assets/cards/sm75/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Explosive Jet",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire"
+        ],
+        "damage": "50×",
+        "text": "Discard any amount of Fire Energy from your Pokémon. This attack does 50 damage for each card you discarded in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-50/large",
+    "tcgplayerId": 175480,
+    "market": 0.3
+  },
+  {
+    "id": "sm75-51",
+    "name": "Drampa",
+    "number": "51",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "This Pokémon is friendly to people and loves children most of all. It comes from deep in the mountains to play with children it likes in town.",
+    "image": "assets/cards/sm75/51.webp",
+    "imageSmall": "assets/cards/sm75/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Wisdom",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Attach a basic Energy card from your discard pile to 1 of your Dragon Pokémon."
+      },
+      {
+        "name": "Hyper Voice",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-51/large",
+    "tcgplayerId": 175481,
+    "market": 0.31
+  },
+  {
+    "id": "sm75-52",
+    "name": "Jangmo-o",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "60",
+    "artist": "Yusuke Ohmura",
+    "flavorText": "They live in mountains where no trace of humans can be detected. Jangmo-o grow little by little as they battle one another.",
+    "image": "assets/cards/sm75/52.webp",
+    "imageSmall": "assets/cards/sm75/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Rigidify",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-52/large",
+    "tcgplayerId": 175482,
+    "market": 0.25
+  },
+  {
+    "id": "sm75-53",
+    "name": "Hakamo-o",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "90",
+    "artist": "hatachu",
+    "flavorText": "It sheds and regrows its scales on a continuous basis. The scales become harder and sharper each time they're regrown.",
+    "evolvesFrom": "Jangmo-o",
+    "image": "assets/cards/sm75/53.webp",
+    "imageSmall": "assets/cards/sm75/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-53/large",
+    "tcgplayerId": 175483,
+    "market": 0.26
+  },
+  {
+    "id": "sm75-54",
+    "name": "Kommo-o",
+    "number": "54",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "160",
+    "artist": "so-taro",
+    "flavorText": "Its rigid scales function as offense and defense. In the past, its scales were processed and used to make weapons and other commodities.",
+    "evolvesFrom": "Hakamo-o",
+    "image": "assets/cards/sm75/54.webp",
+    "imageSmall": "assets/cards/sm75/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Guard Press",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Raging Uppercut",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "If this Pokémon has 8 or more damage counters on it, this attack does 120 more damage."
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/54.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-54/large",
+    "tcgplayerId": 175484,
+    "market": 1.25
+  },
+  {
+    "id": "sm75-55",
+    "name": "Kangaskhan",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Naoyo Kimura",
+    "flavorText": "The child in its pouch leaves home after roughly three years. That is the only time the mother is heard to cry wildly.",
+    "image": "assets/cards/sm75/55.webp",
+    "imageSmall": "assets/cards/sm75/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Fetch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "One-Two Punch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-55/large",
+    "tcgplayerId": 175485,
+    "market": 0.27
+  },
+  {
+    "id": "sm75-56",
+    "name": "Swablu",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Yukiko Baba",
+    "flavorText": "It constantly grooms its cotton-like wings. It takes a shower to clean itself if it becomes dirty.",
+    "image": "assets/cards/sm75/56.webp",
+    "imageSmall": "assets/cards/sm75/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-56/large",
+    "tcgplayerId": 175486,
+    "market": 0.32
+  },
+  {
+    "id": "sm75-57",
+    "name": "Swablu",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Shibuzoh.",
+    "flavorText": "It constantly grooms its cotton-like wings. It takes a shower to clean itself if it becomes dirty.",
+    "image": "assets/cards/sm75/57.webp",
+    "imageSmall": "assets/cards/sm75/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Sing",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-57/large",
+    "tcgplayerId": 175487,
+    "market": 0.85
+  },
+  {
+    "id": "sm75-58",
+    "name": "Blaine's Last Stand",
+    "number": "58",
+    "rarity": "Rare Holo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/sm75/58.webp",
+    "imageSmall": "assets/cards/sm75/58-sm.webp",
+    "foilMap": "assets/foil/maps/sm75/58.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-58/large",
+    "tcgplayerId": 175488,
+    "market": 0.34
+  },
+  {
+    "id": "sm75-59",
+    "name": "Dragon Talon",
+    "number": "59",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sm75/59.webp",
+    "imageSmall": "assets/cards/sm75/59-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-59/large",
+    "tcgplayerId": 175489,
+    "market": 0.3
+  },
+  {
+    "id": "sm75-60",
+    "name": "Fiery Flint",
+    "number": "60",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/sm75/60.webp",
+    "imageSmall": "assets/cards/sm75/60-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-60/large",
+    "tcgplayerId": 175490,
+    "market": 0.52
+  },
+  {
+    "id": "sm75-61",
+    "name": "Lance ◇",
+    "number": "61",
+    "rarity": "Rare Prism Star",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter",
+      "Prism Star"
+    ],
+    "artist": "kodama",
+    "image": "assets/cards/sm75/61.webp",
+    "imageSmall": "assets/cards/sm75/61-sm.webp",
+    "foilMap": "assets/foil/maps/sm75/61.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-61/large",
+    "tcgplayerId": 175491,
+    "market": 2.54
+  },
+  {
+    "id": "sm75-62",
+    "name": "Switch Raft",
+    "number": "62",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Yoshinobu Saito",
+    "image": "assets/cards/sm75/62.webp",
+    "imageSmall": "assets/cards/sm75/62-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-62/large",
+    "tcgplayerId": 175492,
+    "market": 2.07
+  },
+  {
+    "id": "sm75-63",
+    "name": "Wela Volcano Park",
+    "number": "63",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm75/63.webp",
+    "imageSmall": "assets/cards/sm75/63-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-63/large",
+    "tcgplayerId": 175493,
+    "market": 0.36
+  },
+  {
+    "id": "sm75-64",
+    "name": "Zinnia",
+    "number": "64",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/sm75/64.webp",
+    "imageSmall": "assets/cards/sm75/64-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-64/large",
+    "tcgplayerId": 175494,
+    "market": 0.39
+  },
+  {
+    "id": "sm75-65",
+    "name": "Reshiram-GX",
+    "number": "65",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Igarashi",
+    "image": "assets/cards/sm75/65.webp",
+    "imageSmall": "assets/cards/sm75/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Fire Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Scorching Column",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Vermilion-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "You may attach up to 5 Fire Energy cards from your hand to your Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/65.webp",
+    "etchMap": "assets/foil/maps/sm75/65-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-65/large",
+    "tcgplayerId": 175495,
+    "market": 33.53
+  },
+  {
+    "id": "sm75-66",
+    "name": "Kingdra-GX",
+    "number": "66",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Seadra",
+    "image": "assets/cards/sm75/66.webp",
+    "imageSmall": "assets/cards/sm75/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 50 more damage times the amount of Water Energy attached to this Pokémon."
+      },
+      {
+        "name": "Reverse Thrust",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Maelstrom-GX",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 40 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/66.webp",
+    "etchMap": "assets/foil/maps/sm75/66-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-66/large",
+    "tcgplayerId": 175496,
+    "market": 13.48
+  },
+  {
+    "id": "sm75-67",
+    "name": "Dragonite-GX",
+    "number": "67",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/sm75/67.webp",
+    "imageSmall": "assets/cards/sm75/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon can't attack during your next turn."
+      },
+      {
+        "name": "Dragonporter-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 3 Dragon Pokémon from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/67.webp",
+    "etchMap": "assets/foil/maps/sm75/67-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-67/large",
+    "tcgplayerId": 175497,
+    "market": 71.05
+  },
+  {
+    "id": "sm75-68",
+    "name": "Altaria-GX",
+    "number": "68",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/sm75/68.webp",
+    "imageSmall": "assets/cards/sm75/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Bright Tone",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Water",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Euphoria-GX",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep. Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/68.webp",
+    "etchMap": "assets/foil/maps/sm75/68-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-68/large",
+    "tcgplayerId": 175498,
+    "market": 8.45
+  },
+  {
+    "id": "sm75-69",
+    "name": "Blaine's Last Stand",
+    "number": "69",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/sm75/69.webp",
+    "imageSmall": "assets/cards/sm75/69-sm.webp",
+    "foilMap": "assets/foil/maps/sm75/69.webp",
+    "etchMap": "assets/foil/maps/sm75/69-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-69/large",
+    "tcgplayerId": 175499,
+    "market": 45.54
+  },
+  {
+    "id": "sm75-70",
+    "name": "Zinnia",
+    "number": "70",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hideki Ishikawa",
+    "image": "assets/cards/sm75/70.webp",
+    "imageSmall": "assets/cards/sm75/70-sm.webp",
+    "foilMap": "assets/foil/maps/sm75/70.webp",
+    "etchMap": "assets/foil/maps/sm75/70-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-70/large",
+    "tcgplayerId": 175500,
+    "market": 65.6
+  },
+  {
+    "id": "sm75-71",
+    "name": "Reshiram-GX",
+    "number": "71",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Igarashi",
+    "image": "assets/cards/sm75/71.webp",
+    "imageSmall": "assets/cards/sm75/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Fire Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Scorching Column",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Vermilion-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "You may attach up to 5 Fire Energy cards from your hand to your Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/71.webp",
+    "etchMap": "assets/foil/maps/sm75/71-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-71/large",
+    "tcgplayerId": 175501,
+    "market": 65.01
+  },
+  {
+    "id": "sm75-72",
+    "name": "Altaria-GX",
+    "number": "72",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/sm75/72.webp",
+    "imageSmall": "assets/cards/sm75/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Bright Tone",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Water",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Euphoria-GX",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep. Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/72.webp",
+    "etchMap": "assets/foil/maps/sm75/72-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-72/large",
+    "tcgplayerId": 175502,
+    "market": 41.53
+  },
+  {
+    "id": "sm75-73",
+    "name": "Salamence-GX",
+    "number": "73",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Shelgon",
+    "image": "assets/cards/sm75/73.webp",
+    "imageSmall": "assets/cards/sm75/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pokémon."
+      },
+      {
+        "name": "Flame Jet-GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 120 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Lift",
+        "text": "Your Pokémon in play have no Retreat Cost, except Pokémon-GX and Pokémon-EX.",
+        "type": "Ability"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/73.webp",
+    "etchMap": "assets/foil/maps/sm75/73-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-73/large",
+    "tcgplayerId": 175503,
+    "market": 45.4
+  },
+  {
+    "id": "sm75-74",
+    "name": "White Kyurem-GX",
+    "number": "74",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm75/74.webp",
+    "imageSmall": "assets/cards/sm75/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Raging Blade",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon has any damage counters on it, this attack does 80 more damage."
+      },
+      {
+        "name": "Dragon Nova-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Your opponent's Active Pokémon is now Burned and Paralyzed. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/74.webp",
+    "etchMap": "assets/foil/maps/sm75/74-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-74/large",
+    "tcgplayerId": 175504,
+    "market": 51.89
+  },
+  {
+    "id": "sm75-75",
+    "name": "Dragon Talon",
+    "number": "75",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/sm75/75.webp",
+    "imageSmall": "assets/cards/sm75/75-sm.webp",
+    "foilMap": "assets/foil/maps/sm75/75.webp",
+    "etchMap": "assets/foil/maps/sm75/75-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-75/large",
+    "tcgplayerId": 175505,
+    "market": 8.15
+  },
+  {
+    "id": "sm75-76",
+    "name": "Fiery Flint",
+    "number": "76",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/sm75/76.webp",
+    "imageSmall": "assets/cards/sm75/76-sm.webp",
+    "foilMap": "assets/foil/maps/sm75/76.webp",
+    "etchMap": "assets/foil/maps/sm75/76-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-76/large",
+    "tcgplayerId": 175506,
+    "market": 10.17
+  },
+  {
+    "id": "sm75-77",
+    "name": "Switch Raft",
+    "number": "77",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Yoshinobu Saito",
+    "image": "assets/cards/sm75/77.webp",
+    "imageSmall": "assets/cards/sm75/77-sm.webp",
+    "foilMap": "assets/foil/maps/sm75/77.webp",
+    "etchMap": "assets/foil/maps/sm75/77-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-77/large",
+    "tcgplayerId": 175507,
+    "market": 10.57
+  },
+  {
+    "id": "sm75-78",
+    "name": "Ultra Necrozma-GX",
+    "number": "78",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "190",
+    "artist": "PLANETA Igarashi",
+    "image": "assets/cards/sm75/78.webp",
+    "imageSmall": "assets/cards/sm75/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Photon Geyser",
+        "cost": [
+          "Psychic",
+          "Metal"
+        ],
+        "damage": "20+",
+        "text": "Discard all basic Psychic Energy from this Pokémon. This attack does 80 more damage for each card you discarded in this way."
+      },
+      {
+        "name": "Sky-Scorching Light-GX",
+        "cost": [
+          "Psychic",
+          "Metal"
+        ],
+        "damage": "",
+        "text": "You can use this attack only if the total of both players' remaining Prize cards is 6 or less. Put 6 damage counters on each of your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "foilMap": "assets/foil/maps/sm75/78.webp",
+    "etchMap": "assets/foil/maps/sm75/78-etch.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-78/large",
+    "tcgplayerId": 175508,
+    "market": 120.72
+  },
+  {
+    "id": "sm75-40a",
+    "name": "Altaria",
+    "number": "40a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "Shin Nagasawa",
+    "flavorText": "On sunny days, it flies freely through the sky and blends into the clouds. It sings in a beautiful soprano.",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/sm75/40a.webp",
+    "imageSmall": "assets/cards/sm75/40a-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fight Song",
+        "text": "Your Dragon Pokémon's attacks do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 4.7,
+    "imageRemote": "https://images.scrydex.com/pokemon/sm75-40a/large",
+    "printedNumber": "40a/70",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm75/40.webp",
+    "tcgplayerId": 184219,
+    "era": "sm"
+  },
+  {
+    "id": "sm75-smp125",
+    "name": "Naganadel-GX",
+    "number": "smp125",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Poipole",
+    "image": "assets/cards/sm75/smp125.webp",
+    "imageSmall": "assets/cards/sm75/smp125-sm.webp",
+    "attacks": [
+      {
+        "name": "Beast Raid",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each of your Ultra Beasts in play."
+      },
+      {
+        "name": "Jet Needle",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      },
+      {
+        "name": "Stinger-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Both players shuffle their Prize cards into their decks. Then, each player puts the top 3 cards of their deck face down as their Prize cards. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 9.71,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM125/large",
+    "printedNumber": "SM 125",
+    "tcgplayerId": 176944,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm75/smp125.webp"
+  },
+  {
+    "id": "sm75-smp126",
+    "name": "Ultra Necrozma-GX",
+    "number": "smp126",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "190",
+    "artist": "PLANETA",
+    "image": "assets/cards/sm75/smp126.webp",
+    "imageSmall": "assets/cards/sm75/smp126-sm.webp",
+    "attacks": [
+      {
+        "name": "Photon Geyser",
+        "cost": [
+          "Psychic",
+          "Metal"
+        ],
+        "damage": "20+",
+        "text": "Discard all basic Psychic Energy from this Pokémon. This attack does 80 more damage for each card you discarded in this way."
+      },
+      {
+        "name": "Sky-Scorching Light-GX",
+        "cost": [
+          "Psychic",
+          "Metal"
+        ],
+        "damage": "",
+        "text": "You can use this attack only if the total of both players' remaining Prize cards is 6 or less. Put 6 damage counters on each of your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 11.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM126/large",
+    "printedNumber": "SM 126",
+    "tcgplayerId": 179039,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm75/smp126.webp"
+  },
+  {
+    "id": "sm75-smp136",
+    "name": "Latios",
+    "number": "smp136",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "Kouki Saitou",
+    "flavorText": "It understands human speech and is highly intelligent. It is a tender Pokémon that dislikes fighting.",
+    "image": "assets/cards/sm75/smp136.webp",
+    "imageSmall": "assets/cards/sm75/smp136-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Extract",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Search your deck for a basic Energy card and attach it to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Luster Purge",
+        "cost": [
+          "Water",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "Flip a coin. If tails, discard all Energy attached to this Pokémon."
+      }
+    ],
+    "market": 11.66,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM136/large",
+    "printedNumber": "SM 136",
+    "tcgplayerId": 175563,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm75/smp136.webp"
+  },
+  {
+    "id": "sm75-smp139",
+    "name": "Salamence-GX",
+    "number": "smp139",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Shelgon",
+    "image": "assets/cards/sm75/smp139.webp",
+    "imageSmall": "assets/cards/sm75/smp139-sm.webp",
+    "attacks": [
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pokémon."
+      },
+      {
+        "name": "Flame Jet-GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 120 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Lift",
+        "text": "Your Pokémon in play have no Retreat Cost, except Pokémon-GX and Pokémon-EX.",
+        "type": "Ability"
+      }
+    ],
+    "market": 17.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM139/large",
+    "printedNumber": "SM 139",
+    "tcgplayerId": 180529,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm75/smp139.webp",
+    "etchMap": "assets/foil/maps/sm75/smp139-etch.webp"
+  },
+  {
+    "id": "sm75-smp140",
+    "name": "Salamence",
+    "number": "smp140",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "150",
+    "artist": "kawayoo",
+    "flavorText": "It flies around on its wings, which have grown in at last. In its happiness, it gushes hot flames, burning up the fields it passes over.",
+    "evolvesFrom": "Shelgon",
+    "image": "assets/cards/sm75/smp140.webp",
+    "imageSmall": "assets/cards/sm75/smp140-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Wind",
+        "text": "If this Pokémon is your Active Pokémon, once during your turn (before your attack), you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 11.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM140/large",
+    "printedNumber": "SM 140",
+    "tcgplayerId": 180530,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm75/smp140.webp"
+  },
+  {
+    "id": "sm75-smp141",
+    "name": "White Kyurem-GX",
+    "number": "smp141",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm75/smp141.webp",
+    "imageSmall": "assets/cards/sm75/smp141-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Raging Blade",
+        "cost": [
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If this Pokémon has any damage counters on it, this attack does 80 more damage."
+      },
+      {
+        "name": "Dragon Nova-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Your opponent's Active Pokémon is now Burned and Paralyzed. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 14.66,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM141/large",
+    "printedNumber": "SM 141",
+    "tcgplayerId": 180531,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm75/smp141.webp",
+    "etchMap": "assets/foil/maps/sm75/smp141-etch.webp"
+  },
+  {
+    "id": "sm75-smp142",
+    "name": "Kyurem",
+    "number": "smp142",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It generates a powerful, freezing energy inside itself, but its body became frozen when the energy leaked out.",
+    "image": "assets/cards/sm75/smp142.webp",
+    "imageSmall": "assets/cards/sm75/smp142-sm.webp",
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Frost Spear",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 3.56,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM142/large",
+    "printedNumber": "SM 142",
+    "tcgplayerId": 180528,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm75/smp142.webp"
+  },
+  {
+    "id": "sm75-smp155",
+    "name": "Kingdra-GX",
+    "number": "smp155",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Seadra",
+    "image": "assets/cards/sm75/smp155.webp",
+    "imageSmall": "assets/cards/sm75/smp155-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 50 more damage times the amount of Water Energy attached to this Pokémon."
+      },
+      {
+        "name": "Reverse Thrust",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Maelstrom-GX",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 40 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 17.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM155/large",
+    "printedNumber": "SM 155",
+    "tcgplayerId": 178693,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Rainbow",
+    "foilMap": "assets/foil/maps/sm75/smp155.webp",
+    "etchMap": "assets/foil/maps/sm75/smp155-etch.webp"
+  },
+  {
+    "id": "sm75-smp156",
+    "name": "Dragonite-GX",
+    "number": "smp156",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Dragonair",
+    "image": "assets/cards/sm75/smp156.webp",
+    "imageSmall": "assets/cards/sm75/smp156-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Giga Impact",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "This Pokémon can't attack during your next turn."
+      },
+      {
+        "name": "Dragonporter-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 3 Dragon Pokémon from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 90.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM156/large",
+    "printedNumber": "SM 156",
+    "tcgplayerId": 178692,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Rainbow",
+    "foilMap": "assets/foil/maps/sm75/smp156.webp",
+    "etchMap": "assets/foil/maps/sm75/smp156-etch.webp"
+  }
+]

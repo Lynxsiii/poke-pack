@@ -281,17 +281,75 @@
     "eliteTrainerBox": 359.03,
     "boosterPack": 33.85
   },
+  "mcd17": {
+    "boosterPack": 8.5
+  },
+  "mcd18": {
+    "boosterPack": 27.7
+  },
+  "mcd19": {
+    "boosterPack": 15.47
+  },
+  "sm11": {
+    "boosterBox": 3240.3,
+    "boosterPack": 79.75
+  },
+  "sm10": {
+    "boosterBox": 2560.51,
+    "boosterPack": 68.67
+  },
+  "sm6": {
+    "boosterBox": 1647.98,
+    "boosterPack": 47.22
+  },
+  "sm7": {
+    "boosterBox": 2485.83,
+    "boosterPack": 65.83
+  },
+  "sm75": {
+    "boosterPack": 107.42
+  },
+  "sm8": {
+    "boosterBox": 1568.33,
+    "buildBattleBox": 192.54,
+    "boosterPack": 59.36
+  },
+  "sm9": {
+    "boosterBox": 11725.0,
+    "boosterPack": 300.96
+  },
+  "sm115": {
+    "boosterPack": 49.15
+  },
+  "sm12": {
+    "boosterBox": 4216.67,
+    "buildBattleBox": 499.99,
+    "boosterPack": 73.81
+  },
+  "det1": {
+    "boosterPack": 24.56
+  },
   "sm35": {
-    "eliteTrainerBox": 1183.16,
     "boosterPack": 109.79
   },
   "sm4": {
-    "eliteTrainerBox": 221.75,
     "boosterBox": 677.89,
     "boosterPack": 18.22
   },
   "sm5": {
     "boosterBox": 1450.0,
     "boosterPack": 49.67
+  },
+  "sm1": {
+    "boosterBox": 995.35,
+    "boosterPack": 22.97
+  },
+  "sm2": {
+    "boosterBox": 1881.33,
+    "boosterPack": 35.92
+  },
+  "sm3": {
+    "boosterBox": 1243.1,
+    "boosterPack": 31.02
   }
 }

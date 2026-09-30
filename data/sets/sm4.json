@@ -21,8 +21,236 @@
       "tcgplayerGroup": 1861,
       "printed": "SM",
       "pkmnKey": "SM{n:03d}",
-      "scanKey": "SM{n:02d}",
+      "scrydexKey": "SM{n:02d}",
       "era": "sm"
     }
-  }
+  },
+  "promoCards": {
+    "smp072": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM72"
+    },
+    "smp073": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM73"
+    },
+    "smp074": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM74"
+    },
+    "smp075": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM75"
+    },
+    "smp052": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM52"
+    },
+    "smp053": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM53"
+    },
+    "smp054": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM54"
+    },
+    "smp055": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM55"
+    },
+    "smp066": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM66"
+    },
+    "smp067": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM67"
+    },
+    "smp068": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM68"
+    },
+    "smp069": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM69"
+    },
+    "smp091": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM91"
+    },
+    "smp064": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM64"
+    },
+    "smp085": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM85"
+    },
+    "smp098": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM98"
+    },
+    "smp099": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM99"
+    },
+    "63a": {
+      "like": "63a",
+      "keepScan": true,
+      "foilAs": "Rare Holo GX"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 149377,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Prerelease Kit",
+      "kind": "battle",
+      "tcgplayerId": 153081,
+      "packs": 4,
+      "promos": [
+        "smp072",
+        "smp073",
+        "smp074",
+        "smp075"
+      ],
+      "pick": 1,
+      "note": "Event kit; one promo per kit."
+    },
+    {
+      "id": "golisopod-single-pack-blister",
+      "name": "Single Pack Blister [Golisopod]",
+      "kind": "blister",
+      "tcgplayerId": 177874,
+      "packs": 1,
+      "promos": [
+        "smp052"
+      ]
+    },
+    {
+      "id": "dhelmise-single-pack-blister",
+      "name": "Single Pack Blister [Dhelmise]",
+      "kind": "blister",
+      "tcgplayerId": 177875,
+      "packs": 1,
+      "promos": [
+        "smp053"
+      ]
+    },
+    {
+      "id": "lucario-3-pack-blister",
+      "name": "3 Pack Blister [Lucario]",
+      "kind": "blister",
+      "tcgplayerId": 177873,
+      "packs": 3,
+      "promos": [
+        "smp054"
+      ]
+    },
+    {
+      "id": "decidueye-3-pack-blister",
+      "name": "3 Pack Blister [Decidueye]",
+      "kind": "blister",
+      "tcgplayerId": 177872,
+      "packs": 3,
+      "promos": [
+        "smp055"
+      ]
+    },
+    {
+      "id": "ultra-beasts-premium-pheromosa-celesteela",
+      "name": "Ultra Beasts GX Premium Collection [Pheromosa GX & Celesteela GX]",
+      "kind": "premium",
+      "tcgplayerId": 149375,
+      "packs": 8,
+      "promos": [
+        "smp066",
+        "smp067"
+      ]
+    },
+    {
+      "id": "ultra-beasts-premium-buzzwole-xurkitree",
+      "name": "Ultra Beasts GX Premium Collection [Buzzwole GX & Xurkitree GX]",
+      "kind": "premium",
+      "tcgplayerId": 149376,
+      "packs": 8,
+      "promos": [
+        "smp068",
+        "smp069"
+      ]
+    },
+    {
+      "id": "shiny-silvally-gx-box",
+      "name": "Shiny Silvally GX Box",
+      "kind": "collection",
+      "tcgplayerId": 152598,
+      "packs": 4,
+      "promos": [
+        "smp091"
+      ],
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs."
+    },
+    {
+      "id": "silvally-figure-collection",
+      "name": "Silvally Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 152601,
+      "packs": 4,
+      "promos": [
+        "smp064"
+      ],
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs."
+    },
+    {
+      "id": "marshadow-figure-collection",
+      "name": "Marshadow Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 152602,
+      "packs": 4,
+      "promos": [
+        "smp085"
+      ],
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs."
+    },
+    {
+      "id": "guzzlord-gx-box",
+      "name": "Guzzlord GX Box",
+      "kind": "collection",
+      "tcgplayerId": 155061,
+      "packs": 4,
+      "promos": [
+        "63a"
+      ],
+      "note": "Its promo is the alternate-art Guzzlord-GX, Crimson Invasion 63a. The pack mix is not documented; shown as Crimson Invasion packs."
+    },
+    {
+      "id": "pikachu-sidekick-collection",
+      "name": "Pikachu Sidekick Collection",
+      "kind": "collection",
+      "tcgplayerId": 166409,
+      "packs": 3,
+      "promos": [
+        "smp098"
+      ],
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs."
+    },
+    {
+      "id": "mimikyu-sidekick-collection",
+      "name": "Mimikyu Sidekick Collection",
+      "kind": "collection",
+      "tcgplayerId": 166410,
+      "packs": 3,
+      "promos": [
+        "smp099"
+      ],
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs."
+    }
+  ]
 }

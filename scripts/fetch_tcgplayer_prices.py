@@ -75,16 +75,21 @@ def norm(name: str) -> str:
         name = re.sub(r"(\s+\([^)]*\))+$", "", name)
         name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
+    # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
+    # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
+    name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
     # Special Energy by type letter ("Speed L Energy" for Speed Lightning Energy).
     name = re.sub(r"\b([GRWLPFDMNC]) Energy$", lambda m: {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "C": "Colorless"}[m.group(1)] + " Energy", name)
+    # Sun & Moon: Prism Stars print a diamond ("Celebi ◇", TCGplayer says "Celebi
+    # Prism Star"), and the Fairy Charm tools carry their type as one letter
+    # ("Fairy Charm L" is Lightning, "Fairy Charm O" is Dragon).
+    name = name.replace("◇", " Prism Star")
+    name = re.sub(r"\b(Fairy Charm) ([GRWLPFDMNCO])$", lambda m: m.group(1) + " " + {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "O": "Dragon", "C": "Colorless"}[m.group(2)], name)
     # TCGplayer spells Nidoran's symbols out ("Nidoran F"); our data keeps ♀/♂.
     name = name.replace("♀", " F").replace("♂", " M").replace("’", "'")
     # Classic Collection reprints: "M Rayquaza-EX" vs "M Rayquaza EX",
     # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
-    name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "")
-    # Sun & Moon's Prism Stars: pkmn.gg spells the printed diamond ("Giratina ◇"),
-    # TCGplayer the words ("Giratina Prism Star").
-    name = name.replace("◇", " Prism Star").replace("\u25c7", " Prism Star")
+    name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "").replace("◇", " Prism Star")
     name = re.sub(r"_+", "_", name)
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
@@ -151,9 +156,15 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
 
     priced, missing = 0, []
     for card in cards:
-        if card.get("promo") or card.get("number") not in by_number:
+        # Sun & Moon's later print runs add an "a" card (sm2 60a, the 2018
+        # Tapu Lele-GX) that TCGplayer files under the same listing as the
+        # original, so it takes that price.
+        key = card.get("number")
+        if key not in by_number and re.fullmatch(r"\d+a", str(key)):
+            key = str(key)[:-1]
+        if card.get("promo") or key not in by_number:
             continue
-        product = by_number[card["number"]]
+        product = by_number[key]
         rows = prices.get(product["productId"], [])
         first = "Normal" if card["rarity"] in ("Common", "Uncommon") else "Holofoil"
         value = market(rows, first) or market(rows, "Normal") or market(rows, "Holofoil")

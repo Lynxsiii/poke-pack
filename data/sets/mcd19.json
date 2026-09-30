@@ -1,0 +1,100 @@
+{
+  "id": "mcd19",
+  "name": "McDonald's Collection 2019",
+  "side": true,
+  "series": "other",
+  "slug": "mcdonalds-collection-2019",
+  "scrydexId": "mcd19",
+  "printedTotal": 12,
+  "tcgplayerGroup": 2555,
+  "defaults": {
+    "rarity": "Promo",
+    "era": "sm"
+  },
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 200960,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 200961,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 200963,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 200964,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 200966,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 200967,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 200969,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 200971,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 200973,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 200975,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 200976,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 200977,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "tcgl": "window"
+    }
+  ]
+}
