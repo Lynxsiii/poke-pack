@@ -96,6 +96,9 @@ import { normalizeGear } from "./gear.js";
 import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=4";
 import { initBattles } from "./battles.js?v=2";
 import { initCasino } from "./casino.js";
+// grading
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=1";
+import { coinTag } from "./battle-kit.js";
 
 const state = loadState();
 let cloudUser = null;
@@ -113,6 +116,7 @@ let battleReturnPath = "";
 let battlePath = "/battles";
 let casinoReturnPath = "";
 let casinoPath = "/casino";
+let gradingPath = "/grading"; // grading
 
 function snapshotIfProgress(save) {
   if (!save) return null;
@@ -145,6 +149,9 @@ function applyCloudSave(save) {
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   state.gear = normalizeGear(save.gear);
+  // grading: slabs and guard stock ride along with the save (normalizeGear drops unknown keys)
+  state.graded = Array.isArray(save.graded) ? save.graded : [];
+  state.gear.guards = save.gear?.guards && typeof save.gear.guards === "object" ? save.gear.guards : {};
   if (save.createdAt) state.createdAt = save.createdAt;
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
@@ -168,6 +175,7 @@ function wipeProgressMemory() {
   state.worthLog = [];
   state.binder = [];
   state.gear = normalizeGear(null);
+  state.graded = []; // grading
   // Screen memory belongs to the account that is gone: a secret revealed for one
   // trainer must not stay revealed for the next.
   achFilter = "all";
@@ -338,6 +346,7 @@ const els = {
   viewBattles: document.getElementById("view-battles"),
   viewGear: document.getElementById("view-gear"),
   viewCasino: document.getElementById("view-casino"),
+  viewGrading: document.getElementById("view-grading"), // grading
   casinoBar: document.getElementById("casino-bar"),
   viewCollection: document.getElementById("view-collection"),
   viewBinder: document.getElementById("view-binder"),
@@ -3856,6 +3865,7 @@ const VIEW_SECTIONS = {
   battles: "viewBattles",
   gear: "viewGear",
   casino: "viewCasino",
+  grading: "viewGrading", // grading
   collection: "viewCollection",
   binder: "viewBinder",
   catalog: "viewCatalog",
@@ -3873,6 +3883,7 @@ const VIEW_PATHS = {
   battles: "/battles",
   gear: "/gear",
   casino: "/casino",
+  grading: "/grading", // grading
   collection: "/bulk",
   binder: "/binder",
   catalog: "/catalog",
@@ -3894,6 +3905,7 @@ const PATH_VIEWS = {
   "/sleeves": "gear",
   "/coins": "gear",
   "/casino": "casino",
+  "/grading": "grading", // grading
   "/shop": "shop",
   "/bulk": "collection",
   "/collection": "collection",
@@ -3916,6 +3928,7 @@ const VIEW_TITLES = {
   battles: "Pack battles — poke-pack.rip",
   gear: "Sleeves & coins — poke-pack.rip",
   casino: "Casino — poke-pack.rip",
+  grading: "Grading — poke-pack.rip", // grading
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
   catalog: "All sets — poke-pack.rip",
@@ -3936,6 +3949,7 @@ const VIEW_RENDER = {
   battles: () => battles.show(battlePath),
   gear: () => gearPage.show(),
   casino: () => casino.show(casinoPath),
+  grading: () => grading.show(gradingPath), // grading
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
@@ -3961,6 +3975,11 @@ function viewFromPath(pathname) {
   if (/^\/casino(?:\/[a-z]+(?:\/[a-zA-Z0-9-]+)?)?$/.test(path)) {
     casinoPath = path;
     return "casino";
+  }
+  // grading: /grading, /grading/send, /grading/send/<cardId>, /grading/<slabId>
+  if (GRADING_ROUTE.test(path)) {
+    gradingPath = path;
+    return "grading";
   }
   if (PATH_VIEWS[path]) {
     if (PATH_VIEWS[path] === "social") dmHandle = "";
@@ -4013,6 +4032,7 @@ function viewTitle() {
 function pathForView(name) {
   if (name === "battles") return battlePath;
   if (name === "casino") return casinoPath;
+  if (name === "grading") return gradingPath; // grading
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
@@ -4036,6 +4056,7 @@ function paintNav(current) {
 function applyView(next, hist) {
   if (next !== "battles") battles.hide();
   if (next !== "casino") casino.hide();
+  if (next !== "grading") grading.hide(); // grading
   if (next !== "auth" && next !== "battles") battleReturnPath = "";
   if (next !== "auth" && next !== "casino") casinoReturnPath = "";
   view = next;
@@ -5715,6 +5736,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
     e.preventDefault();
     if (btn.dataset.view === "battles") battlePath = "/battles";
     if (btn.dataset.view === "casino") casinoPath = "/casino";
+    if (btn.dataset.view === "grading") gradingPath = "/grading"; // grading
     setView(btn.dataset.view);
   });
 });
@@ -7200,6 +7222,31 @@ const casino = initCasino({
     const coin = getGearCatalog().coins?.[id];
     return coin ? { id: coin.id, name: coin.name, image: coin.front } : null;
   },
+});
+
+// grading: RIP Grading pages (js/grading-page.js). Money and cards move only through
+// its POSTs, each answered with a save that applyCloudSave takes as-is.
+const grading = initGrading({
+  root: els.viewGrading,
+  api,
+  user: () => cloudUser,
+  getSave: () => state,
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    applyCloudSave(save);
+    renderHeader();
+  },
+  cardFace: (card, opts) => tcgFace(card, opts),
+  findCard,
+  loadSetData,
+  inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
+  toast,
+  navigate: (path) => {
+    if (!GRADING_ROUTE.test(path)) return;
+    gradingPath = path;
+    setView("grading");
+  },
+  coinTag,
 });
 
 async function boot() {

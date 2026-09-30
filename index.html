@@ -56,6 +56,9 @@
     <link rel="stylesheet" href="css/battle-reveal.css?v=1" />
     <link rel="stylesheet" href="css/casino-coin.css?v=1" />
     <link rel="stylesheet" href="css/pages/casino.css?v=1" />
+    <!-- grading -->
+    <link rel="stylesheet" href="css/slab.css?v=1" />
+    <link rel="stylesheet" href="css/pages/grading.css?v=1" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -106,6 +109,7 @@
           <summary>More</summary>
           <div class="nav-more-list">
             <a class="nav-btn" href="/gear" data-view="gear">Sleeves &amp; coins</a>
+            <a class="nav-btn" href="/grading" data-view="grading">Grading</a><!-- grading -->
             <a class="nav-btn" href="/catalog" data-view="catalog">All sets</a>
             <a class="nav-btn" href="/notes" data-view="notes">Updates</a>
             <a class="nav-btn" href="/account" data-view="account">Account</a>
@@ -318,6 +322,7 @@
       <section id="view-casino" class="hidden casino-page-root" aria-label="Casino"></section>
 
       <section id="view-gear" class="hidden" aria-label="Sleeves and coins"></section>
+      <section id="view-grading" class="hidden" aria-label="Grading"></section><!-- grading -->
 
       <section id="view-auth" class="hidden">
         <div id="auth-body"></div>
@@ -449,6 +454,7 @@
           <a class="nav-btn" href="/casino" data-view="casino"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5.6"/><path d="M12 9v6M9.6 12h4.8"/></svg>Casino</a>
           <a class="nav-btn" href="/social" data-view="social"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M15.5 14.2a4.5 4.5 0 0 1 5 4.3"/></svg>Social</a>
           <a class="nav-btn" href="/gear" data-view="gear"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="9" cy="12" r="2"/><path d="M14.5 7.2A5.5 5.5 0 0 1 14.5 16.8M16.6 5.4a8 8 0 0 1 0 13.2"/></svg>Sleeves &amp; coins</a>
+          <a class="nav-btn" href="/grading" data-view="grading"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="2.2"/><path d="M8 6h5M8 8.5h3"/><rect x="8" y="11.5" width="8" height="7" rx="0.8"/></svg>Grading</a><!-- grading -->
           <a class="nav-btn" href="/account" data-view="account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Account</a>
           <a class="nav-btn" href="/catalog" data-view="catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>All sets</a>
           <a class="nav-btn" href="/notes" data-view="notes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h9l4 4v12H6z"/><path d="M15 4v4h4M9 12h6M9 16h6"/></svg>Updates</a>
