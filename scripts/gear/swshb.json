@@ -699,14 +699,13 @@
         "swshp"
       ],
       "subject": "Poke Ball",
-      "blurb": "Black card sleeves with a large gold Poke Ball, packed in the Trainer's Toolkit 2023.",
+      "blurb": "Card sleeves with a thick black border, a gold field and a large black mesh Poke Ball, packed in the Trainer's Toolkit 2023.",
       "products": [
         "swshp/trainers-toolkit-2023"
       ],
       "src": {
         "tcgplayer": 501144
       },
-      "quad": "auto",
       "sources": [
         "https://www.codedyellow.com/pokemon-trainers-toolkit-2023/",
         "https://www.tcgplayer.com/product/497380/pokemon-miscellaneous-cards-and-products-pokemon-tcg-trainers-toolkit-2023",
@@ -740,12 +739,12 @@
           461
         ],
         [
-          728,
-          338
+          720,
+          341
         ],
         [
-          899,
-          882
+          891,
+          885
         ],
         [
           502,
@@ -959,13 +958,17 @@
         "swsh12pt5"
       ],
       "subject": "Lucario",
-      "blurb": "Gold metal coin with an embossed Lucario in faint relief, from the Crown Zenith Pokemon Center Elite Trainer Box Plus.",
+      "blurb": "Gold metal coin with an embossed Lucario, from the Crown Zenith Pokemon Center Elite Trainer Box Plus.",
       "material": "metal",
       "products": [
         "swsh12pt5/pc-etb"
       ],
       "src": {
-        "url": "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P8835_290-85187_02.jpg"
+        "render": {
+          "dex": 448,
+          "finish": "gold",
+          "holo": false
+        }
       },
       "backSrc": null,
       "v": 2,
@@ -975,11 +978,6 @@
         "https://www.amazon.com/dp/B0BT21ZWYS",
         "https://www.tcgplayer.com/product/454246/pokemon-swsh-crown-zenith-crown-zenith-pokemon-center-elite-trainer-box-plus",
         "https://www.tcgplayer.com/product/478964"
-      ],
-      "circle": [
-        999,
-        852,
-        37
       ]
     },
     {
@@ -1531,6 +1529,69 @@
         73
       ],
       "inset": 0.02
+    },
+    {
+      "kind": "coin",
+      "v": 1,
+      "material": "metal",
+      "backSrc": null,
+      "id": "swshb-bs-blastoise-blister-coin",
+      "name": "Blastoise coin",
+      "sets": [
+        "swsh9"
+      ],
+      "subject": "Blastoise",
+      "blurb": "Silver coin with a Blastoise relief, as pictured on the Brilliant Stars 3-pack blisters.",
+      "products": [
+        "swsh9/leafeon-3-pack-blister",
+        "swsh9/glaceon-3-pack-blister"
+      ],
+      "src": {
+        "tcgplayer": 256130
+      },
+      "circle": [
+        172,
+        551,
+        104
+      ],
+      "inset": 0.03,
+      "evidence": "inferred",
+      "sources": [
+        "https://www.tcgplayer.com/product/256130",
+        "https://www.tcgplayer.com/product/256132",
+        "https://www.gameology.com.au/products/sword-shield-brilliant-stars-blister-3-pack-pair-leafeon-glaceon-pokemon-tcg"
+      ]
+    },
+    {
+      "kind": "coin",
+      "v": 1,
+      "material": "metal",
+      "backSrc": null,
+      "id": "swshb-lo-charizard-blister-coin",
+      "name": "Charizard coin",
+      "sets": [
+        "swsh11"
+      ],
+      "subject": "Charizard",
+      "blurb": "Gold-tone coin with a Charizard head relief, as pictured on the Lost Origin 3-pack blisters.",
+      "products": [
+        "swsh11/regigigas-3-pack-blister",
+        "swsh11/weavile-3-pack-blister"
+      ],
+      "src": {
+        "tcgplayer": 277329
+      },
+      "circle": [
+        189,
+        633,
+        123
+      ],
+      "inset": 0.02,
+      "evidence": "inferred",
+      "sources": [
+        "https://www.tcgplayer.com/product/277329",
+        "https://www.tcgplayer.com/product/277330"
+      ]
     }
   ],
   "productRules": {}
