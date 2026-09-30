@@ -2559,6 +2559,66 @@ export const MCDONALDS_2024 = {
   ]),
 };
 
+export const UNBROKEN_BONDS = {
+  id: "sm10",
+  tcgId: "sm10",
+  name: "Unbroken Bonds",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "May 3, 2019",
+  live: true,
+  printedTotal: 214,
+  totalCount: 245,
+  packSize: 11,
+  cost: 68.67,
+  dataFile: "data/sm10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, May 2019. Twelve TAG TEAM full arts, the Reshiram & Charizard-GX rainbow and six gold cards, four wrappers.",
+  oddsLine: "GX 1/10 · full art 1/24 · rainbow 1/69 · gold 1/110",
+  lede: "Gardevoir & Sylveon-GX full art and the Reshiram & Charizard-GX rainbow are the chase. GX 1 in 10 packs, a full art 1 in 24, a rainbow 1 in 69.",
+  // Elite Fourum tallies, about 10,400 packs (burpies, sturzflugbombardieru, Derium, TheGameCapital, Danny Phantump); no Prism Stars. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1667, gx: 0.0985, ultra: 0.0411, rainbow: 0.0144, secret: 0.0091 }),
+  heroIds: ["sm10-217", "sm10-205", "sm10-201", "sm10-199"],
+  wrappers: boosterWrappers("sm10", [
+    { id: "machamp-marshadow", name: "Machamp & Marshadow", cardId: "sm10-82", tag: "Tag Team" },
+    { id: "reshiram-charizard", name: "Reshiram & Charizard", cardId: "sm10-20", tag: "Tag Team" },
+    { id: "gardevoir-sylveon", name: "Gardevoir & Sylveon", cardId: "sm10-130", tag: "Tag Team" },
+    { id: "lucario-melmetal", name: "Lucario & Melmetal", cardId: "sm10-120", tag: "Tag Team" },
+  ], 2),
+};
+
+export const UNIFIED_MINDS = {
+  id: "sm11",
+  tcgId: "sm11",
+  name: "Unified Minds",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "August 2, 2019",
+  live: true,
+  printedTotal: 236,
+  totalCount: 270,
+  packSize: 11,
+  cost: 79.75,
+  dataFile: "data/sm11.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, August 2019. Mewtwo & Mew-GX leads eight TAG TEAM, four wrappers.",
+  oddsLine: "GX 1/8 · full art 1/23 · rainbow 1/74 · gold 1/112",
+  lede: "The Mewtwo & Mew-GX rainbow is the chase, with Mega Sableye & Tyranitar, Raichu & Alolan Raichu and Slowpoke & Psyduck full arts behind it. GX 1 in 8 packs, a rainbow 1 in 74.",
+  // Elite Fourum tallies, about 11,600 packs (burpies, sturzflugbombardieru, Derium, TheGameCapital, Danny Phantump); no Prism Stars. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1389, gx: 0.1278, ultra: 0.0429, rainbow: 0.0136, secret: 0.0089 }),
+  heroIds: ["sm11-242", "sm11-226", "sm11-222", "sm11-221"],
+  wrappers: boosterWrappers("sm11", [
+    { id: "garchomp-giratina", name: "Garchomp & Giratina", cardId: "sm11-146", tag: "Tag Team" },
+    { id: "umbreon-darkrai", name: "Umbreon & Darkrai", cardId: "sm11-125", tag: "Tag Team" },
+    { id: "espeon-deoxys", name: "Espeon & Deoxys", cardId: "sm11-72", tag: "Tag Team" },
+    { id: "mewtwo-mew", name: "Mewtwo & Mew", cardId: "sm11-71", tag: "Tag Team" },
+  ], 2),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -2606,6 +2666,8 @@ export const PLAYABLE_SETS = [
   TRICK_OR_TRADE_2024,
   MCDONALDS_2023,
   TRICK_OR_TRADE_2023,
+  UNBROKEN_BONDS,
+  UNIFIED_MINDS,
 ];
 
 /**
@@ -2790,6 +2852,8 @@ const POKESYMBOLS_SLUG = {
   me4: "chaos-rising",
   me5: "pitch-black",
   me55: "30th-celebration",
+  sm10: "unbroken-bonds",
+  sm11: "unified-minds",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
