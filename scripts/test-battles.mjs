@@ -3,7 +3,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
 import { battleResult, battleSettings, BOT_PERSONAS, botPersona } from '../js/battle-rules.js';
-import { resetBattleSchemaCache } from '../worker/battles.js';
+import { resetBattleSchemaCache, resetSettleFailures } from '../worker/battles.js';
 
 const migrationFiles = readdirSync(new URL('../worker/migrations/', import.meta.url)).sort();
 const migrationSql = file => readFileSync(new URL('../worker/migrations/' + file, import.meta.url), 'utf8');
@@ -55,6 +55,7 @@ async function apiOn(target, path, method = 'GET', body, user = 'host', extraHea
   return { status: response.status, ...await response.json() };
 }
 const api = (...args) => apiOn(env, ...args);
+const fetchRaw = path => worker.fetch(new Request('https://poke-pack.rip' + path), env);
 const coinsIn = (db, user) => Math.round(db.prepare('SELECT coins FROM profiles WHERE user_id = ?').get(user).coins * 100);
 const coins = user => coinsIn(db, user);
 const owned = user => db.prepare('SELECT COALESCE(SUM(qty),0) n FROM cards WHERE user_id = ?').get(user).n;
@@ -404,15 +405,45 @@ const backlogFeed = await api('/api/battles', 'GET', undefined, null);
 const feedQueries = queryCount;
 assert.equal(backlogFeed.status, 200); assert.equal(backlogFeed.battles.length, 40);
 assert.ok(backlogFeed.battles.every(b => b.seats.length === 2 && b.rounds.length === 0));
-assert.equal(feedQueries, 5, `Full feed and backlog used ${feedQueries} D1 statements`);
+// Expiry is one batch of two; each due battle settles in its own statement
+// (at most three per request) so one D1 rejection cannot block the rest.
+assert.equal(feedQueries, 8, `Full feed and backlog used ${feedQueries} D1 statements`);
 assert.equal(db.prepare("SELECT COUNT(*) n FROM battles WHERE id LIKE 'query-fixture-%' AND status='cancelled'").get().n, 75);
-assert.equal(db.prepare("SELECT COUNT(*) n FROM battles WHERE id LIKE 'query-fixture-%' AND status='finished'").get().n, 10);
+assert.equal(db.prepare("SELECT COUNT(*) n FROM battles WHERE id LIKE 'query-fixture-%' AND status='finished'").get().n, 3);
 assert.equal(coins('host') - beforeBacklogCoins, 75, 'set-based expiry refunds the paid seat once, free bots nothing');
-assert.equal(owned('host') - beforeBacklogCards, 10, 'bounded set-based settlement awards exactly once');
-// Later ticks finish the remaining backlog without expanding the query count.
-for (let tick = 0; tick < 3; tick++) { queryCount = 0; await api('/api/battles'); assert.equal(queryCount, 5); }
+assert.equal(owned('host') - beforeBacklogCards, 3, 'bounded settlement awards exactly once');
+// Later requests finish the remaining backlog without expanding the query count.
+for (let tick = 0; tick < 13; tick++) { queryCount = 0; await api('/api/battles'); assert.ok(queryCount <= 8, `tick used ${queryCount}`); }
 assert.equal(db.prepare("SELECT COUNT(*) n FROM battles WHERE id LIKE 'query-fixture-%' AND status='finished'").get().n, 40);
 assert.equal(owned('host') - beforeBacklogCards, 40); assert.equal(coins('host') - beforeBacklogCoins, 75);
+
+// 2026-09-30: one battle whose settlement D1 rejected made every battle
+// endpoint answer 500. A settlement failure now stays with its own battle:
+// the feed, other battles and new battles keep working, the stuck battle still
+// shows its rounds, and the failure is reported in a header until it clears.
+{
+  resetSettleFailures();
+  const stuck = await quick({ fast: true }); assert.equal(stuck.status, 200);
+  const fine = await quick({ fast: true }); assert.equal(fine.status, 200);
+  db.exec(`CREATE TRIGGER test_settle_fails BEFORE INSERT ON battle_settlements
+    WHEN NEW.battle_id = '${stuck.battle.id}' BEGIN SELECT RAISE(ABORT, 'simulated D1 rejection'); END`);
+  now = Math.max(stuck.battle.endsAt, fine.battle.endsAt) + 1;
+  const feed = await fetchRaw('/api/battles');
+  assert.equal(feed.status, 200, 'the feed survives a settlement failure');
+  assert.match(feed.headers.get('x-battle-maintenance') || '', /simulated D1 rejection/);
+  const fineView = await api(`/api/battles/${fine.battle.id}`, 'GET', undefined, null);
+  assert.equal(fineView.battle.status, 'finished', 'other battles still settle');
+  const stuckView = await api(`/api/battles/${stuck.battle.id}`, 'GET', undefined, null);
+  assert.equal(stuckView.status, 200); assert.equal(stuckView.battle.status, 'running');
+  assert.equal(stuckView.battle.revealedRounds, stuckView.battle.roundCount, 'a stuck battle still shows every round');
+  assert.equal((await api('/api/battles/no-such-battle', 'GET', undefined, null)).status, 404);
+  const next = await quick({ fast: true }); assert.equal(next.status, 200, 'new battles still start');
+  db.exec('DROP TRIGGER test_settle_fails');
+  now += 61000;
+  const cleared = await fetchRaw(`/api/battles/${stuck.battle.id}`);
+  assert.equal(cleared.status, 200); assert.equal((await cleared.json()).battle.status, 'finished', 'the stuck battle settles once D1 accepts it');
+  assert.equal(cleared.headers.get('x-battle-maintenance'), null);
+}
 
 // Production upgrade: a database at 0012 (nobody can run remote migrations)
 // with lobbies whose bots the host paid for under the old rules. The Worker

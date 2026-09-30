@@ -185,28 +185,63 @@ function expandLineup(lineup, products) {
 
 // Calling this from GET, actions and the existing scheduled Worker makes results
 // durable even if everyone closes their tab; the unique settlement is the award gate.
-export async function maintainBattles(env, now = Date.now()) {
+// Maintenance never fails the request that runs it: one battle whose settlement
+// D1 rejects must not take every battle endpoint down with it (2026-09-30, when
+// it did). Each due battle settles in its own statement; a failure is logged,
+// remembered per isolate for a minute so requests don't keep paying for it, and
+// reported in the x-battle-maintenance header until it clears.
+const SETTLE_RETRY_MS = 60000;
+const settleFailures = new Map(); // battle id -> { at, message }
+/** Tests only: forget remembered settlement failures. */
+export const resetSettleFailures = () => settleFailures.clear();
+const failureText = err => String(err?.message || err).replace(/\s+/g, ' ').slice(0, 300);
+let stepFailure = null; // the last maintenance run's failure outside settling
+function noteFailure(step, id, err, now) {
+  console.error(`battle maintenance: ${step}${id ? ` ${id}` : ''}`, err);
+  if (id) settleFailures.set(id, { at: now, message: failureText(err) });
+  else stepFailure = `${step}: ${failureText(err)}`;
+}
+/**
+ * A short summary of what maintenance could not do, for the response header.
+ * Only an id's first 8 characters: a private battle's id is its invite link.
+ */
+export function maintenanceReport() {
+  return [stepFailure, ...[...settleFailures].map(([id, f]) => `settling ${id.slice(0, 8)}: ${f.message}`)]
+    .filter(Boolean).join(' | ').slice(0, 1000);
+}
+export async function maintainBattles(env, now = Date.now(), { settleLimit = 3 } = {}) {
+  // Free-bot triggers first, so no delete below runs under the 0012 rules.
+  // (Under 0012 a 'free' payer has no profile: nothing is paid or refunded.)
+  await ensureBattleSchema(env);
+  stepFailure = null;
   try {
-    // Free-bot triggers first, so no delete below runs under the 0012 rules.
-    // (Under 0012 a 'free' payer has no profile: nothing is paid or refunded.)
-    await ensureBattleSchema(env);
-    // Three statements regardless of backlog size. The batch and per-row
-    // triggers preserve the same exactly-once refund/award gates as actions.
-    // Bound settlement work to ten games; GET detail also settles its own game.
     await env.DB.batch([
       env.DB.prepare(`UPDATE battles SET status = 'cancelled' WHERE id IN (
         SELECT id FROM battles WHERE status = 'lobby' AND expires_at <= ? LIMIT 100)`).bind(now),
       env.DB.prepare(`DELETE FROM battle_seats WHERE battle_id IN
         (SELECT id FROM battles WHERE status = 'cancelled')`),
-      env.DB.prepare(`INSERT OR IGNORE INTO battle_settlements(battle_id, at)
-        SELECT id, ? FROM battles WHERE status = 'running' AND ends_at <= ? ORDER BY ends_at LIMIT 10`).bind(now, now),
     ]);
-  }
-  catch (err) {
+  } catch (err) {
     // Old databases remain usable while the additive migration is pending.
-    if (/no such table: battles/.test(err.message)) return { migrationPending: true };
-    throw err;
+    if (/no such table: battles/.test(err?.message)) return { migrationPending: true };
+    noteFailure('expiring lobbies', null, err, now);
   }
+  let due = [];
+  try {
+    due = ((await env.DB.prepare(`SELECT id FROM battles WHERE status = 'running' AND ends_at <= ?
+      ORDER BY ends_at LIMIT 20`).bind(now).all()).results || []).map(r => r.id);
+  } catch (err) { noteFailure('listing due battles', null, err, now); return {}; }
+  let settled = 0;
+  for (const id of due) {
+    if (settled >= settleLimit) break;
+    const failed = settleFailures.get(id);
+    if (failed && now - failed.at < SETTLE_RETRY_MS) continue;
+    settled++;
+    try { await settleBattle(env, id, now); settleFailures.delete(id); }
+    catch (err) { noteFailure('settling', id, err, now); }
+  }
+  for (const id of settleFailures.keys()) if (!due.includes(id)) settleFailures.delete(id);
+  return {};
 }
 async function settleBattle(env, id, now) {
   // INSERT OR IGNORE does not suppress trigger RAISE; the SELECT also prevents
@@ -226,7 +261,14 @@ function presentLegacyBots(seats) {
   });
 }
 async function viewBattle(env, id, now = Date.now(), summaryRow = null, summarySeats = null) {
-  if (!summaryRow) await settleBattle(env, id, now);
+  if (!summaryRow) {
+    // A battle D1 will not settle still shows its rounds; maintenance retries it.
+    const failed = settleFailures.get(id);
+    if (!failed || now - failed.at >= SETTLE_RETRY_MS) {
+      try { await settleBattle(env, id, now); settleFailures.delete(id); }
+      catch (err) { if (/no such table/.test(err?.message)) throw err; noteFailure('settling', id, err, now); }
+    }
+  }
   const row = summaryRow || await getRow(env, id);
   if (!row) error('Battle not found.', 404);
   const settings = parse(row.settings); const plan = parse(row.plan);
@@ -299,6 +341,16 @@ const HOST_ACTIONS = ['bot', 'unbot', 'start', 'cancel'];
 
 export async function handleBattles(path, method, request, env, helpers) {
   if (!path.startsWith('/api/battles')) return null;
+  const response = await battleRoute(path, method, request, env, helpers);
+  const report = maintenanceReport();
+  if (report && response?.headers) {
+    const out = new Response(response.body, response);
+    out.headers.set('x-battle-maintenance', report);
+    return out;
+  }
+  return response;
+}
+async function battleRoute(path, method, request, env, helpers) {
   try {
     if (path === '/api/battles/catalog' && method === 'GET') {
       return helpers.json({ products: (await battleCatalog(env, request, helpers)).map(publicProduct), limits: BATTLE_LIMITS, serverNow: Date.now() });
@@ -466,15 +518,13 @@ async function createBattle(env, request, helpers, user, body) {
  * settlement row is the same exactly-once award gate as a natural finish.
  */
 async function skipBattle(env, row, user) {
+  // The view that answers this action settles the battle (non-fatally, see
+  // maintainBattles), so a settlement D1 rejects cannot fail the skip itself.
   const now = Date.now(); const rounds = parse(row.plan).length;
-  await env.DB.batch([
-    env.DB.prepare(`UPDATE battles SET starts_at = ?, ends_at = ? WHERE id = ? AND status = 'running' AND ends_at > ?
-      AND (SELECT COUNT(*) FROM battle_seats WHERE battle_id = ? AND bot = 0) = 1
-      AND EXISTS(SELECT 1 FROM battle_seats WHERE battle_id = ? AND user_id = ?)`)
-      .bind(now - rounds * row.round_ms, now, row.id, now, row.id, row.id, user.id),
-    env.DB.prepare(`INSERT OR IGNORE INTO battle_settlements(battle_id, at)
-      SELECT id, ? FROM battles WHERE id = ? AND status = 'running' AND ends_at <= ?`).bind(now, row.id, now),
-  ]);
+  await env.DB.prepare(`UPDATE battles SET starts_at = ?, ends_at = ? WHERE id = ? AND status = 'running' AND ends_at > ?
+    AND (SELECT COUNT(*) FROM battle_seats WHERE battle_id = ? AND bot = 0) = 1
+    AND EXISTS(SELECT 1 FROM battle_seats WHERE battle_id = ? AND user_id = ?)`)
+    .bind(now - rounds * row.round_ms, now, row.id, now, row.id, row.id, user.id).run();
 }
 
 function seatInsert(env, id, seat, user, payer, bot) {
