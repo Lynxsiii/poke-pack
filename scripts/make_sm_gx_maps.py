@@ -31,9 +31,21 @@ def smooth(x):
     return t * t * (3 - 2 * t)
 
 
+SAFE = "assets/foil/maps/sm-gx-safe.webp"
+
+
+def dest(card):
+    """Beside the card's own map, or (a GX with no TCG Live map: sm35-10a, sm4-63a,
+    sm5-10a) by the scan's path, baked from the text-safe median map."""
+    if card["foilMap"]:
+        return ROOT / card["foilMap"].replace(".webp", "-gx-v1.webp")
+    folder, name = Path(card["image"]).parent.name, Path(card["image"]).stem
+    return ROOT / "assets/foil/maps" / folder / f"{name}-gx-v1.webp"
+
+
 def bake(card):
     scan = Image.open(ROOT / card["image"]).convert("RGBA")
-    m = Image.open(ROOT / card["foilMap"]).convert("RGBA").split()[3]
+    m = Image.open(ROOT / (card["foilMap"] or SAFE)).convert("RGBA").split()[3]
     m = m.resize(scan.size, Image.BICUBIC)
     a = np.asarray(m, dtype=np.float32) / 255
     rgb = np.asarray(scan.convert("RGB").filter(ImageFilter.GaussianBlur(1.2)), dtype=np.float32) / 255
@@ -41,7 +53,7 @@ def bake(card):
     out = a * (FLOOR + (1 - FLOOR) * smooth(luma))
     img = Image.fromarray(np.dstack([np.full(out.shape + (1,), 255, np.uint8).repeat(3, 2)[..., :3],
                                      (np.clip(out, 0, 1) * 255 + 0.5).astype(np.uint8)[..., None]]).astype(np.uint8), "RGBA")
-    dst = ROOT / card["foilMap"].replace(".webp", "-gx-v1.webp")
+    dst = dest(card)
     img.save(dst, "WEBP", quality=92, alpha_quality=100, method=4)
     return dst
 
@@ -49,7 +61,16 @@ def bake(card):
 def main():
     cards = json.loads(subprocess.check_output(["node", str(ROOT / "scripts/list_sm_gx.mjs")]))
     only = set(sys.argv[1:])
-    todo = [c for c in cards if c["foilMap"] and (not only or c["id"] in only)]
+    # Two prints (a stamped "a" reprint and the plain card) can share one map file:
+    # one worker per file, the plain card winning, so the result is deterministic.
+    by_dst = {}
+    for c in cards:
+        if only and c["id"] not in only:
+            continue
+        d = dest(c)
+        if d not in by_dst or Path(by_dst[d]["image"]).stem.endswith("a") and not Path(c["image"]).stem.endswith("a"):
+            by_dst[d] = c
+    todo = list(by_dst.values())
     from multiprocessing import Pool
     with Pool() as pool:
         pool.map(bake, todo, chunksize=4)

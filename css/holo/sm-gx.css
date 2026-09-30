@@ -213,7 +213,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.
     calc(100% - var(--background-x)) var(--background-y),
     var(--background-x) var(--background-y);
   background-blend-mode: soft-light, soft-light, color, hard-light, normal;
-  filter: brightness(0.95) contrast(1.3) saturate(1.3);
+  filter: brightness(1.05) contrast(1.4) saturate(1.7);
   /* The ring is an even-odd polygon (outer box, inner box): gradient layers
      composited into a ring were ignored by Playwright's WebKit, a clip-path
      holds in both engines. The scan's alpha still rounds the corners. */

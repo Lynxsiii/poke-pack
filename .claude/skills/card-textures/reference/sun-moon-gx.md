@@ -121,13 +121,13 @@ kept the plateaus, and did not help.
 
 Fix (this sheet, v=5, and js/sm-foil.js `smGxMap`):
 - GX chain at V-level gain: brightness 0.64 + 0.45r, contrast 2.1, saturate
-  1.35, closing contrast(0.8); the border ring's chain calmed to brightness
-  0.95, contrast 1.3, saturate 1.3.
+  1.35, closing contrast(0.8); the border ring's chain eased to brightness
+  1.05, contrast 1.4, saturate 1.7.
 - **The attack bar takes no foil**, as on the real cards (three sources:
   bleedingcool Espeon, YouTube stills of Reshiram & Zekrom and Charizard-GX:
   the navy bar stays dark, the bands stop at its edges). TCG Live's map
   marks it foil, so `scripts/make_sm_gx_maps.py` bakes `<n>-gx-v1.webp` per
-  GX / TAG TEAM GX (204 cards, `scripts/list_sm_gx.mjs` lists them): the
+  GX / TAG TEAM GX (207 cards, 202 files: alternate-art GX with no TCG Live map are baked from the median safe map; `scripts/list_sm_gx.mjs` lists them; prints sharing a map file get one file, the plain card's): the
   367x512 map smoothed up to the scan's 600x838 (a mask that is never a
   3x-stepped image) times a protect factor of the scan's luminance, 0 at
   luma 0.06 to 1 at 0.20 (floor 0.04). Bar luma is 0.01 to 0.12, art at

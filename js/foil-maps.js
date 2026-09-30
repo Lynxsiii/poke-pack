@@ -273,7 +273,7 @@ export function foilExtras(card, url, reverseKind) {
     add("has-foil-map", "--foil-map", FULL_MAP);
   } else if (sm && smSafeMap(card)) {
     // A GX or Prism Star with no map of its own takes the text-safe median.
-    add("has-foil-map", "--foil-map", smSafeMap(card));
+    add("has-foil-map", "--foil-map", smGxMap(card) || smSafeMap(card));
   }
   if (card.foilMapR && card.foilMapB) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);

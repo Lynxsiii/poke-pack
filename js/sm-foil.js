@@ -75,15 +75,19 @@ export function smSafeMap(card) {
 
 /**
  * A regular GX or TAG TEAM GX's baked map (`<n>-gx-v1.webp`, scripts/make_sm_gx_maps.py):
- * TCG Live's map smoothed to the scan's size with the dark attack bar cut out,
- * as on the real cards. "" for any other card (or one with no map of its own).
+ * TCG Live's map (the text-safe median for an alternate-art GX with none) smoothed
+ * to the scan's size with the dark attack bar cut out, as on the real cards.
+ * "" for any other card.
  */
 export function smGxMap(card) {
-  if (!card.foilMap || card.supertype !== "Pokémon") return "";
+  if (card.supertype !== "Pokémon") return "";
   const k = card.foilAs && !card.reverse ? { ...card, rarity: card.foilAs } : card;
   const p = smPattern(k);
   if (!/\bsm-gx\b/.test(p) || /sm-shiny|sm-fa/.test(p)) return "";
-  return card.foilMap.replace(/\.webp$/, "-gx-v1.webp");
+  if (card.foilMap) return card.foilMap.replace(/\.webp$/, "-gx-v1.webp");
+  // No TCG Live map (an alternate-art GX): baked from the text-safe median by the scan's path.
+  const m = /^assets\/cards\/([^/]+)\/(.+)\.webp$/.exec(card.image || "");
+  return m ? `assets/foil/maps/${m[1]}/${m[2]}-gx-v1.webp` : "";
 }
 
 /**
