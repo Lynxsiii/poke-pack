@@ -361,6 +361,10 @@ def build(set_id: str, refresh: bool) -> int:
             key = str(row.get("numberKey") or number).strip()
             if not number or key in seen:
                 continue
+            # Prize reprints the checklist lists beside the set (182a League
+            # Cup Pokégear 3.0) are not in its packs or its printed total.
+            if number in (cfg.get("skipNumbers") or []):
+                continue
             seen.add(key)
             detail = page_data(fetch(f"{base}/{key}", f"{tag}-{key}", refresh))
             if isinstance(detail, list):  # a listing page came back; skip rather than guess

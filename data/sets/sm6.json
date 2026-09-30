@@ -1,0 +1,136 @@
+{
+  "id": "sm6",
+  "name": "Forbidden Light",
+  "series": "sun-moon",
+  "slug": "forbidden-light",
+  "scrydexId": "sm6",
+  "era": "sm",
+  "artSlug": "forbidden-light",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2209,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
+    }
+  },
+  "promoCards": {
+    "smp119": {
+      "foilAs": "Rare Holo"
+    },
+    "smp120": {
+      "foilAs": "Rare Holo"
+    },
+    "smp123": {
+      "foilAs": "Rare Holo"
+    },
+    "smp124": {
+      "foilAs": "Rare Holo"
+    },
+    "smp133": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp134": {
+      "foilAs": "Rare Holo GX"
+    },
+    "2a": {
+      "like": "2a",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "printedNumber": "2a/131",
+      "tcgplayerId": 180514,
+      "tcgplayerGroup": 1938
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 164303,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "forbidden-light-single-pack-blister-exeggcute",
+      "name": "Forbidden Light Single Pack Blister [Exeggcute]",
+      "kind": "blister",
+      "tcgplayerId": 164301,
+      "packs": 1,
+      "promos": [
+        "smp119"
+      ]
+    },
+    {
+      "id": "forbidden-light-single-pack-blister-rockruff",
+      "name": "Forbidden Light Single Pack Blister [Rockruff]",
+      "kind": "blister",
+      "tcgplayerId": 164302,
+      "packs": 1,
+      "promos": [
+        "smp120"
+      ]
+    },
+    {
+      "id": "dawn-wings-necrozma-premium-collection",
+      "name": "Dawn Wings Necrozma Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 164314,
+      "packs": 5,
+      "promos": [
+        "smp123",
+        "smp124"
+      ]
+    },
+    {
+      "id": "dusk-mane-necrozma-premium-collection",
+      "name": "Dusk Mane Necrozma Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 164315,
+      "packs": 5,
+      "promos": [
+        "smp123",
+        "smp124"
+      ]
+    },
+    {
+      "id": "forces-of-nature-gx-premium-collection",
+      "name": "Forces of Nature GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 169414,
+      "packs": 6,
+      "promos": [
+        "smp133",
+        "smp134"
+      ]
+    },
+    {
+      "id": "alolan-exeggutor-2a",
+      "name": "Alolan Exeggutor 2a/131 (Alternate Art Promo)",
+      "kind": "event",
+      "tcgplayerId": 180514,
+      "packs": 0,
+      "promos": [
+        "2a"
+      ],
+      "tcgplayerGroup": 1938
+    }
+  ],
+  "skipNumbers": [
+    "102a",
+    "112a",
+    "113a"
+  ]
+}
