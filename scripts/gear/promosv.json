@@ -14,19 +14,19 @@
     "cel25/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/promo-sv/cel25__eliteTrainerBox__sleeve.jpg"
+    "tcgplayer": 251631
    },
-   "crop": [
-    32,
-    36,
-    688,
-    958
-   ],
    "v": 1,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/251631/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-celebrations-elite-trainer-box-card-sleeves-25-pikachu-65-pack",
     "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-elite-trainer-box"
+   ],
+   "crop": [
+    32,
+    36,
+    688,
+    958
    ]
   },
   {
@@ -43,20 +43,33 @@
     "cel25/pc-etb"
    ],
    "src": {
-    "file": "refs/promo-sv/rect-cel25-pc-etb.png"
+    "tcgplayer": 253855
    },
-   "crop": [
-    0,
-    0,
-    630,
-    880
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/253855/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-celebrations-pokemon-center-exclusive-elite-trainer-box-card-sleeves-pokemon-25-logo-65-pack",
     "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-elite-trainer-box"
-   ]
+   ],
+   "quad": [
+    [
+     460,
+     347
+    ],
+    [
+     833,
+     282
+    ],
+    [
+     925,
+     787
+    ],
+    [
+     556,
+     858
+    ]
+   ],
+   "snap": false
   },
   {
    "kind": "sleeve",
@@ -72,20 +85,16 @@
     "pgo/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/promo-sv/pgo__eliteTrainerBox__sleeve.jpg"
+    "url": "https://cdn.shopify.com/s/files/1/0311/6433/4213/products/15-51.jpg"
    },
-   "crop": [
-    44,
-    14,
-    728,
-    980
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/278649/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-pokemon-go-elite-trainer-box-card-sleeves-mewtwo-65-pack",
-    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/pokemon-go-elite-trainer-box"
-   ]
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/pokemon-go-elite-trainer-box",
+    "https://pokemonplug.com/products/pokemon-tcg-pokemon-go-elite-trainer-boxes-cases"
+   ],
+   "quad": "auto"
   },
   {
    "kind": "sleeve",
@@ -101,20 +110,15 @@
     "pgo/pc-etb"
    ],
    "src": {
-    "file": "refs/promo-sv/rect-pgo-pc-etb.png"
+    "tcgplayer": 282566
    },
-   "crop": [
-    0,
-    0,
-    630,
-    880
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/282566/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-pokemon-go-pokemon-center-elite-trainer-box-plus-card-sleeves-mewtwo-65-pack",
     "https://www.pokemon.com/us/pokemon-tcg/product-gallery/pokemon-go-pokemon-center-elite-trainer-box-plus"
-   ]
+   ],
+   "quad": "auto"
   },
   {
    "kind": "sleeve",
@@ -130,19 +134,14 @@
     "svp/charizard-ex-premium"
    ],
    "src": {
-    "file": "refs/promo-sv/rect-svp-charizard-ex-premium.png"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/encz1t/zard5.jpg"
    },
-   "crop": [
-    0,
-    0,
-    630,
-    880
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/544608/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-charizard-ex-premium-collection-card-sleeves-charizard-as-a-tera-pokemon-65-pack",
-    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-ex-premium-collection"
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-ex-premium-collection",
+    "https://www.pokeguardian.com/1419633_charizard-ex-premium-collection-revealed"
    ]
   },
   {
@@ -159,19 +158,14 @@
     "svp/armarouge-ex-premium"
    ],
    "src": {
-    "file": "refs/promo-sv/rect-svp-armarouge-ex-premium.png"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/ei5xb4/19-55.jpg"
    },
-   "crop": [
-    0,
-    0,
-    630,
-    880
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/672586/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-armarouge-ex-premium-collection-card-sleeves-armarouge-and-ceruledge-65-pack",
-    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/armarouge-ex-premium-collection"
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/armarouge-ex-premium-collection",
+    "https://www.pokeguardian.com/1657588_armarouge-ex-premium-collection-revealed"
    ]
   },
   {
@@ -188,19 +182,14 @@
     "svp/ogerpon-ex-premium"
    ],
    "src": {
-    "file": "refs/promo-sv/rect-svp-ogerpon-ex-premium.png"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/7-high-h56hjs.jpg"
    },
-   "crop": [
-    0,
-    0,
-    630,
-    880
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/599731/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-ogerpon-ex-premium-collection-card-sleeves-65-pack",
-    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/ogerpon-ex-premium-collection"
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/ogerpon-ex-premium-collection",
+    "https://www.pokeguardian.com/2013754_ogerpon-ex-premium-collection-revealed"
    ]
   },
   {
@@ -211,26 +200,40 @@
     "svp"
    ],
    "subject": "Iono",
-   "blurb": "Magenta-bordered card sleeves showing Iono mid-stream with a small electric Pokémon on her shoulder and a big green Bellibolt below.",
+   "blurb": "Magenta-bordered card sleeves showing Iono mid-stream with her round hair clips and a big green Bellibolt below, with the copyright on a pink tab down the left side.",
    "count": 65,
    "products": [
     "svp/iono-ptc"
    ],
    "src": {
-    "file": "refs/promo-sv/rect-svp-iono-ptc.png"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/lg83mf/p9548_290-85749_04.jpg"
    },
-   "crop": [
-    0,
-    0,
-    630,
-    880
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/546464/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-iono-premium-tournament-collection-box-card-sleeves-65-pack",
-    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/iono-premium-tournament-collection"
-   ]
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/iono-premium-tournament-collection",
+    "https://www.pokeguardian.com/1635605_iono-premium-tournament-collection-revealed-new-iono-full-art-promo"
+   ],
+   "quad": [
+    [
+     464,
+     418
+    ],
+    [
+     906,
+     332
+    ],
+    [
+     1023,
+     950
+    ],
+    [
+     574,
+     1035
+    ]
+   ],
+   "snap": false
   },
   {
    "kind": "sleeve",
@@ -246,19 +249,14 @@
     "svp/trainers-toolkit-2024"
    ],
    "src": {
-    "file": "refs/promo-sv/rect-svp-trainers-toolkit-2024.png"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/8-high-4mb3fu.jpg"
    },
-   "crop": [
-    0,
-    0,
-    630,
-    880
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/587946/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-trainers-toolkit-2024-card-sleeves-65-pack",
-    "https://www.tcgplayer.com/product/564274/pokemon-miscellaneous-cards-and-products-pokemon-tcg-trainers-toolkit-2024"
+    "https://www.tcgplayer.com/product/564274/pokemon-miscellaneous-cards-and-products-pokemon-tcg-trainers-toolkit-2024",
+    "https://www.pokeguardian.com/1968008_trainer-s-toolkit-2024-contains-squawkabilly-ex-promo"
    ]
   },
   {
@@ -275,20 +273,16 @@
     "svp/trainers-toolkit-2025"
    ],
    "src": {
-    "file": "refs/promo-sv/rect-svp-trainers-toolkit-2025.png"
+    "url": "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P10446_10-10112-101_04.jpg"
    },
-   "crop": [
-    0,
-    0,
-    630,
-    880
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/668726/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-2025-trainers-toolkit-card-sleeves-65-pack",
-    "https://www.tcgplayer.com/product/653203/pokemon-miscellaneous-cards-and-products-pokemon-tcg-trainers-toolkit-2025"
-   ]
+    "https://www.tcgplayer.com/product/653203/pokemon-miscellaneous-cards-and-products-pokemon-tcg-trainers-toolkit-2025",
+    "https://justahobby.store/products/pokemon-2025-toolkit-card-sleeves-65-sleeves"
+   ],
+   "quad": "auto"
   },
   {
    "kind": "coin",
@@ -323,28 +317,31 @@
     "cel25"
    ],
    "subject": "Pikachu head (Pokémon 25 logo)",
-   "blurb": "A silver metal coin embossed with the Pikachu-head Pokémon 25 logo inside concentric rings.",
+   "blurb": "A silver metal coin embossed with the Pikachu-head Pokémon 25 logo and lightning tail inside two rings.",
    "material": "metal",
    "products": [
     "cel25/ultra-premium-collection",
     "cel25/pc-etb"
    ],
    "src": {
-    "file": "refs/promo-sv/cel25__ultra-premium-collection__coin-front.jpg"
+    "url": "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/Untitleddesign.png"
    },
-   "crop": null,
-   "circle": [
-    83,
-    92,
-    74
-   ],
-   "v": 1,
-   "evidence": "single-source",
+   "v": 2,
+   "evidence": "verified",
    "sources": [
     "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-ultra-premium-collection",
-    "https://www.collectorscache.com/catalog/pokemon_singles-pokemon_pins_badges__misc_items/pokemon_celebrations_ultrapremium_pikachu_metal_coin/653584",
-    "https://www.ebay.com/itm/157358428129"
-   ]
+    "https://www.tcgplayer.com/product/245140/pokemon-celebrations-celebrations-ultra-premium-collection",
+    "https://justahobby.store/products/pokemon-celebration-ultra-premium-collection-pin-metal-coin",
+    "https://www.tcgplayer.com/product/251199/pokemon-celebrations-celebrations-pokemon-center-elite-trainer-box-exclusive",
+    "https://zulusgames.com/products/pokemon-tcg-celebrations-pokemon-center-elite-trainer-box"
+   ],
+   "circle": [
+    486,
+    348,
+    68
+   ],
+   "snap": false,
+   "inset": 0.02
   },
   {
    "kind": "coin",
@@ -354,50 +351,228 @@
     "pgo"
    ],
    "subject": "Mewtwo",
-   "blurb": "A jumbo coin with a purple rainbow holofoil finish, packed in the Mewtwo V Battle Deck.",
+   "blurb": "A jumbo purple and pink holofoil coin with a white outline of Mewtwo, packed in the Pokémon GO Mewtwo V Battle Deck.",
    "material": "foil",
    "products": [
     "pgo/mewtwo-v-battle-deck",
     "pgo/mewtwo-melmetal-v-battle-deck-bundle"
    ],
    "src": {
-    "render": {
-     "dex": 150,
-     "finish": "purple",
-     "holo": true
-    }
+    "url": "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P7782_699-17148_08.jpg"
    },
-   "v": 1,
-   "evidence": "single-source",
+   "v": 2,
+   "evidence": "verified",
    "sources": [
-    "https://www.thegamer.com/pokemon-tcg-best-pokemon-coins/",
-    "https://www.cardmarket.com/en/Pokemon/Products/Coins/Pokemon-GO-Mewtwo-Coin-Mewtwo-V-Battle-Deck"
-   ]
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/pokemon-go-mewtwo-v-battle-deck-pokemon-go-melmetal-v-battle-deck",
+    "https://www.tcgplayer.com/product/270710/pokemon-pokemon-go-v-battle-deck-mewtwo-v",
+    "https://justahobby.store/products/pokemon-go-mewtwo-v-battle-deck",
+    "https://www.thegamer.com/pokemon-tcg-best-pokemon-coins/"
+   ],
+   "circle": [
+    598,
+    603,
+    228
+   ],
+   "inset": 0.02
   },
   {
    "kind": "coin",
    "id": "psv-charizard-celebrations-coin",
-   "name": "Charizard metal coin",
+   "name": "Charizard gold coin",
    "sets": [
     "cel25"
    ],
    "subject": "Charizard",
-   "blurb": "A metallic coin featuring Charizard, packed in the Celebrations V Memories collection.",
-   "material": "metal",
+   "blurb": "A gold pixel holofoil coin with a black line drawing of Charizard's roaring head, packed in the Celebrations V Memories collection.",
+   "material": "foil",
    "products": [
     "cel25/v-memories-special-collection"
    ],
    "src": {
-    "render": {
-     "dex": 6,
-     "finish": "silver",
-     "holo": false
-    }
+    "file": "refs/cleanup-promosv/cel25__v-memories__charizard-coin__mercari-photo.jpg"
    },
-   "v": 1,
-   "evidence": "inferred",
+   "v": 2,
+   "evidence": "verified",
    "sources": [
-    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-special-collection-v-memories"
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-special-collection-v-memories",
+    "https://www.tcgplayer.com/product/247470/pokemon-celebrations-celebrations-special-collection-v-memories",
+    "https://www.mercari.com/us/item/m71663694696/"
+   ],
+   "circle": [
+    621,
+    612,
+    296
+   ],
+   "inset": 0.03
+  },
+  {
+   "kind": "coin",
+   "id": "psv-melmetal-go-coin",
+   "name": "Melmetal holofoil coin",
+   "sets": [
+    "pgo"
+   ],
+   "subject": "Melmetal",
+   "blurb": "A jumbo silver rainbow holofoil coin with a black outline of Melmetal's head and arm, packed in the Pokémon GO Melmetal V Battle Deck.",
+   "material": "foil",
+   "products": [
+    "pgo/melmetal-v-battle-deck",
+    "pgo/mewtwo-melmetal-v-battle-deck-bundle"
+   ],
+   "src": {
+    "url": "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P7782_699-17147_08.jpg"
+   },
+   "circle": [
+    598,
+    603,
+    228
+   ],
+   "inset": 0.02,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/pokemon-go-mewtwo-v-battle-deck-pokemon-go-melmetal-v-battle-deck",
+    "https://www.tcgplayer.com/product/270711/pokemon-pokemon-go-v-battle-deck-melmetal-v",
+    "https://justahobby.store/products/pokemon-go-melmetal-v-battle-deck"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "psv-iono-coin",
+   "name": "Iono coin",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Iono",
+   "blurb": "A large pink glitter holofoil coin with a black line drawing of Iono grinning under her hair clips.",
+   "material": "foil",
+   "products": [
+    "svp/iono-ptc"
+   ],
+   "src": {
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/4245s1/p9548_290-85749_05.jpg"
+   },
+   "circle": [
+    598,
+    610,
+    227
+   ],
+   "inset": 0.02,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/iono-premium-tournament-collection",
+    "https://www.tcgplayer.com/product/545403/pokemon-miscellaneous-cards-and-products-iono-premium-tournament-collection-box",
+    "https://www.pokeguardian.com/1635605_iono-premium-tournament-collection-revealed-new-iono-full-art-promo"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "psv-battle-academy-2024-coin",
+   "name": "Battle Academy coin",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Armarouge, Pikachu and Darkrai",
+   "blurb": "A large gold glitter holofoil coin with black line art of Armarouge, Pikachu and Darkrai together.",
+   "material": "foil",
+   "products": [
+    "svp/battle-academy-2024"
+   ],
+   "src": {
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/3-high.jpg"
+   },
+   "circle": [
+    600,
+    600,
+    588
+   ],
+   "snap": false,
+   "inset": 0.01,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/pokemon-trading-card-game-battle-academy-2024",
+    "https://www.pokeguardian.com/1753548_2024-version-of-the-pokemon-tcg-battle-academy-revealed",
+    "https://justahobby.store/products/pokemon-battle-academy-2024-armarouge-ex-pikachu-ex-darkrai-ex"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "psv-ex-coin-silver",
+   "name": "Silver ex coin",
+   "sets": [
+    "svp"
+   ],
+   "subject": "ex logo",
+   "blurb": "A large silver metal coin with a bold black and chrome ex logo, packed in the 2023 ex Battle Decks.",
+   "material": "metal",
+   "products": [
+    "svp/battle-deck-lucario",
+    "svp/battle-decks-chien-pao-tinkaton",
+    "svp/battle-deck-kangaskhan",
+    "svp/battle-deck-greninja"
+   ],
+   "src": {
+    "url": "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P8940_699-85241_03.jpg"
+   },
+   "circle": [
+    459,
+    886,
+    121
+   ],
+   "snap": false,
+   "inset": 0.02,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/484382/pokemon-miscellaneous-cards-and-products-ex-battle-deck-lucario-ex",
+    "https://justahobby.store/products/pokemon-lucario-ex-battle-deck",
+    "https://www.tcgplayer.com/product/497967/pokemon-miscellaneous-cards-and-products-ex-battle-deck-chien-pao-tinkaton-set-of-2",
+    "https://justahobby.store/products/pokemon-tinkaton-ex-battle-deck",
+    "https://justahobby.store/products/pokemon-chien-pao-ex-battle-deck",
+    "https://www.tcgplayer.com/product/527674/pokemon-miscellaneous-cards-and-products-ex-battle-deck-kangaskhan-ex",
+    "https://justahobby.store/products/pokemon-kangaskhan-ex-battle-deck",
+    "https://www.tcgplayer.com/product/527671/pokemon-miscellaneous-cards-and-products-ex-battle-deck-greninja-ex",
+    "https://justahobby.store/products/pokemon-greninja-ex-battle-deck"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "psv-ex-coin-green",
+   "name": "Green ex coin",
+   "sets": [
+    "svp"
+   ],
+   "subject": "ex logo",
+   "blurb": "A large mint green metal coin with a bold black and chrome ex logo, packed in the 2024 ex Battle Decks.",
+   "material": "metal",
+   "products": [
+    "svp/battle-deck-houndoom",
+    "svp/battle-deck-melmetal",
+    "svp/battle-deck-victini",
+    "svp/battle-deck-miraidon"
+   ],
+   "src": {
+    "url": "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P9552_699-85756_03.jpg"
+   },
+   "circle": [
+    517,
+    879,
+    121
+   ],
+   "snap": false,
+   "inset": 0.02,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/531574/pokemon-miscellaneous-cards-and-products-ex-battle-deck-houndoom-ex",
+    "https://www.tcgplayer.com/product/531573/pokemon-miscellaneous-cards-and-products-ex-battle-deck-melmetal-ex",
+    "https://www.pokeguardian.com/1580782_pokemon-tcg-ex-battle-decks-melmetal-ex-houndoom-ex-coming",
+    "https://www.tcgplayer.com/product/557326/pokemon-miscellaneous-cards-and-products-ex-battle-deck-victini-ex",
+    "https://justahobby.store/products/pokemon-victini-ex-battle-deck",
+    "https://www.tcgplayer.com/product/557327/pokemon-miscellaneous-cards-and-products-ex-battle-deck-miraidon-ex",
+    "https://justahobby.store/products/pokemon-miraidon-ex-battle-deck"
    ]
   }
  ],

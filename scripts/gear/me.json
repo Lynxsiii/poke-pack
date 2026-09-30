@@ -17,13 +17,7 @@
    "src": {
     "tcgplayer": 662630
    },
-   "crop": [
-    70,
-    60,
-    703,
-    943
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/644279/pokemon-me01-mega-evolution-mega-evolution-elite-trainer-box-mega-gardevoir",
@@ -31,7 +25,8 @@
     "https://www.pokeguardian.com/2604003_pokemon-tcg-mega-evolution-officially-revealed",
     "https://www.tcgplayer.com/product/662630",
     "https://www.tcgplayer.com/product/648415/pokemon-me01-mega-evolution-mega-evolution-pokemon-center-elite-trainer-box-exclusive-mega-gardevoir"
-   ]
+   ],
+   "quad": "auto"
   },
   {
    "kind": "sleeve",
@@ -49,20 +44,15 @@
    "src": {
     "tcgplayer": 662629
    },
-   "crop": [
-    70,
-    60,
-    693,
-    928
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/644282/pokemon-me01-mega-evolution-mega-evolution-pokemon-center-elite-trainer-box-exclusive-mega-lucario",
     "https://www.pokemon.com/us/pokemon-news/pokemon-tcg-mega-evolution-product-showcase",
     "https://www.pokeguardian.com/2604003_pokemon-tcg-mega-evolution-officially-revealed",
     "https://www.tcgplayer.com/product/662629"
-   ]
+   ],
+   "quad": "auto"
   },
   {
    "kind": "sleeve",
@@ -79,15 +69,9 @@
     "me2/pc-etb"
    ],
    "src": {
-    "file": "refs/me-a/me2__eliteTrainerBox__sleeve.jpg"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/p10347_me02_3d_etb_card_sleeves_gen-1372x1890-e5dd884-high.jpg"
    },
-   "crop": [
-    4,
-    4,
-    596,
-    823
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/654136/pokemon-me02-phantasmal-flames-phantasmal-flames-elite-trainer-box",
@@ -138,10 +122,9 @@
     "me2pt5/pc-etb"
    ],
    "src": {
-    "file": "refs/me-rect/me-dragonite-sleeve.jpg"
+    "tcgplayer": 680498
    },
-   "crop": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/668496/pokemon-me-ascended-heroes-ascended-heroes-elite-trainer-box",
@@ -149,7 +132,8 @@
     "https://www.pokeguardian.com/2832227_mega-evolution-ascended-heroes-special-set-officially-revealed",
     "https://www.tcgplayer.com/product/680498",
     "https://www.tcgplayer.com/product/668497/pokemon-me-ascended-heroes-ascended-heroes-pokemon-center-elite-trainer-box-exclusive"
-   ]
+   ],
+   "quad": "auto"
   },
   {
    "kind": "sleeve",
@@ -166,10 +150,9 @@
     "me3/pc-etb"
    ],
    "src": {
-    "file": "refs/me-rect/me-zygarde-sleeve.jpg"
+    "tcgplayer": 686358
    },
-   "crop": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/672401/pokemon-me03-perfect-order-perfect-order-elite-trainer-box",
@@ -178,8 +161,10 @@
     "https://www.bestbuy.com/product/pokemon-trading-card-game-mega-evolution-perfect-order-elite-trainer-box/JJG2TL3W86",
     "https://www.pokeguardian.com/2921595_mega-evolution-perfect-order-officially-revealed",
     "https://www.tcgplayer.com/product/672404/pokemon-me03-perfect-order-perfect-order-pokemon-center-elite-trainer-box",
-    "https://gonintendo.com/contents/58844-pokemon-tcg-mega-evolution-perfect-order-product-showcase"
-   ]
+    "https://gonintendo.com/contents/58844-pokemon-tcg-mega-evolution-perfect-order-product-showcase",
+    "https://www.tcgplayer.com/product/686358"
+   ],
+   "quad": "auto"
   },
   {
    "kind": "sleeve",
@@ -196,10 +181,9 @@
     "me4/pc-etb"
    ],
    "src": {
-    "file": "refs/me-rect/me-greninja-sleeve.jpg"
+    "tcgplayer": 695322
    },
-   "crop": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/684450/pokemon-me04-chaos-rising-chaos-rising-elite-trainer-box",
@@ -208,8 +192,28 @@
     "https://www.gamenerdz.com/pokemon-mega-evolution-chaos-rising-elite-trainer-box",
     "https://www.tcgplayer.com/product/684452/pokemon-me04-chaos-rising-chaos-rising-pokemon-center-elite-trainer-box",
     "https://www.amazon.com/Pokemon-TCG-Evolution-Exclusive-Fennekin/dp/B0H2N248WM",
-    "https://evolvault.com/products/pokemon-chaos-rising-etb-pokemon-center-exclusive"
-   ]
+    "https://evolvault.com/products/pokemon-chaos-rising-etb-pokemon-center-exclusive",
+    "https://www.tcgplayer.com/product/695322"
+   ],
+   "quad": [
+    [
+     453,
+     324
+    ],
+    [
+     877,
+     244
+    ],
+    [
+     986,
+     827
+    ],
+    [
+     562,
+     906
+    ]
+   ],
+   "snap": false
   },
   {
    "kind": "sleeve",
@@ -226,15 +230,9 @@
     "me5/pc-etb"
    ],
    "src": {
-    "file": "refs/me-b/me5__eliteTrainerBox__sleeve.jpg"
+    "tcgplayer": 707158
    },
-   "crop": [
-    3,
-    3,
-    462,
-    637
-   ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/692947/pokemon-me05-pitch-black-pitch-black-elite-trainer-box",
@@ -243,7 +241,8 @@
     "https://www.gamenerdz.com/pokemon-mega-evolution-pitch-black-elite-trainer-box-darkrai-card-sleeves-65ct",
     "https://www.pokeguardian.com/3144089_mega-evolution-pitch-black-officially-revealed",
     "https://www.tcgplayer.com/product/692949/pokemon-me05-pitch-black-pitch-black-pokemon-center-elite-trainer-box-exclusive",
-    "https://evolvault.com/products/pitch-black-pokemon-center-etb"
+    "https://evolvault.com/products/pitch-black-pokemon-center-etb",
+    "https://www.tcgplayer.com/product/707158"
    ]
   },
   {
@@ -254,25 +253,44 @@
     "me55"
    ],
    "subject": "Pikachu 30th Celebration logo",
-   "blurb": "65 white card sleeves with a gold-outlined Pikachu head showing a 3 and a 0 as its eyes over a pale pattern of Pokémon, included in the 30th Celebration Elite Trainer Box.",
+   "blurb": "65 white card sleeves with a gold-outlined Pikachu head showing a 3 and a 0 as its eyes over a pale Pikachu pattern and a sweeping gold arc, included in the 30th Celebration Elite Trainer Box.",
    "count": 65,
    "products": [
     "me55/eliteTrainerBox",
     "me55/pc-etb"
    ],
    "src": {
-    "file": "refs/me-rect/me-pikachu30-sleeve.jpg"
+    "url": "https://cdn.shopify.com/s/files/1/0966/9781/1274/files/P11454_10-10447-108_06_01353dc7-b64c-48da-82bc-dcc62e7d9a8c.png?v=1784267109"
    },
-   "crop": null,
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/704143/pokemon-me-30th-celebration-30th-celebration-elite-trainer-box",
     "https://www.pokeguardian.com/3203075_pokemon-tcg-30th-celebration-set-revealed",
     "https://www.gamenerdz.com/pokemon-30th-celebration-elite-trainer-box",
     "https://www.tcgplayer.com/product/704144/pokemon-me-30th-celebration-30th-celebration-pokemon-center-elite-trainer-box",
-    "https://evolvault.com/products/pokemon-30th-celebration-pokemon-center-etb"
-   ]
+    "https://evolvault.com/products/pokemon-30th-celebration-pokemon-center-etb",
+    "https://www.tcgplayer.com/product/719748"
+   ],
+   "quad": [
+    [
+     545,
+     405
+    ],
+    [
+     1036,
+     315
+    ],
+    [
+     1165,
+     992
+    ],
+    [
+     673,
+     1085
+    ]
+   ],
+   "snap": false
   },
   {
    "kind": "sleeve",
@@ -405,9 +423,9 @@
     "me1/checklane-meowscarada"
    ],
    "src": {
-    "file": "refs/scout/me1__blister-drifloon__product-front__tcgplayer.jpg"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/mega_evolution_checklane_blister_1-high.jpg"
    },
-   "v": 1,
+   "v": 3,
    "evidence": "single-source",
    "sources": [
     "https://www.tcgplayer.com/product/644358/pokemon-me01-mega-evolution-mega-evolution-single-pack-blister-drifloon",
@@ -419,10 +437,12 @@
     "https://www.tcgplayer.com/product/644361/pokemon-me01-mega-evolution-mega-evolution-premium-checklane-blister-meowscarada"
    ],
    "circle": [
-    265,
-    750,
-    148
-   ]
+    451,
+    1344,
+    246
+   ],
+   "inset": 0.03,
+   "snap": false
   },
   {
    "kind": "coin",
@@ -561,9 +581,9 @@
     "me2/checklane-blaziken"
    ],
    "src": {
-    "file": "refs/me-a/me2__blister2-vileplume__coin-front.jpg"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/p10347_3d_me02_checklane_blister_cottonee_en-1144x2104-e2b4004-high.jpg"
    },
-   "v": 2,
+   "v": 3,
    "evidence": "single-source",
    "sources": [
     "https://www.tcgplayer.com/product/654151/pokemon-me02-phantasmal-flames-phantasmal-flames-single-pack-blister-cottonee",
@@ -575,10 +595,12 @@
     "https://www.tcgplayer.com/product/654146/pokemon-me02-phantasmal-flames-phantasmal-flames-premium-checklane-blister-hydrapple"
    ],
    "circle": [
-    350,
-    470,
-    90
-   ]
+    540,
+    1595,
+    300
+   ],
+   "snap": false,
+   "inset": 0.02
   },
   {
    "kind": "coin",
@@ -595,22 +617,25 @@
     "me2/checklane-magcargo"
    ],
    "src": {
-    "file": "refs/me-a/me2__checklane-greedent__coin-front.jpg"
+    "tcgplayer": 672588
    },
-   "v": 2,
+   "v": 3,
    "evidence": "single-source",
    "sources": [
     "https://www.tcgplayer.com/product/668931/pokemon-me02-phantasmal-flames-phantasmal-flames-premium-checklane-blister-arvens-greedent",
     "https://collectivecubed.com/products/phantasmal-flames-premium-checklane-blister-arvens-greedent",
     "https://product-images.tcgplayer.com/fit-in/600x600/668931.jpg",
     "https://www.tcgplayer.com/product/672588/pokemon-me02-phantasmal-flames-phantasmal-flames-premium-checklane-blister-ethans-magcargo",
-    "https://product-images.tcgplayer.com/fit-in/600x600/672588.jpg"
+    "https://product-images.tcgplayer.com/fit-in/600x600/672588.jpg",
+    "https://www.tcgplayer.com/product/672588"
    ],
    "circle": [
-    171,
-    454,
-    86
-   ]
+    254,
+    622,
+    130
+   ],
+   "snap": false,
+   "inset": 0.03
   },
   {
    "kind": "coin",
@@ -651,20 +676,24 @@
     "me2pt5/pc-etb"
    ],
    "src": {
-    "render": {
-     "dex": 149,
-     "finish": "gold",
-     "holo": true
-    }
+    "file": "refs/cleanup-me/me2pt5__eliteTrainerBox__coin-front__rectified-from-evolvault-dice-coin.png"
    },
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/668496/pokemon-me-ascended-heroes-ascended-heroes-elite-trainer-box",
     "https://www.pokemon.com/us/pokemon-news/pokemon-tcg-mega-evolution-ascended-heroes-product-showcase",
     "https://www.pokeguardian.com/2832227_mega-evolution-ascended-heroes-special-set-officially-revealed",
-    "https://www.tcgplayer.com/product/668497/pokemon-me-ascended-heroes-ascended-heroes-pokemon-center-elite-trainer-box-exclusive"
-   ]
+    "https://www.tcgplayer.com/product/668497/pokemon-me-ascended-heroes-ascended-heroes-pokemon-center-elite-trainer-box-exclusive",
+    "https://evolvault.com/products/pokemon-ascended-heroes-etb"
+   ],
+   "circle": [
+    260,
+    260,
+    250
+   ],
+   "snap": false,
+   "inset": 0.05
   },
   {
    "kind": "coin",
@@ -680,9 +709,9 @@
     "me2pt5/collection-erika"
    ],
    "src": {
-    "file": "refs/me-a/me2pt5__collection-erika__coin-front.jpg"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/p11424_10-10312-122_01-high.jpg"
    },
-   "v": 1,
+   "v": 3,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/666906/pokemon-me-ascended-heroes-mega-evolution-ascended-heroes-collection-erika-3-tab",
@@ -690,10 +719,12 @@
     "https://www.pokeguardian.com/2832227_mega-evolution-ascended-heroes-special-set-officially-revealed"
    ],
    "circle": [
-    355,
-    507,
-    63
-   ]
+    609,
+    864,
+    109
+   ],
+   "inset": 0.03,
+   "snap": false
   },
   {
    "kind": "coin",
@@ -709,9 +740,9 @@
     "me2pt5/collection-larry"
    ],
    "src": {
-    "file": "refs/me-a/me2pt5__collection-larry__coin-front.jpg"
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/p11424_10-10312-123_01-high.jpg"
    },
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/666907/pokemon-me-ascended-heroes-mega-evolution-ascended-heroes-collection-larry-3-tab",
@@ -719,10 +750,11 @@
     "https://www.pokeguardian.com/2832227_mega-evolution-ascended-heroes-special-set-officially-revealed"
    ],
    "circle": [
-    356,
-    506,
-    62
-   ]
+    612,
+    864,
+    115
+   ],
+   "inset": 0.02
   },
   {
    "kind": "coin",
@@ -760,7 +792,7 @@
     "me3"
    ],
    "subject": "Snorlax",
-   "blurb": "A flat bronze and gold metal coin with a black rim and an embossed sitting Snorlax, the same coin in the Perfect Order single-pack and checklane blisters.",
+   "blurb": "A flat bronze-gold metal coin with an embossed sitting Snorlax on a dark field, the same coin in the Perfect Order single-pack and checklane blisters.",
    "material": "metal",
    "products": [
     "me3/blister-makuhita",
@@ -770,13 +802,9 @@
     "me3/checklane-clawitzer"
    ],
    "src": {
-    "render": {
-     "dex": 143,
-     "finish": "bronze",
-     "holo": false
-    }
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/perfect_order_checklane_blister_1-high.jpg"
    },
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/672410/pokemon-me03-perfect-order-perfect-order-single-pack-blister-makuhita",
@@ -786,7 +814,13 @@
     "https://www.tcgplayer.com/product/672406/pokemon-me03-perfect-order-perfect-order-premium-checklane-blister-meganium-line",
     "https://www.tcgplayer.com/product/672407/pokemon-me03-perfect-order-perfect-order-premium-checklane-blister-cinderace-line",
     "https://www.tcgplayer.com/product/672408/pokemon-me03-perfect-order-perfect-order-premium-checklane-blister-steelix-line"
-   ]
+   ],
+   "circle": [
+    536,
+    1620,
+    260
+   ],
+   "inset": 0.02
   },
   {
    "kind": "coin",
@@ -825,7 +859,7 @@
     "me4"
    ],
    "subject": "Chikorita",
-   "blurb": "A flat bronze and gold metal coin with a black rim and an embossed sitting Chikorita, the same coin in the Chaos Rising single-pack and checklane blisters.",
+   "blurb": "A flat gold-tone metal coin with an embossed sitting Chikorita, the same coin in the Chaos Rising single-pack and checklane blisters.",
    "material": "metal",
    "products": [
     "me4/blister-toxel",
@@ -835,13 +869,9 @@
     "me4/checklane-reshiram"
    ],
    "src": {
-    "render": {
-     "dex": 152,
-     "finish": "bronze",
-     "holo": false
-    }
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/p11219_me04_3d_checklane_blister_front_en-1144x2104-e2b4004-high.jpg"
    },
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/684457/pokemon-me04-chaos-rising-chaos-rising-single-pack-blister-toxel",
@@ -851,7 +881,14 @@
     "https://www.tcgplayer.com/product/684459/pokemon-me04-chaos-rising-chaos-rising-premium-checklane-blister-pawmot-line",
     "https://totalcards.net/products/pokemon-mega-evolution-chaos-rising-premium-checklane-blister-flygon",
     "https://www.tcgplayer.com/product/684460/pokemon-me04-chaos-rising-chaos-rising-premium-checklane-blister-flygon-line"
-   ]
+   ],
+   "circle": [
+    537,
+    1610,
+    305
+   ],
+   "snap": false,
+   "inset": 0.03
   },
   {
    "kind": "coin",
@@ -926,19 +963,21 @@
     "me5/blister2-zarude"
    ],
    "src": {
-    "render": {
-     "dex": 143,
-     "finish": "silver",
-     "holo": false
-    }
+    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/zar-high.jpg"
    },
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/706250/pokemon-miscellaneous-cards-and-products-2-pack-blister-zarude-3-tab",
     "https://www.pokeguardian.com/3194805_pokemon-tcg-2-pack-blister-zarude-revealed",
     "https://www.ebay.com/itm/407149556868"
-   ]
+   ],
+   "circle": [
+    500,
+    262,
+    110
+   ],
+   "inset": 0.02
   },
   {
    "kind": "coin",
@@ -978,22 +1017,25 @@
     "me55/pc-etb"
    ],
    "src": {
-    "file": "refs/me-b/me55__eliteTrainerBox__coin-front.jpg"
+    "file": "refs/cleanup-me/me55__eliteTrainerBox__coin-front__rectified-from-10-10447-108_08.png"
    },
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/704143/pokemon-me-30th-celebration-30th-celebration-elite-trainer-box",
     "https://www.pokeguardian.com/3203075_pokemon-tcg-30th-celebration-set-revealed",
     "https://www.gamenerdz.com/pokemon-30th-celebration-elite-trainer-box",
     "https://www.tcgplayer.com/product/704144/pokemon-me-30th-celebration-30th-celebration-pokemon-center-elite-trainer-box",
-    "https://evolvault.com/products/pokemon-30th-celebration-pokemon-center-etb"
+    "https://evolvault.com/products/pokemon-30th-celebration-pokemon-center-etb",
+    "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/p11454_10-10447-108_08-high.jpg"
    ],
    "circle": [
-    355,
-    262,
-    205
-   ]
+    259,
+    259,
+    210
+   ],
+   "snap": false,
+   "inset": 0.02
   },
   {
    "kind": "coin",
