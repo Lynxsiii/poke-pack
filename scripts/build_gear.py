@@ -17,7 +17,7 @@ A spec file is {"items": [...], "productRules": {...}}. An item:
          | { "url": "https://..." }
          | { "render": { "dex": 143, "finish": "bronze", "holo": false } },   # coins only
     "crop": [x0, y0, x1, y1] | null,   # pixels in the source image
-    "quadInset": 0.02,                       # sleeves: shrink the quad toward its centre by this fraction
+    "quadInset": 0.02,                       # sleeves: shrink the quad toward its centre (default 0.025, 0 disables)
     "quad": "auto" | [[x,y],[x,y],[x,y],[x,y]] | null,   # sleeves: "auto" finds the front sleeve of a
                                        # fanned stack on white by itself; else the four corners TL TR BR BL of the
                                        # sleeve in the photo; it is straightened (perspective) and
@@ -55,6 +55,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RESEARCH = Path(os.environ.get("GEAR_RESEARCH", "/mnt/project-files/sleeves-coins"))
 CACHE = RESEARCH / "cache"
 SPECS = ROOT / "scripts" / "gear"
+DEFAULT_QUAD_INSET = 0.025
 UA = {"User-Agent": "curl/8.5.0", "Accept": "*/*"}
 ARTWORK = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{}.png"
 
@@ -87,7 +88,10 @@ def build_sleeve(item: dict) -> tuple[Image.Image, str]:
             raise ValueError("auto quad found no sleeve; give the four corners")
     if quad and item.get("snap", True):
         quad = g.refine_quad(im, quad)
-    inset = float(item.get("quadInset") or 0)
+    # Every quad crop is pulled 2.5% inside the sleeve edge unless the item says
+    # otherwise: real sleeves have rounded corners and stack photos show a sliver
+    # of the next sleeve or the background right at the edge.
+    inset = float(item["quadInset"]) if item.get("quadInset") is not None else (DEFAULT_QUAD_INSET if quad else 0)
     if quad and inset:
         # Pull every corner toward the centre so a sleeve's rounded corners and the
         # sliver of whatever sits behind it stay outside the tile.

@@ -17,7 +17,7 @@
    "src": {
     "file": "refs/cleanup-svb/rsv10pt5__eliteTrainerBox__sleeve-stack__obsidia.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/630689/pokemon-sv-white-flare-white-flare-elite-trainer-box",
@@ -65,7 +65,7 @@
    "src": {
     "file": "refs/cleanup-svb/zsv10pt5__eliteTrainerBox__sleeve-stack__obsidia.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/630686/pokemon-sv-black-bolt-black-bolt-elite-trainer-box",
@@ -259,7 +259,7 @@
    "src": {
     "file": "refs/cleanup-svb/sv6pt5__pc-etb__sleeve-stack__pokeguardian.jpg"
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/552999/pokemon-sv-shrouded-fable-shrouded-fable-elite-trainer-box",
@@ -438,7 +438,7 @@
    "src": {
     "tcgplayer": 666507
    },
-   "v": 3,
+   "v": 4,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/650799/pokemon-sv-prismatic-evolutions-prismatic-evolutions-premium-figure-collection",
@@ -454,11 +454,11 @@
      10
     ],
     [
-     708,
+     700,
      8
     ],
     [
-     712,
+     704,
      992
     ],
     [
@@ -466,8 +466,8 @@
      994
     ]
    ],
-   "snap": true,
-   "quadInset": 0.022
+   "snap": false,
+   "quadInset": 0.025
   },
   {
    "kind": "sleeve",
