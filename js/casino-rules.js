@@ -23,3 +23,27 @@ export function matchWindow(hostCents) {
 export function botStakeWindow(hostCents) {
   return { low: Math.max(1, Math.floor(hostCents * (1 - COINFLIP_RULES.botEdge))), high: hostCents };
 }
+
+/* Jackpot (migration 0015): 3 to 10 players toss cards into one pot; when it is
+   full (or the host draws it early with at least 2 entries) one entry is drawn at
+   random, weighted by the value it put up, and that player takes every card. The
+   host's entry sets the pot's minimum; a joiner puts up between 1x and
+   maxMultiple x of it, so a whale cannot dominate. The value window is also
+   enforced by a trigger in the migration, which hard-codes the 5. */
+export const JACKPOT_RULES = {
+  minCents: 10,        // the host's entry (the pot's minimum) is at least 0.10 coins of cards
+  maxCards: 40,        // different cards in one entry
+  maxCopies: 120,      // cards in one entry, counting copies
+  minPlayers: 3,       // a full table auto-draws; tables are 3 to 10 seats
+  maxPlayers: 10,
+  defaultPlayers: 6,
+  earlyDrawMin: 2,     // the host may draw an unfilled pot once it has this many entries
+  maxMultiple: 5,      // a joiner may put up at most this many times the host's entry
+  maxOpen: 3,          // open pots one player can host at once
+  openHours: 24,       // an undrawn pot returns every pile after this
+};
+
+/** The values a joiner's cards may total to enter a pot whose minimum is `minCents`. */
+export function jackpotWindow(minCents) {
+  return { min: minCents, max: minCents * JACKPOT_RULES.maxMultiple };
+}

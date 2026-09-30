@@ -76,7 +76,7 @@ export default {
     } catch (err) {
       const message = err?.message || "Server error.";
       const status = err.status && Number.isInteger(err.status) ? err.status
-        : /(active battles|open coin flips) before (deleting|resetting)/.test(message) ? 409 : 500;
+        : /(active battles|open coin flips|open jackpots) before (deleting|resetting)/.test(message) ? 409 : 500;
       if (status >= 500) console.error(err);
       return json({ error: status >= 500 ? "Server error." : message }, status);
     }
@@ -107,7 +107,7 @@ export async function handleApi(request, env, url) {
 
   if (path.startsWith('/api/casino')) {
     return handleCasino(path, method, request, env, {
-      json, requireUser, readJson, loadSave, loadSetCards, findCatalogCard, inventoryMap, reconcileBinder, parseJson, ensureSocialSchema,
+      json, requireUser, readJson, loadSave, loadSetCards, findCatalogCard, inventoryMap, reconcileBinder, parseJson, ensureSocialSchema, recordQuestEvent,
     });
   }
 
