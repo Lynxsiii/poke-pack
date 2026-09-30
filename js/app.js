@@ -5354,9 +5354,7 @@ function showPromoIntro() {
         ${promos.length ? `<span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>` : ""}
         ${box.length ? `<span><b data-count="${boxTotal}">${boxTotal}</b> in the box</span>` : ""}
         <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>`
-            : ""
-        }
+        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
         ${packs ? `<span><b>${packs}</b> pack${packs === 1 ? "" : "s"} to open</span>` : ""}
       </div>
     </div>
