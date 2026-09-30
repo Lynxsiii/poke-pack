@@ -419,9 +419,14 @@ Shared finishes:
   Rare tuning.
 - [reference/sv-tera-acespec.md](reference/sv-tera-acespec.md): Tera ex
   and ACE SPEC (`sv-finishes.css`).
-- [reference/sun-moon-gx.md](reference/sun-moon-gx.md): Sun & Moon
-  Pokémon-GX, TAG TEAM GX and Prism Star (`sm-gx.css`,
-  `assets/foil/sm-peel.webp`, the text-safe fallback maps).
+- [reference/sun-moon.md](reference/sun-moon.md): the Sun & Moon era
+  overview (pack structure, data gotchas, the four finish sheets
+  `sm.css`, `sm-gx.css`, `sm-fullart.css`, `sm-shiny.css`, what the
+  reviews caught) and the index of its set and family notes, among them
+  [sun-moon-gx.md](reference/sun-moon-gx.md) (Pokémon-GX, TAG TEAM GX, Prism
+  Star), [sun-moon-fullart.md](reference/sun-moon-fullart.md),
+  [sun-moon-holo-reverse.md](reference/sun-moon-holo-reverse.md) and
+  [sun-moon-shiny-vault.md](reference/sun-moon-shiny-vault.md).
 - [reference/sv-reverse.md](reference/sv-reverse.md): the Scarlet & Violet
   reverse holos, one pattern per type, and the Mega Evolution mirror
   (`sv-reverse.css`, `scripts/make_sv_reverse.py`).
