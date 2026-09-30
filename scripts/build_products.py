@@ -237,7 +237,8 @@ def foil_from_tcgl(card: dict) -> str:
 
 
 def split_number(number: str, series: dict) -> tuple[str, int] | None:
-    match = re.fullmatch(r"([a-z]+)(\d+)", number)
+    # An "a" print of a promo (Sun & Moon's smp103a, the gold Lunala-GX) shares its number.
+    match = re.fullmatch(r"([a-z]+)(\d+)[a-z]?", number)
     if match and match.group(1) in series:
         return match.group(1), int(match.group(2))
     return None
@@ -379,14 +380,17 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         ser = series[prefix]
         base_url = f"https://www.pkmn.gg/series/{ser['series']}/{ser['slug']}"
         # pkmn.gg files the Sword & Shield promos under their printed key (SWSH001).
-        page_key = ser.get("pkmnKey", "{n}").format(n=n)
-        detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}.html", refresh))
+        suffix = number[-1] if number[-1].isalpha() else ""
+        page_key = ser.get("pkmnKey", "{n}").format(n=n) + suffix
+        detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}{suffix}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
-        record["printedNumber"] = f"{ser['printed']} {n:03d}"
+        record["printedNumber"] = f"{ser['printed']} {n:03d}{suffix}"
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
-        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/large"
-        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/small"
+        # Sun & Moon's pkmn.gg page key is SM001 but scrydex files the card as smp-SM01 (`scrydexKey`).
+        scrydex_key = ser.get("scrydexKey", ser.get("pkmnKey", "{n}")).format(n=n) + suffix
+        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scrydex_key}/large"
+        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scrydex_key}/small"
         remote = record["image"]
         if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
@@ -493,7 +497,9 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
                 str(r.get("number")): round(float(r["sortPrice"]), 2)
                 for r in rows if isinstance(r.get("sortPrice"), (int, float)) and r["sortPrice"] > 0
             }
-        return listings[prefix].get(str(n))
+        ser = cfg["promoSeries"][prefix]
+        key = ser.get("scrydexKey", "{n}").format(n=n)
+        return listings[prefix].get(str(n)) or listings[prefix].get(key)
 
     for number, spec in (cfg.get("promoCards") or {}).items():
         if number not in sold:
@@ -502,7 +508,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         if prices_only and card_id in cards:
             record, price = dict(cards[card_id]), None
             parts = split_number(number, cfg.get("promoSeries", {}))
-            if parts and not spec.get("like"):
+            if parts and not spec.get("like") and not number[-1].isalpha():
                 price = listed_price(*parts)
         else:
             record, price, remote = promo_record(cfg, number, spec, cards, refresh)
