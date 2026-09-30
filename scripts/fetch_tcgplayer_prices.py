@@ -75,13 +75,16 @@ def norm(name: str) -> str:
         name = re.sub(r"(\s+\([^)]*\))+$", "", name)
         name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
+    # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
+    # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
+    name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
     # Special Energy by type letter ("Speed L Energy" for Speed Lightning Energy).
     name = re.sub(r"\b([GRWLPFDMNC]) Energy$", lambda m: {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "C": "Colorless"}[m.group(1)] + " Energy", name)
     # TCGplayer spells Nidoran's symbols out ("Nidoran F"); our data keeps ♀/♂.
     name = name.replace("♀", " F").replace("♂", " M").replace("’", "'")
     # Classic Collection reprints: "M Rayquaza-EX" vs "M Rayquaza EX",
     # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
-    name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "")
+    name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "").replace("◇", " Prism Star")
     name = re.sub(r"_+", "_", name)
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))

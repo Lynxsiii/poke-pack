@@ -1,0 +1,27 @@
+{
+  "id": "sm75",
+  "name": "Dragon Majesty",
+  "series": "sun-moon",
+  "slug": "dragon-majesty",
+  "scrydexId": "sm75",
+  "era": "sm",
+  "artSlug": "dragon-majesty",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2295,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "sm6",
+  "name": "Forbidden Light",
+  "series": "sun-moon",
+  "slug": "forbidden-light",
+  "scrydexId": "sm6",
+  "era": "sm",
+  "artSlug": "forbidden-light",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2209,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm"
+    }
+  }
+}
