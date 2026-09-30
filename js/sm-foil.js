@@ -36,9 +36,9 @@ export function smPattern(card) {
   const trainer = card.supertype === "Trainer";
   const tag = is("TAG TEAM");
   if (card.gallery === "sv" && card.rarity !== "Rare Secret") {
-    if (card.rarity === "Rare Ultra") return "foil-ultra sm-shiny sm-fa";
-    if (is("GX")) return `foil-ex sm-shiny sm-gx${tag ? " sm-tag" : ""}`;
-    return "foil-holo sm-shiny";
+    if (card.rarity === "Rare Ultra") return "foil-ultra sm-tfa";
+    if (is("GX")) return "foil-ultra foil-shiny sm-shiny sm-shiny-gx";
+    return "foil-holo foil-shiny sm-shiny";
   }
   switch (card.rarity) {
     case "Rare Secret":
