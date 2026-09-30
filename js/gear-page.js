@@ -11,7 +11,7 @@
      giftHtml(granted, gear)      the "in the box" strip on the opening spread */
 import { ALL_SETS } from "./catalog.js";
 import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, normalizeGear, ownedItems } from "./gear.js";
-import { houseFaceSVG } from "./coin.js?v=1";
+import { houseFaceSVG } from "./coin.js?v=2";
 
 let catalog = { sleeves: {}, coins: {}, products: {} };
 

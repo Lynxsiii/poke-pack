@@ -46,7 +46,16 @@ const dateWords = (ms) => {
   return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
 };
 const article = (grade) => (grade === 8 ? "an" : "a");
-const numberLine = (card, set) => `${card?.number || ""}${set?.printedTotal ? `/${set.printedTotal}` : ""}`;
+/** "017/084", the same line the collection and the slab label print. */
+const numberLine = (card, set) => {
+  if (!card) return "";
+  if (card.energy || card.number === "\u2014") return "Energy";
+  if (card.printedNumber) return card.printedNumber;
+  const total = set?.printedTotal != null ? String(set.printedTotal) : "";
+  if (!total) return String(card.number || "");
+  const width = Math.max(3, total.length);
+  return `${String(card.number || "").padStart(width, "0")}/${total.padStart(width, "0")}`;
+};
 const readAttempt = () => {
   try {
     const raw = JSON.parse(sessionStorage.getItem(ATTEMPT_KEY) || "null");
@@ -581,6 +590,12 @@ export function initGrading(deps) {
       </div>
     </div>`;
     const el = root.querySelector(".slab");
+    // The form was tall and the send button sat at its foot: bring the case into view.
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    } catch {
+      window.scrollTo(0, 0);
+    }
     try {
       await revealSlab(el, { motion: motion() });
     } catch {

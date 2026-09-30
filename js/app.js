@@ -94,8 +94,8 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { normalizeGear } from "./gear.js";
-import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=4";
-import { initBattles } from "./battles.js?v=2";
+import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=5";
+import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js";
 // grading
 import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=1";

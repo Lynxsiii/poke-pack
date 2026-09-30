@@ -11,7 +11,7 @@
    modules present what it returns. */
 import { api, esc, coins, coinTag, icon, plural, playerName, emptyLine, seatAvatar, coinArtHTML, potArtHTML, battlesArtHTML } from "./casino-kit.js";
 import { createStakePicker } from "./stake-picker.js";
-import { createCoinflip } from "./coinflip.js?v=1";
+import { createCoinflip } from "./coinflip.js?v=2";
 import { createJackpot } from "./jackpot.js?v=1";
 
 const HUB_POLL_MS = 8000;

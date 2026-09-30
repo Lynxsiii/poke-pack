@@ -8,28 +8,16 @@
  */
 import { RARITY_LABEL } from "./catalog.js";
 
-// TODO(lead): switch to `import { GRADE_WORDS, GUARDS } from "./grading-rules.js"`
-// once agent B's module is merged; the tables below mirror CONTRACT.md exactly.
-const GRADE_WORDS_LOCAL = {
-  10: "Gem Mint", 9: "Mint", 8: "Near Mint-Mint", 7: "Near Mint", 6: "Excellent-Mint",
-  5: "Excellent", 4: "Very Good-Excellent", 3: "Very Good", 2: "Good", 1: "Poor",
-};
-const GUARDS_LOCAL = [
-  { id: "guard-onyx", name: "Onyx" },
-  { id: "guard-cherry", name: "Cherry" },
-  { id: "guard-cobalt", name: "Cobalt" },
-  { id: "guard-rose", name: "Rose" },
-  { id: "guard-frost", name: "Frost" },
-  { id: "guard-gilt", name: "Gilt" },
-];
-const GUARD_IDS = new Set(GUARDS_LOCAL.map((g) => g.id));
+import { GRADE_WORDS, GUARDS } from "./grading-rules.js";
+
+const GUARD_IDS = new Set(GUARDS.map((g) => g.id));
 
 export function gradeWord(grade) {
-  return GRADE_WORDS_LOCAL[Number(grade)] || "";
+  return GRADE_WORDS[Number(grade)] || "";
 }
 
 export function guardName(id) {
-  return GUARDS_LOCAL.find((g) => g.id === id)?.name || "";
+  return GUARDS.find((g) => g.id === id)?.name || "";
 }
 
 function esc(value) {
