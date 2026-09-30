@@ -21,6 +21,8 @@ import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
 import { QUESTS, questPeriods } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
+import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
+import { productGear, rollGear } from "../js/gear.js";
 import {
   achievementById,
   achievementContext,
@@ -160,6 +162,9 @@ export async function handleApi(request, env, url) {
   if (path === "/api/binder" && method === "PUT") {
     return putBinder(request, env);
   }
+
+  const gear = await handleGear(path, method, request, env, { json, requireUser, readJson });
+  if (gear) return gear;
 
   await ensureSocialSchema(env);
   const social = await handleSocial(path, method, request, env, {
@@ -403,6 +408,7 @@ async function resetMe(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   await ensureAchievementSchema(env);
+  await ensureGearSchema(env);
   const now = Date.now();
   const profile = await env.DB.prepare("SELECT active_set_id FROM profiles WHERE user_id = ?")
     .bind(auth.user.id)
@@ -411,6 +417,8 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
+    env.DB.prepare("DELETE FROM user_gear WHERE user_id = ?").bind(auth.user.id),
+    env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare(
       `UPDATE profiles SET coins = ?, last_daily = NULL, packs_opened = 0, pulls = 0,
         packs_since_hit = 0, pack_trick = 0, granted = ?, binder = ?, worth_log = ?, claimed = ?, created_at = ?
@@ -501,10 +509,15 @@ async function openSealed(request, env) {
     if (!card) fail(`Missing promo card ${id}.`, 500);
     return { ...card };
   });
-  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos);
+  // The sleeves and coins in the box come with it. What they are is decided
+  // here, the same way the promo cards are, and saved in the same purchase.
+  const gearItems = rollGear(productGear(await loadGearCatalog(env, request), live.id, offer.id));
+  const grant = await prepareGrant(env, auth.user.id, gearItems);
+  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, grant.stmts);
   if (opened.response) return opened.response;
   return json({
     save: opened.save,
+    gear: grant.granted,
     product: { id: offer.id, name: offer.name, packs: opened.packs.length },
     packs: opened.packs.map((pack) => ({ setId: (pack.set || live).id, wrapperId: pack.wrapper.id, cards: pack.cards })),
     promos: opened.promos,
@@ -518,7 +531,7 @@ async function openSealed(request, env) {
  * `promos` are the product's promo cards: owned like pulls, but not a pack.
  * Returns `{ response }` when the player can't afford it.
  */
-async function openPacks(env, userId, live, packs, cost, promos = []) {
+async function openPacks(env, userId, live, packs, cost, promos = [], extraStmts = []) {
   const now = Date.now();
   const ids = [
     ...new Set([...promos, ...packs.flatMap((pack) => pack.pulls)].map((card) => card.id)),
@@ -627,6 +640,7 @@ async function openPacks(env, userId, live, packs, cost, promos = []) {
     );
   });
   stmts.push(env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, userId));
+  stmts.push(...extraStmts);
   await runBatches(env, stmts);
 
   await trimHistory(env, userId);
@@ -996,6 +1010,7 @@ async function loadSave(env, userId) {
     granted: money(profile.granted),
     claimed: normalizeClaimed(parseJson(profile.claimed, [])),
     quests: await questSummary(env, userId),
+    gear: await gearSummary(env, userId),
     activeSetId: profile.active_set_id || "me5",
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),

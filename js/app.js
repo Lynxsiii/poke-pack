@@ -87,6 +87,8 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { initBattles } from "./battles.js";
+import { normalizeGear } from "./gear.js";
+import { cardBackSrc, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=2";
 
 const state = loadState();
 let cloudUser = null;
@@ -132,6 +134,7 @@ function applyCloudSave(save) {
   state.quests = save.quests || null;
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
+  state.gear = normalizeGear(save.gear);
   if (save.createdAt) state.createdAt = save.createdAt;
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
@@ -153,6 +156,7 @@ function wipeProgressMemory() {
   state.quests = null;
   state.worthLog = [];
   state.binder = [];
+  state.gear = normalizeGear(null);
 }
 
 async function refreshSession() {
@@ -305,6 +309,7 @@ const els = {
   viewHome: document.getElementById("view-home"),
   viewShop: document.getElementById("view-shop"),
   viewBattles: document.getElementById("view-battles"),
+  viewGear: document.getElementById("view-gear"),
   viewCollection: document.getElementById("view-collection"),
   viewBinder: document.getElementById("view-binder"),
   binderBody: document.getElementById("binder-body"),
@@ -765,9 +770,14 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   </div>`;
 }
 
+/** The face-down card: the equipped sleeve when there is one, else the set's printed back. */
+function backSrc(set = liveSet) {
+  return cardBackSrc(state.gear, set?.cardBack || liveSet.cardBack);
+}
+
 function cardBack() {
   return `<div class="tcg back">
-    <img src="${esc(liveSet.cardBack)}" alt="Pokémon TCG card back" draggable="false" />
+    <img src="${esc(backSrc())}" alt="Pokémon TCG card back" draggable="false" />
   </div>`;
 }
 
@@ -3742,6 +3752,7 @@ const VIEW_SECTIONS = {
   home: "viewHome",
   shop: "viewShop",
   battles: "viewBattles",
+  gear: "viewGear",
   collection: "viewCollection",
   binder: "viewBinder",
   catalog: "viewCatalog",
@@ -3757,6 +3768,7 @@ const VIEW_PATHS = {
   home: "/home",
   shop: "/packs",
   battles: "/battles",
+  gear: "/gear",
   collection: "/bulk",
   binder: "/binder",
   catalog: "/catalog",
@@ -3774,6 +3786,9 @@ const PATH_VIEWS = {
   "/index.html": "home",
   "/packs": "shop",
   "/battles": "battles",
+  "/gear": "gear",
+  "/sleeves": "gear",
+  "/coins": "gear",
   "/shop": "shop",
   "/bulk": "collection",
   "/collection": "collection",
@@ -3794,6 +3809,7 @@ const VIEW_TITLES = {
   home: "poke-pack.rip — rip packs, fill the binder",
   shop: "Packs — poke-pack.rip",
   battles: "Pack battles — poke-pack.rip",
+  gear: "Sleeves & coins — poke-pack.rip",
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
   catalog: "All sets — poke-pack.rip",
@@ -3812,6 +3828,7 @@ const VIEW_RENDER = {
   },
   shop: () => centerQuickSet(),
   battles: () => battles.show(battlePath),
+  gear: () => gearPage.show(),
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
@@ -4073,7 +4090,7 @@ function paintOpeningStage(wrap) {
   const overlay = els.overlay;
   if (!packGlowCache.has(wrap?.art)) overlay.style.setProperty("--pack-glow", PACK_GLOW_DEFAULT);
   if (wrap?.art) overlay.style.setProperty("--pack-mask", `url("${absUrl(wrap.art)}")`);
-  if (liveSet.cardBack) overlay.style.setProperty("--card-back", `url("${absUrl(liveSet.cardBack)}")`);
+  if (liveSet.cardBack) overlay.style.setProperty("--card-back", `url("${absUrl(backSrc())}")`);
   packGlow(wrap).then((rgb) => {
     if (activeWrapper === wrap) overlay.style.setProperty("--pack-glow", rgb || PACK_GLOW_DEFAULT);
   });
@@ -5103,16 +5120,18 @@ async function startSealed(productId) {
       [...new Set(packs.map((pack) => pack.set))].map((set) => loadSetData(set).catch(() => null))
     );
     const promos = (data.promos || []).map((card) => ({ ...card, reverse: false }));
+    const gift = Array.isArray(data.gear) ? data.gear : [];
     sealedRun = {
       product: { ...offer, ...data.product },
       packs,
       promos,
-      index: promos.length ? -1 : 0,
+      gift,
+      index: promos.length || gift.length ? -1 : 0,
       cost: data.cost,
     };
     renderHeader();
     renderShop();
-    if (promos.length) showPromoIntro();
+    if (promos.length || gift.length) showPromoIntro();
     else if (packs.length) presentPack(packs[0].wrapper, packs[0].cards, packs[0].set);
   } catch (err) {
     toast(err.message || "Couldn't open that box.");
@@ -5148,8 +5167,14 @@ function showPromoIntro() {
   const worth = money(promos.reduce((sum, card) => sum + sellValue(card), 0));
   const fresh = promos.filter((card) => card.wasNew).length;
   const packs = run.packs.length;
-  const head =
-    promos.length === 1
+  const gift = run.gift || [];
+  const head = !promos.length
+    ? gift.some((g) => g.kind === "coin") && gift.some((g) => g.kind === "sleeve")
+      ? `Sleeves and a coin in the ${run.product.noun}.`
+      : gift.some((g) => g.kind === "coin")
+        ? `A coin in the ${run.product.noun}.`
+        : `Sleeves in the ${run.product.noun}.`
+    : promos.length === 1
       ? `${promos[0].name}, ${numberLine(promos[0])}.`
       : `${promos.length} promos in the ${run.product.noun}.`;
   els.spread.innerHTML = `
@@ -5157,9 +5182,13 @@ function showPromoIntro() {
       <p class="spread-kicker"><span>${esc(liveSet.name)}</span><span>${esc(run.product.name)}</span></p>
       <h2>${esc(head)}</h2>
       <div class="spread-stats">
-        <span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>
+        ${
+          promos.length
+            ? `<span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>
         <span><b data-count="${fresh}">${fresh}</b> new</span>
-        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
+        <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>`
+            : ""
+        }
         ${packs ? `<span><b>${packs}</b> pack${packs === 1 ? "" : "s"} to open</span>` : ""}
       </div>
     </div>
@@ -5175,11 +5204,16 @@ function showPromoIntro() {
       </button>`
       )
       .join("")}</div>
+    ${giftHtml(gift, state.gear, { also: promos.length > 0 })}
     <p class="spread-tip">${
-      `${promos.length === 1 ? "Your promo is" : "Your promos are"} saved. ${
-        packs ? "The packs come next." : "The deck's other cards aren't simulated."
-      }`
-    } Select a card to inspect it.</p>`;
+      promos.length
+        ? `${promos.length === 1 ? "Your promo is" : "Your promos are"} saved. ${
+            packs ? "The packs come next." : "The deck's other cards aren't simulated."
+          } Select a card to inspect it.`
+        : packs
+          ? "The packs come next."
+          : ""
+    }</p>`;
 
   els.ripHint.textContent = "";
   syncBoxProgress();
@@ -6842,6 +6876,17 @@ async function routeFromLocation() {
   setView("home", { history: "none" });
 }
 
+const gearPage = initGear({
+  root: els.viewGear,
+  user: () => cloudUser,
+  api,
+  getGear: () => state.gear,
+  setGear: (gear) => {
+    state.gear = normalizeGear(gear);
+  },
+  toast,
+});
+
 const battles = initBattles({
   root: els.viewBattles,
   user: () => cloudUser,
@@ -6870,7 +6915,7 @@ const battles = initBattles({
   cardFace: (card, opts) => tcgFace(card, opts),
   cardBack: (setId) => {
     const set = ALL_SETS.find((s) => s.id === setId) || liveSet;
-    return `<div class="tcg back"><img src="${esc(set.cardBack || liveSet.cardBack)}" alt="Pokémon TCG card back" draggable="false" /></div>`;
+    return `<div class="tcg back"><img src="${esc(backSrc(set))}" alt="Pokémon TCG card back" draggable="false" /></div>`;
   },
   // Battle pulls carry only what scoring needs; the face wants the full
   // catalog record (foil maps, subtypes, small scan). Fetches each set once.
@@ -6888,7 +6933,7 @@ const battles = initBattles({
 
 async function boot() {
   try {
-    await Promise.all([loadSealedPrices(), loadPatchNotes()]);
+    await Promise.all([loadSealedPrices(), loadPatchNotes(), loadGearCatalog()]);
     await refreshSession();
     // Friends and requests load now rather than on the next 5s poll, so the
     // Social page and the Friends badge are right on first paint.
@@ -6904,7 +6949,7 @@ async function boot() {
     renderHeader();
     scheduleDailyTick();
     const back = new Image();
-    back.src = liveSet.cardBack;
+    back.src = backSrc();
     await routeFromLocation();
 
     // Not awaited: the page is usable without it, and it refreshes home when done.
