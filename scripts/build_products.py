@@ -105,12 +105,11 @@ TCGL_INDEX = "https://cdn.malie.io/file/malie-io/tcgl/export/index.json"
 TCGL_PRINT = "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/{path}{kind}.png"
 # TCG Live's key for each promo series prefix.
 TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
-# How a promo series writes its numbers when it is not the default. The SM
-# Black Star Promos print SM01 (two digits) and scrydex files the scan the
-# same way (smp-SM01; smp-SM001 is the card back), while pkmn.gg's page key is
-# SM001 (`pkmnKey` in each set's promoSeries). A set's promoSeries may override
-# `scrydexKey` and `printedFormat`.
-PROMO_FORMATS = {"smp": {"scrydexKey": "SM{n:02d}", "printedFormat": "SM{n:02d}"}}
+# How a promo series keys its numbers, whatever a set's promoSeries says. The
+# SM Black Star Promos: scrydex files the scan as smp-SM01 under 100 and
+# smp-SM179 above (smp-SM001 is the card back), while pkmn.gg's page key is
+# always three digits (SM001; SM01 is a 404).
+PROMO_FORMATS = {"smp": {"pkmnKey": "SM{n:03d}", "scrydexKey": "SM{n:02d}"}}
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
 MISC = 2374
@@ -385,12 +384,12 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         ser = series[prefix]
         base_url = f"https://www.pkmn.gg/series/{ser['series']}/{ser['slug']}"
         # pkmn.gg files the Sword & Shield promos under their printed key (SWSH001).
-        page_key = ser.get("pkmnKey", "{n}").format(n=n)
+        fmt = {**ser, **PROMO_FORMATS.get(ser["scrydex"], {})}
+        page_key = fmt.get("pkmnKey", "{n}").format(n=n)
         detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
-        fmt = {**PROMO_FORMATS.get(ser["scrydex"], {}), **ser}
-        record["printedNumber"] = fmt["printedFormat"].format(n=n) if fmt.get("printedFormat") else f"{ser['printed']} {n:03d}"
+        record["printedNumber"] = f"{ser['printed']} {n:03d}"
         scrydex_key = fmt["scrydexKey"].format(n=n) if fmt.get("scrydexKey") else page_key
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
         record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scrydex_key}/large"
