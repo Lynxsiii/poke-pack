@@ -3161,5 +3161,629 @@
     "image": "assets/cards/shared/energy-metal-sm17.webp",
     "imageSmall": "assets/cards/shared/energy-metal-sm17-sm.webp",
     "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
+  },
+  {
+    "id": "sm35-28h",
+    "name": "Pikachu",
+    "number": "28h",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "A plan was recently announced to gather many Pikachu and make an electric power plant.",
+    "image": "assets/cards/sm35/28.webp",
+    "imageSmall": "assets/cards/sm35/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Tail",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm35-28/large",
+    "printedNumber": "28",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Water Web holo"
+  },
+  {
+    "id": "sm35-smp070",
+    "name": "Shining Ho-Oh",
+    "number": "smp070",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "A legend says that its body glows in seven colors. A rainbow is said to form behind it when it flies.",
+    "image": "assets/cards/sm35/smp070.webp",
+    "imageSmall": "assets/cards/sm35/smp070-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Blast",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Golden Wing",
+        "text": "If this Pokémon is your Active Pokémon and is Knocked Out by damage from an opponent's attack, move up to 2 basic Energy cards from this Pokémon to your Benched Pokémon in any way you like.",
+        "type": "Ability"
+      }
+    ],
+    "market": 25.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM70/large",
+    "printedNumber": "SM70",
+    "tcgplayerId": 146979,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Shining",
+    "foilMap": "assets/foil/maps/sm35/smp070.webp",
+    "etchMap": "assets/foil/maps/sm35/smp070-etch.webp"
+  },
+  {
+    "id": "sm35-smp076",
+    "name": "Pikachu",
+    "number": "smp076",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "match",
+    "flavorText": "A plan was recently announced to gather many Pikachu and make an electric power plant.",
+    "image": "assets/cards/sm35/smp076.webp",
+    "imageSmall": "assets/cards/sm35/smp076-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 20.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM76/large",
+    "printedNumber": "SM76",
+    "tcgplayerId": 146980,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm35/smp076.webp"
+  },
+  {
+    "id": "sm35-smp077",
+    "name": "Mewtwo",
+    "number": "smp077",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Kouki Saitou",
+    "flavorText": "A Pokémon created by recombining Mew's genes. It's said to have the most savage heart among Pokémon.",
+    "image": "assets/cards/sm35/smp077.webp",
+    "imageSmall": "assets/cards/sm35/smp077-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pressure",
+        "text": "As long as this Pokémon is your Active Pokémon, your opponent's Active Pokémon's attack do 20 less damage (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 19.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM77/large",
+    "printedNumber": "SM77",
+    "tcgplayerId": 146982,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm35/smp077.webp"
+  },
+  {
+    "id": "sm35-smp079",
+    "name": "Shining Celebi",
+    "number": "smp079",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "This Pokémon wanders across time. Grass and trees flourish in the forests in which it has appeared.",
+    "image": "assets/cards/sm35/smp079.webp",
+    "imageSmall": "assets/cards/sm35/smp079-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Step",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Time Recall",
+        "text": "Each of your evolved Pokémon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)",
+        "type": "Ability"
+      }
+    ],
+    "market": 57.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM79/large",
+    "printedNumber": "SM79",
+    "tcgplayerId": 148427,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Shining",
+    "foilMap": "assets/foil/maps/sm35/smp079.webp",
+    "etchMap": "assets/foil/maps/sm35/smp079-etch.webp"
+  },
+  {
+    "id": "sm35-smp080",
+    "name": "Ho-Oh-GX",
+    "number": "smp080",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm35/smp080.webp",
+    "imageSmall": "assets/cards/sm35/smp080-sm.webp",
+    "attacks": [
+      {
+        "name": "Sacred Fire",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Phoenix Burn",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This Pokémon can't use Phoenix Burn during your next turn."
+      },
+      {
+        "name": "Eternal Light-GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 3 in any combination of Fire Pokémon-GX or Fire Pokémon-EX from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 16.11,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM80/large",
+    "printedNumber": "SM80",
+    "tcgplayerId": 148425,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Rainbow",
+    "foilMap": "assets/foil/maps/sm35/smp080.webp",
+    "etchMap": "assets/foil/maps/sm35/smp080-etch.webp"
+  },
+  {
+    "id": "sm35-smp081",
+    "name": "Pikachu",
+    "number": "smp081",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "A plan was recently announced to gather many Pikachu and make an electric power plant.",
+    "image": "assets/cards/sm35/smp081.webp",
+    "imageSmall": "assets/cards/sm35/smp081-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 33.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM81/large",
+    "printedNumber": "SM81",
+    "tcgplayerId": 148426,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm35/smp081.webp"
+  },
+  {
+    "id": "sm35-smp082",
+    "name": "Shining Lugia",
+    "number": "smp082",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "It sleeps in a deep-sea trench. If it flaps its wings, it is said to cause a 40-day storm.",
+    "image": "assets/cards/sm35/smp082.webp",
+    "imageSmall": "assets/cards/sm35/smp082-sm.webp",
+    "attacks": [
+      {
+        "name": "Argent Wing",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If your opponent's Active Pokémon has an Ability, this attack does 60 more damage."
+      },
+      {
+        "name": "Aero Force",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "market": 112.01,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM82/large",
+    "printedNumber": "SM82",
+    "tcgplayerId": 148428,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Shining",
+    "foilMap": "assets/foil/maps/sm35/smp082.webp",
+    "etchMap": "assets/foil/maps/sm35/smp082-etch.webp"
+  },
+  {
+    "id": "sm35-smp083",
+    "name": "Zorua",
+    "number": "smp083",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "kodama",
+    "flavorText": "It changes so it looks like its foe, tricks it, and then uses that opportunity to flee.",
+    "image": "assets/cards/sm35/smp083.webp",
+    "imageSmall": "assets/cards/sm35/smp083-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 2.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM83/large",
+    "printedNumber": "SM83",
+    "tcgplayerId": 149385,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm35/smp083.webp"
+  },
+  {
+    "id": "sm35-smp084",
+    "name": "Zoroark-GX",
+    "number": "smp084",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Zorua",
+    "image": "assets/cards/sm35/smp084.webp",
+    "imageSmall": "assets/cards/sm35/smp084-sm.webp",
+    "attacks": [
+      {
+        "name": "Riotous Beating",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each of your Pokémon in play."
+      },
+      {
+        "name": "Trickster-GX",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon's attacks and use it as this attack. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Trade",
+        "text": "Once during your turn (before your attack), you may discard a card from your hand. If you do, draw 2 cards.",
+        "type": "Ability"
+      }
+    ],
+    "market": 7.6,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM84/large",
+    "printedNumber": "SM84",
+    "tcgplayerId": 149386,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "foilMap": "assets/foil/maps/sm35/smp084.webp",
+    "etchMap": "assets/foil/maps/sm35/smp084-etch.webp"
+  },
+  {
+    "id": "sm35-smp089",
+    "name": "Zoroark",
+    "number": "smp089",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "120",
+    "artist": "Misa Tsutsui",
+    "flavorText": "Each has the ability to fool a large group of people simultaneously. They protect their lair with illusory scenery.",
+    "evolvesFrom": "Zorua",
+    "image": "assets/cards/sm35/smp089.webp",
+    "imageSmall": "assets/cards/sm35/smp089-sm.webp",
+    "attacks": [
+      {
+        "name": "Rip Claw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Doom Crush",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard a Darkness Energy from this Pokémon."
+      }
+    ],
+    "market": 1.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM89/large",
+    "printedNumber": "SM89",
+    "tcgplayerId": 154718,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm35/smp089.webp"
+  },
+  {
+    "id": "sm35-smp090",
+    "name": "Raichu-GX",
+    "number": "smp090",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/sm35/smp090.webp",
+    "imageSmall": "assets/cards/sm35/smp090-sm.webp",
+    "attacks": [
+      {
+        "name": "Powerful Spark",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage times the amount of Lightning Energy attached to your Pokémon."
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This Pokémon does 30 damage to itself."
+      },
+      {
+        "name": "Voltail-GX",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Your opponent's Active Pokémon is now Paralyzed. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 11.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM90/large",
+    "printedNumber": "SM90",
+    "tcgplayerId": 155587,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "foilMap": "assets/foil/maps/sm35/smp090.webp",
+    "etchMap": "assets/foil/maps/sm35/smp090-etch.webp"
+  },
+  {
+    "id": "sm35-smp093",
+    "name": "Marshadow",
+    "number": "smp093",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "kirisAki",
+    "flavorText": "Able to conceal itself in shadows, it never appears before humans, so its very existence was the stuff of myth.",
+    "image": "assets/cards/sm35/smp093.webp",
+    "imageSmall": "assets/cards/sm35/smp093-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadowy Echoes",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put a Basic Pokémon from each player's discard pile onto its owner's Bench."
+      },
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 2.68,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM93/large",
+    "printedNumber": "SM93",
+    "tcgplayerId": 155597,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm35/smp093.webp"
   }
 ]

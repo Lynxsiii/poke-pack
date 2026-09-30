@@ -93,11 +93,16 @@
     "smp099": {
       "foilAs": "Rare Holo",
       "printedNumber": "SM99"
+    },
+    "63a": {
+      "like": "63a",
+      "keepScan": true,
+      "foilAs": "Rare Holo GX"
     }
   },
   "products": [
     {
-      "id": "eliteTrainerBox",
+      "id": "elite-trainer-box",
       "name": "Elite Trainer Box",
       "kind": "etb",
       "tcgplayerId": 149377,
