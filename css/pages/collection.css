@@ -834,3 +834,38 @@ body.no-motion .bulk-bar span { animation: none; }
 @media (min-width: 1120px) {
   .binder-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 18px; }
 }
+
+/* ---- Graded copies (RIP Grading): a small ivory label plate on tiles that
+   hold a slab, top right, opposite the ×count badge. ---- */
+.grade-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 3px 5px;
+  border-radius: 3px;
+  background: #f3eee3;
+  color: #15171a;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.45);
+  pointer-events: none;
+}
+.grade-badge i {
+  font-style: normal;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 2px 3px;
+  border-radius: 2px;
+  background: #ff6b4a;
+  color: #fff7f2;
+}
+.grade-badge.grade-10 { background: linear-gradient(135deg, #f3cf72, #e9b949); }
+.grade-badge.grade-9 { background: linear-gradient(135deg, #e6e8ec, #c9ccd2); }
+.slot-graded { color: var(--ink-2); text-decoration: none; font-weight: 600; }
+.slot-graded:hover { color: var(--ink); text-decoration: underline; }
