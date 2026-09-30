@@ -456,5 +456,50 @@
       "commonHolo": 3,
       "rareHolo": 1
     }
+  },
+  "sm35": {
+    "name": "Shining Legends",
+    "printedTotal": 73,
+    "released": "2017-10-06",
+    "updated": "2026-09-30",
+    "source": "Eleven cards: basic Energy, 5 Commons, 3 Uncommons, a reverse slot and a rare slot that is always a holo or better (no plain Rare exists; TCGplayer group 2054 lists none, Elite Fourum, 'The English Pokemon card rarity guide' post 144 https://www.elitefourum.com/t/39762/144: 'all of these cards come in the rare slot'). Shining Pokemon are rare-slot cards, not reverse. GX 11.89%, full art 4.25%, secret total 2.45% and Shining 8.86%, pooled from burpies (n=1,536, Elite Fourum, 'Pull Rates in Sun & Moon - Sword & Shield Sets' (burpies, YouTube/Twitch box tally) https://www.elitefourum.com/t/pull-rates-in-modern-sets/25220), Derium (n=1,002) and sturzflugbombardieru's own boxes (n=330) as tallied in Elite Fourum, 'The English Pokemon card rarity guide' (sturzflugbombardieru: own full-box YouTube tallies pooled with Derium and Danny Phantump) https://www.elitefourum.com/t/39762/140. Rainbow 1.57% and the gold tube Mewtwo-GX 0.88%: the split follows E2's raw per-card counts (own + Derium n=1,332: rainbow 22, tube Mewtwo 11) and burpies (23 : 14), 45 : 25 pooled, from the second-source check (https://efour.b-cdn.net/uploads/default/original/3X/c/0/c0b6c315a3c260383181edd86f4951acdf46b8ad.png). Rare Holo is the remainder of the slot. Reverse basic Energy 7% of reverse slots (Derium 6.6%, E2 model 7.4%, ThePriceDex 1 in 14.3). Shining and reverse Energy are the least certain figures (small samples, one aggregator).",
+    "rates": {
+      "holo": 0.7255,
+      "gx": 0.1189,
+      "ultra": 0.0425,
+      "rainbow": 0.0157,
+      "secret": 0.0088,
+      "shining": 0.0886,
+      "reverseEnergy": 0.07
+    }
+  },
+  "sm4": {
+    "name": "Crimson Invasion",
+    "printedTotal": 111,
+    "released": "2017-11-03",
+    "updated": "2026-09-30",
+    "source": "Eleven cards: basic Energy, 5 Commons, 3 Uncommons, a reverse holo and a rare slot (plain Rare in 2 of 3 packs). GX 8.35%, full art 4.43% and secret total 2.13%: pooled tallies of sturzflugbombardieru's boxes (n=1,981, Elite Fourum, 'The English Pokemon card rarity guide' (sturzflugbombardieru: own full-box YouTube tallies pooled with Derium and Danny Phantump) https://www.elitefourum.com/t/39762/140), burpies (n=1,530, Elite Fourum, 'Pull Rates in Sun & Moon - Sword & Shield Sets' (burpies, YouTube/Twitch box tally) https://www.elitefourum.com/t/pull-rates-in-modern-sets/25220) and Derium (n=1,008), which agree within a point (GX 3.00, 2.99, 3.04 a box; Danny Phantump 3.06). Rainbow 1.04% and gold 1.09%: E2's raw per-card counts (own + Derium n=2,989: rainbow 30, gold 32) and burpies' 50/50 pool to 47 : 49, which is not the card-count rule's 61.5% rainbow (second-source check). second-source check of 2026-09-30 (/mnt/project-files/sun-moon/research/second-source-check.md): plain Rare counted at 66.5 to 67.0% of packs in every Sun & Moon main set from E2's per-card raw counts (1,296 to 4,968 packs per set; https://www.elitefourum.com/t/39762/145 and /146), and 'holo-or-better in every third pack' confirmed independently (Elite Fourum 'Sun and Moon Booster Boxes Mappable' https://www.elitefourum.com/t/pokemon-sun-and-moon-booster-boxes-mappable/15673; Player.One https://www.player.one/pokemon-sun-moon-booster-boxes-mapped-how-get-ultra-rare-or-holographic-every-time-584349), so Rare Holo = 1/3 minus the hits.",
+    "rates": {
+      "holo": 0.1842,
+      "gx": 0.0835,
+      "ultra": 0.0443,
+      "rainbow": 0.0104,
+      "secret": 0.0109
+    }
+  },
+  "sm5": {
+    "name": "Ultra Prism",
+    "printedTotal": 156,
+    "released": "2018-02-02",
+    "updated": "2026-09-30",
+    "source": "Eleven cards: basic Energy, 5 Commons, 3 Uncommons, a reverse slot and a rare slot. Prism Star cards replace the reverse holo (E2 posts 140 and 146 https://www.elitefourum.com/t/39762/146: 'Prism Star cards, which appear in the reverse slot'; PrimetimePokemon http://primetimepokemon.blogspot.com/2018/02/prism-star-cards-pokemon-tcg.html; PokeBeach 'Prism Star cards take the place of the Reverse Holo' https://www.pokebeach.com/forums/threads/forbidden-light-packs-with-5-prism-cards.147088/; and the rare-slot classes already sum to the packs opened without them). Pooled n=6,246 from E2's own boxes (n=2,844), burpies (n=1,674, Elite Fourum, 'Pull Rates in Sun & Moon - Sword & Shield Sets' (burpies, YouTube/Twitch box tally) https://www.elitefourum.com/t/pull-rates-in-modern-sets/25220), Derium (n=1,008) and Flipside Gaming's 720 packs (https://flipsidegaming.com/blogs/pokemon-blog/a-review-of-rarity-in-ultra-prism, quoted at https://www.elitefourum.com/t/official-pull-rates/20546): GX 8.17%, full art 4.14%, Prism Star 8.50%; rainbow 1.47% and gold 0.81% from E2's raw counts (own + Derium n=3,852: rainbow 58, gold 33) and burpies (25 : 13). second-source check of 2026-09-30 (/mnt/project-files/sun-moon/research/second-source-check.md): plain Rare counted at 66.5 to 67.0% of packs in every Sun & Moon main set from E2's per-card raw counts (1,296 to 4,968 packs per set; https://www.elitefourum.com/t/39762/145 and /146), and 'holo-or-better in every third pack' confirmed independently (Elite Fourum 'Sun and Moon Booster Boxes Mappable' https://www.elitefourum.com/t/pokemon-sun-and-moon-booster-boxes-mappable/15673; Player.One https://www.player.one/pokemon-sun-moon-booster-boxes-mapped-how-get-ultra-rare-or-holographic-every-time-584349), so Rare Holo = 1/3 minus the hits.",
+    "rates": {
+      "holo": 0.1875,
+      "gx": 0.0817,
+      "prismStar": 0.085,
+      "ultra": 0.0414,
+      "rainbow": 0.0147,
+      "secret": 0.0081
+    }
   }
 }

@@ -2883,6 +2883,97 @@ export const DETECTIVE_PIKACHU = {
   ]),
 };
 
+export const ULTRA_PRISM = {
+  id: "sm5",
+  tcgId: "sm5",
+  name: "Ultra Prism",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "February 2, 2018",
+  live: true,
+  printedTotal: 156,
+  totalCount: 176,
+  packSize: 11,
+  cost: 49.67,
+  dataFile: "data/sm5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, February 2018. Necrozma in two forms, Giratina and Leafeon on the wrappers, and the first Prism Star cards, four wrappers.",
+  oddsLine: "GX 1/12 · Prism Star 1/12 · full art 1/24 · rainbow 1/68 · gold 1/123",
+  lede: "The first Prism Star cards take the reverse holo slot 1 pack in 12. GX come 1 in 12 packs, full arts 1 in 23, and the Lillie and Cynthia full-art Trainers are the chase.",
+  // Elite Fourum (E2, burpies, Derium) and Flipside Gaming, 6,246 packs; the Prism Star replaces the reverse holo; holo Rare is 1/3 minus the hits (plain Rare is 2/3 of packs, counted). Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1875, gx: 0.0817, ultra: 0.0414, rainbow: 0.0147, secret: 0.0081, reverseSpecial: [["prismStar", 0.085]] }),
+  heroIds: ["sm5-151", "sm5-148", "sm5-153", "sm5-157"],
+  wrappers: boosterWrappers("sm5", [
+    { id: "giratina", name: "Giratina", cardId: "sm5-58", tag: "Chaotic star" },
+    { id: "leafeon", name: "Leafeon", cardId: "sm5-13", tag: "Grand Bloom" },
+    { id: "dawn-wings", name: "Dawn Wings Necrozma", cardId: "sm5-63", tag: "Moon's Eclipse" },
+    { id: "dusk-mane", name: "Dusk Mane Necrozma", cardId: "sm5-90", tag: "Sun's Eclipse" },
+  ], 2),
+};
+
+export const CRIMSON_INVASION = {
+  id: "sm4",
+  tcgId: "sm4",
+  name: "Crimson Invasion",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "November 3, 2017",
+  live: true,
+  printedTotal: 111,
+  totalCount: 140,
+  packSize: 11,
+  cost: 18.22,
+  dataFile: "data/sm4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, November 2017. The Ultra Beasts land in Alola: Guzzlord, Kartana, Buzzwole and Silvally, four wrappers.",
+  oddsLine: "GX 1/12 · full art 1/23 · rainbow 1/96 · gold 1/92",
+  lede: "Gyarados-GX leads the Ultra Beast invasion. GX come 1 in 12 packs, full arts 1 in 23, a rainbow GX 1 in 96 and a gold item or Energy 1 in 92.",
+  // Elite Fourum: sturzflugbombardieru's boxes (1,981 packs), burpies (1,530) and Derium (1,008); holo Rare is 1/3 of the rare slot minus the hits. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1842, gx: 0.0835, ultra: 0.0443, rainbow: 0.0104, secret: 0.0109 }),
+  heroIds: ["sm4-112", "sm4-110", "sm4-101", "sm4-38"],
+  wrappers: boosterWrappers("sm4", [
+    { id: "guzzlord", name: "Guzzlord", cardId: "sm4-63", tag: "Glutton" },
+    { id: "kartana", name: "Kartana", cardId: "sm4-70", tag: "Blade" },
+    { id: "buzzwole", name: "Buzzwole", cardId: "sm4-57", tag: "Knuckle impact" },
+    { id: "silvally", name: "Silvally", cardId: "sm4-90", tag: "Rebel" },
+  ], 2),
+};
+
+export const SHINING_LEGENDS = {
+  id: "sm35",
+  tcgId: "sm35",
+  name: "Shining Legends",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "October 6, 2017",
+  live: true,
+  printedTotal: 73,
+  totalCount: 101,
+  packSize: 11,
+  cost: 109.79,
+  dataFile: "data/sm35.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, October 2017. A 73-card special set that only came in boxes and tins: six Shining Pokémon, the tube Mewtwo-GX, four wrappers.",
+  oddsLine: "Shining 1/11 · GX 1/8 · full art 1/24 · rainbow 1/64 · gold 1/114",
+  lede: "Every rare slot is a holo or better, and there is no plain Rare. A Shining Pokémon lands 1 pack in 11, a GX 1 in 8, and the gold Mewtwo-GX in a tube 1 in 114; a reverse holo Energy takes the reverse slot 1 time in 14.",
+  // Elite Fourum: burpies (1,536 packs), Derium (1,002) and sturzflugbombardieru's boxes (330); Shining sit in the rare slot, reverse basic Energy in the reverse slot. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.7255, gx: 0.1189, ultra: 0.0425, rainbow: 0.0157, secret: 0.0088, shining: 0.0886, reverseSpecial: [["reverseEnergy", 0.07]] }),
+  heroIds: ["sm35-78", "sm35-40", "sm35-56", "sm35-76"],
+  wrappers: boosterWrappers("sm35", [
+    { id: "genesect", name: "Genesect", cardId: "sm35-9", tag: "Shining" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "sm35-39", tag: "Psystrike" },
+    { id: "mew", name: "Mew", cardId: "sm35-40", tag: "Shining" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "sm35-56", tag: "Shining" },
+  ], 2),
+};
+
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -2940,6 +3031,9 @@ export const PLAYABLE_SETS = [
   HIDDEN_FATES,
   COSMIC_ECLIPSE,
   DETECTIVE_PIKACHU,
+  ULTRA_PRISM,
+  CRIMSON_INVASION,
+  SHINING_LEGENDS,
 ];
 
 /**
@@ -3082,6 +3176,9 @@ const POKESYMBOLS_SLUG = {
   sm9: "team-up",
   sm115: "hidden-fates",
   det1: "detective-pikachu",
+  sm35: "shining-legends",
+  sm4: "crimson-invasion",
+  sm5: "ultra-prism",
   swsh1: "sword-and-shield",
   swsh2: "rebel-clash",
   swsh3: "darkness-ablaze",
