@@ -237,6 +237,13 @@ for (const set of PLAYABLE_SETS) {
   assert.equal(master.coins, masteryCoins(set.totalCount));
   assert.ok(master.name.startsWith(set.name) && half.name.startsWith(set.name));
   assert.equal(master.title, masteryTitle(set.name));
+  // A set name that cannot fit "<name> Master" in 32 characters (even without a
+  // McDonald's brand) gets cut mid-word: name the set shorter, the way the
+  // promo sets are ("SM Black Star Promos").
+  assert.ok(
+    master.title === `${set.name} Master` || master.title === `${set.name.replace(/^McDonald's\s+/, "")} Master`,
+    `${set.id}: "${set.name} Master" is too long for a title and would be cut (${master.title})`
+  );
   const award = AWARD_TITLES.find((row) => row.ach === master.id);
   assert.ok(award, `${set.id} needs an award title`);
   assert.equal(award.name, master.title);
