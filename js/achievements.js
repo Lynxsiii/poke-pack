@@ -7,9 +7,8 @@
  * `goal`, which is what draws the bar and what the claim check compares.
  */
 import { titleContext, ownedPerSet } from "./titles.js";
-import { RARITY_ORDER } from "./catalog.js";
 import { nameHas, tokens, setIdOfCard } from "./achievement-kit.js";
-import { SET_INFO } from "./achievement-eras.js";
+import { SET_INFO, RARITIES_IN_PRINT } from "./achievement-eras.js";
 import { RIP, CHASE, COLLECT, WEALTH, TRAINER } from "./achievement-core.js";
 import { DEX } from "./achievement-dex.js";
 import { RARITY, MARKET, BATTLE, SOCIAL, QUESTS } from "./achievement-misc.js";
@@ -239,7 +238,7 @@ export function achievementContext(save, options = {}) {
     eraOwned: (era) => eraCards.get(era) || 0,
     editionOwned: (edition) => editionCards.get(edition) || 0,
     editionDone: (edition) => editionDone.get(edition) || 0,
-    raritiesOwned: RARITY_ORDER.filter((rarity) => base.count(rarity) > 0).length,
+    raritiesOwned: RARITIES_IN_PRINT.filter((rarity) => base.count(rarity) > 0).length,
     setOwned,
     setTotal,
     setPct,

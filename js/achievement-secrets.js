@@ -5,7 +5,8 @@
  * moment in time like "hold exactly 777 coins", so nobody misses one by
  * looking away.
  */
-import { PLAYABLE_SETS, RARITY_ORDER } from "./catalog.js";
+import { PLAYABLE_SETS } from "./catalog.js";
+import { RARITIES_IN_PRINT } from "./achievement-eras.js";
 import { secret, EEVEELUTIONS, SWSH_FINISHES, SV_FINISHES } from "./achievement-kit.js";
 
 const GHOSTS = [
@@ -34,7 +35,7 @@ export const SECRETS = [
 
   secret("rarity", 4, "sword-sweep", "SWSH", "Sword sweep", "One era, every finish it ever printed.", `Own every Sword & Shield finish: ${SWSH_FINISHES.join(", ")}.`, SWSH_FINISHES.length, (c) => finishesOwned(c, SWSH_FINISHES), 2000),
   secret("rarity", 4, "scarlet-sweep", "SV", "Scarlet sweep", "One era, every finish it ever printed.", `Own every Scarlet & Violet finish: ${SV_FINISHES.join(", ")}.`, SV_FINISHES.length, (c) => finishesOwned(c, SV_FINISHES), 1800),
-  secret("rarity", 4, "full-spectrum", "ALL", "Full spectrum", "Every finish there is.", "Own a card of every rarity in the game.", RARITY_ORDER.length, (c) => c.raritiesOwned, 4000, { title: "Full Spectrum" }),
+  secret("rarity", 4, "full-spectrum", "ALL", "Full spectrum", "Every finish there is.", "Own a card of every rarity in the game.", RARITIES_IN_PRINT.length, (c) => c.raritiesOwned, 4000, { title: "Full Spectrum" }),
 
   secret("sets", 4, "grand-tour", "ALL", "Grand tour", "See the whole shelf.", "Own at least one card from every playable set.", PLAYABLE_SETS.length, (c) => c.setsStarted, 3000, { title: "Globetrotter" }),
   secret("sets", 2, "happy-ending", "MCD", "Happy ending", "The toy was included.", "Complete a McDonald's set.", 1, (c) => c.editionDone("McDonald's"), 600),

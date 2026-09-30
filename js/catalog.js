@@ -6,12 +6,18 @@ export const RARITY_ORDER = [
   // Sword & Shield: the holo Rare is its own rarity (the plain Rare is not
   // foil), then the V line, the special sets' finishes and the secret rares.
   "Rare Holo",
+  // Sun & Moon: the GX and the Prism Star sit just above the holo Rare, the
+  // Shining Pokémon and the two Shiny Vault finishes beside Rare Shiny.
+  "Rare Holo GX",
+  "Rare Prism Star",
   "Rare Holo V",
   "Rare Holo VMAX",
   "Rare Holo VSTAR",
   "Amazing Rare",
   "Radiant Rare",
+  "Rare Shining",
   "Rare Shiny",
+  "Rare Shiny GX",
   "Trainer Gallery Rare Holo",
   "Rare Ultra",
   "Rare Rainbow",
@@ -45,6 +51,10 @@ export const RARITY_LABEL = {
   Uncommon: "Uncommon",
   Rare: "Rare",
   "Rare Holo": "Rare holo",
+  "Rare Holo GX": "Pokémon-GX",
+  "Rare Prism Star": "Prism Star",
+  "Rare Shining": "Shining Pokémon",
+  "Rare Shiny GX": "Shiny Vault GX",
   "Rare Holo V": "Pokémon V",
   "Rare Holo VMAX": "Pokémon VMAX",
   "Rare Holo VSTAR": "Pokémon VSTAR",
@@ -107,6 +117,12 @@ export const RARITY_MARK = {
   // Sword & Shield printed one black star on every rare-or-better card;
   // the hollow and coloured pips here tell the finishes apart in filters.
   "Rare Holo": { pips: [["★", "ink"]], group: "expanded" },
+  // Sun & Moon: a black star on every rare-or-better card, a hollow shiny one
+  // on the Shiny Vault, as Sword & Shield filed them.
+  "Rare Holo GX": { pips: [["★", "ink"]], group: "expanded" },
+  "Rare Prism Star": { pips: [["★", "silver"]], group: "expanded" },
+  "Rare Shining": { pips: [["☆", "shiny"]], group: "expanded" },
+  "Rare Shiny GX": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Holo V": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Holo VMAX": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Holo VSTAR": { pips: [["★", "ink"]], group: "expanded" },
@@ -141,6 +157,10 @@ export const SELL_VALUE = {
   Rare: 0.18,
   "Double Rare": 0.61,
   "Rare Holo": 0.4,
+  "Rare Holo GX": 6.8,
+  "Rare Prism Star": 5,
+  "Rare Shining": 34,
+  "Rare Shiny GX": 26,
   "Rare Holo V": 1.2,
   "Rare Holo VMAX": 3,
   "Rare Holo VSTAR": 3,
