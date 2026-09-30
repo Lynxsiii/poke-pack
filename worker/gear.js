@@ -33,7 +33,7 @@ const DDL = [
   "CREATE INDEX IF NOT EXISTS idx_user_gear_user ON user_gear(user_id, first_at DESC)",
 ];
 
-/** Same statements as worker/migrations/0014_gear.sql, so a deploy needs no manual step. */
+/** Same statements as worker/migrations/0018_gear.sql, so a deploy needs no manual step. */
 export async function ensureGearSchema(env) {
   if (schemaReady) return;
   try {
@@ -88,6 +88,21 @@ async function readSummary(env, userId) {
     if (raw.recent.length < 12) raw.recent.push({ kind: row.kind, id: row.item_id, at: row.last_at });
   }
   return normalizeGear(raw);
+}
+
+/**
+ * The coin a player flips with: the equipped coin's id while they still hold it,
+ * else null (the house coin). The casino stamps this on each flip it creates.
+ */
+export async function equippedCoinId(env, userId) {
+  try {
+    const gear = await gearSummary(env, userId);
+    const id = gear.equipped.coin;
+    return id && gear.coins[id] > 0 ? id : null;
+  } catch (err) {
+    console.error("equippedCoinId", err);
+    return null;
+  }
 }
 
 /**

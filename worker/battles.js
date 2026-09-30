@@ -53,24 +53,76 @@ END`,
 WHERE bot = 1 AND payer_id = 'free'`,
 ];
 const FREE_BOT_OBJECTS = ['battle_seat_refund', 'battle_seat_validate', 'battle_seat_debit', 'battle_bot_persona'];
+// The same DDL as worker/migrations/0014_fast_settlement.sql: the award trigger
+// with each JSON value read once. 0012's version re-parsed every allocation per
+// card and joined every round to every round, which production D1 refused for
+// a big battle (SQLITE_NOMEM, 2026-09-30). Applied like FREE_BOT_DDL: one atomic batch, once per isolate,
+// recognised by the LIMIT -1 subqueries.
+export const AWARD_DDL = [
+  'DROP TRIGGER IF EXISTS battle_settle_award',
+  `CREATE TRIGGER battle_settle_award AFTER INSERT ON battle_settlements BEGIN
+  UPDATE battles SET status = 'finished' WHERE id = NEW.battle_id;
+  INSERT INTO cards(user_id, card_id, qty, reverse_qty)
+  SELECT al.uid, json_extract(c.value, '$.id'), COUNT(*), SUM(COALESCE(json_extract(c.value, '$.reverse'), 0))
+  FROM (SELECT json_extract(a.value, '$.userId') AS uid, json_extract(a.value, '$.cards') AS cards
+    FROM battles b, json_each(b.result, '$.allocations') a WHERE b.id = NEW.battle_id LIMIT -1) al,
+    json_each(al.cards) c
+  WHERE al.uid IS NOT NULL
+  GROUP BY al.uid, json_extract(c.value, '$.id')
+  ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + excluded.qty,
+    reverse_qty = cards.reverse_qty + excluded.reverse_qty;
+  UPDATE profiles SET packs_opened = packs_opened + (
+    SELECT COUNT(*) FROM battles b, json_each(b.plan) r
+    WHERE b.id = NEW.battle_id AND json_extract(r.value, '$.kind') = 'pack'
+  ), pulls = pulls + COALESCE((
+    SELECT SUM(pu.n) FROM (SELECT json_extract(p.value, '$.seat') AS seat, json_array_length(p.value, '$.cards') AS n
+      FROM battles b, json_each(b.outcomes) r, json_each(r.value, '$.pulls') p WHERE b.id = NEW.battle_id LIMIT -1) pu,
+      battle_seats s
+    WHERE s.battle_id = NEW.battle_id AND s.user_id = profiles.user_id AND s.seat = pu.seat
+  ), 0)
+  WHERE user_id IN (SELECT user_id FROM battle_seats WHERE battle_id = NEW.battle_id AND bot = 0);
+  INSERT INTO pack_log(user_id, set_id, wrapper_id, cost, cards, at)
+  SELECT s.user_id, pl.set_id, pl.wrapper_id, 0, pu.cards, NEW.at
+  FROM (SELECT json_extract(plan.value, '$.index') AS idx, json_extract(plan.value, '$.setId') AS set_id,
+      json_extract(plan.value, '$.wrapperId') AS wrapper_id
+    FROM battles b, json_each(b.plan) plan
+    WHERE b.id = NEW.battle_id AND json_extract(plan.value, '$.kind') = 'pack' LIMIT -1) pl,
+    (SELECT json_extract(r.value, '$.index') AS idx, json_extract(p.value, '$.seat') AS seat,
+      json_extract(p.value, '$.cards') AS cards
+    FROM battles b, json_each(b.outcomes) r, json_each(r.value, '$.pulls') p WHERE b.id = NEW.battle_id LIMIT -1) pu,
+    battle_seats s
+  WHERE pu.idx = pl.idx AND s.battle_id = NEW.battle_id AND s.seat = pu.seat AND s.bot = 0;
+  UPDATE users SET last_played = NEW.at WHERE id IN
+    (SELECT user_id FROM battle_seats WHERE battle_id = NEW.battle_id AND bot = 0);
+END`,
+];
+const AWARD_MARK = 'LIMIT -1';
 let battleSchemaReady = false;
 /** Tests only: forget the per-isolate cache so another database is checked. */
 export const resetBattleSchemaCache = () => { battleSchemaReady = false; };
 /**
- * Bring the seat triggers to 0013 once per isolate (one cheap sqlite_master
- * read after that the flag short-circuits). Only the presence of the 'free'
- * rule is checked, never exact text, so a later migration that rewrites these
- * triggers (keeping the rule) is never reverted. Resolves false while the 0012
+ * Bring the seat triggers to 0013 and the award trigger to 0014 once per
+ * isolate (one cheap sqlite_master read; after that the flag short-circuits).
+ * Only the presence of the 'free' rule and the LIMIT -1 mark is checked, never
+ * exact text, so a later migration that rewrites these triggers (keeping them)
+ * is never reverted. Resolves false while the 0012
  * tables are missing or the upgrade failed; the caller then refuses bots.
  */
 export async function ensureBattleSchema(env) {
   if (battleSchemaReady) return true;
   try {
+    const names = [...FREE_BOT_OBJECTS, 'battle_settle_award'];
     const rows = (await env.DB.prepare(`SELECT name, sql FROM sqlite_master WHERE type IN ('trigger','index')
-      AND name IN (${FREE_BOT_OBJECTS.map(() => '?').join(',')})`).bind(...FREE_BOT_OBJECTS).all()).results || [];
+      AND name IN (${names.map(() => '?').join(',')})`).bind(...names).all()).results || [];
     if (!rows.some(r => r.name === 'battle_seat_validate')) return false; // 0012 not applied yet
     const current = FREE_BOT_OBJECTS.every(name => rows.some(r => r.name === name && String(r.sql).includes(`'${FREE_PAYER}'`)));
     if (!current) await env.DB.batch(FREE_BOT_DDL.map(sql => env.DB.prepare(sql)));
+    const award = rows.find(r => r.name === 'battle_settle_award');
+    // Bots don't depend on this one: a failure is logged and retried next isolate.
+    if (!award || !String(award.sql).includes(AWARD_MARK)) {
+      try { await env.DB.batch(AWARD_DDL.map(sql => env.DB.prepare(sql))); }
+      catch (err) { console.error('ensureBattleSchema: award trigger', err); }
+    }
     battleSchemaReady = true;
     return true;
   } catch (err) {
@@ -185,28 +237,63 @@ function expandLineup(lineup, products) {
 
 // Calling this from GET, actions and the existing scheduled Worker makes results
 // durable even if everyone closes their tab; the unique settlement is the award gate.
-export async function maintainBattles(env, now = Date.now()) {
+// Maintenance never fails the request that runs it: one battle whose settlement
+// D1 rejects must not take every battle endpoint down with it (2026-09-30, when
+// it did). Each due battle settles in its own statement; a failure is logged,
+// remembered per isolate for a minute so requests don't keep paying for it, and
+// reported in the x-battle-maintenance header until it clears.
+const SETTLE_RETRY_MS = 60000;
+const settleFailures = new Map(); // battle id -> { at, message }
+/** Tests only: forget remembered settlement failures. */
+export const resetSettleFailures = () => settleFailures.clear();
+const failureText = err => String(err?.message || err).replace(/\s+/g, ' ').slice(0, 300);
+let stepFailure = null; // the last maintenance run's failure outside settling
+function noteFailure(step, id, err, now) {
+  console.error(`battle maintenance: ${step}${id ? ` ${id}` : ''}`, err);
+  if (id) settleFailures.set(id, { at: now, message: failureText(err) });
+  else stepFailure = `${step}: ${failureText(err)}`;
+}
+/**
+ * A short summary of what maintenance could not do, for the response header.
+ * Only an id's first 8 characters: a private battle's id is its invite link.
+ */
+export function maintenanceReport() {
+  return [stepFailure, ...[...settleFailures].map(([id, f]) => `settling ${id.slice(0, 8)}: ${f.message}`)]
+    .filter(Boolean).join(' | ').slice(0, 1000);
+}
+export async function maintainBattles(env, now = Date.now(), { settleLimit = 3 } = {}) {
+  // Free-bot triggers first, so no delete below runs under the 0012 rules.
+  // (Under 0012 a 'free' payer has no profile: nothing is paid or refunded.)
+  await ensureBattleSchema(env);
+  stepFailure = null;
   try {
-    // Free-bot triggers first, so no delete below runs under the 0012 rules.
-    // (Under 0012 a 'free' payer has no profile: nothing is paid or refunded.)
-    await ensureBattleSchema(env);
-    // Three statements regardless of backlog size. The batch and per-row
-    // triggers preserve the same exactly-once refund/award gates as actions.
-    // Bound settlement work to ten games; GET detail also settles its own game.
     await env.DB.batch([
       env.DB.prepare(`UPDATE battles SET status = 'cancelled' WHERE id IN (
         SELECT id FROM battles WHERE status = 'lobby' AND expires_at <= ? LIMIT 100)`).bind(now),
       env.DB.prepare(`DELETE FROM battle_seats WHERE battle_id IN
         (SELECT id FROM battles WHERE status = 'cancelled')`),
-      env.DB.prepare(`INSERT OR IGNORE INTO battle_settlements(battle_id, at)
-        SELECT id, ? FROM battles WHERE status = 'running' AND ends_at <= ? ORDER BY ends_at LIMIT 10`).bind(now, now),
     ]);
-  }
-  catch (err) {
+  } catch (err) {
     // Old databases remain usable while the additive migration is pending.
-    if (/no such table: battles/.test(err.message)) return { migrationPending: true };
-    throw err;
+    if (/no such table: battles/.test(err?.message)) return { migrationPending: true };
+    noteFailure('expiring lobbies', null, err, now);
   }
+  let due = [];
+  try {
+    due = ((await env.DB.prepare(`SELECT id FROM battles WHERE status = 'running' AND ends_at <= ?
+      ORDER BY ends_at LIMIT 20`).bind(now).all()).results || []).map(r => r.id);
+  } catch (err) { noteFailure('listing due battles', null, err, now); return {}; }
+  let settled = 0;
+  for (const id of due) {
+    if (settled >= settleLimit) break;
+    const failed = settleFailures.get(id);
+    if (failed && now - failed.at < SETTLE_RETRY_MS) continue;
+    settled++;
+    try { await settleBattle(env, id, now); settleFailures.delete(id); }
+    catch (err) { noteFailure('settling', id, err, now); }
+  }
+  for (const id of settleFailures.keys()) if (!due.includes(id)) settleFailures.delete(id);
+  return {};
 }
 async function settleBattle(env, id, now) {
   // INSERT OR IGNORE does not suppress trigger RAISE; the SELECT also prevents
@@ -226,7 +313,14 @@ function presentLegacyBots(seats) {
   });
 }
 async function viewBattle(env, id, now = Date.now(), summaryRow = null, summarySeats = null) {
-  if (!summaryRow) await settleBattle(env, id, now);
+  if (!summaryRow) {
+    // A battle D1 will not settle still shows its rounds; maintenance retries it.
+    const failed = settleFailures.get(id);
+    if (!failed || now - failed.at >= SETTLE_RETRY_MS) {
+      try { await settleBattle(env, id, now); settleFailures.delete(id); }
+      catch (err) { if (/no such table/.test(err?.message)) throw err; noteFailure('settling', id, err, now); }
+    }
+  }
   const row = summaryRow || await getRow(env, id);
   if (!row) error('Battle not found.', 404);
   const settings = parse(row.settings); const plan = parse(row.plan);
@@ -299,6 +393,16 @@ const HOST_ACTIONS = ['bot', 'unbot', 'start', 'cancel'];
 
 export async function handleBattles(path, method, request, env, helpers) {
   if (!path.startsWith('/api/battles')) return null;
+  const response = await battleRoute(path, method, request, env, helpers);
+  const report = maintenanceReport();
+  if (report && response?.headers) {
+    const out = new Response(response.body, response);
+    out.headers.set('x-battle-maintenance', report);
+    return out;
+  }
+  return response;
+}
+async function battleRoute(path, method, request, env, helpers) {
   try {
     if (path === '/api/battles/catalog' && method === 'GET') {
       return helpers.json({ products: (await battleCatalog(env, request, helpers)).map(publicProduct), limits: BATTLE_LIMITS, serverNow: Date.now() });
@@ -466,15 +570,13 @@ async function createBattle(env, request, helpers, user, body) {
  * settlement row is the same exactly-once award gate as a natural finish.
  */
 async function skipBattle(env, row, user) {
+  // The view that answers this action settles the battle (non-fatally, see
+  // maintainBattles), so a settlement D1 rejects cannot fail the skip itself.
   const now = Date.now(); const rounds = parse(row.plan).length;
-  await env.DB.batch([
-    env.DB.prepare(`UPDATE battles SET starts_at = ?, ends_at = ? WHERE id = ? AND status = 'running' AND ends_at > ?
-      AND (SELECT COUNT(*) FROM battle_seats WHERE battle_id = ? AND bot = 0) = 1
-      AND EXISTS(SELECT 1 FROM battle_seats WHERE battle_id = ? AND user_id = ?)`)
-      .bind(now - rounds * row.round_ms, now, row.id, now, row.id, row.id, user.id),
-    env.DB.prepare(`INSERT OR IGNORE INTO battle_settlements(battle_id, at)
-      SELECT id, ? FROM battles WHERE id = ? AND status = 'running' AND ends_at <= ?`).bind(now, row.id, now),
-  ]);
+  await env.DB.prepare(`UPDATE battles SET starts_at = ?, ends_at = ? WHERE id = ? AND status = 'running' AND ends_at > ?
+    AND (SELECT COUNT(*) FROM battle_seats WHERE battle_id = ? AND bot = 0) = 1
+    AND EXISTS(SELECT 1 FROM battle_seats WHERE battle_id = ? AND user_id = ?)`)
+    .bind(now - rounds * row.round_ms, now, row.id, now, row.id, row.id, user.id).run();
 }
 
 function seatInsert(env, id, seat, user, payer, bot) {

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync,existsSync} from 'node:fs';
 import worker from '../worker/index.js';
+import {equippedCoinId} from '../worker/gear.js';
 import {productGear,rollGear,normalizeGear,equippedCoin,equippedSleeve,HOUSE_COIN} from '../js/gear.js';
 // Sleeves and coins: catalog integrity, grants on opening, equip rules, reset. Same in-memory D1 stand-in as test-sealed.mjs.
 const catalog=JSON.parse(readFileSync(new URL('../data/gear.json',import.meta.url),'utf8'));
@@ -110,7 +111,9 @@ if(coinId) {
   r=await request('/api/gear/equip','POST',{kind:'coin',id:coinId});
   assert.equal(r.status,200);assert.equal(r.body.gear.equipped.coin,coinId);
   assert.equal(equippedCoin(normalizeGear(r.body.gear),catalog).id,coinId);
+  assert.equal(await equippedCoinId(env,'test'),coinId,'the casino stamps the equipped coin on a flip');
 }
+assert.equal(await equippedCoinId(env,'other'),null,'no coin equipped means the house coin');
 if(sleeveId) {
   r=await request('/api/gear/equip','POST',{kind:'sleeve',id:sleeveId});
   assert.equal(r.body.gear.equipped.sleeve,sleeveId);
@@ -124,5 +127,6 @@ if(coinId) assert.equal((await request('/api/gear/equip','POST',{kind:'coin',id:
 
 // Progress reset starts the cosmetics over too.
 assert.equal((await request('/api/me/reset','POST')).status,200);
+assert.equal(await equippedCoinId(env,'test'),null,'reset clears the equipped coin');
 assert.deepEqual((await request('/api/gear')).body.gear,{sleeves:{},coins:{},equipped:{sleeve:null,coin:null},recent:[]});
 console.log(`Gear checks passed: ${Object.keys(catalog.sleeves).length} sleeves and ${Object.keys(catalog.coins).length} coins across ${rows} products resolve to real files and real products; opening grants once per copy, new flags, refusal grants nothing, equip needs ownership, saves carry gear, reset clears it.`);

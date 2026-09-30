@@ -254,3 +254,7 @@
 @media (prefers-reduced-motion: reduce) {
   .gcoin { transition: none; }
 }
+
+/* A coin's picture is one file holding both faces side by side; the casino coin
+   shows one face per side, so crop it to the obverse (left half). */
+.cf-art[src*="/coins/"] { object-position: 0 50%; }

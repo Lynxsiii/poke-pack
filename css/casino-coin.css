@@ -1,0 +1,226 @@
+/* The casino coin (js/coin.js): a struck gold token in CSS 3D. Size comes from
+   --cf-size (default 168px; 72px chips up to a 240px hero all hold up). The
+   metal keeps its own colour stops, money gold on the page stays --gold.
+   The toss is Web Animations on transform, opacity and filter only; nothing here
+   loops, so there is nothing to switch off under prefers-reduced-motion. */
+
+/* ---------- stage: the table under the coin ---------- */
+.cf-coin-stage {
+  --cf-size: 168px;
+  --cf-headroom: 0.42; /* room above the coin for the toss, in coin widths */
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(var(--cf-size) * 1.32);
+  max-width: 100%;
+  padding: calc(var(--cf-size) * var(--cf-headroom)) 0 calc(var(--cf-size) * 0.12);
+  margin-inline: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.cf-coin-stage > .cf-coin,
+.cf-coin-stage > .cf-shadow { grid-area: 1 / 1; }
+
+/* A soft ellipse on the table. The toss rewrites its transform, opacity and blur
+   so it shrinks, thins and softens as the coin climbs. */
+.cf-shadow {
+  place-self: center;
+  width: calc(var(--cf-size, 168px) * 1);
+  height: calc(var(--cf-size, 168px) * 1);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.78) 0 80%, rgb(0 0 0 / 0) 100%);
+  opacity: 0.62;
+  transform: translate(calc(var(--cf-size, 168px) * 0.045), calc(var(--cf-size, 168px) * 0.075)) scale(0.98);
+  filter: blur(calc(var(--cf-size, 168px) * 0.018));
+  pointer-events: none;
+}
+
+/* ---------- the coin ---------- */
+.cf-coin {
+  --cf-t: max(3px, calc(var(--cf-size, 168px) * 0.085)); /* thickness */
+  --cf-edge-lo: #6f4a10;
+  --cf-edge-mid: #c99a34;
+  --cf-edge-hi: #f6dc8b;
+  position: relative;
+  display: block;
+  flex: none;
+  width: var(--cf-size, 168px);
+  height: var(--cf-size, 168px);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: perspective(calc(var(--cf-size, 168px) * 5)) rotateX(0deg);
+  -webkit-tap-highlight-color: transparent;
+}
+.cf-coin[data-rest="tails"] { transform: perspective(calc(var(--cf-size, 168px) * 5)) rotateX(180deg); }
+/* promo coins are brass and steel rather than house gold, so their edge is paler */
+.cf-coin.cf-custom {
+  --cf-edge-lo: #6c6759;
+  --cf-edge-mid: #aaa38d;
+  --cf-edge-hi: #d9d2bb;
+}
+
+.cf-face {
+  position: absolute;
+  inset: 0;
+  /* flat on purpose: a face is one plane, and its own backface is what hides it */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.cf-front { transform: translateZ(calc(var(--cf-t) / 2)); }
+.cf-back { transform: rotateX(180deg) translateZ(calc(var(--cf-t) / 2)); }
+
+/* ---------- edge: a ring of reeded facets ---------- */
+.cf-edge {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  pointer-events: none;
+}
+.cf-edge > i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--cf-w);
+  height: var(--cf-t);
+  margin: calc(var(--cf-t) / -2) 0 0 calc(var(--cf-w) / -2);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background:
+    /* per-facet light, baked in by the script */
+    linear-gradient(rgb(0 0 0 / var(--s, 0.2)), rgb(0 0 0 / var(--s, 0.2))),
+    /* chamfered lips top and bottom */
+    linear-gradient(180deg, rgb(255 240 190 / 0.55), rgb(255 240 190 / 0) 16%, rgb(0 0 0 / 0) 82%, rgb(0 0 0 / 0.4)),
+    /* the reeding */
+    repeating-linear-gradient(90deg,
+      var(--cf-edge-hi) 0 calc(var(--cf-size, 168px) * 0.0035),
+      var(--cf-edge-mid) calc(var(--cf-size, 168px) * 0.0035) calc(var(--cf-size, 168px) * 0.0075),
+      var(--cf-edge-lo) calc(var(--cf-size, 168px) * 0.0075) calc(var(--cf-size, 168px) * 0.0105));
+}
+
+/* ---------- a face, flat ---------- */
+.cf-face-flat {
+  /* Laid out at twice the size and scaled back: engines rasterise a tilted 3D
+     layer at 1x, which turns the emboss into stair-steps on a phone screen. */
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+  isolation: isolate;
+  /* the chamfer: lit from the upper left */
+  background: linear-gradient(140deg, #fff4c4 0%, #e3b954 22%, #a9782a 52%, #6a4510 80%, #4a2e08 100%);
+}
+/* a struck field, sunk inside the rim: gold sweeps with two lobes, lathe rings under it */
+.cf-field {
+  position: absolute;
+  inset: 6.2%;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.055) 0 1px, rgb(0 0 0 / 0.07) 1px 2.2px),
+    radial-gradient(circle at 34% 28%, rgb(255 244 200 / 0.35), rgb(255 244 200 / 0) 52%),
+    conic-gradient(from 25deg at 50% 50%,
+      #c8982f 0deg, #eccb6e 34deg, #f9e6a3 58deg, #d4a640 92deg, #a07220 132deg,
+      #8a5f17 160deg, #b8862a 196deg, #e7c165 236deg, #f7dd93 262deg, #cf9f38 300deg,
+      #a97b25 332deg, #c8982f 360deg);
+  box-shadow:
+    inset 3px 5px 6px rgb(40 22 2 / 0.5),
+    inset -2px -3px 3px rgb(255 236 170 / 0.4),
+    0 0 0 1.2px rgb(40 22 2 / 0.55);
+}
+/* the rim's highlight line where the chamfer meets the air */
+.cf-lip {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 246 205 / 0.55),
+    inset 2px 3px 2px rgb(255 250 220 / 0.5),
+    inset -2px -3px 3px rgb(30 16 2 / 0.4);
+}
+
+/* ---------- house coin artwork ---------- */
+.cf-art-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.cf-beads, .cf-beads-sh, .cf-inner-ring, .cf-ring, .cf-ring-sh { fill: none; }
+.cf-beads, .cf-beads-sh {
+  stroke-width: 3.1;
+  stroke-linecap: round;
+  stroke-dasharray: 0.01 6.928;
+}
+.cf-beads { stroke: #f4d97f; }
+.cf-beads-sh { stroke: rgb(58 32 4 / 0.7); }
+.cf-inner-ring { stroke: rgb(70 42 6 / 0.5); stroke-width: 1.1; }
+.cf-ring { stroke: #e6bd58; stroke-width: 5; }
+.cf-ring-sh { stroke: rgb(50 28 3 / 0.6); stroke-width: 5; }
+.cf-legend {
+  font-family: var(--font, "Bricolage Grotesque", system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 1.7px;
+  fill: #6d4710;
+}
+.cf-legend-low { font-size: 12.5px; letter-spacing: 3.2px; }
+.cf-legend-sh { fill: rgb(255 240 178 / 0.75); }
+.cf-em-sh { fill: rgb(50 28 3 / 0.62); }
+.cf-em-hi { fill: rgb(255 245 200 / 0.9); }
+.cf-em-body { fill: #e0b54e; }
+.cf-em-body .cf-cut { fill: #b48328; }
+.cf-em-sh .cf-cut, .cf-em-hi .cf-cut { fill: inherit; }
+
+/* ---------- promo coin: real art in a machined rim ---------- */
+.cf-art {
+  position: absolute;
+  inset: 5.6%;
+  width: 88.8%;
+  height: 88.8%;
+  border-radius: 50%;
+  object-fit: cover;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+.cf-has-art .cf-field { inset: 4%; background:
+    conic-gradient(from 25deg, #b8b09a, #ece6d2 60deg, #9b937e 140deg, #d8d1bb 230deg, #a49c86 300deg, #b8b09a); }
+.cf-has-art .cf-lip::after {
+  content: "";
+  position: absolute;
+  inset: 5.6%;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1.4px rgb(0 0 0 / 0.6),
+    inset 4px 6px 10px rgb(0 0 0 / 0.35),
+    inset -2px -3px 6px rgb(255 255 255 / 0.12);
+}
+
+/* ---------- light on the face (rewritten during a toss) ---------- */
+.cf-shade {
+  position: absolute;
+  inset: 0;
+  background: #0b0703;
+  opacity: 0.04;
+  pointer-events: none;
+}
+.cf-sheen {
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background: linear-gradient(120deg,
+    rgb(255 250 225 / 0) 35%, rgb(255 250 225 / 0.13) 45%, rgb(255 252 235 / 0.3) 50%,
+    rgb(255 250 225 / 0.13) 55%, rgb(255 250 225 / 0) 65%);
+  transform: translateY(calc(var(--cf-size, 168px) * -0.68)); /* the face is laid out at 2x */
+}
+.cf-has-art .cf-sheen { opacity: 0.7; }
