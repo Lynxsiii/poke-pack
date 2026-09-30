@@ -1,0 +1,2867 @@
+{
+ "_doc": "Sun & Moon sealed-product contents beyond packs and promos, read by scripts/build_box_contents.py (sun_moon()). See .claude/skills/card-textures/reference/sun-moon-box-contents.md. Products are matched by set + tcgplayerId, so the ids the set builders chose for them do not matter.",
+ "etb": {
+  "total": 45,
+  "types": 9,
+  "dealt": 40,
+  "print": {
+   "sm1": "sm17",
+   "sm2": "sm17",
+   "sm3": "sm17",
+   "sm35": "sm17",
+   "sm4": "sm17",
+   "sm5": "sm17",
+   "sm6": "sm17",
+   "sm7": "sm17",
+   "sm75": "sm17",
+   "sm8": "sm17",
+   "sm9": "sm19",
+   "sm10": "sm19",
+   "sm11": "sm19",
+   "sm115": "sm19",
+   "sm12": "sm19"
+  },
+  "note": "45 basic Energy = 5 of each of the nine Sun & Moon types. The site has no Fairy Energy, so 40 (5 of each of the other eight) are dealt.",
+  "confidence": "verified",
+  "sources": [
+   {
+    "url": "https://bulbapedia.bulbagarden.net/wiki/Elite_Trainer_Box_(TCG)",
+    "quote": "40 Basic Energy cards, increased to 45 from XY to Black Bolt & White Flare"
+   },
+   {
+    "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise",
+    "quote": "Team Up ETB: five copies of each basic Energy card (45 total); Shining Legends ETB: multiple copies of the nine Sun & Moon Series basic Energy cards"
+   },
+   {
+    "url": "https://mp-search-api.tcgplayer.com/v1/product/185719/details",
+    "quote": "45 Energy cards (the Sun & Moon ETBs' own product text, sm2 to sm12)"
+   },
+   {
+    "url": "https://www.pokemon.com/us/pokemon-tcg/product-gallery/sun-moon-team-up-elite-trainer-box",
+    "quote": "45 Pokémon TCG Energy cards"
+   }
+  ]
+ },
+ "products": [
+  {
+   "set": "sm10",
+   "tcgplayerId": 192230,
+   "name": "Blastoise-GX Premium Collection",
+   "cards": [
+    {
+     "id": "sm10-33",
+     "n": 1
+    },
+    {
+     "id": "sm10-34",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/192230/details",
+     "quote": "1 foil card featuring Wartortle; 1 foil card featuring Squirtle"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Blastoise-GX_Premium_Collection",
+     "quote": "straight reprints of Squirtle and Wartortle from Unbroken Bonds (UNB 33, 34; Cosmos Holofoil)"
+    }
+   ],
+   "notes": "The full-art Blastoise-GX (SM189) is the modelled promo; the oversize copy is not a card on the site."
+  },
+  {
+   "set": "sm11",
+   "tcgplayerId": 229579,
+   "name": "Premium Checklane Blister (Umbreon)",
+   "cards": [
+    {
+     "id": "sm8-120",
+     "n": 1
+    },
+    {
+     "oneOf": [
+      "sm5-104",
+      "sm5-105"
+     ],
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/229579/details",
+     "quote": "2 cards with an evolution line"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Unified_Minds_Stage_1_Blisters",
+     "quote": "Cosmos Holofoil variants of either Espeon or Umbreon from Lost Thunder and regular copies of one of the two Eevee from Ultra Prism (LOT 120; UPR 104 or 105)"
+    },
+    {
+     "url": "https://www.pokeguardian.com/348298_target-exclusive-unified-minds-umbreon-espeon-checklane-blisters-revealed",
+     "quote": "includes a cosmofoil holo version of Espeon and Umbreon from Lost Thunder. Eevee from Ultra Prism has no cosmofoil treatment"
+    }
+   ],
+   "notes": "Which of the two Ultra Prism Eevee (104 or 105) goes with which blister is not documented: dealt as one of the two at random."
+  },
+  {
+   "set": "sm11",
+   "tcgplayerId": 229580,
+   "name": "Premium Checklane Blister (Espeon)",
+   "cards": [
+    {
+     "id": "sm8-89",
+     "n": 1
+    },
+    {
+     "oneOf": [
+      "sm5-104",
+      "sm5-105"
+     ],
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/229580/details",
+     "quote": "2 cards with an evolution line"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Unified_Minds_Stage_1_Blisters",
+     "quote": "LOT 89 Cosmos Holofoil; UPR Eevee 104 or 105"
+    },
+    {
+     "url": "https://www.pokeguardian.com/348298_target-exclusive-unified-minds-umbreon-espeon-checklane-blisters-revealed",
+     "quote": "includes a cosmofoil holo version of Espeon and Umbreon from Lost Thunder. Eevee from Ultra Prism has no cosmofoil treatment"
+    }
+   ],
+   "notes": "Same Eevee note as the Umbreon blister."
+  },
+  {
+   "set": "sm2",
+   "tcgplayerId": 133806,
+   "name": "Decidueye-GX Premium Collection",
+   "cards": [
+    {
+     "id": "sm1-9",
+     "n": 1
+    },
+    {
+     "id": "sm1-10",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/133806/details",
+     "quote": "a complete Evolution chain of three foil promo cards, an oversized card"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Decidueye-GX_Premium_Collection",
+     "quote": "Sun & Moon 9 Rowlet and 10 Dartrix, Cosmos Holofoil"
+    }
+   ]
+  },
+  {
+   "set": "sm2",
+   "tcgplayerId": 133807,
+   "name": "Incineroar-GX Premium Collection",
+   "cards": [
+    {
+     "id": "sm1-24",
+     "n": 1
+    },
+    {
+     "id": "sm1-25",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/133807/details",
+     "quote": "a complete Evolution chain of three foil promo cards"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Incineroar-GX_Premium_Collection",
+     "quote": "Sun & Moon 24 Litten and 25 Torracat, Cosmos Holofoil"
+    }
+   ]
+  },
+  {
+   "set": "sm2",
+   "tcgplayerId": 133805,
+   "name": "Primarina-GX Premium Collection",
+   "cards": [
+    {
+     "id": "sm1-39",
+     "n": 1
+    },
+    {
+     "id": "sm1-40",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/133805/details",
+     "quote": "a complete Evolution chain of three foil promo cards"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Primarina-GX_Premium_Collection",
+     "quote": "Sun & Moon 39 Popplio and 40 Brionne, Cosmos Holofoil"
+    }
+   ]
+  },
+  {
+   "set": "sm2",
+   "tcgplayerId": 137523,
+   "name": "Espeon-GX Premium Collection",
+   "cards": [
+    {
+     "id": "sm1-80",
+     "n": 1
+    },
+    {
+     "id": "sm1-101",
+     "n": 1
+    }
+   ],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Espeon-GX_Premium_Collection",
+     "quote": "Sun & Moon 101 Eevee (Cosmos Holofoil) and 80 Umbreon-GX"
+    },
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/137523/details",
+     "quote": "an oversized card of Espeon GX, an alternate art Promo of Espeon GX (no mention of the reprints)"
+    }
+   ],
+   "notes": "Held: only Bulbapedia lists the reprints. Also check which Eevee print the site has (sm1-101 or sm1-101a)."
+  },
+  {
+   "set": "sm2",
+   "tcgplayerId": 137524,
+   "name": "Umbreon-GX Premium Collection",
+   "cards": [
+    {
+     "id": "sm1-61",
+     "n": 1
+    },
+    {
+     "id": "sm1-101",
+     "n": 1
+    }
+   ],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Umbreon-GX_Premium_Collection",
+     "quote": "Sun & Moon 101 Eevee (Cosmos Holofoil) and 61 Espeon-GX"
+    },
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/137524/details",
+     "quote": "an oversized card of Umbreon GX, an alternate art Promo of Umbreon GX"
+    }
+   ],
+   "notes": "Held: only Bulbapedia lists the reprints."
+  },
+  {
+   "set": "sm2",
+   "tcgplayerId": 218327,
+   "name": "Solgaleo-GX Challenge Box",
+   "cards": [
+    {
+     "id": "sm1-89",
+     "n": 1
+    },
+    {
+     "id": "sm2-87",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/218327/details",
+     "quote": "a copy of Solgaleo-GX from Sun & Moon, and a Water Web Holofoil variant of Solgaleo from Guardians Rising"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#GX_Challenge_Boxes",
+     "quote": "Sun & Moon 089; Guardians Rising 087 Water Web Holofoil"
+    }
+   ],
+   "notes": "The Steel Sun theme deck (60 cards) is not modelled."
+  },
+  {
+   "set": "sm2",
+   "tcgplayerId": 218328,
+   "name": "Lunala-GX Challenge Box",
+   "cards": [
+    {
+     "id": "sm1-66",
+     "n": 1
+    },
+    {
+     "id": "sm2-61",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/218328/details",
+     "quote": "a copy of Lunala-GX from Sun & Moon, and a Water Web Holofoil variant of Lunala from Guardians Rising"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#GX_Challenge_Boxes",
+     "quote": "Sun & Moon 066; Guardians Rising 061 Water Web Holofoil"
+    }
+   ],
+   "notes": "The Hidden Moon theme deck is not modelled."
+  },
+  {
+   "set": "sm3",
+   "tcgplayerId": 148154,
+   "name": "Charizard-GX Premium Collection",
+   "cards": [
+    {
+     "id": "sm3-18",
+     "n": 1
+    },
+    {
+     "id": "sm3-19",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/148154/details",
+     "quote": "1 holofoil Charmander promo; 1 holofoil Charmeleon promo"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Charizard-GX_Premium_Collection",
+     "quote": "Burning Shadows 18 Charmander and 19 Charmeleon, Water Web Holofoil"
+    }
+   ]
+  },
+  {
+   "set": "sm3",
+   "tcgplayerId": 148417,
+   "name": "Team Skull Pin Collection",
+   "cards": [
+    {
+     "id": "sm2-8",
+     "n": 1
+    },
+    {
+     "id": "sm2-15",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/148417/details",
+     "quote": "4 holofoil promo cards featuring Wimpod, Golisopod GX, Salandit, and Salazzle GX"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Team_Skull_Pin_Collection",
+     "quote": "Guardians Rising 8 Wimpod and 15 Salandit, Water Web Holofoil"
+    }
+   ],
+   "notes": "Golisopod-GX and Salazzle-GX are the modelled SM promos (SM62, SM63)."
+  },
+  {
+   "set": "sm3",
+   "tcgplayerId": 218320,
+   "name": "Alolan Ninetales-GX Challenge Box",
+   "cards": [
+    {
+     "id": "sm2-22",
+     "n": 1
+    },
+    {
+     "id": "sm3-28",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/218320/details",
+     "quote": "1 foil promo featuring Alolan Ninetales GX; 1 foil promo featuring Alolan Ninetales"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#GX_Challenge_Boxes",
+     "quote": "Guardians Rising 022 Alolan Ninetales-GX; Burning Shadows 028 Alolan Ninetales, Water Web Holofoil"
+    }
+   ],
+   "notes": "Luminous Frost theme deck not modelled."
+  },
+  {
+   "set": "sm3",
+   "tcgplayerId": 218321,
+   "name": "Lycanroc-GX Challenge Box",
+   "cards": [
+    {
+     "id": "sm3-76",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/218321/details",
+     "quote": "1 foil promo featuring Lycanroc GX; 1 foil promo featuring Lycanroc"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#GX_Challenge_Boxes",
+     "quote": "Burning Shadows 076 Lycanroc, Water Web Holofoil"
+    }
+   ],
+   "notes": "Lycanroc-GX is SM14 (the modelled promo). Rock Steady theme deck not modelled."
+  },
+  {
+   "set": "sm35",
+   "tcgplayerId": 155062,
+   "name": "Special Collection (Raichu-GX)",
+   "cards": [
+    {
+     "id": "sm35-28",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/155062/details",
+     "quote": "a full art Raichu GX holofoil promo, a holofoil Pikachu promo"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Shining_Legends_Special_Collection—Raichu-GX",
+     "quote": "Shining Legends 28 Pikachu, Water Web Holofoil (no SM number)"
+    }
+   ]
+  },
+  {
+   "set": "sm1",
+   "tcgplayerId": 209655,
+   "name": "Incineroar GX Challenge Box",
+   "cards": [
+    {
+     "id": "sm1-27",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/209655/details",
+     "quote": "foil GX card; 1 complete theme deck"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Incineroar-GX_Challenge_Box",
+     "quote": "Sun & Moon GX reprint"
+    }
+   ],
+   "notes": "Theme deck (60 cards) not modelled; the GX reprint may already be the product's own promo (the builder drops duplicates)."
+  },
+  {
+   "set": "sm1",
+   "tcgplayerId": 230425,
+   "name": "Decidueye GX Challenge Box",
+   "cards": [
+    {
+     "id": "sm1-12",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/230425/details",
+     "quote": "foil GX card; 1 complete theme deck"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Decidueye-GX_Challenge_Box",
+     "quote": "Sun & Moon GX reprint"
+    }
+   ],
+   "notes": "Theme deck (60 cards) not modelled; the GX reprint may already be the product's own promo (the builder drops duplicates)."
+  },
+  {
+   "set": "sm1",
+   "tcgplayerId": 656924,
+   "name": "Primarina GX Challenge Box",
+   "cards": [
+    {
+     "id": "sm1-42",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/656924/details",
+     "quote": "foil GX card; 1 complete theme deck"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Primarina_GX_Challenge_Box",
+     "quote": "Sun & Moon GX reprint"
+    }
+   ],
+   "notes": "Theme deck (60 cards) not modelled; the GX reprint may already be the product's own promo (the builder drops duplicates)."
+  },
+  {
+   "set": "sm1",
+   "tcgplayerId": 244313,
+   "name": "Sun & Moon GX Challenge Box (Incineroar)",
+   "cards": [
+    {
+     "id": "sm1-27",
+     "n": 1
+    },
+    {
+     "id": "sm1-26",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/244313/details",
+     "quote": "foil GX card + water web holo of the Stage 1; 1 complete theme deck"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Sun_&_Moon_GX_Challenge_Boxes",
+     "quote": "Sun & Moon GX reprint and Water Web holo Stage 1"
+    }
+   ],
+   "notes": "Theme deck (60 cards) not modelled; the GX reprint may already be the product's own promo (the builder drops duplicates)."
+  },
+  {
+   "set": "sm1",
+   "tcgplayerId": 244314,
+   "name": "Sun & Moon GX Challenge Box (Decidueye)",
+   "cards": [
+    {
+     "id": "sm1-12",
+     "n": 1
+    },
+    {
+     "id": "sm1-11",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/244314/details",
+     "quote": "foil GX card + water web holo of the Stage 1; 1 complete theme deck"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Sun_&_Moon_GX_Challenge_Boxes",
+     "quote": "Sun & Moon GX reprint and Water Web holo Stage 1"
+    }
+   ],
+   "notes": "Theme deck (60 cards) not modelled; the GX reprint may already be the product's own promo (the builder drops duplicates)."
+  },
+  {
+   "set": "sm1",
+   "tcgplayerId": 656996,
+   "name": "Sun & Moon GX Challenge Box (Primarina)",
+   "cards": [
+    {
+     "id": "sm1-42",
+     "n": 1
+    },
+    {
+     "id": "sm1-41",
+     "n": 1
+    }
+   ],
+   "confidence": "verified",
+   "sources": [
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/656996/details",
+     "quote": "foil GX card + water web holo of the Stage 1; 1 complete theme deck"
+    },
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Sun_&_Moon_GX_Challenge_Boxes",
+     "quote": "Sun & Moon GX reprint and Water Web holo Stage 1"
+    }
+   ],
+   "notes": "Theme deck (60 cards) not modelled; the GX reprint may already be the product's own promo (the builder drops duplicates)."
+  },
+  {
+   "set": "sm9",
+   "tcgplayerId": 624521,
+   "name": "Premium Checklane Blister (Gyarados)",
+   "cards": [
+    {
+     "id": "sm3-32",
+     "n": 1
+    },
+    {
+     "id": "sm3-33",
+     "n": 1
+    }
+   ],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Team_Up_Stage_1_Blisters",
+     "quote": "Burning Shadows 32 Magikarp, 33 Gyarados (Cosmos Holofoil)"
+    },
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/624521/details",
+     "quote": "2 cards with an evolution line"
+    }
+   ],
+   "notes": "Held: only Bulbapedia names the print."
+  },
+  {
+   "set": "sm9",
+   "tcgplayerId": 624522,
+   "name": "Premium Checklane Blister (Raichu)",
+   "cards": [
+    {
+     "id": "sm3-40",
+     "n": 1
+    },
+    {
+     "id": "sm3-41",
+     "n": 1
+    }
+   ],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Team_Up_Stage_1_Blisters",
+     "quote": "Burning Shadows 40 Pikachu, 41 Raichu (Cosmos Holofoil)"
+    },
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/624522/details",
+     "quote": "2 cards with an evolution line"
+    }
+   ],
+   "notes": "Held: only Bulbapedia names the print."
+  },
+  {
+   "set": "sm10",
+   "tcgplayerId": 240188,
+   "name": "Single Pack Blister (Steelix)",
+   "cards": [
+    {
+     "id": "sm8-109",
+     "n": 1
+    },
+    {
+     "id": "sm8-125",
+     "n": 1
+    }
+   ],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Unbroken_Bonds_Stage_1_Blisters",
+     "quote": "Lost Thunder 109 Onix, 125 Steelix (Cosmos Holofoil)"
+    },
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/240188/details",
+     "quote": "a promotional card of Onix and Steelix"
+    }
+   ],
+   "notes": "Held: only Bulbapedia names the print. The product is not on the site yet."
+  },
+  {
+   "set": "sm10",
+   "tcgplayerId": 240189,
+   "name": "Single Pack Blister (Wailord)",
+   "cards": [
+    {
+     "id": "sm7-39",
+     "n": 1
+    },
+    {
+     "id": "sm7-40",
+     "n": 1
+    }
+   ],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Unbroken_Bonds_Stage_1_Blisters",
+     "quote": "Celestial Storm 39 Wailmer, 40 Wailord (Cosmos Holofoil)"
+    },
+    {
+     "url": "https://mp-search-api.tcgplayer.com/v1/product/240189/details",
+     "quote": "a promotional card of Wailmer and Wailord"
+    }
+   ],
+   "notes": "Held: only Bulbapedia names the print. The product is not on the site yet."
+  }
+ ],
+ "buildBattle": [
+  {
+   "set": "sm1",
+   "tcgplayerId": 206409,
+   "name": "Sun & Moon Prerelease Kit",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Shiinotic",
+     "cards": [
+      {
+       "id": "sm1-1",
+       "name": "Caterpie",
+       "n": 3
+      },
+      {
+       "id": "sm1-2",
+       "name": "Metapod",
+       "n": 2
+      },
+      {
+       "id": "sm1-3",
+       "name": "Butterfree",
+       "n": 2
+      },
+      {
+       "id": "sm1-16",
+       "name": "Morelull",
+       "n": 1
+      }
+     ],
+     "promo": 10
+    },
+    {
+     "name": "Bruxish",
+     "cards": [
+      {
+       "id": "sm1-33",
+       "name": "Shellder",
+       "n": 2
+      },
+      {
+       "id": "sm1-34",
+       "name": "Cloyster",
+       "n": 2
+      },
+      {
+       "id": "sm1-49",
+       "name": "Chinchou",
+       "n": 2
+      },
+      {
+       "id": "sm1-50",
+       "name": "Lanturn",
+       "n": 2
+      }
+     ],
+     "promo": 11
+    },
+    {
+     "name": "Oranguru",
+     "cards": [
+      {
+       "id": "sm1-54",
+       "name": "Zubat",
+       "n": 3
+      },
+      {
+       "id": "sm1-55",
+       "name": "Golbat",
+       "n": 2
+      },
+      {
+       "id": "sm1-56",
+       "name": "Crobat",
+       "n": 2
+      },
+      {
+       "id": "sm1-119",
+       "name": "Great Ball",
+       "n": 1
+      }
+     ],
+     "promo": 13
+    },
+    {
+     "name": "Passimian",
+     "cards": [
+      {
+       "id": "sm1-67",
+       "name": "Makuhita",
+       "n": 3
+      },
+      {
+       "id": "sm1-68",
+       "name": "Hariyama",
+       "n": 2
+      },
+      {
+       "id": "sm1-73",
+       "name": "Passimian",
+       "n": 2
+      },
+      {
+       "id": "sm1-119",
+       "name": "Great Ball",
+       "n": 1
+      }
+     ],
+     "promo": 12
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm1-120",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm1-121",
+     "name": "Ilima",
+     "max": 2
+    },
+    {
+     "id": "sm1-122",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm1-128",
+     "name": "Professor Kukui",
+     "max": 2
+    },
+    {
+     "id": "sm1-123",
+     "name": "Nest Ball",
+     "max": 2
+    },
+    {
+     "id": "sm1-134",
+     "name": "Timer Ball",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_Prerelease_Kit_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm2",
+   "tcgplayerId": 131273,
+   "name": "Guardians Rising Prerelease Kit",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Oricorio",
+     "cards": [
+      {
+       "id": "sm2-4",
+       "name": "Petilil",
+       "n": 2
+      },
+      {
+       "id": "sm2-5",
+       "name": "Lilligant",
+       "n": 2
+      },
+      {
+       "id": "sm2-6",
+       "name": "Phantump",
+       "n": 2
+      },
+      {
+       "id": "sm2-7",
+       "name": "Trevenant",
+       "n": 1
+      }
+     ],
+     "promo": 19
+    },
+    {
+     "name": "Alolan Sandslash",
+     "cards": [
+      {
+       "id": "sm2-19",
+       "name": "Alolan Sandshrew",
+       "n": 1
+      },
+      {
+       "id": "sm2-33",
+       "name": "Vanillite",
+       "n": 2
+      },
+      {
+       "id": "sm2-34",
+       "name": "Vanillish",
+       "n": 2
+      },
+      {
+       "id": "sm2-35",
+       "name": "Vanilluxe",
+       "n": 2
+      }
+     ],
+     "promo": 18
+    },
+    {
+     "name": "Mudsdale",
+     "cards": [
+      {
+       "id": "sm2-67",
+       "name": "Gligar",
+       "n": 2
+      },
+      {
+       "id": "sm2-68",
+       "name": "Gliscor",
+       "n": 2
+      },
+      {
+       "id": "sm2-75",
+       "name": "Mudbray",
+       "n": 2
+      },
+      {
+       "id": "sm2-76",
+       "name": "Mudsdale",
+       "n": 1
+      },
+      {
+       "id": "sm2-121",
+       "name": "Choice Band",
+       "n": 1
+      }
+     ],
+     "promo": 20
+    },
+    {
+     "name": "Drampa",
+     "cards": [
+      {
+       "id": "sm2-72",
+       "name": "Pancham",
+       "n": 2
+      },
+      {
+       "id": "sm2-78",
+       "name": "Murkrow",
+       "n": 2
+      },
+      {
+       "id": "sm2-79",
+       "name": "Honchkrow",
+       "n": 2
+      },
+      {
+       "id": "sm2-82",
+       "name": "Pangoro",
+       "n": 1
+      }
+     ],
+     "promo": 21
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm1-120",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm1-122",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm1-128",
+     "name": "Professor Kukui",
+     "max": 2
+    },
+    {
+     "id": "sm1-119",
+     "name": "Great Ball",
+     "max": 1
+    },
+    {
+     "id": "sm1-123",
+     "name": "Nest Ball",
+     "max": 2
+    },
+    {
+     "id": "sm1-134",
+     "name": "Timer Ball",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Guardians_Rising_Prerelease_Kit_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm3",
+   "tcgplayerId": 139888,
+   "name": "Burning Shadows Prerelease Kit",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Bewear",
+     "cards": [
+      {
+       "id": "sm3-4",
+       "name": "Oddish",
+       "n": 2
+      },
+      {
+       "id": "sm3-5",
+       "name": "Gloom",
+       "n": 2
+      },
+      {
+       "id": "sm3-6",
+       "name": "Vileplume",
+       "n": 2
+      },
+      {
+       "id": "sm3-110",
+       "name": "Stufful",
+       "n": 1
+      }
+     ],
+     "promo": 49
+    },
+    {
+     "name": "Seviper",
+     "cards": [
+      {
+       "id": "sm3-54",
+       "name": "Croagunk",
+       "n": 2
+      },
+      {
+       "id": "sm3-55",
+       "name": "Toxicroak",
+       "n": 2
+      },
+      {
+       "id": "sm3-59",
+       "name": "Espurr",
+       "n": 2
+      },
+      {
+       "id": "sm3-60",
+       "name": "Meowstic",
+       "n": 2
+      }
+     ],
+     "promo": 46
+    },
+    {
+     "name": "Crabominable",
+     "cards": [
+      {
+       "id": "sm3-65",
+       "name": "Rhyhorn",
+       "n": 2
+      },
+      {
+       "id": "sm3-66",
+       "name": "Rhydon",
+       "n": 2
+      },
+      {
+       "id": "sm3-67",
+       "name": "Rhyperior",
+       "n": 2
+      },
+      {
+       "id": "sm3-73",
+       "name": "Crabrawler",
+       "n": 1
+      },
+      {
+       "id": "sm3-114",
+       "name": "Escape Rope",
+       "n": 1
+      }
+     ],
+     "promo": 47
+    },
+    {
+     "name": "Zygarde",
+     "cards": [
+      {
+       "id": "sm3-81",
+       "name": "Alolan Rattata",
+       "n": 2
+      },
+      {
+       "id": "sm3-82",
+       "name": "Alolan Raticate",
+       "n": 2
+      },
+      {
+       "id": "sm3-106",
+       "name": "Hoothoot",
+       "n": 2
+      },
+      {
+       "id": "sm3-107",
+       "name": "Noctowl",
+       "n": 1
+      },
+      {
+       "id": "sm3-126",
+       "name": "Weakness Policy",
+       "n": 1
+      }
+     ],
+     "promo": 48
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm1-120",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm1-122",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm1-128",
+     "name": "Professor Kukui",
+     "max": 2
+    },
+    {
+     "id": "sm1-119",
+     "name": "Great Ball",
+     "max": 1
+    },
+    {
+     "id": "sm1-123",
+     "name": "Nest Ball",
+     "max": 2
+    },
+    {
+     "id": "sm1-134",
+     "name": "Timer Ball",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Burning_Shadows_Prerelease_Kit_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm4",
+   "tcgplayerId": 153081,
+   "name": "Crimson Invasion Prerelease Kit",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Alolan Raichu",
+     "cards": [
+      {
+       "id": "sm4-5",
+       "name": "Cacnea",
+       "n": 2
+      },
+      {
+       "id": "sm4-6",
+       "name": "Cacturne",
+       "n": 2
+      },
+      {
+       "id": "sm4-30",
+       "name": "Pikachu",
+       "n": 2
+      },
+      {
+       "id": "sm4-31",
+       "name": "Alolan Raichu",
+       "n": 1
+      }
+     ],
+     "promo": 72
+    },
+    {
+     "name": "Salazzle",
+     "cards": [
+      {
+       "id": "sm4-36",
+       "name": "Gastly",
+       "n": 2
+      },
+      {
+       "id": "sm4-37",
+       "name": "Haunter",
+       "n": 2
+      },
+      {
+       "id": "sm4-38",
+       "name": "Gengar",
+       "n": 2
+      },
+      {
+       "id": "sm4-46",
+       "name": "Salandit",
+       "n": 1
+      }
+     ],
+     "promo": 73
+    },
+    {
+     "name": "Regirock",
+     "cards": [
+      {
+       "id": "sm4-29",
+       "name": "Shellos",
+       "n": 2
+      },
+      {
+       "id": "sm4-53",
+       "name": "Regirock",
+       "n": 1
+      },
+      {
+       "id": "sm4-54",
+       "name": "Gastrodon",
+       "n": 2
+      },
+      {
+       "id": "sm4-55",
+       "name": "Stufful",
+       "n": 1
+      },
+      {
+       "id": "sm4-56",
+       "name": "Bewear",
+       "n": 1
+      }
+     ],
+     "promo": 74
+    },
+    {
+     "name": "Registeel",
+     "cards": [
+      {
+       "id": "sm4-7",
+       "name": "Karrablast",
+       "n": 3
+      },
+      {
+       "id": "sm4-64",
+       "name": "Mawile",
+       "n": 1
+      },
+      {
+       "id": "sm4-68",
+       "name": "Registeel",
+       "n": 1
+      },
+      {
+       "id": "sm4-69",
+       "name": "Escavalier",
+       "n": 2
+      }
+     ],
+     "promo": 75
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm1-120",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm1-122",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm1-128",
+     "name": "Professor Kukui",
+     "max": 2
+    },
+    {
+     "id": "sm3-123",
+     "name": "Sophocles",
+     "max": 2
+    },
+    {
+     "id": "sm1-119",
+     "name": "Great Ball",
+     "max": 1
+    },
+    {
+     "id": "sm1-123",
+     "name": "Nest Ball",
+     "max": 2
+    },
+    {
+     "id": "sm1-134",
+     "name": "Timer Ball",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Crimson_Invasion_Prerelease_Kit_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm5",
+   "tcgplayerId": null,
+   "name": "Ultra Prism Prerelease Kit",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Wash Rotom",
+     "cards": [
+      {
+       "id": "sm5-31",
+       "name": "Piplup",
+       "n": 2
+      },
+      {
+       "id": "sm5-32",
+       "name": "Piplup",
+       "n": 1
+      },
+      {
+       "id": "sm5-33",
+       "name": "Prinplup",
+       "n": 2
+      },
+      {
+       "id": "sm5-34",
+       "name": "Empoleon",
+       "n": 2
+      },
+      {
+       "id": "sm5-111",
+       "name": "Shaymin",
+       "n": 1
+      },
+      {
+       "id": "sm5-133",
+       "name": "Pokémon Fan Club",
+       "n": 1
+      },
+      {
+       "id": "sm1-134",
+       "name": "Timer Ball",
+       "n": 1
+      }
+     ],
+     "promo": 94
+    },
+    {
+     "name": "Gumshoos",
+     "cards": [
+      {
+       "id": "sm5-43",
+       "name": "Electabuzz",
+       "n": 2
+      },
+      {
+       "id": "sm5-44",
+       "name": "Electivire",
+       "n": 2
+      },
+      {
+       "id": "sm5-112",
+       "name": "Yungoos",
+       "n": 2
+      },
+      {
+       "id": "sm5-113",
+       "name": "Gumshoos",
+       "n": 1
+      },
+      {
+       "id": "sm5-135",
+       "name": "Volkner",
+       "n": 1
+      },
+      {
+       "id": "sm1-119",
+       "name": "Great Ball",
+       "n": 1
+      },
+      {
+       "id": "sm1-123",
+       "name": "Nest Ball",
+       "n": 1
+      }
+     ],
+     "promo": 97
+    },
+    {
+     "name": "Lucario",
+     "cards": [
+      {
+       "id": "sm5-53",
+       "name": "Spiritomb",
+       "n": 1
+      },
+      {
+       "id": "sm5-66",
+       "name": "Riolu",
+       "n": 1
+      },
+      {
+       "id": "sm5-96",
+       "name": "Gible",
+       "n": 2
+      },
+      {
+       "id": "sm5-98",
+       "name": "Gabite",
+       "n": 2
+      },
+      {
+       "id": "sm5-99",
+       "name": "Garchomp",
+       "n": 2
+      },
+      {
+       "id": "sm5-119",
+       "name": "Cynthia",
+       "n": 1
+      },
+      {
+       "id": "sm1-123",
+       "name": "Nest Ball",
+       "n": 1
+      }
+     ],
+     "promo": 95
+    },
+    {
+     "name": "Heatran",
+     "cards": [
+      {
+       "id": "sm5-80",
+       "name": "Magnemite",
+       "n": 1
+      },
+      {
+       "id": "sm5-81",
+       "name": "Magnemite",
+       "n": 1
+      },
+      {
+       "id": "sm5-82",
+       "name": "Magneton",
+       "n": 2
+      },
+      {
+       "id": "sm5-83",
+       "name": "Magnezone",
+       "n": 2
+      },
+      {
+       "id": "sm5-88",
+       "name": "Heatran",
+       "n": 1
+      },
+      {
+       "id": "sm5-126",
+       "name": "Looker",
+       "n": 1
+      },
+      {
+       "id": "sm1-119",
+       "name": "Great Ball",
+       "n": 1
+      },
+      {
+       "id": "sm1-134",
+       "name": "Timer Ball",
+       "n": 1
+      }
+     ],
+     "promo": 96
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm1-120",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm5-125",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm1-128",
+     "name": "Professor Kukui",
+     "max": 2
+    },
+    {
+     "id": "sm3-123",
+     "name": "Sophocles",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Ultra_Prism_Prerelease_Kit_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm6",
+   "tcgplayerId": null,
+   "name": "Forbidden Light Build & Battle Box",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Pheromosa",
+     "cards": [
+      {
+       "id": "sm6-5",
+       "name": "Scatterbug",
+       "n": 3
+      },
+      {
+       "id": "sm6-7",
+       "name": "Spewpa",
+       "n": 2
+      },
+      {
+       "id": "sm6-8",
+       "name": "Vivillon",
+       "n": 2
+      },
+      {
+       "id": "sm6-99",
+       "name": "Furfrou",
+       "n": 1
+      },
+      {
+       "id": "sm1-123",
+       "name": "Nest Ball",
+       "n": 1
+      }
+     ],
+     "promo": 115
+    },
+    {
+     "name": "Xurkitree",
+     "cards": [
+      {
+       "id": "sm6-34",
+       "name": "Magnemite",
+       "n": 2
+      },
+      {
+       "id": "sm6-35",
+       "name": "Magneton",
+       "n": 2
+      },
+      {
+       "id": "sm6-36",
+       "name": "Magnezone",
+       "n": 2
+      },
+      {
+       "id": "sm6-99",
+       "name": "Furfrou",
+       "n": 1
+      },
+      {
+       "id": "sm1-119",
+       "name": "Great Ball",
+       "n": 1
+      },
+      {
+       "id": "sm1-134",
+       "name": "Timer Ball",
+       "n": 1
+      }
+     ],
+     "promo": 116
+    },
+    {
+     "name": "Malamar",
+     "cards": [
+      {
+       "id": "sm6-41",
+       "name": "Uxie",
+       "n": 2
+      },
+      {
+       "id": "sm6-42",
+       "name": "Mesprit",
+       "n": 2
+      },
+      {
+       "id": "sm6-50",
+       "name": "Inkay",
+       "n": 2
+      },
+      {
+       "id": "sm6-51",
+       "name": "Malamar",
+       "n": 1
+      },
+      {
+       "id": "sm6-113",
+       "name": "Mysterious Treasure",
+       "n": 1
+      },
+      {
+       "id": "sm1-123",
+       "name": "Nest Ball",
+       "n": 1
+      }
+     ],
+     "promo": 117
+    },
+    {
+     "name": "Lycanroc",
+     "cards": [
+      {
+       "id": "sm6-63",
+       "name": "Croagunk",
+       "n": 2
+      },
+      {
+       "id": "sm6-64",
+       "name": "Toxicroak",
+       "n": 2
+      },
+      {
+       "id": "sm6-75",
+       "name": "Rockruff",
+       "n": 2
+      },
+      {
+       "id": "sm6-76",
+       "name": "Lycanroc",
+       "n": 1
+      },
+      {
+       "id": "sm1-134",
+       "name": "Timer Ball",
+       "n": 1
+      }
+     ],
+     "promo": 118
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm1-120",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm5-125",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm5-126",
+     "name": "Looker",
+     "max": 2
+    },
+    {
+     "id": "sm1-128",
+     "name": "Professor Kukui",
+     "max": 2
+    },
+    {
+     "id": "sm3-123",
+     "name": "Sophocles",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Forbidden_Light_Build_%26_Battle_Box_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm7",
+   "tcgplayerId": 170280,
+   "name": "Celestial Storm Build & Battle Box",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Kyogre",
+     "cards": [
+      {
+       "id": "sm7-32",
+       "name": "Mudkip",
+       "n": 1
+      },
+      {
+       "id": "sm7-33",
+       "name": "Mudkip",
+       "n": 2
+      },
+      {
+       "id": "sm7-34",
+       "name": "Marshtomp",
+       "n": 2
+      },
+      {
+       "id": "sm7-35",
+       "name": "Swampert",
+       "n": 2
+      },
+      {
+       "id": "sm7-139",
+       "name": "The Masked Royal",
+       "n": 1
+      },
+      {
+       "id": "sm1-134",
+       "name": "Timer Ball",
+       "n": 1
+      }
+     ],
+     "promo": 129
+    },
+    {
+     "name": "Manectric",
+     "cards": [
+      {
+       "id": "sm7-49",
+       "name": "Chinchou",
+       "n": 2
+      },
+      {
+       "id": "sm7-50",
+       "name": "Lanturn",
+       "n": 2
+      },
+      {
+       "id": "sm7-51",
+       "name": "Electrike",
+       "n": 2
+      },
+      {
+       "id": "sm7-52",
+       "name": "Manectric",
+       "n": 1
+      },
+      {
+       "id": "sm1-119",
+       "name": "Great Ball",
+       "n": 1
+      },
+      {
+       "id": "sm1-123",
+       "name": "Nest Ball",
+       "n": 1
+      }
+     ],
+     "promo": 130
+    },
+    {
+     "name": "Delcatty",
+     "cards": [
+      {
+       "id": "sm7-57",
+       "name": "Gulpin",
+       "n": 2
+      },
+      {
+       "id": "sm7-58",
+       "name": "Swalot",
+       "n": 2
+      },
+      {
+       "id": "sm7-120",
+       "name": "Skitty",
+       "n": 2
+      },
+      {
+       "id": "sm7-121",
+       "name": "Delcatty",
+       "n": 1
+      },
+      {
+       "id": "sm7-124",
+       "name": "Apricorn Maker",
+       "n": 1
+      },
+      {
+       "id": "sm1-119",
+       "name": "Great Ball",
+       "n": 1
+      },
+      {
+       "id": "sm1-123",
+       "name": "Nest Ball",
+       "n": 1
+      }
+     ],
+     "promo": 132
+    },
+    {
+     "name": "Celesteela",
+     "cards": [
+      {
+       "id": "sm7-92",
+       "name": "Beldum",
+       "n": 3
+      },
+      {
+       "id": "sm7-94",
+       "name": "Metang",
+       "n": 2
+      },
+      {
+       "id": "sm7-95",
+       "name": "Metagross",
+       "n": 2
+      },
+      {
+       "id": "sm7-147",
+       "name": "Switch",
+       "n": 1
+      },
+      {
+       "id": "sm7-148",
+       "name": "Tate & Liza",
+       "n": 1
+      },
+      {
+       "id": "sm1-134",
+       "name": "Timer Ball",
+       "n": 1
+      }
+     ],
+     "promo": 131
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm7-126",
+     "name": "Bill's Maintenance",
+     "max": 2
+    },
+    {
+     "id": "sm7-127",
+     "name": "Copycat",
+     "max": 2
+    },
+    {
+     "id": "sm7-132",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm7-149",
+     "name": "TV Reporter",
+     "max": 2
+    },
+    {
+     "id": "sm7-150",
+     "name": "Underground Expedition",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Celestial_Storm_Build_%26_Battle_Box_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm8",
+   "tcgplayerId": 179423,
+   "name": "Lost Thunder Build & Battle Box",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Suicune",
+     "cards": [
+      {
+       "id": "sm8-64",
+       "name": "Popplio",
+       "n": 2
+      },
+      {
+       "id": "sm8-65",
+       "name": "Popplio",
+       "n": 1
+      },
+      {
+       "id": "sm8-66",
+       "name": "Brionne",
+       "n": 2
+      },
+      {
+       "id": "sm8-67",
+       "name": "Primarina",
+       "n": 2
+      },
+      {
+       "id": "sm8-179",
+       "name": "Kahili",
+       "n": 1
+      },
+      {
+       "id": "sm1-134",
+       "name": "Timer Ball",
+       "n": 1
+      }
+     ],
+     "promo": 149
+    },
+    {
+     "name": "Raikou",
+     "cards": [
+      {
+       "id": "sm8-76",
+       "name": "Mareep",
+       "n": 3
+      },
+      {
+       "id": "sm8-77",
+       "name": "Flaaffy",
+       "n": 2
+      },
+      {
+       "id": "sm8-78",
+       "name": "Ampharos",
+       "n": 2
+      },
+      {
+       "id": "sm8-188",
+       "name": "Professor Elm's Lecture",
+       "n": 1
+      },
+      {
+       "id": "sm1-134",
+       "name": "Timer Ball",
+       "n": 1
+      }
+     ],
+     "promo": 150
+    },
+    {
+     "name": "Giratina",
+     "cards": [
+      {
+       "id": "sm8-87",
+       "name": "Natu",
+       "n": 2
+      },
+      {
+       "id": "sm8-88",
+       "name": "Xatu",
+       "n": 2
+      },
+      {
+       "id": "sm8-107",
+       "name": "Poipole",
+       "n": 1
+      },
+      {
+       "id": "sm8-108",
+       "name": "Naganadel",
+       "n": 1
+      },
+      {
+       "id": "sm8-184",
+       "name": "Mixed Herbs",
+       "n": 1
+      },
+      {
+       "id": "sm8-189",
+       "name": "Sightseer",
+       "n": 1
+      },
+      {
+       "id": "sm1-123",
+       "name": "Nest Ball",
+       "n": 1
+      }
+     ],
+     "promo": 151
+    },
+    {
+     "name": "Tapu Lele",
+     "cards": [
+      {
+       "id": "sm8-133",
+       "name": "Jigglypuff",
+       "n": 3
+      },
+      {
+       "id": "sm8-134",
+       "name": "Wigglytuff",
+       "n": 2
+      },
+      {
+       "id": "sm8-174",
+       "name": "Fairy Charm G",
+       "n": 1
+      },
+      {
+       "id": "sm8-175",
+       "name": "Fairy Charm P",
+       "n": 1
+      },
+      {
+       "id": "sm8-183",
+       "name": "Mina",
+       "n": 1
+      },
+      {
+       "id": "sm1-123",
+       "name": "Nest Ball",
+       "n": 1
+      }
+     ],
+     "promo": 152
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm7-127",
+     "name": "Copycat",
+     "max": 2
+    },
+    {
+     "id": "sm7-132",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm5-125",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm5-126",
+     "name": "Looker",
+     "max": 2
+    },
+    {
+     "id": "sm1-128",
+     "name": "Professor Kukui",
+     "max": 2
+    },
+    {
+     "id": "sm7-148",
+     "name": "Tate & Liza",
+     "max": 2
+    },
+    {
+     "id": "sm7-149",
+     "name": "TV Reporter",
+     "max": 2
+    },
+    {
+     "id": "sm7-150",
+     "name": "Underground Expedition",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Lost_Thunder_Build_%26_Battle_Box_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm9",
+   "tcgplayerId": 183975,
+   "name": "Team Up Build & Battle Box",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Charizard",
+     "cards": [
+      {
+       "id": "sm9-12",
+       "name": "Charmander",
+       "n": 1
+      },
+      {
+       "id": "sm9-13",
+       "name": "Charmeleon",
+       "n": 1
+      },
+      {
+       "id": "sm9-17",
+       "name": "Ponyta",
+       "n": 3
+      },
+      {
+       "id": "sm9-18",
+       "name": "Rapidash",
+       "n": 2
+      },
+      {
+       "id": "sm9-140",
+       "name": "Erika's Hospitality",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 158
+    },
+    {
+     "name": "Zapdos",
+     "cards": [
+      {
+       "id": "sm9-44",
+       "name": "Blitzle",
+       "n": 3
+      },
+      {
+       "id": "sm9-45",
+       "name": "Zebstrika",
+       "n": 2
+      },
+      {
+       "id": "sm9-46",
+       "name": "Emolga",
+       "n": 1
+      },
+      {
+       "id": "sm9-127",
+       "name": "Farfetch'd",
+       "n": 1
+      },
+      {
+       "id": "sm7-147",
+       "name": "Switch",
+       "n": 1
+      },
+      {
+       "id": "sm7-148",
+       "name": "Tate & Liza",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 159
+    },
+    {
+     "name": "Nidoqueen",
+     "cards": [
+      {
+       "id": "sm9-54",
+       "name": "Nidoran♀",
+       "n": 1
+      },
+      {
+       "id": "sm9-55",
+       "name": "Nidorina",
+       "n": 1
+      },
+      {
+       "id": "sm9-62",
+       "name": "Grimer",
+       "n": 3
+      },
+      {
+       "id": "sm9-63",
+       "name": "Muk",
+       "n": 2
+      },
+      {
+       "id": "sm9-144",
+       "name": "Ingo & Emmet",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 160
+    },
+    {
+     "name": "Jirachi",
+     "cards": [
+      {
+       "id": "sm9-104",
+       "name": "Pawniard",
+       "n": 3
+      },
+      {
+       "id": "sm9-105",
+       "name": "Bisharp",
+       "n": 2
+      },
+      {
+       "id": "sm9-127",
+       "name": "Farfetch'd",
+       "n": 1
+      },
+      {
+       "id": "sm5-122",
+       "name": "Escape Board",
+       "n": 1
+      },
+      {
+       "id": "sm9-145",
+       "name": "Jasmine",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 161
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm7-127",
+     "name": "Copycat",
+     "max": 2
+    },
+    {
+     "id": "sm5-119",
+     "name": "Cynthia",
+     "max": 2
+    },
+    {
+     "id": "sm7-132",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm8-179",
+     "name": "Kahili",
+     "max": 2
+    },
+    {
+     "id": "sm5-125",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm5-126",
+     "name": "Looker",
+     "max": 2
+    },
+    {
+     "id": "sm1-128",
+     "name": "Professor Kukui",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Team_Up_Build_%26_Battle_Box_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm10",
+   "tcgplayerId": 189823,
+   "name": "Unbroken Bonds Build & Battle Box",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Volcanion",
+     "cards": [
+      {
+       "id": "sm10-27",
+       "name": "Litten",
+       "n": 3
+      },
+      {
+       "id": "sm10-28",
+       "name": "Torracat",
+       "n": 2
+      },
+      {
+       "id": "sm10-29",
+       "name": "Incineroar",
+       "n": 2
+      },
+      {
+       "id": "sm10-189",
+       "name": "Welder",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 179
+    },
+    {
+     "name": "Persian",
+     "cards": [
+      {
+       "id": "sm10-48",
+       "name": "Goldeen",
+       "n": 3
+      },
+      {
+       "id": "sm10-49",
+       "name": "Seaking",
+       "n": 2
+      },
+      {
+       "id": "sm10-147",
+       "name": "Meowth",
+       "n": 1
+      },
+      {
+       "id": "sm10-184",
+       "name": "Red's Challenge",
+       "n": 1
+      },
+      {
+       "id": "sm5-122",
+       "name": "Escape Board",
+       "n": 2
+      }
+     ],
+     "promo": 182
+    },
+    {
+     "name": "Stakataka",
+     "cards": [
+      {
+       "id": "sm10-83",
+       "name": "Sandshrew",
+       "n": 2
+      },
+      {
+       "id": "sm10-84",
+       "name": "Sandslash",
+       "n": 2
+      },
+      {
+       "id": "sm10-104",
+       "name": "Crabrawler",
+       "n": 2
+      },
+      {
+       "id": "sm10-105",
+       "name": "Crabominable",
+       "n": 2
+      },
+      {
+       "id": "sm10-176",
+       "name": "Janine",
+       "n": 1
+      }
+     ],
+     "promo": 180
+    },
+    {
+     "name": "Melmetal",
+     "cards": [
+      {
+       "id": "sm10-102",
+       "name": "Riolu",
+       "n": 3
+      },
+      {
+       "id": "sm10-126",
+       "name": "Lucario",
+       "n": 2
+      },
+      {
+       "id": "sm10-128",
+       "name": "Meltan",
+       "n": 1
+      },
+      {
+       "id": "sm10-175",
+       "name": "Green's Exploration",
+       "n": 1
+      },
+      {
+       "id": "sm10-180",
+       "name": "Metal Core Barrier",
+       "n": 2
+      }
+     ],
+     "promo": 181
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm7-127",
+     "name": "Copycat",
+     "max": 2
+    },
+    {
+     "id": "sm5-119",
+     "name": "Cynthia",
+     "max": 2
+    },
+    {
+     "id": "sm9-140",
+     "name": "Erika's Hospitality",
+     "max": 2
+    },
+    {
+     "id": "sm7-132",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm8-179",
+     "name": "Kahili",
+     "max": 2
+    },
+    {
+     "id": "sm5-125",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm5-126",
+     "name": "Looker",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Unbroken_Bonds_Build_%26_Battle_Box_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm11",
+   "tcgplayerId": 195612,
+   "name": "Unified Minds Build & Battle Box",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Amoonguss",
+     "cards": [
+      {
+       "id": "sm11-5",
+       "name": "Shroomish",
+       "n": 1
+      },
+      {
+       "id": "sm11-108",
+       "name": "Breloom",
+       "n": 1
+      },
+      {
+       "id": "sm11-13",
+       "name": "Foongus",
+       "n": 3
+      },
+      {
+       "id": "sm11-14",
+       "name": "Amoonguss",
+       "n": 2
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 202
+    },
+    {
+     "name": "Tapu Fini",
+     "cards": [
+      {
+       "id": "sm11-177",
+       "name": "Audino",
+       "n": 1
+      },
+      {
+       "id": "sm11-37",
+       "name": "Snorunt",
+       "n": 3
+      },
+      {
+       "id": "sm11-38",
+       "name": "Froslass",
+       "n": 2
+      },
+      {
+       "id": "sm11-211",
+       "name": "U-Turn Board",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 203
+    },
+    {
+     "name": "Necrozma",
+     "cards": [
+      {
+       "id": "sm11-101",
+       "name": "Necrozma",
+       "n": 1
+      },
+      {
+       "id": "sm11-105",
+       "name": "Cubone",
+       "n": 3
+      },
+      {
+       "id": "sm11-75",
+       "name": "Alolan Marowak",
+       "n": 2
+      },
+      {
+       "id": "sm11-212",
+       "name": "Recycle Energy",
+       "n": 1
+      },
+      {
+       "id": "sm10-165",
+       "name": "Chip-Chip Ice Axe",
+       "n": 1
+      }
+     ],
+     "promo": 204
+    },
+    {
+     "name": "Terrakion",
+     "cards": [
+      {
+       "id": "sm11-164",
+       "name": "Tauros",
+       "n": 1
+      },
+      {
+       "id": "sm11-109",
+       "name": "Meditite",
+       "n": 3
+      },
+      {
+       "id": "sm11-110",
+       "name": "Medicham",
+       "n": 2
+      },
+      {
+       "id": "sm11-201",
+       "name": "Karate Belt",
+       "n": 2
+      }
+     ],
+     "promo": 205
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm8-188",
+     "name": "Professor Elm's Lecture",
+     "max": 2
+    },
+    {
+     "id": "sm5-125",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm5-119",
+     "name": "Cynthia",
+     "max": 2
+    },
+    {
+     "id": "sm5-126",
+     "name": "Looker",
+     "max": 2
+    },
+    {
+     "id": "sm7-132",
+     "name": "Hau",
+     "max": 2
+    },
+    {
+     "id": "sm7-133",
+     "name": "Hiker",
+     "max": 2
+    },
+    {
+     "id": "sm8-179",
+     "name": "Kahili",
+     "max": 2
+    },
+    {
+     "id": "sm10-175",
+     "name": "Green's Exploration",
+     "max": 2
+    },
+    {
+     "id": "sm11-188",
+     "name": "Blue's Tactics",
+     "max": 2
+    },
+    {
+     "id": "sm11-189",
+     "name": "Bug Catcher",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Unified_Minds_Build_%26_Battle_Box_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  },
+  {
+   "set": "sm12",
+   "tcgplayerId": 199310,
+   "name": "Cosmic Eclipse Build & Battle Box",
+   "total": 23,
+   "groups": [
+    {
+     "name": "Buzzwole",
+     "cards": [
+      {
+       "id": "sm12-13",
+       "name": "Kricketot",
+       "n": 2
+      },
+      {
+       "id": "sm12-14",
+       "name": "Kricketune",
+       "n": 2
+      },
+      {
+       "id": "sm12-15",
+       "name": "Deerling",
+       "n": 2
+      },
+      {
+       "id": "sm12-16",
+       "name": "Sawsbuck",
+       "n": 2
+      },
+      {
+       "id": "sm12-201",
+       "name": "Professor Oak's Setup",
+       "n": 1
+      }
+     ],
+     "promo": 218
+    },
+    {
+     "name": "Entei",
+     "cards": [
+      {
+       "id": "sm12-31",
+       "name": "Tepig",
+       "n": 3
+      },
+      {
+       "id": "sm12-32",
+       "name": "Pignite",
+       "n": 2
+      },
+      {
+       "id": "sm12-33",
+       "name": "Emboar",
+       "n": 2
+      },
+      {
+       "id": "sm12-203",
+       "name": "Roller Skater",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 219
+    },
+    {
+     "name": "Phione",
+     "cards": [
+      {
+       "id": "sm12-54",
+       "name": "Piplup",
+       "n": 3
+      },
+      {
+       "id": "sm12-55",
+       "name": "Prinplup",
+       "n": 2
+      },
+      {
+       "id": "sm12-56",
+       "name": "Empoleon",
+       "n": 2
+      },
+      {
+       "id": "sm12-209",
+       "name": "Draw Energy",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 220
+    },
+    {
+     "name": "Blacephalon",
+     "cards": [
+      {
+       "id": "sm12-83",
+       "name": "Duskull",
+       "n": 3
+      },
+      {
+       "id": "sm12-84",
+       "name": "Dusclops",
+       "n": 2
+      },
+      {
+       "id": "sm12-85",
+       "name": "Dusknoir",
+       "n": 2
+      },
+      {
+       "id": "sm12-205",
+       "name": "Roxie",
+       "n": 1
+      },
+      {
+       "id": "sm9-152",
+       "name": "Pokémon Communication",
+       "n": 1
+      }
+     ],
+     "promo": 221
+    }
+   ],
+   "pool": [
+    {
+     "id": "sm11-188",
+     "name": "Blue's Tactics",
+     "max": 2
+    },
+    {
+     "id": "sm5-119",
+     "name": "Cynthia",
+     "max": 2
+    },
+    {
+     "id": "sm9-140",
+     "name": "Erika's Hospitality",
+     "max": 2
+    },
+    {
+     "id": "sm5-125",
+     "name": "Lillie",
+     "max": 2
+    },
+    {
+     "id": "sm10-184",
+     "name": "Red's Challenge",
+     "max": 2
+    },
+    {
+     "id": "sm12-204",
+     "name": "Rosa",
+     "max": 2
+    },
+    {
+     "id": "sm7-148",
+     "name": "Tate & Liza",
+     "max": 2
+    }
+   ],
+   "missing": [],
+   "confidence": "single-source",
+   "sources": [
+    {
+     "url": "https://bulbapedia.bulbagarden.net/wiki/Cosmic_Eclipse_Build_%26_Battle_Box_%28TCG%29",
+     "quote": "Each box included two of the following four groups, one always coinciding with the prerelease promo, plus random Trainers (max 2 of each)"
+    }
+   ]
+  }
+ ]
+}
