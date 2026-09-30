@@ -8,7 +8,7 @@
    The server owns every pull, balance and award (worker/battles.js). These
    modules only present what it returns. */
 import { createHall } from "./battle-hall.js?v=1";
-import { createTable } from "./battle-table.js?v=1";
+import { createTable } from "./battle-table.js?v=2";
 
 const ID_ROUTE = /^\/battles\/([a-zA-Z0-9-]{1,80})$/;
 

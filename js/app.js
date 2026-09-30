@@ -86,7 +86,8 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
-import { initBattles } from "./battles.js";
+import { initBattles } from "./battles.js?v=2";
+import { initCasino } from "./casino.js";
 
 const state = loadState();
 let cloudUser = null;
@@ -102,6 +103,8 @@ let pendingClaim = localStorage.getItem(CLOUD_SEEN_KEY) ? null : snapshotIfProgr
 let ripLock = false;
 let battleReturnPath = "";
 let battlePath = "/battles";
+let casinoReturnPath = "";
+let casinoPath = "/casino";
 
 function snapshotIfProgress(save) {
   if (!save) return null;
@@ -307,6 +310,8 @@ const els = {
   viewHome: document.getElementById("view-home"),
   viewShop: document.getElementById("view-shop"),
   viewBattles: document.getElementById("view-battles"),
+  viewCasino: document.getElementById("view-casino"),
+  casinoBar: document.getElementById("casino-bar"),
   viewCollection: document.getElementById("view-collection"),
   viewBinder: document.getElementById("view-binder"),
   binderBody: document.getElementById("binder-body"),
@@ -2505,12 +2510,17 @@ function busyPack() {
 function openAuth(tab) {
   if (busyPack()) return;
   if (view === "battles") battleReturnPath = battlePath;
+  if (view === "casino") casinoReturnPath = casinoPath;
   authTab = tab === "signin" ? "signin" : tab === "signup" ? "signup" : "signup";
   setView("auth");
 }
 
 function returnAfterAuth() {
-  if (battleReturnPath) {
+  if (casinoReturnPath) {
+    casinoPath = casinoReturnPath;
+    casinoReturnPath = "";
+    setView("casino");
+  } else if (battleReturnPath) {
     battlePath = battleReturnPath;
     battleReturnPath = "";
     setView("battles");
@@ -3748,6 +3758,7 @@ const VIEW_SECTIONS = {
   home: "viewHome",
   shop: "viewShop",
   battles: "viewBattles",
+  casino: "viewCasino",
   collection: "viewCollection",
   binder: "viewBinder",
   catalog: "viewCatalog",
@@ -3763,6 +3774,7 @@ const VIEW_PATHS = {
   home: "/home",
   shop: "/packs",
   battles: "/battles",
+  casino: "/casino",
   collection: "/bulk",
   binder: "/binder",
   catalog: "/catalog",
@@ -3780,6 +3792,7 @@ const PATH_VIEWS = {
   "/index.html": "home",
   "/packs": "shop",
   "/battles": "battles",
+  "/casino": "casino",
   "/shop": "shop",
   "/bulk": "collection",
   "/collection": "collection",
@@ -3800,6 +3813,7 @@ const VIEW_TITLES = {
   home: "poke-pack.rip — rip packs, fill the binder",
   shop: "Packs — poke-pack.rip",
   battles: "Pack battles — poke-pack.rip",
+  casino: "Casino — poke-pack.rip",
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
   catalog: "All sets — poke-pack.rip",
@@ -3818,6 +3832,7 @@ const VIEW_RENDER = {
   },
   shop: () => centerQuickSet(),
   battles: () => battles.show(battlePath),
+  casino: () => casino.show(casinoPath),
   collection: () => renderCollection(),
   binder: () => renderBinder(),
   catalog: () => renderCatalog(),
@@ -3839,6 +3854,10 @@ function viewFromPath(pathname) {
   if (/^\/battles(?:\/[a-zA-Z0-9_-]+)?$/.test(path)) {
     battlePath = path;
     return "battles";
+  }
+  if (/^\/casino(?:\/[a-z]+(?:\/[a-zA-Z0-9-]+)?)?$/.test(path)) {
+    casinoPath = path;
+    return "casino";
   }
   if (PATH_VIEWS[path]) {
     if (PATH_VIEWS[path] === "social") dmHandle = "";
@@ -3890,6 +3909,7 @@ function viewTitle() {
 
 function pathForView(name) {
   if (name === "battles") return battlePath;
+  if (name === "casino") return casinoPath;
   if (name === "profile") return profilePath(profileHandle || "trainer", profilePageWanted);
   if (name === "shop") return `/packs/${liveSet.id}`;
   if (name === "social") return dmHandle ? `/social/${dmHandle}` : "/social";
@@ -3901,7 +3921,7 @@ function reduceMotion() {
 }
 
 function paintNav(current) {
-  const navView = current === "auth" || current === "profile" ? "account" : current;
+  const navView = current === "auth" || current === "profile" ? "account" : current === "battles" ? "casino" : current;
   document.querySelectorAll(".nav-btn").forEach((btn) => {
     const on = btn.dataset.view === navView;
     btn.classList.toggle("active", on);
@@ -3912,7 +3932,9 @@ function paintNav(current) {
 
 function applyView(next, hist) {
   if (next !== "battles") battles.hide();
+  if (next !== "casino") casino.hide();
   if (next !== "auth" && next !== "battles") battleReturnPath = "";
+  if (next !== "auth" && next !== "casino") casinoReturnPath = "";
   view = next;
   for (const [name, key] of Object.entries(VIEW_SECTIONS)) {
     els[key]?.classList.toggle("hidden", view !== name);
@@ -3921,12 +3943,16 @@ function applyView(next, hist) {
   document.querySelectorAll(".nav-more").forEach((more) => more.removeAttribute("open"));
   if (view !== "shop") hideSetNotice();
   VIEW_RENDER[view]?.();
+  // Battles live under the casino: it draws the sub-nav above them.
+  if (view === "battles") casino.paintBar("battles");
+  else if (view !== "casino") casino.paintBar("");
   document.body.classList.toggle("on-home", view === "home");
   document.body.classList.toggle("on-shop", view === "shop");
   document.body.classList.toggle("on-collection", view === "collection");
   document.body.classList.toggle("on-auth", view === "auth");
   document.body.classList.toggle("on-social", view === "social");
   document.body.classList.toggle("on-battles", view === "battles");
+  document.body.classList.toggle("on-casino", view === "casino" || view === "battles");
   document.title = viewTitle();
   if (!document.body.classList.contains("is-booting")) {
     window.scrollTo(0, 0);
@@ -5613,6 +5639,7 @@ document.querySelectorAll(".nav-btn").forEach((btn) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
     e.preventDefault();
     if (btn.dataset.view === "battles") battlePath = "/battles";
+    if (btn.dataset.view === "casino") casinoPath = "/casino";
     setView(btn.dataset.view);
   });
 });
@@ -6958,6 +6985,60 @@ const battles = initBattles({
     });
   },
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
+});
+
+/** Every card the player owns that has a picture and a price, for the stake picker. */
+async function casinoOwnedCards() {
+  await Promise.all([refreshSession().catch(() => null), ...PLAYABLE_SETS.map((set) => loadSetData(set).catch(() => null))]);
+  renderHeader();
+  const out = [];
+  for (const [id, owned] of Object.entries(state.collection || {})) {
+    if (!(owned > 0)) continue;
+    const card = findCard(id);
+    if (!card?.image) continue;
+    out.push({
+      id,
+      owned,
+      name: card.name,
+      number: card.number,
+      rarity: card.rarity,
+      image: card.image,
+      small: card.imageSmall || card.image,
+      value: sellValue(card),
+    });
+  }
+  return out;
+}
+
+const casino = initCasino({
+  root: els.viewCasino,
+  bar: els.casinoBar,
+  user: () => cloudUser,
+  settings: () => state.settings,
+  featuredSetId: () => liveSet?.id || state.activeSetId,
+  applySave: (save) => {
+    if (!cloudUser || !save) return;
+    applyCloudSave(save);
+    renderHeader();
+  },
+  navigate: (path) => {
+    if (!/^\/casino(?:\/[a-z]+(?:\/[a-zA-Z0-9-]+)?)?$/.test(path) && !/^\/battles(?:\/[a-zA-Z0-9_-]+)?$/.test(path)) return;
+    if (path.startsWith("/battles")) {
+      battlePath = path;
+      setView("battles");
+      return;
+    }
+    casinoPath = path;
+    setView("casino");
+  },
+  signIn: () => openAuth("signin"),
+  toast,
+  buzz,
+  ownedCards: casinoOwnedCards,
+  inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
+  // The equipped coin's art comes from the coin collection once it exists;
+  // until then every flip uses the default coin.
+  coinArt: () => null,
 });
 
 async function boot() {
