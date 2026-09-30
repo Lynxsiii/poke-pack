@@ -1,0 +1,35 @@
+{
+  "id": "sm10",
+  "name": "Unbroken Bonds",
+  "series": "sun-moon",
+  "slug": "unbroken-bonds",
+  "scrydexId": "sm10",
+  "era": "sm",
+  "artSlug": "unbroken-bonds",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2420,
+  "skipNumbers": [
+    "182a",
+    "182b",
+    "189a",
+    "195a"
+  ],
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}
