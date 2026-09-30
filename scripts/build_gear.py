@@ -17,6 +17,7 @@ A spec file is {"items": [...], "productRules": {...}}. An item:
          | { "url": "https://..." }
          | { "render": { "dex": 143, "finish": "bronze", "holo": false } },   # coins only
     "crop": [x0, y0, x1, y1] | null,   # pixels in the source image
+    "quadInset": 0.02,                       # sleeves: shrink the quad toward its centre by this fraction
     "quad": "auto" | [[x,y],[x,y],[x,y],[x,y]] | null,   # sleeves: "auto" finds the front sleeve of a
                                        # fanned stack on white by itself; else the four corners TL TR BR BL of the
                                        # sleeve in the photo; it is straightened (perspective) and
@@ -86,6 +87,13 @@ def build_sleeve(item: dict) -> tuple[Image.Image, str]:
             raise ValueError("auto quad found no sleeve; give the four corners")
     if quad and item.get("snap", True):
         quad = g.refine_quad(im, quad)
+    inset = float(item.get("quadInset") or 0)
+    if quad and inset:
+        # Pull every corner toward the centre so a sleeve's rounded corners and the
+        # sliver of whatever sits behind it stay outside the tile.
+        cx = sum(x for x, _ in quad) / 4
+        cy = sum(y for _, y in quad) / 4
+        quad = [(x + (cx - x) * inset, y + (cy - y) * inset) for x, y in quad]
     card = g.sleeve_card(im, item.get("crop"), quad=quad, rotate=float(item.get("rotate") or 0))
     return card, g.dominant_tint(card)
 
