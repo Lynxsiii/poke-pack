@@ -15,7 +15,8 @@ import {
   sellValue,
 } from "../js/catalog.js";
 import { drawPromos, isHit, ripPack } from "../js/engine.js";
-import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema } from "./social.js";
+import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, masteryBannerError } from "./social.js";
+import { DEFAULT_BANNER } from "../js/cosmetics.js";
 import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
@@ -330,6 +331,12 @@ async function patchMe(request, env) {
   let color = user.color;
   let title = user.title;
   let passwordHash = user.password_hash;
+  // A mastery banner is a reward: only for a set whose mastery is claimed.
+  if (typeof body.banner === "string" && body.banner.startsWith("mastery:")) {
+    await ensureAchievementSchema(env);
+    const refusal = await masteryBannerError(env, user.id, body.banner);
+    if (refusal) return json({ error: refusal.error }, refusal.status);
+  }
   const social = patchSocialFields(body, user);
 
   if (body.name != null) {
@@ -426,6 +433,7 @@ async function resetMe(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   await ensureAchievementSchema(env);
+  await ensureSocialSchema(env);
   const statsReady = await ensureQuestSchema(env);
   const now = Date.now();
   const profile = await env.DB.prepare("SELECT active_set_id FROM profiles WHERE user_id = ?")
@@ -433,6 +441,8 @@ async function resetMe(request, env) {
     .first();
   await env.DB.batch([
     ...(statsReady ? clearStatsStmts(env, auth.user.id) : []),
+    // A reset drops every claimed mastery, so a mastery banner goes with them.
+    env.DB.prepare("UPDATE users SET banner = ? WHERE id = ? AND banner LIKE 'mastery:%'").bind(DEFAULT_BANNER, auth.user.id),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
