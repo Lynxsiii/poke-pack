@@ -72,10 +72,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo .fo
   background-position:
     calc(var(--background-x) * 0.6) calc(var(--background-y) * 0.6),
     calc(100% - var(--background-x) * 0.8) calc(100% - var(--background-y) * 0.5),
-    calc(((50% - var(--background-x)) * 1.4) + 50%) calc(((50% - var(--background-y)) * 0.9) + 50%);
+    clamp(0%, calc(((50% - var(--background-x)) * 1.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 0.9) + 50%), 100%);
   background-size: 210% auto, 150% auto, 300% 300%;
   background-blend-mode: multiply, screen, normal;
-  filter: brightness(0.7) contrast(1.35) saturate(1.3) contrast(0.8);
+  filter: brightness(0.58) contrast(1.5) saturate(1.8) contrast(0.8);
   mix-blend-mode: color-dodge;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo:not(.lit):not(.settling) .foil {
@@ -93,17 +93,17 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo .fo
 /* A soft pool of light under the pointer; the far side stays grey, never dark. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 95%, 0.85) 0%, hsla(0, 0%, 70%, 0.55) 40%, hsla(0, 0%, 40%, 0.9) 100%);
+    hsla(0, 0%, 62%, 0.8) 0%, hsla(0, 0%, 50%, 0.55) 40%, hsla(0, 0%, 36%, 0.9) 100%);
   background-size: cover;
   mix-blend-mode: luminosity;
-  filter: brightness(0.8) contrast(1.6);
+  filter: brightness(0.8) contrast(1.3);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
   mix-blend-mode: overlay;
   filter: brightness(0.8) contrast(1.5);
-  opacity: calc(var(--card-opacity) * 0.7);
+  opacity: calc(var(--card-opacity) * 0.45);
 }
 
 /* ---- Rare Holo, Lost Thunder to Cosmic Eclipse: satin ---------------------------
@@ -113,18 +113,18 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo .gl
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo.sm-late .foil {
   background-image:
     radial-gradient(ellipse 70% 55% at calc(var(--pointer-x) * 0.8 + 10%) calc(var(--pointer-y) * 0.6 + 15%),
-      hsl(330, 75%, 78%) 0%, hsla(330, 75%, 78%, 0) 75%),
+      hsl(330, 60%, 30%) 0%, hsla(330, 60%, 30%, 0) 75%),
     radial-gradient(ellipse 65% 60% at calc(100% - var(--pointer-x) * 0.7) calc(100% - var(--pointer-y) * 0.6),
-      hsl(150, 70%, 74%) 0%, hsla(150, 70%, 74%, 0) 75%),
-    linear-gradient(115deg, #2a2a2a, #6a6a6a);
+      hsl(150, 50%, 28%) 0%, hsla(150, 50%, 28%, 0) 75%),
+    linear-gradient(115deg, #000, #000);
   background-position: center, center, center;
   background-size: 100% 100%, 100% 100%, 100% 100%;
   background-blend-mode: screen, screen, normal;
-  filter: brightness(0.75) contrast(1.15) saturate(0.9) contrast(0.8);
-  mix-blend-mode: color-dodge;
+  filter: saturate(1.1);
+  mix-blend-mode: screen;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo.sm-late:not(.lit):not(.settling) .foil {
-  filter: brightness(0.7) contrast(1.1) saturate(0.6) contrast(0.8);
+  filter: saturate(0.6);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo.sm-late .foil::before {
   opacity: calc(0.12 + var(--pointer-from-center) * 0.15);
