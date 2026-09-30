@@ -91,6 +91,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "tot24": ("#ff8f2e", "#9866ff"),     # Trick or Trade 2024: pumpkin to violet
     "mcd23": ("#ff4a3d", "#ffc72c"),     # Match Battle: fries red and gold
     "tot23": ("#8fdc4a", "#ff6fae"),     # Trick or Trade 2023: slime green to pink
+    "smp": ("#c5d0e6", "#ff9a3c"),       # SM promos: silver star, Alola sun orange
+    "mcd17": ("#ffb02e", "#ff4a3d"),     # McDonald's 2017: golden arches to red
+    "mcd18": ("#ff5a3d", "#ffd84a"),     # McDonald's 2018: red to fries yellow
+    "mcd19": ("#ff3d6a", "#ffc72c"),     # McDonald's 2019: berry red and gold
 }
 
 # Used when a set has no art at all and no override.

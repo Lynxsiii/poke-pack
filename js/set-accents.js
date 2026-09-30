@@ -47,4 +47,8 @@ export const SET_ACCENTS = {
   "tot24": { a: "#ff8f2e", b: "#9866ff" },
   "mcd23": { a: "#ff4a3d", b: "#ffc72c" },
   "tot23": { a: "#8fdc4a", b: "#ff6fae" },
+  "smp": { a: "#c5d0e6", b: "#ff9a3c" },
+  "mcd17": { a: "#ffb02e", b: "#ff4a3d" },
+  "mcd18": { a: "#ff5a3d", b: "#ffd84a" },
+  "mcd19": { a: "#ff3d6a", b: "#ffc72c" },
 };

@@ -15,6 +15,9 @@ const SIDE = {
   tot24: { packSize: 3, holos: 10 },
   mcd23: { packSize: 4, holos: 6 },
   mcd24: { packSize: 4, holos: 7 },
+  mcd17: { packSize: 1, holos: 12 },
+  mcd18: { packSize: 1, holos: 12 },
+  mcd19: { packSize: 1, holos: 12 },
 };
 
 for (const [id, want] of Object.entries(SIDE)) {
@@ -63,6 +66,14 @@ const tot24 = read("data/tot24.json");
 assert.equal(tot24.find((c) => c.name === "Darkrai").printedNumber, "136/197");
 assert.ok(tot24.filter((c) => c.holo).every((c) => c.foilAs === "Cosmos"));
 assert.ok(read("data/mcd23.json").filter((c) => c.holo).every((c) => c.foilAs === "Confetti"));
+// McDonald's 2017-2019: one Sun & Moon reprint to a Happy Meal, every card a holo in the SM finish.
+for (const id of ["mcd17", "mcd18", "mcd19"]) {
+  const cards = read(`data/${id}.json`);
+  assert.ok(cards.every((c) => c.era === "sm" && c.holo && c.foilAs === "Rare Holo"), `${id}: SM holos`);
+  assert.equal(getSet(id).cost, sealed[id].boosterPack, `${id}: the pack costs the mean of its cards`);
+  const mean = cards.reduce((a, c) => a + c.market, 0) / cards.length;
+  assert.ok(Math.abs(mean - getSet(id).cost) < 0.01, `${id}: cost ${getSet(id).cost} vs mean ${mean.toFixed(2)}`);
+}
 
 // The BOOster Bundles open as their packs.
 assert.deepEqual(promoOffers(products.tot23).map((o) => [o.id, o.packs]), [["booster-bundle-50", 50]]);

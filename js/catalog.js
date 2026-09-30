@@ -2554,6 +2554,73 @@ export const MCDONALDS_2024 = {
   ]),
 };
 
+/**
+ * SM Black Star Promos. Like the SWSH and SV promo pages there is no booster:
+ * each card comes in a product that holds packs from several sets (a collection
+ * box, a premium collection), in a deck or trainer kit, or at an event
+ * (a launch, the Worlds, a prerelease, a film release). A promo one set's own
+ * boxes carry (blisters, tins, Build & Battle Boxes, its GX boxes) stays filed
+ * under that set, and this page lists those too. Sources and gaps:
+ * .claude/skills/card-textures/reference/sun-moon-smp.md.
+ */
+export const SM_PROMOS = {
+  id: "smp",
+  tcgId: "smp",
+  name: "SM Black Star Promos",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "November 18, 2016",
+  live: true,
+  promoSet: true,
+  promoPrefix: "SM ",
+  totalCount: 33,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/smp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Sun & Moon, 2016 to 2021. The black star promos from premium and TAG TEAM collections, decks, the Alolan Sandslash trainer kit and events.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Sun & Moon black star promo that isn't in a set's own boxes: the TAG TEAM Powers and Premium Collections with their real packs, the theme and league decks, and the prerelease, Worlds and movie giveaways on their own.",
+  slots: [],
+  heroIds: ["smp-smp241", "smp-smp240", "smp-smp248", "smp-smp247"],
+  wrappers: [],
+};
+
+/**
+ * McDonald's Happy Meal promos of 2017, 2018 and 2019 (English): twelve
+ * reprints of Sun & Moon cards in Confetti Holofoil, one random card to a
+ * Happy Meal with a toy (Bulbapedia; TCGplayer lists every card as foil only).
+ * Nobody sold a pack and TCGplayer has no listing for one, so a "pack" here is
+ * one card priced at the average market price of the twelve (a fair draw),
+ * in a pouch drawn for the site (scripts/make_mcd_sm_wrappers.py).
+ */
+function happyMeal2017to2019(id, year, released, cost, heroIds, cardId) {
+  return {
+    id,
+    name: `McDonald's Collection ${year}`,
+    edition: "McDonald's",
+    era: "Sun & Moon",
+    released,
+    live: true,
+    printedTotal: 12,
+    totalCount: 12,
+    packSize: 1,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `Happy Meal promos, ${year}. Twelve Sun & Moon reprints in Confetti Holofoil, one card to a meal.`,
+    oddsLine: "1 card · always a Confetti holo · 12 cards",
+    lede: `One Happy Meal, one Confetti holo out of twelve. The Pikachu in each set is the one people chase.`,
+    slots: [{ pool: "printedHolo", count: 1 }],
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+  };
+}
+
+export const MCDONALDS_2017 = happyMeal2017to2019("mcd17", "2017", "November 7, 2017", 8.5, ["mcd17-5", "mcd17-3", "mcd17-1", "mcd17-12"], "mcd17-5");
+export const MCDONALDS_2018 = happyMeal2017to2019("mcd18", "2018", "October 16, 2018", 27.7, ["mcd18-2", "mcd18-11", "mcd18-4", "mcd18-5"], "mcd18-4");
+export const MCDONALDS_2019 = happyMeal2017to2019("mcd19", "2019", "October 15, 2019", 15.47, ["mcd19-6", "mcd19-12", "mcd19-5", "mcd19-1"], "mcd19-6");
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -2601,6 +2668,10 @@ export const PLAYABLE_SETS = [
   TRICK_OR_TRADE_2024,
   MCDONALDS_2023,
   TRICK_OR_TRADE_2023,
+  SM_PROMOS,
+  MCDONALDS_2017,
+  MCDONALDS_2018,
+  MCDONALDS_2019,
 ];
 
 /**
@@ -2775,9 +2846,13 @@ const POKESYMBOLS_SLUG = {
   rsv10pt5: "white-flare",
   svp: "_promo",
   swshp: "_promo",
+  smp: "_promo",
   sve: "scarlet-and-violet-energies",
   mcd23: "mcdonalds-collection-2023",
   mcd24: "mcdonalds-collection-dragon-discovery-2024",
+  mcd17: "mcdonalds-collection-2017",
+  mcd18: "mcdonalds-collection-2018",
+  mcd19: "mcdonalds-collection-2019",
   me1: "mega-evolution",
   me2: "phantasmal-flames",
   me2pt5: "ascended-heroes",
