@@ -98,6 +98,54 @@ reaches white on silver). No map (base rules): the window is a plain box
 - Lab cards were found by number, which collides across sets: per-set
   scratch data.
 
+## iPhone blocks on the attack bar (Raichu-GX SM213 and 20/68, Noah 2026-09-30)
+
+Blocky red, black, blue and magenta patches, stair-stepped, over the dark
+attack bar and the red ground, on iOS Safari's inspector (two screenshots,
+the second after the first fix). **Not reproducible in Playwright WebKit on
+Linux** (lab, real app, real inspector at 393x852 DPR 3, pinned and mouse
+poses, extreme poses, foil strength 1.5, an injected 5 percent noise layer, a
+stage-by-stage 8-bit filter emulation): all clean. So the cause is inferred,
+not seen, and "fixed" means "no longer built the way that fails", confirmed
+by Noah's phone, not by us.
+
+What the layer was: the shipped chain was brightness up to 1.37, contrast
+2.3, saturate 2.4, then the closing contrast(0.8). Rendered on its own it is
+near-binary: 63 percent of pixels sit at about 0.09 and most of the rest at
+0.77, pure colour plateaus with steep edges, and a colour-dodge divides the
+dark ink under it by one minus that (10x at the 0.9 cap). The Pokémon V
+recipe, the same structure (3-layer mask, dodge, exclusion twin) with
+brightness 0.62 up, contrast 2.2, saturate 1.25, has a max layer near 0.6
+and has always looked right on his phone. A `brightness(0.85)` cap (#113)
+kept the plateaus, and did not help.
+
+Fix (this sheet, v=5, and js/sm-foil.js `smGxMap`):
+- GX chain at V-level gain: brightness 0.64 + 0.45r, contrast 2.1, saturate
+  1.35, closing contrast(0.8); the border ring's chain eased to brightness
+  1.05, contrast 1.4, saturate 1.7.
+- **The attack bar takes no foil**, as on the real cards (three sources:
+  bleedingcool Espeon, YouTube stills of Reshiram & Zekrom and Charizard-GX:
+  the navy bar stays dark, the bands stop at its edges). TCG Live's map
+  marks it foil, so `scripts/make_sm_gx_maps.py` bakes `<n>-gx-v1.webp` per
+  GX / TAG TEAM GX (207 cards, 202 files: alternate-art GX with no TCG Live map are baked from the median safe map; `scripts/list_sm_gx.mjs` lists them; prints sharing a map file get one file, the plain card's): the
+  367x512 map smoothed up to the scan's 600x838 (a mask that is never a
+  3x-stepped image) times a protect factor of the scan's luminance, 0 at
+  luma 0.06 to 1 at 0.20 (floor 0.04). Bar luma is 0.01 to 0.12, art at
+  least 0.2. The old map files stay; `foilMap` in the data is unchanged and
+  `smGxMap()` renames at draw time. Re-run the script after any GX change.
+Lessons: (1) keep a dodged layer's channels off the rails: a recipe whose
+filter chain multiplies to more than about 3 (contrast x saturate x 0.8)
+makes a near-binary layer, and only the V numbers are proven on an iPhone;
+(2) dark print should be protected by the map, which is what the real card
+does; (3) a Linux WebKit render cannot clear an iPhone-only glitch: ask for
+a phone screenshot and say so.
+
+Texture (texture-refs/gx-v2/findings.md, 3 photographers): a pebble relief
+(0.5 to 1 percent of card width, no direction, seen only inside a band or
+glare) on Espeon and Solgaleo & Lunala, which `.glare::after`'s peel already
+is; one real Raichu & Alolan Raichu TAG TEAM shows fine ruled lines (0.8
+percent, one card), not drawn because a line screen aliases at phone size.
+
 ## Verification
 
 Chromium and WebKit (Playwright) at 220 px × 3, poses rest, 30:25, 75:65,
