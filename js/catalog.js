@@ -2579,7 +2579,7 @@ export const LOST_THUNDER = {
   oddsLine: "GX 1/10 · full art 1/23 · rainbow 1/80 · gold 1/109 · Prism Star 1/8",
   lede: "Lugia-GX, Zeraora-GX and Mimikyu-GX in rainbow are the chase. A Prism Star takes the reverse slot about 1 pack in 8; the rare slot is a GX 1 in 10.",
   // Elite Fourum's box tallies (burpies n=1,274, sturzflugbombardieru n=3,168, Derium n=1,008, Danny Phantump), pooled n=5,450; Prism Stars replace the reverse holo (Elite Fourum, PrimetimePokemon, Dripshop). Sources in data/pullrates.json.
-  slots: smSlots({ holo: 0.1667, gx: 0.1017, ultra: 0.044, rainbow: 0.0125, secret: 0.0092, reverseSpecial: [["prismStar", 0.1246]] }),
+  slots: smSlots({ holo: 0.1659, gx: 0.1017, ultra: 0.044, rainbow: 0.0125, secret: 0.0092, reverseSpecial: [["prismStar", 0.1246]] }),
   heroIds: ["sm8-226", "sm8-227", "sm8-206", "sm8-221"],
   wrappers: boosterWrappers("sm8", [
     { id: "celebi", name: "Celebi", cardId: "sm8-19", tag: "Prism Star" },
@@ -2609,7 +2609,7 @@ export const TEAM_UP = {
   oddsLine: "GX 1/10 · full art 1/24 · rainbow 1/74 · gold 1/98 · Prism Star 1/18",
   lede: "The first TAG TEAM GX. Gengar & Mimikyu and Latias & Latios have alternate full arts, and every TAG TEAM has a rainbow. Full art 1 in 24, rainbow 1 in 74.",
   // Elite Fourum's box tallies (sturzflugbombardieru n=2,016, burpies n=872, Derium n=2,999, Danny Phantump), pooled n=5,887; Prism Stars replace the reverse holo. Sources in data/pullrates.json.
-  slots: smSlots({ holo: 0.1667, gx: 0.102, ultra: 0.0425, rainbow: 0.0136, secret: 0.0102, reverseSpecial: [["prismStar", 0.0562]] }),
+  slots: smSlots({ holo: 0.165, gx: 0.102, ultra: 0.0425, rainbow: 0.0136, secret: 0.0102, reverseSpecial: [["prismStar", 0.0562]] }),
   heroIds: ["sm9-170", "sm9-165", "sm9-161", "sm9-191"],
   wrappers: boosterWrappers("sm9", [
     { id: "eevee-snorlax", name: "Eevee & Snorlax", cardId: "sm9-120", tag: "Tag Team" },
