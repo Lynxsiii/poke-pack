@@ -1,0 +1,482 @@
+[
+  {
+    "id": "mcd17-1",
+    "name": "Rowlet",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Megumi Mizutani",
+    "flavorText": "This wary Pokémon uses photosynthesis to store up energy during the day, while becoming active at night.",
+    "image": "assets/cards/mcd17/1.webp",
+    "imageSmall": "assets/cards/mcd17/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 7.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-1/large",
+    "printedNumber": "001/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152681
+  },
+  {
+    "id": "mcd17-2",
+    "name": "Grubbin",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Akira Komayama",
+    "flavorText": "They often gather near places frequented by electric Pokémon in order to avoid being attacked by bird Pokémon.",
+    "image": "assets/cards/mcd17/2.webp",
+    "imageSmall": "assets/cards/mcd17/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Vice Grip",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 3.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-2/large",
+    "printedNumber": "002/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152682
+  },
+  {
+    "id": "mcd17-3",
+    "name": "Litten",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Akira Komayama",
+    "flavorText": "While grooming itself, it builds up fur inside its stomach. It sets the fur alight and spews fiery attacks, which change based on how it coughs.",
+    "image": "assets/cards/mcd17/3.webp",
+    "imageSmall": "assets/cards/mcd17/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 17.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-3/large",
+    "printedNumber": "003/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152683
+  },
+  {
+    "id": "mcd17-4",
+    "name": "Popplio",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "This Pokémon snorts body fluids from its nose, blowing balloons to smash into its foes. It's famous for being a hard worker.",
+    "image": "assets/cards/mcd17/4.webp",
+    "imageSmall": "assets/cards/mcd17/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 3.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-4/large",
+    "printedNumber": "004/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152684
+  },
+  {
+    "id": "mcd17-5",
+    "name": "Pikachu",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "kirisAki",
+    "flavorText": "A plan was recently announced to gather many Pikachu and make an electric power plant.",
+    "image": "assets/cards/mcd17/5.webp",
+    "imageSmall": "assets/cards/mcd17/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 31.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-5/large",
+    "printedNumber": "005/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152685
+  },
+  {
+    "id": "mcd17-6",
+    "name": "Cosmog",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Megumi Mizutani",
+    "flavorText": "Its body is gaseous and frail. It slowly grows as it collects dust from the atmosphere.",
+    "image": "assets/cards/mcd17/6.webp",
+    "imageSmall": "assets/cards/mcd17/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Dust Gathering",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      }
+    ],
+    "market": 4.63,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-6/large",
+    "printedNumber": "006/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152686
+  },
+  {
+    "id": "mcd17-7",
+    "name": "Crabrawler",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It punches so much, its pincers often come off from overuse, but they grow back quickly. What little meat they contain is rich and delicious.",
+    "image": "assets/cards/mcd17/7.webp",
+    "imageSmall": "assets/cards/mcd17/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Crabhammer",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 5.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-7/large",
+    "printedNumber": "007/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152687
+  },
+  {
+    "id": "mcd17-8",
+    "name": "Alolan Meowth",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "This Pokémon was not originally found in Alola. Human actions caused a surge in their numbers, and they went feral. They're prideful and crafty.",
+    "image": "assets/cards/mcd17/8.webp",
+    "imageSmall": "assets/cards/mcd17/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "market": 5.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-8/large",
+    "printedNumber": "008/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152688
+  },
+  {
+    "id": "mcd17-9",
+    "name": "Alolan Diglett",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "50",
+    "artist": "Megumi Mizutani",
+    "flavorText": "Its head sports an altered form of whiskers made of metal. When in communication with its comrades, its whiskers wobble to and fro.",
+    "image": "assets/cards/mcd17/9.webp",
+    "imageSmall": "assets/cards/mcd17/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Spelunk",
+        "damage": "",
+        "text": "Look at the top 3 cards of your deck and put them back in any order."
+      },
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 5.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-9/large",
+    "printedNumber": "009/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152689
+  },
+  {
+    "id": "mcd17-10",
+    "name": "Cutiefly",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "30",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "It feeds on the nectar and pollen of flowers. Because it's able to sense auras, it can identify which flowers are about to bloom.",
+    "image": "assets/cards/mcd17/10.webp",
+    "imageSmall": "assets/cards/mcd17/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Fly Around",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "10",
+        "text": "If any damage is done to this Pokémon by attacks during your opponent's next turn, flip a coin. If heads, prevent that damage."
+      }
+    ],
+    "market": 5.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-10/large",
+    "printedNumber": "010/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152690
+  },
+  {
+    "id": "mcd17-11",
+    "name": "Pikipek",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Shin Nagasawa",
+    "flavorText": "This Pokémon feeds on berries, whose leftover seeds become the ammunition for the attacks it fires off from its mouth.",
+    "image": "assets/cards/mcd17/11.webp",
+    "imageSmall": "assets/cards/mcd17/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Smash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "market": 5.97,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-11/large",
+    "printedNumber": "011/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152692
+  },
+  {
+    "id": "mcd17-12",
+    "name": "Yungoos",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "match",
+    "flavorText": "With its sharp fangs, it will bite anything. It did not originally live in Alola but was imported from another region.",
+    "image": "assets/cards/mcd17/12.webp",
+    "imageSmall": "assets/cards/mcd17/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 6.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd17-12/large",
+    "printedNumber": "012/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 152693
+  }
+]

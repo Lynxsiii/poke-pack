@@ -1,0 +1,88 @@
+{
+  "id": "mcd18",
+  "name": "McDonald's Collection 2018",
+  "side": true,
+  "series": "other",
+  "slug": "mcdonalds-collection-2018",
+  "scrydexId": "mcd18",
+  "printedTotal": 12,
+  "tcgplayerGroup": 2364,
+  "defaults": {
+    "rarity": "Promo",
+    "era": "sm"
+  },
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 180450,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 180451,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 180449,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 180452,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 180453,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 180454,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 180455,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 180456,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 180457,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 180458,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 180459,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 180460,
+      "holo": true,
+      "foilAs": "Rare Holo"
+    }
+  ]
+}

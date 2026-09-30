@@ -1,0 +1,444 @@
+[
+  {
+    "id": "mcd19-1",
+    "name": "Caterpie",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Sekio",
+    "flavorText": "When attacked by bird Pokémon, it resists by releasing a terrifically strong odor from its antennae, but it often becomes their prey.",
+    "image": "assets/cards/mcd19/1.webp",
+    "imageSmall": "assets/cards/mcd19/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 15.06,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-1/large",
+    "printedNumber": "001/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200960
+  },
+  {
+    "id": "mcd19-2",
+    "name": "Alolan Exeggutor",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "160",
+    "artist": "Satoshi Shirai",
+    "flavorText": "As it grew taller and taller, it outgrew its reliance on psychic powers, while within it awakened the power of the sleeping dragon.",
+    "evolvesFrom": "Exeggcute",
+    "image": "assets/cards/mcd19/2.webp",
+    "imageSmall": "assets/cards/mcd19/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Tropical Shake",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20+",
+        "text": "This attack does 20 more damage for each type of basic Energy card in your discard pile. You can't add more than 100 damage in this way."
+      }
+    ],
+    "market": 7.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-2/large",
+    "printedNumber": "002/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200961
+  },
+  {
+    "id": "mcd19-3",
+    "name": "Magmar",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Yumi",
+    "flavorText": "When angered, it spouts brilliant fire from all over its body. It doesn't calm down until its opponent has burned to ash.",
+    "image": "assets/cards/mcd19/3.webp",
+    "imageSmall": "assets/cards/mcd19/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Controlled Burn",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "market": 10.86,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-3/large",
+    "printedNumber": "003/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200963
+  },
+  {
+    "id": "mcd19-4",
+    "name": "Alolan Sandshrew",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Shin Nagasawa",
+    "flavorText": "An ancient tradition of Alolan festivals, still carried on to this day, is a competition to slide Sandshrew across ice as far as one can.",
+    "image": "assets/cards/mcd19/4.webp",
+    "imageSmall": "assets/cards/mcd19/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "damage": "10",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "market": 12.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-4/large",
+    "printedNumber": "004/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200964
+  },
+  {
+    "id": "mcd19-5",
+    "name": "Lapras",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Saya Tsuruta",
+    "flavorText": "These Pokémon were once near extinction due to poaching. Following protective regulations, there is now an overabundance of them.",
+    "image": "assets/cards/mcd19/5.webp",
+    "imageSmall": "assets/cards/mcd19/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Bullet",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": "This attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "This attack does 10 more damage times the amount of Water Energy attached to this Pokémon."
+      }
+    ],
+    "market": 18.53,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-5/large",
+    "printedNumber": "005/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200966
+  },
+  {
+    "id": "mcd19-6",
+    "name": "Pikachu",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "A plan was recently announced to gather many Pikachu and make an electric power plant.",
+    "image": "assets/cards/mcd19/6.webp",
+    "imageSmall": "assets/cards/mcd19/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Tail",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin until you get tails. This attack does 20 damage for each heads."
+      }
+    ],
+    "market": 36.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-6/large",
+    "printedNumber": "006/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200967
+  },
+  {
+    "id": "mcd19-7",
+    "name": "Gastly",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Shibuzoh.",
+    "flavorText": "Should a strange light be seen flickering in an abandoned building, Gastly is lurking there.",
+    "image": "assets/cards/mcd19/7.webp",
+    "imageSmall": "assets/cards/mcd19/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Ominous Eyes",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 1 damage counter on 1 of your opponent's Pokémon."
+      }
+    ],
+    "market": 15.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-7/large",
+    "printedNumber": "007/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200969
+  },
+  {
+    "id": "mcd19-8",
+    "name": "Mankey",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Miki Tanaka",
+    "flavorText": "It can spontaneously become enraged. Everyone near it clears out as it rampages, and the resulting loneliness makes it angrier still.",
+    "image": "assets/cards/mcd19/8.webp",
+    "imageSmall": "assets/cards/mcd19/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Three-Step Strike",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": "Flip 3 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "market": 8.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-8/large",
+    "printedNumber": "008/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200971
+  },
+  {
+    "id": "mcd19-9",
+    "name": "Onix",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It usually lives underground. It searches for food while boring its way through the ground at 50 miles per hour.",
+    "image": "assets/cards/mcd19/9.webp",
+    "imageSmall": "assets/cards/mcd19/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Screech",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your next turn, the Defending Pokémon takes 20 more damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Rage",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "10+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      }
+    ],
+    "market": 9.57,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-9/large",
+    "printedNumber": "009/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200973
+  },
+  {
+    "id": "mcd19-10",
+    "name": "Alolan Meowth",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "When its delicate pride is wounded, or when the gold coin on its forehead is dirtied, it flies into a hysterical rage.",
+    "image": "assets/cards/mcd19/10.webp",
+    "imageSmall": "assets/cards/mcd19/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Spoil the Fun",
+        "damage": "10+",
+        "text": "If you go second, this attack does 60 more damage during your first turn."
+      }
+    ],
+    "market": 14.96,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-10/large",
+    "printedNumber": "010/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200975
+  },
+  {
+    "id": "mcd19-11",
+    "name": "Alolan Dugtrio",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Megumi Mizutani",
+    "flavorText": "This Pokémon are cherished in the Alola region, where they are thought to be feminine deities of the land incarnate.",
+    "evolvesFrom": "Alolan Diglett",
+    "image": "assets/cards/mcd19/11.webp",
+    "imageSmall": "assets/cards/mcd19/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Gold Rush",
+        "damage": "30",
+        "text": "Discard any number of Metal Energy cards from your hand. This attack does 30 damage for each card you discarded in this way."
+      }
+    ],
+    "market": 10.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-11/large",
+    "printedNumber": "011/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200976
+  },
+  {
+    "id": "mcd19-12",
+    "name": "Eevee",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "Current studies show it can evolve into an incredible eight different species of Pokémon.",
+    "image": "assets/cards/mcd19/12.webp",
+    "imageSmall": "assets/cards/mcd19/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 25.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd19-12/large",
+    "printedNumber": "012/012",
+    "era": "sm",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 200977
+  }
+]
