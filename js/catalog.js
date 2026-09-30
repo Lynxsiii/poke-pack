@@ -473,6 +473,11 @@ const ENERGY_PRINTS = [
   // The Sword & Shield era's own basic Energy (the 2020 print, pkmn.gg's
   // sword-shield-energy-2020), the eleventh card of every SWSH pack.
   { print: "swsh", suffix: "-swsh", label: "Sword & Shield 2020" },
+  // The Sun & Moon era's two basic Energy runs (Sun & Moon Energy 2017 and
+  // 2019, pkmn.gg's sun-moon-energy-2017 / -2019; the Fairy card is left out,
+  // the site has no Fairy type). The -sm suffix is taken (small scans).
+  { print: "sm17", suffix: "-sm17", label: "Sun & Moon 2017" },
+  { print: "sm19", suffix: "-sm19", label: "Sun & Moon 2019" },
   // The Mega Evolution era's own (MEE 001-008): in the Mega Evolution ETBs and
   // Build & Battle decks. No set's pack Energy slot uses it yet.
   { print: "mee", suffix: "-mee", first: 1, code: "MEE" },
