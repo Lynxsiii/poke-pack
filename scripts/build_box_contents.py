@@ -40,6 +40,11 @@ DATA = ROOT / "data"
 OUT = DATA / "box-contents.json"
 # --trial ships single-source rows too, to a scratch file, to exercise the deal.
 ALLOW_SINGLE = False
+# Second-source check found these still in conflict (see verify-decks.md): held back until settled.
+HOLD = {
+    "svp/trainers-toolkit-2024": "card quantities disagree between sources",
+    "swshp/trainers-toolkit-2021": "basic Energy count disagrees between sources",
+}
 
 ENERGY_TYPES = ["grass", "fire", "water", "lightning", "psychic", "fighting", "darkness", "metal"]
 STANDARD = {"boosterBox", "eliteTrainerBox", "boosterBundle"}
@@ -146,6 +151,8 @@ def mee_energy(missing: list[dict]) -> tuple[list[list], list[dict]]:
 def usable(entry: dict, confirmed: set[str], key: str) -> str | None:
     """None when this entry may ship, else why not."""
     grade = entry.get("confidence")
+    if key in HOLD:
+        return HOLD[key]
     if grade == "verified" or key in confirmed or (ALLOW_SINGLE and grade == "single-source"):
         return None
     if grade == "single-source":
