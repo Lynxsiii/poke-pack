@@ -1,0 +1,28 @@
+{
+  "id": "sm5",
+  "name": "Ultra Prism",
+  "series": "sun-moon",
+  "slug": "ultra-prism",
+  "scrydexId": "sm5",
+  "era": "sm",
+  "artSlug": "ultra-prism",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2178,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "scanKey": "SM{n:02d}",
+      "era": "sm"
+    }
+  }
+}

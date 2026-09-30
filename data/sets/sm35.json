@@ -1,0 +1,28 @@
+{
+  "id": "sm35",
+  "name": "Shining Legends",
+  "series": "sun-moon",
+  "slug": "shining-legends",
+  "scrydexId": "sm35",
+  "era": "sm",
+  "artSlug": "shining-legends",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2054,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "scanKey": "SM{n:02d}",
+      "era": "sm"
+    }
+  }
+}
