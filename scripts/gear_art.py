@@ -39,8 +39,35 @@ def _fit_circle(im: Image.Image):
     return im.convert("RGBA").crop(box)
 
 
+def find_circle(im: Image.Image, cx: float, cy: float, r: float, span: float = 0.12):
+    """Refine a rough coin circle to the photo's own rim: the circle (centre within
+    `span` * r, radius within 15%) with the strongest radial gradient around it."""
+    g = np.asarray(im.convert("L")).astype(np.float32)
+    g = np.asarray(Image.fromarray(g.astype("uint8")).filter(ImageFilter.GaussianBlur(1.2))).astype(np.float32)
+    gy, gx = np.gradient(g)
+    ang = np.linspace(0, 2 * math.pi, 96, endpoint=False)
+    ca, sa = np.cos(ang), np.sin(ang)
+    H, W = g.shape
+    best, best_c = -1.0, (cx, cy, r)
+    step = max(1, int(round(r * 0.02)))
+    for rr in np.arange(r * 0.85, r * 1.15 + 1, step):
+        for dx in range(int(-span * r), int(span * r) + 1, step):
+            for dy in range(int(-span * r), int(span * r) + 1, step):
+                x = cx + dx + rr * ca
+                y = cy + dy + rr * sa
+                xi = np.clip(np.round(x).astype(int), 0, W - 1)
+                yi = np.clip(np.round(y).astype(int), 0, H - 1)
+                # Rim: brightness changes across the circle, pointing outward or inward.
+                score = float(np.abs(gx[yi, xi] * ca + gy[yi, xi] * sa).mean()) / (rr ** 0.15)
+                if score > best:
+                    best, best_c = score, (cx + dx, cy + dy, float(rr))
+    return tuple(round(v, 1) for v in best_c)
+
+
 def coin_face(im: Image.Image, size: int = COIN, inset: float = 0.0) -> Image.Image:
-    """A coin photo as a circle with transparent corners, `size` pixels square."""
+    """A coin photo as a circle with transparent corners, `size` pixels square.
+    `inset` (a fraction of the radius, e.g. 0.02) pulls the mask inside the
+    fitted circle so background that leaks in at the rim of a photo never shows."""
     sq = _fit_circle(im)
     sq = sq.resize((size, size), Image.LANCZOS)
     ss = 4
@@ -112,10 +139,188 @@ def coin_sheet(front: Image.Image, back: Image.Image | None, size: int = COIN) -
     return sheet
 
 
-def sleeve_card(im: Image.Image, crop=None, w: int = SLEEVE_W, h: int = SLEEVE_H, radius: float = 0.048) -> Image.Image:
-    """Sleeve art as a card back: cropped to the sleeve, 63:88, rounded corners."""
+def _perspective_coeffs(src, dst):
+    """PIL transform coefficients mapping the target rectangle `dst` back onto
+    the source quadrilateral `src` (both four (x, y) pairs, TL TR BR BL)."""
+    A = []
+    for (x, y), (u, v) in zip(dst, src):
+        A.append([x, y, 1, 0, 0, 0, -u * x, -u * y])
+        A.append([0, 0, 0, x, y, 1, -v * x, -v * y])
+    b = np.array([c for pt in src for c in pt], dtype=np.float64)
+    return tuple(np.linalg.solve(np.array(A, dtype=np.float64), b))
+
+
+def _line_intersection(p1, p2, p3, p4):
+    x1, y1 = p1
+    x2, y2 = p2
+    x3, y3 = p3
+    x4, y4 = p4
+    den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
+    if abs(den) < 1e-9:
+        return p2
+    px = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / den
+    py = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / den
+    return (px, py)
+
+
+def refine_quad(im: Image.Image, quad, search: int = 12):
+    """Snap a hand-picked sleeve outline to the strongest nearby edge. Each side of
+    the quad slides along its normal (up to `search` px) to where the image
+    gradient across it is largest; the corners are the intersections of the
+    four snapped sides. The photo's own edge wins over a coordinate typed from
+    a grid, so a 5 px misread does not leave a sliver of background."""
+    g = np.asarray(im.convert("L")).astype(np.float32)
+    g = np.asarray(Image.fromarray(g.astype("uint8")).filter(ImageFilter.GaussianBlur(1.0))).astype(np.float32)
+    gy, gx = np.gradient(g)
+    pts = [tuple(map(float, p)) for p in quad]
+    lines = []
+    for i in range(4):
+        p, q = np.array(pts[i]), np.array(pts[(i + 1) % 4])
+        d = q - p
+        length = np.hypot(*d)
+        if length < 2:
+            lines.append((p, q))
+            continue
+        n = np.array([-d[1], d[0]]) / length
+        ts = np.linspace(0.12, 0.88, 40)
+        best, best_t = -1.0, 0
+        for t in range(-search, search + 1):
+            score = 0.0
+            for s in ts:
+                x, y = p + d * s + n * t
+                xi, yi = int(round(x)), int(round(y))
+                if 0 <= xi < g.shape[1] and 0 <= yi < g.shape[0]:
+                    score += abs(gx[yi, xi] * n[0] + gy[yi, xi] * n[1])
+            if score > best:
+                best, best_t = score, t
+        lines.append((p + n * best_t, q + n * best_t))
+    out = []
+    for i in range(4):
+        a = lines[(i - 1) % 4]
+        b = lines[i]
+        out.append(_line_intersection(a[0], a[1], b[0], b[1]))
+    return [(round(x, 1), round(y, 1)) for x, y in out]
+
+
+def _walk_edge(points, start_idx, direction, min_run=40, tol=4.0, miss=6):
+    """Follow boundary samples from a corner while they stay on one straight
+    line; returns the index of the last sample on that line. `points` is a
+    list of (x, y) ordered along the walk, start_idx where the walk begins."""
+    idx = start_idx
+    run = [points[idx]]
+    misses = 0
+    last_good = idx
+    while True:
+        idx += direction
+        if idx < 0 or idx >= len(points) or points[idx] is None:
+            break
+        x, y = points[idx]
+        if len(run) >= min_run:
+            xs = np.array([p[0] for p in run], dtype=np.float64)
+            ys = np.array([p[1] for p in run], dtype=np.float64)
+            # Fit x = a*y + b or y = a*x + b, whichever spans more.
+            if np.ptp(ys) >= np.ptp(xs):
+                a, b = np.polyfit(ys, xs, 1)
+                dist = abs(a * y + b - x)
+            else:
+                a, b = np.polyfit(xs, ys, 1)
+                dist = abs(a * x + b - y)
+            if dist > tol:
+                misses += 1
+                if misses >= miss:
+                    break
+                continue
+            misses = 0
+        run.append((x, y))
+        last_good = idx
+    return last_good
+
+
+def auto_quad(im: Image.Image, thresh: int = 238):
+    """Find the front sleeve in a product photo of a fanned stack on white: the
+    right and bottom edges of the front sleeve are the outer boundary of
+    everything that is not background, so walk them from the bottom-right
+    corner until the boundary steps inward (the sleeve behind), then close the
+    rectangle. Returns TL TR BR BL, or None when no sleeve stands out."""
+    rgba = im.convert("RGBA")
+    a = np.asarray(rgba)
+    mask = (a[..., 3] > 16) & ~((a[..., :3] >= thresh).all(axis=2))
+    # Drop specks: a 3 px erosion/dilation via blur threshold.
+    m = np.asarray(Image.fromarray((mask * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(1.5))) > 128
+    H, W = m.shape
+    ys, xs = np.where(m)
+    if len(xs) < 1000:
+        return None
+    # Bottom-right corner: the mask point furthest along x + y, then also
+    # consider the extreme right and bottom points to survive rounded corners.
+    k = int(np.argmax(xs + ys))
+    brx, bry = int(xs[k]), int(ys[k])
+    right = [None] * H
+    for y in range(H):
+        row = np.where(m[y])[0]
+        if len(row):
+            right[y] = (int(row.max()), y)
+    bottom = [None] * W
+    for x in range(W):
+        col = np.where(m[:, x])[0]
+        if len(col):
+            bottom[x] = (x, int(col.max()))
+    # Walk up the right edge from the bottom-right corner, and left along the bottom edge.
+    y0 = bry
+    while y0 > 0 and right[y0] is None:
+        y0 -= 1
+    tr_idx = _walk_edge(right, y0, -1)
+    x0 = brx
+    while x0 > 0 and bottom[x0] is None:
+        x0 -= 1
+    bl_idx = _walk_edge(bottom, x0, -1)
+    tr = right[tr_idx]
+    bl = bottom[bl_idx]
+    br = (float(brx), float(bry))
+    tr = (float(tr[0]), float(tr[1]))
+    bl = (float(bl[0]), float(bl[1]))
+    height = math.hypot(tr[0] - br[0], tr[1] - br[1])
+    width = math.hypot(bl[0] - br[0], bl[1] - br[1])
+    if height < 80 or width < 60:
+        return None
+    ratio = width / height
+    if not (0.55 < ratio < 0.95):
+        # One walk overshot (a sleeve behind on the same line). Trust the
+        # longer edge and derive the other from the real 63:88 shape.
+        if ratio >= 0.95:
+            width = height * 63 / 88
+            ux, uy = (bl[0] - br[0]) / max(1e-6, math.hypot(bl[0] - br[0], bl[1] - br[1])), (bl[1] - br[1]) / max(1e-6, math.hypot(bl[0] - br[0], bl[1] - br[1]))
+            bl = (br[0] + ux * width, br[1] + uy * width)
+        else:
+            height = width * 88 / 63
+            ux, uy = (tr[0] - br[0]) / max(1e-6, math.hypot(tr[0] - br[0], tr[1] - br[1])), (tr[1] - br[1]) / max(1e-6, math.hypot(tr[0] - br[0], tr[1] - br[1]))
+            tr = (br[0] + ux * height, br[1] + uy * height)
+    tl = (tr[0] + bl[0] - br[0], tr[1] + bl[1] - br[1])
+    return [tuple(round(v, 1) for v in p) for p in (tl, tr, br, bl)]
+
+
+def warp_quad(im: Image.Image, quad, w: int = SLEEVE_W, h: int = SLEEVE_H, oversample: int = 2) -> Image.Image:
+    """The region inside `quad` (TL, TR, BR, BL in source pixels) straightened
+    into a w x h image: a sleeve photographed at an angle becomes flat."""
+    W, H = w * oversample, h * oversample
+    coeffs = _perspective_coeffs([tuple(p) for p in quad], [(0, 0), (W, 0), (W, H), (0, H)])
+    out = im.convert("RGBA").transform((W, H), Image.PERSPECTIVE, coeffs, Image.BICUBIC)
+    return out.resize((w, h), Image.LANCZOS)
+
+
+def sleeve_card(im: Image.Image, crop=None, w: int = SLEEVE_W, h: int = SLEEVE_H, radius: float = 0.048, quad=None, rotate: float = 0.0) -> Image.Image:
+    """Sleeve art as a card back: cropped to the sleeve, 63:88, rounded corners.
+    `quad` (four corners, TL TR BR BL, source pixels) straightens a photo taken
+    at an angle and replaces `crop`; `rotate` (degrees, counter-clockwise) fixes a
+    flat scan that is merely tilted, applied before `crop`."""
     im = im.convert("RGBA")
-    if crop:
+    if quad:
+        im = warp_quad(im, quad, w, h)
+    elif rotate:
+        im = im.rotate(rotate, resample=Image.BICUBIC, expand=True, fillcolor=(255, 255, 255, 0))
+    if quad:
+        pass
+    elif crop:
         im = im.crop(tuple(crop))
     else:
         im = im.crop(_bbox_of_content(im, thresh=250))
