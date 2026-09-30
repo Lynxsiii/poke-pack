@@ -14,8 +14,8 @@
     "hp": "80",
     "artist": "Ken Sugimori",
     "flavorText": "It tangles any moving thing with its vines. Their subtle shaking is ticklish if you get ensnared.",
-    "image": "https://images.scrydex.com/pokemon/sm8-1/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-1/small",
+    "image": "assets/cards/sm8/1.webp",
+    "imageSmall": "assets/cards/sm8/1-sm.webp",
     "attacks": [
       {
         "name": "Gentle Slap",
@@ -36,7 +36,8 @@
         "damage": "40",
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-1/large"
   },
   {
     "id": "sm8-2",
@@ -54,8 +55,8 @@
     "artist": "Atsuko Nishida",
     "flavorText": "Its vines grow so profusely that, in the warm season, you can't even see its eyes.",
     "evolvesFrom": "Tangela",
-    "image": "https://images.scrydex.com/pokemon/sm8-2/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-2/small",
+    "image": "assets/cards/sm8/2.webp",
+    "imageSmall": "assets/cards/sm8/2-sm.webp",
     "attacks": [
       {
         "name": "Hefty Whip",
@@ -78,7 +79,8 @@
         "damage": "110",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-2/large"
   },
   {
     "id": "sm8-3",
@@ -95,8 +97,8 @@
     "hp": "80",
     "artist": "Kouki Saitou",
     "flavorText": "While young, they live together deep in the mountains, training themselves in how to fight with their scythes and move at high speeds.",
-    "image": "https://images.scrydex.com/pokemon/sm8-3/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-3/small",
+    "image": "assets/cards/sm8/3.webp",
+    "imageSmall": "assets/cards/sm8/3-sm.webp",
     "attacks": [
       {
         "name": "Fury Cutter",
@@ -107,7 +109,8 @@
         "damage": "10+",
         "text": "Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 50 more damage. If all of them are heads, this attack does 70 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-3/large"
   },
   {
     "id": "sm8-4",
@@ -124,8 +127,8 @@
     "hp": "110",
     "artist": "Suwama Chiaki",
     "flavorText": "One solid blow from its horns is enough to split apart a large tree. Its greatest rival in Alola is Vikavolt.",
-    "image": "https://images.scrydex.com/pokemon/sm8-4/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-4/small",
+    "image": "assets/cards/sm8/4.webp",
+    "imageSmall": "assets/cards/sm8/4-sm.webp",
     "attacks": [
       {
         "name": "Grip and Squeeze",
@@ -145,7 +148,8 @@
         "damage": "70",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-4/large"
   },
   {
     "id": "sm8-5",
@@ -162,8 +166,8 @@
     "hp": "60",
     "artist": "Aya Kusube",
     "flavorText": "It uses the leaf on its head to determine the temperature and humidity. It loves to sunbathe.",
-    "image": "https://images.scrydex.com/pokemon/sm8-5/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-5/small",
+    "image": "assets/cards/sm8/5.webp",
+    "imageSmall": "assets/cards/sm8/5-sm.webp",
     "attacks": [
       {
         "name": "Synthesis",
@@ -182,7 +186,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-5/large"
   },
   {
     "id": "sm8-6",
@@ -199,8 +204,8 @@
     "hp": "70",
     "artist": "sowsow",
     "flavorText": "It uses the leaf on its head to determine the temperature and humidity. It loves to sunbathe.",
-    "image": "https://images.scrydex.com/pokemon/sm8-6/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-6/small",
+    "image": "assets/cards/sm8/6.webp",
+    "imageSmall": "assets/cards/sm8/6-sm.webp",
     "attacks": [
       {
         "name": "Mini Drain",
@@ -210,7 +215,8 @@
         "damage": "10",
         "text": "Heal 10 damage from this Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-6/large"
   },
   {
     "id": "sm8-7",
@@ -228,8 +234,8 @@
     "artist": "Kagemaru Himeno",
     "flavorText": "The buds that ring its neck give off a spicy aroma that perks people up.",
     "evolvesFrom": "Chikorita",
-    "image": "https://images.scrydex.com/pokemon/sm8-7/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-7/small",
+    "image": "assets/cards/sm8/7.webp",
+    "imageSmall": "assets/cards/sm8/7-sm.webp",
     "attacks": [
       {
         "name": "Soothing Scent",
@@ -249,7 +255,8 @@
         "damage": "50",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-7/large"
   },
   {
     "id": "sm8-8",
@@ -267,8 +274,8 @@
     "artist": "nagimiso",
     "flavorText": "Meganium's breath has the power to revive dead grass and plants. It can make them healthy again.",
     "evolvesFrom": "Bayleef",
-    "image": "https://images.scrydex.com/pokemon/sm8-8/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-8/small",
+    "image": "assets/cards/sm8/8.webp",
+    "imageSmall": "assets/cards/sm8/8-sm.webp",
     "attacks": [
       {
         "name": "Solar Beam",
@@ -288,7 +295,8 @@
         "text": "Once during your turn (before your attack), you may use this Ability. Choose 1 of your Basic Pokémon in play. If you have a Stage 2 card in your hand that evolves from that Pokémon, put that card onto the Basic Pokémon to evolve it. You can use this Ability during your first turn or on a Pokémon that was put into play this turn.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-8/large"
   },
   {
     "id": "sm8-9",
@@ -305,8 +313,8 @@
     "hp": "50",
     "artist": "Misa Tsutsui",
     "flavorText": "Some fishermen weave its sturdy thread into nets to catch fish Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/sm8-9/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-9/small",
+    "image": "assets/cards/sm8/9.webp",
+    "imageSmall": "assets/cards/sm8/9-sm.webp",
     "attacks": [
       {
         "name": "Spider Scram",
@@ -324,7 +332,8 @@
         "damage": "10",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-9/large"
   },
   {
     "id": "sm8-10",
@@ -342,8 +351,8 @@
     "artist": "Suwama Chiaki",
     "flavorText": "It spins thread from both its rear and its mouth. Then it wraps its prey up in thread and sips their bodily fluids at its leisure.",
     "evolvesFrom": "Spinarak",
-    "image": "https://images.scrydex.com/pokemon/sm8-10/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-10/small",
+    "image": "assets/cards/sm8/10.webp",
+    "imageSmall": "assets/cards/sm8/10-sm.webp",
     "attacks": [
       {
         "name": "Trapping Thread",
@@ -364,7 +373,8 @@
         "damage": "70",
         "text": "Your opponent's Active Pokémon is now Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-10/large"
   },
   {
     "id": "sm8-11",
@@ -381,8 +391,8 @@
     "hp": "30",
     "artist": "Mizue",
     "flavorText": "It drifts on winds. It is said that when Hoppip gather in fields and mountains, spring is on the way.",
-    "image": "https://images.scrydex.com/pokemon/sm8-11/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-11/small",
+    "image": "assets/cards/sm8/11.webp",
+    "imageSmall": "assets/cards/sm8/11-sm.webp",
     "attacks": [
       {
         "name": "Multiply",
@@ -392,7 +402,8 @@
         "damage": "",
         "text": "Search your deck for Hoppip and put it onto your Bench. Then, shuffle your deck."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-11/large"
   },
   {
     "id": "sm8-12",
@@ -409,8 +420,8 @@
     "hp": "40",
     "artist": "kawayoo",
     "flavorText": "It drifts on winds. It is said that when Hoppip gather in fields and mountains, spring is on the way.",
-    "image": "https://images.scrydex.com/pokemon/sm8-12/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-12/small",
+    "image": "assets/cards/sm8/12.webp",
+    "imageSmall": "assets/cards/sm8/12-sm.webp",
     "attacks": [
       {
         "name": "Tackle",
@@ -420,7 +431,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-12/large"
   },
   {
     "id": "sm8-13",
@@ -438,8 +450,8 @@
     "artist": "Hitoshi Ariga",
     "flavorText": "It spreads its petals to absorb sunlight. It also floats in the air to get closer to the sun.",
     "evolvesFrom": "Hoppip",
-    "image": "https://images.scrydex.com/pokemon/sm8-13/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-13/small",
+    "image": "assets/cards/sm8/13.webp",
+    "imageSmall": "assets/cards/sm8/13-sm.webp",
     "attacks": [
       {
         "name": "Tackle",
@@ -456,7 +468,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for Jumpluff, put this Pokémon and all cards attached to it in the Lost Zone, and put that Jumpluff in its place. Then, shuffle your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-13/large"
   },
   {
     "id": "sm8-14",
@@ -474,8 +487,8 @@
     "artist": "Masakazu Fukuda",
     "flavorText": "Even in the fiercest wind, it can control its fluff to make its way to any place in the world it wants.",
     "evolvesFrom": "Skiploom",
-    "image": "https://images.scrydex.com/pokemon/sm8-14/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-14/small",
+    "image": "assets/cards/sm8/14.webp",
+    "imageSmall": "assets/cards/sm8/14-sm.webp",
     "attacks": [
       {
         "name": "Lost March",
@@ -485,7 +498,8 @@
         "damage": "20×",
         "text": "This attack does 20 damage for each of your Pokémon, except ◇ (Prism Star) Pokémon, in the Lost Zone."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-14/large"
   },
   {
     "id": "sm8-15",
@@ -502,8 +516,8 @@
     "hp": "60",
     "artist": "Misa Tsutsui",
     "flavorText": "It looks just like a pinecone. Its shell protects it from bird Pokémon that peck it by mistake.",
-    "image": "https://images.scrydex.com/pokemon/sm8-15/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-15/small",
+    "image": "assets/cards/sm8/15.webp",
+    "imageSmall": "assets/cards/sm8/15-sm.webp",
     "attacks": [
       {
         "name": "Continuous Headbutt",
@@ -513,7 +527,8 @@
         "damage": "20×",
         "text": "Flip a coin until you get tails. This attack does 20 damage for each heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-15/large"
   },
   {
     "id": "sm8-16",
@@ -530,8 +545,8 @@
     "hp": "60",
     "artist": "Masakazu Fukuda",
     "flavorText": "It stores berries inside its shell. To avoid attacks, it hides beneath rocks and remains completely still.",
-    "image": "https://images.scrydex.com/pokemon/sm8-16/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-16/small",
+    "image": "assets/cards/sm8/16.webp",
+    "imageSmall": "assets/cards/sm8/16-sm.webp",
     "attacks": [
       {
         "name": "Energy Drink",
@@ -548,7 +563,8 @@
         "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 3 basic Energy cards and discard them. Then, shuffle your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-16/large"
   },
   {
     "id": "sm8-17",
@@ -565,8 +581,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-17/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-17/small",
+    "image": "assets/cards/sm8/17.webp",
+    "imageSmall": "assets/cards/sm8/17-sm.webp",
     "attacks": [
       {
         "name": "Triple Poison",
@@ -591,7 +607,8 @@
         "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon that have 2 or fewer Energy attached to them.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-17/large"
   },
   {
     "id": "sm8-18",
@@ -608,8 +625,8 @@
     "hp": "120",
     "artist": "Ken Sugimori",
     "flavorText": "With its Herculean powers, it can easily throw around an object that is 100 times its own weight.",
-    "image": "https://images.scrydex.com/pokemon/sm8-18/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-18/small",
+    "image": "assets/cards/sm8/18.webp",
+    "imageSmall": "assets/cards/sm8/18-sm.webp",
     "attacks": [
       {
         "name": "Tackle",
@@ -628,7 +645,8 @@
         "damage": "30+",
         "text": "If you have any Stage 2 Pokémon on your Bench, this attack does 90 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-18/large"
   },
   {
     "id": "sm8-19",
@@ -646,8 +664,8 @@
     "hp": "90",
     "artist": "Masakazu Fukuda",
     "flavorText": "It has the power to travel across time, but it is said to appear only in peaceful times.",
-    "image": "https://images.scrydex.com/pokemon/sm8-19/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-19/small",
+    "image": "assets/cards/sm8/19.webp",
+    "imageSmall": "assets/cards/sm8/19-sm.webp",
     "attacks": [
       {
         "name": "Time Distortion",
@@ -665,7 +683,8 @@
         "damage": "20",
         "text": "Heal 20 damage from this Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-19/large"
   },
   {
     "id": "sm8-20",
@@ -682,8 +701,8 @@
     "hp": "60",
     "artist": "Tomokazu Komiya",
     "flavorText": "Small hooks on the bottom of its feet catch on walls and ceilings. That is how it can hang from above.",
-    "image": "https://images.scrydex.com/pokemon/sm8-20/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-20/small",
+    "image": "assets/cards/sm8/20.webp",
+    "imageSmall": "assets/cards/sm8/20-sm.webp",
     "attacks": [
       {
         "name": "Find a Friend",
@@ -693,7 +712,8 @@
         "damage": "",
         "text": "Search your deck for a Grass Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-20/large"
   },
   {
     "id": "sm8-21",
@@ -711,8 +731,8 @@
     "artist": "Ayaka Yoshida",
     "flavorText": "It lives in dense jungles. While closing in on its prey, it leaps from branch to branch.",
     "evolvesFrom": "Treecko",
-    "image": "https://images.scrydex.com/pokemon/sm8-21/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-21/small",
+    "image": "assets/cards/sm8/21.webp",
+    "imageSmall": "assets/cards/sm8/21-sm.webp",
     "attacks": [
       {
         "name": "Slicing Blade",
@@ -730,7 +750,8 @@
         "text": "Once during your turn (before your attack), you may search your deck for a Grass Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-21/large"
   },
   {
     "id": "sm8-22",
@@ -748,8 +769,8 @@
     "hp": "230",
     "artist": "Yoshinobu Saito",
     "evolvesFrom": "Grovyle",
-    "image": "https://images.scrydex.com/pokemon/sm8-22/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-22/small",
+    "image": "assets/cards/sm8/22.webp",
+    "imageSmall": "assets/cards/sm8/22-sm.webp",
     "attacks": [
       {
         "name": "Mach Cut",
@@ -776,7 +797,8 @@
         "damage": "",
         "text": "Heal all damage from each of your Pokémon that has any Grass Energy attached to it. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-22/large"
   },
   {
     "id": "sm8-23",
@@ -793,8 +815,8 @@
     "hp": "60",
     "artist": "kirisAki",
     "flavorText": "It lives among the tall grass and in forests. It repels attacks by raising up the spikes on its rear.",
-    "image": "https://images.scrydex.com/pokemon/sm8-23/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-23/small",
+    "image": "assets/cards/sm8/23.webp",
+    "imageSmall": "assets/cards/sm8/23-sm.webp",
     "attacks": [
       {
         "name": "Ram",
@@ -804,7 +826,8 @@
         "damage": "10",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-23/large"
   },
   {
     "id": "sm8-24",
@@ -821,8 +844,8 @@
     "hp": "60",
     "artist": "Mina Nakai",
     "flavorText": "It lives among the tall grass and in forests. It repels attacks by raising up the spikes on its rear.",
-    "image": "https://images.scrydex.com/pokemon/sm8-24/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-24/small",
+    "image": "assets/cards/sm8/24.webp",
+    "imageSmall": "assets/cards/sm8/24-sm.webp",
     "attacks": [
       {
         "name": "Poison Sting",
@@ -832,7 +855,8 @@
         "damage": "",
         "text": "Your opponent's Active Pokémon is now Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-24/large"
   },
   {
     "id": "sm8-25",
@@ -850,8 +874,8 @@
     "artist": "Satoshi Shirai",
     "flavorText": "It drinks dew that collects on its silk and waits for evolution. Its hard cocoon repels attacks.",
     "evolvesFrom": "Wurmple",
-    "image": "https://images.scrydex.com/pokemon/sm8-25/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-25/small",
+    "image": "assets/cards/sm8/25.webp",
+    "imageSmall": "assets/cards/sm8/25-sm.webp",
     "attacks": [
       {
         "name": "Cocoon Collector",
@@ -869,7 +893,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-25/large"
   },
   {
     "id": "sm8-26",
@@ -887,8 +912,8 @@
     "artist": "0313",
     "flavorText": "It has an aggressive nature. It stabs prey with its long, narrow mouth to drain the prey's fluids.",
     "evolvesFrom": "Silcoon",
-    "image": "https://images.scrydex.com/pokemon/sm8-26/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-26/small",
+    "image": "assets/cards/sm8/26.webp",
+    "imageSmall": "assets/cards/sm8/26-sm.webp",
     "attacks": [
       {
         "name": "Skill Dive",
@@ -906,7 +931,8 @@
         "damage": "30",
         "text": "If your opponent's Pokémon is Knocked Out by damage from this attack, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-26/large"
   },
   {
     "id": "sm8-27",
@@ -924,8 +950,8 @@
     "artist": "Aya Kusube",
     "flavorText": "It never forgets any attack it endured while in the cocoon. After evolution, it seeks payback.",
     "evolvesFrom": "Wurmple",
-    "image": "https://images.scrydex.com/pokemon/sm8-27/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-27/small",
+    "image": "assets/cards/sm8/27.webp",
+    "imageSmall": "assets/cards/sm8/27-sm.webp",
     "attacks": [
       {
         "name": "Cocoon Collector",
@@ -944,7 +970,8 @@
         "damage": "30",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-27/large"
   },
   {
     "id": "sm8-28",
@@ -962,8 +989,8 @@
     "artist": "Midori Harada",
     "flavorText": "It violently flutters its wings to scatter toxic dust when attacked. It becomes active after sunset.",
     "evolvesFrom": "Cascoon",
-    "image": "https://images.scrydex.com/pokemon/sm8-28/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-28/small",
+    "image": "assets/cards/sm8/28.webp",
+    "imageSmall": "assets/cards/sm8/28-sm.webp",
     "attacks": [
       {
         "name": "Gust",
@@ -981,7 +1008,8 @@
         "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may leave your opponent's Active Pokémon Paralyzed and Poisoned. If you do, put 3 damage counters instead of 1 on that Pokémon between turns.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-28/large"
   },
   {
     "id": "sm8-29",
@@ -998,8 +1026,8 @@
     "hp": "40",
     "artist": "SATOSHI NAKAI",
     "flavorText": "It can sometimes live underground for more than 10 years. It absorbs nutrients from the roots of trees.",
-    "image": "https://images.scrydex.com/pokemon/sm8-29/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-29/small",
+    "image": "assets/cards/sm8/29.webp",
+    "imageSmall": "assets/cards/sm8/29-sm.webp",
     "attacks": [
       {
         "name": "Fury Swipes",
@@ -1009,7 +1037,8 @@
         "damage": "10×",
         "text": "Flip 3 coins. This attack does 10 damage for each heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-29/large"
   },
   {
     "id": "sm8-30",
@@ -1027,8 +1056,8 @@
     "artist": "kirisAki",
     "flavorText": "Because it moves so quickly, it sometimes becomes unseeable. It congregates around tree sap.",
     "evolvesFrom": "Nincada",
-    "image": "https://images.scrydex.com/pokemon/sm8-30/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-30/small",
+    "image": "assets/cards/sm8/30.webp",
+    "imageSmall": "assets/cards/sm8/30-sm.webp",
     "attacks": [
       {
         "name": "X-Scissor",
@@ -1045,7 +1074,8 @@
         "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put a Shedinja from your discard pile onto your Bench.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-30/large"
   },
   {
     "id": "sm8-31",
@@ -1062,8 +1092,8 @@
     "hp": "40",
     "artist": "Akira Komayama",
     "flavorText": "It collects and delivers honey to its colony. At night, they cluster to form a beehive and sleep.",
-    "image": "https://images.scrydex.com/pokemon/sm8-31/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-31/small",
+    "image": "assets/cards/sm8/31.webp",
+    "imageSmall": "assets/cards/sm8/31-sm.webp",
     "attacks": [
       {
         "name": "Bee March",
@@ -1073,7 +1103,8 @@
         "damage": "",
         "text": "Search your deck for up to 3 Combee and put them onto your Bench. Then, shuffle your deck."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-31/large"
   },
   {
     "id": "sm8-32",
@@ -1091,8 +1122,8 @@
     "artist": "chibi",
     "flavorText": "Its abdomen is a honeycomb for grubs. It raises its grubs on honey collected by Combee.",
     "evolvesFrom": "Combee",
-    "image": "https://images.scrydex.com/pokemon/sm8-32/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-32/small",
+    "image": "assets/cards/sm8/32.webp",
+    "imageSmall": "assets/cards/sm8/32-sm.webp",
     "attacks": [
       {
         "name": "Commanding Queen",
@@ -1102,7 +1133,8 @@
         "damage": "120",
         "text": "If you have 4 or fewer Grass Pokémon on your Bench, this attack does nothing."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-32/large"
   },
   {
     "id": "sm8-33",
@@ -1119,8 +1151,8 @@
     "hp": "70",
     "artist": "Sekio",
     "flavorText": "The blooming of Gracidea flowers confers the power of flight upon it. Feelings of gratitude are the message it delivers.",
-    "image": "https://images.scrydex.com/pokemon/sm8-33/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-33/small",
+    "image": "assets/cards/sm8/33.webp",
+    "imageSmall": "assets/cards/sm8/33-sm.webp",
     "attacks": [
       {
         "name": "Ram",
@@ -1138,7 +1170,8 @@
         "text": "Once during your turn (before your attack), you may heal 20 damage from your Active Grass Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-33/large"
   },
   {
     "id": "sm8-34",
@@ -1155,8 +1188,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-34/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-34/small",
+    "image": "assets/cards/sm8/34.webp",
+    "imageSmall": "assets/cards/sm8/34-sm.webp",
     "attacks": [
       {
         "name": "Double Draw",
@@ -1183,7 +1216,8 @@
         "damage": "",
         "text": "Put any number of your Pokémon in play and all cards attached to them into your hand. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-34/large"
   },
   {
     "id": "sm8-35",
@@ -1200,8 +1234,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "If it has sunshine and water, it doesn't need to eat, because it can generate energy from the leaves on its back.",
-    "image": "https://images.scrydex.com/pokemon/sm8-35/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-35/small",
+    "image": "assets/cards/sm8/35.webp",
+    "imageSmall": "assets/cards/sm8/35-sm.webp",
     "attacks": [
       {
         "name": "Collect",
@@ -1220,7 +1254,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-35/large"
   },
   {
     "id": "sm8-36",
@@ -1238,8 +1273,8 @@
     "artist": "sowsow",
     "flavorText": "They inhabit mountainous regions. The leader of the herd is decided by a battle of clashing horns.",
     "evolvesFrom": "Skiddo",
-    "image": "https://images.scrydex.com/pokemon/sm8-36/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-36/small",
+    "image": "assets/cards/sm8/36.webp",
+    "imageSmall": "assets/cards/sm8/36-sm.webp",
     "attacks": [
       {
         "name": "Leaf Wallop",
@@ -1260,7 +1295,8 @@
         "damage": "100",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-36/large"
   },
   {
     "id": "sm8-37",
@@ -1277,8 +1313,8 @@
     "hp": "130",
     "artist": "Satoshi Shirai",
     "flavorText": "The guardian deity of Ula'ula is a lazy Pokémon. It commands plants to immobilize its foes and then deals them a savage blow with its horns.",
-    "image": "https://images.scrydex.com/pokemon/sm8-37/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-37/small",
+    "image": "assets/cards/sm8/37.webp",
+    "imageSmall": "assets/cards/sm8/37-sm.webp",
     "attacks": [
       {
         "name": "Heavy Punch",
@@ -1299,7 +1335,8 @@
         "damage": "120",
         "text": "Flip a coin. If tails, this Pokémon does 30 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-37/large"
   },
   {
     "id": "sm8-38",
@@ -1316,8 +1353,8 @@
     "hp": "120",
     "artist": "Misa Tsutsui",
     "flavorText": "One of the legendary bird Pokémon. It is said that its appearance indicates the coming of spring.",
-    "image": "https://images.scrydex.com/pokemon/sm8-38/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-38/small",
+    "image": "assets/cards/sm8/38.webp",
+    "imageSmall": "assets/cards/sm8/38-sm.webp",
     "attacks": [
       {
         "name": "Assisting Heater",
@@ -1337,7 +1374,8 @@
         "damage": "90",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-38/large"
   },
   {
     "id": "sm8-39",
@@ -1354,8 +1392,8 @@
     "hp": "60",
     "artist": "Mina Nakai",
     "flavorText": "It has a timid nature. If it is startled, the flames on its back burn more vigorously.",
-    "image": "https://images.scrydex.com/pokemon/sm8-39/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-39/small",
+    "image": "assets/cards/sm8/39.webp",
+    "imageSmall": "assets/cards/sm8/39-sm.webp",
     "attacks": [
       {
         "name": "Smokescreen",
@@ -1365,7 +1403,8 @@
         "damage": "10",
         "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack doesn't happen."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-39/large"
   },
   {
     "id": "sm8-40",
@@ -1382,8 +1421,8 @@
     "hp": "70",
     "artist": "kirisAki",
     "flavorText": "It has a timid nature. If it is startled, the flames on its back burn more vigorously.",
-    "image": "https://images.scrydex.com/pokemon/sm8-40/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-40/small",
+    "image": "assets/cards/sm8/40.webp",
+    "imageSmall": "assets/cards/sm8/40-sm.webp",
     "attacks": [
       {
         "name": "Hammer In",
@@ -1394,7 +1433,8 @@
         "damage": "30",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-40/large"
   },
   {
     "id": "sm8-41",
@@ -1412,8 +1452,8 @@
     "artist": "Miki Tanaka",
     "flavorText": "Be careful if it turns its back during battle. It means that it will attack with the fire on its back.",
     "evolvesFrom": "Cyndaquil",
-    "image": "https://images.scrydex.com/pokemon/sm8-41/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-41/small",
+    "image": "assets/cards/sm8/41.webp",
+    "imageSmall": "assets/cards/sm8/41-sm.webp",
     "attacks": [
       {
         "name": "Hammer In",
@@ -1434,7 +1474,8 @@
         "damage": "60",
         "text": "Your opponent's Active Pokémon is now Burned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-41/large"
   },
   {
     "id": "sm8-42",
@@ -1452,8 +1493,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "It has a secret, devastating move. It rubs its blazing fur together to cause huge explosions.",
     "evolvesFrom": "Quilava",
-    "image": "https://images.scrydex.com/pokemon/sm8-42/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-42/small",
+    "image": "assets/cards/sm8/42.webp",
+    "imageSmall": "assets/cards/sm8/42-sm.webp",
     "attacks": [
       {
         "name": "Lost Flame",
@@ -1473,7 +1514,8 @@
         "text": "Once during your turn (before your attack), you may use this Ability. All Energy attached to your Pokémon are Fire Energy instead of their usual type until the end of your turn. (This includes cards that come into play on this turn.)",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-42/large"
   },
   {
     "id": "sm8-43",
@@ -1490,8 +1532,8 @@
     "hp": "80",
     "artist": "SATOSHI NAKAI",
     "flavorText": "Its body is made of magma. If it doesn't keep moving, its body will cool and harden.",
-    "image": "https://images.scrydex.com/pokemon/sm8-43/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-43/small",
+    "image": "assets/cards/sm8/43.webp",
+    "imageSmall": "assets/cards/sm8/43-sm.webp",
     "attacks": [
       {
         "name": "Stampede",
@@ -1512,7 +1554,8 @@
         "damage": "60",
         "text": "Discard an Energy from this Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-43/large"
   },
   {
     "id": "sm8-44",
@@ -1530,8 +1573,8 @@
     "hp": "210",
     "artist": "5ban Graphics",
     "evolvesFrom": "Slugma",
-    "image": "https://images.scrydex.com/pokemon/sm8-44/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-44/small",
+    "image": "assets/cards/sm8/44.webp",
+    "imageSmall": "assets/cards/sm8/44-sm.webp",
     "attacks": [
       {
         "name": "Lava Flow",
@@ -1558,7 +1601,8 @@
         "text": "Once during your turn (before your attack), you may discard the top card of your deck. If it's a basic Energy card, attach it to 1 of your Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-44/large"
   },
   {
     "id": "sm8-45",
@@ -1575,8 +1619,8 @@
     "hp": "60",
     "artist": "Ken Sugimori",
     "flavorText": "To corner prey, they check each other's location using barks that only they can understand.",
-    "image": "https://images.scrydex.com/pokemon/sm8-45/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-45/small",
+    "image": "assets/cards/sm8/45.webp",
+    "imageSmall": "assets/cards/sm8/45-sm.webp",
     "attacks": [
       {
         "name": "Team Hunt",
@@ -1594,7 +1638,8 @@
         "damage": "10",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-45/large"
   },
   {
     "id": "sm8-46",
@@ -1612,8 +1657,8 @@
     "artist": "Sekio",
     "flavorText": "The flames it breathes when angry contain toxins. If they cause a burn, it will hurt forever.",
     "evolvesFrom": "Houndour",
-    "image": "https://images.scrydex.com/pokemon/sm8-46/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-46/small",
+    "image": "assets/cards/sm8/46.webp",
+    "imageSmall": "assets/cards/sm8/46-sm.webp",
     "attacks": [
       {
         "name": "Nasty Plot",
@@ -1632,7 +1677,8 @@
         "damage": "50+",
         "text": "If you have more cards in your hand than your opponent, this attack does 80 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-46/large"
   },
   {
     "id": "sm8-47",
@@ -1649,8 +1695,8 @@
     "hp": "130",
     "artist": "kawayoo",
     "flavorText": "It is said that when it roars, a volcano erupts somewhere around the globe.",
-    "image": "https://images.scrydex.com/pokemon/sm8-47/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-47/small",
+    "image": "assets/cards/sm8/47.webp",
+    "imageSmall": "assets/cards/sm8/47-sm.webp",
     "attacks": [
       {
         "name": "Fire Fang",
@@ -1671,7 +1717,8 @@
         "damage": "80+",
         "text": "Each player discards the top card of their deck. This attack does 60 more damage for each Energy card discarded in this way."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-47/large"
   },
   {
     "id": "sm8-48",
@@ -1688,8 +1735,8 @@
     "hp": "140",
     "artist": "Kagemaru Himeno",
     "flavorText": "Boiling blood, like magma, circulates through its body. It makes its dwelling place in volcanic caves.",
-    "image": "https://images.scrydex.com/pokemon/sm8-48/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-48/small",
+    "image": "assets/cards/sm8/48.webp",
+    "imageSmall": "assets/cards/sm8/48-sm.webp",
     "attacks": [
       {
         "name": "Lava Burn",
@@ -1712,7 +1759,8 @@
         "damage": "150",
         "text": "Discard the top 5 cards of your deck."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-48/large"
   },
   {
     "id": "sm8-49",
@@ -1729,8 +1777,8 @@
     "hp": "70",
     "artist": "sowsow",
     "flavorText": "When it shares the infinite energy it creates, that being's entire body will be overflowing with power.",
-    "image": "https://images.scrydex.com/pokemon/sm8-49/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-49/small",
+    "image": "assets/cards/sm8/49.webp",
+    "imageSmall": "assets/cards/sm8/49-sm.webp",
     "attacks": [
       {
         "name": "V-Beatdown",
@@ -1741,7 +1789,8 @@
         "damage": "20×",
         "text": "This attack does 20 damage for each of your Basic Pokémon in play."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-49/large"
   },
   {
     "id": "sm8-50",
@@ -1758,8 +1807,8 @@
     "hp": "60",
     "artist": "Akira Komayama",
     "flavorText": "They set off on their own from their pride and live by themselves to become stronger. These hot-blooded Pokémon are quick to fight.",
-    "image": "https://images.scrydex.com/pokemon/sm8-50/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-50/small",
+    "image": "assets/cards/sm8/50.webp",
+    "imageSmall": "assets/cards/sm8/50-sm.webp",
     "attacks": [
       {
         "name": "Take Down",
@@ -1777,7 +1826,8 @@
         "text": "If your opponent has any Pokémon-GX or Pokémon-EX in play, this Pokémon has no Retreat Cost.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-50/large"
   },
   {
     "id": "sm8-51",
@@ -1795,8 +1845,8 @@
     "artist": "Hasuno",
     "flavorText": "With fiery breath of more than 10,000 degrees Fahrenheit, they viciously threaten any challenger. The females protect the pride's cubs.",
     "evolvesFrom": "Litleo",
-    "image": "https://images.scrydex.com/pokemon/sm8-51/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-51/small",
+    "image": "assets/cards/sm8/51.webp",
+    "imageSmall": "assets/cards/sm8/51-sm.webp",
     "attacks": [
       {
         "name": "Crunch",
@@ -1817,7 +1867,8 @@
         "damage": "90",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-51/large"
   },
   {
     "id": "sm8-52",
@@ -1835,8 +1886,8 @@
     ],
     "hp": "180",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-52/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-52/small",
+    "image": "assets/cards/sm8/52.webp",
+    "imageSmall": "assets/cards/sm8/52-sm.webp",
     "attacks": [
       {
         "name": "Bursting Burn",
@@ -1863,7 +1914,8 @@
         "damage": "",
         "text": "Discard 1 of your Prize cards. If it's an Energy card, attach it to 1 of your Pokémon. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-52/large"
   },
   {
     "id": "sm8-53",
@@ -1880,8 +1932,8 @@
     "hp": "60",
     "artist": "Naoyo Kimura",
     "flavorText": "In hot weather, this Pokémon makes ice shards with its six tails and sprays them around to cool itself off.",
-    "image": "https://images.scrydex.com/pokemon/sm8-53/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-53/small",
+    "image": "assets/cards/sm8/53.webp",
+    "imageSmall": "assets/cards/sm8/53-sm.webp",
     "attacks": [
       {
         "name": "Gnaw",
@@ -1899,7 +1951,8 @@
         "text": "If you have any Fairy Pokémon in play, this Pokémon has no Retreat Cost.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-53/large"
   },
   {
     "id": "sm8-54",
@@ -1916,8 +1969,8 @@
     "hp": "70",
     "artist": "Tomokazu Komiya",
     "flavorText": "Alolan home cooking involves drying Slowpoke tails and then simmering them into a salty stew.",
-    "image": "https://images.scrydex.com/pokemon/sm8-54/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-54/small",
+    "image": "assets/cards/sm8/54.webp",
+    "imageSmall": "assets/cards/sm8/54-sm.webp",
     "attacks": [
       {
         "name": "Yawn",
@@ -1927,7 +1980,8 @@
         "damage": "",
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-54/large"
   },
   {
     "id": "sm8-55",
@@ -1945,8 +1999,8 @@
     "artist": "sowsow",
     "flavorText": "This Pokémon is so famed for its intellect that a proverb still persists in some regions: \"When in doubt, ask Slowking.\"",
     "evolvesFrom": "Slowpoke",
-    "image": "https://images.scrydex.com/pokemon/sm8-55/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-55/small",
+    "image": "assets/cards/sm8/55.webp",
+    "imageSmall": "assets/cards/sm8/55-sm.webp",
     "attacks": [
       {
         "name": "Memory Melt",
@@ -1966,7 +2020,8 @@
         "damage": "60+",
         "text": "This attack does 20 more damage times the amount of Energy attached to your opponent's Active Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-55/large"
   },
   {
     "id": "sm8-56",
@@ -1983,8 +2038,8 @@
     "hp": "120",
     "artist": "Sekio",
     "flavorText": "These Pokémon were once near extinction due to poaching. Following protective regulations, there is now an overabundance of them.",
-    "image": "https://images.scrydex.com/pokemon/sm8-56/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-56/small",
+    "image": "assets/cards/sm8/56.webp",
+    "imageSmall": "assets/cards/sm8/56-sm.webp",
     "attacks": [
       {
         "name": "Ice Beam",
@@ -2002,7 +2057,8 @@
         "text": "Once during your turn (before your attack), you may look at the top 2 cards of your deck and put them back in any order.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-56/large"
   },
   {
     "id": "sm8-57",
@@ -2019,8 +2075,8 @@
     "hp": "90",
     "artist": "Ken Sugimori",
     "flavorText": "It has a generous habit of sharing its food with people and Pokémon, so it's always scrounging around for more food.",
-    "image": "https://images.scrydex.com/pokemon/sm8-57/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-57/small",
+    "image": "assets/cards/sm8/57.webp",
+    "imageSmall": "assets/cards/sm8/57-sm.webp",
     "attacks": [
       {
         "name": "Happy Delivery",
@@ -2039,7 +2095,8 @@
         "damage": "30",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-57/large"
   },
   {
     "id": "sm8-58",
@@ -2056,8 +2113,8 @@
     "hp": "120",
     "artist": "Sanosuke Sakuma",
     "flavorText": "While elegantly swimming in the sea, it ignores Remoraid that cling to its fins seeking food scraps.",
-    "image": "https://images.scrydex.com/pokemon/sm8-58/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-58/small",
+    "image": "assets/cards/sm8/58.webp",
+    "imageSmall": "assets/cards/sm8/58-sm.webp",
     "attacks": [
       {
         "name": "Surf",
@@ -2076,7 +2133,8 @@
         "text": "If this Pokémon has any Energy attached to it, it has no Retreat Cost.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-58/large"
   },
   {
     "id": "sm8-59",
@@ -2093,8 +2151,8 @@
     "hp": "110",
     "artist": "Anesaki Dynamic",
     "flavorText": "Said to be the embodiment of north winds, it can instantly purify filthy, murky water.",
-    "image": "https://images.scrydex.com/pokemon/sm8-59/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-59/small",
+    "image": "assets/cards/sm8/59.webp",
+    "imageSmall": "assets/cards/sm8/59-sm.webp",
     "attacks": [
       {
         "name": "Aurora Gain",
@@ -2113,7 +2171,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may have your opponent switch their Active Pokémon with 1 of their Benched Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-59/large"
   },
   {
     "id": "sm8-60",
@@ -2130,8 +2189,8 @@
     ],
     "hp": "180",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-60/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-60/small",
+    "image": "assets/cards/sm8/60.webp",
+    "imageSmall": "assets/cards/sm8/60-sm.webp",
     "attacks": [
       {
         "name": "Cure Stream",
@@ -2160,7 +2219,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is on your Bench, you may shuffle it and all cards attached to it into your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-60/large"
   },
   {
     "id": "sm8-61",
@@ -2177,8 +2237,8 @@
     "hp": "70",
     "artist": "0313",
     "flavorText": "Their snot is a barometer of health. When healthy, their snot is sticky and the power of their ice moves increases.",
-    "image": "https://images.scrydex.com/pokemon/sm8-61/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-61/small",
+    "image": "assets/cards/sm8/61.webp",
+    "imageSmall": "assets/cards/sm8/61-sm.webp",
     "attacks": [
       {
         "name": "Secondary Chills",
@@ -2197,7 +2257,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-61/large"
   },
   {
     "id": "sm8-62",
@@ -2215,8 +2276,8 @@
     "artist": "Mina Nakai",
     "flavorText": "It freezes its breath to create fangs and claws of ice to fight with. Cold northern areas are its habitat.",
     "evolvesFrom": "Cubchoo",
-    "image": "https://images.scrydex.com/pokemon/sm8-62/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-62/small",
+    "image": "assets/cards/sm8/62.webp",
+    "imageSmall": "assets/cards/sm8/62-sm.webp",
     "attacks": [
       {
         "name": "Resolute Claws",
@@ -2239,7 +2300,8 @@
         "damage": "150",
         "text": "This Pokémon can't attack during your next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-62/large"
   },
   {
     "id": "sm8-63",
@@ -2256,8 +2318,8 @@
     "hp": "130",
     "artist": "Hitoshi Ariga",
     "flavorText": "It generates a powerful, freezing energy inside itself, but its body became frozen when the energy leaked out.",
-    "image": "https://images.scrydex.com/pokemon/sm8-63/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-63/small",
+    "image": "assets/cards/sm8/63.webp",
+    "imageSmall": "assets/cards/sm8/63-sm.webp",
     "attacks": [
       {
         "name": "Field Crush",
@@ -2278,7 +2340,8 @@
         "damage": "80+",
         "text": "If this Pokémon has any Fire Energy attached to it, this attack does 80 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-63/large"
   },
   {
     "id": "sm8-64",
@@ -2295,8 +2358,8 @@
     "hp": "60",
     "artist": "Hitoshi Ariga",
     "flavorText": "This Pokémon snorts body fluids from its nose, blowing balloons to smash into its foes. It's famous for being a hard worker.",
-    "image": "https://images.scrydex.com/pokemon/sm8-64/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-64/small",
+    "image": "assets/cards/sm8/64.webp",
+    "imageSmall": "assets/cards/sm8/64-sm.webp",
     "attacks": [
       {
         "name": "Disarming Voice",
@@ -2307,7 +2370,8 @@
         "damage": "20",
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Confused."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-64/large"
   },
   {
     "id": "sm8-65",
@@ -2324,8 +2388,8 @@
     "hp": "70",
     "artist": "Yusuke Ohmura",
     "flavorText": "This Pokémon can control water bubbles. It practice diligently so it can learn to make big bubbles.",
-    "image": "https://images.scrydex.com/pokemon/sm8-65/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-65/small",
+    "image": "assets/cards/sm8/65.webp",
+    "imageSmall": "assets/cards/sm8/65-sm.webp",
     "attacks": [
       {
         "name": "Blot",
@@ -2335,7 +2399,8 @@
         "damage": "10",
         "text": "Heal 10 damage from this Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-65/large"
   },
   {
     "id": "sm8-66",
@@ -2353,8 +2418,8 @@
     "artist": "Atsuko Nishida",
     "flavorText": "It cares deeply for its companions. When its Trainer is feeling down, it performs a cheery dance to try and help.",
     "evolvesFrom": "Popplio",
-    "image": "https://images.scrydex.com/pokemon/sm8-66/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-66/small",
+    "image": "assets/cards/sm8/66.webp",
+    "imageSmall": "assets/cards/sm8/66-sm.webp",
     "attacks": [
       {
         "name": "Captivate",
@@ -2372,7 +2437,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-66/large"
   },
   {
     "id": "sm8-67",
@@ -2390,8 +2456,8 @@
     "artist": "Shin Nagasawa",
     "flavorText": "Its singing voice is its chief weapon in battle. This Pokémon's Trainer must prioritize the daily maintenance of its throat at all costs.",
     "evolvesFrom": "Brionne",
-    "image": "https://images.scrydex.com/pokemon/sm8-67/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-67/small",
+    "image": "assets/cards/sm8/67.webp",
+    "imageSmall": "assets/cards/sm8/67-sm.webp",
     "attacks": [
       {
         "name": "Hypno Splash",
@@ -2410,7 +2476,8 @@
         "text": "Whenever you attach an Energy card from your hand to 1 of your Pokémon, except with an attack, Ability, or Trainer card, attach up to 2 Energy cards to that Pokémon instead of 1.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-67/large"
   },
   {
     "id": "sm8-68",
@@ -2427,8 +2494,8 @@
     "hp": "50",
     "artist": "Aya Kusube",
     "flavorText": "It's found crawling on beaches and seafloors. The coral that grows on Corsola's head is as good as a five-star banquet to this Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/sm8-68/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-68/small",
+    "image": "assets/cards/sm8/68.webp",
+    "imageSmall": "assets/cards/sm8/68-sm.webp",
     "attacks": [
       {
         "name": "Spike Cannon",
@@ -2438,7 +2505,8 @@
         "damage": "30×",
         "text": "Flip 2 coins. This attack does 30 damage for each heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-68/large"
   },
   {
     "id": "sm8-69",
@@ -2456,8 +2524,8 @@
     "artist": "kirisAki",
     "flavorText": "Those attacked by Toxapex's poison will suffer intense pain for three days and three nights. Post-recovery, there will be some aftereffects.",
     "evolvesFrom": "Mareanie",
-    "image": "https://images.scrydex.com/pokemon/sm8-69/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-69/small",
+    "image": "assets/cards/sm8/69.webp",
+    "imageSmall": "assets/cards/sm8/69-sm.webp",
     "attacks": [
       {
         "name": "Poison Sting",
@@ -2476,7 +2544,8 @@
         "damage": "50×",
         "text": "If your opponent's Active Pokémon is Poisoned, this attack does 50 damage for each damage counter on that Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-69/large"
   },
   {
     "id": "sm8-70",
@@ -2493,8 +2562,8 @@
     "hp": "90",
     "artist": "tetsuya koizumi",
     "flavorText": "It stuns its prey with psychokinesis and then grinds them to mush with its strong teeth. Even Shellder's shell is no match for it.",
-    "image": "https://images.scrydex.com/pokemon/sm8-70/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-70/small",
+    "image": "assets/cards/sm8/70.webp",
+    "imageSmall": "assets/cards/sm8/70-sm.webp",
     "attacks": [
       {
         "name": "Mind Bend",
@@ -2513,7 +2582,8 @@
         "damage": "",
         "text": "This attack does 60 damage to 1 of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-70/large"
   },
   {
     "id": "sm8-71",
@@ -2530,8 +2600,8 @@
     "hp": "80",
     "artist": "Naoyo Kimura",
     "flavorText": "Electricity leaks from it in amounts far greater than the amount of electricity it eats.",
-    "image": "https://images.scrydex.com/pokemon/sm8-71/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-71/small",
+    "image": "assets/cards/sm8/71.webp",
+    "imageSmall": "assets/cards/sm8/71-sm.webp",
     "attacks": [
       {
         "name": "Thunder Shock",
@@ -2542,7 +2612,8 @@
         "damage": "30",
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-71/large"
   },
   {
     "id": "sm8-72",
@@ -2560,8 +2631,8 @@
     "artist": "Akira Komayama",
     "flavorText": "When it gets excited, it thumps its chest. With every thud, thunder roars and electric sparks shower all around.",
     "evolvesFrom": "Electabuzz",
-    "image": "https://images.scrydex.com/pokemon/sm8-72/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-72/small",
+    "image": "assets/cards/sm8/72.webp",
+    "imageSmall": "assets/cards/sm8/72-sm.webp",
     "attacks": [
       {
         "name": "Electrocharge",
@@ -2582,7 +2653,8 @@
         "damage": "190",
         "text": "Discard 3 Energy from this Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-72/large"
   },
   {
     "id": "sm8-73",
@@ -2599,8 +2671,8 @@
     "hp": "60",
     "artist": "Akira Komayama",
     "flavorText": "It lives in the depths beyond the reach of sunlight. It flashes lights on its antennae to communicate with others of its kind.",
-    "image": "https://images.scrydex.com/pokemon/sm8-73/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-73/small",
+    "image": "assets/cards/sm8/73.webp",
+    "imageSmall": "assets/cards/sm8/73-sm.webp",
     "attacks": [
       {
         "name": "Thunder Wave",
@@ -2619,7 +2691,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-73/large"
   },
   {
     "id": "sm8-74",
@@ -2637,8 +2710,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "This Pokémon flashes a bright light that blinds its prey. This creates an opening for it to deliver an electrical attack.",
     "evolvesFrom": "Chinchou",
-    "image": "https://images.scrydex.com/pokemon/sm8-74/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-74/small",
+    "image": "assets/cards/sm8/74.webp",
+    "imageSmall": "assets/cards/sm8/74-sm.webp",
     "attacks": [
       {
         "name": "Salvage",
@@ -2657,7 +2730,8 @@
         "damage": "50",
         "text": "Your opponent's Active Pokémon is now Confused."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-74/large"
   },
   {
     "id": "sm8-75",
@@ -2674,8 +2748,8 @@
     "hp": "50",
     "artist": "Midori Harada",
     "flavorText": "It stores lots of air in its soft fur, allowing it to stay cool in summer and warm in winter.",
-    "image": "https://images.scrydex.com/pokemon/sm8-75/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-75/small",
+    "image": "assets/cards/sm8/75.webp",
+    "imageSmall": "assets/cards/sm8/75-sm.webp",
     "attacks": [
       {
         "name": "Tackle",
@@ -2693,7 +2767,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may leave your opponent's Active Pokémon Asleep.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-75/large"
   },
   {
     "id": "sm8-76",
@@ -2710,8 +2785,8 @@
     "hp": "60",
     "artist": "0313",
     "flavorText": "It stores lots of air in its soft fur, allowing it to stay cool in summer and warm in winter.",
-    "image": "https://images.scrydex.com/pokemon/sm8-76/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-76/small",
+    "image": "assets/cards/sm8/76.webp",
+    "imageSmall": "assets/cards/sm8/76-sm.webp",
     "attacks": [
       {
         "name": "Thunder Shock",
@@ -2721,7 +2796,8 @@
         "damage": "10",
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-76/large"
   },
   {
     "id": "sm8-77",
@@ -2739,8 +2815,8 @@
     "artist": "Mizue",
     "flavorText": "If its coat becomes fully charged with electricity, its tail lights up. It fires hair that zaps on impact.",
     "evolvesFrom": "Mareep",
-    "image": "https://images.scrydex.com/pokemon/sm8-77/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-77/small",
+    "image": "assets/cards/sm8/77.webp",
+    "imageSmall": "assets/cards/sm8/77-sm.webp",
     "attacks": [
       {
         "name": "Signal Beam",
@@ -2751,7 +2827,8 @@
         "damage": "40",
         "text": "Your opponent's Active Pokémon is now Confused."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-77/large"
   },
   {
     "id": "sm8-78",
@@ -2769,8 +2846,8 @@
     "artist": "Satoshi Shirai",
     "flavorText": "The tail's tip shines brightly and can be seen from far away. It acts as a beacon for lost people.",
     "evolvesFrom": "Flaaffy",
-    "image": "https://images.scrydex.com/pokemon/sm8-78/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-78/small",
+    "image": "assets/cards/sm8/78.webp",
+    "imageSmall": "assets/cards/sm8/78-sm.webp",
     "attacks": [
       {
         "name": "Split Bomb",
@@ -2788,7 +2865,8 @@
         "text": "Once during your turn (before your attack), you may put 2 Lightning Energy cards from your hand in the Lost Zone. If you do, your opponent's Active Pokémon is now Paralyzed.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-78/large"
   },
   {
     "id": "sm8-79",
@@ -2805,8 +2883,8 @@
     "hp": "120",
     "artist": "Kagemaru Himeno",
     "flavorText": "This rough Pokémon stores energy inside its body, then sweeps across the land, shooting off electricity.",
-    "image": "https://images.scrydex.com/pokemon/sm8-79/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-79/small",
+    "image": "assets/cards/sm8/79.webp",
+    "imageSmall": "assets/cards/sm8/79-sm.webp",
     "attacks": [
       {
         "name": "Lost Voltage",
@@ -2817,7 +2895,8 @@
         "damage": "30+",
         "text": "If you have any Lightning Energy cards in the Lost Zone, this attack does 90 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-79/large"
   },
   {
     "id": "sm8-80",
@@ -2834,8 +2913,8 @@
     "hp": "70",
     "artist": "Yuka Morii",
     "flavorText": "A pair may be seen rubbing their cheek pouches together in an effort to share stored electricity.",
-    "image": "https://images.scrydex.com/pokemon/sm8-80/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-80/small",
+    "image": "assets/cards/sm8/80.webp",
+    "imageSmall": "assets/cards/sm8/80-sm.webp",
     "attacks": [
       {
         "name": "Overshort",
@@ -2845,7 +2924,8 @@
         "damage": "20+",
         "text": "Before doing damage, discard all Pokémon Tool cards from your opponent's Active Pokémon. If you discarded a Pokémon Tool card in this way, this attack does 40 more damage, and your opponent's Active Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-80/large"
   },
   {
     "id": "sm8-81",
@@ -2862,8 +2942,8 @@
     "hp": "70",
     "artist": "Miki Tanaka",
     "flavorText": "Its mane shines when it discharges electricity. They use the frequency and rhythm of these flashes to communicate.",
-    "image": "https://images.scrydex.com/pokemon/sm8-81/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-81/small",
+    "image": "assets/cards/sm8/81.webp",
+    "imageSmall": "assets/cards/sm8/81-sm.webp",
     "attacks": [
       {
         "name": "Flop",
@@ -2882,7 +2962,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-81/large"
   },
   {
     "id": "sm8-82",
@@ -2900,8 +2981,8 @@
     "artist": "Misa Tsutsui",
     "flavorText": "They have lightning-like movements. When Zebstrika run at full speed, the sound of thunder reverberates.",
     "evolvesFrom": "Blitzle",
-    "image": "https://images.scrydex.com/pokemon/sm8-82/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-82/small",
+    "image": "assets/cards/sm8/82.webp",
+    "imageSmall": "assets/cards/sm8/82-sm.webp",
     "attacks": [
       {
         "name": "Head Bolt",
@@ -2919,7 +3000,8 @@
         "text": "Once during your turn (before your attack), you may discard your hand and draw 4 cards.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-82/large"
   },
   {
     "id": "sm8-83",
@@ -2936,8 +3018,8 @@
     "hp": "110",
     "artist": "Ken Sugimori",
     "flavorText": "It conceals itself in the mud of the seashore. Then it waits. When prey touch it, it delivers a jolt of electricity.",
-    "image": "https://images.scrydex.com/pokemon/sm8-83/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-83/small",
+    "image": "assets/cards/sm8/83.webp",
+    "imageSmall": "assets/cards/sm8/83-sm.webp",
     "attacks": [
       {
         "name": "Flail",
@@ -2955,7 +3037,8 @@
         "damage": "50",
         "text": "Discard a Lightning Energy from this Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-83/large"
   },
   {
     "id": "sm8-84",
@@ -2972,8 +3055,8 @@
     "hp": "70",
     "artist": "MAHOU",
     "flavorText": "It uses its tail to absorb electricity from power plants or from outlets in houses, and then it fires the electricity from its whiskers.",
-    "image": "https://images.scrydex.com/pokemon/sm8-84/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-84/small",
+    "image": "assets/cards/sm8/84.webp",
+    "imageSmall": "assets/cards/sm8/84-sm.webp",
     "attacks": [
       {
         "name": "Nuzzle",
@@ -2991,7 +3074,8 @@
         "damage": "",
         "text": "This attack does 10 damage for each of your Pokémon in play that has the Nuzzle attack to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-84/large"
   },
   {
     "id": "sm8-85",
@@ -3008,8 +3092,8 @@
     "hp": "120",
     "artist": "kawayoo",
     "flavorText": "It confuses its enemies by flying too quickly for the eye to follow. It has a hair-trigger temper but forgets what made it angry an instant later.",
-    "image": "https://images.scrydex.com/pokemon/sm8-85/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-85/small",
+    "image": "assets/cards/sm8/85.webp",
+    "imageSmall": "assets/cards/sm8/85-sm.webp",
     "attacks": [
       {
         "name": "Strafe",
@@ -3030,7 +3114,8 @@
         "damage": "120",
         "text": "This Pokémon can't use Flashing Bolt during your next turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-85/large"
   },
   {
     "id": "sm8-86",
@@ -3047,8 +3132,8 @@
     ],
     "hp": "190",
     "artist": "PLANETA Otani",
-    "image": "https://images.scrydex.com/pokemon/sm8-86/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-86/small",
+    "image": "assets/cards/sm8/86.webp",
+    "imageSmall": "assets/cards/sm8/86-sm.webp",
     "attacks": [
       {
         "name": "Plasma Fists",
@@ -3075,7 +3160,8 @@
         "text": "Each of your Pokémon that has any Lightning Energy attached to it has no Retreat Cost.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-86/large"
   },
   {
     "id": "sm8-87",
@@ -3092,8 +3178,8 @@
     "hp": "40",
     "artist": "Anesaki Dynamic",
     "flavorText": "It usually forages for food on the ground bu may, on rare occasions, hop onto branches to peck at shoots.",
-    "image": "https://images.scrydex.com/pokemon/sm8-87/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-87/small",
+    "image": "assets/cards/sm8/87.webp",
+    "imageSmall": "assets/cards/sm8/87-sm.webp",
     "attacks": [
       {
         "name": "Lost March",
@@ -3104,7 +3190,8 @@
         "damage": "20×",
         "text": "This attack does 20 damage for each of your Pokémon, except ◇ (Prism Star) Pokémon, in the Lost Zone."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-87/large"
   },
   {
     "id": "sm8-88",
@@ -3122,8 +3209,8 @@
     "artist": "Ken Sugimori",
     "flavorText": "They say that it stays still and quiet because it is seeing both the past and future at the same time.",
     "evolvesFrom": "Natu",
-    "image": "https://images.scrydex.com/pokemon/sm8-88/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-88/small",
+    "image": "assets/cards/sm8/88.webp",
+    "imageSmall": "assets/cards/sm8/88-sm.webp",
     "attacks": [
       {
         "name": "Energy Gaze",
@@ -3144,7 +3231,8 @@
         "damage": "80",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-88/large"
   },
   {
     "id": "sm8-89",
@@ -3162,8 +3250,8 @@
     "artist": "Ryota Murayama",
     "flavorText": "It unleashes psychic power from the orb on its forehead. When its power is exhausted, the orb grows dull and dark.",
     "evolvesFrom": "Eevee",
-    "image": "https://images.scrydex.com/pokemon/sm8-89/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-89/small",
+    "image": "assets/cards/sm8/89.webp",
+    "imageSmall": "assets/cards/sm8/89-sm.webp",
     "attacks": [
       {
         "name": "Allure",
@@ -3181,7 +3269,8 @@
         "damage": "20+",
         "text": "This attack does 20 more damage times the amount of Energy attached to all of your opponent's Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-89/large"
   },
   {
     "id": "sm8-90",
@@ -3198,8 +3287,8 @@
     "hp": "60",
     "artist": "Masakazu Fukuda",
     "flavorText": "Shaped like ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/sm8-90/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-90/small",
+    "image": "assets/cards/sm8/90.webp",
+    "imageSmall": "assets/cards/sm8/90-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -3216,7 +3305,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, and if there are 66 or more damage counters on your Benched Pokémon, you may use this Ability. If you do, you win this game.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-90/large"
   },
   {
     "id": "sm8-91",
@@ -3233,8 +3323,8 @@
     "hp": "60",
     "artist": "Hasuno",
     "flavorText": "Shaped like ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/sm8-91/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-91/small",
+    "image": "assets/cards/sm8/91.webp",
+    "imageSmall": "assets/cards/sm8/91-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -3251,7 +3341,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, and if you have 35 or more cards in your hand, you may use this Ability. If you do, you win this game.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-91/large"
   },
   {
     "id": "sm8-92",
@@ -3268,8 +3359,8 @@
     "hp": "60",
     "artist": "Naoki Saito",
     "flavorText": "Shaped like ancient writing, it is a huge mystery whether language or Unown came first.",
-    "image": "https://images.scrydex.com/pokemon/sm8-92/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-92/small",
+    "image": "assets/cards/sm8/92.webp",
+    "imageSmall": "assets/cards/sm8/92-sm.webp",
     "attacks": [
       {
         "name": "Hidden Power",
@@ -3286,7 +3377,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, and if your opponent has 12 or more Supporter cards in the Lost Zone, you may use this Ability. If you do, you win this game.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-92/large"
   },
   {
     "id": "sm8-93",
@@ -3303,8 +3395,8 @@
     "hp": "110",
     "artist": "Megumi Mizutani",
     "flavorText": "To keep its pitch-black tail hidden, it live quietly in the darkness. It is never first to attack.",
-    "image": "https://images.scrydex.com/pokemon/sm8-93/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-93/small",
+    "image": "assets/cards/sm8/93.webp",
+    "imageSmall": "assets/cards/sm8/93-sm.webp",
     "attacks": [
       {
         "name": "Knock Away",
@@ -3322,7 +3414,8 @@
         "text": "As long as this Pokémon is on your Bench, ◇ (Prism Star) Pokémon in play (both yours and your opponent's) can't attack and have no Abilities.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-93/large"
   },
   {
     "id": "sm8-94",
@@ -3339,8 +3432,8 @@
     "hp": "90",
     "artist": "Ayaka Yoshida",
     "flavorText": "Its tail has a small brain of its own. Beware! If you get close, it may react to your scent by biting.",
-    "image": "https://images.scrydex.com/pokemon/sm8-94/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-94/small",
+    "image": "assets/cards/sm8/94.webp",
+    "imageSmall": "assets/cards/sm8/94-sm.webp",
     "attacks": [
       {
         "name": "Get Lost",
@@ -3360,7 +3453,8 @@
         "damage": "70",
         "text": "This attack's damage isn't affected by Weakness or Resistance."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-94/large"
   },
   {
     "id": "sm8-95",
@@ -3378,8 +3472,8 @@
     "artist": "kawayoo",
     "flavorText": "A most peculiar Pokémon that somehow appears in a Poké Ball when a Nincada evolves.",
     "evolvesFrom": "Nincada",
-    "image": "https://images.scrydex.com/pokemon/sm8-95/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-95/small",
+    "image": "assets/cards/sm8/95.webp",
+    "imageSmall": "assets/cards/sm8/95-sm.webp",
     "attacks": [
       {
         "name": "Haunt",
@@ -3396,7 +3490,8 @@
         "text": "Once during your turn (before your attack), you may discard all cards attached to this Pokémon and attach it to 1 of your Pokémon as a Pokémon Tool card. When the Pokémon this card is attached to is Knocked Out, your opponent takes 1 fewer Prize card.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-95/large"
   },
   {
     "id": "sm8-96",
@@ -3413,8 +3508,8 @@
     "hp": "80",
     "artist": "Miki Tanaka",
     "flavorText": "This Pokémon is feared. When its gemstone eyes begin to glow with a sinister shine, it's believed that Sableye will steal people's spirits away.",
-    "image": "https://images.scrydex.com/pokemon/sm8-96/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-96/small",
+    "image": "assets/cards/sm8/96.webp",
+    "imageSmall": "assets/cards/sm8/96-sm.webp",
     "attacks": [
       {
         "name": "Quick Hunt",
@@ -3432,7 +3527,8 @@
         "damage": "",
         "text": "Put 3 damage counters on your opponent's Pokémon in any way you like."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-96/large"
   },
   {
     "id": "sm8-97",
@@ -3449,8 +3545,8 @@
     "hp": "130",
     "artist": "Hasuno",
     "flavorText": "It was banished for its violence. It silently gazed upon the old world from the Distortion World.",
-    "image": "https://images.scrydex.com/pokemon/sm8-97/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-97/small",
+    "image": "assets/cards/sm8/97.webp",
+    "imageSmall": "assets/cards/sm8/97-sm.webp",
     "attacks": [
       {
         "name": "Shadow Impact",
@@ -3469,7 +3565,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put it onto your Bench. If you do, put 1 damage counter on 2 of your opponent's Benched Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-97/large"
   },
   {
     "id": "sm8-98",
@@ -3486,8 +3583,8 @@
     ],
     "hp": "170",
     "artist": "PLANETA Otani",
-    "image": "https://images.scrydex.com/pokemon/sm8-98/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-98/small",
+    "image": "assets/cards/sm8/98.webp",
+    "imageSmall": "assets/cards/sm8/98-sm.webp",
     "attacks": [
       {
         "name": "Sonic Wing",
@@ -3516,7 +3613,8 @@
         "text": "If this Pokémon is your Active Pokémon and is damaged by an attack from your opponent's Pokémon-GX or Pokémon-EX (even if this Pokémon is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-98/large"
   },
   {
     "id": "sm8-99",
@@ -3533,8 +3631,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "Each of them carries a mask that used to be its face when it was human. Sometimes they look at it and cry.",
-    "image": "https://images.scrydex.com/pokemon/sm8-99/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-99/small",
+    "image": "assets/cards/sm8/99.webp",
+    "imageSmall": "assets/cards/sm8/99-sm.webp",
     "attacks": [
       {
         "name": "Haunt",
@@ -3544,7 +3642,8 @@
         "damage": "",
         "text": "Put 1 damage counter on your opponent's Active Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-99/large"
   },
   {
     "id": "sm8-100",
@@ -3562,8 +3661,8 @@
     "artist": "tetsuya koizumi",
     "flavorText": "Grave robbers who mistake them for real coffins and get too close end up trapped inside their bodies.",
     "evolvesFrom": "Yamask",
-    "image": "https://images.scrydex.com/pokemon/sm8-100/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-100/small",
+    "image": "assets/cards/sm8/100.webp",
+    "imageSmall": "assets/cards/sm8/100-sm.webp",
     "attacks": [
       {
         "name": "Spirit Juggling",
@@ -3574,7 +3673,8 @@
         "damage": "10+",
         "text": "Discard any number of your Benched Pokémon. This attack does 30 more damage for each Benched Pokémon you discarded in this way."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-100/large"
   },
   {
     "id": "sm8-101",
@@ -3591,8 +3691,8 @@
     "hp": "60",
     "artist": "Asako Ito",
     "flavorText": "Litwick shines a light that absorbs the life energy of people and Pokémon, which becomes the fuel that it burns.",
-    "image": "https://images.scrydex.com/pokemon/sm8-101/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-101/small",
+    "image": "assets/cards/sm8/101.webp",
+    "imageSmall": "assets/cards/sm8/101-sm.webp",
     "attacks": [
       {
         "name": "Haunt",
@@ -3602,7 +3702,8 @@
         "damage": "",
         "text": "Put 1 damage counter on your opponent's Active Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-101/large"
   },
   {
     "id": "sm8-102",
@@ -3620,8 +3721,8 @@
     "artist": "Anesaki Dynamic",
     "flavorText": "It arrives near the moment of death and steals spirit from the body.",
     "evolvesFrom": "Litwick",
-    "image": "https://images.scrydex.com/pokemon/sm8-102/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-102/small",
+    "image": "assets/cards/sm8/102.webp",
+    "imageSmall": "assets/cards/sm8/102-sm.webp",
     "attacks": [
       {
         "name": "Haunt",
@@ -3631,7 +3732,8 @@
         "damage": "",
         "text": "Put 3 damage counters on your opponent's Active Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-102/large"
   },
   {
     "id": "sm8-103",
@@ -3649,8 +3751,8 @@
     "artist": "so-taro",
     "flavorText": "The spirits burned up in its ominous flame lose their way and wander this world forever.",
     "evolvesFrom": "Lampent",
-    "image": "https://images.scrydex.com/pokemon/sm8-103/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-103/small",
+    "image": "assets/cards/sm8/103.webp",
+    "imageSmall": "assets/cards/sm8/103-sm.webp",
     "attacks": [
       {
         "name": "Cursed Drop",
@@ -3669,7 +3771,8 @@
         "damage": "20×",
         "text": "This attack does 20 damage for each damage counter on all of your opponent's Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-103/large"
   },
   {
     "id": "sm8-104",
@@ -3686,8 +3789,8 @@
     "hp": "80",
     "artist": "nagimiso",
     "flavorText": "Its melodies are sung with a special vocalization method that can control the feels of those who hear it.",
-    "image": "https://images.scrydex.com/pokemon/sm8-104/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-104/small",
+    "image": "assets/cards/sm8/104.webp",
+    "imageSmall": "assets/cards/sm8/104-sm.webp",
     "attacks": [
       {
         "name": "Sing",
@@ -3707,7 +3810,8 @@
         "damage": "",
         "text": "Flip a coin for each of your Pokémon in play that has the Sing attack. This attack does 10 damage for each heads to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-104/large"
   },
   {
     "id": "sm8-105",
@@ -3724,8 +3828,8 @@
     "hp": "60",
     "artist": "Sanosuke Sakuma",
     "flavorText": "It plunges the poison spike on its head into its prey. When the prey has weakened, Mareanie deals the finishing blow with its 10 tentacles.",
-    "image": "https://images.scrydex.com/pokemon/sm8-105/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-105/small",
+    "image": "assets/cards/sm8/105.webp",
+    "imageSmall": "assets/cards/sm8/105-sm.webp",
     "attacks": [
       {
         "name": "Peck",
@@ -3744,7 +3848,8 @@
         "damage": "10×",
         "text": "Flip 4 coins. This attack does 10 damage for each heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-105/large"
   },
   {
     "id": "sm8-106",
@@ -3762,8 +3867,8 @@
     "hp": "110",
     "artist": "Megumi Mizutani",
     "flavorText": "One of the Ultra Beasts, it's unclear whether or not this Pokémon is sentient, but sometimes it can be observed behaving like a young girl.",
-    "image": "https://images.scrydex.com/pokemon/sm8-106/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-106/small",
+    "image": "assets/cards/sm8/106.webp",
+    "imageSmall": "assets/cards/sm8/106-sm.webp",
     "attacks": [
       {
         "name": "Nightcap",
@@ -3781,7 +3886,8 @@
         "damage": "",
         "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-106/large"
   },
   {
     "id": "sm8-107",
@@ -3799,8 +3905,8 @@
     "hp": "70",
     "artist": "Hitoshi Ariga",
     "flavorText": "This Ultra Beast is well enough liked to be chosen as a first partner in its own world.",
-    "image": "https://images.scrydex.com/pokemon/sm8-107/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-107/small",
+    "image": "assets/cards/sm8/107.webp",
+    "imageSmall": "assets/cards/sm8/107-sm.webp",
     "attacks": [
       {
         "name": "Eye Opener",
@@ -3819,7 +3925,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-107/large"
   },
   {
     "id": "sm8-108",
@@ -3838,8 +3945,8 @@
     "artist": "Shin Nagasawa",
     "flavorText": "It stores hundreds of liters of poisonous liquid inside its body. It is one of the organisms known as UBs.",
     "evolvesFrom": "Poipole",
-    "image": "https://images.scrydex.com/pokemon/sm8-108/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-108/small",
+    "image": "assets/cards/sm8/108.webp",
+    "imageSmall": "assets/cards/sm8/108-sm.webp",
     "attacks": [
       {
         "name": "Turning Point",
@@ -3858,7 +3965,8 @@
         "text": "Once during your turn (before your attack), you may attach a basic Energy card from your discard pile to this Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-108/large"
   },
   {
     "id": "sm8-109",
@@ -3875,8 +3983,8 @@
     "hp": "120",
     "artist": "Tomokazu Komiya",
     "flavorText": "It usually lives underground. It searches for food while boring its way through the ground at 50 miles per hour.",
-    "image": "https://images.scrydex.com/pokemon/sm8-109/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-109/small",
+    "image": "assets/cards/sm8/109.webp",
+    "imageSmall": "assets/cards/sm8/109-sm.webp",
     "attacks": [
       {
         "name": "Land Crush",
@@ -3889,7 +3997,8 @@
         "damage": "120",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-109/large"
   },
   {
     "id": "sm8-110",
@@ -3906,8 +4015,8 @@
     "hp": "110",
     "artist": "Ken Sugimori",
     "flavorText": "Apparently, the larger the green parts of this Pokémon, the more collectors value it. It's a particular favorite among elderly people.",
-    "image": "https://images.scrydex.com/pokemon/sm8-110/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-110/small",
+    "image": "assets/cards/sm8/110.webp",
+    "imageSmall": "assets/cards/sm8/110-sm.webp",
     "attacks": [
       {
         "name": "Reply Strongly",
@@ -3917,7 +4026,8 @@
         "damage": "20+",
         "text": "If this Pokémon was damaged by an attack during your opponent's last turn while it was your Active Pokémon, this attack does 80 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-110/large"
   },
   {
     "id": "sm8-111",
@@ -3934,8 +4044,8 @@
     "hp": "80",
     "artist": "Asako Ito",
     "flavorText": "It is strong despite its compact size. It can easily pick up and carry an adult human on its back.",
-    "image": "https://images.scrydex.com/pokemon/sm8-111/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-111/small",
+    "image": "assets/cards/sm8/111.webp",
+    "imageSmall": "assets/cards/sm8/111-sm.webp",
     "attacks": [
       {
         "name": "Last Resort",
@@ -3946,7 +4056,8 @@
         "damage": "50",
         "text": "Flip a coin. If tails, this attack does nothing."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-111/large"
   },
   {
     "id": "sm8-112",
@@ -3964,8 +4075,8 @@
     "artist": "Naoyo Kimura",
     "flavorText": "The longer and bigger its tusks, the higher its rank in its herd. The tusks take long to grow.",
     "evolvesFrom": "Phanpy",
-    "image": "https://images.scrydex.com/pokemon/sm8-112/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-112/small",
+    "image": "assets/cards/sm8/112.webp",
+    "imageSmall": "assets/cards/sm8/112-sm.webp",
     "attacks": [
       {
         "name": "Rolling Spin",
@@ -3984,7 +4095,8 @@
         "text": "If this Pokémon has full HP and would be Knocked Out by damage from an attack, this Pokémon is not Knocked Out, and its remaining HP becomes 10.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-112/large"
   },
   {
     "id": "sm8-113",
@@ -4001,8 +4113,8 @@
     "hp": "80",
     "artist": "sowsow",
     "flavorText": "If you are enchanted by its smooth, dance-like kicks, you may get a closer experience with one than you'd like.",
-    "image": "https://images.scrydex.com/pokemon/sm8-113/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-113/small",
+    "image": "assets/cards/sm8/113.webp",
+    "imageSmall": "assets/cards/sm8/113-sm.webp",
     "attacks": [
       {
         "name": "Rapid Spin",
@@ -4022,7 +4134,8 @@
         "damage": "40×",
         "text": "Flip 3 coins. This attack does 40 damage for each heads."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-113/large"
   },
   {
     "id": "sm8-114",
@@ -4039,8 +4152,8 @@
     "hp": "50",
     "artist": "Misa Tsutsui",
     "flavorText": "Born deep underground, it comes aboveground and becomes a pupa once it has finished eating the surrounding soil.",
-    "image": "https://images.scrydex.com/pokemon/sm8-114/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-114/small",
+    "image": "assets/cards/sm8/114.webp",
+    "imageSmall": "assets/cards/sm8/114-sm.webp",
     "attacks": [
       {
         "name": "Bite",
@@ -4057,7 +4170,8 @@
         "text": "As long as this Pokémon is on your Bench, prevent all damage done to this Pokémon by attacks (both yours and your opponent's).",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-114/large"
   },
   {
     "id": "sm8-115",
@@ -4074,8 +4188,8 @@
     "hp": "60",
     "artist": "SATOSHI NAKAI",
     "flavorText": "Born deep underground, it comes aboveground and becomes a pupa once it has finished eating the surrounding soil.",
-    "image": "https://images.scrydex.com/pokemon/sm8-115/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-115/small",
+    "image": "assets/cards/sm8/115.webp",
+    "imageSmall": "assets/cards/sm8/115-sm.webp",
     "attacks": [
       {
         "name": "Second Strike",
@@ -4086,7 +4200,8 @@
         "damage": "10+",
         "text": "If your opponent's Active Pokémon already has 3 or more damage counters on it, this attack does 70 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-115/large"
   },
   {
     "id": "sm8-116",
@@ -4104,8 +4219,8 @@
     "artist": "Yuka Morii",
     "flavorText": "Its shell is as hard as sheet rock, and it is also very strong. Its thrashing can topple a mountain.",
     "evolvesFrom": "Larvitar",
-    "image": "https://images.scrydex.com/pokemon/sm8-116/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-116/small",
+    "image": "assets/cards/sm8/116.webp",
+    "imageSmall": "assets/cards/sm8/116-sm.webp",
     "attacks": [
       {
         "name": "Hammer In",
@@ -4124,7 +4239,8 @@
         "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may prevent all damage done to this Pokémon by your opponent's attacks until the end of your opponent's next turn.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-116/large"
   },
   {
     "id": "sm8-117",
@@ -4141,8 +4257,8 @@
     "hp": "90",
     "artist": "Sanosuke Sakuma",
     "flavorText": "Although this Pokémon is not especially rare, its glittering, jewel-draped body draws attention from people.",
-    "image": "https://images.scrydex.com/pokemon/sm8-117/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-117/small",
+    "image": "assets/cards/sm8/117.webp",
+    "imageSmall": "assets/cards/sm8/117-sm.webp",
     "attacks": [
       {
         "name": "Diamond Gate",
@@ -4162,7 +4278,8 @@
         "damage": "60",
         "text": "During your opponent's next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance)."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-117/large"
   },
   {
     "id": "sm8-118",
@@ -4179,15 +4296,16 @@
     "hp": "60",
     "artist": "Akira Komayama",
     "flavorText": "When its delicate pride is wounded, or when the gold coin on its forehead is dirtied, it flies into a hysterical rage.",
-    "image": "https://images.scrydex.com/pokemon/sm8-118/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-118/small",
+    "image": "assets/cards/sm8/118.webp",
+    "imageSmall": "assets/cards/sm8/118-sm.webp",
     "attacks": [
       {
         "name": "Spoil the Fun",
         "damage": "10+",
         "text": "If you go second, this attack does 60 more damage during your first turn."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-118/large"
   },
   {
     "id": "sm8-119",
@@ -4205,15 +4323,16 @@
     "artist": "Tomokazu Komiya",
     "flavorText": "It looks down on everyone other than itself. Its preferred tactics are sucker punches and blindside attacks.",
     "evolvesFrom": "Alolan Meowth",
-    "image": "https://images.scrydex.com/pokemon/sm8-119/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-119/small",
+    "image": "assets/cards/sm8/119.webp",
+    "imageSmall": "assets/cards/sm8/119-sm.webp",
     "attacks": [
       {
         "name": "Empty Threat",
         "damage": "90-",
         "text": "This attack does 30 less damage times the amount of Energy attached to your opponent's Active Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-119/large"
   },
   {
     "id": "sm8-120",
@@ -4231,8 +4350,8 @@
     "artist": "Ryota Murayama",
     "flavorText": "With its black fur, it blends into the darkness. It bides its time, and when prey appears, this Pokémon goes for its threat, and then eats it.",
     "evolvesFrom": "Eevee",
-    "image": "https://images.scrydex.com/pokemon/sm8-120/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-120/small",
+    "image": "assets/cards/sm8/120.webp",
+    "imageSmall": "assets/cards/sm8/120-sm.webp",
     "attacks": [
       {
         "name": "Retaliate",
@@ -4251,7 +4370,8 @@
         "damage": "60",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-120/large"
   },
   {
     "id": "sm8-121",
@@ -4269,8 +4389,8 @@
     "hp": "250",
     "artist": "5ban Graphics",
     "evolvesFrom": "Pupitar",
-    "image": "https://images.scrydex.com/pokemon/sm8-121/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-121/small",
+    "image": "assets/cards/sm8/121.webp",
+    "imageSmall": "assets/cards/sm8/121-sm.webp",
     "attacks": [
       {
         "name": "Dusty Ruckus",
@@ -4299,7 +4419,8 @@
         "text": "If your opponent's Pokémon is Knocked Out by damage from this Pokémon's attacks, put that Pokémon and all cards attached to it in the Lost Zone instead of the discard pile.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-121/large"
   },
   {
     "id": "sm8-122",
@@ -4316,15 +4437,16 @@
     "hp": "50",
     "artist": "Midori Harada",
     "flavorText": "Its golden hairs function as sensors. It pokes them out of its burrow to monitor its surroundings.",
-    "image": "https://images.scrydex.com/pokemon/sm8-122/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-122/small",
+    "image": "assets/cards/sm8/122.webp",
+    "imageSmall": "assets/cards/sm8/122-sm.webp",
     "attacks": [
       {
         "name": "Call for Family",
         "damage": "",
         "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-122/large"
   },
   {
     "id": "sm8-123",
@@ -4342,15 +4464,16 @@
     "artist": "Yuka Morii",
     "flavorText": "These Pokémon are cherished in the Alola region, where they are thought to be feminine deities of the land incarnate.",
     "evolvesFrom": "Alolan Diglett",
-    "image": "https://images.scrydex.com/pokemon/sm8-123/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-123/small",
+    "image": "assets/cards/sm8/123.webp",
+    "imageSmall": "assets/cards/sm8/123-sm.webp",
     "attacks": [
       {
         "name": "Digging Dash",
         "damage": "60",
         "text": "This attack's damage isn't affected by Weakness or Resistance."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-123/large"
   },
   {
     "id": "sm8-124",
@@ -4368,8 +4491,8 @@
     "artist": "tetsuya koizumi",
     "flavorText": "It remains immovably rooted to its tree. It scatters piece of its hard shell to drive its enemies away.",
     "evolvesFrom": "Pineco",
-    "image": "https://images.scrydex.com/pokemon/sm8-124/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-124/small",
+    "image": "assets/cards/sm8/124.webp",
+    "imageSmall": "assets/cards/sm8/124-sm.webp",
     "attacks": [
       {
         "name": "Thorny Eruption",
@@ -4389,7 +4512,8 @@
         "damage": "190",
         "text": "Put this Pokémon and all cards attached to it in the Lost Zone."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-124/large"
   },
   {
     "id": "sm8-125",
@@ -4407,8 +4531,8 @@
     "artist": "Shin Nagasawa",
     "flavorText": "It chews its way through boulders with its sturdy jaws. Its eyes can see in the darkness underground.",
     "evolvesFrom": "Onix",
-    "image": "https://images.scrydex.com/pokemon/sm8-125/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-125/small",
+    "image": "assets/cards/sm8/125.webp",
+    "imageSmall": "assets/cards/sm8/125-sm.webp",
     "attacks": [
       {
         "name": "Hammer In",
@@ -4431,7 +4555,8 @@
         "damage": "170",
         "text": "This Pokémon does 50 damage to itself."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-125/large"
   },
   {
     "id": "sm8-126",
@@ -4449,8 +4574,8 @@
     "artist": "Anesaki Dynamic",
     "flavorText": "Once it has identified an enemy, this Pokémon smashes it mercilessly with pincers hard as steel.",
     "evolvesFrom": "Scyther",
-    "image": "https://images.scrydex.com/pokemon/sm8-126/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-126/small",
+    "image": "assets/cards/sm8/126.webp",
+    "imageSmall": "assets/cards/sm8/126-sm.webp",
     "attacks": [
       {
         "name": "Special Blow",
@@ -4468,7 +4593,8 @@
         "text": "This Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-126/large"
   },
   {
     "id": "sm8-127",
@@ -4485,8 +4611,8 @@
     "hp": "130",
     "artist": "nagimiso",
     "flavorText": "It has the power to control time. It appears in Sinnoh-region myths as an ancient deity.",
-    "image": "https://images.scrydex.com/pokemon/sm8-127/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-127/small",
+    "image": "assets/cards/sm8/127.webp",
+    "imageSmall": "assets/cards/sm8/127-sm.webp",
     "attacks": [
       {
         "name": "Turn Back Time",
@@ -4509,7 +4635,8 @@
         "damage": "130",
         "text": "Discard an Energy from this Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-127/large"
   },
   {
     "id": "sm8-128",
@@ -4526,8 +4653,8 @@
     "hp": "80",
     "artist": "Ken Sugimori",
     "flavorText": "They attack in groups, covering themselves in steel armor to protect themselves from Heatmor.",
-    "image": "https://images.scrydex.com/pokemon/sm8-128/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-128/small",
+    "image": "assets/cards/sm8/128.webp",
+    "imageSmall": "assets/cards/sm8/128-sm.webp",
     "attacks": [
       {
         "name": "Knock Over",
@@ -4546,7 +4673,8 @@
         "damage": "",
         "text": "Discard the top 2 cards of your opponent's deck."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-128/large"
   },
   {
     "id": "sm8-129",
@@ -4563,8 +4691,8 @@
     "hp": "120",
     "artist": "Kouki Saitou",
     "flavorText": "It has a body and heart of steel. It worked with its allies to punish people when they hurt Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/sm8-129/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-129/small",
+    "image": "assets/cards/sm8/129.webp",
+    "imageSmall": "assets/cards/sm8/129-sm.webp",
     "attacks": [
       {
         "name": "Guard Press",
@@ -4585,7 +4713,8 @@
         "damage": "80+",
         "text": "If this Pokémon has a Pokémon Tool card attached to it, this attack does 40 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-129/large"
   },
   {
     "id": "sm8-130",
@@ -4602,8 +4731,8 @@
     ],
     "hp": "180",
     "artist": "Yoshinobu Saito",
-    "image": "https://images.scrydex.com/pokemon/sm8-130/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-130/small",
+    "image": "assets/cards/sm8/130.webp",
+    "imageSmall": "assets/cards/sm8/130-sm.webp",
     "attacks": [
       {
         "name": "Burst Shot",
@@ -4632,7 +4761,8 @@
         "text": "This Pokémon may have up to 2 Pokémon Tool cards attached to it. If it loses this Ability, discard Pokémon Tool cards from it until only 1 remains.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-130/large"
   },
   {
     "id": "sm8-131",
@@ -4649,8 +4779,8 @@
     "hp": "90",
     "artist": "Masakazu Fukuda",
     "flavorText": "Its mechanized body is merely a vessel. Its true self is its Soul-Heart, an artificial soul.",
-    "image": "https://images.scrydex.com/pokemon/sm8-131/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-131/small",
+    "image": "assets/cards/sm8/131.webp",
+    "imageSmall": "assets/cards/sm8/131-sm.webp",
     "attacks": [
       {
         "name": "Minor Errand-Running",
@@ -4669,7 +4799,8 @@
         "damage": "30+",
         "text": "This attack does 20 more damage times the amount of Energy attached to your opponent's Active Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-131/large"
   },
   {
     "id": "sm8-132",
@@ -4687,8 +4818,8 @@
     "hp": "200",
     "artist": "5ban Graphics",
     "evolvesFrom": "Alolan Vulpix",
-    "image": "https://images.scrydex.com/pokemon/sm8-132/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-132/small",
+    "image": "assets/cards/sm8/132.webp",
+    "imageSmall": "assets/cards/sm8/132-sm.webp",
     "attacks": [
       {
         "name": "Snowy Wind",
@@ -4715,7 +4846,8 @@
         "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-132/large"
   },
   {
     "id": "sm8-133",
@@ -4732,8 +4864,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "Jigglypuff posses a vocal range that exceeds 12 octaves, but each individual's singing skill depends on its own effort.",
-    "image": "https://images.scrydex.com/pokemon/sm8-133/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-133/small",
+    "image": "assets/cards/sm8/133.webp",
+    "imageSmall": "assets/cards/sm8/133-sm.webp",
     "attacks": [
       {
         "name": "Pound",
@@ -4752,7 +4884,8 @@
         "damage": "",
         "text": "Your opponent's Active Pokémon is now Asleep."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-133/large"
   },
   {
     "id": "sm8-134",
@@ -4770,8 +4903,8 @@
     "artist": "nagimiso",
     "flavorText": "As it inhales, it expands…and expands…and expands. Wigglytuff compete to see which one can inflate itself the most.",
     "evolvesFrom": "Jigglypuff",
-    "image": "https://images.scrydex.com/pokemon/sm8-134/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-134/small",
+    "image": "assets/cards/sm8/134.webp",
+    "imageSmall": "assets/cards/sm8/134-sm.webp",
     "attacks": [
       {
         "name": "Expand",
@@ -4792,7 +4925,8 @@
         "damage": "70+",
         "text": "If this Pokémon has a Pokémon Tool card that has \"Fairy Charm\" in its name attached to it, this attack does 70 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-134/large"
   },
   {
     "id": "sm8-135",
@@ -4809,8 +4943,8 @@
     "hp": "70",
     "artist": "Ken Sugimori",
     "flavorText": "The tip of its tail is filled with oil that is lighter than water, so it acts as a float.",
-    "image": "https://images.scrydex.com/pokemon/sm8-135/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-135/small",
+    "image": "assets/cards/sm8/135.webp",
+    "imageSmall": "assets/cards/sm8/135-sm.webp",
     "attacks": [
       {
         "name": "Magical Shot",
@@ -4821,7 +4955,8 @@
         "damage": "30",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-135/large"
   },
   {
     "id": "sm8-136",
@@ -4839,8 +4974,8 @@
     "artist": "Naoyo Kimura",
     "flavorText": "The bubble-like pattern on its stomach helps it camouflage itself when it's in the water.",
     "evolvesFrom": "Marill",
-    "image": "https://images.scrydex.com/pokemon/sm8-136/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-136/small",
+    "image": "assets/cards/sm8/136.webp",
+    "imageSmall": "assets/cards/sm8/136-sm.webp",
     "attacks": [
       {
         "name": "Polka-Dot Search",
@@ -4860,7 +4995,8 @@
         "damage": "60+",
         "text": "Flip a coin. If heads, this attack does 30 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-136/large"
   },
   {
     "id": "sm8-137",
@@ -4877,8 +5013,8 @@
     "hp": "70",
     "artist": "Akira Komayama",
     "flavorText": "Its growls make its opponents uneasy. This laid-back Pokémon tends to sleep half the day.",
-    "image": "https://images.scrydex.com/pokemon/sm8-137/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-137/small",
+    "image": "assets/cards/sm8/137.webp",
+    "imageSmall": "assets/cards/sm8/137-sm.webp",
     "attacks": [
       {
         "name": "Make a Mess",
@@ -4888,7 +5024,8 @@
         "damage": "20×",
         "text": "Discard up to 2 Trainer cards from your hand. This attack does 20 damage for each card you discarded in this way."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-137/large"
   },
   {
     "id": "sm8-138",
@@ -4906,8 +5043,8 @@
     "artist": "Shin Nagasawa",
     "flavorText": "More timid than Snubbull, this Pokémon is doted on by young people amused at the contrast between its looks and its attitude.",
     "evolvesFrom": "Snubbull",
-    "image": "https://images.scrydex.com/pokemon/sm8-138/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-138/small",
+    "image": "assets/cards/sm8/138.webp",
+    "imageSmall": "assets/cards/sm8/138-sm.webp",
     "attacks": [
       {
         "name": "All Out",
@@ -4927,7 +5064,8 @@
         "damage": "110",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-138/large"
   },
   {
     "id": "sm8-139",
@@ -4944,8 +5082,8 @@
     "hp": "50",
     "artist": "Yuka Morii",
     "flavorText": "It is highly attuned to the emotions of people and Pokémon. It hides if it senses hostility.",
-    "image": "https://images.scrydex.com/pokemon/sm8-139/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-139/small",
+    "image": "assets/cards/sm8/139.webp",
+    "imageSmall": "assets/cards/sm8/139-sm.webp",
     "attacks": [
       {
         "name": "Beckon",
@@ -4964,7 +5102,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-139/large"
   },
   {
     "id": "sm8-140",
@@ -4982,8 +5121,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "It has a psychic power that enabled it to distort the space around it and see into the future.",
     "evolvesFrom": "Ralts",
-    "image": "https://images.scrydex.com/pokemon/sm8-140/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-140/small",
+    "image": "assets/cards/sm8/140.webp",
+    "imageSmall": "assets/cards/sm8/140-sm.webp",
     "attacks": [
       {
         "name": "Beat",
@@ -5004,7 +5143,8 @@
         "damage": "50",
         "text": "Your opponent's Active Pokémon is now Confused."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-140/large"
   },
   {
     "id": "sm8-141",
@@ -5022,8 +5162,8 @@
     "artist": "Ryota Murayama",
     "flavorText": "It has the power to predict the future. Its power peaks when it is protecting its Trainer.",
     "evolvesFrom": "Kirlia",
-    "image": "https://images.scrydex.com/pokemon/sm8-141/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-141/small",
+    "image": "assets/cards/sm8/141.webp",
+    "imageSmall": "assets/cards/sm8/141-sm.webp",
     "attacks": [
       {
         "name": "Brilliant Search",
@@ -5043,7 +5183,8 @@
         "damage": "70+",
         "text": "If you played a Supporter card from your hand during this turn, this attack does 90 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-141/large"
   },
   {
     "id": "sm8-142",
@@ -5060,8 +5201,8 @@
     "hp": "70",
     "artist": "Megumi Mizutani",
     "flavorText": "It uses its tail to absorb electricity from power plants or from outlets in houses, and then it fires the electricity from its whiskers.",
-    "image": "https://images.scrydex.com/pokemon/sm8-142/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-142/small",
+    "image": "assets/cards/sm8/142.webp",
+    "imageSmall": "assets/cards/sm8/142-sm.webp",
     "attacks": [
       {
         "name": "Zzzap Touch",
@@ -5071,7 +5212,8 @@
         "damage": "10",
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Confused. If tails, your opponent's Active Pokémon is now Paralyzed."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-142/large"
   },
   {
     "id": "sm8-143",
@@ -5088,8 +5230,8 @@
     "hp": "90",
     "artist": "Ken Sugimori",
     "flavorText": "Although this Pokémon is not especially rare, its glittering, jewel-draped body draws attention from people.",
-    "image": "https://images.scrydex.com/pokemon/sm8-143/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-143/small",
+    "image": "assets/cards/sm8/143.webp",
+    "imageSmall": "assets/cards/sm8/143-sm.webp",
     "attacks": [
       {
         "name": "Wonder Ray",
@@ -5110,7 +5252,8 @@
         "damage": "60",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-143/large"
   },
   {
     "id": "sm8-144",
@@ -5128,8 +5271,8 @@
     "hp": "160",
     "artist": "Shin Nagasawa",
     "flavorText": "When the horns on its head shine in seven colors, it is said to be sharing everlasting life.",
-    "image": "https://images.scrydex.com/pokemon/sm8-144/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-144/small",
+    "image": "assets/cards/sm8/144.webp",
+    "imageSmall": "assets/cards/sm8/144-sm.webp",
     "attacks": [
       {
         "name": "Bright Horns",
@@ -5148,7 +5291,8 @@
         "text": "Once during your turn, when this Pokémon moves from your Bench to become your Active Pokémon, you may move any number of Energy from your other Pokémon to it.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-144/large"
   },
   {
     "id": "sm8-145",
@@ -5165,8 +5309,8 @@
     "hp": "30",
     "artist": "Midori Harada",
     "flavorText": "Myriads of Cutiefly flutter above the heads of people who have auras resembling those of flowers.",
-    "image": "https://images.scrydex.com/pokemon/sm8-145/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-145/small",
+    "image": "assets/cards/sm8/145.webp",
+    "imageSmall": "assets/cards/sm8/145-sm.webp",
     "attacks": [
       {
         "name": "Sweet Scent",
@@ -5176,7 +5320,8 @@
         "damage": "",
         "text": "Heal 30 damage from 1 of your Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-145/large"
   },
   {
     "id": "sm8-146",
@@ -5194,8 +5339,8 @@
     "artist": "Hasuno",
     "flavorText": "Some of Ribombee's pollen puffs are highly nutritious. They are sometimes sold as supplements.",
     "evolvesFrom": "Cutiefly",
-    "image": "https://images.scrydex.com/pokemon/sm8-146/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-146/small",
+    "image": "assets/cards/sm8/146.webp",
+    "imageSmall": "assets/cards/sm8/146-sm.webp",
     "attacks": [
       {
         "name": "Stampede",
@@ -5212,7 +5357,8 @@
         "text": "As long as this Pokémon is on your Bench, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to your Fairy Pokémon in play.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-146/large"
   },
   {
     "id": "sm8-147",
@@ -5229,8 +5375,8 @@
     "hp": "60",
     "artist": "You Iribi",
     "flavorText": "As it drowses the day away, it nourishes itself by sucking from tree roots. It wakens at the fall of night, wandering off in search of a new tree.",
-    "image": "https://images.scrydex.com/pokemon/sm8-147/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-147/small",
+    "image": "assets/cards/sm8/147.webp",
+    "imageSmall": "assets/cards/sm8/147-sm.webp",
     "attacks": [
       {
         "name": "Perplex",
@@ -5240,7 +5386,8 @@
         "damage": "",
         "text": "Your opponent's Active Pokémon is now Confused."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-147/large"
   },
   {
     "id": "sm8-148",
@@ -5258,8 +5405,8 @@
     "artist": "Suwama Chiaki",
     "flavorText": "It emits flickering spores that cause drowsiness. When its prey succumb to sleep, this Pokémon feeds on them by sucking in their energy.",
     "evolvesFrom": "Morelull",
-    "image": "https://images.scrydex.com/pokemon/sm8-148/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-148/small",
+    "image": "assets/cards/sm8/148.webp",
+    "imageSmall": "assets/cards/sm8/148-sm.webp",
     "attacks": [
       {
         "name": "Dream's Touch",
@@ -5277,7 +5424,8 @@
         "text": "If this Pokémon is your Active Pokémon and is damaged by an opponent's attack (even if this Pokémon is Knocked Out), the Attacking Pokémon is now Asleep.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-148/large"
   },
   {
     "id": "sm8-149",
@@ -5294,8 +5442,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-149/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-149/small",
+    "image": "assets/cards/sm8/149.webp",
+    "imageSmall": "assets/cards/sm8/149-sm.webp",
     "attacks": [
       {
         "name": "Perplex",
@@ -5322,7 +5470,8 @@
         "damage": "",
         "text": "Choose 1 of your opponent's Benched Pokémon. Your opponent shuffles that Pokémon and all cards attached to it into their deck. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-149/large"
   },
   {
     "id": "sm8-150",
@@ -5339,8 +5488,8 @@
     "hp": "110",
     "artist": "Mizue",
     "flavorText": "As it flutters about, it scatters its strangely glowing scales. Touching them is said to restore good health on the spot.",
-    "image": "https://images.scrydex.com/pokemon/sm8-150/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-150/small",
+    "image": "assets/cards/sm8/150.webp",
+    "imageSmall": "assets/cards/sm8/150-sm.webp",
     "attacks": [
       {
         "name": "Magical Shot",
@@ -5359,7 +5508,8 @@
         "text": "Whenever you attach a Pokémon Tool card that has \"Fairy Charm\" in its name from your hand to this Pokémon during your turn, you may leave your opponent's Active Pokémon Confused.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-150/large"
   },
   {
     "id": "sm8-151",
@@ -5376,8 +5526,8 @@
     "hp": "120",
     "artist": "Kagemaru Himeno",
     "flavorText": "The guardian deity of Poni, it can control water. People say it can create pure water that will wash away any uncleanness.",
-    "image": "https://images.scrydex.com/pokemon/sm8-151/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-151/small",
+    "image": "assets/cards/sm8/151.webp",
+    "imageSmall": "assets/cards/sm8/151-sm.webp",
     "attacks": [
       {
         "name": "Dream Away",
@@ -5398,7 +5548,8 @@
         "damage": "100",
         "text": "Your opponent's Active Pokémon is now Confused."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-151/large"
   },
   {
     "id": "sm8-152",
@@ -5415,8 +5566,8 @@
     "hp": "100",
     "artist": "MAHOU",
     "flavorText": "Not only are these Pokémon fast runners, they're also few in number, so anyone who finds one must be lucky indeed.",
-    "image": "https://images.scrydex.com/pokemon/sm8-152/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-152/small",
+    "image": "assets/cards/sm8/152.webp",
+    "imageSmall": "assets/cards/sm8/152-sm.webp",
     "attacks": [
       {
         "name": "Healing Pirouette",
@@ -5436,7 +5587,8 @@
         "damage": "100",
         "text": "If your opponent's Active Pokémon already has any damage counters on it before this attack does damage, this attack does nothing."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-152/large"
   },
   {
     "id": "sm8-153",
@@ -5454,8 +5606,8 @@
     "artist": "MAHOU",
     "flavorText": "Its fluffy fur coat acts as a sensor, enabling it to read the feelings of people and Pokémon.",
     "evolvesFrom": "Chansey",
-    "image": "https://images.scrydex.com/pokemon/sm8-153/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-153/small",
+    "image": "assets/cards/sm8/153.webp",
+    "imageSmall": "assets/cards/sm8/153-sm.webp",
     "attacks": [
       {
         "name": "Powerful Slap",
@@ -5474,7 +5626,8 @@
         "text": "Once during your turn (before your attack), you may remove a Special Condition from your Active Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-153/large"
   },
   {
     "id": "sm8-154",
@@ -5492,15 +5645,16 @@
     "hp": "40",
     "artist": "kirisAki",
     "flavorText": "With its astonishing capacity for metamorphosis, it can get along with anything. It does not get along well with its fellow Ditto.",
-    "image": "https://images.scrydex.com/pokemon/sm8-154/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-154/small",
+    "image": "assets/cards/sm8/154.webp",
+    "imageSmall": "assets/cards/sm8/154-sm.webp",
     "abilities": [
       {
         "name": "Almighty Evolution",
         "text": "Once during your turn (before your attack), you may put any Stage 1 card from your hand onto this Pokémon to evolve it. You can't use this Ability during your first turn or the turn this Pokémon was put into play.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-154/large"
   },
   {
     "id": "sm8-155",
@@ -5517,8 +5671,8 @@
     "hp": "60",
     "artist": "Sekio",
     "flavorText": "Current studies show it can evolve into an incredible eight different species of Pokémon.",
-    "image": "https://images.scrydex.com/pokemon/sm8-155/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-155/small",
+    "image": "assets/cards/sm8/155.webp",
+    "imageSmall": "assets/cards/sm8/155-sm.webp",
     "attacks": [
       {
         "name": "Gnaw",
@@ -5528,7 +5682,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-155/large"
   },
   {
     "id": "sm8-156",
@@ -5545,8 +5700,8 @@
     "hp": "110",
     "artist": "Midori Harada",
     "flavorText": "The curved antlers change the flow of air to create a strange space where reality is distorted.",
-    "image": "https://images.scrydex.com/pokemon/sm8-156/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-156/small",
+    "image": "assets/cards/sm8/156.webp",
+    "imageSmall": "assets/cards/sm8/156-sm.webp",
     "attacks": [
       {
         "name": "Mystifying Horns",
@@ -5565,7 +5720,8 @@
         "damage": "20+",
         "text": "If this Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-156/large"
   },
   {
     "id": "sm8-157",
@@ -5582,8 +5738,8 @@
     "hp": "80",
     "artist": "Ken Sugimori",
     "flavorText": "It draws symbols all over the place to mark its territory. In towns with many Smeargle, the walls are covered in graffiti.",
-    "image": "https://images.scrydex.com/pokemon/sm8-157/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-157/small",
+    "image": "assets/cards/sm8/157.webp",
+    "imageSmall": "assets/cards/sm8/157-sm.webp",
     "attacks": [
       {
         "name": "Stunning Likeness",
@@ -5601,7 +5757,8 @@
         "damage": "30",
         "text": "Flip a coin. If tails, this attack does nothing."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-157/large"
   },
   {
     "id": "sm8-158",
@@ -5618,8 +5775,8 @@
     "hp": "130",
     "artist": "Naoki Saito",
     "flavorText": "Most people raise it for its milk, but it's quite tough and strong, so it's also well suited for battle.",
-    "image": "https://images.scrydex.com/pokemon/sm8-158/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-158/small",
+    "image": "assets/cards/sm8/158.webp",
+    "imageSmall": "assets/cards/sm8/158-sm.webp",
     "attacks": [
       {
         "name": "Milk Cannon",
@@ -5631,7 +5788,8 @@
         "damage": "60×",
         "text": "Reveal any number of Moomoo Milk cards in your hand. This attack does 60 damage for each card you revealed in this way."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-158/large"
   },
   {
     "id": "sm8-159",
@@ -5648,8 +5806,8 @@
     ],
     "hp": "190",
     "artist": "PLANETA Igarashi",
-    "image": "https://images.scrydex.com/pokemon/sm8-159/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-159/small",
+    "image": "assets/cards/sm8/159.webp",
+    "imageSmall": "assets/cards/sm8/159-sm.webp",
     "attacks": [
       {
         "name": "Psychic",
@@ -5682,7 +5840,8 @@
         "damage": "",
         "text": "Put your opponent's Active Pokémon and all cards attached to it in the Lost Zone. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-159/large"
   },
   {
     "id": "sm8-160",
@@ -5699,8 +5858,8 @@
     "hp": "130",
     "artist": "Aya Kusube",
     "flavorText": "It will reveal itself before a pure-hearted Trainer by shining its bright, rainbow-colored wings.",
-    "image": "https://images.scrydex.com/pokemon/sm8-160/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-160/small",
+    "image": "assets/cards/sm8/160.webp",
+    "imageSmall": "assets/cards/sm8/160-sm.webp",
     "attacks": [
       {
         "name": "Rainbow Burn",
@@ -5712,7 +5871,8 @@
         "damage": "30+",
         "text": "This attack does 30 more damage for each type of basic Energy attached to this Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-160/large"
   },
   {
     "id": "sm8-161",
@@ -5729,8 +5889,8 @@
     "hp": "80",
     "artist": "OOYAMA",
     "flavorText": "It changes its shading to match its surroundings so it can sneak up on prey. Only its belly patterns stay fixed.",
-    "image": "https://images.scrydex.com/pokemon/sm8-161/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-161/small",
+    "image": "assets/cards/sm8/161.webp",
+    "imageSmall": "assets/cards/sm8/161-sm.webp",
     "attacks": [
       {
         "name": "Tongue Smack",
@@ -5747,7 +5907,8 @@
         "text": "As long as this Pokémon has Unit Energy GrassFireWater attached to it, it is a Grass, Fire, and Water Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-161/large"
   },
   {
     "id": "sm8-162",
@@ -5764,8 +5925,8 @@
     "hp": "80",
     "artist": "OOYAMA",
     "flavorText": "It changes its shading to match its surroundings so it can sneak up on prey. Only its belly patterns stay fixed.",
-    "image": "https://images.scrydex.com/pokemon/sm8-162/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-162/small",
+    "image": "assets/cards/sm8/162.webp",
+    "imageSmall": "assets/cards/sm8/162-sm.webp",
     "attacks": [
       {
         "name": "Gentle Slap",
@@ -5783,7 +5944,8 @@
         "text": "As long as this Pokémon has Unit Energy FightingDarknessFairy attached to it, it is a Fighting, Darkness, and Fairy Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-162/large"
   },
   {
     "id": "sm8-163",
@@ -5800,8 +5962,8 @@
     "hp": "50",
     "artist": "Miki Tanaka",
     "flavorText": "This Pokémon feeds on berries, whose leftover seeds become the ammunition for attacks it fires off from its mouth.",
-    "image": "https://images.scrydex.com/pokemon/sm8-163/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-163/small",
+    "image": "assets/cards/sm8/163.webp",
+    "imageSmall": "assets/cards/sm8/163-sm.webp",
     "attacks": [
       {
         "name": "Peck Off",
@@ -5811,7 +5973,8 @@
         "damage": "10",
         "text": "Before doing damage, discard all Pokémon Tool cards from your opponent's Active Pokémon."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-163/large"
   },
   {
     "id": "sm8-164",
@@ -5828,8 +5991,8 @@
     "hp": "60",
     "artist": "Suwama Chiaki",
     "flavorText": "This Pokémon feeds on berries, whose leftover seeds become the ammunition for attacks it fires off from its mouth.",
-    "image": "https://images.scrydex.com/pokemon/sm8-164/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-164/small",
+    "image": "assets/cards/sm8/164.webp",
+    "imageSmall": "assets/cards/sm8/164-sm.webp",
     "attacks": [
       {
         "name": "Send Back",
@@ -5848,7 +6011,8 @@
         "damage": "20",
         "text": ""
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-164/large"
   },
   {
     "id": "sm8-165",
@@ -5866,8 +6030,8 @@
     "artist": "Shin Nagasawa",
     "flavorText": "By bending its beak, it can produce a variety of calls and brand itself a noisy nuisance for its neighbors.",
     "evolvesFrom": "Pikipek",
-    "image": "https://images.scrydex.com/pokemon/sm8-165/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-165/small",
+    "image": "assets/cards/sm8/165.webp",
+    "imageSmall": "assets/cards/sm8/165-sm.webp",
     "attacks": [
       {
         "name": "Peck",
@@ -5885,7 +6049,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is in your hand, you may reveal it. If you do, look at the top card of your opponent's deck and put this Pokémon in the Lost Zone. If that card is a Supporter card, you may put it in the Lost Zone. If your opponent has no cards in their deck, you can't use this Ability.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-165/large"
   },
   {
     "id": "sm8-166",
@@ -5903,8 +6068,8 @@
     "artist": "Kouki Saitou",
     "flavorText": "Within its beak, its internal gas ignites, explosively launching seeds with enough power to pulverize boulders.",
     "evolvesFrom": "Trumbeak",
-    "image": "https://images.scrydex.com/pokemon/sm8-166/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-166/small",
+    "image": "assets/cards/sm8/166.webp",
+    "imageSmall": "assets/cards/sm8/166-sm.webp",
     "attacks": [
       {
         "name": "Heat Beak",
@@ -5924,7 +6089,8 @@
         "damage": "160",
         "text": "If this Pokémon evolved during this turn, this attack does nothing."
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-166/large"
   },
   {
     "id": "sm8-167",
@@ -5936,8 +6102,9 @@
       "Item"
     ],
     "artist": "Yoshinobu Saito",
-    "image": "https://images.scrydex.com/pokemon/sm8-167/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-167/small"
+    "image": "assets/cards/sm8/167.webp",
+    "imageSmall": "assets/cards/sm8/167-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-167/large"
   },
   {
     "id": "sm8-168",
@@ -5949,8 +6116,9 @@
       "Supporter"
     ],
     "artist": "take",
-    "image": "https://images.scrydex.com/pokemon/sm8-168/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-168/small"
+    "image": "assets/cards/sm8/168.webp",
+    "imageSmall": "assets/cards/sm8/168-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-168/large"
   },
   {
     "id": "sm8-169",
@@ -5962,8 +6130,9 @@
       "Pokémon Tool"
     ],
     "artist": "Eske Yoshinob",
-    "image": "https://images.scrydex.com/pokemon/sm8-169/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-169/small"
+    "image": "assets/cards/sm8/169.webp",
+    "imageSmall": "assets/cards/sm8/169-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-169/large"
   },
   {
     "id": "sm8-170",
@@ -5975,8 +6144,9 @@
       "Pokémon Tool"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-170/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-170/small"
+    "image": "assets/cards/sm8/170.webp",
+    "imageSmall": "assets/cards/sm8/170-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-170/large"
   },
   {
     "id": "sm8-171",
@@ -5988,8 +6158,9 @@
       "Item"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-171/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-171/small"
+    "image": "assets/cards/sm8/171.webp",
+    "imageSmall": "assets/cards/sm8/171-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-171/large"
   },
   {
     "id": "sm8-172",
@@ -6001,8 +6172,9 @@
       "Item"
     ],
     "artist": "Eske Yoshinob",
-    "image": "https://images.scrydex.com/pokemon/sm8-172/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-172/small"
+    "image": "assets/cards/sm8/172.webp",
+    "imageSmall": "assets/cards/sm8/172-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-172/large"
   },
   {
     "id": "sm8-173",
@@ -6014,8 +6186,9 @@
       "Supporter"
     ],
     "artist": "take",
-    "image": "https://images.scrydex.com/pokemon/sm8-173/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-173/small"
+    "image": "assets/cards/sm8/173.webp",
+    "imageSmall": "assets/cards/sm8/173-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-173/large"
   },
   {
     "id": "sm8-174",
@@ -6027,8 +6200,9 @@
       "Pokémon Tool"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-174/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-174/small"
+    "image": "assets/cards/sm8/174.webp",
+    "imageSmall": "assets/cards/sm8/174-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-174/large"
   },
   {
     "id": "sm8-175",
@@ -6040,8 +6214,9 @@
       "Pokémon Tool"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-175/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-175/small"
+    "image": "assets/cards/sm8/175.webp",
+    "imageSmall": "assets/cards/sm8/175-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-175/large"
   },
   {
     "id": "sm8-176",
@@ -6053,8 +6228,9 @@
       "Pokémon Tool"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-176/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-176/small"
+    "image": "assets/cards/sm8/176.webp",
+    "imageSmall": "assets/cards/sm8/176-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-176/large"
   },
   {
     "id": "sm8-177",
@@ -6066,8 +6242,9 @@
       "Pokémon Tool"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-177/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-177/small"
+    "image": "assets/cards/sm8/177.webp",
+    "imageSmall": "assets/cards/sm8/177-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-177/large"
   },
   {
     "id": "sm8-178",
@@ -6080,8 +6257,9 @@
       "Prism Star"
     ],
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-178/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-178/small"
+    "image": "assets/cards/sm8/178.webp",
+    "imageSmall": "assets/cards/sm8/178-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-178/large"
   },
   {
     "id": "sm8-179",
@@ -6093,8 +6271,9 @@
       "Supporter"
     ],
     "artist": "Ken Sugimori",
-    "image": "https://images.scrydex.com/pokemon/sm8-179/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-179/small"
+    "image": "assets/cards/sm8/179.webp",
+    "imageSmall": "assets/cards/sm8/179-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-179/large"
   },
   {
     "id": "sm8-180",
@@ -6107,8 +6286,9 @@
       "Prism Star"
     ],
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-180/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-180/small"
+    "image": "assets/cards/sm8/180.webp",
+    "imageSmall": "assets/cards/sm8/180-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-180/large"
   },
   {
     "id": "sm8-181",
@@ -6120,8 +6300,9 @@
       "Item"
     ],
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-181/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-181/small"
+    "image": "assets/cards/sm8/181.webp",
+    "imageSmall": "assets/cards/sm8/181-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-181/large"
   },
   {
     "id": "sm8-182",
@@ -6134,8 +6315,9 @@
       "Prism Star"
     ],
     "artist": "nagimiso",
-    "image": "https://images.scrydex.com/pokemon/sm8-182/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-182/small"
+    "image": "assets/cards/sm8/182.webp",
+    "imageSmall": "assets/cards/sm8/182-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-182/large"
   },
   {
     "id": "sm8-183",
@@ -6147,8 +6329,9 @@
       "Supporter"
     ],
     "artist": "Ken Sugimori",
-    "image": "https://images.scrydex.com/pokemon/sm8-183/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-183/small"
+    "image": "assets/cards/sm8/183.webp",
+    "imageSmall": "assets/cards/sm8/183-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-183/large"
   },
   {
     "id": "sm8-184",
@@ -6160,8 +6343,9 @@
       "Item"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-184/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-184/small"
+    "image": "assets/cards/sm8/184.webp",
+    "imageSmall": "assets/cards/sm8/184-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-184/large"
   },
   {
     "id": "sm8-185",
@@ -6173,8 +6357,9 @@
       "Item"
     ],
     "artist": "Ayaka Yoshida",
-    "image": "https://images.scrydex.com/pokemon/sm8-185/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-185/small"
+    "image": "assets/cards/sm8/185.webp",
+    "imageSmall": "assets/cards/sm8/185-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-185/large"
   },
   {
     "id": "sm8-186",
@@ -6186,8 +6371,9 @@
       "Supporter"
     ],
     "artist": "Ken Sugimori",
-    "image": "https://images.scrydex.com/pokemon/sm8-186/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-186/small"
+    "image": "assets/cards/sm8/186.webp",
+    "imageSmall": "assets/cards/sm8/186-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-186/large"
   },
   {
     "id": "sm8-187",
@@ -6199,8 +6385,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/sm8-187/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-187/small"
+    "image": "assets/cards/sm8/187.webp",
+    "imageSmall": "assets/cards/sm8/187-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-187/large"
   },
   {
     "id": "sm8-188",
@@ -6212,8 +6399,9 @@
       "Supporter"
     ],
     "artist": "Hideki Ishikawa",
-    "image": "https://images.scrydex.com/pokemon/sm8-188/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-188/small"
+    "image": "assets/cards/sm8/188.webp",
+    "imageSmall": "assets/cards/sm8/188-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-188/large"
   },
   {
     "id": "sm8-189",
@@ -6225,8 +6413,9 @@
       "Supporter"
     ],
     "artist": "Naoki Saito",
-    "image": "https://images.scrydex.com/pokemon/sm8-189/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-189/small"
+    "image": "assets/cards/sm8/189.webp",
+    "imageSmall": "assets/cards/sm8/189-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-189/large"
   },
   {
     "id": "sm8-190",
@@ -6238,8 +6427,9 @@
       "Pokémon Tool"
     ],
     "artist": "Ayaka Yoshida",
-    "image": "https://images.scrydex.com/pokemon/sm8-190/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-190/small"
+    "image": "assets/cards/sm8/190.webp",
+    "imageSmall": "assets/cards/sm8/190-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-190/large"
   },
   {
     "id": "sm8-191",
@@ -6252,8 +6442,9 @@
       "Prism Star"
     ],
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-191/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-191/small"
+    "image": "assets/cards/sm8/191.webp",
+    "imageSmall": "assets/cards/sm8/191-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-191/large"
   },
   {
     "id": "sm8-192",
@@ -6265,8 +6456,9 @@
       "Item"
     ],
     "artist": "Yoshinobu Saito",
-    "image": "https://images.scrydex.com/pokemon/sm8-192/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-192/small"
+    "image": "assets/cards/sm8/192.webp",
+    "imageSmall": "assets/cards/sm8/192-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-192/large"
   },
   {
     "id": "sm8-193",
@@ -6278,8 +6470,9 @@
       "Supporter"
     ],
     "artist": "Ken Sugimori",
-    "image": "https://images.scrydex.com/pokemon/sm8-193/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-193/small"
+    "image": "assets/cards/sm8/193.webp",
+    "imageSmall": "assets/cards/sm8/193-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-193/large"
   },
   {
     "id": "sm8-194",
@@ -6290,8 +6483,9 @@
     "subtypes": [
       "Special"
     ],
-    "image": "https://images.scrydex.com/pokemon/sm8-194/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-194/small"
+    "image": "assets/cards/sm8/194.webp",
+    "imageSmall": "assets/cards/sm8/194-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-194/large"
   },
   {
     "id": "sm8-195",
@@ -6308,8 +6502,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-195/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-195/small",
+    "image": "assets/cards/sm8/195.webp",
+    "imageSmall": "assets/cards/sm8/195-sm.webp",
     "attacks": [
       {
         "name": "Triple Poison",
@@ -6334,7 +6528,8 @@
         "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon that have 2 or fewer Energy attached to them.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-195/large"
   },
   {
     "id": "sm8-196",
@@ -6352,8 +6547,8 @@
     "hp": "230",
     "artist": "Yoshinobu Saito",
     "evolvesFrom": "Grovyle",
-    "image": "https://images.scrydex.com/pokemon/sm8-196/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-196/small",
+    "image": "assets/cards/sm8/196.webp",
+    "imageSmall": "assets/cards/sm8/196-sm.webp",
     "attacks": [
       {
         "name": "Mach Cut",
@@ -6380,7 +6575,8 @@
         "damage": "",
         "text": "Heal all damage from each of your Pokémon that has any Grass Energy attached to it. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-196/large"
   },
   {
     "id": "sm8-197",
@@ -6397,8 +6593,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-197/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-197/small",
+    "image": "assets/cards/sm8/197.webp",
+    "imageSmall": "assets/cards/sm8/197-sm.webp",
     "attacks": [
       {
         "name": "Double Draw",
@@ -6425,7 +6621,8 @@
         "damage": "",
         "text": "Put any number of your Pokémon in play and all cards attached to them into your hand. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-197/large"
   },
   {
     "id": "sm8-198",
@@ -6443,8 +6640,8 @@
     "hp": "210",
     "artist": "5ban Graphics",
     "evolvesFrom": "Slugma",
-    "image": "https://images.scrydex.com/pokemon/sm8-198/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-198/small",
+    "image": "assets/cards/sm8/198.webp",
+    "imageSmall": "assets/cards/sm8/198-sm.webp",
     "attacks": [
       {
         "name": "Lava Flow",
@@ -6471,7 +6668,8 @@
         "text": "Once during your turn (before your attack), you may discard the top card of your deck. If it's a basic Energy card, attach it to 1 of your Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-198/large"
   },
   {
     "id": "sm8-199",
@@ -6489,8 +6687,8 @@
     ],
     "hp": "180",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-199/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-199/small",
+    "image": "assets/cards/sm8/199.webp",
+    "imageSmall": "assets/cards/sm8/199-sm.webp",
     "attacks": [
       {
         "name": "Bursting Burn",
@@ -6517,7 +6715,8 @@
         "damage": "",
         "text": "Discard 1 of your Prize cards. If it's an Energy card, attach it to 1 of your Pokémon. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-199/large"
   },
   {
     "id": "sm8-200",
@@ -6534,8 +6733,8 @@
     ],
     "hp": "180",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-200/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-200/small",
+    "image": "assets/cards/sm8/200.webp",
+    "imageSmall": "assets/cards/sm8/200-sm.webp",
     "attacks": [
       {
         "name": "Cure Stream",
@@ -6564,7 +6763,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is on your Bench, you may shuffle it and all cards attached to it into your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-200/large"
   },
   {
     "id": "sm8-201",
@@ -6581,8 +6781,8 @@
     ],
     "hp": "190",
     "artist": "PLANETA Otani",
-    "image": "https://images.scrydex.com/pokemon/sm8-201/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-201/small",
+    "image": "assets/cards/sm8/201.webp",
+    "imageSmall": "assets/cards/sm8/201-sm.webp",
     "attacks": [
       {
         "name": "Plasma Fists",
@@ -6609,7 +6809,8 @@
         "text": "Each of your Pokémon that has any Lightning Energy attached to it has no Retreat Cost.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-201/large"
   },
   {
     "id": "sm8-202",
@@ -6626,8 +6827,8 @@
     ],
     "hp": "170",
     "artist": "PLANETA Igarashi",
-    "image": "https://images.scrydex.com/pokemon/sm8-202/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-202/small",
+    "image": "assets/cards/sm8/202.webp",
+    "imageSmall": "assets/cards/sm8/202-sm.webp",
     "attacks": [
       {
         "name": "Sonic Wing",
@@ -6656,7 +6857,8 @@
         "text": "If this Pokémon is your Active Pokémon and is damaged by an attack from your opponent's Pokémon-GX or Pokémon-EX (even if this Pokémon is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-202/large"
   },
   {
     "id": "sm8-203",
@@ -6674,8 +6876,8 @@
     "hp": "250",
     "artist": "5ban Graphics",
     "evolvesFrom": "Pupitar",
-    "image": "https://images.scrydex.com/pokemon/sm8-203/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-203/small",
+    "image": "assets/cards/sm8/203.webp",
+    "imageSmall": "assets/cards/sm8/203-sm.webp",
     "attacks": [
       {
         "name": "Dusty Ruckus",
@@ -6704,7 +6906,8 @@
         "text": "If your opponent's Pokémon is Knocked Out by damage from this Pokémon's attacks, put that Pokémon and all cards attached to it in the Lost Zone instead of the discard pile.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-203/large"
   },
   {
     "id": "sm8-204",
@@ -6721,8 +6924,8 @@
     ],
     "hp": "180",
     "artist": "Yoshinobu Saito",
-    "image": "https://images.scrydex.com/pokemon/sm8-204/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-204/small",
+    "image": "assets/cards/sm8/204.webp",
+    "imageSmall": "assets/cards/sm8/204-sm.webp",
     "attacks": [
       {
         "name": "Burst Shot",
@@ -6751,7 +6954,8 @@
         "text": "This Pokémon may have up to 2 Pokémon Tool cards attached to it. If it loses this Ability, discard Pokémon Tool cards from it until only 1 remains.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-204/large"
   },
   {
     "id": "sm8-205",
@@ -6769,8 +6973,8 @@
     "hp": "200",
     "artist": "5ban Graphics",
     "evolvesFrom": "Alolan Vulpix",
-    "image": "https://images.scrydex.com/pokemon/sm8-205/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-205/small",
+    "image": "assets/cards/sm8/205.webp",
+    "imageSmall": "assets/cards/sm8/205-sm.webp",
     "attacks": [
       {
         "name": "Snowy Wind",
@@ -6797,7 +7001,8 @@
         "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-205/large"
   },
   {
     "id": "sm8-206",
@@ -6814,8 +7019,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-206/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-206/small",
+    "image": "assets/cards/sm8/206.webp",
+    "imageSmall": "assets/cards/sm8/206-sm.webp",
     "attacks": [
       {
         "name": "Perplex",
@@ -6842,7 +7047,8 @@
         "damage": "",
         "text": "Choose 1 of your opponent's Benched Pokémon. Your opponent shuffles that Pokémon and all cards attached to it into their deck. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-206/large"
   },
   {
     "id": "sm8-207",
@@ -6859,8 +7065,8 @@
     ],
     "hp": "190",
     "artist": "PLANETA Igarashi",
-    "image": "https://images.scrydex.com/pokemon/sm8-207/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-207/small",
+    "image": "assets/cards/sm8/207.webp",
+    "imageSmall": "assets/cards/sm8/207-sm.webp",
     "attacks": [
       {
         "name": "Psychic",
@@ -6893,7 +7099,8 @@
         "damage": "",
         "text": "Put your opponent's Active Pokémon and all cards attached to it in the Lost Zone. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-207/large"
   },
   {
     "id": "sm8-208",
@@ -6905,8 +7112,9 @@
       "Supporter"
     ],
     "artist": "take",
-    "image": "https://images.scrydex.com/pokemon/sm8-208/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-208/small"
+    "image": "assets/cards/sm8/208.webp",
+    "imageSmall": "assets/cards/sm8/208-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-208/large"
   },
   {
     "id": "sm8-209",
@@ -6918,8 +7126,9 @@
       "Supporter"
     ],
     "artist": "Sanosuke Sakuma",
-    "image": "https://images.scrydex.com/pokemon/sm8-209/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-209/small"
+    "image": "assets/cards/sm8/209.webp",
+    "imageSmall": "assets/cards/sm8/209-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-209/large"
   },
   {
     "id": "sm8-210",
@@ -6931,8 +7140,9 @@
       "Supporter"
     ],
     "artist": "Megumi Mizutani",
-    "image": "https://images.scrydex.com/pokemon/sm8-210/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-210/small"
+    "image": "assets/cards/sm8/210.webp",
+    "imageSmall": "assets/cards/sm8/210-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-210/large"
   },
   {
     "id": "sm8-211",
@@ -6944,8 +7154,9 @@
       "Supporter"
     ],
     "artist": "You Iribi",
-    "image": "https://images.scrydex.com/pokemon/sm8-211/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-211/small"
+    "image": "assets/cards/sm8/211.webp",
+    "imageSmall": "assets/cards/sm8/211-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-211/large"
   },
   {
     "id": "sm8-212",
@@ -6957,8 +7168,9 @@
       "Supporter"
     ],
     "artist": "Sanosuke Sakuma",
-    "image": "https://images.scrydex.com/pokemon/sm8-212/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-212/small"
+    "image": "assets/cards/sm8/212.webp",
+    "imageSmall": "assets/cards/sm8/212-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-212/large"
   },
   {
     "id": "sm8-213",
@@ -6970,8 +7182,9 @@
       "Supporter"
     ],
     "artist": "Hideki Ishikawa",
-    "image": "https://images.scrydex.com/pokemon/sm8-213/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-213/small"
+    "image": "assets/cards/sm8/213.webp",
+    "imageSmall": "assets/cards/sm8/213-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-213/large"
   },
   {
     "id": "sm8-214",
@@ -6983,8 +7196,9 @@
       "Supporter"
     ],
     "artist": "Sanosuke Sakuma",
-    "image": "https://images.scrydex.com/pokemon/sm8-214/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-214/small"
+    "image": "assets/cards/sm8/214.webp",
+    "imageSmall": "assets/cards/sm8/214-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-214/large"
   },
   {
     "id": "sm8-215",
@@ -7001,8 +7215,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-215/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-215/small",
+    "image": "assets/cards/sm8/215.webp",
+    "imageSmall": "assets/cards/sm8/215-sm.webp",
     "attacks": [
       {
         "name": "Triple Poison",
@@ -7027,7 +7241,8 @@
         "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon that have 2 or fewer Energy attached to them.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-215/large"
   },
   {
     "id": "sm8-216",
@@ -7045,8 +7260,8 @@
     "hp": "230",
     "artist": "Yoshinobu Saito",
     "evolvesFrom": "Grovyle",
-    "image": "https://images.scrydex.com/pokemon/sm8-216/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-216/small",
+    "image": "assets/cards/sm8/216.webp",
+    "imageSmall": "assets/cards/sm8/216-sm.webp",
     "attacks": [
       {
         "name": "Mach Cut",
@@ -7073,7 +7288,8 @@
         "damage": "",
         "text": "Heal all damage from each of your Pokémon that has any Grass Energy attached to it. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-216/large"
   },
   {
     "id": "sm8-217",
@@ -7090,8 +7306,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-217/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-217/small",
+    "image": "assets/cards/sm8/217.webp",
+    "imageSmall": "assets/cards/sm8/217-sm.webp",
     "attacks": [
       {
         "name": "Double Draw",
@@ -7118,7 +7334,8 @@
         "damage": "",
         "text": "Put any number of your Pokémon in play and all cards attached to them into your hand. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-217/large"
   },
   {
     "id": "sm8-218",
@@ -7136,8 +7353,8 @@
     "hp": "210",
     "artist": "5ban Graphics",
     "evolvesFrom": "Slugma",
-    "image": "https://images.scrydex.com/pokemon/sm8-218/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-218/small",
+    "image": "assets/cards/sm8/218.webp",
+    "imageSmall": "assets/cards/sm8/218-sm.webp",
     "attacks": [
       {
         "name": "Lava Flow",
@@ -7164,7 +7381,8 @@
         "text": "Once during your turn (before your attack), you may discard the top card of your deck. If it's a basic Energy card, attach it to 1 of your Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-218/large"
   },
   {
     "id": "sm8-219",
@@ -7182,8 +7400,8 @@
     ],
     "hp": "180",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-219/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-219/small",
+    "image": "assets/cards/sm8/219.webp",
+    "imageSmall": "assets/cards/sm8/219-sm.webp",
     "attacks": [
       {
         "name": "Bursting Burn",
@@ -7210,7 +7428,8 @@
         "damage": "",
         "text": "Discard 1 of your Prize cards. If it's an Energy card, attach it to 1 of your Pokémon. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-219/large"
   },
   {
     "id": "sm8-220",
@@ -7227,8 +7446,8 @@
     ],
     "hp": "180",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-220/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-220/small",
+    "image": "assets/cards/sm8/220.webp",
+    "imageSmall": "assets/cards/sm8/220-sm.webp",
     "attacks": [
       {
         "name": "Cure Stream",
@@ -7257,7 +7476,8 @@
         "text": "Once during your turn (before your attack), if this Pokémon is on your Bench, you may shuffle it and all cards attached to it into your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-220/large"
   },
   {
     "id": "sm8-221",
@@ -7274,8 +7494,8 @@
     ],
     "hp": "190",
     "artist": "PLANETA Otani",
-    "image": "https://images.scrydex.com/pokemon/sm8-221/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-221/small",
+    "image": "assets/cards/sm8/221.webp",
+    "imageSmall": "assets/cards/sm8/221-sm.webp",
     "attacks": [
       {
         "name": "Plasma Fists",
@@ -7302,7 +7522,8 @@
         "text": "Each of your Pokémon that has any Lightning Energy attached to it has no Retreat Cost.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-221/large"
   },
   {
     "id": "sm8-222",
@@ -7319,8 +7540,8 @@
     ],
     "hp": "170",
     "artist": "PLANETA Igarashi",
-    "image": "https://images.scrydex.com/pokemon/sm8-222/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-222/small",
+    "image": "assets/cards/sm8/222.webp",
+    "imageSmall": "assets/cards/sm8/222-sm.webp",
     "attacks": [
       {
         "name": "Sonic Wing",
@@ -7349,7 +7570,8 @@
         "text": "If this Pokémon is your Active Pokémon and is damaged by an attack from your opponent's Pokémon-GX or Pokémon-EX (even if this Pokémon is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-222/large"
   },
   {
     "id": "sm8-223",
@@ -7367,8 +7589,8 @@
     "hp": "250",
     "artist": "5ban Graphics",
     "evolvesFrom": "Pupitar",
-    "image": "https://images.scrydex.com/pokemon/sm8-223/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-223/small",
+    "image": "assets/cards/sm8/223.webp",
+    "imageSmall": "assets/cards/sm8/223-sm.webp",
     "attacks": [
       {
         "name": "Dusty Ruckus",
@@ -7397,7 +7619,8 @@
         "text": "If your opponent's Pokémon is Knocked Out by damage from this Pokémon's attacks, put that Pokémon and all cards attached to it in the Lost Zone instead of the discard pile.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-223/large"
   },
   {
     "id": "sm8-224",
@@ -7414,8 +7637,8 @@
     ],
     "hp": "180",
     "artist": "Yoshinobu Saito",
-    "image": "https://images.scrydex.com/pokemon/sm8-224/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-224/small",
+    "image": "assets/cards/sm8/224.webp",
+    "imageSmall": "assets/cards/sm8/224-sm.webp",
     "attacks": [
       {
         "name": "Burst Shot",
@@ -7444,7 +7667,8 @@
         "text": "This Pokémon may have up to 2 Pokémon Tool cards attached to it. If it loses this Ability, discard Pokémon Tool cards from it until only 1 remains.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-224/large"
   },
   {
     "id": "sm8-225",
@@ -7462,8 +7686,8 @@
     "hp": "200",
     "artist": "5ban Graphics",
     "evolvesFrom": "Alolan Vulpix",
-    "image": "https://images.scrydex.com/pokemon/sm8-225/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-225/small",
+    "image": "assets/cards/sm8/225.webp",
+    "imageSmall": "assets/cards/sm8/225-sm.webp",
     "attacks": [
       {
         "name": "Snowy Wind",
@@ -7490,7 +7714,8 @@
         "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.",
         "type": "Ability"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-225/large"
   },
   {
     "id": "sm8-226",
@@ -7507,8 +7732,8 @@
     ],
     "hp": "170",
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-226/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-226/small",
+    "image": "assets/cards/sm8/226.webp",
+    "imageSmall": "assets/cards/sm8/226-sm.webp",
     "attacks": [
       {
         "name": "Perplex",
@@ -7535,7 +7760,8 @@
         "damage": "",
         "text": "Choose 1 of your opponent's Benched Pokémon. Your opponent shuffles that Pokémon and all cards attached to it into their deck. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-226/large"
   },
   {
     "id": "sm8-227",
@@ -7552,8 +7778,8 @@
     ],
     "hp": "190",
     "artist": "PLANETA Igarashi",
-    "image": "https://images.scrydex.com/pokemon/sm8-227/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-227/small",
+    "image": "assets/cards/sm8/227.webp",
+    "imageSmall": "assets/cards/sm8/227-sm.webp",
     "attacks": [
       {
         "name": "Psychic",
@@ -7586,7 +7812,8 @@
         "damage": "",
         "text": "Put your opponent's Active Pokémon and all cards attached to it in the Lost Zone. (You can't use more than 1 GX attack in a game.)"
       }
-    ]
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-227/large"
   },
   {
     "id": "sm8-228",
@@ -7598,8 +7825,9 @@
       "Item"
     ],
     "artist": "Yoshinobu Saito",
-    "image": "https://images.scrydex.com/pokemon/sm8-228/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-228/small"
+    "image": "assets/cards/sm8/228.webp",
+    "imageSmall": "assets/cards/sm8/228-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-228/large"
   },
   {
     "id": "sm8-229",
@@ -7611,8 +7839,9 @@
       "Pokémon Tool"
     ],
     "artist": "Eske Yoshinob",
-    "image": "https://images.scrydex.com/pokemon/sm8-229/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-229/small"
+    "image": "assets/cards/sm8/229.webp",
+    "imageSmall": "assets/cards/sm8/229-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-229/large"
   },
   {
     "id": "sm8-230",
@@ -7624,8 +7853,9 @@
       "Pokémon Tool"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-230/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-230/small"
+    "image": "assets/cards/sm8/230.webp",
+    "imageSmall": "assets/cards/sm8/230-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-230/large"
   },
   {
     "id": "sm8-231",
@@ -7637,8 +7867,9 @@
       "Item"
     ],
     "artist": "Toyste Beach",
-    "image": "https://images.scrydex.com/pokemon/sm8-231/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-231/small"
+    "image": "assets/cards/sm8/231.webp",
+    "imageSmall": "assets/cards/sm8/231-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-231/large"
   },
   {
     "id": "sm8-232",
@@ -7650,8 +7881,9 @@
       "Item"
     ],
     "artist": "Eske Yoshinob",
-    "image": "https://images.scrydex.com/pokemon/sm8-232/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-232/small"
+    "image": "assets/cards/sm8/232.webp",
+    "imageSmall": "assets/cards/sm8/232-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-232/large"
   },
   {
     "id": "sm8-233",
@@ -7663,8 +7895,9 @@
       "Item"
     ],
     "artist": "5ban Graphics",
-    "image": "https://images.scrydex.com/pokemon/sm8-233/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-233/small"
+    "image": "assets/cards/sm8/233.webp",
+    "imageSmall": "assets/cards/sm8/233-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-233/large"
   },
   {
     "id": "sm8-234",
@@ -7676,8 +7909,9 @@
       "Item"
     ],
     "artist": "Ryo Ueda",
-    "image": "https://images.scrydex.com/pokemon/sm8-234/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-234/small"
+    "image": "assets/cards/sm8/234.webp",
+    "imageSmall": "assets/cards/sm8/234-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-234/large"
   },
   {
     "id": "sm8-235",
@@ -7689,8 +7923,9 @@
       "Pokémon Tool"
     ],
     "artist": "Ayaka Yoshida",
-    "image": "https://images.scrydex.com/pokemon/sm8-235/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-235/small"
+    "image": "assets/cards/sm8/235.webp",
+    "imageSmall": "assets/cards/sm8/235-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-235/large"
   },
   {
     "id": "sm8-236",
@@ -7702,7 +7937,8 @@
       "Item"
     ],
     "artist": "Yoshinobu Saito",
-    "image": "https://images.scrydex.com/pokemon/sm8-236/large",
-    "imageSmall": "https://images.scrydex.com/pokemon/sm8-236/small"
+    "image": "assets/cards/sm8/236.webp",
+    "imageSmall": "assets/cards/sm8/236-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm8-236/large"
   }
 ]
