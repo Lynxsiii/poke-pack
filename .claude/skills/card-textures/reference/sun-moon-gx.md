@@ -98,6 +98,26 @@ reaches white on silver). No map (base rules): the window is a plain box
 - Lab cards were found by number, which collides across sets: per-set
   scratch data.
 
+## iPhone blocks on the attack bar (Raichu-GX SM213, Noah 2026-09-30)
+
+Blocky red, blue and magenta patches over the dark-blue attack bar (and a
+green fleck in the bright art) on iOS Safari's inspector, at phone size.
+**Not reproducible in Playwright WebKit on Linux** (lab, real app, real
+inspector with a mouse, corner and out-of-range poses, foil strength 1.5:
+all clean), so the cause is inferred, not seen. The GX `.foil` chain was
+the only one in the era that drives the layer up to the closing
+`contrast(0.8)` cap (brightness up to 1.37, contrast 2.3, saturate 2.4);
+the other SM chains top out well below 0.9. A colour dodge divides the dark
+ink by 1 minus the layer, so at 0.9 the gain is 10x and a one-step error in
+any of the four 8-bit filter stages becomes a 15 to 20 percent colour jump
+per channel (a numpy simulation of the chain: worst step 0.16). iOS runs the
+filter list stage by stage; Skia on Linux fuses it in floats. Fix: one more
+`brightness(0.85)` after the closing `contrast(0.8)` (layer cap 0.765, gain
+4.3x, worst simulated step 0.05); the look is a touch calmer, not different.
+Lesson: a hot dodge chain on a card with dark ink needs a **lower cap, not
+just the closing contrast(0.8)**, and a Linux WebKit render cannot clear an
+iPhone-only glitch: ask for a phone screenshot after shipping.
+
 ## Verification
 
 Chromium and WebKit (Playwright) at 220 px × 3, poses rest, 30:25, 75:65,
