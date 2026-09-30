@@ -1,0 +1,9 @@
+# Detective Pikachu (det1)
+
+Built 2026-09-30. Research: `/mnt/project-files/sun-moon/research/det1.md`.
+
+- A special set with no boosters at retail: four-card packs of holofoil cards (3 Common Holo + 1 Rare Holo) that only come inside Case Files, tins and the Collector Chest (Bulbapedia; TCGplayer 187239; the 3 + 1 split is sturzflugbombardieru, Elite Fourum, and ThePriceDex). The shop sells the loose-pack TCGplayer listing ($24.56) as the booster pack, and `slots` is custom (`common` x3, `rare-slot` x1 = `holo`).
+- Data: 18 cards. pkmn.gg labels them Common 8, Rare 6, Rare Ultra 4 (a price tier); Bulbapedia lists 8 Common Holo and 10 Rare Holo, so the ten are filed `Rare Holo`, and all 18 carry `foilAs: "Rare Holo"` (the Commons foil too). No TCG Live maps exist for the set (probed det1, det, smdet and others); the holo recipe runs without a window map.
+- Odds: uniform over the ten Rares (sturzflugbombardieru's 75 pulls, chi-square 10.2 on 9 df). burpies' "37.08% rare holo" is not a per-pack rate and was not used.
+- Products: each box holds DET packs plus other Sun & Moon packs that TCGplayer does not name ("Packs may vary by product"), so only the Detective Pikachu packs are simulated and the product `note` says so: Case File (2 of 3), Charizard-GX, Mewtwo-GX, Greninja-GX Case Files (4, 4, 5 of 6, 6, 7), the GameStop Charizard-GX Special Case File (5 of 7), Collector Chest (7 of 9), two Walmart tins (4 of 6), Cafe Figure Collection (4 of 6), On the Case Figure Collection (3 of 5; smp170 and smp198-200). The Charizard-GX Case File is 4 + 2 (Bulbapedia, and the Special Case File is "the regular box plus one pack"); TCGplayer's own blurb says 2 + 2. Not built: the Special Case File 190325 (no TCGplayer price), the 7-Eleven two-pack blister (one source), the Special Promo Booster Pack (SM190, event only).
+- Promo finishes: `smbsp` maps for smp170, smp194-200 (numbers match).

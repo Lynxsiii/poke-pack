@@ -2554,6 +2554,100 @@ export const MCDONALDS_2024 = {
   ]),
 };
 
+export const HIDDEN_FATES = {
+  id: "sm115",
+  tcgId: "sm115",
+  name: "Hidden Fates",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "August 23, 2019",
+  live: true,
+  printedTotal: 68,
+  totalCount: 171,
+  packSize: 11,
+  cost: 49.15,
+  dataFile: "data/sm115.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, August 2019. A 69-card special set with the 94-card Shiny Vault, sold only in tins, pins and boxes: shiny Charizard-GX, four wrappers.",
+  oddsLine: "GX 1/7 · full art 1/27 · rainbow 1/58 · Shiny Vault 1/3 · shiny gold 1/57",
+  lede: "Hidden Fates never came in a booster box. The Shiny Vault takes the reverse slot in about one pack in three: a shiny Pokémon 1 in 5, a shiny GX 1 in 10, a gold Tapu or Stadium 1 in 57.",
+  // burpies, 1,580 packs (Elite Fourum; ThePriceDex for the holo rate and the main/vault full-art split); the Shiny Vault takes the reverse slot. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.2, gx: 0.1506, ultra: 0.0373, rainbow: 0.0171, reverseSpecial: [["shinyBaby", 0.212], ["shinyGX", 0.1019], ["shinyUltra", 0.0114], ["shinyGold", 0.0177]] }),
+  heroIds: ["sm115-SV49", "sm115-69", "sm115-SV59", "sm115-SV94"],
+  wrappers: boosterWrappers("sm115", [
+    { id: "mew", name: "Mew", cardId: "sm115-32", tag: "Mythical" },
+    { id: "legendary-birds", name: "Articuno, Zapdos & Moltres", cardId: "sm115-44", tag: "Legendary" },
+    { id: "shiny-mewtwo", name: "Shiny Mewtwo", cardId: "sm115-SV59", tag: "Shiny" },
+    { id: "shiny-charizard", name: "Shiny Charizard", cardId: "sm115-SV49", tag: "Shiny chase" },
+  ]),
+};
+
+export const COSMIC_ECLIPSE = {
+  id: "sm12",
+  tcgId: "sm12",
+  name: "Cosmic Eclipse",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "November 1, 2019",
+  live: true,
+  printedTotal: 236,
+  totalCount: 284,
+  packSize: 11,
+  cost: 73.81,
+  dataFile: "data/sm12.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, November 2019. The last Sun & Moon set: 27 full-art TAG TEAMs and Trainers, 14 rainbows, Character Rares and gold Trainers, four wrappers.",
+  oddsLine: "GX 1/8 · full art 1/27 · rainbow 1/67 · gold 1/112 · Character Rare 1/10",
+  lede: "Twelve Character Rares take the reverse slot about one pack in ten. The rainbow TAG TEAMs are 1 in 67, and each of the 27 full arts about 1 in 720 packs.",
+  // Elite Fourum: sturzflugbombardieru's 3,024 packs and burpies' 3,136 (rainbow and gold split from burpies). Character Rares sit in the reverse slot. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1431, gx: 0.1237, ultra: 0.0374, rainbow: 0.015, secret: 0.0089, reverseSpecial: [["character", 0.1035]] }),
+  heroIds: ["sm12-251", "sm12-254", "sm12-253", "sm12-258"],
+  wrappers: boosterWrappers("sm12", [
+    { id: "togepi-cleffa-igglybuff", name: "Togepi, Cleffa & Igglybuff", cardId: "sm12-143", tag: "Fairy" },
+    { id: "solgaleo-lunala", name: "Solgaleo & Lunala", cardId: "sm12-216", tag: "Cosmic" },
+    { id: "blastoise-piplup", name: "Blastoise & Piplup", cardId: "sm12-214", tag: "Water" },
+    { id: "arceus-dialga-palkia", name: "Arceus, Dialga & Palkia", cardId: "sm12-220", tag: "Legendary" },
+  ]),
+};
+
+/**
+ * Detective Pikachu: a four-card pack of holofoil cards (three Commons and a
+ * Rare, no Energy, no reverse), sold only inside the set's Case Files, tins and
+ * chests. Every card is foil, the Commons through `foilAs`.
+ */
+export const DETECTIVE_PIKACHU = {
+  id: "det1",
+  tcgId: "det1",
+  name: "Detective Pikachu",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "April 5, 2019",
+  live: true,
+  printedTotal: 18,
+  totalCount: 26,
+  packSize: 4,
+  cost: 24.56,
+  dataFile: "data/det1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, April 2019. An 18-card movie set, all holofoil, four cards a pack, sold only in Case Files, tins and chests.",
+  oddsLine: "3 holo Commons + 1 holo Rare · each Rare 1 in 10 packs",
+  lede: "Every card is foil. The rare slot is uniform: each of the ten Rares, Charizard and Mewtwo among them, turns up in about one pack in ten.",
+  // Three Common Holo and one Rare Holo a pack, the rare uniform over the ten (sturzflugbombardieru's 75 pulls, Elite Fourum; ThePriceDex; Bulbapedia). Sources in data/pullrates.json.
+  slots: [
+    { pool: "common", count: 3 },
+    { pool: "rare-slot", count: 1, table: [["holo", 1]] },
+  ],
+  heroIds: ["det1-5", "det1-9", "det1-12", "det1-10"],
+  wrappers: boosterWrappers("det1", [
+    { id: "poke-ball", name: "Detective Pikachu", cardId: "det1-10", tag: "Case File" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -2601,6 +2695,9 @@ export const PLAYABLE_SETS = [
   TRICK_OR_TRADE_2024,
   MCDONALDS_2023,
   TRICK_OR_TRADE_2023,
+  HIDDEN_FATES,
+  COSMIC_ECLIPSE,
+  DETECTIVE_PIKACHU,
 ];
 
 /**
@@ -2660,7 +2757,6 @@ export const ROADMAP = [
   {
     era: "Sun & Moon → XY → BW",
     sets: [
-      { id: "sm12", name: "Cosmic Eclipse", released: "Nov 2019", cards: "—" },
       { id: "sm1", name: "Sun & Moon", released: "Feb 2017", cards: "—" },
       { id: "xy12", name: "Evolutions", released: "Nov 2016", cards: "—" },
       { id: "xy1", name: "XY", released: "Feb 2014", cards: "—" },
@@ -2740,6 +2836,8 @@ const POKESYMBOLS_SLUG = {
   xy12: "xy-evolutions",
   sm1: "sun-and-moon",
   sm12: "cosmic-eclipse",
+  sm115: "hidden-fates",
+  det1: "detective-pikachu",
   swsh1: "sword-and-shield",
   swsh2: "rebel-clash",
   swsh3: "darkness-ablaze",

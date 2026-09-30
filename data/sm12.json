@@ -5651,50 +5651,6 @@
     "market": 64.12
   },
   {
-    "id": "sm12-143a",
-    "name": "Togepi & Cleffa & Igglybuff-GX",
-    "number": "143a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "TAG TEAM",
-      "GX"
-    ],
-    "types": [
-      "Fairy"
-    ],
-    "hp": "240",
-    "artist": "0313",
-    "image": "assets/cards/sm12/143a.webp",
-    "imageSmall": "assets/cards/sm12/143a-sm.webp",
-    "attacks": [
-      {
-        "name": "Rolling Panic",
-        "cost": [
-          "Fairy",
-          "Fairy",
-          "Colorless"
-        ],
-        "damage": "120+",
-        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
-      },
-      {
-        "name": "Supreme Puff-GX",
-        "cost": [
-          "Fairy",
-          "Fairy"
-        ],
-        "damage": "",
-        "text": "Take another turn after this one. (Skip the between-turns step.) If this Pokémon has at least 14 extra Fairy Energy attached to it (in addition to this attack's cost), your opponent shuffles all of their Benched Pokémon and all cards attached to them into their deck. (You can't use more than 1 GX attack in a game.)"
-      }
-    ],
-    "imageRemote": "https://images.scrydex.com/pokemon/sm12-143a/large",
-    "promo": true,
-    "variant": "Play! Pokémon stamp",
-    "foilAs": "Rare Ultra"
-  },
-  {
     "id": "sm12-144",
     "name": "Clefairy",
     "number": "144",
@@ -8781,7 +8737,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-237/large",
     "foilMap": "assets/foil/maps/sm12/237.webp",
     "tcgplayerId": 201348,
-    "market": 14.31
+    "market": 14.31,
+    "character": true
   },
   {
     "id": "sm12-238",
@@ -8824,7 +8781,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-238/large",
     "foilMap": "assets/foil/maps/sm12/238.webp",
     "tcgplayerId": 201349,
-    "market": 12.71
+    "market": 12.71,
+    "character": true
   },
   {
     "id": "sm12-239",
@@ -8858,7 +8816,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-239/large",
     "foilMap": "assets/foil/maps/sm12/239.webp",
     "tcgplayerId": 201350,
-    "market": 66.77
+    "market": 66.77,
+    "character": true
   },
   {
     "id": "sm12-240",
@@ -8899,7 +8858,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-240/large",
     "foilMap": "assets/foil/maps/sm12/240.webp",
     "tcgplayerId": 201351,
-    "market": 18.58
+    "market": 18.58,
+    "character": true
   },
   {
     "id": "sm12-241",
@@ -8941,7 +8901,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-241/large",
     "foilMap": "assets/foil/maps/sm12/241.webp",
     "tcgplayerId": 201352,
-    "market": 225.48
+    "market": 225.48,
+    "character": true
   },
   {
     "id": "sm12-242",
@@ -8973,7 +8934,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-242/large",
     "foilMap": "assets/foil/maps/sm12/242.webp",
     "tcgplayerId": 201353,
-    "market": 23.65
+    "market": 23.65,
+    "character": true
   },
   {
     "id": "sm12-243",
@@ -9013,7 +8975,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-243/large",
     "foilMap": "assets/foil/maps/sm12/243.webp",
     "tcgplayerId": 201354,
-    "market": 39.45
+    "market": 39.45,
+    "character": true
   },
   {
     "id": "sm12-244",
@@ -9054,7 +9017,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-244/large",
     "foilMap": "assets/foil/maps/sm12/244.webp",
     "tcgplayerId": 201355,
-    "market": 11.7
+    "market": 11.7,
+    "character": true
   },
   {
     "id": "sm12-245",
@@ -9094,7 +9058,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-245/large",
     "foilMap": "assets/foil/maps/sm12/245.webp",
     "tcgplayerId": 201356,
-    "market": 72.04
+    "market": 72.04,
+    "character": true
   },
   {
     "id": "sm12-246",
@@ -9135,7 +9100,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-246/large",
     "foilMap": "assets/foil/maps/sm12/246.webp",
     "tcgplayerId": 201357,
-    "market": 5.25
+    "market": 5.25,
+    "character": true
   },
   {
     "id": "sm12-247",
@@ -9180,7 +9146,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-247/large",
     "foilMap": "assets/foil/maps/sm12/247.webp",
     "tcgplayerId": 201358,
-    "market": 18.7
+    "market": 18.7,
+    "character": true
   },
   {
     "id": "sm12-248",
@@ -9222,7 +9189,8 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm12-248/large",
     "foilMap": "assets/foil/maps/sm12/248.webp",
     "tcgplayerId": 201359,
-    "market": 9.9
+    "market": 9.9,
+    "character": true
   },
   {
     "id": "sm12-249",
@@ -10073,5 +10041,600 @@
     "etchMap": "assets/foil/maps/sm12/271-etch.webp",
     "tcgplayerId": 201636,
     "market": 7.84
+  },
+  {
+    "id": "sm12-143a",
+    "name": "Togepi & Cleffa & Igglybuff-GX",
+    "number": "143a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "TAG TEAM",
+      "GX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "240",
+    "artist": "0313",
+    "image": "assets/cards/sm12/143a.webp",
+    "imageSmall": "assets/cards/sm12/143a-sm.webp",
+    "attacks": [
+      {
+        "name": "Rolling Panic",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      },
+      {
+        "name": "Supreme Puff-GX",
+        "cost": [
+          "Fairy",
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Take another turn after this one. (Skip the between-turns step.) If this Pokémon has at least 14 extra Fairy Energy attached to it (in addition to this attack's cost), your opponent shuffles all of their Benched Pokémon and all cards attached to them into their deck. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm12-143a/large",
+    "printedNumber": "143a/236",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "variant": "Small But Mighty Premium Collection"
+  },
+  {
+    "id": "sm12-smp218",
+    "name": "Buzzwole",
+    "number": "smp218",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Kouki Saitou",
+    "flavorText": "Although it's alien to this world and a danger here, it's apparently a common organism in the world where it normally lives.",
+    "image": "assets/cards/sm12/smp218.webp",
+    "imageSmall": "assets/cards/sm12/smp218-sm.webp",
+    "attacks": [
+      {
+        "name": "Touchdown",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Beast Boost",
+        "text": "This Pokémon's attacks do 20 more damage to your opponent's Active Pokémon for each Prize card you have taken (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "market": 6.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM218/large",
+    "printedNumber": "SM 218",
+    "tcgplayerId": 201940,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp218.webp"
+  },
+  {
+    "id": "sm12-smp219",
+    "name": "Entei",
+    "number": "smp219",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "Ryuta Fuse",
+    "flavorText": "A Pokémon that races across the land. It is said that one is born every time a new volcano appears.",
+    "image": "assets/cards/sm12/smp219.webp",
+    "imageSmall": "assets/cards/sm12/smp219-sm.webp",
+    "attacks": [
+      {
+        "name": "Rally Back",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If any of your Pokémon were Knocked Out by damage from an opponent's attack during their last turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Fire Mane",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "market": 21.57,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM219/large",
+    "printedNumber": "SM 219",
+    "tcgplayerId": 201943,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp219.webp"
+  },
+  {
+    "id": "sm12-smp220",
+    "name": "Phione",
+    "number": "smp220",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "When the water warms, they inflate the flotation sac on their heads and drift languidly on the sea in packs.",
+    "image": "assets/cards/sm12/smp220.webp",
+    "imageSmall": "assets/cards/sm12/smp220-sm.webp",
+    "attacks": [
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Whirlpool Suction",
+        "text": "Once during your turn (before your attack), if this Pokémon is on your Bench, you may have your opponent switch their Active Pokémon with 1 of their Benched Pokémon. If you do, discard all cards attached to this Pokémon and put it on the bottom of your deck.",
+        "type": "Ability"
+      }
+    ],
+    "market": 13.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM220/large",
+    "printedNumber": "SM 220",
+    "tcgplayerId": 201938,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp220.webp"
+  },
+  {
+    "id": "sm12-smp221",
+    "name": "Blacephalon",
+    "number": "smp221",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It slithers toward people. Then, without warning, it triggers the explosion of its own head. It's apparently one kind of Ultra Beast.",
+    "image": "assets/cards/sm12/smp221.webp",
+    "imageSmall": "assets/cards/sm12/smp221-sm.webp",
+    "attacks": [
+      {
+        "name": "Fireworks Bomb",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 4 damage counters on your opponent's Pokémon in any way you like. If your opponent has exactly 3 Prize cards remaining, put 12 damage counters on them instead."
+      }
+    ],
+    "market": 11.66,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM221/large",
+    "printedNumber": "SM 221",
+    "tcgplayerId": 201944,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp221.webp"
+  },
+  {
+    "id": "sm12-smp222",
+    "name": "Mismagius",
+    "number": "smp222",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "Feared for its wrath and the curses it spreads, this Pokémon will also, on a whim, cast spells that help people.",
+    "evolvesFrom": "Misdreavus",
+    "image": "assets/cards/sm12/smp222.webp",
+    "imageSmall": "assets/cards/sm12/smp222-sm.webp",
+    "attacks": [
+      {
+        "name": "Psywave",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage times the amount of Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Astonish",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck."
+      }
+    ],
+    "market": 0.75,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM222/large",
+    "printedNumber": "SM 222",
+    "tcgplayerId": 204985,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp222.webp"
+  },
+  {
+    "id": "sm12-smp223",
+    "name": "Terrakion",
+    "number": "smp223",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its charge is strong enough to break through a giant castle wall in one blow. This Pokémon is spoken of in legends.",
+    "image": "assets/cards/sm12/smp223.webp",
+    "imageSmall": "assets/cards/sm12/smp223-sm.webp",
+    "attacks": [
+      {
+        "name": "Cavern Counter",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If all of your Benched Pokémon have at least 1 damage counter on them, this attack does 150 more damage."
+      },
+      {
+        "name": "Boulder Crush",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      }
+    ],
+    "market": 0.49,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM223/large",
+    "printedNumber": "SM 223",
+    "tcgplayerId": 204984,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp223.webp"
+  },
+  {
+    "id": "sm12-smp224",
+    "name": "Celebi",
+    "number": "smp224",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Mizue",
+    "flavorText": "This Pokémon wanders across time. Grass and trees flourish in the forests in which it has appeared.",
+    "image": "assets/cards/sm12/smp224.webp",
+    "imageSmall": "assets/cards/sm12/smp224-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Greatness",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Pokémon-GX with different names, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 5.64,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM224/large",
+    "printedNumber": "SM 224",
+    "tcgplayerId": 204973,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp224.webp"
+  },
+  {
+    "id": "sm12-smp226",
+    "name": "Charizard",
+    "number": "smp226",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "150",
+    "artist": "2019 Pikachu Project",
+    "flavorText": "This Pokémon was created by Mewtwo to prove that copies can be even more powerful than their originals.",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/sm12/smp226.webp",
+    "imageSmall": "assets/cards/sm12/smp226-sm.webp",
+    "attacks": [
+      {
+        "name": "Continuous Blaze Ball",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "30+",
+        "text": "Discard all Fire Energy from this Pokémon. This attack does 50 more damage for each card you discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Roaring Resolve",
+        "text": "Once during your turn (before your attack), you may put 2 damage counters on this Pokémon. If you do, search your deck for up to 2 Fire Energy cards and attach them to this Pokémon. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "market": 70.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM226/large",
+    "printedNumber": "SM 226",
+    "tcgplayerId": 205171,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp226.webp"
+  },
+  {
+    "id": "sm12-smp227",
+    "name": "Pikachu",
+    "number": "smp227",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "2019 Pikachu Project",
+    "flavorText": "Its nature is to store up electricity. Forests where nests of Pikachu live are dangerous, since the trees are so often struck by lightning.",
+    "image": "assets/cards/sm12/smp227.webp",
+    "imageSmall": "assets/cards/sm12/smp227-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "market": 23.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM227/large",
+    "printedNumber": "SM 227",
+    "tcgplayerId": 205170,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp227.webp"
+  },
+  {
+    "id": "sm12-smp228",
+    "name": "Armored Mewtwo",
+    "number": "smp228",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "2019 Pikachu Project",
+    "flavorText": "Mewtwo was on a rampage searching for meaning to its existence in this world when Giovanni suppressed and controlled its power.",
+    "image": "assets/cards/sm12/smp228.webp",
+    "imageSmall": "assets/cards/sm12/smp228-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Raid",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't attack during your next turn."
+      }
+    ],
+    "market": 312.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM228/large",
+    "printedNumber": "SM 228",
+    "tcgplayerId": 205169,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm12/smp228.webp"
+  },
+  {
+    "id": "sm12-smp229",
+    "name": "Venusaur & Snivy-GX",
+    "number": "smp229",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "TAG TEAM",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "270",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/sm12/smp229.webp",
+    "imageSmall": "assets/cards/sm12/smp229-sm.webp",
+    "attacks": [
+      {
+        "name": "Forest Dump",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": ""
+      },
+      {
+        "name": "Solar Plant-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to each of your opponent's Pokémon. If this Pokémon has at least 2 extra Energy attached to it (in addition to this attack's cost), heal all damage from all of your Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shining Vine",
+        "text": "Once during your turn, if this Pokémon is your Active Pokémon, when you attach a Grass Energy card from your hand to it, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 148.85,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM229/large",
+    "printedNumber": "SM 229",
+    "tcgplayerId": 205162,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "foilMap": "assets/foil/maps/sm12/smp229.webp",
+    "etchMap": "assets/foil/maps/sm12/smp229-etch.webp"
+  },
+  {
+    "id": "sm12-smp230",
+    "name": "Charizard & Braixen-GX",
+    "number": "smp230",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "TAG TEAM",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "270",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/sm12/smp230.webp",
+    "imageSmall": "assets/cards/sm12/smp230-sm.webp",
+    "attacks": [
+      {
+        "name": "Brilliant Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "You may search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Crimson Flame Pillar-GX",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Attach 5 basic Energy cards from your discard pile to your Pokémon in any way you like. If this Pokémon has at least 1 extra Energy attached to it (in addition to this attack's cost), your opponent's Active Pokémon is now Burned and Confused. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 102.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM230/large",
+    "printedNumber": "SM 230",
+    "tcgplayerId": 205163,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "foilMap": "assets/foil/maps/sm12/smp230.webp",
+    "etchMap": "assets/foil/maps/sm12/smp230-etch.webp"
   }
 ]
