@@ -131,7 +131,7 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
   const got = rows.filter((row) => claimed.has(row.id)).length;
   const unlocked = rows.length > 0 && (got >= rows.length || Boolean(summary.chests?.[period.id]));
   const paid = claimed.has(id);
-  const coins = deps.chestCoins ? deps.chestCoins(period.id, rows) : 0;
+  const coins = deps.chestCoins ? deps.chestCoins(period.id, rows, summary) : 0;
   const name = `${period.id[0].toUpperCase()}${period.id.slice(1)} chest`;
   const state = paid ? "is-claimed" : unlocked ? "is-ready" : "is-open";
   const status = paid
@@ -154,9 +154,8 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
 }
 
 /**
- * The board: today, this week, this month, then the streak. Works on the old
- * summary shape too (no `active`), where it falls back to every quest of a
- * period in the table.
+ * The board: the streak, then today, this week and this month, each ending in
+ * its chest. `summary` is save.quests from the Worker (see questSummary).
  */
 export function questBoardHtml(summary, deps, ui = {}) {
   const { esc, num } = deps;
@@ -167,12 +166,10 @@ export function questBoardHtml(summary, deps, ui = {}) {
   const now = deps.now ? deps.now() : Date.now();
   const claimed = new Set(summary.claimed || []);
   const sections = PERIODS.map((period) => {
-    const ids = summary.active?.[period.id];
-    const rows = ids ? ids.map((id) => deps.questRow(id)).filter(Boolean) : deps.questRows.filter((row) => row.period === period.id);
+    const rows = (summary.active?.[period.id] || []).map((id) => deps.questRow(id)).filter(Boolean);
     if (!rows.length) return "";
     const got = rows.filter((row) => claimed.has(row.id)).length;
     const end = periodEnd(period.id, summary.periods);
-    const hasChest = Boolean(summary.active) || Boolean(summary.chests);
     return `<section class="qb-period" data-period="${period.id}">
       <header class="qb-head">
         <h2>${period.title}</h2>
@@ -180,7 +177,7 @@ export function questBoardHtml(summary, deps, ui = {}) {
       </header>
       <ol class="qb-rows">
         ${rows.map((row) => questRowHtml(row, summary, deps, { fresh })).join("")}
-        ${hasChest ? chestRowHtml(period, rows, summary, deps, { fresh }) : ""}
+        ${chestRowHtml(period, rows, summary, deps, { fresh })}
       </ol>
     </section>`;
   }).join("");
@@ -197,14 +194,13 @@ export function questReadyCount(summary, deps) {
   const claimed = new Set(summary.claimed || []);
   let n = 0;
   for (const period of PERIODS) {
-    const ids = summary.active?.[period.id];
-    const rows = ids ? ids.map((id) => deps.questRow(id)).filter(Boolean) : deps.questRows.filter((row) => row.period === period.id);
+    const rows = (summary.active?.[period.id] || []).map((id) => deps.questRow(id)).filter(Boolean);
     let got = 0;
     for (const row of rows) {
       if (claimed.has(row.id)) got++;
       else if (Number(summary.progress?.[row.id] || 0) >= row.goal) n++;
     }
-    if (summary.active && rows.length && got >= rows.length && !claimed.has(`chest-${period.id}`)) n++;
+    if (rows.length && got >= rows.length && !claimed.has(`chest-${period.id}`)) n++;
   }
   return n;
 }
@@ -242,13 +238,14 @@ function exclusives(row) {
 export function achievementTileHtml(row, stats, deps, ui = {}) {
   const { esc, num } = deps;
   const s = status(row, stats, deps);
+  const face = deps.achievementFace(row, s.p.done || s.isClaimed);
   const fresh = ui.fresh?.has(row.id) ? " is-fresh" : "";
-  if (s.hidden) {
+  if (face.masked) {
     return `<article class="qa-tile t${row.tier} is-secret" data-ach="${esc(row.id)}">
       <div class="qa-badge secret"><span>?</span></div>
       <div class="qa-copy">
-        <b>???</b>
-        <p class="qa-hint">${esc(row.hint || "Something you have not tried yet.")}</p>
+        <b>${esc(face.name)}</b>
+        <p class="qa-hint">${esc(face.note)}</p>
       </div>
       <div class="qa-side"><span class="qa-coin">?</span><span class="qa-count">Secret</span></div>
     </article>`;
@@ -385,7 +382,7 @@ function masterySetTile(set, row, mastered, on, deps) {
   return `<button type="button" class="qm-set${on ? " on" : ""}${mastered ? " is-mastered" : ""}" data-mastery-set="${esc(set.id)}" aria-pressed="${on}" aria-label="${esc(set.name)}, ${num(row.owned)} of ${num(row.total)} cards${mastered ? ", mastered" : ""}">
     <span class="qm-set-top">
       <img class="qm-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
-      <span class="qm-emblem${mastered ? " lit" : ""}">${deps.masteryEmblem(set.id, { size: "sm" })}</span>
+      <span class="qm-emblem">${deps.masteryEmblem(set.id, { size: "sm", locked: !mastered, label: false })}</span>
     </span>
     <span class="qm-name">${esc(set.name)}</span>
     <span class="qm-foot">
@@ -409,7 +406,7 @@ export function masteryDetailHtml(set, row, stats, deps, ui = {}) {
   return `<section class="qm-detail" data-detail="${esc(set.id)}" aria-label="${esc(set.name)} mastery">
     <div class="qm-detail-main">
       <header class="qm-detail-head">
-        <span class="qm-detail-emblem${mastered ? " lit" : ""}">${deps.masteryEmblem(set.id, { size: "lg" })}</span>
+        <span class="qm-detail-emblem">${deps.masteryEmblem(set.id, { size: "lg", locked: !mastered, name: set.name })}</span>
         <div>
           <h3>${esc(set.name)}</h3>
           <p>${
@@ -430,16 +427,16 @@ export function masteryDetailHtml(set, row, stats, deps, ui = {}) {
         <h4>What mastery unlocks</h4>
         <ul>
           <li class="${unlocked ? "is-open" : ""}">
-            <span class="qm-emblem-prev">${deps.masteryEmblem(set.id, { size: "md" })}</span>
-            <span><b>Emblem</b><small>Shown on your profile.</small></span>
+            <span class="qm-art">${deps.masteryEmblem(set.id, { size: "md", locked: !mastered, label: false })}</span>
+            <span><b>Emblem</b><small>Shown under your name on your profile.</small></span>
           </li>
           <li class="${unlocked ? "is-open" : ""}">
-            <span class="qm-title-prev">${esc(title)}</span>
-            <span><b>Title</b><small>Sits under your name.</small></span>
+            <span class="qm-art"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3.5 12.4V4.5h7.9l9.1 9.1-7.9 7.9zM8 8.3a1.2 1.2 0 1 0 0-.01z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+            <span><b>${esc(title)}</b><small>A title that sits under your name.</small></span>
           </li>
           <li class="${unlocked ? "is-open" : ""}">
-            <span class="qm-banner-prev acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></span>
-            <span><b>Banner</b><small>Only this set has it.</small></span>
+            <span class="qm-art wide"><span class="qm-banner-prev acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></span></span>
+            <span><b>Exclusive banner</b><small>Only ${esc(set.name)} masters can use it.</small></span>
           </li>
         </ul>
       </div>
@@ -498,8 +495,8 @@ export function masteryStripHtml(setIds, deps, { mine = false, limit = 18 } = {}
   const label = `${num(ids.length)} ${ids.length === 1 ? "set" : "sets"} mastered`;
   const items = shown
     .map((id) => {
-      const name = `${deps.setById(id).name} master`;
-      return `<li title="${esc(name)}" aria-label="${esc(name)}">${deps.masteryEmblem(id, { size: "sm" })}</li>`;
+      const name = `${deps.setById(id).name} Master`;
+      return `<li title="${esc(name)}" aria-label="${esc(name)}">${deps.masteryEmblem(id, { size: "sm", label: false })}</li>`;
     })
     .join("");
   const inner = `<ul class="mstrip-list">${items}</ul><small>${esc(label)}${more > 0 ? ` (+${num(more)} more)` : ""}</small>`;
@@ -519,7 +516,7 @@ export function masteryBannersHtml(current, claimed, deps) {
     const v = deps.bannerVars(id);
     const on = current === id;
     return `<button type="button" class="mb-tile${on ? " on" : ""}${unlocked ? "" : " locked"}" ${unlocked ? `data-set-banner="${esc(id)}"` : "disabled"} aria-pressed="${on}">
-      <span class="mb-art" style="${esc(v.style)}"></span>
+      <span class="mb-art acct-banner banner-wash is-still" data-motion="${esc(v.motion)}" style="${esc(v.style)}"></span>
       <b>${esc(set.name)}</b>
       <small>${unlocked ? (on ? "In use" : "Use this banner") : `Master ${esc(set.name)} to unlock`}</small>
     </button>`;

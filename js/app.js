@@ -48,6 +48,7 @@ import {
   achievementContext,
   achievementProgress,
   isAchievementDone,
+  achievementFace,
   isSecret,
   achievementsBySet,
   masteryRowFor,
@@ -55,7 +56,7 @@ import {
   claimTotal,
 } from "./achievements.js";
 import * as questRules from "./quests.js";
-import { masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
+import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import * as questArea from "./quest-area.js?v=1";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import {
@@ -135,6 +136,7 @@ function applyCloudSave(save) {
   state.granted = save.granted;
   state.claimed = Array.isArray(save.claimed) ? save.claimed : [];
   state.quests = save.quests || null;
+  state.stats = save.stats || null;
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   if (save.createdAt) state.createdAt = save.createdAt;
@@ -156,6 +158,7 @@ function wipeProgressMemory() {
   state.granted = 0;
   state.claimed = [];
   state.quests = null;
+  state.stats = null;
   state.worthLog = [];
   state.binder = [];
 }
@@ -2432,7 +2435,7 @@ function ownedRarities() {
 
 /** Progress context shared by the badge wall, the title picker, and the hero. */
 function achieveCtx() {
-  return achievementContext(state, { signed: Boolean(activeTrainer()), rarities: ownedRarities() });
+  return achievementContext(state, { signed: Boolean(activeTrainer()), rarities: ownedRarities(), findCard });
 }
 
 function claimedIds() {
@@ -2465,27 +2468,10 @@ function achievementStats() {
 /* ---- The quest area (js/quest-area.js draws it; this file owns state and events) ---- */
 
 const SET_BY_ID = new Map(PLAYABLE_SETS.map((set) => [set.id, set]));
-let questTable = null;
 
-/** Every quest or chest row the shared rules file exports, by id, whatever shape it grows into. */
-function questRowById(id) {
-  if (!questTable) {
-    questTable = new Map();
-    for (const value of Object.values(questRules)) {
-      if (!Array.isArray(value)) continue;
-      for (const row of value) if (row && row.id && row.goal) questTable.set(row.id, row);
-    }
-  }
-  return questTable.get(id) || null;
-}
-
-/** A chest pays a bonus over the quests it covers; the rules file may say how much. */
-function chestCoins(period, rows) {
-  const rule = questRules.CHESTS?.[period] ?? questRules.QUEST_CHESTS?.[period];
-  const fixed = typeof rule === "number" ? rule : rule?.coins;
-  if (fixed) return fixed;
-  const sum = rows.reduce((n, row) => n + (row.coins || 0), 0);
-  return Math.max(5, Math.round((sum * 0.25) / 5) * 5);
+/** A chest's bonus: the Worker sends it with the summary; the shared rules compute the same number. */
+function chestCoins(period, rows, summary) {
+  return summary?.chestCoins?.[period] ?? questRules.chestFor(period, rows).coins;
 }
 
 const areaDeps = {
@@ -2499,14 +2485,15 @@ const areaDeps = {
   rows: ACHIEVEMENTS,
   categories: ACH_CATEGORIES,
   achievementProgress,
+  achievementFace,
+  achievementFace,
   isSecret,
   achievementsBySet,
   masteryRowFor,
   masteryEmblem,
   masteryBannerId,
   bannerVars,
-  questRows: questRules.QUESTS || [],
-  questRow: questRowById,
+  questRow: questRules.questById,
   chestCoins,
 };
 
@@ -2678,6 +2665,13 @@ const ACCOUNT_TABS = [
   { id: "security", name: "Security", note: "Password and deleting the account." },
 ];
 
+/** Word rows scroll sideways on a phone: bring the chosen word into view, sideways only. */
+function bringIntoView(el) {
+  const track = el.parentElement;
+  if (!track || track.scrollWidth <= track.clientWidth) return;
+  track.scrollLeft = Math.max(0, el.offsetLeft - (track.clientWidth - el.offsetWidth) / 2);
+}
+
 /** The little count on a tab: things waiting to be claimed there. */
 function tabDot(id, stats) {
   const n =
@@ -2724,6 +2718,7 @@ function renderAccount() {
   const chart = els.accountBody.querySelector("#acct-worth-chart");
   if (chart) renderWorthChart(chart, state.worthLog, state.granted);
   if (accountTab === "mastery") placeMasteryDetail();
+  for (const on of els.accountBody.querySelectorAll(".acct-tabs .on, .qa-words:not(.qa-words-inline) .on")) bringIntoView(on);
   freshClaims = new Set();
 }
 
@@ -3124,7 +3119,7 @@ function lookTab(trainer, stats) {
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
   const won = titlesFromClaims(stats.claimed);
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
-  const onMastery = Boolean(banner.mastery);
+  const onMastery = Boolean(banner.set);
 
   return `<div class="look-layout">
     <aside class="look-preview" aria-label="Preview">
@@ -3184,7 +3179,7 @@ function lookTab(trainer, stats) {
         ).join("")}</div>
         <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
         <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
-        ${questArea.masteryBannersHtml(banner.mastery ? masteryBannerId(banner.mastery) : "", stats.claimed, areaDeps)}
+        ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
       </section>
       <section class="acct-sec">
         <div class="acct-sec-head">
@@ -5785,7 +5780,7 @@ els.accountBody.addEventListener("click", async (e) => {
       renderHeader();
       renderAccount();
       const chest = questClaim.dataset.questClaim.startsWith("chest-");
-      toast(chest ? `Chest opened · +${coin(data.coins)} coins` : `Quest claimed · +${coin(data.coins)} coins`);
+      toast(chest ? `Chest opened, +${num(data.coins)} coins` : `Quest claimed, +${num(data.coins)} coins`);
     } catch (err) {
       toast(err.message || "Couldn't claim quest.");
       renderAccount();

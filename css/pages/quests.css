@@ -59,7 +59,7 @@
 
 /* ---- Words: the category, era and motion pickers -------------------------- */
 .qa-words {
-  position: relative; display: flex; gap: 26px;
+  position: relative; display: flex; gap: 30px;
   margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter);
   border-bottom: 1px solid var(--line);
   overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter);
@@ -67,13 +67,13 @@
 }
 .qa-words::-webkit-scrollbar { display: none; }
 .qa-word {
-  position: relative; flex: none; display: inline-flex; align-items: baseline; gap: 7px;
-  min-width: 0; min-height: 0; padding: 11px 0 14px;
+  position: relative; flex: none; display: inline-flex; flex-direction: column; align-items: flex-start; gap: 3px;
+  min-width: 0; min-height: 0; padding: 11px 0 13px;
   border: 0; border-radius: 0; background: transparent; box-shadow: none;
   color: var(--muted); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap;
   scroll-snap-align: start; transition: color 0.15s ease;
 }
-.qa-word small { color: var(--faint); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.qa-word small { color: var(--faint); font-size: 12.5px; font-weight: 500; line-height: 1.2; font-variant-numeric: tabular-nums; }
 .qa-word:hover { color: var(--ink); }
 .qa-word.on { color: var(--ink); }
 .qa-word.on small { color: var(--muted); }
@@ -81,9 +81,10 @@
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink);
 }
 /* A square of gold beside a category that has something to claim. */
-.qa-dot { align-self: center; width: 6px; height: 6px; background: var(--gold); }
+.qa-dot { position: absolute; top: 15px; right: -12px; width: 6px; height: 6px; background: var(--gold); }
 /* Inside a section (the banner motion picker) the words do not bleed. */
 .qa-words-inline { margin: 0 0 4px; padding: 0; }
+.qa-words-inline .qa-word { padding: 8px 0 13px; }
 
 /* ---- Quest board ----------------------------------------------------------- */
 .qb { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
@@ -173,7 +174,7 @@
 .qa-grid.preview .qa-tile { opacity: 0.78; }
 
 /* Tier: the ring's colour. Bronze, silver, platinum, then holo. */
-.qa-tile, .next-row, .qa-badge { --tone: #c58d63; }
+.qa-tile, .next-row, .qa-badge.t1 { --tone: #c58d63; }
 .qa-tile.t2, .next-row.t2, .qa-badge.t2 { --tone: #b4bdc9; }
 .qa-tile.t3, .next-row.t3, .qa-badge.t3 { --tone: #eef2f7; }
 .qa-tile.t4, .next-row.t4, .qa-badge.t4 { --tone: #cdb8ff; }
@@ -195,7 +196,7 @@
 .qa-tile.t4 > .qa-bar i { background: linear-gradient(90deg, #ff7a8a, #ffcf6b, #8cf3a6, #6fd8ff, #a58bff); }
 
 .qa-tile.is-locked .qa-copy b { color: var(--ink-2); }
-.qa-tile.is-ready { border-color: color-mix(in oklab, var(--gold) 46%, transparent); background: var(--surface-2); }
+.qa-tile.is-ready { border-color: color-mix(in oklab, var(--gold) 34%, transparent); background: var(--surface-2); }
 .qa-tile.is-claimed { background: transparent; }
 .qa-tile.is-claimed .qa-coin { color: var(--muted); }
 .qa-tile.is-claimed .qa-copy b { color: var(--ink-2); }
@@ -204,7 +205,7 @@
 .qa-badge {
   --track: rgba(255, 255, 255, 0.09);
   position: relative; flex: none; width: 48px; height: 48px; border-radius: 50%;
-  background: conic-gradient(var(--tone) calc(var(--pct) * 1%), var(--track) 0);
+  background: conic-gradient(var(--tone, #c58d63) calc(var(--pct) * 1%), var(--track) 0);
 }
 .qa-badge.sm { width: 46px; height: 46px; }
 .qa-badge.t4, .qa-tile.t4 .qa-badge, .next-row.t4 .qa-badge {
@@ -213,20 +214,20 @@
 }
 .qa-badge > span {
   position: absolute; inset: 3px; display: grid; place-items: center; border-radius: 50%;
-  background: radial-gradient(circle at 50% 28%, color-mix(in oklab, var(--tone) 14%, #16151b), #0c0b10 78%);
-  color: var(--tone);
+  background: radial-gradient(circle at 50% 28%, color-mix(in oklab, var(--tone, #c58d63) 14%, #16151b), #0c0b10 78%);
+  color: var(--tone, #c58d63);
   font-family: var(--font); font-size: 15px; font-weight: 800; font-variation-settings: "opsz" 96;
   letter-spacing: -0.03em; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums;
 }
 .qa-badge.long > span { font-size: 12.5px; }
 .qa-badge > span img { display: block; width: 24px; height: 24px; object-fit: contain; }
-.qa-tile.is-locked .qa-badge > span { color: color-mix(in oklab, var(--tone) 55%, var(--faint)); }
+.qa-tile.is-locked .qa-badge > span { color: color-mix(in oklab, var(--tone, #c58d63) 55%, var(--faint)); }
 .qa-tile.is-locked .qa-badge > span img { opacity: 0.6; }
 .qa-tile.is-ready .qa-badge > span { color: var(--ink); }
 
 /* Mastery rows carry a small ink flag: the medal is the set's own symbol. */
 .qa-tile.is-mastery { border-color: var(--line-2); }
-.qa-tile.is-mastery.is-ready { border-color: color-mix(in oklab, var(--gold) 46%, transparent); }
+.qa-tile.is-mastery.is-ready { border-color: color-mix(in oklab, var(--gold) 34%, transparent); }
 
 /* Secret rows: a dark, closed tile. No name, no note, no numbers. */
 .qa-tile.is-secret {
@@ -274,9 +275,7 @@
 .qm-set.on, .qm-set.on:hover { background: var(--surface-3); border-color: var(--line-2); color: var(--ink); }
 .qm-set-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .qm-symbol { display: block; width: auto; max-width: 44px; height: 20px; object-fit: contain; object-position: left center; }
-.qm-emblem { display: block; width: 28px; height: 28px; opacity: 0.32; }
-.qm-emblem.lit { opacity: 1; }
-.qm-emblem svg, .qm-detail-emblem svg, .qm-emblem-prev svg { display: block; width: 100%; height: 100%; }
+.qm-emblem { display: block; line-height: 0; }
 .qm-name {
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; min-height: 2.5em; overflow: hidden;
   font-size: 14px; font-weight: 600; line-height: 1.25;
@@ -294,31 +293,28 @@
   margin: 6px 0 10px; padding: 20px 18px 22px;
   border: 1px solid var(--line-2); border-radius: var(--r); background: var(--surface);
 }
-.qm-detail-head { display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: center; gap: 16px; }
+.qm-detail-head { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: center; gap: 16px; }
 .qm-detail-head h3 { margin: 0; font-size: 24px; font-weight: 800; font-variation-settings: "opsz" 96; line-height: 1; letter-spacing: -0.03em; }
 .qm-detail-head p { margin: 7px 0 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
-.qm-detail-emblem { display: block; width: 72px; height: 72px; opacity: 0.4; }
-.qm-detail-emblem.lit { opacity: 1; }
+.qm-detail-emblem { display: block; line-height: 0; }
 .qm-meter { display: grid; gap: 8px; margin: 18px 0 16px; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
 .qm-open { justify-self: start; }
 .qm-unlocks { margin-top: 26px; }
 .qm-detail h4 { margin: 0 0 12px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
 .qm-unlocks ul { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
 .qm-unlocks li {
-  display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 14px;
-  padding: 11px 0; border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: center; gap: 14px;
+  padding: 12px 0; border-top: 1px solid var(--line);
 }
-.qm-unlocks li b { display: block; font-size: 14px; font-weight: 650; }
-.qm-unlocks li small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; }
-.qm-unlocks li > :first-child { opacity: 0.45; }
-.qm-unlocks li.is-open > :first-child { opacity: 1; }
-.qm-emblem-prev { display: block; width: 44px; height: 44px; }
-.qm-title-prev {
-  display: inline-flex; align-items: center; justify-content: center; min-height: 26px; padding: 3px 8px; text-align: center;
-  border-radius: 999px; background: var(--surface-2); color: var(--ink); font-size: 11.5px; font-weight: 600; line-height: 1.15;
-}
-.qm-banner-prev { position: relative; display: block; width: 76px; height: 44px; border-radius: var(--r-sm); overflow: hidden; }
-#view-account .qm-banner-prev.acct-banner { margin: 0; height: 44px; border-radius: var(--r-sm); }
+.qm-unlocks li b { display: block; font-size: 14px; font-weight: 650; line-height: 1.3; }
+.qm-unlocks li small { display: block; margin-top: 2px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+.qm-art { display: grid; place-items: center start; height: 48px; color: var(--muted); }
+.qm-art .qm-banner-prev { width: 88px; }
+/* Not yet yours: the title tag and the banner sit back. The emblem dims itself. */
+.qm-unlocks li:not(.is-open) .qm-art svg:not(.mastery-emblem-svg), .qm-unlocks li:not(.is-open) .qm-banner-prev { opacity: 0.45; }
+.qm-unlocks li.is-open .qm-art { color: var(--ink); }
+#view-account .qm-banner-prev.acct-banner { position: relative; display: block; height: 48px; margin: 0; border-radius: var(--r-sm); }
+.qm-detail .qa-own { display: none; }
 .qm-detail-rows .qa-grid { gap: 8px; }
 
 /* ---- Emblem strip: a quiet row under the title -------------------------------- */
@@ -329,11 +325,11 @@
 button.mstrip { min-height: 0; }
 button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
 .mstrip-list { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; padding: 0; list-style: none; }
-.mstrip-list li { width: 28px; height: 28px; }
-.mstrip-list svg { display: block; width: 100%; height: 100%; }
+.mstrip-list li { width: 28px; height: 28px; line-height: 0; }
 .mstrip small { font-size: 13px; font-weight: 500; }
 
 /* ---- Look tab: mastery banners and grouped titles ------------------------------- */
+.mb { margin-top: 40px; }
 .mb h3 { margin: 0 0 14px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
 .mb h3 small { margin-left: 8px; color: var(--muted); font-size: 13px; font-weight: 500; }
 .mb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
@@ -348,13 +344,8 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 .mb-tile small { color: var(--muted); font-size: 12.5px; line-height: 1.35; }
 .mb-tile.on small { color: var(--ink); }
 .mb-tile.locked { opacity: 0.5; cursor: default; }
-.mb-art {
-  display: block; height: 40px; border-radius: 6px;
-  background:
-    radial-gradient(120% 160% at 15% 0%, var(--b1), transparent 60%),
-    radial-gradient(120% 160% at 95% 100%, var(--b2), transparent 62%),
-    #100f16;
-}
+#view-account .mb-art.acct-banner { position: relative; display: block; height: 44px; margin: 0; border-radius: 6px; }
+.banner-wash.is-still::before, .banner-wash.is-still::after { animation: none; }
 
 .qa-fold { margin-top: 14px; border-top: 1px solid var(--line); }
 .qa-fold > summary {
@@ -378,7 +369,7 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 /* ---- Reward flash: mastery brings the emblem ------------------------------------ */
 .reward-flash.has-mastery { padding-top: 20px; }
 .flash-emblems { display: flex; justify-content: center; gap: 8px; margin: 0 0 12px; }
-.flash-emblems svg { display: block; width: 72px; height: 72px; }
+.flash-emblems .mastery-emblem { display: block; }
 .reward-flash i { display: block; margin-top: 3px; }
 
 /* ---- Bigger screens ------------------------------------------------------------- */
@@ -387,7 +378,7 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qb-days { grid-template-columns: repeat(14, 28px); gap: 6px; max-width: none; }
 }
 @media (min-width: 720px) {
-  .qa-words { margin-inline: 0; padding-inline: 0; overflow: visible; flex-wrap: wrap; }
+  .qa-words { margin-inline: 0; padding-inline: 0; overflow: visible; flex-wrap: wrap; gap: 0 26px; }
   #view-account .acct-tabs { margin-inline: 0; padding-inline: 0; overflow: visible; }
   .qa-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
   .qa-grid.one { grid-template-columns: minmax(0, 1fr); }
@@ -402,6 +393,11 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qb-periods:has(> :nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 719px) {
+  .qa-words, #view-account .acct-tabs {
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+  }
+  .qa-words-inline { -webkit-mask-image: none; mask-image: none; }
   .qa-head .acct-figures { flex-basis: 100%; margin: 0 -16px; padding: 0 16px 20px; }
   .qa-head .claim-cta { width: 100%; justify-content: center; }
   .qa-seg { display: grid; grid-auto-columns: minmax(0, 1fr); width: 100%; }
