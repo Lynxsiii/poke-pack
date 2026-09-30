@@ -428,28 +428,6 @@
    "notes": "Lycanroc-GX is SM14 (the modelled promo). Rock Steady theme deck not modelled."
   },
   {
-   "set": "sm35",
-   "tcgplayerId": 155062,
-   "name": "Special Collection (Raichu-GX)",
-   "cards": [
-    {
-     "id": "sm35-28",
-     "n": 1
-    }
-   ],
-   "confidence": "verified",
-   "sources": [
-    {
-     "url": "https://mp-search-api.tcgplayer.com/v1/product/155062/details",
-     "quote": "a full art Raichu GX holofoil promo, a holofoil Pikachu promo"
-    },
-    {
-     "url": "https://bulbapedia.bulbagarden.net/wiki/Sun_%26_Moon_TCG_Series_merchandise#Shining_Legends_Special_Collection—Raichu-GX",
-     "quote": "Shining Legends 28 Pikachu, Water Web Holofoil (no SM number)"
-    }
-   ]
-  },
-  {
    "set": "sm1",
    "tcgplayerId": 209655,
    "name": "Incineroar GX Challenge Box",
@@ -2863,5 +2841,8 @@
     }
    ]
   }
- ]
+ ],
+ "_modelledAsPromo": {
+  "sm35/155062": "Special Collection (Raichu-GX): the Water Web Pikachu (SL 28) is the product's own promo sm35-28h in data/sets/sm35.json, so no box row."
+ }
 }

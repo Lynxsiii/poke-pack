@@ -883,6 +883,59 @@
    ]
   ]
  },
+ "sm1/decidueye-gx-challenge-box-2020": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm1-12",
+    1
+   ],
+   [
+    "sm1-11",
+    1
+   ]
+  ]
+ },
+ "sm1/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm1/incineroar-gx-challenge-box-2020": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm1-27",
+    1
+   ],
+   [
+    "sm1-26",
+    1
+   ]
+  ]
+ },
+ "sm1/lunala-elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm1/primarina-gx-challenge-box-2020": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm1-42",
+    1
+   ],
+   [
+    "sm1-41",
+    1
+   ]
+  ]
+ },
  "sm10/blastoise-gx-premium-collection": {
   "label": "2 extra cards",
   "cards": [
@@ -904,6 +957,229 @@
   }
  },
  "sm11/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm19"
+  }
+ },
+ "sm11/espeon-premium-checklane-blister": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm8-89",
+    1
+   ],
+   [
+    [
+     "sm5-104",
+     "sm5-105"
+    ],
+    1
+   ]
+  ]
+ },
+ "sm11/umbreon-premium-checklane-blister": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm8-120",
+    1
+   ],
+   [
+    [
+     "sm5-104",
+     "sm5-105"
+    ],
+    1
+   ]
+  ]
+ },
+ "sm115/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm19"
+  }
+ },
+ "sm12/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm19"
+  }
+ },
+ "sm2/decidueye-gx-premium-collection": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm1-9",
+    1
+   ],
+   [
+    "sm1-10",
+    1
+   ]
+  ]
+ },
+ "sm2/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm2/incineroar-gx-premium-collection": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm1-24",
+    1
+   ],
+   [
+    "sm1-25",
+    1
+   ]
+  ]
+ },
+ "sm2/lunala-gx-challenge-box": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm1-66",
+    1
+   ],
+   [
+    "sm2-61",
+    1
+   ]
+  ]
+ },
+ "sm2/solgaleo-gx-challenge-box": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm1-89",
+    1
+   ],
+   [
+    "sm2-87",
+    1
+   ]
+  ]
+ },
+ "sm3/alolan-ninetales-gx-challenge-box": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm2-22",
+    1
+   ],
+   [
+    "sm3-28",
+    1
+   ]
+  ]
+ },
+ "sm3/charizard-gx-premium-collection": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm3-18",
+    1
+   ],
+   [
+    "sm3-19",
+    1
+   ]
+  ]
+ },
+ "sm3/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm3/lycanroc-gx-challenge-box": {
+  "label": "1 extra card",
+  "cards": [
+   [
+    "sm3-76",
+    1
+   ]
+  ]
+ },
+ "sm3/team-skull-pin-collection": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm2-8",
+    1
+   ],
+   [
+    "sm2-15",
+    1
+   ]
+  ]
+ },
+ "sm35/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm4/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm5/etb-dawn-wings-necrozma": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm5/etb-dusk-mane-necrozma": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm6/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm7/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm75/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm8/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm17"
+  }
+ },
+ "sm9/elite-trainer-box": {
   "label": "40 basic Energy",
   "spread": {
    "total": 40,
