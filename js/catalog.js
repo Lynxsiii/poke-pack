@@ -326,6 +326,111 @@ export function findOffer(prices, products, id) {
   );
 }
 
+/**
+ * The single cards a box holds beyond its packs and promos: a battle deck's
+ * other 59 cards, an ETB's Energy. `entry` is one row of data/box-contents.json
+ * (scripts/build_box_contents.py writes it and documents each field):
+ *
+ *  - `cards`: `[[id, n]]`, always in the box.
+ *  - `variants`: `[{ promos, cards }]`, the list that goes with the promo the
+ *    box came with (`promoIds`, what drawPromos dealt).
+ *  - `spread`: `{ total, print }`, basic Energy dealt evenly over the eight
+ *    types, the odd cards on random types.
+ *  - `recipe`: a Build & Battle Box. The deck is the group of the promo it came
+ *    with, plus one of the other groups at random, plus a few random Trainers,
+ *    plus basic Energy up to the deck size. Each box is dealt fresh.
+ *
+ * In a list, an id can be `[a, b]` (one of them, at random) and a count can be
+ * `[min, max]`. Returns `[{ id, n }]`, empty for a box that holds nothing more.
+ */
+export function boxCardList(entry, promoIds = [], rand = Math.random) {
+  if (!entry) return [];
+  const counts = new Map();
+  const add = (id, n) => {
+    if (n > 0) counts.set(id, (counts.get(id) || 0) + n);
+  };
+  const between = (lo, hi) => lo + Math.floor(rand() * (hi - lo + 1));
+  const rows = (list) => {
+    for (const [id, n] of list || []) {
+      add(Array.isArray(id) ? id[between(0, id.length - 1)] : id, Array.isArray(n) ? between(n[0], n[1]) : n);
+    }
+  };
+  const drawn = new Set((promoIds || []).map(String));
+  rows(entry.cards);
+  const variant = (entry.variants || []).find(
+    (item) => item.promos?.length && item.promos.every((id) => drawn.has(String(id)))
+  );
+  if (variant) rows(variant.cards);
+  if (entry.spread) {
+    const { total, print = "" } = entry.spread;
+    const per = Math.floor(total / ENERGY_TYPES.length);
+    const odd = new Set();
+    while (odd.size < total - per * ENERGY_TYPES.length) odd.add(between(0, ENERGY_TYPES.length - 1));
+    ENERGY_TYPES.forEach(([kind], i) => add(`energy-${kind}${print ? `-${print}` : ""}`, per + (odd.has(i) ? 1 : 0)));
+  }
+  if (entry.recipe) dealRecipe(entry.recipe, drawn, { rand, between, add, rows, counts });
+  return [...counts].map(([id, n]) => ({ id, n }));
+}
+
+/** Build & Battle Box deck: see boxCardList. */
+function dealRecipe(recipe, drawn, { rand, between, add, rows, counts }) {
+  const keys = Object.keys(recipe.groups || {});
+  if (!keys.length) return;
+  const primary = keys.find((key) => drawn.has(key)) || keys[between(0, keys.length - 1)];
+  const chosen = [primary];
+  const others = keys.filter((key) => key !== primary);
+  if (recipe.second !== false && others.length) chosen.push(others[between(0, others.length - 1)]);
+  for (const key of chosen) rows(recipe.groups[key].cards);
+  rows(recipe.fixed);
+  const size = () => [...counts.values()].reduce((sum, n) => sum + n, 0) + Math.max(1, drawn.size);
+
+  const trainers = recipe.trainers;
+  if (trainers?.pool?.length) {
+    const pool = trainers.pool.map(([id, min, max]) => ({ id, min, max, have: 0 }));
+    let want = trainers.count ? between(trainers.count[0], trainers.count[1]) : Math.max(0, (trainers.fillTo || 0) - size());
+    for (const item of pool) {
+      if (item.min > 0) {
+        add(item.id, item.min);
+        item.have = item.min;
+        want -= item.min;
+      }
+    }
+    for (let open = pool.filter((item) => item.have < item.max); want > 0 && open.length; open = pool.filter((item) => item.have < item.max)) {
+      const item = open[between(0, open.length - 1)];
+      add(item.id, 1);
+      item.have += 1;
+      want -= 1;
+    }
+  }
+
+  if (recipe.energy) {
+    const room = (recipe.total || 0) - size();
+    const n = recipe.energy.n ? Math.min(recipe.energy.n, room) : room;
+    if (n > 0) {
+      const weights = {};
+      for (const key of chosen) {
+        for (const [kind, weight] of Object.entries(recipe.groups[key].types || {})) weights[kind] = (weights[kind] || 0) + weight;
+      }
+      const kinds = Object.keys(weights).length ? Object.keys(weights) : ENERGY_TYPES.map(([kind]) => kind);
+      const sum = kinds.reduce((total, kind) => total + (weights[kind] || 1), 0);
+      // Largest remainder, so the split adds up to exactly n.
+      const shares = kinds.map((kind) => {
+        const exact = (n * (weights[kind] || 1)) / sum;
+        return { kind, whole: Math.floor(exact), rest: exact - Math.floor(exact) };
+      });
+      let left = n - shares.reduce((total, item) => total + item.whole, 0);
+      for (const item of shares.slice().sort((a, b) => b.rest - a.rest)) {
+        if (left > 0) {
+          item.whole += 1;
+          left -= 1;
+        }
+      }
+      const suffix = recipe.energy.print ? `-${recipe.energy.print}` : "";
+      for (const item of shares) add(`energy-${item.kind}${suffix}`, item.whole);
+    }
+  }
+}
+
 /** Booster packs in an offer, special packs included. */
 export function offerPackCount(offer) {
   const special = Object.values(offer?.special || {}).reduce((sum, n) => sum + (Number(n) || 0), 0);
@@ -368,16 +473,19 @@ const ENERGY_PRINTS = [
   // The Sword & Shield era's own basic Energy (the 2020 print, pkmn.gg's
   // sword-shield-energy-2020), the eleventh card of every SWSH pack.
   { print: "swsh", suffix: "-swsh", label: "Sword & Shield 2020" },
+  // The Mega Evolution era's own (MEE 001-008): in the Mega Evolution ETBs and
+  // Build & Battle decks. No set's pack Energy slot uses it yet.
+  { print: "mee", suffix: "-mee", first: 1, code: "MEE" },
 ];
 
-export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first, label }) =>
+export const BASIC_ENERGY = ENERGY_PRINTS.flatMap(({ print, suffix, first, label, code = "SVE" }) =>
   ENERGY_TYPES.map(([id, name], i) => ({
     id: `energy-${id}${suffix}`,
     name: `${name} Energy`,
     number: "—",
     rarity: "Energy",
     energy: true,
-    ...(print ? { energyPrint: print, variant: label || `SVE ${String(first + i).padStart(3, "0")}` } : {}),
+    ...(print ? { energyPrint: print, variant: label || `${code} ${String(first + i).padStart(3, "0")}` } : {}),
     supertype: "Energy",
     subtypes: ["Basic"],
     types: [name],

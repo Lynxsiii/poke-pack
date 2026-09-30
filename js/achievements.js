@@ -6,80 +6,246 @@
  * cannot decide it has earned one. `at(ctx)` returns raw progress against
  * `goal`, which is what draws the bar and what the claim check compares.
  */
-import { titleContext, setPercents } from "./titles.js";
+import { titleContext, ownedPerSet } from "./titles.js";
+import { RARITY_ORDER } from "./catalog.js";
+import { nameHas, tokens, setIdOfCard } from "./achievement-kit.js";
+import { SET_INFO } from "./achievement-eras.js";
+import { RIP, CHASE, COLLECT, WEALTH, TRAINER } from "./achievement-core.js";
+import { DEX } from "./achievement-dex.js";
+import { RARITY, MARKET, BATTLE, SOCIAL, QUESTS } from "./achievement-misc.js";
+import { SETS_GENERAL, SET_ROWS } from "./achievement-sets.js";
+import { SECRETS } from "./achievement-secrets.js";
 
 export const ACH_CATEGORIES = [
   { id: "rip", name: "Ripping", note: "Packs through your hands." },
   { id: "chase", name: "Chase", note: "The cards everyone opens for." },
   { id: "collect", name: "Collecting", note: "Filling sets and filling pages." },
+  { id: "sets", name: "Sets", note: "Finish a set and it is yours for good." },
+  { id: "dex", name: "Pokédex", note: "Collections by Pokémon name." },
+  { id: "rarity", name: "Rarities", note: "One of every finish." },
   { id: "wealth", name: "Wealth", note: "Coins in the bank." },
+  { id: "market", name: "Market", note: "Selling cards and opening sealed product." },
+  { id: "battle", name: "Battles", note: "Pack battles against everyone." },
+  { id: "social", name: "Social", note: "The people you play with." },
+  { id: "quests", name: "Quests", note: "Daily work and streaks." },
   { id: "trainer", name: "Trainer", note: "The account itself." },
 ];
 
-export const ACHIEVEMENTS = [
-  // Ripping
-  { id: "first-pack", cat: "rip", tier: 1, mark: "1", name: "First rip", note: "Open your first booster.", goal: 1, at: (c) => c.packs, coins: 25 },
-  { id: "ten-packs", cat: "rip", tier: 1, mark: "10", name: "Warming up", note: "Rip ten packs.", goal: 10, at: (c) => c.packs, coins: 60 },
-  { id: "box-worth", cat: "rip", tier: 2, mark: "36", name: "Box worth", note: "Rip 36 packs — a sealed booster box.", goal: 36, at: (c) => c.packs, coins: 150, title: "Box Breaker" },
-  { id: "century", cat: "rip", tier: 2, mark: "100", name: "Century", note: "Rip 100 packs.", goal: 100, at: (c) => c.packs, coins: 300 },
-  { id: "marathon", cat: "rip", tier: 3, mark: "250", name: "Marathon", note: "Rip 250 packs.", goal: 250, at: (c) => c.packs, coins: 700 },
-  { id: "case-cracker", cat: "rip", tier: 4, mark: "500", name: "Case cracker", note: "Rip 500 packs — six boxes deep.", goal: 500, at: (c) => c.packs, coins: 1500, title: "Case Cracker" },
+const BY_CATEGORY = {
+  rip: RIP,
+  chase: CHASE,
+  collect: COLLECT,
+  sets: [...SETS_GENERAL, ...SET_ROWS],
+  dex: DEX,
+  rarity: RARITY,
+  wealth: WEALTH,
+  market: MARKET,
+  battle: BATTLE,
+  social: SOCIAL,
+  quests: QUESTS,
+  trainer: TRAINER,
+};
 
-  // Chase
-  { id: "first-hit", cat: "chase", tier: 1, mark: "★", name: "Hit", note: "Pull anything at hit rarity.", goal: 1, at: (c) => c.hits, coins: 40 },
-  { id: "double-up", cat: "chase", tier: 1, mark: "★★", name: "Double up", note: "Own a Double Rare.", goal: 1, at: (c) => c.count("Double Rare"), coins: 40 },
-  { id: "reverse", cat: "chase", tier: 1, mark: "◆", name: "Shiny back", note: "Pull a reverse holo.", goal: 1, at: (c) => c.reverses, coins: 25 },
-  { id: "ultra", cat: "chase", tier: 2, mark: "☆☆", name: "Ultra", note: "Own an Ultra Rare.", goal: 1, at: (c) => c.count("Ultra Rare"), coins: 90 },
-  { id: "illustrator", cat: "chase", tier: 2, mark: "☆", name: "Illustrator", note: "Own an Illustration Rare.", goal: 1, at: (c) => c.count("Illustration Rare"), coins: 110 },
-  { id: "special-art", cat: "chase", tier: 3, mark: "☆☆", name: "Special art", note: "Own a Special Illustration Rare.", goal: 1, at: (c) => c.count("Special Illustration Rare"), coins: 260, title: "Artisan" },
-  { id: "hit-stack", cat: "chase", tier: 3, mark: "25", name: "Hit stack", note: "Own 25 cards at hit rarity.", goal: 25, at: (c) => c.hits, coins: 450, title: "Chase Addict" },
-  { id: "monochrome", cat: "chase", tier: 4, mark: "★☆", name: "Black and white", note: "Own a Black White Rare.", goal: 1, at: (c) => c.count("Black White Rare"), coins: 400, title: "Monochrome" },
-  { id: "gold-chase", cat: "chase", tier: 4, mark: "◈", name: "Gold chase", note: "Own a gold Hyper Rare.", goal: 1, at: (c) => c.count("Mega Hyper Rare") + c.count("Hyper Rare"), coins: 500, title: "Goldsmith" },
-
-  // Collecting
-  { id: "unique-10", cat: "collect", tier: 1, mark: "10", name: "Getting started", note: "Own ten different cards.", goal: 10, at: (c) => c.unique, coins: 30 },
-  { id: "binder-page", cat: "collect", tier: 1, mark: "9", name: "First page", note: "Fill nine binder pockets.", goal: 9, at: (c) => c.binder, coins: 70 },
-  { id: "unique-50", cat: "collect", tier: 2, mark: "50", name: "Binder rat", note: "Own fifty different cards.", goal: 50, at: (c) => c.unique, coins: 120 },
-  { id: "halfway", cat: "collect", tier: 2, mark: "50%", name: "Halfway", note: "Reach 50% on any live set.", goal: 50, at: (c) => c.bestSet, coins: 200 },
-  { id: "binder-three", cat: "collect", tier: 2, mark: "27", name: "Three pages", note: "Fill twenty-seven binder pockets.", goal: 27, at: (c) => c.binder, coins: 220, title: "Curator" },
-  { id: "unique-150", cat: "collect", tier: 3, mark: "150", name: "Dex keeper", note: "Own 150 different cards.", goal: 150, at: (c) => c.unique, coins: 400, title: "Dex Keeper" },
-  { id: "master-set", cat: "collect", tier: 4, mark: "100%", name: "Master set", note: "Complete any live set.", goal: 100, at: (c) => c.bestSet, coins: 1200, title: "Set Master" },
-  { id: "double-master", cat: "collect", tier: 4, mark: "x2", name: "Double master", note: "Complete two live sets.", goal: 2, at: (c) => c.setsDone, coins: 3000, title: "Completionist" },
-
-  // Wealth
-  { id: "clocked-in", cat: "wealth", tier: 1, mark: "✦", name: "Clocked in", note: "Claim an hourly stack.", goal: 1, at: (c) => (c.hourly ? 1 : 0), coins: 25 },
-  { id: "loaded", cat: "wealth", tier: 1, mark: "250", name: "Loaded", note: "Hold ✦ 250 at once.", goal: 250, at: (c) => c.coins, coins: 60 },
-  { id: "banked", cat: "wealth", tier: 2, mark: "1K", name: "Banked", note: "Hold ✦ 1,000 at once.", goal: 1000, at: (c) => c.coins, coins: 240, title: "High Roller" },
-  { id: "vaulted", cat: "wealth", tier: 3, mark: "5K", name: "Vaulted", note: "Hold ✦ 5,000 at once.", goal: 5000, at: (c) => c.coins, coins: 900, title: "Vaulted" },
-
-  // Trainer
-  { id: "named", cat: "trainer", tier: 1, mark: "@", name: "Named trainer", note: "Make an account.", goal: 1, at: (c) => (c.signed ? 1 : 0), coins: 50 },
-  { id: "pull-machine", cat: "trainer", tier: 2, mark: "500", name: "Pull machine", note: "Pull 500 cards.", goal: 500, at: (c) => c.pulls, coins: 250 },
-  { id: "conveyor", cat: "trainer", tier: 3, mark: "2K", name: "Conveyor", note: "Pull 2,000 cards.", goal: 2000, at: (c) => c.pulls, coins: 800, title: "Conveyor" },
-];
+/** Every row, grouped by category in ACH_CATEGORIES order, secrets last in their group. */
+export const ACHIEVEMENTS = ACH_CATEGORIES.flatMap((cat) => [
+  ...(BY_CATEGORY[cat.id] || []),
+  ...SECRETS.filter((row) => row.cat === cat.id),
+]);
 
 const BY_ID = new Map(ACHIEVEMENTS.map((row) => [row.id, row]));
+const BY_SET = new Map();
+for (const row of ACHIEVEMENTS) {
+  if (!row.set) continue;
+  if (!BY_SET.has(row.set)) BY_SET.set(row.set, []);
+  BY_SET.get(row.set).push(row);
+}
 
 export function achievementById(id) {
   return BY_ID.get(String(id || "")) || null;
 }
 
+/** A secret row hides its name and note until it is done. */
+export function isSecret(row) {
+  return Boolean(row && row.secret === true);
+}
+
+/** Every row tied to one set: its halfway row, then its mastery row. */
+export function achievementsBySet(setId) {
+  return (BY_SET.get(String(setId || "")) || []).slice();
+}
+
+/** The mastery row of a set, or null for a set with none. */
+export function masteryRowFor(setId) {
+  return achievementsBySet(setId).find((row) => row.kind === "mastery") || null;
+}
+
+export function achievementsByCategory(catId) {
+  return ACHIEVEMENTS.filter((row) => row.cat === catId);
+}
+
+/**
+ * What to draw for a row: a secret that is not done yet shows its hint and
+ * nothing else, so the name and note never reach the page early.
+ */
+export function achievementFace(row, done) {
+  if (isSecret(row) && !done) {
+    return { masked: true, name: "???", note: row.hint || "A secret.", mark: "?" };
+  }
+  return { masked: false, name: row.name, note: row.note, mark: row.mark };
+}
+
+const count = (value) => {
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
+};
+
+/**
+ * The owned cards as `{ id, name, rarity, setId }`. `opts.cards` wins; else
+ * `opts.findCard(id)` is asked for every owned id (the same lookup titleContext
+ * takes); with neither, name based rows stay at zero.
+ */
+function ownedCards(save, opts) {
+  let list = [];
+  if (Array.isArray(opts.cards)) {
+    list = opts.cards;
+  } else if (typeof opts.findCard === "function") {
+    for (const [id, n] of Object.entries(save?.collection || {})) {
+      if (!(n > 0)) continue;
+      const card = opts.findCard(id);
+      if (card) list.push({ ...card, id: card.id || id });
+    }
+  }
+  return list
+    .filter((card) => card && card.id)
+    .map((card) => ({
+      id: String(card.id),
+      name: String(card.name || ""),
+      rarity: card.rarity,
+      setId: card.setId || setIdOfCard(card.id),
+    }));
+}
+
+/** A lookup over owned card names: whole-word, case-insensitive, memoised. */
+function nameLookup(cards) {
+  const names = cards.map((card) => card.name.toLowerCase()).filter(Boolean);
+  const words = new Map();
+  for (const name of names) {
+    for (const word of new Set(tokens(name))) words.set(word, (words.get(word) || 0) + 1);
+  }
+  const memo = new Map();
+  const countName = (query) => {
+    const key = String(query || "").toLowerCase().trim();
+    if (!key) return 0;
+    if (memo.has(key)) return memo.get(key);
+    // One plain word is a token lookup; anything with spaces or punctuation
+    // ("Team Rocket's", "Ho-Oh") scans the names.
+    const n = /^[\p{L}\p{N}]+$/u.test(key) ? words.get(key) || 0 : names.filter((name) => nameHas(name, key)).length;
+    memo.set(key, n);
+    return n;
+  };
+  return {
+    countName,
+    has: (query) => countName(query) > 0,
+    species: (list) => (Array.isArray(list) ? list.filter((name) => countName(name) > 0).length : 0),
+  };
+}
+
 /**
  * Everything the tests read. Built on titleContext so a title and an
  * achievement can never disagree about how many packs you have opened.
+ *
+ * Pass `opts.cards` (or `opts.findCard`) so the name rows can see what you
+ * own. `save.stats` (from the Worker) feeds stat(), setPacks() and friends;
+ * anything missing reads as zero.
  */
-export function achievementContext(save, opts = {}) {
-  const base = titleContext(save, opts);
-  const pcts = setPercents(save?.collection || {});
+export function achievementContext(save, options = {}) {
+  const opts = options || {};
+  const cards = ownedCards(save, opts);
+  let rarities = opts.rarities || null;
+  if (!rarities && cards.length) {
+    rarities = {};
+    for (const card of cards) if (card.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
+  }
+  const base = titleContext(save, { ...opts, rarities });
+  const collection = save?.collection || {};
+  const stats = save?.stats && typeof save.stats === "object" ? save.stats : {};
+  const counters = stats.counters && typeof stats.counters === "object" ? stats.counters : {};
+  const packsBySet = stats.setPacks && typeof stats.setPacks === "object" ? stats.setPacks : {};
+
   const binder = Array.isArray(save?.binder) ? save.binder.filter(Boolean).length : 0;
   let copies = 0;
-  for (const n of Object.values(save?.collection || {})) copies += n > 0 ? n : 0;
+  let maxCopies = 0;
+  for (const n of Object.values(collection)) {
+    if (!(n > 0)) continue;
+    copies += n;
+    if (n > maxCopies) maxCopies = n;
+  }
+
+  const owned = ownedPerSet(collection);
+  const setOwned = (id) => owned.get(id) || 0;
+  const setTotal = (id) => SET_INFO.get(id)?.total || 0;
+  const setPct = (id) => {
+    const total = setTotal(id);
+    if (!total) return 0;
+    const have = setOwned(id);
+    return have >= total ? 100 : Math.floor((have / total) * 100);
+  };
+  const setPacks = (id) => count(packsBySet[id]);
+
+  let setsDone = 0;
+  let setsHalf = 0;
+  let setsStarted = 0;
+  let setsAlmost = 0;
+  let setsRipped = 0;
+  let bestSetPacks = 0;
+  let promoOwned = 0;
+  const eraCards = new Map();
+  const eraRipped = new Set();
+  const editionCards = new Map();
+  const editionDone = new Map();
+  for (const info of SET_INFO.values()) {
+    const have = setOwned(info.id);
+    const packs = setPacks(info.id);
+    if (info.total && have >= info.total) setsDone += 1;
+    if (info.total && have * 2 >= info.total) setsHalf += 1;
+    if (have > 0) setsStarted += 1;
+    if (info.total >= 100 && have > 0 && have >= info.total - 1) setsAlmost += 1;
+    if (packs > 0) {
+      setsRipped += 1;
+      eraRipped.add(info.era);
+    }
+    if (packs > bestSetPacks) bestSetPacks = packs;
+    if (info.promo) promoOwned += have;
+    eraCards.set(info.era, (eraCards.get(info.era) || 0) + have);
+    editionCards.set(info.edition, (editionCards.get(info.edition) || 0) + have);
+    if (info.total && have >= info.total) editionDone.set(info.edition, (editionDone.get(info.edition) || 0) + 1);
+  }
+
   return {
     ...base,
+    ...nameLookup(cards),
     binder,
     copies,
-    setsDone: pcts.filter((pct) => pct >= 100).length,
-    setsHalf: pcts.filter((pct) => pct >= 50).length,
+    maxCopies,
+    setsDone,
+    setsHalf,
+    setsStarted,
+    setsAlmost,
+    setsRipped,
+    bestSetPacks,
+    promoOwned,
+    erasStarted: [...eraCards.values()].filter((n) => n > 0).length,
+    erasRipped: eraRipped.size,
+    eraOwned: (era) => eraCards.get(era) || 0,
+    editionOwned: (edition) => editionCards.get(edition) || 0,
+    editionDone: (edition) => editionDone.get(edition) || 0,
+    raritiesOwned: RARITY_ORDER.filter((rarity) => base.count(rarity) > 0).length,
+    setOwned,
+    setTotal,
+    setPct,
+    setPacks,
+    stat: (key) => count(counters[key]),
+    friends: count(stats.friends),
   };
 }
 

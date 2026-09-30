@@ -29,6 +29,7 @@ js/engine.js          pack generation — slot tables and pull odds
 js/state.js           localStorage save, coins, daily bonus, collection
 js/achievements.js    achievement table, progress, and claim rewards
 js/titles.js          titles, including the ones an achievement hands over
+js/quest-area.js      the quest board, achievement wall and mastery shelf (pure HTML builders)
 data/<set>.json       card data per set
 assets/packs/<set>/   booster wrapper art (avif with png fallback)
 scripts/              python builders that generate data/ and crop wrapper art
@@ -238,6 +239,18 @@ imports the same file, so `POST /api/achievements/claim` recomputes progress
 server-side and pays out from the table — the client only names which row to
 check. Claimed ids live in `profiles.claimed`, and the award titles at the
 bottom of `js/titles.js` unlock by reading that list.
+
+### The quest area
+
+The account page's Quests, Achievements and Mastery tabs are drawn by
+`js/quest-area.js`: pure functions from data to an HTML string, handed a `deps`
+object by `js/app.js`, which keeps the state and the click handling. Styles are
+in `css/pages/quests.css`. The wall shows one category at a time (words with an
+ink underline, a square Ready / Locked / Claimed control); categories over 60
+rows use `content-visibility: auto`. Secret rows render as a dark "???" tile
+with only their hint until they are done. Mastery adds the emblem strip on the
+account hero and the public profile, the mastery banners in the Look tab and
+the inline set panel on the shelf.
 
 ## Known gaps
 

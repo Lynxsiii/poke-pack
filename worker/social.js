@@ -8,7 +8,7 @@ import {
   DEFAULT_AVATAR,
   DEFAULT_BANNER,
 } from "../js/cosmetics.js";
-import { sellValue } from "../js/catalog.js";
+import { PLAYABLE_SETS, sellValue } from "../js/catalog.js";
 
 const ONLINE_MS = 90_000;
 const PRESENCE_WRITE_MS = 45_000;
@@ -160,11 +160,51 @@ export async function handleSocial(path, method, request, env, helpers) {
   return null;
 }
 
+const MASTERY_BANNER = /^mastery:([a-z0-9_-]{1,32})$/;
+
+/** The set id inside an exact "mastery:<setId>" banner naming a real set, or null for any other value. */
+export function masteryBannerSet(value) {
+  const match = typeof value === "string" ? MASTERY_BANNER.exec(value) : null;
+  return match && PLAYABLE_SETS.some((set) => set.id === match[1]) ? match[1] : null;
+}
+
+/** Anything that reads as an attempt at a mastery banner, however it is spelt: it must pass the entitlement gate. */
+export function looksLikeMasteryBanner(value) {
+  return typeof value === "string" && /^\s*mastery\s*:/i.test(value);
+}
+
+/**
+ * A banner as it is stored. The mastery banners are exclusive rewards, kept
+ * exactly as given (patchMe has already checked the entitlement); everything
+ * else normalises through bannerId as before.
+ */
+function bannerValue(value) {
+  const set = masteryBannerSet(value);
+  return set ? `mastery:${set}` : bannerId(value);
+}
+
+/** Set ids whose mastery achievement (`set-<id>-master`) is in a claimed list. */
+export function masterySetIds(claimed) {
+  const have = new Set(Array.isArray(claimed) ? claimed : []);
+  return PLAYABLE_SETS.filter((set) => have.has(`set-${set.id}-master`)).map((set) => set.id);
+}
+
+/** null when the player may wear this mastery banner, otherwise the refusal. */
+export async function masteryBannerError(env, userId, value) {
+  const set = masteryBannerSet(value);
+  if (!set) return { status: 400, error: "That banner does not exist." };
+  const profile = await env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first();
+  if (!masterySetIds(parseJson(profile?.claimed, [])).includes(set)) {
+    return { status: 403, error: "Master that set to wear its banner." };
+  }
+  return null;
+}
+
 export function socialUserFields(row) {
   return {
     avatar: avatarId(row.avatar || DEFAULT_AVATAR),
     avatarStyle: avatarStyle(row.avatar_style || row.avatarStyle),
-    banner: bannerId(row.banner || DEFAULT_BANNER),
+    banner: bannerValue(row.banner || DEFAULT_BANNER),
     showcase: parseShowcase(row.showcase),
     binderPages: normalizeProfilePages(row.binder_pages),
     shownStats: normalizeStats(parseJson(row.shown_stats, null)),
@@ -410,6 +450,7 @@ async function publicProfile(request, env, helpers, rawHandle) {
     relation: await relation(env, auth.user?.id, user.id),
     showcase,
     binderPages,
+    masteries: masterySetIds(parseJson(profile?.claimed, [])),
     comments: comments.map((row) => ({
       id: row.id,
       body: row.body,
@@ -767,14 +808,14 @@ export function patchSocialFields(body, user) {
   const next = {
     avatar: avatarId(user.avatar || DEFAULT_AVATAR),
     avatarStyle: avatarStyle(user.avatar_style || user.avatarStyle),
-    banner: bannerId(user.banner || DEFAULT_BANNER),
+    banner: bannerValue(user.banner || DEFAULT_BANNER),
     showcase: parseShowcase(user.showcase),
     binderPages: normalizeProfilePages(user.binder_pages),
     shownStats: normalizeStats(parseJson(user.shown_stats, null)),
   };
   if (body.avatar != null) next.avatar = avatarId(body.avatar);
   if (body.avatarStyle != null) next.avatarStyle = avatarStyle(body.avatarStyle);
-  if (body.banner != null) next.banner = bannerId(body.banner);
+  if (body.banner != null) next.banner = bannerValue(body.banner);
   if (body.shownStats != null) next.shownStats = normalizeStats(body.shownStats);
   if (Array.isArray(body.showcase)) {
     next.showcase = parseShowcase(body.showcase);
