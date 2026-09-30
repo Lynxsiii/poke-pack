@@ -25,11 +25,12 @@ export const GEAR_KINDS = ["sleeve", "coin"];
 export const HOUSE_COIN = {
   id: "house",
   name: "House coin",
-  subject: "Poké Ball",
+  subject: "Meowth",
   material: "metal",
   front: "",
   back: "",
   tint: "#c9a24a",
+  blurb: "The casino's own Meowth coin, until you choose another.",
   house: true,
 };
 
