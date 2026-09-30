@@ -35,6 +35,8 @@ export function smPattern(card) {
   const is = (sub) => subs.some((s) => String(s).toUpperCase() === sub);
   const trainer = card.supertype === "Trainer";
   const tag = is("TAG TEAM");
+  // Hidden Fates' Shiny Vault (gallery "sv"): the Shiny Rares and Shiny GX, the
+  // Supporters; the golds fall through to "Rare Secret" below.
   if (card.gallery === "sv" && card.rarity !== "Rare Secret") {
     if (card.rarity === "Rare Ultra") return "foil-ultra sm-tfa";
     if (is("GX")) return "foil-ultra foil-shiny sm-shiny sm-shiny-gx";
@@ -55,10 +57,6 @@ export function smPattern(card) {
     case "Rare Shining":
       // Shining Legends' Shining Pokémon (finish owner: the shiny family).
       return "foil-holo foil-shiny sm-shiny sm-shining";
-    case "Rare Shiny":
-      return "foil-holo sm-shiny";
-    case "Rare Shiny GX":
-      return `foil-ex sm-shiny sm-gx${tag ? " sm-tag" : ""}`;
     case "Rare Holo":
       return "foil-holo sm-holo";
     default:

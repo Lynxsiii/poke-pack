@@ -354,7 +354,8 @@
     "foilMap": "assets/foil/maps/sm35/9.webp",
     "etchMap": "assets/foil/maps/sm35/9-etch.webp",
     "tcgplayerId": 146661,
-    "market": 13.44
+    "market": 13.44,
+    "etchSoft": "assets/foil/maps/sm35/9-etch-arc.webp"
   },
   {
     "id": "sm35-10",
@@ -1154,7 +1155,8 @@
     "foilMap": "assets/foil/maps/sm35/27.webp",
     "etchMap": "assets/foil/maps/sm35/27-etch.webp",
     "tcgplayerId": 146681,
-    "market": 6.57
+    "market": 6.57,
+    "etchSoft": "assets/foil/maps/sm35/27-etch-arc.webp"
   },
   {
     "id": "sm35-28",
@@ -1661,7 +1663,8 @@
     "foilMap": "assets/foil/maps/sm35/40.webp",
     "etchMap": "assets/foil/maps/sm35/40-etch.webp",
     "tcgplayerId": 146699,
-    "market": 187.02
+    "market": 187.02,
+    "etchSoft": "assets/foil/maps/sm35/40-etch-arc.webp"
   },
   {
     "id": "sm35-41",
@@ -1737,7 +1740,8 @@
     "foilMap": "assets/foil/maps/sm35/42.webp",
     "etchMap": "assets/foil/maps/sm35/42-etch.webp",
     "tcgplayerId": 146701,
-    "market": 33.02
+    "market": 33.02,
+    "etchSoft": "assets/foil/maps/sm35/42-etch-arc.webp"
   },
   {
     "id": "sm35-43",
@@ -2318,7 +2322,8 @@
     "foilMap": "assets/foil/maps/sm35/56.webp",
     "etchMap": "assets/foil/maps/sm35/56-etch.webp",
     "tcgplayerId": 146719,
-    "market": 153.22
+    "market": 153.22,
+    "etchSoft": "assets/foil/maps/sm35/56-etch-arc.webp"
   },
   {
     "id": "sm35-57",
@@ -2361,7 +2366,8 @@
     "foilMap": "assets/foil/maps/sm35/57.webp",
     "etchMap": "assets/foil/maps/sm35/57-etch.webp",
     "tcgplayerId": 146720,
-    "market": 34.7
+    "market": 34.7,
+    "etchSoft": "assets/foil/maps/sm35/57-etch-arc.webp"
   },
   {
     "id": "sm35-58",
@@ -3241,7 +3247,8 @@
     "promo": true,
     "foilAs": "Rare Shining",
     "foilMap": "assets/foil/maps/sm35/smp070.webp",
-    "etchMap": "assets/foil/maps/sm35/smp070-etch.webp"
+    "etchMap": "assets/foil/maps/sm35/smp070-etch.webp",
+    "etchSoft": "assets/foil/maps/sm35/smp070-etch-arc.webp"
   },
   {
     "id": "sm35-smp076",
@@ -3377,7 +3384,8 @@
     "promo": true,
     "foilAs": "Rare Shining",
     "foilMap": "assets/foil/maps/sm35/smp079.webp",
-    "etchMap": "assets/foil/maps/sm35/smp079-etch.webp"
+    "etchMap": "assets/foil/maps/sm35/smp079-etch.webp",
+    "etchSoft": "assets/foil/maps/sm35/smp079-etch-arc.webp"
   },
   {
     "id": "sm35-smp080",
@@ -3533,7 +3541,8 @@
     "promo": true,
     "foilAs": "Rare Shining",
     "foilMap": "assets/foil/maps/sm35/smp082.webp",
-    "etchMap": "assets/foil/maps/sm35/smp082-etch.webp"
+    "etchMap": "assets/foil/maps/sm35/smp082-etch.webp",
+    "etchSoft": "assets/foil/maps/sm35/smp082-etch-arc.webp"
   },
   {
     "id": "sm35-smp083",

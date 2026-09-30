@@ -31,12 +31,18 @@ Contact sheets (Chromium and WebKit, 220 px x 3, rest / 30:25 / -30:-20 / 0:40):
   conic ray sets (12 and 20 rays, broad, no seam) that turn with the pointer; the silver ramp set by `--sm-lamp/--sm-mid/--pf-lo`
   (91/85/80 % window, 96/91/83 % GX; 80 % floor so the window reads silver, not paper); a calm rest state (saturate 0.4,
   opacity 0.95); and the soft etch masks below.
-- **sm-shining.** Same layers with the rays switched off (`--sm-ray-a: 0`, also at rest) and a stronger band alpha
-  (0.6 lit, 0.45 at rest), since the foil area is one small silhouette.
+- **sm-shining.** Its own `.foil` stack (the window recipe's multiply can only darken a coloured Pokemon, which the
+  reviewer measured as -4 to -7 at rest): soft etch (soft-light), pastel bands, and a near-neutral cool silver ramp
+  (hsl 190, 22% to 10% saturation, lightness 55/52/50 %) drawn with `mix-blend-mode: hard-light`. Hard-light at about
+  50 % is neutral, so it multiplies a light body toward the cool tint (Arceus, Mew), screens a dark one up to silver
+  (Rayquaza) and never darkens (WebKit mean change at rest +4 to +20 over the art window, no pixel below -25). No
+  colour dodge, no rays (`--sm-ray-a: 0`), bands 0.5 lit and 0.35 at rest, the held screen layer at 0.2. A first try
+  with plain `screen` at 52 % washed the inks out and greyed Rayquaza; 16 % screen was too weak for the etch.
 - **Soft etch (`etchSoft`).** The 400 px Live etch of the regular-engraving cards measures lb 35-45 and coherence about 0.7
   (grating-like; see `etch_metrics.py`) and showed a diagonal line screen in WebKit at DPR 1. Per card, a Gaussian-softened copy
-  (sigma 0.8 for SV1-45, 1.2 for SV46-80, 0.9 for the six Shining) is shipped as `<n>-etch-arc.webp` (white + alpha), stamped as
-  `etchSoft` in the data. The sheet uses it for the `.foil` etch layer and as the mask of the arcs on `::after` and `.glare::after`.
+  (sigma 0.8 for SV1-45, 1.2 for SV46-80, 0.9 for the nine Shining cards: the six of sm35 plus the promos Ho-Oh smp070, Celebi smp079, Lugia smp082, which draw `sm-shining` through `foilAs: Rare Shining`) is shipped as `<n>-etch-arc.webp` (white + alpha), stamped as
+  `etchSoft` in the data (`scripts/stamp_shining_etchsoft.py` does the sm35 cards: **run it after any rebuild of data/sm35.json**,
+  it is idempotent). The sheet uses it for the `.foil` etch layer and as the mask of the arcs on `::after` and `.glare::after`.
   Line screen gone in WebKit DPR 1 and 2 (3x nearest-neighbour crops, the render-diff metric). Maps of the Shiny Vault
   also ship `<n>-etch-angle.webp` (line direction, 367 px) for the arcs; the Shining cards have no arcs (no angle map).
 
@@ -48,10 +54,17 @@ Contact sheets (Chromium and WebKit, 220 px x 3, rest / 30:25 / -30:-20 / 0:40):
 - Playwright: Chromium must run without `PLAYWRIGHT_BROWSERS_PATH` pointing at the WebKit dir; `--css ""` parses as true.
 - `git add` of maps outside the sparse checkout needs `--sparse`; the files then vanish from the work tree (restore with `git archive`).
 
-## Verification (2026-09-30)
+## Verification (2026-09-30, after the independent review)
 
-- Chromium and WebKit contact sheets at 220 px x 3, four poses, for Shiny Rare (8 cards), Shiny GX (4) and all six Shining.
-- `dark_specks.py`: at most 8 specks per card (budget 40) on SV1, 5, 13, 15, 26, 30, 49, 50, 59, 60, 69, 71, 75 and the six sm35 cards: ok.
-- `foil_coverage.mjs sm115 sm35`: nothing printed. `sweep_finishes.py --set sm115` and `--set sm35`: ok, no asset changed in place.
-- No colour dodge in these chains (multiply, soft-light, screen, difference), so no WebKit divide-by-zero blotches.
-- No independent reviewer sub-agent: the session had no Agent tool. Self-review against the addendum list instead.
+- Chromium and WebKit contact sheets at 220 px x 3, four poses (rest, 30:25, 75:65, 50:78) for the six Shining cards and the
+  three promos (`finish-sheets/shiny-vault/*-v2.png`); Shiny Rare / GX sheets from the first pass.
+- Reviewer findings fixed: the six Shining cards lost `etchSoft` because the stamp lived on an untracked data copy (now stamped
+  in the committed data, script in the repo); the three Shining promos had none (added); the finish was much weaker than the
+  photos and darkened at rest (redrawn, above); dead `case "Rare Shiny"` / `"Rare Shiny GX"` removed from `smPattern`.
+- Shining, WebKit, art-window mean |foil - bare| at 30:25: 14 to 40 (Shiny Rare 12-15; the foil covers only the silhouette),
+  rest +4 to +20 signed, no pixel darker than -25 at any pose.
+- `dark_specks.py` (Chromium; 13 Hidden Fates cards and the nine Shining cards, four poses): ok. The reviewer's tighter poses
+  on Hidden Fates peaked at 35 specks per card (budget 40), which the first note wrongly gave as 8.
+- `foil_coverage.mjs sm115 sm35`: nothing printed. `sweep_finishes.py --set sm35` / `sm115`: dark dots ok. It also flags
+  `assets/packs/sources.json` changed in place against origin/master; that file comes from the builder branches, not from this sheet.
+- No colour dodge in any chain here (multiply, soft-light, hard-light, screen), so no WebKit divide-by-zero blocks.

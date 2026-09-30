@@ -79,14 +79,45 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shiny.ha
   background-repeat: no-repeat, repeat, no-repeat, no-repeat, no-repeat;
   background-blend-mode: soft-light, normal, normal, normal, normal;
 }
-/* Shining Legends' Shining Pokemon (`sm-shining`, sm35): the same etched silver,
-   but only on the Pokemon (the foil map is the silhouette), and no sunburst:
-   the photos show the Pokemon turning silver-teal under a fine etch while the
-   art around it stays flat print. More colour in the bands than the window
-   shinies, since the foil area is small. */
+/* Shining Legends' Shining Pokemon (`sm-shining`, sm35; also the three Shining
+   promos, Ho-Oh, Celebi and Lugia, which draw it through foilAs). The photos
+   (reference/sun-moon-shiny-vault.md): only the Pokemon is foil, and it turns
+   silver with a teal cast and a visible fine etch (Arceus saturated teal-cyan,
+   Mew white-silver, Rayquaza dark with a silver-brown sheen), art around it
+   flat print, no rays. The window shinies above multiply a silver ramp onto a
+   white scan, which can only darken a coloured Pokemon; here the foil is
+   SCREENED on (mix-blend screen, no dodge), so it lightens toward silver and
+   the bands tint the art. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shining.has-foil-map {
   --sm-ray-a: 0;
-  --pf-a: 0.6;
+  --sh-lamp: 55%;
+  --sh-mid: 52%;
+  --sh-lo: 50%;
+  --pf-a: 0.5;
+  --pf-screen: 0.2;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shining.has-foil-map .foil {
+  background-image:
+    var(--etch-soft, var(--etch-map, linear-gradient(transparent, transparent))),
+    repeating-linear-gradient(var(--pf-band-angle),
+      transparent 0%,
+      hsla(0, 90%, 62%, var(--pf-a)) calc(var(--pf-w) * 0.14),
+      hsla(42, 100%, 58%, var(--pf-a)) calc(var(--pf-w) * 0.3),
+      hsla(100, 80%, 56%, var(--pf-a)) calc(var(--pf-w) * 0.46),
+      hsla(186, 90%, 54%, var(--pf-a)) calc(var(--pf-w) * 0.62),
+      hsla(230, 90%, 66%, var(--pf-a)) calc(var(--pf-w) * 0.78),
+      hsla(285, 80%, 66%, var(--pf-a)) calc(var(--pf-w) * 0.9),
+      transparent var(--pf-w), transparent var(--pf-period)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(190, 22%, var(--sh-lamp)) 0%, hsl(195, 16%, var(--sh-mid)) 30%, hsl(200, 10%, var(--sh-lo)) 100%);
+  background-size: 100% 100%, 200% 200%, 100% 100%;
+  background-position: center,
+    calc((var(--background-x) - 50%) * 3 + 50%) calc((var(--background-y) - 50%) * 3 + 50%),
+    center;
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-blend-mode: soft-light, normal, normal;
+  mix-blend-mode: hard-light;
+  filter: none;
 }
 /* Resting: the photos of a flat card are neutral silver with the rays just
    readable and a hint of colour; the rainbow comes with the light. */
@@ -98,7 +129,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shiny.ha
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shining.has-foil-map:not(.lit):not(.settling) .foil {
   --sm-ray-a: 0;
-  --pf-a: 0.45;
+  --pf-a: 0.35;
+  filter: saturate(0.85);
+  opacity: calc(0.9 * var(--foil-strength, 1));
 }
 
 /* The fingerprint catching the light (::after) and its dark half
