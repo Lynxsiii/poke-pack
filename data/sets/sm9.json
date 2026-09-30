@@ -1,0 +1,32 @@
+{
+  "id": "sm9",
+  "name": "Team Up",
+  "series": "sun-moon",
+  "slug": "team-up",
+  "scrydexId": "sm9",
+  "era": "sm",
+  "artSlug": "team-up",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2377,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "scanKey": "SM{n:02d}",
+      "era": "sm"
+    }
+  },
+  "excludeNumbers": [
+    "152a",
+    "152b"
+  ]
+}
