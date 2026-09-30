@@ -26,3 +26,6 @@ CREATE TABLE IF NOT EXISTS quest_claims (
   PRIMARY KEY (user_id, quest_id, period_start),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Makes the per-set pack count (GROUP BY set_id) an index-only read.
+CREATE INDEX IF NOT EXISTS idx_pack_log_user_set ON pack_log(user_id, set_id);

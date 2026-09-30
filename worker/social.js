@@ -160,12 +160,17 @@ export async function handleSocial(path, method, request, env, helpers) {
   return null;
 }
 
-const MASTERY_BANNER = /^mastery:([a-z0-9_-]{1,32})$/i;
+const MASTERY_BANNER = /^mastery:([a-z0-9_-]{1,32})$/;
 
-/** The set id inside a "mastery:<setId>" banner, or null for any other value. */
+/** The set id inside an exact "mastery:<setId>" banner naming a real set, or null for any other value. */
 export function masteryBannerSet(value) {
   const match = typeof value === "string" ? MASTERY_BANNER.exec(value) : null;
-  return match ? match[1] : null;
+  return match && PLAYABLE_SETS.some((set) => set.id === match[1]) ? match[1] : null;
+}
+
+/** Anything that reads as an attempt at a mastery banner, however it is spelt: it must pass the entitlement gate. */
+export function looksLikeMasteryBanner(value) {
+  return typeof value === "string" && /^\s*mastery\s*:/i.test(value);
 }
 
 /**
@@ -187,7 +192,7 @@ export function masterySetIds(claimed) {
 /** null when the player may wear this mastery banner, otherwise the refusal. */
 export async function masteryBannerError(env, userId, value) {
   const set = masteryBannerSet(value);
-  if (!set || !PLAYABLE_SETS.some((row) => row.id === set)) return { status: 400, error: "That banner does not exist." };
+  if (!set) return { status: 400, error: "That banner does not exist." };
   const profile = await env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first();
   if (!masterySetIds(parseJson(profile?.claimed, [])).includes(set)) {
     return { status: 403, error: "Master that set to wear its banner." };

@@ -15,7 +15,7 @@ import {
   sellValue,
 } from "../js/catalog.js";
 import { drawPromos, isHit, ripPack } from "../js/engine.js";
-import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, masteryBannerError } from "./social.js";
+import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER } from "../js/cosmetics.js";
 import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
@@ -51,6 +51,7 @@ const STARTING_COINS = 25;
 const DAILY_BONUS = 100;
 const DAILY_COOLDOWN_MS = 60 * 60 * 1000;
 const DAY_MS = 86_400_000;
+const CLAIM_ATTEMPTS = 4;
 // Quest events only feed the current month; claims also feed the streak.
 const QUEST_EVENT_KEEP_MS = 40 * DAY_MS;
 const QUEST_CLAIM_KEEP_MS = 400 * DAY_MS;
@@ -261,6 +262,8 @@ async function signup(request, env) {
     throw err;
   }
 
+  // Battles settled before this account existed are nobody's to count.
+  if (await ensureQuestSchema(env)) await skipSettledBattles(env, id);
   const token = await createSession(env, id, now);
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
@@ -334,7 +337,7 @@ async function patchMe(request, env) {
   let title = user.title;
   let passwordHash = user.password_hash;
   // A mastery banner is a reward: only for a set whose mastery is claimed.
-  if (typeof body.banner === "string" && body.banner.startsWith("mastery:")) {
+  if (looksLikeMasteryBanner(body.banner)) {
     await ensureAchievementSchema(env);
     const refusal = await masteryBannerError(env, user.id, body.banner);
     if (refusal) return json({ error: refusal.error }, refusal.status);
@@ -465,6 +468,10 @@ async function resetMe(request, env) {
   // Battles fought before the reset are not counted again.
   if (statsReady) await skipSettledBattles(env, auth.user.id);
   const save = await loadSave(env, auth.user.id);
+  // A title that came from what was just wiped goes back to Rookie.
+  if (!isTitleUnlocked(auth.user.title, titleContext(save, { signed: true, rarities: {} }))) {
+    await env.DB.prepare("UPDATE users SET title = 'Rookie' WHERE id = ?").bind(auth.user.id).run();
+  }
   if (profile?.active_set_id) save.activeSetId = profile.active_set_id;
   return json({ save });
 }
@@ -704,10 +711,10 @@ async function daily(request, env) {
   const now = Date.now();
   const cutoff = now - DAILY_COOLDOWN_MS;
   const updated = await env.DB.prepare(
-    `UPDATE profiles SET coins = coins + ?, granted = granted + ?, last_daily = ?
+    `UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ?, last_daily = ?
      WHERE user_id = ? AND (last_daily IS NULL OR last_daily <= ?)`
   )
-    .bind(DAILY_BONUS, DAILY_BONUS, now, auth.user.id, cutoff)
+    .bind(DAILY_BONUS, MAX_COINS, DAILY_BONUS, now, auth.user.id, cutoff)
     .run();
   if (!updated.meta?.changes) {
     return json({ error: "Hourly bonus is not ready yet." }, 400);
@@ -728,45 +735,57 @@ async function daily(request, env) {
 async function claimAchievement(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
+  await ensureAchievementSchema(env);
   const body = await readJson(request);
-  const save = await loadSave(env, auth.user.id);
-  const claimed = new Set(save.claimed);
-  const { rarities, cards } = await ownedCardsFor(env, request, save.collection);
-  const ctx = achievementContext(save, { signed: true, rarities, cards });
 
-  let ids;
-  if (body?.all) {
-    ids = readyToClaim(ctx, claimed);
-    if (!ids.length) return json({ error: "Nothing ready to claim." }, 400);
-  } else {
-    const row = achievementById(body?.id);
-    if (!row) return json({ error: "Unknown achievement." }, 400);
-    if (claimed.has(row.id)) return json({ error: "Already claimed." }, 400);
-    if (!isAchievementDone(row, ctx)) return json({ error: "Not unlocked yet." }, 400);
-    ids = [row.id];
+  // The write is conditional on the stored `claimed` text it was worked out
+  // from. If another claim lands in between, nothing is paid, and this one
+  // starts again from what is stored now, so an id is paid once and no id is
+  // lost from the list.
+  for (let attempt = 0; attempt < CLAIM_ATTEMPTS; attempt += 1) {
+    const stored = await env.DB.prepare("SELECT claimed FROM profiles WHERE user_id = ?").bind(auth.user.id).first();
+    const raw = stored?.claimed ?? null;
+    const save = await loadSave(env, auth.user.id);
+    const claimed = new Set(normalizeClaimed(parseJson(raw, [])));
+    const { rarities, cards } = await ownedCardsFor(env, request, save.collection);
+    const ctx = achievementContext(save, { signed: true, rarities, cards });
+
+    let ids;
+    if (body?.all) {
+      ids = readyToClaim(ctx, claimed);
+      if (!ids.length) return json({ error: "Nothing ready to claim." }, 400);
+    } else {
+      const row = achievementById(body?.id);
+      if (!row) return json({ error: "Unknown achievement." }, 400);
+      if (claimed.has(row.id)) return json({ error: "Already claimed." }, 400);
+      if (!isAchievementDone(row, ctx)) return json({ error: "Not unlocked yet." }, 400);
+      ids = [row.id];
+    }
+
+    const rewards = ids.map((id) => achievementById(id)).filter(Boolean);
+    const coins = money(rewards.reduce((n, row) => n + (row.coins || 0), 0));
+    const titles = rewards.map((row) => row.title).filter(Boolean);
+    for (const id of ids) claimed.add(id);
+
+    const results = await env.DB.batch([
+      env.DB.prepare(
+        `UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ?, claimed = ?
+         WHERE user_id = ? AND claimed IS ?`
+      ).bind(coins, MAX_COINS, coins, JSON.stringify([...claimed]), auth.user.id, raw),
+      env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(Date.now(), auth.user.id),
+    ]);
+    if (!results[0]?.meta?.changes) continue;
+
+    const next = await loadSave(env, auth.user.id);
+    return json({
+      save: next,
+      coins,
+      titles,
+      claimed: ids,
+      rewards: rewards.map((row) => ({ id: row.id, name: row.name, coins: row.coins, title: row.title || null })),
+    });
   }
-
-  const rewards = ids.map((id) => achievementById(id)).filter(Boolean);
-  const coins = money(rewards.reduce((n, row) => n + (row.coins || 0), 0));
-  const titles = rewards.map((row) => row.title).filter(Boolean);
-  for (const id of ids) claimed.add(id);
-
-  await env.DB.batch([
-    env.DB.prepare(
-      `UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ?, claimed = ?
-       WHERE user_id = ?`
-    ).bind(coins, MAX_COINS, coins, JSON.stringify([...claimed]), auth.user.id),
-    env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(Date.now(), auth.user.id),
-  ]);
-
-  const next = await loadSave(env, auth.user.id);
-  return json({
-    save: next,
-    coins,
-    titles,
-    claimed: ids,
-    rewards: rewards.map((row) => ({ id: row.id, name: row.name, coins: row.coins, title: row.title || null })),
-  });
+  return json({ error: "Your claims collided. Try again." }, 409);
 }
 
 /**
@@ -799,8 +818,8 @@ async function claimQuest(request, env) {
       "INSERT OR IGNORE INTO quest_claims (user_id, quest_id, period_start, claimed_at) VALUES (?, ?, ?, ?)"
     ).bind(auth.user.id, row.id, period, now),
     env.DB.prepare(
-      "UPDATE profiles SET coins = coins + ?, granted = granted + ? WHERE user_id = ? AND changes() = 1"
-    ).bind(row.coins, row.coins, auth.user.id),
+      "UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ? WHERE user_id = ? AND changes() = 1"
+    ).bind(row.coins, MAX_COINS, row.coins, auth.user.id),
   ]);
   if (!results[0]?.meta?.changes) return json({ error: "Already claimed this period." }, 400);
 
@@ -862,17 +881,21 @@ async function questSummary(env, userId, counters = null) {
   try {
     // Settled battles become events before progress is read (a claim asks too).
     const stored = counters || (await syncBattleStats(env, userId, await loadCounters(env, userId)));
-    const packs = await env.DB.prepare(
-      `SELECT COUNT(*) AS monthly, SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS weekly,
-         SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS daily FROM pack_log WHERE user_id = ? AND at >= ?`
-    ).bind(periods.weekly, periods.daily, userId, periods.monthly).first();
-    const events = (await env.DB.prepare(
-      `SELECT kind, SUM(amount) AS monthly, SUM(CASE WHEN at >= ? THEN amount ELSE 0 END) AS weekly,
-         SUM(CASE WHEN at >= ? THEN amount ELSE 0 END) AS daily FROM quest_events WHERE user_id = ? AND at >= ? GROUP BY kind`
-    ).bind(periods.weekly, periods.daily, userId, periods.monthly).all()).results || [];
-    const claims = (await env.DB.prepare(
-      "SELECT quest_id, period_start FROM quest_claims WHERE user_id = ? AND period_start IN (?, ?, ?)"
-    ).bind(userId, periods.daily, periods.weekly, periods.monthly).all()).results || [];
+    const [packs, eventRows, claimRows] = await Promise.all([
+      env.DB.prepare(
+        `SELECT COUNT(*) AS monthly, SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS weekly,
+           SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS daily FROM pack_log WHERE user_id = ? AND at >= ?`
+      ).bind(periods.weekly, periods.daily, userId, periods.monthly).first(),
+      env.DB.prepare(
+        `SELECT kind, SUM(amount) AS monthly, SUM(CASE WHEN at >= ? THEN amount ELSE 0 END) AS weekly,
+           SUM(CASE WHEN at >= ? THEN amount ELSE 0 END) AS daily FROM quest_events WHERE user_id = ? AND at >= ? GROUP BY kind`
+      ).bind(periods.weekly, periods.daily, userId, periods.monthly).all(),
+      env.DB.prepare(
+        "SELECT quest_id, period_start FROM quest_claims WHERE user_id = ? AND period_start IN (?, ?, ?)"
+      ).bind(userId, periods.daily, periods.weekly, periods.monthly).all(),
+    ]);
+    const events = eventRows.results || [];
+    const claims = claimRows.results || [];
     const counts = { packs: { daily: packs?.daily || 0, weekly: packs?.weekly || 0, monthly: packs?.monthly || 0 } };
     for (const row of events) counts[row.kind] = { daily: row.daily || 0, weekly: row.weekly || 0, monthly: row.monthly || 0 };
 
@@ -882,10 +905,11 @@ async function questSummary(env, userId, counters = null) {
     const chests = {};
     for (const period of ["daily", "weekly", "monthly"]) {
       let all = true;
+      const needs = new Set(chestRows[period].needs);
       for (const row of active[period]) {
         progress[row.id] = counts[row.kind]?.[period] || 0;
         if (have.has(`${row.id}:${periods[period]}`)) claimed.push(row.id);
-        else all = false;
+        else if (needs.has(row.id)) all = false;
       }
       chests[period] = all;
       if (have.has(`${chestRows[period].id}:${periods[period]}`)) claimed.push(chestRows[period].id);
