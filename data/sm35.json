@@ -457,7 +457,13 @@
         "text": "This attack does 150 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/sm35-10a/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sm35-10a/large",
+    "promo": true,
+    "era": "sm",
+    "foilAs": "Rare Holo GX",
+    "printedNumber": "10a/73",
+    "market": 4.23,
+    "tcgplayerId": 146663
   },
   {
     "id": "sm35-11",
@@ -2534,20 +2540,6 @@
     "market": 0.27
   },
   {
-    "id": "sm35-68a",
-    "name": "Ultra Ball",
-    "number": "68a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "Ryo Ueda",
-    "image": "assets/cards/sm35/68a.webp",
-    "imageSmall": "assets/cards/sm35/68a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm35-68a/large"
-  },
-  {
     "id": "sm35-69",
     "name": "Double Colorless Energy",
     "number": "69",
@@ -2958,7 +2950,13 @@
         "type": "Ability"
       }
     ],
-    "imageRemote": "https://images.scrydex.com/pokemon/sm35-77a/large"
+    "imageRemote": "https://images.scrydex.com/pokemon/sm35-77a/large",
+    "promo": true,
+    "era": "sm",
+    "foilAs": "Rare Ultra",
+    "printedNumber": "77a/73",
+    "market": 27.6,
+    "tcgplayerId": 146716
   },
   {
     "id": "sm35-78",
@@ -3011,5 +3009,157 @@
     "etchMap": "assets/foil/maps/sm35/78-etch.webp",
     "tcgplayerId": 146698,
     "market": 819.25
+  },
+  {
+    "id": "sm35-energy-grass",
+    "name": "Grass Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-grass-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-grass-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
+  },
+  {
+    "id": "sm35-energy-fire",
+    "name": "Fire Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-fire-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-fire-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
+  },
+  {
+    "id": "sm35-energy-water",
+    "name": "Water Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-water-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-water-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
+  },
+  {
+    "id": "sm35-energy-lightning",
+    "name": "Lightning Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-lightning-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-lightning-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
+  },
+  {
+    "id": "sm35-energy-psychic",
+    "name": "Psychic Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-psychic-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-psychic-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
+  },
+  {
+    "id": "sm35-energy-fighting",
+    "name": "Fighting Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-fighting-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-fighting-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
+  },
+  {
+    "id": "sm35-energy-darkness",
+    "name": "Darkness Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-darkness-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-darkness-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
+  },
+  {
+    "id": "sm35-energy-metal",
+    "name": "Metal Energy",
+    "number": "—",
+    "rarity": "Energy",
+    "energy": true,
+    "reverse": true,
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "artist": "Pokémon",
+    "image": "assets/cards/shared/energy-metal-sm17.webp",
+    "imageSmall": "assets/cards/shared/energy-metal-sm17-sm.webp",
+    "variant": "Sun & Moon 2017 · Shining Legends reverse holo"
   }
 ]

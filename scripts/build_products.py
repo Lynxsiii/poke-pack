@@ -522,7 +522,9 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         cards[card_id] = record
 
     promo_ids = {f"{set_id}-{n}" for n in (cfg.get("promoCards") or {}) if n in sold}
-    ordered_records = [cards[c["id"]] for c in records if c["id"] not in promo_ids and not c.get("promo")]
+    # A promo-only print the set's own checklist carries (Crimson Invasion 63a, the
+    # alternate-art Guzzlord-GX) has a real rarity and `promo: true`; it stays.
+    ordered_records = [cards[c["id"]] for c in records if c["id"] not in promo_ids and not (c.get("promo") and c.get("rarity") == "Promo")]
     ordered_records += [cards[i] for i in sorted(promo_ids, key=lambda i: cards[i]["number"])]
     data_path.write_text(json.dumps(ordered_records, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     price_history.record(set_id, "cards", card_prices, today)

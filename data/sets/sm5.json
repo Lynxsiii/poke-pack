@@ -24,5 +24,136 @@
       "scanKey": "SM{n:02d}",
       "era": "sm"
     }
-  }
+  },
+  "promoCards": {
+    "smp100": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM100"
+    },
+    "smp101": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM101"
+    },
+    "smp102": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM102"
+    },
+    "smp105": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM105"
+    },
+    "smp106": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM106"
+    },
+    "smp107": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM107"
+    },
+    "smp121": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM121"
+    },
+    "10a": {
+      "like": "sm35:10a",
+      "keepScan": true,
+      "foilAs": "Rare Holo GX"
+    }
+  },
+  "products": [
+    {
+      "id": "etb-dawn-wings-necrozma",
+      "name": "Elite Trainer Box [Dawn Wings Necrozma]",
+      "kind": "etb",
+      "tcgplayerId": 155663,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "etb-dusk-mane-necrozma",
+      "name": "Elite Trainer Box [Dusk Mane Necrozma]",
+      "kind": "etb",
+      "tcgplayerId": 155664,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "lucario-gx-box",
+      "name": "Lucario GX Box",
+      "kind": "collection",
+      "tcgplayerId": 161256,
+      "packs": 4,
+      "promos": [
+        "smp100"
+      ],
+      "note": "The pack mix is not documented; shown as Ultra Prism packs."
+    },
+    {
+      "id": "necrozma-prism-tin-dawn-wings",
+      "name": "Necrozma Prism Tin [Dawn Wings Necrozma GX]",
+      "kind": "tin",
+      "tcgplayerId": 162046,
+      "packs": 4,
+      "promos": [
+        "smp101"
+      ],
+      "note": "The pack mix is not documented; shown as Ultra Prism packs."
+    },
+    {
+      "id": "necrozma-prism-tin-dusk-mane",
+      "name": "Necrozma Prism Tin [Dusk Mane Necrozma GX]",
+      "kind": "tin",
+      "tcgplayerId": 162045,
+      "packs": 4,
+      "promos": [
+        "smp102"
+      ],
+      "note": "The pack mix is not documented; shown as Ultra Prism packs."
+    },
+    {
+      "id": "spring-2018-collectors-chest",
+      "name": "Spring 2018 Collector's Chest Tin",
+      "kind": "tin",
+      "tcgplayerId": 162044,
+      "packs": 2,
+      "promos": [
+        "smp105",
+        "smp106",
+        "smp107"
+      ],
+      "note": "Five packs in the real tin: 2 Ultra Prism, 1 Sun & Moon, 1 XY Evolutions, 1 XY Ancient Origins; only the Ultra Prism packs are shown."
+    },
+    {
+      "id": "legends-of-johto-gx-premium-collection",
+      "name": "Legends of Johto GX Premium Collection Box",
+      "kind": "premium",
+      "tcgplayerId": 164232,
+      "packs": 6,
+      "promos": [
+        "smp121",
+        "10a"
+      ],
+      "note": "The pack mix is not documented; shown as Ultra Prism packs."
+    },
+    {
+      "id": "legends-of-johto-gx-collection",
+      "name": "Legends of Johto GX Collection Box",
+      "kind": "collection",
+      "tcgplayerId": 246416,
+      "packs": 5,
+      "promos": [
+        "smp121",
+        "10a"
+      ],
+      "note": "The international version: 5 packs, no pin or coin."
+    },
+    {
+      "id": "ultra-prism-3-pack-hanger-box",
+      "name": "3 Pack Hanger Box",
+      "kind": "bundle",
+      "tcgplayerId": 232314,
+      "packs": 3,
+      "promos": []
+    }
+  ]
 }

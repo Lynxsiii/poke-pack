@@ -24,5 +24,219 @@
       "scanKey": "SM{n:02d}",
       "era": "sm"
     }
-  }
+  },
+  "promoCards": {
+    "smp070": {
+      "foilAs": "Rare Shining",
+      "printedNumber": "SM70"
+    },
+    "smp076": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM76"
+    },
+    "smp077": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM77"
+    },
+    "smp089": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM89"
+    },
+    "smp093": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM93"
+    },
+    "smp079": {
+      "foilAs": "Rare Shining",
+      "printedNumber": "SM79"
+    },
+    "smp080": {
+      "foilAs": "Rare Ultra",
+      "printedNumber": "SM80"
+    },
+    "smp081": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM81"
+    },
+    "smp082": {
+      "foilAs": "Rare Shining",
+      "printedNumber": "SM82"
+    },
+    "smp083": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM83"
+    },
+    "smp084": {
+      "foilAs": "Rare Ultra",
+      "printedNumber": "SM84"
+    },
+    "smp090": {
+      "foilAs": "Rare Ultra",
+      "printedNumber": "SM90"
+    },
+    "smp086": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM86"
+    },
+    "smp087": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM87"
+    },
+    "smp088": {
+      "foilAs": "Rare Holo",
+      "printedNumber": "SM88"
+    },
+    "smp122": {
+      "foilAs": "Rare Holo GX",
+      "printedNumber": "SM122"
+    },
+    "28h": {
+      "like": "28",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Water Web holo"
+    }
+  },
+  "products": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 145847,
+      "packs": 10,
+      "promos": [
+        "smp070"
+      ]
+    },
+    {
+      "id": "pikachu-pin-collection",
+      "name": "Pin Collection [Pikachu]",
+      "kind": "collection",
+      "tcgplayerId": 145849,
+      "packs": 3,
+      "promos": [
+        "smp076"
+      ]
+    },
+    {
+      "id": "mewtwo-pin-collection",
+      "name": "Pin Collection [Mewtwo]",
+      "kind": "collection",
+      "tcgplayerId": 145848,
+      "packs": 3,
+      "promos": [
+        "smp077"
+      ]
+    },
+    {
+      "id": "zoroark-pin-collection",
+      "name": "Pin Collection [Zoroark]",
+      "kind": "collection",
+      "tcgplayerId": 154717,
+      "packs": 3,
+      "promos": [
+        "smp089"
+      ]
+    },
+    {
+      "id": "marshadow-pin-collection",
+      "name": "Pin Collection [Marshadow]",
+      "kind": "collection",
+      "tcgplayerId": 155596,
+      "packs": 3,
+      "promos": [
+        "smp093"
+      ]
+    },
+    {
+      "id": "super-premium-collection-ho-oh-gx",
+      "name": "Super-Premium Collection [Ho-Oh GX]",
+      "kind": "premium",
+      "tcgplayerId": 148412,
+      "packs": 10,
+      "promos": [
+        "smp079",
+        "smp080",
+        "smp081",
+        "smp082"
+      ]
+    },
+    {
+      "id": "premium-powers-collection",
+      "name": "Premium Powers Collection",
+      "kind": "premium",
+      "tcgplayerId": 209439,
+      "packs": 8,
+      "promos": [
+        "smp079",
+        "smp080",
+        "smp081",
+        "smp082"
+      ],
+      "note": "Sold outside North America."
+    },
+    {
+      "id": "zoroark-gx-special-collection",
+      "name": "Special Collection [Zoroark GX]",
+      "kind": "collection",
+      "tcgplayerId": 149378,
+      "packs": 5,
+      "promos": [
+        "smp083",
+        "smp084"
+      ]
+    },
+    {
+      "id": "raichu-gx-special-collection",
+      "name": "Special Collection [Raichu GX]",
+      "kind": "collection",
+      "tcgplayerId": 155062,
+      "packs": 5,
+      "promos": [
+        "smp090",
+        "28h"
+      ]
+    },
+    {
+      "id": "collector-chest",
+      "name": "Collector Chest",
+      "kind": "tin",
+      "tcgplayerId": 152603,
+      "packs": 5,
+      "promos": [
+        "smp086",
+        "smp087",
+        "smp088"
+      ]
+    },
+    {
+      "id": "shiny-darkrai-gx-figure-collection",
+      "name": "Figure Collection [Shiny Darkrai GX]",
+      "kind": "collection",
+      "tcgplayerId": 161257,
+      "packs": 4,
+      "promos": [],
+      "note": "Its promo is Burning Shadows 88a, not an SM number."
+    },
+    {
+      "id": "shiny-darkrai-gx-collection",
+      "name": "Collection [Shiny Darkrai GX]",
+      "kind": "collection",
+      "tcgplayerId": 600514,
+      "packs": 4,
+      "promos": [],
+      "note": "European version. Its promo is Burning Shadows 88a, not an SM number."
+    },
+    {
+      "id": "shiny-zygarde-gx-box",
+      "name": "Shiny Zygarde GX Box",
+      "kind": "collection",
+      "tcgplayerId": 169543,
+      "packs": 4,
+      "promos": [
+        "smp122"
+      ],
+      "note": "Filed under Shining Legends by TCGplayer, released seven months after the set; the pack set is not documented."
+    }
+  ]
 }
