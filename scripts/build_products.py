@@ -380,13 +380,16 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         base_url = f"https://www.pkmn.gg/series/{ser['series']}/{ser['slug']}"
         # pkmn.gg files the Sword & Shield promos under their printed key (SWSH001).
         page_key = ser.get("pkmnKey", "{n}").format(n=n)
+        # scrydex keys can differ from pkmn.gg's (Sun & Moon promos: SM001 on
+        # pkmn.gg, smp-SM01 on scrydex), so `scanKey` overrides for the scan.
+        scan_key = ser.get("scanKey", ser.get("pkmnKey", "{n}")).format(n=n)
         detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
         record["printedNumber"] = f"{ser['printed']} {n:03d}"
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
-        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/large"
-        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/small"
+        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scan_key}/large"
+        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scan_key}/small"
         remote = record["image"]
         if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
