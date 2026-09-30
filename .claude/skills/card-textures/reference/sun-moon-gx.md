@@ -7,7 +7,12 @@ shiny GX) belongs to sm-shiny.css and `sm-fa` full arts to sm-fullart.css:
 every selector here says `:not(.sm-shiny)` and never matches `sm-fa`.
 
 Assets: `assets/foil/sm-peel.webp` (256 px seamless isotropic facet tile,
-white on alpha, light only, ~25 KB) made by `scripts/make_sm_peel.py`.
+white on alpha, light only, ~25 KB) made by `scripts/make_sm_peel.py`, and
+the text-safe fallback maps `assets/foil/maps/sm-gx-safe.webp` and
+`sm-prism-safe.webp` (per-pixel median of the site's own TCG Live maps of the
+layout, `scripts/make_sm_safe_maps.py`; js/sm-foil.js `smSafeMap()` hands one
+to a GX or Prism Star Pokémon with no map of its own, so `has-foil-map` is
+always set).
 
 ## Photos (`/mnt/project-files/sun-moon/texture-refs/gx-tag-prism/`, SOURCES.txt)
 
@@ -47,14 +52,18 @@ flat floor so text is never washed; `.glare::after` tiles `sm-peel.webp` at
 the same recipe: there is no separate `sm-tag` rule (the real card prints
 the same foil; only the yellow accents differ, and the map keeps them dark).
 
-**Prism Star.** `.foil` (window + strip) is clipped with `inset()` to the
-area above `--p-gate` (51% Pokémon, 52.6% `.foil-trainer`, 64.6%
-`.foil-energy`: measured as the strip bottom on the TCG Live maps, tip of
-the diamond is at or below) and inset 2.6% / 3.6% from the edge so the black
-frame stays matte. `.glare` is the diamond below the gate: a 300% sunpillar
-ramp at 150deg blended with `multiply` (colour-dodge on a pale silver scan
-only reaches white, multiply tints it like a silver sheet) with
-`saturate(1.3) brightness(1.22)`; `.glare::after` adds the peel sparkle.
+**Prism Star.** Two layers, split at the strip's top edge (`--p-strip`: 41%
+Pokémon, 40.4% Trainer, 52% Energy, measured on the TCG Live maps). `.foil`
+is the window only: a colour-dodged stack plus exclusion twin, clipped with
+`inset()` so the frame stays black, masked art ∩ map. Trainers and Energy get
+a held-back stack (contrast 1.6, saturate 0.75, twin at 60%) because their
+art is already saturated and the photos keep it. `.glare` is the rules strip
+and the diamond together, from `--p-strip` down: a 300% sunpillar ramp at
+150deg blended with `multiply`, `saturate(1.3) brightness(1.22)`, masked
+art ∩ map. A multiply cannot lighten, so the strip stays white with black
+text, and the pale silver diamond takes the rainbow bars (colour-dodge only
+reaches white on silver). No map (base rules): the window is a plain box
+(`--p-top`) and the strip and diamond stay matte.
 
 ## Mistakes made and fixed
 
@@ -69,6 +78,23 @@ only reaches white, multiply tints it like a silver sheet) with
   engines. The flat floor and radial pool gradients as `add` layers do work.
 - Prism rim: the map says foil, photos say black. Inset, not the map.
 - Colour-dodge on the silver diamond: only ever white. Use multiply.
+- Review 2026-09-30 (an independent reviewer, WebKit): (1) the strip's text
+  went neon green because the colour dodge and the exclusion twin covered the
+  strip too: dark ink under a dodge or exclusion is recoloured. Strip now
+  multiplied (above). (2) Trainer windows were electric blue / pink / green to
+  red: held back (above). (3) The peel was inert (at most 12 of 255 levels): it
+  sat inside `.glare`, whose hard-light blend and 0.55 opacity cut it. Raised
+  to a measured 26 levels at most (p99 16), a flecked sheen, deliberately
+  quiet: stronger reads as glitter. (4) No-map alternate-art GX (sm35-10a,
+  sm4-63a, sm5-10a) painted the whole card: they are different artworks, not
+  stamped prints of sm35-10 / sm4-63 (the "A" mark is the promo logo in the
+  footer, outside the foil), so stamp_knockout.py has nothing to cut and the
+  plain print's map has the wrong Pokémon. They take the text-safe median
+  map instead. (5) `.sm-prism` without a map painted from the card top: it
+  now degrades to a box. The GX beam was raised (brightness floor 0.72 to
+  0.92, saturate 1.8 to 2.4) to sit nearer the Espeon photo. `.glare` now
+  scales with the foil-strength setting too (`.foil::before` and `::after`
+  already did, being inside `.foil`).
 - Lab cards were found by number, which collides across sets: per-set
   scratch data.
 
@@ -83,7 +109,7 @@ Prism 10 51 134 158), sm12 (Tag 22 75 143 156 158 165, GX 4 63), sm1-61.
 
 ## Still off
 
-GX at 75:65 is paler than the photo's vivid beam and has no big specular
-pool on the Pokémon (the Pokémon is knocked out of the foil, as it is on the
-real card). Prism Trainer and Energy windows only spot-checked against the map
+GX at 75:65 is still less vivid than the Espeon photo's beam and has no big
+specular pool on the Pokémon (the Pokémon is knocked out of the foil, as it is
+on the real card); the relief is a quiet sheen, not the photo's macro pebbles. Prism Trainer and Energy windows only spot-checked against the map
 geometry, no real photo.

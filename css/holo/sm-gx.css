@@ -16,12 +16,21 @@
  *   flashes the loudest colour; a specular pool with the dimples lit sits
  *   around the lamp. There is no etch map for any of it: the texture is the
  *   foil itself, so it is drawn as a soft facet tile (assets/foil/sm-peel.webp,
- *   make_sm_peel.py) that only adds light, never a grating.
+ *   make_sm_peel.py) that only adds light, never a grating (etch_metrics lb
+ *   20.8, coherence 0.22). It is a quiet flecked sheen near the lamp, not
+ *   the loud relief of a macro shot: at 220 px it changes up to 26 levels of
+ *   255 (p99 16), because anything stronger reads as glitter, which Noah
+ *   does not want noticed first.
  * - Prism Star: dead black frame; foil only in the art window behind the
  *   Pokémon, the rules strip, and the big diamond in the text box (its star
  *   cut-out matte). The diamond is a silver sheet with broad straight
  *   rainbow bars at about 60 degrees; the window is the wavy gold and
  *   rainbow foil. TCG Live's map draws exactly those areas.
+ *
+ * A GX or Prism Star with no TCG Live map of its own (the alternate-art
+ * promos sm35-10a, sm4-63a, sm5-10a) takes a text-safe median map from
+ * js/sm-foil.js smSafeMap(), so every rule below can rely on .has-foil-map
+ * and never paints over the rules text.
  *
  * Follows swsh.css's Pokémon V: a colour-dodged sun-pillar stack masked by
  * the card's art and TCG Live foil map, closing contrast(0.8) on every
@@ -100,7 +109,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.
   background-position: center, center, var(--g-pos);
   background-blend-mode: soft-light, soft-light, color, hard-light, normal;
   /* Closing contrast(0.8): dodge-safe (Safari divides by zero at 1.0). */
-  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.72)) contrast(2.3) saturate(1.8) contrast(0.8);
+  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.92)) contrast(2.3) saturate(2.4) contrast(0.8);
   mix-blend-mode: color-dodge;
   clip-path: none;
   border-radius: 0;
@@ -152,7 +161,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.
   background-position: center;
   mix-blend-mode: hard-light;
   filter: brightness(0.9) contrast(1.6);
-  opacity: calc(var(--card-opacity) * 0.55);
+  opacity: calc(var(--card-opacity) * 0.55 * var(--foil-strength, 1));
   clip-path: none;
   border-radius: 0;
 }
@@ -175,7 +184,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.
    (normal blend of white), over the card, the Pokémon's gloss included. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.sm-shiny) .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.3) 28%, hsla(0, 0%, 100%, 0.08) 65%, hsla(0, 0%, 100%, 0.02) 100%);
+    hsla(0, 0%, 100%, 0.85) 0%, hsla(0, 0%, 100%, 0.6) 28%, hsla(0, 0%, 100%, 0.22) 65%, hsla(0, 0%, 100%, 0.05) 100%);
   background-size: 100% 100%;
   -webkit-mask-image: var(--smg-peel);
   mask-image: var(--smg-peel);
@@ -187,7 +196,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.
   mask-repeat: repeat;
   mix-blend-mode: normal;
   filter: none;
-  opacity: calc(0.5 + var(--pointer-from-center) * 0.5);
+  opacity: calc(0.65 + var(--pointer-from-center) * 0.35);
 }
 /* The silver border: the loudest colour on the real card (Espeon-GX and
    Solgaleo & Lunala-GX photos flash rainbow along the rim first). A ring
@@ -224,14 +233,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.
    the rules strip and the diamond in the text box (its star cut out). The
    black frame is matte in every photo (Celebi, Ditto, Lunala), though the
    map marks the card's outer 3.5% as foil, so an inset box cuts it.
-   The window and strip are dodged rainbow foil (.foil, the top of the card
-   down to the gate). The diamond is a silver sheet with broad straight
-   rainbow bars at about 60 degrees, hues side by side (Ditto and Celebi:
-   blue, green, magenta, orange); its scan is pale silver, where a colour
-   dodge can only reach white, so its bars are multiplied on instead
-   (.glare, below the gate) and the white specular rides on top.
-   The gate is the row where the strip ends: 51% on a Pokémon, 52.6% on a
-   Trainer, 64.6% on an Energy (measured on the maps, 2026-09-30). */
+   Two layers, split at the strip's top edge (--p-strip, measured on the TCG
+   Live maps: 41% on a Pokémon, 40.4% on a Trainer, 52% on an Energy):
+   - .foil, above it: the window, dodged rainbow foil. A colour dodge and an
+     exclusion twin would recolour dark ink (the strip's rules text went neon
+     green, sm5-58, reviewed 2026-09-30), so nothing with text is in it.
+   - .glare, below it: the rules strip and the diamond, hues MULTIPLIED on.
+     A multiply can only darken, so the strip stays white with its text
+     black, and the pale silver diamond takes the broad 60 degree rainbow
+     bars (Ditto and Celebi: blue, green, magenta, orange) that a colour
+     dodge could not (it only reaches white on silver).
+   The map is required: a card without one gets the shared text-safe median
+   map from js/sm-foil.js (assets/foil/maps/sm-prism-safe.webp); with
+   neither, the window alone is a plain box and the strip and diamond stay
+   matte. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism {
   --p-space: 3.6%;
   --p-hues: repeating-linear-gradient(150deg,
@@ -247,13 +262,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism {
     hsl(180, 10%, 54%) 14%, #0e152e 20%, #0e152e 34%);
   --p-dim: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 0%, 0.05) 12%, hsla(0, 0%, 0%, 0.12) 25%, hsla(0, 0%, 0%, 0.25) 120%);
-  --p-gate: 51%;
-  --p-floor: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+  --p-strip: 41%;
+  --p-top: 10%;
   --p-light: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     #000 0%, #000 30%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.55) 100%);
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.foil-trainer { --p-gate: 52.6%; }
-body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.foil-energy { --p-gate: 64.6%; }
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.foil-trainer { --p-strip: 40.4%; --p-top: 13.7%; }
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.foil-energy { --p-strip: 52%; --p-top: 13.5%; }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .foil {
   background-image:
     linear-gradient(#fff, #fff),
@@ -267,10 +282,25 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .f
   background-blend-mode: soft-light, soft-light, color, hard-light, normal;
   filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.64)) contrast(2.2) saturate(1.2) contrast(0.8);
   mix-blend-mode: color-dodge;
-  /* Above the gate, inside the frame: clip-path, because gradient layers
-     composited into the mask were ignored by Playwright's WebKit. */
-  clip-path: inset(2.6% 3.6% calc(100% - var(--p-gate)) 3.6%);
+  /* The window box, no map: inside the frame, above the strip. A clip-path,
+     because gradient layers composited into a mask were ignored by
+     Playwright's WebKit. */
+  clip-path: inset(var(--p-top) 7% calc(100% - var(--p-strip)) 7%);
   border-radius: 0;
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+/* With the map: the window's own silhouette (the Pokémon cut out) and the
+   frame inset, the light pool scaling the rest. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.has-foil-map .foil {
+  clip-path: inset(2.6% 3.6% calc(100% - var(--p-strip)) 3.6%);
   -webkit-mask-image: var(--art), var(--foil-map), var(--p-light);
   -webkit-mask-composite: source-in, source-in, source-over;
   mask-image: var(--art), var(--foil-map), var(--p-light);
@@ -278,13 +308,21 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .f
   mask-mode: alpha;
   -webkit-mask-size: contain, 100% 100%, 100% 100%;
   mask-size: contain, 100% 100%, 100% 100%;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+}
+/* A Trainer's window art is already saturated (Black Market blue, Cyrus
+   blue): the photos keep the art's own colours under a streak or a green-gold
+   sheen, so the dodge is held back and the twin nearly off (sm9-134, sm8-178
+   and sm8-180 went electric blue, pink, green to red, reviewed 2026-09-30). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism:is(.foil-trainer, .foil-energy) .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.3) + 0.5)) contrast(1.6) saturate(0.75) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism:is(.foil-trainer, .foil-energy) .foil::after {
+  filter: brightness(calc((var(--pointer-from-center) * 0.3) + 0.4)) contrast(1.3) saturate(0.6);
+  opacity: 0.6;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism:not(.lit):not(.settling) .foil {
   filter: brightness(0.55) contrast(2.4) saturate(0.4);
+  opacity: calc(0.18 * var(--foil-strength, 1));
 }
 /* The same ramp sliding the other way: the hues flip where the two cross. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .foil::after {
@@ -301,10 +339,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .f
   filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.5)) contrast(1.66) saturate(1);
   mix-blend-mode: exclusion;
 }
-/* The diamond: multiplied rainbow bars, only below the gate, inside the
-   map. Bars lighten towards the lamp (the sheet is brightest where it
-   faces the light) and stay at 60% or above elsewhere, so the silver never
-   goes grey. */
+/* The strip and the diamond: multiplied rainbow bars, from the strip's top
+   down, inside the map and only with it. Bars lighten towards the lamp (the
+   sheet is brightest where it faces the light) and stay at 60% or above
+   elsewhere, so the silver never goes grey. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .glare {
   background-image: var(--p-hues);
   background-size: 300% 300%;
@@ -312,9 +350,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .g
   background-repeat: repeat;
   mix-blend-mode: multiply;
   filter: saturate(1.3) brightness(1.22);
-  opacity: calc(var(--card-opacity) * 0.85);
-  clip-path: inset(var(--p-gate) 3.6% 2.6% 3.6%);
+  opacity: 0;
+  clip-path: inset(var(--p-strip) 3.6% 2.6% 3.6%);
   border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.has-foil-map .glare {
+  opacity: calc(var(--card-opacity) * 0.85 * var(--foil-strength, 1));
   -webkit-mask-image: var(--art), var(--foil-map);
   -webkit-mask-composite: source-in, source-over;
   mask-image: var(--art), var(--foil-map);
@@ -330,6 +373,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .g
 /* Sparkle in the foil (the window's gold grain) and the diamond's white
    specular, lit near the lamp, only on the foil the map names. Light only. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism .glare::after {
+  opacity: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-prism.has-foil-map .glare::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.3) 28%, hsla(0, 0%, 100%, 0.08) 65%, hsla(0, 0%, 100%, 0.02) 100%);
   background-size: 100% 100%;
