@@ -7,7 +7,7 @@
  * `goal`, which is what draws the bar and what the claim check compares.
  */
 import { titleContext, ownedPerSet } from "./titles.js";
-import { nameHas, tokens, setIdOfCard } from "./achievement-kit.js";
+import { nameHas, tokens, setIdOfCard, isTagTeamName } from "./achievement-kit.js";
 import { SET_INFO, RARITIES_IN_PRINT } from "./achievement-eras.js";
 import { RIP, CHASE, COLLECT, WEALTH, TRAINER } from "./achievement-core.js";
 import { DEX } from "./achievement-dex.js";
@@ -223,6 +223,7 @@ export function achievementContext(save, options = {}) {
   return {
     ...base,
     ...nameLookup(cards),
+    tagTeams: cards.filter((card) => isTagTeamName(card.name)).length,
     binder,
     copies,
     maxCopies,

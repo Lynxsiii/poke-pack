@@ -6,8 +6,8 @@
  * looking away.
  */
 import { PLAYABLE_SETS } from "./catalog.js";
-import { RARITIES_IN_PRINT } from "./achievement-eras.js";
-import { secret, EEVEELUTIONS, SWSH_FINISHES, SV_FINISHES } from "./achievement-kit.js";
+import { RARITIES_IN_PRINT, isPrinted } from "./achievement-eras.js";
+import { secret, EEVEELUTIONS, SWSH_FINISHES, SM_FINISHES, SV_FINISHES } from "./achievement-kit.js";
 
 const GHOSTS = [
   "Gastly", "Haunter", "Gengar", "Mimikyu", "Sableye", "Gholdengo",
@@ -34,6 +34,11 @@ export const SECRETS = [
   secret("dex", 4, "charizard-hoard", "45", "Charizard hoard", "It burns the whole room.", "Own 45 different Charizard cards.", 45, (c) => c.countName("Charizard"), 2000, { title: "Flame Hoarder" }),
 
   secret("rarity", 4, "sword-sweep", "SWSH", "Sword sweep", "One era, every finish it ever printed.", `Own every Sword & Shield finish: ${SWSH_FINISHES.join(", ")}.`, SWSH_FINISHES.length, (c) => finishesOwned(c, SWSH_FINISHES), 2000),
+  // Needs every finish printed by a playable set (Prism Stars, the Shining Pokémon and the
+  // Shiny Vault each come from their own sets), so it appears with the last of them.
+  ...(SM_FINISHES.every(isPrinted)
+    ? [secret("rarity", 4, "alola-sweep", "SM", "Alola sweep", "Every shine the islands ever printed.", `Own every Sun & Moon finish: ${SM_FINISHES.join(", ")}.`, SM_FINISHES.length, (c) => finishesOwned(c, SM_FINISHES), 2000)]
+    : []),
   secret("rarity", 4, "scarlet-sweep", "SV", "Scarlet sweep", "One era, every finish it ever printed.", `Own every Scarlet & Violet finish: ${SV_FINISHES.join(", ")}.`, SV_FINISHES.length, (c) => finishesOwned(c, SV_FINISHES), 1800),
   secret("rarity", 4, "full-spectrum", "ALL", "Full spectrum", "Every finish there is.", "Own a card of every rarity in the game.", RARITIES_IN_PRINT.length, (c) => c.raritiesOwned, 4000, { title: "Full Spectrum" }),
 
