@@ -1,0 +1,27 @@
+{
+  "id": "det1",
+  "name": "Detective Pikachu",
+  "series": "sun-moon",
+  "slug": "detective-pikachu",
+  "scrydexId": "det1",
+  "era": "sm",
+  "artSlug": "detective-pikachu",
+  "packs": [
+    "pack-0"
+  ],
+  "tcgplayerGroup": 2409,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

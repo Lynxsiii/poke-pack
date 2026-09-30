@@ -1,0 +1,30 @@
+{
+  "id": "sm12",
+  "name": "Cosmic Eclipse",
+  "series": "sun-moon",
+  "slug": "cosmic-eclipse",
+  "scrydexId": "sm12",
+  "era": "sm",
+  "artSlug": "cosmic-eclipse",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2534,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
+    }
+  },
+  "promoCards": {},
+  "products": []
+}

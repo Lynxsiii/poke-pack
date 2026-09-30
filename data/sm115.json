@@ -1,0 +1,6846 @@
+[
+  {
+    "id": "sm115-1",
+    "name": "Caterpie",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "tetsuya koizumi",
+    "flavorText": "Perhaps because it would like to grow up quickly, it has a voracious appetite, eating a hundred leaves a day.",
+    "image": "assets/cards/sm115/1.webp",
+    "imageSmall": "assets/cards/sm115/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-1/large",
+    "tcgplayerId": 197643,
+    "market": 0.22
+  },
+  {
+    "id": "sm115-2",
+    "name": "Metapod",
+    "number": "2",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Shibuzoh.",
+    "flavorText": "Its shell is filled with a thick liquid. All of the cells throughout its body are being rebuilt in preparation for evolution.",
+    "evolvesFrom": "Caterpie",
+    "image": "assets/cards/sm115/2.webp",
+    "imageSmall": "assets/cards/sm115/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-2/large",
+    "tcgplayerId": 197644,
+    "market": 0.07
+  },
+  {
+    "id": "sm115-3",
+    "name": "Butterfree",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its wings are covered in toxic scales. If it finds bird Pokémon going after Caterpie, Butterfree sprinkles its scales on them to drive them off.",
+    "evolvesFrom": "Metapod",
+    "image": "assets/cards/sm115/3.webp",
+    "imageSmall": "assets/cards/sm115/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-3/large",
+    "tcgplayerId": 197645,
+    "market": 0.29
+  },
+  {
+    "id": "sm115-4",
+    "name": "Paras",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "OOYAMA",
+    "flavorText": "Whether it's due to a lack of moisture or a lack of nutrients, in Alola the mushrooms on Paras don't grow up quite right.",
+    "image": "assets/cards/sm115/4.webp",
+    "imageSmall": "assets/cards/sm115/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-4/large",
+    "tcgplayerId": 197646,
+    "market": 0.05
+  },
+  {
+    "id": "sm115-5",
+    "name": "Scyther",
+    "number": "5",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Hasuno",
+    "flavorText": "Its two sharp scythes are more than just weapons. It uses them with dexterity to dress its prey before eating.",
+    "image": "assets/cards/sm115/5.webp",
+    "imageSmall": "assets/cards/sm115/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sharp Scythe",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-5/large",
+    "tcgplayerId": 197647,
+    "market": 0.21
+  },
+  {
+    "id": "sm115-6",
+    "name": "Pinsir-GX",
+    "number": "6",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/6.webp",
+    "imageSmall": "assets/cards/sm115/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Superpowered Horns",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      },
+      {
+        "name": "Guillotine-GX",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-6/large",
+    "foilMap": "assets/foil/maps/sm115/6.webp",
+    "tcgplayerId": 197648,
+    "market": 1.36
+  },
+  {
+    "id": "sm115-7",
+    "name": "Charmander",
+    "number": "7",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Megumi Mizutani",
+    "flavorText": "The flame on its tail indicates Charmander's life force. If it is healthy, the flame burns brightly.",
+    "image": "assets/cards/sm115/7.webp",
+    "imageSmall": "assets/cards/sm115/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-7/large",
+    "tcgplayerId": 197649,
+    "market": 0.32
+  },
+  {
+    "id": "sm115-8",
+    "name": "Charmeleon",
+    "number": "8",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It lashes about with its tail to knock down its foe. It then tears up the fallen opponent with sharp claws.",
+    "evolvesFrom": "Charmander",
+    "image": "assets/cards/sm115/8.webp",
+    "imageSmall": "assets/cards/sm115/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-8/large",
+    "tcgplayerId": 197650,
+    "market": 0.22
+  },
+  {
+    "id": "sm115-9",
+    "name": "Charizard-GX",
+    "number": "9",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "250",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/sm115/9.webp",
+    "imageSmall": "assets/cards/sm115/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      },
+      {
+        "name": "Flare Blitz-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-9/large",
+    "foilMap": "assets/foil/maps/sm115/9.webp",
+    "tcgplayerId": 197651,
+    "market": 9.93
+  },
+  {
+    "id": "sm115-10",
+    "name": "Magmar",
+    "number": "10",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "Satoshi Shirai",
+    "flavorText": "Its entire body is burning. When it breathes, the temperature rises. When it sneezes, flames shoot out!",
+    "image": "assets/cards/sm115/10.webp",
+    "imageSmall": "assets/cards/sm115/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Punch",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-10/large",
+    "tcgplayerId": 197652,
+    "market": 0.06
+  },
+  {
+    "id": "sm115-11",
+    "name": "Psyduck",
+    "number": "11",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "nagimiso",
+    "flavorText": "Using psychokinesis gives it a headache, so it normally passes the time spacing out and doing as little as possible.",
+    "image": "assets/cards/sm115/11.webp",
+    "imageSmall": "assets/cards/sm115/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Headache",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-11/large",
+    "tcgplayerId": 197653,
+    "market": 0.39
+  },
+  {
+    "id": "sm115-12",
+    "name": "Slowpoke",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Misa Tsutsui",
+    "flavorText": "Alolan home cooking involves drying Slowpoke tails and then simmering them into a salty stew.",
+    "image": "assets/cards/sm115/12.webp",
+    "imageSmall": "assets/cards/sm115/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Yawn",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-12/large",
+    "tcgplayerId": 197654,
+    "market": 0.2
+  },
+  {
+    "id": "sm115-13",
+    "name": "Staryu",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "In many places, there are folktales of stardust falling into the ocean and becoming Staryu.",
+    "image": "assets/cards/sm115/13.webp",
+    "imageSmall": "assets/cards/sm115/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Numbing Water",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-13/large",
+    "tcgplayerId": 197657,
+    "market": 0.05
+  },
+  {
+    "id": "sm115-14",
+    "name": "Starmie-GX",
+    "number": "14",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "190",
+    "artist": "PLANETA Otani",
+    "evolvesFrom": "Staryu",
+    "image": "assets/cards/sm115/14.webp",
+    "imageSmall": "assets/cards/sm115/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Star Stream",
+        "cost": [
+          "Water"
+        ],
+        "damage": "40",
+        "text": "Attach 2 Water Energy cards from your discard pile to 1 of your Pokémon."
+      },
+      {
+        "name": "Spinning Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      },
+      {
+        "name": "Hydro Pump-GX",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 40 more damage times the amount of Water Energy attached to this Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-14/large",
+    "foilMap": "assets/foil/maps/sm115/14.webp",
+    "tcgplayerId": 197658,
+    "market": 2.24
+  },
+  {
+    "id": "sm115-15",
+    "name": "Magikarp",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Shigenori Negishi",
+    "flavorText": "In the distant past, they were fairly strong, but they have become gradually weaker over time.",
+    "image": "assets/cards/sm115/15.webp",
+    "imageSmall": "assets/cards/sm115/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Splash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-15/large",
+    "tcgplayerId": 197659,
+    "market": 0.32
+  },
+  {
+    "id": "sm115-16",
+    "name": "Gyarados-GX",
+    "number": "16",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Magikarp",
+    "image": "assets/cards/sm115/16.webp",
+    "imageSmall": "assets/cards/sm115/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Rage",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Hyper Beam-GX",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-16/large",
+    "foilMap": "assets/foil/maps/sm115/16.webp",
+    "tcgplayerId": 197660,
+    "market": 6.05
+  },
+  {
+    "id": "sm115-17",
+    "name": "Lapras",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "kodama",
+    "flavorText": "It likes swimming around with people on its back. In the Alola region, it's an important means of transportation over water.",
+    "image": "assets/cards/sm115/17.webp",
+    "imageSmall": "assets/cards/sm115/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Wave",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-17/large",
+    "tcgplayerId": 197661,
+    "market": 0.39
+  },
+  {
+    "id": "sm115-18",
+    "name": "Vaporeon",
+    "number": "18",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Clean, clear waters are its usual habitat. When it's about to be attacked by an invading enemy, it dives into the water to hide.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm115/18.webp",
+    "imageSmall": "assets/cards/sm115/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Bubble Drain",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Heal 30 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-18/large",
+    "foilMap": "assets/foil/maps/sm115/18.webp",
+    "tcgplayerId": 197662,
+    "market": 1.52
+  },
+  {
+    "id": "sm115-19",
+    "name": "Pikachu",
+    "number": "19",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its nature is to store up electricity. Forests where nests of Pikachu live are dangerous, since the trees are so often struck by lightning.",
+    "image": "assets/cards/sm115/19.webp",
+    "imageSmall": "assets/cards/sm115/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-19/large",
+    "tcgplayerId": 197663,
+    "market": 0.99
+  },
+  {
+    "id": "sm115-20",
+    "name": "Raichu-GX",
+    "number": "20",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/sm115/20.webp",
+    "imageSmall": "assets/cards/sm115/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Spark Ball-GX",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-20/large",
+    "foilMap": "assets/foil/maps/sm115/20.webp",
+    "tcgplayerId": 197664,
+    "market": 2.68
+  },
+  {
+    "id": "sm115-21",
+    "name": "Voltorb",
+    "number": "21",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "SATOSHI NAKAI",
+    "flavorText": "It was discovered when Poké Balls were introduced. It is said that there is some connection.",
+    "image": "assets/cards/sm115/21.webp",
+    "imageSmall": "assets/cards/sm115/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Ball",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-21/large",
+    "tcgplayerId": 197665,
+    "market": 0.02
+  },
+  {
+    "id": "sm115-22",
+    "name": "Electrode",
+    "number": "22",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "It explodes in response to even minor stimuli. It is feared, with the nickname of \"The Bomb Ball.\"",
+    "evolvesFrom": "Voltorb",
+    "image": "assets/cards/sm115/22.webp",
+    "imageSmall": "assets/cards/sm115/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Ball",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Electroblast",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip 2 coins. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-22/large",
+    "tcgplayerId": 197666,
+    "market": 0.25
+  },
+  {
+    "id": "sm115-23",
+    "name": "Jolteon",
+    "number": "23",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Kouki Saitou",
+    "flavorText": "Its lungs contain an organ that creates electricity. The crackling sound of electricity can be heard when it exhales.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm115/23.webp",
+    "imageSmall": "assets/cards/sm115/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard all Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Electromagnetic Wall",
+        "text": "As long as this Pokémon is your Active Pokémon, whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 2 damage counters on that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-23/large",
+    "tcgplayerId": 197667,
+    "market": 0.64
+  },
+  {
+    "id": "sm115-24",
+    "name": "Zapdos",
+    "number": "24",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Shin Nagasawa",
+    "flavorText": "A legendary bird Pokémon that is said to appear from clouds while dropping enormous lightning bolts.",
+    "image": "assets/cards/sm115/24.webp",
+    "imageSmall": "assets/cards/sm115/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Hurricane Call",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 4 coins. For each heads, search your deck for a Lightning Energy card and attach it to 1 of your Pokémon-GX or Pokémon-EX. Then, shuffle your deck."
+      },
+      {
+        "name": "Sky-High Claws",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-24/large",
+    "foilMap": "assets/foil/maps/sm115/24.webp",
+    "tcgplayerId": 197668,
+    "market": 0.63
+  },
+  {
+    "id": "sm115-25",
+    "name": "Ekans",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "MAHOU",
+    "flavorText": "By dislocating its jaw, it can swallow prey larger than itself. After a meal, it curls up and rests.",
+    "image": "assets/cards/sm115/25.webp",
+    "imageSmall": "assets/cards/sm115/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Wrap",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-25/large",
+    "tcgplayerId": 197669,
+    "market": 0.19
+  },
+  {
+    "id": "sm115-26",
+    "name": "Ekans",
+    "number": "26",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "By dislocating its jaw, it can swallow prey larger than itself. After a meal, it curls up and rests.",
+    "image": "assets/cards/sm115/26.webp",
+    "imageSmall": "assets/cards/sm115/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Whap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-26/large",
+    "tcgplayerId": 197670,
+    "market": 0.19
+  },
+  {
+    "id": "sm115-27",
+    "name": "Arbok",
+    "number": "27",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "kirisAki",
+    "flavorText": "The latest research has determined that there are over 20 possible arrangements of the patterns on its stomach.",
+    "evolvesFrom": "Ekans",
+    "image": "assets/cards/sm115/27.webp",
+    "imageSmall": "assets/cards/sm115/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Rocket Tail",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If Jessie & James is in your discard pile, this attack does 80 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Last Pattern",
+        "text": "If this Pokémon is Knocked Out by damage from an opponent's attack, discard 2 random cards from your opponent's hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-27/large",
+    "tcgplayerId": 197671,
+    "market": 0.38
+  },
+  {
+    "id": "sm115-28",
+    "name": "Koffing",
+    "number": "28",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Saya Tsuruta",
+    "flavorText": "Its thin, balloon-like body is inflated by horribly toxic gases. It reeks when it is nearby.",
+    "image": "assets/cards/sm115/28.webp",
+    "imageSmall": "assets/cards/sm115/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-28/large",
+    "tcgplayerId": 197672,
+    "market": 0.07
+  },
+  {
+    "id": "sm115-29",
+    "name": "Weezing",
+    "number": "29",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "Hideki Ishikawa",
+    "flavorText": "If one of the twin Koffing inflates, the other one deflates. It constantly mixes its poisonous gases.",
+    "evolvesFrom": "Koffing",
+    "image": "assets/cards/sm115/29.webp",
+    "imageSmall": "assets/cards/sm115/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Surrender Now",
+        "text": "Once during your turn, if this Pokémon is discarded with the effect of Jessie & James, you may have your opponent discard a card from their hand. (They discard that card after the effect of Jessie & James.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-29/large",
+    "tcgplayerId": 197673,
+    "market": 0.3
+  },
+  {
+    "id": "sm115-30",
+    "name": "Jynx",
+    "number": "30",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Kouki Saitou",
+    "flavorText": "It sways its hips to a rhythm all its own. The precise movements of Jynx living in Alola are truly wonderful.",
+    "image": "assets/cards/sm115/30.webp",
+    "imageSmall": "assets/cards/sm115/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Slap",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Lovely Kiss",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-30/large",
+    "tcgplayerId": 197674,
+    "market": 0.14
+  },
+  {
+    "id": "sm115-31",
+    "name": "Mewtwo-GX",
+    "number": "31",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "180",
+    "artist": "aky CG Works",
+    "image": "assets/cards/sm115/31.webp",
+    "imageSmall": "assets/cards/sm115/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      },
+      {
+        "name": "Psycrush-GX",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard all Energy from your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-31/large",
+    "foilMap": "assets/foil/maps/sm115/31.webp",
+    "tcgplayerId": 197675,
+    "market": 8.25
+  },
+  {
+    "id": "sm115-32",
+    "name": "Mew",
+    "number": "32",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "Because it can use all kinds of moves, many scientists believe Mew to be the ancestor of Pokémon.",
+    "image": "assets/cards/sm115/32.webp",
+    "imageSmall": "assets/cards/sm115/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyshot",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-32/large",
+    "tcgplayerId": 197676,
+    "market": 2.76
+  },
+  {
+    "id": "sm115-33",
+    "name": "Geodude",
+    "number": "33",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "Geodude that have lived a long life have had all their edges smoothed out until they're totally round. They also have a calm, quiet disposition.",
+    "image": "assets/cards/sm115/33.webp",
+    "imageSmall": "assets/cards/sm115/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-33/large",
+    "tcgplayerId": 197677,
+    "market": 0.17
+  },
+  {
+    "id": "sm115-34",
+    "name": "Graveler",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Ken Sugimori",
+    "flavorText": "It climbs up cliffs as it heads toward the peak of a mountain. As soon as it reaches the summit, it rolls back down the way it came.",
+    "evolvesFrom": "Geodude",
+    "image": "assets/cards/sm115/34.webp",
+    "imageSmall": "assets/cards/sm115/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Mudslide",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard 2 Fighting Energy from this Pokémon. This attack does 80 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-34/large",
+    "tcgplayerId": 197678,
+    "market": 0.07
+  },
+  {
+    "id": "sm115-35",
+    "name": "Golem",
+    "number": "35",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "170",
+    "artist": "Ken Sugimori",
+    "flavorText": "When Golem grow old, they stop shedding their shells. Those that have lived a long, long time have shells green with moss.",
+    "evolvesFrom": "Graveler",
+    "image": "assets/cards/sm115/35.webp",
+    "imageSmall": "assets/cards/sm115/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Slide",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack does 20 damage to 3 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Land Crush",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-35/large",
+    "tcgplayerId": 197679,
+    "market": 0.29
+  },
+  {
+    "id": "sm115-36",
+    "name": "Onix-GX",
+    "number": "36",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "200",
+    "artist": "PLANETA Igarashi",
+    "image": "assets/cards/sm115/36.webp",
+    "imageSmall": "assets/cards/sm115/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Bind",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Heavy Impact",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": ""
+      },
+      {
+        "name": "Rocky Avalanche-GX",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "During your opponent's next turn, this Pokémon takes 100 less damage from attacks (after applying Weakness and Resistance). (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-36/large",
+    "foilMap": "assets/foil/maps/sm115/36.webp",
+    "tcgplayerId": 197680,
+    "market": 2.7
+  },
+  {
+    "id": "sm115-37",
+    "name": "Cubone",
+    "number": "37",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Hasuno",
+    "flavorText": "The skull it wears on its head is that of its dead mother. According to some, it will evolve when it comes to terms with the pain of her death.",
+    "image": "assets/cards/sm115/37.webp",
+    "imageSmall": "assets/cards/sm115/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharpshooting",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-37/large",
+    "tcgplayerId": 197681,
+    "market": 0.25
+  },
+  {
+    "id": "sm115-38",
+    "name": "Clefairy",
+    "number": "38",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "60",
+    "artist": "Saya Tsuruta",
+    "flavorText": "They're popular, but they're rare. Trainers who show them off recklessly may be targeted by thieves.",
+    "image": "assets/cards/sm115/38.webp",
+    "imageSmall": "assets/cards/sm115/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Lead",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Pound",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-38/large",
+    "tcgplayerId": 197682,
+    "market": 0.39
+  },
+  {
+    "id": "sm115-39",
+    "name": "Clefairy",
+    "number": "39",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "60",
+    "artist": "kirisAki",
+    "flavorText": "They're popular, but they're rare. Trainers who show them off recklessly may be targeted by thieves.",
+    "image": "assets/cards/sm115/39.webp",
+    "imageSmall": "assets/cards/sm115/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Moon Dance",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-39/large",
+    "tcgplayerId": 197683,
+    "market": 0.39
+  },
+  {
+    "id": "sm115-40",
+    "name": "Clefable",
+    "number": "40",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "120",
+    "artist": "sui",
+    "flavorText": "It can't help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren't many people or Pokémon.",
+    "evolvesFrom": "Clefairy",
+    "image": "assets/cards/sm115/40.webp",
+    "imageSmall": "assets/cards/sm115/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Moon Impact",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-40/large",
+    "tcgplayerId": 197684,
+    "market": 0.46
+  },
+  {
+    "id": "sm115-41",
+    "name": "Jigglypuff",
+    "number": "41",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "70",
+    "artist": "Mizue",
+    "flavorText": "Recordings of Jigglypuff's strange lullabies can be purchased from department stores. These CDs can be found near the bedding area.",
+    "image": "assets/cards/sm115/41.webp",
+    "imageSmall": "assets/cards/sm115/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Singing Voice",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-41/large",
+    "tcgplayerId": 197685,
+    "market": 0.37
+  },
+  {
+    "id": "sm115-42",
+    "name": "Wigglytuff-GX",
+    "number": "42",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Jigglypuff",
+    "image": "assets/cards/sm115/42.webp",
+    "imageSmall": "assets/cards/sm115/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Rolling Rush",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+      },
+      {
+        "name": "Lovely Star-GX",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Heal all damage from this Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-42/large",
+    "foilMap": "assets/foil/maps/sm115/42.webp",
+    "tcgplayerId": 197686,
+    "market": 3.8
+  },
+  {
+    "id": "sm115-43",
+    "name": "Mr. Mime",
+    "number": "43",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "90",
+    "artist": "Hideki Ishikawa",
+    "flavorText": "Its pantomime skills are wonderful. You may become enraptured while watching it, but next thing you know, Mr. Mime has made a real wall.",
+    "image": "assets/cards/sm115/43.webp",
+    "imageSmall": "assets/cards/sm115/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Happy Mime",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Each player draws a card."
+      },
+      {
+        "name": "Double Slap",
+        "cost": [
+          "Fairy",
+          "Fairy"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-43/large",
+    "tcgplayerId": 197687,
+    "market": 0.45
+  },
+  {
+    "id": "sm115-44",
+    "name": "Moltres & Zapdos & Articuno-GX",
+    "number": "44",
+    "rarity": "Rare Holo GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "TAG TEAM",
+      "GX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "300",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/sm115/44.webp",
+    "imageSmall": "assets/cards/sm115/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Trinity Burn",
+        "cost": [
+          "Fire",
+          "Water",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": ""
+      },
+      {
+        "name": "Sky Legends-GX",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle this Pokémon and all cards attached to it into your deck. If this Pokémon has at least 1 extra Fire, Water, and Lightning Energy attached to it (in addition to this attack's cost), this attack does 110 damage to 3 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-44/large",
+    "foilMap": "assets/foil/maps/sm115/44.webp",
+    "tcgplayerId": 197688,
+    "market": 49.67
+  },
+  {
+    "id": "sm115-45",
+    "name": "Farfetch'd",
+    "number": "45",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Eri Yamaki",
+    "flavorText": "The plant stalk it holds is its weapon. The stalk is used like a sword to cut all sorts of things.",
+    "image": "assets/cards/sm115/45.webp",
+    "imageSmall": "assets/cards/sm115/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Leek Slap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-45/large",
+    "tcgplayerId": 197689,
+    "market": 0.23
+  },
+  {
+    "id": "sm115-46",
+    "name": "Chansey",
+    "number": "46",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "sowsow",
+    "flavorText": "It seems that other Pokémon's efforts to take its delicious, nutritious egg away from it caused Chansey to get faster at fleeing.",
+    "image": "assets/cards/sm115/46.webp",
+    "imageSmall": "assets/cards/sm115/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Double-Edge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-46/large",
+    "tcgplayerId": 197691,
+    "market": 0.4
+  },
+  {
+    "id": "sm115-47",
+    "name": "Kangaskhan",
+    "number": "47",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "You Iribi",
+    "flavorText": "Kangaskhan protects its child by keeping it in its pouch. It has zero forgiveness for those who harm its child and will beat them down.",
+    "image": "assets/cards/sm115/47.webp",
+    "imageSmall": "assets/cards/sm115/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Parental Fury",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip a coin until you get tails. This attack does 40 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-47/large",
+    "tcgplayerId": 197692,
+    "market": 0.27
+  },
+  {
+    "id": "sm115-48",
+    "name": "Eevee",
+    "number": "48",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "The question of why only Eevee has such unstable genes has still not been solved.",
+    "image": "assets/cards/sm115/48.webp",
+    "imageSmall": "assets/cards/sm115/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Curiosity",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals their hand."
+      },
+      {
+        "name": "Spin Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this Pokémon does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-48/large",
+    "foilMap": "assets/foil/maps/sm115/48.webp",
+    "tcgplayerId": 197693,
+    "market": 2.74
+  },
+  {
+    "id": "sm115-49",
+    "name": "Eevee",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "Current studies show it can evolve into an incredible eight different species of Pokémon.",
+    "image": "assets/cards/sm115/49.webp",
+    "imageSmall": "assets/cards/sm115/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-49/large",
+    "tcgplayerId": 197694,
+    "market": 0.36
+  },
+  {
+    "id": "sm115-50",
+    "name": "Snorlax",
+    "number": "50",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "150",
+    "artist": "Akira Komayama",
+    "flavorText": "It doesn't do anything other than eat and sleep. When prompted to make a serious effort, though, it apparently displays awesome power.",
+    "image": "assets/cards/sm115/50.webp",
+    "imageSmall": "assets/cards/sm115/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Incredible Snore",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-50/large",
+    "tcgplayerId": 197696,
+    "market": 1.36
+  },
+  {
+    "id": "sm115-51",
+    "name": "Bill's Analysis",
+    "number": "51",
+    "rarity": "Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/sm115/51.webp",
+    "imageSmall": "assets/cards/sm115/51-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-51/large",
+    "tcgplayerId": 197697,
+    "market": 0.26
+  },
+  {
+    "id": "sm115-52",
+    "name": "Blaine's Last Stand",
+    "number": "52",
+    "rarity": "Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/sm115/52.webp",
+    "imageSmall": "assets/cards/sm115/52-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-52/large",
+    "tcgplayerId": 197699,
+    "market": 0.21
+  },
+  {
+    "id": "sm115-53",
+    "name": "Brock's Grit",
+    "number": "53",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/sm115/53.webp",
+    "imageSmall": "assets/cards/sm115/53-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-53/large",
+    "tcgplayerId": 197700,
+    "market": 0.19
+  },
+  {
+    "id": "sm115-54",
+    "name": "Brock's Pewter City Gym",
+    "number": "54",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/54.webp",
+    "imageSmall": "assets/cards/sm115/54-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-54/large",
+    "tcgplayerId": 197702,
+    "market": 0.07
+  },
+  {
+    "id": "sm115-55",
+    "name": "Brock's Training",
+    "number": "55",
+    "rarity": "Rare Holo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "TOKIYA",
+    "image": "assets/cards/sm115/55.webp",
+    "imageSmall": "assets/cards/sm115/55-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-55/large",
+    "foilMap": "assets/foil/maps/sm115/55.webp",
+    "tcgplayerId": 197704,
+    "market": 0.37
+  },
+  {
+    "id": "sm115-56",
+    "name": "Erika's Hospitality",
+    "number": "56",
+    "rarity": "Rare",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Sanosuke Sakuma",
+    "image": "assets/cards/sm115/56.webp",
+    "imageSmall": "assets/cards/sm115/56-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-56/large",
+    "tcgplayerId": 197706,
+    "market": 0.23
+  },
+  {
+    "id": "sm115-57",
+    "name": "Giovanni's Exile",
+    "number": "57",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/sm115/57.webp",
+    "imageSmall": "assets/cards/sm115/57-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-57/large",
+    "tcgplayerId": 197709,
+    "market": 0.18
+  },
+  {
+    "id": "sm115-58",
+    "name": "Jessie & James",
+    "number": "58",
+    "rarity": "Rare Holo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/sm115/58.webp",
+    "imageSmall": "assets/cards/sm115/58-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-58/large",
+    "foilMap": "assets/foil/maps/sm115/58.webp",
+    "tcgplayerId": 197711,
+    "market": 2.2
+  },
+  {
+    "id": "sm115-59",
+    "name": "Koga's Trap",
+    "number": "59",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/sm115/59.webp",
+    "imageSmall": "assets/cards/sm115/59-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-59/large",
+    "tcgplayerId": 197712,
+    "market": 0.17
+  },
+  {
+    "id": "sm115-60",
+    "name": "Lt. Surge's Strategy",
+    "number": "60",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/sm115/60.webp",
+    "imageSmall": "assets/cards/sm115/60-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-60/large",
+    "tcgplayerId": 197714,
+    "market": 0.21
+  },
+  {
+    "id": "sm115-61",
+    "name": "Misty's Cerulean City Gym",
+    "number": "61",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/61.webp",
+    "imageSmall": "assets/cards/sm115/61-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-61/large",
+    "tcgplayerId": 197716,
+    "market": 0.23
+  },
+  {
+    "id": "sm115-62",
+    "name": "Misty's Determination",
+    "number": "62",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/sm115/62.webp",
+    "imageSmall": "assets/cards/sm115/62-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-62/large",
+    "tcgplayerId": 197717,
+    "market": 0.37
+  },
+  {
+    "id": "sm115-63",
+    "name": "Misty's Water Command",
+    "number": "63",
+    "rarity": "Rare Holo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "TOKIYA",
+    "image": "assets/cards/sm115/63.webp",
+    "imageSmall": "assets/cards/sm115/63-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-63/large",
+    "foilMap": "assets/foil/maps/sm115/63.webp",
+    "tcgplayerId": 197720,
+    "market": 0.88
+  },
+  {
+    "id": "sm115-64",
+    "name": "Pokémon Center Lady",
+    "number": "64",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "TOKIYA",
+    "image": "assets/cards/sm115/64.webp",
+    "imageSmall": "assets/cards/sm115/64-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-64/large",
+    "tcgplayerId": 197724,
+    "market": 0.26
+  },
+  {
+    "id": "sm115-65",
+    "name": "Sabrina's Suggestion",
+    "number": "65",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/sm115/65.webp",
+    "imageSmall": "assets/cards/sm115/65-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-65/large",
+    "tcgplayerId": 197725,
+    "market": 0.17
+  },
+  {
+    "id": "sm115-66",
+    "name": "Moltres & Zapdos & Articuno-GX",
+    "number": "66",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "TAG TEAM",
+      "GX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "300",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/66.webp",
+    "imageSmall": "assets/cards/sm115/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Trinity Burn",
+        "cost": [
+          "Fire",
+          "Water",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": ""
+      },
+      {
+        "name": "Sky Legends-GX",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle this Pokémon and all cards attached to it into your deck. If this Pokémon has at least 1 extra Fire, Water, and Lightning Energy attached to it (in addition to this attack's cost), this attack does 110 damage to 3 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-66/large",
+    "foilMap": "assets/foil/maps/sm115/66.webp",
+    "etchMap": "assets/foil/maps/sm115/66-etch.webp",
+    "tcgplayerId": 197726,
+    "market": 47.24
+  },
+  {
+    "id": "sm115-67",
+    "name": "Giovanni's Exile",
+    "number": "67",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "TOKIYA",
+    "image": "assets/cards/sm115/67.webp",
+    "imageSmall": "assets/cards/sm115/67-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-67/large",
+    "foilMap": "assets/foil/maps/sm115/67.webp",
+    "etchMap": "assets/foil/maps/sm115/67-etch.webp",
+    "tcgplayerId": 197730,
+    "market": 4.03
+  },
+  {
+    "id": "sm115-68",
+    "name": "Jessie & James",
+    "number": "68",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/sm115/68.webp",
+    "imageSmall": "assets/cards/sm115/68-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-68/large",
+    "foilMap": "assets/foil/maps/sm115/68.webp",
+    "etchMap": "assets/foil/maps/sm115/68-etch.webp",
+    "tcgplayerId": 197732,
+    "market": 74.18
+  },
+  {
+    "id": "sm115-69",
+    "name": "Moltres & Zapdos & Articuno-GX",
+    "number": "69",
+    "rarity": "Rare Rainbow",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "TAG TEAM",
+      "GX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "300",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/69.webp",
+    "imageSmall": "assets/cards/sm115/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Trinity Burn",
+        "cost": [
+          "Fire",
+          "Water",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": ""
+      },
+      {
+        "name": "Sky Legends-GX",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle this Pokémon and all cards attached to it into your deck. If this Pokémon has at least 1 extra Fire, Water, and Lightning Energy attached to it (in addition to this attack's cost), this attack does 110 damage to 3 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/sm115-69/large",
+    "foilMap": "assets/foil/maps/sm115/69.webp",
+    "etchMap": "assets/foil/maps/sm115/69-etch.webp",
+    "tcgplayerId": 197728,
+    "market": 47.25
+  },
+  {
+    "id": "sm115-SV1",
+    "name": "Scyther",
+    "number": "SV1",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Shigenori Negishi",
+    "flavorText": "While young, they live together deep in the mountains, training themselves in how to fight with their scythes and move at high speeds.",
+    "image": "assets/cards/sm115/SV1.webp",
+    "imageSmall": "assets/cards/sm115/SV1-sm.webp",
+    "attacks": [
+      {
+        "name": "Twin Play",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Scyther and put them onto your Bench. Then, shuffle your deck."
+      },
+      {
+        "name": "Agility",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV1/large",
+    "foilMap": "assets/foil/maps/sm115/SV1.webp",
+    "etchMap": "assets/foil/maps/sm115/SV1-etch.webp",
+    "tcgplayerId": 197738,
+    "market": 9.92
+  },
+  {
+    "id": "sm115-SV2",
+    "name": "Rowlet",
+    "number": "SV2",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "This wary Pokémon uses photosynthesis to store up energy during the day, while becoming active at night.",
+    "image": "assets/cards/sm115/SV2.webp",
+    "imageSmall": "assets/cards/sm115/SV2-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV2/large",
+    "foilMap": "assets/foil/maps/sm115/SV2.webp",
+    "etchMap": "assets/foil/maps/sm115/SV2-etch.webp",
+    "tcgplayerId": 197739,
+    "market": 6.98
+  },
+  {
+    "id": "sm115-SV3",
+    "name": "Dartrix",
+    "number": "SV3",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Shigenori Negishi",
+    "flavorText": "A bit of a dandy, it spends its free time preening its wings. Its preoccupation with any dirt on its plumage can leave it unable to battle.",
+    "evolvesFrom": "Rowlet",
+    "image": "assets/cards/sm115/SV3.webp",
+    "imageSmall": "assets/cards/sm115/SV3-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Blade Quill",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Leaf Blade",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV3/large",
+    "foilMap": "assets/foil/maps/sm115/SV3.webp",
+    "etchMap": "assets/foil/maps/sm115/SV3-etch.webp",
+    "tcgplayerId": 197740,
+    "market": 2.78
+  },
+  {
+    "id": "sm115-SV4",
+    "name": "Wimpod",
+    "number": "SV4",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "SATOSHI NAKAI",
+    "flavorText": "This Pokémon is a coward. As it desperately dashes off, the flailing of its many legs leaves a sparkling clean path in its wake.",
+    "image": "assets/cards/sm115/SV4.webp",
+    "imageSmall": "assets/cards/sm115/SV4-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wimp Out",
+        "text": "During your first turn, this Pokémon has no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV4/large",
+    "foilMap": "assets/foil/maps/sm115/SV4.webp",
+    "etchMap": "assets/foil/maps/sm115/SV4-etch.webp",
+    "tcgplayerId": 197741,
+    "market": 2.69
+  },
+  {
+    "id": "sm115-SV5",
+    "name": "Pheromosa",
+    "number": "SV5",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Mizue",
+    "flavorText": "One of the Ultra Beasts. It refuses to touch anything, perhaps because it senses some uncleanness in this world.",
+    "image": "assets/cards/sm115/SV5.webp",
+    "imageSmall": "assets/cards/sm115/SV5-sm.webp",
+    "attacks": [
+      {
+        "name": "High Jump Kick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "White Ray",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "If you have only 1 Prize card remaining, this attack does 90 more damage."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV5/large",
+    "foilMap": "assets/foil/maps/sm115/SV5.webp",
+    "etchMap": "assets/foil/maps/sm115/SV5-etch.webp",
+    "tcgplayerId": 197743,
+    "market": 10.35
+  },
+  {
+    "id": "sm115-SV6",
+    "name": "Charmander",
+    "number": "SV6",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "kirisAki",
+    "flavorText": "From the time it is born, a flame burns at the tip of its tail. Its life would end if the flame were to go out.",
+    "image": "assets/cards/sm115/SV6.webp",
+    "imageSmall": "assets/cards/sm115/SV6-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV6/large",
+    "foilMap": "assets/foil/maps/sm115/SV6.webp",
+    "etchMap": "assets/foil/maps/sm115/SV6-etch.webp",
+    "tcgplayerId": 197744,
+    "market": 31.28
+  },
+  {
+    "id": "sm115-SV7",
+    "name": "Charmeleon",
+    "number": "SV7",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "nagimiso",
+    "flavorText": "When it swings its burning tail, it elevates the air temperature to unbearably high levels.",
+    "evolvesFrom": "Charmander",
+    "image": "assets/cards/sm115/SV7.webp",
+    "imageSmall": "assets/cards/sm115/SV7-sm.webp",
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard an Energy from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Burning Fighter",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may discard the top 5 cards of your deck. If any of those cards are Fire Energy cards, attach them to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV7/large",
+    "foilMap": "assets/foil/maps/sm115/SV7.webp",
+    "etchMap": "assets/foil/maps/sm115/SV7-etch.webp",
+    "tcgplayerId": 197745,
+    "market": 16.9
+  },
+  {
+    "id": "sm115-SV8",
+    "name": "Alolan Vulpix",
+    "number": "SV8",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "It exhales air colder than -58 degrees Fahrenheit. Elderly people in Alola call this Pokémon by an older name—Keokeo.",
+    "image": "assets/cards/sm115/SV8.webp",
+    "imageSmall": "assets/cards/sm115/SV8-sm.webp",
+    "attacks": [
+      {
+        "name": "Beacon",
+        "damage": "",
+        "text": "Search your deck for up to 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Icy Snow",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV8/large",
+    "foilMap": "assets/foil/maps/sm115/SV8.webp",
+    "etchMap": "assets/foil/maps/sm115/SV8-etch.webp",
+    "tcgplayerId": 197762,
+    "market": 13.31
+  },
+  {
+    "id": "sm115-SV9",
+    "name": "Wooper",
+    "number": "SV9",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Misa Tsutsui",
+    "flavorText": "When the temperature cools in the evening, they emerge from water to seek food along the shore.",
+    "image": "assets/cards/sm115/SV9.webp",
+    "imageSmall": "assets/cards/sm115/SV9-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV9/large",
+    "foilMap": "assets/foil/maps/sm115/SV9.webp",
+    "etchMap": "assets/foil/maps/sm115/SV9-etch.webp",
+    "tcgplayerId": 197763,
+    "market": 24.7
+  },
+  {
+    "id": "sm115-SV10",
+    "name": "Quagsire",
+    "number": "SV10",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Saya Tsuruta",
+    "flavorText": "This carefree Pokémon has an easygoing nature. While swimming, it always bumps into boat hulls.",
+    "evolvesFrom": "Wooper",
+    "image": "assets/cards/sm115/SV10.webp",
+    "imageSmall": "assets/cards/sm115/SV10-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage times the amount of Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wash Out",
+        "text": "As often as you like during your turn (before your attack), you may move a Water Energy from 1 of your Benched Pokémon to your Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV10/large",
+    "foilMap": "assets/foil/maps/sm115/SV10.webp",
+    "etchMap": "assets/foil/maps/sm115/SV10-etch.webp",
+    "tcgplayerId": 197764,
+    "market": 18.5
+  },
+  {
+    "id": "sm115-SV11",
+    "name": "Froakie",
+    "number": "SV11",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "sui",
+    "flavorText": "It protects its skin by covering its body in delicate bubbles. Beneath its happy-go-lucky air, it keeps a watchful eye on its surroundings.",
+    "image": "assets/cards/sm115/SV11.webp",
+    "imageSmall": "assets/cards/sm115/SV11-sm.webp",
+    "attacks": [
+      {
+        "name": "Flop",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frubbles",
+        "text": "If this Pokémon has any Water Energy attached to it, it has no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV11/large",
+    "foilMap": "assets/foil/maps/sm115/SV11.webp",
+    "etchMap": "assets/foil/maps/sm115/SV11-etch.webp",
+    "tcgplayerId": 197765,
+    "market": 9.42
+  },
+  {
+    "id": "sm115-SV12",
+    "name": "Frogadier",
+    "number": "SV12",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "Its swiftness is unparalleled. It can scale a tower of more than 2,000 feet in a minute's time.",
+    "evolvesFrom": "Froakie",
+    "image": "assets/cards/sm115/SV12.webp",
+    "imageSmall": "assets/cards/sm115/SV12-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Drip",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Gale Shuriken",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put 2 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV12/large",
+    "foilMap": "assets/foil/maps/sm115/SV12.webp",
+    "etchMap": "assets/foil/maps/sm115/SV12-etch.webp",
+    "tcgplayerId": 197766,
+    "market": 6.84
+  },
+  {
+    "id": "sm115-SV13",
+    "name": "Voltorb",
+    "number": "SV13",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Usually found in power plants. Easily mistaken for a Poké Ball, it has zapped many people.",
+    "image": "assets/cards/sm115/SV13.webp",
+    "imageSmall": "assets/cards/sm115/SV13-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Shock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Floating Electrons",
+        "text": "If this Pokémon has any Energy attached to it, it has no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV13/large",
+    "foilMap": "assets/foil/maps/sm115/SV13.webp",
+    "etchMap": "assets/foil/maps/sm115/SV13-etch.webp",
+    "tcgplayerId": 197767,
+    "market": 4.08
+  },
+  {
+    "id": "sm115-SV14",
+    "name": "Xurkitree",
+    "number": "SV14",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Naoki Saito",
+    "flavorText": "It appeared from the Ultra Wormhole. It raided a power plant, so people think it energizes itself with electricity.",
+    "image": "assets/cards/sm115/SV14.webp",
+    "imageSmall": "assets/cards/sm115/SV14-sm.webp",
+    "attacks": [
+      {
+        "name": "Dazzle Blast",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Cablegram",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "If you have exactly 3 Prize cards remaining, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV14/large",
+    "foilMap": "assets/foil/maps/sm115/SV14.webp",
+    "etchMap": "assets/foil/maps/sm115/SV14-etch.webp",
+    "tcgplayerId": 197768,
+    "market": 5.33
+  },
+  {
+    "id": "sm115-SV15",
+    "name": "Seviper",
+    "number": "SV15",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "SATOSHI NAKAI",
+    "flavorText": "In battle, it uses its bladed tail to counter any Zangoose. It secretes a deadly venom in its tail.",
+    "image": "assets/cards/sm115/SV15.webp",
+    "imageSmall": "assets/cards/sm115/SV15-sm.webp",
+    "attacks": [
+      {
+        "name": "Venomous Fang",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "More Poison",
+        "text": "Put 1 more damage counter on your opponent's Poisoned Pokémon between turns.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV15/large",
+    "foilMap": "assets/foil/maps/sm115/SV15.webp",
+    "etchMap": "assets/foil/maps/sm115/SV15-etch.webp",
+    "tcgplayerId": 197769,
+    "market": 2.33
+  },
+  {
+    "id": "sm115-SV16",
+    "name": "Shuppet",
+    "number": "SV16",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "It loves vengeful emotions and hangs in rows under the eaves of houses where vengeful people live.",
+    "image": "assets/cards/sm115/SV16.webp",
+    "imageSmall": "assets/cards/sm115/SV16-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Will-O-Wisp",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV16/large",
+    "foilMap": "assets/foil/maps/sm115/SV16.webp",
+    "etchMap": "assets/foil/maps/sm115/SV16-etch.webp",
+    "tcgplayerId": 197771,
+    "market": 4.41
+  },
+  {
+    "id": "sm115-SV17",
+    "name": "Inkay",
+    "number": "SV17",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It flashes the light-emitting spots on its body, which drains its opponent's will to fight. It takes the opportunity to scuttle away and hide.",
+    "image": "assets/cards/sm115/SV17.webp",
+    "imageSmall": "assets/cards/sm115/SV17-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnosis",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV17/large",
+    "foilMap": "assets/foil/maps/sm115/SV17.webp",
+    "etchMap": "assets/foil/maps/sm115/SV17-etch.webp",
+    "tcgplayerId": 197772,
+    "market": 2.61
+  },
+  {
+    "id": "sm115-SV18",
+    "name": "Malamar",
+    "number": "SV18",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Hideki Ishikawa",
+    "flavorText": "It lures prey close with hypnotic motions, then wraps its tentacles around it before finishing it off with digestive fluids.",
+    "evolvesFrom": "Inkay",
+    "image": "assets/cards/sm115/SV18.webp",
+    "imageSmall": "assets/cards/sm115/SV18-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Sphere",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Psychic Recharge",
+        "text": "Once during your turn (before your attack), you may attach a Psychic Energy card from your discard pile to 1 of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV18/large",
+    "foilMap": "assets/foil/maps/sm115/SV18.webp",
+    "etchMap": "assets/foil/maps/sm115/SV18-etch.webp",
+    "tcgplayerId": 197773,
+    "market": 2.74
+  },
+  {
+    "id": "sm115-SV19",
+    "name": "Poipole",
+    "number": "SV19",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Akira Komayama",
+    "flavorText": "This Ultra Beast is well enough liked to be chosen as a first partner in its own world.",
+    "image": "assets/cards/sm115/SV19.webp",
+    "imageSmall": "assets/cards/sm115/SV19-sm.webp",
+    "attacks": [
+      {
+        "name": "Spit Poison",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      },
+      {
+        "name": "Knockout Reviver",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, if this Pokémon is Knocked Out, your opponent can't take any Prize cards for it."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV19/large",
+    "foilMap": "assets/foil/maps/sm115/SV19.webp",
+    "etchMap": "assets/foil/maps/sm115/SV19-etch.webp",
+    "tcgplayerId": 197775,
+    "market": 6.68
+  },
+  {
+    "id": "sm115-SV20",
+    "name": "Sudowoodo",
+    "number": "SV20",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "To avoid attack, it mimics a tree. It will run off if splashed with water, which it hates.",
+    "image": "assets/cards/sm115/SV20.webp",
+    "imageSmall": "assets/cards/sm115/SV20-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Throw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Roadblock",
+        "text": "Your opponent can't have more than 4 Benched Pokémon. If they have 5 or more Benched Pokémon, they discard Benched Pokémon until they have 4 Pokémon on the Bench. If more than one effect changes the number of Benched Pokémon allowed, use the smaller number.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV20/large",
+    "foilMap": "assets/foil/maps/sm115/SV20.webp",
+    "etchMap": "assets/foil/maps/sm115/SV20-etch.webp",
+    "tcgplayerId": 197777,
+    "market": 4.51
+  },
+  {
+    "id": "sm115-SV21",
+    "name": "Riolu",
+    "number": "SV21",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Misa Tsutsui",
+    "flavorText": "It's tough enough to run right through the night, and it's also a hard worker, but it's still just a youngster.",
+    "image": "assets/cards/sm115/SV21.webp",
+    "imageSmall": "assets/cards/sm115/SV21-sm.webp",
+    "attacks": [
+      {
+        "name": "Detect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      },
+      {
+        "name": "Jab",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV21/large",
+    "foilMap": "assets/foil/maps/sm115/SV21.webp",
+    "etchMap": "assets/foil/maps/sm115/SV21-etch.webp",
+    "tcgplayerId": 197778,
+    "market": 12.14
+  },
+  {
+    "id": "sm115-SV22",
+    "name": "Lucario",
+    "number": "SV22",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Kouki Saitou",
+    "flavorText": "They can detect the species of a living being—and its emotions—from over half a mile away. They control auras and hunt their prey in packs.",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/sm115/SV22.webp",
+    "imageSmall": "assets/cards/sm115/SV22-sm.webp",
+    "attacks": [
+      {
+        "name": "Missile Jab",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Precognitive Aura",
+        "text": "Once during your turn (before your attack), if you have Garchomp in play, you may search your deck for a card and put it into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV22/large",
+    "foilMap": "assets/foil/maps/sm115/SV22.webp",
+    "etchMap": "assets/foil/maps/sm115/SV22-etch.webp",
+    "tcgplayerId": 197779,
+    "market": 22.12
+  },
+  {
+    "id": "sm115-SV23",
+    "name": "Rockruff",
+    "number": "SV23",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "This Pokémon has lived with people since times long ago. It can sense when its Trainer is in the dumps and will stick close by its Trainer's side.",
+    "image": "assets/cards/sm115/SV23.webp",
+    "imageSmall": "assets/cards/sm115/SV23-sm.webp",
+    "attacks": [
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV23/large",
+    "foilMap": "assets/foil/maps/sm115/SV23.webp",
+    "etchMap": "assets/foil/maps/sm115/SV23-etch.webp",
+    "tcgplayerId": 197781,
+    "market": 5.39
+  },
+  {
+    "id": "sm115-SV24",
+    "name": "Buzzwole",
+    "number": "SV24",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Shin Nagasawa",
+    "flavorText": "A mysterious life-form called an Ultra Beast. Witnesses saw it pulverize a dump truck with a single punch.",
+    "image": "assets/cards/sm115/SV24.webp",
+    "imageSmall": "assets/cards/sm115/SV24-sm.webp",
+    "attacks": [
+      {
+        "name": "Sledgehammer",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30+",
+        "text": "If your opponent has exactly 4 Prize cards remaining, this attack does 90 more damage."
+      },
+      {
+        "name": "Swing Around",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip 2 coins. This attack does 20 more damage for each heads."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV24/large",
+    "foilMap": "assets/foil/maps/sm115/SV24.webp",
+    "etchMap": "assets/foil/maps/sm115/SV24-etch.webp",
+    "tcgplayerId": 197783,
+    "market": 3.79
+  },
+  {
+    "id": "sm115-SV25",
+    "name": "Zorua",
+    "number": "SV25",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Saya Tsuruta",
+    "flavorText": "It changes so it looks like its foe, tricks it, and then uses that opportunity to flee.",
+    "image": "assets/cards/sm115/SV25.webp",
+    "imageSmall": "assets/cards/sm115/SV25-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV25/large",
+    "foilMap": "assets/foil/maps/sm115/SV25.webp",
+    "etchMap": "assets/foil/maps/sm115/SV25-etch.webp",
+    "tcgplayerId": 197784,
+    "market": 14.01
+  },
+  {
+    "id": "sm115-SV26",
+    "name": "Guzzlord",
+    "number": "SV26",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "160",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "A dangerous Ultra Beast, it appears to be eating constantly, but for some reason its droppings have never been found.",
+    "image": "assets/cards/sm115/SV26.webp",
+    "imageSmall": "assets/cards/sm115/SV26-sm.webp",
+    "attacks": [
+      {
+        "name": "Lord's Valley",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "160",
+        "text": "If you have exactly 2, 4, or 6 Prize cards remaining, discard the top 10 cards of your deck."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV26/large",
+    "foilMap": "assets/foil/maps/sm115/SV26.webp",
+    "etchMap": "assets/foil/maps/sm115/SV26-etch.webp",
+    "tcgplayerId": 197786,
+    "market": 5.96
+  },
+  {
+    "id": "sm115-SV27",
+    "name": "Magnemite",
+    "number": "SV27",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "SATOSHI NAKAI",
+    "flavorText": "It sends out electromagnetic waves, which let it float through the air. Touching it while it's eating electricity will give you a full-body shock.",
+    "image": "assets/cards/sm115/SV27.webp",
+    "imageSmall": "assets/cards/sm115/SV27-sm.webp",
+    "attacks": [
+      {
+        "name": "Searching Magnet",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 Metal Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV27/large",
+    "foilMap": "assets/foil/maps/sm115/SV27.webp",
+    "etchMap": "assets/foil/maps/sm115/SV27-etch.webp",
+    "tcgplayerId": 197788,
+    "market": 2.84
+  },
+  {
+    "id": "sm115-SV28",
+    "name": "Magneton",
+    "number": "SV28",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "It has about three times the electrical power of Magnemite. For some reason, outbreaks of this Pokémon happen when lots of sunspots appear.",
+    "evolvesFrom": "Magnemite",
+    "image": "assets/cards/sm115/SV28.webp",
+    "imageSmall": "assets/cards/sm115/SV28-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Zap Cannon",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon can't use Zap Cannon during your next turn."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV28/large",
+    "foilMap": "assets/foil/maps/sm115/SV28.webp",
+    "etchMap": "assets/foil/maps/sm115/SV28-etch.webp",
+    "tcgplayerId": 197790,
+    "market": 5.46
+  },
+  {
+    "id": "sm115-SV29",
+    "name": "Magnezone",
+    "number": "SV29",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "150",
+    "artist": "Misa Tsutsui",
+    "flavorText": "As it zooms through the sky, this Pokémon seems to be receiving signals of unknown origin, while transmitting signals of unknown purpose.",
+    "evolvesFrom": "Magneton",
+    "image": "assets/cards/sm115/SV29.webp",
+    "imageSmall": "assets/cards/sm115/SV29-sm.webp",
+    "attacks": [
+      {
+        "name": "Zap Cannon",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't use Zap Cannon during your next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magnetic Circuit",
+        "text": "As often as you like during your turn (before your attack), you may attach a Metal Energy card from your hand to 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV29/large",
+    "foilMap": "assets/foil/maps/sm115/SV29.webp",
+    "etchMap": "assets/foil/maps/sm115/SV29-etch.webp",
+    "tcgplayerId": 197792,
+    "market": 3.01
+  },
+  {
+    "id": "sm115-SV30",
+    "name": "Beldum",
+    "number": "SV30",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Mizue",
+    "flavorText": "Its cells are all magnets. It uses magnetism to communicate with others of its kind.",
+    "image": "assets/cards/sm115/SV30.webp",
+    "imageSmall": "assets/cards/sm115/SV30-sm.webp",
+    "attacks": [
+      {
+        "name": "Core Beam",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20",
+        "text": "Discard a Metal Energy from this Pokémon."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV30/large",
+    "foilMap": "assets/foil/maps/sm115/SV30.webp",
+    "etchMap": "assets/foil/maps/sm115/SV30-etch.webp",
+    "tcgplayerId": 197793,
+    "market": 3.14
+  },
+  {
+    "id": "sm115-SV31",
+    "name": "Metang",
+    "number": "SV31",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Saya Tsuruta",
+    "flavorText": "When two Beldum link together, their psychic power is doubled. Their intelligence, however, remains unchanged.",
+    "evolvesFrom": "Beldum",
+    "image": "assets/cards/sm115/SV31.webp",
+    "imageSmall": "assets/cards/sm115/SV31-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Core Beam",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard a Metal Energy from this Pokémon."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV31/large",
+    "foilMap": "assets/foil/maps/sm115/SV31.webp",
+    "etchMap": "assets/foil/maps/sm115/SV31-etch.webp",
+    "tcgplayerId": 197794,
+    "market": 5.61
+  },
+  {
+    "id": "sm115-SV32",
+    "name": "Celesteela",
+    "number": "SV32",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "140",
+    "artist": "Kouki Saitou",
+    "flavorText": "One kind of Ultra Beast. Witnesses have seen it burn down a forest by expelling gas from its two arms.",
+    "image": "assets/cards/sm115/SV32.webp",
+    "imageSmall": "assets/cards/sm115/SV32-sm.webp",
+    "attacks": [
+      {
+        "name": "Moon Raker",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "If the total of both players' remaining Prize cards is exactly 6, this attack can be used for Metal."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV32/large",
+    "foilMap": "assets/foil/maps/sm115/SV32.webp",
+    "etchMap": "assets/foil/maps/sm115/SV32-etch.webp",
+    "tcgplayerId": 197796,
+    "market": 5.52
+  },
+  {
+    "id": "sm115-SV33",
+    "name": "Kartana",
+    "number": "SV33",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Anesaki Dynamic",
+    "flavorText": "One of the Ultra Beast life-forms, it was observed cutting down a gigantic steel tower with one stroke of its blade.",
+    "image": "assets/cards/sm115/SV33.webp",
+    "imageSmall": "assets/cards/sm115/SV33-sm.webp",
+    "attacks": [
+      {
+        "name": "Divine Paper",
+        "cost": [
+          "Metal",
+          "Metal"
+        ],
+        "damage": "40+",
+        "text": "If your opponent has exactly 6 Prize cards remaining, this attack does 90 more damage."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV33/large",
+    "foilMap": "assets/foil/maps/sm115/SV33.webp",
+    "etchMap": "assets/foil/maps/sm115/SV33-etch.webp",
+    "tcgplayerId": 197798,
+    "market": 4.24
+  },
+  {
+    "id": "sm115-SV34",
+    "name": "Ralts",
+    "number": "SV34",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "60",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "If its horns capture the warm feelings of people or Pokémon, its body warms up slightly.",
+    "image": "assets/cards/sm115/SV34.webp",
+    "imageSmall": "assets/cards/sm115/SV34-sm.webp",
+    "attacks": [
+      {
+        "name": "Draining Kiss",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "10",
+        "text": "Heal 10 damage from this Pokémon."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV34/large",
+    "foilMap": "assets/foil/maps/sm115/SV34.webp",
+    "etchMap": "assets/foil/maps/sm115/SV34-etch.webp",
+    "tcgplayerId": 197799,
+    "market": 6.27
+  },
+  {
+    "id": "sm115-SV35",
+    "name": "Kirlia",
+    "number": "SV35",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "80",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "The cheerful spirit of its Trainer gives it energy for its psychokinetic power. It spins and dances when happy.",
+    "evolvesFrom": "Ralts",
+    "image": "assets/cards/sm115/SV35.webp",
+    "imageSmall": "assets/cards/sm115/SV35-sm.webp",
+    "attacks": [
+      {
+        "name": "Smack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV35/large",
+    "foilMap": "assets/foil/maps/sm115/SV35.webp",
+    "etchMap": "assets/foil/maps/sm115/SV35-etch.webp",
+    "tcgplayerId": 197801,
+    "market": 6.31
+  },
+  {
+    "id": "sm115-SV36",
+    "name": "Diancie",
+    "number": "SV36",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "90",
+    "artist": "Akira Komayama",
+    "flavorText": "A sudden transformation of Carbink, its pink, glimmering body is said to be the loveliest sight in the whole world.",
+    "image": "assets/cards/sm115/SV36.webp",
+    "imageSmall": "assets/cards/sm115/SV36-sm.webp",
+    "attacks": [
+      {
+        "name": "Sparkling Wish",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck."
+      },
+      {
+        "name": "Diamond Storm",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Heal 30 damage from each of your Fairy Pokémon."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV36/large",
+    "foilMap": "assets/foil/maps/sm115/SV36.webp",
+    "etchMap": "assets/foil/maps/sm115/SV36-etch.webp",
+    "tcgplayerId": 197802,
+    "market": 5.67
+  },
+  {
+    "id": "sm115-SV37",
+    "name": "Altaria",
+    "number": "SV37",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "kirisAki",
+    "flavorText": "On sunny days, it flies freely through the sky and blends into the clouds. It sings in a beautiful soprano.",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/sm115/SV37.webp",
+    "imageSmall": "assets/cards/sm115/SV37-sm.webp",
+    "attacks": [
+      {
+        "name": "Pierce",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fight Song",
+        "text": "Your Dragon Pokémon's attacks do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV37/large",
+    "foilMap": "assets/foil/maps/sm115/SV37.webp",
+    "etchMap": "assets/foil/maps/sm115/SV37-etch.webp",
+    "tcgplayerId": 197804,
+    "market": 7.44
+  },
+  {
+    "id": "sm115-SV38",
+    "name": "Gible",
+    "number": "SV38",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "50",
+    "artist": "Saya Tsuruta",
+    "flavorText": "It skulks in caves, and when prey or an enemy passes by, it leaps out and chomps them. The force of its attack sometimes chips its teeth.",
+    "image": "assets/cards/sm115/SV38.webp",
+    "imageSmall": "assets/cards/sm115/SV38-sm.webp",
+    "attacks": [
+      {
+        "name": "Ascension",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV38/large",
+    "foilMap": "assets/foil/maps/sm115/SV38.webp",
+    "etchMap": "assets/foil/maps/sm115/SV38-etch.webp",
+    "tcgplayerId": 197805,
+    "market": 7.2
+  },
+  {
+    "id": "sm115-SV39",
+    "name": "Gabite",
+    "number": "SV39",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Shiny objects are its passion. It can be found in its cave, scarcely moving, its gaze fixed on the jewels it's amassed or Carbink it has caught.",
+    "evolvesFrom": "Gible",
+    "image": "assets/cards/sm115/SV39.webp",
+    "imageSmall": "assets/cards/sm115/SV39-sm.webp",
+    "attacks": [
+      {
+        "name": "Ascension",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV39/large",
+    "foilMap": "assets/foil/maps/sm115/SV39.webp",
+    "etchMap": "assets/foil/maps/sm115/SV39-etch.webp",
+    "tcgplayerId": 197807,
+    "market": 6.36
+  },
+  {
+    "id": "sm115-SV40",
+    "name": "Garchomp",
+    "number": "SV40",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "150",
+    "artist": "Shin Nagasawa",
+    "flavorText": "The protuberances on its head serve as sensors. It can even detect distant prey.",
+    "evolvesFrom": "Gabite",
+    "image": "assets/cards/sm115/SV40.webp",
+    "imageSmall": "assets/cards/sm115/SV40-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Dive",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Royal Blades",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If you played Cynthia from your hand during this turn, this attack does 100 more damage."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV40/large",
+    "foilMap": "assets/foil/maps/sm115/SV40.webp",
+    "etchMap": "assets/foil/maps/sm115/SV40-etch.webp",
+    "tcgplayerId": 197809,
+    "market": 12.02
+  },
+  {
+    "id": "sm115-SV41",
+    "name": "Eevee",
+    "number": "SV41",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "kirisAki",
+    "flavorText": "Current studies show it can evolve into an incredible eight different species of Pokémon.",
+    "image": "assets/cards/sm115/SV41.webp",
+    "imageSmall": "assets/cards/sm115/SV41-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, draw a card."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Evolution",
+        "text": "When you attach a basic Energy card from your hand to this Pokémon during your turn, you may search your deck for a card that evolves from this Pokémon that is the same type as that Energy card and put it onto this Pokémon to evolve it. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV41/large",
+    "foilMap": "assets/foil/maps/sm115/SV41.webp",
+    "etchMap": "assets/foil/maps/sm115/SV41-etch.webp",
+    "tcgplayerId": 197811,
+    "market": 50.43
+  },
+  {
+    "id": "sm115-SV42",
+    "name": "Swablu",
+    "number": "SV42",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It constantly grooms its cotton-like wings. It takes a shower to clean itself if it becomes dirty.",
+    "image": "assets/cards/sm115/SV42.webp",
+    "imageSmall": "assets/cards/sm115/SV42-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV42/large",
+    "foilMap": "assets/foil/maps/sm115/SV42.webp",
+    "etchMap": "assets/foil/maps/sm115/SV42-etch.webp",
+    "tcgplayerId": 197813,
+    "market": 6.43
+  },
+  {
+    "id": "sm115-SV43",
+    "name": "Noibat",
+    "number": "SV43",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Mizue",
+    "flavorText": "They live in pitch black caves. Their enormous ears can emit ultrasonic waves of 200,000 hertz.",
+    "image": "assets/cards/sm115/SV43.webp",
+    "imageSmall": "assets/cards/sm115/SV43-sm.webp",
+    "attacks": [
+      {
+        "name": "Agility",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV43/large",
+    "foilMap": "assets/foil/maps/sm115/SV43.webp",
+    "etchMap": "assets/foil/maps/sm115/SV43-etch.webp",
+    "tcgplayerId": 197815,
+    "market": 4.75
+  },
+  {
+    "id": "sm115-SV44",
+    "name": "Oranguru",
+    "number": "SV44",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Akira Komayama",
+    "flavorText": "Deep in the jungle, high in the lofty canopy, this Pokémon abides. On rare occasions, it shows up at the beach to match wits with Slowking.",
+    "image": "assets/cards/sm115/SV44.webp",
+    "imageSmall": "assets/cards/sm115/SV44-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage times the amount of Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Instruct",
+        "text": "Once during your turn (before your attack), you may draw cards until you have 3 cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV44/large",
+    "foilMap": "assets/foil/maps/sm115/SV44.webp",
+    "etchMap": "assets/foil/maps/sm115/SV44-etch.webp",
+    "tcgplayerId": 197817,
+    "market": 2.21
+  },
+  {
+    "id": "sm115-SV45",
+    "name": "Type: Null",
+    "number": "SV45",
+    "rarity": "Rare Shiny",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Shin Nagasawa",
+    "flavorText": "The heavy control mask it wears suppresses its intrinsic capabilities. This Pokémon has some hidden special power.",
+    "image": "assets/cards/sm115/SV45.webp",
+    "imageSmall": "assets/cards/sm115/SV45-sm.webp",
+    "attacks": [
+      {
+        "name": "Armor Press",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV45/large",
+    "foilMap": "assets/foil/maps/sm115/SV45.webp",
+    "etchMap": "assets/foil/maps/sm115/SV45-etch.webp",
+    "tcgplayerId": 197819,
+    "market": 5.59
+  },
+  {
+    "id": "sm115-SV46",
+    "name": "Leafeon-GX",
+    "number": "SV46",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm115/SV46.webp",
+    "imageSmall": "assets/cards/sm115/SV46-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Beam",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      },
+      {
+        "name": "Grand Bloom-GX",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "For each of your Benched Basic Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Breath of the Leaves",
+        "text": "If this Pokémon is your Active Pokémon, once during your turn (before your attack), you may heal 50 damage from 1 of your Pokémon that has any Energy attached to it.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV46/large",
+    "foilMap": "assets/foil/maps/sm115/SV46.webp",
+    "etchMap": "assets/foil/maps/sm115/SV46-etch.webp",
+    "tcgplayerId": 197770,
+    "market": 75.31
+  },
+  {
+    "id": "sm115-SV47",
+    "name": "Decidueye-GX",
+    "number": "SV47",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Dartrix",
+    "image": "assets/cards/sm115/SV47.webp",
+    "imageSmall": "assets/cards/sm115/SV47-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      },
+      {
+        "name": "Hollow Hunt-GX",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Put 3 cards from your discard pile into your hand. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Feather Arrow",
+        "text": "Once during your turn (before your attack), you may put 2 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV47/large",
+    "foilMap": "assets/foil/maps/sm115/SV47.webp",
+    "etchMap": "assets/foil/maps/sm115/SV47-etch.webp",
+    "tcgplayerId": 197774,
+    "market": 19.91
+  },
+  {
+    "id": "sm115-SV48",
+    "name": "Golisopod-GX",
+    "number": "SV48",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Wimpod",
+    "image": "assets/cards/sm115/SV48.webp",
+    "imageSmall": "assets/cards/sm115/SV48-sm.webp",
+    "attacks": [
+      {
+        "name": "First Impression",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30+",
+        "text": "If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Armor Press",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Crossing Cut-GX",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV48/large",
+    "foilMap": "assets/foil/maps/sm115/SV48.webp",
+    "etchMap": "assets/foil/maps/sm115/SV48-etch.webp",
+    "tcgplayerId": 197776,
+    "market": 10.89
+  },
+  {
+    "id": "sm115-SV49",
+    "name": "Charizard-GX",
+    "number": "SV49",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/sm115/SV49.webp",
+    "imageSmall": "assets/cards/sm115/SV49-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Crimson Storm",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": "Discard 3 Fire Energy from this Pokémon."
+      },
+      {
+        "name": "Raging Out-GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard the top 10 cards of your opponent's deck. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV49/large",
+    "foilMap": "assets/foil/maps/sm115/SV49.webp",
+    "etchMap": "assets/foil/maps/sm115/SV49-etch.webp",
+    "tcgplayerId": 197780,
+    "market": 768.1
+  },
+  {
+    "id": "sm115-SV50",
+    "name": "Ho-Oh-GX",
+    "number": "SV50",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV50.webp",
+    "imageSmall": "assets/cards/sm115/SV50-sm.webp",
+    "attacks": [
+      {
+        "name": "Sacred Fire",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Phoenix Burn",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This Pokémon can't use Phoenix Burn during your next turn."
+      },
+      {
+        "name": "Eternal Light-GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 3 in any combination of Fire Pokémon-GX or Fire Pokémon-EX from your discard pile onto your Bench. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV50/large",
+    "foilMap": "assets/foil/maps/sm115/SV50.webp",
+    "etchMap": "assets/foil/maps/sm115/SV50-etch.webp",
+    "tcgplayerId": 197782,
+    "market": 37.67
+  },
+  {
+    "id": "sm115-SV51",
+    "name": "Reshiram-GX",
+    "number": "SV51",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "PLANETA Igarashi",
+    "image": "assets/cards/sm115/SV51.webp",
+    "imageSmall": "assets/cards/sm115/SV51-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Fire Energy cards and attach them to this Pokémon. Then, shuffle your deck."
+      },
+      {
+        "name": "Scorching Column",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "Your opponent's Active Pokémon is now Burned."
+      },
+      {
+        "name": "Vermilion-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "You may attach up to 5 Fire Energy cards from your hand to your Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV51/large",
+    "foilMap": "assets/foil/maps/sm115/SV51.webp",
+    "etchMap": "assets/foil/maps/sm115/SV51-etch.webp",
+    "tcgplayerId": 197785,
+    "market": 58.11
+  },
+  {
+    "id": "sm115-SV52",
+    "name": "Turtonator-GX",
+    "number": "SV52",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV52.webp",
+    "imageSmall": "assets/cards/sm115/SV52-sm.webp",
+    "attacks": [
+      {
+        "name": "Shell Trap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, if this Pokémon is damaged by an attack (even if this Pokémon is Knocked Out), put 8 damage counters on the Attacking Pokémon."
+      },
+      {
+        "name": "Bright Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Discard 2 Fire Energy from this Pokémon."
+      },
+      {
+        "name": "Nitro Tank-GX",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Attach 5 Fire Energy cards from your discard pile to your Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV52/large",
+    "foilMap": "assets/foil/maps/sm115/SV52.webp",
+    "etchMap": "assets/foil/maps/sm115/SV52-etch.webp",
+    "tcgplayerId": 197787,
+    "market": 8.41
+  },
+  {
+    "id": "sm115-SV53",
+    "name": "Alolan Ninetales-GX",
+    "number": "SV53",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Alolan Vulpix",
+    "image": "assets/cards/sm115/SV53.webp",
+    "imageSmall": "assets/cards/sm115/SV53-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Blade",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Blizzard Edge",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "Discard 2 Energy from this Pokémon."
+      },
+      {
+        "name": "Ice Path-GX",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Move all damage counters from this Pokémon to your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV53/large",
+    "foilMap": "assets/foil/maps/sm115/SV53.webp",
+    "etchMap": "assets/foil/maps/sm115/SV53-etch.webp",
+    "tcgplayerId": 197789,
+    "market": 53.89
+  },
+  {
+    "id": "sm115-SV54",
+    "name": "Articuno-GX",
+    "number": "SV54",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV54.webp",
+    "imageSmall": "assets/cards/sm115/SV54-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Wing",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Cold Crush-GX",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Discard all Energy from both Active Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Legendary Ascent",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may switch it with your Active Pokémon. If you do, move any number of Water Energy from your other Pokémon to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV54/large",
+    "foilMap": "assets/foil/maps/sm115/SV54.webp",
+    "etchMap": "assets/foil/maps/sm115/SV54-etch.webp",
+    "tcgplayerId": 197791,
+    "market": 46.85
+  },
+  {
+    "id": "sm115-SV55",
+    "name": "Glaceon-GX",
+    "number": "SV55",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm115/SV55.webp",
+    "imageSmall": "assets/cards/sm115/SV55-sm.webp",
+    "attacks": [
+      {
+        "name": "Frost Bullet",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Polar Spear-GX",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each damage counter on your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Freezing Gaze",
+        "text": "As long as this Pokémon is your Active Pokémon, your opponent's Pokémon-GX and Pokémon-EX in play, in their hand, and in their discard pile have no Abilities, except for Freezing Gaze.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV55/large",
+    "foilMap": "assets/foil/maps/sm115/SV55.webp",
+    "etchMap": "assets/foil/maps/sm115/SV55-etch.webp",
+    "tcgplayerId": 197795,
+    "market": 57.55
+  },
+  {
+    "id": "sm115-SV56",
+    "name": "Greninja-GX",
+    "number": "SV56",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/sm115/SV56.webp",
+    "imageSmall": "assets/cards/sm115/SV56-sm.webp",
+    "attacks": [
+      {
+        "name": "Haze Slash",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "You may shuffle this Pokémon and all cards attached to it into your deck."
+      },
+      {
+        "name": "Shadowy Hunter-GX",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 130 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shuriken Flurry",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may put 3 damage counters on 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV56/large",
+    "foilMap": "assets/foil/maps/sm115/SV56.webp",
+    "etchMap": "assets/foil/maps/sm115/SV56-etch.webp",
+    "tcgplayerId": 197797,
+    "market": 114.38
+  },
+  {
+    "id": "sm115-SV57",
+    "name": "Electrode-GX",
+    "number": "SV57",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Voltorb",
+    "image": "assets/cards/sm115/SV57.webp",
+    "imageSmall": "assets/cards/sm115/SV57-sm.webp",
+    "attacks": [
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Crush and Burn-GX",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Discard any amount of Energy from your Pokémon. This attack does 50 more damage for each card you discarded in this way. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Extra Energy Bomb",
+        "text": "Once during your turn (before your attack), you may attach 5 Energy cards from your discard pile to your Pokémon, except Pokémon-GX or Pokémon-EX, in any way you like. If you do, this Pokémon is Knocked Out.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV57/large",
+    "foilMap": "assets/foil/maps/sm115/SV57.webp",
+    "etchMap": "assets/foil/maps/sm115/SV57-etch.webp",
+    "tcgplayerId": 197800,
+    "market": 14.91
+  },
+  {
+    "id": "sm115-SV58",
+    "name": "Xurkitree-GX",
+    "number": "SV58",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV58.webp",
+    "imageSmall": "assets/cards/sm115/SV58-sm.webp",
+    "attacks": [
+      {
+        "name": "Rumbling Wires",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Lighting-GX",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals their hand. Add a card you find there to their Prize cards face down. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flashing Head",
+        "text": "Prevent all damage done to this Pokémon by attacks from your opponent's Pokémon that have any Special Energy attached to them.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV58/large",
+    "foilMap": "assets/foil/maps/sm115/SV58.webp",
+    "etchMap": "assets/foil/maps/sm115/SV58-etch.webp",
+    "tcgplayerId": 197803,
+    "market": 16.87
+  },
+  {
+    "id": "sm115-SV59",
+    "name": "Mewtwo-GX",
+    "number": "SV59",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV59.webp",
+    "imageSmall": "assets/cards/sm115/SV59-sm.webp",
+    "attacks": [
+      {
+        "name": "Full Burst",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage times the amount of Energy attached to this Pokémon."
+      },
+      {
+        "name": "Super Absorption",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Psystrike-GX",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "200",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV59/large",
+    "foilMap": "assets/foil/maps/sm115/SV59.webp",
+    "etchMap": "assets/foil/maps/sm115/SV59-etch.webp",
+    "tcgplayerId": 197806,
+    "market": 137.72
+  },
+  {
+    "id": "sm115-SV60",
+    "name": "Espeon-GX",
+    "number": "SV60",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm115/SV60.webp",
+    "imageSmall": "assets/cards/sm115/SV60-sm.webp",
+    "attacks": [
+      {
+        "name": "Psybeam",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 30 more damage times the number of Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Divide-GX",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 10 damage counters on your opponent's Pokémon in any way you like. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV60/large",
+    "foilMap": "assets/foil/maps/sm115/SV60.webp",
+    "etchMap": "assets/foil/maps/sm115/SV60-etch.webp",
+    "tcgplayerId": 197808,
+    "market": 134.09
+  },
+  {
+    "id": "sm115-SV61",
+    "name": "Banette-GX",
+    "number": "SV61",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Shuppet",
+    "image": "assets/cards/sm115/SV61.webp",
+    "imageSmall": "assets/cards/sm115/SV61-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Chant",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30+",
+        "text": "This attack does 10 more damage for each Supporter card in your discard pile. You can't add more than 100 damage in this way."
+      },
+      {
+        "name": "Tomb Hunt-GX",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 3 cards from your discard pile into your hand. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shady Move",
+        "text": "Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may move 1 damage counter from 1 Pokémon to another Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV61/large",
+    "foilMap": "assets/foil/maps/sm115/SV61.webp",
+    "etchMap": "assets/foil/maps/sm115/SV61-etch.webp",
+    "tcgplayerId": 197810,
+    "market": 11.77
+  },
+  {
+    "id": "sm115-SV62",
+    "name": "Nihilego-GX",
+    "number": "SV62",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV62.webp",
+    "imageSmall": "assets/cards/sm115/SV62-sm.webp",
+    "attacks": [
+      {
+        "name": "Lock Up",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "120",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Symbiont-GX",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Add the top 2 cards of your opponent's deck to their Prize cards. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Empty Light",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may leave both Active Pokémon Confused and Poisoned.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV62/large",
+    "foilMap": "assets/foil/maps/sm115/SV62.webp",
+    "etchMap": "assets/foil/maps/sm115/SV62-etch.webp",
+    "tcgplayerId": 197812,
+    "market": 20.53
+  },
+  {
+    "id": "sm115-SV63",
+    "name": "Naganadel-GX",
+    "number": "SV63",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Poipole",
+    "image": "assets/cards/sm115/SV63.webp",
+    "imageSmall": "assets/cards/sm115/SV63-sm.webp",
+    "attacks": [
+      {
+        "name": "Beast Raid",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage for each of your Ultra Beasts in play."
+      },
+      {
+        "name": "Jet Needle",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      },
+      {
+        "name": "Stinger-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Both players shuffle their Prize cards into their decks. Then, each player puts the top 3 cards of their deck face down as their Prize cards. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV63/large",
+    "foilMap": "assets/foil/maps/sm115/SV63.webp",
+    "etchMap": "assets/foil/maps/sm115/SV63-etch.webp",
+    "tcgplayerId": 197814,
+    "market": 14.88
+  },
+  {
+    "id": "sm115-SV64",
+    "name": "Lucario-GX",
+    "number": "SV64",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Riolu",
+    "image": "assets/cards/sm115/SV64.webp",
+    "imageSmall": "assets/cards/sm115/SV64-sm.webp",
+    "attacks": [
+      {
+        "name": "Aura Strike",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30+",
+        "text": "If this Pokémon evolved from Riolu during this turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Cyclone Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Cantankerous Beatdown-GX",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each damage counter on this Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV64/large",
+    "foilMap": "assets/foil/maps/sm115/SV64.webp",
+    "etchMap": "assets/foil/maps/sm115/SV64-etch.webp",
+    "tcgplayerId": 197816,
+    "market": 85.89
+  },
+  {
+    "id": "sm115-SV65",
+    "name": "Zygarde-GX",
+    "number": "SV65",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV65.webp",
+    "imageSmall": "assets/cards/sm115/SV65-sm.webp",
+    "attacks": [
+      {
+        "name": "Cell Connector",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Attach 2 Fighting Energy cards from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Land's Wrath",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Verdict-GX",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX during your opponent's next turn. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV65/large",
+    "foilMap": "assets/foil/maps/sm115/SV65.webp",
+    "etchMap": "assets/foil/maps/sm115/SV65-etch.webp",
+    "tcgplayerId": 197818,
+    "market": 38.44
+  },
+  {
+    "id": "sm115-SV66",
+    "name": "Lycanroc-GX",
+    "number": "SV66",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Rockruff",
+    "image": "assets/cards/sm115/SV66.webp",
+    "imageSmall": "assets/cards/sm115/SV66-sm.webp",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      },
+      {
+        "name": "Dangerous Rogue-GX",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each of your opponent's Benched Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bloodthirsty Eyes",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV66/large",
+    "foilMap": "assets/foil/maps/sm115/SV66.webp",
+    "etchMap": "assets/foil/maps/sm115/SV66-etch.webp",
+    "tcgplayerId": 197820,
+    "market": 14.2
+  },
+  {
+    "id": "sm115-SV67",
+    "name": "Lycanroc-GX",
+    "number": "SV67",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Rockruff",
+    "image": "assets/cards/sm115/SV67.webp",
+    "imageSmall": "assets/cards/sm115/SV67-sm.webp",
+    "attacks": [
+      {
+        "name": "Accelerock",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Splintered Shards-GX",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage for each Energy card in your opponent's discard pile. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Twilight Eyes",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may discard an Energy attached to your opponent's Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV67/large",
+    "foilMap": "assets/foil/maps/sm115/SV67.webp",
+    "etchMap": "assets/foil/maps/sm115/SV67-etch.webp",
+    "tcgplayerId": 197821,
+    "market": 20.69
+  },
+  {
+    "id": "sm115-SV68",
+    "name": "Buzzwole-GX",
+    "number": "SV68",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV68.webp",
+    "imageSmall": "assets/cards/sm115/SV68-sm.webp",
+    "attacks": [
+      {
+        "name": "Jet Punch",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Knuckle Impact",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "160",
+        "text": "This Pokémon can't attack during your next turn."
+      },
+      {
+        "name": "Absorption-GX",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40×",
+        "text": "This attack does 40 damage for each of your remaining Prize cards. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV68/large",
+    "foilMap": "assets/foil/maps/sm115/SV68.webp",
+    "etchMap": "assets/foil/maps/sm115/SV68-etch.webp",
+    "tcgplayerId": 197822,
+    "market": 12.4
+  },
+  {
+    "id": "sm115-SV69",
+    "name": "Umbreon-GX",
+    "number": "SV69",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm115/SV69.webp",
+    "imageSmall": "assets/cards/sm115/SV69-sm.webp",
+    "attacks": [
+      {
+        "name": "Strafe",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Shadow Bullet",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Dark Call-GX",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard 2 Energy from your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV69/large",
+    "foilMap": "assets/foil/maps/sm115/SV69.webp",
+    "etchMap": "assets/foil/maps/sm115/SV69-etch.webp",
+    "tcgplayerId": 197823,
+    "market": 321.0
+  },
+  {
+    "id": "sm115-SV70",
+    "name": "Darkrai-GX",
+    "number": "SV70",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV70.webp",
+    "imageSmall": "assets/cards/sm115/SV70-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Cleave",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This attack's damage isn't affected by Resistance."
+      },
+      {
+        "name": "Dead End-GX",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If your opponent's Active Pokémon is affected by a Special Condition, that Pokémon is Knocked Out. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Restoration",
+        "text": "Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put it onto your Bench. Then, attach a Darkness Energy card from your discard pile to this Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV70/large",
+    "foilMap": "assets/foil/maps/sm115/SV70.webp",
+    "etchMap": "assets/foil/maps/sm115/SV70-etch.webp",
+    "tcgplayerId": 197824,
+    "market": 102.82
+  },
+  {
+    "id": "sm115-SV71",
+    "name": "Guzzlord-GX",
+    "number": "SV71",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV71.webp",
+    "imageSmall": "assets/cards/sm115/SV71-sm.webp",
+    "attacks": [
+      {
+        "name": "Eat Sloppily",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Discard the top 5 cards of your deck. If any of those cards are Energy cards, attach them to this Pokémon."
+      },
+      {
+        "name": "Tyrannical Hole",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": ""
+      },
+      {
+        "name": "Glutton-GX",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "100",
+        "text": "If your opponent's Pokémon is Knocked Out by damage from this attack, take 2 more Prize cards. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV71/large",
+    "foilMap": "assets/foil/maps/sm115/SV71.webp",
+    "etchMap": "assets/foil/maps/sm115/SV71-etch.webp",
+    "tcgplayerId": 197825,
+    "market": 16.51
+  },
+  {
+    "id": "sm115-SV72",
+    "name": "Scizor-GX",
+    "number": "SV72",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Scyther",
+    "image": "assets/cards/sm115/SV72.webp",
+    "imageSmall": "assets/cards/sm115/SV72-sm.webp",
+    "attacks": [
+      {
+        "name": "Steel Wing",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Cross-Cut-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 100 more damage. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Danger Perception",
+        "text": "If this Pokémon's remaining HP is 100 or less, its attacks do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV72/large",
+    "foilMap": "assets/foil/maps/sm115/SV72.webp",
+    "etchMap": "assets/foil/maps/sm115/SV72-etch.webp",
+    "tcgplayerId": 197826,
+    "market": 72.75
+  },
+  {
+    "id": "sm115-SV73",
+    "name": "Kartana-GX",
+    "number": "SV73",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV73.webp",
+    "imageSmall": "assets/cards/sm115/SV73-sm.webp",
+    "attacks": [
+      {
+        "name": "Gale Blade",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "You may shuffle this Pokémon and all cards attached to it into your deck."
+      },
+      {
+        "name": "Blade-GX",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Take a Prize card. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Slice Off",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may discard a Special Energy from 1 of your opponent's Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV73/large",
+    "foilMap": "assets/foil/maps/sm115/SV73.webp",
+    "etchMap": "assets/foil/maps/sm115/SV73-etch.webp",
+    "tcgplayerId": 197827,
+    "market": 8.69
+  },
+  {
+    "id": "sm115-SV74",
+    "name": "Stakataka-GX",
+    "number": "SV74",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX",
+      "Ultra Beast"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV74.webp",
+    "imageSmall": "assets/cards/sm115/SV74-sm.webp",
+    "attacks": [
+      {
+        "name": "Gigaton Stomp",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Assembly-GX",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 50 more damage for each Prize card you have taken. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ultra Wall",
+        "text": "Your Ultra Beasts take 10 less damage from your opponent's attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV74/large",
+    "foilMap": "assets/foil/maps/sm115/SV74.webp",
+    "etchMap": "assets/foil/maps/sm115/SV74-etch.webp",
+    "tcgplayerId": 197828,
+    "market": 12.64
+  },
+  {
+    "id": "sm115-SV75",
+    "name": "Gardevoir-GX",
+    "number": "SV75",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Kirlia",
+    "image": "assets/cards/sm115/SV75.webp",
+    "imageSmall": "assets/cards/sm115/SV75-sm.webp",
+    "attacks": [
+      {
+        "name": "Infinite Force",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage times the amount of Energy attached to both Active Pokémon."
+      },
+      {
+        "name": "Twilight-GX",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Shuffle 10 cards from your discard pile into your deck. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Secret Spring",
+        "text": "Once during your turn (before your attack), you may attach a Fairy Energy card from your hand to 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV75/large",
+    "foilMap": "assets/foil/maps/sm115/SV75.webp",
+    "etchMap": "assets/foil/maps/sm115/SV75-etch.webp",
+    "tcgplayerId": 197829,
+    "market": 86.05
+  },
+  {
+    "id": "sm115-SV76",
+    "name": "Sylveon-GX",
+    "number": "SV76",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/sm115/SV76.webp",
+    "imageSmall": "assets/cards/sm115/SV76-sm.webp",
+    "attacks": [
+      {
+        "name": "Magical Ribbon",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Fairy Wind",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": ""
+      },
+      {
+        "name": "Plea-GX",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 2 of your opponent's Benched Pokémon and all cards attached to them into your opponent's hand. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV76/large",
+    "foilMap": "assets/foil/maps/sm115/SV76.webp",
+    "etchMap": "assets/foil/maps/sm115/SV76-etch.webp",
+    "tcgplayerId": 197830,
+    "market": 222.59
+  },
+  {
+    "id": "sm115-SV77",
+    "name": "Altaria-GX",
+    "number": "SV77",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Swablu",
+    "image": "assets/cards/sm115/SV77.webp",
+    "imageSmall": "assets/cards/sm115/SV77-sm.webp",
+    "attacks": [
+      {
+        "name": "Bright Tone",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon-GX and Pokémon-EX."
+      },
+      {
+        "name": "Sonic Edge",
+        "cost": [
+          "Water",
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Euphoria-GX",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep. Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV77/large",
+    "foilMap": "assets/foil/maps/sm115/SV77.webp",
+    "etchMap": "assets/foil/maps/sm115/SV77-etch.webp",
+    "tcgplayerId": 197831,
+    "market": 26.46
+  },
+  {
+    "id": "sm115-SV78",
+    "name": "Noivern-GX",
+    "number": "SV78",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Noibat",
+    "image": "assets/cards/sm115/SV78.webp",
+    "imageSmall": "assets/cards/sm115/SV78-sm.webp",
+    "attacks": [
+      {
+        "name": "Distort",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Your opponent can't play any Item cards from their hand during their next turn."
+      },
+      {
+        "name": "Sonic Volume",
+        "cost": [
+          "Psychic",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Your opponent can't play any Special Energy cards from their hand during their next turn."
+      },
+      {
+        "name": "Boomburst-GX",
+        "cost": [
+          "Psychic",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV78/large",
+    "foilMap": "assets/foil/maps/sm115/SV78.webp",
+    "etchMap": "assets/foil/maps/sm115/SV78-etch.webp",
+    "tcgplayerId": 197832,
+    "market": 17.87
+  },
+  {
+    "id": "sm115-SV79",
+    "name": "Silvally-GX",
+    "number": "SV79",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Type: Null",
+    "image": "assets/cards/sm115/SV79.webp",
+    "imageSmall": "assets/cards/sm115/SV79-sm.webp",
+    "attacks": [
+      {
+        "name": "Turbo Drive",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Rebel-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each of your opponent's Benched Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Gyro Unit",
+        "text": "Your Basic Pokémon in play have no Retreat Cost.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV79/large",
+    "foilMap": "assets/foil/maps/sm115/SV79.webp",
+    "etchMap": "assets/foil/maps/sm115/SV79-etch.webp",
+    "tcgplayerId": 197833,
+    "market": 13.53
+  },
+  {
+    "id": "sm115-SV80",
+    "name": "Drampa-GX",
+    "number": "SV80",
+    "rarity": "Rare Shiny GX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV80.webp",
+    "imageSmall": "assets/cards/sm115/SV80-sm.webp",
+    "attacks": [
+      {
+        "name": "Righteous Edge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Discard a Special Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Berserk",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "If your Benched Pokémon have any damage counters on them, this attack does 70 more damage."
+      },
+      {
+        "name": "Big Wheel-GX",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw 10 cards. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV80/large",
+    "foilMap": "assets/foil/maps/sm115/SV80.webp",
+    "etchMap": "assets/foil/maps/sm115/SV80-etch.webp",
+    "tcgplayerId": 197834,
+    "market": 11.52
+  },
+  {
+    "id": "sm115-SV81",
+    "name": "Aether Foundation Employee",
+    "number": "SV81",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "take",
+    "image": "assets/cards/sm115/SV81.webp",
+    "imageSmall": "assets/cards/sm115/SV81-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV81/large",
+    "foilMap": "assets/foil/maps/sm115/SV81.webp",
+    "etchMap": "assets/foil/maps/sm115/SV81-etch.webp",
+    "tcgplayerId": 197835,
+    "market": 10.31
+  },
+  {
+    "id": "sm115-SV82",
+    "name": "Cynthia",
+    "number": "SV82",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yusuke Ohmura",
+    "image": "assets/cards/sm115/SV82.webp",
+    "imageSmall": "assets/cards/sm115/SV82-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV82/large",
+    "foilMap": "assets/foil/maps/sm115/SV82.webp",
+    "etchMap": "assets/foil/maps/sm115/SV82-etch.webp",
+    "tcgplayerId": 197836,
+    "market": 185.0
+  },
+  {
+    "id": "sm115-SV83",
+    "name": "Fisherman",
+    "number": "SV83",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/sm115/SV83.webp",
+    "imageSmall": "assets/cards/sm115/SV83-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV83/large",
+    "foilMap": "assets/foil/maps/sm115/SV83.webp",
+    "etchMap": "assets/foil/maps/sm115/SV83-etch.webp",
+    "tcgplayerId": 197837,
+    "market": 7.79
+  },
+  {
+    "id": "sm115-SV84",
+    "name": "Guzma",
+    "number": "SV84",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/sm115/SV84.webp",
+    "imageSmall": "assets/cards/sm115/SV84-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV84/large",
+    "foilMap": "assets/foil/maps/sm115/SV84.webp",
+    "etchMap": "assets/foil/maps/sm115/SV84-etch.webp",
+    "tcgplayerId": 197838,
+    "market": 22.05
+  },
+  {
+    "id": "sm115-SV85",
+    "name": "Hiker",
+    "number": "SV85",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/sm115/SV85.webp",
+    "imageSmall": "assets/cards/sm115/SV85-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV85/large",
+    "foilMap": "assets/foil/maps/sm115/SV85.webp",
+    "etchMap": "assets/foil/maps/sm115/SV85-etch.webp",
+    "tcgplayerId": 197839,
+    "market": 5.03
+  },
+  {
+    "id": "sm115-SV86",
+    "name": "Lady",
+    "number": "SV86",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Kanako Eo",
+    "image": "assets/cards/sm115/SV86.webp",
+    "imageSmall": "assets/cards/sm115/SV86-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV86/large",
+    "foilMap": "assets/foil/maps/sm115/SV86.webp",
+    "etchMap": "assets/foil/maps/sm115/SV86-etch.webp",
+    "tcgplayerId": 197840,
+    "market": 15.39
+  },
+  {
+    "id": "sm115-SV87",
+    "name": "Aether Paradise Conservation Area",
+    "number": "SV87",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV87.webp",
+    "imageSmall": "assets/cards/sm115/SV87-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV87/large",
+    "foilMap": "assets/foil/maps/sm115/SV87.webp",
+    "etchMap": "assets/foil/maps/sm115/SV87-etch.webp",
+    "tcgplayerId": 197841,
+    "market": 8.25
+  },
+  {
+    "id": "sm115-SV88",
+    "name": "Brooklet Hill",
+    "number": "SV88",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV88.webp",
+    "imageSmall": "assets/cards/sm115/SV88-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV88/large",
+    "foilMap": "assets/foil/maps/sm115/SV88.webp",
+    "etchMap": "assets/foil/maps/sm115/SV88-etch.webp",
+    "tcgplayerId": 197842,
+    "market": 27.57
+  },
+  {
+    "id": "sm115-SV89",
+    "name": "Mt. Coronet",
+    "number": "SV89",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV89.webp",
+    "imageSmall": "assets/cards/sm115/SV89-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV89/large",
+    "foilMap": "assets/foil/maps/sm115/SV89.webp",
+    "etchMap": "assets/foil/maps/sm115/SV89-etch.webp",
+    "tcgplayerId": 197843,
+    "market": 11.52
+  },
+  {
+    "id": "sm115-SV90",
+    "name": "Shrine of Punishment",
+    "number": "SV90",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV90.webp",
+    "imageSmall": "assets/cards/sm115/SV90-sm.webp",
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV90/large",
+    "foilMap": "assets/foil/maps/sm115/SV90.webp",
+    "etchMap": "assets/foil/maps/sm115/SV90-etch.webp",
+    "tcgplayerId": 197844,
+    "market": 6.12
+  },
+  {
+    "id": "sm115-SV91",
+    "name": "Tapu Bulu-GX",
+    "number": "SV91",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV91.webp",
+    "imageSmall": "assets/cards/sm115/SV91-sm.webp",
+    "attacks": [
+      {
+        "name": "Horn Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Nature's Judgment",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "You may discard all Energy from this Pokémon. If you do, this attack does 60 more damage."
+      },
+      {
+        "name": "Tapu Wilderness-GX",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Heal all damage from this Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV91/large",
+    "foilMap": "assets/foil/maps/sm115/SV91.webp",
+    "etchMap": "assets/foil/maps/sm115/SV91-etch.webp",
+    "tcgplayerId": 197845,
+    "market": 18.66
+  },
+  {
+    "id": "sm115-SV92",
+    "name": "Tapu Fini-GX",
+    "number": "SV92",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV92.webp",
+    "imageSmall": "assets/cards/sm115/SV92-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Ring",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "You may switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Hydro Shot",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard 2 Water Energy from this Pokémon. This attack does 120 damage to 1 of your opponent's Pokémon. (Don't apply Weakness or Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Tapu Storm-GX",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Shuffle your opponent's Active Pokémon and all cards attached to it into their deck. If your opponent has no Benched Pokémon, this attack does nothing. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV92/large",
+    "foilMap": "assets/foil/maps/sm115/SV92.webp",
+    "etchMap": "assets/foil/maps/sm115/SV92-etch.webp",
+    "tcgplayerId": 197846,
+    "market": 20.41
+  },
+  {
+    "id": "sm115-SV93",
+    "name": "Tapu Koko-GX",
+    "number": "SV93",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV93.webp",
+    "imageSmall": "assets/cards/sm115/SV93-sm.webp",
+    "attacks": [
+      {
+        "name": "Sky-High Claws",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Tapu Thunder-GX",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage times the amount of Energy attached to all of your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Aero Trail",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may move any number of Lightning Energy from your other Pokémon to this Pokémon. If you do, switch this Pokémon with your Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV93/large",
+    "foilMap": "assets/foil/maps/sm115/SV93.webp",
+    "etchMap": "assets/foil/maps/sm115/SV93-etch.webp",
+    "tcgplayerId": 197847,
+    "market": 19.27
+  },
+  {
+    "id": "sm115-SV94",
+    "name": "Tapu Lele-GX",
+    "number": "SV94",
+    "rarity": "Rare Secret",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm115/SV94.webp",
+    "imageSmall": "assets/cards/sm115/SV94-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Drive",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage times the amount of Energy attached to both Active Pokémon. This damage isn't affected by Weakness or Resistance."
+      },
+      {
+        "name": "Tapu Cure-GX",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Heal all damage from 2 of your Benched Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Wonder Tag",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "gallery": "sv",
+    "imageRemote": "https://images.scrydex.com/pokemon/sma-SV94/large",
+    "foilMap": "assets/foil/maps/sm115/SV94.webp",
+    "etchMap": "assets/foil/maps/sm115/SV94-etch.webp",
+    "tcgplayerId": 197848,
+    "market": 20.63
+  },
+  {
+    "id": "sm115-smp103a",
+    "name": "Lunala-GX",
+    "number": "smp103a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "230",
+    "artist": "PLANETA Igarashi",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/sm115/smp103a.webp",
+    "imageSmall": "assets/cards/sm115/smp103a-sm.webp",
+    "attacks": [
+      {
+        "name": "Glide",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Lunar Javelin",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Psychic Energy from this Pokémon."
+      },
+      {
+        "name": "Requiem-GX",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM103a/large",
+    "printedNumber": "SM 103a",
+    "tcgplayerId": 202636,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 15.08
+  },
+  {
+    "id": "sm115-smp104a",
+    "name": "Solgaleo-GX",
+    "number": "smp104a",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "250",
+    "artist": "PLANETA Igarashi",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/sm115/smp104a.webp",
+    "imageSmall": "assets/cards/sm115/smp104a-sm.webp",
+    "attacks": [
+      {
+        "name": "Turbo Strike",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Attach 2 basic Energy cards from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Prominence-GX",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal all damage from all of your Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shining Mane",
+        "text": "Your Pokémon in play have no Weakness.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM104a/large",
+    "printedNumber": "SM 104a",
+    "tcgplayerId": 202637,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 12.33
+  },
+  {
+    "id": "sm115-smp210",
+    "name": "Moltres & Zapdos & Articuno-GX",
+    "number": "smp210",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "TAG TEAM",
+      "GX"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "300",
+    "artist": "HYOGONOSUKE",
+    "image": "assets/cards/sm115/smp210.webp",
+    "imageSmall": "assets/cards/sm115/smp210-sm.webp",
+    "attacks": [
+      {
+        "name": "Trinity Burn",
+        "cost": [
+          "Fire",
+          "Water",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "210",
+        "text": ""
+      },
+      {
+        "name": "Sky Legends-GX",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle this Pokémon and all cards attached to it into your deck. If this Pokémon has at least 1 extra Fire, Water, and Lightning Energy attached to it (in addition to this attack's cost), this attack does 110 damage to 3 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM210/large",
+    "printedNumber": "SM 210",
+    "tcgplayerId": 189659,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 153.33,
+    "foilMap": "assets/foil/maps/sm115/smp210.webp",
+    "etchMap": "assets/foil/maps/sm115/smp210-etch.webp"
+  },
+  {
+    "id": "sm115-smp211",
+    "name": "Charizard-GX",
+    "number": "smp211",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "250",
+    "artist": "aky CG Works",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/sm115/smp211.webp",
+    "imageSmall": "assets/cards/sm115/smp211-sm.webp",
+    "attacks": [
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": ""
+      },
+      {
+        "name": "Flare Blitz-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM211/large",
+    "printedNumber": "SM 211",
+    "tcgplayerId": 197874,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 10.1,
+    "foilMap": "assets/foil/maps/sm115/smp211.webp"
+  },
+  {
+    "id": "sm115-smp212",
+    "name": "Gyarados-GX",
+    "number": "smp212",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Magikarp",
+    "image": "assets/cards/sm115/smp212.webp",
+    "imageSmall": "assets/cards/sm115/smp212-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Rage",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      },
+      {
+        "name": "Hyper Beam-GX",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "240",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM212/large",
+    "printedNumber": "SM 212",
+    "tcgplayerId": 197875,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 3.18,
+    "foilMap": "assets/foil/maps/sm115/smp212.webp"
+  },
+  {
+    "id": "sm115-smp213",
+    "name": "Raichu-GX",
+    "number": "smp213",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/sm115/smp213.webp",
+    "imageSmall": "assets/cards/sm115/smp213-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Spark Ball-GX",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "(You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM213/large",
+    "printedNumber": "SM 213",
+    "tcgplayerId": 197876,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 2.25,
+    "foilMap": "assets/foil/maps/sm115/smp213.webp"
+  },
+  {
+    "id": "sm115-smp214",
+    "name": "Mewtwo",
+    "number": "smp214",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "kawayoo",
+    "flavorText": "It was created by a scientist after years of horrific gene-splicing and DNA-engineering experiments.",
+    "image": "assets/cards/sm115/smp214.webp",
+    "imageSmall": "assets/cards/sm115/smp214-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyshock",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mind Report",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may put a Supporter card from your discard pile on top of your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM214/large",
+    "printedNumber": "SM 214",
+    "tcgplayerId": 197855,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 18.11,
+    "foilMap": "assets/foil/maps/sm115/smp214.webp"
+  },
+  {
+    "id": "sm115-smp215",
+    "name": "Mew",
+    "number": "smp215",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Because it can use all kinds of moves, many scientists believe Mew to be the ancestor of Pokémon.",
+    "image": "assets/cards/sm115/smp215.webp",
+    "imageSmall": "assets/cards/sm115/smp215-sm.webp",
+    "attacks": [
+      {
+        "name": "Psypower",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put 3 damage counters on your opponent's Pokémon in any way you like."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bench Barrier",
+        "text": "Prevent all damage done to your Benched Pokémon by your opponent's attacks.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM215/large",
+    "printedNumber": "SM 215",
+    "tcgplayerId": 197854,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 25.02,
+    "foilMap": "assets/foil/maps/sm115/smp215.webp"
+  }
+]
