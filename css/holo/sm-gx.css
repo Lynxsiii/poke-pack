@@ -109,7 +109,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gx:not(.
   background-position: center, center, var(--g-pos);
   background-blend-mode: soft-light, soft-light, color, hard-light, normal;
   /* Closing contrast(0.8): dodge-safe (Safari divides by zero at 1.0). */
-  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.92)) contrast(2.3) saturate(2.4) contrast(0.8);
+  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.92)) contrast(2.3) saturate(2.4) contrast(0.8) brightness(0.85);
   mix-blend-mode: color-dodge;
   clip-path: none;
   border-radius: 0;
