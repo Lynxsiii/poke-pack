@@ -16,6 +16,13 @@ Contact sheets: `/mnt/project-files/sun-moon/finish-sheets/f3-fullart-rainbow-go
   gold swsh9-186).
 - Photos are low-res video frames (eBay, Reddit, image search are blocked), so
   they fix colour and movement only; micro-texture comes from TCG Live's maps.
+  **Evidence gaps (review 2026-09-30):** the standard full art (Umbreon &
+  Darkrai SM241), rainbow (Lurantis, Pikachu & Zekrom) and gold have two or
+  more video frames each; the **alternate arts, the Cosmic Eclipse colour
+  secrets and the full-art Supporter have at most one frame each** (Lillie
+  147 in hand, one gloved colour card, one static Misty's Favor slide), none
+  second-sourced. Those three recipes rest on TCG Live's maps. Look again when
+  a macro photo turns up.
 - Standard full art GX / Tag Team (sm9 162, 163): foil map bright on the
   background and frame, part strength on the Pokemon; etch is a concentric
   fingerprint over the whole face, text box included. Tilted, steep diagonal
@@ -57,6 +64,31 @@ Contact sheets: `/mnt/project-files/sun-moon/finish-sheets/f3-fullart-rainbow-go
   (`<n>-etch-v4.webp`, `native_era_etch.py`, sigma 0.6), not the builders'
   400 px `-etch.webp`. `scripts/repoint_native_etch.py <sets>` repoints the
   data to files already shipped.
+
+## Review round (2026-09-30)
+
+- Etch: the six densest maps (sm35-75, sm12-270, sm8-235, sm2-166, sm1-160,
+  sm10-233) are `-etch-v5` (sigma 1.0). etch_metrics `lb` went UP (117-189), not
+  down: it is peak/mean in the 2-9 px band, and a blur removes the band's mean
+  faster than its peak. What changed is `mid` (0.35-0.63 to 0.71-0.80), the
+  "sheen, not lines" end of the doc's scale; the real test is WebKit at 340 px
+  x 2 (sm2-166, sm35-75 checked: a soft ripple, no screen). Do not chase `lb`.
+- Full art: a fifth brighter (brightness offset .4 to .5, floor .4 to .5,
+  glare .5 to .6); mean change 14.5 to 18.5 levels at 30:25 (`lift.sh`-style
+  on/off render diff). The same metric on swsh3-183/185 (Scizor V, Salamence V)
+  gave 14.2, so the review's "under-lit next to SWSH" held only against the
+  photo, not against our own SWSH recipe.
+- Rainbow: `.foil` now closes in `contrast(0.8)` (lit and rest; it was the one
+  dodged chain without the cap), glitter cut by a third (foil opacity, wink
+  layer .5 to .33), the glare's dark end lifted to alpha .15 (verify.md limit),
+  glare .6 to .4, the lit etch lines drawn in the spectrum instead of white and
+  the pastel sheen at full opacity and saturate(2.4). Lit saturation of the
+  card 0.254 to 0.271 (bare print 0.290; before: 0.246).
+- Gold: the lit etch lines are cut to the foil map too (the native etch runs
+  under the title and rules text; hard-light white over dark ink made grey),
+  lines and glitter a step lower, and a header-band mask (2.5% to 10.5% of the
+  card, 45%) keeps TRAINER / ENERGY readable. Dark Energy stays dark teal.
+- Reviewer's nit 8 was not itemised in the brief; nothing done for it.
 
 ## Mistakes made and fixed
 

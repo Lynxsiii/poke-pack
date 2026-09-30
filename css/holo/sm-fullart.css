@@ -49,13 +49,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm {
    The native TCG Live etch (-etch-v4, sigma 0.6) is used as is: a blurred or
    400 px copy turned the ridges into camouflage patches. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-fa, .sm-tfa).foil-ultra.has-foil-map .foil {
-  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.4)) contrast(2) saturate(0.85) contrast(0.8);
+  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.5)) contrast(2) saturate(0.9) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-tfa.foil-ultra.has-foil-map .foil {
   filter: brightness(calc((var(--pointer-from-center) * 0.15) + 0.5)) contrast(1.9) saturate(1) contrast(0.8);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-fa, .sm-tfa).foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
-  filter: brightness(0.5) contrast(2.5) saturate(0.35) contrast(0.8);
+  filter: brightness(0.55) contrast(2.5) saturate(0.4) contrast(0.8);
 }
 /* A full art is foil edge to edge, silver frame included, but TCG Live shades
    the frame and the copyright band dark, so under the light the lit frame
@@ -63,7 +63,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-fa, 
    of foil under the map: art AND light AND (map OR floor). Not on an
    alternate art, whose Pokémon is matte ink: there the map is the truth. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-fa, .sm-tfa).foil-ultra.has-foil-map:not(.sm-alt) .foil {
-  --smfa-floor: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  --smfa-floor: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   -webkit-mask-image: var(--art), var(--fa-light), var(--foil-map), var(--smfa-floor);
   -webkit-mask-composite: source-in, source-in, source-over, source-over;
   mask-image: var(--art), var(--fa-light), var(--foil-map), var(--smfa-floor);
@@ -79,7 +79,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-fa, 
 /* The glare over the family: about half of sv-fullart.css's hard-light, which
    over a saturated painting is a milky veil at one tilt (swsh.css benchmark). */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-fa.foil-ultra.has-foil-map .glare {
-  opacity: calc(var(--card-opacity) * 0.5);
+  opacity: calc(var(--card-opacity) * 0.6);
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-tfa.foil-ultra.has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
@@ -147,13 +147,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow 
     center;
   background-blend-mode: screen, multiply;
   background-repeat: repeat;
-  filter: brightness(calc(0.95 + var(--pointer-from-center) * 0.4)) contrast(1.8) saturate(0.5);
+  filter: brightness(calc(1.05 + var(--pointer-from-center) * 0.4)) contrast(1.8) saturate(0.6) contrast(0.8);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+  opacity: calc((0.12 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow:not(.lit):not(.settling) .foil {
-  filter: brightness(0.9) contrast(1.4) saturate(0.3);
-  opacity: calc(0.24 * var(--foil-strength, 1));
+  filter: brightness(0.95) contrast(1.4) saturate(0.3) contrast(0.8);
+  opacity: calc(0.22 * var(--foil-strength, 1));
 }
 /* The wink: the grain multiplied by itself at another pitch, one copy
    moving with the pointer, so only the grains that line up light. */
@@ -166,7 +166,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow 
   background-repeat: repeat;
   filter: brightness(3.2) saturate(0.6);
   mix-blend-mode: screen;
-  opacity: calc(var(--card-opacity) * 0.5);
+  opacity: calc(var(--card-opacity) * 0.33);
   -webkit-mask-image: none;
   mask-image: none;
   clip-path: none;
@@ -179,9 +179,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow 
   background-position: var(--background-x) var(--background-y);
   background-blend-mode: normal;
   background-repeat: repeat;
-  filter: none;
+  filter: saturate(2.4);
   mix-blend-mode: soft-light;
-  opacity: 0.4;
+  opacity: 1;
   -webkit-mask-image: none;
   mask-image: none;
   clip-path: none;
@@ -189,10 +189,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow 
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(50, 20%, 92%, 0.7) 0%, hsla(150, 10%, 40%, 0.5) 45%, hsla(0, 0%, 5%, 0.9) 110%);
+    hsla(50, 20%, 92%, 0.7) 0%, hsla(150, 10%, 40%, 0.5) 45%, hsla(0, 0%, 5%, 0.15) 110%);
   mix-blend-mode: hard-light;
   filter: brightness(0.95) contrast(1.4);
-  opacity: calc(var(--card-opacity) * 0.6);
+  opacity: calc(var(--card-opacity) * 0.4);
   clip-path: none;
   border-radius: 0;
 }
@@ -206,9 +206,11 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow 
   opacity: 1;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow:is(.has-etch-map, .has-etch-tile) .glare::after {
-  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.25) 30%, hsla(0, 0%, 100%, 0.1) 70%);
-  background-size: 100% 100%;
+  background-image: repeating-linear-gradient(15deg, var(--smfa-spectrum), var(--smfa-spectrum)),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.35) 0%, hsla(0, 0%, 100%, 0.15) 40%, hsla(0, 0%, 100%, 0) 75%);
+  background-size: 240% 240%, 100% 100%;
+  background-position: var(--background-x) var(--background-y), center;
   -webkit-mask-image: var(--smfa-etch);
   mask-image: var(--smfa-etch);
   -webkit-mask-size: var(--smfa-etch-size);
@@ -244,4 +246,63 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foi
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
   filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
+}
+
+/* The gold's lit layers, kept off the ink. The native etch runs under the
+   title, the header band and the rules text (the real cards' engraving does),
+   and its white lines are drawn in a hard-light glare: over dark ink they
+   lifted "Dangerous Drill" and the TRAINER / ENERGY headers to grey, and a
+   dark Energy to bright teal (review, 2026-09-30). So the lit lines are cut
+   to the foil map as well (TCG Live greys the header band and blacks the
+   text), and the lines and glitter run a step lower. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 0%, hsla(0, 0%, 100%, 0.45) 30%, hsla(0, 0%, 100%, 0.25) 80%);
+  -webkit-mask-image: var(--fa-etch), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--fa-etch), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: var(--fa-etch-size), 100% 100%;
+  mask-size: var(--fa-etch-size), 100% 100%;
+  -webkit-mask-position: var(--fa-etch-pos), center;
+  mask-position: var(--fa-etch-pos), center;
+  -webkit-mask-repeat: var(--fa-etch-repeat), no-repeat;
+  mask-repeat: var(--fa-etch-repeat), no-repeat;
+  opacity: calc(0.45 + var(--pointer-from-center) * 0.35);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map .foil::after {
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
+}
+
+/* The header band (TRAINER / ENERGY, or a GX's name line) is printed silver
+   or grey on gold, the faintest ink on the card: under the pointer the foil
+   and the lit lines washed it out (review, sm9-192). One more mask layer cuts
+   both to 45% across the band, rows 2.5% to 10.5% of the card. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map {
+  --smg-calm: linear-gradient(180deg, #000 0, #000 2%, rgba(0, 0, 0, 0.45) 3%,
+    rgba(0, 0, 0, 0.45) 10%, #000 11.5%, #000 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map:is(.has-etch-map, .has-etch-tile) .foil {
+  -webkit-mask-image: var(--smg-calm), var(--art), var(--foil-map), var(--fa-etch), var(--fa-floor);
+  -webkit-mask-composite: source-in, source-in, source-in, source-over, source-over;
+  mask-image: var(--smg-calm), var(--art), var(--foil-map), var(--fa-etch), var(--fa-floor);
+  mask-composite: intersect, intersect, intersect, add, add;
+  -webkit-mask-size: 100% 100%, contain, 100% 100%, var(--fa-etch-size), 100% 100%;
+  mask-size: 100% 100%, contain, 100% 100%, var(--fa-etch-size), 100% 100%;
+  -webkit-mask-position: center, center, center, var(--fa-etch-pos), center;
+  mask-position: center, center, center, var(--fa-etch-pos), center;
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat, var(--fa-etch-repeat), no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat, var(--fa-etch-repeat), no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
+  -webkit-mask-image: var(--smg-calm), var(--fa-etch), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-image: var(--smg-calm), var(--fa-etch), var(--foil-map);
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-size: 100% 100%, var(--fa-etch-size), 100% 100%;
+  mask-size: 100% 100%, var(--fa-etch-size), 100% 100%;
+  -webkit-mask-position: center, var(--fa-etch-pos), center;
+  mask-position: center, var(--fa-etch-pos), center;
+  -webkit-mask-repeat: no-repeat, var(--fa-etch-repeat), no-repeat;
+  mask-repeat: no-repeat, var(--fa-etch-repeat), no-repeat;
 }
