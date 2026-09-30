@@ -132,7 +132,8 @@ function pick(pool, count, seed) {
     if (!chosen.includes(row)) chosen.push(row);
   }
   // Easiest first, so the list reads from a warm-up to the stretch goal.
-  return chosen.sort((a, b) => a.coins - b.coins || a.id.localeCompare(b.id));
+  // Plain comparison, not localeCompare: client and Worker must order alike in every locale.
+  return chosen.sort((a, b) => a.coins - b.coins || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
 /** `{ daily: [rows], weekly: [rows], monthly: [rows] }` for the given period starts. */
@@ -147,17 +148,28 @@ export function activeQuests(periods = questPeriods()) {
   };
 }
 
-/** The chest row for a period, its bonus being a share of what the active quests pay. */
+/**
+ * The quests a chest waits for. Winning a battle depends on luck and on who
+ * sits across the table, so those quests still pay on their own but never keep
+ * a chest shut.
+ */
+export function chestNeeds(rows) {
+  return rows.filter((row) => row.kind !== "battleWins");
+}
+
+/** The chest row for a period, its bonus being a share of what the quests it needs pay. */
 export function chestFor(period, rows) {
-  const total = rows.reduce((sum, row) => sum + row.coins, 0);
+  const needs = chestNeeds(rows);
+  const total = needs.reduce((sum, row) => sum + row.coins, 0);
   const name = { daily: "Daily chest", weekly: "Weekly chest", monthly: "Monthly chest" }[period];
-  const cover = { daily: "daily", weekly: "weekly", monthly: "monthly" }[period];
+  const skipped = needs.length < rows.length;
   return {
     id: CHEST_IDS[period],
     period,
     chest: true,
     name,
-    note: `Claim every ${cover} quest.`,
+    note: `Claim every ${period} quest${skipped ? " except battle wins" : ""}.`,
+    needs: needs.map((row) => row.id),
     coins: Math.max(5, Math.round((total * CHEST_SHARE) / 5) * 5),
   };
 }

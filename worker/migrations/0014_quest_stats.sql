@@ -27,23 +27,5 @@ CREATE TABLE IF NOT EXISTS quest_claims (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Counts a settled battle (and each win) for the human seats. Needs 0012's
--- battle tables. Same statement as BATTLE_STATS_TRIGGER in worker/stats.js.
-CREATE TRIGGER IF NOT EXISTS battle_settle_quest_stats AFTER INSERT ON battle_settlements BEGIN
-  INSERT INTO quest_events (user_id, kind, amount, at)
-  SELECT s.user_id, 'battles', 1, NEW.at FROM battle_seats s
-  WHERE s.battle_id = NEW.battle_id AND s.bot = 0 AND s.user_id IN (SELECT id FROM users);
-  INSERT INTO quest_events (user_id, kind, amount, at)
-  SELECT s.user_id, 'battleWins', 1, NEW.at FROM battle_seats s JOIN battles b ON b.id = s.battle_id
-  WHERE s.battle_id = NEW.battle_id AND s.bot = 0 AND s.user_id IN (SELECT id FROM users)
-    AND EXISTS (SELECT 1 FROM json_each(b.result, '$.winners') w WHERE w.value = s.seat);
-  INSERT INTO player_stats (user_id, key, value)
-  SELECT s.user_id, 'battles', 1 FROM battle_seats s
-  WHERE s.battle_id = NEW.battle_id AND s.bot = 0 AND s.user_id IN (SELECT id FROM users)
-  ON CONFLICT(user_id, key) DO UPDATE SET value = value + 1;
-  INSERT INTO player_stats (user_id, key, value)
-  SELECT s.user_id, 'battleWins', 1 FROM battle_seats s JOIN battles b ON b.id = s.battle_id
-  WHERE s.battle_id = NEW.battle_id AND s.bot = 0 AND s.user_id IN (SELECT id FROM users)
-    AND EXISTS (SELECT 1 FROM json_each(b.result, '$.winners') w WHERE w.value = s.seat)
-  ON CONFLICT(user_id, key) DO UPDATE SET value = value + 1;
-END;
+-- Makes the per-set pack count (GROUP BY set_id) an index-only read.
+CREATE INDEX IF NOT EXISTS idx_pack_log_user_set ON pack_log(user_id, set_id);

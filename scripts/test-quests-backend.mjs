@@ -86,7 +86,10 @@ function satisfy(row,at=clock) {
     const dailyCoins=day.daily.reduce((n,r)=>n+r.coins,0);
     assert.ok(dailyCoins<300,`a day pays ${dailyCoins}`);
     const chest=activeChests(day);
-    assert.ok(chest.daily.coins<=Math.round(dailyCoins*0.3)&&chest.daily.coins>=Math.round(dailyCoins*0.2),'a chest is about a quarter of its quests');
+    const needed=day.daily.filter(r=>r.kind!=='battleWins').reduce((n,r)=>n+r.coins,0);
+    assert.ok(chest.daily.coins<=Math.round(needed*0.3)&&chest.daily.coins>=Math.round(needed*0.2),'a chest is about a quarter of the quests it needs');
+    assert.ok(!chest.daily.needs.some(id=>day.daily.find(r=>r.id===id).kind==='battleWins'),'a chest never waits for a battle win');
+    assert.equal(chest.daily.note.includes('except battle wins'),day.daily.some(r=>r.kind==='battleWins'));
     lists.add(day.daily.map(r=>r.id).join());
   }
   assert.ok(lists.size>=15,'the daily list rotates');
@@ -97,6 +100,11 @@ function satisfy(row,at=clock) {
   assert.ok(weeklyCoins>=250&&weeklyCoins<=650,`weeklies pay ${weeklyCoins}`);
   const monthlyCoins=MONTHLY_QUESTS.reduce((n,r)=>n+r.coins,0);
   assert.ok(monthlyCoins+chestFor('monthly',MONTHLY_QUESTS).coins>=1000&&monthlyCoins+chestFor('monthly',MONTHLY_QUESTS).coins<=2000);
+  // The order of a list does not depend on the locale.
+  const realCompare=String.prototype.localeCompare;
+  String.prototype.localeCompare=function(){throw new Error('localeCompare must not be used');};
+  try { activeQuests(questPeriods(Date.UTC(2026,8,30))); activeQuests(questPeriods(Date.UTC(2026,9,7))); }
+  finally { String.prototype.localeCompare=realCompare; }
   assert.equal(streakFromDays([10,9,8],10),3);
   assert.equal(streakFromDays([9,8],10),2,'yesterday keeps a streak alive');
   assert.equal(streakFromDays([8,7],10),0,'a missed day breaks it');
@@ -109,7 +117,7 @@ function satisfy(row,at=clock) {
   const save=await me();
   assert.ok(!save.quests.unavailable,'missing tables are created on demand');
   for(const table of ['player_stats','quest_events','quest_claims']) assert.equal(db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE name=?").get(table).n,1,table);
-  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE name='battle_settle_quest_stats'").get().n,1,'the battle trigger exists');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE type='trigger' AND name LIKE '%quest%'").get().n,0,'no trigger is put on the battle tables');
 }
 
 // ---- The old bug: a claim wiped every event and claim the player had ----
@@ -197,10 +205,13 @@ function satisfy(row,at=clock) {
   assert.deepEqual(save.quests.chests,{daily:false,weekly:false,monthly:false});
   assert.deepEqual(save.quests.chestCoins,{daily:chests.daily.coins,weekly:chests.weekly.coins,monthly:chests.monthly.coins});
   for(const period of ['daily','weekly','monthly']) {
-    const rows=active[period];
+    const rows=active[period].filter(r=>chests[period].needs.includes(r.id));
+    const wins=active[period].filter(r=>!chests[period].needs.includes(r.id));
+    assert.ok(wins.every(r=>r.kind==='battleWins'));
+    // A battle-win quest is not even finished, and the chest does not care.
     rows.forEach(row=>satisfy(row));
     for(let i=0;i<rows.length;i++) {
-      // Locked until the last quest is claimed.
+      // Locked until the last quest it needs is claimed.
       const shut=await request('/api/quests/claim','POST',{id:chests[period].id});
       assert.equal(shut.status,400,`${period} chest shut with ${i} of ${rows.length} claimed`);
       const paid=coins();
@@ -220,6 +231,14 @@ function satisfy(row,at=clock) {
     assert.equal(coins(),paid+chests[period].coins);
     assert.equal((await request('/api/quests/claim','POST',{id:chests[period].id})).status,400,`${period} chest opens once`);
     assert.equal(coins(),paid+chests[period].coins);
+    // The battle-win quests still pay on their own, once finished.
+    for(const row of wins) {
+      assert.equal((await request('/api/quests/claim','POST',{id:row.id})).status,400,'not won yet');
+      satisfy(row);
+      const before=coins();
+      assert.equal((await request('/api/quests/claim','POST',{id:row.id})).status,200);
+      assert.equal(coins(),before+row.coins);
+    }
     save=await me();
     assert.ok(save.quests.claimed.includes(chests[period].id));
   }
@@ -361,14 +380,16 @@ function satisfy(row,at=clock) {
   assert.equal(res.status,200,JSON.stringify(res.body));
   assert.equal(res.body.save.stats.counters.questsClaimed,1);
 
-  // Battles ride the settlement insert; a bot seat is never counted.
+  // Battles are counted at read time from the battle tables; a bot seat is never counted.
   const later=realNow+3600_000;
-  function settle(id,winners) {
+  // Seat 0 is `test`; seat 1 is a free bot, or `partner` when given. Rows are inserted the way test-battles.mjs does.
+  function settle(id,winners,{partner=null,at=clock}={}) {
     db.prepare("INSERT INTO battles(id,host_id,request_id,status,settings,lineup,plan,entry_cost,created_at,expires_at) VALUES(?,?,?,'lobby',?,'[]','[]',1,?,?)").run(id,'test','r-'+id,JSON.stringify({players:2}),realNow,later);
     db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,0,'test','test','Quest Tester','questtester','gold',0);
-    db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,1,null,'free','Sparky','bot:sparky','gold',1);
-    db.prepare("UPDATE battles SET status='running',starts_at=?,ends_at=?,round_ms=1000,outcomes='[]',result=? WHERE id=?").run(clock-2000,clock-1,JSON.stringify({winners,scores:[],allocations:[]}),id);
-    db.prepare('INSERT INTO battle_settlements(battle_id,at) VALUES(?,?)').run(id,clock);
+    if(partner) db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,1,partner,partner,'Other','otherguy','gold',0);
+    else db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,1,null,'free','Sparky','bot:sparky','gold',1);
+    db.prepare("UPDATE battles SET status='running',starts_at=?,ends_at=?,round_ms=1000,outcomes='[]',result=? WHERE id=?").run(at-2000,at-1,JSON.stringify({winners,scores:[],allocations:[]}),id);
+    db.prepare('INSERT INTO battle_settlements(battle_id,at) VALUES(?,?)').run(id,at);
   }
   settle('b1',[0]);
   save=await me();
@@ -389,6 +410,34 @@ function satisfy(row,at=clock) {
     if(row.kind==='battles') assert.equal(save.quests.progress[row.id],3);
     if(row.kind==='battleWins') assert.equal(save.quests.progress[row.id],1);
   }
+
+  // Reading again counts nothing twice; only new settlements are added.
+  const events=count('quest_events');
+  save=await me();save=await me();
+  assert.equal(save.stats.counters.battles,3);
+  assert.equal(count('quest_events'),events,'a battle is counted once');
+  // Two humans in one battle: each is credited by their own seat.
+  settle('b4',[1],{partner:'other'});
+  save=await me();
+  assert.equal(save.stats.counters.battles,4);
+  assert.equal(save.stats.counters.battleWins,1,'seat 1 won, and that was not test');
+  const otherSave=await me('sid-other');
+  assert.equal(otherSave.stats.counters.battles,1);
+  assert.equal(otherSave.stats.counters.battleWins,1);
+  assert.equal((await me('sid-other')).stats.counters.battles,1,'and once for them too');
+  // A battle from long ago counts for the lifetime counters but not for any current period.
+  settle('b5',[0],{at:clock-50*DAY});
+  save=await me();
+  assert.equal(save.stats.counters.battles,5);
+  assert.equal(save.stats.counters.battleWins,2);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='test' AND kind='battles' AND at<?").get(clock-40*DAY).n,0);
+  // A claim reads battles too, so a finished battle is never "not complete yet".
+  settle('b6',[0]);
+  const fresh=db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='test' AND kind='battles'").get().n;
+  await request('/api/quests/claim','POST',{id:'nope'});
+  const claimTry=activeQuests(questPeriods()).monthly[0];
+  await request('/api/quests/claim','POST',{id:claimTry.id});
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='test' AND kind='battles'").get().n,fresh+1,'a claim syncs battles first');
 }
 
 // ---- Old accounts: counters are backfilled once from pack_log ----
@@ -438,7 +487,7 @@ function satisfy(row,at=clock) {
   assert.deepEqual(res.body.save.quests.claimed,[]);
   assert.equal(res.body.save.quests.streak,0);
   assert.equal(res.body.save.quests.streakBest,0);
-  assert.equal(count('player_stats','other'),0,'other players are untouched');
+  assert.equal(db.prepare("SELECT value FROM player_stats WHERE user_id='other' AND key='battles'").get().value,1,'other players are untouched');
 }
 
 // ---- Mastery banners and the public profile ----
@@ -457,6 +506,12 @@ function satisfy(row,at=clock) {
 
   db.prepare('UPDATE profiles SET claimed=? WHERE user_id=?').run(JSON.stringify(['set-me5-master','set-nosuch-master','hourly']),'test');
   assert.equal((await request('/api/me','PATCH',{banner:'mastery:me4'})).status,403,'only the claimed set');
+  for(const spelling of ['MASTERY:me4','Mastery:me4',' mastery:me4','mastery :me4']) {
+    assert.equal((await request('/api/me','PATCH',{banner:spelling})).status,400,`${spelling} is refused, never stored`);
+  }
+  assert.equal((await request('/api/me','PATCH',{banner:'MASTERY:me5'})).status,400,'only the exact spelling is a banner');
+  assert.equal((await request('/api/me','PATCH',{banner:'mastery:ME5'})).status,400);
+  assert.notEqual(banner('test'),'MASTERY:me5');
   res=await request('/api/me','PATCH',{banner:'mastery:me5'});
   assert.equal(res.status,200,JSON.stringify(res.body));
   assert.equal(banner('test'),'mastery:me5','stored as given');
@@ -484,6 +539,173 @@ function satisfy(row,at=clock) {
   db.prepare('DELETE FROM profiles WHERE user_id=?').run('other');
   db.prepare('DELETE FROM users WHERE id=?').run('other');
   for(const table of ['player_stats','quest_events','quest_claims']) assert.equal(count(table,'other'),0,`${table} cascades`);
+}
+
+// ---- Achievement claims: compare-and-swap, no double pay and no lost update ----
+{
+  db.prepare("UPDATE profiles SET coins=1000,claimed=? WHERE user_id='test'").run(JSON.stringify([]));
+  const before=coins();
+  // Three parallel claims of one id pay once.
+  const same=await Promise.all([1,2,3].map(()=>request('/api/achievements/claim','POST',{id:'loaded'})));
+  assert.equal(same.filter(r=>r.status===200).length,1,JSON.stringify(same.map(r=>r.status)));
+  assert.ok(same.every(r=>r.status===200||r.status===400||r.status===409));
+  const loaded=same.find(r=>r.status===200).body.coins;
+  assert.ok(loaded>0);
+  assert.equal(coins(),before+loaded,'paid exactly once');
+  // Parallel claims of different ids keep every id.
+  db.prepare("UPDATE profiles SET coins=1000,packs_opened=300,pulls=3000,claimed=? WHERE user_id='test'").run(JSON.stringify([]));
+  const cash=db.prepare("SELECT coins FROM profiles WHERE user_id='test'").get().coins;
+  const singles=(await Promise.all(['loaded','banked'].map(id=>request('/api/achievements/claim','POST',{id})))).filter(r=>r.status===200);
+  const stored=JSON.parse(db.prepare("SELECT claimed FROM profiles WHERE user_id='test'").get().claimed);
+  for(const r of singles) for(const id of r.body.claimed) assert.ok(stored.includes(id),`${id} is not lost`);
+  assert.equal(stored.length,singles.length);
+  const paid=singles.reduce((n,r)=>n+r.body.coins,0);
+  assert.equal(coins(),Math.min(cash+paid,1_000_000),'each id paid once');
+}
+
+// ---- Coins from quests and the hourly bonus stop at the ceiling ----
+{
+  db.exec("DELETE FROM quest_claims;DELETE FROM quest_events;");
+  db.prepare("UPDATE profiles SET coins=999990,last_daily=NULL WHERE user_id='test'").run();
+  setDay(2027,2,3,12);
+  assert.equal((await request('/api/daily','POST')).status,200);
+  assert.equal(coins(),1_000_000,'the hourly bonus is capped');
+  db.prepare("UPDATE profiles SET coins=999990 WHERE user_id='test'").run();
+  const res=await request('/api/quests/claim','POST',{id:'daily-bonus'});
+  assert.equal(res.status,200,JSON.stringify(res.body));
+  assert.equal(coins(),1_000_000,'a quest is capped');
+  db.prepare("UPDATE profiles SET coins=5000 WHERE user_id='test'").run();
+}
+
+// ---- Set pack counts are index-backed ----
+{
+  const plan=db.prepare("EXPLAIN QUERY PLAN SELECT set_id, COUNT(*) AS n FROM pack_log WHERE user_id = ? GROUP BY set_id").all('test').map(r=>r.detail).join(' ');
+  assert.match(plan,/idx_pack_log_user_set/,plan);
+}
+
+// ---- Backfill is bounded, resumable, and never fails a save ----
+{
+  addUser('whale','whalegal','sid-whale',100);
+  const hitCard=JSON.stringify([{id:'me5-1',reverse:false,rarity:'Common'},{id:'me5-9',reverse:false,rarity:'Ultra Rare'}]);
+  const dryCard=JSON.stringify([{id:'me5-1',reverse:false,rarity:'Common'}]);
+  const total=1300;
+  const insert=db.prepare('INSERT INTO pack_log(user_id,set_id,wrapper_id,cost,cards,at) VALUES(?,?,?,?,?,?)');
+  db.exec('BEGIN');
+  for(let i=0;i<total;i++) insert.run('whale',i%2?'me5':'me4','w',1,i%7===0?hitCard:dryCard,clock-(total-i)*1000);
+  // Battle packs (cost 0) are left out, as they are when live.
+  insert.run('whale','me5','w',0,hitCard,clock);
+  db.exec('COMMIT');
+  const expected=droughtFromLog(db.prepare('SELECT cards FROM pack_log WHERE user_id=? AND cost>0 ORDER BY id').all('whale'));
+  let res=await request('/api/me','GET',undefined,'sid-whale');
+  assert.equal(res.status,200);
+  assert.ok(!db.prepare("SELECT value FROM player_stats WHERE user_id='whale' AND key='_backfilled'").get(),'one read does not finish 1300 packs');
+  assert.equal(res.body.save.stats.counters.hitsPulled,Math.ceil(500/7),'progress so far is shown');
+  res=await request('/api/me','GET',undefined,'sid-whale');
+  assert.ok(res.body.save.stats.counters.hitsPulled>Math.ceil(500/7));
+  res=await request('/api/me','GET',undefined,'sid-whale');
+  assert.equal(db.prepare("SELECT value FROM player_stats WHERE user_id='whale' AND key='_backfilled'").get().value,1);
+  assert.equal(res.body.save.stats.counters.hitsPulled,expected.hits);
+  assert.equal(res.body.save.stats.counters.maxDrought,expected.maxDrought);
+  assert.equal(res.body.save.stats.setPacks.me5+res.body.save.stats.setPacks.me4,total+1,'set counts still include every pack');
+  const again=await request('/api/me','GET',undefined,'sid-whale');
+  assert.equal(again.body.save.stats.counters.hitsPulled,expected.hits,'finished means finished');
+
+  // A rip in the middle of a backfill is counted once.
+  addUser('midway','midwayguy','sid-mid',100);
+  db.exec('BEGIN');
+  for(let i=0;i<700;i++) insert.run('midway','me5','w',1,dryCard,clock-(700-i)*1000);
+  db.exec('COMMIT');
+  db.prepare('UPDATE profiles SET packs_since_hit=700 WHERE user_id=?').run('midway'); // as a real account keeps it
+  res=await request('/api/packs/rip','POST',{setId:'me5'},'sid-mid');
+  assert.equal(res.status,200,JSON.stringify(res.body));
+  res=await request('/api/me','GET',undefined,'sid-mid');
+  res=await request('/api/me','GET',undefined,'sid-mid');
+  const truth=droughtFromLog(db.prepare('SELECT cards FROM pack_log WHERE user_id=? AND cost>0 ORDER BY id').all('midway'));
+  assert.equal(res.body.save.stats.counters.hitsPulled,truth.hits,'the live rip and the backfill do not overlap');
+  assert.equal(res.body.save.stats.counters.maxDrought,truth.maxDrought);
+
+  // A failing backfill never fails the request.
+  addUser('broken','brokengal','sid-broken',100);
+  db.prepare('INSERT INTO pack_log(user_id,set_id,wrapper_id,cost,cards,at) VALUES(?,?,?,?,?,?)').run('broken','me5','w',1,'not json',clock);
+  res=await request('/api/me','GET',undefined,'sid-broken');
+  assert.equal(res.status,200,'garbage in pack_log is skipped');
+  const realExec=DB.prepare;
+  DB.prepare=function(sql){ if(/FROM pack_log WHERE user_id = \? AND id > \?/.test(sql)) throw new Error('simulated D1 failure'); return realExec.call(this,sql); };
+  addUser('flaky','flakyguy','sid-flaky',100);
+  const origError=console.error;console.error=()=>{};
+  try {
+    res=await request('/api/me','GET',undefined,'sid-flaky');
+    assert.equal(res.status,200,'a backfill failure never fails /api/me');
+    res=await request('/api/packs/rip','POST',{setId:'me5'},'sid-flaky');
+    assert.equal(res.status,200,'or a rip');
+  } finally { console.error=origError; DB.prepare=realExec; }
+}
+
+// ---- A malformed battle result does not stick the sync ----
+{
+  db.exec("PRAGMA foreign_keys=OFF");
+  addUser('duelist','duelguy','sid-duel',100);
+  const later=realNow+3600_000;
+  const battle=(id,result)=>{
+    db.prepare("INSERT INTO battles(id,host_id,request_id,status,settings,lineup,plan,entry_cost,created_at,expires_at) VALUES(?,?,?,'lobby',?,'[]','[]',1,?,?)").run(id,'duelist','r-'+id,JSON.stringify({players:2}),realNow,later);
+    db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,0,'duelist','duelist','Duel','duelguy','gold',0);
+    db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,1,null,'free','Sparky','bot:sparky','gold',1);
+    db.prepare("UPDATE battles SET status='running',starts_at=?,ends_at=?,round_ms=1000,outcomes='[]',result=? WHERE id=?").run(clock-2000,clock-1,'{"winners":[0],"allocations":[]}',id);
+    db.prepare('INSERT INTO battle_settlements(battle_id,at) VALUES(?,?)').run(id,clock);
+    db.prepare('UPDATE battles SET result=? WHERE id=?').run(result,id);
+  };
+  battle('m1','{not json');
+  battle('m2','{"winners":[0],"allocations":[]}');
+  battle('m3',null);
+  const res=await request('/api/me','GET',undefined,'sid-duel');
+  assert.equal(res.status,200);
+  assert.equal(res.body.save.stats.counters.battles,3,'every battle is counted as played');
+  assert.equal(res.body.save.stats.counters.battleWins,1,'only the readable win is a win');
+  battle('m4','{"winners":[0],"allocations":[]}');
+  assert.equal((await request('/api/me','GET',undefined,'sid-duel')).body.save.stats.counters.battles,4,'later battles still count');
+  // If the events write fails the watermark is put back and the battle is counted next time.
+  battle('m5','{"winners":[0],"allocations":[]}');
+  const realPrepare=DB.prepare;
+  DB.prepare=function(sql){ if(/INSERT INTO quest_events \(user_id, kind, amount, at\)\s+SELECT \?, json_extract/.test(sql)) throw new Error('simulated write failure'); return realPrepare.call(this,sql); };
+  const origError=console.error;console.error=()=>{};
+  try { assert.equal((await request('/api/me','GET',undefined,'sid-duel')).body.save.stats.counters.battles,4); }
+  finally { console.error=origError; DB.prepare=realPrepare; }
+  assert.equal((await request('/api/me','GET',undefined,'sid-duel')).body.save.stats.counters.battles,5,'a failed write is retried');
+  db.exec("PRAGMA foreign_keys=ON");
+}
+
+// ---- New accounts start after every battle already settled ----
+{
+  const top=db.prepare('SELECT MAX(rowid) AS top FROM battle_settlements').get().top;
+  assert.ok(top>0);
+  const signup=await worker.fetch(new Request('https://poke-pack.rip/api/auth/signup',{method:'POST',headers:{'content-type':'application/json',origin:'https://poke-pack.rip'},body:JSON.stringify({name:'Fresh Face',handle:'freshface',password:'hunter22'})}),env);
+  assert.equal(signup.status,201);
+  const id=db.prepare("SELECT id FROM users WHERE handle='freshface'").get().id;
+  assert.equal(db.prepare("SELECT value FROM player_stats WHERE user_id=? AND key='_battleRow'").get(id).value,top);
+}
+
+// ---- Reset puts a title that is no longer earned back to Rookie ----
+{
+  db.prepare("UPDATE profiles SET claimed=? WHERE user_id='test'").run(JSON.stringify(['set-me5-master','box-worth']));
+  db.prepare("UPDATE users SET title='Box Breaker' WHERE id='test'").run();
+  db.prepare("UPDATE users SET title='Century' WHERE id='other'").run();
+  assert.equal((await request('/api/me/reset','POST')).status,200);
+  assert.equal(db.prepare("SELECT title FROM users WHERE id='test'").get().title,'Rookie');
+  db.prepare("UPDATE users SET title='Named trainer' WHERE id='test'").run();
+  assert.equal((await request('/api/me/reset','POST')).status,200);
+  assert.equal(db.prepare("SELECT title FROM users WHERE id='test'").get().title,'Named trainer','a title that needs nothing you lost stays');
+}
+
+// ---- Odd or missing battle tables never break a save ----
+{
+  db.exec('DROP TABLE battle_settlements;');
+  let res=await request('/api/me');
+  assert.equal(res.status,200);
+  assert.equal(res.body.save.stats.counters.battles,0,'reset cleared it, and nothing is invented');
+  db.exec('DROP TABLE battle_seats;DROP TABLE battles;');
+  res=await request('/api/me');
+  assert.equal(res.status,200,'no battle tables at all');
+  assert.equal((await request('/api/packs/rip','POST',{setId:'me5'})).status,200);
 }
 
 console.log('Quest backend checks passed: pools and periods, lazy schema, no double claims, chests, streak, monthly, counters, battle stats, backfill, reset, masteries.');
