@@ -37,6 +37,7 @@ import {
 } from "./stats.js";
 import { activeChests, activeQuests, activeRowById, questPeriods, streakFromDays } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
+import { handleCasino, maintainCoinflips } from "./casino.js";
 import {
   achievementById,
   achievementContext,
@@ -100,7 +101,7 @@ export default {
     } catch (err) {
       const message = err?.message || "Server error.";
       const status = err.status && Number.isInteger(err.status) ? err.status
-        : /active battles before (deleting|resetting)/.test(message) ? 409 : 500;
+        : /(active battles|open coin flips|open jackpots) before (deleting|resetting)/.test(message) ? 409 : 500;
       if (status >= 500) console.error(err);
       return json({ error: status >= 500 ? "Server error." : message }, status);
     }
@@ -110,6 +111,7 @@ export default {
   // each set's market prices once a UTC day into D1. See worker/prices.js.
   async scheduled(controller, env, ctx) {
     ctx.waitUntil(maintainBattles(env, Date.now(), { settleLimit: 10 }).catch(err => console.error('battle maintenance', err)));
+    ctx.waitUntil(maintainCoinflips(env).catch(err => console.error('coinflip maintenance', err)));
     ctx.waitUntil(
       recordDailyPrices(env).then(
         (result) => console.log("daily prices", JSON.stringify(result)),
@@ -125,6 +127,12 @@ export async function handleApi(request, env, url) {
   if (path.startsWith('/api/battles')) {
     return handleBattles(path, method, request, env, {
       json, requireUser, readJson, loadSave, loadSetCards, loadSealed, loadProducts, packCost, ensureSocialSchema,
+    });
+  }
+
+  if (path.startsWith('/api/casino')) {
+    return handleCasino(path, method, request, env, {
+      json, requireUser, readJson, loadSave, loadSetCards, findCatalogCard, inventoryMap, reconcileBinder, parseJson, ensureSocialSchema, recordQuestEvent,
     });
   }
 

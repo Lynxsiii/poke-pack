@@ -13,6 +13,7 @@ import { esc, coins, coinTag, icon, wrapperArt, seatAvatar, hitTier } from "./ba
 // Same specifier as the router, so this is the same module instance (the
 // builder's state lives there). A namespace import tolerates a missing export.
 import * as hallModule from "./battle-hall.js?v=1";
+import { mountWinnings, winningsSlot } from "./casino-winnings.js";
 
 const MODE_NAME = { standard: "Standard", crazy: "Crazy", shared: "Shared" };
 const SCORED_BY = { total: "total value", last: "the last round", best: "best single card" };
@@ -446,7 +447,10 @@ export function createTable(ctx) {
       setHTML("head", `<h1 class="page-title">This table was cancelled</h1><p class="tb-lede">Every entry was refunded. The lineup is still here if you want to run it again.</p>`);
     } else if (view === "result") {
       headRound = -2;
-      setHTML("head", resultHead());
+      if (setHTML("head", resultHead())) {
+        const slot = region("head")?.querySelector("[data-winnings]");
+        if (slot) mountWinnings(slot, { source: "battle", id: battle.id, ctx });
+      }
     } else {
       renderRoundHeader();
     }
@@ -1003,6 +1007,9 @@ export function createTable(ctx) {
     }).join("");
   }
 
+  /** True when this viewer was allocated cards, so the shared "sell all winnings" has something to offer. */
+  const wonCards = () => (battle.result?.allocations || []).some((a) => Number(a.cardCount) > 0 && isMe(seatAt(a.seat)));
+
   function resultHead() {
     const b = battle;
     const total = (b.result?.allocations || []).reduce((t, a) => t + Number(a.value || 0), 0)
@@ -1017,6 +1024,7 @@ export function createTable(ctx) {
         <button class="ghost" data-act="replay">${icon("play")}Watch again</button>
         <a class="tb-text-link" href="/battles" data-nav="/battles">All battles</a>
       </div>
+      ${wonCards() ? winningsSlot("battle", b.id) : ""}
     </div>`;
   }
 

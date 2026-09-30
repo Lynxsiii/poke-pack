@@ -53,6 +53,8 @@
     <link rel="stylesheet" href="css/pages/battles.css?v=1" />
     <link rel="stylesheet" href="css/battle-table.css?v=1" />
     <link rel="stylesheet" href="css/battle-reveal.css?v=1" />
+    <link rel="stylesheet" href="css/casino-coin.css?v=1" />
+    <link rel="stylesheet" href="css/pages/casino.css?v=1" />
     <!-- Holofoil, derived from pokemon-cards-css (GPL-3). Loaded after app.css
          so its body.fx-holo rules win; Settings → Card effects switches to
          body.fx-classic, which leaves the original system painting. -->
@@ -91,7 +93,7 @@
       <nav class="nav" aria-label="Sections">
         <a class="nav-btn active" href="/home" data-view="home">Home</a>
         <a class="nav-btn" href="/packs" data-view="shop">Packs</a>
-        <a class="nav-btn" href="/battles" data-view="battles">Battles</a>
+        <a class="nav-btn" href="/casino" data-view="casino">Casino</a>
         <a class="nav-btn" href="/bulk" data-view="collection">Collection</a>
         <a class="nav-btn" href="/binder" data-view="binder">Binder</a>
         <a class="nav-btn" href="/social" data-view="social">Social</a>
@@ -305,7 +307,9 @@
         <div id="social-body"></div>
       </section>
 
+      <nav id="casino-bar" class="casino-bar" aria-label="Casino" hidden></nav>
       <section id="view-battles" class="hidden battle-page" aria-label="Pack battles"></section>
+      <section id="view-casino" class="hidden casino-page-root" aria-label="Casino"></section>
 
       <section id="view-auth" class="hidden">
         <div id="auth-body"></div>
@@ -434,7 +438,7 @@
           <span>More</span>
         </summary>
         <div class="nav-more-list">
-          <a class="nav-btn" href="/battles" data-view="battles"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 14 14-2 2L3 5zM19 3 5 17l2 2L21 5zM3 19l3-3M18 16l3 3"/></svg>Battles</a>
+          <a class="nav-btn" href="/casino" data-view="casino"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5.6"/><path d="M12 9v6M9.6 12h4.8"/></svg>Casino</a>
           <a class="nav-btn" href="/social" data-view="social"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M15.5 14.2a4.5 4.5 0 0 1 5 4.3"/></svg>Social</a>
           <a class="nav-btn" href="/account" data-view="account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Account</a>
           <a class="nav-btn" href="/catalog" data-view="catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>All sets</a>
@@ -450,6 +454,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=92"></script>
+    <script type="module" src="js/app.js?v=93"></script>
   </body>
 </html>
