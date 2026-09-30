@@ -82,10 +82,10 @@ async function readSummary(env, userId) {
   const equipped = await env.DB.prepare("SELECT sleeve, coin FROM gear_equipped WHERE user_id = ?")
     .bind(userId)
     .first();
-  const raw = { sleeves: {}, coins: {}, equipped: { sleeve: equipped?.sleeve || null, coin: equipped?.coin || null }, recent: [] };
+  const raw = { sleeves: {}, coins: {}, guards: {}, equipped: { sleeve: equipped?.sleeve || null, coin: equipped?.coin || null }, recent: [] };
   for (const row of rows) {
-    raw[row.kind === "sleeve" ? "sleeves" : "coins"][row.item_id] = row.qty;
-    if (raw.recent.length < 12) raw.recent.push({ kind: row.kind, id: row.item_id, at: row.last_at });
+    raw[row.kind === "sleeve" ? "sleeves" : row.kind === "guard" ? "guards" : "coins"][row.item_id] = row.qty;
+    if (row.kind !== "guard" && raw.recent.length < 12) raw.recent.push({ kind: row.kind, id: row.item_id, at: row.last_at });
   }
   return normalizeGear(raw);
 }

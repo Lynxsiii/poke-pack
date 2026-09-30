@@ -72,7 +72,7 @@ assert.equal((await request('/api/gear','GET',null,null)).status,401);
 assert.equal((await request('/api/gear/equip','POST',{kind:'coin',id:null},null)).status,401);
 let r=await request('/api/gear');
 assert.equal(r.status,200);
-assert.deepEqual(r.body.gear,{sleeves:{},coins:{},equipped:{sleeve:null,coin:null},recent:[]});
+assert.deepEqual(r.body.gear,{sleeves:{},coins:{},guards:{},equipped:{sleeve:null,coin:null},recent:[]});
 assert.deepEqual((await request('/api/me')).body.save.gear,r.body.gear,'the save carries gear');
 
 // Pick a product that hands out both a sleeve and a coin (else any).
@@ -128,5 +128,5 @@ if(coinId) assert.equal((await request('/api/gear/equip','POST',{kind:'coin',id:
 // Progress reset starts the cosmetics over too.
 assert.equal((await request('/api/me/reset','POST')).status,200);
 assert.equal(await equippedCoinId(env,'test'),null,'reset clears the equipped coin');
-assert.deepEqual((await request('/api/gear')).body.gear,{sleeves:{},coins:{},equipped:{sleeve:null,coin:null},recent:[]});
+assert.deepEqual((await request('/api/gear')).body.gear,{sleeves:{},coins:{},guards:{},equipped:{sleeve:null,coin:null},recent:[]});
 console.log(`Gear checks passed: ${Object.keys(catalog.sleeves).length} sleeves and ${Object.keys(catalog.coins).length} coins across ${rows} products resolve to real files and real products; opening grants once per copy, new flags, refusal grants nothing, equip needs ownership, saves carry gear, reset clears it.`);

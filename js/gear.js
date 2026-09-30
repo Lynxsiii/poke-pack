@@ -11,8 +11,11 @@
  *
  * A player's holdings travel inside their save as `save.gear`:
  *
- *   { sleeves: { id: qty }, coins: { id: qty }, equipped: { sleeve: id|null, coin: id|null },
+ *   { sleeves: { id: qty }, coins: { id: qty }, guards: { id: qty }, equipped: { sleeve: id|null, coin: id|null },
  *     recent: [{ kind, id, at }] }
+ *
+ * `guards` are the slab bumpers of RIP Grading (js/grading-rules.js GUARDS),
+ * bought with coins and worn per slab, so they never appear in `equipped`.
  *
  * What other features read:
  *   equippedCoin(gear, catalog)   the coin a coinflip should draw (falls back to the house coin)
@@ -83,7 +86,7 @@ export function rollGear(entry, rand = Math.random) {
 }
 
 export function emptyGear() {
-  return { sleeves: {}, coins: {}, equipped: { sleeve: null, coin: null }, recent: [] };
+  return { sleeves: {}, coins: {}, guards: {}, equipped: { sleeve: null, coin: null }, recent: [] };
 }
 
 /** A save's gear block, always complete, so callers never branch on its absence. */
@@ -96,6 +99,10 @@ export function normalizeGear(raw) {
       const n = Math.floor(Number(qty) || 0);
       if (n > 0) gear[key][id] = n;
     }
+  }
+  for (const [id, qty] of Object.entries(raw.guards || {})) {
+    const n = Math.floor(Number(qty) || 0);
+    if (n > 0) gear.guards[id] = n;
   }
   gear.equipped.sleeve = raw.equipped?.sleeve || null;
   gear.equipped.coin = raw.equipped?.coin || null;
