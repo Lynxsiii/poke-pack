@@ -174,7 +174,7 @@ assert.equal(db.prepare("SELECT count(*) AS n FROM price_days").get().n, sets.le
 
 // The cron entry point runs the same job, one step per call.
 globalThis.fetch = tcgcsv(40);
-for (let i = 0; i < 20; i += 1) {
+for (let i = 0; i < 60; i += 1) {
   const waits = [];
   await worker.scheduled({ cron: "*/10 * * * *" }, env, { waitUntil: (p) => waits.push(p) });
   await Promise.all(waits);
