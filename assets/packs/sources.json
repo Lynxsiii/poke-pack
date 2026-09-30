@@ -678,6 +678,58 @@
         }
       ]
     },
+    "sm10": {
+      "name": "Unbroken Bonds",
+      "slug": "unbroken-bonds",
+      "packs": [
+        {
+          "id": "machamp-marshadow",
+          "remote": "unbroken-bonds-pack-0.avif",
+          "file": "sm10/pack-0-v2.avif"
+        },
+        {
+          "id": "reshiram-charizard",
+          "remote": "unbroken-bonds-pack-1.avif",
+          "file": "sm10/pack-1-v2.avif"
+        },
+        {
+          "id": "gardevoir-sylveon",
+          "remote": "unbroken-bonds-pack-2.avif",
+          "file": "sm10/pack-2-v2.avif"
+        },
+        {
+          "id": "lucario-melmetal",
+          "remote": "unbroken-bonds-pack-3.avif",
+          "file": "sm10/pack-3-v2.avif"
+        }
+      ]
+    },
+    "sm11": {
+      "name": "Unified Minds",
+      "slug": "unified-minds",
+      "packs": [
+        {
+          "id": "garchomp-giratina",
+          "remote": "unified-minds-pack-0.avif",
+          "file": "sm11/pack-0-v2.avif"
+        },
+        {
+          "id": "umbreon-darkrai",
+          "remote": "unified-minds-pack-1.avif",
+          "file": "sm11/pack-1-v2.avif"
+        },
+        {
+          "id": "espeon-deoxys",
+          "remote": "unified-minds-pack-2.avif",
+          "file": "sm11/pack-2-v2.avif"
+        },
+        {
+          "id": "mewtwo-mew",
+          "remote": "unified-minds-pack-3.avif",
+          "file": "sm11/pack-3-v2.avif"
+        }
+      ]
+    },
     "sm6": {
       "name": "Forbidden Light",
       "slug": "forbidden-light",
