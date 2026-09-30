@@ -93,7 +93,7 @@ function tcgcsv(base, { down = [] } = {}) {
 /** Run steps until a day is done or stops moving. */
 async function runDay(when, fetcher, e = env) {
   const steps = [];
-  for (let i = 0; i < 40; i += 1) {
+  for (let i = 0; i < 80; i += 1) {
     const result = await recordDailyPrices(e, when, fetcher);
     steps.push(result);
     if (!result.waiting || (!result.fetched.length && !result.recorded.length)) break;
