@@ -156,9 +156,15 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
 
     priced, missing = 0, []
     for card in cards:
-        if card.get("promo") or card.get("number") not in by_number:
+        # Sun & Moon's later print runs add an "a" card (sm2 60a, the 2018
+        # Tapu Lele-GX) that TCGplayer files under the same listing as the
+        # original, so it takes that price.
+        key = card.get("number")
+        if key not in by_number and re.fullmatch(r"\d+a", str(key)):
+            key = str(key)[:-1]
+        if card.get("promo") or key not in by_number:
             continue
-        product = by_number[card["number"]]
+        product = by_number[key]
         rows = prices.get(product["productId"], [])
         first = "Normal" if card["rarity"] in ("Common", "Uncommon") else "Holofoil"
         value = market(rows, first) or market(rows, "Normal") or market(rows, "Holofoil")

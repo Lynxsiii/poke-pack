@@ -501,5 +501,47 @@
       "rainbow": 0.0147,
       "secret": 0.0081
     }
+  },
+  "sm1": {
+    "name": "Sun & Moon",
+    "printedTotal": 149,
+    "released": "2017-02-03",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum tallies of English packs: sturzflugbombardieru's 'The English Pokemon card rarity guide' box-ratio table (own YouTube full boxes pooled with burpies, Derium and Danny Phantump; https://www.elitefourum.com/t/39762/140, set post https://www.elitefourum.com/t/39762/141) and burpies' 'Pull Rates in Sun & Moon - Sword & Shield Sets' (YouTube/Twitch tally, https://www.elitefourum.com/t/25220, section 02.01). Pooled over 8,316 packs: GX 11.14%, full art 4.21% (Pokemon 2.81, Trainer 1.40), rainbow plus gold 2.31%. No TCGplayer Authentication Center study exists for the set. Rainbow and gold split 60/40 by E2's sheet model (4 full-art Trainers x10, 8 rainbow x4-5, 6 gold x4), burpies measuring 1.47% and 0.81% (n=7,020). Holo Rare is the structural remainder: a holo or better fills exactly 12 of every 36 rare slots in the E2 360-pack sequence. All tallies reach us through one forum, so read '2+ sources' as two independent tallies from one aggregator; ThePriceDex and PullRates.com are modelled from the same sheet and were not used as sources.",
+    "rates": {
+      "holo": 0.1567,
+      "gx": 0.1114,
+      "ultra": 0.0421,
+      "rainbow": 0.0139,
+      "secret": 0.0092
+    }
+  },
+  "sm2": {
+    "name": "Guardians Rising",
+    "printedTotal": 145,
+    "released": "2017-05-05",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum tallies of English packs: sturzflugbombardieru's 'The English Pokemon card rarity guide' box-ratio table (own YouTube full boxes pooled with burpies, Derium and Danny Phantump; https://www.elitefourum.com/t/39762/140, set post https://www.elitefourum.com/t/39762/142) and burpies' 'Pull Rates in Sun & Moon - Sword & Shield Sets' (YouTube/Twitch tally, https://www.elitefourum.com/t/25220, section 02.02). Pooled over 8,352 packs: GX 11.12%, full art 4.17% (Pokemon 3.35, Trainer 0.82), rainbow plus gold 2.27%. No TCGplayer Authentication Center study exists for the set. Rainbow and gold split 15/24 to 9/24 (all 24 secrets printed 3x on the sheet), burpies measuring 1.29% and 0.81% (n=2,088). Holo Rare is the structural remainder: a holo or better fills exactly 12 of every 36 rare slots in the E2 360-pack sequence. All tallies reach us through one forum, so read '2+ sources' as two independent tallies from one aggregator; ThePriceDex and PullRates.com are modelled from the same sheet and were not used as sources.",
+    "rates": {
+      "holo": 0.1577,
+      "gx": 0.1112,
+      "ultra": 0.0417,
+      "rainbow": 0.0142,
+      "secret": 0.0085
+    }
+  },
+  "sm3": {
+    "name": "Burning Shadows",
+    "printedTotal": 147,
+    "released": "2017-08-04",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum tallies of English packs: sturzflugbombardieru's 'The English Pokemon card rarity guide' box-ratio table (own YouTube full boxes pooled with burpies, Derium and Danny Phantump; https://www.elitefourum.com/t/39762/140, set post https://www.elitefourum.com/t/39762/143) and burpies' 'Pull Rates in Sun & Moon - Sword & Shield Sets' (YouTube/Twitch tally, https://www.elitefourum.com/t/25220, section 02.03). Pooled over 7,986 packs: GX 10.98%, full art 4.24% (Pokemon 2.99, Trainer 1.25), rainbow plus gold 2.32%. No TCGplayer Authentication Center study exists for the set. Rainbow and gold split 13/22 to 9/22 (all 22 secrets printed 3x), burpies measuring 1.59% and 0.95% (n=2,010). Holo Rare is the structural remainder: a holo or better fills exactly 12 of every 36 rare slots in the E2 360-pack sequence. All tallies reach us through one forum, so read '2+ sources' as two independent tallies from one aggregator; ThePriceDex and PullRates.com are modelled from the same sheet and were not used as sources.",
+    "rates": {
+      "holo": 0.1579,
+      "gx": 0.1098,
+      "ultra": 0.0424,
+      "rainbow": 0.0137,
+      "secret": 0.0095
+    }
   }
 }

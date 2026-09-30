@@ -870,6 +870,89 @@
           "file": "det1/pack-0.avif"
         }
       ]
+    },
+    "sm1": {
+      "name": "Sun & Moon",
+      "slug": "sun-and-moon",
+      "packs": [
+        {
+          "id": "solgaleo",
+          "remote": "sun-and-moon-pack-0.avif",
+          "file": "sm1/pack-0.avif"
+        },
+        {
+          "id": "lunala",
+          "remote": "sun-and-moon-pack-1.avif",
+          "file": "sm1/pack-1.avif"
+        },
+        {
+          "id": "incineroar",
+          "remote": "sun-and-moon-pack-2.avif",
+          "file": "sm1/pack-2.avif"
+        },
+        {
+          "id": "decidueye",
+          "remote": "sun-and-moon-pack-3.avif",
+          "file": "sm1/pack-3.avif"
+        },
+        {
+          "id": "primarina",
+          "remote": "sun-and-moon-pack-4.avif",
+          "file": "sm1/pack-4.avif"
+        }
+      ]
+    },
+    "sm2": {
+      "name": "Guardians Rising",
+      "slug": "guardians-rising",
+      "packs": [
+        {
+          "id": "alolan-ninetales",
+          "remote": "guardians-rising-pack-0.avif",
+          "file": "sm2/pack-0.avif"
+        },
+        {
+          "id": "tapu-koko",
+          "remote": "guardians-rising-pack-1.avif",
+          "file": "sm2/pack-1.avif"
+        },
+        {
+          "id": "lycanroc",
+          "remote": "guardians-rising-pack-2.avif",
+          "file": "sm2/pack-2.avif"
+        },
+        {
+          "id": "kommo-o",
+          "remote": "guardians-rising-pack-3.avif",
+          "file": "sm2/pack-3.avif"
+        }
+      ]
+    },
+    "sm3": {
+      "name": "Burning Shadows",
+      "slug": "burning-shadows",
+      "packs": [
+        {
+          "id": "marshadow",
+          "remote": "burning-shadows-pack-0.avif",
+          "file": "sm3/pack-0.avif"
+        },
+        {
+          "id": "tapu-fini",
+          "remote": "burning-shadows-pack-1.avif",
+          "file": "sm3/pack-1.avif"
+        },
+        {
+          "id": "necrozma",
+          "remote": "burning-shadows-pack-2.avif",
+          "file": "sm3/pack-2.avif"
+        },
+        {
+          "id": "ho-oh",
+          "remote": "burning-shadows-pack-3.avif",
+          "file": "sm3/pack-3.avif"
+        }
+      ]
     }
   }
 }
