@@ -38,7 +38,7 @@ so a set's rows appear when its products and cards are in the data: re-run the
 script after a set lands.
 
     python3 scripts/build_box_contents.py /path/to/deck-boxes/parts
-    python3 scripts/build_box_contents.py /path/to/deck-boxes/parts --trial   # single-source rows too, scratch file
+    python3 scripts/build_box_contents.py /path/to/deck-boxes/parts --trial   # writes a scratch file; add --verified-only to drop single-source rows
 """
 from __future__ import annotations
 
@@ -51,8 +51,9 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 OUT = DATA / "box-contents.json"
 SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
-# --trial ships single-source rows too, to a scratch file, to exercise the deal.
-ALLOW_SINGLE = False
+# Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
+# --trial writes the same build to a scratch file.
+ALLOW_SINGLE = True
 # Second-source check found these still in conflict (see verify-decks.md): held back until settled.
 HOLD = {
     "svp/trainers-toolkit-2024": "card quantities disagree between sources",
@@ -582,7 +583,8 @@ if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if len(args) != 1:
         raise SystemExit(__doc__)
+    if "--verified-only" in sys.argv:
+        ALLOW_SINGLE = False
     if "--trial" in sys.argv:
-        ALLOW_SINGLE = True
         OUT = Path("/tmp/box-contents-trial.json")
     raise SystemExit(build(Path(args[0])))
