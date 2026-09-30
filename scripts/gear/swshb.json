@@ -159,7 +159,7 @@
       "src": {
         "tcgplayer": 264833
       },
-      "v": 2,
+      "v": 3,
       "evidence": "verified",
       "sources": [
         "https://www.justahobby.store/products/pokemon-brilliant-stars-pokemon-center-elite-trainer-box",
@@ -186,7 +186,8 @@
           859
         ]
       ],
-      "snap": false
+      "snap": false,
+      "quadInset": 0.035
     },
     {
       "kind": "sleeve",
@@ -394,35 +395,38 @@
         "swsh12/pc-etb"
       ],
       "src": {
-        "url": "https://cdn.shopify.com/s/files/1/0793/5819/8079/files/P8696_183-85162_05.jpg"
+        "file": "refs/hunt-pc/st-pc-lugia__levelupstore.jpg"
       },
-      "v": 2,
+      "v": 3,
       "evidence": "verified",
       "sources": [
         "https://zulusgames.com/products/pokemon-tcg-silver-tempest-pokemon-center-elite-trainer-box",
         "https://www.amazon.com/dp/B0BRQX3D3Z",
         "https://www.justahobby.store/cdn/shop/files/P8696_183-85162_09.jpg",
-        "https://www.tcgplayer.com/product/285860/pokemon-swsh12-silver-tempest-silver-tempest-pokemon-center-elite-trainer-box-exclusive"
+        "https://www.tcgplayer.com/product/285860/pokemon-swsh12-silver-tempest-silver-tempest-pokemon-center-elite-trainer-box-exclusive",
+        "https://levelupstore.co.za/products/pokemon-silver-tempest-lugia-card-sleeves-65-pack"
       ],
       "quad": [
         [
-          718,
-          309
+          304,
+          216
         ],
         [
-          1026,
-          254
+          554,
+          216
         ],
         [
-          1110,
-          704
+          554,
+          584
         ],
         [
-          803,
-          759
+          304,
+          584
         ]
       ],
-      "snap": false
+      "snap": false,
+      "quadInset": 0.02,
+      "crop": null
     },
     {
       "kind": "sleeve",

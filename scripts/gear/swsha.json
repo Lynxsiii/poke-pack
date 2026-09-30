@@ -45,34 +45,36 @@
     "swsh3/eliteTrainerBox"
    ],
    "src": {
-    "tcgplayer": 220675
+    "file": "refs/hunt-pc/da-eternatus__justahobby-P6379_174-80731_05.jpg"
    },
    "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/220675",
-    "https://facetofacegames.com/en-us/products/pokemon-tcg-sword-shield-darkness-ablaze-elite-trainer-box"
+    "https://facetofacegames.com/en-us/products/pokemon-tcg-sword-shield-darkness-ablaze-elite-trainer-box",
+    "https://www.justahobby.store/products/pokemon-darkness-ablaze-elite-trainer-box"
    ],
    "quad": [
     [
-     295,
-     223
+     568,
+     406
     ],
     [
-     537,
-     180
+     1000,
+     338
     ],
     [
-     599,
-     509
+     1104,
+     936
     ],
     [
-     358,
-     553
+     664,
+     1022
     ]
    ],
-   "snap": false
+   "snap": false,
+   "quadInset": 0.02
   },
   {
    "kind": "sleeve",
@@ -91,7 +93,7 @@
     "tcgplayer": 224095
    },
    "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/224095",
@@ -116,7 +118,8 @@
      846
     ]
    ],
-   "snap": false
+   "snap": false,
+   "quadInset": 0.018
   },
   {
    "kind": "sleeve",
@@ -157,35 +160,37 @@
     "swsh45/eliteTrainerBox"
    ],
    "src": {
-    "tcgplayer": 232635
+    "file": "refs/hunt-pc/sf-eevee__pokeguardian-593042.jpg"
    },
    "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/232635",
     "https://marriland.com/updates/shining-fates-elite-trainer-box-review/",
-    "https://facetofacegames.com/en-us/products/pokemon-tcg-shining-fates-elite-trainer-box"
+    "https://facetofacegames.com/en-us/products/pokemon-tcg-shining-fates-elite-trainer-box",
+    "https://www.pokeguardian.com/593042_more-shining-fates-elite-trainer-box-product-images-revealed-close-up-of-english-eevee-vmax"
    ],
    "quad": [
     [
-     370,
-     288
+     612,
+     452
     ],
     [
-     665,
-     221
+     1072,
+     368
     ],
     [
-     743,
-     621
+     1196,
+     996
     ],
     [
-     448,
-     687
+     720,
+     1090
     ]
    ],
-   "snap": false
+   "snap": false,
+   "quadInset": 0.02
   },
   {
    "kind": "sleeve",
@@ -204,7 +209,7 @@
     "tcgplayer": 248790
    },
    "crop": null,
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/248790",
@@ -213,12 +218,12 @@
    ],
    "quad": [
     [
-     414,
-     354
+     416,
+     362
     ],
     [
-     796,
-     281
+     798,
+     290
     ],
     [
      895,
@@ -229,7 +234,8 @@
      875
     ]
    ],
-   "snap": false
+   "snap": false,
+   "quadInset": 0.02
   },
   {
    "kind": "coin",

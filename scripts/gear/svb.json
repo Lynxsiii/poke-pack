@@ -438,7 +438,7 @@
    "src": {
     "tcgplayer": 666507
    },
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
     "https://www.tcgplayer.com/product/650799/pokemon-sv-prismatic-evolutions-prismatic-evolutions-premium-figure-collection",
@@ -447,7 +447,27 @@
     "https://obsidia-tcg.store/products/pokemon-tcg-prismatic-evolutions-premium-figure-collection",
     "https://www.pokeguardian.com/2604312_prismatic-evolutions-premium-figure-collection-revealed"
    ],
-   "crop": null
+   "crop": null,
+   "quad": [
+    [
+     12,
+     10
+    ],
+    [
+     708,
+     8
+    ],
+    [
+     712,
+     992
+    ],
+    [
+     10,
+     994
+    ]
+   ],
+   "snap": true,
+   "quadInset": 0.022
   },
   {
    "kind": "sleeve",
