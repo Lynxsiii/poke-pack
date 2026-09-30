@@ -25,6 +25,19 @@ export const SM_FULL_ART = new Set(["Rare Ultra", "Rare Rainbow", "Rare Secret"]
 export const SM_ETCHED = new Set(["Rare Ultra", "Rare Rainbow", "Rare Secret"]);
 
 /**
+ * Alternate-art Tag Teams (Rare Ultra): the Pokémon is plain ink in TCG Live's
+ * foil map and the foil sits on the scenery (css/holo/sm-fullart.css, `sm-alt`).
+ * The card data cannot tell them from the standard full art, so the list is
+ * measured from the maps: scripts/sm_alt_art.py in the card-textures skill.
+ */
+export const SM_ALT_ART = new Set([
+  "sm9-161", "sm9-165", "sm9-170",
+  "sm10-192", "sm10-197", "sm10-199", "sm10-201", "sm10-205",
+  "sm11-218", "sm11-221", "sm11-226",
+  "sm12-215", "sm12-221", "sm12-224", "sm12-226",
+]);
+
+/**
  * The finish of a Sun & Moon print, read from its rarity, its GX / TAG TEAM
  * subtype and the Shiny Vault gallery tag (`gallery: "sv"`). An empty string
  * means the generic engine decides; "foil-none" means the card is not foil
@@ -42,12 +55,15 @@ export function smPattern(card) {
   }
   switch (card.rarity) {
     case "Rare Secret":
+      // Gold: Trainers, Energy and GX. A Pokémon that is not a GX is Cosmic
+      // Eclipse's full-colour alternate art, foil on its scenery, not gold.
+      if (card.supertype === "Pokémon" && !is("GX")) return "foil-ultra sm-fa sm-alt";
       return "foil-gold sm-gold";
     case "Rare Rainbow":
       return "foil-ir sm-rainbow";
     case "Rare Ultra":
       if (trainer) return "foil-ultra sm-tfa";
-      return `foil-ultra sm-fa${tag ? " sm-tag" : ""}`;
+      return `foil-ultra sm-fa${SM_ALT_ART.has(card.id) ? " sm-alt" : ""}${tag ? " sm-tag" : ""}`;
     case "Rare Holo GX":
       return `foil-ex sm-gx${tag ? " sm-tag" : ""}`;
     case "Rare Prism Star":

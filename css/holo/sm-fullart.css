@@ -1,20 +1,247 @@
 /*
- * Sun & Moon era: full-art GX / Supporter, rainbow and gold.
+ * Sun & Moon era: full-art GX / Tag Team / Supporter, Rainbow Rare and gold.
  *
- * Draws: sm-fa, sm-tfa (full-art Trainer), sm-rainbow (`foil-ir`) and sm-gold (`foil-gold`).
- * Classes come from smPattern() in js/sm-foil.js; `era-sm` marks every
- * Sun & Moon print (js/foil-maps.js). Research and photos live in
- * .claude/skills/card-textures/reference/sun-moon.md and
- * /mnt/project-files/sun-moon/texture-refs. Follow SKILL.md: realism first,
- * TCG Live foil maps, no outline or box-shadow on `.tcg`, cap any colour
- * dodge with a closing contrast(0.8), and run foil_coverage.mjs plus a
- * WebKit render at phone size before merging.
+ * Draws sm-fa (Rare Ultra GX and Tag Team full arts), sm-fa + sm-alt (the
+ * alternate-art Tag Teams and Cosmic Eclipse's full-colour secret Pokémon:
+ * matte Pokémon, foil on the scenery), sm-tfa (full-art Supporter),
+ * sm-rainbow (`foil-ir`) and sm-gold (`foil-gold`: gold Trainers, Energy and
+ * GX). Classes come from smPattern() in js/sm-foil.js; `era-sm` marks every
+ * Sun & Moon print (js/foil-maps.js). The research, the photos and what each
+ * finish does are in .claude/skills/card-textures/reference/sun-moon-fullart.md
+ * and /mnt/project-files/sun-moon/texture-refs/f3-fullart-rainbow-gold.
  *
- * Specificity: repeat `era-sm` five times in every selector, like swsh.css
- * (body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-holo .foil),
- * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Same stock as the Sword & Shield and Scarlet & Violet full arts (TCG Live
+ * files them as SUN_PILLAR / ETCHED, RAINBOW and gold ETCHED), so this sheet
+ * keeps sv-fullart.css's Ultra Rare and gold layers and the tuning swsh.css
+ * learned from the poke-holo.simey.me benchmark, and adds what only the
+ * Sun & Moon maps say: the etch is a concentric fingerprint over the whole
+ * face, the gold's printed stars are cut out of it, and an alternate art is
+ * foil on its scenery only.
+ *
+ * Layer ideas follow pokemon-cards-css by Simon Goellner (@simeydotme),
+ * GPL-3.0; see NOTICE.md.
+ *
+ * Specificity: `era-sm` five times in every selector (ten classes once the
+ * rest is counted), one more than sv-fullart.css, so the rule wins whichever
+ * order the sheets load in; a resting card paints `.foil` alone.
  * Bump this sheet's ?v= tag in index.html on every change.
- *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
  */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm {
+  --smfa-glitter: url("/assets/foil/glitter.png");
+  --smfa-flecks: url("/assets/foil/glitter-flecks.webp");
+  --smfa-spectrum: hsl(2, 100%, 73%), hsl(53, 100%, 69%), hsl(93, 100%, 69%),
+    hsl(176, 100%, 76%), hsl(228, 100%, 74%), hsl(283, 100%, 73%), hsl(2, 100%, 73%);
+  --smfa-seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* ---- Full art: Rare Ultra GX, Tag Team and Supporter ---------------------------
+   sv-fullart.css's Ultra Rare (SUN_PILLAR / ETCHED) is the same stock, so its
+   layers stay. Tuned here, from the photos and TCG Live's maps:
+   - GX / Tag Team full art (Umbreon & Darkrai SM241 tilted; sm9 162, 163):
+     the whole face catches rainbow bands, frame included, and the Pokémon
+     stays readable. The map greys the Pokémon (part strength); the etch is a
+     fingerprint of concentric ridges edge to edge, text box included.
+   - Full-art Supporter (sm9 172): same stock, flatter light; its etch follows
+     the line art in short hatches.
+   Dodge-safe: every colour-dodged chain ends in contrast(0.8), or Safari
+   draws near-black ink as pure blue blocks (verify.md).
+   The native TCG Live etch (-etch-v4, sigma 0.6) is used as is: a blurred or
+   400 px copy turned the ridges into camouflage patches. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-fa, .sm-tfa).foil-ultra.has-foil-map .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.4) + 0.4)) contrast(2) saturate(0.85) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-tfa.foil-ultra.has-foil-map .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.15) + 0.5)) contrast(1.9) saturate(1) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-fa, .sm-tfa).foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.5) contrast(2.5) saturate(0.35) contrast(0.8);
+}
+/* A full art is foil edge to edge, silver frame included, but TCG Live shades
+   the frame and the copyright band dark, so under the light the lit frame
+   stopped in a hard line at a corner (swsh.css, Charizard V SWSH260). A floor
+   of foil under the map: art AND light AND (map OR floor). Not on an
+   alternate art, whose Pokémon is matte ink: there the map is the truth. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm:is(.sm-fa, .sm-tfa).foil-ultra.has-foil-map:not(.sm-alt) .foil {
+  --smfa-floor: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  -webkit-mask-image: var(--art), var(--fa-light), var(--foil-map), var(--smfa-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--fa-light), var(--foil-map), var(--smfa-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* The glare over the family: about half of sv-fullart.css's hard-light, which
+   over a saturated painting is a milky veil at one tilt (swsh.css benchmark). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-fa.foil-ultra.has-foil-map .glare {
+  opacity: calc(var(--card-opacity) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-tfa.foil-ultra.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 80%) 5%, hsl(200, 5%, 45%) 65%, hsl(320, 20%, 15%) 150%);
+  filter: brightness(0.9) contrast(1.1);
+  opacity: calc(var(--card-opacity) * 0.4);
+}
+/* The etched twin held back: with the native etch the lit ridges cover most
+   of a painted Pokémon, and at full strength they shifted its colours. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-fa.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .foil::before {
+  opacity: 0.35;
+}
+
+/* ---- Alternate arts: matte Pokémon, foil on the scenery -------------------------
+   TCG Live's maps (sm9 161 and 165 and 170, Cosmic Eclipse 237 to 248): the
+   Pokémon is black in the foil map (plain ink), the scenery and the frame are
+   foil, and the etch, where there is one (the Tag Team alternate arts carry a
+   faint one, the Cosmic Eclipse secret Pokémon none), is a fine fingerprint
+   in the background only. So: the map alone decides where the foil is (no
+   floor, above), the gloss on the varnish stays off the Pokémon, and a print
+   with no etch map draws no etch layers at all (the shared tile
+   js/foil-maps.js hands every etched rarity is a texture the real card does
+   not have). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-alt.foil-ultra.has-foil-map .glare {
+  -webkit-mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-image: var(--art), var(--foil-map);
+  mask-composite: intersect, add;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-alt.foil-ultra.has-foil-map.has-etch-tile {
+  --fa-etch: linear-gradient(transparent, transparent);
+  --fa-etch-size: 100% 100%;
+  --fa-etch-pos: center;
+  --fa-etch-repeat: no-repeat;
+}
+
+/* ---- Rainbow Rare: the glitter foil under a printed rainbow ---------------------
+   Photos (Pikachu & Zekrom 184 and Lurantis GX rainbow, in hand): the rainbow
+   is printed, pastel, across the whole card; the foil under it is a fine
+   dense glitter that flashes white and prismatic points as the card turns,
+   with the art's etch as faint relief. So no colour of our own beyond a faint
+   pastel sheen: white sparkle in the light, the grains winking as the card
+   tilts, kept restrained (Noah, 2026-09-28: no glitter you notice first). The
+   IR recipe it inherits from celebration.css washed the whole card milky at
+   the top-left tilt and lost the etch; this is swsh.css's rainbow (benchmark
+   scorecard: match). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .foil {
+  --shift: 3px;
+  background-image:
+    var(--smfa-glitter),
+    var(--smfa-flecks),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      #fff 0%, #a0a0a0 35%, #3c3c3c 100%);
+  background-size: 30% auto, 26% auto, cover;
+  background-position:
+    calc(var(--seed-x, 0.5) * 100% + (var(--pointer-from-left) - 0.5) * var(--shift))
+      calc(var(--seed-y, 0.5) * 100% + (var(--pointer-from-top) - 0.5) * var(--shift)),
+    calc(var(--seed-y, 0.5) * 100%) calc(var(--seed-x, 0.5) * -100%),
+    center;
+  background-blend-mode: screen, multiply;
+  background-repeat: repeat;
+  filter: brightness(calc(0.95 + var(--pointer-from-center) * 0.4)) contrast(1.8) saturate(0.5);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow:not(.lit):not(.settling) .foil {
+  filter: brightness(0.9) contrast(1.4) saturate(0.3);
+  opacity: calc(0.24 * var(--foil-strength, 1));
+}
+/* The wink: the grain multiplied by itself at another pitch, one copy
+   moving with the pointer, so only the grains that line up light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .foil::before {
+  background-image: var(--smfa-flecks), var(--smfa-flecks);
+  background-size: 112px 112px, 131px 131px;
+  background-position: var(--smfa-seed-pos),
+    calc(50% + var(--pointer-from-left, 0.5) * 90px) calc(50% + var(--pointer-from-top, 0.5) * 70px);
+  background-blend-mode: multiply, normal;
+  background-repeat: repeat;
+  filter: brightness(3.2) saturate(0.6);
+  mix-blend-mode: screen;
+  opacity: calc(var(--card-opacity) * 0.5);
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+}
+/* A faint pastel sheen drifting over the sparkle. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .foil::after {
+  background-image: repeating-linear-gradient(15deg, var(--smfa-spectrum), var(--smfa-spectrum));
+  background-size: 240% 240%;
+  background-position: var(--background-x) var(--background-y);
+  background-blend-mode: normal;
+  background-repeat: repeat;
+  filter: none;
+  mix-blend-mode: soft-light;
+  opacity: 0.4;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(50, 20%, 92%, 0.7) 0%, hsla(150, 10%, 40%, 0.5) 45%, hsla(0, 0%, 5%, 0.9) 110%);
+  mix-blend-mode: hard-light;
+  filter: brightness(0.95) contrast(1.4);
+  opacity: calc(var(--card-opacity) * 0.6);
+  clip-path: none;
+  border-radius: 0;
+}
+/* The art's etch as relief under the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow:is(.has-etch-map, .has-etch-tile) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.25) 30%, hsla(0, 0%, 100%, 0.1) 70%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--smfa-etch);
+  mask-image: var(--smfa-etch);
+  -webkit-mask-size: var(--smfa-etch-size);
+  mask-size: var(--smfa-etch-size);
+  -webkit-mask-position: var(--smfa-etch-pos);
+  mask-position: var(--smfa-etch-pos);
+  -webkit-mask-repeat: var(--smfa-etch-repeat);
+  mask-repeat: var(--smfa-etch-repeat);
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow.has-etch-map {
+  --smfa-etch: var(--etch-map);
+  --smfa-etch-size: 100% 100%;
+  --smfa-etch-pos: center;
+  --smfa-etch-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-rainbow.has-etch-tile {
+  --smfa-etch: var(--etch-tile);
+  --smfa-etch-size: 100% auto;
+  --smfa-etch-pos: var(--smfa-seed-pos);
+  --smfa-etch-repeat: repeat;
+}
+
+/* ---- Gold: Trainers, Energy and GX --------------------------------------------
+   sv-fullart.css's gold (SV_ULTRA / ETCHED: a faint rainbow through two light
+   bars under gold ink, glitter, the etch lit over the whole card) is the same
+   stock. The Sun & Moon maps add one thing: the printed four-point stars are
+   cut out of the etch and bright in the foil map, glossy mirror foil rather
+   than etched, and a Energy's type circle likewise. Dodge-safe: the chain
+   closes in contrast(0.8) (Eternatus V, Noah 2026-09-29). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map .foil {
+  filter: brightness(0.62) contrast(1.5) saturate(0.45) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-gold.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
+}
