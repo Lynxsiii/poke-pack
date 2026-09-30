@@ -883,6 +883,33 @@
    ]
   ]
  },
+ "sm10/blastoise-gx-premium-collection": {
+  "label": "2 extra cards",
+  "cards": [
+   [
+    "sm10-33",
+    1
+   ],
+   [
+    "sm10-34",
+    1
+   ]
+  ]
+ },
+ "sm10/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm19"
+  }
+ },
+ "sm11/elite-trainer-box": {
+  "label": "40 basic Energy",
+  "spread": {
+   "total": 40,
+   "print": "sm19"
+  }
+ },
  "sv1/build-battle": {
   "recipe": {
    "total": 40,
