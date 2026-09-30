@@ -1,7 +1,7 @@
 import { money, sellValue } from '../js/catalog.js';
 import { SALES_DDL } from './casino-ddl.js';
 
-/* "Sell all winnings" (migration 0016): one shared endpoint for every casino
+/* "Sell all winnings" (migration 0017): one shared endpoint for every casino
    game. A winner can turn the cards they won into coins at the same market rate
    selling always uses, in one tap. The Worker decides what counts as winnings
    (never a card the player already owned before the game), sells at most what

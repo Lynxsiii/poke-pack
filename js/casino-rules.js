@@ -24,7 +24,7 @@ export function botStakeWindow(hostCents) {
   return { low: Math.max(1, Math.floor(hostCents * (1 - COINFLIP_RULES.botEdge))), high: hostCents };
 }
 
-/* Jackpot (migration 0015): 3 to 10 players toss cards into one pot; when it is
+/* Jackpot (migration 0016): 3 to 10 players toss cards into one pot; when it is
    full (or the host draws it early with at least 2 entries) one entry is drawn at
    random, weighted by the value it put up, and that player takes every card. The
    host's entry sets the pot's minimum; a joiner puts up between 1x and

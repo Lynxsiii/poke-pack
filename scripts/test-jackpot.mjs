@@ -13,7 +13,7 @@ import { JACKPOT_RULES, jackpotWindow, botStakeWindow } from '../js/casino-rules
 const migrationDir = new URL('../worker/migrations/', import.meta.url);
 const migrationFiles = readdirSync(migrationDir).sort();
 const migrationSql = file => readFileSync(new URL(file, migrationDir), 'utf8');
-assert.deepEqual(splitStatements(migrationSql('0015_casino_jackpot.sql')), JACKPOT_DDL, 'worker/casino-ddl.js is stale: run node scripts/gen-casino-ddl.mjs');
+assert.deepEqual(splitStatements(migrationSql('0016_casino_jackpot.sql')), JACKPOT_DDL, 'worker/casino-ddl.js is stale: run node scripts/gen-casino-ddl.mjs');
 
 function makeDb(files) {
   const db = new DatabaseSync(':memory:');
@@ -40,7 +40,7 @@ function makeDb(files) {
   return { db, DB };
 }
 // The Worker upgrades a database that only has migrations up to 0013, as production does.
-const { db, DB } = makeDb(migrationFiles.filter(f => f < '0014'));
+const { db, DB } = makeDb(migrationFiles.filter(f => f < '0015'));
 assert.equal(db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name = 'jackpots'").get().n, 0);
 const realNow = Date.now; let now = realNow(); Date.now = () => now;
 const USERS = ['host', ...Array.from({ length: 10 }, (_, i) => `p${i + 1}`)];

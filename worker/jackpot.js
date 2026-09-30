@@ -4,7 +4,7 @@ import { avatarId, avatarStyle } from '../js/cosmetics.js';
 import { JACKPOT_RULES, jackpotWindow } from '../js/casino-rules.js';
 import { JACKPOT_DDL } from './casino-ddl.js';
 
-/* Casino jackpot (migration 0015). Same shape as the coinflip in worker/casino.js:
+/* Casino jackpot (migration 0016). Same shape as the coinflip in worker/casino.js:
    the rules live here and in the triggers of the migration, a client only asks.
    Cards leave a player's inventory when their entry row is inserted and come back
    only through the triggers (a leave, a cancel, or the winner's payout), so they

@@ -6,7 +6,7 @@ import { CASINO_DDL } from './casino-ddl.js';
 import { ensureSalesSchema, winningsInfo, sellWinnings } from './winnings.js';
 import { handleJackpots, maintainJackpots } from './jackpot.js';
 
-/* Casino coinflip (migration 0014). The rules and every card movement live
+/* Casino coinflip (migration 0015). The rules and every card movement live
    here and in the triggers of the migration: a client only asks. Values are
    whole cents, taken from the same market-based sellValue() that selling uses. */
 

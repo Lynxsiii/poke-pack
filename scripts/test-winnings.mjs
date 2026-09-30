@@ -34,7 +34,7 @@ function makeDb(files) {
   return { db, DB };
 }
 // The Worker upgrades a database that only has migrations up to 0013, as production does.
-const { db, DB } = makeDb(migrationFiles.filter(f => f < '0014'));
+const { db, DB } = makeDb(migrationFiles.filter(f => f < '0015'));
 assert.equal(db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name = 'coinflips'").get().n, 0);
 const realNow = Date.now; let now = realNow(); Date.now = () => now;
 const addUser = (id, coins = 100) => {
