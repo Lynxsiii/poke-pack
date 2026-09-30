@@ -306,5 +306,35 @@
       "energyFoil": 0.2483,
       "demigod": 0.000769
     }
+  },
+  "sm10": {
+    "name": "Unbroken Bonds",
+    "printedTotal": 214,
+    "released": "2019-05-03",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum tallies, English, per pack, all reaching us through one forum: burpies 'Pull Rates in Sun & Moon - Sword & Shield Sets' https://www.elitefourum.com/t/25220 (YouTube/Twitch box openings) and sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/140 (box-ratio tables per set, pooling his own full-box data with Derium, TheGameCapital 2,592 packs and Danny Phantump https://www.youtube.com/watch?v=4TCjfoHoUqk); set post https://www.elitefourum.com/t/39762/153. No Prism Star cards in this set, so the reverse slot is always a reverse holo. The rare slot holds a plain Rare unless it rolls a holo Rare, a GX (TAG TEAM included), a full art (Rare Ultra: full-art GX, TAG TEAM, alternate art or Trainer), a rainbow or a gold. Pack: 1 Energy, 5 Common, 3 Uncommon, 1 reverse, 1 rare slot (TCGplayer product text, Bulbapedia Booster pack (TCG)). Cross-check only (not independent): ThePriceDex https://www.thepricedex.com/set/sm10/unbroken-bonds/pull-rates. Pooled over 10,405 packs: GX 9.85% (1 in 10), full art 4.11% (1 in 24), rainbow 1.44% and gold 0.91% (E2 per-card counts over 6,517 packs pooled with burpies' 3,888; the split is 62:38, not the 14:6 card ratio, because the six golds print more often); holo Rare 16.67% (1 in 6, sturzflug's own 2,845 packs, the only tally; ThePriceDex also says 1 in 6).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/153",
+    "rates": {
+      "holo": 0.1667,
+      "gx": 0.0985,
+      "ultra": 0.0411,
+      "rainbow": 0.0144,
+      "secret": 0.0091
+    }
+  },
+  "sm11": {
+    "name": "Unified Minds",
+    "printedTotal": 236,
+    "released": "2019-08-02",
+    "updated": "2026-09-30",
+    "source": "Elite Fourum tallies, English, per pack, all reaching us through one forum: burpies 'Pull Rates in Sun & Moon - Sword & Shield Sets' https://www.elitefourum.com/t/25220 (YouTube/Twitch box openings) and sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/140 (box-ratio tables per set, pooling his own full-box data with Derium, TheGameCapital 2,592 packs and Danny Phantump https://www.youtube.com/watch?v=4TCjfoHoUqk); set post https://www.elitefourum.com/t/39762/154. No Prism Star cards in this set, so the reverse slot is always a reverse holo. The rare slot holds a plain Rare unless it rolls a holo Rare, a GX (TAG TEAM included), a full art (Rare Ultra: full-art GX, TAG TEAM, alternate art or Trainer), a rainbow or a gold. Pack: 1 Energy, 5 Common, 3 Uncommon, 1 reverse, 1 rare slot (TCGplayer product text, Bulbapedia Booster pack (TCG)). Cross-check only (not independent): ThePriceDex https://www.thepricedex.com/set/sm11/unified-minds/pull-rates. Pooled over 11,628 packs: GX 12.78% (1 in 8, all tallies 10.8 to 12.9%), full art 4.29% (1 in 23), rainbow 1.36% and gold 0.89% (E2 per-card counts over 7,956 packs pooled with burpies' 3,672); holo Rare 13.89% (1 in 7.2, sturzflug's own 4,284 packs, the only tally; ThePriceDex's 1 in 7.2 reproduces his model). Unified Minds has fewer holos and more GX than the other three sets of 2018-19.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/154",
+    "rates": {
+      "holo": 0.1389,
+      "gx": 0.1278,
+      "ultra": 0.0429,
+      "rainbow": 0.0136,
+      "secret": 0.0089
+    }
   }
 }

@@ -30,6 +30,165 @@
       "era": "sm"
     }
   },
-  "promoCards": {},
-  "products": []
+  "promoCards": {
+    "smp179": {
+      "foilAs": "Rare Holo"
+    },
+    "smp180": {
+      "foilAs": "Rare Holo"
+    },
+    "smp181": {
+      "foilAs": "Rare Holo"
+    },
+    "smp182": {
+      "foilAs": "Rare Holo"
+    },
+    "smp183": {
+      "foilAs": "Rare Holo"
+    },
+    "smp184": {
+      "foilAs": "Rare Holo"
+    },
+    "smp185": {
+      "foilAs": "Rare Holo"
+    },
+    "smp187": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp188": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp189": {
+      "foilAs": "Rare Ultra"
+    },
+    "smp201": {
+      "foilAs": "Rare Ultra"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 185719,
+      "packs": 8,
+      "promos": []
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 189823,
+      "packs": 4,
+      "promos": [
+        "smp179",
+        "smp180",
+        "smp181",
+        "smp182"
+      ],
+      "pick": 1,
+      "note": "One of four prerelease promos, picked at random. The real box also held a 23-card evolution pack, which isn't simulated."
+    },
+    {
+      "id": "sceptile-3-pack-blister",
+      "name": "3 Pack Blister (Sceptile)",
+      "kind": "blister",
+      "tcgplayerId": 188410,
+      "packs": 3,
+      "promos": [],
+      "note": "Its promo is a special-art Sceptile reprint from Celestial Storm, which isn't on the site."
+    },
+    {
+      "id": "typhlosion-3-pack-blister",
+      "name": "3 Pack Blister (Typhlosion)",
+      "kind": "blister",
+      "tcgplayerId": 188411,
+      "packs": 3,
+      "promos": [
+        "smp185"
+      ]
+    },
+    {
+      "id": "eevee-single-pack-blister",
+      "name": "Single Pack Blister (Eevee)",
+      "kind": "blister",
+      "tcgplayerId": 188412,
+      "packs": 1,
+      "promos": [
+        "smp184"
+      ]
+    },
+    {
+      "id": "pikachu-single-pack-blister",
+      "name": "Single Pack Blister (Pikachu)",
+      "kind": "blister",
+      "tcgplayerId": 188413,
+      "packs": 1,
+      "promos": [
+        "smp183"
+      ]
+    },
+    {
+      "id": "steelix-single-pack-blister",
+      "name": "Single Pack Blister (Steelix)",
+      "kind": "blister",
+      "tcgplayerId": 240188,
+      "packs": 1,
+      "promos": [],
+      "note": "The real blister also held two reprint cards, which aren't simulated. A Target exclusive."
+    },
+    {
+      "id": "wailord-single-pack-blister",
+      "name": "Single Pack Blister (Wailord)",
+      "kind": "blister",
+      "tcgplayerId": 240189,
+      "packs": 1,
+      "promos": [],
+      "note": "The real blister also held two reprint cards, which aren't simulated. A Target exclusive."
+    },
+    {
+      "id": "alolan-marowak-gx-box",
+      "name": "Alolan Marowak-GX Box",
+      "kind": "collection",
+      "tcgplayerId": 189658,
+      "packs": 4,
+      "promos": [
+        "smp187"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "kangaskhan-gx-box",
+      "name": "Kangaskhan-GX Box",
+      "kind": "collection",
+      "tcgplayerId": 192083,
+      "packs": 4,
+      "promos": [
+        "smp188"
+      ],
+      "note": "Pack mix approximate: the real box held Unbroken Bonds, Lost Thunder and XY Evolutions packs."
+    },
+    {
+      "id": "blastoise-gx-premium-collection",
+      "name": "Blastoise-GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 192230,
+      "packs": 6,
+      "promos": [
+        "smp189"
+      ],
+      "note": "Pack mix approximate: the real box held six packs, mostly Unbroken Bonds and Lost Thunder."
+    },
+    {
+      "id": "reshiram-charizard-gx-figure-collection",
+      "name": "Reshiram & Charizard-GX Figure Collection",
+      "kind": "collection",
+      "tcgplayerId": 194597,
+      "packs": 4,
+      "promos": [
+        "smp201"
+      ],
+      "note": "Pack mix approximate: the real box held Unified Minds, Unbroken Bonds and Roaring Skies packs."
+    }
+  ]
 }
