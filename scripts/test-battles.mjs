@@ -41,7 +41,7 @@ function addUser(db, id, balance) {
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, balance, balance, now, '[]');
   db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
 }
-for (const [id, balance] of [['host', 100000], ['rival', 100000], ['third', 100000], ['poor', 0]]) addUser(db, id, balance);
+for (const [id, balance] of [['host', 100000], ['rival', 100000], ['third', 100000], ['fourth', 100000], ['poor', 0]]) addUser(db, id, balance);
 const ASSETS = { fetch: async request => {
   const path = new URL(request.url).pathname;
   try { return new Response(readFileSync(new URL('..' + path, import.meta.url)), { headers: { 'content-type': 'application/json' } }); }
@@ -341,6 +341,33 @@ assert.ok(leanList.battles.every(b => b.status === 'finished'
   ? b.result.allocations.every(a => Object.keys(a).sort().join() === 'cardCount,seat,value') && Array.isArray(b.winners)
   : b.result === null), 'list carries only the result summary of finished battles');
 
+// Settling the biggest battle with four real players: under 0012's award
+// trigger this took seconds (json re-parsed per card, rounds joined to rounds)
+// and production D1 ran out of memory on it. 0014 reads each JSON value once.
+{
+  const big = await create({ players: 4, fast: true }, [{ key: 'me5:boosterBox', quantity: 2 }]);
+  assert.equal(big.status, 200);
+  for (const user of ['rival', 'third', 'fourth']) assert.equal((await api(`/api/battles/${big.battle.id}/join`, 'POST', {}, user)).status, 200);
+  const running = await api(`/api/battles/${big.battle.id}/start`, 'POST', {});
+  assert.equal(running.status, 200, JSON.stringify(running).slice(0, 300));
+  const logBefore = db.prepare('SELECT COUNT(*) n FROM pack_log').get().n;
+  const pullsBefore = db.prepare("SELECT SUM(pulls) n FROM profiles WHERE user_id IN ('host','rival','third','fourth')").get().n;
+  const ownedBefore = ['host', 'rival', 'third', 'fourth'].reduce((n, u) => n + owned(u), 0);
+  now = running.battle.endsAt;
+  const started = performance.now();
+  const settled = await api(`/api/battles/${big.battle.id}`);
+  const settleMs = performance.now() - started;
+  assert.equal(settled.battle.status, 'finished');
+  assert.ok(settleMs < 1000, `four-player maximum battle settled in ${Math.round(settleMs)} ms`);
+  assert.equal(db.prepare('SELECT COUNT(*) n FROM pack_log').get().n - logBefore, 72 * 4, 'one pack_log row per player per pack');
+  const pulled = JSON.parse(db.prepare('SELECT outcomes FROM battles WHERE id=?').get(big.battle.id).outcomes)
+    .reduce((n, r) => n + r.pulls.reduce((m, p) => m + p.cards.length, 0), 0);
+  assert.equal(db.prepare("SELECT SUM(pulls) n FROM profiles WHERE user_id IN ('host','rival','third','fourth')").get().n - pullsBefore, pulled);
+  const awarded = JSON.parse(db.prepare('SELECT result FROM battles WHERE id=?').get(big.battle.id).result)
+    .allocations.reduce((n, a) => n + a.cards.length, 0);
+  assert.equal(['host', 'rival', 'third', 'fourth'].reduce((n, u) => n + owned(u), 0) - ownedBefore, awarded, 'every allocated card awarded once');
+}
+
 // Concurrent ordinary rips and battle settlement preserve both sets of awards.
 const raceBattle = await create({ mode: 'shared', fast: true }, [{ key: 'me5:boosterPack', quantity: 2 }], 'third');
 await api(`/api/battles/${raceBattle.battle.id}/join`, 'POST', {}, 'rival');
@@ -474,6 +501,8 @@ resetBattleSchemaCache(); batchCount = 0; queryCount = 0;
 const upgraded = await Promise.all([legacyApi('/api/battles/legacy-cancel'), legacyApi('/api/battles/legacy-cancel')]);
 assert.ok(upgraded.every(r => r.status === 200));
 assert.deepEqual(freeObjects(legacy.db), freeObjects(db), 'runtime step and 0013 file produce the same schema');
+const awardTrigger = target => target.prepare("SELECT sql FROM sqlite_master WHERE name = 'battle_settle_award'").get().sql;
+assert.equal(awardTrigger(legacy.db), awardTrigger(db), 'runtime step and 0014 file produce the same award trigger');
 const legacyView = upgraded[0].battle;
 assertPersonas(legacyView); assert.equal(legacyView.soloHuman, true);
 assert.equal(legacy.db.prepare("SELECT COUNT(*) n FROM battle_seats WHERE handle='practice-bot'").get().n, 5, 'legacy rows are not rewritten');
@@ -508,4 +537,4 @@ assert.equal(queryCount, 6, 'one sqlite_master read on top of the usual five sta
 queryCount = 0; await api('/api/battles', 'GET', undefined, null); assert.equal(queryCount, 5, 'cached after the first request');
 
 Date.now = realNow;
-console.log(`Pack battles: ${catalog.products.length} real products; escrow, retries, races, timed secrecy, awards, free bots (fill, unbot, quick, skip, personas, legacy paid-bot refunds, runtime 0013 upgrade), promos, mixed sets, rules, concurrent sells/rips, ${rowBytes}-byte maximum lineup and ${feedQueries}-query full feed/backlog passed.`);
+console.log(`Pack battles: ${catalog.products.length} real products; escrow, retries, races, timed secrecy, awards, free bots (fill, unbot, quick, skip, personas, legacy paid-bot refunds, runtime 0013/0014 upgrade, fast four-player settlement), promos, mixed sets, rules, concurrent sells/rips, ${rowBytes}-byte maximum lineup and ${feedQueries}-query full feed/backlog passed.`);
