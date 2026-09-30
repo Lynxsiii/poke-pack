@@ -3,6 +3,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import worker from '../worker/index.js';
 import {sealedOffers} from '../js/catalog.js';
+import {activeQuests} from '../js/quests.js';
 // Same in-memory D1 stand-in as test-profile-pages.mjs.
 const db=new DatabaseSync(':memory:');
 for(const file of readdirSync(new URL('../worker/migrations/',import.meta.url)).sort()) {
@@ -72,8 +73,14 @@ const logged=db.prepare('SELECT cost FROM pack_log WHERE user_id=?').all('test')
 assert.equal(logged.length,36);
 assert.equal(logged.reduce((sum,row)=>sum+cents(row.cost),0),cents(sealed.me5.boosterBox));
 assert.ok(db.prepare('SELECT COUNT(*) AS n FROM history WHERE user_id=?').get('test').n<=24);
-assert.equal(box.save.quests.progress['daily-five'],36);
-assert.equal(box.save.quests.progress['weekly-packs'],36);
+// A box is 36 packs to every pack quest, and one sealed product to the sealed ones.
+assert.equal(box.save.quests.progress['monthly-packs'],36);
+for(const row of activeQuests(box.save.quests.periods).daily.concat(activeQuests(box.save.quests.periods).weekly)) {
+  if(row.kind==='packs') assert.equal(box.save.quests.progress[row.id],36,row.id);
+  if(row.kind==='sealed') assert.equal(box.save.quests.progress[row.id],1,row.id);
+}
+assert.equal(box.save.stats.counters.sealed,1);
+assert.equal(box.save.stats.setPacks.me5,36);
 // packs_since_hit counts the dry packs after the box's last hit.
 const lastHit=box.packs.findLastIndex(pack=>pack.cards.some(card=>!card.reverse&&['Double Rare','Ultra Rare','Illustration Rare','Special Illustration Rare','Mega Hyper Rare'].includes(card.rarity)));
 assert.equal(profile().packs_since_hit,lastHit<0?36:35-lastHit);

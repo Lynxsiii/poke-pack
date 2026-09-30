@@ -40,7 +40,7 @@ import {
   DEFAULT_STATS,
   SHOWCASE_MAX,
 } from "./cosmetics.js";
-import { unlockedTitles, titleContext, TITLES, isTitleUnlocked } from "./titles.js";
+import { unlockedTitles, titleContext, TITLES, isTitleUnlocked, ownedPerSet } from "./titles.js";
 import {
   ACHIEVEMENTS,
   ACH_CATEGORIES,
@@ -48,10 +48,16 @@ import {
   achievementContext,
   achievementProgress,
   isAchievementDone,
+  achievementFace,
+  isSecret,
+  achievementsBySet,
+  masteryRowFor,
   readyToClaim,
   claimTotal,
 } from "./achievements.js";
-import { QUESTS } from "./quests.js";
+import * as questRules from "./quests.js";
+import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
+import * as questArea from "./quest-area.js?v=3";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import {
   loadPriceHistory,
@@ -133,6 +139,7 @@ function applyCloudSave(save) {
   state.granted = save.granted;
   state.claimed = Array.isArray(save.claimed) ? save.claimed : [];
   state.quests = save.quests || null;
+  state.stats = save.stats || null;
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   if (save.createdAt) state.createdAt = save.createdAt;
@@ -154,8 +161,17 @@ function wipeProgressMemory() {
   state.granted = 0;
   state.claimed = [];
   state.quests = null;
+  state.stats = null;
   state.worthLog = [];
   state.binder = [];
+  // Screen memory belongs to the account that is gone: a secret revealed for one
+  // trainer must not stay revealed for the next.
+  achFilter = "all";
+  achCat = "";
+  masteryEra = "";
+  masterySet = "";
+  freshClaims = new Set();
+  seenSecrets.clear();
 }
 
 async function refreshSession() {
@@ -243,6 +259,12 @@ let signupColor = "gold";
 /** Account page: which tab is open, how the badge wall is filtered. */
 let accountTab = "overview";
 let achFilter = "all";
+let achCat = "";
+let masteryEra = "";
+let masterySet = "";
+/** Ids just claimed, so their tiles pulse once on the next paint; secret rows already revealed this session. */
+let freshClaims = new Set();
+const seenSecrets = new Set();
 let historyOpen = false;
 let historyFilter = "all";
 let currentPulls = [];
@@ -1875,10 +1897,19 @@ function completion() {
   return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
 }
 
+/** Per-set id index, built once per loaded list, so an owned-card lookup is a map hit and not a scan. */
+const cardIndexes = new WeakMap();
+
 function findCard(id) {
   if (byId[id]) return byId[id];
   for (const list of Object.values(setCache)) {
-    const hit = list?.find((c) => c.id === id);
+    if (!list) continue;
+    let index = cardIndexes.get(list);
+    if (!index || index.size !== list.length) {
+      index = new Map(list.map((c) => [c.id, c]));
+      cardIndexes.set(list, index);
+    }
+    const hit = index.get(id);
     if (hit) return hit;
   }
   return null;
@@ -2412,8 +2443,9 @@ function guestHasProgress() {
 }
 
 function setCompletionRows() {
+  const perSet = ownedPerSet(state.collection);
   return PLAYABLE_SETS.map((set) => {
-    const owned = ownedInSet(set);
+    const owned = perSet.get(set.id) || 0;
     const total = set.totalCount || 1;
     return { set, owned, total, pct: Math.round((owned / total) * 100) };
   });
@@ -2432,7 +2464,7 @@ function ownedRarities() {
 
 /** Progress context shared by the badge wall, the title picker, and the hero. */
 function achieveCtx() {
-  return achievementContext(state, { signed: Boolean(activeTrainer()), rarities: ownedRarities() });
+  return achievementContext(state, { signed: Boolean(activeTrainer()), rarities: ownedRarities(), findCard });
 }
 
 function claimedIds() {
@@ -2458,8 +2490,42 @@ function achievementStats() {
     waiting: claimTotal(ready),
     total: ACHIEVEMENTS.length,
     pct: Math.round((claimed.size / ACHIEVEMENTS.length) * 100),
+    setRows: setCompletionRows(),
   };
 }
+
+/* ---- The quest area (js/quest-area.js draws it; this file owns state and events) ---- */
+
+const SET_BY_ID = new Map(PLAYABLE_SETS.map((set) => [set.id, set]));
+
+/** A chest's bonus: the Worker sends it with the summary; the shared rules compute the same number. */
+function chestCoins(period, rows, summary) {
+  return summary?.chestCoins?.[period] ?? questRules.chestFor(period, rows).coins;
+}
+
+const areaDeps = {
+  esc,
+  num,
+  coin,
+  setIdentity,
+  eraTitle,
+  sets: PLAYABLE_SETS,
+  setById: (id) => SET_BY_ID.get(id) || null,
+  rows: ACHIEVEMENTS,
+  categories: ACH_CATEGORIES,
+  achievementProgress,
+  achievementFace,
+  achievementById,
+  isSecret,
+  achievementsBySet,
+  masteryRowFor,
+  masteryEmblem,
+  masteryBannerId,
+  bannerVars,
+  questRow: questRules.questById,
+  chestCoins,
+  chestRow: (period, rows) => questRules.chestFor(period, rows),
+};
 
 function colorPicks(selected, attr = "data-color", label = "Avatar colour") {
   return `<div class="color-picks" role="radiogroup" aria-label="${esc(label)}">${AVATAR_COLORS.map(
@@ -2626,14 +2692,58 @@ function renderAuth() {
 
 const ACCOUNT_TABS = [
   { id: "overview", name: "Overview", note: "Career, sets, and what you pulled." },
-  { id: "quests", name: "Quests", note: "Daily and weekly coin rewards." },
-  { id: "achievements", name: "Achievements", note: "Badges, rewards, and titles." },
+  { id: "quests", name: "Quests", note: "Daily, weekly and monthly coin rewards." },
+  { id: "achievements", name: "Achievements", note: "Badges, secrets, rewards and titles." },
+  { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
   { id: "profile", name: "Profile", note: "Name, bio, and what the public sees." },
   { id: "look", name: "Look", note: "Avatar, banner, and title." },
   { id: "security", name: "Security", note: "Password and deleting the account." },
 ];
 
+/** Word rows scroll sideways on a phone: bring the chosen word into view, sideways only. */
+function bringIntoView(el) {
+  const track = el.parentElement;
+  if (!track || track.scrollWidth <= track.clientWidth) return;
+  track.scrollLeft = Math.max(0, el.offsetLeft - (track.clientWidth - el.offsetWidth) / 2);
+}
+
+/** The little count on a tab: things waiting to be claimed there. */
+function tabDot(id, stats) {
+  const n =
+    id === "achievements" ? stats.ready.length : id === "quests" ? questArea.questReadyCount(state.quests, areaDeps) : 0;
+  return n ? `<i class="acct-dot" aria-hidden="true">${n}</i><span class="sr-only">, ${n} ready to claim</span>` : "";
+}
+
+/** What has focus inside the account page, as an attribute and value that survive a repaint. */
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-banner", "data-set-title"];
+function focusKey() {
+  const el = document.activeElement;
+  if (!el || el === document.body || !els.accountBody.contains(el)) return null;
+  for (const attr of FOCUS_ATTRS) if (el.hasAttribute(attr)) return [attr, el.getAttribute(attr), el.classList[0] || ""];
+  return el.id === "claim-all" ? ["id", "claim-all", el.classList[0] || ""] : null;
+}
+
+/** Repainting replaces every node, so put focus back on the same control (or its closest survivor). */
+function restoreFocus(key) {
+  if (!key) return;
+  const [attr, value, cls] = key;
+  // The same value can sit on two controls (a tab and a shortcut in the hero): take the one that looks alike.
+  const matches = [...els.accountBody.querySelectorAll(attr === "id" ? `#${value}` : `[${attr}="${CSS.escape(value)}"]`)];
+  const target =
+    matches.find((el) => el.classList.contains(cls)) ||
+    matches[0] ||
+    // A claimed row's button is gone: land on the category or tab that holds it.
+    els.accountBody.querySelector(".qa-word.on, .acct-tab.on");
+  target?.focus({ preventScroll: true });
+}
+
 function renderAccount() {
+  const focused = focusKey();
+  renderAccountBody();
+  restoreFocus(focused);
+}
+
+function renderAccountBody() {
   const trainer = activeTrainer();
   if (!trainer) {
     els.accountBody.innerHTML = signedOutAccount();
@@ -2646,6 +2756,8 @@ function renderAccount() {
       ? questsTab()
       : accountTab === "achievements"
       ? achievementsTab(stats)
+      : accountTab === "mastery"
+      ? masteryTab(stats)
       : accountTab === "profile"
         ? profileTab(trainer)
         : accountTab === "look"
@@ -2656,11 +2768,11 @@ function renderAccount() {
 
   els.accountBody.innerHTML = `
     ${accountHero(trainer, stats)}
-    <div class="acct-tabs" role="tablist" aria-label="Account sections">
+    <div class="acct-tabs" role="group" aria-label="Account sections">
       ${ACCOUNT_TABS.map(
-        (tab) => `<button type="button" role="tab" class="acct-tab${tab.id === accountTab ? " on" : ""}"
-          aria-selected="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
-          ${esc(tab.name)}${tab.id === "achievements" && stats.ready.length ? `<i class="acct-dot">${stats.ready.length}</i>` : ""}
+        (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
+          aria-current="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
+          ${esc(tab.name)}${tabDot(tab.id, stats)}
         </button>`
       ).join("")}
     </div>
@@ -2669,15 +2781,19 @@ function renderAccount() {
 
   const chart = els.accountBody.querySelector("#acct-worth-chart");
   if (chart) renderWorthChart(chart, state.worthLog, state.granted);
+  if (accountTab === "mastery") placeMasteryDetail();
+  for (const on of els.accountBody.querySelectorAll(".acct-tabs .on, .qa-words:not(.qa-words-inline) .on")) bringIntoView(on);
+  freshClaims = new Set();
 }
 
 function signedOutAccount() {
-  const preview = ACHIEVEMENTS.slice(0, 10)
+  const preview = ACHIEVEMENTS.filter((row) => !isSecret(row))
+    .slice(0, 10)
     .map(
-      (row) => `<article class="ach-tile t${row.tier} is-locked">
-        <div class="ach-badge" style="--pct:0"><span>${esc(row.mark)}</span></div>
-        <div class="ach-tile-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
-        <div class="ach-reward"><span class="ach-coin">&#10022; ${num(row.coins)}</span></div>
+      (row) => `<article class="qa-tile t${row.tier} is-locked">
+        ${questArea.miniMedal(row, 0, areaDeps).replace("qa-badge sm", "qa-badge")}
+        <div class="qa-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
+        <div class="qa-side"><span class="qa-coin">&#10022; ${num(row.coins)}</span></div>
       </article>`
     )
     .join("");
@@ -2699,11 +2815,11 @@ function signedOutAccount() {
     <section class="acct-sec">
       <div class="acct-sec-head">
         <div>
-          <h2>${ACHIEVEMENTS.length} badges to earn</h2>
-          <p>Every one pays coins, and some hand over a title you can't get any other way.</p>
+          <h2>${num(ACHIEVEMENTS.length)} badges to earn</h2>
+          <p>Every one pays coins. Some hand over a title, an emblem or a banner you can't get any other way, and a few are secret.</p>
         </div>
       </div>
-      <div class="ach-grid preview">${preview}</div>
+      <div class="qa-grid preview">${preview}</div>
     </section>`;
 }
 
@@ -2724,6 +2840,7 @@ function accountHero(trainer, stats) {
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
           <span class="acct-code" title="Your trainer code">${esc(trainerCode(trainer.id))}</span>
         </p>
+        ${questArea.masteryStripHtml(masterySetIds(state.claimed), areaDeps, { mine: true })}
         ${trainer.bio ? `<p class="account-bio">${esc(trainer.bio)}</p>` : ""}
       </div>
       <div class="acct-hero-actions">
@@ -2789,9 +2906,10 @@ function setRings() {
 function overviewTab(trainer, stats) {
   const history = state.history || [];
   const recent = historyCards(history, 8);
-  const nextUp = ACHIEVEMENTS.filter((row) => !stats.claimed.has(row.id) && !isAchievementDone(row, stats.ctx))
+  // Secret rows never show up here; their progress would give the secret away.
+  const nextUp = ACHIEVEMENTS.filter((row) => !isSecret(row) && !stats.claimed.has(row.id) && !isAchievementDone(row, stats.ctx))
     .map((row) => ({ row, p: achievementProgress(row, stats.ctx) }))
-    .sort((a, b) => b.p.pct - a.p.pct)
+    .sort((a, b) => b.p.pct - a.p.pct || b.row.coins - a.row.coins)
     .slice(0, 3);
 
   return `<div class="acct-overview">
@@ -2810,17 +2928,17 @@ function overviewTab(trainer, stats) {
           <h2>Closest badges</h2>
           <p>The ones you are nearest to earning.</p>
         </div>
-        <button class="ghost sm" type="button" data-acct-tab="achievements">All ${stats.total}</button>
+        <button class="ghost sm" type="button" data-acct-tab="achievements">All ${num(stats.total)}</button>
       </div>
       ${
         nextUp.length
           ? `<ol class="next-list">${nextUp
               .map(
                 ({ row, p }) => `<li class="next-row t${row.tier}">
-                  <div class="ach-badge" style="--pct:${p.pct}"><span>${esc(row.mark)}</span></div>
+                  ${questArea.miniMedal(row, p.pct, areaDeps)}
                   <div class="next-copy">
-                    <div class="next-head"><b>${esc(row.name)}</b><span class="ach-coin">&#10022; ${num(row.coins)}</span></div>
-                    <div class="ach-bar"><span style="width:${p.pct}%"></span></div>
+                    <div class="next-head"><b>${esc(row.name)}</b><span class="qa-coin">&#10022; ${num(row.coins)}</span></div>
+                    <span class="qa-bar" aria-hidden="true"><i style="width:${p.pct}%"></i></span>
                     <small>${esc(row.note)} ${num(p.at)} of ${num(p.goal)} so far.${row.title ? ` Unlocks the ${esc(row.title)} title.` : ""}</small>
                   </div>
                 </li>`
@@ -2861,86 +2979,54 @@ function overviewTab(trainer, stats) {
 
 /* ---- Achievements ------------------------------------------------------- */
 
-const ACH_FILTERS = [
-  { id: "all", name: "All" },
-  { id: "ready", name: "Ready" },
-  { id: "claimed", name: "Claimed" },
-  { id: "locked", name: "Locked" },
-  ...ACH_CATEGORIES.map((cat) => ({ id: cat.id, name: cat.name })),
-];
-
-function achTile(row, ctx, claimed) {
-  const p = achievementProgress(row, ctx);
-  const isClaimed = claimed.has(row.id);
-  const ready = !isClaimed && p.done;
-  const cls = isClaimed ? "is-claimed" : ready ? "is-ready" : "is-locked";
-  const action = isClaimed
-    ? `<span class="ach-done">Claimed</span>`
-    : ready
-      ? `<button class="ghost sm ach-claim" type="button" data-claim="${esc(row.id)}">Claim</button>`
-      : `<span class="ach-progress">${num(p.at)} of ${num(p.goal)}</span>`;
-  return `<article class="ach-tile t${row.tier} ${cls}">
-    <div class="ach-badge" style="--pct:${p.pct}"><span>${esc(row.mark)}</span></div>
-    <div class="ach-tile-copy">
-      <b>${esc(row.name)}</b>
-      <p>${esc(row.note)}</p>
-      ${row.title ? `<span class="ach-title-tag">${isClaimed ? "Won" : "Unlocks"} the ${esc(row.title)} title</span>` : ""}
-    </div>
-    ${p.done ? "" : `<div class="ach-bar" aria-hidden="true"><span style="width:${p.pct}%"></span></div>`}
-    <div class="ach-reward">
-      <span class="ach-coin">&#10022; ${num(row.coins)}</span>
-      ${action}
-    </div>
-  </article>`;
-}
-
+/** Titles won from badges, for the summary and the Look tab. */
 function titlesFromClaims(claimed) {
   return ACHIEVEMENTS.filter((row) => row.title && claimed.has(row.id)).length;
 }
 
-function achievementsTab(stats) {
-  const { ctx, claimed } = stats;
-  const rows = ACHIEVEMENTS.filter((row) => {
-    if (achFilter === "all") return true;
-    if (achFilter === "claimed") return claimed.has(row.id);
-    if (achFilter === "ready") return !claimed.has(row.id) && isAchievementDone(row, ctx);
-    if (achFilter === "locked") return !claimed.has(row.id) && !isAchievementDone(row, ctx);
-    return row.cat === achFilter;
-  });
-  const counts = { ready: stats.ready.length, claimed: claimed.size, locked: stats.total - stats.done };
-  const empty = {
-    ready: "Nothing is ready to claim yet. Keep ripping and the next badge lands here.",
-    claimed: "Nothing claimed yet. Finished badges wait under Ready.",
-    locked: "Every badge is earned. Nothing left to chase.",
-  };
-
-  return `<div class="ach-wall">
-    <div class="ach-head">
-      <dl class="acct-figures ach-summary">
-        <div class="acct-fig"><dt>Claimed</dt><dd>${stats.claimed.size} of ${stats.total}</dd></div>
-        <div class="acct-fig money"><dt>Banked so far</dt><dd>&#10022; ${num(stats.banked)}</dd></div>
-        <div class="acct-fig money"><dt>Waiting for you</dt><dd>&#10022; ${num(stats.waiting)}</dd></div>
-        <div class="acct-fig"><dt>Titles won</dt><dd>${titlesFromClaims(claimed)}</dd></div>
-      </dl>
-      ${
-        stats.ready.length
-          ? `<button class="solid claim-cta" type="button" id="claim-all">Claim all <span class="claim-amt">&#10022; ${num(stats.waiting)}</span></button>`
-          : `<p class="ach-none">Nothing to claim yet.</p>`
-      }
-    </div>
-    <div class="ach-filters chip-row" role="group" aria-label="Filter badges">
-      ${ACH_FILTERS.map(
-        (f) => `<button type="button" class="pick-chip${f.id === achFilter ? " on" : ""}" data-ach-filter="${esc(f.id)}" aria-pressed="${f.id === achFilter}">${esc(f.name)}${
-          counts[f.id] != null ? ` <span class="chip-count">${num(counts[f.id])}</span>` : ""
-        }</button>`
-      ).join("")}
-    </div>
-    ${
-      rows.length
-        ? `<div class="ach-grid">${rows.map((row) => achTile(row, ctx, claimed)).join("")}</div>`
-        : `<p class="panel-empty">${esc(empty[achFilter] || "Nothing in that filter yet.")}</p>`
+/** The wall keeps a claimed-this-session pulse and remembers which secrets it has already revealed. */
+function achievementUi(stats) {
+  const reveal = new Set();
+  for (const row of ACHIEVEMENTS) {
+    if (!isSecret(row) || seenSecrets.has(row.id)) continue;
+    if (!stats.claimed.has(row.id) && isAchievementDone(row, stats.ctx)) {
+      reveal.add(row.id);
+      seenSecrets.add(row.id);
     }
-  </div>`;
+  }
+  return { cat: achCat, filter: achFilter, fresh: freshClaims, reveal };
+}
+
+function achievementsTab(stats) {
+  const ui = achievementUi(stats);
+  if (!ui.cat) {
+    // First visit: open the category with something to claim, else the first.
+    const ready = ACHIEVEMENTS.find((row) => stats.ready.includes(row.id));
+    achCat = ui.cat = ready?.cat || ACH_CATEGORIES[0]?.id || "";
+  }
+  return questArea.achievementWallHtml(stats, ui, areaDeps);
+}
+
+/** The set shelf: eras as words, sets as flat tiles, the chosen one opens a panel underneath. */
+function masteryTab(stats) {
+  if (!masteryEra) masteryEra = PLAYABLE_SETS.find((set) => set.id === masterySet)?.era || PLAYABLE_SETS[0]?.era || "";
+  return questArea.masteryShelfHtml(stats, { era: masteryEra, set: masterySet, fresh: freshClaims, reveal: new Set() }, areaDeps);
+}
+
+/**
+ * The detail panel is drawn first in the markup; here it moves to sit under
+ * the row of the chosen tile, whatever the current column count is.
+ */
+function placeMasteryDetail() {
+  const panel = els.accountBody.querySelector(".qm-detail");
+  const shelf = els.accountBody.querySelector(".qm-shelf");
+  if (!panel || !shelf) return;
+  const tiles = [...shelf.querySelectorAll(".qm-set")];
+  const at = tiles.findIndex((tile) => tile.classList.contains("on"));
+  if (at < 0) return;
+  const cols = getComputedStyle(shelf).gridTemplateColumns.split(" ").filter(Boolean).length || 1;
+  const last = Math.min(tiles.length - 1, (Math.floor(at / cols) + 1) * cols - 1);
+  tiles[last].after(panel);
 }
 
 /* ---- Pull history sheet ------------------------------------------------- */
@@ -3096,16 +3182,8 @@ function lookTab(trainer, stats) {
   const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities() });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
   const won = titlesFromClaims(stats.claimed);
-
-  const titleChips = TITLES.map((row) => {
-    const open = unlocked.has(row.name);
-    const on = trainer.title === row.name;
-    return `<button type="button" class="title-chip${on ? " on" : ""}${open ? "" : " locked"}"
-      ${open ? `data-set-title="${esc(row.name)}"` : "disabled"} aria-pressed="${on}" title="${esc(row.note)}">
-      <b>${esc(row.name)}</b><small>${esc(row.note)}</small>
-      ${row.award ? `<i class="title-award">Badge reward</i>` : ""}
-    </button>`;
-  }).join("");
+  const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
+  const onMastery = Boolean(banner.set);
 
   return `<div class="look-layout">
     <aside class="look-preview" aria-label="Preview">
@@ -3160,20 +3238,21 @@ function lookTab(trainer, stats) {
             <p>Two colours and a motion, mixed live behind your name.</p>
           </div>
         </div>
-        <div class="chip-row style-picks" role="group" aria-label="Banner motion">${BANNER_MOTIONS.map(
-          (row) => `<button type="button" class="pick-chip${banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${banner.motion === row.id}">${esc(row.name)}</button>`
+        <div class="qa-words qa-words-inline" role="group" aria-label="Banner motion">${BANNER_MOTIONS.map(
+          (row) => `<button type="button" class="qa-word${!onMastery && banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${!onMastery && banner.motion === row.id}"><span>${esc(row.name)}</span></button>`
         ).join("")}</div>
-        <div class="field"><span>First colour</span>${colorPicks(banner.colors[0], "data-banner-a", "First banner colour")}</div>
-        <div class="field"><span>Second colour</span>${colorPicks(banner.colors[1], "data-banner-b", "Second banner colour")}</div>
+        <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
+        <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
+        ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
       </section>
       <section class="acct-sec">
         <div class="acct-sec-head">
           <div>
             <h2>Title</h2>
-            <p>${unlocked.size} of ${TITLES.length} unlocked. Your title sits under your name everywhere.</p>
+            <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked. Your title sits under your name everywhere.</p>
           </div>
         </div>
-        <div class="title-wall">${titleChips}</div>
+        <div class="title-groups">${titleGroups}</div>
       </section>
     </div>
   </div>`;
@@ -3303,6 +3382,7 @@ async function renderProfile() {
                 ${data.online ? `<span class="live-tag">Online now</span>` : ""}
               </p>
               <p class="acct-chips"><span class="account-title">${esc(user.title || "Rookie")}</span></p>
+              ${questArea.masteryStripHtml(data.masteries || [], areaDeps)}
               ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
             </div>
             <div class="acct-hero-actions profile-actions">${friendBtn}</div>
@@ -5501,48 +5581,8 @@ async function sellOwnedCard(card, { extra = false } = {}) {
   }
 }
 
-/** "in 5 hours", "in 3 days": how long until a quest period rolls over. */
-function resetIn(at) {
-  const ms = Math.max(0, Number(at) - Date.now());
-  const hours = Math.round(ms / 3_600_000);
-  if (hours < 1) return "in under an hour";
-  if (hours < 48) return `in ${hours} hour${hours === 1 ? "" : "s"}`;
-  return `in ${Math.round(hours / 24)} days`;
-}
-
 function questsTab() {
-  const summary = state.quests;
-  if (!summary || summary.unavailable) return `<p class="panel-empty">Quests are being set up. Check back in a minute.</p>`;
-  const claimed = new Set(summary.claimed || []);
-  const section = (period, title, reset) => `<section class="acct-sec quest-sec">
-    <div class="acct-sec-head">
-      <div>
-        <h2>${title}</h2>
-        <p>Resets ${esc(resetIn(reset))}.</p>
-      </div>
-    </div>
-    <div class="quest-list">${QUESTS.filter(row => row.period === period).map(row => {
-      const at = Math.min(row.goal, Number(summary.progress?.[row.id] || 0));
-      const done = at >= row.goal;
-      const paid = claimed.has(row.id);
-      const pct = Math.round(at / row.goal * 100);
-      return `<article class="ach-tile quest ${paid ? "is-claimed" : done ? "is-ready" : "is-locked"}">
-        <div class="ach-badge" style="--pct:${pct}"><span>${num(row.goal)}</span></div>
-        <div class="ach-tile-copy"><b>${esc(row.name)}</b><p>${esc(row.note)}</p></div>
-        ${done ? "" : `<div class="ach-bar" aria-hidden="true"><span style="width:${pct}%"></span></div>`}
-        <div class="ach-reward"><span class="ach-coin">&#10022; ${num(row.coins)}</span>
-          ${paid ? `<span class="ach-done">Claimed</span>` : done ? `<button class="ghost sm ach-claim" type="button" data-quest-claim="${esc(row.id)}">Claim</button>` : `<span class="ach-progress">${num(at)} of ${num(row.goal)}</span>`}
-        </div>
-      </article>`;
-    }).join("")}</div>
-  </section>`;
-  return `<div class="acct-quests">
-    <p class="acct-lede">Extra coins for playing. Progress is checked on your account when you claim.</p>
-    <div class="acct-cols">
-      ${section("daily", "Daily quests", Number(summary.periods.daily) + 86_400_000)}
-      ${section("weekly", "Weekly quests", Number(summary.periods.weekly) + 7 * 86_400_000)}
-    </div>
-  </div>`;
+  return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims });
 }
 
 async function sellSetDuplicates() {
@@ -5841,28 +5881,68 @@ els.accountBody.addEventListener("click", async (e) => {
     renderAccount();
     return;
   }
+  const achCatBtn = e.target.closest("[data-ach-cat]");
+  if (achCatBtn) {
+    achCat = achCatBtn.dataset.achCat;
+    renderAccount();
+    return;
+  }
+  const eraBtn = e.target.closest("[data-mastery-era]");
+  if (eraBtn) {
+    masteryEra = eraBtn.dataset.masteryEra;
+    masterySet = "";
+    renderAccount();
+    return;
+  }
+  const setBtn = e.target.closest("[data-mastery-set]");
+  if (setBtn) {
+    masterySet = masterySet === setBtn.dataset.masterySet ? "" : setBtn.dataset.masterySet;
+    renderAccount();
+    els.accountBody.querySelector(".qm-detail")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    return;
+  }
+  const bannerBtn = e.target.closest("[data-set-banner]");
+  if (bannerBtn) {
+    try {
+      await patchLook({ banner: bannerBtn.dataset.setBanner });
+    } catch (err) {
+      toast(err.message || "That banner is locked.");
+    }
+    return;
+  }
   const claim = e.target.closest("[data-claim]");
   const questClaim = e.target.closest("[data-quest-claim]");
   if (questClaim) {
-    questClaim.disabled = true;
+    if (questClaim.getAttribute("aria-disabled") === "true") return;
+    questClaim.setAttribute("aria-disabled", "true");
+    const focused = focusKey();
     try {
       const data = await api("/api/quests/claim", { method: "POST", body: JSON.stringify({ id: questClaim.dataset.questClaim }) });
       afterEconomy(data.save);
+      freshClaims = new Set([questClaim.dataset.questClaim]);
       renderHeader();
       renderAccount();
-      toast(`Quest claimed · +${coin(data.coins)} coins`);
+      restoreFocus(focused);
+      const chest = questClaim.dataset.questClaim.startsWith("chest-");
+      toast(chest ? `Chest opened, +${num(data.coins)} coins` : `Quest claimed, +${num(data.coins)} coins`);
     } catch (err) {
       toast(err.message || "Couldn't claim quest.");
       renderAccount();
+      restoreFocus(focused);
     }
     return;
   }
   if (claim) {
+    if (achievementClaiming) return;
+    claim.setAttribute("aria-disabled", "true");
     const row = achievementById(claim.dataset.claim);
     await claimAchievements({ id: claim.dataset.claim }, row?.name || "Claimed");
     return;
   }
-  if (e.target.closest("#claim-all")) {
+  const claimAll = e.target.closest("#claim-all");
+  if (claimAll) {
+    if (achievementClaiming) return;
+    claimAll.setAttribute("aria-disabled", "true");
     await claimAchievements({ all: true }, "Cleared the wall");
     return;
   }
@@ -6061,45 +6141,77 @@ async function surpriseLook() {
  * Cash in one achievement, or every ready one. The reward comes back from the
  * worker rather than the table here, so the coins shown are the coins paid.
  */
+let achievementClaiming = false;
 async function claimAchievements(body, label) {
   if (!activeTrainer()) {
     openAuth("signin");
     return;
   }
+  // One request at a time: a second click on the same button must not send a second batch.
+  if (achievementClaiming) return;
+  achievementClaiming = true;
+  // Something else may repaint while the request is out; remember where focus was now.
+  const focused = focusKey();
   try {
     const data = await api("/api/achievements/claim", { method: "POST", body: JSON.stringify(body) });
     afterEconomy(data.save);
+    freshClaims = new Set(data.claimed || (body.id ? [body.id] : []));
     renderHeader();
     renderAccount();
+    restoreFocus(focused);
     rewardFlash(data.rewards || [], data.coins || 0);
     const titles = data.titles || [];
+    const masteries = (data.rewards || []).filter((row) => achievementById(row.id)?.kind === "mastery");
     const won = titles.length === 1 ? ` and the ${titles[0]} title` : titles.length ? ` and ${titles.length} new titles` : "";
-    toast(`${label}: ✦ ${num(data.coins)} banked${won}.`);
+    const extra = masteries.length ? `, plus ${masteries.length === 1 ? "an emblem and a banner" : `${masteries.length} emblems and banners`}` : "";
+    toast(`${label}: ✦ ${num(data.coins)} banked${won}${extra}.`);
   } catch (err) {
     toast(err.message || "Couldn't claim that.");
     renderAccount();
+    restoreFocus(focused);
+  } finally {
+    achievementClaiming = false;
   }
 }
 
-/** The little gold card that flies in when a reward lands. */
+/** The little card that drops in when a reward lands; mastery adds the emblem and what it unlocked. */
 function rewardFlash(rewards, coins) {
   if (!rewards.length) return;
   document.querySelector(".reward-flash")?.remove();
   const titles = rewards.filter((row) => row.title);
+  const masteries = rewards.map((row) => achievementById(row.id)).filter((row) => row?.kind === "mastery" && row.set);
+  const secrets = rewards.filter((row) => isSecret(achievementById(row.id)));
   const el = document.createElement("div");
-  el.className = "reward-flash";
+  el.className = `reward-flash${masteries.length ? " has-mastery" : ""}`;
   el.setAttribute("role", "status");
+  const emblems = masteries.length
+    ? `<div class="flash-emblems">${masteries.slice(0, 4).map((row) => masteryEmblem(row.set, { size: "lg" })).join("")}</div>`
+    : "";
+  const perks = masteries.length
+    ? `<i>${masteries.length === 1 ? "Emblem and exclusive banner unlocked" : `${masteries.length} emblems and exclusive banners unlocked`}</i>`
+    : "";
   el.innerHTML = `
+    ${emblems}
     <b>✦ ${num(coins)}</b>
     <span>${rewards.length === 1 ? esc(rewards[0].name) : `${rewards.length} achievements claimed`}</span>
-    ${titles.length ? `<i>${titles.length === 1 ? "New title" : "New titles"}: ${titles.map((row) => esc(row.title)).join(", ")}</i>` : ""}`;
+    ${secrets.length ? `<i>${secrets.length === 1 ? "A secret, revealed" : `${secrets.length} secrets, revealed`}</i>` : ""}
+    ${titles.length ? `<i>${titles.length === 1 ? "New title" : "New titles"}: ${titles.slice(0, 3).map((row) => esc(row.title)).join(", ")}${titles.length > 3 ? ` and ${titles.length - 3} more` : ""}</i>` : ""}
+    ${perks}`;
   document.body.appendChild(el);
   requestAnimationFrame(() => el.classList.add("show"));
   window.setTimeout(() => {
     el.classList.remove("show");
     window.setTimeout(() => el.remove(), 400);
-  }, 2800);
+  }, masteries.length ? 4200 : 2800);
 }
+
+let masteryResize = 0;
+window.addEventListener("resize", () => {
+  window.clearTimeout(masteryResize);
+  masteryResize = window.setTimeout(() => {
+    if (view === "account" && accountTab === "mastery") placeMasteryDetail();
+  }, 120);
+});
 
 els.accountBody.addEventListener("input", (e) => {
   if (e.target.id !== "avatar-search") return;

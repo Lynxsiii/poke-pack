@@ -52,13 +52,63 @@ export const AWARD_TITLES = [
   { id: "high-roller", name: "High Roller", ach: "banked" },
   { id: "vaulted", name: "Vaulted", ach: "vaulted" },
   { id: "conveyor", name: "Conveyor", ach: "conveyor" },
+  // Rewards from the wider achievement table (js/achievement-*.js).
+  { id: "thousand-club", name: "Thousand Club", ach: "pack-1000" },
+  { id: "pack-factory", name: "Pack Factory", ach: "pack-5000" },
+  { id: "bindermaster", name: "Bindermaster", ach: "binder-360" },
+  { id: "librarian", name: "Librarian", ach: "unique-5000" },
+  { id: "six-figures", name: "Six Figures", ach: "coins-100k" },
+  { id: "never-miss", name: "Never Miss", ach: "bonus-1000" },
+  { id: "living-legend", name: "Living Legend", ach: "trophies-200" },
+  { id: "legend-keeper", name: "Legend Keeper", ach: "legend-hunter-all" },
+  { id: "finish-line", name: "Finish Line", ach: "finishes-30" },
+  { id: "dealer", name: "Dealer", ach: "sold-1000" },
+  { id: "arena-legend", name: "Arena Legend", ach: "wins-100" },
+  { id: "social-butterfly", name: "Social Butterfly", ach: "friends-50" },
+  { id: "guild-veteran", name: "Guild Veteran", ach: "quests-500" },
+  { id: "devoted", name: "Devoted", ach: "streak-100" },
+  { id: "grand-master", name: "Grand Master", ach: "sets-done-10" },
+  { id: "pokemon-master", name: "Pokémon Master", ach: "sets-done-all" },
+  // Secret achievements.
+  { id: "drought-survivor", name: "Drought Survivor", ach: "desert-crossing" },
+  { id: "almost-there", name: "Almost There", ach: "so-close" },
+  { id: "flame-hoarder", name: "Flame Hoarder", ach: "charizard-hoard" },
+  { id: "full-spectrum", name: "Full Spectrum", ach: "full-spectrum" },
+  { id: "globetrotter", name: "Globetrotter", ach: "grand-tour" },
+  { id: "evergreen", name: "Evergreen", ach: "year-of-quests" },
 ];
+
+/** Titles stop at 32 characters (PATCH /api/me cuts them there). */
+const TITLE_MAX = 32;
+
+/**
+ * The title a set's mastery pays: "<Set name> Master". A few set names are
+ * long enough to overflow (McDonald's Match Battle 2023), so those drop the
+ * brand first and only then get cut.
+ */
+export function masteryTitle(setName) {
+  let name = String(setName || "").trim();
+  if (`${name} Master`.length > TITLE_MAX) name = name.replace(/^McDonald's\s+/, "");
+  if (`${name} Master`.length > TITLE_MAX) name = name.slice(0, TITLE_MAX - " Master".length).trim();
+  return `${name} Master`;
+}
+
+// One title per set, earned by claiming that set's mastery achievement
+// (`set-<id>-master` in js/achievement-sets.js).
+for (const set of PLAYABLE_SETS) {
+  AWARD_TITLES.push({
+    id: `master-${set.id}`,
+    name: masteryTitle(set.name),
+    ach: `set-${set.id}-master`,
+    note: `Complete every card in ${set.name}.`,
+  });
+}
 
 for (const row of AWARD_TITLES) {
   TITLES.push({
+    note: "Reward for an achievement.",
     ...row,
     award: true,
-    note: "Reward for an achievement.",
     test: (c) => c.claimed.has(row.ach),
   });
 }
@@ -98,16 +148,30 @@ function rarityCounts(collection, findCard) {
   return counts;
 }
 
-/** Completion percentage of every playable set, in catalog order. */
+/**
+ * Completion percentage of every playable set, in catalog order. Rounded down,
+ * so a set one card short never reads as 100%.
+ */
 export function setPercents(collection) {
+  const owned = ownedPerSet(collection);
   return PLAYABLE_SETS.map((set) => {
     const total = set.totalCount || 1;
-    let owned = 0;
-    for (const [id, n] of Object.entries(collection || {})) {
-      if (n > 0 && id.startsWith(`${set.id}-`)) owned += 1;
-    }
-    return Math.round((owned / total) * 100);
+    const have = owned.get(set.id) || 0;
+    return have >= total ? 100 : Math.floor((have / total) * 100);
   });
+}
+
+/** How many different cards of each set are in a collection, by set id. */
+export function ownedPerSet(collection) {
+  const owned = new Map();
+  for (const [id, n] of Object.entries(collection || {})) {
+    if (!(n > 0)) continue;
+    const dash = id.indexOf("-");
+    if (dash <= 0) continue;
+    const setId = id.slice(0, dash);
+    owned.set(setId, (owned.get(setId) || 0) + 1);
+  }
+  return owned;
 }
 
 function bestSetPct(collection) {

@@ -30,12 +30,9 @@
 .acct-cols {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 56px; align-items: start;
 }
-.acct-lede { margin: 0 0 24px; color: var(--ink-2); font-size: 15px; max-width: 60ch; }
 
 /* Chip rows scroll sideways on a phone rather than wrapping into a wall. */
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip-count { margin-left: 4px; color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 600; }
-.pick-chip.on .chip-count { color: rgba(8, 8, 11, 0.6); }
 
 /* Forms on these pages: sentence-case labels in the body face. */
 :is(#view-auth, #view-account) .field { display: grid; gap: 7px; margin: 0 0 18px; }
@@ -226,16 +223,7 @@
 }
 
 /* ---- Account tabs ------------------------------------------------------- */
-#view-account .acct-tabs {
-  display: flex; width: max-content; max-width: 100%;
-  margin: 36px 0 36px; overflow-x: auto; scrollbar-width: none;
-  scroll-snap-type: x proximity;
-}
-#view-account .acct-tabs::-webkit-scrollbar { display: none; }
-#view-account .acct-tab {
-  position: relative; flex: none; padding: 0 18px; min-height: 40px; white-space: nowrap;
-  scroll-snap-align: start; display: inline-flex; align-items: center;
-}
+/* The tab words and their ink line are in css/pages/quests.css. */
 .acct-dot {
   display: inline-grid; place-items: center; min-width: 20px; height: 20px; margin-left: 7px; padding: 0 6px;
   border-radius: 999px; color: var(--on-rip); font-style: normal; font-size: 11.5px; font-weight: 700;
@@ -264,11 +252,9 @@
   padding: 16px 0; border-top: 1px solid var(--line);
 }
 .next-row:first-child { padding-top: 2px; border-top: 0; }
-.next-row .ach-badge { width: 46px; height: 46px; }
-.next-row .ach-badge > span { font-size: 13px; }
 .next-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .next-head b { font-size: 15px; font-weight: 650; }
-.next-row .ach-bar { margin-top: 9px; }
+.next-row .qa-bar { margin-top: 9px; }
 .next-row small { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
 /* The latest pulls: real cards in a row, a size worth reading. */
@@ -315,95 +301,7 @@
 .set-rest[open] > summary { margin-bottom: 8px; }
 .set-rest .set-ring { opacity: 0.78; }
 
-/* ---- The badge wall ----------------------------------------------------- */
-/* Each badge is a medal: a ring that fills with progress around the mark,
-   set large in the display cut. Bronze, silver and platinum by tier; the top
-   tier is holo. Ready ones take a gold hairline (money waiting); claimed ones
-   go quiet. */
-.ach-head {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 32px;
-  margin: 0 0 22px; padding: 0 0 22px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none;
-}
-.ach-head .acct-figures { margin: 0; padding: 0; border: 0; flex: 1 1 520px; }
-.ach-none { margin: 0; color: var(--muted); font-size: 14px; }
-.ach-filters { margin: 0 0 20px; }
-
-.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(208px, 1fr)); gap: 14px; }
-#view-account .ach-tile {
-  --tone: #c58d63; --track: rgba(255, 255, 255, 0.09);
-  position: relative; display: flex; flex-direction: column; gap: 12px;
-  padding: 18px 16px 14px; overflow: hidden;
-  border: 1px solid var(--line); border-radius: var(--r); background: var(--surface);
-  box-shadow: none; opacity: 1;
-}
-#view-account .ach-tile.t2 { --tone: #b4bdc9; }
-#view-account .ach-tile.t3 { --tone: #eef2f7; }
-#view-account .ach-tile.t4 { --tone: #cdb8ff; }
-#view-account .ach-tile::after { content: none; display: none; animation: none; }
-.ach-badge {
-  --tone: var(--ink); --track: rgba(255, 255, 255, 0.09);
-  position: relative; flex: none; width: 60px; height: 60px; border-radius: 50%;
-  background: conic-gradient(var(--tone) calc(var(--pct) * 1%), var(--track) 0);
-}
-.ach-tile .ach-badge, .next-row .ach-badge { --tone: inherit; --track: inherit; }
-.ach-tile.t1 .ach-badge, .next-row.t1 .ach-badge { --tone: #c58d63; }
-.ach-tile.t2 .ach-badge, .next-row.t2 .ach-badge { --tone: #b4bdc9; }
-.ach-tile.t3 .ach-badge, .next-row.t3 .ach-badge { --tone: #eef2f7; }
-.ach-tile.t4 .ach-badge, .next-row.t4 .ach-badge {
-  --tone: #cdb8ff;
-  background: conic-gradient(#ff7a8a 0, #ffcf6b calc(var(--pct) * 0.2%), #8cf3a6 calc(var(--pct) * 0.4%),
-    #6fd8ff calc(var(--pct) * 0.6%), #a58bff calc(var(--pct) * 0.8%), #ff7ad9 calc(var(--pct) * 1%), var(--track) 0);
-}
-.ach-badge > span {
-  position: absolute; inset: 3px; display: grid; place-items: center; border-radius: 50%;
-  background: radial-gradient(circle at 50% 28%, color-mix(in oklab, var(--tone) 14%, #16151b), #0c0b10 78%);
-  color: var(--tone);
-  font-family: var(--font); font-size: 18px; font-weight: 800; font-variation-settings: "opsz" 96;
-  letter-spacing: -0.03em; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums;
-}
-.ach-tile-copy { flex: 1; min-width: 0; }
-.ach-tile-copy b { display: block; font-size: 15px; font-weight: 650; line-height: 1.25; }
-.ach-tile-copy p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
-.ach-title-tag {
-  display: block; margin-top: 8px; padding: 0; border: 0; background: none;
-  color: var(--ink-2); font-family: var(--font); font-size: 12.5px; font-weight: 600; letter-spacing: 0; text-transform: none; line-height: 1.4;
-}
-.ach-bar { height: 3px; margin: 0; border-radius: 2px; background: var(--track, rgba(255, 255, 255, 0.09)); overflow: hidden; }
-.ach-bar span { display: block; height: 100%; border-radius: inherit; background: var(--tone, var(--ink)); }
-.ach-tile.t4 .ach-bar span { background: linear-gradient(90deg, #ff7a8a, #ffcf6b, #8cf3a6, #6fd8ff, #a58bff); }
-.ach-reward { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 34px; text-align: left; }
-.ach-coin { color: var(--gold-2); font-size: 15px; font-weight: 650; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.ach-progress, .ach-done { color: var(--muted); font-size: 13px; font-weight: 500; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.ach-done { display: inline-flex; align-items: center; gap: 6px; }
-.ach-done::before {
-  content: ""; width: 9px; height: 5px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
-  transform: rotate(-45deg) translateY(-2px);
-}
-.ach-claim.ghost.sm { min-height: 34px; padding: 0 14px; }
-
-#view-account .ach-tile.is-locked .ach-badge > span { color: color-mix(in oklab, var(--tone) 55%, var(--faint)); }
-#view-account .ach-tile.is-locked .ach-tile-copy b { color: var(--ink-2); }
-#view-account .ach-tile.is-ready { border-color: rgba(242, 193, 78, 0.5); background: var(--surface-2); }
-#view-account .ach-tile.is-ready .ach-badge > span { color: var(--ink); }
-#view-account .ach-tile.is-claimed { background: transparent; border-color: var(--line); }
-#view-account .ach-tile.is-claimed .ach-badge > span { color: var(--tone); }
-#view-account .ach-tile.is-claimed .ach-coin { color: var(--muted); }
-#view-account .ach-grid.preview .ach-tile { opacity: 0.75; }
-
-/* Quests: the same medal, laid out as rows. */
-.quest-list { display: grid; gap: 10px; }
-#view-account .ach-tile.quest {
-  display: grid; grid-template-columns: 48px minmax(0, 1fr) auto;
-  grid-template-areas: "badge copy reward" "badge bar reward";
-  align-items: center; gap: 8px 16px; padding: 14px 16px;
-  --tone: var(--ink);
-}
-.ach-tile.quest .ach-badge { grid-area: badge; width: 48px; height: 48px; --tone: var(--ink); }
-.ach-tile.quest .ach-badge > span { font-size: 14px; }
-.ach-tile.quest .ach-tile-copy { grid-area: copy; }
-.ach-tile.quest .ach-tile-copy p { margin-top: 2px; }
-.ach-tile.quest .ach-bar { grid-area: bar; }
-.ach-tile.quest .ach-reward { grid-area: reward; flex-direction: column; align-items: flex-end; justify-content: center; gap: 4px; }
+/* The badge wall, quest board and mastery shelf live in css/pages/quests.css. */
 
 /* ---- Pull history sheet ------------------------------------------------- */
 .sheet-backdrop { position: fixed; inset: 0; z-index: 60; background: rgba(4, 3, 6, 0.74); }
@@ -544,12 +442,6 @@
 #view-account .title-chip.on { background: var(--ink); border-color: var(--ink); color: var(--black); }
 #view-account .title-chip.on small { color: rgba(8, 8, 11, 0.66); }
 #view-account .title-chip.locked { opacity: 0.42; cursor: default; }
-.title-award {
-  position: absolute; top: 11px; right: 12px;
-  color: var(--muted); font-family: var(--font); font-style: normal; font-size: 11.5px; font-weight: 600;
-  letter-spacing: 0; text-transform: none;
-}
-.title-chip.on .title-award { color: rgba(8, 8, 11, 0.6); }
 
 /* ---- Security ----------------------------------------------------------- */
 .acct-danger .danger-btn {
@@ -916,32 +808,18 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   .acct-progress { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 16px; }
   .acct-progress .claim-cta { width: 100%; justify-content: center; }
 
-  #view-account .acct-tabs { margin: 28px 0 28px; }
-  #view-account .acct-tab { padding: 0 14px; }
 
   .acct-sec-head h2 { font-size: 22px; }
   .acct-overview { gap: 44px; }
   #view-account .acct-pull-row { margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; }
   .set-rings { grid-template-columns: minmax(0, 1fr); }
 
-  .ach-head { align-items: stretch; }
-  .ach-head .acct-figures { flex-basis: 100%; margin: 0 -16px; padding: 0 16px; }
-  .ach-head .claim-cta { width: 100%; justify-content: center; }
-  .ach-filters, .sheet-filters .chip-row, .look-controls .style-picks.chip-row {
+  .sheet-filters .chip-row {
     flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
     margin-inline: -16px; padding-inline: 16px;
   }
-  .ach-filters::-webkit-scrollbar, .sheet-filters .chip-row::-webkit-scrollbar { display: none; }
-  .ach-filters .pick-chip, .sheet-filters .pick-chip, .look-controls .style-picks .pick-chip { flex: none; scroll-snap-align: start; }
-  .ach-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  #view-account .ach-tile { padding: 14px 12px 12px; gap: 10px; }
-  .ach-badge { width: 52px; height: 52px; }
-  .ach-badge > span { font-size: 16px; }
-  .ach-tile-copy p { font-size: 12.5px; }
-  .ach-coin { font-size: 14px; }
-  .ach-claim.ghost.sm { padding: 0 12px; }
-  #view-account .ach-tile.quest { grid-template-columns: 44px minmax(0, 1fr) auto; gap: 6px 12px; padding: 12px; }
-  .ach-tile.quest .ach-badge { width: 44px; height: 44px; }
+  .sheet-filters .chip-row::-webkit-scrollbar { display: none; }
+  .sheet-filters .pick-chip { flex: none; scroll-snap-align: start; }
 
   /* Pull history rises from the bottom like a sheet. */
   #view-account .sheet {
@@ -1015,10 +893,6 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   .friends .friends-panel { width: calc(100vw - 24px); max-width: 360px; }
   .player-tip { width: calc(100vw - 24px); }
 }
-@media (max-width: 380px) {
-  .ach-grid { grid-template-columns: minmax(0, 1fr); }
-}
-
 /* ---- Motion off --------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .banner-wash::before, .banner-wash::after,

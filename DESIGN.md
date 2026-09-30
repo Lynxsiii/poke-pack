@@ -163,13 +163,49 @@ after the theme. The holo sheets (`css/holo/*`), the tear (`css/tear.css`,
   24px, stroke 1.75. Anything with `.nav-btn[data-view]` is painted active by
   `paintNav`.
 - **Buttons:** primary coral, secondary `surface-2`, both 44px tall on phones.
-- **Segmented controls:** a sunk pill track (`well`) with a raised pill.
-- **Chips:** `surface-2` pills; chosen is ink on black. Chip rows scroll
-  sideways on a phone with `scroll-snap`, never wrap into a wall.
+- **Segmented controls:** a sunk track (`well`) with a raised selected segment.
+  The round one (`.seg`) is for two or three choices; the square one
+  (`.qa-seg`, 8px radius) is for a status filter such as All, Ready, Locked,
+  Claimed.
+- **Words with an ink line:** the picker for anything with more than three
+  choices. Account tabs, achievement categories, mastery eras, banner motions
+  and collection eras are all a row of words, the chosen one in ink with a 2px
+  ink line under it and the rest muted, each optionally followed by a small
+  count ("12 of 30"). Rows scroll sideways on a phone and fade at the edge.
+- **Chips:** not a picker. Rounded chips survive only as inert badges ("New",
+  "Promo") and the account title under a name. Never build a filter or a picker
+  out of a row of them.
 - **Inputs:** 44px, `surface` fill, hairline, brighter on focus.
 - **Stages** (the featured pack, the shop hero): edge to edge on a phone
   (`.bleed`), 22px radius on larger screens, the pack art with a real drop
   shadow, a masked glint that moves by transform.
+
+## The quest area
+
+Quests, achievements and mastery share one vocabulary (`css/pages/quests.css`,
+drawn by `js/quest-area.js`).
+
+- **A quest is a flat row between hairlines:** name and coins, the note and its
+  state, then a 2px bar. Coral appears on a row only when it can be claimed
+  now. The chest ends each period's list, dim until everything above it is
+  claimed. Squares carry counts (one per quest under a chest, fourteen for the
+  streak); nothing in this area is a pill.
+- **The medal:** a 48px ring that fills with progress around the mark or the set
+  symbol. The tier is the ring: bronze, silver, platinum, and a prismatic ring
+  at the top. It is the one circle in the area, because a medal is round.
+- **Tiles are 8px and flat.** Ready ones take a gold hairline (money waiting),
+  claimed ones drop their fill. Progress is a 2px line on the tile's bottom
+  edge. Long categories use `content-visibility: auto`.
+- **A secret is a closed tile:** dark well fill, dashed hairline, "???", the hint
+  in quotes and a "?" where the coins would be. Nothing about the real
+  achievement is in the markup. When it is done the tile opens into a normal
+  ready one with a small "Secret" mark.
+- **Mastery is a shelf:** flat set tiles (symbol, name, owned/total, a hairline)
+  with the set's emblem lit when mastered and a dim silhouette when not. The
+  chosen set opens a panel in the shelf, under its row, not a modal.
+- **The claim moment** is one short settle and a ring of light leaving the
+  medal (transform and opacity only). Mastery adds the emblem to the reward
+  card.
 
 ## Motion
 
