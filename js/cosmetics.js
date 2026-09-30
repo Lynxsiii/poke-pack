@@ -4,6 +4,7 @@
  * idea as the TCG catalog). We do not hotlink Serebii.
  */
 import { avatarColor, COLOR_IDS } from "./palette.js";
+import { isMasteryBanner, isMasterySet, masteryBannerId, masteryBannerSet, setAccent } from "./mastery.js";
 
 export const AVATAR_MAX = 1025;
 export const SHOWCASE_MAX = 6;
@@ -111,8 +112,20 @@ export function avatarSrc(id, style) {
   return avatarStyle(style) === "pixel" ? avatarIcon(id) : avatarArt(id);
 }
 
+/**
+ * Banner ids are `motion:colorA+colorB` (palette ids), or `mastery:<setId>`,
+ * the exclusive banner a set's mastery unlocks. For the mastery form `colors`
+ * holds the default banner's palette ids so callers that read `.colors[0]`
+ * keep working, `set` names the set, and bannerVars gives the real hexes.
+ * An unknown set id falls back to the default banner.
+ */
 export function parseBanner(value) {
   const raw = String(value || DEFAULT_BANNER);
+  if (isMasteryBanner(raw)) {
+    const set = masteryBannerSet(raw);
+    if (isMasterySet(set)) return { motion: "mastery", colors: DEFAULT_BANNER.split(":")[1].split("+"), set };
+    return parseBanner(DEFAULT_BANNER);
+  }
   const [motionRaw, colorRaw] = raw.split(":");
   const motion = MOTION_IDS.has(motionRaw) ? motionRaw : "aurora";
   const colors = String(colorRaw || "gold+violet")
@@ -125,15 +138,20 @@ export function parseBanner(value) {
 }
 
 export function bannerId(value) {
-  const { motion, colors } = parseBanner(value);
-  return `${motion}:${colors.join("+")}`;
+  const parsed = parseBanner(value);
+  if (parsed.set) return masteryBannerId(parsed.set);
+  return `${parsed.motion}:${parsed.colors.join("+")}`;
 }
 
 export function bannerVars(value) {
-  const { motion, colors } = parseBanner(value);
-  const a = avatarColor(colors[0]).hex;
-  const b = avatarColor(colors[1]).hex;
-  return { motion, style: `--b1:${a};--b2:${b}` };
+  const parsed = parseBanner(value);
+  if (parsed.set) {
+    const { a, b } = setAccent(parsed.set);
+    return { motion: "mastery", style: `--b1:${a};--b2:${b}` };
+  }
+  const a = avatarColor(parsed.colors[0]).hex;
+  const b = avatarColor(parsed.colors[1]).hex;
+  return { motion: parsed.motion, style: `--b1:${a};--b2:${b}` };
 }
 
 export function normalizeStats(list) {
