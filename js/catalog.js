@@ -2739,6 +2739,8 @@ const POKESYMBOLS_SLUG = {
   xy1: "xy",
   xy12: "xy-evolutions",
   sm1: "sun-and-moon",
+  sm2: "guardians-rising",
+  sm3: "burning-shadows",
   sm12: "cosmic-eclipse",
   swsh1: "sword-and-shield",
   swsh2: "rebel-clash",

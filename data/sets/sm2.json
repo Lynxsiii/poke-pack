@@ -1,0 +1,27 @@
+{
+  "id": "sm2",
+  "name": "Guardians Rising",
+  "series": "sun-moon",
+  "slug": "guardians-rising",
+  "scrydexId": "sm2",
+  "era": "sm",
+  "artSlug": "guardians-rising",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1919,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm"
+    }
+  }
+}

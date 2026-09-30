@@ -1,0 +1,38 @@
+{
+  "id": "sm1",
+  "name": "Sun & Moon",
+  "series": "sun-moon",
+  "slug": "sun-moon",
+  "scrydexId": "sm1",
+  "era": "sm",
+  "artSlug": "sun-and-moon",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1863,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm"
+    }
+  },
+  "skipNumbers": [
+    "164",
+    "165",
+    "166",
+    "167",
+    "168",
+    "169",
+    "170",
+    "171",
+    "172"
+  ]
+}

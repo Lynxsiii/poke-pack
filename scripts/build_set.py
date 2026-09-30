@@ -361,6 +361,10 @@ def build(set_id: str, refresh: bool) -> int:
             key = str(row.get("numberKey") or number).strip()
             if not number or key in seen:
                 continue
+            # A set can leave listed numbers out (sm1's nine unnumbered 2017
+            # basic Energy, which the site deals as its shared sm17 prints).
+            if number in (cfg.get("skipNumbers") or []):
+                continue
             seen.add(key)
             detail = page_data(fetch(f"{base}/{key}", f"{tag}-{key}", refresh))
             if isinstance(detail, list):  # a listing page came back; skip rather than guess

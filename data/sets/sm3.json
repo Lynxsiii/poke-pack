@@ -1,0 +1,27 @@
+{
+  "id": "sm3",
+  "name": "Burning Shadows",
+  "series": "sun-moon",
+  "slug": "burning-shadows",
+  "scrydexId": "sm3",
+  "era": "sm",
+  "artSlug": "burning-shadows",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1957,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm"
+    }
+  }
+}
