@@ -730,7 +730,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-18a/large",
     "tcgplayerId": 138454,
-    "market": 0.23
+    "market": 0.23,
+    "promo": true,
+    "foilAs": "Rare Holo"
   },
   {
     "id": "sm3-19",
@@ -1645,7 +1647,9 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-39a/large",
     "foilMap": "assets/foil/maps/sm3/39.webp",
     "tcgplayerId": 138519,
-    "market": 6.27
+    "market": 6.27,
+    "promo": true,
+    "foilAs": "Rare Holo GX"
   },
   {
     "id": "sm3-40",
@@ -3709,7 +3713,9 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-88a/large",
     "foilMap": "assets/foil/maps/sm3/88.webp",
     "tcgplayerId": 138578,
-    "market": 8.77
+    "market": 8.77,
+    "promo": true,
+    "foilAs": "Rare Holo GX"
   },
   {
     "id": "sm3-89",
@@ -3904,7 +3910,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-92a/large",
     "tcgplayerId": 138584,
-    "market": 0.47
+    "market": 0.47,
+    "promo": true,
+    "foilAs": "Rare Holo"
   },
   {
     "id": "sm3-93",
@@ -4472,7 +4480,9 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-105a/large",
     "foilMap": "assets/foil/maps/sm3/105.webp",
     "tcgplayerId": 138601,
-    "market": 0.46
+    "market": 0.46,
+    "promo": true,
+    "foilAs": "Rare Holo"
   },
   {
     "id": "sm3-106",
@@ -4742,7 +4752,8 @@
     "imageSmall": "assets/cards/sm3/112a-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-112a/large",
     "tcgplayerId": 138608,
-    "market": 0.27
+    "market": 0.27,
+    "promo": true
   },
   {
     "id": "sm3-113",
@@ -4806,7 +4817,8 @@
     "imageSmall": "assets/cards/sm3/115a-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-115a/large",
     "tcgplayerId": 138611,
-    "market": 3.4
+    "market": 3.4,
+    "promo": true
   },
   {
     "id": "sm3-116",
@@ -4838,7 +4850,8 @@
     "imageSmall": "assets/cards/sm3/116a-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-116a/large",
     "tcgplayerId": 138612,
-    "market": 0.26
+    "market": 0.26,
+    "promo": true
   },
   {
     "id": "sm3-117",
@@ -6683,5 +6696,715 @@
     "imageRemote": "https://images.scrydex.com/pokemon/sm3-169/large",
     "tcgplayerId": 138637,
     "market": 92.93
+  },
+  {
+    "id": "sm3-smp014",
+    "name": "Lycanroc-GX",
+    "number": "smp014",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Rockruff",
+    "image": "assets/cards/sm3/smp014.webp",
+    "imageSmall": "assets/cards/sm3/smp014-sm.webp",
+    "attacks": [
+      {
+        "name": "Crunch",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Discard an Energy from your opponent's Active Pokémon."
+      },
+      {
+        "name": "Accelerock",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Lycanfang-GX",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard 2 Energy from this Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 1.39,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM14/large",
+    "printedNumber": "SM 014",
+    "tcgplayerId": 127520,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm3/smp014.webp"
+  },
+  {
+    "id": "sm3-smp040",
+    "name": "Jangmo-o",
+    "number": "smp040",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "60",
+    "artist": "Naoki Saito",
+    "flavorText": "It expresses its feelings by smacking its scales. Metallic sounds echo through the tall mountains where Jangmo-o lives.",
+    "image": "assets/cards/sm3/smp040.webp",
+    "imageSmall": "assets/cards/sm3/smp040-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Defense",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent's next turn."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM40/large",
+    "printedNumber": "SM 040",
+    "tcgplayerId": 139097,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm3/smp040.webp"
+  },
+  {
+    "id": "sm3-smp042",
+    "name": "Cosmog",
+    "number": "smp042",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Megumi Mizutani",
+    "flavorText": "Its body is gaseous and frail. It slowly grows as it collects dust from the atmosphere.",
+    "image": "assets/cards/sm3/smp042.webp",
+    "imageSmall": "assets/cards/sm3/smp042-sm.webp",
+    "attacks": [
+      {
+        "name": "Dust Gathering",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      }
+    ],
+    "market": 0.48,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM42/large",
+    "printedNumber": "SM 042",
+    "tcgplayerId": 139100,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm3/smp042.webp"
+  },
+  {
+    "id": "sm3-smp043",
+    "name": "Alolan Meowth",
+    "number": "smp043",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Megumi Mizutani",
+    "flavorText": "This Pokémon was not originally found in Alola. Human actions caused a surge in their numbers, and they went feral. They're prideful and crafty.",
+    "image": "assets/cards/sm3/smp043.webp",
+    "imageSmall": "assets/cards/sm3/smp043-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fake Out",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 1.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM43/large",
+    "printedNumber": "SM 043",
+    "tcgplayerId": 139099,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm3/smp043.webp"
+  },
+  {
+    "id": "sm3-smp046",
+    "name": "Seviper",
+    "number": "smp046",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Eri Yamaki",
+    "flavorText": "In battle, it uses its bladed tail to counter any Zangoose. It secretes a deadly venom in its tail.",
+    "image": "assets/cards/sm3/smp046.webp",
+    "imageSmall": "assets/cards/sm3/smp046-sm.webp",
+    "attacks": [
+      {
+        "name": "Venomous Fang",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "More Poison",
+        "text": "Put 1 more damage counter on your opponent's Poisoned Pokémon between turns.",
+        "type": "Ability"
+      }
+    ],
+    "market": 7.48,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM46/large",
+    "printedNumber": "SM 046",
+    "tcgplayerId": 139088,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm3/smp046.webp"
+  },
+  {
+    "id": "sm3-smp047",
+    "name": "Crabominable",
+    "number": "smp047",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "140",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It aimed for the top but got lost and ended up on a snowy mountain. Being forced to endure the cold, this Pokémon evolved and grew fur.",
+    "evolvesFrom": "Crabrawler",
+    "image": "assets/cards/sm3/smp047.webp",
+    "imageSmall": "assets/cards/sm3/smp047-sm.webp",
+    "attacks": [
+      {
+        "name": "Gutsy Hammer",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "80",
+        "text": "This Pokémon does 10 damage to itself for each damage counter on it."
+      },
+      {
+        "name": "Double Stomp",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "80+",
+        "text": "Flip 2 coins. This attack does 40 more damage for each heads."
+      }
+    ],
+    "market": 4.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM47/large",
+    "printedNumber": "SM 047",
+    "tcgplayerId": 139095,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm3/smp047.webp"
+  },
+  {
+    "id": "sm3-smp048",
+    "name": "Zygarde",
+    "number": "smp048",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "150",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "This is Zygarde's form at times when it uses its overwhelming power to suppress those who endanger the ecosystem.",
+    "image": "assets/cards/sm3/smp048.webp",
+    "imageSmall": "assets/cards/sm3/smp048-sm.webp",
+    "attacks": [
+      {
+        "name": "Land Crush",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      },
+      {
+        "name": "Core Enforcer",
+        "cost": [
+          "Darkness",
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard a Darkness Energy and a Fairy Energy attached to this Pokémon."
+      }
+    ],
+    "market": 15.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM48/large",
+    "printedNumber": "SM 048",
+    "tcgplayerId": 139093,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm3/smp048.webp"
+  },
+  {
+    "id": "sm3-smp049",
+    "name": "Bewear",
+    "number": "smp049",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "This immensely dangerous Pokémon possesses overwhelming physical strength. Its habitat is generally off-limits.",
+    "evolvesFrom": "Stufful",
+    "image": "assets/cards/sm3/smp049.webp",
+    "imageSmall": "assets/cards/sm3/smp049-sm.webp",
+    "attacks": [
+      {
+        "name": "Mix-Up",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, discard the top 3 cards of your opponent's deck."
+      },
+      {
+        "name": "Tantrum",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon is now Confused."
+      }
+    ],
+    "market": 13.85,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM49/large",
+    "printedNumber": "SM 049",
+    "tcgplayerId": 139090,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm3/smp049.webp"
+  },
+  {
+    "id": "sm3-smp056",
+    "name": "Tsareena-GX",
+    "number": "smp056",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "230",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Steenee",
+    "image": "assets/cards/sm3/smp056.webp",
+    "imageSmall": "assets/cards/sm3/smp056-sm.webp",
+    "attacks": [
+      {
+        "name": "Side Eye",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon. The new Active Pokémon is now Confused."
+      },
+      {
+        "name": "Jumping Side Kick",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "If your opponent's Active Pokémon is Confused, this attack does 90 more damage."
+      },
+      {
+        "name": "Queen's Command-GX",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent discards 4 cards from their hand. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 2.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM56/large",
+    "printedNumber": "SM 056",
+    "tcgplayerId": 141244,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm3/smp056.webp"
+  },
+  {
+    "id": "sm3-smp058",
+    "name": "Necrozma-GX",
+    "number": "smp058",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm3/smp058.webp",
+    "imageSmall": "assets/cards/sm3/smp058-sm.webp",
+    "attacks": [
+      {
+        "name": "Prismatic Burst",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Discard all Psychic Energy from this Pokémon. This attack does 60 more damage for each card you discarded in this way."
+      },
+      {
+        "name": "Black Ray-GX",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 100 damage to each of your opponent's Pokémon-GX and Pokémon-EX. This damage isn't affected by Weakness or Resistance. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Light's End",
+        "text": "Prevent all damage done to this Pokémon by attacks from Colorless Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 1.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM58/large",
+    "printedNumber": "SM 058",
+    "tcgplayerId": 148423,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm3/smp058.webp"
+  },
+  {
+    "id": "sm3-smp059",
+    "name": "Marshadow-GX",
+    "number": "smp059",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/sm3/smp059.webp",
+    "imageSmall": "assets/cards/sm3/smp059-sm.webp",
+    "attacks": [
+      {
+        "name": "Beatdown",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      },
+      {
+        "name": "Peerless Hundred Blows-GX",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage times the number of basic Energy attached to this Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shadow Hunt",
+        "text": "This Pokémon can use the attacks of Basic Pokémon in your discard pile. (You still need the necessary Energy to use each attack.)",
+        "type": "Ability"
+      }
+    ],
+    "market": 3.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM59/large",
+    "printedNumber": "SM 059",
+    "tcgplayerId": 148422,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm3/smp059.webp"
+  },
+  {
+    "id": "sm3-smp060",
+    "name": "Charizard-GX",
+    "number": "smp060",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/sm3/smp060.webp",
+    "imageSmall": "assets/cards/sm3/smp060-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Crimson Storm",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "300",
+        "text": "Discard 3 Fire Energy from this Pokémon."
+      },
+      {
+        "name": "Raging Out-GX",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard the top 10 cards of your opponent's deck. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 52.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM60/large",
+    "printedNumber": "SM 060",
+    "tcgplayerId": 148151,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "foilMap": "assets/foil/maps/sm3/smp060.webp",
+    "etchMap": "assets/foil/maps/sm3/smp060-etch.webp"
+  },
+  {
+    "id": "sm3-smp062",
+    "name": "Golisopod-GX",
+    "number": "smp062",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Wimpod",
+    "image": "assets/cards/sm3/smp062.webp",
+    "imageSmall": "assets/cards/sm3/smp062-sm.webp",
+    "attacks": [
+      {
+        "name": "First Impression",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30+",
+        "text": "If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 90 more damage."
+      },
+      {
+        "name": "Armor Press",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, this Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Crossing Cut-GX",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 1.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM62/large",
+    "printedNumber": "SM 062",
+    "tcgplayerId": 148430,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm3/smp062.webp"
+  },
+  {
+    "id": "sm3-smp063",
+    "name": "Salazzle-GX",
+    "number": "smp063",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "200",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Salandit",
+    "image": "assets/cards/sm3/smp063.webp",
+    "imageSmall": "assets/cards/sm3/smp063-sm.webp",
+    "attacks": [
+      {
+        "name": "Diabolical Claws",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "50×",
+        "text": "This attack does 50 damage for each Prize card you have taken."
+      },
+      {
+        "name": "Heat Blast",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "110",
+        "text": ""
+      },
+      {
+        "name": "Queen's Haze-GX",
+        "cost": [
+          "Fire",
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard all Energy from your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "market": 2.49,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM63/large",
+    "printedNumber": "SM 063",
+    "tcgplayerId": 148429,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm3/smp063.webp"
   }
 ]

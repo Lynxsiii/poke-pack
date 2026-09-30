@@ -385,8 +385,10 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         record["id"], record["number"] = card_id, number
         record["printedNumber"] = f"{ser['printed']} {n:03d}"
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
-        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/large"
-        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/small"
+        # (scrydex files the Sun & Moon promos as smp-SM06, two digits: `scrydexKey`.)
+        scry_key = ser.get("scrydexKey", "{key}").format(n=n, key=page_key)
+        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scry_key}/large"
+        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scry_key}/small"
         remote = record["image"]
         if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
@@ -519,7 +521,8 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         cards[card_id] = record
 
     promo_ids = {f"{set_id}-{n}" for n in (cfg.get("promoCards") or {}) if n in sold}
-    ordered_records = [cards[c["id"]] for c in records if c["id"] not in promo_ids and not c.get("promo")]
+    # A set's own box-only reprints ("a" numbers: sm2 60a) are kept with promo: true.
+    ordered_records = [cards[c["id"]] for c in records if c["id"] not in promo_ids and (not c.get("promo") or re.fullmatch(r"\d+a", str(c.get("number"))))]
     ordered_records += [cards[i] for i in sorted(promo_ids, key=lambda i: cards[i]["number"])]
     data_path.write_text(json.dumps(ordered_records, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     price_history.record(set_id, "cards", card_prices, today)

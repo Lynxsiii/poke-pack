@@ -2559,6 +2559,97 @@ export const MCDONALDS_2024 = {
   ]),
 };
 
+export const SUN_MOON = {
+  id: "sm1",
+  tcgId: "sm1",
+  name: "Sun & Moon",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "February 3, 2017",
+  live: true,
+  printedTotal: 149,
+  totalCount: 178,
+  packSize: 11,
+  cost: 22.97,
+  dataFile: "data/sm1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, February 2017. The first Pokémon-GX set, with Solgaleo-GX and Lunala-GX on five wrappers.",
+  oddsLine: "GX 1/9 · full art 1/24 · rainbow 1/72 · gold 1/109",
+  lede: "Solgaleo-GX and Lunala-GX lead the first GX set, with the rainbow Solgaleo, Lunala and Umbreon the chase. GX 1 in 9 packs, a full art 1 in 24, a rainbow 1 in 72.",
+  // Elite Fourum tallies, about 8,300 packs (sturzflugbombardieru, burpies, Derium, Danny Phantump); a holo or better fills 12 of every 36 rare slots. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1567, gx: 0.1114, ultra: 0.0421, rainbow: 0.0139, secret: 0.0092 }),
+  heroIds: ["sm1-155", "sm1-153", "sm1-154", "sm1-161"],
+  wrappers: boosterWrappers("sm1", [
+    { id: "solgaleo", name: "Solgaleo", cardId: "sm1-89", tag: "Legendary" },
+    { id: "lunala", name: "Lunala", cardId: "sm1-66", tag: "Legendary" },
+    { id: "incineroar", name: "Incineroar", cardId: "sm1-27", tag: "Starter" },
+    { id: "decidueye", name: "Decidueye", cardId: "sm1-12", tag: "Starter" },
+    { id: "primarina", name: "Primarina", cardId: "sm1-42", tag: "Starter" },
+  ]),
+};
+
+export const GUARDIANS_RISING = {
+  id: "sm2",
+  tcgId: "sm2",
+  name: "Guardians Rising",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "May 5, 2017",
+  live: true,
+  printedTotal: 145,
+  totalCount: 198,
+  packSize: 11,
+  cost: 35.92,
+  dataFile: "data/sm2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, May 2017. Tapu Koko-GX and Tapu Lele-GX with the rainbow Sylveon-GX, four wrappers.",
+  oddsLine: "GX 1/9 · full art 1/24 · rainbow 1/70 · gold 1/118",
+  lede: "Fifteen rainbow GX, the Tapu Koko, Sylveon and Lycanroc among them, sit above twelve GX. GX 1 in 9 packs, a full art 1 in 24, a rainbow 1 in 70.",
+  // Elite Fourum tallies, about 8,350 packs (sturzflugbombardieru, burpies, Derium, Danny Phantump); a holo or better fills 12 of every 36 rare slots. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1577, gx: 0.1112, ultra: 0.0417, rainbow: 0.0142, secret: 0.0085 }),
+  heroIds: ["sm2-153", "sm2-158", "sm2-156", "sm2-146"],
+  wrappers: boosterWrappers("sm2", [
+    { id: "alolan-ninetales", name: "Alolan Ninetales", cardId: "sm2-22", tag: "Alolan" },
+    { id: "tapu-koko", name: "Tapu Koko", cardId: "sm2-47", tag: "Guardian" },
+    { id: "lycanroc", name: "Lycanroc", cardId: "sm2-74", tag: "Midnight" },
+    { id: "kommo-o", name: "Kommo-o", cardId: "sm2-100", tag: "Dragon" },
+  ]),
+};
+
+export const BURNING_SHADOWS = {
+  id: "sm3",
+  tcgId: "sm3",
+  name: "Burning Shadows",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "August 4, 2017",
+  live: true,
+  printedTotal: 147,
+  totalCount: 191,
+  packSize: 11,
+  cost: 31.02,
+  dataFile: "data/sm3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, August 2017. Charizard-GX, Ho-Oh-GX and the Necrozma and Marshadow rainbows, four wrappers.",
+  oddsLine: "GX 1/9 · full art 1/24 · rainbow 1/73 · gold 1/105",
+  lede: "The rainbow Charizard-GX is the chase, with Necrozma, Marshadow and Tapu Bulu behind it. GX 1 in 9 packs, a full art 1 in 24, a rainbow 1 in 73.",
+  // Elite Fourum tallies, about 8,000 packs (sturzflugbombardieru, burpies, Derium, Danny Phantump); a holo or better fills 12 of every 36 rare slots. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1579, gx: 0.1098, ultra: 0.0424, rainbow: 0.0137, secret: 0.0095 }),
+  heroIds: ["sm3-150", "sm3-153", "sm3-156", "sm3-149"],
+  wrappers: boosterWrappers("sm3", [
+    { id: "marshadow", name: "Marshadow", cardId: "sm3-80", tag: "Mythical" },
+    { id: "tapu-fini", name: "Tapu Fini", cardId: "sm3-39", tag: "Guardian" },
+    { id: "necrozma", name: "Necrozma", cardId: "sm3-63", tag: "Dusk Mane" },
+    { id: "ho-oh", name: "Ho-Oh", cardId: "sm3-21", tag: "Rainbow" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -2606,6 +2697,9 @@ export const PLAYABLE_SETS = [
   TRICK_OR_TRADE_2024,
   MCDONALDS_2023,
   TRICK_OR_TRADE_2023,
+  SUN_MOON,
+  GUARDIANS_RISING,
+  BURNING_SHADOWS,
 ];
 
 /**
@@ -2666,7 +2760,6 @@ export const ROADMAP = [
     era: "Sun & Moon → XY → BW",
     sets: [
       { id: "sm12", name: "Cosmic Eclipse", released: "Nov 2019", cards: "—" },
-      { id: "sm1", name: "Sun & Moon", released: "Feb 2017", cards: "—" },
       { id: "xy12", name: "Evolutions", released: "Nov 2016", cards: "—" },
       { id: "xy1", name: "XY", released: "Feb 2014", cards: "—" },
       { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },

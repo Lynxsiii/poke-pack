@@ -4129,7 +4129,9 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/sm1-101a/large",
     "tcgplayerId": 126973,
-    "market": 0.54
+    "market": 0.54,
+    "promo": true,
+    "foilAs": "Rare Holo"
   },
   {
     "id": "sm1-102",
@@ -6005,5 +6007,652 @@
     "etchMap": "assets/foil/maps/sm1/163-etch.webp",
     "tcgplayerId": 127202,
     "market": 13.65
+  },
+  {
+    "id": "sm1-smp006",
+    "name": "Rockruff",
+    "number": "smp006",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "match",
+    "flavorText": "It's considered to be a good Pokémon for beginners because of its friendliness, but its disposition grows rougher as it grows up.",
+    "image": "assets/cards/sm1/smp006.webp",
+    "imageSmall": "assets/cards/sm1/smp006-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rock Throw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 1.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM06/large",
+    "printedNumber": "SM 006",
+    "tcgplayerId": 127511,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp006.webp"
+  },
+  {
+    "id": "sm1-smp007",
+    "name": "Pikipek",
+    "number": "smp007",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "match",
+    "flavorText": "It can peck at a rate of 16 times a second to drill holes in trees. It uses holes for food storage and for nesting.",
+    "image": "assets/cards/sm1/smp007.webp",
+    "imageSmall": "assets/cards/sm1/smp007-sm.webp",
+    "attacks": [
+      {
+        "name": "Nosedive",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "market": 0.68,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM07/large",
+    "printedNumber": "SM 007",
+    "tcgplayerId": 127512,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp007.webp"
+  },
+  {
+    "id": "sm1-smp009",
+    "name": "Togedemaru",
+    "number": "smp009",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "match",
+    "flavorText": "The long hairs on its back act as lightning rods. The bolts of lightning it attracts are stored as energy in its electric sac.",
+    "image": "assets/cards/sm1/smp009.webp",
+    "imageSmall": "assets/cards/sm1/smp009-sm.webp",
+    "attacks": [
+      {
+        "name": "Defense Curl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent's next turn."
+      },
+      {
+        "name": "Discharge",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30×",
+        "text": "Discard all Lightning Energy from this Pokémon. This attack does 30 damage for each card you discarded in this way."
+      }
+    ],
+    "market": 1.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM09/large",
+    "printedNumber": "SM 009",
+    "tcgplayerId": 127514,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp009.webp"
+  },
+  {
+    "id": "sm1-smp010",
+    "name": "Shiinotic",
+    "number": "smp010",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Mizue",
+    "flavorText": "It emits flickering spores that cause drowsiness. When its prey succumb to sleep, this Pokémon feeds on them by sucking in their energy.",
+    "evolvesFrom": "Morelull",
+    "image": "assets/cards/sm1/smp010.webp",
+    "imageSmall": "assets/cards/sm1/smp010-sm.webp",
+    "attacks": [
+      {
+        "name": "Flickering Spores",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Illuminate",
+        "text": "Once during your turn (before your attack), you may search your deck for a Grass Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+        "type": "Ability"
+      }
+    ],
+    "market": 21.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM10/large",
+    "printedNumber": "SM 010",
+    "tcgplayerId": 127181,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp010.webp"
+  },
+  {
+    "id": "sm1-smp011",
+    "name": "Bruxish",
+    "number": "smp011",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Mizue",
+    "flavorText": "It stuns its prey with psychokinesis and then grinds them to mush with its strong teeth. Even Shellder's shell is no match for it.",
+    "image": "assets/cards/sm1/smp011.webp",
+    "imageSmall": "assets/cards/sm1/smp011-sm.webp",
+    "attacks": [
+      {
+        "name": "Vivid Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 3 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+      },
+      {
+        "name": "Psychic Fang",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      }
+    ],
+    "market": 10.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM11/large",
+    "printedNumber": "SM 011",
+    "tcgplayerId": 127184,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp011.webp"
+  },
+  {
+    "id": "sm1-smp012",
+    "name": "Passimian",
+    "number": "smp012",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Naoki Saito",
+    "flavorText": "They form groups of roughly 20 individuals. Their mutual bond is remarkable—they will never let down a comrade.",
+    "image": "assets/cards/sm1/smp012.webp",
+    "imageSmall": "assets/cards/sm1/smp012-sm.webp",
+    "attacks": [
+      {
+        "name": "Fling",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Team Play",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 30 more damage for each of your Benched Passimian."
+      }
+    ],
+    "market": 9.63,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM12/large",
+    "printedNumber": "SM 012",
+    "tcgplayerId": 127185,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp012.webp"
+  },
+  {
+    "id": "sm1-smp013",
+    "name": "Oranguru",
+    "number": "smp013",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Deep in the jungle, high in the lofty canopy, this Pokémon abides. On rare occasions, it shows up at the beach to match wits with Slowking.",
+    "image": "assets/cards/sm1/smp013.webp",
+    "imageSmall": "assets/cards/sm1/smp013-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 20 more damage times the amount of Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Instruct",
+        "text": "Once during your turn (before your attack), you may draw cards until you have 3 cards in your hand.",
+        "type": "Ability"
+      }
+    ],
+    "market": 20.72,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM13/large",
+    "printedNumber": "SM 013",
+    "tcgplayerId": 127188,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp013.webp"
+  },
+  {
+    "id": "sm1-smp015",
+    "name": "Zygarde",
+    "number": "smp015",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "kawayoo",
+    "flavorText": "This is Zygarde's form at times when it uses its overwhelming power to suppress those who endanger the ecosystem.",
+    "image": "assets/cards/sm1/smp015.webp",
+    "imageSmall": "assets/cards/sm1/smp015-sm.webp",
+    "attacks": [
+      {
+        "name": "Pulse Blast",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Land's Wrath",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "market": 1.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM15/large",
+    "printedNumber": "SM 015",
+    "tcgplayerId": 129313,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp015.webp"
+  },
+  {
+    "id": "sm1-smp016",
+    "name": "Solgaleo-GX",
+    "number": "smp016",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/sm1/smp016.webp",
+    "imageSmall": "assets/cards/sm1/smp016-sm.webp",
+    "attacks": [
+      {
+        "name": "Sunsteel Strike",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "230",
+        "text": "Discard all Energy from this Pokémon."
+      },
+      {
+        "name": "Sol Burst-GX",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 5 Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ultra Road",
+        "text": "Once during your turn (before your attack), you may switch your Active Pokémon with 1 of your Benched Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 2.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM16/large",
+    "printedNumber": "SM 016",
+    "tcgplayerId": 129311,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm1/smp016.webp"
+  },
+  {
+    "id": "sm1-smp017",
+    "name": "Lunala-GX",
+    "number": "smp017",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "250",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Cosmoem",
+    "image": "assets/cards/sm1/smp017.webp",
+    "imageSmall": "assets/cards/sm1/smp017-sm.webp",
+    "attacks": [
+      {
+        "name": "Moongeist Beam",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "120",
+        "text": "The Defending Pokémon can't be healed during your opponent's next turn."
+      },
+      {
+        "name": "Lunar Fall-GX",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Knock Out 1 of your opponent's Basic Pokémon that isn't a Pokémon-GX. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Psychic Transfer",
+        "text": "As often as you like during your turn (before your attack), you may move a Psychic Energy from 1 of your Pokémon to another of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "market": 4.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM17/large",
+    "printedNumber": "SM 017",
+    "tcgplayerId": 129312,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "foilMap": "assets/foil/maps/sm1/smp017.webp"
+  },
+  {
+    "id": "sm1-smp022",
+    "name": "Rowlet",
+    "number": "smp022",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "This wary Pokémon uses photosynthesis to store up energy during the day, while becoming active at night.",
+    "image": "assets/cards/sm1/smp022.webp",
+    "imageSmall": "assets/cards/sm1/smp022-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Leafage",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 7.65,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM22/large",
+    "printedNumber": "SM 022",
+    "tcgplayerId": 130683,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp022.webp"
+  },
+  {
+    "id": "sm1-smp023",
+    "name": "Litten",
+    "number": "smp023",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "5ban Graphics",
+    "flavorText": "While grooming itself, it builds up fur inside its stomach. It sets the fur alight and spews fiery attacks, which change based on how it coughs.",
+    "image": "assets/cards/sm1/smp023.webp",
+    "imageSmall": "assets/cards/sm1/smp023-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 2.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM23/large",
+    "printedNumber": "SM 023",
+    "tcgplayerId": 130684,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp023.webp"
+  },
+  {
+    "id": "sm1-smp024",
+    "name": "Popplio",
+    "number": "smp024",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon snorts body fluids from its nose, blowing balloons to smash into its foes. It's famous for being a hard worker.",
+    "image": "assets/cards/sm1/smp024.webp",
+    "imageSmall": "assets/cards/sm1/smp024-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 1.65,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM24/large",
+    "printedNumber": "SM 024",
+    "tcgplayerId": 130685,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp024.webp"
+  },
+  {
+    "id": "sm1-smp029",
+    "name": "Mimikyu",
+    "number": "smp029",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Its actual appearance is unknown. A scholar who saw what was under its rag was overwhelmed by terror and died from the shock.",
+    "image": "assets/cards/sm1/smp029.webp",
+    "imageSmall": "assets/cards/sm1/smp029-sm.webp",
+    "attacks": [
+      {
+        "name": "Haunt",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 1 damage counter on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Astonish",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck."
+      }
+    ],
+    "market": 22.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM29/large",
+    "printedNumber": "SM 029",
+    "tcgplayerId": 129894,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/sm1/smp029.webp"
   }
 ]
