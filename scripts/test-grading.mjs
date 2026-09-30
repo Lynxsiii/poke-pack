@@ -157,7 +157,7 @@ const buy = (guardId, qty, requestId, user = 'host') => api('/api/grading/guards
 const me5 = JSON.parse(readFileSync(new URL('../data/me5.json', import.meta.url), 'utf8'));
 const cardById = new Map(me5.map((c) => [c.id, c]));
 const big = cardById.get('me5-87'); // 8.28 market
-const SLAB_KEYS = ['band', 'cardId', 'cert', 'fee', 'grade', 'gradedAt', 'guard', 'id', 'reverse', 'value'];
+const SLAB_KEYS = ['band', 'cardId', 'cert', 'fee', 'grade', 'gradedAt', 'guard', 'id', 'reverse', 'shown', 'value'];
 
 // me5-87: 2 copies, one of them reverse. me5-90 (12.85) one plain copy.
 give('host', 'me5-87', 2, 1); give('host', 'me5-90', 1); give('host', 'me5-1', 2);
@@ -400,6 +400,60 @@ await check('slab limit -> 409 and no charge', async () => {
   db.prepare("DELETE FROM graded_cards WHERE user_id = 'full' AND request_id LIKE 'fill-%'").run();
   assert.equal((await submit('me5-1', false, 'grade-full-00001', 'full')).status, 200, 'room again');
 });
+// ---- The Graded section of a profile ------------------------------------------
+const showSlab = (slabId, shown, user = 'show') => api('/api/grading/show', 'POST', { slabId, shown }, user);
+await check('schema: the shown column arrives on demand (0020) and on a fresh DDL database', async () => {
+  const cols = db.prepare('PRAGMA table_info(graded_cards)').all().map((c) => c.name);
+  assert.ok(cols.includes('shown'), cols.join(','));
+  assert.ok(migrationFiles.includes('0020_grading_shown.sql'));
+  assert.match(migrationSql('0020_grading_shown.sql'), /ADD COLUMN shown INTEGER NOT NULL DEFAULT 0/);
+});
+await check('show: pin a slab to the profile, cap at maxShown, unpin, ownership and status checks', async () => {
+  addUser('show', 500);
+  give('show', 'me5-1', 12); give('show', 'me5-87', 1);
+  db.prepare("UPDATE users SET showcase = ?, shown_stats = ? WHERE id = 'show'").run(JSON.stringify([{ id: 'me5-87', reverse: false }]), JSON.stringify(['unique']));
+  const ids = [];
+  for (let i = 0; i < 10; i++) { const r = await submit('me5-1', false, `show-slab-${String(i).padStart(4, '0')}`, 'show'); assert.equal(r.status, 200, JSON.stringify(r)); ids.push(r.slab.id); assert.equal(r.slab.shown, false); }
+  const only = await submit('me5-87', false, 'show-slab-0087', 'show'); assert.equal(only.status, 200);
+  assert.equal((await api('/api/grading/show', 'POST', { slabId: 'x', shown: true }, 'show')).status, 400);
+  assert.equal((await showSlab(999, true)).status, 404);
+  assert.equal((await showSlab(ids[0], true, 'host')).status, 404, 'someone else\'s slab');
+  for (let i = 0; i < GRADING_LIMITS.maxShown; i++) { const r = await showSlab(ids[i], true); assert.equal(r.status, 200, JSON.stringify(r)); assert.equal(r.slab.shown, true); }
+  const over = await showSlab(ids[8], true);
+  assert.equal(over.status, 409); assert.match(over.error, /up to 8 slabs/);
+  assert.equal((await showSlab(ids[0], true)).status, 200, 'showing a shown slab again is a no-op');
+  const save = (await api('/api/me', 'GET', undefined, 'show')).save;
+  assert.equal(save.graded.filter((s) => s.shown).length, GRADING_LIMITS.maxShown);
+  const off = await showSlab(ids[0], false);
+  assert.equal(off.status, 200); assert.equal(off.slab.shown, false);
+  assert.equal((await showSlab(ids[8], true)).status, 200, 'room again');
+  assert.equal((await showSlab(ids[9], false)).status, 200, 'unpinning an unpinned slab is a no-op');
+});
+await check('public profile: shown slabs best grade first with card info; slabbed copies stay owned', async () => {
+  const p = await api('/api/u/show', 'GET', undefined, null);
+  assert.equal(p.status, 200, JSON.stringify(p));
+  assert.equal(p.graded.length, GRADING_LIMITS.maxShown); assert.equal(p.gradedCount, 11);
+  const grades = p.graded.map((s) => s.grade);
+  assert.deepEqual(grades, [...grades].sort((a, b) => b - a), 'best grade first');
+  for (const s of p.graded) { assert.equal(s.name, 'Tropius'); assert.ok(s.image); assert.equal(s.shown, true); assert.equal(s.cardId, 'me5-1'); assert.ok(s.value > 0); }
+  assert.deepEqual(p.showcase.map((c) => c.id), ['me5-87'], 'a card whose only copy is in a slab stays pinned');
+  assert.equal(p.stats.unique, 2, 'unique counts the slabbed me5-87 and the raw + slabbed me5-1');
+  // Cracking or selling a shown slab takes it off the profile.
+  const shown = p.graded[0].id;
+  assert.equal((await crack(shown, 'show')).status, 200);
+  assert.equal(db.prepare('SELECT shown FROM graded_cards WHERE id = ?').get(shown).shown, 0);
+  const next = (await api('/api/u/show', 'GET', undefined, null)).graded;
+  assert.equal(next.length, GRADING_LIMITS.maxShown - 1); assert.ok(!next.some((s) => s.id === shown));
+  const sold = next[0].id;
+  assert.equal((await sell(sold, 'sell-show-1', 'show')).status, 200);
+  assert.equal(db.prepare('SELECT shown FROM graded_cards WHERE id = ?').get(sold).shown, 0);
+  assert.equal((await api('/api/u/show', 'GET', undefined, null)).graded.length, GRADING_LIMITS.maxShown - 2);
+  assert.equal((await showSlab(shown, true)).status, 404, 'a cracked slab cannot be shown');
+  // Someone with nothing shown gets an empty section, not an error.
+  const q = await api('/api/u/poor', 'GET', undefined, null);
+  assert.equal(q.status, 200); assert.deepEqual(q.graded, []); assert.equal(q.gradedCount, 0);
+});
+
 await check('progress reset drops slabs, guard stock and the purchase log; others keep theirs', async () => {
   assert.ok((await api('/api/me')).save.graded.length > 0);
   const r = await api('/api/me/reset', 'POST');

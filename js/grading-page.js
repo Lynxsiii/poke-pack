@@ -8,7 +8,8 @@
    sends the same id, so the Worker answers with the slab it already made and
    nothing is graded twice. Routes:
 
-     /grading                 the landing: how it works, your slabs, the guard shop
+     /grading                 the landing: how it works, the latest slabs, the guard shop
+     /grading/graded          every slab, sortable, with what sits on the profile
      /grading/send            pick an owned card
      /grading/send/<cardId>   fee, odds, disclaimer, the send button, then the reveal
      /grading/<slabId>        one slab large, guard controls, crack and sell
@@ -31,9 +32,16 @@ import { esc, coins } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 
 /** The paths this page answers. app.js uses it to route and to allow navigate(). */
-export const GRADING_ROUTE = /^\/grading(?:\/send(?:\/([a-zA-Z0-9-]{1,60}))?|\/(\d{1,12}))?$/;
+export const GRADING_ROUTE = /^\/grading(?:\/send(?:\/([a-zA-Z0-9-]{1,60}))?|\/graded|\/(\d{1,12}))?$/;
 
 const PICK_PAGE = 60;
+const RECENT_SLABS = 6;
+const GRADED_SORTS = [
+  ["newest", "Newest"],
+  ["grade", "Highest grade"],
+  ["value", "Value"],
+  ["name", "Name"],
+];
 const ATTEMPT_KEY = "gd-attempt";
 const ATTEMPT_TTL = 15 * 60 * 1000;
 const GRADES = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
@@ -97,6 +105,9 @@ export function initGrading(deps) {
   let sendError = "";
   let revealed = null; // the slab just graded
 
+  // The Graded page.
+  let gradedSort = "newest";
+
   // The picker.
   let pickQuery = "";
   let pickSort = "value";
@@ -128,6 +139,16 @@ export function initGrading(deps) {
   const ownedOf = (guardId) => Number(data.owned[guardId] || 0);
   const freeOf = (guardId) => Math.max(0, ownedOf(guardId) - equippedCount(guardId));
   const guardOf = (id) => GUARDS.find((g) => g.id === id) || null;
+  const shownCount = () => data.slabs.filter((s) => s.shown).length;
+  const handleNow = () => deps.user?.()?.handle || "";
+  const sortedSlabs = (by) => {
+    const name = (s) => deps.findCard(s.cardId)?.name || s.cardId;
+    const list = [...data.slabs];
+    if (by === "grade") return list.sort((a, b) => b.grade - a.grade || b.value - a.value || (b.gradedAt || 0) - (a.gradedAt || 0));
+    if (by === "value") return list.sort((a, b) => b.value - a.value || b.grade - a.grade);
+    if (by === "name") return list.sort((a, b) => name(a).localeCompare(name(b)) || b.grade - a.grade);
+    return list.sort((a, b) => (b.gradedAt || 0) - (a.gradedAt || 0) || b.id - a.id);
+  };
   const plainOwned = (cardId) => Math.max(0, Number(save().collection?.[cardId] || 0) - Number(save().reverses?.[cardId] || 0));
   const reverseOwned = (cardId) => Number(save().reverses?.[cardId] || 0);
 
@@ -244,7 +265,7 @@ export function initGrading(deps) {
     const card = deps.findCard(slab.cardId);
     return `<a class="gd-slab-tile" href="/grading/${Number(slab.id)}" data-gd-link>
       <span class="gd-slab-holder" data-slab-holder="${Number(slab.id)}"></span>
-      <span class="gd-slab-caption"><b>${esc(card?.name || slab.cardId)}</b><small>${slab.grade} ${esc(gradeWord(slab.grade))} · ${coinTag(slab.value)}</small></span>
+      <span class="gd-slab-caption"><b>${esc(card?.name || slab.cardId)}</b><small>${slab.grade} ${esc(gradeWord(slab.grade))} · ${coinTag(slab.value)}${slab.shown ? `<span class="gd-onprofile"> · On profile</span>` : ""}</small></span>
     </a>`;
   }
 
@@ -275,10 +296,13 @@ export function initGrading(deps) {
       root.innerHTML = gate();
       return;
     }
-    const slabs = [...data.slabs].sort((a, b) => (b.gradedAt || 0) - (a.gradedAt || 0));
-    await ensureSlabCards(slabs);
+    const slabs = sortedSlabs("newest");
+    const recent = slabs.slice(0, RECENT_SLABS);
+    await ensureSlabCards(recent);
     const preview = bestSlab() || (await sampleSlab());
     if (!visible || route.kind !== "landing") return;
+    const worth = slabs.reduce((n, s) => n + (Number(s.value) || 0), 0);
+    const onProfile = shownCount();
     pendingPreview = preview;
     const balance = coinsNow();
     root.innerHTML = `<div class="gd-page gd-landing">
@@ -298,10 +322,14 @@ export function initGrading(deps) {
         <div class="gd-actions"><a class="solid" href="/grading/send" data-gd-link>Send a card</a></div>
       </section>
       <section class="gd-section" aria-labelledby="gd-slabs-h">
-        <h2 class="gd-h" id="gd-slabs-h">Your slabs <span>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}</span></h2>
+        <div class="gd-section-head">
+          <h2 class="gd-h" id="gd-slabs-h">Graded <span>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}</span></h2>
+          ${slabs.length ? `<a class="gd-more-link" href="/grading/graded" data-gd-link>All ${slabs.length} ${slabs.length === 1 ? "slab" : "slabs"}</a>` : ""}
+        </div>
         ${
           slabs.length
-            ? `<div class="gd-slabs">${slabs.map(slabTile).join("")}</div>`
+            ? `<p class="gd-sub">${slabs.length > recent.length ? `The latest ${recent.length}. ` : ""}Worth ${coinTag(worth)} together${onProfile ? `, ${onProfile} on your profile` : ""}.</p>
+               <div class="gd-slabs">${recent.map(slabTile).join("")}</div>`
             : `<p class="gd-empty">${data.loaded ? "Nothing in plastic yet. Send a card and it comes back here." : "Loading your slabs."}</p>`
         }
       </section>
@@ -310,6 +338,45 @@ export function initGrading(deps) {
         <p class="gd-sub">A bumper around the outside of the case. Cosmetic only: the grade, the label and the value do not change. Buy one here, then put it on from a slab's page.</p>
         <div class="gd-guards">${GUARDS.map((g) => guardShopTile(g, preview, balance)).join("")}</div>
       </section>
+    </div>`;
+    windowSlabs();
+  }
+
+  // ---- Graded: every slab --------------------------------------------------------
+  async function paintGraded() {
+    if (!signedIn()) {
+      root.innerHTML = gate();
+      return;
+    }
+    const slabs = sortedSlabs(gradedSort);
+    await ensureSlabCards(slabs);
+    if (!visible || route.kind !== "graded") return;
+    const worth = slabs.reduce((n, s) => n + (Number(s.value) || 0), 0);
+    const best = bestSlab();
+    const onProfile = shownCount();
+    const handle = handleNow();
+    root.innerHTML = `<div class="gd-page gd-graded">
+      ${back("/grading", "Grading")}
+      <header class="gd-head">
+        ${mark()}
+        <h1 class="page-title">Graded</h1>
+        <p class="gd-lede">Every card of yours in a case. Open a slab to change its guard, show it on your profile, crack it or sell it.</p>
+      </header>
+      ${
+        slabs.length
+          ? `<dl class="gd-facts gd-facts-graded">
+            <div><dt>Slabs</dt><dd>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs ? ` <small>of ${GRADING_LIMITS.maxSlabs}</small>` : ""}</dd></div>
+            <div><dt>Worth together</dt><dd>${coinTag(worth)}</dd></div>
+            <div><dt>Best grade</dt><dd>${best ? `${best.grade} ${esc(gradeWord(best.grade))}` : ""}</dd></div>
+            <div><dt>On your profile</dt><dd>${onProfile} of ${GRADING_LIMITS.maxShown}${handle ? ` <small><a href="/u/${esc(handle)}">See your profile</a></small>` : ""}</dd></div>
+          </dl>
+          <div class="gd-graded-tools">
+            <span class="gd-words" role="group" aria-label="Sort">${GRADED_SORTS.map(([id, label]) => `<button type="button" data-gd-gsort="${id}" class="${gradedSort === id ? "on" : ""}">${label}</button>`).join("")}</span>
+          </div>
+          <div class="gd-slabs">${slabs.map(slabTile).join("")}</div>`
+          : `<p class="gd-empty">${data.loaded ? "Nothing in plastic yet. Send a card and it comes back here." : "Loading your slabs."}</p>
+             <div class="gd-actions"><a class="solid" href="/grading/send" data-gd-link>Send a card</a></div>`
+      }
     </div>`;
     windowSlabs();
   }
@@ -657,6 +724,14 @@ export function initGrading(deps) {
             <div><dt>Graded</dt><dd>${esc(dateWords(slab.gradedAt))}</dd></div>
             <div><dt>Graded value</dt><dd>${coinTag(value)} <small>raw ${coinTag(raw)}</small></dd></div>
           </dl>
+          <div class="gd-showrow">
+            <button type="button" class="ghost" data-gd-show="${slab.shown ? "0" : "1"}" ${slabBusy ? "disabled" : ""}>${slabBusy ? "Working" : slab.shown ? "Remove from profile" : "Show on profile"}</button>
+            <small class="gd-reason">${
+              slab.shown
+                ? `In the Graded section of your profile.${handleNow() ? ` <a href="/u/${esc(handleNow())}">See it</a>` : ""}`
+                : `Your profile has room for ${GRADING_LIMITS.maxShown} slabs, ${shownCount()} in use.`
+            }</small>
+          </div>
           <section class="gd-guardbox" aria-labelledby="gd-guard-h">
             <h2 class="gd-h" id="gd-guard-h">Guard</h2>
             <p class="gd-sub">Tap a style to see it on this slab. Cosmetic only.</p>
@@ -755,6 +830,14 @@ export function initGrading(deps) {
       slabPick = undefined;
       if (visible && route.kind === "slab") render();
     }
+  }
+
+  async function setShown(shown) {
+    const slabId = route.slabId;
+    const ok = await slabCall(() => post("/api/grading/show", { slabId, shown }), {
+      done: shown ? "On your profile." : "Taken off your profile.",
+    });
+    if (ok && visible && route.kind === "slab") render();
   }
 
   async function crack() {
@@ -896,6 +979,14 @@ export function initGrading(deps) {
     if (pick) return previewGuard(pick.dataset.gdPick || null);
     const guardBtn = t.closest("[data-gd-guard]");
     if (guardBtn) return setGuard(guardBtn.dataset.gdGuard || null);
+    const showBtn = t.closest("[data-gd-show]");
+    if (showBtn) return setShown(showBtn.dataset.gdShow === "1");
+    const gsort = t.closest("[data-gd-gsort]");
+    if (gsort) {
+      gradedSort = gsort.dataset.gdGsort;
+      render();
+      return;
+    }
     const buyOneBtn = t.closest("[data-gd-buy-one]");
     if (buyOneBtn) return buyOne(buyOneBtn.dataset.gdBuyOne);
     if (t.closest("[data-gd-crack]")) {
@@ -938,7 +1029,8 @@ export function initGrading(deps) {
   let renderGen = 0;
   function render() {
     const gen = ++renderGen;
-    const job = route.kind === "slab" ? paintSlab() : route.kind === "send" ? (route.cardId ? paintSend() : paintPicker()) : paintLanding();
+    const job =
+      route.kind === "slab" ? paintSlab() : route.kind === "graded" ? paintGraded() : route.kind === "send" ? (route.cardId ? paintSend() : paintPicker()) : paintLanding();
     job.catch((err) => {
       if (gen !== renderGen) return;
       console.error(err);
@@ -951,7 +1043,9 @@ export function initGrading(deps) {
     const m = clean.match(GRADING_ROUTE);
     const next = m?.[2]
       ? { kind: "slab", slabId: Number(m[2]), cardId: "" }
-      : clean.startsWith("/grading/send")
+      : clean === "/grading/graded"
+        ? { kind: "graded", slabId: 0, cardId: "" }
+        : clean.startsWith("/grading/send")
         ? { kind: "send", slabId: 0, cardId: m?.[1] || "" }
         : { kind: "landing", slabId: 0, cardId: "" };
     const wasVisible = visible;

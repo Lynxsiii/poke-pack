@@ -491,6 +491,26 @@
 #view-profile .showcase-slot figcaption b { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.3; }
 #view-profile .showcase-slot figcaption span { color: var(--gold-2); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
 #view-profile .profile-binder { margin: 40px 0 0; }
+/* Graded: the slabs a trainer chose to show, in a well like the showcase. */
+#view-profile .profile-graded { margin: 48px 0 0; padding: 0; border: 0; background: none; }
+#view-profile .profile-graded .acct-sec-head { align-items: flex-end; }
+#view-profile .profile-graded .acct-sec-head .ghost { text-decoration: none; }
+.graded-stage {
+  padding: clamp(22px, 3vw, 40px) clamp(18px, 3vw, 40px);
+  border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--well); overflow: visible;
+}
+.graded-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 28px 20px; }
+.graded-slot { margin: 0; min-width: 0; }
+.graded-slot:has(.lit), .graded-slot:has(.settling) { position: relative; z-index: 5; }
+.graded-slot figcaption { display: grid; gap: 3px; margin-top: 10px; padding: 0 2px; min-width: 0; line-height: 1.3; }
+.graded-slot figcaption b { font-size: 14px; font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.graded-slot .graded-grade { color: var(--ink-2); font-size: 13px; font-weight: 600; }
+.graded-slot .graded-worth { color: var(--gold-2); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.graded-slot figcaption a {
+  justify-self: start; margin-top: 2px; color: var(--ink-2); font-size: 13px; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint);
+}
+.graded-slot figcaption a:hover { color: var(--ink); text-decoration-color: var(--ink); }
 #view-profile .profile-wall { margin-top: 56px; max-width: 760px; }
 .comment-list { display: grid; margin: 0 0 20px; padding: 0; list-style: none; }
 #view-profile .comment-item {
@@ -859,6 +879,9 @@ body.on-social .friends, body.on-auth .friends { display: none; }
   #view-profile .showcase-slot { flex: 0 0 44%; scroll-snap-align: start; }
   #view-profile .showcase-slot:only-child { flex-basis: 56%; margin-inline: auto; }
   #view-profile .profile-wall { margin-top: 44px; }
+  #view-profile .profile-graded { margin-top: 40px; }
+  .graded-stage { margin-inline: -16px; padding: 22px 16px 18px; border-radius: 0; border-inline: 0; }
+  .graded-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; }
 
   /* Social: one pane at a time, like a phone messenger. */
   #view-social .social-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; }
