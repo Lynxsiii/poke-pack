@@ -9,17 +9,16 @@ the two box promos smp133 and smp134. Research:
 - Pack: 1 basic Energy (`sm17`, the 2017 print), 5 Commons, 3 Uncommons, 1 reverse holo
   (C/U/R/Rare Holo), 1 rare slot. Face to Face Games, ToyWiz and GoNintendo product text
   ("each pack contains 10 cards and 1 basic Energy"), Bulbapedia "Booster pack (TCG)".
-- Odds: Elite Fourum "Pull Rates in Sun & Moon - Sword & Shield Sets"
-  (https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220), n=1,264
-  packs, the only tally found (ThePriceDex and Pokecompare repeat it): GX 7.44%, Prism
-  Star 7.91%, full art 3.56%, rainbow 1.34%, gold 0.71%. Weak corroboration: Elite Fourum
-  post 2018-06-07 (https://www.elitefourum.com/t/official-pull-rates/20546).
-- **Prism Stars are in the reverse slot** (`reverseSpecial: [["prismStar", 0.0791]]`), so
-  they are not part of the rare slot's hits.
-- **Holo share is an assumption**: no set-specific tally. Plain Rare = 2/3 of the rare slot
-  and holo = 1/3 minus the hits (0.2028), the ratio measured for sm8 to sm11 (Elite
-  Fourum https://www.elitefourum.com/t/39762/150 to /154). The research file's own
-  heuristic (11 holo / 36 rares) was not used.
+- Odds, three tallies pooled (n=3,668, research/second-source-check.md in the shared sun-moon folder (Elite Fourum https://www.elitefourum.com/t/39762/147 per-card box counts, burpies https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220, Derium YouTube)): GX 7.94%, Prism Star 8.04%, full art 3.90%,
+  rainbow 1.23%, gold 0.90%. Weak corroboration: Elite Fourum post 2018-06-07
+  (https://www.elitefourum.com/t/official-pull-rates/20546).
+- **Prism Stars are in the reverse slot** (`reverseSpecial: [["prismStar", 0.0804]]`), so
+  they are not part of the rare slot's hits (Elite Fourum 39762/140 and /146, PokeBeach
+  "Prism Star cards take the place of the Reverse Holo", and the rare-slot classes already
+  sum to every pack).
+- **Holo is measured, not assumed**: plain Rare is exactly 2/3 of packs (939 of 1,404
+  counted) and holo-or-better is 12.0 per 36, so holo = 1/3 minus the hits (0.1937).
+  Earlier builds used 0.2028 from the sm8 to sm11 ratio; superseded by the second-source check.
 - Gold cards are all Trainers and Energy (Beast Ring, Eneporter, Metal Frying Pan,
   Mysterious Treasure, Unit Energy FDY, Energy Recycler).
 

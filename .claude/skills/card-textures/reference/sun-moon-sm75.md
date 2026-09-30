@@ -9,11 +9,16 @@ Built 2026-09-30 (builder b3). 70 printed, 88 cards in `data/sm75.json`: 78 pack
   Rare Holo or better (Flipside Gaming Collector's Dossier: "at least one holographic
   rare card and there are no non-holo rares",
   https://flipsidegaming.com/blogs/pokemon-blog/sun-and-moon-dragon-majesty-collectors-dossier).
-  Holo = 1 minus the hits (0.7456), structural.
-- Odds: Elite Fourum (n=389, one source and a small sample, flagged by Elite Fourum
-  itself for special sets): GX 15.42%, Prism Star 10.8% (reverse slot), full art 6.94%,
-  rainbow 2.31%, gold 0.77% (3 pulls; the four golds share it). ThePriceDex rounds the
-  same data and disagrees on rainbow and gold, so it was not used.
+  Holo = 1 minus the hits (0.7471), structural: all 560 of Elite Fourum's counted packs had a
+  holo or better.
+- Odds, two tallies pooled (n=949, research/second-source-check.md in the shared sun-moon folder (Elite Fourum https://www.elitefourum.com/t/39762/149 per-card box counts, burpies https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220, Derium YouTube)): GX 14.96%, Prism Star 10.22%
+  (reverse slot), full art 6.32%, rainbow 2.53%, gold 1.48% (the four golds share it). The two
+  tallies may share videos and the rainbow and gold intervals are about 1 point wide.
+  Earlier builds used n=389 alone.
+- **Reverse Energy is not wired**: the set has 9 reverse basic Energy prints (Flipside dossier,
+  Elite Fourum 39762/149), about 6.7% of packs by E2's sheet model (unmeasured). The set's card
+  data has no reverse Energy cards, so `["reverseEnergy", 0.067]` would roll an empty pool;
+  it needs the nine prints as cards first (engine/data owners).
 - No Booster Box was printed (Generations-style special set): packs sold loose at about
   $5; the booster pack's TCGplayer market price today is $107.42, the cost on the site.
 

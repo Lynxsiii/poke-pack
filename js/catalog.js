@@ -2636,10 +2636,10 @@ export const FORBIDDEN_LIGHT = {
   energyPrint: "sm17",
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Sun & Moon, May 2018. The Ultra Beasts and Necrozma: Greninja-GX, Zygarde-GX and the rainbow Lucario-GX, four wrappers.",
-  oddsLine: "GX 1/13 · Prism Star 1/13 · full art 1/28 · rainbow 1/75 · gold 1/141",
-  lede: "Nine Pokémon-GX get a full art and a rainbow print, and the Lucario-GX and Greninja-GX rainbows are the chase. The gold cards are all Trainers and Energy, and a Prism Star takes the reverse slot about 1 pack in 13.",
-  // Elite Fourum 1,264 packs (one source); holo = 1/3 of the rare slot minus the hits (LOT to UNM ratio), plain Rare 2/3. Sources in data/pullrates.json.
-  slots: smSlots({ holo: 0.2028, gx: 0.0744, ultra: 0.0356, rainbow: 0.0134, secret: 0.0071, reverseSpecial: [["prismStar", 0.0791]] }),
+  oddsLine: "GX 1/13 · Prism Star 1/12 · full art 1/26 · rainbow 1/81 · gold 1/111",
+  lede: "Nine Pokémon-GX get a full art and a rainbow print, and the Lucario-GX and Greninja-GX rainbows are the chase. The gold cards are all Trainers and Energy, and a Prism Star takes the reverse slot about 1 pack in 12.",
+  // Elite Fourum tallies pooled, n=3,668 (research/second-source-check.md); plain Rare is 2/3 of packs (direct count), holo = 1/3 minus the hits. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1937, gx: 0.0794, ultra: 0.039, rainbow: 0.0123, secret: 0.009, reverseSpecial: [["prismStar", 0.0804]] }),
   heroIds: ["sm6-135", "sm6-133", "sm6-138", "sm6-136"],
   wrappers: boosterWrappers("sm6", [
     { id: "naganadel", name: "Naganadel", cardId: "sm6-56", tag: "Ultra Beast" },
@@ -2666,10 +2666,10 @@ export const CELESTIAL_STORM = {
   energyPrint: "sm17",
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Sun & Moon, August 2018. Rayquaza-GX, Blaziken-GX and Jirachi Prism Star, four wrappers.",
-  oddsLine: "GX 1/9 · Prism Star 1/18 · full art 1/27 · rainbow 1/79 · gold 1/106",
+  oddsLine: "GX 1/9 · Prism Star 1/18 · full art 1/27 · rainbow 1/76 · gold 1/118",
   lede: "Rayquaza-GX is the chase, with a full art and the rainbow above it; the Lisia and TV Reporter full arts are close behind. Gold is Trainers and Energy only.",
-  // Elite Fourum 1,480 packs and a PokeBeach shop's 432 packs, pooled; holo = 1/3 of the rare slot minus the hits. Sources in data/pullrates.json.
-  slots: smSlots({ holo: 0.168, gx: 0.1067, ultra: 0.0366, rainbow: 0.0126, secret: 0.0094, reverseSpecial: [["prismStar", 0.0549]] }),
+  // Four tallies pooled, n=4,720 (research/second-source-check.md); plain Rare is 2/3 of packs, holo = 1/3 minus the hits. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1631, gx: 0.1114, ultra: 0.0371, rainbow: 0.0132, secret: 0.0085, reverseSpecial: [["prismStar", 0.0551]] }),
   heroIds: ["sm7-177", "sm7-160", "sm7-170", "sm7-175"],
   wrappers: boosterWrappers("sm7", [
     { id: "stakataka", name: "Stakataka", cardId: "sm7-102", tag: "Ultra Beast" },
@@ -2696,10 +2696,10 @@ export const DRAGON_MAJESTY = {
   energyPrint: "sm17",
   reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
   blurb: "Sun & Moon, September 2018. A 70-card dragon set with no booster box and no plain Rares: Charizard, Dragonite, Reshiram and Salamence on the wrappers.",
-  oddsLine: "GX 1/6.5 · Prism Star 1/9 · full art 1/14 · rainbow 1/43 · gold 1/130",
-  lede: "Every rare slot is a holo or better. Ultra Necrozma-GX gold is the chase, one of four golds sharing 1 pack in 130, and a Prism Star takes the reverse slot 1 pack in 9.",
-  // Elite Fourum 389 packs (one source, small sample); no plain Rare exists, so holo = 1 minus the hits. Sources in data/pullrates.json.
-  slots: smSlots({ holo: 0.7456, gx: 0.1542, ultra: 0.0694, rainbow: 0.0231, secret: 0.0077, reverseSpecial: [["prismStar", 0.108]] }),
+  oddsLine: "GX 1/6.7 · Prism Star 1/10 · full art 1/16 · rainbow 1/40 · gold 1/68",
+  lede: "Every rare slot is a holo or better. Ultra Necrozma-GX gold is the chase, one of four golds sharing 1 pack in 68, and a Prism Star takes the reverse slot 1 pack in 10.",
+  // Two tallies pooled, n=949 (research/second-source-check.md); no plain Rare exists, so holo = 1 minus the hits. Reverse Energy (6.7%, a sheet model) is not wired: the set data holds no reverse Energy cards. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.7471, gx: 0.1496, ultra: 0.0632, rainbow: 0.0253, secret: 0.0148, reverseSpecial: [["prismStar", 0.1022]] }),
   heroIds: ["sm75-78", "sm75-71", "sm75-73", "sm75-67"],
   wrappers: boosterWrappers("sm75", [
     { id: "charizard", name: "Charizard", cardId: "sm75-3", tag: "Flame" },

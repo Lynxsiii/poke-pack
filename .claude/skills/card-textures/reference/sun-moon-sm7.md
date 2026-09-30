@@ -7,13 +7,12 @@ Built 2026-09-30 (builder b3). 168 printed, 195 cards in `data/sm7.json`: 183 pa
 - Cards pkmn.gg `sun-moon/celestial-storm`, scans scrydex `sm7-<n>`. Pack as sm6 (1 Energy
   `sm17`, 5 C, 3 U, 1 reverse, 1 rare slot; Face to Face Games, ToyWiz, GoNintendo,
   Bulbapedia).
-- Odds, two independent samples pooled: Elite Fourum (same article as sm6, n=1,480) and a
-  PokeBeach shop owner's 12 boxes (n=432, https://www.pokebeach.com/forums/threads/celestial-storm-pull-rates.147911/,
-  counts from search excerpts): GX 10.67%, Prism Star 5.49%, full art 3.66%, rainbow
-  1.26%, gold 0.94%. They agree within their intervals on every line.
-- Prism Stars in the reverse slot (`reverseSpecial`). Holo = 1/3 minus the hits (0.168),
-  plain Rare 2/3: an assumption from the sm8 to sm11 ratio, not measured here. This set
-  has 18 Rare Holo against 17 Rare, so the real split may well differ.
+- Odds, four tallies pooled (n=4,720, research/second-source-check.md in the shared sun-moon folder (Elite Fourum https://www.elitefourum.com/t/39762/148 per-card box counts, burpies https://www.elitefourum.com/t/pull-rates-in-sun-moon-sword-shield-sets/25220, Derium YouTube); one is a PokeBeach shop
+  owner's 12 boxes, https://www.pokebeach.com/forums/threads/celestial-storm-pull-rates.147911/):
+  GX 11.14%, Prism Star 5.51%, full art 3.71%, rainbow 1.32%, gold 0.85%.
+- Prism Stars in the reverse slot (`reverseSpecial`). Holo = 1/3 minus the hits (0.1631):
+  plain Rare is 2/3 of packs (1,199 of 1,800 counted) even though the set has 18 Rare Holo
+  against 17 Rare, so the card-count split is not the pack split. Earlier builds used 0.168.
 - Gold is Trainers and Energy only (Acro Bike, Hustle Belt, Life Herb, PokeNav, Rainbow
   Brush, Rainbow Energy).
 
