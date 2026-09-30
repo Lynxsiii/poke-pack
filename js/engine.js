@@ -63,6 +63,8 @@ export const HIT_RARITIES = new Set([
   "Rare Holo GX",
   "Rare Prism Star",
   "Rare Shiny GX",
+  // Shining Legends' Shining Pokémon.
+  "Rare Shining",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -149,6 +151,8 @@ export function poolsFrom(cards, set) {
     // Fates' Shiny Vault tiers (shiny GX, the full-art shiny Ultra).
     gx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo GX"),
     prismStar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Prism Star"),
+    // Shining Legends' Shining Pokémon fill its rare slot (smSlots `shining`).
+    shining: pokemonOrTrainer.filter((c) => c.rarity === "Rare Shining"),
     shinyGX: gallery("sv").filter((c) => c.rarity === "Rare Shiny GX"),
     shinyUltra: gallery("sv").filter((c) => c.rarity === "Rare Ultra"),
     classicCollection: gallery("cc"),
