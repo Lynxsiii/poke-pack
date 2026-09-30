@@ -5399,60 +5399,6 @@
     "market": 23.86
   },
   {
-    "id": "sm6-102a",
-    "name": "Beast Ring",
-    "number": "102a",
-    "rarity": "Promo",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "5ban Graphics",
-    "image": "assets/cards/sm6/102a.webp",
-    "imageSmall": "assets/cards/sm6/102a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm6-102a/large",
-    "printedNumber": "102a/131",
-    "promo": true,
-    "tcgplayerId": 191904,
-    "market": 0.9
-  },
-  {
-    "id": "sm6-112a",
-    "name": "Metal Frying Pan",
-    "number": "112a",
-    "rarity": "Promo",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Pokémon Tool"
-    ],
-    "artist": "Ryo Ueda",
-    "image": "assets/cards/sm6/112a.webp",
-    "imageSmall": "assets/cards/sm6/112a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm6-112a/large",
-    "printedNumber": "112a/131",
-    "promo": true,
-    "tcgplayerId": 189779,
-    "market": 0.86
-  },
-  {
-    "id": "sm6-113a",
-    "name": "Mysterious Treasure",
-    "number": "113a",
-    "rarity": "Promo",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "Eske Yoshinob",
-    "image": "assets/cards/sm6/113a.webp",
-    "imageSmall": "assets/cards/sm6/113a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm6-113a/large",
-    "printedNumber": "113a/131",
-    "promo": true,
-    "tcgplayerId": 198227,
-    "market": 2.22
-  },
-  {
     "id": "sm6-2a",
     "name": "Alolan Exeggutor",
     "number": "2a",
@@ -5480,12 +5426,12 @@
         "text": "This attack does 20 more damage for each type of basic Energy card in your discard pile. You can't add more than 100 damage in this way."
       }
     ],
+    "market": 3.15,
     "imageRemote": "https://images.scrydex.com/pokemon/sm6-2a/large",
     "printedNumber": "2a/131",
     "promo": true,
     "foilAs": "Rare Holo",
-    "tcgplayerId": 180514,
-    "market": 3.15
+    "tcgplayerId": 180514
   },
   {
     "id": "sm6-smp133",
@@ -5534,13 +5480,13 @@
         "text": "Flip 4 coins. This attack does 100 damage for each heads. (You can't use more than 1 GX attack in a game.)"
       }
     ],
+    "market": 3.71,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM133/large",
     "printedNumber": "SM 133",
     "tcgplayerId": 170032,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo GX",
-    "market": 3.71,
     "foilMap": "assets/foil/maps/sm6/smp133.webp"
   },
   {
@@ -5591,13 +5537,13 @@
         "text": "Discard all Energy from your opponent's Active Pokémon. (You can't use more than 1 GX attack in a game.)"
       }
     ],
+    "market": 3.12,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM134/large",
     "printedNumber": "SM 134",
     "tcgplayerId": 170033,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo GX",
-    "market": 3.12,
     "foilMap": "assets/foil/maps/sm6/smp134.webp"
   }
 ]

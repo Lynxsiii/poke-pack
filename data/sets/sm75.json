@@ -71,19 +71,11 @@
       "tcgplayerId": 184219,
       "tcgplayerGroup": 1938,
       "foilMap": "assets/foil/maps/sm75/40.webp"
-    },
-    "60a": {
-      "like": "60a",
-      "keepScan": true,
-      "keepMaps": true,
-      "printedNumber": "60a/70",
-      "tcgplayerId": 206298,
-      "tcgplayerGroup": 1539
     }
   },
   "products": [
     {
-      "id": "eliteTrainerBox",
+      "id": "elite-trainer-box",
       "name": "Elite Trainer Box",
       "kind": "etb",
       "tcgplayerId": 173393,
@@ -176,17 +168,9 @@
         "40a"
       ],
       "tcgplayerGroup": 1938
-    },
-    {
-      "id": "fiery-flint-60a",
-      "name": "Fiery Flint 60a/70 (Pokemon League)",
-      "kind": "event",
-      "tcgplayerId": 206298,
-      "packs": 0,
-      "promos": [
-        "60a"
-      ],
-      "tcgplayerGroup": 1539
     }
+  ],
+  "skipNumbers": [
+    "60a"
   ]
 }

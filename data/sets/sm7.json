@@ -71,22 +71,6 @@
       "tcgplayerId": 189786,
       "tcgplayerGroup": 1938
     },
-    "123a": {
-      "like": "123a",
-      "keepScan": true,
-      "keepMaps": true,
-      "printedNumber": "123a/168",
-      "tcgplayerId": 202639,
-      "tcgplayerGroup": 1539
-    },
-    "148a": {
-      "like": "148a",
-      "keepScan": true,
-      "keepMaps": true,
-      "printedNumber": "148a/168",
-      "tcgplayerId": 200203,
-      "tcgplayerGroup": 1938
-    },
     "177a": {
       "like": "177a",
       "keepScan": true,
@@ -99,7 +83,7 @@
   },
   "products": [
     {
-      "id": "eliteTrainerBox",
+      "id": "elite-trainer-box",
       "name": "Elite Trainer Box",
       "kind": "etb",
       "tcgplayerId": 170277,
@@ -212,28 +196,6 @@
       "tcgplayerGroup": 1938
     },
     {
-      "id": "acro-bike-123a",
-      "name": "Acro Bike 123a/168 (Pokemon League)",
-      "kind": "event",
-      "tcgplayerId": 202639,
-      "packs": 0,
-      "promos": [
-        "123a"
-      ],
-      "tcgplayerGroup": 1539
-    },
-    {
-      "id": "tate-liza-148a",
-      "name": "Tate & Liza 148a/168 (Alternate Art Promo)",
-      "kind": "event",
-      "tcgplayerId": 200203,
-      "packs": 0,
-      "promos": [
-        "148a"
-      ],
-      "tcgplayerGroup": 1938
-    },
-    {
       "id": "rayquaza-gx-177a",
       "name": "Rayquaza GX 177a/168 (Alternate Art Promo)",
       "kind": "event",
@@ -244,5 +206,9 @@
       ],
       "tcgplayerGroup": 1938
     }
+  ],
+  "skipNumbers": [
+    "123a",
+    "148a"
   ]
 }

@@ -2991,26 +2991,8 @@
     "printedNumber": "40a/70",
     "promo": true,
     "foilAs": "Rare Holo",
-    "tcgplayerId": 184219,
-    "foilMap": "assets/foil/maps/sm75/40.webp"
-  },
-  {
-    "id": "sm75-60a",
-    "name": "Fiery Flint",
-    "number": "60a",
-    "rarity": "Promo",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "Yoshinobu Saito",
-    "image": "assets/cards/sm75/60a.webp",
-    "imageSmall": "assets/cards/sm75/60a-sm.webp",
-    "market": 0.52,
-    "imageRemote": "https://images.scrydex.com/pokemon/sm75-60a/large",
-    "printedNumber": "60a/70",
-    "promo": true,
-    "tcgplayerId": 206298
+    "foilMap": "assets/foil/maps/sm75/40.webp",
+    "tcgplayerId": 184219
   },
   {
     "id": "sm75-smp125",

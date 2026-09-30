@@ -2220,7 +2220,7 @@
   ],
   "sm6": [
     {
-      "id": "eliteTrainerBox",
+      "id": "elite-trainer-box",
       "name": "Elite Trainer Box",
       "kind": "etb",
       "packs": 8,
@@ -2228,7 +2228,7 @@
       "price": 686.16,
       "tcgplayerId": 164303,
       "released": "2018-05-04",
-      "image": "assets/products/sm6/eliteTrainerBox.webp"
+      "image": "assets/products/sm6/elite-trainer-box.webp"
     },
     {
       "id": "forces-of-nature-gx-premium-collection",
@@ -2254,44 +2254,11 @@
       ],
       "price": 3.15,
       "tcgplayerId": 180514
-    },
-    {
-      "id": "beast-ring-102a",
-      "name": "Beast Ring 102a/131 (League Cup)",
-      "kind": "event",
-      "packs": 0,
-      "promos": [
-        "sm6-102a"
-      ],
-      "price": 0.9,
-      "tcgplayerId": 191904
-    },
-    {
-      "id": "metal-frying-pan-112a",
-      "name": "Metal Frying Pan 112a/131 (Pokemon League)",
-      "kind": "event",
-      "packs": 0,
-      "promos": [
-        "sm6-112a"
-      ],
-      "price": 0.86,
-      "tcgplayerId": 189779
-    },
-    {
-      "id": "mysterious-treasure-113a",
-      "name": "Mysterious Treasure 113a/131 (Pokemon League)",
-      "kind": "event",
-      "packs": 0,
-      "promos": [
-        "sm6-113a"
-      ],
-      "price": 2.22,
-      "tcgplayerId": 198227
     }
   ],
   "sm7": [
     {
-      "id": "eliteTrainerBox",
+      "id": "elite-trainer-box",
       "name": "Elite Trainer Box",
       "kind": "etb",
       "packs": 8,
@@ -2299,7 +2266,7 @@
       "price": 2091.3,
       "tcgplayerId": 170277,
       "released": "2018-08-03",
-      "image": "assets/products/sm7/eliteTrainerBox.webp"
+      "image": "assets/products/sm7/elite-trainer-box.webp"
     },
     {
       "id": "buildBattleBox",
@@ -2403,28 +2370,6 @@
       "tcgplayerId": 189786
     },
     {
-      "id": "acro-bike-123a",
-      "name": "Acro Bike 123a/168 (Pokemon League)",
-      "kind": "event",
-      "packs": 0,
-      "promos": [
-        "sm7-123a"
-      ],
-      "price": 0.86,
-      "tcgplayerId": 202639
-    },
-    {
-      "id": "tate-liza-148a",
-      "name": "Tate & Liza 148a/168 (Alternate Art Promo)",
-      "kind": "event",
-      "packs": 0,
-      "promos": [
-        "sm7-148a"
-      ],
-      "price": 11.42,
-      "tcgplayerId": 200203
-    },
-    {
       "id": "rayquaza-gx-177a",
       "name": "Rayquaza GX 177a/168 (Alternate Art Promo)",
       "kind": "event",
@@ -2438,7 +2383,7 @@
   ],
   "sm75": [
     {
-      "id": "eliteTrainerBox",
+      "id": "elite-trainer-box",
       "name": "Elite Trainer Box",
       "kind": "etb",
       "packs": 10,
@@ -2448,7 +2393,7 @@
       "price": 1256.49,
       "tcgplayerId": 173393,
       "released": "2018-09-21",
-      "image": "assets/products/sm75/eliteTrainerBox.webp"
+      "image": "assets/products/sm75/elite-trainer-box.webp"
     },
     {
       "id": "latios-pin-collection",
@@ -2524,17 +2469,6 @@
       ],
       "price": 4.7,
       "tcgplayerId": 184219
-    },
-    {
-      "id": "fiery-flint-60a",
-      "name": "Fiery Flint 60a/70 (Pokemon League)",
-      "kind": "event",
-      "packs": 0,
-      "promos": [
-        "sm75-60a"
-      ],
-      "price": 0.52,
-      "tcgplayerId": 206298
     }
   ],
   "sv1": [

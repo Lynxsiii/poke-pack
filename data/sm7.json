@@ -6485,48 +6485,12 @@
         "type": "Ability"
       }
     ],
+    "market": 4.85,
     "imageRemote": "https://images.scrydex.com/pokemon/sm7-10a/large",
     "printedNumber": "10a/168",
     "promo": true,
     "foilAs": "Rare Holo",
-    "tcgplayerId": 189786,
-    "market": 4.85
-  },
-  {
-    "id": "sm7-123a",
-    "name": "Acro Bike",
-    "number": "123a",
-    "rarity": "Promo",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "Toyste Beach",
-    "image": "assets/cards/sm7/123a.webp",
-    "imageSmall": "assets/cards/sm7/123a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm7-123a/large",
-    "printedNumber": "123a/168",
-    "promo": true,
-    "tcgplayerId": 202639,
-    "market": 0.86
-  },
-  {
-    "id": "sm7-148a",
-    "name": "Tate & Liza",
-    "number": "148a",
-    "rarity": "Promo",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Supporter"
-    ],
-    "artist": "You Iribi",
-    "image": "assets/cards/sm7/148a.webp",
-    "imageSmall": "assets/cards/sm7/148a-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/sm7-148a/large",
-    "printedNumber": "148a/168",
-    "promo": true,
-    "tcgplayerId": 200203,
-    "market": 11.42
+    "tcgplayerId": 189786
   },
   {
     "id": "sm7-177a",
@@ -6572,12 +6536,12 @@
         "type": "Ability"
       }
     ],
+    "market": 191.07,
     "imageRemote": "https://images.scrydex.com/pokemon/sm7-177a/large",
     "printedNumber": "177a/168",
     "promo": true,
     "foilAs": "Rare Ultra",
-    "tcgplayerId": 202638,
-    "market": 191.07
+    "tcgplayerId": 202638
   },
   {
     "id": "sm7-smp103",
@@ -6630,13 +6594,13 @@
         "text": "(You can't use more than 1 GX attack in a game.)"
       }
     ],
+    "market": 13.83,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM103/large",
     "printedNumber": "SM 103",
     "tcgplayerId": 177710,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo GX",
-    "market": 13.83,
     "foilMap": "assets/foil/maps/sm7/smp103.webp"
   },
   {
@@ -6684,13 +6648,13 @@
         "type": "Ability"
       }
     ],
+    "market": 15.47,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM104/large",
     "printedNumber": "SM 104",
     "tcgplayerId": 177900,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo GX",
-    "market": 15.47,
     "foilMap": "assets/foil/maps/sm7/smp104.webp"
   },
   {
@@ -6731,13 +6695,13 @@
         "text": "This Pokémon can't use Grand Wave during your next turn."
       }
     ],
+    "market": 34.48,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM129/large",
     "printedNumber": "SM 129",
     "tcgplayerId": 172930,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 34.48,
     "foilMap": "assets/foil/maps/sm7/smp129.webp"
   },
   {
@@ -6775,13 +6739,13 @@
         "type": "Ability"
       }
     ],
+    "market": 7.72,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM130/large",
     "printedNumber": "SM 130",
     "tcgplayerId": 172933,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 7.72,
     "foilMap": "assets/foil/maps/sm7/smp130.webp"
   },
   {
@@ -6816,13 +6780,13 @@
         "text": "If the total of both players' remaining Prize cards is exactly 6, this attack can be used for Metal."
       }
     ],
+    "market": 6.75,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM131/large",
     "printedNumber": "SM 131",
     "tcgplayerId": 172935,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 6.75,
     "foilMap": "assets/foil/maps/sm7/smp131.webp"
   },
   {
@@ -6861,13 +6825,13 @@
         "type": "Ability"
       }
     ],
+    "market": 8.54,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM132/large",
     "printedNumber": "SM 132",
     "tcgplayerId": 172937,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 8.54,
     "foilMap": "assets/foil/maps/sm7/smp132.webp"
   },
   {
@@ -6915,13 +6879,13 @@
         "type": "Ability"
       }
     ],
+    "market": 6.51,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM146/large",
     "printedNumber": "SM 146",
     "tcgplayerId": 177112,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo GX",
-    "market": 6.51,
     "foilMap": "assets/foil/maps/sm7/smp146.webp"
   },
   {
@@ -6971,13 +6935,13 @@
         "type": "Ability"
       }
     ],
+    "market": 8.61,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM147/large",
     "printedNumber": "SM 147",
     "tcgplayerId": 177111,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo GX",
-    "market": 8.61,
     "foilMap": "assets/foil/maps/sm7/smp147.webp"
   },
   {
@@ -7018,13 +6982,13 @@
         "text": "If you have used your GX attack, this attack does 60 more damage."
       }
     ],
+    "market": 1.29,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM61/large",
     "printedNumber": "SM 061",
     "tcgplayerId": 173382,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 1.29,
     "foilMap": "assets/foil/maps/sm7/smp61.webp"
   },
   {
@@ -7065,13 +7029,13 @@
         "text": "If any of your Water Pokémon was healed during this turn, this attack does 60 more damage."
       }
     ],
+    "market": 2.23,
     "imageRemote": "https://images.scrydex.com/pokemon/smp-SM92/large",
     "printedNumber": "SM 092",
     "tcgplayerId": 173383,
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 2.23,
     "foilMap": "assets/foil/maps/sm7/smp92.webp"
   }
 ]

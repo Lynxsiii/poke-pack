@@ -52,35 +52,11 @@
       "printedNumber": "2a/131",
       "tcgplayerId": 180514,
       "tcgplayerGroup": 1938
-    },
-    "102a": {
-      "like": "102a",
-      "keepScan": true,
-      "keepMaps": true,
-      "printedNumber": "102a/131",
-      "tcgplayerId": 191904,
-      "tcgplayerGroup": 1539
-    },
-    "112a": {
-      "like": "112a",
-      "keepScan": true,
-      "keepMaps": true,
-      "printedNumber": "112a/131",
-      "tcgplayerId": 189779,
-      "tcgplayerGroup": 1539
-    },
-    "113a": {
-      "like": "113a",
-      "keepScan": true,
-      "keepMaps": true,
-      "printedNumber": "113a/131",
-      "tcgplayerId": 198227,
-      "tcgplayerGroup": 1539
     }
   },
   "products": [
     {
-      "id": "eliteTrainerBox",
+      "id": "elite-trainer-box",
       "name": "Elite Trainer Box",
       "kind": "etb",
       "tcgplayerId": 164303,
@@ -150,39 +126,11 @@
         "2a"
       ],
       "tcgplayerGroup": 1938
-    },
-    {
-      "id": "beast-ring-102a",
-      "name": "Beast Ring 102a/131 (League Cup)",
-      "kind": "event",
-      "tcgplayerId": 191904,
-      "packs": 0,
-      "promos": [
-        "102a"
-      ],
-      "tcgplayerGroup": 1539
-    },
-    {
-      "id": "metal-frying-pan-112a",
-      "name": "Metal Frying Pan 112a/131 (Pokemon League)",
-      "kind": "event",
-      "tcgplayerId": 189779,
-      "packs": 0,
-      "promos": [
-        "112a"
-      ],
-      "tcgplayerGroup": 1539
-    },
-    {
-      "id": "mysterious-treasure-113a",
-      "name": "Mysterious Treasure 113a/131 (Pokemon League)",
-      "kind": "event",
-      "tcgplayerId": 198227,
-      "packs": 0,
-      "promos": [
-        "113a"
-      ],
-      "tcgplayerGroup": 1539
     }
+  ],
+  "skipNumbers": [
+    "102a",
+    "112a",
+    "113a"
   ]
 }
