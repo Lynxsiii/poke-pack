@@ -30,5 +30,180 @@
     "187a",
     "188a",
     "189a"
+  ],
+  "promoCards": {
+    "smp143": {
+      "foilAs": "Rare Holo"
+    },
+    "smp144": {
+      "foilAs": "Rare Holo"
+    },
+    "smp145": {
+      "foilAs": "Rare Holo"
+    },
+    "smp149": {
+      "foilAs": "Rare Holo"
+    },
+    "smp150": {
+      "foilAs": "Rare Holo"
+    },
+    "smp151": {
+      "foilAs": "Rare Holo"
+    },
+    "smp152": {
+      "foilAs": "Rare Holo"
+    },
+    "smp153": {
+      "foilAs": "Rare Holo"
+    },
+    "smp154": {
+      "foilAs": "Rare Holo"
+    },
+    "smp171": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp172": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp173": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp174": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp175": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    },
+    "smp176": {
+      "foilAs": "Rare Ultra",
+      "notes": "full-art GX (checked against the scan)"
+    }
+  },
+  "products": [
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "tcgplayerId": 179423,
+      "packs": 4,
+      "promos": [
+        "smp149",
+        "smp150",
+        "smp151",
+        "smp152"
+      ],
+      "pick": 1,
+      "note": "Also sold as the Lost Thunder Prerelease Kit (TCGplayer 179423)."
+    },
+    {
+      "id": "altaria-3-pack-blister",
+      "name": "Altaria 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 177904,
+      "packs": 3,
+      "promos": [],
+      "note": "Its promo is a special-art Altaria reprint (Dragon Majesty 40a), not an SM Black Star number."
+    },
+    {
+      "id": "alolan-exeggutor-3-pack-blister",
+      "name": "Alolan Exeggutor 3 Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 177905,
+      "packs": 3,
+      "promos": [],
+      "note": "Its promo is a special-art Alolan Exeggutor reprint (Forbidden Light 2a), not an SM Black Star number."
+    },
+    {
+      "id": "salandit-single-pack-blister",
+      "name": "Salandit Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 177906,
+      "packs": 1,
+      "promos": [
+        "smp154"
+      ]
+    },
+    {
+      "id": "rowlet-single-pack-blister",
+      "name": "Rowlet Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 177907,
+      "packs": 1,
+      "promos": [
+        "smp153"
+      ]
+    },
+    {
+      "id": "island-guardians-gx-premium-collection",
+      "name": "Island Guardians GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 177864,
+      "packs": 8,
+      "promos": [],
+      "note": "Pack mix approximate: the real split isn't documented. Its promos are alternate-art Tapu Lele-GX and Tapu Fini-GX reprints, not SM Black Star numbers."
+    },
+    {
+      "id": "island-guardians-gx-premium-pin-collection",
+      "name": "Island Guardians GX Premium Pin Collection",
+      "kind": "premium",
+      "tcgplayerId": 181707,
+      "packs": 8,
+      "promos": [],
+      "note": "Pack mix approximate: the real split isn't documented. Same cards as the Premium Collection."
+    },
+    {
+      "id": "fall-2018-collector-chest",
+      "name": "Fall 2018 Collector Chest",
+      "kind": "tin",
+      "tcgplayerId": 180518,
+      "packs": 5,
+      "promos": [
+        "smp143",
+        "smp144",
+        "smp145"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "flareon-gx-special-collection",
+      "name": "Flareon GX Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 181708,
+      "packs": 5,
+      "promos": [
+        "smp171",
+        "smp174"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "jolteon-gx-special-collection",
+      "name": "Jolteon GX Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 181709,
+      "packs": 5,
+      "promos": [
+        "smp173",
+        "smp176"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    },
+    {
+      "id": "vaporeon-gx-special-collection",
+      "name": "Vaporeon GX Special Collection",
+      "kind": "collection",
+      "tcgplayerId": 181710,
+      "packs": 5,
+      "promos": [
+        "smp172",
+        "smp175"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented."
+    }
   ]
 }

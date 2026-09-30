@@ -385,8 +385,11 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         record["id"], record["number"] = card_id, number
         record["printedNumber"] = f"{ser['printed']} {n:03d}"
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
-        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/large"
-        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/small"
+        # scrydex files the Sun & Moon promos as smp-SM01 (two digits to 99) where
+        # pkmn.gg's page is SM001: `scanKey` is the scan's own format.
+        scan_key = ser["scanKey"].format(n=n) if ser.get("scanKey") else page_key
+        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scan_key}/large"
+        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scan_key}/small"
         remote = record["image"]
         if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
