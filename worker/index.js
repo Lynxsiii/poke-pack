@@ -32,6 +32,8 @@ import {
   recordActivity,
   setPacksFor,
   setStatStmt,
+  skipSettledBattles,
+  syncBattleStats,
 } from "./stats.js";
 import { activeChests, activeQuests, activeRowById, questPeriods, streakFromDays } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
@@ -460,6 +462,8 @@ async function resetMe(request, env) {
       auth.user.id
     ),
   ]);
+  // Battles fought before the reset are not counted again.
+  if (statsReady) await skipSettledBattles(env, auth.user.id);
   const save = await loadSave(env, auth.user.id);
   if (profile?.active_set_id) save.activeSetId = profile.active_set_id;
   return json({ save });
@@ -856,6 +860,8 @@ async function questSummary(env, userId, counters = null) {
   };
   if (!(await ensureQuestSchema(env))) return { ...base, unavailable: true };
   try {
+    // Settled battles become events before progress is read (a claim asks too).
+    const stored = counters || (await syncBattleStats(env, userId, await loadCounters(env, userId)));
     const packs = await env.DB.prepare(
       `SELECT COUNT(*) AS monthly, SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS weekly,
          SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS daily FROM pack_log WHERE user_id = ? AND at >= ?`
@@ -885,7 +891,6 @@ async function questSummary(env, userId, counters = null) {
       if (have.has(`${chestRows[period].id}:${periods[period]}`)) claimed.push(chestRows[period].id);
     }
 
-    const stored = counters || (await loadCounters(env, userId));
     const today = Math.floor(periods.daily / DAY_MS);
     // A streak survives until a whole UTC day passes without a claim.
     const live = (stored._streakDay || 0) >= today - 1 ? stored.streak || 0 : 0;
@@ -1106,6 +1111,7 @@ async function ownedCardsFor(env, request, collection) {
 async function loadSave(env, userId) {
   await ensureQuestSchema(env);
   // Independent reads, run together: this is called on every rip.
+  // Battle results are folded into the counters here, at read time (no triggers).
   const [profile, inventory, historyRows, counters, setPacks, friends] = await Promise.all([
     env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first(),
     inventoryMap(env, userId),
@@ -1116,7 +1122,7 @@ async function loadSave(env, userId) {
       .bind(userId)
       .all()
       .then((res) => res.results || []),
-    loadCounters(env, userId),
+    loadCounters(env, userId).then((stored) => syncBattleStats(env, userId, stored)),
     setPacksFor(env, userId),
     friendsCount(env, userId),
   ]);

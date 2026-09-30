@@ -109,7 +109,7 @@ function satisfy(row,at=clock) {
   const save=await me();
   assert.ok(!save.quests.unavailable,'missing tables are created on demand');
   for(const table of ['player_stats','quest_events','quest_claims']) assert.equal(db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE name=?").get(table).n,1,table);
-  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE name='battle_settle_quest_stats'").get().n,1,'the battle trigger exists');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE type='trigger' AND name LIKE '%quest%'").get().n,0,'no trigger is put on the battle tables');
 }
 
 // ---- The old bug: a claim wiped every event and claim the player had ----
@@ -361,14 +361,16 @@ function satisfy(row,at=clock) {
   assert.equal(res.status,200,JSON.stringify(res.body));
   assert.equal(res.body.save.stats.counters.questsClaimed,1);
 
-  // Battles ride the settlement insert; a bot seat is never counted.
+  // Battles are counted at read time from the battle tables; a bot seat is never counted.
   const later=realNow+3600_000;
-  function settle(id,winners) {
+  // Seat 0 is `test`; seat 1 is a free bot, or `partner` when given. Rows are inserted the way test-battles.mjs does.
+  function settle(id,winners,{partner=null,at=clock}={}) {
     db.prepare("INSERT INTO battles(id,host_id,request_id,status,settings,lineup,plan,entry_cost,created_at,expires_at) VALUES(?,?,?,'lobby',?,'[]','[]',1,?,?)").run(id,'test','r-'+id,JSON.stringify({players:2}),realNow,later);
     db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,0,'test','test','Quest Tester','questtester','gold',0);
-    db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,1,null,'free','Sparky','bot:sparky','gold',1);
-    db.prepare("UPDATE battles SET status='running',starts_at=?,ends_at=?,round_ms=1000,outcomes='[]',result=? WHERE id=?").run(clock-2000,clock-1,JSON.stringify({winners,scores:[],allocations:[]}),id);
-    db.prepare('INSERT INTO battle_settlements(battle_id,at) VALUES(?,?)').run(id,clock);
+    if(partner) db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,1,partner,partner,'Other','otherguy','gold',0);
+    else db.prepare("INSERT INTO battle_seats(battle_id,seat,user_id,payer_id,name,handle,color,bot) VALUES(?,?,?,?,?,?,?,?)").run(id,1,null,'free','Sparky','bot:sparky','gold',1);
+    db.prepare("UPDATE battles SET status='running',starts_at=?,ends_at=?,round_ms=1000,outcomes='[]',result=? WHERE id=?").run(at-2000,at-1,JSON.stringify({winners,scores:[],allocations:[]}),id);
+    db.prepare('INSERT INTO battle_settlements(battle_id,at) VALUES(?,?)').run(id,at);
   }
   settle('b1',[0]);
   save=await me();
@@ -389,6 +391,34 @@ function satisfy(row,at=clock) {
     if(row.kind==='battles') assert.equal(save.quests.progress[row.id],3);
     if(row.kind==='battleWins') assert.equal(save.quests.progress[row.id],1);
   }
+
+  // Reading again counts nothing twice; only new settlements are added.
+  const events=count('quest_events');
+  save=await me();save=await me();
+  assert.equal(save.stats.counters.battles,3);
+  assert.equal(count('quest_events'),events,'a battle is counted once');
+  // Two humans in one battle: each is credited by their own seat.
+  settle('b4',[1],{partner:'other'});
+  save=await me();
+  assert.equal(save.stats.counters.battles,4);
+  assert.equal(save.stats.counters.battleWins,1,'seat 1 won, and that was not test');
+  const otherSave=await me('sid-other');
+  assert.equal(otherSave.stats.counters.battles,1);
+  assert.equal(otherSave.stats.counters.battleWins,1);
+  assert.equal((await me('sid-other')).stats.counters.battles,1,'and once for them too');
+  // A battle from long ago counts for the lifetime counters but not for any current period.
+  settle('b5',[0],{at:clock-50*DAY});
+  save=await me();
+  assert.equal(save.stats.counters.battles,5);
+  assert.equal(save.stats.counters.battleWins,2);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='test' AND kind='battles' AND at<?").get(clock-40*DAY).n,0);
+  // A claim reads battles too, so a finished battle is never "not complete yet".
+  settle('b6',[0]);
+  const fresh=db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='test' AND kind='battles'").get().n;
+  await request('/api/quests/claim','POST',{id:'nope'});
+  const claimTry=activeQuests(questPeriods()).monthly[0];
+  await request('/api/quests/claim','POST',{id:claimTry.id});
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM quest_events WHERE user_id='test' AND kind='battles'").get().n,fresh+1,'a claim syncs battles first');
 }
 
 // ---- Old accounts: counters are backfilled once from pack_log ----
@@ -438,7 +468,7 @@ function satisfy(row,at=clock) {
   assert.deepEqual(res.body.save.quests.claimed,[]);
   assert.equal(res.body.save.quests.streak,0);
   assert.equal(res.body.save.quests.streakBest,0);
-  assert.equal(count('player_stats','other'),0,'other players are untouched');
+  assert.equal(db.prepare("SELECT value FROM player_stats WHERE user_id='other' AND key='battles'").get().value,1,'other players are untouched');
 }
 
 // ---- Mastery banners and the public profile ----
@@ -484,6 +514,18 @@ function satisfy(row,at=clock) {
   db.prepare('DELETE FROM profiles WHERE user_id=?').run('other');
   db.prepare('DELETE FROM users WHERE id=?').run('other');
   for(const table of ['player_stats','quest_events','quest_claims']) assert.equal(count(table,'other'),0,`${table} cascades`);
+}
+
+// ---- Odd or missing battle tables never break a save ----
+{
+  db.exec('DROP TABLE battle_settlements;');
+  let res=await request('/api/me');
+  assert.equal(res.status,200);
+  assert.equal(res.body.save.stats.counters.battles,0,'reset cleared it, and nothing is invented');
+  db.exec('DROP TABLE battle_seats;DROP TABLE battles;');
+  res=await request('/api/me');
+  assert.equal(res.status,200,'no battle tables at all');
+  assert.equal((await request('/api/packs/rip','POST',{setId:'me5'})).status,200);
 }
 
 console.log('Quest backend checks passed: pools and periods, lazy schema, no double claims, chests, streak, monthly, counters, battle stats, backfill, reset, masteries.');
