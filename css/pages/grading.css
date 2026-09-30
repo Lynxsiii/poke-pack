@@ -1,4 +1,4 @@
-/* RIP Grading: /grading, /grading/send, /grading/send/<card>, /grading/<slab>.
+/* RIP Grading: /grading, /grading/graded, /grading/send, /grading/send/<card>, /grading/<slab>.
    Loads after css/theme.css and css/slab.css. Same rules as the rest of the
    site: ink and hairlines, gold is only money, coral is the one action on a
    screen, real objects (a card, a slab) sit in a well, pickers are flat tiles
@@ -63,6 +63,28 @@
 .gd-slab-caption b { font-size: 14px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gd-slab-caption small { color: var(--muted); font-size: 12.5px; }
 .gd-slab-tile:hover .gd-slab-caption b { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
+
+.gd-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
+.gd-section-head .gd-h { margin: 0; }
+.gd-more-link {
+  color: var(--ink-2); font-size: 14px; font-weight: 600; white-space: nowrap;
+  text-decoration: underline !important; text-underline-offset: 4px; text-decoration-color: var(--faint) !important;
+}
+.gd-more-link:hover { color: var(--ink); text-decoration-color: var(--ink) !important; }
+.gd-onprofile { color: var(--ink-2); }
+
+/* ---- Graded: every slab, sorted --------------------------------------------- */
+.gd-facts-graded { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 16px; }
+.gd-facts dd small a, .gd-reason a {
+  color: var(--ink-2); font-weight: 600;
+  text-decoration: underline !important; text-underline-offset: 4px; text-decoration-color: var(--faint) !important;
+}
+.gd-graded-tools { margin: 0 0 6px; }
+
+/* ---- Show on profile (the slab page) ----------------------------------------- */
+.gd-showrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: -8px 0 22px; }
+.gd-showrow .ghost { min-width: 160px; }
+.gd-showrow .gd-reason { flex: 1 1 200px; margin: 0; }
 
 /* ---- The guard shop: flat tiles with a live preview ------------------------- */
 .gd-guards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
@@ -236,6 +258,7 @@
   .gd-gtiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (min-width: 720px) {
+  .gd-facts-graded { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .gd-guards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .gd-pick-tools { grid-template-columns: minmax(0, 360px) auto; align-items: center; justify-content: space-between; }
   .gd-pick-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }

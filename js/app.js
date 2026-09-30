@@ -41,7 +41,8 @@ import {
   SHOWCASE_MAX,
 } from "./cosmetics.js";
 import { unlockedTitles, titleContext, TITLES, isTitleUnlocked, ownedPerSet } from "./titles.js";
-import { slabHTML } from "./slab.js?v=1";
+import { slabHTML, gradeWord } from "./slab.js?v=1";
+import { GRADING_LIMITS } from "./grading-rules.js";
 import {
   ACHIEVEMENTS,
   ACH_CATEGORIES,
@@ -98,7 +99,7 @@ import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from
 import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=1";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=2";
 import { coinTag } from "./battle-kit.js";
 
 const state = loadState();
@@ -3444,6 +3445,51 @@ async function renderProfile() {
       })
       .join("");
 
+    // The Graded section: slabs the trainer chose to show, drawn with the real face.
+    const gradedSlabs = Array.isArray(data.graded) ? data.graded : [];
+    const gradedSets = new Map();
+    for (const slab of gradedSlabs) {
+      const set = setForCardId(slab.cardId);
+      if (set && !findCard(slab.cardId)) gradedSets.set(set.id, set);
+    }
+    if (gradedSets.size) {
+      await Promise.all([...gradedSets.values()].map((set) => loadSetData(set).catch(() => null)));
+      if (profileHandle !== handle) return;
+    }
+    const graded = gradedSlabs
+      .map((slab) => {
+        const known = findCard(slab.cardId);
+        const set = setForCardId(slab.cardId);
+        const card = known || { id: slab.cardId, name: slab.name, rarity: slab.rarity };
+        const face = known
+          ? tcgFace({ ...known, reverse: slab.reverse }, { small: true, stamp: false, lazy: true })
+          : `<img src="${esc(slab.image)}" alt="${esc(slab.name)}" loading="lazy" />`;
+        const worth = Number(slab.value) > 0 ? `<span class="graded-worth">✦ ${coin(slab.value)}</span>` : "";
+        return `<figure class="graded-slot">
+          ${slabHTML({ face, card, slab, set, size: "grid" })}
+          <figcaption><b>${esc(card.name)}</b><span class="graded-grade">${slab.grade} ${esc(gradeWord(slab.grade))}</span>${worth}${mine ? `<a href="/grading/${Number(slab.id)}">Open slab</a>` : ""}</figcaption>
+        </figure>`;
+      })
+      .join("");
+    const gradedTotal = Number(data.gradedCount) || gradedSlabs.length;
+    const gradedSection =
+      !gradedSlabs.length && !mine
+        ? ""
+        : `<section class="acct-sec profile-graded">
+          <div class="acct-sec-head">
+            <div>
+              <h2>Graded</h2>
+              <p>${
+                gradedSlabs.length
+                  ? `${gradedSlabs.length} of the ${num(gradedTotal)} ${gradedTotal === 1 ? "card" : "cards"} ${esc(user.name)} had slabbed.`
+                  : `Open one of your slabs and choose Show on profile. Up to ${GRADING_LIMITS.maxShown} sit here.`
+              }</p>
+            </div>
+            ${mine ? `<a class="ghost sm" href="/grading/graded">Your slabs</a>` : ""}
+          </div>
+          ${graded ? `<div class="graded-stage"><div class="graded-row">${graded}</div></div>` : ""}
+        </section>`;
+
     const comments = (data.comments || [])
       .map(
         (row) => `<li class="comment-item">
@@ -3508,6 +3554,7 @@ async function renderProfile() {
           </div>
           ${showcase ? `<div class="showcase-stage"><div class="showcase-row">${showcase}</div></div>` : ""}
         </section>
+        ${gradedSection}
         ${profileBinderPagesHtml()}
         <section class="acct-sec profile-wall">
           <div class="acct-sec-head">

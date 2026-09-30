@@ -55,7 +55,7 @@ export const GRADING_FEE = { flat: 5, rate: 0.05 };
 /** Value multipliers for grades 9 and below; a 10 uses its band's `gem`. */
 export const GRADE_MULTIPLIER = { 9: 1.0, 8: 0.8, 7: 0.7, 6: 0.6, 5: 0.5, 4: 0.45, 3: 0.4, 2: 0.35, 1: 0.3 };
 
-export const GRADING_LIMITS = { maxSlabs: 400, maxGuardQty: 10 };
+export const GRADING_LIMITS = { maxSlabs: 400, maxGuardQty: 10, maxShown: 8 };
 
 /** Cosmetic bumpers for a slab, bought with coins; kind "guard" in user_gear. */
 export const GUARDS = [

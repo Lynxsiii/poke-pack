@@ -364,7 +364,7 @@ async function postChat(request, env, { json, requireUser, publicUser, readJson 
 }
 
 async function publicProfile(request, env, helpers, rawHandle) {
-  const { json, requireUser, publicUser, normalizeHandle, findCatalogCard, money } = helpers;
+  const { json, requireUser, publicUser, normalizeHandle, findCatalogCard, money, ownedWithSlabs, shownSlabs, gradedTotal } = helpers;
   const handle = normalizeHandle(rawHandle);
   const user = await env.DB.prepare("SELECT * FROM users WHERE handle = ?").bind(handle).first();
   if (!user) return json({ error: "Trainer not found." }, 404);
@@ -373,11 +373,11 @@ async function publicProfile(request, env, helpers, rawHandle) {
   if (auth.user) await touchPresence(env, auth.user.id);
 
   const profile = await env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(user.id).first();
-  const uniqueRow = await env.DB.prepare(
-    "SELECT COUNT(*) AS n FROM cards WHERE user_id = ? AND qty > 0"
-  )
-    .bind(user.id)
-    .first();
+  // Raw copies plus the ones sitting in slabs: a graded card is still owned, so
+  // it stays pinned in the showcase, in a shared binder page and in the count.
+  const ownedRows = await queryAll(env, "SELECT card_id, qty FROM cards WHERE user_id = ? AND qty > 0", user.id);
+  const rawOwned = Object.fromEntries(ownedRows.map(row => [row.card_id, row.qty]));
+  const owned = ownedWithSlabs ? await ownedWithSlabs(env, user.id, rawOwned) : rawOwned;
   const friendCount = await queryFirst(
     env,
     "SELECT COUNT(*) AS n FROM friends WHERE from_id = ? AND status = 'accepted'",
@@ -389,11 +389,9 @@ async function publicProfile(request, env, helpers, rawHandle) {
   const stats = {};
   if (shown.includes("packs")) stats.packs = profile?.packs_opened || 0;
   if (shown.includes("pulls")) stats.pulls = profile?.pulls || 0;
-  if (shown.includes("unique")) stats.unique = uniqueRow?.n || 0;
+  if (shown.includes("unique")) stats.unique = Object.values(owned).filter((n) => n > 0).length;
   if (shown.includes("coins")) stats.coins = money(profile?.coins || 0);
 
-  const ownedRows = await queryAll(env, "SELECT card_id, qty FROM cards WHERE user_id = ? AND qty > 0", user.id);
-  const owned = Object.fromEntries(ownedRows.map(row => [row.card_id, row.qty]));
   const showcase = [];
   for (const slot of parseShowcase(user.showcase)) {
     if (!(owned[slot.id] > 0)) continue;
@@ -427,6 +425,10 @@ async function publicProfile(request, env, helpers, rawHandle) {
     binderPages.push({index:page.index, slots});
   }
 
+  // The Graded section: the slabs this trainer chose to show, best grade first.
+  const graded = shownSlabs ? await shownSlabs(env, user.id, { findCatalogCard, request }) : [];
+  const gradedCount = gradedTotal ? await gradedTotal(env, user.id) : graded.length;
+
   const comments = await queryAll(
     env,
     `SELECT profile_comments.id, profile_comments.body, profile_comments.created_at AS at,
@@ -450,6 +452,8 @@ async function publicProfile(request, env, helpers, rawHandle) {
     relation: await relation(env, auth.user?.id, user.id),
     showcase,
     binderPages,
+    graded,
+    gradedCount,
     masteries: masterySetIds(parseJson(profile?.claimed, [])),
     comments: comments.map((row) => ({
       id: row.id,

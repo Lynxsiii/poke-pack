@@ -82,15 +82,40 @@ export const GRADING_DDL = [
   "CREATE INDEX IF NOT EXISTS idx_gear_purchases_user ON gear_purchases(user_id, created_at DESC)",
 ];
 
+/** Columns added after 0019, each as (name, ALTER): worker/migrations/0020_grading_shown.sql. */
+export const GRADING_COLUMNS = [
+  ["shown", "ALTER TABLE graded_cards ADD COLUMN shown INTEGER NOT NULL DEFAULT 0 CHECK(shown IN (0,1))"],
+];
+
+let schemaWork = null;
 export async function ensureGradingSchema(env) {
   if (schemaReady) return;
-  try {
-    for (const sql of GRADING_DDL) await env.DB.exec(`${sql.replace(/\s+/g, " ").trim()};`);
-    schemaReady = true;
-  } catch (err) {
-    console.error("ensureGradingSchema", err);
-    throw err;
+  // Requests that arrive together share one upgrade, so two never race the same ALTER.
+  if (!schemaWork) {
+    schemaWork = (async () => {
+      try {
+        for (const sql of GRADING_DDL) await env.DB.exec(`${sql.replace(/\s+/g, " ").trim()};`);
+        const info = await env.DB.prepare("PRAGMA table_info(graded_cards)").all();
+        const have = new Set((info.results || []).map((row) => row.name));
+        for (const [name, sql] of GRADING_COLUMNS) {
+          if (have.has(name)) continue;
+          try {
+            await env.DB.exec(`${sql};`);
+          } catch (err) {
+            // Another isolate got there first.
+            if (!/duplicate column/i.test(String(err?.message || err))) throw err;
+          }
+        }
+        schemaReady = true;
+      } catch (err) {
+        console.error("ensureGradingSchema", err);
+        throw err;
+      } finally {
+        schemaWork = null;
+      }
+    })();
   }
+  return schemaWork;
 }
 
 // ---- Randomness ---------------------------------------------------------------
@@ -124,6 +149,7 @@ export function slabView(row, card) {
     fee: row.fee_cents / 100,
     value: card ? gradedValue(card, row.grade, set) : null,
     guard: row.guard || null,
+    shown: Boolean(row.shown),
     gradedAt: row.created_at,
   };
 }
@@ -170,6 +196,45 @@ export async function gradedCounts(env, userId) {
   const out = {};
   for (const row of res.results || []) out[row.id] = Number(row.n) || 0;
   return out;
+}
+
+/** The slabs a player chose for the Graded section of their public profile:
+    best grade first, then newest, at most GRADING_LIMITS.maxShown. Each carries
+    the card's name, rarity and image so a profile can draw it without a set load. */
+export async function shownSlabs(env, userId, deps) {
+  await ensureGradingSchema(env);
+  const rows =
+    (
+      await env.DB.prepare(
+        `SELECT * FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' AND shown = 1
+         ORDER BY grade DESC, created_at DESC, id DESC LIMIT ?`
+      )
+        .bind(userId, GRADING_LIMITS.maxShown)
+        .all()
+    ).results || [];
+  const out = [];
+  for (const row of rows) {
+    let card = null;
+    try {
+      card = await deps.findCatalogCard(env, requestFor(deps), row.card_id);
+    } catch {
+      /* a set whose data is missing: the slab still shows with what the row knows */
+    }
+    out.push({
+      ...slabView(row, card),
+      name: card?.name || "",
+      rarity: card?.rarity || "",
+      image: card?.imageSmall || card?.image || "",
+    });
+  }
+  return out;
+}
+
+/** How many active slabs a player has: the profile's "N graded" line. */
+export async function gradedTotal(env, userId) {
+  await ensureGradingSchema(env);
+  const row = await env.DB.prepare(`SELECT COUNT(*) AS n FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}'`).bind(userId).first();
+  return Number(row?.n) || 0;
 }
 
 /** Guard stock: owned units per guard (user_gear) and how many active slabs wear each. */
@@ -277,7 +342,7 @@ async function crack(env, user, body) {
   if (!row) error("Slab not found.", 404);
   if (row.status !== ACTIVE) error(row.status === "sold" ? "That slab was sold." : "That slab is already cracked.", 409);
   const results = await env.DB.batch([
-    env.DB.prepare(`UPDATE graded_cards SET status = 'cracked', closed_at = ?, guard = NULL WHERE id = ? AND user_id = ? AND status = '${ACTIVE}'`)
+    env.DB.prepare(`UPDATE graded_cards SET status = 'cracked', closed_at = ?, guard = NULL, shown = 0 WHERE id = ? AND user_id = ? AND status = '${ACTIVE}'`)
       .bind(Date.now(), id, user.id),
     env.DB.prepare(
       `INSERT INTO cards (user_id, card_id, qty, reverse_qty) SELECT ?, ?, 1, ? WHERE changes() = 1
@@ -300,7 +365,7 @@ async function sell(env, request, helpers, user, body) {
   const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id)) * 100);
   const results = await env.DB.batch([
     env.DB.prepare(
-      `UPDATE graded_cards SET status = 'sold', closed_at = ?, guard = NULL, sell_request_id = ?, sold_cents = ?
+      `UPDATE graded_cards SET status = 'sold', closed_at = ?, guard = NULL, shown = 0, sell_request_id = ?, sold_cents = ?
        WHERE id = ? AND user_id = ? AND status = '${ACTIVE}'`
     ).bind(Date.now(), requestId, cents, id, user.id),
     env.DB.prepare("UPDATE profiles SET coins = coins + ? WHERE user_id = ? AND changes() = 1").bind(cents / 100, user.id),
@@ -338,6 +403,32 @@ async function guard(env, user, body) {
     const again = await slabFor(env, user.id, id);
     if (!again || again.status !== ACTIVE) error("Slab not found.", 404);
     error(`No free ${item.name} guard. Buy one or take it off another slab.`, 409);
+  }
+  return slabFor(env, user.id, id);
+}
+
+/** Put a slab in (or take it out of) the Graded section of the player's profile. */
+async function show(env, user, body) {
+  const id = slabIdOf(body);
+  const wanted = body.shown === true || body.shown === 1 || body.shown === "1";
+  const row = await slabFor(env, user.id, id);
+  if (!row || row.status !== ACTIVE) error("Slab not found.", 404);
+  if (Boolean(row.shown) === wanted) return row;
+  if (!wanted) {
+    await env.DB.prepare(`UPDATE graded_cards SET shown = 0 WHERE id = ? AND user_id = ? AND status = '${ACTIVE}'`).bind(id, user.id).run();
+    return slabFor(env, user.id, id);
+  }
+  // The cap is checked in the same statement, so two taps at once cannot pass it.
+  const done = await env.DB.prepare(
+    `UPDATE graded_cards SET shown = 1 WHERE id = ?1 AND user_id = ?2 AND status = '${ACTIVE}'
+     AND (SELECT COUNT(*) FROM graded_cards WHERE user_id = ?2 AND status = '${ACTIVE}' AND shown = 1 AND id != ?1) < ?3`
+  )
+    .bind(id, user.id, GRADING_LIMITS.maxShown)
+    .run();
+  if (!done.meta?.changes) {
+    const again = await slabFor(env, user.id, id);
+    if (!again || again.status !== ACTIVE) error("Slab not found.", 404);
+    error(`Your profile shows up to ${GRADING_LIMITS.maxShown} slabs. Take one off to add this one.`, 409);
   }
   return slabFor(env, user.id, id);
 }
@@ -386,7 +477,7 @@ export async function handleGrading(path, method, request, env, helpers) {
       if (auth.response) return auth.response;
       return json(await gradedSummary(env, auth.user.id, deps));
     }
-    const action = path.match(/^\/api\/grading\/(submit|crack|sell|guard|guards\/buy)$/)?.[1];
+    const action = path.match(/^\/api\/grading\/(submit|crack|sell|guard|show|guards\/buy)$/)?.[1];
     if (!action || method !== "POST") return json({ error: "Not found." }, 404);
     const origin = request.headers.get("origin");
     if (origin && origin !== new URL(request.url).origin) error("Use this site to grade.", 403);
@@ -412,6 +503,10 @@ export async function handleGrading(path, method, request, env, helpers) {
     }
     if (action === "guard") {
       const row = await guard(env, user, body);
+      return json({ slab: await view(row), save: await helpers.loadSave(env, user.id) });
+    }
+    if (action === "show") {
+      const row = await show(env, user, body);
       return json({ slab: await view(row), save: await helpers.loadSave(env, user.id) });
     }
     await buyGuards(env, user, body);

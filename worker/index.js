@@ -41,7 +41,7 @@ import { handleBattles, maintainBattles } from "./battles.js";
 import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
-import { ensureGradingSchema, gradedCounts, gradedSlabs, handleGrading } from "./grading.js";
+import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
 import {
   achievementById,
   achievementContext,
@@ -224,6 +224,9 @@ export async function handleApi(request, env, url) {
     findCatalogCard,
     money,
     readJson,
+    ownedWithSlabs,
+    shownSlabs,
+    gradedTotal,
   });
   if (social) return social;
 
