@@ -228,6 +228,8 @@ let liveSet = getSet(state.activeSetId);
 let sealedPrices = {};
 /** Promo products (collections, tins, decks) per set id, from data/products.json. */
 let productList = {};
+/** The single cards a box holds beyond packs and promos, by "set/product", from data/box-contents.json. */
+let boxContents = {};
 let cards = [];
 let setCards = [];
 let byId = {};
@@ -1144,7 +1146,7 @@ function renderSealed() {
         </div>
         <div class="sealed-copy">
           <h3>${esc(offer.name)}</h3>
-          <p>${offer.packs} packs${promo ? ` with ${esc(promo)}` : ""}. ✦ ${coin(each)} a pack, ${esc(deal)}.</p>
+          <p>${offer.packs} packs${promo ? ` with ${esc(promo)}` : ""}${boxContents[`${liveSet.id}/${offer.id}`]?.label ? ` and ${esc(boxContents[`${liveSet.id}/${offer.id}`].label)}` : ""}. ✦ ${coin(each)} a pack, ${esc(deal)}.</p>
           ${trendButton(offer.id, `${liveSet.name} ${offer.name}`)}
         </div>
         <div class="pack-meta">
@@ -1175,8 +1177,12 @@ function productContents(offer) {
     const name = liveSet.specialPacks?.[key]?.wrapper?.name || key;
     parts.push(`${n} ${name} pack${n === 1 ? "" : "s"}`);
   }
-  if (!parts.length && offer.kind === "deck") parts.push("60-card deck");
-  if (offer.kind === "battle") parts.push("40-card deck");
+  const box = boxContents[`${liveSet.id}/${offer.id}`];
+  if (box?.label) parts.push(box.label);
+  else {
+    if (!parts.length && offer.kind === "deck") parts.push("60-card deck");
+    if (offer.kind === "battle") parts.push("40-card deck");
+  }
   if (!parts.length && offer.kind === "event") parts.push(offer.note || "The card on its own");
   return parts.join(" + ");
 }
@@ -4988,7 +4994,7 @@ function showBoxSummary() {
       .join("")}</div>
     <p class="spread-tip">${
       unseen > 0 ? `${unseen} unopened pack${unseen === 1 ? " was" : "s were"} added straight to your collection. ` : ""
-    }${hits.length || !run.packs.length ? "" : "Showing the best cards instead. "}Select a card to inspect it.</p>`;
+    }${(run.boxCards || []).length ? `The box's other ${run.boxCards.reduce((sum, card) => sum + card.n, 0)} cards are in your collection too. ` : ""}${hits.length || !run.packs.length ? "" : "Showing the best cards instead. "}Select a card to inspect it.</p>`;
 
   els.ripHint.textContent = "";
   syncBoxProgress();
@@ -5129,16 +5135,22 @@ async function startSealed(productId) {
       [...new Set(packs.map((pack) => pack.set))].map((set) => loadSetData(set).catch(() => null))
     );
     const promos = (data.promos || []).map((card) => ({ ...card, reverse: false }));
+    // The rest of the box (a deck's other cards, an ETB's Energy): each card of its own set.
+    const boxCards = (data.boxCards || []).map((card) => ({ ...card, reverse: false }));
+    await Promise.all(
+      [...new Set(boxCards.map((card) => setForCard(card)))].map((set) => loadSetData(set).catch(() => null))
+    );
     sealedRun = {
       product: { ...offer, ...data.product },
       packs,
       promos,
-      index: promos.length ? -1 : 0,
+      boxCards,
+      index: promos.length || boxCards.length ? -1 : 0,
       cost: data.cost,
     };
     renderHeader();
     renderShop();
-    if (promos.length) showPromoIntro();
+    if (promos.length || boxCards.length) showPromoIntro();
     else if (packs.length) presentPack(packs[0].wrapper, packs[0].cards, packs[0].set);
   } catch (err) {
     toast(err.message || "Couldn't open that box.");
@@ -5147,6 +5159,49 @@ async function startSealed(productId) {
   } finally {
     ripLock = false;
   }
+}
+
+/**
+ * The rest of a box on the table under its promos: a battle deck's other cards
+ * or an ETB's Energy, grouped Pokémon, Trainer, Energy, each card once with
+ * its copy count.
+ */
+function boxCardsHtml(box, label) {
+  const groups = [
+    ["Pokémon", (card) => card.supertype === "Pokémon"],
+    ["Trainer", (card) => card.supertype === "Trainer"],
+    ["Energy", (card) => card.supertype === "Energy" || card.energy],
+  ];
+  const seen = new Set();
+  const sections = groups
+    .map(([name, test]) => {
+      const list = box.filter((card) => !seen.has(card.id) && test(card));
+      list.forEach((card) => seen.add(card.id));
+      return { name, list };
+    })
+    .concat({ name: "Other", list: box.filter((card) => !seen.has(card.id)) })
+    .filter((group) => group.list.length);
+  let index = 0;
+  return `<section class="box-cards" aria-label="${esc(label)}">
+    <h3 class="box-cards-title">${esc(label)}</h3>
+    ${sections
+      .map(
+        (group) => `<div class="box-cards-group">
+      <h4>${esc(group.name)} <span>${group.list.reduce((sum, card) => sum + card.n, 0)}</span></h4>
+      <div class="box-cards-grid">${group.list
+        .map(
+          (card) => `<button type="button" class="box-card" style="--d:${Math.min(index++, 24) * 25}ms"
+          ${inspectAttrs(card)} title="${esc(card.name)} · ${esc(rarityLine(card))}">
+        ${tcgFace(card, { small: true })}
+        ${card.n > 1 ? `<span class="box-count">×${card.n}</span>` : ""}
+        ${card.wasNew ? `<span class="box-new">New</span>` : ""}
+      </button>`
+        )
+        .join("")}</div>
+    </div>`
+      )
+      .join("")}
+  </section>`;
 }
 
 /**
@@ -5171,11 +5226,16 @@ function showPromoIntro() {
   els.spread.classList.remove("hidden");
 
   const promos = run.promos;
-  const worth = money(promos.reduce((sum, card) => sum + sellValue(card), 0));
-  const fresh = promos.filter((card) => card.wasNew).length;
+  const box = run.boxCards || [];
+  const boxTotal = box.reduce((sum, card) => sum + card.n, 0);
+  const worth = money(
+    promos.reduce((sum, card) => sum + sellValue(card), 0) + box.reduce((sum, card) => sum + sellValue(card) * card.n, 0)
+  );
+  const fresh = [...promos, ...box].filter((card) => card.wasNew).length;
   const packs = run.packs.length;
-  const head =
-    promos.length === 1
+  const head = !promos.length
+    ? `${boxTotal} cards in the ${run.product.noun}.`
+    : promos.length === 1
       ? `${promos[0].name}, ${numberLine(promos[0])}.`
       : `${promos.length} promos in the ${run.product.noun}.`;
   els.spread.innerHTML = `
@@ -5183,15 +5243,18 @@ function showPromoIntro() {
       <p class="spread-kicker"><span>${esc(liveSet.name)}</span><span>${esc(run.product.name)}</span></p>
       <h2>${esc(head)}</h2>
       <div class="spread-stats">
-        <span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>
+        ${promos.length ? `<span><b data-count="${promos.length}">${promos.length}</b> promo${promos.length === 1 ? "" : "s"}</span>` : ""}
+        ${box.length ? `<span><b data-count="${boxTotal}">${boxTotal}</b> in the box</span>` : ""}
         <span><b data-count="${fresh}">${fresh}</b> new</span>
         <span><b data-count="${worth}" data-fmt="coin" data-prefix="✦ ">✦ ${coin(worth)}</b> value</span>
         ${packs ? `<span><b>${packs}</b> pack${packs === 1 ? "" : "s"} to open</span>` : ""}
       </div>
     </div>
-    <div class="spread-grid promo-spread">${promos
-      .map(
-        (card, i) => `<button type="button" class="spread-card promo-pull ${i === 0 ? "top-pull" : ""}"
+    ${
+      promos.length
+        ? `<div class="spread-grid promo-spread">${promos
+            .map(
+              (card, i) => `<button type="button" class="spread-card promo-pull ${i === 0 ? "top-pull" : ""}"
           style="--d:${i * 90}ms"
           ${inspectAttrs(card)}
           title="${esc(card.name)} · ${esc(rarityLine(card))}">
@@ -5199,11 +5262,14 @@ function showPromoIntro() {
         <span class="chip promo">Promo</span>
         ${card.wasNew ? `<span class="chip new">New</span>` : ""}
       </button>`
-      )
-      .join("")}</div>
+            )
+            .join("")}</div>`
+        : ""
+    }
+    ${box.length ? boxCardsHtml(box, boxContents[`${liveSet.id}/${run.product.id}`]?.label || "The rest of the box") : ""}
     <p class="spread-tip">${
-      `${promos.length === 1 ? "Your promo is" : "Your promos are"} saved. ${
-        packs ? "The packs come next." : "The deck's other cards aren't simulated."
+      `${promos.length === 1 ? "Your promo is" : promos.length ? "Your promos are" : "Your cards are"} saved. ${
+        packs ? "The packs come next." : box.length ? "" : "The deck's other cards aren't simulated."
       }`
     } Select a card to inspect it.</p>`;
 
@@ -6765,6 +6831,14 @@ async function loadSealedPrices() {
     });
   } catch {
     productList = {};
+  }
+  try {
+    boxContents = await fetch("data/box-contents.json", { cache: "no-cache" }).then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+  } catch {
+    boxContents = {};
   }
   try {
     const prices = await fetch("data/sealed.json", { cache: "no-cache" }).then((r) => {

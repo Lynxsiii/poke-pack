@@ -1214,3 +1214,43 @@ body.no-motion .focus-aura { transition: none; }
   #overlay .hit-rays { opacity: 0 !important; }
   .op-dim, .op-room, .op-glow, .op-rays, .hit-rays > i, .focus-aura { transition: none; }
 }
+
+/* The rest of a box under its promos: a battle deck's other cards, an ETB's Energy. */
+#overlay .box-cards { order: 2; width: min(980px, 100%); margin: 28px auto 0; padding: 0 12px; }
+#overlay .box-cards-title {
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.18));
+  font: 650 13px/1.2 var(--font);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#overlay .box-cards-group + .box-cards-group { margin-top: 16px; }
+#overlay .box-cards-group h4 { margin: 0 0 8px; font: 600 12px/1 var(--font); opacity: 0.75; }
+#overlay .box-cards-group h4 span { margin-left: 6px; font-variant-numeric: tabular-nums; }
+#overlay .box-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 10px; }
+#overlay .box-card {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  animation: opRise 0.45s var(--op-ease) var(--d, 0ms) both;
+}
+#overlay .box-card .tcg { width: 100%; }
+#overlay .box-count,
+#overlay .box-new {
+  position: absolute;
+  z-index: 3;
+  padding: 2px 6px;
+  font: 700 11px/1.2 var(--font);
+  background: var(--ink);
+  color: var(--black);
+  pointer-events: none;
+}
+#overlay .box-count { right: 0; bottom: 0; font-variant-numeric: tabular-nums; }
+#overlay .box-new { left: 0; top: 0; background: var(--gold); color: #1a1408; }
+@media (max-width: 640px) {
+  #overlay .box-cards-grid { grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 8px; }
+}
