@@ -5,6 +5,7 @@ import { COINFLIP_RULES, matchWindow, botStakeWindow } from '../js/casino-rules.
 import { CASINO_DDL } from './casino-ddl.js';
 import { ensureSalesSchema, winningsInfo, sellWinnings } from './winnings.js';
 import { handleJackpots, maintainJackpots } from './jackpot.js';
+import { equippedCoinId } from './gear.js';
 
 /* Casino coinflip (migration 0015). The rules and every card movement live
    here and in the triggers of the migration: a client only asks. Values are
@@ -156,8 +157,8 @@ export async function maintainCoinflips(env, now = Date.now()) {
   await maintainJackpots(env, now); // one scheduled handler covers both games
 }
 
-/** The equipped coin a player flips with, or null for the default. Filled in by the coin collection. */
-async function equippedCoin(_env, _userId) { return null; }
+/** The equipped coin a player flips with (an id from data/gear.json), or null for the house coin. */
+const equippedCoin = (env, userId) => equippedCoinId(env, userId);
 
 // What the jackpot module borrows from here (it cannot import this file back without a cycle).
 const SHARED = { buildStake, buildBotStake, botPool, binderStatement, pick, shuffle };

@@ -1,0 +1,3913 @@
+{
+ "version": 1,
+ "sleeves": {
+  "me-mega-gardevoir-etb-sleeves": {
+   "id": "me-mega-gardevoir-etb-sleeves",
+   "name": "Mega Gardevoir sleeves",
+   "sets": [
+    "me1"
+   ],
+   "subject": "Mega Gardevoir ex",
+   "blurb": "65 black card sleeves with a cream Mega Gardevoir outlined in gold over a diamond lattice and sweeping gold arcs, included in the Mega Gardevoir Elite Trainer Box.",
+   "tint": "#cdbb80",
+   "from": [
+    "me1/eliteTrainerBox",
+    "me1/pc-etb-gardevoir"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-mega-gardevoir-etb-sleeves-v1.webp"
+  },
+  "me-mega-lucario-etb-sleeves": {
+   "id": "me-mega-lucario-etb-sleeves",
+   "name": "Mega Lucario sleeves",
+   "sets": [
+    "me1"
+   ],
+   "subject": "Mega Lucario ex",
+   "blurb": "65 black card sleeves with a blue Mega Lucario outlined in gold over a diamond lattice and sweeping gold arcs, included in the Mega Lucario Pokémon Center Elite Trainer Box.",
+   "tint": "#68b0cd",
+   "from": [
+    "me1/pc-etb-lucario"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-mega-lucario-etb-sleeves-v1.webp"
+  },
+  "me-mega-charizard-x-etb-sleeves": {
+   "id": "me-mega-charizard-x-etb-sleeves",
+   "name": "Mega Charizard X sleeves",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Mega Charizard X ex",
+   "blurb": "65 dark navy card sleeves with a glowing electric-blue line drawing of Mega Charizard X, included in the Phantasmal Flames Elite Trainer Box.",
+   "tint": "#4986cd",
+   "from": [
+    "me2/eliteTrainerBox",
+    "me2/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-mega-charizard-x-etb-sleeves-v1.webp"
+  },
+  "me-mega-charizard-x-upc-sleeves": {
+   "id": "me-mega-charizard-x-upc-sleeves",
+   "name": "Mega Charizard X painted sleeves",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Mega Charizard X ex",
+   "blurb": "65 card sleeves showing a painted Mega Charizard X breathing blue flame against a stormy red sky, included in the Mega Charizard X ex Ultra-Premium Collection.",
+   "tint": "#cc828b",
+   "from": [
+    "me2/charizard-upc"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-mega-charizard-x-upc-sleeves-v1.webp"
+  },
+  "me-dragonite-etb-sleeves": {
+   "id": "me-dragonite-etb-sleeves",
+   "name": "Mega Dragonite sleeves",
+   "sets": [
+    "me2pt5"
+   ],
+   "subject": "Mega Dragonite ex",
+   "blurb": "65 teal card sleeves with a yellow Dragonite over a purple and yellow starburst, included in the Ascended Heroes Elite Trainer Box.",
+   "tint": "#bbcc6f",
+   "from": [
+    "me2pt5/eliteTrainerBox",
+    "me2pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-dragonite-etb-sleeves-v1.webp"
+  },
+  "me-zygarde-etb-sleeves": {
+   "id": "me-zygarde-etb-sleeves",
+   "name": "Zygarde sleeves",
+   "sets": [
+    "me3"
+   ],
+   "subject": "Zygarde Cell and Core",
+   "blurb": "65 green card sleeves with two white line-art Zygarde forms over a dark grey hexagon burst, included in the Perfect Order Elite Trainer Box.",
+   "tint": "#a0cd65",
+   "from": [
+    "me3/eliteTrainerBox",
+    "me3/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-zygarde-etb-sleeves-v1.webp"
+  },
+  "me-greninja-etb-sleeves": {
+   "id": "me-greninja-etb-sleeves",
+   "name": "Greninja sleeves",
+   "sets": [
+    "me4"
+   ],
+   "subject": "Mega Greninja",
+   "blurb": "65 pink-bordered card sleeves with Greninja in blue and white over swirling water, included in the Chaos Rising Elite Trainer Box.",
+   "tint": "#6493cd",
+   "from": [
+    "me4/eliteTrainerBox",
+    "me4/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-greninja-etb-sleeves-v1.webp"
+  },
+  "me-darkrai-etb-sleeves": {
+   "id": "me-darkrai-etb-sleeves",
+   "name": "Darkrai sleeves",
+   "sets": [
+    "me5"
+   ],
+   "subject": "Darkrai",
+   "blurb": "65 black card sleeves with silver line-art Darkrai in a swirl of shadow, included in the Pitch Black Elite Trainer Box.",
+   "tint": "#cdc4c6",
+   "from": [
+    "me5/eliteTrainerBox",
+    "me5/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-darkrai-etb-sleeves-v1.webp"
+  },
+  "me-pikachu-30-etb-sleeves": {
+   "id": "me-pikachu-30-etb-sleeves",
+   "name": "Pikachu 30 sleeves",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Pikachu 30th Celebration logo",
+   "blurb": "65 white card sleeves with a gold-outlined Pikachu head showing a 3 and a 0 as its eyes over a pale pattern of Pokémon, included in the 30th Celebration Elite Trainer Box.",
+   "tint": "#cdb370",
+   "from": [
+    "me55/eliteTrainerBox",
+    "me55/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-pikachu-30-etb-sleeves-v1.webp"
+  },
+  "me-upc-day-sleeves": {
+   "id": "me-upc-day-sleeves",
+   "name": "Pikachu, Espeon and Mew sleeves",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Pikachu, Espeon and Mew (Day)",
+   "blurb": "65 blue-bordered card sleeves showing Pikachu and Espeon under a sunny sky with Mew floating above, included in the Ultra-Premium Collection: Day.",
+   "tint": "#cdc1ac",
+   "from": [
+    "me55/upc-day"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-upc-day-sleeves-v1.webp"
+  },
+  "me-upc-night-sleeves": {
+   "id": "me-upc-night-sleeves",
+   "name": "Pikachu, Umbreon and Mewtwo sleeves",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Pikachu, Umbreon and Mewtwo (Night)",
+   "blurb": "65 purple-bordered card sleeves showing Pikachu and Umbreon dancing under fireworks with Mewtwo above, included in the Ultra-Premium Collection: Night.",
+   "tint": "#cd89a5",
+   "from": [
+    "me55/upc-night"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/me-upc-night-sleeves-v1.webp"
+  },
+  "psv-cel25-pikachu-etb": {
+   "id": "psv-cel25-pikachu-etb",
+   "name": "Pokémon 25 Pikachu sleeves",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Pikachu head with Pokémon 25 logo",
+   "blurb": "Near-black card sleeves with a yellow outline of Pikachu's lightning tail over a faint pattern of Pokémon faces and the Pikachu-head Pokémon 25 logo.",
+   "tint": "#cdbc22",
+   "from": [
+    "cel25/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-cel25-pikachu-etb-v1.webp"
+  },
+  "psv-cel25-pikachu-pc-etb": {
+   "id": "psv-cel25-pikachu-pc-etb",
+   "name": "Pokémon 25 lightning tail sleeves",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Pikachu head with Pokémon 25 logo",
+   "blurb": "White card sleeves with a grey pattern of Pokémon faces, the Pikachu-head Pokémon 25 logo and a big yellow and black lightning tail block; exclusive to the Pokémon Center box.",
+   "tint": "#cdb10d",
+   "from": [
+    "cel25/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-cel25-pikachu-pc-etb-v1.webp"
+  },
+  "psv-pgo-mewtwo-etb": {
+   "id": "psv-pgo-mewtwo-etb",
+   "name": "Pokémon GO silver Mewtwo sleeves",
+   "sets": [
+    "pgo"
+   ],
+   "subject": "Mewtwo",
+   "blurb": "Blue card sleeves with a silver foil Mewtwo over wavy contour lines, matching the Pokémon GO Elite Trainer Box art.",
+   "tint": "#2098cd",
+   "from": [
+    "pgo/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-pgo-mewtwo-etb-v1.webp"
+  },
+  "psv-pgo-mewtwo-pc-etb": {
+   "id": "psv-pgo-mewtwo-pc-etb",
+   "name": "Pokémon GO skyscraper Mewtwo sleeves",
+   "sets": [
+    "pgo"
+   ],
+   "subject": "Mewtwo",
+   "blurb": "Navy-bordered card sleeves showing Mewtwo leaping past glass skyscrapers; exclusive to the Pokémon Center Elite Trainer Box Plus.",
+   "tint": "#6193cd",
+   "from": [
+    "pgo/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-pgo-mewtwo-pc-etb-v1.webp"
+  },
+  "psv-charizard-ex-premium": {
+   "id": "psv-charizard-ex-premium",
+   "name": "Tera Charizard ex sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Charizard ex as a Tera Pokémon",
+   "blurb": "Red-bordered card sleeves with a crystal Terastallized Charizard roaring through flying crystal shards.",
+   "tint": "#cd7c51",
+   "from": [
+    "svp/charizard-ex-premium"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-charizard-ex-premium-v1.webp"
+  },
+  "psv-armarouge-ex-premium": {
+   "id": "psv-armarouge-ex-premium",
+   "name": "Armarouge and Ceruledge sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Armarouge and Ceruledge",
+   "blurb": "Dark-bordered card sleeves with fiery Armarouge and icy Ceruledge facing off across an orange and blue sky.",
+   "tint": "#cdab9f",
+   "from": [
+    "svp/armarouge-ex-premium"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-armarouge-ex-premium-v1.webp"
+  },
+  "psv-ogerpon-ex-premium": {
+   "id": "psv-ogerpon-ex-premium",
+   "name": "Teal Mask Ogerpon sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Teal Mask Ogerpon",
+   "blurb": "Teal-bordered card sleeves with a crystal Terastallized Teal Mask Ogerpon ex over a dark forest.",
+   "tint": "#aecda2",
+   "from": [
+    "svp/ogerpon-ex-premium"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-ogerpon-ex-premium-v1.webp"
+  },
+  "psv-iono-ptc": {
+   "id": "psv-iono-ptc",
+   "name": "Iono sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Iono",
+   "blurb": "Magenta-bordered card sleeves showing Iono mid-stream with a small electric Pokémon on her shoulder and a big green Bellibolt below.",
+   "tint": "#cd99b3",
+   "from": [
+    "svp/iono-ptc"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-iono-ptc-v1.webp"
+  },
+  "psv-toolkit-2024-teal": {
+   "id": "psv-toolkit-2024-teal",
+   "name": "Teal Poké Ball sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Poké Ball",
+   "blurb": "Teal card sleeves with a large darker-teal Poké Ball and black and silver metallic corner panels.",
+   "tint": "#2cc8cc",
+   "from": [
+    "svp/trainers-toolkit-2024"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-toolkit-2024-teal-v1.webp"
+  },
+  "psv-toolkit-2025-purple": {
+   "id": "psv-toolkit-2025-purple",
+   "name": "Purple Poké Ball sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Poké Ball",
+   "blurb": "Purple card sleeves with a large purple Poké Ball, black scale-pattern panels and silver trim.",
+   "tint": "#cd77c0",
+   "from": [
+    "svp/trainers-toolkit-2025"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/psv-toolkit-2025-purple-v1.webp"
+  },
+  "sva-koraidon-etb": {
+   "id": "sva-koraidon-etb",
+   "name": "Koraidon sleeves",
+   "sets": [
+    "sv1"
+   ],
+   "subject": "Koraidon",
+   "blurb": "Red card sleeves with a gold foil outline of Koraidon and radiating burst rays, matching the Koraidon Elite Trainer Box art.",
+   "tint": "#cd2b3c",
+   "from": [
+    "sv1/eliteTrainerBox",
+    "sv1/pc-etb-koraidon"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/sva-koraidon-etb-v1.webp"
+  },
+  "sva-miraidon-etb": {
+   "id": "sva-miraidon-etb",
+   "name": "Miraidon sleeves",
+   "sets": [
+    "sv1"
+   ],
+   "subject": "Miraidon",
+   "blurb": "Purple card sleeves with a gold foil outline of Miraidon and radiating burst rays, matching the Miraidon Elite Trainer Box art.",
+   "tint": "#b768cd",
+   "from": [
+    "sv1/etb-miraidon",
+    "sv1/pc-etb-miraidon"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/sva-miraidon-etb-v1.webp"
+  },
+  "sva-paldea-starters-etb": {
+   "id": "sva-paldea-starters-etb",
+   "name": "Paldea starters sleeves",
+   "sets": [
+    "sv2"
+   ],
+   "subject": "Sprigatito, Fuecoco and Quaxly",
+   "blurb": "Black-bordered card sleeves showing Sprigatito, Fuecoco and Quaxly in flat green, orange and blue line art.",
+   "tint": "#bbcd92",
+   "from": [
+    "sv2/eliteTrainerBox",
+    "sv2/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/sva-paldea-starters-etb-v1.webp"
+  },
+  "sva-charmander-etb": {
+   "id": "sva-charmander-etb",
+   "name": "Charmander sleeves",
+   "sets": [
+    "sv3"
+   ],
+   "subject": "Charmander",
+   "blurb": "Dark red card sleeves with an orange Charmander in front of darker flame streaks.",
+   "tint": "#cc6b33",
+   "from": [
+    "sv3/eliteTrainerBox",
+    "sv3/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/sva-charmander-etb-v1.webp"
+  },
+  "sva-151-silhouettes-etb": {
+   "id": "sva-151-silhouettes-etb",
+   "name": "Kanto 151 silhouette sleeves",
+   "sets": [
+    "sv3pt5"
+   ],
+   "subject": "The original 151 Pokemon",
+   "blurb": "White card sleeves covered in small multicolour silhouettes of the original 151 Pokemon, matching the 151 Elite Trainer Box pattern.",
+   "tint": "#cdc3b0",
+   "from": [
+    "sv3pt5/eliteTrainerBox",
+    "sv3pt5/pc-etb"
+   ],
+   "evidence": "single-source",
+   "count": 65,
+   "art": "assets/sleeves/sva-151-silhouettes-etb-v1.webp"
+  },
+  "sva-roaring-moon-etb": {
+   "id": "sva-roaring-moon-etb",
+   "name": "Roaring Moon sleeves",
+   "sets": [
+    "sv4"
+   ],
+   "subject": "Roaring Moon",
+   "blurb": "Red-bordered card sleeves with a yellow line-art Roaring Moon over a blue and cream sky and a blue diamond pattern.",
+   "tint": "#cdcba0",
+   "from": [
+    "sv4/eliteTrainerBox",
+    "sv4/pc-etb-roaring-moon"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/sva-roaring-moon-etb-v2.webp"
+  },
+  "sva-iron-valiant-etb": {
+   "id": "sva-iron-valiant-etb",
+   "name": "Iron Valiant sleeves",
+   "sets": [
+    "sv4"
+   ],
+   "subject": "Iron Valiant",
+   "blurb": "Green-bordered card sleeves with a pink Iron Valiant holding its sword over a mint green and pink diamond pattern.",
+   "tint": "#c8ccc9",
+   "from": [
+    "sv4/pc-etb-iron-valiant"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/sva-iron-valiant-etb-v2.webp"
+  },
+  "sva-shiny-mimikyu-etb": {
+   "id": "sva-shiny-mimikyu-etb",
+   "name": "Shiny Mimikyu sleeves",
+   "sets": [
+    "sv4pt5"
+   ],
+   "subject": "Shiny Mimikyu",
+   "blurb": "Dark purple card sleeves with a silver foil line-art Shiny Mimikyu and four-point sparkles over a tribal diamond pattern.",
+   "tint": "#aa76cd",
+   "from": [
+    "sv4pt5/eliteTrainerBox",
+    "sv4pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/sva-shiny-mimikyu-etb-v1.webp"
+  },
+  "svb-white-flare-reshiram-etb": {
+   "id": "svb-white-flare-reshiram-etb",
+   "name": "Reshiram sleeves",
+   "sets": [
+    "rsv10pt5"
+   ],
+   "subject": "Reshiram",
+   "blurb": "White card sleeves with a magenta panel, a black-and-white zebra-stripe border and a white Reshiram outlined in pink and black.",
+   "tint": "#cc2e6a",
+   "from": [
+    "rsv10pt5/eliteTrainerBox",
+    "rsv10pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-white-flare-reshiram-etb-v1.webp"
+  },
+  "svb-black-bolt-zekrom-etb": {
+   "id": "svb-black-bolt-zekrom-etb",
+   "name": "Zekrom sleeves",
+   "sets": [
+    "zsv10pt5"
+   ],
+   "subject": "Zekrom",
+   "blurb": "Black card sleeves with a cyan panel, a black-and-white zebra-stripe border and a black Zekrom silhouette outlined in cyan.",
+   "tint": "#2ab1cc",
+   "from": [
+    "zsv10pt5/eliteTrainerBox",
+    "zsv10pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-black-bolt-zekrom-etb-v1.webp"
+  },
+  "svb-destined-rivals-giovanni-mewtwo-etb": {
+   "id": "svb-destined-rivals-giovanni-mewtwo-etb",
+   "name": "Giovanni and Mewtwo sleeves",
+   "sets": [
+    "sv10"
+   ],
+   "subject": "Team Rocket's Giovanni and Mewtwo",
+   "blurb": "Black carbon-fibre-look card sleeves with a thin red border showing Team Rocket's Giovanni in his black suit beside Mewtwo.",
+   "tint": "#cd87ae",
+   "from": [
+    "sv10/eliteTrainerBox",
+    "sv10/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-destined-rivals-giovanni-mewtwo-etb-v1.webp"
+  },
+  "svb-temporal-forces-iron-leaves-etb": {
+   "id": "svb-temporal-forces-iron-leaves-etb",
+   "name": "Iron Leaves sleeves",
+   "sets": [
+    "sv5"
+   ],
+   "subject": "Iron Leaves",
+   "blurb": "Dark magenta foil card sleeves with a pale-green Iron Leaves over a gold circuit-line pattern.",
+   "tint": "#cd5984",
+   "from": [
+    "sv5/eliteTrainerBox",
+    "sv5/pc-etb-iron-leaves",
+    "sv5/pc-etb-walking-wake"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-temporal-forces-iron-leaves-etb-v1.webp"
+  },
+  "svb-temporal-forces-walking-wake-etb": {
+   "id": "svb-temporal-forces-walking-wake-etb",
+   "name": "Walking Wake sleeves",
+   "sets": [
+    "sv5"
+   ],
+   "subject": "Walking Wake",
+   "blurb": "Purple card sleeves with teal accents and a silvery-white foil Walking Wake.",
+   "tint": "#8984cd",
+   "from": [
+    "sv5/etb-walking-wake",
+    "sv5/pc-etb-iron-leaves",
+    "sv5/pc-etb-walking-wake"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-temporal-forces-walking-wake-etb-v1.webp"
+  },
+  "svb-twilight-masquerade-ogerpon-etb": {
+   "id": "svb-twilight-masquerade-ogerpon-etb",
+   "name": "Teal Mask Ogerpon sleeves",
+   "sets": [
+    "sv6"
+   ],
+   "subject": "Teal Mask Ogerpon",
+   "blurb": "Teal and dark-green card sleeves with a pale-green outlined Teal Mask Ogerpon in the centre.",
+   "tint": "#83c7cd",
+   "from": [
+    "sv6/eliteTrainerBox",
+    "sv6/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-twilight-masquerade-ogerpon-etb-v1.webp"
+  },
+  "svb-shrouded-fable-kitakami-trio-etb": {
+   "id": "svb-shrouded-fable-kitakami-trio-etb",
+   "name": "Okidogi, Munkidori and Fezandipiti sleeves",
+   "sets": [
+    "sv6pt5"
+   ],
+   "subject": "Okidogi, Munkidori and Fezandipiti",
+   "blurb": "Black card sleeves with a purple and green border and the silver foil trio Okidogi, Munkidori and Fezandipiti.",
+   "tint": "#cdadbb",
+   "from": [
+    "sv6pt5/eliteTrainerBox",
+    "sv6pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-shrouded-fable-kitakami-trio-etb-v1.webp"
+  },
+  "svb-stellar-crown-terapagos-etb": {
+   "id": "svb-stellar-crown-terapagos-etb",
+   "name": "Stellar Terapagos sleeves",
+   "sets": [
+    "sv7"
+   ],
+   "subject": "Terapagos (Stellar Form)",
+   "blurb": "Royal-blue card sleeves with a silvery foil Stellar Form Terapagos and a pale triangle lattice pattern.",
+   "tint": "#5f8ecd",
+   "from": [
+    "sv7/eliteTrainerBox",
+    "sv7/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-stellar-crown-terapagos-etb-v1.webp"
+  },
+  "svb-surging-sparks-lightning-etb": {
+   "id": "svb-surging-sparks-lightning-etb",
+   "name": "Lightning bolt sleeves",
+   "sets": [
+    "sv8"
+   ],
+   "subject": "Lightning bolt",
+   "blurb": "Dark navy and purple card sleeves with gold diagonal stripes and one large yellow lightning bolt.",
+   "tint": "#cdb81c",
+   "from": [
+    "sv8/eliteTrainerBox",
+    "sv8/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-surging-sparks-lightning-etb-v1.webp"
+  },
+  "svb-prismatic-evolutions-eevee-etb": {
+   "id": "svb-prismatic-evolutions-eevee-etb",
+   "name": "Stellar Tera Eevee sleeves",
+   "sets": [
+    "sv8pt5"
+   ],
+   "subject": "Eevee (Stellar Tera form)",
+   "blurb": "Holographic silver card sleeves with Eevee as a Stellar Tera Pokemon surrounded by coloured gemstones.",
+   "tint": "#cdae8d",
+   "from": [
+    "sv8pt5/eliteTrainerBox",
+    "sv8pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-prismatic-evolutions-eevee-etb-v1.webp"
+  },
+  "svb-prismatic-evolutions-eeveelutions-super-premium": {
+   "id": "svb-prismatic-evolutions-eeveelutions-super-premium",
+   "name": "Eevee and Evolutions sleeves",
+   "sets": [
+    "sv8pt5"
+   ],
+   "subject": "Eevee and its Evolutions",
+   "blurb": "Pastel rainbow card sleeves in a mint-green border with Eevee surrounded by Vaporeon, Jolteon, Flareon, Espeon, Umbreon, Leafeon, Glaceon and Sylveon.",
+   "tint": "#cacd9c",
+   "from": [
+    "sv8pt5/super-premium"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-prismatic-evolutions-eeveelutions-super-premium-v1.webp"
+  },
+  "svb-prismatic-evolutions-espeon-umbreon-premium-figure": {
+   "id": "svb-prismatic-evolutions-espeon-umbreon-premium-figure",
+   "name": "Espeon and Umbreon sleeves",
+   "sets": [
+    "sv8pt5"
+   ],
+   "subject": "Espeon and Umbreon",
+   "blurb": "Full-art card sleeves with Espeon and Umbreon leaping across a pink and blue sky.",
+   "tint": "#abb5cd",
+   "from": [
+    "sv8pt5/premium-figure"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-prismatic-evolutions-espeon-umbreon-premium-figure-v1.webp"
+  },
+  "svb-journey-together-n-zoroark-etb": {
+   "id": "svb-journey-together-n-zoroark-etb",
+   "name": "N and Zoroark sleeves",
+   "sets": [
+    "sv9"
+   ],
+   "subject": "N and Zoroark",
+   "blurb": "Purple and magenta card sleeves with a teal border showing N in his white coat beside Zoroark.",
+   "tint": "#cd82cb",
+   "from": [
+    "sv9/eliteTrainerBox",
+    "sv9/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-journey-together-n-zoroark-etb-v1.webp"
+  },
+  "svb-lillie-clefairy-ptc": {
+   "id": "svb-lillie-clefairy-ptc",
+   "name": "Lillie and Clefairy sleeves",
+   "sets": [
+    "sv9"
+   ],
+   "subject": "Lillie and Clefairy",
+   "blurb": "Yellow-bordered card sleeves showing Lillie and Clefairy on a sunny beach.",
+   "tint": "#c3cda4",
+   "from": [
+    "sv9/ptc-lillie"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/svb-lillie-clefairy-ptc-v1.webp"
+  },
+  "swsha-copperajah-etb": {
+   "id": "swsha-copperajah-etb",
+   "name": "Copperajah sleeves",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Copperajah",
+   "blurb": "Matte yellow sleeves with a teal Copperajah over a darker yellow burst, the Rebel Clash Elite Trainer Box set of 65.",
+   "tint": "#aacd6a",
+   "from": [
+    "swsh2/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swsha-copperajah-etb-v1.webp"
+  },
+  "swsha-eternatus-etb": {
+   "id": "swsha-eternatus-etb",
+   "name": "Eternatus sleeves",
+   "sets": [
+    "swsh3"
+   ],
+   "subject": "Eternatus",
+   "blurb": "Deep purple sleeves with a crimson Eternatus and blue ripple lines, the Darkness Ablaze Elite Trainer Box set of 65.",
+   "tint": "#cd3592",
+   "from": [
+    "swsh3/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swsha-eternatus-etb-v1.webp"
+  },
+  "swsha-gmax-charizard-etb": {
+   "id": "swsha-gmax-charizard-etb",
+   "name": "Gigantamax Charizard sleeves",
+   "sets": [
+    "swsh35"
+   ],
+   "subject": "Gigantamax Charizard",
+   "blurb": "Black sleeves with an orange Gigantamax Charizard over a faint grey pattern of Energy type symbols, from the Champion's Path Elite Trainer Box.",
+   "tint": "#cd612a",
+   "from": [
+    "swsh35/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swsha-gmax-charizard-etb-v1.webp"
+  },
+  "swsha-gmax-pikachu-etb": {
+   "id": "swsha-gmax-pikachu-etb",
+   "name": "Gigantamax Pikachu sleeves",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Gigantamax Pikachu",
+   "blurb": "Red-orange sleeves with a yellow Gigantamax Pikachu among dark-red lightning zigzags, the Vivid Voltage Elite Trainer Box set of 65.",
+   "tint": "#cd8212",
+   "from": [
+    "swsh4/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swsha-gmax-pikachu-etb-v1.webp"
+  },
+  "swsha-gmax-eevee-etb": {
+   "id": "swsha-gmax-eevee-etb",
+   "name": "Gigantamax Eevee sleeves",
+   "sets": [
+    "swsh45"
+   ],
+   "subject": "Gigantamax Eevee",
+   "blurb": "Black sleeves with a copper Gigantamax Eevee and a gold zigzag line pattern, the Shining Fates Elite Trainer Box set of 65.",
+   "tint": "#cd7630",
+   "from": [
+    "swsh45/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swsha-gmax-eevee-etb-v1.webp"
+  },
+  "swsha-ice-rider-calyrex-pc-etb": {
+   "id": "swsha-ice-rider-calyrex-pc-etb",
+   "name": "Ice Rider Calyrex sleeves",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Ice Rider Calyrex",
+   "blurb": "Matte navy sleeves with a pale-blue Ice Rider Calyrex and Glastrier over a spiky white burst, exclusive to the Pokemon Center Chilling Reign Elite Trainer Box.",
+   "tint": "#668ccd",
+   "from": [
+    "swsh6/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swsha-ice-rider-calyrex-pc-etb-v1.webp"
+  },
+  "swshb-es-pc-eeveelutions-sleeves": {
+   "id": "swshb-es-pc-eeveelutions-sleeves",
+   "name": "Evolving Skies Eeveelution sleeves (Glaceon, Vaporeon, Sylveon, Espeon)",
+   "sets": [
+    "swsh7"
+   ],
+   "subject": "Glaceon, Vaporeon, Sylveon and Espeon",
+   "blurb": "Matte black card sleeves with four halftone-dot stripes, one per Eeveelution in teal, blue, pink and purple, packed in the Evolving Skies Pokemon Center Elite Trainer Box.",
+   "tint": "#6b74cd",
+   "from": [
+    "swsh7/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-es-pc-eeveelutions-sleeves-v1.webp"
+  },
+  "swshb-fs-pc-mew-sleeves": {
+   "id": "swshb-fs-pc-mew-sleeves",
+   "name": "Fusion Strike Mew sleeves (Pokemon Center)",
+   "sets": [
+    "swsh8"
+   ],
+   "subject": "Mew",
+   "blurb": "Light blue card sleeves with a concentric swirl pattern and a pink Mew, one of the two sleeve sets in the Fusion Strike Pokemon Center Elite Trainer Box.",
+   "tint": "#b690cd",
+   "from": [
+    "swsh8/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-fs-pc-mew-sleeves-v1.webp"
+  },
+  "swshb-fs-pc-genesect-sleeves": {
+   "id": "swshb-fs-pc-genesect-sleeves",
+   "name": "Fusion Strike Genesect sleeves (Pokemon Center)",
+   "sets": [
+    "swsh8"
+   ],
+   "subject": "Genesect",
+   "blurb": "Magenta and purple card sleeves with a dark purple Genesect silhouette on a checkered ground, the second sleeve set in the Fusion Strike Pokemon Center Elite Trainer Box.",
+   "tint": "#b644cd",
+   "from": [
+    "swsh8/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-fs-pc-genesect-sleeves-v1.webp"
+  },
+  "swshb-fs-etb-mew-sleeves": {
+   "id": "swshb-fs-etb-mew-sleeves",
+   "name": "Fusion Strike Mew sleeves",
+   "sets": [
+    "swsh8"
+   ],
+   "subject": "Mew",
+   "blurb": "Purple card sleeves with a blue halftone swirl and a large pink Mew, packed in the Fusion Strike Elite Trainer Box.",
+   "tint": "#8f43cd",
+   "from": [
+    "swsh8/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-fs-etb-mew-sleeves-v1.webp"
+  },
+  "swshb-bs-pc-arceus-sleeves": {
+   "id": "swshb-bs-pc-arceus-sleeves",
+   "name": "Brilliant Stars Arceus sleeves (Pokemon Center)",
+   "sets": [
+    "swsh9"
+   ],
+   "subject": "Arceus",
+   "blurb": "Metallic gold card sleeves with a silver and white Arceus on a golden starburst, packed in the Brilliant Stars Pokemon Center Elite Trainer Box.",
+   "tint": "#cda63f",
+   "from": [
+    "swsh9/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-bs-pc-arceus-sleeves-v1.webp"
+  },
+  "swshb-bs-etb-arceus-sleeves": {
+   "id": "swshb-bs-etb-arceus-sleeves",
+   "name": "Brilliant Stars Arceus sleeves",
+   "sets": [
+    "swsh9"
+   ],
+   "subject": "Arceus",
+   "blurb": "White card sleeves with a large gold-outlined Arceus inside a gold ring, packed in the Brilliant Stars Elite Trainer Box.",
+   "tint": "#cdc2a0",
+   "from": [
+    "swsh9/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-bs-etb-arceus-sleeves-v1.webp"
+  },
+  "swshb-ar-pc-darkrai-sleeves": {
+   "id": "swshb-ar-pc-darkrai-sleeves",
+   "name": "Astral Radiance Darkrai sleeves (Pokemon Center)",
+   "sets": [
+    "swsh10"
+   ],
+   "subject": "Darkrai",
+   "blurb": "Deep purple card sleeves showing a black Darkrai silhouette with a red eye in a purple swirling vortex, packed in the Astral Radiance Pokemon Center Elite Trainer Box.",
+   "tint": "#cd41a6",
+   "from": [
+    "swsh10/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-ar-pc-darkrai-sleeves-v1.webp"
+  },
+  "swshb-ar-etb-darkrai-sleeves": {
+   "id": "swshb-ar-etb-darkrai-sleeves",
+   "name": "Astral Radiance Darkrai sleeves",
+   "sets": [
+    "swsh10"
+   ],
+   "subject": "Darkrai",
+   "blurb": "Black card sleeves with a red Darkrai silhouette and red slashing stripes, packed in the Astral Radiance Elite Trainer Box.",
+   "tint": "#cd1f53",
+   "from": [
+    "swsh10/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-ar-etb-darkrai-sleeves-v1.webp"
+  },
+  "swshb-lo-pc-giratina-sleeves": {
+   "id": "swshb-lo-pc-giratina-sleeves",
+   "name": "Lost Origin Giratina sleeves (Pokemon Center)",
+   "sets": [
+    "swsh11"
+   ],
+   "subject": "Giratina",
+   "blurb": "Black card sleeves with a faint chevron texture and a large red-outlined Giratina, packed in the Lost Origin Pokemon Center Elite Trainer Box.",
+   "tint": "#cd2c44",
+   "from": [
+    "swsh11/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-lo-pc-giratina-sleeves-v1.webp"
+  },
+  "swshb-lo-etb-giratina-sleeves": {
+   "id": "swshb-lo-etb-giratina-sleeves",
+   "name": "Lost Origin Giratina sleeves",
+   "sets": [
+    "swsh11"
+   ],
+   "subject": "Giratina",
+   "blurb": "Red and black striped card sleeves with a black Giratina outlined in gold, packed in the Lost Origin Elite Trainer Box.",
+   "tint": "#cd523d",
+   "from": [
+    "swsh11/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-lo-etb-giratina-sleeves-v1.webp"
+  },
+  "swshb-st-pc-alolan-vulpix-sleeves": {
+   "id": "swshb-st-pc-alolan-vulpix-sleeves",
+   "name": "Silver Tempest Alolan Vulpix sleeves (Pokemon Center)",
+   "sets": [
+    "swsh12"
+   ],
+   "subject": "Alolan Vulpix",
+   "blurb": "Light blue card sleeves with white snowflakes and a teal Alolan Vulpix, one of the two sleeve sets in the Silver Tempest Pokemon Center Elite Trainer Box.",
+   "tint": "#44a2cd",
+   "from": [
+    "swsh12/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-st-pc-alolan-vulpix-sleeves-v1.webp"
+  },
+  "swshb-st-pc-lugia-sleeves": {
+   "id": "swshb-st-pc-lugia-sleeves",
+   "name": "Silver Tempest Lugia sleeves (Pokemon Center)",
+   "sets": [
+    "swsh12"
+   ],
+   "subject": "Lugia",
+   "blurb": "Steel blue card sleeves with a white and silver Lugia on a swirling grey-blue ground, the second sleeve set in the Silver Tempest Pokemon Center Elite Trainer Box.",
+   "tint": "#96aecd",
+   "from": [
+    "swsh12/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-st-pc-lugia-sleeves-v1.webp"
+  },
+  "swshb-st-etb-alolan-vulpix-sleeves": {
+   "id": "swshb-st-etb-alolan-vulpix-sleeves",
+   "name": "Silver Tempest Alolan Vulpix sleeves",
+   "sets": [
+    "swsh12"
+   ],
+   "subject": "Alolan Vulpix",
+   "blurb": "Pale blue card sleeves with a dark blue Alolan Vulpix on translucent ice crystals, packed in the Silver Tempest Elite Trainer Box.",
+   "tint": "#5c8bcd",
+   "from": [
+    "swsh12/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-st-etb-alolan-vulpix-sleeves-v1.webp"
+  },
+  "swshb-cz-pc-lucario-sleeves": {
+   "id": "swshb-cz-pc-lucario-sleeves",
+   "name": "Crown Zenith Lucario sleeves (Pokemon Center)",
+   "sets": [
+    "swsh12pt5"
+   ],
+   "subject": "Lucario",
+   "blurb": "Black card sleeves with a gold-foil crown diamond pattern and a bright blue Lucario, packed in the Crown Zenith Pokemon Center Elite Trainer Box Plus.",
+   "tint": "#a2cdc7",
+   "from": [
+    "swsh12pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-cz-pc-lucario-sleeves-v1.webp"
+  },
+  "swshb-cz-etb-lucario-sleeves": {
+   "id": "swshb-cz-etb-lucario-sleeves",
+   "name": "Crown Zenith Lucario sleeves",
+   "sets": [
+    "swsh12pt5"
+   ],
+   "subject": "Lucario",
+   "blurb": "Black card sleeves with a dark crown diamond pattern, coloured diagonal stripes and a gold-outlined Lucario, packed in the Crown Zenith Elite Trainer Box.",
+   "tint": "#cdaf7c",
+   "from": [
+    "swsh12pt5/eliteTrainerBox"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-cz-etb-lucario-sleeves-v1.webp"
+  },
+  "swshb-zacian-etb-plus-sleeves": {
+   "id": "swshb-zacian-etb-plus-sleeves",
+   "name": "Zacian sleeves (Elite Trainer Box Plus)",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Zacian",
+   "blurb": "Near-black card sleeves with tonal dark grey line art of Zacian, packed in the Sword and Shield Elite Trainer Box Plus (Zacian).",
+   "tint": "#b3c2cd",
+   "from": [
+    "swshp/zacian-elite-trainer-box-plus"
+   ],
+   "evidence": "single-source",
+   "count": 65,
+   "art": "assets/sleeves/swshb-zacian-etb-plus-sleeves-v1.webp"
+  },
+  "swshb-marnie-tournament-sleeves": {
+   "id": "swshb-marnie-tournament-sleeves",
+   "name": "Marnie sleeves",
+   "sets": [
+    "swshp"
+   ],
+   "subject": "Marnie",
+   "blurb": "Matte card sleeves with a magenta border and full-colour art of Marnie sitting on a bed beside Morpeko, packed in the Marnie Premium Tournament Collection.",
+   "tint": "#cd7ea6",
+   "from": [
+    "swshp/marnie-premium-tournament-collection"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-marnie-tournament-sleeves-v1.webp"
+  },
+  "swshb-charizard-upc-sleeves": {
+   "id": "swshb-charizard-upc-sleeves",
+   "name": "Gigantamax Charizard sleeves",
+   "sets": [
+    "swsh11"
+   ],
+   "subject": "Gigantamax Charizard",
+   "blurb": "Red-bordered card sleeves with full-colour Gigantamax Charizard art and a G-Max Wildfire fireball, packed in the Sword and Shield Ultra-Premium Collection: Charizard.",
+   "tint": "#cd7c5f",
+   "from": [
+    "swshp/sword-shield-ultra-premium-collection-charizard"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-charizard-upc-sleeves-v1.webp"
+  },
+  "swshb-toolkit-2021-sleeves": {
+   "id": "swshb-toolkit-2021-sleeves",
+   "name": "Poke Ball sleeves (Trainer's Toolkit 2021)",
+   "sets": [
+    "swshp"
+   ],
+   "subject": "Poke Ball",
+   "blurb": "Dark navy blue card sleeves with a large grey honeycomb-mesh Poke Ball, packed in the 2021 Trainer's Toolkit.",
+   "tint": "#366dcd",
+   "from": [
+    "swshp/trainers-toolkit-2021"
+   ],
+   "evidence": "verified",
+   "count": 65,
+   "art": "assets/sleeves/swshb-toolkit-2021-sleeves-v1.webp"
+  }
+ },
+ "coins": {
+  "me-mega-gardevoir-coin": {
+   "id": "me-mega-gardevoir-coin",
+   "name": "Mega Gardevoir coin",
+   "sets": [
+    "me1"
+   ],
+   "subject": "Mega Gardevoir",
+   "blurb": "A black plastic coin with an iridescent silver Mega Gardevoir head and shoulders inside a silver ring, packed in the Mega Gardevoir Elite Trainer Box.",
+   "tint": "#c4cdc7",
+   "from": [
+    "me1/eliteTrainerBox",
+    "me1/pc-etb-gardevoir"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-mega-gardevoir-coin-v1.webp",
+   "drawn": false
+  },
+  "me-mega-lucario-coin": {
+   "id": "me-mega-lucario-coin",
+   "name": "Mega Lucario coin",
+   "sets": [
+    "me1"
+   ],
+   "subject": "Mega Lucario",
+   "blurb": "A black plastic coin with an iridescent blue and violet Mega Lucario head inside a thin ring, packed in the Mega Lucario Pokémon Center Elite Trainer Box.",
+   "tint": "#188fcd",
+   "from": [
+    "me1/pc-etb-lucario"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-mega-lucario-coin-v1.webp",
+   "drawn": false
+  },
+  "me-me1-blister-coin": {
+   "id": "me-me1-blister-coin",
+   "name": "Mega Evolution blister coin",
+   "sets": [
+    "me1"
+   ],
+   "subject": "Silver Pokémon head (looks like Lucario)",
+   "blurb": "A silver metal coin with an embossed Pokémon head in profile, the same coin in every Mega Evolution single-pack and checklane blister.",
+   "tint": "#ccc4b1",
+   "from": [
+    "me1/blister-drifloon",
+    "me1/blister-drifblim",
+    "me1/blister-wailord",
+    "me1/blister-lycanroc",
+    "me1/checklane-tyranitar",
+    "me1/checklane-meowscarada"
+   ],
+   "evidence": "single-source",
+   "material": "metal",
+   "front": "assets/coins/me-me1-blister-coin-v1.webp",
+   "drawn": false
+  },
+  "me-raikou-coin": {
+   "id": "me-raikou-coin",
+   "name": "Raikou coin",
+   "sets": [
+    "me1"
+   ],
+   "subject": "Raikou",
+   "blurb": "A silver metal coin with a black relief of Raikou's head and a raised rim, packed in the Raikou 2-pack blister.",
+   "tint": "#cdcbcc",
+   "from": [
+    "me1/blister2-raikou"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-raikou-coin-v1.webp",
+   "drawn": false
+  },
+  "me-mega-charizard-x-etb-coin": {
+   "id": "me-mega-charizard-x-etb-coin",
+   "name": "Mega Charizard X coin",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Mega Charizard X",
+   "blurb": "A teal plastic coin with a black-outlined embossed Mega Charizard X head and flame-wing shapes, packed in the Phantasmal Flames Elite Trainer Box.",
+   "tint": "#43a9cd",
+   "from": [
+    "me2/eliteTrainerBox",
+    "me2/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-mega-charizard-x-etb-coin-v1.webp",
+   "drawn": false
+  },
+  "me-mega-charizard-x-upc-coin": {
+   "id": "me-mega-charizard-x-upc-coin",
+   "name": "Mega Charizard X silver coin",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Mega Charizard X",
+   "blurb": "A silver holo-foil metal coin with an embossed Mega Charizard X head, packed in the Mega Charizard X ex Ultra-Premium Collection.",
+   "tint": "#cdc6b6",
+   "from": [
+    "me2/charizard-upc"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-mega-charizard-x-upc-coin-v1.webp",
+   "drawn": false
+  },
+  "me-mega-gengar-deck-coin": {
+   "id": "me-mega-gengar-deck-coin",
+   "name": "Mega Gengar coin",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Mega Gengar",
+   "blurb": "A large purple metal coin with a grinning, wide-mouthed Mega Gengar face and a third eye, packed in the Mega Gengar ex Mega Battle Deck.",
+   "tint": "#a968cd",
+   "from": [
+    "me2/deck-gengar"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-mega-gengar-deck-coin-v1.webp",
+   "drawn": false
+  },
+  "me-mega-diancie-deck-coin": {
+   "id": "me-mega-diancie-deck-coin",
+   "name": "Mega Diancie coin",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Mega Diancie",
+   "blurb": "A large pink metal coin with a faceted crystal-gem Mega Diancie head, packed in the Mega Diancie ex Mega Battle Deck.",
+   "tint": "#cd92b4",
+   "from": [
+    "me2/deck-diancie"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-mega-diancie-deck-coin-v1.webp",
+   "drawn": false
+  },
+  "me-pf-blister-coin": {
+   "id": "me-pf-blister-coin",
+   "name": "Phantasmal Flames blister coin",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Faceted crystal Pokémon head",
+   "blurb": "A silver metal coin with a shattered-crystal relief of a Pokémon head under a gem shape, the same die in the Phantasmal Flames blisters and checklane packs.",
+   "tint": "#c7c9cc",
+   "from": [
+    "me2/blister-cottonee",
+    "me2/blister-whimsicott",
+    "me2/blister2-vileplume",
+    "me2/checklane-hydrapple",
+    "me2/checklane-blaziken"
+   ],
+   "evidence": "single-source",
+   "material": "metal",
+   "front": "assets/coins/me-pf-blister-coin-v2.webp",
+   "drawn": false
+  },
+  "me-pf-checklane-gold-coin": {
+   "id": "me-pf-checklane-gold-coin",
+   "name": "Phantasmal Flames cream coin",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Faceted crystal Pokémon head",
+   "blurb": "A cream and gold-tone metal coin with the same shattered-crystal Pokémon head relief, packed in the Arven's Greedent and Ethan's Magcargo checklane blisters.",
+   "tint": "#cdbea2",
+   "from": [
+    "me2/checklane-greedent",
+    "me2/checklane-magcargo"
+   ],
+   "evidence": "single-source",
+   "material": "metal",
+   "front": "assets/coins/me-pf-checklane-gold-coin-v2.webp",
+   "drawn": false
+  },
+  "me-pokemon-day-2026-coin": {
+   "id": "me-pokemon-day-2026-coin",
+   "name": "Pokémon Day 2026 coin",
+   "sets": [
+    "me2"
+   ],
+   "subject": "Pikachu 30 logo",
+   "blurb": "A black and gold metal coin with a Pikachu-head silhouette carrying a 30 and the words 2026 Pokémon Day, packed in the Pokémon Day 2026 Collection.",
+   "tint": "#cdc597",
+   "from": [
+    "me2/pokemon-day-2026"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-pokemon-day-2026-coin-v1.webp",
+   "drawn": false
+  },
+  "me-dragonite-coin": {
+   "id": "me-dragonite-coin",
+   "name": "Dragonite coin",
+   "sets": [
+    "me2pt5"
+   ],
+   "subject": "Dragonite",
+   "blurb": "A cream and gold coin with a rainbow foil sheen and an embossed smiling Dragonite head, packed in the Ascended Heroes Elite Trainer Box.",
+   "tint": "#cd9e32",
+   "from": [
+    "me2pt5/eliteTrainerBox",
+    "me2pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-dragonite-coin-v1.webp",
+   "drawn": true
+  },
+  "me-erika-coin": {
+   "id": "me-erika-coin",
+   "name": "Erika coin",
+   "sets": [
+    "me2pt5"
+   ],
+   "subject": "Erika",
+   "blurb": "A green-tinted foil metal coin with an embossed line portrait of Erika, packed in the Ascended Heroes Collection: Erika.",
+   "tint": "#a1cd6f",
+   "from": [
+    "me2pt5/collection-erika"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-erika-coin-v1.webp",
+   "drawn": false
+  },
+  "me-larry-coin": {
+   "id": "me-larry-coin",
+   "name": "Larry coin",
+   "sets": [
+    "me2pt5"
+   ],
+   "subject": "Larry",
+   "blurb": "A black and gold metal coin with an embossed line portrait of Larry, packed in the Ascended Heroes Collection: Larry.",
+   "tint": "#cdbb84",
+   "from": [
+    "me2pt5/collection-larry"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-larry-coin-v1.webp",
+   "drawn": false
+  },
+  "me-zygarde-coin": {
+   "id": "me-zygarde-coin",
+   "name": "Zygarde Cell coin",
+   "sets": [
+    "me3"
+   ],
+   "subject": "Zygarde Cell",
+   "blurb": "A lime-green to yellow plastic coin with a black ring and an embossed Zygarde Cell face, packed in the Perfect Order Elite Trainer Box.",
+   "tint": "#b3cd33",
+   "from": [
+    "me3/eliteTrainerBox",
+    "me3/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-zygarde-coin-v1.webp",
+   "drawn": false
+  },
+  "me-snorlax-bronze-coin": {
+   "id": "me-snorlax-bronze-coin",
+   "name": "Snorlax coin",
+   "sets": [
+    "me3"
+   ],
+   "subject": "Snorlax",
+   "blurb": "A flat bronze and gold metal coin with a black rim and an embossed sitting Snorlax, the same coin in the Perfect Order single-pack and checklane blisters.",
+   "tint": "#cd8b4a",
+   "from": [
+    "me3/blister-makuhita",
+    "me3/checklane-meganium",
+    "me3/checklane-cinderace",
+    "me3/checklane-steelix",
+    "me3/checklane-clawitzer"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-snorlax-bronze-coin-v1.webp",
+   "drawn": true
+  },
+  "me-froakie-coin": {
+   "id": "me-froakie-coin",
+   "name": "Froakie coin",
+   "sets": [
+    "me4"
+   ],
+   "subject": "Froakie",
+   "blurb": "A translucent blue bubble-glitter plastic coin with a black rim and an embossed crouching Froakie, packed in the Chaos Rising Elite Trainer Box.",
+   "tint": "#46a5cd",
+   "from": [
+    "me4/eliteTrainerBox",
+    "me4/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-froakie-coin-v1.webp",
+   "drawn": false
+  },
+  "me-chikorita-coin": {
+   "id": "me-chikorita-coin",
+   "name": "Chikorita coin",
+   "sets": [
+    "me4"
+   ],
+   "subject": "Chikorita",
+   "blurb": "A flat bronze and gold metal coin with a black rim and an embossed sitting Chikorita, the same coin in the Chaos Rising single-pack and checklane blisters.",
+   "tint": "#cd8a4a",
+   "from": [
+    "me4/blister-toxel",
+    "me4/checklane-pawmot",
+    "me4/checklane-flygon",
+    "me4/checklane-zacian",
+    "me4/checklane-reshiram"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-chikorita-coin-v1.webp",
+   "drawn": true
+  },
+  "me-darkrai-coin": {
+   "id": "me-darkrai-coin",
+   "name": "Darkrai coin",
+   "sets": [
+    "me5"
+   ],
+   "subject": "Darkrai",
+   "blurb": "A purple marbled plastic coin with a black rim and an embossed Darkrai, packed in the Pitch Black Elite Trainer Box.",
+   "tint": "#a065cd",
+   "from": [
+    "me5/eliteTrainerBox",
+    "me5/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-darkrai-coin-v1.webp",
+   "drawn": false
+  },
+  "me-tepig-coin": {
+   "id": "me-tepig-coin",
+   "name": "Tepig coin",
+   "sets": [
+    "me5"
+   ],
+   "subject": "Tepig",
+   "blurb": "A flat gold and bronze metal coin on black with an embossed leaping Tepig, the same coin in the Pitch Black single-pack and checklane blisters.",
+   "tint": "#cdc498",
+   "from": [
+    "me5/blister-slowpoke",
+    "me5/checklane-gengar",
+    "me5/checklane-luxray",
+    "me5/checklane-tyrantrum",
+    "me5/checklane-aurorus"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-tepig-coin-v1.webp",
+   "drawn": false
+  },
+  "me-snorlax-silver-coin": {
+   "id": "me-snorlax-silver-coin",
+   "name": "Silver Snorlax coin",
+   "sets": [
+    "me5"
+   ],
+   "subject": "Snorlax",
+   "blurb": "A silver metal coin with an embossed sitting Snorlax, packed in the Zarude 2-pack blister.",
+   "tint": "#b9c0cd",
+   "from": [
+    "me5/blister2-zarude"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-snorlax-silver-coin-v1.webp",
+   "drawn": true
+  },
+  "me-mega-gengar-silver-coin": {
+   "id": "me-mega-gengar-silver-coin",
+   "name": "Mega Gengar silver coin",
+   "sets": [
+    "me5"
+   ],
+   "subject": "Mega Gengar",
+   "blurb": "A silver coin with an embossed grinning three-eyed Mega Gengar face, packed in the Gengar, Marshadow and Team Rocket's Mimikyu Enhanced 2-pack blister.",
+   "tint": "#cdcbcb",
+   "from": [
+    "me5/blister2-gengar"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-mega-gengar-silver-coin-v1.webp",
+   "drawn": false
+  },
+  "me-pikachu-30-etb-coin": {
+   "id": "me-pikachu-30-etb-coin",
+   "name": "Pikachu 30 coin",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Pikachu 30th Celebration face",
+   "blurb": "A glittery gold and rainbow plastic coin with a black rim and an outline Pikachu head with a 3 and a 0 for eyes, packed in the 30th Celebration Elite Trainer Box.",
+   "tint": "#cdb677",
+   "from": [
+    "me55/eliteTrainerBox",
+    "me55/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-pikachu-30-etb-coin-v1.webp",
+   "drawn": false
+  },
+  "me-pikachu-30-orange-coin": {
+   "id": "me-pikachu-30-orange-coin",
+   "name": "Orange Pikachu 30 coin",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Pikachu 30th Celebration face",
+   "blurb": "A glossy orange and amber plastic coin with a black rim and an outline Pikachu head with a 3 and a 0 for eyes, packed in the 30th Celebration Knock Out Collection.",
+   "tint": "#cd7324",
+   "from": [
+    "me55/knock-out"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-pikachu-30-orange-coin-v1.webp",
+   "drawn": false
+  },
+  "me-upc-espeon-coin": {
+   "id": "me-upc-espeon-coin",
+   "name": "Espeon coin",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Espeon",
+   "blurb": "A silver and champagne metal coin with a rainbow-tinted sheen and an embossed Espeon face, packed in the Ultra-Premium Collection: Day.",
+   "tint": "#cdb78b",
+   "from": [
+    "me55/upc-day"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-upc-espeon-coin-v1.webp",
+   "drawn": false
+  },
+  "me-upc-umbreon-coin": {
+   "id": "me-upc-umbreon-coin",
+   "name": "Umbreon coin",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Umbreon",
+   "blurb": "A silver metal coin with a green and orange sheen and an embossed Umbreon face with sparkles, packed in the Ultra-Premium Collection: Night.",
+   "tint": "#cdae7a",
+   "from": [
+    "me55/upc-night"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/me-upc-umbreon-coin-v1.webp",
+   "drawn": false
+  },
+  "me-deck-espeon-coin": {
+   "id": "me-deck-espeon-coin",
+   "name": "Espeon deck coin",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Espeon",
+   "blurb": "A teal-blue glossy plastic coin with a black rim and an embossed Espeon face, packed in the Espeon ex Battle Deck.",
+   "tint": "#53afcd",
+   "from": [
+    "me55/deck-espeon"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-deck-espeon-coin-v1.webp",
+   "drawn": false
+  },
+  "me-deck-umbreon-coin": {
+   "id": "me-deck-umbreon-coin",
+   "name": "Umbreon deck coin",
+   "sets": [
+    "me55"
+   ],
+   "subject": "Umbreon",
+   "blurb": "A purple sparkle plastic coin with a black rim and an embossed Umbreon face with stars, packed in the Umbreon ex Battle Deck.",
+   "tint": "#a984cd",
+   "from": [
+    "me55/deck-umbreon"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/me-deck-umbreon-coin-v1.webp",
+   "drawn": false
+  },
+  "psv-pikachu-25-coin-gold": {
+   "id": "psv-pikachu-25-coin-gold",
+   "name": "Pokémon 25 gold foil coin",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Pikachu head (Pokémon 25 logo)",
+   "blurb": "A gold and rainbow foil coin with a black Pikachu-head Pokémon 25 logo inside two rings.",
+   "tint": "#cdbd82",
+   "from": [
+    "cel25/dragapult-prime-collection"
+   ],
+   "evidence": "verified",
+   "material": "foil",
+   "front": "assets/coins/psv-pikachu-25-coin-gold-v1.webp",
+   "drawn": false
+  },
+  "psv-pikachu-25-coin-silver": {
+   "id": "psv-pikachu-25-coin-silver",
+   "name": "Pokémon 25 silver coin",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Pikachu head (Pokémon 25 logo)",
+   "blurb": "A silver metal coin embossed with the Pikachu-head Pokémon 25 logo inside concentric rings.",
+   "tint": "#cdcab4",
+   "from": [
+    "cel25/ultra-premium-collection",
+    "cel25/pc-etb"
+   ],
+   "evidence": "single-source",
+   "material": "metal",
+   "front": "assets/coins/psv-pikachu-25-coin-silver-v1.webp",
+   "drawn": false
+  },
+  "psv-mewtwo-go-coin": {
+   "id": "psv-mewtwo-go-coin",
+   "name": "Mewtwo holofoil coin",
+   "sets": [
+    "pgo"
+   ],
+   "subject": "Mewtwo",
+   "blurb": "A jumbo coin with a purple rainbow holofoil finish, packed in the Mewtwo V Battle Deck.",
+   "tint": "#6a3dcd",
+   "from": [
+    "pgo/mewtwo-v-battle-deck",
+    "pgo/mewtwo-melmetal-v-battle-deck-bundle"
+   ],
+   "evidence": "single-source",
+   "material": "foil",
+   "front": "assets/coins/psv-mewtwo-go-coin-v1.webp",
+   "drawn": true
+  },
+  "psv-charizard-celebrations-coin": {
+   "id": "psv-charizard-celebrations-coin",
+   "name": "Charizard metal coin",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Charizard",
+   "blurb": "A metallic coin featuring Charizard, packed in the Celebrations V Memories collection.",
+   "tint": "#b8bfcd",
+   "from": [
+    "cel25/v-memories-special-collection"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/psv-charizard-celebrations-coin-v1.webp",
+   "drawn": true
+  },
+  "sva-fuecoco-coin": {
+   "id": "sva-fuecoco-coin",
+   "name": "Fuecoco coin",
+   "sets": [
+    "sv1"
+   ],
+   "subject": "Fuecoco",
+   "blurb": "Embossed silver-toned round coin with Fuecoco's face, packed one per Scarlet & Violet single pack blister.",
+   "tint": "#cdcab9",
+   "from": [
+    "sv1/blister-spidops",
+    "sv1/blister-espathra"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/sva-fuecoco-coin-v1.webp",
+   "drawn": false
+  },
+  "sva-quaxly-coin": {
+   "id": "sva-quaxly-coin",
+   "name": "Quaxly coin",
+   "sets": [
+    "sv2"
+   ],
+   "subject": "Quaxly",
+   "blurb": "Embossed silver-toned round coin with Quaxly's face, packed one per Paldea Evolved single pack blister.",
+   "tint": "#cdc9b7",
+   "from": [
+    "sv2/blister-smoliv",
+    "sv2/blister-growlithe"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/sva-quaxly-coin-v1.webp",
+   "drawn": false
+  },
+  "sva-sprigatito-coin": {
+   "id": "sva-sprigatito-coin",
+   "name": "Sprigatito coin",
+   "sets": [
+    "sv3"
+   ],
+   "subject": "Sprigatito",
+   "blurb": "Embossed silver-toned round coin with Sprigatito's face, packed one per Obsidian Flames single pack blister.",
+   "tint": "#cdc9b9",
+   "from": [
+    "sv3/blister-pawmi",
+    "sv3/blister-wooper"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/sva-sprigatito-coin-v1.webp",
+   "drawn": false
+  },
+  "sva-pikachu-coin-sv4": {
+   "id": "sva-pikachu-coin-sv4",
+   "name": "Waving Pikachu coin",
+   "sets": [
+    "sv4"
+   ],
+   "subject": "Pikachu",
+   "blurb": "Embossed silver-toned round coin with a waving Pikachu, packed one per Paradox Rift single pack blister.",
+   "tint": "#cdcab9",
+   "from": [
+    "sv4/blister-sinistea",
+    "sv4/blister-pineco"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/sva-pikachu-coin-sv4-v1.webp",
+   "drawn": false
+  },
+  "sva-mew-coin": {
+   "id": "sva-mew-coin",
+   "name": "Mew coin",
+   "sets": [
+    "sv3pt5"
+   ],
+   "subject": "Mew",
+   "blurb": "Round metallic coin showing Mew on a glittery pink field inside a black rim, included in the 151 Ultra-Premium Collection.",
+   "tint": "#cc9fb7",
+   "from": [
+    "sv3pt5/upc"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/sva-mew-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-moltres-fire-energy-coin": {
+   "id": "svb-moltres-fire-energy-coin",
+   "name": "Fire Energy coin",
+   "sets": [
+    "sv10"
+   ],
+   "subject": "Fire Energy symbol",
+   "blurb": "Red glitter-foil metal coin with a black hexagonal frame around the white Fire Energy flame, included in the Team Rocket's Moltres ex Ultra-Premium Collection.",
+   "tint": "#cd686c",
+   "from": [
+    "sv10/upc-moltres"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-moltres-fire-energy-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-fidough-coin": {
+   "id": "svb-fidough-coin",
+   "name": "Fidough coin",
+   "sets": [
+    "sv10"
+   ],
+   "subject": "Fidough",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Fidough, packed one per Destined Rivals single pack blister.",
+   "tint": "#cdc8b8",
+   "from": [
+    "sv10/blister-eevee",
+    "sv10/blister-zarude"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-fidough-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-pawmi-coin": {
+   "id": "svb-pawmi-coin",
+   "name": "Pawmi coin",
+   "sets": [
+    "sv5"
+   ],
+   "subject": "Pawmi",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Pawmi, packed one per Temporal Forces single pack blister.",
+   "tint": "#cdc8b5",
+   "from": [
+    "sv5/blister-carvanha",
+    "sv5/blister-bellibolt"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-pawmi-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-lechonk-coin": {
+   "id": "svb-lechonk-coin",
+   "name": "Lechonk coin",
+   "sets": [
+    "sv6"
+   ],
+   "subject": "Lechonk",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Lechonk, packed one per Twilight Masquerade single pack blister.",
+   "tint": "#cdc9b9",
+   "from": [
+    "sv6/blister-pupitar",
+    "sv6/blister-toxel"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-lechonk-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-stellar-crown-terapagos-coin": {
+   "id": "svb-stellar-crown-terapagos-coin",
+   "name": "Stellar Terapagos coin",
+   "sets": [
+    "sv7"
+   ],
+   "subject": "Terapagos (Stellar Form)",
+   "blurb": "Blue pearlescent metal coin with a black relief of Stellar Form Terapagos under four-point stars, included in the Terapagos ex Ultra-Premium Collection.",
+   "tint": "#6ea9cd",
+   "from": [
+    "sv7/terapagos-upc"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-stellar-crown-terapagos-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-dragonite-coin": {
+   "id": "svb-dragonite-coin",
+   "name": "Dragonite coin",
+   "sets": [
+    "sv7"
+   ],
+   "subject": "Dragonite",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Dragonite, packed one per Stellar Crown single pack blister.",
+   "tint": "#cdc6b2",
+   "from": [
+    "sv7/blister-horsea",
+    "sv7/blister-porygon2"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-dragonite-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-prismatic-eevee-coin": {
+   "id": "svb-prismatic-eevee-coin",
+   "name": "Eevee coin",
+   "sets": [
+    "sv8pt5"
+   ],
+   "subject": "Eevee",
+   "blurb": "Gold-coloured metal coin with an embossed Eevee on a black background, packed in the Prismatic Evolutions 2-pack blister.",
+   "tint": "#cdaf6a",
+   "from": [
+    "sv8pt5/blister2-eevee"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-prismatic-eevee-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-lillie-coin": {
+   "id": "svb-lillie-coin",
+   "name": "Lillie coin",
+   "sets": [
+    "sv9"
+   ],
+   "subject": "Lillie",
+   "blurb": "Large green holo metal coin with a black relief portrait of Lillie, included in the Lillie Premium Tournament Collection.",
+   "tint": "#9acd6b",
+   "from": [
+    "sv9/ptc-lillie"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-lillie-coin-v1.webp",
+   "drawn": false
+  },
+  "svb-greedent-coin": {
+   "id": "svb-greedent-coin",
+   "name": "Greedent coin",
+   "sets": [
+    "sv9"
+   ],
+   "subject": "Greedent",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Greedent, packed one per Journey Together single pack blister.",
+   "tint": "#ccc7ae",
+   "from": [
+    "sv9/blister-yanma",
+    "sv9/blister-scraggy"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/svb-greedent-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh1-1pack-coin": {
+   "id": "swsha-swsh1-1pack-coin",
+   "name": "Sword & Shield 1-pack blister coin",
+   "sets": [
+    "swsh1"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round silver-tone coin with black line art of two Pokemon heads side by side, coin that comes in the single-pack blisters of this set.",
+   "tint": "#c3c8cd",
+   "from": [
+    "swsh1/gossifleur-single-pack-blister",
+    "swsh1/wooloo-single-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh1-1pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh1-3pack-coin": {
+   "id": "swsha-swsh1-3pack-coin",
+   "name": "Sword & Shield 3-pack blister coin",
+   "sets": [
+    "swsh1"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round pale-gold coin with black line art of a fanged, curl-horned dragon-like head, coin that comes in the 3-pack blisters of this set.",
+   "tint": "#cdbf9c",
+   "from": [
+    "swsh1/morpeko-3-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh1-3pack-coin-v2.webp",
+   "drawn": false
+  },
+  "swsha-swsh2-1pack-coin": {
+   "id": "swsha-swsh2-1pack-coin",
+   "name": "Rebel Clash 1-pack blister coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round gold coin with black line art of a crested, owl-like creature, coin that comes in the single-pack blisters of this set.",
+   "tint": "#cdc689",
+   "from": [
+    "swsh2/noctowl-single-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh2-1pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh2-3pack-coin": {
+   "id": "swsha-swsh2-3pack-coin",
+   "name": "Rebel Clash 3-pack blister coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round pale-gold coin with black line art of a maned, wolf-like head in profile, coin that comes in the 3-pack blisters of this set.",
+   "tint": "#cdc998",
+   "from": [
+    "swsh2/duraludon-3-pack-blister",
+    "swsh2/rayquaza-3-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh2-3pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh3-1pack-coin": {
+   "id": "swsha-swsh3-1pack-coin",
+   "name": "Darkness Ablaze 1-pack blister coin",
+   "sets": [
+    "swsh3"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round green coin with a yellow-to-orange five-petal flower face in the centre, coin that comes in the single-pack blisters of this set.",
+   "tint": "#9ccd70",
+   "from": [
+    "swsh3/hatenna-single-pack-blister",
+    "swsh3/pikachu-single-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh3-1pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh3-3pack-coin": {
+   "id": "swsha-swsh3-3pack-coin",
+   "name": "Darkness Ablaze 3-pack blister coin",
+   "sets": [
+    "swsh3"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round iridescent pale-blue coin with a small round-headed creature with big black eyes and drooping antennae, coin that comes in the 3-pack blisters of this set.",
+   "tint": "#b9cdc4",
+   "from": [
+    "swsh3/eevee-3-pack-blister",
+    "swsh3/flareon-3-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh3-3pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh4-1pack-coin": {
+   "id": "swsha-swsh4-1pack-coin",
+   "name": "Vivid Voltage 1-pack blister coin",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round blue coin with a cyan line-art armoured head on dark blue, coin that comes in the single-pack blisters of this set.",
+   "tint": "#5ca8cd",
+   "from": [
+    "swsh4/grookey-single-pack-blister",
+    "swsh4/scorbunny-single-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh4-1pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh4-3pack-coin": {
+   "id": "swsha-swsh4-3pack-coin",
+   "name": "Vivid Voltage 3-pack blister coin",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round silver-grey coin with dense dark line art of a large horned, dinosaur-like beast head, coin that comes in the 3-pack blisters of this set.",
+   "tint": "#cdc8c7",
+   "from": [
+    "swsh4/sobble-3-pack-blister",
+    "swsh4/vaporeon-3-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh4-3pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh5-1pack-coin": {
+   "id": "swsha-swsh5-1pack-coin",
+   "name": "Battle Styles 1-pack blister coin",
+   "sets": [
+    "swsh5"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round orange-red gradient coin with dark line art of a pointed, beaked head, coin that comes in the single-pack blisters of this set.",
+   "tint": "#cd744b",
+   "from": [
+    "swsh5/charmander-single-pack-blister",
+    "swsh5/arrokuda-single-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh5-1pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh5-3pack-coin": {
+   "id": "swsha-swsh5-3pack-coin",
+   "name": "Battle Styles 3-pack blister coin",
+   "sets": [
+    "swsh5"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round yellow-green coin with a rainbow-tinted five-petal flower face in the centre, coin that comes in the 3-pack blisters of this set.",
+   "tint": "#cdc87a",
+   "from": [
+    "swsh5/jolteon-3-pack-blister",
+    "swsh5/eevee-3-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh5-3pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-swsh6-1pack-coin": {
+   "id": "swsha-swsh6-1pack-coin",
+   "name": "Chilling Reign 1-pack blister coin",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round purple coin with dark line art of an armoured, rectangular head with a triangle on the forehead, coin that comes in the single-pack blisters of this set.",
+   "tint": "#be98cd",
+   "from": [
+    "swsh6/morpeko-single-pack-blister",
+    "swsh6/phanpy-single-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh6-1pack-coin-v2.webp",
+   "drawn": false
+  },
+  "swsha-swsh6-3pack-coin": {
+   "id": "swsha-swsh6-3pack-coin",
+   "name": "Chilling Reign 3-pack blister coin",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round iridescent purple-pink coin with a small round-headed creature with big black eyes and long ears, coin that comes in the 3-pack blisters of this set.",
+   "tint": "#cd8cbb",
+   "from": [
+    "swsh6/eevee-3-pack-blister",
+    "swsh6/snorlax-3-pack-blister"
+   ],
+   "evidence": "verified",
+   "material": "plastic",
+   "front": "assets/coins/swsha-swsh6-3pack-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-ice-rider-calyrex-coin": {
+   "id": "swsha-ice-rider-calyrex-coin",
+   "name": "Ice Rider Calyrex coin",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Ice Rider Calyrex",
+   "blurb": "A mirror-silver metal coin with blue line art of Ice Rider Calyrex, included in the Pokemon Center Chilling Reign Elite Trainer Box.",
+   "tint": "#5b8fcd",
+   "from": [
+    "swsh6/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swsha-ice-rider-calyrex-coin-v1.webp",
+   "drawn": false
+  },
+  "swsha-shiny-dragapult-coin": {
+   "id": "swsha-shiny-dragapult-coin",
+   "name": "Shiny Dragapult coin",
+   "sets": [
+    "swsh45"
+   ],
+   "subject": "Dragapult",
+   "blurb": "A teal-blue metal coin embossed with Dragapult on a dark recessed background, included in the Shining Fates Shiny Dragapult VMAX Premium Collection.",
+   "tint": "#3579cd",
+   "from": [
+    "swsh45/shiny-dragapult-vmax-premium-collection"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swsha-shiny-dragapult-coin-v1.webp",
+   "drawn": true
+  },
+  "swsha-shiny-crobat-coin": {
+   "id": "swsha-shiny-crobat-coin",
+   "name": "Shiny Crobat coin",
+   "sets": [
+    "swsh45"
+   ],
+   "subject": "Crobat",
+   "blurb": "A pink-plum metal coin embossed with Crobat and spread wings on a dark recessed background, included in the Shining Fates Shiny Crobat VMAX Premium Collection.",
+   "tint": "#cd528f",
+   "from": [
+    "swsh45/shiny-crobat-vmax-premium-collection"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swsha-shiny-crobat-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-es-pc-eeveelutions-coin": {
+   "id": "swshb-es-pc-eeveelutions-coin",
+   "name": "Eeveelutions coin (silver)",
+   "sets": [
+    "swsh7"
+   ],
+   "subject": "Vaporeon, Espeon, Glaceon and Sylveon",
+   "blurb": "Silver metal coin with a rainbow holo shimmer showing Vaporeon, Espeon, Glaceon and Sylveon together, from the Evolving Skies Pokemon Center Elite Trainer Box.",
+   "tint": "#cdc6ab",
+   "from": [
+    "swsh7/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-es-pc-eeveelutions-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-fs-pc-mew-coin": {
+   "id": "swshb-fs-pc-mew-coin",
+   "name": "Mew coin",
+   "sets": [
+    "swsh8"
+   ],
+   "subject": "Mew",
+   "blurb": "Metal coin with a seated Mew in black line art on a rainbow holo purple and black ground, from the Fusion Strike Pokemon Center Elite Trainer Box.",
+   "tint": "#cda59e",
+   "from": [
+    "swsh8/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-fs-pc-mew-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-bs-pc-arceus-coin": {
+   "id": "swshb-bs-pc-arceus-coin",
+   "name": "Arceus coin",
+   "sets": [
+    "swsh9"
+   ],
+   "subject": "Arceus",
+   "blurb": "Metal coin with holo silver Arceus line art on a black ground, from the Brilliant Stars Pokemon Center Elite Trainer Box.",
+   "tint": "#cdbea6",
+   "from": [
+    "swsh9/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-bs-pc-arceus-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-ar-pc-darkrai-coin": {
+   "id": "swshb-ar-pc-darkrai-coin",
+   "name": "Darkrai coin",
+   "sets": [
+    "swsh10"
+   ],
+   "subject": "Darkrai",
+   "blurb": "Metal coin with a black line-art Darkrai silhouette on a silver ground, from the Astral Radiance Pokemon Center Elite Trainer Box.",
+   "tint": "#cdc9ca",
+   "from": [
+    "swsh10/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-ar-pc-darkrai-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-lo-pc-giratina-coin": {
+   "id": "swshb-lo-pc-giratina-coin",
+   "name": "Giratina coin",
+   "sets": [
+    "swsh11"
+   ],
+   "subject": "Giratina",
+   "blurb": "Metal coin with black line-art Giratina on a shimmering gold and orange ground, from the Lost Origin Pokemon Center Elite Trainer Box.",
+   "tint": "#cdb86f",
+   "from": [
+    "swsh11/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-lo-pc-giratina-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-st-pc-alolan-vulpix-coin": {
+   "id": "swshb-st-pc-alolan-vulpix-coin",
+   "name": "Alolan Vulpix coin",
+   "sets": [
+    "swsh12"
+   ],
+   "subject": "Alolan Vulpix",
+   "blurb": "Embossed metal coin with a dark teal Alolan Vulpix and a cloudy blue-green marbled finish, from the Silver Tempest Pokemon Center Elite Trainer Box.",
+   "tint": "#88c9cd",
+   "from": [
+    "swsh12/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-st-pc-alolan-vulpix-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-cz-pc-lucario-coin": {
+   "id": "swshb-cz-pc-lucario-coin",
+   "name": "Lucario coin",
+   "sets": [
+    "swsh12pt5"
+   ],
+   "subject": "Lucario",
+   "blurb": "Gold metal coin with an embossed Lucario in faint relief, from the Crown Zenith Pokemon Center Elite Trainer Box Plus.",
+   "tint": "#cdc180",
+   "from": [
+    "swsh12pt5/pc-etb"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-cz-pc-lucario-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-cz-lugia-coin": {
+   "id": "swshb-cz-lugia-coin",
+   "name": "Lugia coin",
+   "sets": [
+    "swsh12pt5"
+   ],
+   "subject": "Lugia",
+   "blurb": "Metallic coin with a silver Lugia on a lavender and blue ground, from the Crown Zenith Unown V and Lugia V Special Collection.",
+   "tint": "#b8becd",
+   "from": [
+    "swsh12pt5/unown-v-lugia-v-special-collection"
+   ],
+   "evidence": "single-source",
+   "material": "metal",
+   "front": "assets/coins/swshb-cz-lugia-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-es-dragonite-blister-coin": {
+   "id": "swshb-es-dragonite-blister-coin",
+   "name": "Dragonite coin",
+   "sets": [
+    "swsh7"
+   ],
+   "subject": "Dragonite",
+   "blurb": "Pale silver coin with a Dragonite relief, as pictured on the Evolving Skies 3-pack blisters.",
+   "tint": "#cdc8ac",
+   "from": [
+    "swsh7/eiscue-3-pack-blister",
+    "swsh7/umbreon-3-pack-blister"
+   ],
+   "evidence": "single-source",
+   "material": "plastic",
+   "front": "assets/coins/swshb-es-dragonite-blister-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-ar-eevee-blister-coin": {
+   "id": "swshb-ar-eevee-blister-coin",
+   "name": "Eevee coin",
+   "sets": [
+    "swsh10"
+   ],
+   "subject": "Eevee",
+   "blurb": "Silver coin with an Eevee face, as pictured on the Astral Radiance 3-pack blisters.",
+   "tint": "#b9bfcd",
+   "from": [
+    "swsh10/eevee-3-pack-blister",
+    "swsh10/sylveon-3-pack-blister"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-ar-eevee-blister-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-st-pikachu-blister-coin": {
+   "id": "swshb-st-pikachu-blister-coin",
+   "name": "Pikachu coin",
+   "sets": [
+    "swsh12"
+   ],
+   "subject": "Pikachu",
+   "blurb": "Silver coin with a smiling Pikachu, as pictured on the Silver Tempest 3-pack blisters.",
+   "tint": "#b8bfcd",
+   "from": [
+    "swsh12/togetic-3-pack-blister",
+    "swsh12/manaphy-3-pack-blister"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-st-pikachu-blister-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-eternatus-vmax-coin": {
+   "id": "swshb-eternatus-vmax-coin",
+   "name": "Eternatus coin",
+   "sets": [
+    "swsh3"
+   ],
+   "subject": "Eternatus",
+   "blurb": "Round metal coin with a pearl-white face and a purple Eternatus line-art relief, from the Eternatus VMAX Premium Collection.",
+   "tint": "#a0b3cd",
+   "from": [
+    "swshp/eternatus-vmax-premium-collection"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-eternatus-vmax-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-zacian-etb-plus-coin": {
+   "id": "swshb-zacian-etb-plus-coin",
+   "name": "Zacian coin",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Zacian",
+   "blurb": "Gold-tone embossed metal coin with a Zacian relief, from the Sword and Shield Elite Trainer Box Plus (Zacian).",
+   "tint": "#cccda7",
+   "from": [
+    "swshp/zacian-elite-trainer-box-plus"
+   ],
+   "evidence": "single-source",
+   "material": "metal",
+   "front": "assets/coins/swshb-zacian-etb-plus-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-zamazenta-etb-plus-coin": {
+   "id": "swshb-zamazenta-etb-plus-coin",
+   "name": "Zamazenta coin",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Zamazenta",
+   "blurb": "Metal coin featuring Zamazenta from the Sword and Shield Elite Trainer Box Plus (Zamazenta), drawn in the gold tone of its Zacian twin.",
+   "tint": "#cd9c34",
+   "from": [
+    "swshp/zamazenta-elite-trainer-box-plus"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-zamazenta-etb-plus-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-marnie-coin": {
+   "id": "swshb-marnie-coin",
+   "name": "Marnie coin",
+   "sets": [
+    "swshp"
+   ],
+   "subject": "Marnie",
+   "blurb": "Large round metal coin with a black line-art portrait of Marnie on pink and magenta holo foil facets, from the Marnie Premium Tournament Collection.",
+   "tint": "#cd92ad",
+   "from": [
+    "swshp/marnie-premium-tournament-collection"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-marnie-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-victini-battle-deck-coin": {
+   "id": "swshb-victini-battle-deck-coin",
+   "name": "Victini coin",
+   "sets": [
+    "swshp"
+   ],
+   "subject": "Victini",
+   "blurb": "Copper-coloured metal coin with a Victini relief, from the Victini V Battle Deck.",
+   "tint": "#cd8b4b",
+   "from": [
+    "swshp/victini-v-battle-deck"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-victini-battle-deck-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-gardevoir-battle-deck-coin": {
+   "id": "swshb-gardevoir-battle-deck-coin",
+   "name": "Gardevoir coin",
+   "sets": [
+    "swshp"
+   ],
+   "subject": "Gardevoir",
+   "blurb": "Deep plum metal coin with a shallow Gardevoir relief, from the Gardevoir V Battle Deck.",
+   "tint": "#7e49cd",
+   "from": [
+    "swshp/gardevoir-v-battle-deck"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-gardevoir-battle-deck-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-lucario-vstar-coin": {
+   "id": "swshb-lucario-vstar-coin",
+   "name": "Lucario coin",
+   "sets": [
+    "swshp"
+   ],
+   "subject": "Lucario",
+   "blurb": "Silver-rimmed metal coin showing a leaping blue Lucario on a purple and pink swirl, from the Lucario VSTAR Premium Collection.",
+   "tint": "#b7becd",
+   "from": [
+    "swshp/lucario-vstar-premium-collection"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-lucario-vstar-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-spring-2022-chest-arceus-coin": {
+   "id": "swshb-spring-2022-chest-arceus-coin",
+   "name": "Arceus coin (glitter)",
+   "sets": [
+    "swshp"
+   ],
+   "subject": "Arceus",
+   "blurb": "White plastic coin with Arceus in white line art on a rainbow glitter holofoil field, from the Spring 2022 Collector Chest.",
+   "tint": "#a0b2cd",
+   "from": [
+    "swshp/spring-2022-collector-chest"
+   ],
+   "evidence": "inferred",
+   "material": "plastic",
+   "front": "assets/coins/swshb-spring-2022-chest-arceus-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-kleavor-vstar-coin": {
+   "id": "swshb-kleavor-vstar-coin",
+   "name": "Kleavor coin",
+   "sets": [
+    "swshp"
+   ],
+   "subject": "Kleavor",
+   "blurb": "Metal coin with a Kleavor relief, from the Kleavor VSTAR Premium Collection.",
+   "tint": "#b8bfcd",
+   "from": [
+    "swshp/kleavor-vstar-premium-collection"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-kleavor-vstar-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-origin-dialga-coin": {
+   "id": "swshb-origin-dialga-coin",
+   "name": "Origin Forme Dialga coin",
+   "sets": [
+    "swsh11"
+   ],
+   "subject": "Origin Forme Dialga",
+   "blurb": "Silver metal coin with rainbow sheen, a navy blue field and an Origin Forme Dialga relief, from the Origin Forme Dialga VSTAR Premium Collection.",
+   "tint": "#adb5cd",
+   "from": [
+    "swshp/origin-forme-dialga-vstar-premium-collection"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-origin-dialga-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-origin-palkia-coin": {
+   "id": "swshb-origin-palkia-coin",
+   "name": "Origin Forme Palkia coin",
+   "sets": [
+    "swsh11"
+   ],
+   "subject": "Origin Forme Palkia",
+   "blurb": "Silver metal coin with rainbow sheen, a purple field and an Origin Forme Palkia relief, from the Origin Forme Palkia VSTAR Premium Collection.",
+   "tint": "#cdb0b3",
+   "from": [
+    "swshp/origin-forme-palkia-vstar-premium-collection"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-origin-palkia-coin-v1.webp",
+   "drawn": false
+  },
+  "swshb-hisuian-zoroark-coin": {
+   "id": "swshb-hisuian-zoroark-coin",
+   "name": "Hisuian Zoroark coin",
+   "sets": [
+    "swsh11"
+   ],
+   "subject": "Hisuian Zoroark",
+   "blurb": "Large silver metal coin with a Hisuian Zoroark line-art relief, from the Hisuian Zoroark VSTAR Premium Collection.",
+   "tint": "#b8bfcd",
+   "from": [
+    "swshp/hisuian-zoroark-vstar-premium-collection"
+   ],
+   "evidence": "inferred",
+   "material": "metal",
+   "front": "assets/coins/swshb-hisuian-zoroark-coin-v1.webp",
+   "drawn": true
+  },
+  "swshb-charizard-upc-coin": {
+   "id": "swshb-charizard-upc-coin",
+   "name": "Gigantamax Charizard coin",
+   "sets": [
+    "swsh11"
+   ],
+   "subject": "Gigantamax Charizard",
+   "blurb": "Gold-tone embossed metal coin with a Gigantamax Charizard relief, from the Sword and Shield Ultra-Premium Collection: Charizard.",
+   "tint": "#cdb990",
+   "from": [
+    "swshp/sword-shield-ultra-premium-collection-charizard"
+   ],
+   "evidence": "verified",
+   "material": "metal",
+   "front": "assets/coins/swshb-charizard-upc-coin-v1.webp",
+   "drawn": false
+  }
+ },
+ "products": {
+  "me1/eliteTrainerBox": {
+   "sleeves": [
+    "me-mega-gardevoir-etb-sleeves"
+   ],
+   "coins": [
+    "me-mega-gardevoir-coin"
+   ],
+   "name": "Elite Trainer Box (Mega Evolution)"
+  },
+  "me1/pc-etb-gardevoir": {
+   "sleeves": [
+    "me-mega-gardevoir-etb-sleeves"
+   ],
+   "coins": [
+    "me-mega-gardevoir-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box: Mega Gardevoir (Mega Evolution)"
+  },
+  "me1/pc-etb-lucario": {
+   "sleeves": [
+    "me-mega-lucario-etb-sleeves"
+   ],
+   "coins": [
+    "me-mega-lucario-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box: Mega Lucario (Mega Evolution)"
+  },
+  "me2/eliteTrainerBox": {
+   "sleeves": [
+    "me-mega-charizard-x-etb-sleeves"
+   ],
+   "coins": [
+    "me-mega-charizard-x-etb-coin"
+   ],
+   "name": "Elite Trainer Box (Phantasmal Flames)"
+  },
+  "me2/pc-etb": {
+   "sleeves": [
+    "me-mega-charizard-x-etb-sleeves"
+   ],
+   "coins": [
+    "me-mega-charizard-x-etb-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Phantasmal Flames)"
+  },
+  "me2/charizard-upc": {
+   "sleeves": [
+    "me-mega-charizard-x-upc-sleeves"
+   ],
+   "coins": [
+    "me-mega-charizard-x-upc-coin"
+   ],
+   "name": "Mega Charizard X ex Ultra-Premium Collection (Phantasmal Flames)"
+  },
+  "me2pt5/eliteTrainerBox": {
+   "sleeves": [
+    "me-dragonite-etb-sleeves"
+   ],
+   "coins": [
+    "me-dragonite-coin"
+   ],
+   "name": "Elite Trainer Box (Ascended Heroes)"
+  },
+  "me2pt5/pc-etb": {
+   "sleeves": [
+    "me-dragonite-etb-sleeves"
+   ],
+   "coins": [
+    "me-dragonite-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Ascended Heroes)"
+  },
+  "me3/eliteTrainerBox": {
+   "sleeves": [
+    "me-zygarde-etb-sleeves"
+   ],
+   "coins": [
+    "me-zygarde-coin"
+   ],
+   "name": "Elite Trainer Box (Perfect Order)"
+  },
+  "me3/pc-etb": {
+   "sleeves": [
+    "me-zygarde-etb-sleeves"
+   ],
+   "coins": [
+    "me-zygarde-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Perfect Order)"
+  },
+  "me4/eliteTrainerBox": {
+   "sleeves": [
+    "me-greninja-etb-sleeves"
+   ],
+   "coins": [
+    "me-froakie-coin"
+   ],
+   "name": "Elite Trainer Box (Chaos Rising)"
+  },
+  "me4/pc-etb": {
+   "sleeves": [
+    "me-greninja-etb-sleeves"
+   ],
+   "coins": [
+    "me-froakie-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Chaos Rising)"
+  },
+  "me5/eliteTrainerBox": {
+   "sleeves": [
+    "me-darkrai-etb-sleeves"
+   ],
+   "coins": [
+    "me-darkrai-coin"
+   ],
+   "name": "Elite Trainer Box (Pitch Black)"
+  },
+  "me5/pc-etb": {
+   "sleeves": [
+    "me-darkrai-etb-sleeves"
+   ],
+   "coins": [
+    "me-darkrai-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Pitch Black)"
+  },
+  "me55/eliteTrainerBox": {
+   "sleeves": [
+    "me-pikachu-30-etb-sleeves"
+   ],
+   "coins": [
+    "me-pikachu-30-etb-coin"
+   ],
+   "name": "Elite Trainer Box (30th Celebration)"
+  },
+  "me55/pc-etb": {
+   "sleeves": [
+    "me-pikachu-30-etb-sleeves"
+   ],
+   "coins": [
+    "me-pikachu-30-etb-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (30th Celebration)"
+  },
+  "me55/upc-day": {
+   "sleeves": [
+    "me-upc-day-sleeves"
+   ],
+   "coins": [
+    "me-upc-espeon-coin"
+   ],
+   "name": "Ultra-Premium Collection: Day (30th Celebration)"
+  },
+  "me55/upc-night": {
+   "sleeves": [
+    "me-upc-night-sleeves"
+   ],
+   "coins": [
+    "me-upc-umbreon-coin"
+   ],
+   "name": "Ultra-Premium Collection: Night (30th Celebration)"
+  },
+  "me1/blister-drifloon": {
+   "coins": [
+    "me-me1-blister-coin"
+   ],
+   "name": "Single Pack Blister: Drifloon (Mega Evolution)"
+  },
+  "me1/blister-drifblim": {
+   "coins": [
+    "me-me1-blister-coin"
+   ],
+   "name": "Single Pack Blister: Drifblim (Mega Evolution)"
+  },
+  "me1/blister-wailord": {
+   "coins": [
+    "me-me1-blister-coin"
+   ],
+   "name": "Single Pack Blister: Wailord (Mega Evolution)"
+  },
+  "me1/blister-lycanroc": {
+   "coins": [
+    "me-me1-blister-coin"
+   ],
+   "name": "Single Pack Blister: Lycanroc (Mega Evolution)"
+  },
+  "me1/checklane-tyranitar": {
+   "coins": [
+    "me-me1-blister-coin"
+   ],
+   "name": "Premium Checklane Blister: Tyranitar (Mega Evolution)"
+  },
+  "me1/checklane-meowscarada": {
+   "coins": [
+    "me-me1-blister-coin"
+   ],
+   "name": "Premium Checklane Blister: Meowscarada (Mega Evolution)"
+  },
+  "me1/blister2-raikou": {
+   "coins": [
+    "me-raikou-coin"
+   ],
+   "name": "2 Pack Blister: Raikou (Mega Evolution)"
+  },
+  "me2/deck-gengar": {
+   "coins": [
+    "me-mega-gengar-deck-coin"
+   ],
+   "name": "Mega Battle Deck: Mega Gengar ex (Phantasmal Flames)"
+  },
+  "me2/deck-diancie": {
+   "coins": [
+    "me-mega-diancie-deck-coin"
+   ],
+   "name": "Mega Battle Deck: Mega Diancie ex (Phantasmal Flames)"
+  },
+  "me2/blister-cottonee": {
+   "coins": [
+    "me-pf-blister-coin"
+   ],
+   "name": "Single Pack Blister: Cottonee (Phantasmal Flames)"
+  },
+  "me2/blister-whimsicott": {
+   "coins": [
+    "me-pf-blister-coin"
+   ],
+   "name": "Single Pack Blister: Whimsicott (Phantasmal Flames)"
+  },
+  "me2/blister2-vileplume": {
+   "coins": [
+    "me-pf-blister-coin"
+   ],
+   "name": "Enhanced 2 Pack Blister: Oddish, Gloom & Vileplume (Phantasmal Flames)"
+  },
+  "me2/checklane-hydrapple": {
+   "coins": [
+    "me-pf-blister-coin"
+   ],
+   "name": "Premium Checklane Blister: Hydrapple (Phantasmal Flames)"
+  },
+  "me2/checklane-blaziken": {
+   "coins": [
+    "me-pf-blister-coin"
+   ],
+   "name": "Premium Checklane Blister: Blaziken (Phantasmal Flames)"
+  },
+  "me2/checklane-greedent": {
+   "coins": [
+    "me-pf-checklane-gold-coin"
+   ],
+   "name": "Premium Checklane Blister: Arven's Greedent (Phantasmal Flames)"
+  },
+  "me2/checklane-magcargo": {
+   "coins": [
+    "me-pf-checklane-gold-coin"
+   ],
+   "name": "Premium Checklane Blister: Ethan's Magcargo (Phantasmal Flames)"
+  },
+  "me2/pokemon-day-2026": {
+   "coins": [
+    "me-pokemon-day-2026-coin"
+   ],
+   "name": "Pokémon Day 2026 Collection (Phantasmal Flames)"
+  },
+  "me2pt5/collection-erika": {
+   "coins": [
+    "me-erika-coin"
+   ],
+   "name": "Ascended Heroes Collection: Erika"
+  },
+  "me2pt5/collection-larry": {
+   "coins": [
+    "me-larry-coin"
+   ],
+   "name": "Ascended Heroes Collection: Larry"
+  },
+  "me3/blister-makuhita": {
+   "coins": [
+    "me-snorlax-bronze-coin"
+   ],
+   "name": "Single Pack Blister: Makuhita (Perfect Order)"
+  },
+  "me3/checklane-meganium": {
+   "coins": [
+    "me-snorlax-bronze-coin"
+   ],
+   "name": "Premium Checklane Blister: Meganium (Perfect Order)"
+  },
+  "me3/checklane-cinderace": {
+   "coins": [
+    "me-snorlax-bronze-coin"
+   ],
+   "name": "Premium Checklane Blister: Cinderace (Perfect Order)"
+  },
+  "me3/checklane-steelix": {
+   "coins": [
+    "me-snorlax-bronze-coin"
+   ],
+   "name": "Checklane Blister: Steelix (Perfect Order)"
+  },
+  "me3/checklane-clawitzer": {
+   "coins": [
+    "me-snorlax-bronze-coin"
+   ],
+   "name": "Checklane Blister: Clawitzer (Perfect Order)"
+  },
+  "me4/blister-toxel": {
+   "coins": [
+    "me-chikorita-coin"
+   ],
+   "name": "Single Pack Blister: Toxel (Chaos Rising)"
+  },
+  "me4/checklane-pawmot": {
+   "coins": [
+    "me-chikorita-coin"
+   ],
+   "name": "Premium Checklane Blister: Pawmot (Chaos Rising)"
+  },
+  "me4/checklane-flygon": {
+   "coins": [
+    "me-chikorita-coin"
+   ],
+   "name": "Premium Checklane Blister: Flygon (Chaos Rising)"
+  },
+  "me4/checklane-zacian": {
+   "coins": [
+    "me-chikorita-coin"
+   ],
+   "name": "Checklane Blister: Zacian & Mimikyu (Chaos Rising)"
+  },
+  "me4/checklane-reshiram": {
+   "coins": [
+    "me-chikorita-coin"
+   ],
+   "name": "Checklane Blister: Reshiram & Moltres (Chaos Rising)"
+  },
+  "me5/blister-slowpoke": {
+   "coins": [
+    "me-tepig-coin"
+   ],
+   "name": "Single Pack Blister: Slowpoke (Pitch Black)"
+  },
+  "me5/checklane-gengar": {
+   "coins": [
+    "me-tepig-coin"
+   ],
+   "name": "Premium Checklane Blister: Gengar (Pitch Black)"
+  },
+  "me5/checklane-luxray": {
+   "coins": [
+    "me-tepig-coin"
+   ],
+   "name": "Premium Checklane Blister: Luxray (Pitch Black)"
+  },
+  "me5/checklane-tyrantrum": {
+   "coins": [
+    "me-tepig-coin"
+   ],
+   "name": "Checklane Blister: Tyrunt & Tyrantrum (Pitch Black)"
+  },
+  "me5/checklane-aurorus": {
+   "coins": [
+    "me-tepig-coin"
+   ],
+   "name": "Checklane Blister: Amaura & Aurorus (Pitch Black)"
+  },
+  "me5/blister2-zarude": {
+   "coins": [
+    "me-snorlax-silver-coin"
+   ],
+   "name": "2 Pack Blister: Zarude (Pitch Black)"
+  },
+  "me5/blister2-gengar": {
+   "coins": [
+    "me-mega-gengar-silver-coin"
+   ],
+   "name": "Enhanced 2 Pack Blister: Gengar, Marshadow & Team Rocket's Mimikyu (Pitch Black)"
+  },
+  "me55/knock-out": {
+   "coins": [
+    "me-pikachu-30-orange-coin"
+   ],
+   "name": "Knock Out Collection (30th Celebration)"
+  },
+  "me55/deck-espeon": {
+   "coins": [
+    "me-deck-espeon-coin"
+   ],
+   "name": "Battle Deck: Espeon ex (30th Celebration)"
+  },
+  "me55/deck-umbreon": {
+   "coins": [
+    "me-deck-umbreon-coin"
+   ],
+   "name": "Battle Deck: Umbreon ex (30th Celebration)"
+  },
+  "cel25/eliteTrainerBox": {
+   "sleeves": [
+    "psv-cel25-pikachu-etb"
+   ],
+   "name": "Elite Trainer Box (Celebrations)"
+  },
+  "cel25/pc-etb": {
+   "sleeves": [
+    "psv-cel25-pikachu-pc-etb"
+   ],
+   "coins": [
+    "psv-pikachu-25-coin-silver"
+   ],
+   "name": "Celebrations Pokémon Center Elite Trainer Box"
+  },
+  "pgo/eliteTrainerBox": {
+   "sleeves": [
+    "psv-pgo-mewtwo-etb"
+   ],
+   "name": "Pokémon GO Elite Trainer Box"
+  },
+  "pgo/pc-etb": {
+   "sleeves": [
+    "psv-pgo-mewtwo-pc-etb"
+   ],
+   "name": "Pokémon GO Pokémon Center Elite Trainer Box Plus"
+  },
+  "svp/charizard-ex-premium": {
+   "sleeves": [
+    "psv-charizard-ex-premium"
+   ],
+   "name": "Charizard ex Premium Collection (SV Black Star Promos)"
+  },
+  "svp/armarouge-ex-premium": {
+   "sleeves": [
+    "psv-armarouge-ex-premium"
+   ],
+   "name": "Armarouge ex Premium Collection (SV Black Star Promos)"
+  },
+  "svp/ogerpon-ex-premium": {
+   "sleeves": [
+    "psv-ogerpon-ex-premium"
+   ],
+   "name": "Ogerpon ex Premium Collection (SV Black Star Promos)"
+  },
+  "svp/iono-ptc": {
+   "sleeves": [
+    "psv-iono-ptc"
+   ],
+   "name": "Iono Premium Tournament Collection (SV Black Star Promos)"
+  },
+  "svp/trainers-toolkit-2024": {
+   "sleeves": [
+    "psv-toolkit-2024-teal"
+   ],
+   "name": "Trainer's Toolkit (2024) (SV Black Star Promos)"
+  },
+  "svp/trainers-toolkit-2025": {
+   "sleeves": [
+    "psv-toolkit-2025-purple"
+   ],
+   "name": "Trainer's Toolkit (2025) (SV Black Star Promos)"
+  },
+  "cel25/dragapult-prime-collection": {
+   "coins": [
+    "psv-pikachu-25-coin-gold"
+   ],
+   "name": "Celebrations Collection Dragapult Prime"
+  },
+  "cel25/ultra-premium-collection": {
+   "coins": [
+    "psv-pikachu-25-coin-silver"
+   ],
+   "name": "Celebrations Ultra-Premium Collection"
+  },
+  "pgo/mewtwo-v-battle-deck": {
+   "coins": [
+    "psv-mewtwo-go-coin"
+   ],
+   "name": "Pokémon GO V Battle Deck: Mewtwo V"
+  },
+  "pgo/mewtwo-melmetal-v-battle-deck-bundle": {
+   "coins": [
+    "psv-mewtwo-go-coin"
+   ],
+   "name": "Pokémon GO V Battle Deck Bundle: Mewtwo V and Melmetal V"
+  },
+  "cel25/v-memories-special-collection": {
+   "coins": [
+    "psv-charizard-celebrations-coin"
+   ],
+   "name": "Celebrations Special Collection V Memories"
+  },
+  "sv1/eliteTrainerBox": {
+   "sleeves": [
+    "sva-koraidon-etb"
+   ],
+   "name": "Elite Trainer Box: Koraidon (Scarlet & Violet)"
+  },
+  "sv1/pc-etb-koraidon": {
+   "sleeves": [
+    "sva-koraidon-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box: Koraidon (Scarlet & Violet)"
+  },
+  "sv1/etb-miraidon": {
+   "sleeves": [
+    "sva-miraidon-etb"
+   ],
+   "name": "Elite Trainer Box: Miraidon (Scarlet & Violet)"
+  },
+  "sv1/pc-etb-miraidon": {
+   "sleeves": [
+    "sva-miraidon-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box: Miraidon (Scarlet & Violet)"
+  },
+  "sv2/eliteTrainerBox": {
+   "sleeves": [
+    "sva-paldea-starters-etb"
+   ],
+   "name": "Elite Trainer Box (Paldea Evolved)"
+  },
+  "sv2/pc-etb": {
+   "sleeves": [
+    "sva-paldea-starters-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Paldea Evolved)"
+  },
+  "sv3/eliteTrainerBox": {
+   "sleeves": [
+    "sva-charmander-etb"
+   ],
+   "name": "Elite Trainer Box (Obsidian Flames)"
+  },
+  "sv3/pc-etb": {
+   "sleeves": [
+    "sva-charmander-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Obsidian Flames)"
+  },
+  "sv3pt5/eliteTrainerBox": {
+   "sleeves": [
+    "sva-151-silhouettes-etb"
+   ],
+   "name": "Elite Trainer Box (151)"
+  },
+  "sv3pt5/pc-etb": {
+   "sleeves": [
+    "sva-151-silhouettes-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (151)"
+  },
+  "sv4/eliteTrainerBox": {
+   "sleeves": [
+    "sva-roaring-moon-etb"
+   ],
+   "name": "Elite Trainer Box (Paradox Rift)"
+  },
+  "sv4/pc-etb-roaring-moon": {
+   "sleeves": [
+    "sva-roaring-moon-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box: Roaring Moon (Paradox Rift)"
+  },
+  "sv4/pc-etb-iron-valiant": {
+   "sleeves": [
+    "sva-iron-valiant-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box: Iron Valiant (Paradox Rift)"
+  },
+  "sv4pt5/eliteTrainerBox": {
+   "sleeves": [
+    "sva-shiny-mimikyu-etb"
+   ],
+   "name": "Elite Trainer Box (Paldean Fates)"
+  },
+  "sv4pt5/pc-etb": {
+   "sleeves": [
+    "sva-shiny-mimikyu-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Paldean Fates)"
+  },
+  "sv1/blister-spidops": {
+   "coins": [
+    "sva-fuecoco-coin"
+   ],
+   "name": "Single Pack Blister: Spidops (Scarlet & Violet)"
+  },
+  "sv1/blister-espathra": {
+   "coins": [
+    "sva-fuecoco-coin"
+   ],
+   "name": "Single Pack Blister: Espathra (Scarlet & Violet)"
+  },
+  "sv2/blister-smoliv": {
+   "coins": [
+    "sva-quaxly-coin"
+   ],
+   "name": "Single Pack Blister: Smoliv (Paldea Evolved)"
+  },
+  "sv2/blister-growlithe": {
+   "coins": [
+    "sva-quaxly-coin"
+   ],
+   "name": "Single Pack Blister: Growlithe (Paldea Evolved)"
+  },
+  "sv3/blister-pawmi": {
+   "coins": [
+    "sva-sprigatito-coin"
+   ],
+   "name": "Single Pack Blister: Pawmi (Obsidian Flames)"
+  },
+  "sv3/blister-wooper": {
+   "coins": [
+    "sva-sprigatito-coin"
+   ],
+   "name": "Single Pack Blister: Paldean Wooper (Obsidian Flames)"
+  },
+  "sv4/blister-sinistea": {
+   "coins": [
+    "sva-pikachu-coin-sv4"
+   ],
+   "name": "Single Pack Blister: Sinistea (Paradox Rift)"
+  },
+  "sv4/blister-pineco": {
+   "coins": [
+    "sva-pikachu-coin-sv4"
+   ],
+   "name": "Single Pack Blister: Pineco (Paradox Rift)"
+  },
+  "sv3pt5/upc": {
+   "coins": [
+    "sva-mew-coin"
+   ],
+   "name": "Ultra-Premium Collection (151)"
+  },
+  "rsv10pt5/eliteTrainerBox": {
+   "sleeves": [
+    "svb-white-flare-reshiram-etb"
+   ],
+   "name": "Elite Trainer Box (White Flare)"
+  },
+  "rsv10pt5/pc-etb": {
+   "sleeves": [
+    "svb-white-flare-reshiram-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (White Flare)"
+  },
+  "zsv10pt5/eliteTrainerBox": {
+   "sleeves": [
+    "svb-black-bolt-zekrom-etb"
+   ],
+   "name": "Elite Trainer Box (Black Bolt)"
+  },
+  "zsv10pt5/pc-etb": {
+   "sleeves": [
+    "svb-black-bolt-zekrom-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Black Bolt)"
+  },
+  "sv10/eliteTrainerBox": {
+   "sleeves": [
+    "svb-destined-rivals-giovanni-mewtwo-etb"
+   ],
+   "name": "Elite Trainer Box (Destined Rivals)"
+  },
+  "sv10/pc-etb": {
+   "sleeves": [
+    "svb-destined-rivals-giovanni-mewtwo-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Destined Rivals)"
+  },
+  "sv5/eliteTrainerBox": {
+   "sleeves": [
+    "svb-temporal-forces-iron-leaves-etb"
+   ],
+   "name": "Elite Trainer Box (Temporal Forces)"
+  },
+  "sv5/pc-etb-iron-leaves": {
+   "sleeves": [
+    "svb-temporal-forces-iron-leaves-etb",
+    "svb-temporal-forces-walking-wake-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box: Iron Leaves (Temporal Forces)",
+   "pick": {
+    "sleeves": 1
+   }
+  },
+  "sv5/pc-etb-walking-wake": {
+   "sleeves": [
+    "svb-temporal-forces-iron-leaves-etb",
+    "svb-temporal-forces-walking-wake-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box: Walking Wake (Temporal Forces)",
+   "pick": {
+    "sleeves": 1
+   }
+  },
+  "sv5/etb-walking-wake": {
+   "sleeves": [
+    "svb-temporal-forces-walking-wake-etb"
+   ],
+   "name": "Elite Trainer Box: Walking Wake (Temporal Forces)"
+  },
+  "sv6/eliteTrainerBox": {
+   "sleeves": [
+    "svb-twilight-masquerade-ogerpon-etb"
+   ],
+   "name": "Elite Trainer Box (Twilight Masquerade)"
+  },
+  "sv6/pc-etb": {
+   "sleeves": [
+    "svb-twilight-masquerade-ogerpon-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Twilight Masquerade)"
+  },
+  "sv6pt5/eliteTrainerBox": {
+   "sleeves": [
+    "svb-shrouded-fable-kitakami-trio-etb"
+   ],
+   "name": "Elite Trainer Box (Shrouded Fable)"
+  },
+  "sv6pt5/pc-etb": {
+   "sleeves": [
+    "svb-shrouded-fable-kitakami-trio-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Shrouded Fable)"
+  },
+  "sv7/eliteTrainerBox": {
+   "sleeves": [
+    "svb-stellar-crown-terapagos-etb"
+   ],
+   "name": "Elite Trainer Box (Stellar Crown)"
+  },
+  "sv7/pc-etb": {
+   "sleeves": [
+    "svb-stellar-crown-terapagos-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Stellar Crown)"
+  },
+  "sv8/eliteTrainerBox": {
+   "sleeves": [
+    "svb-surging-sparks-lightning-etb"
+   ],
+   "name": "Elite Trainer Box (Surging Sparks)"
+  },
+  "sv8/pc-etb": {
+   "sleeves": [
+    "svb-surging-sparks-lightning-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Surging Sparks)"
+  },
+  "sv8pt5/eliteTrainerBox": {
+   "sleeves": [
+    "svb-prismatic-evolutions-eevee-etb"
+   ],
+   "name": "Elite Trainer Box (Prismatic Evolutions)"
+  },
+  "sv8pt5/pc-etb": {
+   "sleeves": [
+    "svb-prismatic-evolutions-eevee-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Prismatic Evolutions)"
+  },
+  "sv8pt5/super-premium": {
+   "sleeves": [
+    "svb-prismatic-evolutions-eeveelutions-super-premium"
+   ],
+   "name": "Super-Premium Collection (Prismatic Evolutions)"
+  },
+  "sv8pt5/premium-figure": {
+   "sleeves": [
+    "svb-prismatic-evolutions-espeon-umbreon-premium-figure"
+   ],
+   "name": "Premium Figure Collection: Espeon & Umbreon (Prismatic Evolutions)"
+  },
+  "sv9/eliteTrainerBox": {
+   "sleeves": [
+    "svb-journey-together-n-zoroark-etb"
+   ],
+   "name": "Elite Trainer Box (Journey Together)"
+  },
+  "sv9/pc-etb": {
+   "sleeves": [
+    "svb-journey-together-n-zoroark-etb"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Journey Together)"
+  },
+  "sv9/ptc-lillie": {
+   "sleeves": [
+    "svb-lillie-clefairy-ptc"
+   ],
+   "coins": [
+    "svb-lillie-coin"
+   ],
+   "name": "Lillie Premium Tournament Collection (Journey Together)"
+  },
+  "sv10/upc-moltres": {
+   "coins": [
+    "svb-moltres-fire-energy-coin"
+   ],
+   "name": "Team Rocket's Moltres ex Ultra-Premium Collection (Destined Rivals)"
+  },
+  "sv10/blister-eevee": {
+   "coins": [
+    "svb-fidough-coin"
+   ],
+   "name": "Single Pack Blister: Eevee (Destined Rivals)"
+  },
+  "sv10/blister-zarude": {
+   "coins": [
+    "svb-fidough-coin"
+   ],
+   "name": "Single Pack Blister: Zarude (Destined Rivals)"
+  },
+  "sv5/blister-carvanha": {
+   "coins": [
+    "svb-pawmi-coin"
+   ],
+   "name": "Single Pack Blister: Carvanha (Temporal Forces)"
+  },
+  "sv5/blister-bellibolt": {
+   "coins": [
+    "svb-pawmi-coin"
+   ],
+   "name": "Single Pack Blister: Bellibolt (Temporal Forces)"
+  },
+  "sv6/blister-pupitar": {
+   "coins": [
+    "svb-lechonk-coin"
+   ],
+   "name": "Single Pack Blister: Pupitar (Twilight Masquerade)"
+  },
+  "sv6/blister-toxel": {
+   "coins": [
+    "svb-lechonk-coin"
+   ],
+   "name": "Single Pack Blister: Toxel (Twilight Masquerade)"
+  },
+  "sv7/terapagos-upc": {
+   "coins": [
+    "svb-stellar-crown-terapagos-coin"
+   ],
+   "name": "Terapagos ex Ultra-Premium Collection (Stellar Crown)"
+  },
+  "sv7/blister-horsea": {
+   "coins": [
+    "svb-dragonite-coin"
+   ],
+   "name": "Single Pack Blister: Horsea (Stellar Crown)"
+  },
+  "sv7/blister-porygon2": {
+   "coins": [
+    "svb-dragonite-coin"
+   ],
+   "name": "Single Pack Blister: Porygon2 (Stellar Crown)"
+  },
+  "sv8pt5/blister2-eevee": {
+   "coins": [
+    "svb-prismatic-eevee-coin"
+   ],
+   "name": "2-Pack Blister: Eevee (Prismatic Evolutions)"
+  },
+  "sv9/blister-yanma": {
+   "coins": [
+    "svb-greedent-coin"
+   ],
+   "name": "Single Pack Blister: Yanma (Journey Together)"
+  },
+  "sv9/blister-scraggy": {
+   "coins": [
+    "svb-greedent-coin"
+   ],
+   "name": "Single Pack Blister: Scraggy (Journey Together)"
+  },
+  "swsh2/eliteTrainerBox": {
+   "sleeves": [
+    "swsha-copperajah-etb"
+   ],
+   "name": "Elite Trainer Box (Rebel Clash)"
+  },
+  "swsh3/eliteTrainerBox": {
+   "sleeves": [
+    "swsha-eternatus-etb"
+   ],
+   "name": "Elite Trainer Box (Darkness Ablaze)"
+  },
+  "swsh35/eliteTrainerBox": {
+   "sleeves": [
+    "swsha-gmax-charizard-etb"
+   ],
+   "name": "Elite Trainer Box (Champion's Path)"
+  },
+  "swsh4/eliteTrainerBox": {
+   "sleeves": [
+    "swsha-gmax-pikachu-etb"
+   ],
+   "name": "Elite Trainer Box (Vivid Voltage)"
+  },
+  "swsh45/eliteTrainerBox": {
+   "sleeves": [
+    "swsha-gmax-eevee-etb"
+   ],
+   "name": "Elite Trainer Box (Shining Fates)"
+  },
+  "swsh6/pc-etb": {
+   "sleeves": [
+    "swsha-ice-rider-calyrex-pc-etb"
+   ],
+   "coins": [
+    "swsha-ice-rider-calyrex-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Chilling Reign)"
+  },
+  "swsh1/gossifleur-single-pack-blister": {
+   "coins": [
+    "swsha-swsh1-1pack-coin"
+   ],
+   "name": "Gossifleur Single Pack Blister (Sword & Shield)"
+  },
+  "swsh1/wooloo-single-pack-blister": {
+   "coins": [
+    "swsha-swsh1-1pack-coin"
+   ],
+   "name": "Wooloo Single Pack Blister (Sword & Shield)"
+  },
+  "swsh1/morpeko-3-pack-blister": {
+   "coins": [
+    "swsha-swsh1-3pack-coin"
+   ],
+   "name": "Morpeko 3 Pack Blister (Sword & Shield)"
+  },
+  "swsh2/noctowl-single-pack-blister": {
+   "coins": [
+    "swsha-swsh2-1pack-coin"
+   ],
+   "name": "Noctowl Single Pack Blister (Rebel Clash)"
+  },
+  "swsh2/duraludon-3-pack-blister": {
+   "coins": [
+    "swsha-swsh2-3pack-coin"
+   ],
+   "name": "Duraludon 3 Pack Blister (Rebel Clash)"
+  },
+  "swsh2/rayquaza-3-pack-blister": {
+   "coins": [
+    "swsha-swsh2-3pack-coin"
+   ],
+   "name": "Rayquaza 3 Pack Blister (Rebel Clash)"
+  },
+  "swsh3/hatenna-single-pack-blister": {
+   "coins": [
+    "swsha-swsh3-1pack-coin"
+   ],
+   "name": "Hatenna Single Pack Blister (Darkness Ablaze)"
+  },
+  "swsh3/pikachu-single-pack-blister": {
+   "coins": [
+    "swsha-swsh3-1pack-coin"
+   ],
+   "name": "Pikachu Single Pack Blister (Darkness Ablaze)"
+  },
+  "swsh3/eevee-3-pack-blister": {
+   "coins": [
+    "swsha-swsh3-3pack-coin"
+   ],
+   "name": "Eevee 3 Pack Blister (Darkness Ablaze)"
+  },
+  "swsh3/flareon-3-pack-blister": {
+   "coins": [
+    "swsha-swsh3-3pack-coin"
+   ],
+   "name": "Flareon 3 Pack Blister (Darkness Ablaze)"
+  },
+  "swsh4/grookey-single-pack-blister": {
+   "coins": [
+    "swsha-swsh4-1pack-coin"
+   ],
+   "name": "Grookey Single Pack Blister (Vivid Voltage)"
+  },
+  "swsh4/scorbunny-single-pack-blister": {
+   "coins": [
+    "swsha-swsh4-1pack-coin"
+   ],
+   "name": "Scorbunny Single Pack Blister (Vivid Voltage)"
+  },
+  "swsh4/sobble-3-pack-blister": {
+   "coins": [
+    "swsha-swsh4-3pack-coin"
+   ],
+   "name": "Sobble 3 Pack Blister (Vivid Voltage)"
+  },
+  "swsh4/vaporeon-3-pack-blister": {
+   "coins": [
+    "swsha-swsh4-3pack-coin"
+   ],
+   "name": "Vaporeon 3 Pack Blister (Vivid Voltage)"
+  },
+  "swsh5/charmander-single-pack-blister": {
+   "coins": [
+    "swsha-swsh5-1pack-coin"
+   ],
+   "name": "Charmander Single Pack Blister (Battle Styles)"
+  },
+  "swsh5/arrokuda-single-pack-blister": {
+   "coins": [
+    "swsha-swsh5-1pack-coin"
+   ],
+   "name": "Arrokuda Single Pack Blister (Battle Styles)"
+  },
+  "swsh5/jolteon-3-pack-blister": {
+   "coins": [
+    "swsha-swsh5-3pack-coin"
+   ],
+   "name": "Jolteon 3 Pack Blister (Battle Styles)"
+  },
+  "swsh5/eevee-3-pack-blister": {
+   "coins": [
+    "swsha-swsh5-3pack-coin"
+   ],
+   "name": "Eevee 3 Pack Blister (Battle Styles)"
+  },
+  "swsh6/morpeko-single-pack-blister": {
+   "coins": [
+    "swsha-swsh6-1pack-coin"
+   ],
+   "name": "Morpeko Single Pack Blister (Chilling Reign)"
+  },
+  "swsh6/phanpy-single-pack-blister": {
+   "coins": [
+    "swsha-swsh6-1pack-coin"
+   ],
+   "name": "Phanpy Single Pack Blister (Chilling Reign)"
+  },
+  "swsh6/eevee-3-pack-blister": {
+   "coins": [
+    "swsha-swsh6-3pack-coin"
+   ],
+   "name": "Eevee 3 Pack Blister (Chilling Reign)"
+  },
+  "swsh6/snorlax-3-pack-blister": {
+   "coins": [
+    "swsha-swsh6-3pack-coin"
+   ],
+   "name": "Snorlax 3 Pack Blister (Chilling Reign)"
+  },
+  "swsh45/shiny-dragapult-vmax-premium-collection": {
+   "coins": [
+    "swsha-shiny-dragapult-coin"
+   ],
+   "name": "Shiny Dragapult VMAX Premium Collection (Shining Fates)"
+  },
+  "swsh45/shiny-crobat-vmax-premium-collection": {
+   "coins": [
+    "swsha-shiny-crobat-coin"
+   ],
+   "name": "Shiny Crobat VMAX Premium Collection (Shining Fates)"
+  },
+  "swsh7/pc-etb": {
+   "sleeves": [
+    "swshb-es-pc-eeveelutions-sleeves"
+   ],
+   "coins": [
+    "swshb-es-pc-eeveelutions-coin"
+   ],
+   "name": "Evolving Skies Pokémon Center Elite Trainer Box (Glaceon/Vaporeon/Sylveon/Espeon)"
+  },
+  "swsh8/pc-etb": {
+   "sleeves": [
+    "swshb-fs-pc-genesect-sleeves",
+    "swshb-fs-pc-mew-sleeves"
+   ],
+   "coins": [
+    "swshb-fs-pc-mew-coin"
+   ],
+   "name": "Fusion Strike Pokémon Center Elite Trainer Box"
+  },
+  "swsh8/eliteTrainerBox": {
+   "sleeves": [
+    "swshb-fs-etb-mew-sleeves"
+   ],
+   "name": "Elite Trainer Box (Fusion Strike)"
+  },
+  "swsh9/pc-etb": {
+   "sleeves": [
+    "swshb-bs-pc-arceus-sleeves"
+   ],
+   "coins": [
+    "swshb-bs-pc-arceus-coin"
+   ],
+   "name": "Brilliant Stars Pokémon Center Elite Trainer Box"
+  },
+  "swsh9/eliteTrainerBox": {
+   "sleeves": [
+    "swshb-bs-etb-arceus-sleeves"
+   ],
+   "name": "Elite Trainer Box (Brilliant Stars)"
+  },
+  "swsh10/pc-etb": {
+   "sleeves": [
+    "swshb-ar-pc-darkrai-sleeves"
+   ],
+   "coins": [
+    "swshb-ar-pc-darkrai-coin"
+   ],
+   "name": "Astral Radiance Pokémon Center Elite Trainer Box"
+  },
+  "swsh10/eliteTrainerBox": {
+   "sleeves": [
+    "swshb-ar-etb-darkrai-sleeves"
+   ],
+   "name": "Elite Trainer Box (Astral Radiance)"
+  },
+  "swsh11/pc-etb": {
+   "sleeves": [
+    "swshb-lo-pc-giratina-sleeves"
+   ],
+   "coins": [
+    "swshb-lo-pc-giratina-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Lost Origin)"
+  },
+  "swsh11/eliteTrainerBox": {
+   "sleeves": [
+    "swshb-lo-etb-giratina-sleeves"
+   ],
+   "name": "Elite Trainer Box (Lost Origin)"
+  },
+  "swsh12/pc-etb": {
+   "sleeves": [
+    "swshb-st-pc-alolan-vulpix-sleeves",
+    "swshb-st-pc-lugia-sleeves"
+   ],
+   "coins": [
+    "swshb-st-pc-alolan-vulpix-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box (Silver Tempest)"
+  },
+  "swsh12/eliteTrainerBox": {
+   "sleeves": [
+    "swshb-st-etb-alolan-vulpix-sleeves"
+   ],
+   "name": "Elite Trainer Box (Silver Tempest)"
+  },
+  "swsh12pt5/pc-etb": {
+   "sleeves": [
+    "swshb-cz-pc-lucario-sleeves"
+   ],
+   "coins": [
+    "swshb-cz-pc-lucario-coin"
+   ],
+   "name": "Pokémon Center Elite Trainer Box Plus (Crown Zenith)"
+  },
+  "swsh12pt5/eliteTrainerBox": {
+   "sleeves": [
+    "swshb-cz-etb-lucario-sleeves"
+   ],
+   "name": "Elite Trainer Box (Crown Zenith)"
+  },
+  "swshp/zacian-elite-trainer-box-plus": {
+   "sleeves": [
+    "swshb-zacian-etb-plus-sleeves"
+   ],
+   "coins": [
+    "swshb-zacian-etb-plus-coin"
+   ],
+   "name": "Sword & Shield Elite Trainer Box Plus (Zacian) (SWSH Black Star Promos)"
+  },
+  "swshp/marnie-premium-tournament-collection": {
+   "sleeves": [
+    "swshb-marnie-tournament-sleeves"
+   ],
+   "coins": [
+    "swshb-marnie-coin"
+   ],
+   "name": "Marnie Premium Tournament Collection (SWSH Black Star Promos)"
+  },
+  "swshp/sword-shield-ultra-premium-collection-charizard": {
+   "sleeves": [
+    "swshb-charizard-upc-sleeves"
+   ],
+   "coins": [
+    "swshb-charizard-upc-coin"
+   ],
+   "name": "Sword & Shield Ultra-Premium Collection: Charizard (SWSH Black Star Promos)"
+  },
+  "swshp/trainers-toolkit-2021": {
+   "sleeves": [
+    "swshb-toolkit-2021-sleeves"
+   ],
+   "name": "Trainer's Toolkit (2021) (SWSH Black Star Promos)"
+  },
+  "swsh12pt5/unown-v-lugia-v-special-collection": {
+   "coins": [
+    "swshb-cz-lugia-coin"
+   ],
+   "name": "Unown V & Lugia V Special Collection (Crown Zenith)"
+  },
+  "swsh7/eiscue-3-pack-blister": {
+   "coins": [
+    "swshb-es-dragonite-blister-coin"
+   ],
+   "name": "Eiscue 3 Pack Blister (Evolving Skies)"
+  },
+  "swsh7/umbreon-3-pack-blister": {
+   "coins": [
+    "swshb-es-dragonite-blister-coin"
+   ],
+   "name": "Umbreon 3 Pack Blister (Evolving Skies)"
+  },
+  "swsh10/eevee-3-pack-blister": {
+   "coins": [
+    "swshb-ar-eevee-blister-coin"
+   ],
+   "name": "Eevee 3 Pack Blister (Astral Radiance)"
+  },
+  "swsh10/sylveon-3-pack-blister": {
+   "coins": [
+    "swshb-ar-eevee-blister-coin"
+   ],
+   "name": "Sylveon 3 Pack Blister (Astral Radiance)"
+  },
+  "swsh12/togetic-3-pack-blister": {
+   "coins": [
+    "swshb-st-pikachu-blister-coin"
+   ],
+   "name": "Togetic 3-Pack Blister (Silver Tempest)"
+  },
+  "swsh12/manaphy-3-pack-blister": {
+   "coins": [
+    "swshb-st-pikachu-blister-coin"
+   ],
+   "name": "Manaphy 3-Pack Blister (Silver Tempest)"
+  },
+  "swshp/eternatus-vmax-premium-collection": {
+   "coins": [
+    "swshb-eternatus-vmax-coin"
+   ],
+   "name": "Eternatus VMAX Premium Collection (SWSH Black Star Promos)"
+  },
+  "swshp/zamazenta-elite-trainer-box-plus": {
+   "coins": [
+    "swshb-zamazenta-etb-plus-coin"
+   ],
+   "name": "Sword & Shield Elite Trainer Box Plus (Zamazenta) (SWSH Black Star Promos)"
+  },
+  "swshp/victini-v-battle-deck": {
+   "coins": [
+    "swshb-victini-battle-deck-coin"
+   ],
+   "name": "Victini V Battle Deck (SWSH Black Star Promos)"
+  },
+  "swshp/gardevoir-v-battle-deck": {
+   "coins": [
+    "swshb-gardevoir-battle-deck-coin"
+   ],
+   "name": "Gardevoir V Battle Deck (SWSH Black Star Promos)"
+  },
+  "swshp/lucario-vstar-premium-collection": {
+   "coins": [
+    "swshb-lucario-vstar-coin"
+   ],
+   "name": "Lucario VSTAR Premium Collection (SWSH Black Star Promos)"
+  },
+  "swshp/spring-2022-collector-chest": {
+   "coins": [
+    "swshb-spring-2022-chest-arceus-coin"
+   ],
+   "name": "Spring 2022 Collector Chest (SWSH Black Star Promos)"
+  },
+  "swshp/kleavor-vstar-premium-collection": {
+   "coins": [
+    "swshb-kleavor-vstar-coin"
+   ],
+   "name": "Kleavor VSTAR Premium Collection (SWSH Black Star Promos)"
+  },
+  "swshp/origin-forme-dialga-vstar-premium-collection": {
+   "coins": [
+    "swshb-origin-dialga-coin"
+   ],
+   "name": "Origin Forme Dialga VSTAR Premium Collection (SWSH Black Star Promos)"
+  },
+  "swshp/origin-forme-palkia-vstar-premium-collection": {
+   "coins": [
+    "swshb-origin-palkia-coin"
+   ],
+   "name": "Origin Forme Palkia VSTAR Premium Collection (SWSH Black Star Promos)"
+  },
+  "swshp/hisuian-zoroark-vstar-premium-collection": {
+   "coins": [
+    "swshb-hisuian-zoroark-coin"
+   ],
+   "name": "Hisuian Zoroark VSTAR Premium Collection (SWSH Black Star Promos)"
+  }
+ }
+}

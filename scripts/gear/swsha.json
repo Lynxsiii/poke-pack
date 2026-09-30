@@ -1,0 +1,616 @@
+{
+ "items": [
+  {
+   "kind": "sleeve",
+   "id": "swsha-copperajah-etb",
+   "name": "Copperajah sleeves",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Copperajah",
+   "blurb": "Matte yellow sleeves with a teal Copperajah over a darker yellow burst, the Rebel Clash Elite Trainer Box set of 65.",
+   "count": 65,
+   "products": [
+    "swsh2/eliteTrainerBox"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsha-rect-220674.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/220674",
+    "https://moonshotgamestore.com/products/rebel-clash-elite-trainer-box",
+    "https://www.kasecollect.com/products/pokemon-rebel-clash-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "swsha-eternatus-etb",
+   "name": "Eternatus sleeves",
+   "sets": [
+    "swsh3"
+   ],
+   "subject": "Eternatus",
+   "blurb": "Deep purple sleeves with a crimson Eternatus and blue ripple lines, the Darkness Ablaze Elite Trainer Box set of 65.",
+   "count": 65,
+   "products": [
+    "swsh3/eliteTrainerBox"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsha-rect-220675.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/220675",
+    "https://facetofacegames.com/en-us/products/pokemon-tcg-sword-shield-darkness-ablaze-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "swsha-gmax-charizard-etb",
+   "name": "Gigantamax Charizard sleeves",
+   "sets": [
+    "swsh35"
+   ],
+   "subject": "Gigantamax Charizard",
+   "blurb": "Black sleeves with an orange Gigantamax Charizard over a faint grey pattern of Energy type symbols, from the Champion's Path Elite Trainer Box.",
+   "count": 65,
+   "products": [
+    "swsh35/eliteTrainerBox"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsha-rect-224095.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/224095",
+    "https://toywiz.com/pokemon-trading-card-game-champions-path-elite-trainer-box/",
+    "https://facetofacegames.com/en-us/collections/pokemon-sealed/products/pokemon-tcg-champions-path-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "swsha-gmax-pikachu-etb",
+   "name": "Gigantamax Pikachu sleeves",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Gigantamax Pikachu",
+   "blurb": "Red-orange sleeves with a yellow Gigantamax Pikachu among dark-red lightning zigzags, the Vivid Voltage Elite Trainer Box set of 65.",
+   "count": 65,
+   "products": [
+    "swsh4/eliteTrainerBox"
+   ],
+   "src": {
+    "tcgplayer": 227647
+   },
+   "crop": [
+    2,
+    2,
+    296,
+    397
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/227647",
+    "https://toywiz.com/pokemon-trading-card-game-sword-shield-vivid-voltage-elite-trainer-box/"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "swsha-gmax-eevee-etb",
+   "name": "Gigantamax Eevee sleeves",
+   "sets": [
+    "swsh45"
+   ],
+   "subject": "Gigantamax Eevee",
+   "blurb": "Black sleeves with a copper Gigantamax Eevee and a gold zigzag line pattern, the Shining Fates Elite Trainer Box set of 65.",
+   "count": 65,
+   "products": [
+    "swsh45/eliteTrainerBox"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsha-rect-232635.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/232635",
+    "https://marriland.com/updates/shining-fates-elite-trainer-box-review/",
+    "https://facetofacegames.com/en-us/products/pokemon-tcg-shining-fates-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "swsha-ice-rider-calyrex-pc-etb",
+   "name": "Ice Rider Calyrex sleeves",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Ice Rider Calyrex",
+   "blurb": "Matte navy sleeves with a pale-blue Ice Rider Calyrex and Glastrier over a spiky white burst, exclusive to the Pokemon Center Chilling Reign Elite Trainer Box.",
+   "count": 65,
+   "products": [
+    "swsh6/pc-etb"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsha-rect-248790.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/248790",
+    "https://www.pokeguardian.com/639913_sword-shield-chilling-reign-product-line-up-revealed",
+    "https://pack-fresh.com/products/chilling-reign-pokemon-center-elite-trainer-box-ice-calyrex"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh1-1pack-coin",
+   "name": "Sword & Shield 1-pack blister coin",
+   "sets": [
+    "swsh1"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round silver-tone coin with black line art of two Pokemon heads side by side, coin that comes in the single-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh1/gossifleur-single-pack-blister",
+    "swsh1/wooloo-single-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh1__wooloo-single-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    175,
+    176,
+    90
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/206032",
+    "https://www.tcgplayer.com/product/206031"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh1-3pack-coin",
+   "name": "Sword & Shield 3-pack blister coin",
+   "sets": [
+    "swsh1"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round pale-gold coin with black line art of a fanged, curl-horned dragon-like head, coin that comes in the 3-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh1/morpeko-3-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh1__morpeko-3-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    213,
+    178,
+    77
+   ],
+   "backSrc": null,
+   "v": 2,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/206029"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh2-1pack-coin",
+   "name": "Rebel Clash 1-pack blister coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round gold coin with black line art of a crested, owl-like creature, coin that comes in the single-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh2/noctowl-single-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh2__noctowl-single-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    175,
+    172,
+    85
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/210565"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh2-3pack-coin",
+   "name": "Rebel Clash 3-pack blister coin",
+   "sets": [
+    "swsh2"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round pale-gold coin with black line art of a maned, wolf-like head in profile, coin that comes in the 3-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh2/duraludon-3-pack-blister",
+    "swsh2/rayquaza-3-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh2__duraludon-3-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    220,
+    191,
+    80
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/210567",
+    "https://www.tcgplayer.com/product/210568"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh3-1pack-coin",
+   "name": "Darkness Ablaze 1-pack blister coin",
+   "sets": [
+    "swsh3"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round green coin with a yellow-to-orange five-petal flower face in the centre, coin that comes in the single-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh3/hatenna-single-pack-blister",
+    "swsh3/pikachu-single-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh3__hatenna-single-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    160,
+    156,
+    70
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/216859",
+    "https://www.tcgplayer.com/product/216860"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh3-3pack-coin",
+   "name": "Darkness Ablaze 3-pack blister coin",
+   "sets": [
+    "swsh3"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round iridescent pale-blue coin with a small round-headed creature with big black eyes and drooping antennae, coin that comes in the 3-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh3/eevee-3-pack-blister",
+    "swsh3/flareon-3-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh3__eevee-3-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    220,
+    171,
+    83
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/216857",
+    "https://www.tcgplayer.com/product/216858"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh4-1pack-coin",
+   "name": "Vivid Voltage 1-pack blister coin",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round blue coin with a cyan line-art armoured head on dark blue, coin that comes in the single-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh4/grookey-single-pack-blister",
+    "swsh4/scorbunny-single-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh4__grookey-single-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    172,
+    168,
+    85
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/221746",
+    "https://www.tcgplayer.com/product/221747"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh4-3pack-coin",
+   "name": "Vivid Voltage 3-pack blister coin",
+   "sets": [
+    "swsh4"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round silver-grey coin with dense dark line art of a large horned, dinosaur-like beast head, coin that comes in the 3-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh4/sobble-3-pack-blister",
+    "swsh4/vaporeon-3-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh4__sobble-3-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    215,
+    186,
+    80
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/221744",
+    "https://www.tcgplayer.com/product/221745"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh5-1pack-coin",
+   "name": "Battle Styles 1-pack blister coin",
+   "sets": [
+    "swsh5"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round orange-red gradient coin with dark line art of a pointed, beaked head, coin that comes in the single-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh5/charmander-single-pack-blister",
+    "swsh5/arrokuda-single-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh5__arrokuda-single-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    170,
+    168,
+    86
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/229280",
+    "https://www.tcgplayer.com/product/229281"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh5-3pack-coin",
+   "name": "Battle Styles 3-pack blister coin",
+   "sets": [
+    "swsh5"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round yellow-green coin with a rainbow-tinted five-petal flower face in the centre, coin that comes in the 3-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh5/jolteon-3-pack-blister",
+    "swsh5/eevee-3-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh5__eevee-3-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    218,
+    173,
+    80
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/229282",
+    "https://www.tcgplayer.com/product/229283"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh6-1pack-coin",
+   "name": "Chilling Reign 1-pack blister coin",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round purple coin with dark line art of an armoured, rectangular head with a triangle on the forehead, coin that comes in the single-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh6/morpeko-single-pack-blister",
+    "swsh6/phanpy-single-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh6__morpeko-single-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    185,
+    184,
+    88
+   ],
+   "backSrc": null,
+   "v": 2,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/236273",
+    "https://www.tcgplayer.com/product/236272"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-swsh6-3pack-coin",
+   "name": "Chilling Reign 3-pack blister coin",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Line-art Pokemon coin (the Pokemon is not named by sources)",
+   "blurb": "A round iridescent purple-pink coin with a small round-headed creature with big black eyes and long ears, coin that comes in the 3-pack blisters of this set.",
+   "material": "plastic",
+   "products": [
+    "swsh6/eevee-3-pack-blister",
+    "swsh6/snorlax-3-pack-blister"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh6__eevee-3-pack-blister__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    222,
+    200,
+    83
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/236268",
+    "https://www.tcgplayer.com/product/236269"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-ice-rider-calyrex-coin",
+   "name": "Ice Rider Calyrex coin",
+   "sets": [
+    "swsh6"
+   ],
+   "subject": "Ice Rider Calyrex",
+   "blurb": "A mirror-silver metal coin with blue line art of Ice Rider Calyrex, included in the Pokemon Center Chilling Reign Elite Trainer Box.",
+   "material": "metal",
+   "products": [
+    "swsh6/pc-etb"
+   ],
+   "src": {
+    "file": "refs/swsh-a/swsh6__pc-etb__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    268,
+    254,
+    230
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/247281/pokemon-swsh06-chilling-reign-chilling-reign-pokemon-center-elite-trainer-box-ice-rider-calyrex-exclusive",
+    "https://www.pokeguardian.com/639913_sword-shield-chilling-reign-product-line-up-revealed"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-shiny-dragapult-coin",
+   "name": "Shiny Dragapult coin",
+   "sets": [
+    "swsh45"
+   ],
+   "subject": "Dragapult",
+   "blurb": "A teal-blue metal coin embossed with Dragapult on a dark recessed background, included in the Shining Fates Shiny Dragapult VMAX Premium Collection.",
+   "material": "metal",
+   "products": [
+    "swsh45/shiny-dragapult-vmax-premium-collection"
+   ],
+   "src": {
+    "render": {
+     "dex": 887,
+     "finish": "blue",
+     "holo": false
+    }
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/230392/pokemon-shining-fates-shining-fates-premium-collection-shiny-dragapult",
+    "https://facetofacegames.com/en-us/products/pokemon-tcg-shining-fates-premium-collection-shiny-dragapult-vmax"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "swsha-shiny-crobat-coin",
+   "name": "Shiny Crobat coin",
+   "sets": [
+    "swsh45"
+   ],
+   "subject": "Crobat",
+   "blurb": "A pink-plum metal coin embossed with Crobat and spread wings on a dark recessed background, included in the Shining Fates Shiny Crobat VMAX Premium Collection.",
+   "material": "metal",
+   "products": [
+    "swsh45/shiny-crobat-vmax-premium-collection"
+   ],
+   "src": {
+    "render": {
+     "dex": 169,
+     "finish": "pink",
+     "holo": false
+    }
+   },
+   "crop": null,
+   "circle": null,
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/230391/pokemon-shining-fates-shining-fates-premium-collection-shiny-crobat",
+    "https://obsidia-tcg.store/products/pokemon-tcg-shinning-fates-premium-collection-shiny-crobat-vmax"
+   ]
+  }
+ ],
+ "productRules": {}
+}

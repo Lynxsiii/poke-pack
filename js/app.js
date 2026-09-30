@@ -92,6 +92,8 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
+import { normalizeGear } from "./gear.js";
+import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=4";
 import { initBattles } from "./battles.js?v=2";
 import { initCasino } from "./casino.js";
 
@@ -142,6 +144,7 @@ function applyCloudSave(save) {
   state.stats = save.stats || null;
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
+  state.gear = normalizeGear(save.gear);
   if (save.createdAt) state.createdAt = save.createdAt;
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
@@ -164,6 +167,7 @@ function wipeProgressMemory() {
   state.stats = null;
   state.worthLog = [];
   state.binder = [];
+  state.gear = normalizeGear(null);
   // Screen memory belongs to the account that is gone: a secret revealed for one
   // trainer must not stay revealed for the next.
   achFilter = "all";
@@ -332,6 +336,7 @@ const els = {
   viewHome: document.getElementById("view-home"),
   viewShop: document.getElementById("view-shop"),
   viewBattles: document.getElementById("view-battles"),
+  viewGear: document.getElementById("view-gear"),
   viewCasino: document.getElementById("view-casino"),
   casinoBar: document.getElementById("casino-bar"),
   viewCollection: document.getElementById("view-collection"),
@@ -794,9 +799,14 @@ function tcgFace(card, { small = false, stamp = true, lazy = false } = {}) {
   </div>`;
 }
 
+/** The face-down card: the equipped sleeve when there is one, else the set's printed back. */
+function backSrc(set = liveSet) {
+  return cardBackSrc(state.gear, set?.cardBack || liveSet.cardBack);
+}
+
 function cardBack() {
   return `<div class="tcg back">
-    <img src="${esc(liveSet.cardBack)}" alt="Pokémon TCG card back" draggable="false" />
+    <img src="${esc(backSrc())}" alt="Pokémon TCG card back" draggable="false" />
   </div>`;
 }
 
@@ -3838,6 +3848,7 @@ const VIEW_SECTIONS = {
   home: "viewHome",
   shop: "viewShop",
   battles: "viewBattles",
+  gear: "viewGear",
   casino: "viewCasino",
   collection: "viewCollection",
   binder: "viewBinder",
@@ -3854,6 +3865,7 @@ const VIEW_PATHS = {
   home: "/home",
   shop: "/packs",
   battles: "/battles",
+  gear: "/gear",
   casino: "/casino",
   collection: "/bulk",
   binder: "/binder",
@@ -3872,6 +3884,9 @@ const PATH_VIEWS = {
   "/index.html": "home",
   "/packs": "shop",
   "/battles": "battles",
+  "/gear": "gear",
+  "/sleeves": "gear",
+  "/coins": "gear",
   "/casino": "casino",
   "/shop": "shop",
   "/bulk": "collection",
@@ -3893,6 +3908,7 @@ const VIEW_TITLES = {
   home: "poke-pack.rip — rip packs, fill the binder",
   shop: "Packs — poke-pack.rip",
   battles: "Pack battles — poke-pack.rip",
+  gear: "Sleeves & coins — poke-pack.rip",
   casino: "Casino — poke-pack.rip",
   collection: "Collection — poke-pack.rip",
   binder: "Binder — poke-pack.rip",
@@ -3912,6 +3928,7 @@ const VIEW_RENDER = {
   },
   shop: () => centerQuickSet(),
   battles: () => battles.show(battlePath),
+  gear: () => gearPage.show(),
   casino: () => casino.show(casinoPath),
   collection: () => renderCollection(),
   binder: () => renderBinder(),
@@ -4185,7 +4202,7 @@ function paintOpeningStage(wrap) {
   const overlay = els.overlay;
   if (!packGlowCache.has(wrap?.art)) overlay.style.setProperty("--pack-glow", PACK_GLOW_DEFAULT);
   if (wrap?.art) overlay.style.setProperty("--pack-mask", `url("${absUrl(wrap.art)}")`);
-  if (liveSet.cardBack) overlay.style.setProperty("--card-back", `url("${absUrl(liveSet.cardBack)}")`);
+  if (liveSet.cardBack) overlay.style.setProperty("--card-back", `url("${absUrl(backSrc())}")`);
   packGlow(wrap).then((rgb) => {
     if (activeWrapper === wrap) overlay.style.setProperty("--pack-glow", rgb || PACK_GLOW_DEFAULT);
   });
@@ -5215,6 +5232,7 @@ async function startSealed(productId) {
       [...new Set(packs.map((pack) => pack.set))].map((set) => loadSetData(set).catch(() => null))
     );
     const promos = (data.promos || []).map((card) => ({ ...card, reverse: false }));
+    const gift = Array.isArray(data.gear) ? data.gear : [];
     // The rest of the box (a deck's other cards, an ETB's Energy): each card of its own set.
     const boxCards = (data.boxCards || []).map((card) => ({ ...card, reverse: false }));
     await Promise.all(
@@ -5224,13 +5242,14 @@ async function startSealed(productId) {
       product: { ...offer, ...data.product },
       packs,
       promos,
+      gift,
       boxCards,
-      index: promos.length || boxCards.length ? -1 : 0,
+      index: promos.length || boxCards.length || gift.length ? -1 : 0,
       cost: data.cost,
     };
     renderHeader();
     renderShop();
-    if (promos.length || boxCards.length) showPromoIntro();
+    if (promos.length || boxCards.length || gift.length) showPromoIntro();
     else if (packs.length) presentPack(packs[0].wrapper, packs[0].cards, packs[0].set);
   } catch (err) {
     toast(err.message || "Couldn't open that box.");
@@ -5313,8 +5332,17 @@ function showPromoIntro() {
   );
   const fresh = [...promos, ...box].filter((card) => card.wasNew).length;
   const packs = run.packs.length;
+  const gift = run.gift || [];
+  const giftHead =
+    gift.some((g) => g.kind === "coin") && gift.some((g) => g.kind === "sleeve")
+      ? `Sleeves and a coin in the ${run.product.noun}.`
+      : gift.some((g) => g.kind === "coin")
+        ? `A coin in the ${run.product.noun}.`
+        : `Sleeves in the ${run.product.noun}.`;
   const head = !promos.length
-    ? `${boxTotal} cards in the ${run.product.noun}.`
+    ? boxTotal
+      ? `${boxTotal} cards in the ${run.product.noun}.`
+      : giftHead
     : promos.length === 1
       ? `${promos[0].name}, ${numberLine(promos[0])}.`
       : `${promos.length} promos in the ${run.product.noun}.`;
@@ -5347,6 +5375,7 @@ function showPromoIntro() {
         : ""
     }
     ${box.length ? boxCardsHtml(box, boxContents[`${liveSet.id}/${run.product.id}`]?.label || "The rest of the box") : ""}
+    ${giftHtml(gift, state.gear, { also: promos.length > 0 || box.length > 0 })}
     <p class="spread-tip">${
       `${promos.length === 1 ? "Your promo is" : promos.length ? "Your promos are" : "Your cards are"} saved. ${
         packs ? "The packs come next." : box.length ? "" : "The deck's other cards aren't simulated."
@@ -7055,6 +7084,17 @@ async function routeFromLocation() {
   setView("home", { history: "none" });
 }
 
+const gearPage = initGear({
+  root: els.viewGear,
+  user: () => cloudUser,
+  api,
+  getGear: () => state.gear,
+  setGear: (gear) => {
+    state.gear = normalizeGear(gear);
+  },
+  toast,
+});
+
 const battles = initBattles({
   root: els.viewBattles,
   user: () => cloudUser,
@@ -7083,7 +7123,7 @@ const battles = initBattles({
   cardFace: (card, opts) => tcgFace(card, opts),
   cardBack: (setId) => {
     const set = ALL_SETS.find((s) => s.id === setId) || liveSet;
-    return `<div class="tcg back"><img src="${esc(set.cardBack || liveSet.cardBack)}" alt="Pokémon TCG card back" draggable="false" /></div>`;
+    return `<div class="tcg back"><img src="${esc(backSrc(set))}" alt="Pokémon TCG card back" draggable="false" /></div>`;
   },
   // Battle pulls carry only what scoring needs; the face wants the full
   // catalog record (foil maps, subtypes, small scan). Fetches each set once.
@@ -7148,14 +7188,17 @@ const casino = initCasino({
   buzz,
   ownedCards: casinoOwnedCards,
   inspect: (card) => openInspect(card.id, Boolean(card.reverse), card.reverseKind || ""),
-  // The equipped coin's art comes from the coin collection once it exists;
-  // until then every flip uses the default coin.
-  coinArt: () => null,
+  // A flip remembers the coin id each player flipped with; the art is that coin's
+  // picture from the catalog (null = the house coin).
+  coinArt: (id) => {
+    const coin = getGearCatalog().coins?.[id];
+    return coin ? { id: coin.id, name: coin.name, image: coin.front } : null;
+  },
 });
 
 async function boot() {
   try {
-    await Promise.all([loadSealedPrices(), loadPatchNotes()]);
+    await Promise.all([loadSealedPrices(), loadPatchNotes(), loadGearCatalog()]);
     await refreshSession();
     // Friends and requests load now rather than on the next 5s poll, so the
     // Social page and the Friends badge are right on first paint.
@@ -7171,7 +7214,7 @@ async function boot() {
     renderHeader();
     scheduleDailyTick();
     const back = new Image();
-    back.src = liveSet.cardBack;
+    back.src = backSrc();
     await routeFromLocation();
 
     // Not awaited: the page is usable without it, and it refreshes home when done.

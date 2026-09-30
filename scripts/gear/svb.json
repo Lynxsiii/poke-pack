@@ -1,0 +1,746 @@
+{
+ "items": [
+  {
+   "kind": "sleeve",
+   "id": "svb-white-flare-reshiram-etb",
+   "name": "Reshiram sleeves",
+   "sets": [
+    "rsv10pt5"
+   ],
+   "subject": "Reshiram",
+   "blurb": "White card sleeves with a magenta panel, a black-and-white zebra-stripe border and a white Reshiram outlined in pink and black.",
+   "count": 65,
+   "products": [
+    "rsv10pt5/eliteTrainerBox",
+    "rsv10pt5/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-647648.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/630689/pokemon-sv-white-flare-white-flare-elite-trainer-box",
+    "https://www.tcgplayer.com/product/647648",
+    "https://obsidia-tcg.store/products/pokemon-tcg-black-white-flare-elite-trainer-box",
+    "https://pack-fresh.com/products/white-flare-elite-trainer-box",
+    "https://www.tcgplayer.com/product/630688/pokemon-sv-white-flare-white-flare-pokemon-center-elite-trainer-box-exclusive",
+    "https://smokeandmirrorshobby.com/products/white-flare-pokemon-center-elite-trainer-box-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-black-bolt-zekrom-etb",
+   "name": "Zekrom sleeves",
+   "sets": [
+    "zsv10pt5"
+   ],
+   "subject": "Zekrom",
+   "blurb": "Black card sleeves with a cyan panel, a black-and-white zebra-stripe border and a black Zekrom silhouette outlined in cyan.",
+   "count": 65,
+   "products": [
+    "zsv10pt5/eliteTrainerBox",
+    "zsv10pt5/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-647650.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/630686/pokemon-sv-black-bolt-black-bolt-elite-trainer-box",
+    "https://www.tcgplayer.com/product/647650",
+    "https://obsidia-tcg.store/products/pokemon-tcg-black-bolt-elite-trainer-box",
+    "https://www.tcgplayer.com/product/630687/pokemon-sv-black-bolt-black-bolt-pokemon-center-elite-trainer-box-exclusive",
+    "https://smokeandmirrorshobby.com/products/black-bolt-pokemon-center-elite-trainer-box-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-destined-rivals-giovanni-mewtwo-etb",
+   "name": "Giovanni and Mewtwo sleeves",
+   "sets": [
+    "sv10"
+   ],
+   "subject": "Team Rocket's Giovanni and Mewtwo",
+   "blurb": "Black carbon-fibre-look card sleeves with a thin red border showing Team Rocket's Giovanni in his black suit beside Mewtwo.",
+   "count": 65,
+   "products": [
+    "sv10/eliteTrainerBox",
+    "sv10/pc-etb"
+   ],
+   "src": {
+    "tcgplayer": 637450
+   },
+   "crop": [
+    137,
+    0,
+    863,
+    1000
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/624676/pokemon-sv10-destined-rivals-destined-rivals-elite-trainer-box",
+    "https://www.tcgplayer.com/product/637450",
+    "https://obsidia-tcg.store/products/pokemon-tcg-destined-rivals-elite-trainer-box",
+    "https://763collectibles.com/products/pokemon-destined-rivals-elite-trainer-box",
+    "https://victoryroadcollections.com/products/scarlet-and-violet-destined-rivals-elite-trainer-box",
+    "https://www.tcgplayer.com/product/624675/pokemon-sv10-destined-rivals-destined-rivals-pokemon-center-elite-trainer-box-exclusive",
+    "https://elite4tradingcards.com/products/destined-rivals-pokemon-center-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-temporal-forces-iron-leaves-etb",
+   "name": "Iron Leaves sleeves",
+   "sets": [
+    "sv5"
+   ],
+   "subject": "Iron Leaves",
+   "blurb": "Dark magenta foil card sleeves with a pale-green Iron Leaves over a gold circuit-line pattern.",
+   "count": 65,
+   "products": [
+    "sv5/eliteTrainerBox",
+    "sv5/pc-etb-iron-leaves",
+    "sv5/pc-etb-walking-wake"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-544188.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/532848/pokemon-sv05-temporal-forces-temporal-forces-elite-trainer-box-iron-leaves-ex",
+    "https://www.tcgplayer.com/product/544188",
+    "https://www.amazon.com/dp/B0CS7P4W8C",
+    "https://hobby-addicts.com/products/pokemon-temporal-forces-elite-trainer-box",
+    "https://card-binder.com/products/pokemon-tcg-temporal-forces-elite-trainer-box-iron-leaves",
+    "https://www.tcgplayer.com/product/532853/pokemon-sv05-temporal-forces-temporal-forces-pokemon-center-elite-trainer-box-exclusive-iron-leaves",
+    "https://pack-fresh.com/products/pokemon-s-v-temporal-forces-pokemon-center-elite-trainer-box-iron-leaves",
+    "https://adtcg.com/products/temporal-forces-pokemon-center-elite-trainer-box-iron-leaves"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-temporal-forces-walking-wake-etb",
+   "name": "Walking Wake sleeves",
+   "sets": [
+    "sv5"
+   ],
+   "subject": "Walking Wake",
+   "blurb": "Purple card sleeves with teal accents and a silvery-white foil Walking Wake.",
+   "count": 65,
+   "products": [
+    "sv5/etb-walking-wake",
+    "sv5/pc-etb-iron-leaves",
+    "sv5/pc-etb-walking-wake"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-544189.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/532845/pokemon-sv05-temporal-forces-temporal-forces-elite-trainer-box-walking-wake",
+    "https://www.tcgplayer.com/product/544189",
+    "https://obsidia-tcg.store/products/pokemon-tcg-temporal-forces-elite-trainer-box-walking-wake",
+    "https://pack-fresh.com/products/pokemon-temporal-forces-elite-trainer-box-walking-wake",
+    "https://www.tcgplayer.com/product/532853/pokemon-sv05-temporal-forces-temporal-forces-pokemon-center-elite-trainer-box-exclusive-iron-leaves",
+    "https://pack-fresh.com/products/pokemon-s-v-temporal-forces-pokemon-center-elite-trainer-box-iron-leaves",
+    "https://adtcg.com/products/temporal-forces-pokemon-center-elite-trainer-box-iron-leaves",
+    "https://www.tcgplayer.com/product/544188"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-twilight-masquerade-ogerpon-etb",
+   "name": "Teal Mask Ogerpon sleeves",
+   "sets": [
+    "sv6"
+   ],
+   "subject": "Teal Mask Ogerpon",
+   "blurb": "Teal and dark-green card sleeves with a pale-green outlined Teal Mask Ogerpon in the centre.",
+   "count": 65,
+   "products": [
+    "sv6/eliteTrainerBox",
+    "sv6/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-552790.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/543845/pokemon-sv06-twilight-masquerade-twilight-masquerade-elite-trainer-box",
+    "https://www.tcgplayer.com/product/552790",
+    "https://www.amazon.com/dp/B0CXY99B6D",
+    "https://www.collectorscache.com/catalog/pokemon_sleeves/pokemon_sv6_twilight_masquerade_teal_mask_ogerpon_elite_trainer_sleeves__65ct/716608",
+    "https://bleedingcool.com/games/pokemon-tcg-opening-twilight-masquerade-elite-trainer-box/",
+    "https://obsidia-tcg.store/products/pokemon-tcg-twilight-masquerade-elite-trainer-box",
+    "https://pkmn.store/products/pokemon-tcg-twilight-masquerade-elite-trainer-box",
+    "https://www.tcgplayer.com/product/543844/pokemon-sv06-twilight-masquerade-twilight-masquerade-pokemon-center-elite-trainer-box-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-shrouded-fable-kitakami-trio-etb",
+   "name": "Okidogi, Munkidori and Fezandipiti sleeves",
+   "sets": [
+    "sv6pt5"
+   ],
+   "subject": "Okidogi, Munkidori and Fezandipiti",
+   "blurb": "Black card sleeves with a purple and green border and the silver foil trio Okidogi, Munkidori and Fezandipiti.",
+   "count": 65,
+   "products": [
+    "sv6pt5/eliteTrainerBox",
+    "sv6pt5/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-575150.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/552999/pokemon-sv-shrouded-fable-shrouded-fable-elite-trainer-box",
+    "https://www.tcgplayer.com/product/575150",
+    "https://obsidia-tcg.store/products/pokemon-tcg-shrouded-fable-elite-trainer-box",
+    "https://pack-fresh.com/products/pokemon-s-v-shrouded-fable-elite-trainer-box",
+    "https://www.tcgplayer.com/product/552998/pokemon-sv-shrouded-fable-shrouded-fable-pokemon-center-elite-trainer-box-exclusive",
+    "https://pack-fresh.com/products/pokemon-s-v-shrouded-fable-pokemon-center-elite-trainer-box",
+    "https://elite4tradingcards.com/products/shrouded-fable-pokemon-center-elite-trainer-box-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-stellar-crown-terapagos-etb",
+   "name": "Stellar Terapagos sleeves",
+   "sets": [
+    "sv7"
+   ],
+   "subject": "Terapagos (Stellar Form)",
+   "blurb": "Royal-blue card sleeves with a silvery foil Stellar Form Terapagos and a pale triangle lattice pattern.",
+   "count": 65,
+   "products": [
+    "sv7/eliteTrainerBox",
+    "sv7/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-583520.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/557350/pokemon-sv07-stellar-crown-stellar-crown-elite-trainer-box",
+    "https://www.tcgplayer.com/product/583520",
+    "https://www.amazon.com/dp/B0D894GL5B",
+    "https://www.amazon.com/dp/B0DHL4RS83",
+    "https://obsidia-tcg.store/products/pokemon-tcg-stellar-crown-elite-trainer-box",
+    "https://hobby-addicts.com/products/pokemon-stellar-crown-elite-trainer-box",
+    "https://www.tcgplayer.com/product/557340/pokemon-sv07-stellar-crown-stellar-crown-pokemon-center-elite-trainer-box-exclusive",
+    "https://pack-fresh.com/products/stellar-crown-pokemon-center-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-surging-sparks-lightning-etb",
+   "name": "Lightning bolt sleeves",
+   "sets": [
+    "sv8"
+   ],
+   "subject": "Lightning bolt",
+   "blurb": "Dark navy and purple card sleeves with gold diagonal stripes and one large yellow lightning bolt.",
+   "count": 65,
+   "products": [
+    "sv8/eliteTrainerBox",
+    "sv8/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-598076.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/565630/pokemon-sv08-surging-sparks-surging-sparks-elite-trainer-box",
+    "https://www.tcgplayer.com/product/598076",
+    "https://obsidia-tcg.store/products/pokemon-tcg-surging-sparks-elite-trainer-box",
+    "https://hobby-addicts.com/products/pokemon-surging-sparks-elite-trainer-box",
+    "https://www.tcgplayer.com/product/565632/pokemon-sv08-surging-sparks-surging-sparks-pokemon-center-elite-trainer-box-exclusive",
+    "https://763collectibles.com/products/pokemon-surging-sparks-elite-trainer-box-pokemon-center-exclusive-w-magnetic-acrylic-copy",
+    "https://myfavoritehobby.shop/products/pokemon-center-surging-sparks-etb"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-prismatic-evolutions-eevee-etb",
+   "name": "Stellar Tera Eevee sleeves",
+   "sets": [
+    "sv8pt5"
+   ],
+   "subject": "Eevee (Stellar Tera form)",
+   "blurb": "Holographic silver card sleeves with Eevee as a Stellar Tera Pokemon surrounded by coloured gemstones.",
+   "count": 65,
+   "products": [
+    "sv8pt5/eliteTrainerBox",
+    "sv8pt5/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-614504.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/593355/pokemon-sv-prismatic-evolutions-prismatic-evolutions-elite-trainer-box",
+    "https://www.tcgplayer.com/product/614504",
+    "https://obsidia-tcg.store/products/pokemon-tcg-prismatic-evolution-elite-trainer-box",
+    "https://pack-fresh.com/products/pokemon-s-v-prismatic-evolutions-elite-trainer-box",
+    "https://zulusgames.com/products/pokemon-tcg-prismatic-evolution-elite-trainer-box-1",
+    "https://www.tcgplayer.com/product/593324/pokemon-sv-prismatic-evolutions-prismatic-evolutions-pokemon-center-elite-trainer-box-exclusive",
+    "https://zulusgames.com/products/pokemon-tcg-prismatic-evolutions-elite-trainer-box-pokemon-center-edition",
+    "https://763collectibles.com/products/pokemon-prismatic-evolutions-elite-trainer-box-pokemon-center-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-prismatic-evolutions-eeveelutions-super-premium",
+   "name": "Eevee and Evolutions sleeves",
+   "sets": [
+    "sv8pt5"
+   ],
+   "subject": "Eevee and its Evolutions",
+   "blurb": "Pastel rainbow card sleeves in a mint-green border with Eevee surrounded by Vaporeon, Jolteon, Flareon, Espeon, Umbreon, Leafeon, Glaceon and Sylveon.",
+   "count": 65,
+   "products": [
+    "sv8pt5/super-premium"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-634175.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/622770/pokemon-sv-prismatic-evolutions-prismatic-evolutions-super-premium-collection",
+    "https://www.tcgplayer.com/product/634175",
+    "https://obsidia-tcg.store/products/pokemon-tcg-prismatic-evolutions-super-premium-collection",
+    "https://hobby-addicts.com/products/pokemon-prismatic-evolutions-super-premium-collection"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-prismatic-evolutions-espeon-umbreon-premium-figure",
+   "name": "Espeon and Umbreon sleeves",
+   "sets": [
+    "sv8pt5"
+   ],
+   "subject": "Espeon and Umbreon",
+   "blurb": "Full-art card sleeves with Espeon and Umbreon leaping across a pink and blue sky.",
+   "count": 65,
+   "products": [
+    "sv8pt5/premium-figure"
+   ],
+   "src": {
+    "tcgplayer": 666507
+   },
+   "crop": [
+    34,
+    30,
+    688,
+    964
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/650799/pokemon-sv-prismatic-evolutions-prismatic-evolutions-premium-figure-collection",
+    "https://www.tcgplayer.com/product/666507",
+    "https://hobby-addicts.com/products/pokemon-prismatic-evolutions-premium-figure-collection",
+    "https://obsidia-tcg.store/products/pokemon-tcg-prismatic-evolutions-premium-figure-collection"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-journey-together-n-zoroark-etb",
+   "name": "N and Zoroark sleeves",
+   "sets": [
+    "sv9"
+   ],
+   "subject": "N and Zoroark",
+   "blurb": "Purple and magenta card sleeves with a teal border showing N in his white coat beside Zoroark.",
+   "count": 65,
+   "products": [
+    "sv9/eliteTrainerBox",
+    "sv9/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-639448.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/610930/pokemon-sv09-journey-together-journey-together-elite-trainer-box",
+    "https://www.tcgplayer.com/product/639448",
+    "https://obsidia-tcg.store/products/pokemon-tcg-journey-together-elite-trainer-box",
+    "https://pkmn.store/products/pokemon-tcg-journey-together-elite-trainer-box",
+    "https://www.tcgplayer.com/product/610929/pokemon-sv09-journey-together-journey-together-pokemon-center-elite-trainer-box-exclusive",
+    "https://763collectibles.com/products/pokemon-journey-together-elite-trainer-box-pokemon-center-exclusive-w-magnetic-acrylic-copy",
+    "https://common-lands.com/products/journey-together-pokemon-center-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "svb-lillie-clefairy-ptc",
+   "name": "Lillie and Clefairy sleeves",
+   "sets": [
+    "sv9"
+   ],
+   "subject": "Lillie and Clefairy",
+   "blurb": "Yellow-bordered card sleeves showing Lillie and Clefairy on a sunny beach.",
+   "count": 65,
+   "products": [
+    "sv9/ptc-lillie"
+   ],
+   "src": {
+    "file": "refs/sv-b/svb-rect-681600.png"
+   },
+   "crop": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/626605/pokemon-miscellaneous-cards-and-products-lillie-premium-tournament-collection-box",
+    "https://www.tcgplayer.com/product/681600",
+    "https://pack-fresh.com/products/lillie-premium-tournament-collection-box",
+    "https://www.smokeandmirrorshobby.com/products/pokemon-tcg-premium-tournament-collection-lillie-limit-1",
+    "https://obsidia-tcg.store/products/pokemon-tcg-lillie-premium-tournament-collection",
+    "https://www.pokebeach.com/2025/02/lillie-premium-tournament-collection-revealed-for-april"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-moltres-fire-energy-coin",
+   "name": "Fire Energy coin",
+   "sets": [
+    "sv10"
+   ],
+   "subject": "Fire Energy symbol",
+   "blurb": "Red glitter-foil metal coin with a black hexagonal frame around the white Fire Energy flame, included in the Team Rocket's Moltres ex Ultra-Premium Collection.",
+   "material": "metal",
+   "products": [
+    "sv10/upc-moltres"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv10__upc-moltres__coin-front.jpg"
+   },
+   "circle": [
+    300,
+    298,
+    283
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/656997/pokemon-miscellaneous-cards-and-products-team-rockets-moltres-ex-ultra-premium-collection",
+    "https://obsidia-tcg.store/products/pokemon-tcg-team-rocket-moltres-ex-ultra-premium-collection",
+    "https://www.pokebeach.com/2025/08/team-rockets-moltres-ex-ultra-premium-collection-revealed-for-november"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-fidough-coin",
+   "name": "Fidough coin",
+   "sets": [
+    "sv10"
+   ],
+   "subject": "Fidough",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Fidough, packed one per Destined Rivals single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv10/blister-eevee",
+    "sv10/blister-zarude"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv10__blister-eevee__coin-front.jpg"
+   },
+   "circle": [
+    162,
+    154,
+    137
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/633105/pokemon-sv10-destined-rivals-destined-rivals-single-pack-blister-eevee",
+    "https://adtcg.com/products/destined-rivals-single-pack-blister-eevee",
+    "https://nexus-entertainment.com/products/pokemon-destined-rivals-single-pack-blister-eevee",
+    "https://product-images.tcgplayer.com/fit-in/1000x1000/633105.jpg",
+    "https://www.cardmarket.com/en/Pokemon/Products/Coins/Destined-Rivals-Fidough-Coin",
+    "https://www.amazon.com/dp/B0FDKV39DG",
+    "https://www.tcgplayer.com/product/633106/pokemon-sv10-destined-rivals-destined-rivals-single-pack-blister-zarude",
+    "https://smokeandmirrorshobby.com/products/pokemon-tcg-scarlet-violet-destined-rivals-single-pack-blister-zarude-limit-1"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-pawmi-coin",
+   "name": "Pawmi coin",
+   "sets": [
+    "sv5"
+   ],
+   "subject": "Pawmi",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Pawmi, packed one per Temporal Forces single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv5/blister-carvanha",
+    "sv5/blister-bellibolt"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv5__blister-bellibolt__coin-front.jpg"
+   },
+   "circle": [
+    155,
+    157,
+    137
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/536284/pokemon-sv05-temporal-forces-temporal-forces-single-pack-blister-carvanha",
+    "https://pack-fresh.com/products/temporal-forces-single-pack-blister-carvanha",
+    "https://763collectibles.com/products/pokemon-temporal-forces-single-pack-blister-carvanha",
+    "https://product-images.tcgplayer.com/fit-in/1000x1000/536284.jpg",
+    "https://www.cardmarket.com/en/Pokemon/Products/Coins/Pawmi-Coin-Temporal-Forces-Blisters",
+    "https://www.amazon.com/dp/B0D8DBVQFS",
+    "https://www.tcgplayer.com/product/536594/pokemon-sv05-temporal-forces-temporal-forces-single-pack-blister-bellibolt",
+    "https://product-images.tcgplayer.com/fit-in/1000x1000/536594.jpg"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-lechonk-coin",
+   "name": "Lechonk coin",
+   "sets": [
+    "sv6"
+   ],
+   "subject": "Lechonk",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Lechonk, packed one per Twilight Masquerade single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv6/blister-pupitar",
+    "sv6/blister-toxel"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv6__blister-toxel__coin-front.jpg"
+   },
+   "circle": [
+    158,
+    156,
+    138
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/544177/pokemon-sv06-twilight-masquerade-twilight-masquerade-single-pack-blister-pupitar",
+    "https://pack-fresh.com/products/twilight-masquerade-single-pack-blister-pupitar",
+    "https://common-lands.com/products/twilight-masquerade-single-pack-blister-pupitar",
+    "https://product-images.tcgplayer.com/fit-in/1000x1000/544177.jpg",
+    "https://www.cardmarket.com/en/Pokemon/Products/Coins/Twilight-Masquerade-Lechonk-Coin",
+    "https://www.tcgplayer.com/product/544179/pokemon-sv06-twilight-masquerade-twilight-masquerade-single-pack-blister-toxel",
+    "https://pack-fresh.com/products/twilight-masquerade-single-pack-blister-toxel",
+    "https://common-lands.com/products/twilight-masquerade-single-pack-blister-toxel"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-stellar-crown-terapagos-coin",
+   "name": "Stellar Terapagos coin",
+   "sets": [
+    "sv7"
+   ],
+   "subject": "Terapagos (Stellar Form)",
+   "blurb": "Blue pearlescent metal coin with a black relief of Stellar Form Terapagos under four-point stars, included in the Terapagos ex Ultra-Premium Collection.",
+   "material": "metal",
+   "products": [
+    "sv7/terapagos-upc"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv7__terapagos-upc__coin-front.jpg"
+   },
+   "circle": [
+    189,
+    167,
+    126
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/575198/pokemon-miscellaneous-cards-and-products-terapagos-ex-ultra-premium-collection",
+    "https://www.pokebeach.com/2024/07/2024-ultra-premium-collection-releasing-in-november",
+    "https://hobby-addicts.com/products/pokemon-terapagos-ex-ultra-premium-collection",
+    "https://obsidia-tcg.store/products/pokemon-tcg-terapagos-ex-ultra-premium-collection"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-dragonite-coin",
+   "name": "Dragonite coin",
+   "sets": [
+    "sv7"
+   ],
+   "subject": "Dragonite",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Dragonite, packed one per Stellar Crown single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv7/blister-horsea",
+    "sv7/blister-porygon2"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv7__blister-horsea__coin-front.jpg"
+   },
+   "circle": [
+    159,
+    157,
+    136
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/557338/pokemon-sv07-stellar-crown-stellar-crown-single-pack-blister-horsea",
+    "https://obsidia-tcg.store/products/pokemon-tcg-stellar-crown-checklane-blister-horsea",
+    "https://smokeandmirrorshobby.com/products/pokemon-tcg-scarlet-violet-stellar-crown-single-pack-blister-horsea-9-9",
+    "https://product-images.tcgplayer.com/fit-in/1000x1000/557338.jpg",
+    "https://www.cardmarket.com/en/Pokemon/Products/Coins/Stellar-Crown-Dragonite-Coin",
+    "https://www.tcgplayer.com/product/557341/pokemon-sv07-stellar-crown-stellar-crown-single-pack-blister-porygon2",
+    "https://pack-fresh.com/products/stellar-crown-single-pack-blister-porygon2",
+    "https://common-lands.com/products/stellar-crown-single-pack-blister-porygon2"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-prismatic-eevee-coin",
+   "name": "Eevee coin",
+   "sets": [
+    "sv8pt5"
+   ],
+   "subject": "Eevee",
+   "blurb": "Gold-coloured metal coin with an embossed Eevee on a black background, packed in the Prismatic Evolutions 2-pack blister.",
+   "material": "metal",
+   "products": [
+    "sv8pt5/blister2-eevee"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv8pt5__blister2-eevee__coin-front.jpg"
+   },
+   "circle": [
+    200,
+    142,
+    130
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/609716/pokemon-sv-prismatic-evolutions-prismatic-evolutions-2-pack-blister-eevee",
+    "https://pack-fresh.com/products/pokemon-prismatic-evolutions-2-pack-blister-eevee",
+    "https://common-lands.com/products/pokemon-prismatic-evolutions-2-pack-blister-eevee",
+    "https://www.pokebeach.com/2024/11/prismatic-evolutions-2-pack-blister-features-eevee-to-release-on-pokemon-day",
+    "https://product-images.tcgplayer.com/fit-in/1000x1000/609716.jpg"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-lillie-coin",
+   "name": "Lillie coin",
+   "sets": [
+    "sv9"
+   ],
+   "subject": "Lillie",
+   "blurb": "Large green holo metal coin with a black relief portrait of Lillie, included in the Lillie Premium Tournament Collection.",
+   "material": "metal",
+   "products": [
+    "sv9/ptc-lillie"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv9__ptc-lillie__coin-front.jpg"
+   },
+   "circle": [
+    300,
+    295,
+    138
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/626605/pokemon-miscellaneous-cards-and-products-lillie-premium-tournament-collection-box",
+    "https://www.tcgplayer.com/product/681600",
+    "https://pack-fresh.com/products/lillie-premium-tournament-collection-box",
+    "https://www.smokeandmirrorshobby.com/products/pokemon-tcg-premium-tournament-collection-lillie-limit-1",
+    "https://obsidia-tcg.store/products/pokemon-tcg-lillie-premium-tournament-collection",
+    "https://www.pokebeach.com/2025/02/lillie-premium-tournament-collection-revealed-for-april"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "svb-greedent-coin",
+   "name": "Greedent coin",
+   "sets": [
+    "sv9"
+   ],
+   "subject": "Greedent",
+   "blurb": "Embossed pewter-toned jumbo coin with a relief of Greedent, packed one per Journey Together single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv9/blister-yanma",
+    "sv9/blister-scraggy"
+   ],
+   "src": {
+    "file": "refs/sv-b/sv9__blister-scraggy__coin-front.jpg"
+   },
+   "circle": [
+    157,
+    156,
+    136
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/610950/pokemon-sv09-journey-together-journey-together-single-pack-blister-yanma",
+    "https://smokeandmirrorshobby.com/products/pokemon-tcg-scarlet-violet-journey-together-single-pack-blister-yanma",
+    "https://763collectibles.com/products/pokemon-journey-together-single-pack-blister-yanma",
+    "https://product-images.tcgplayer.com/fit-in/1000x1000/610950.jpg",
+    "https://www.cardmarket.com/en/Pokemon/Products/Coins/Journey-Together-Greedent-Coin",
+    "https://www.amazon.com/dp/B0F4LSDG8R",
+    "https://www.tcgplayer.com/product/610949/pokemon-sv09-journey-together-journey-together-single-pack-blister-scraggy",
+    "https://pack-fresh.com/products/journey-together-single-pack-blister-scraggy"
+   ]
+  }
+ ],
+ "productRules": {
+  "sv5/pc-etb-iron-leaves": {
+   "pick": {
+    "sleeves": 1
+   }
+  },
+  "sv5/pc-etb-walking-wake": {
+   "pick": {
+    "sleeves": 1
+   }
+  }
+ }
+}

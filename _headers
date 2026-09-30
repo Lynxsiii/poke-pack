@@ -26,6 +26,8 @@
   Cache-Control: no-cache
 /battles/*
   Cache-Control: no-cache
+/gear
+  Cache-Control: no-cache
 /bulk
   Cache-Control: no-cache
 /binder

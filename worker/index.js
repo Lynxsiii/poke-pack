@@ -38,6 +38,8 @@ import {
 } from "./stats.js";
 import { activeChests, activeQuests, activeRowById, questPeriods, streakFromDays } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
+import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
+import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import {
   achievementById,
@@ -204,6 +206,9 @@ export async function handleApi(request, env, url) {
   if (path === "/api/binder" && method === "PUT") {
     return putBinder(request, env);
   }
+
+  const gear = await handleGear(path, method, request, env, { json, requireUser, readJson });
+  if (gear) return gear;
 
   await ensureSocialSchema(env);
   const social = await handleSocial(path, method, request, env, {
@@ -457,6 +462,7 @@ async function resetMe(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   await ensureAchievementSchema(env);
+  await ensureGearSchema(env);
   await ensureSocialSchema(env);
   const statsReady = await ensureQuestSchema(env);
   const now = Date.now();
@@ -470,6 +476,8 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
+    env.DB.prepare("DELETE FROM user_gear WHERE user_id = ?").bind(auth.user.id),
+    env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare(
       `UPDATE profiles SET coins = ?, last_daily = NULL, packs_opened = 0, pulls = 0,
         packs_since_hit = 0, pack_trick = 0, granted = ?, binder = ?, worth_log = ?, claimed = ?, created_at = ?
@@ -566,6 +574,10 @@ async function openSealed(request, env) {
     if (!card) fail(`Missing promo card ${id}.`, 500);
     return { ...card };
   });
+  // The sleeves and coins in the box come with it. What they are is decided
+  // here, the same way the promo cards are, and saved in the same purchase.
+  const gearItems = rollGear(productGear(await loadGearCatalog(env, request), live.id, offer.id));
+  const grant = await prepareGrant(env, auth.user.id, gearItems);
   // The rest of the box: a battle deck's other cards, an ETB's Energy. Each
   // one is the card of its own set (or a shared basic Energy), owned in
   // copies, and not a pull.
@@ -576,10 +588,11 @@ async function openSealed(request, env) {
     if (!card) fail(`Missing box card ${id} for ${offer.id}.`, 500);
     boxCards.push({ ...card, n });
   }
-  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, boxCards, { sealed: true });
+  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, boxCards, { sealed: true, extraStmts: grant.stmts });
   if (opened.response) return opened.response;
   return json({
     save: opened.save,
+    gear: grant.granted,
     product: { id: offer.id, name: offer.name, packs: opened.packs.length },
     packs: opened.packs.map((pack) => ({ setId: (pack.set || live).id, wrapperId: pack.wrapper.id, cards: pack.cards })),
     promos: opened.promos,
@@ -595,7 +608,7 @@ async function openSealed(request, env) {
  * `boxCards` are its other cards (`{...card, n}`): owned in `n` copies, not pulls.
  * Returns `{ response }` when the player can't afford it.
  */
-async function openPacks(env, userId, live, packs, cost, promos = [], boxCards = [], { sealed = false } = {}) {
+async function openPacks(env, userId, live, packs, cost, promos = [], boxCards = [], { sealed = false, extraStmts = [] } = {}) {
   const now = Date.now();
   // Counters first: an old account's lifetime hits are read out of pack_log
   // here, before this rip writes its own rows there.
@@ -728,6 +741,7 @@ async function openPacks(env, userId, live, packs, cost, promos = [], boxCards =
     );
   });
   stmts.push(env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, userId));
+  stmts.push(...extraStmts);
   if (statsReady) {
     tally.drought = Math.max(tally.drought, run);
     if (tally.hits) stmts.push(eventStmt(env, userId, "hits", tally.hits, now), bumpStatStmt(env, userId, "hitsPulled", tally.hits));
@@ -1212,6 +1226,7 @@ async function loadSave(env, userId) {
     claimed: normalizeClaimed(parseJson(profile.claimed, [])),
     quests,
     stats: { setPacks, counters: publicCounters(counters, quests), friends },
+    gear: await gearSummary(env, userId),
     activeSetId: profile.active_set_id || "me5",
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),

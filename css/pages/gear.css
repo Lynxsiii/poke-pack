@@ -1,0 +1,271 @@
+/* Sleeves and coins: the /gear page, the coin and sleeve objects other screens
+   borrow (the opening spread, the coinflip), and the detail sheet.
+   Loads after css/theme.css. Coins sit in round recesses, sleeves are card-shaped,
+   both on the same dark well as the binder; selection is ink, never a pill. */
+
+/* ---- The coin ---------------------------------------------------------------
+   One image holds both faces side by side (obverse left, reverse right), so a coin
+   is one file. `.flipped` turns it over. --s sets the size. */
+.gcoin {
+  --s: 72px;
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--s);
+  height: var(--s);
+  filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.5));
+}
+/* A coin turns over by squeezing to an edge and swapping faces (gear-page.js flips
+   the class halfway through), not by a 3D rotation: Safari and its kin draw the back
+   face through a 3D-turned element that also carries a filter. */
+.gcoin-in { position: absolute; inset: 0; }
+.gcoin.turning .gcoin-in { animation: gcoin-turn 0.5s cubic-bezier(0.4, 0, 0.6, 1); }
+@keyframes gcoin-turn {
+  0% { transform: scaleX(1) scaleY(1); }
+  50% { transform: scaleX(0.04) scaleY(1.06); }
+  100% { transform: scaleX(1) scaleY(1); }
+}
+.gcoin.sm { --s: 52px; }
+.gcoin.tile { --s: min(24vw, 96px); }
+.gcoin.lg { --s: 92px; }
+.gcoin.xl { --s: min(62vw, 260px); }
+.gcoin-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--coin) 0 0 / 200% 100% no-repeat;
+}
+.gcoin-face.back {
+  visibility: hidden;
+  background-position: 100% 0;
+}
+.gcoin.flipped .gcoin-face.front { visibility: hidden; }
+.gcoin.flipped .gcoin-face.back { visibility: visible; }
+/* The house coin has no photo: brushed brass, a Poké Ball struck in the middle. */
+.gcoin.is-house .gcoin-face {
+  display: grid;
+  place-items: center;
+  color: rgba(70, 46, 8, 0.72);
+  background:
+    radial-gradient(circle at 34% 28%, #f6df9a 0, #d8ad4d 38%, #a9791f 78%, #85590f 100%);
+  box-shadow: inset 0 0 0 3px rgba(255, 236, 170, 0.35), inset 0 0 0 5px rgba(90, 58, 6, 0.45);
+}
+.gcoin.is-house .gcoin-face svg { width: 62%; height: 62%; }
+.gcoin.is-house .gcoin-face.back { background-position: 0 0; }
+
+/* ---- The sleeve -------------------------------------------------------------
+   A sleeve is a card back (.tcg.back), so the site's card tilt applies. */
+.gsleeve { --w: 72px; width: var(--w); flex: none; aspect-ratio: 600 / 838; }
+.gsleeve img { width: 100%; height: 100%; display: block; }
+.gsleeve.sm { --w: 44px; }
+.gsleeve.tile { --w: min(22vw, 92px); }
+.gsleeve.lg { --w: 84px; }
+.gsleeve.xl { --w: min(52vw, 230px); }
+.gsleeve-standard {
+  display: block;
+  width: 60px;
+  aspect-ratio: 600 / 838;
+  border-radius: 6px;
+  background: url("../../assets/cards/shared/card-back-sm.webp") center / cover no-repeat;
+}
+
+/* ---- Page -------------------------------------------------------------------- */
+#view-gear { padding-bottom: 32px; }
+.gear-head h1 {
+  margin: 0 0 10px;
+  font-size: clamp(38px, 8vw, 60px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  font-variation-settings: "opsz" 96;
+}
+.gear-head .lede { max-width: 56ch; margin: 0 0 24px; font-size: 15px; line-height: 1.5; }
+
+.gear-table {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.gear-slot {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 18px;
+  border-radius: var(--r);
+  background: var(--well);
+  border: 1px solid var(--line);
+}
+.gear-slot-art {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  min-height: 96px;
+}
+.gear-slot-copy { display: grid; gap: 3px; min-width: 0; }
+.gear-slot-copy small { color: var(--muted); font-size: 13px; font-weight: 500; }
+.gear-slot-copy b { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+.gear-slot-copy span { color: var(--muted); font-size: 13px; }
+.gear-slot-copy .link-btn { justify-self: start; margin-top: 6px; font-size: 13px; }
+
+.gear-kinds { margin-bottom: 14px; }
+.gear-count { margin-left: 4px; color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
+.gear-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 4px 0 8px;
+}
+.gear-progress {
+  flex: 1;
+  height: 2px;
+  min-width: 40px;
+  background: var(--line-2);
+}
+.gear-progress i { display: block; height: 100%; background: var(--ink); }
+
+.gear-group { margin-top: 26px; }
+.gear-group h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.gear-group h2 small { margin-left: 6px; color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.gear-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.gear-tile {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 8px;
+  min-height: 0;
+  padding: 14px 8px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--ink-2);
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.gear-tile:hover { background: var(--surface-2); color: var(--ink); }
+.gear-tile.in-use { background: var(--surface-3); border-color: var(--line-2); }
+.gear-art { display: grid; place-items: center; min-height: 96px; }
+.gear-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.gear-meta { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.gear-tile.in-use .gear-meta { color: var(--ink); font-weight: 600; }
+.gear-tile.missing .gear-art { filter: grayscale(1) brightness(0.32) contrast(1.1); opacity: 0.9; }
+.gear-tile.missing .gear-name { color: var(--muted); }
+.gear-empty { margin: 32px 0; color: var(--muted); font-size: 14px; max-width: 46ch; }
+
+/* ---- Detail sheet ------------------------------------------------------------ */
+.gear-sheet {
+  width: min(440px, 100%);
+  max-width: 100%;
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  background: color-mix(in oklab, var(--black) 92%, rgb(var(--ambient)));
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.gear-sheet::backdrop { background: rgba(4, 4, 8, 0.72); }
+.gear-sheet-body { position: relative; display: grid; gap: 10px; padding: 22px 22px 22px; }
+.gear-sheet-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ink-2);
+}
+.gear-sheet-close svg { width: 20px; height: 20px; }
+.gear-sheet-close:hover { background: var(--surface-2); color: var(--ink); }
+.gear-stage {
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+  margin: 18px 0 6px;
+  border-radius: var(--r);
+  background: var(--well);
+}
+.gear-stage.missing .gcoin, .gear-stage.missing .gsleeve { filter: grayscale(1) brightness(0.4); }
+.gear-flip { padding: 0; border: 0; background: none; cursor: pointer; }
+.gear-sheet h2 { margin: 4px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.gear-sheet-note { margin: 0; color: var(--ink-2); font-size: 14px; }
+.gear-sheet-blurb { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.gear-found { display: grid; gap: 4px; margin-top: 4px; }
+.gear-found small { color: var(--muted); font-size: 13px; }
+.gear-found a { color: var(--ink); font-size: 14px; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
+.gear-sheet-actions { display: grid; margin-top: 10px; }
+.gear-sheet-actions button { width: 100%; min-height: 46px; }
+
+/* ---- On the opening spread: "Also in the box" ---------------------------------- */
+.spread-gear {
+  display: grid;
+  gap: 8px;
+  max-width: 520px;
+  margin: 26px auto 0;
+  text-align: left;
+}
+.spread-gear h3 { margin: 0 0 4px; font-size: 16px; font-weight: 700; }
+#overlay.is-spread .spread-gear { order: 4; }
+.gift {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}
+.gift-art { position: relative; flex: none; display: grid; place-items: center; width: 60px; }
+.gift-art .chip.new { position: absolute; top: -6px; right: -8px; padding: 1px 7px; }
+.gift-copy { display: grid; flex: 1; min-width: 0; gap: 1px; }
+.gift-copy b { font-size: 14px; font-weight: 650; }
+.gift-copy span { color: var(--muted); font-size: 12px; }
+.gift .ghost.sm { flex: none; min-height: 36px; padding: 6px 12px; font-size: 13px; }
+
+@media (min-width: 720px) {
+  .gear-table { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gear-grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+  .gcoin.tile { --s: 88px; }
+  .gsleeve.tile { --w: 84px; }
+  .gear-sheet { margin: auto; }
+}
+@media (max-width: 480px) {
+  .gift { flex-wrap: wrap; }
+  .gift-copy { flex-basis: calc(100% - 90px); }
+  .gift .ghost.sm { flex: 1 0 100%; }
+}
+@media (max-width: 719px) {
+  .gear-sheet { margin: auto 0 0; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .gear-slot { padding: 14px; gap: 14px; }
+  .gear-slot-art { width: 84px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gcoin.turning .gcoin-in { animation: none; }
+}
+
+/* A coin's picture is one file holding both faces side by side; the casino coin
+   shows one face per side, so crop it to the obverse (left half). */
+.cf-art[src*="/coins/"] { object-position: 0 50%; }

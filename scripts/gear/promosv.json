@@ -1,0 +1,405 @@
+{
+ "items": [
+  {
+   "kind": "sleeve",
+   "id": "psv-cel25-pikachu-etb",
+   "name": "Pokémon 25 Pikachu sleeves",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Pikachu head with Pokémon 25 logo",
+   "blurb": "Near-black card sleeves with a yellow outline of Pikachu's lightning tail over a faint pattern of Pokémon faces and the Pikachu-head Pokémon 25 logo.",
+   "count": 65,
+   "products": [
+    "cel25/eliteTrainerBox"
+   ],
+   "src": {
+    "file": "refs/promo-sv/cel25__eliteTrainerBox__sleeve.jpg"
+   },
+   "crop": [
+    32,
+    36,
+    688,
+    958
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/251631/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-celebrations-elite-trainer-box-card-sleeves-25-pikachu-65-pack",
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-cel25-pikachu-pc-etb",
+   "name": "Pokémon 25 lightning tail sleeves",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Pikachu head with Pokémon 25 logo",
+   "blurb": "White card sleeves with a grey pattern of Pokémon faces, the Pikachu-head Pokémon 25 logo and a big yellow and black lightning tail block; exclusive to the Pokémon Center box.",
+   "count": 65,
+   "products": [
+    "cel25/pc-etb"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-cel25-pc-etb.png"
+   },
+   "crop": [
+    0,
+    0,
+    630,
+    880
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/253855/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-celebrations-pokemon-center-exclusive-elite-trainer-box-card-sleeves-pokemon-25-logo-65-pack",
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-pgo-mewtwo-etb",
+   "name": "Pokémon GO silver Mewtwo sleeves",
+   "sets": [
+    "pgo"
+   ],
+   "subject": "Mewtwo",
+   "blurb": "Blue card sleeves with a silver foil Mewtwo over wavy contour lines, matching the Pokémon GO Elite Trainer Box art.",
+   "count": 65,
+   "products": [
+    "pgo/eliteTrainerBox"
+   ],
+   "src": {
+    "file": "refs/promo-sv/pgo__eliteTrainerBox__sleeve.jpg"
+   },
+   "crop": [
+    44,
+    14,
+    728,
+    980
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/278649/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-pokemon-go-elite-trainer-box-card-sleeves-mewtwo-65-pack",
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/pokemon-go-elite-trainer-box"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-pgo-mewtwo-pc-etb",
+   "name": "Pokémon GO skyscraper Mewtwo sleeves",
+   "sets": [
+    "pgo"
+   ],
+   "subject": "Mewtwo",
+   "blurb": "Navy-bordered card sleeves showing Mewtwo leaping past glass skyscrapers; exclusive to the Pokémon Center Elite Trainer Box Plus.",
+   "count": 65,
+   "products": [
+    "pgo/pc-etb"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-pgo-pc-etb.png"
+   },
+   "crop": [
+    0,
+    0,
+    630,
+    880
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/282566/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-pokemon-go-pokemon-center-elite-trainer-box-plus-card-sleeves-mewtwo-65-pack",
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/pokemon-go-pokemon-center-elite-trainer-box-plus"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-charizard-ex-premium",
+   "name": "Tera Charizard ex sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Charizard ex as a Tera Pokémon",
+   "blurb": "Red-bordered card sleeves with a crystal Terastallized Charizard roaring through flying crystal shards.",
+   "count": 65,
+   "products": [
+    "svp/charizard-ex-premium"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-svp-charizard-ex-premium.png"
+   },
+   "crop": [
+    0,
+    0,
+    630,
+    880
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/544608/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-charizard-ex-premium-collection-card-sleeves-charizard-as-a-tera-pokemon-65-pack",
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/charizard-ex-premium-collection"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-armarouge-ex-premium",
+   "name": "Armarouge and Ceruledge sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Armarouge and Ceruledge",
+   "blurb": "Dark-bordered card sleeves with fiery Armarouge and icy Ceruledge facing off across an orange and blue sky.",
+   "count": 65,
+   "products": [
+    "svp/armarouge-ex-premium"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-svp-armarouge-ex-premium.png"
+   },
+   "crop": [
+    0,
+    0,
+    630,
+    880
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/672586/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-armarouge-ex-premium-collection-card-sleeves-armarouge-and-ceruledge-65-pack",
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/armarouge-ex-premium-collection"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-ogerpon-ex-premium",
+   "name": "Teal Mask Ogerpon sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Teal Mask Ogerpon",
+   "blurb": "Teal-bordered card sleeves with a crystal Terastallized Teal Mask Ogerpon ex over a dark forest.",
+   "count": 65,
+   "products": [
+    "svp/ogerpon-ex-premium"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-svp-ogerpon-ex-premium.png"
+   },
+   "crop": [
+    0,
+    0,
+    630,
+    880
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/599731/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-ogerpon-ex-premium-collection-card-sleeves-65-pack",
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/ogerpon-ex-premium-collection"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-iono-ptc",
+   "name": "Iono sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Iono",
+   "blurb": "Magenta-bordered card sleeves showing Iono mid-stream with a small electric Pokémon on her shoulder and a big green Bellibolt below.",
+   "count": 65,
+   "products": [
+    "svp/iono-ptc"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-svp-iono-ptc.png"
+   },
+   "crop": [
+    0,
+    0,
+    630,
+    880
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/546464/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-iono-premium-tournament-collection-box-card-sleeves-65-pack",
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/iono-premium-tournament-collection"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-toolkit-2024-teal",
+   "name": "Teal Poké Ball sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Poké Ball",
+   "blurb": "Teal card sleeves with a large darker-teal Poké Ball and black and silver metallic corner panels.",
+   "count": 65,
+   "products": [
+    "svp/trainers-toolkit-2024"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-svp-trainers-toolkit-2024.png"
+   },
+   "crop": [
+    0,
+    0,
+    630,
+    880
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/587946/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-trainers-toolkit-2024-card-sleeves-65-pack",
+    "https://www.tcgplayer.com/product/564274/pokemon-miscellaneous-cards-and-products-pokemon-tcg-trainers-toolkit-2024"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "psv-toolkit-2025-purple",
+   "name": "Purple Poké Ball sleeves",
+   "sets": [
+    "svp"
+   ],
+   "subject": "Poké Ball",
+   "blurb": "Purple card sleeves with a large purple Poké Ball, black scale-pattern panels and silver trim.",
+   "count": 65,
+   "products": [
+    "svp/trainers-toolkit-2025"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-svp-trainers-toolkit-2025.png"
+   },
+   "crop": [
+    0,
+    0,
+    630,
+    880
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/668726/card-sleeves-pokemon-international-card-sleeves-pokemon-tcg-2025-trainers-toolkit-card-sleeves-65-pack",
+    "https://www.tcgplayer.com/product/653203/pokemon-miscellaneous-cards-and-products-pokemon-tcg-trainers-toolkit-2025"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "psv-pikachu-25-coin-gold",
+   "name": "Pokémon 25 gold foil coin",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Pikachu head (Pokémon 25 logo)",
+   "blurb": "A gold and rainbow foil coin with a black Pikachu-head Pokémon 25 logo inside two rings.",
+   "material": "foil",
+   "products": [
+    "cel25/dragapult-prime-collection"
+   ],
+   "src": {
+    "file": "refs/promo-sv/rect-cel25-dragapult-coin.png"
+   },
+   "crop": null,
+   "circle": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-collection-dragapult-prime",
+    "https://www.coolstuffinc.com/p/324486"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "psv-pikachu-25-coin-silver",
+   "name": "Pokémon 25 silver coin",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Pikachu head (Pokémon 25 logo)",
+   "blurb": "A silver metal coin embossed with the Pikachu-head Pokémon 25 logo inside concentric rings.",
+   "material": "metal",
+   "products": [
+    "cel25/ultra-premium-collection",
+    "cel25/pc-etb"
+   ],
+   "src": {
+    "file": "refs/promo-sv/cel25__ultra-premium-collection__coin-front.jpg"
+   },
+   "crop": null,
+   "circle": [
+    83,
+    92,
+    74
+   ],
+   "v": 1,
+   "evidence": "single-source",
+   "sources": [
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-ultra-premium-collection",
+    "https://www.collectorscache.com/catalog/pokemon_singles-pokemon_pins_badges__misc_items/pokemon_celebrations_ultrapremium_pikachu_metal_coin/653584",
+    "https://www.ebay.com/itm/157358428129"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "psv-mewtwo-go-coin",
+   "name": "Mewtwo holofoil coin",
+   "sets": [
+    "pgo"
+   ],
+   "subject": "Mewtwo",
+   "blurb": "A jumbo coin with a purple rainbow holofoil finish, packed in the Mewtwo V Battle Deck.",
+   "material": "foil",
+   "products": [
+    "pgo/mewtwo-v-battle-deck",
+    "pgo/mewtwo-melmetal-v-battle-deck-bundle"
+   ],
+   "src": {
+    "render": {
+     "dex": 150,
+     "finish": "purple",
+     "holo": true
+    }
+   },
+   "v": 1,
+   "evidence": "single-source",
+   "sources": [
+    "https://www.thegamer.com/pokemon-tcg-best-pokemon-coins/",
+    "https://www.cardmarket.com/en/Pokemon/Products/Coins/Pokemon-GO-Mewtwo-Coin-Mewtwo-V-Battle-Deck"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "psv-charizard-celebrations-coin",
+   "name": "Charizard metal coin",
+   "sets": [
+    "cel25"
+   ],
+   "subject": "Charizard",
+   "blurb": "A metallic coin featuring Charizard, packed in the Celebrations V Memories collection.",
+   "material": "metal",
+   "products": [
+    "cel25/v-memories-special-collection"
+   ],
+   "src": {
+    "render": {
+     "dex": 6,
+     "finish": "silver",
+     "holo": false
+    }
+   },
+   "v": 1,
+   "evidence": "inferred",
+   "sources": [
+    "https://www.pokemon.com/us/pokemon-tcg/product-gallery/celebrations-special-collection-v-memories"
+   ]
+  }
+ ],
+ "productRules": {}
+}
