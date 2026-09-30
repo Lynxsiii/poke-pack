@@ -57,7 +57,7 @@ import {
 } from "./achievements.js";
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
-import * as questArea from "./quest-area.js?v=1";
+import * as questArea from "./quest-area.js?v=2";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import {
   loadPriceHistory,
@@ -2505,6 +2505,7 @@ const areaDeps = {
   bannerVars,
   questRow: questRules.questById,
   chestCoins,
+  chestRow: (period, rows) => questRules.chestFor(period, rows),
 };
 
 function colorPicks(selected, attr = "data-color", label = "Avatar colour") {

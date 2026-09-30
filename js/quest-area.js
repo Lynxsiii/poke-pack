@@ -128,28 +128,34 @@ function chestRowHtml(period, rows, summary, deps, { fresh }) {
   const { esc, num } = deps;
   const claimed = new Set(summary.claimed || []);
   const id = `chest-${period.id}`;
-  const got = rows.filter((row) => claimed.has(row.id)).length;
-  const unlocked = rows.length > 0 && (got >= rows.length || Boolean(summary.chests?.[period.id]));
+  // A chest waits only for the quests it needs (battle wins never hold it shut).
+  const chest = deps.chestRow ? deps.chestRow(period.id, rows) : null;
+  const needs = chest?.needs ? rows.filter((row) => chest.needs.includes(row.id)) : rows;
+  const got = needs.filter((row) => claimed.has(row.id)).length;
+  const unlocked = needs.length > 0 && (got >= needs.length || Boolean(summary.chests?.[period.id]));
   const paid = claimed.has(id);
   const coins = deps.chestCoins ? deps.chestCoins(period.id, rows, summary) : 0;
+  const skipped = needs.length < rows.length;
   const name = `${period.id[0].toUpperCase()}${period.id.slice(1)} chest`;
   const state = paid ? "is-claimed" : unlocked ? "is-ready" : "is-open";
   const status = paid
     ? `<span class="qa-done">Opened</span>`
     : unlocked
       ? `<button class="solid sm qa-claim" type="button" data-quest-claim="${id}">Open</button>`
-      : `<span class="qa-count">${num(got)} of ${num(rows.length)}</span>`;
+      : `<span class="qa-count">${num(got)} of ${num(needs.length)}</span>`;
   const note = paid
     ? "Everything claimed. See you at the reset."
     : unlocked
       ? "Every quest claimed. The chest is open."
-      : `Claim ${rows.length === 1 ? "the quest" : `all ${rows.length} quests`} above to open it.`;
+      : needs.length === 1
+        ? "Claim the quest above to open it."
+        : `Claim ${skipped ? `${needs.length} quests above, battle wins aside,` : `all ${needs.length} quests above`} to open it.`;
   return `<li class="qrow qrow-chest ${state}${fresh.has(id) ? " is-fresh" : ""}">
     <b class="qrow-name"><svg class="qa-chest" viewBox="0 0 20 18" width="20" height="18" aria-hidden="true"><path d="M2 7h16v9H2zM1 3.5h18V7H1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 9.5h3v3h-3z" fill="currentColor"/></svg>${esc(name)}</b>
     <span class="qa-coin">${coins ? `${GLYPH} ${num(coins)}` : "Bonus"}</span>
     <p class="qrow-note">${esc(note)}</p>
     <span class="qrow-status">${status}</span>
-    ${paid ? "" : segments(got, rows.length)}
+    ${paid ? "" : segments(got, needs.length)}
   </li>`;
 }
 
@@ -195,12 +201,13 @@ export function questReadyCount(summary, deps) {
   let n = 0;
   for (const period of PERIODS) {
     const rows = (summary.active?.[period.id] || []).map((id) => deps.questRow(id)).filter(Boolean);
-    let got = 0;
+    const chest = deps.chestRow ? deps.chestRow(period.id, rows) : null;
+    const needs = chest?.needs ? rows.filter((row) => chest.needs.includes(row.id)) : rows;
     for (const row of rows) {
-      if (claimed.has(row.id)) got++;
-      else if (Number(summary.progress?.[row.id] || 0) >= row.goal) n++;
+      if (!claimed.has(row.id) && Number(summary.progress?.[row.id] || 0) >= row.goal) n++;
     }
-    if (rows.length && got >= rows.length && !claimed.has(`chest-${period.id}`)) n++;
+    const got = needs.filter((row) => claimed.has(row.id)).length;
+    if (needs.length && got >= needs.length && !claimed.has(`chest-${period.id}`)) n++;
   }
   return n;
 }
