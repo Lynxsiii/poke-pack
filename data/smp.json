@@ -1433,7 +1433,9 @@
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Secret",
-    "foilMap": "assets/foil/maps/smp/smp247.webp"
+    "foilMap": "assets/foil/maps/smp/smp247.webp",
+    "etchMap": "assets/foil/maps/smp/smp247-etch.webp",
+    "etchDrawn": true
   },
   {
     "id": "smp-smp248",
@@ -1482,6 +1484,8 @@
     "era": "sm",
     "promo": true,
     "foilAs": "Rare Secret",
-    "foilMap": "assets/foil/maps/smp/smp248.webp"
+    "foilMap": "assets/foil/maps/smp/smp248.webp",
+    "etchMap": "assets/foil/maps/smp/smp248-etch.webp",
+    "etchDrawn": true
   }
 ]

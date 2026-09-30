@@ -947,8 +947,8 @@ function eraYears(sets) {
     .map((set) => String(set.released).match(/\d{4}/)?.[0])
     .filter(Boolean);
   if (!years.length) return "";
-  const newest = years[0];
-  const oldest = years[years.length - 1];
+  const newest = years.reduce((a, b) => (b > a ? b : a));
+  const oldest = years.reduce((a, b) => (b < a ? b : a));
   return newest === oldest ? newest : `${oldest}–${newest}`;
 }
 
