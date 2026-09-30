@@ -4,6 +4,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import worker from '../worker/index.js';
 import {CardSpring} from '../js/card-motion.js';
 import {validateProfilePages,selectedProfilePages} from '../js/profile-pages.js';
+import {activeQuests} from '../js/quests.js';
 const db=new DatabaseSync(':memory:');
 for(const file of readdirSync(new URL('../worker/migrations/',import.meta.url)).sort()) {
   db.exec(readFileSync(new URL('../worker/migrations/'+file,import.meta.url),'utf8'));
@@ -70,12 +71,18 @@ assert.deepEqual(db.prepare('SELECT card_id,qty,reverse_qty FROM cards WHERE use
 assert.equal(response.body.save.binder[1].id,'me5-1');
 assert.equal(response.body.save.binder.filter(slot=>slot?.id==='me5-1').length,1);
 assert.equal((await request('/api/cards/sell-duplicates','POST',{setId:'me5'})).status,400);
-assert.equal(response.body.save.quests.progress['daily-spares'],5);
+// The daily list rotates, so the sold quest is only there on some days.
+const quests=response.body.save.quests;
+assert.equal(response.body.save.stats.counters.sold,5);
 assert.equal((await request('/api/quests/claim','POST',{id:'daily-rip'})).status,400);
-response=await request('/api/quests/claim','POST',{id:'daily-spares'});
-assert.equal(response.status,200,JSON.stringify(response.body));
-assert.equal(response.body.coins,20);
-assert.equal((await request('/api/quests/claim','POST',{id:'daily-spares'})).status,400);
+const soldQuest=activeQuests(quests.periods).daily.find(row=>row.kind==='sold');
+if(soldQuest) {
+  assert.equal(quests.progress[soldQuest.id],5);
+  response=await request('/api/quests/claim','POST',{id:soldQuest.id});
+  assert.equal(response.status,200,JSON.stringify(response.body));
+  assert.equal(response.body.coins,soldQuest.coins);
+  assert.equal((await request('/api/quests/claim','POST',{id:soldQuest.id})).status,400);
+}
 response=await request('/api/daily','POST');
 assert.equal(response.status,200,JSON.stringify(response.body));
 assert.equal(response.body.save.quests.progress['daily-bonus'],1);

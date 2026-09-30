@@ -18,23 +18,68 @@ const DDL = [
   "CREATE TABLE IF NOT EXISTS quest_claims (user_id TEXT NOT NULL, quest_id TEXT NOT NULL, period_start INTEGER NOT NULL, claimed_at INTEGER NOT NULL, PRIMARY KEY (user_id, quest_id, period_start), FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE)",
 ];
 
+// Counts a settled battle for every human seat, and a win for the seats the
+// result names. It rides the settlement insert, so it is exactly once and adds
+// no statement to the request that settles. It can never make a settlement
+// fail: it only reads seats, and skips a seat whose user no longer exists
+// (quest_events and player_stats hold a foreign key to users).
+export const BATTLE_STATS_TRIGGER = `CREATE TRIGGER IF NOT EXISTS battle_settle_quest_stats AFTER INSERT ON battle_settlements BEGIN
+  INSERT INTO quest_events (user_id, kind, amount, at)
+  SELECT s.user_id, 'battles', 1, NEW.at FROM battle_seats s
+  WHERE s.battle_id = NEW.battle_id AND s.bot = 0 AND s.user_id IN (SELECT id FROM users);
+  INSERT INTO quest_events (user_id, kind, amount, at)
+  SELECT s.user_id, 'battleWins', 1, NEW.at FROM battle_seats s JOIN battles b ON b.id = s.battle_id
+  WHERE s.battle_id = NEW.battle_id AND s.bot = 0 AND s.user_id IN (SELECT id FROM users)
+    AND EXISTS (SELECT 1 FROM json_each(b.result, '$.winners') w WHERE w.value = s.seat);
+  INSERT INTO player_stats (user_id, key, value)
+  SELECT s.user_id, 'battles', 1 FROM battle_seats s
+  WHERE s.battle_id = NEW.battle_id AND s.bot = 0 AND s.user_id IN (SELECT id FROM users)
+  ON CONFLICT(user_id, key) DO UPDATE SET value = value + 1;
+  INSERT INTO player_stats (user_id, key, value)
+  SELECT s.user_id, 'battleWins', 1 FROM battle_seats s JOIN battles b ON b.id = s.battle_id
+  WHERE s.battle_id = NEW.battle_id AND s.bot = 0 AND s.user_id IN (SELECT id FROM users)
+    AND EXISTS (SELECT 1 FROM json_each(b.result, '$.winners') w WHERE w.value = s.seat)
+  ON CONFLICT(user_id, key) DO UPDATE SET value = value + 1;
+END`;
+
 let schemaReady = false;
+let triggerReady = false;
+let triggerTriedAt = 0;
+const TRIGGER_RETRY_MS = 60_000;
 
 /** Tests only: forget the per-isolate cache so another database is checked. */
 export function resetQuestSchemaCache() {
   schemaReady = false;
+  triggerReady = false;
+  triggerTriedAt = 0;
 }
 
 /** Resolves true once the quest and stats tables exist; false (and retried next call) if they cannot be made. */
 export async function ensureQuestSchema(env) {
-  if (schemaReady) return true;
+  if (!schemaReady) {
+    try {
+      for (const sql of DDL) await env.DB.exec(`${sql};`);
+      schemaReady = true;
+    } catch (err) {
+      console.error("ensureQuestSchema", err);
+      return false;
+    }
+  }
+  if (!triggerReady) await ensureBattleStatsTrigger(env);
+  return true;
+}
+
+// The battle tables come from 0012 and may not exist yet, so this is retried
+// at most once a minute per isolate and never fails the caller.
+async function ensureBattleStatsTrigger(env) {
+  const now = Date.now();
+  if (now - triggerTriedAt < TRIGGER_RETRY_MS) return;
+  triggerTriedAt = now;
   try {
-    for (const sql of DDL) await env.DB.exec(`${sql};`);
-    schemaReady = true;
-    return true;
+    await env.DB.prepare(BATTLE_STATS_TRIGGER).run();
+    triggerReady = true;
   } catch (err) {
-    console.error("ensureQuestSchema", err);
-    return false;
+    if (!isMissingTable(err)) console.error("ensureBattleStatsTrigger", err);
   }
 }
 
@@ -178,30 +223,4 @@ export function clearStatsStmts(env, userId) {
     env.DB.prepare("DELETE FROM quest_events WHERE user_id = ?").bind(userId),
     env.DB.prepare("DELETE FROM quest_claims WHERE user_id = ?").bind(userId),
   ];
-}
-
-/**
- * Count a settled battle for every human seat, and a win for the seats the
- * result names. Called once, by whoever inserted the battle's settlement row.
- */
-export async function recordBattleStats(env, battleId, at) {
-  if (!(await ensureQuestSchema(env))) return;
-  const row = await env.DB.prepare("SELECT result FROM battles WHERE id = ?").bind(battleId).first();
-  let winners = [];
-  try {
-    winners = JSON.parse(row?.result || "{}").winners || [];
-  } catch {
-    winners = [];
-  }
-  const seats =
-    (await env.DB.prepare("SELECT seat, user_id FROM battle_seats WHERE battle_id = ? AND bot = 0").bind(battleId).all()).results || [];
-  const stmts = [];
-  for (const seat of seats) {
-    if (!seat.user_id) continue;
-    stmts.push(eventStmt(env, seat.user_id, "battles", 1, at), bumpStatStmt(env, seat.user_id, "battles", 1));
-    if (winners.includes(seat.seat)) {
-      stmts.push(eventStmt(env, seat.user_id, "battleWins", 1, at), bumpStatStmt(env, seat.user_id, "battleWins", 1));
-    }
-  }
-  if (stmts.length) await env.DB.batch(stmts);
 }

@@ -19,8 +19,20 @@ import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema }
 import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
-import { ensureQuestSchema } from "./stats.js";
-import { QUESTS, questPeriods } from "../js/quests.js";
+import {
+  bumpStatStmt,
+  clearStatsStmts,
+  ensureQuestSchema,
+  eventStmt,
+  friendsCount,
+  isMissingTable,
+  loadCounters,
+  maxStatStmt,
+  recordActivity,
+  setPacksFor,
+  setStatStmt,
+} from "./stats.js";
+import { activeChests, activeQuests, activeRowById, questPeriods, streakFromDays } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
 import {
   achievementById,
@@ -35,6 +47,14 @@ const COOKIE = "pp_sid";
 const STARTING_COINS = 25;
 const DAILY_BONUS = 100;
 const DAILY_COOLDOWN_MS = 60 * 60 * 1000;
+const DAY_MS = 86_400_000;
+// Quest events only feed the current month; claims also feed the streak.
+const QUEST_EVENT_KEEP_MS = 40 * DAY_MS;
+const QUEST_CLAIM_KEEP_MS = 400 * DAY_MS;
+const COUNTER_KEYS = [
+  "sold", "bonus", "sealed", "battles", "battleWins", "questsClaimed", "chests",
+  "hitsPulled", "maxDrought", "streak", "streakBest",
+];
 const PBKDF2_ITERS = 12_000;
 const BINDER_PAGE = 9;
 const BINDER_MAX_SLOTS = BINDER_PAGE * 40;
@@ -277,7 +297,9 @@ async function deleteAccount(request, env) {
     return json({ error: "Wrong password." }, 401);
   }
   const id = auth.user.id;
+  const statsReady = await ensureQuestSchema(env);
   await env.DB.batch([
+    ...(statsReady ? clearStatsStmts(env, id) : []),
     env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(id),
@@ -404,11 +426,13 @@ async function resetMe(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   await ensureAchievementSchema(env);
+  const statsReady = await ensureQuestSchema(env);
   const now = Date.now();
   const profile = await env.DB.prepare("SELECT active_set_id FROM profiles WHERE user_id = ?")
     .bind(auth.user.id)
     .first();
   await env.DB.batch([
+    ...(statsReady ? clearStatsStmts(env, auth.user.id) : []),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
@@ -502,7 +526,7 @@ async function openSealed(request, env) {
     if (!card) fail(`Missing promo card ${id}.`, 500);
     return { ...card };
   });
-  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos);
+  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, { sealed: true });
   if (opened.response) return opened.response;
   return json({
     save: opened.save,
@@ -519,8 +543,16 @@ async function openSealed(request, env) {
  * `promos` are the product's promo cards: owned like pulls, but not a pack.
  * Returns `{ response }` when the player can't afford it.
  */
-async function openPacks(env, userId, live, packs, cost, promos = []) {
+async function openPacks(env, userId, live, packs, cost, promos = [], { sealed = false } = {}) {
   const now = Date.now();
+  // Counters first: an old account's lifetime hits are read out of pack_log
+  // here, before this rip writes its own rows there.
+  const statsReady = await ensureQuestSchema(env);
+  let run = 0;
+  if (statsReady) {
+    await loadCounters(env, userId);
+    run = (await env.DB.prepare("SELECT packs_since_hit FROM profiles WHERE user_id = ?").bind(userId).first())?.packs_since_hit || 0;
+  }
   const ids = [
     ...new Set([...promos, ...packs.flatMap((pack) => pack.pulls)].map((card) => card.id)),
   ];
@@ -549,6 +581,7 @@ async function openPacks(env, userId, live, packs, cost, promos = []) {
   });
   let pulled = promoCards.length;
   let sinceHit = -1;
+  const tally = { hits: 0, fresh: promoCards.filter((card) => card.wasNew).length, reverses: 0, drought: 0 };
   const opened = packs.map((pack) => {
     const cards = [];
     let hits = 0;
@@ -557,7 +590,16 @@ async function openPacks(env, userId, live, packs, cost, promos = []) {
       qty[card.id] = (qty[card.id] || 0) + 1;
       if (card.reverse) reverseQty[card.id] = (reverseQty[card.id] || 0) + 1;
       if (isHit(card)) hits += 1;
+      if (wasNew) tally.fresh += 1;
+      if (card.reverse) tally.reverses += 1;
       cards.push({ ...card, reverse: Boolean(card.reverse), wasNew });
+    }
+    tally.hits += hits;
+    if (hits > 0) {
+      tally.drought = Math.max(tally.drought, run);
+      run = 0;
+    } else {
+      run += 1;
     }
     pulled += cards.length;
     sinceHit = hits > 0 ? 0 : sinceHit < 0 ? sinceHit : sinceHit + 1;
@@ -628,6 +670,14 @@ async function openPacks(env, userId, live, packs, cost, promos = []) {
     );
   });
   stmts.push(env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, userId));
+  if (statsReady) {
+    tally.drought = Math.max(tally.drought, run);
+    if (tally.hits) stmts.push(eventStmt(env, userId, "hits", tally.hits, now), bumpStatStmt(env, userId, "hitsPulled", tally.hits));
+    if (tally.fresh) stmts.push(eventStmt(env, userId, "newcards", tally.fresh, now));
+    if (tally.reverses) stmts.push(eventStmt(env, userId, "reverses", tally.reverses, now));
+    if (opened.length) stmts.push(maxStatStmt(env, userId, "maxDrought", tally.drought));
+    if (sealed) stmts.push(eventStmt(env, userId, "sealed", 1, now), bumpStatStmt(env, userId, "sealed", 1));
+  }
   await runBatches(env, stmts);
 
   await trimHistory(env, userId);
@@ -648,7 +698,7 @@ async function daily(request, env) {
   if (!updated.meta?.changes) {
     return json({ error: "Hourly bonus is not ready yet." }, 400);
   }
-  await recordQuestEvent(env, auth.user.id, "bonus", 1, now);
+  await recordActivity(env, auth.user.id, { event: "bonus", counter: "bonus", at: now });
   const save = await loadSave(env, auth.user.id);
   return json({ save, amount: DAILY_BONUS });
 }
@@ -667,8 +717,8 @@ async function claimAchievement(request, env) {
   const body = await readJson(request);
   const save = await loadSave(env, auth.user.id);
   const claimed = new Set(save.claimed);
-  const rarities = await rarityCountsFor(env, request, save.collection);
-  const ctx = achievementContext(save, { signed: true, rarities });
+  const { rarities, cards } = await ownedCardsFor(env, request, save.collection);
+  const ctx = achievementContext(save, { signed: true, rarities, cards });
 
   let ids;
   if (body?.all) {
@@ -705,73 +755,140 @@ async function claimAchievement(request, env) {
   });
 }
 
+/**
+ * Cash in a quest or a period chest. The list of what is active, the goals and
+ * the coins all come from js/quests.js and the progress from the database, so
+ * the body only names an id. Each (id, period) pays once: the claim row is the
+ * gate and the coin credit is tied to that insert.
+ */
 async function claimQuest(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   const body = await readJson(request);
-  const quest = QUESTS.find(row => row.id === body?.id);
-  if (!quest) return json({ error: "Unknown quest." }, 400);
+  const id = String(body?.id || "");
   const summary = await questSummary(env, auth.user.id);
   if (summary.unavailable) return json({ error: "Quests are being prepared. Try again shortly." }, 503);
-  if ((summary.progress[quest.id] || 0) < quest.goal) return json({ error: "Quest is not complete yet." }, 400);
-  if (summary.claimed.includes(quest.id)) return json({ error: "Already claimed this period." }, 400);
-  const period = summary.periods[quest.period];
+  const active = activeQuests(summary.periods);
+  const row = activeRowById(id, active);
+  if (!row) return json({ error: "Unknown quest." }, 400);
+  if (summary.claimed.includes(row.id)) return json({ error: "Already claimed this period." }, 400);
+  if (row.chest) {
+    if (!summary.chests[row.period]) return json({ error: "Claim every quest first." }, 400);
+  } else if ((summary.progress[row.id] || 0) < row.goal) {
+    return json({ error: "Quest is not complete yet." }, 400);
+  }
+
+  const now = Date.now();
+  const period = summary.periods[row.period];
   const results = await env.DB.batch([
     env.DB.prepare(
       "INSERT OR IGNORE INTO quest_claims (user_id, quest_id, period_start, claimed_at) VALUES (?, ?, ?, ?)"
-    ).bind(auth.user.id, quest.id, period, Date.now()),
+    ).bind(auth.user.id, row.id, period, now),
     env.DB.prepare(
       "UPDATE profiles SET coins = coins + ?, granted = granted + ? WHERE user_id = ? AND changes() = 1"
-    ).bind(quest.coins, quest.coins, auth.user.id),
+    ).bind(row.coins, row.coins, auth.user.id),
   ]);
-  try {
-    await env.DB.batch([
-      env.DB.prepare("DELETE FROM quest_events WHERE user_id = ?").bind(auth.user.id),
-      env.DB.prepare("DELETE FROM quest_claims WHERE user_id = ?").bind(auth.user.id),
-    ]);
-  } catch (err) {
-    if (!String(err?.message || err).includes("no such table")) throw err;
-  }
   if (!results[0]?.meta?.changes) return json({ error: "Already claimed this period." }, 400);
-  return json({ save: await loadSave(env, auth.user.id), coins: quest.coins, name: quest.name });
+
+  // The day's streak comes from the claim days on record, then is kept in
+  // player_stats so a read needs no scan.
+  const today = Math.floor(now / DAY_MS);
+  const days =
+    (
+      await env.DB.prepare(
+        "SELECT DISTINCT claimed_at / 86400000 AS d FROM quest_claims WHERE user_id = ? AND claimed_at >= ? ORDER BY d DESC"
+      )
+        .bind(auth.user.id, now - QUEST_CLAIM_KEEP_MS)
+        .all()
+    ).results || [];
+  const streak = streakFromDays(new Set(days.map((r) => r.d)), today);
+  await env.DB.batch([
+    bumpStatStmt(env, auth.user.id, row.chest ? "chests" : "questsClaimed", 1),
+    setStatStmt(env, auth.user.id, "streak", streak),
+    setStatStmt(env, auth.user.id, "_streakDay", today),
+    maxStatStmt(env, auth.user.id, "streakBest", streak),
+    // Old rows only: nothing this period or the last month is ever dropped.
+    env.DB.prepare("DELETE FROM quest_events WHERE user_id = ? AND at < ?").bind(auth.user.id, now - QUEST_EVENT_KEEP_MS),
+    env.DB.prepare("DELETE FROM quest_claims WHERE user_id = ? AND claimed_at < ?").bind(auth.user.id, now - QUEST_CLAIM_KEEP_MS),
+  ]);
+  return json({
+    save: await loadSave(env, auth.user.id),
+    coins: row.coins,
+    name: row.name,
+    chest: Boolean(row.chest),
+    streak,
+  });
 }
 
-async function recordQuestEvent(env, userId, kind, amount, at = Date.now()) {
-  if (!amount) return;
-  // During rollout the Worker may deploy before migrations are applied.
-  try {
-    await env.DB.prepare(
-      "INSERT INTO quest_events (user_id, kind, amount, at) VALUES (?, ?, ?, ?)"
-    ).bind(userId, kind, amount, at).run();
-  } catch (err) {
-    if (!String(err?.message || err).includes("no such table")) throw err;
-  }
-}
-
-async function questSummary(env, userId) {
+/**
+ * Progress, claims, chests and the streak for the current periods. Pack
+ * quests count pack_log (a box is 36 packs, a battle's packs count too); the
+ * rest come from quest_events, which the Worker writes where each thing
+ * happens. Progress is only returned for the quests that are active today.
+ */
+async function questSummary(env, userId, counters = null) {
   const periods = questPeriods();
-  if (!(await ensureQuestSchema(env))) return { periods, progress: {}, claimed: [], unavailable: true };
+  const active = activeQuests(periods);
+  const chestRows = activeChests(active);
+  const base = {
+    periods,
+    active: {
+      daily: active.daily.map((row) => row.id),
+      weekly: active.weekly.map((row) => row.id),
+      monthly: active.monthly.map((row) => row.id),
+    },
+    progress: {},
+    claimed: [],
+    streak: 0,
+    streakBest: 0,
+    chests: { daily: false, weekly: false, monthly: false },
+    chestCoins: { daily: chestRows.daily.coins, weekly: chestRows.weekly.coins, monthly: chestRows.monthly.coins },
+  };
+  if (!(await ensureQuestSchema(env))) return { ...base, unavailable: true };
   try {
     const packs = await env.DB.prepare(
-      "SELECT COUNT(*) AS weekly, SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS daily FROM pack_log WHERE user_id = ? AND at >= ?"
-    ).bind(periods.daily, userId, periods.weekly).first();
+      `SELECT COUNT(*) AS monthly, SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS weekly,
+         SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS daily FROM pack_log WHERE user_id = ? AND at >= ?`
+    ).bind(periods.weekly, periods.daily, userId, periods.monthly).first();
     const events = (await env.DB.prepare(
-      "SELECT kind, SUM(amount) AS weekly, SUM(CASE WHEN at >= ? THEN amount ELSE 0 END) AS daily FROM quest_events WHERE user_id = ? AND at >= ? GROUP BY kind"
-    ).bind(periods.daily, userId, periods.weekly).all()).results || [];
+      `SELECT kind, SUM(amount) AS monthly, SUM(CASE WHEN at >= ? THEN amount ELSE 0 END) AS weekly,
+         SUM(CASE WHEN at >= ? THEN amount ELSE 0 END) AS daily FROM quest_events WHERE user_id = ? AND at >= ? GROUP BY kind`
+    ).bind(periods.weekly, periods.daily, userId, periods.monthly).all()).results || [];
     const claims = (await env.DB.prepare(
-      "SELECT quest_id, period_start FROM quest_claims WHERE user_id = ? AND period_start IN (?, ?)"
-    ).bind(userId, periods.daily, periods.weekly).all()).results || [];
-    const counts = { packs: { daily: packs?.daily || 0, weekly: packs?.weekly || 0 } };
-    for (const row of events) counts[row.kind] = { daily: row.daily || 0, weekly: row.weekly || 0 };
+      "SELECT quest_id, period_start FROM quest_claims WHERE user_id = ? AND period_start IN (?, ?, ?)"
+    ).bind(userId, periods.daily, periods.weekly, periods.monthly).all()).results || [];
+    const counts = { packs: { daily: packs?.daily || 0, weekly: packs?.weekly || 0, monthly: packs?.monthly || 0 } };
+    for (const row of events) counts[row.kind] = { daily: row.daily || 0, weekly: row.weekly || 0, monthly: row.monthly || 0 };
+
+    const have = new Set(claims.map((row) => `${row.quest_id}:${row.period_start}`));
+    const claimed = [];
+    const progress = {};
+    const chests = {};
+    for (const period of ["daily", "weekly", "monthly"]) {
+      let all = true;
+      for (const row of active[period]) {
+        progress[row.id] = counts[row.kind]?.[period] || 0;
+        if (have.has(`${row.id}:${periods[period]}`)) claimed.push(row.id);
+        else all = false;
+      }
+      chests[period] = all;
+      if (have.has(`${chestRows[period].id}:${periods[period]}`)) claimed.push(chestRows[period].id);
+    }
+
+    const stored = counters || (await loadCounters(env, userId));
+    const today = Math.floor(periods.daily / DAY_MS);
+    // A streak survives until a whole UTC day passes without a claim.
+    const live = (stored._streakDay || 0) >= today - 1 ? stored.streak || 0 : 0;
     return {
-      periods,
-      progress: Object.fromEntries(QUESTS.map(row => [row.id, counts[row.kind]?.[row.period] || 0])),
-      claimed: claims.filter(row => QUESTS.some(quest => quest.id === row.quest_id && periods[quest.period] === row.period_start)).map(row => row.quest_id),
+      ...base,
+      progress,
+      claimed,
+      chests,
+      streak: live,
+      streakBest: Math.max(stored.streakBest || 0, live),
     };
   } catch (err) {
-    if (String(err?.message || err).includes("no such table")) {
-      return { periods, progress: {}, claimed: [], unavailable: true };
-    }
+    if (isMissingTable(err)) return { ...base, unavailable: true };
     throw err;
   }
 }
@@ -817,7 +934,7 @@ async function sell(request, env) {
   ]);
   if (!results[0]?.meta?.changes) return json({ error: 'Collection changed. Try again.' }, 409);
 
-  if (owned.qty > 1) await recordQuestEvent(env, auth.user.id, "sold", 1);
+  await recordActivity(env, auth.user.id, { event: owned.qty > 1 ? "sold" : null, counter: "sold" });
   const save = await loadSave(env, auth.user.id);
   return json({ save, value });
 }
@@ -864,7 +981,7 @@ async function sellDuplicates(request, env) {
     ).bind(auth.user.id, snapshot),
   ]);
   if (!results[0]?.meta?.changes) return json({ error: "Collection changed. Try again." }, 409);
-  await recordQuestEvent(env, auth.user.id, "sold", copies);
+  await recordActivity(env, auth.user.id, { event: "sold", counter: "sold", amount: copies });
   return json({ save: await loadSave(env, auth.user.id), copies, value });
 }
 
@@ -955,28 +1072,47 @@ function normalizeClaimed(list) {
 }
 
 async function rarityCountsFor(env, request, collection) {
-  const counts = {};
+  return (await ownedCardsFor(env, request, collection)).rarities;
+}
+
+/**
+ * Rarity counts plus `cards`, `{ id, name, rarity, setId }` for every owned
+ * card the catalog knows: the `opts.cards` that achievementContext reads.
+ */
+async function ownedCardsFor(env, request, collection) {
+  const rarities = {};
+  const cards = [];
   for (const [id, n] of Object.entries(collection || {})) {
     if (!n) continue;
     const card = await findCatalogCard(env, request, id);
-    if (card?.rarity) counts[card.rarity] = (counts[card.rarity] || 0) + 1;
+    if (!card) continue;
+    if (card.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
+    const set = ALL_SETS.find((row) => id.startsWith(`${row.id}-`));
+    cards.push({ id: card.id, name: card.name, rarity: card.rarity, setId: set ? set.id : id.split("-")[0] });
   }
-  return counts;
+  return { rarities, cards };
 }
 
 async function loadSave(env, userId) {
-  const profile = await env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first();
+  await ensureQuestSchema(env);
+  // Independent reads, run together: this is called on every rip.
+  const [profile, inventory, historyRows, counters, setPacks, friends] = await Promise.all([
+    env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first(),
+    inventoryMap(env, userId),
+    env.DB.prepare(
+      `SELECT card_id AS id, name, rarity, reverse, was_new AS wasNew, pack_id AS packId, at
+       FROM history WHERE user_id = ? ORDER BY at DESC LIMIT 24`
+    )
+      .bind(userId)
+      .all()
+      .then((res) => res.results || []),
+    loadCounters(env, userId),
+    setPacksFor(env, userId),
+    friendsCount(env, userId),
+  ]);
   if (!profile) fail("Missing profile.", 500);
-  const { collection, reverses } = await inventoryMap(env, userId);
-  const historyRows =
-    (
-      await env.DB.prepare(
-        `SELECT card_id AS id, name, rarity, reverse, was_new AS wasNew, pack_id AS packId, at
-         FROM history WHERE user_id = ? ORDER BY at DESC LIMIT 24`
-      )
-        .bind(userId)
-        .all()
-    ).results || [];
+  const { collection, reverses } = inventory;
+  const quests = await questSummary(env, userId, counters);
   return {
     coins: money(profile.coins),
     collection,
@@ -997,12 +1133,25 @@ async function loadSave(env, userId) {
     })),
     granted: money(profile.granted),
     claimed: normalizeClaimed(parseJson(profile.claimed, [])),
-    quests: await questSummary(env, userId),
+    quests,
+    stats: { setPacks, counters: publicCounters(counters, quests), friends },
     activeSetId: profile.active_set_id || "me5",
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),
     worthLog: Array.isArray(parseJson(profile.worth_log, [])) ? parseJson(profile.worth_log, []).slice(-200) : [],
   };
+}
+
+/** Counters as the client sees them: no bookkeeping keys, the live streak, the known keys always present. */
+function publicCounters(stored, quests) {
+  const out = {};
+  for (const key of COUNTER_KEYS) out[key] = 0;
+  for (const [key, value] of Object.entries(stored || {})) {
+    if (!key.startsWith("_")) out[key] = value;
+  }
+  out.streak = quests?.streak || 0;
+  out.streakBest = quests?.streakBest || 0;
+  return out;
 }
 
 async function runBatches(env, stmts) {
