@@ -200,3 +200,20 @@ export function isTitleUnlocked(name, ctx) {
     return row.id === "rookie";
   }
 }
+
+/**
+ * Every copy a player owns as `{ cardId: qty }`: the raw sellable counts in
+ * save.collection plus one per active slab in save.graded (a graded copy left
+ * `cards` for its case but is still theirs). The client and the Worker both
+ * count completion, rarities and achievements from this map.
+ */
+export function ownedMap(save) {
+  const owned = {};
+  for (const [id, n] of Object.entries(save?.collection || {})) {
+    if (n > 0) owned[id] = n;
+  }
+  for (const slab of Array.isArray(save?.graded) ? save.graded : []) {
+    if (slab?.cardId) owned[slab.cardId] = (owned[slab.cardId] || 0) + 1;
+  }
+  return owned;
+}

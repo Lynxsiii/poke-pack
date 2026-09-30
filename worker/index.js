@@ -20,7 +20,7 @@ import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, 
 import { DEFAULT_BANNER } from "../js/cosmetics.js";
 import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
-import { isTitleUnlocked, titleContext } from "../js/titles.js";
+import { isTitleUnlocked, ownedMap, titleContext } from "../js/titles.js";
 import {
   bumpStatStmt,
   clearStatsStmts,
@@ -41,6 +41,7 @@ import { handleBattles, maintainBattles } from "./battles.js";
 import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
+import { ensureGradingSchema, gradedSlabs, handleGrading } from "./grading.js";
 import {
   achievementById,
   achievementContext,
@@ -147,6 +148,10 @@ export async function handleApi(request, env, url) {
     return handleCasino(path, method, request, env, {
       json, requireUser, readJson, loadSave, loadSetCards, findCatalogCard, inventoryMap, reconcileBinder, parseJson, ensureSocialSchema, recordQuestEvent,
     });
+  }
+
+  if (path.startsWith('/api/grading')) {
+    return handleGrading(path, method, request, env, { json, requireUser, readJson, loadSave, findCatalogCard, recordQuestEvent });
   }
 
   if (path === "/api/health" && method === "GET") {
@@ -392,7 +397,7 @@ async function patchMe(request, env) {
   if (body.title != null) {
     const nextTitle = String(body.title || "").slice(0, 32);
     const save = await loadSave(env, user.id);
-    const rarities = await rarityCountsFor(env, request, save.collection);
+    const rarities = await rarityCountsFor(env, request, ownedMap(save));
     const ctx = titleContext(save, { signed: true, rarities });
     if (!isTitleUnlocked(nextTitle, ctx)) return json({ error: "That title is locked." }, 400);
     title = nextTitle;
@@ -463,6 +468,7 @@ async function resetMe(request, env) {
   if (auth.response) return auth.response;
   await ensureAchievementSchema(env);
   await ensureGearSchema(env);
+  await ensureGradingSchema(env);
   await ensureSocialSchema(env);
   const statsReady = await ensureQuestSchema(env);
   const now = Date.now();
@@ -478,6 +484,8 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM user_gear WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
+    env.DB.prepare("DELETE FROM graded_cards WHERE user_id = ?").bind(auth.user.id),
+    env.DB.prepare("DELETE FROM gear_purchases WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare(
       `UPDATE profiles SET coins = ?, last_daily = NULL, packs_opened = 0, pulls = 0,
         packs_since_hit = 0, pack_trick = 0, granted = ?, binder = ?, worth_log = ?, claimed = ?, created_at = ?
@@ -798,7 +806,7 @@ async function claimAchievement(request, env) {
     const raw = stored?.claimed ?? null;
     const save = await loadSave(env, auth.user.id);
     const claimed = new Set(normalizeClaimed(parseJson(raw, [])));
-    const { rarities, cards } = await ownedCardsFor(env, request, save.collection);
+    const { rarities, cards } = await ownedCardsFor(env, request, ownedMap(save));
     const ctx = achievementContext(save, { signed: true, rarities, cards });
 
     let ids;
@@ -1168,6 +1176,7 @@ async function rarityCountsFor(env, request, collection) {
 /**
  * Rarity counts plus `cards`, `{ id, name, rarity, setId }` for every owned
  * card the catalog knows: the `opts.cards` that achievementContext reads.
+ * Callers hand it ownedMap(save), so a copy sitting in a slab still counts.
  */
 async function ownedCardsFor(env, request, collection) {
   const rarities = {};
@@ -1227,6 +1236,9 @@ async function loadSave(env, userId) {
     quests,
     stats: { setPacks, counters: publicCounters(counters, quests), friends },
     gear: await gearSummary(env, userId),
+    // Active slabs, valued at today's market. `collection` stays the raw sellable
+    // counts; ownedMap(save) (js/titles.js) unions the two for completion counts.
+    graded: await gradedSlabs(env, userId, { findCatalogCard }),
     activeSetId: profile.active_set_id || "me5",
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),
