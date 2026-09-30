@@ -9,6 +9,7 @@ import {
   getSet,
   PLAYABLE_SETS,
   RARITY_ORDER,
+  boxCardList,
   findOffer,
   money,
   offerPackSets,
@@ -80,6 +81,7 @@ const jsonHeaders = {
 const setCache = new Map();
 let sealedCache = null;
 let productsCache = null;
+let boxContentsCache = null;
 
 export default {
   async fetch(request, env) {
@@ -564,13 +566,24 @@ async function openSealed(request, env) {
     if (!card) fail(`Missing promo card ${id}.`, 500);
     return { ...card };
   });
-  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, { sealed: true });
+  // The rest of the box: a battle deck's other cards, an ETB's Energy. Each
+  // one is the card of its own set (or a shared basic Energy), owned in
+  // copies, and not a pull.
+  const contents = (await loadBoxContents(env, request))[`${live.id}/${offer.id}`];
+  const boxCards = [];
+  for (const { id, n } of boxCardList(contents, promos.map((card) => card.id))) {
+    const card = await findCatalogCard(env, request, id);
+    if (!card) fail(`Missing box card ${id} for ${offer.id}.`, 500);
+    boxCards.push({ ...card, n });
+  }
+  const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, boxCards, { sealed: true });
   if (opened.response) return opened.response;
   return json({
     save: opened.save,
     product: { id: offer.id, name: offer.name, packs: opened.packs.length },
     packs: opened.packs.map((pack) => ({ setId: (pack.set || live).id, wrapperId: pack.wrapper.id, cards: pack.cards })),
     promos: opened.promos,
+    boxCards: opened.boxCards,
     cost: offer.price,
   });
 }
@@ -579,9 +592,10 @@ async function openSealed(request, env) {
  * Charge `cost` once and add every pack's pulls to the account. `wasNew` runs
  * across the whole purchase, so only the first copy of a card in a box is new.
  * `promos` are the product's promo cards: owned like pulls, but not a pack.
+ * `boxCards` are its other cards (`{...card, n}`): owned in `n` copies, not pulls.
  * Returns `{ response }` when the player can't afford it.
  */
-async function openPacks(env, userId, live, packs, cost, promos = [], { sealed = false } = {}) {
+async function openPacks(env, userId, live, packs, cost, promos = [], boxCards = [], { sealed = false } = {}) {
   const now = Date.now();
   // Counters first: an old account's lifetime hits are read out of pack_log
   // here, before this rip writes its own rows there.
@@ -592,7 +606,7 @@ async function openPacks(env, userId, live, packs, cost, promos = [], { sealed =
     run = (await env.DB.prepare("SELECT packs_since_hit FROM profiles WHERE user_id = ?").bind(userId).first())?.packs_since_hit || 0;
   }
   const ids = [
-    ...new Set([...promos, ...packs.flatMap((pack) => pack.pulls)].map((card) => card.id)),
+    ...new Set([...promos, ...boxCards, ...packs.flatMap((pack) => pack.pulls)].map((card) => card.id)),
   ];
   const existing = [];
   // D1 caps bound parameters per query at 100.
@@ -615,6 +629,12 @@ async function openPacks(env, userId, live, packs, cost, promos = [], { sealed =
   const promoCards = promos.map((card) => {
     const wasNew = !(qty[card.id] > 0);
     qty[card.id] = (qty[card.id] || 0) + 1;
+    return { ...card, reverse: false, wasNew };
+  });
+  // The box's other cards come in copies; only the first copy can be new.
+  const boxOut = boxCards.map((card) => {
+    const wasNew = !(qty[card.id] > 0);
+    qty[card.id] = (qty[card.id] || 0) + card.n;
     return { ...card, reverse: false, wasNew };
   });
   let pulled = promoCards.length;
@@ -719,7 +739,7 @@ async function openPacks(env, userId, live, packs, cost, promos = [], { sealed =
   await runBatches(env, stmts);
 
   await trimHistory(env, userId);
-  return { save: await loadSave(env, userId), packs: opened, promos: promoCards };
+  return { save: await loadSave(env, userId), packs: opened, promos: promoCards, boxCards: boxOut };
 }
 
 async function daily(request, env) {
@@ -1265,6 +1285,20 @@ async function loadProducts(env, request) {
     return {};
   }
   return productsCache || {};
+}
+
+/** data/box-contents.json: the single cards each box holds beyond packs and promos, by "set/product". */
+async function loadBoxContents(env, request) {
+  try {
+    if (!boxContentsCache) {
+      const res = await env.ASSETS.fetch(new Request(new URL("/data/box-contents.json", request.url), { method: "GET" }));
+      if (!res.ok) return {};
+      boxContentsCache = await res.json();
+    }
+  } catch {
+    return {};
+  }
+  return boxContentsCache || {};
 }
 
 async function packCost(env, request, set) {
