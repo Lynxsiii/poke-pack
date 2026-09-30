@@ -234,6 +234,10 @@ export function foilExtras(card, url, reverseKind) {
     const finish = reverseFinish(card, reverseKind);
     if (finish === "mirror") return { classes: "rev-mirror", style: "", cure: false };
     if (!finish) return { classes: "", style: "", cure: false };
+    if (finish.startsWith("sm-")) {
+      const type = finish.slice(3);
+      return { classes: `rev-sv rev-sm rev-${type}`, style: `--rev-pattern:url('${url(`assets/foil/sm-reverse/${type}.webp`)}')`, cure: false };
+    }
     if (finish.startsWith("swsh-")) {
       const type = finish.slice(5);
       return {

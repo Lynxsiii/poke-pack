@@ -25,6 +25,16 @@ export const SM_FULL_ART = new Set(["Rare Ultra", "Rare Rainbow", "Rare Secret"]
 export const SM_ETCHED = new Set(["Rare Ultra", "Rare Rainbow", "Rare Secret"]);
 
 /**
+ * Lost Thunder to Cosmic Eclipse (and Detective Pikachu): the window holo went
+ * from shattered rainbow to a soft satin sheen (photos in
+ * texture-refs/f1-holo-reverse; css/holo/sm.css).
+ */
+const SM_LATE = /^(sm8|sm9|sm10|sm11|sm115|sm12|det1)-/;
+export function smLate(card) {
+  return SM_LATE.test(String(card?.id || ""));
+}
+
+/**
  * The finish of a Sun & Moon print, read from its rarity, its GX / TAG TEAM
  * subtype and the Shiny Vault gallery tag (`gallery: "sv"`). An empty string
  * means the generic engine decides; "foil-none" means the card is not foil
@@ -57,7 +67,7 @@ export function smPattern(card) {
     case "Rare Shiny GX":
       return `foil-ex sm-shiny sm-gx${tag ? " sm-tag" : ""}`;
     case "Rare Holo":
-      return "foil-holo sm-holo";
+      return `foil-holo sm-holo${smLate(card) ? " sm-late" : ""}`;
     default:
       break;
   }
@@ -72,7 +82,10 @@ export function smPattern(card) {
  * `sm-<type>` or `sm-trainer` name like Sword & Shield's (foil-maps.js turns
  * it into assets/foil/sm-reverse/<type>.webp).
  */
+const SM_REVERSE_TYPES = new Set(["grass", "fire", "water", "lightning", "psychic", "fighting", "darkness", "metal", "fairy", "dragon", "colorless"]);
 export function smReverseFinish(card) {
   if (card.supertype === "Energy" || card.energy) return "";
-  return "mirror";
+  if (card.supertype === "Trainer") return "sm-trainer";
+  const type = String(card.types?.[0] || "").toLowerCase();
+  return SM_REVERSE_TYPES.has(type) ? `sm-${type}` : "mirror";
 }
