@@ -2579,6 +2579,66 @@ export const MCDONALDS_2024 = {
   ]),
 };
 
+export const LOST_THUNDER = {
+  id: "sm8",
+  tcgId: "sm8",
+  name: "Lost Thunder",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "November 2, 2018",
+  live: true,
+  printedTotal: 214,
+  totalCount: 246,
+  packSize: 11,
+  cost: 59.36,
+  dataFile: "data/sm8.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, November 2018. Seven Prism Stars in the reverse slot, Blacephalon-GX and the Ultra Beasts, four wrappers.",
+  oddsLine: "GX 1/10 · full art 1/23 · rainbow 1/80 · gold 1/109 · Prism Star 1/8",
+  lede: "Lugia-GX, Zeraora-GX and Mimikyu-GX in rainbow are the chase. A Prism Star takes the reverse slot about 1 pack in 8; the rare slot is a GX 1 in 10.",
+  // Elite Fourum's box tallies (burpies n=1,274, sturzflugbombardieru n=3,168, Derium n=1,008, Danny Phantump), pooled n=5,450; Prism Stars replace the reverse holo (Elite Fourum, PrimetimePokemon, Dripshop). Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1659, gx: 0.1017, ultra: 0.044, rainbow: 0.0125, secret: 0.0092, reverseSpecial: [["prismStar", 0.1246]] }),
+  heroIds: ["sm8-226", "sm8-227", "sm8-206", "sm8-221"],
+  wrappers: boosterWrappers("sm8", [
+    { id: "celebi", name: "Celebi", cardId: "sm8-19", tag: "Prism Star" },
+    { id: "blacephalon", name: "Blacephalon", cardId: "sm8-52", tag: "Ultra Beast" },
+    { id: "zeraora", name: "Zeraora", cardId: "sm8-86", tag: "Lightning" },
+    { id: "lugia", name: "Lugia", cardId: "sm8-159", tag: "Psychic" },
+  ], 2),
+};
+
+export const TEAM_UP = {
+  id: "sm9",
+  tcgId: "sm9",
+  name: "Team Up",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "February 1, 2019",
+  live: true,
+  printedTotal: 181,
+  totalCount: 204,
+  packSize: 11,
+  cost: 300.96,
+  dataFile: "data/sm9.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, February 2019. The first TAG TEAM GX, with Latias & Latios and Gengar & Mimikyu alternate arts, four wrappers.",
+  oddsLine: "GX 1/10 · full art 1/24 · rainbow 1/74 · gold 1/98 · Prism Star 1/18",
+  lede: "The first TAG TEAM GX. Gengar & Mimikyu and Latias & Latios have alternate full arts, and every TAG TEAM has a rainbow. Full art 1 in 24, rainbow 1 in 74.",
+  // Elite Fourum's box tallies (sturzflugbombardieru n=2,016, burpies n=872, Derium n=2,999, Danny Phantump), pooled n=5,887; Prism Stars replace the reverse holo. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.165, gx: 0.102, ultra: 0.0425, rainbow: 0.0136, secret: 0.0102, reverseSpecial: [["prismStar", 0.0562]] }),
+  heroIds: ["sm9-170", "sm9-165", "sm9-161", "sm9-191"],
+  wrappers: boosterWrappers("sm9", [
+    { id: "eevee-snorlax", name: "Eevee & Snorlax", cardId: "sm9-120", tag: "Tag Team" },
+    { id: "gengar-mimikyu", name: "Gengar & Mimikyu", cardId: "sm9-53", tag: "Tag Team" },
+    { id: "pikachu-zekrom", name: "Pikachu & Zekrom", cardId: "sm9-33", tag: "Tag Team" },
+    { id: "venusaur-celebi", name: "Venusaur & Celebi", cardId: "sm9-1", tag: "Tag Team" },
+  ], 2),
+};
+
 export const UNBROKEN_BONDS = {
   id: "sm10",
   tcgId: "sm10",
@@ -2781,6 +2841,8 @@ export const PLAYABLE_SETS = [
   FORBIDDEN_LIGHT,
   CELESTIAL_STORM,
   DRAGON_MAJESTY,
+  LOST_THUNDER,
+  TEAM_UP,
 ];
 
 /**
@@ -2920,6 +2982,8 @@ const POKESYMBOLS_SLUG = {
   xy12: "xy-evolutions",
   sm1: "sun-and-moon",
   sm12: "cosmic-eclipse",
+  sm8: "lost-thunder",
+  sm9: "team-up",
   swsh1: "sword-and-shield",
   swsh2: "rebel-clash",
   swsh3: "darkness-ablaze",

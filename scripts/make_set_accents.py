@@ -96,6 +96,8 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "sm6": ("#a45cff", "#f2b84a"),       # Forbidden Light: Necrozma violet to gold
     "sm7": ("#37d6a0", "#ffc83d"),       # Celestial Storm: storm green to star yellow
     "sm75": ("#ffb62e", "#e6492d"),      # Dragon Majesty: dragon gold to flame red
+    "sm8": ("#ffb02e", "#8a5cff"),     # Lost Thunder: thunder yellow to storm violet
+    "sm9": ("#5aa9ff", "#ff5c8a"),     # Team Up: team blue to logo pink
 }
 
 # Used when a set has no art at all and no override.
