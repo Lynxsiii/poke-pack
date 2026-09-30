@@ -95,7 +95,7 @@ function streakStrip(summary, deps) {
       : "Started today.";
   return `<section class="qb-streak" aria-label="Quest streak">
     <div class="qb-streak-copy">
-      <p>${line}<span>Best ${num(best)} ${best === 1 ? "day" : "days"}</span></p>
+      <p>${line}${best > 0 ? `<span>Best ${num(best)} ${best === 1 ? "day" : "days"}</span>` : ""}</p>
       <p class="qb-streak-hint">${esc(hint)}</p>
     </div>
     <ol class="qb-days" aria-hidden="true">${cells.join("")}</ol>
@@ -214,6 +214,11 @@ export function questReadyCount(summary, deps) {
 
 /* ---- Achievement wall ------------------------------------------------------ */
 
+/** A small square beside a word that has something to claim, with a text for screen readers. */
+function readyDot(n) {
+  return n ? `<i class="qa-dot" aria-hidden="true"></i><span class="sr-only">, ${n} ready to claim</span>` : "";
+}
+
 /** One row's state against the player's progress. */
 function status(row, stats, deps) {
   const p = deps.achievementProgress(row, stats.ctx);
@@ -238,7 +243,8 @@ function medal(row, s, deps) {
 
 /** Text that says what a row hands over besides coins. */
 function exclusives(row) {
-  if (row.kind === "mastery") return `${row.title ? `${row.title} title, ` : ""}emblem and banner`;
+  // A mastery row's own note already names the title, emblem and banner.
+  if (row.kind === "mastery") return "";
   return row.title ? `${row.title} title` : "";
 }
 
@@ -248,7 +254,8 @@ export function achievementTileHtml(row, stats, deps, ui = {}) {
   const face = deps.achievementFace(row, s.p.done || s.isClaimed);
   const fresh = ui.fresh?.has(row.id) ? " is-fresh" : "";
   if (face.masked) {
-    return `<article class="qa-tile t${row.tier} is-secret" data-ach="${esc(row.id)}">
+    // Nothing of the real row: no id, no tier, no numbers.
+    return `<article class="qa-tile is-secret">
       <div class="qa-badge secret"><span>?</span></div>
       <div class="qa-copy">
         <b>${esc(face.name)}</b>
@@ -339,13 +346,13 @@ export function achievementWallHtml(stats, ui, deps) {
           : `<p class="qa-none">Nothing to claim right now.</p>`
       }
     </div>
-    <div class="qa-words" role="tablist" aria-label="Achievement categories">
+    <div class="qa-words" role="group" aria-label="Achievement categories">
       ${cats
         .map((c) => {
           const t = tallies.get(c.id);
           const on = c.id === cat;
-          return `<button type="button" role="tab" class="qa-word${on ? " on" : ""}" aria-selected="${on}" data-ach-cat="${esc(c.id)}">
-            <span>${esc(c.name)}</span><small>${num(t.claimed)} of ${num(t.total)}</small>${t.ready ? `<i class="qa-dot" title="${num(t.ready)} ready"></i>` : ""}
+          return `<button type="button" class="qa-word${on ? " on" : ""}" aria-current="${on}" data-ach-cat="${esc(c.id)}">
+            <span>${esc(c.name)}</span><small>${num(t.claimed)} of ${num(t.total)}</small>${readyDot(t.ready)}
           </button>`;
         })
         .join("")}
@@ -382,18 +389,20 @@ function eraBlocks(deps) {
   return order.map((era) => ({ era, sets: map.get(era) }));
 }
 
-function masterySetTile(set, row, mastered, on, deps) {
+function masterySetTile(set, row, mastered, ready, on, deps) {
   const { esc, num } = deps;
   const { symbol } = deps.setIdentity(set);
   const pct = row.total ? Math.min(100, (row.owned / row.total) * 100) : 0;
-  return `<button type="button" class="qm-set${on ? " on" : ""}${mastered ? " is-mastered" : ""}" data-mastery-set="${esc(set.id)}" aria-pressed="${on}" aria-label="${esc(set.name)}, ${num(row.owned)} of ${num(row.total)} cards${mastered ? ", mastered" : ""}">
+  const count = mastered ? "Mastered" : ready ? "Ready to claim" : `${num(row.owned)}/${num(row.total)}`;
+  // The emblem is lit only once the set is mastered; every other tile is just its symbol.
+  return `<button type="button" class="qm-set${on ? " on" : ""}${mastered ? " is-mastered" : ""}${ready ? " is-ready" : ""}" data-mastery-set="${esc(set.id)}" aria-pressed="${on}" aria-label="${esc(set.name)}, ${num(row.owned)} of ${num(row.total)} cards${mastered ? ", mastered" : ready ? ", ready to claim" : ""}">
     <span class="qm-set-top">
       <img class="qm-symbol" src="${esc(symbol)}" alt="" height="20" loading="lazy" decoding="async" />
-      <span class="qm-emblem">${deps.masteryEmblem(set.id, { size: "sm", locked: !mastered, label: false })}</span>
+      ${mastered ? `<span class="qm-emblem">${deps.masteryEmblem(set.id, { size: "sm", label: false })}</span>` : ""}
     </span>
     <span class="qm-name">${esc(set.name)}</span>
     <span class="qm-foot">
-      <span class="qm-count">${mastered ? "Mastered" : `${num(row.owned)}/${num(row.total)}`}</span>
+      <span class="qm-count">${count}</span>
       ${bar(pct, mastered ? "full" : "")}
     </span>
   </button>`;
@@ -460,6 +469,12 @@ export function masteryShelfHtml(stats, ui, deps) {
   const blocks = eraBlocks(deps);
   const rowFor = new Map(stats.setRows.map((r) => [r.set.id, r]));
   const masteredOf = (set) => stats.claimed.has(`set-${set.id}-master`);
+  // Every card owned but the mastery not claimed yet.
+  const readyOf = (set) => {
+    if (masteredOf(set)) return false;
+    const row = deps.masteryRowFor(set.id);
+    return Boolean(row && deps.achievementProgress(row, stats.ctx).done);
+  };
   const era = blocks.some((b) => b.era === ui.era) ? ui.era : blocks[0]?.era;
   const block = blocks.find((b) => b.era === era) || blocks[0];
   const mastered = deps.sets.filter(masteredOf).length;
@@ -471,20 +486,20 @@ export function masteryShelfHtml(stats, ui, deps) {
       <div class="acct-fig"><dt>Halfway or better</dt><dd>${num(half)}</dd></div>
       <div class="acct-fig"><dt>Banners unlocked</dt><dd>${num(mastered)}</dd></div>
     </dl>
-    <div class="qa-words" role="tablist" aria-label="Eras">
+    <div class="qa-words" role="group" aria-label="Eras">
       ${blocks
         .map((b) => {
           const on = b.era === era;
           const got = b.sets.filter(masteredOf).length;
-          return `<button type="button" role="tab" class="qa-word${on ? " on" : ""}" aria-selected="${on}" data-mastery-era="${esc(b.era)}">
-            <span>${esc(deps.eraTitle(b.era))}</span><small>${num(got)} of ${num(b.sets.length)}</small></button>`;
+          return `<button type="button" class="qa-word${on ? " on" : ""}" aria-current="${on}" data-mastery-era="${esc(b.era)}">
+            <span>${esc(deps.eraTitle(b.era))}</span><small>${num(got)} of ${num(b.sets.length)}</small>${readyDot(b.sets.filter(readyOf).length)}</button>`;
         })
         .join("")}
     </div>
     <p class="qm-lede">Own every card in a set and claim its mastery. Each one hands over a title, an emblem and a banner nobody else can use.</p>
     <div class="qm-shelf">
       ${(block?.sets || [])
-        .map((set) => masterySetTile(set, rowFor.get(set.id) || { owned: 0, total: set.totalCount || 1 }, masteredOf(set), selected?.id === set.id, deps))
+        .map((set) => masterySetTile(set, rowFor.get(set.id) || { owned: 0, total: set.totalCount || 1 }, masteredOf(set), readyOf(set), selected?.id === set.id, deps))
         .join("")}
     </div>
     ${selected ? masteryDetailHtml(selected, rowFor.get(selected.id) || { owned: 0, total: selected.totalCount || 1 }, stats, deps, ui) : ""}
@@ -500,16 +515,18 @@ export function masteryStripHtml(setIds, deps, { mine = false, limit = 18 } = {}
   const shown = ids.slice(0, limit);
   const more = ids.length - shown.length;
   const label = `${num(ids.length)} ${ids.length === 1 ? "set" : "sets"} mastered`;
-  const items = shown
-    .map((id) => {
-      const name = `${deps.setById(id).name} Master`;
-      return `<li title="${esc(name)}" aria-label="${esc(name)}">${deps.masteryEmblem(id, { size: "sm", label: false })}</li>`;
-    })
-    .join("");
-  const inner = `<ul class="mstrip-list">${items}</ul><small>${esc(label)}${more > 0 ? ` (+${num(more)} more)` : ""}</small>`;
+  // A button may only hold phrasing content, so the linked strip uses spans and the public one a list.
+  const cell = (id) => {
+    const name = `${deps.setById(id).name} Master`;
+    return mine
+      ? `<span title="${esc(name)}">${deps.masteryEmblem(id, { size: "sm", label: false })}</span>`
+      : `<li title="${esc(name)}" aria-label="${esc(name)}">${deps.masteryEmblem(id, { size: "sm", label: false })}</li>`;
+  };
+  const items = shown.map(cell).join("");
+  const tail = `<small>${esc(label)}${more > 0 ? ` (+${num(more)} more)` : ""}</small>`;
   return mine
-    ? `<button type="button" class="mstrip" data-acct-tab="mastery" aria-label="${esc(label)}. Open Mastery.">${inner}</button>`
-    : `<div class="mstrip" role="group" aria-label="${esc(label)}">${inner}</div>`;
+    ? `<button type="button" class="mstrip" data-acct-tab="mastery" aria-label="${esc(label)}. Open Mastery."><span class="mstrip-list">${items}</span>${tail}</button>`
+    : `<div class="mstrip" role="group" aria-label="${esc(label)}"><ul class="mstrip-list">${items}</ul>${tail}</div>`;
 }
 
 /* ---- Look tab: mastery banners and grouped titles ---------------------------- */
@@ -543,12 +560,20 @@ export function masteryBannersHtml(current, claimed, deps) {
   </div>`;
 }
 
+/** Titles handed out by a secret achievement that is not won yet: they stay out of sight. */
+export function hiddenTitles(titles, unlocked, deps) {
+  return titles.filter((row) => row.ach && !unlocked.has(row.name) && deps.isSecret(deps.achievementById?.(row.ach)));
+}
+
 /**
  * Titles in folded groups so 46 mastery titles do not become a wall: the
  * everyday ones, the badge rewards, then a group per era of set masters.
  */
 export function titleGroupsHtml(titles, current, unlocked, deps) {
   const { esc, num } = deps;
+  // Titles that come from a secret achievement stay out of sight until won.
+  const hidden = new Set(hiddenTitles(titles, unlocked, deps));
+  titles = titles.filter((row) => !hidden.has(row));
   const masterSet = (row) => {
     const m = /^set-(.+)-master$/.exec(row.ach || "");
     return m ? deps.setById(m[1]) : null;
@@ -586,7 +611,7 @@ export function titleGroupsHtml(titles, current, unlocked, deps) {
         <div class="title-wall">${g.rows.map(chip).join("")}</div>
       </details>`;
     })
-    .join("");
+    .join("") + (hidden.size ? `<p class="qa-hidden-titles">${num(hidden.size)} hidden ${hidden.size === 1 ? "title" : "titles"}, won by secret achievements.</p>` : "");
 }
 
 /* ---- Overview and signed-out helpers ----------------------------------------- */

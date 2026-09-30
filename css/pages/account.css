@@ -30,12 +30,9 @@
 .acct-cols {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 56px; align-items: start;
 }
-.acct-lede { margin: 0 0 24px; color: var(--ink-2); font-size: 15px; max-width: 60ch; }
 
 /* Chip rows scroll sideways on a phone rather than wrapping into a wall. */
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip-count { margin-left: 4px; color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 600; }
-.pick-chip.on .chip-count { color: rgba(8, 8, 11, 0.6); }
 
 /* Forms on these pages: sentence-case labels in the body face. */
 :is(#view-auth, #view-account) .field { display: grid; gap: 7px; margin: 0 0 18px; }
@@ -445,12 +442,6 @@
 #view-account .title-chip.on { background: var(--ink); border-color: var(--ink); color: var(--black); }
 #view-account .title-chip.on small { color: rgba(8, 8, 11, 0.66); }
 #view-account .title-chip.locked { opacity: 0.42; cursor: default; }
-.title-award {
-  position: absolute; top: 11px; right: 12px;
-  color: var(--muted); font-family: var(--font); font-style: normal; font-size: 11.5px; font-weight: 600;
-  letter-spacing: 0; text-transform: none;
-}
-.title-chip.on .title-award { color: rgba(8, 8, 11, 0.6); }
 
 /* ---- Security ----------------------------------------------------------- */
 .acct-danger .danger-btn {

@@ -57,7 +57,7 @@ import {
 } from "./achievements.js";
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
-import * as questArea from "./quest-area.js?v=2";
+import * as questArea from "./quest-area.js?v=3";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import {
   loadPriceHistory,
@@ -161,6 +161,14 @@ function wipeProgressMemory() {
   state.stats = null;
   state.worthLog = [];
   state.binder = [];
+  // Screen memory belongs to the account that is gone: a secret revealed for one
+  // trainer must not stay revealed for the next.
+  achFilter = "all";
+  achCat = "";
+  masteryEra = "";
+  masterySet = "";
+  freshClaims = new Set();
+  seenSecrets.clear();
 }
 
 async function refreshSession() {
@@ -2496,7 +2504,7 @@ const areaDeps = {
   categories: ACH_CATEGORIES,
   achievementProgress,
   achievementFace,
-  achievementFace,
+  achievementById,
   isSecret,
   achievementsBySet,
   masteryRowFor,
@@ -2687,10 +2695,39 @@ function bringIntoView(el) {
 function tabDot(id, stats) {
   const n =
     id === "achievements" ? stats.ready.length : id === "quests" ? questArea.questReadyCount(state.quests, areaDeps) : 0;
-  return n ? `<i class="acct-dot">${n}</i>` : "";
+  return n ? `<i class="acct-dot" aria-hidden="true">${n}</i><span class="sr-only">, ${n} ready to claim</span>` : "";
+}
+
+/** What has focus inside the account page, as an attribute and value that survive a repaint. */
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-banner", "data-set-title"];
+function focusKey() {
+  const el = document.activeElement;
+  if (!el || el === document.body || !els.accountBody.contains(el)) return null;
+  for (const attr of FOCUS_ATTRS) if (el.hasAttribute(attr)) return [attr, el.getAttribute(attr), el.classList[0] || ""];
+  return el.id === "claim-all" ? ["id", "claim-all", el.classList[0] || ""] : null;
+}
+
+/** Repainting replaces every node, so put focus back on the same control (or its closest survivor). */
+function restoreFocus(key) {
+  if (!key) return;
+  const [attr, value, cls] = key;
+  // The same value can sit on two controls (a tab and a shortcut in the hero): take the one that looks alike.
+  const matches = [...els.accountBody.querySelectorAll(attr === "id" ? `#${value}` : `[${attr}="${CSS.escape(value)}"]`)];
+  const target =
+    matches.find((el) => el.classList.contains(cls)) ||
+    matches[0] ||
+    // A claimed row's button is gone: land on the category or tab that holds it.
+    els.accountBody.querySelector(".qa-word.on, .acct-tab.on");
+  target?.focus({ preventScroll: true });
 }
 
 function renderAccount() {
+  const focused = focusKey();
+  renderAccountBody();
+  restoreFocus(focused);
+}
+
+function renderAccountBody() {
   const trainer = activeTrainer();
   if (!trainer) {
     els.accountBody.innerHTML = signedOutAccount();
@@ -2715,10 +2752,10 @@ function renderAccount() {
 
   els.accountBody.innerHTML = `
     ${accountHero(trainer, stats)}
-    <div class="acct-tabs" role="tablist" aria-label="Account sections">
+    <div class="acct-tabs" role="group" aria-label="Account sections">
       ${ACCOUNT_TABS.map(
-        (tab) => `<button type="button" role="tab" class="acct-tab${tab.id === accountTab ? " on" : ""}"
-          aria-selected="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
+        (tab) => `<button type="button" class="acct-tab${tab.id === accountTab ? " on" : ""}"
+          aria-current="${tab.id === accountTab}" data-acct-tab="${esc(tab.id)}" title="${esc(tab.note)}">
           ${esc(tab.name)}${tabDot(tab.id, stats)}
         </button>`
       ).join("")}
@@ -3196,7 +3233,7 @@ function lookTab(trainer, stats) {
         <div class="acct-sec-head">
           <div>
             <h2>Title</h2>
-            <p>${unlocked.size} of ${TITLES.length} unlocked. Your title sits under your name everywhere.</p>
+            <p>${unlocked.size} of ${TITLES.length - questArea.hiddenTitles(TITLES, unlocked, areaDeps).length} unlocked. Your title sits under your name everywhere.</p>
           </div>
         </div>
         <div class="title-groups">${titleGroups}</div>
@@ -5783,27 +5820,36 @@ els.accountBody.addEventListener("click", async (e) => {
   const claim = e.target.closest("[data-claim]");
   const questClaim = e.target.closest("[data-quest-claim]");
   if (questClaim) {
-    questClaim.disabled = true;
+    if (questClaim.getAttribute("aria-disabled") === "true") return;
+    questClaim.setAttribute("aria-disabled", "true");
+    const focused = focusKey();
     try {
       const data = await api("/api/quests/claim", { method: "POST", body: JSON.stringify({ id: questClaim.dataset.questClaim }) });
       afterEconomy(data.save);
       freshClaims = new Set([questClaim.dataset.questClaim]);
       renderHeader();
       renderAccount();
+      restoreFocus(focused);
       const chest = questClaim.dataset.questClaim.startsWith("chest-");
       toast(chest ? `Chest opened, +${num(data.coins)} coins` : `Quest claimed, +${num(data.coins)} coins`);
     } catch (err) {
       toast(err.message || "Couldn't claim quest.");
       renderAccount();
+      restoreFocus(focused);
     }
     return;
   }
   if (claim) {
+    if (achievementClaiming) return;
+    claim.setAttribute("aria-disabled", "true");
     const row = achievementById(claim.dataset.claim);
     await claimAchievements({ id: claim.dataset.claim }, row?.name || "Claimed");
     return;
   }
-  if (e.target.closest("#claim-all")) {
+  const claimAll = e.target.closest("#claim-all");
+  if (claimAll) {
+    if (achievementClaiming) return;
+    claimAll.setAttribute("aria-disabled", "true");
     await claimAchievements({ all: true }, "Cleared the wall");
     return;
   }
@@ -6002,17 +6048,24 @@ async function surpriseLook() {
  * Cash in one achievement, or every ready one. The reward comes back from the
  * worker rather than the table here, so the coins shown are the coins paid.
  */
+let achievementClaiming = false;
 async function claimAchievements(body, label) {
   if (!activeTrainer()) {
     openAuth("signin");
     return;
   }
+  // One request at a time: a second click on the same button must not send a second batch.
+  if (achievementClaiming) return;
+  achievementClaiming = true;
+  // Something else may repaint while the request is out; remember where focus was now.
+  const focused = focusKey();
   try {
     const data = await api("/api/achievements/claim", { method: "POST", body: JSON.stringify(body) });
     afterEconomy(data.save);
     freshClaims = new Set(data.claimed || (body.id ? [body.id] : []));
     renderHeader();
     renderAccount();
+    restoreFocus(focused);
     rewardFlash(data.rewards || [], data.coins || 0);
     const titles = data.titles || [];
     const masteries = (data.rewards || []).filter((row) => achievementById(row.id)?.kind === "mastery");
@@ -6022,6 +6075,9 @@ async function claimAchievements(body, label) {
   } catch (err) {
     toast(err.message || "Couldn't claim that.");
     renderAccount();
+    restoreFocus(focused);
+  } finally {
+    achievementClaiming = false;
   }
 }
 

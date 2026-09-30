@@ -11,6 +11,10 @@
    is off under reduced motion and body.no-motion. */
 
 /* ---- Shared bits --------------------------------------------------------- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap; border: 0;
+}
 .qa-coin {
   color: var(--gold-2); font-size: 15px; font-weight: 650; white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -35,6 +39,9 @@
 .qa-empty { margin: 0; padding: 28px 0; color: var(--muted); font-size: 15px; line-height: 1.5; max-width: 56ch; }
 .qa-empty.slim { padding: 4px 0 0; font-size: 14px; }
 .qa-none { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* A claim in flight: still focusable, but inert and dimmed until the repaint. */
+.qa-claim[aria-disabled="true"], .claim-cta[aria-disabled="true"] { opacity: 0.55; pointer-events: none; cursor: default; }
 
 /* ---- Account tabs: words, the ink line under the open one ----------------- */
 #view-account .acct-tabs {
@@ -73,15 +80,15 @@
   color: var(--muted); font-size: 15px; font-weight: 600; line-height: 1.2; white-space: nowrap;
   scroll-snap-align: start; transition: color 0.15s ease;
 }
-.qa-word small { color: var(--faint); font-size: 12.5px; font-weight: 500; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.qa-word small { color: var(--muted); font-size: 12.5px; font-weight: 500; line-height: 1.2; font-variant-numeric: tabular-nums; }
 .qa-word:hover { color: var(--ink); }
 .qa-word.on { color: var(--ink); }
-.qa-word.on small { color: var(--muted); }
+.qa-word.on small { color: var(--ink-2); }
 .qa-word.on::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink);
 }
-/* A square of gold beside a category that has something to claim. */
-.qa-dot { position: absolute; top: 15px; right: -12px; width: 6px; height: 6px; background: var(--gold); }
+/* A square of coral beside a word that has something to claim right now. */
+.qa-dot { position: absolute; top: 15px; right: -12px; width: 6px; height: 6px; background: var(--rip); }
 /* Inside a section (the banner motion picker) the words do not bleed. */
 .qa-words-inline { margin: 0 0 4px; padding: 0; }
 .qa-words-inline .qa-word { padding: 8px 0 13px; }
@@ -105,8 +112,8 @@
 .qb-days .on i { background: var(--ink); }
 .qb-days .today i { box-shadow: inset 0 0 0 1.5px var(--line-2); }
 .qb-days .today.on i { box-shadow: none; }
-.qb-days small { color: var(--faint); font-size: 11px; font-weight: 500; line-height: 1; text-align: center; }
-.qb-days .today small { color: var(--muted); }
+.qb-days small { color: var(--muted); font-size: 11px; font-weight: 500; line-height: 1; text-align: center; }
+.qb-days .today small { color: var(--ink-2); }
 
 .qb-head { margin: 0 0 6px; }
 .qb-head h2 { margin: 0; font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
@@ -131,7 +138,7 @@
 .qrow .qa-bar, .qrow .qa-segs { grid-column: 1 / -1; margin-top: 11px; }
 .qrow .qa-claim { min-height: 38px; padding: 0 18px; }
 .qrow.is-claimed .qrow-name, .qrow.is-claimed .qrow-note { color: var(--muted); }
-.qrow.is-claimed .qa-coin { color: var(--faint); }
+.qrow.is-claimed .qa-coin { color: var(--muted); }
 .qrow.is-claimed .qrow-name { font-weight: 550; }
 .qrow.is-open .qrow-name { color: var(--ink); }
 /* The chest is the finale: set apart by a stronger rule above it. */
@@ -163,7 +170,7 @@
   min-height: 34px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent;
   color: var(--muted); font-size: 14px; font-weight: 600; white-space: nowrap;
 }
-.qa-seg button small { color: var(--faint); font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.qa-seg button small { color: var(--muted); font-size: 12.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .qa-seg button:hover { color: var(--ink); }
 .qa-seg button.on { background: var(--surface-3); color: var(--ink); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset; }
 .qa-seg button.on small { color: var(--ink-2); }
@@ -236,10 +243,10 @@
 .qa-tile.is-secret .qa-badge { --tone: var(--faint); background: var(--line-2); }
 .qa-tile.is-secret .qa-badge > span { color: var(--muted); font-size: 20px; }
 .qa-tile.is-secret .qa-copy b { color: var(--muted); font-size: 16px; letter-spacing: 0.14em; }
-.qa-tile.is-secret .qa-hint { color: var(--faint); font-size: 13px; line-height: 1.4; }
+.qa-tile.is-secret .qa-hint { color: var(--muted); font-size: 13px; line-height: 1.4; }
 .qa-tile.is-secret .qa-hint::before { content: "\201C"; }
 .qa-tile.is-secret .qa-hint::after { content: "\201D"; }
-.qa-tile.is-secret .qa-coin { color: var(--faint); }
+.qa-tile.is-secret .qa-coin { color: var(--muted); }
 .qa-secret-mark {
   display: inline-block; margin-left: 9px; padding: 0 0 0 10px; position: relative;
   color: var(--ink-2); font-family: var(--font); font-size: 11.5px; font-style: normal; font-weight: 600; letter-spacing: 0;
@@ -285,6 +292,9 @@
 .qm-set.on .qm-count { color: var(--ink-2); }
 .qm-set.on .qa-bar i { background: var(--ink); }
 .qm-set.is-mastered .qm-count { color: var(--ink); font-weight: 650; }
+.qm-set.is-ready .qm-count, .qm-set.is-ready.on .qm-count { color: var(--rip); font-weight: 650; }
+.qm-set.is-ready .qm-foot { grid-template-columns: minmax(0, 1fr); }
+.qm-set.is-ready .qa-bar { display: none; }
 
 /* The chosen set opens a panel in the shelf, on the row under it. */
 .qm-shelf .qm-detail { grid-column: 1 / -1; }
@@ -313,7 +323,10 @@
 /* Not yet yours: the title tag and the banner sit back. The emblem dims itself. */
 .qm-unlocks li:not(.is-open) .qm-art svg:not(.mastery-emblem-svg), .qm-unlocks li:not(.is-open) .qm-banner-prev { opacity: 0.45; }
 .qm-unlocks li.is-open .qm-art { color: var(--ink); }
-#view-account .qm-banner-prev.acct-banner { position: relative; display: block; height: 48px; margin: 0; border-radius: var(--r-sm); }
+#view-account .qm-banner-prev.acct-banner {
+  position: relative; display: block; height: 48px; margin: 0; border-radius: var(--r-sm);
+  -webkit-mask-image: none; mask-image: none;
+}
 .qm-detail .qa-own { display: none; }
 .qm-detail-rows .qa-grid { gap: 8px; }
 
@@ -344,8 +357,14 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 .mb-tile small { color: var(--muted); font-size: 12.5px; line-height: 1.35; }
 .mb-tile.on small { color: var(--ink); }
 .mb-tile.locked { opacity: 0.5; cursor: default; }
-#view-account .mb-art.acct-banner { position: relative; display: block; height: 44px; margin: 0; border-radius: 6px; }
-.banner-wash.is-still::before, .banner-wash.is-still::after { animation: none; }
+#view-account .mb-art.acct-banner {
+  position: relative; display: block; height: 44px; margin: 0; border-radius: 6px;
+  -webkit-mask-image: none; mask-image: none;
+}
+/* A swatch holds still. The mastery banner's own rules are more specific than
+   the plain .is-still one, so its two layers are named here. */
+.banner-wash.is-still::before, .banner-wash.is-still::after,
+.banner-wash.is-still[data-motion="mastery"]::before, .banner-wash.is-still[data-motion="mastery"]::after { animation: none; }
 
 .qa-fold { margin-top: 14px; border-top: 1px solid var(--line); }
 .qa-fold > summary {
@@ -362,6 +381,7 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 .qa-fold > summary small { color: var(--muted); font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .qa-fold[open] > summary { color: var(--ink); }
 .title-groups { display: grid; }
+.qa-hidden-titles { margin: 4px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13.5px; line-height: 1.4; }
 .title-groups .qa-fold:first-child { margin-top: 0; }
 .title-groups .title-chip b { padding-right: 0; }
 .title-groups .title-wall { max-height: none; overflow: visible; padding: 2px 0 16px; }
@@ -394,17 +414,30 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
   .qb-periods:has(> :nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 719px) {
+  /* 44px is the least a thumb needs. */
+  .qa-seg button { min-height: 44px; }
+  .qa-side .qa-claim, .qrow .qa-claim { min-height: 44px; min-width: 64px; }
+  .qrow.is-ready .qrow-status { min-height: 44px; }
+  .qa-words-inline .qa-word { min-height: 44px; min-width: 44px; padding: 10px 0 12px; }
+  button.mstrip { min-height: 44px; }
+  /* The figures wrap into a grid rather than scrolling sideways. */
+  .qa-summary.acct-figures, .qa-head .qa-summary.acct-figures, .qm > .qa-summary.acct-figures {
+    grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-columns: auto; gap: 18px 0;
+    overflow: visible; margin: 0 0 18px; padding: 0 0 20px; flex-basis: 100%;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .qa-summary .acct-fig, .qa-summary .acct-fig:last-child { padding: 0 0 0 16px; border-left: 1px solid var(--line); }
+  .qa-summary .acct-fig:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .qa-summary .acct-fig dt { white-space: normal; }
   .qa-words, #view-account .acct-tabs {
     -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
     mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
   }
   .qa-words-inline { -webkit-mask-image: none; mask-image: none; }
-  .qa-head .acct-figures { flex-basis: 100%; margin: 0 -16px; padding: 0 16px 20px; }
   .qa-head .claim-cta { width: 100%; justify-content: center; }
   .qa-seg { display: grid; grid-auto-columns: minmax(0, 1fr); width: 100%; }
   .qa-seg button { padding: 0 6px; min-width: 0; }
   .qa-bar-row { gap: 10px; }
-  .qm > .acct-figures { margin-inline: -16px; padding-inline: 16px; }
   .qm-set { padding: 11px 11px 11px; }
   .qm-detail { margin-inline: -4px; padding: 18px 14px 20px; }
   .mb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
