@@ -105,6 +105,12 @@ TCGL_INDEX = "https://cdn.malie.io/file/malie-io/tcgl/export/index.json"
 TCGL_PRINT = "https://cdn.malie.io/file/malie-io/tcgl/cards/png/en/{path}{kind}.png"
 # TCG Live's key for each promo series prefix.
 TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
+# How a promo series writes its numbers when it is not the default. The SM
+# Black Star Promos print SM01 (two digits) and scrydex files the scan the
+# same way (smp-SM01; smp-SM001 is the card back), while pkmn.gg's page key is
+# SM001 (`pkmnKey` in each set's promoSeries). A set's promoSeries may override
+# `scrydexKey` and `printedFormat`.
+PROMO_FORMATS = {"smp": {"scrydexKey": "SM{n:02d}", "printedFormat": "SM{n:02d}"}}
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
 MISC = 2374
@@ -383,10 +389,12 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
-        record["printedNumber"] = f"{ser['printed']} {n:03d}"
+        fmt = {**PROMO_FORMATS.get(ser["scrydex"], {}), **ser}
+        record["printedNumber"] = fmt["printedFormat"].format(n=n) if fmt.get("printedFormat") else f"{ser['printed']} {n:03d}"
+        scrydex_key = fmt["scrydexKey"].format(n=n) if fmt.get("scrydexKey") else page_key
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
-        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/large"
-        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{page_key}/small"
+        record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scrydex_key}/large"
+        record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scrydex_key}/small"
         remote = record["image"]
         if isinstance(detail.get("sortPrice"), (int, float)) and detail["sortPrice"] > 0:
             price = round(float(detail["sortPrice"]), 2)
