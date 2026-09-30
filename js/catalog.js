@@ -2679,6 +2679,96 @@ export const UNIFIED_MINDS = {
   ], 2),
 };
 
+export const FORBIDDEN_LIGHT = {
+  id: "sm6",
+  tcgId: "sm6",
+  name: "Forbidden Light",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "May 4, 2018",
+  live: true,
+  printedTotal: 131,
+  totalCount: 149,
+  packSize: 11,
+  cost: 47.22,
+  dataFile: "data/sm6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, May 2018. The Ultra Beasts and Necrozma: Greninja-GX, Zygarde-GX and the rainbow Lucario-GX, four wrappers.",
+  oddsLine: "GX 1/13 · Prism Star 1/12 · full art 1/26 · rainbow 1/81 · gold 1/111",
+  lede: "Nine Pokémon-GX get a full art and a rainbow print, and the Lucario-GX and Greninja-GX rainbows are the chase. The gold cards are all Trainers and Energy, and a Prism Star takes the reverse slot about 1 pack in 12.",
+  // Elite Fourum tallies pooled, n=3,668 (research/second-source-check.md); plain Rare is 2/3 of packs (direct count), holo = 1/3 minus the hits. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1937, gx: 0.0794, ultra: 0.039, rainbow: 0.0123, secret: 0.009, reverseSpecial: [["prismStar", 0.0804]] }),
+  heroIds: ["sm6-135", "sm6-133", "sm6-138", "sm6-136"],
+  wrappers: boosterWrappers("sm6", [
+    { id: "naganadel", name: "Naganadel", cardId: "sm6-56", tag: "Ultra Beast" },
+    { id: "greninja", name: "Greninja", cardId: "sm6-24", tag: "Ninja" },
+    { id: "necrozma", name: "Ultra Necrozma", cardId: "sm6-95", tag: "Ultra" },
+    { id: "zygarde", name: "Zygarde", cardId: "sm6-73", tag: "Complete" },
+  ], 2),
+};
+
+export const CELESTIAL_STORM = {
+  id: "sm7",
+  tcgId: "sm7",
+  name: "Celestial Storm",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "August 3, 2018",
+  live: true,
+  printedTotal: 168,
+  totalCount: 195,
+  packSize: 11,
+  cost: 65.83,
+  dataFile: "data/sm7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, August 2018. Rayquaza-GX, Blaziken-GX and Jirachi Prism Star, four wrappers.",
+  oddsLine: "GX 1/9 · Prism Star 1/18 · full art 1/27 · rainbow 1/76 · gold 1/118",
+  lede: "Rayquaza-GX is the chase, with a full art and the rainbow above it; the Lisia and TV Reporter full arts are close behind. Gold is Trainers and Energy only.",
+  // Four tallies pooled, n=4,720 (research/second-source-check.md); plain Rare is 2/3 of packs, holo = 1/3 minus the hits. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1631, gx: 0.1114, ultra: 0.0371, rainbow: 0.0132, secret: 0.0085, reverseSpecial: [["prismStar", 0.0551]] }),
+  heroIds: ["sm7-177", "sm7-160", "sm7-170", "sm7-175"],
+  wrappers: boosterWrappers("sm7", [
+    { id: "stakataka", name: "Stakataka", cardId: "sm7-102", tag: "Ultra Beast" },
+    { id: "blaziken", name: "Blaziken", cardId: "sm7-28", tag: "Blaze" },
+    { id: "jirachi", name: "Jirachi", cardId: "sm7-97", tag: "Wish" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "sm7-109", tag: "Sky" },
+  ], 2),
+};
+
+export const DRAGON_MAJESTY = {
+  id: "sm75",
+  tcgId: "sm75",
+  name: "Dragon Majesty",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "September 7, 2018",
+  live: true,
+  printedTotal: 70,
+  totalCount: 88,
+  packSize: 11,
+  cost: 107.42,
+  dataFile: "data/sm75.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, September 2018. A 70-card dragon set with no booster box and no plain Rares: Charizard, Dragonite, Reshiram and Salamence on the wrappers.",
+  oddsLine: "GX 1/6.7 · Prism Star 1/10 · full art 1/16 · rainbow 1/40 · gold 1/68",
+  lede: "Every rare slot is a holo or better. Ultra Necrozma-GX gold is the chase, one of four golds sharing 1 pack in 68, and a Prism Star takes the reverse slot 1 pack in 10.",
+  // Two tallies pooled, n=949 (research/second-source-check.md); no plain Rare exists, so holo = 1 minus the hits. Reverse Energy (6.7%, a sheet model) is not wired: the set data holds no reverse Energy cards. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.7471, gx: 0.1496, ultra: 0.0632, rainbow: 0.0253, secret: 0.0148, reverseSpecial: [["prismStar", 0.1022]] }),
+  heroIds: ["sm75-78", "sm75-71", "sm75-73", "sm75-67"],
+  wrappers: boosterWrappers("sm75", [
+    { id: "charizard", name: "Charizard", cardId: "sm75-3", tag: "Flame" },
+    { id: "dragonite", name: "Dragonite", cardId: "sm75-37", tag: "Dragon" },
+    { id: "reshiram", name: "Reshiram", cardId: "sm75-11", tag: "Vermilion" },
+    { id: "salamence", name: "Salamence", cardId: "sm75-44", tag: "Storm" },
+  ], 2),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -2728,6 +2818,9 @@ export const PLAYABLE_SETS = [
   TRICK_OR_TRADE_2023,
   UNBROKEN_BONDS,
   UNIFIED_MINDS,
+  FORBIDDEN_LIGHT,
+  CELESTIAL_STORM,
+  DRAGON_MAJESTY,
   LOST_THUNDER,
   TEAM_UP,
 ];
@@ -2918,6 +3011,9 @@ const POKESYMBOLS_SLUG = {
   me55: "30th-celebration",
   sm10: "unbroken-bonds",
   sm11: "unified-minds",
+  sm6: "forbidden-light",
+  sm7: "celestial-storm",
+  sm75: "dragon-majesty",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

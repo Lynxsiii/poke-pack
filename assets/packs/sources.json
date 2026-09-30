@@ -729,6 +729,84 @@
           "file": "sm11/pack-3-v2.avif"
         }
       ]
+    },
+    "sm6": {
+      "name": "Forbidden Light",
+      "slug": "forbidden-light",
+      "packs": [
+        {
+          "id": "naganadel",
+          "remote": "forbidden-light-pack-0.avif",
+          "file": "sm6/pack-0-v2.avif"
+        },
+        {
+          "id": "greninja",
+          "remote": "forbidden-light-pack-1.avif",
+          "file": "sm6/pack-1-v2.avif"
+        },
+        {
+          "id": "necrozma",
+          "remote": "forbidden-light-pack-2.avif",
+          "file": "sm6/pack-2-v2.avif"
+        },
+        {
+          "id": "zygarde",
+          "remote": "forbidden-light-pack-3.avif",
+          "file": "sm6/pack-3-v2.avif"
+        }
+      ]
+    },
+    "sm7": {
+      "name": "Celestial Storm",
+      "slug": "celestial-storm",
+      "packs": [
+        {
+          "id": "stakataka",
+          "remote": "celestial-storm-pack-0.avif",
+          "file": "sm7/pack-0-v2.avif"
+        },
+        {
+          "id": "blaziken",
+          "remote": "celestial-storm-pack-1.avif",
+          "file": "sm7/pack-1-v2.avif"
+        },
+        {
+          "id": "jirachi",
+          "remote": "celestial-storm-pack-2.avif",
+          "file": "sm7/pack-2-v2.avif"
+        },
+        {
+          "id": "rayquaza",
+          "remote": "celestial-storm-pack-3.avif",
+          "file": "sm7/pack-3-v2.avif"
+        }
+      ]
+    },
+    "sm75": {
+      "name": "Dragon Majesty",
+      "slug": "dragon-majesty",
+      "packs": [
+        {
+          "id": "charizard",
+          "remote": "dragon-majesty-pack-0.avif",
+          "file": "sm75/pack-0-v2.avif"
+        },
+        {
+          "id": "dragonite",
+          "remote": "dragon-majesty-pack-1.avif",
+          "file": "sm75/pack-1-v2.avif"
+        },
+        {
+          "id": "reshiram",
+          "remote": "dragon-majesty-pack-2.avif",
+          "file": "sm75/pack-2-v2.avif"
+        },
+        {
+          "id": "salamence",
+          "remote": "dragon-majesty-pack-3.avif",
+          "file": "sm75/pack-3-v2.avif"
+        }
+      ]
     }
   }
 }
