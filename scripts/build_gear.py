@@ -193,7 +193,8 @@ def main() -> int:
     for key, slot in catalog["products"].items():
         set_id, prod = key.split("/", 1)
         base = names.get(key) or STANDARD.get(prod, prod)
-        slot["name"] = f"{base} ({sets.get(set_id, set_id)})" if prod in STANDARD or base in STANDARD.values() else base
+        set_name = sets.get(set_id, set_id)
+        slot["name"] = base if set_name.lower() in base.lower() else f"{base} ({set_name})"
         if key in rules and rules[key].get("pick"):
             slot["pick"] = rules[key]["pick"]
         slot["sleeves"] = sorted(set(slot["sleeves"]))

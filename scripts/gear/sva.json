@@ -1,0 +1,431 @@
+{
+ "items": [
+  {
+   "kind": "sleeve",
+   "id": "sva-koraidon-etb",
+   "name": "Koraidon sleeves",
+   "sets": [
+    "sv1"
+   ],
+   "subject": "Koraidon",
+   "blurb": "Red card sleeves with a gold foil outline of Koraidon and radiating burst rays, matching the Koraidon Elite Trainer Box art.",
+   "count": 65,
+   "products": [
+    "sv1/eliteTrainerBox",
+    "sv1/pc-etb-koraidon"
+   ],
+   "src": {
+    "tcgplayer": 491190
+   },
+   "crop": [
+    541,
+    353,
+    848,
+    782
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/478335/pokemon-sv01-scarlet-and-violet-base-set-scarlet-and-violet-elite-trainer-box-koraidon",
+    "https://www.tcgplayer.com/product/491190",
+    "https://cardshoplive.com/products/scarlet-violet-elite-trainer-box-koraidon",
+    "https://www.tcgplayer.com/product/478758/pokemon-sv01-scarlet-and-violet-base-set-scarlet-and-violet-pokemon-center-elite-trainer-box-exclusive-koraidon",
+    "https://cardshoplive.com/products/scarlet-violet-elite-trainer-box-koraidon-pokemon-center-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "sva-miraidon-etb",
+   "name": "Miraidon sleeves",
+   "sets": [
+    "sv1"
+   ],
+   "subject": "Miraidon",
+   "blurb": "Purple card sleeves with a gold foil outline of Miraidon and radiating burst rays, matching the Miraidon Elite Trainer Box art.",
+   "count": 65,
+   "products": [
+    "sv1/etb-miraidon",
+    "sv1/pc-etb-miraidon"
+   ],
+   "src": {
+    "tcgplayer": 491191
+   },
+   "crop": [
+    541,
+    353,
+    848,
+    782
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/478336/pokemon-sv01-scarlet-and-violet-base-set-scarlet-and-violet-elite-trainer-box-miraidon",
+    "https://www.tcgplayer.com/product/491191",
+    "https://cardshoplive.com/products/scarlet-violet-elite-trainer-box-miraidon",
+    "https://www.tcgplayer.com/product/478756/pokemon-sv01-scarlet-and-violet-base-set-scarlet-and-violet-pokemon-center-elite-trainer-box-exclusive-miraidon",
+    "https://cardshoplive.com/products/scarlet-violet-elite-trainer-box-miraidon-pokemon-center-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "sva-paldea-starters-etb",
+   "name": "Paldea starters sleeves",
+   "sets": [
+    "sv2"
+   ],
+   "subject": "Sprigatito, Fuecoco and Quaxly",
+   "blurb": "Black-bordered card sleeves showing Sprigatito, Fuecoco and Quaxly in flat green, orange and blue line art.",
+   "count": 65,
+   "products": [
+    "sv2/eliteTrainerBox",
+    "sv2/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-a/sv2__eliteTrainerBox__sleeve.jpg"
+   },
+   "crop": [
+    10,
+    10,
+    694,
+    960
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/493974/pokemon-sv02-paldea-evolved-paldea-evolved-elite-trainer-box",
+    "https://www.tcgplayer.com/product/500848",
+    "https://www.codedyellow.com/paldea-evolved-elite-trainer-box/",
+    "https://www.tcgplayer.com/product/493973/pokemon-sv02-paldea-evolved-paldea-evolved-pokemon-center-elite-trainer-box-exclusive",
+    "https://cardshoplive.com/products/scarlet-violet-paldea-evolved-elite-trainer-box-pokemon-center-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "sva-charmander-etb",
+   "name": "Charmander sleeves",
+   "sets": [
+    "sv3"
+   ],
+   "subject": "Charmander",
+   "blurb": "Dark red card sleeves with an orange Charmander in front of darker flame streaks.",
+   "count": 65,
+   "products": [
+    "sv3/eliteTrainerBox",
+    "sv3/pc-etb"
+   ],
+   "src": {
+    "tcgplayer": 512038
+   },
+   "crop": [
+    541,
+    353,
+    848,
+    782
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/501264/pokemon-sv03-obsidian-flames-obsidian-flames-elite-trainer-box",
+    "https://www.tcgplayer.com/product/512038",
+    "https://cardshoplive.com/products/scarlet-violet-obsidian-flames-elite-trainer-box",
+    "https://www.tcgplayer.com/product/501266/pokemon-sv03-obsidian-flames-obsidian-flames-pokemon-center-elite-trainer-box-exclusive",
+    "https://cardshoplive.com/products/scarlet-violet-obsidian-flames-elite-trainer-box-pokemon-center-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "sva-151-silhouettes-etb",
+   "name": "Kanto 151 silhouette sleeves",
+   "sets": [
+    "sv3pt5"
+   ],
+   "subject": "The original 151 Pokemon",
+   "blurb": "White card sleeves covered in small multicolour silhouettes of the original 151 Pokemon, matching the 151 Elite Trainer Box pattern.",
+   "count": 65,
+   "products": [
+    "sv3pt5/eliteTrainerBox",
+    "sv3pt5/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-a/sv3pt5__eliteTrainerBox__sleeve.jpg"
+   },
+   "crop": [
+    356,
+    236,
+    546,
+    502
+   ],
+   "v": 1,
+   "evidence": "single-source",
+   "sources": [
+    "https://www.tcgplayer.com/product/503313/pokemon-sv-scarlet-and-violet-151-151-elite-trainer-box",
+    "https://www.tcgplayer.com/product/517555",
+    "https://stompinggroundstcg.com/products/scarlet-and-violet-151-elite-trainer-box",
+    "https://www.tcgplayer.com/product/501999/pokemon-sv-scarlet-and-violet-151-151-pokemon-center-elite-trainer-box-exclusive",
+    "https://763collectibles.com/collections/pokemon/products/pokemon-151-elite-trainer-box-pokemon-center-exclusive-w-magnetic-acrylic"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "sva-roaring-moon-etb",
+   "name": "Roaring Moon sleeves",
+   "sets": [
+    "sv4"
+   ],
+   "subject": "Roaring Moon",
+   "blurb": "Red-bordered card sleeves with a yellow line-art Roaring Moon over a blue and cream sky and a blue diamond pattern.",
+   "count": 65,
+   "products": [
+    "sv4/eliteTrainerBox",
+    "sv4/pc-etb-roaring-moon"
+   ],
+   "src": {
+    "tcgplayer": 527209
+   },
+   "crop": [
+    549,
+    364,
+    840,
+    771
+   ],
+   "v": 2,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/512815/pokemon-sv04-paradox-rift-paradox-rift-elite-trainer-box-roaring-moon",
+    "https://www.tcgplayer.com/product/527209",
+    "https://cardshoplive.com/products/scarlet-violet-paradox-rift-elite-trainer-box-roaring-moon",
+    "https://www.tcgplayer.com/product/512809/pokemon-sv04-paradox-rift-paradox-rift-pokemon-center-elite-trainer-box-exclusive-roaring-moon",
+    "https://cardshoplive.com/products/scarlet-violet-paradox-rift-elite-trainer-box-roaring-moon-pokemon-center-exclusive"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "sva-iron-valiant-etb",
+   "name": "Iron Valiant sleeves",
+   "sets": [
+    "sv4"
+   ],
+   "subject": "Iron Valiant",
+   "blurb": "Green-bordered card sleeves with a pink Iron Valiant holding its sword over a mint green and pink diamond pattern.",
+   "count": 65,
+   "products": [
+    "sv4/pc-etb-iron-valiant"
+   ],
+   "src": {
+    "tcgplayer": 527210
+   },
+   "crop": [
+    549,
+    364,
+    840,
+    771
+   ],
+   "v": 2,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/512801/pokemon-sv04-paradox-rift-paradox-rift-pokemon-center-elite-trainer-box-exclusive-iron-valiant",
+    "https://cardshoplive.com/products/scarlet-violet-paradox-rift-elite-trainer-box-iron-valiant-pokemon-center-exclusive",
+    "https://www.tcgplayer.com/product/527210"
+   ]
+  },
+  {
+   "kind": "sleeve",
+   "id": "sva-shiny-mimikyu-etb",
+   "name": "Shiny Mimikyu sleeves",
+   "sets": [
+    "sv4pt5"
+   ],
+   "subject": "Shiny Mimikyu",
+   "blurb": "Dark purple card sleeves with a silver foil line-art Shiny Mimikyu and four-point sparkles over a tribal diamond pattern.",
+   "count": 65,
+   "products": [
+    "sv4pt5/eliteTrainerBox",
+    "sv4pt5/pc-etb"
+   ],
+   "src": {
+    "file": "refs/sv-a/sv4pt5__eliteTrainerBox__sleeve.jpg"
+   },
+   "crop": [
+    350,
+    231,
+    545,
+    501
+   ],
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/528040/pokemon-sv-paldean-fates-paldean-fates-elite-trainer-box",
+    "https://www.tcgplayer.com/product/536270",
+    "https://galaxygamesllc.com/products/scarlet-violet-paldean-fates-elite-trainer-box",
+    "https://www.tcgplayer.com/product/528039/pokemon-sv-paldean-fates-paldean-fates-pokemon-center-elite-trainer-box-exclusive",
+    "https://galaxygamesllc.com/products/scarlet-violet-paldean-fates-elite-trainer-box-pokemon-center-exclusive"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "sva-fuecoco-coin",
+   "name": "Fuecoco coin",
+   "sets": [
+    "sv1"
+   ],
+   "subject": "Fuecoco",
+   "blurb": "Embossed silver-toned round coin with Fuecoco's face, packed one per Scarlet & Violet single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv1/blister-spidops",
+    "sv1/blister-espathra"
+   ],
+   "src": {
+    "file": "refs/sv-a/sv1__blister-spidops__coin-front.jpg"
+   },
+   "circle": [
+    312,
+    332,
+    266
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/478765/pokemon-sv01-scarlet-and-violet-base-set-scarlet-and-violet-single-pack-blister-spidops",
+    "https://cardshoplive.com/products/scarlet-violet-single-pack-blister-spidops",
+    "https://www.smokeandmirrorshobby.com/products/scarlet-violet-single-pack-blister-espathra",
+    "https://bulbapedia.bulbagarden.net/wiki/Scarlet_&_Violet_TCG_Series_merchandise",
+    "https://www.tcgplayer.com/product/478766/pokemon-sv01-scarlet-and-violet-base-set-scarlet-and-violet-single-pack-blister-espathra",
+    "https://cardshoplive.com/products/scarlet-violet-single-pack-blister-espathra"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "sva-quaxly-coin",
+   "name": "Quaxly coin",
+   "sets": [
+    "sv2"
+   ],
+   "subject": "Quaxly",
+   "blurb": "Embossed silver-toned round coin with Quaxly's face, packed one per Paldea Evolved single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv2/blister-smoliv",
+    "sv2/blister-growlithe"
+   ],
+   "src": {
+    "file": "refs/sv-a/sv2__blister-smoliv__coin-front.jpg"
+   },
+   "circle": [
+    154,
+    137,
+    100
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/493999/pokemon-sv02-paldea-evolved-paldea-evolved-single-pack-blister-smoliv",
+    "https://cardshoplive.com/products/scarlet-violet-paldea-evolved-checklane-blister-smoliv",
+    "https://www.tcgplayer.com/product/493999",
+    "https://www.tcgplayer.com/product/494001/pokemon-sv02-paldea-evolved-paldea-evolved-single-pack-blister-growlithe",
+    "https://cardshoplive.com/products/scarlet-violet-paldea-evolved-checklane-blister-growlithe",
+    "https://www.tcgplayer.com/product/494001"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "sva-sprigatito-coin",
+   "name": "Sprigatito coin",
+   "sets": [
+    "sv3"
+   ],
+   "subject": "Sprigatito",
+   "blurb": "Embossed silver-toned round coin with Sprigatito's face, packed one per Obsidian Flames single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv3/blister-pawmi",
+    "sv3/blister-wooper"
+   ],
+   "src": {
+    "file": "refs/sv-a/sv3__blister-pawmi__coin-front.jpg"
+   },
+   "circle": [
+    205,
+    183,
+    122
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/501262/pokemon-sv03-obsidian-flames-obsidian-flames-single-pack-blister-pawmi",
+    "https://cardshoplive.com/products/scarlet-violet-obsidian-flames-single-pack-blister-set-of-2-paldean-wooper-pawmi",
+    "https://www.tcgplayer.com/product/501262",
+    "https://www.tcgplayer.com/product/512047/pokemon-sv03-obsidian-flames-obsidian-flames-single-pack-blister-paldean-wooper",
+    "https://www.tcgplayer.com/product/512047"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "sva-pikachu-coin-sv4",
+   "name": "Waving Pikachu coin",
+   "sets": [
+    "sv4"
+   ],
+   "subject": "Pikachu",
+   "blurb": "Embossed silver-toned round coin with a waving Pikachu, packed one per Paradox Rift single pack blister.",
+   "material": "metal",
+   "products": [
+    "sv4/blister-sinistea",
+    "sv4/blister-pineco"
+   ],
+   "src": {
+    "file": "refs/sv-a/sv4__blister-sinistea__coin-front.jpg"
+   },
+   "circle": [
+    156,
+    166,
+    140
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/514223/pokemon-sv04-paradox-rift-paradox-rift-single-pack-blister-sinistea",
+    "https://cardshoplive.com/products/scarlet-violet-paradox-rift-single-pack-blister-set-of-2",
+    "https://www.tcgplayer.com/product/514223",
+    "https://www.tcgplayer.com/product/514224/pokemon-sv04-paradox-rift-paradox-rift-single-pack-blister-pineco",
+    "https://www.tcgplayer.com/product/514224"
+   ]
+  },
+  {
+   "kind": "coin",
+   "id": "sva-mew-coin",
+   "name": "Mew coin",
+   "sets": [
+    "sv3pt5"
+   ],
+   "subject": "Mew",
+   "blurb": "Round metallic coin showing Mew on a glittery pink field inside a black rim, included in the 151 Ultra-Premium Collection.",
+   "material": "metal",
+   "products": [
+    "sv3pt5/upc"
+   ],
+   "src": {
+    "file": "refs/sv-a/sv3pt5__upc__coin-front.jpg"
+   },
+   "circle": [
+    67,
+    63,
+    46
+   ],
+   "backSrc": null,
+   "v": 1,
+   "evidence": "verified",
+   "sources": [
+    "https://www.tcgplayer.com/product/502005/pokemon-sv-scarlet-and-violet-151-151-ultra-premium-collection",
+    "https://cardshoplive.com/products/pokemon-151-ultra-premium-colelction",
+    "https://tistaminis.com/blogs/blog/pokemon-151-ultra-premium-collection-holy-grail-guide",
+    "https://themythicstore.com/products/pokemon-scarlet-violet-151-ultra-premium-collection-mew"
+   ]
+  }
+ ],
+ "productRules": {}
+}

@@ -31,9 +31,10 @@ const env={DB,SITE_ORIGIN:`http://127.0.0.1:${port}`,ASSETS:{fetch:async request
   const path=new URL(request.url).pathname;
   try{return new Response(readFileSync(new URL('..'+path,import.meta.url)),{headers:{'content-type':path.endsWith('.json')?'application/json':'application/octet-stream'}});}catch{return new Response('',{status:404});}
 }}};
-if(process.argv.includes('--seed')) {
+if(process.argv.includes('--seed')||process.argv.includes('--all')) {
   const catalog=JSON.parse(readFileSync(new URL('../data/gear.json',import.meta.url),'utf8'));
-  const ids=[...Object.keys(catalog.sleeves).slice(0,3).map(id=>['sleeve',id]),...Object.keys(catalog.coins).slice(0,5).map(id=>['coin',id])];
+  const all=process.argv.includes('--all');
+  const ids=all?[...Object.keys(catalog.sleeves).filter((_,i)=>i%2===0).map(id=>['sleeve',id]),...Object.keys(catalog.coins).filter((_,i)=>i%2===0).map(id=>['coin',id])]:[...Object.keys(catalog.sleeves).slice(0,3).map(id=>['sleeve',id]),...Object.keys(catalog.coins).slice(0,5).map(id=>['coin',id])];
   for(const [kind,id] of ids) db.prepare('INSERT INTO user_gear(user_id,kind,item_id,qty,first_at,last_at) VALUES(?,?,?,?,?,?)').run('test',kind,id,1,now,now);
 }
 const mime={'.js':'text/javascript','.css':'text/css','.html':'text/html','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.avif':'image/avif','.jpg':'image/jpeg','.woff2':'font/woff2'};
