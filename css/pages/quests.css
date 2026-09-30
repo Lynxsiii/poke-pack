@@ -363,6 +363,7 @@ button.mstrip:hover small { color: var(--ink); text-decoration: underline; text-
 .qa-fold[open] > summary { color: var(--ink); }
 .title-groups { display: grid; }
 .title-groups .qa-fold:first-child { margin-top: 0; }
+.title-groups .title-chip b { padding-right: 0; }
 .title-groups .title-wall { max-height: none; overflow: visible; padding: 2px 0 16px; }
 .qa-fold > .mb-grid { padding: 0 0 12px; }
 

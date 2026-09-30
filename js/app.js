@@ -40,7 +40,7 @@ import {
   DEFAULT_STATS,
   SHOWCASE_MAX,
 } from "./cosmetics.js";
-import { unlockedTitles, titleContext, TITLES, isTitleUnlocked } from "./titles.js";
+import { unlockedTitles, titleContext, TITLES, isTitleUnlocked, ownedPerSet } from "./titles.js";
 import {
   ACHIEVEMENTS,
   ACH_CATEGORIES,
@@ -1878,10 +1878,19 @@ function completion() {
   return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
 }
 
+/** Per-set id index, built once per loaded list, so an owned-card lookup is a map hit and not a scan. */
+const cardIndexes = new WeakMap();
+
 function findCard(id) {
   if (byId[id]) return byId[id];
   for (const list of Object.values(setCache)) {
-    const hit = list?.find((c) => c.id === id);
+    if (!list) continue;
+    let index = cardIndexes.get(list);
+    if (!index || index.size !== list.length) {
+      index = new Map(list.map((c) => [c.id, c]));
+      cardIndexes.set(list, index);
+    }
+    const hit = index.get(id);
     if (hit) return hit;
   }
   return null;
@@ -2415,8 +2424,9 @@ function guestHasProgress() {
 }
 
 function setCompletionRows() {
+  const perSet = ownedPerSet(state.collection);
   return PLAYABLE_SETS.map((set) => {
-    const owned = ownedInSet(set);
+    const owned = perSet.get(set.id) || 0;
     const total = set.totalCount || 1;
     return { set, owned, total, pct: Math.round((owned / total) * 100) };
   });
