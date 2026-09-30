@@ -1,0 +1,413 @@
+{
+  "id": "smp",
+  "name": "SM Black Star Promos",
+  "series": "sun-moon",
+  "slug": "sm-black-star-promos",
+  "scrydexId": "smp",
+  "era": "sm",
+  "tcgplayerGroup": 1861,
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm"
+    }
+  },
+  "promoCards": {
+    "smp004": {
+      "notes": "plain non-holo (Target launch event)",
+      "tcgplayerId": 147224
+    },
+    "smp078": {
+      "tcgplayerId": 179429
+    },
+    "smp148": {},
+    "smp094": {
+      "foilAs": "Rare Holo"
+    },
+    "smp095": {
+      "foilAs": "Rare Holo"
+    },
+    "smp096": {
+      "foilAs": "Rare Holo"
+    },
+    "smp097": {
+      "foilAs": "Rare Holo"
+    },
+    "smp115": {
+      "foilAs": "Rare Holo"
+    },
+    "smp116": {
+      "foilAs": "Rare Holo"
+    },
+    "smp117": {
+      "foilAs": "Rare Holo"
+    },
+    "smp118": {
+      "foilAs": "Rare Holo"
+    },
+    "smp108": {},
+    "smp109": {},
+    "smp110": {},
+    "smp111": {},
+    "smp112": {},
+    "smp113": {},
+    "smp114": {},
+    "smp127": {},
+    "smp128": {},
+    "smp157": {
+      "foilAs": "Rare Holo"
+    },
+    "smp186": {},
+    "smp190": {
+      "foilAs": "Rare Holo"
+    },
+    "smp237": {},
+    "smp238": {},
+    "smp239": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp240": {
+      "foilAs": "Rare Ultra"
+    },
+    "smp241": {
+      "foilAs": "Rare Ultra"
+    },
+    "smp242": {
+      "foilAs": "Rare Ultra"
+    },
+    "smp243": {
+      "foilAs": "Cosmos"
+    },
+    "smp244": {},
+    "smp247": {
+      "foilAs": "Rare Secret"
+    },
+    "smp248": {
+      "foilAs": "Rare Secret"
+    }
+  },
+  "products": [
+    {
+      "id": "pikachu-eevee-poke-ball-collection",
+      "name": "Pikachu & Eevee Poke Ball Collection",
+      "kind": "collection",
+      "tcgplayerId": 179376,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "sm8": 5
+      },
+      "promos": [
+        "smp157"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented. Five booster packs, released with Lost Thunder."
+    },
+    {
+      "id": "tag-team-powers-collection-espeon-deoxys",
+      "name": "TAG TEAM Powers Collection [Espeon & Deoxys GX]",
+      "kind": "collection",
+      "tcgplayerId": 209532,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "sm12": 3,
+        "sm11": 2,
+        "sm10": 2,
+        "sm9": 1
+      },
+      "promos": [
+        "smp237",
+        "smp238",
+        "smp239",
+        "smp240",
+        "smp241",
+        "smp242",
+        "smp243"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented. Eight packs (Bulbapedia)."
+    },
+    {
+      "id": "tag-team-powers-collection-umbreon-darkrai",
+      "name": "TAG TEAM Powers Collection [Umbreon & Darkrai GX]",
+      "kind": "collection",
+      "tcgplayerId": 209533,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "sm12": 3,
+        "sm11": 2,
+        "sm10": 2,
+        "sm9": 1
+      },
+      "promos": [
+        "smp237",
+        "smp238",
+        "smp239",
+        "smp240",
+        "smp241",
+        "smp242",
+        "smp243"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented. Eight packs (Bulbapedia)."
+    },
+    {
+      "id": "reshiram-charizard-gx-premium-collection",
+      "name": "Reshiram & Charizard GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 248208,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh7": 4,
+        "swsh6": 3,
+        "swsh5": 3
+      },
+      "promos": [
+        "smp247"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented. Ten Sword & Shield packs."
+    },
+    {
+      "id": "pikachu-zekrom-gx-premium-collection",
+      "name": "Pikachu & Zekrom GX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 253396,
+      "tcgplayerGroup": 2374,
+      "from": {
+        "swsh7": 4,
+        "swsh6": 3,
+        "swsh5": 3
+      },
+      "promos": [
+        "smp248"
+      ],
+      "note": "Pack mix approximate: the real split isn't documented. Ten packs, contents vary (TCGplayer)."
+    },
+    {
+      "id": "pikachu-zekrom-gx-league-battle-deck",
+      "name": "Pikachu & Zekrom GX League Battle Deck",
+      "kind": "deck",
+      "tcgplayerId": 214269,
+      "tcgplayerGroup": 2374,
+      "packs": 0,
+      "promos": [
+        "smp244"
+      ]
+    },
+    {
+      "id": "lets-play-eevee-theme-deck",
+      "name": "Let's Play, Eevee! Theme Deck",
+      "kind": "deck",
+      "tcgplayerId": 181697,
+      "tcgplayerGroup": 2374,
+      "packs": 0,
+      "promos": [
+        "smp186"
+      ]
+    },
+    {
+      "id": "trainer-kit-alolan-sandslash-ninetales",
+      "name": "Trainer Kit: Alolan Sandslash & Alolan Ninetales",
+      "kind": "deck",
+      "tcgplayerId": 162111,
+      "tcgplayerGroup": 2208,
+      "packs": 0,
+      "promos": [
+        "smp127",
+        "smp128"
+      ],
+      "note": "Two half decks; the deck lists themselves aren't simulated."
+    },
+    {
+      "id": "event-smp004",
+      "name": "Pikachu · Sun & Moon Launch Event",
+      "kind": "event",
+      "tcgplayerId": 147224,
+      "note": "Handed out at the Target launch event (November 19, 2016) and GAME's midnight launch.",
+      "promos": [
+        "smp004"
+      ]
+    },
+    {
+      "id": "event-smp078",
+      "name": "Champions Festival · Worlds 2017",
+      "kind": "event",
+      "tcgplayerId": 179429,
+      "note": "Handed to players at the 2017 World Championships.",
+      "promos": [
+        "smp078"
+      ]
+    },
+    {
+      "id": "event-smp148",
+      "name": "Champions Festival · Worlds 2018",
+      "kind": "event",
+      "tcgplayerId": 175064,
+      "note": "Handed to players at the 2018 World Championships.",
+      "promos": [
+        "smp148"
+      ]
+    },
+    {
+      "id": "event-smp094",
+      "name": "Wash Rotom · Ultra Prism Prerelease",
+      "kind": "event",
+      "tcgplayerId": 158167,
+      "note": "Ultra Prism Prerelease participation promo.",
+      "promos": [
+        "smp094"
+      ]
+    },
+    {
+      "id": "event-smp095",
+      "name": "Lucario · Ultra Prism Prerelease",
+      "kind": "event",
+      "tcgplayerId": 158165,
+      "note": "Ultra Prism Prerelease participation promo.",
+      "promos": [
+        "smp095"
+      ]
+    },
+    {
+      "id": "event-smp096",
+      "name": "Heatran · Ultra Prism Prerelease",
+      "kind": "event",
+      "tcgplayerId": 158171,
+      "note": "Ultra Prism Prerelease participation promo.",
+      "promos": [
+        "smp096"
+      ]
+    },
+    {
+      "id": "event-smp097",
+      "name": "Gumshoos · Ultra Prism Prerelease",
+      "kind": "event",
+      "tcgplayerId": 158169,
+      "note": "Ultra Prism Prerelease participation promo.",
+      "promos": [
+        "smp097"
+      ]
+    },
+    {
+      "id": "event-smp115",
+      "name": "Pheromosa · Forbidden Light Prerelease",
+      "kind": "event",
+      "tcgplayerId": 166288,
+      "note": "Forbidden Light Prerelease participation promo.",
+      "promos": [
+        "smp115"
+      ]
+    },
+    {
+      "id": "event-smp116",
+      "name": "Xurkitree · Forbidden Light Prerelease",
+      "kind": "event",
+      "tcgplayerId": 166290,
+      "note": "Forbidden Light Prerelease participation promo.",
+      "promos": [
+        "smp116"
+      ]
+    },
+    {
+      "id": "event-smp117",
+      "name": "Malamar · Forbidden Light Prerelease",
+      "kind": "event",
+      "tcgplayerId": 166292,
+      "note": "Forbidden Light Prerelease participation promo.",
+      "promos": [
+        "smp117"
+      ]
+    },
+    {
+      "id": "event-smp118",
+      "name": "Lycanroc · Forbidden Light Prerelease",
+      "kind": "event",
+      "tcgplayerId": 166294,
+      "note": "Forbidden Light Prerelease participation promo.",
+      "promos": [
+        "smp118"
+      ]
+    },
+    {
+      "id": "event-smp108",
+      "name": "Ash's Pikachu · I Choose You! 1",
+      "kind": "event",
+      "tcgplayerId": 151973,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp108"
+      ]
+    },
+    {
+      "id": "event-smp109",
+      "name": "Ash's Pikachu · I Choose You! 2",
+      "kind": "event",
+      "tcgplayerId": 151974,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp109"
+      ]
+    },
+    {
+      "id": "event-smp110",
+      "name": "Ash's Pikachu · I Choose You! 3",
+      "kind": "event",
+      "tcgplayerId": 152673,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp110"
+      ]
+    },
+    {
+      "id": "event-smp111",
+      "name": "Ash's Pikachu · I Choose You! 4",
+      "kind": "event",
+      "tcgplayerId": 153995,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp111"
+      ]
+    },
+    {
+      "id": "event-smp112",
+      "name": "Ash's Pikachu · I Choose You! 5",
+      "kind": "event",
+      "tcgplayerId": 153996,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp112"
+      ]
+    },
+    {
+      "id": "event-smp113",
+      "name": "Ash's Pikachu · I Choose You! 6",
+      "kind": "event",
+      "tcgplayerId": 153997,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp113"
+      ]
+    },
+    {
+      "id": "event-smp114",
+      "name": "Ash's Pikachu · I Choose You! 7",
+      "kind": "event",
+      "tcgplayerId": 153998,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp114"
+      ]
+    },
+    {
+      "id": "event-smp190",
+      "name": "Detective Pikachu · theatrical release",
+      "kind": "event",
+      "tcgplayerId": 189805,
+      "note": "Given out on the Detective Pikachu movie's opening weekend.",
+      "promos": [
+        "smp190"
+      ]
+    }
+  ]
+}

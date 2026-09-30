@@ -1,5 +1,5 @@
 {
-  "_fetchedAt": "2026-09-29",
+  "_fetchedAt": "2026-09-30",
   "cel25": [
     {
       "id": "eliteTrainerBox",
@@ -197,6 +197,141 @@
       "price": 173.99,
       "tcgplayerId": 251989,
       "image": "assets/products/cel25/dark-sylveon-v-tin.webp"
+    }
+  ],
+  "det1": [
+    {
+      "id": "case-file",
+      "name": "Detective Pikachu Case File",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Also holds 1 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp194"
+      ],
+      "price": 94.33,
+      "tcgplayerId": 185245,
+      "released": "2019-04-05",
+      "image": "assets/products/det1/case-file.webp"
+    },
+    {
+      "id": "charizard-gx-case-file",
+      "name": "Detective Pikachu: Charizard-GX Case File",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp195"
+      ],
+      "price": 195.78,
+      "tcgplayerId": 185242,
+      "image": "assets/products/det1/charizard-gx-case-file.webp"
+    },
+    {
+      "id": "charizard-gx-special-case-file",
+      "name": "Detective Pikachu: Charizard-GX Special Case File",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp195"
+      ],
+      "price": 499.99,
+      "tcgplayerId": 237678,
+      "image": "assets/products/det1/charizard-gx-special-case-file.webp"
+    },
+    {
+      "id": "mewtwo-gx-case-file",
+      "name": "Detective Pikachu: Mewtwo-GX Case File",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp196"
+      ],
+      "price": 168.5,
+      "tcgplayerId": 190324,
+      "image": "assets/products/det1/mewtwo-gx-case-file.webp"
+    },
+    {
+      "id": "greninja-gx-case-file",
+      "name": "Detective Pikachu: Greninja-GX Case File",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp197"
+      ],
+      "price": 176.99,
+      "tcgplayerId": 185243,
+      "image": "assets/products/det1/greninja-gx-case-file.webp"
+    },
+    {
+      "id": "collector-chest",
+      "name": "Detective Pikachu: Collector Chest",
+      "kind": "collection",
+      "packs": 7,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [],
+      "price": 372.33,
+      "tcgplayerId": 185244,
+      "released": "2019-04-05",
+      "image": "assets/products/det1/collector-chest.webp"
+    },
+    {
+      "id": "charizard-tin",
+      "name": "Detective Pikachu Tin (Charizard)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp195"
+      ],
+      "price": 169.91,
+      "tcgplayerId": 502477,
+      "image": "assets/products/det1/charizard-tin.webp"
+    },
+    {
+      "id": "mewtwo-tin",
+      "name": "Detective Pikachu Tin (Mewtwo)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp196"
+      ],
+      "price": 149.97,
+      "tcgplayerId": 502478,
+      "image": "assets/products/det1/mewtwo-tin.webp"
+    },
+    {
+      "id": "cafe-figure-collection",
+      "name": "Detective Pikachu Cafe Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp170"
+      ],
+      "price": 487.5,
+      "tcgplayerId": 264420,
+      "image": "assets/products/det1/cafe-figure-collection.webp"
+    },
+    {
+      "id": "on-the-case-figure-collection",
+      "name": "Detective Pikachu On the Case Figure Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Also holds 2 other Sun & Moon booster packs (TCGplayer: packs may vary by product, the mix is not named); not simulated.",
+      "promos": [
+        "det1-smp170",
+        "det1-smp198",
+        "det1-smp199",
+        "det1-smp200"
+      ],
+      "price": 329.96,
+      "tcgplayerId": 197563,
+      "image": "assets/products/det1/on-the-case-figure-collection.webp"
     }
   ],
   "me1": [
@@ -2216,6 +2351,1947 @@
       "tcgplayerId": 630612,
       "released": "2025-07-18",
       "image": "assets/products/rsv10pt5/unova-poster.webp"
+    }
+  ],
+  "smp": [
+    {
+      "id": "pikachu-eevee-poke-ball-collection",
+      "name": "Pikachu & Eevee Poke Ball Collection",
+      "kind": "collection",
+      "packs": 5,
+      "from": {
+        "sm8": 5
+      },
+      "note": "Pack mix approximate: the real split isn't documented. Five booster packs, released with Lost Thunder.",
+      "promos": [
+        "smp-smp157"
+      ],
+      "price": 257.91,
+      "tcgplayerId": 179376,
+      "image": "assets/products/smp/pikachu-eevee-poke-ball-collection.webp"
+    },
+    {
+      "id": "tag-team-powers-collection-espeon-deoxys",
+      "name": "TAG TEAM Powers Collection [Espeon & Deoxys GX]",
+      "kind": "collection",
+      "packs": 8,
+      "from": {
+        "sm12": 3,
+        "sm11": 2,
+        "sm10": 2,
+        "sm9": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented. Eight packs (Bulbapedia).",
+      "promos": [
+        "smp-smp237",
+        "smp-smp238",
+        "smp-smp239",
+        "smp-smp240",
+        "smp-smp241",
+        "smp-smp242",
+        "smp-smp243"
+      ],
+      "price": 1914.5,
+      "tcgplayerId": 209532,
+      "released": "2020-03-27",
+      "image": "assets/products/smp/tag-team-powers-collection-espeon-deoxys.webp"
+    },
+    {
+      "id": "tag-team-powers-collection-umbreon-darkrai",
+      "name": "TAG TEAM Powers Collection [Umbreon & Darkrai GX]",
+      "kind": "collection",
+      "packs": 8,
+      "from": {
+        "sm12": 3,
+        "sm11": 2,
+        "sm10": 2,
+        "sm9": 1
+      },
+      "note": "Pack mix approximate: the real split isn't documented. Eight packs (Bulbapedia).",
+      "promos": [
+        "smp-smp237",
+        "smp-smp238",
+        "smp-smp239",
+        "smp-smp240",
+        "smp-smp241",
+        "smp-smp242",
+        "smp-smp243"
+      ],
+      "price": 1849.99,
+      "tcgplayerId": 209533,
+      "released": "2020-03-27",
+      "image": "assets/products/smp/tag-team-powers-collection-umbreon-darkrai.webp"
+    },
+    {
+      "id": "reshiram-charizard-gx-premium-collection",
+      "name": "Reshiram & Charizard GX Premium Collection",
+      "kind": "premium",
+      "packs": 10,
+      "from": {
+        "swsh7": 4,
+        "swsh6": 3,
+        "swsh5": 3
+      },
+      "note": "Pack mix approximate: the real split isn't documented. Ten Sword & Shield packs.",
+      "promos": [
+        "smp-smp247"
+      ],
+      "price": 287.71,
+      "tcgplayerId": 248208,
+      "image": "assets/products/smp/reshiram-charizard-gx-premium-collection.webp"
+    },
+    {
+      "id": "pikachu-zekrom-gx-premium-collection",
+      "name": "Pikachu & Zekrom GX Premium Collection",
+      "kind": "premium",
+      "packs": 10,
+      "from": {
+        "swsh7": 4,
+        "swsh6": 3,
+        "swsh5": 3
+      },
+      "note": "Pack mix approximate: the real split isn't documented. Ten packs, contents vary (TCGplayer).",
+      "promos": [
+        "smp-smp248"
+      ],
+      "price": 296.25,
+      "tcgplayerId": 253396,
+      "image": "assets/products/smp/pikachu-zekrom-gx-premium-collection.webp"
+    },
+    {
+      "id": "pikachu-zekrom-gx-league-battle-deck",
+      "name": "Pikachu & Zekrom GX League Battle Deck",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "smp-smp244"
+      ],
+      "price": 237.03,
+      "tcgplayerId": 214269,
+      "released": "2020-05-22",
+      "image": "assets/products/smp/pikachu-zekrom-gx-league-battle-deck.webp"
+    },
+    {
+      "id": "lets-play-eevee-theme-deck",
+      "name": "Let's Play, Eevee! Theme Deck",
+      "kind": "deck",
+      "packs": 0,
+      "promos": [
+        "smp-smp186"
+      ],
+      "price": 49.71,
+      "tcgplayerId": 181697,
+      "image": "assets/products/smp/lets-play-eevee-theme-deck.webp"
+    },
+    {
+      "id": "trainer-kit-alolan-sandslash-ninetales",
+      "name": "Trainer Kit: Alolan Sandslash & Alolan Ninetales",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks; the deck lists themselves aren't simulated.",
+      "promos": [
+        "smp-smp127",
+        "smp-smp128"
+      ],
+      "price": 59.56,
+      "tcgplayerId": 162111,
+      "image": "assets/products/smp/trainer-kit-alolan-sandslash-ninetales.webp"
+    },
+    {
+      "id": "event-smp004",
+      "name": "Pikachu · Sun & Moon Launch Event",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the Target launch event (November 19, 2016) and GAME's midnight launch.",
+      "promos": [
+        "smp-smp004"
+      ],
+      "price": 12.77,
+      "tcgplayerId": 147224
+    },
+    {
+      "id": "event-smp078",
+      "name": "Champions Festival · Worlds 2017",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed to players at the 2017 World Championships.",
+      "promos": [
+        "smp-smp078"
+      ],
+      "price": 388.67,
+      "tcgplayerId": 179429
+    },
+    {
+      "id": "event-smp148",
+      "name": "Champions Festival · Worlds 2018",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed to players at the 2018 World Championships.",
+      "promos": [
+        "smp-smp148"
+      ],
+      "price": 249.99,
+      "tcgplayerId": 175064
+    },
+    {
+      "id": "event-smp094",
+      "name": "Wash Rotom · Ultra Prism Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Ultra Prism Prerelease participation promo.",
+      "promos": [
+        "smp-smp094"
+      ],
+      "price": 23.44,
+      "tcgplayerId": 158167
+    },
+    {
+      "id": "event-smp095",
+      "name": "Lucario · Ultra Prism Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Ultra Prism Prerelease participation promo.",
+      "promos": [
+        "smp-smp095"
+      ],
+      "price": 37.75,
+      "tcgplayerId": 158165
+    },
+    {
+      "id": "event-smp096",
+      "name": "Heatran · Ultra Prism Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Ultra Prism Prerelease participation promo.",
+      "promos": [
+        "smp-smp096"
+      ],
+      "price": 5.42,
+      "tcgplayerId": 158171
+    },
+    {
+      "id": "event-smp097",
+      "name": "Gumshoos · Ultra Prism Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Ultra Prism Prerelease participation promo.",
+      "promos": [
+        "smp-smp097"
+      ],
+      "price": 5.7,
+      "tcgplayerId": 158169
+    },
+    {
+      "id": "event-smp115",
+      "name": "Pheromosa · Forbidden Light Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Forbidden Light Prerelease participation promo.",
+      "promos": [
+        "smp-smp115"
+      ],
+      "price": 10.1,
+      "tcgplayerId": 166288
+    },
+    {
+      "id": "event-smp116",
+      "name": "Xurkitree · Forbidden Light Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Forbidden Light Prerelease participation promo.",
+      "promos": [
+        "smp-smp116"
+      ],
+      "price": 7.33,
+      "tcgplayerId": 166290
+    },
+    {
+      "id": "event-smp117",
+      "name": "Malamar · Forbidden Light Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Forbidden Light Prerelease participation promo.",
+      "promos": [
+        "smp-smp117"
+      ],
+      "price": 6.39,
+      "tcgplayerId": 166292
+    },
+    {
+      "id": "event-smp118",
+      "name": "Lycanroc · Forbidden Light Prerelease",
+      "kind": "event",
+      "packs": 0,
+      "note": "Forbidden Light Prerelease participation promo.",
+      "promos": [
+        "smp-smp118"
+      ],
+      "price": 15.78,
+      "tcgplayerId": 166294
+    },
+    {
+      "id": "event-smp108",
+      "name": "Ash's Pikachu · I Choose You! 1",
+      "kind": "event",
+      "packs": 0,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp-smp108"
+      ],
+      "price": 29.33,
+      "tcgplayerId": 151973
+    },
+    {
+      "id": "event-smp109",
+      "name": "Ash's Pikachu · I Choose You! 2",
+      "kind": "event",
+      "packs": 0,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp-smp109"
+      ],
+      "price": 116.36,
+      "tcgplayerId": 151974
+    },
+    {
+      "id": "event-smp110",
+      "name": "Ash's Pikachu · I Choose You! 3",
+      "kind": "event",
+      "packs": 0,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp-smp110"
+      ],
+      "price": 60.48,
+      "tcgplayerId": 152673
+    },
+    {
+      "id": "event-smp111",
+      "name": "Ash's Pikachu · I Choose You! 4",
+      "kind": "event",
+      "packs": 0,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp-smp111"
+      ],
+      "price": 58.48,
+      "tcgplayerId": 153995
+    },
+    {
+      "id": "event-smp112",
+      "name": "Ash's Pikachu · I Choose You! 5",
+      "kind": "event",
+      "packs": 0,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp-smp112"
+      ],
+      "price": 57.72,
+      "tcgplayerId": 153996
+    },
+    {
+      "id": "event-smp113",
+      "name": "Ash's Pikachu · I Choose You! 6",
+      "kind": "event",
+      "packs": 0,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp-smp113"
+      ],
+      "price": 55.34,
+      "tcgplayerId": 153997
+    },
+    {
+      "id": "event-smp114",
+      "name": "Ash's Pikachu · I Choose You! 7",
+      "kind": "event",
+      "packs": 0,
+      "note": "I Choose You! cinema release and TCG purchase campaign.",
+      "promos": [
+        "smp-smp114"
+      ],
+      "price": 50.28,
+      "tcgplayerId": 153998
+    },
+    {
+      "id": "event-smp190",
+      "name": "Detective Pikachu · theatrical release",
+      "kind": "event",
+      "packs": 0,
+      "note": "Given out on the Detective Pikachu movie's opening weekend.",
+      "promos": [
+        "smp-smp190"
+      ],
+      "price": 6.84,
+      "tcgplayerId": 189805
+    }
+  ],
+  "sm1": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Sun & Moon Elite Trainer Box [Solgaleo]",
+      "kind": "etb",
+      "packs": 8,
+      "note": "Two art variants (Solgaleo 126089, Lunala 126091), same contents.",
+      "promos": [],
+      "price": 250.93,
+      "tcgplayerId": 126089,
+      "image": "assets/products/sm1/elite-trainer-box.webp"
+    },
+    {
+      "id": "lunala-elite-trainer-box",
+      "name": "Sun & Moon Elite Trainer Box [Lunala]",
+      "kind": "etb",
+      "packs": 8,
+      "note": "Art variant of eliteTrainerBox.",
+      "promos": [],
+      "price": 249.65,
+      "tcgplayerId": 126091,
+      "image": "assets/products/sm1/lunala-elite-trainer-box.webp"
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Sun & Moon Prerelease Kit",
+      "kind": "battle",
+      "packs": 4,
+      "note": "Event kit, sold on TCGplayer as a sealed kit; no retail Build & Battle Box exists for this set. One promo per kit.",
+      "promos": [
+        "sm1-smp010",
+        "sm1-smp011",
+        "sm1-smp012",
+        "sm1-smp013"
+      ],
+      "pick": 1,
+      "price": 662.5,
+      "tcgplayerId": 206409,
+      "image": "assets/products/sm1/prerelease-kit.webp"
+    },
+    {
+      "id": "rockruff-single-pack-blister",
+      "name": "Sun & Moon Single Blister Pack [Rockruff]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm1-smp006"
+      ],
+      "price": 129.97,
+      "tcgplayerId": 231689,
+      "image": "assets/products/sm1/rockruff-single-pack-blister.webp"
+    },
+    {
+      "id": "pikipek-single-pack-blister",
+      "name": "Sun & Moon Single Blister Pack [Pikipek]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm1-smp007"
+      ],
+      "price": 124.99,
+      "tcgplayerId": 231690,
+      "image": "assets/products/sm1/pikipek-single-pack-blister.webp"
+    },
+    {
+      "id": "togedemaru-3-pack-blister",
+      "name": "Sun & Moon Base Set 3 Pack Blister [Togedemaru]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm1-smp009"
+      ],
+      "price": 121.99,
+      "tcgplayerId": 126052,
+      "image": "assets/products/sm1/togedemaru-3-pack-blister.webp"
+    },
+    {
+      "id": "zygarde-complete-pin-collection",
+      "name": "Zygarde Complete Forme Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm1-smp015"
+      ],
+      "price": 150.0,
+      "tcgplayerId": 455776,
+      "image": "assets/products/sm1/zygarde-complete-pin-collection.webp"
+    },
+    {
+      "id": "mimikyu-pin-collection",
+      "name": "Mimikyu Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm1-smp029"
+      ],
+      "price": 165.79,
+      "tcgplayerId": 129895,
+      "image": "assets/products/sm1/mimikyu-pin-collection.webp"
+    },
+    {
+      "id": "legends-of-alola-tin-solgaleo",
+      "name": "Legends of Alola Tin [Solgaleo GX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm1-smp016"
+      ],
+      "price": 192.49,
+      "tcgplayerId": 129309,
+      "image": "assets/products/sm1/legends-of-alola-tin-solgaleo.webp"
+    },
+    {
+      "id": "legends-of-alola-tin-lunala",
+      "name": "Legends of Alola Tin [Lunala GX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm1-smp017"
+      ],
+      "price": 196.96,
+      "tcgplayerId": 129310,
+      "image": "assets/products/sm1/legends-of-alola-tin-lunala.webp"
+    },
+    {
+      "id": "spring-2017-collector-chest",
+      "name": "Spring 2017 Collector's Chest Tin",
+      "kind": "tin",
+      "packs": 5,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm1-smp022",
+        "sm1-smp023",
+        "sm1-smp024"
+      ],
+      "price": 230.99,
+      "tcgplayerId": 267958,
+      "image": "assets/products/sm1/spring-2017-collector-chest.webp"
+    },
+    {
+      "id": "incineroar-gx-challenge-box-2020",
+      "name": "Sun & Moon GX Challenge Box [Incineroar]",
+      "kind": "collection",
+      "packs": 2,
+      "note": "No SM number.",
+      "promos": [],
+      "price": 103.97,
+      "tcgplayerId": 244313,
+      "image": "assets/products/sm1/incineroar-gx-challenge-box-2020.webp"
+    },
+    {
+      "id": "decidueye-gx-challenge-box-2020",
+      "name": "Sun & Moon GX Challenge Box [Decidueye]",
+      "kind": "collection",
+      "packs": 2,
+      "note": "No SM number.",
+      "promos": [],
+      "price": 150.0,
+      "tcgplayerId": 244314,
+      "image": "assets/products/sm1/decidueye-gx-challenge-box-2020.webp"
+    },
+    {
+      "id": "primarina-gx-challenge-box-2020",
+      "name": "Sun & Moon GX Challenge Box [Primarina]",
+      "kind": "collection",
+      "packs": 2,
+      "note": "No SM number.",
+      "promos": [],
+      "price": 139.22,
+      "tcgplayerId": 656996,
+      "image": "assets/products/sm1/primarina-gx-challenge-box-2020.webp"
+    }
+  ],
+  "sm10": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 2799.99,
+      "tcgplayerId": 185719,
+      "released": "2019-05-03",
+      "image": "assets/products/sm10/elite-trainer-box.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "note": "One of four prerelease promos, picked at random. The real box also held a 23-card evolution pack, which isn't simulated.",
+      "promos": [
+        "sm10-smp179",
+        "sm10-smp180",
+        "sm10-smp181",
+        "sm10-smp182"
+      ],
+      "pick": 1,
+      "price": 334.99,
+      "tcgplayerId": 189823,
+      "image": "assets/products/sm10/buildBattleBox.webp"
+    },
+    {
+      "id": "sceptile-3-pack-blister",
+      "name": "3 Pack Blister (Sceptile)",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Its promo is a special-art Sceptile reprint from Celestial Storm, which isn't on the site.",
+      "promos": [],
+      "price": 249.74,
+      "tcgplayerId": 188410,
+      "released": "2019-05-03",
+      "image": "assets/products/sm10/sceptile-3-pack-blister.webp"
+    },
+    {
+      "id": "typhlosion-3-pack-blister",
+      "name": "3 Pack Blister (Typhlosion)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm10-smp185"
+      ],
+      "price": 246.25,
+      "tcgplayerId": 188411,
+      "released": "2019-05-03",
+      "image": "assets/products/sm10/typhlosion-3-pack-blister.webp"
+    },
+    {
+      "id": "eevee-single-pack-blister",
+      "name": "Single Pack Blister (Eevee)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm10-smp184"
+      ],
+      "price": 86.69,
+      "tcgplayerId": 188412,
+      "released": "2019-05-03",
+      "image": "assets/products/sm10/eevee-single-pack-blister.webp"
+    },
+    {
+      "id": "pikachu-single-pack-blister",
+      "name": "Single Pack Blister (Pikachu)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm10-smp183"
+      ],
+      "price": 99.44,
+      "tcgplayerId": 188413,
+      "released": "2019-05-03",
+      "image": "assets/products/sm10/pikachu-single-pack-blister.webp"
+    },
+    {
+      "id": "alolan-marowak-gx-box",
+      "name": "Alolan Marowak-GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm10-smp187"
+      ],
+      "price": 849.0,
+      "tcgplayerId": 189658,
+      "released": "2019-05-03",
+      "image": "assets/products/sm10/alolan-marowak-gx-box.webp"
+    },
+    {
+      "id": "kangaskhan-gx-box",
+      "name": "Kangaskhan-GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held Unbroken Bonds, Lost Thunder and XY Evolutions packs.",
+      "promos": [
+        "sm10-smp188"
+      ],
+      "price": 400.0,
+      "tcgplayerId": 192083,
+      "image": "assets/products/sm10/kangaskhan-gx-box.webp"
+    },
+    {
+      "id": "blastoise-gx-premium-collection",
+      "name": "Blastoise-GX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "note": "Pack mix approximate: the real box held six packs, mostly Unbroken Bonds and Lost Thunder.",
+      "promos": [
+        "sm10-smp189"
+      ],
+      "price": 410.0,
+      "tcgplayerId": 192230,
+      "image": "assets/products/sm10/blastoise-gx-premium-collection.webp"
+    },
+    {
+      "id": "reshiram-charizard-gx-figure-collection",
+      "name": "Reshiram & Charizard-GX Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real box held Unified Minds, Unbroken Bonds and Roaring Skies packs.",
+      "promos": [
+        "sm10-smp201"
+      ],
+      "price": 900.0,
+      "tcgplayerId": 194597,
+      "image": "assets/products/sm10/reshiram-charizard-gx-figure-collection.webp"
+    }
+  ],
+  "sm11": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 1719.9,
+      "tcgplayerId": 193052,
+      "released": "2019-08-02",
+      "image": "assets/products/sm11/elite-trainer-box.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "note": "One of four prerelease promos, picked at random. The real box also held a 23-card evolution pack, which isn't simulated.",
+      "promos": [
+        "sm11-smp202",
+        "sm11-smp203",
+        "sm11-smp204",
+        "sm11-smp205"
+      ],
+      "pick": 1,
+      "price": 349.98,
+      "tcgplayerId": 195612,
+      "released": "2019-08-02",
+      "image": "assets/products/sm11/buildBattleBox.webp"
+    },
+    {
+      "id": "stakataka-3-pack-blister",
+      "name": "3 Pack Blister (Stakataka)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm11-smp209"
+      ],
+      "price": 330.0,
+      "tcgplayerId": 191884,
+      "released": "2019-08-02",
+      "image": "assets/products/sm11/stakataka-3-pack-blister.webp"
+    },
+    {
+      "id": "vikavolt-3-pack-blister",
+      "name": "3 Pack Blister (Vikavolt)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm11-smp208"
+      ],
+      "price": 328.9,
+      "tcgplayerId": 191885,
+      "released": "2019-08-02",
+      "image": "assets/products/sm11/vikavolt-3-pack-blister.webp"
+    },
+    {
+      "id": "pikachu-single-pack-blister",
+      "name": "Single Pack Blister (Pikachu)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm11-smp206"
+      ],
+      "price": 200.0,
+      "tcgplayerId": 191886,
+      "released": "2019-08-02",
+      "image": "assets/products/sm11/pikachu-single-pack-blister.webp"
+    },
+    {
+      "id": "sudowoodo-single-pack-blister",
+      "name": "Single Pack Blister (Sudowoodo)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm11-smp207"
+      ],
+      "price": 99.49,
+      "tcgplayerId": 191887,
+      "released": "2019-08-02",
+      "image": "assets/products/sm11/sudowoodo-single-pack-blister.webp"
+    },
+    {
+      "id": "umbreon-premium-checklane-blister",
+      "name": "Premium Checklane Blister (Umbreon)",
+      "kind": "blister",
+      "packs": 1,
+      "note": "Two reprint cards: a Cosmos holo Lost Thunder Umbreon and an Ultra Prism Eevee (which of the two prints isn't documented).",
+      "promos": [],
+      "price": 149.99,
+      "tcgplayerId": 229579,
+      "image": "assets/products/sm11/umbreon-premium-checklane-blister.webp"
+    },
+    {
+      "id": "espeon-premium-checklane-blister",
+      "name": "Premium Checklane Blister (Espeon)",
+      "kind": "blister",
+      "packs": 1,
+      "note": "Two reprint cards: a Cosmos holo Lost Thunder Espeon and an Ultra Prism Eevee (which of the two prints isn't documented).",
+      "promos": [],
+      "price": 470.79,
+      "tcgplayerId": 229580,
+      "image": "assets/products/sm11/espeon-premium-checklane-blister.webp"
+    },
+    {
+      "id": "power-partnership-tin-mewtwo-mew",
+      "name": "Power Partnership Tin (Mewtwo & Mew-GX)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm11-smp191"
+      ],
+      "price": 857.4,
+      "tcgplayerId": 194735,
+      "released": "2019-09-06",
+      "image": "assets/products/sm11/power-partnership-tin-mewtwo-mew.webp"
+    },
+    {
+      "id": "power-partnership-tin-lucario-melmetal",
+      "name": "Power Partnership Tin (Lucario & Melmetal-GX)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm11-smp192"
+      ],
+      "price": 410.0,
+      "tcgplayerId": 194736,
+      "released": "2019-09-06",
+      "image": "assets/products/sm11/power-partnership-tin-lucario-melmetal.webp"
+    },
+    {
+      "id": "power-partnership-tin-garchomp-giratina",
+      "name": "Power Partnership Tin (Garchomp & Giratina-GX)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm11-smp193"
+      ],
+      "price": 549.99,
+      "tcgplayerId": 194737,
+      "released": "2019-09-06",
+      "image": "assets/products/sm11/power-partnership-tin-garchomp-giratina.webp"
+    },
+    {
+      "id": "pale-moon-gx-box",
+      "name": "Pale Moon-GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm11-smp217"
+      ],
+      "price": 400.0,
+      "tcgplayerId": 198528,
+      "released": "2019-10-18",
+      "image": "assets/products/sm11/pale-moon-gx-box.webp"
+    }
+  ],
+  "sm115": [
+    {
+      "id": "pin-mew",
+      "name": "Mew Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm115-smp215"
+      ],
+      "price": 274.99,
+      "tcgplayerId": 193439,
+      "released": "2019-08-23",
+      "image": "assets/products/sm115/pin-mew.webp"
+    },
+    {
+      "id": "pin-mewtwo",
+      "name": "Mewtwo Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm115-smp214"
+      ],
+      "price": 240.0,
+      "tcgplayerId": 193440,
+      "released": "2019-08-23",
+      "image": "assets/products/sm115/pin-mewtwo.webp"
+    },
+    {
+      "id": "tin-charizard-gx",
+      "name": "Charizard-GX Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "sm115-smp211"
+      ],
+      "price": 173.21,
+      "tcgplayerId": 193437,
+      "released": "2019-09-06",
+      "image": "assets/products/sm115/tin-charizard-gx.webp"
+    },
+    {
+      "id": "tin-gyarados-gx",
+      "name": "Gyarados-GX Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "sm115-smp212"
+      ],
+      "price": 167.34,
+      "tcgplayerId": 193436,
+      "released": "2019-09-06",
+      "image": "assets/products/sm115/tin-gyarados-gx.webp"
+    },
+    {
+      "id": "tin-raichu-gx",
+      "name": "Raichu-GX Tin",
+      "kind": "tin",
+      "packs": 4,
+      "promos": [
+        "sm115-smp213"
+      ],
+      "price": 178.11,
+      "tcgplayerId": 193438,
+      "released": "2019-09-06",
+      "image": "assets/products/sm115/tin-raichu-gx.webp"
+    },
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "sm115-smp210"
+      ],
+      "price": 564.69,
+      "tcgplayerId": 194729,
+      "released": "2019-09-20",
+      "image": "assets/products/sm115/elite-trainer-box.webp"
+    },
+    {
+      "id": "premium-powers-collection",
+      "name": "Premium Powers Collection",
+      "kind": "premium",
+      "packs": 7,
+      "promos": [
+        "sm115-smp103a",
+        "sm115-smp104a"
+      ],
+      "price": 751.66,
+      "tcgplayerId": 206302,
+      "image": "assets/products/sm115/premium-powers-collection.webp"
+    },
+    {
+      "id": "ultra-premium-collection",
+      "name": "Ultra-Premium Collection",
+      "kind": "premium",
+      "packs": 15,
+      "promos": [
+        "sm115-smp103a",
+        "sm115-smp104a"
+      ],
+      "price": 1350.0,
+      "tcgplayerId": 199466,
+      "released": "2019-11-22",
+      "image": "assets/products/sm115/ultra-premium-collection.webp"
+    },
+    {
+      "id": "collection-charizard-gx",
+      "name": "Charizard-GX Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm115-smp211"
+      ],
+      "price": 201.99,
+      "tcgplayerId": 205159,
+      "image": "assets/products/sm115/collection-charizard-gx.webp"
+    },
+    {
+      "id": "collection-gyarados-gx",
+      "name": "Gyarados-GX Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm115-smp212"
+      ],
+      "price": 182.13,
+      "tcgplayerId": 205160,
+      "image": "assets/products/sm115/collection-gyarados-gx.webp"
+    },
+    {
+      "id": "collection-raichu-gx",
+      "name": "Raichu-GX Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm115-smp213"
+      ],
+      "price": 182.33,
+      "tcgplayerId": 205161,
+      "image": "assets/products/sm115/collection-raichu-gx.webp"
+    }
+  ],
+  "sm12": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 1874.5,
+      "tcgplayerId": 199308,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/elite-trainer-box.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sm12-smp218",
+        "sm12-smp219",
+        "sm12-smp220",
+        "sm12-smp221"
+      ],
+      "pick": 1,
+      "price": 499.99,
+      "tcgplayerId": 199310,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/buildBattleBox.webp"
+    },
+    {
+      "id": "celebi-3-pack-blister",
+      "name": "3 Pack Blister (Celebi)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm12-smp224"
+      ],
+      "price": 400.0,
+      "tcgplayerId": 199767,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/celebi-3-pack-blister.webp"
+    },
+    {
+      "id": "mismagius-single-pack-blister",
+      "name": "Single Pack Blister (Mismagius)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm12-smp222"
+      ],
+      "price": 187.8,
+      "tcgplayerId": 199768,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/mismagius-single-pack-blister.webp"
+    },
+    {
+      "id": "terrakion-single-pack-blister",
+      "name": "Single Pack Blister (Terrakion)",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm12-smp223"
+      ],
+      "price": 130.49,
+      "tcgplayerId": 199769,
+      "released": "2019-11-01",
+      "image": "assets/products/sm12/terrakion-single-pack-blister.webp"
+    },
+    {
+      "id": "tag-team-generations-premium-collection",
+      "name": "TAG TEAM Generations Premium Collection",
+      "kind": "premium",
+      "packs": 7,
+      "note": "Pack mix approximate: TCGplayer says 7 Pokemon TCG booster packs without naming the sets.",
+      "promos": [
+        "sm12-smp229",
+        "sm12-smp230"
+      ],
+      "price": 1815.0,
+      "tcgplayerId": 200172,
+      "released": "2019-11-22",
+      "image": "assets/products/sm12/tag-team-generations-premium-collection.webp"
+    },
+    {
+      "id": "fall-2019-collectors-chest",
+      "name": "Fall 2019 Collector's Chest",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Pack mix approximate: TCGplayer says 5 Pokemon TCG booster packs without naming the sets.",
+      "promos": [
+        "sm12-smp226",
+        "sm12-smp227",
+        "sm12-smp228"
+      ],
+      "price": 1499.99,
+      "tcgplayerId": 200142,
+      "image": "assets/products/sm12/fall-2019-collectors-chest.webp"
+    },
+    {
+      "id": "small-but-mighty-premium-collection",
+      "name": "Small But Mighty Premium Collection",
+      "kind": "premium",
+      "packs": 10,
+      "note": "Pack mix approximate: TCGplayer says 10 booster packs without naming the set.",
+      "promos": [
+        "sm12-143a"
+      ],
+      "price": 749.88,
+      "tcgplayerId": 226128,
+      "released": "2020-11-01",
+      "image": "assets/products/sm12/small-but-mighty-premium-collection.webp"
+    }
+  ],
+  "sm2": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Guardians Rising Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 446.54,
+      "tcgplayerId": 129890,
+      "image": "assets/products/sm2/elite-trainer-box.webp"
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Guardians Rising Prerelease Kit",
+      "kind": "battle",
+      "packs": 4,
+      "note": "Event kit; one promo per kit.",
+      "promos": [
+        "sm2-smp018",
+        "sm2-smp019",
+        "sm2-smp020",
+        "sm2-smp021"
+      ],
+      "pick": 1,
+      "price": 345.5,
+      "tcgplayerId": 131273,
+      "image": "assets/products/sm2/prerelease-kit.webp"
+    },
+    {
+      "id": "lurantis-single-pack-blister",
+      "name": "Guardians Rising Single Pack Blister [Lurantis]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm2-smp025"
+      ],
+      "price": 38.68,
+      "tcgplayerId": 184341,
+      "image": "assets/products/sm2/lurantis-single-pack-blister.webp"
+    },
+    {
+      "id": "tsareena-single-pack-blister",
+      "name": "Guardians Rising Single Pack Blister [Tsareena]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm2-smp026"
+      ],
+      "price": 38.18,
+      "tcgplayerId": 184342,
+      "image": "assets/products/sm2/tsareena-single-pack-blister.webp"
+    },
+    {
+      "id": "turtonator-3-pack-blister",
+      "name": "Guardians Rising 3 Pack Blister [Turtonator]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm2-smp027"
+      ],
+      "price": 88.74,
+      "tcgplayerId": 184340,
+      "image": "assets/products/sm2/turtonator-3-pack-blister.webp"
+    },
+    {
+      "id": "vikavolt-3-pack-blister",
+      "name": "Guardians Rising 3 Pack Blister [Vikavolt]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm2-smp028"
+      ],
+      "price": 116.99,
+      "tcgplayerId": 184339,
+      "image": "assets/products/sm2/vikavolt-3-pack-blister.webp"
+    },
+    {
+      "id": "alolan-persian-single-pack-blister",
+      "name": "Guardians Rising Single Pack Blister [Alolan Persian]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "No SM number (Sun & Moon 79 Cosmos Holofoil).",
+      "promos": [],
+      "price": 92.4,
+      "tcgplayerId": 242964,
+      "image": "assets/products/sm2/alolan-persian-single-pack-blister.webp"
+    },
+    {
+      "id": "tapu-koko-figure-collection",
+      "name": "Tapu Koko Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp030"
+      ],
+      "price": 185.0,
+      "tcgplayerId": 131734,
+      "image": "assets/products/sm2/tapu-koko-figure-collection.webp"
+    },
+    {
+      "id": "tapu-koko-pin-collection",
+      "name": "Tapu Koko Pin Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp031"
+      ],
+      "price": 79.33,
+      "tcgplayerId": 132237,
+      "image": "assets/products/sm2/tapu-koko-pin-collection.webp"
+    },
+    {
+      "id": "island-guardians-tin-tapu-koko",
+      "name": "Island Guardians Tin [Tapu Koko GX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp033"
+      ],
+      "price": 175.0,
+      "tcgplayerId": 131725,
+      "image": "assets/products/sm2/island-guardians-tin-tapu-koko.webp"
+    },
+    {
+      "id": "island-guardians-tin-tapu-bulu",
+      "name": "Island Guardians Tin [Tapu Bulu GX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp032"
+      ],
+      "price": 174.0,
+      "tcgplayerId": 131726,
+      "image": "assets/products/sm2/island-guardians-tin-tapu-bulu.webp"
+    },
+    {
+      "id": "bewear-gx-box",
+      "name": "Bewear GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp034"
+      ],
+      "price": 277.97,
+      "tcgplayerId": 132238,
+      "image": "assets/products/sm2/bewear-gx-box.webp"
+    },
+    {
+      "id": "decidueye-gx-premium-collection",
+      "name": "Decidueye GX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp037"
+      ],
+      "price": 297.95,
+      "tcgplayerId": 133806,
+      "image": "assets/products/sm2/decidueye-gx-premium-collection.webp"
+    },
+    {
+      "id": "incineroar-gx-premium-collection",
+      "name": "Incineroar GX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp038"
+      ],
+      "price": 341.99,
+      "tcgplayerId": 133807,
+      "image": "assets/products/sm2/incineroar-gx-premium-collection.webp"
+    },
+    {
+      "id": "espeon-gx-premium-collection",
+      "name": "Espeon GX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp035"
+      ],
+      "price": 455.0,
+      "tcgplayerId": 137523,
+      "image": "assets/products/sm2/espeon-gx-premium-collection.webp"
+    },
+    {
+      "id": "umbreon-gx-premium-collection",
+      "name": "Umbreon GX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp036"
+      ],
+      "price": 812.5,
+      "tcgplayerId": 137524,
+      "image": "assets/products/sm2/umbreon-gx-premium-collection.webp"
+    },
+    {
+      "id": "shiny-tapu-koko-gx-box",
+      "name": "Shiny Tapu Koko GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm2-smp050"
+      ],
+      "price": 142.51,
+      "tcgplayerId": 137872,
+      "image": "assets/products/sm2/shiny-tapu-koko-gx-box.webp"
+    },
+    {
+      "id": "solgaleo-gx-challenge-box",
+      "name": "Solgaleo GX Challenge Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "No SM number. Bulbapedia also lists a June 7 2019 Solgaleo-GX Challenge Box with a jumbo SM1 89; TCGplayer text matches the Walmart version.",
+      "promos": [],
+      "price": 300.0,
+      "tcgplayerId": 218327,
+      "image": "assets/products/sm2/solgaleo-gx-challenge-box.webp"
+    },
+    {
+      "id": "lunala-gx-challenge-box",
+      "name": "Lunala GX Challenge Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "No SM number.",
+      "promos": [],
+      "price": 199.99,
+      "tcgplayerId": 218328,
+      "image": "assets/products/sm2/lunala-gx-challenge-box.webp"
+    }
+  ],
+  "sm3": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Burning Shadows Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 324.38,
+      "tcgplayerId": 133776,
+      "released": "2017-08-04",
+      "image": "assets/products/sm3/elite-trainer-box.webp"
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Burning Shadows Prerelease Kit",
+      "kind": "battle",
+      "packs": 4,
+      "note": "Event kit; one promo per kit.",
+      "promos": [
+        "sm3-smp046",
+        "sm3-smp047",
+        "sm3-smp048",
+        "sm3-smp049"
+      ],
+      "pick": 1,
+      "price": 299.97,
+      "tcgplayerId": 139888,
+      "image": "assets/products/sm3/prerelease-kit.webp"
+    },
+    {
+      "id": "jangmo-o-single-pack-blister",
+      "name": "Burning Shadows Single Pack Blister [Jangmo-o]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm3-smp040"
+      ],
+      "price": 80.0,
+      "tcgplayerId": 136597,
+      "image": "assets/products/sm3/jangmo-o-single-pack-blister.webp"
+    },
+    {
+      "id": "cosmog-3-pack-blister",
+      "name": "Burning Shadows 3 Pack Blister [Cosmog]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm3-smp042"
+      ],
+      "price": 120.0,
+      "tcgplayerId": 136600,
+      "image": "assets/products/sm3/cosmog-3-pack-blister.webp"
+    },
+    {
+      "id": "alolan-meowth-3-pack-blister",
+      "name": "Burning Shadows 3 Pack Blister [Alolan Meowth]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "sm3-smp043"
+      ],
+      "price": 120.0,
+      "tcgplayerId": 136599,
+      "image": "assets/products/sm3/alolan-meowth-3-pack-blister.webp"
+    },
+    {
+      "id": "tsareena-gx-box",
+      "name": "Tsareena GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm3-smp056"
+      ],
+      "price": 199.98,
+      "tcgplayerId": 141243,
+      "image": "assets/products/sm3/tsareena-gx-box.webp"
+    },
+    {
+      "id": "charizard-gx-premium-collection",
+      "name": "Charizard GX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm3-smp060"
+      ],
+      "price": 1320.0,
+      "tcgplayerId": 148154,
+      "image": "assets/products/sm3/charizard-gx-premium-collection.webp"
+    },
+    {
+      "id": "team-skull-pin-collection",
+      "name": "Team Skull Pin Collection",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "sm3-smp062",
+        "sm3-smp063"
+      ],
+      "price": 210.0,
+      "tcgplayerId": 148417,
+      "image": "assets/products/sm3/team-skull-pin-collection.webp"
+    },
+    {
+      "id": "mysterious-powers-tin-necrozma",
+      "name": "Mysterious Powers Tin [Necrozma GX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm3-smp058"
+      ],
+      "price": 126.74,
+      "tcgplayerId": 148419,
+      "image": "assets/products/sm3/mysterious-powers-tin-necrozma.webp"
+    },
+    {
+      "id": "mysterious-powers-tin-marshadow",
+      "name": "Mysterious Powers Tin [Marshadow GX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack set/mix not documented; assumed own set.",
+      "promos": [
+        "sm3-smp059"
+      ],
+      "price": 184.99,
+      "tcgplayerId": 148420,
+      "image": "assets/products/sm3/mysterious-powers-tin-marshadow.webp"
+    },
+    {
+      "id": "alolan-ninetales-gx-challenge-box",
+      "name": "Alolan Ninetales GX Challenge Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "No SM number.",
+      "promos": [],
+      "price": 97.5,
+      "tcgplayerId": 218320,
+      "image": "assets/products/sm3/alolan-ninetales-gx-challenge-box.webp"
+    },
+    {
+      "id": "lycanroc-gx-challenge-box",
+      "name": "Lycanroc GX Challenge Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "SM14 also ships in the SM1 Lycanroc GX Box.",
+      "promos": [
+        "sm3-smp014"
+      ],
+      "price": 90.0,
+      "tcgplayerId": 218321,
+      "image": "assets/products/sm3/lycanroc-gx-challenge-box.webp"
+    }
+  ],
+  "sm6": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 686.16,
+      "tcgplayerId": 164303,
+      "released": "2018-05-04",
+      "image": "assets/products/sm6/elite-trainer-box.webp"
+    },
+    {
+      "id": "forces-of-nature-gx-premium-collection",
+      "name": "Forces of Nature GX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "promos": [
+        "sm6-smp133",
+        "sm6-smp134"
+      ],
+      "price": 265.0,
+      "tcgplayerId": 169414,
+      "released": "2018-07-06",
+      "image": "assets/products/sm6/forces-of-nature-gx-premium-collection.webp"
+    },
+    {
+      "id": "alolan-exeggutor-2a",
+      "name": "Alolan Exeggutor 2a/131 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm6-2a"
+      ],
+      "price": 3.15,
+      "tcgplayerId": 180514
+    }
+  ],
+  "sm7": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 2091.3,
+      "tcgplayerId": 170277,
+      "released": "2018-08-03",
+      "image": "assets/products/sm7/elite-trainer-box.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "promos": [
+        "sm7-smp129",
+        "sm7-smp130",
+        "sm7-smp131",
+        "sm7-smp132"
+      ],
+      "pick": 1,
+      "price": 730.0,
+      "tcgplayerId": 170280,
+      "image": "assets/products/sm7/buildBattleBox.webp"
+    },
+    {
+      "id": "celestial-storm-single-pack-blister-tapu-bulu",
+      "name": "Celestial Storm Single Pack Blister [Tapu Bulu]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm7-smp61"
+      ],
+      "price": 89.99,
+      "tcgplayerId": 177898,
+      "image": "assets/products/sm7/celestial-storm-single-pack-blister-tapu-bulu.webp"
+    },
+    {
+      "id": "celestial-storm-single-pack-blister-tapu-fini",
+      "name": "Celestial Storm Single Pack Blister [Tapu Fini]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm7-smp92"
+      ],
+      "price": 89.99,
+      "tcgplayerId": 177899,
+      "image": "assets/products/sm7/celestial-storm-single-pack-blister-tapu-fini.webp"
+    },
+    {
+      "id": "solgaleo-gx-box",
+      "name": "Solgaleo GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm7-smp104"
+      ],
+      "price": 699.99,
+      "tcgplayerId": 175558,
+      "released": "2018-10-05",
+      "image": "assets/products/sm7/solgaleo-gx-box.webp"
+    },
+    {
+      "id": "lunala-gx-box",
+      "name": "Lunala GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm7-smp103"
+      ],
+      "price": 289.85,
+      "tcgplayerId": 175559,
+      "released": "2018-10-05",
+      "image": "assets/products/sm7/lunala-gx-box.webp"
+    },
+    {
+      "id": "evolution-celebration-tin-glaceon-gx",
+      "name": "Evolution Celebration Tin [Glaceon GX]",
+      "kind": "tin",
+      "packs": 2,
+      "promos": [
+        "sm7-smp147"
+      ],
+      "price": 148.62,
+      "tcgplayerId": 175555,
+      "image": "assets/products/sm7/evolution-celebration-tin-glaceon-gx.webp"
+    },
+    {
+      "id": "evolution-celebration-tin-leafeon-gx",
+      "name": "Evolution Celebration Tin [Leafeon GX]",
+      "kind": "tin",
+      "packs": 2,
+      "promos": [
+        "sm7-smp146"
+      ],
+      "price": 156.15,
+      "tcgplayerId": 175556,
+      "image": "assets/products/sm7/evolution-celebration-tin-leafeon-gx.webp"
+    },
+    {
+      "id": "sceptile-10a",
+      "name": "Sceptile 10a/168 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm7-10a"
+      ],
+      "price": 4.85,
+      "tcgplayerId": 189786
+    },
+    {
+      "id": "rayquaza-gx-177a",
+      "name": "Rayquaza GX 177a/168 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm7-177a"
+      ],
+      "price": 191.07,
+      "tcgplayerId": 202638
+    }
+  ],
+  "sm75": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "sm75-smp125"
+      ],
+      "price": 1256.49,
+      "tcgplayerId": 173393,
+      "released": "2018-09-21",
+      "image": "assets/products/sm75/elite-trainer-box.webp"
+    },
+    {
+      "id": "latios-pin-collection",
+      "name": "Dragon Majesty Pin Collection [Latios]",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm75-smp136"
+      ],
+      "price": 450.0,
+      "tcgplayerId": 175063,
+      "released": "2018-09-07",
+      "image": "assets/products/sm75/latios-pin-collection.webp"
+    },
+    {
+      "id": "super-premium-collection",
+      "name": "Dragon Majesty Super-Premium Collection",
+      "kind": "premium",
+      "packs": 10,
+      "promos": [
+        "sm75-smp155",
+        "sm75-smp156"
+      ],
+      "price": 1699.99,
+      "tcgplayerId": 175560,
+      "image": "assets/products/sm75/super-premium-collection.webp"
+    },
+    {
+      "id": "ultra-necrozma-gx-figure-collection",
+      "name": "Ultra Necrozma GX Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "sm75-smp126"
+      ],
+      "price": 541.99,
+      "tcgplayerId": 179038,
+      "image": "assets/products/sm75/ultra-necrozma-gx-figure-collection.webp"
+    },
+    {
+      "id": "salamence-gx-special-collection",
+      "name": "Dragon Majesty Special Collection: Salamence GX",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "sm75-smp139",
+        "sm75-smp140"
+      ],
+      "price": 999.99,
+      "tcgplayerId": 180522,
+      "image": "assets/products/sm75/salamence-gx-special-collection.webp"
+    },
+    {
+      "id": "white-kyurem-gx-special-collection",
+      "name": "Dragon Majesty Special Collection: White Kyurem GX",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "sm75-smp141",
+        "sm75-smp142"
+      ],
+      "price": 588.97,
+      "tcgplayerId": 180526,
+      "image": "assets/products/sm75/white-kyurem-gx-special-collection.webp"
+    },
+    {
+      "id": "altaria-40a",
+      "name": "Altaria 40a/70 (Alternate Art Promo)",
+      "kind": "event",
+      "packs": 0,
+      "promos": [
+        "sm75-40a"
+      ],
+      "price": 4.7,
+      "tcgplayerId": 184219
+    }
+  ],
+  "sm8": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 681.55,
+      "tcgplayerId": 175511,
+      "released": "2018-11-02",
+      "image": "assets/products/sm8/elite-trainer-box.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "note": "Also sold as the Lost Thunder Prerelease Kit (TCGplayer 179423).",
+      "promos": [
+        "sm8-smp149",
+        "sm8-smp150",
+        "sm8-smp151",
+        "sm8-smp152"
+      ],
+      "pick": 1,
+      "price": 192.54,
+      "tcgplayerId": 179423,
+      "image": "assets/products/sm8/buildBattleBox.webp"
+    },
+    {
+      "id": "salandit-single-pack-blister",
+      "name": "Salandit Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm8-smp154"
+      ],
+      "price": 127.96,
+      "tcgplayerId": 177906,
+      "released": "2018-11-02",
+      "image": "assets/products/sm8/salandit-single-pack-blister.webp"
+    },
+    {
+      "id": "rowlet-single-pack-blister",
+      "name": "Rowlet Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm8-smp153"
+      ],
+      "price": 90.99,
+      "tcgplayerId": 177907,
+      "released": "2018-11-02",
+      "image": "assets/products/sm8/rowlet-single-pack-blister.webp"
+    },
+    {
+      "id": "island-guardians-gx-premium-collection",
+      "name": "Island Guardians GX Premium Collection",
+      "kind": "premium",
+      "packs": 8,
+      "note": "Pack mix approximate: the real split isn't documented. Its promos are alternate-art Tapu Lele-GX and Tapu Fini-GX reprints, not SM Black Star numbers.",
+      "promos": [],
+      "price": 580.0,
+      "tcgplayerId": 177864,
+      "released": "2018-11-02",
+      "image": "assets/products/sm8/island-guardians-gx-premium-collection.webp"
+    },
+    {
+      "id": "island-guardians-gx-premium-pin-collection",
+      "name": "Island Guardians GX Premium Pin Collection",
+      "kind": "premium",
+      "packs": 8,
+      "note": "Pack mix approximate: the real split isn't documented. Same cards as the Premium Collection.",
+      "promos": [],
+      "price": 897.99,
+      "tcgplayerId": 181707,
+      "image": "assets/products/sm8/island-guardians-gx-premium-pin-collection.webp"
+    },
+    {
+      "id": "flareon-gx-special-collection",
+      "name": "Flareon GX Special Collection",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm8-smp171",
+        "sm8-smp174"
+      ],
+      "price": 589.0,
+      "tcgplayerId": 181708,
+      "released": "2019-01-18",
+      "image": "assets/products/sm8/flareon-gx-special-collection.webp"
+    },
+    {
+      "id": "jolteon-gx-special-collection",
+      "name": "Jolteon GX Special Collection",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm8-smp173",
+        "sm8-smp176"
+      ],
+      "price": 600.0,
+      "tcgplayerId": 181709,
+      "released": "2019-01-18",
+      "image": "assets/products/sm8/jolteon-gx-special-collection.webp"
+    }
+  ],
+  "sm9": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 4000.0,
+      "tcgplayerId": 181704,
+      "released": "2019-02-01",
+      "image": "assets/products/sm9/elite-trainer-box.webp"
+    },
+    {
+      "id": "buildBattleBox",
+      "name": "Build & Battle Box",
+      "kind": "battle",
+      "packs": 4,
+      "note": "Also sold as the Team Up Prerelease Kit (TCGplayer 183975).",
+      "promos": [
+        "sm9-smp158",
+        "sm9-smp159",
+        "sm9-smp160",
+        "sm9-smp161"
+      ],
+      "pick": 1,
+      "price": 1300.0,
+      "tcgplayerId": 183975,
+      "released": "2019-02-01",
+      "image": "assets/products/sm9/buildBattleBox.webp"
+    },
+    {
+      "id": "mimikyu-single-pack-blister",
+      "name": "Mimikyu Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm9-smp163"
+      ],
+      "price": 379.66,
+      "tcgplayerId": 181702,
+      "image": "assets/products/sm9/mimikyu-single-pack-blister.webp"
+    },
+    {
+      "id": "pikachu-single-pack-blister",
+      "name": "Pikachu Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm9-smp162"
+      ],
+      "price": 471.05,
+      "tcgplayerId": 181703,
+      "image": "assets/products/sm9/pikachu-single-pack-blister.webp"
+    },
+    {
+      "id": "tag-team-tin-celebi-venusaur",
+      "name": "TAG TEAM Tin (Celebi & Venusaur-GX)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm9-smp167"
+      ],
+      "price": 618.33,
+      "tcgplayerId": 185256,
+      "image": "assets/products/sm9/tag-team-tin-celebi-venusaur.webp"
+    },
+    {
+      "id": "tag-team-tin-eevee-snorlax",
+      "name": "TAG TEAM Tin (Eevee & Snorlax-GX)",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Pack mix approximate: the real split isn't documented.",
+      "promos": [
+        "sm9-smp169"
+      ],
+      "price": 702.48,
+      "tcgplayerId": 185257,
+      "image": "assets/products/sm9/tag-team-tin-eevee-snorlax.webp"
     }
   ],
   "sv1": [
@@ -7548,6 +9624,358 @@
       "price": 180.68,
       "tcgplayerId": 668632,
       "image": "assets/products/zsv10pt5/heavy-hitters.webp"
+    }
+  ],
+  "sm35": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "promos": [
+        "sm35-smp070"
+      ],
+      "price": 1183.16,
+      "tcgplayerId": 145847,
+      "released": "2017-10-06",
+      "image": "assets/products/sm35/elite-trainer-box.webp"
+    },
+    {
+      "id": "pikachu-pin-collection",
+      "name": "Pin Collection [Pikachu]",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm35-smp076"
+      ],
+      "price": 327.56,
+      "tcgplayerId": 145849,
+      "image": "assets/products/sm35/pikachu-pin-collection.webp"
+    },
+    {
+      "id": "mewtwo-pin-collection",
+      "name": "Pin Collection [Mewtwo]",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm35-smp077"
+      ],
+      "price": 414.63,
+      "tcgplayerId": 145848,
+      "image": "assets/products/sm35/mewtwo-pin-collection.webp"
+    },
+    {
+      "id": "zoroark-pin-collection",
+      "name": "Pin Collection [Zoroark]",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm35-smp089"
+      ],
+      "price": 386.5,
+      "tcgplayerId": 154717,
+      "image": "assets/products/sm35/zoroark-pin-collection.webp"
+    },
+    {
+      "id": "marshadow-pin-collection",
+      "name": "Pin Collection [Marshadow]",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "sm35-smp093"
+      ],
+      "price": 329.99,
+      "tcgplayerId": 155596,
+      "image": "assets/products/sm35/marshadow-pin-collection.webp"
+    },
+    {
+      "id": "super-premium-collection-ho-oh-gx",
+      "name": "Super-Premium Collection [Ho-Oh GX]",
+      "kind": "premium",
+      "packs": 10,
+      "promos": [
+        "sm35-smp079",
+        "sm35-smp080",
+        "sm35-smp081",
+        "sm35-smp082"
+      ],
+      "price": 1560.0,
+      "tcgplayerId": 148412,
+      "image": "assets/products/sm35/super-premium-collection-ho-oh-gx.webp"
+    },
+    {
+      "id": "premium-powers-collection",
+      "name": "Premium Powers Collection",
+      "kind": "premium",
+      "packs": 8,
+      "note": "Sold outside North America.",
+      "promos": [
+        "sm35-smp079",
+        "sm35-smp080",
+        "sm35-smp081",
+        "sm35-smp082"
+      ],
+      "price": 999.99,
+      "tcgplayerId": 209439,
+      "image": "assets/products/sm35/premium-powers-collection.webp"
+    },
+    {
+      "id": "zoroark-gx-special-collection",
+      "name": "Special Collection [Zoroark GX]",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "sm35-smp083",
+        "sm35-smp084"
+      ],
+      "price": 499.99,
+      "tcgplayerId": 149378,
+      "image": "assets/products/sm35/zoroark-gx-special-collection.webp"
+    },
+    {
+      "id": "raichu-gx-special-collection",
+      "name": "Special Collection [Raichu GX]",
+      "kind": "collection",
+      "packs": 5,
+      "promos": [
+        "sm35-smp090",
+        "sm35-28h"
+      ],
+      "price": 537.14,
+      "tcgplayerId": 155062,
+      "image": "assets/products/sm35/raichu-gx-special-collection.webp"
+    },
+    {
+      "id": "shiny-darkrai-gx-figure-collection",
+      "name": "Figure Collection [Shiny Darkrai GX]",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Its promo is Burning Shadows 88a, not an SM number.",
+      "promos": [],
+      "price": 750.0,
+      "tcgplayerId": 161257,
+      "released": "2018-03-09",
+      "image": "assets/products/sm35/shiny-darkrai-gx-figure-collection.webp"
+    },
+    {
+      "id": "shiny-darkrai-gx-collection",
+      "name": "Collection [Shiny Darkrai GX]",
+      "kind": "collection",
+      "packs": 4,
+      "note": "European version. Its promo is Burning Shadows 88a, not an SM number.",
+      "promos": [],
+      "price": 462.49,
+      "tcgplayerId": 600514,
+      "image": "assets/products/sm35/shiny-darkrai-gx-collection.webp"
+    }
+  ],
+  "sm4": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 221.75,
+      "tcgplayerId": 149377,
+      "image": "assets/products/sm4/elite-trainer-box.webp"
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Prerelease Kit",
+      "kind": "battle",
+      "packs": 4,
+      "note": "Event kit; one promo per kit.",
+      "promos": [
+        "sm4-smp072",
+        "sm4-smp073",
+        "sm4-smp074",
+        "sm4-smp075"
+      ],
+      "pick": 1,
+      "price": 97.86,
+      "tcgplayerId": 153081,
+      "image": "assets/products/sm4/prerelease-kit.webp"
+    },
+    {
+      "id": "golisopod-single-pack-blister",
+      "name": "Single Pack Blister [Golisopod]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm4-smp052"
+      ],
+      "price": 33.16,
+      "tcgplayerId": 177874,
+      "image": "assets/products/sm4/golisopod-single-pack-blister.webp"
+    },
+    {
+      "id": "dhelmise-single-pack-blister",
+      "name": "Single Pack Blister [Dhelmise]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "sm4-smp053"
+      ],
+      "price": 33.68,
+      "tcgplayerId": 177875,
+      "image": "assets/products/sm4/dhelmise-single-pack-blister.webp"
+    },
+    {
+      "id": "ultra-beasts-premium-pheromosa-celesteela",
+      "name": "Ultra Beasts GX Premium Collection [Pheromosa GX & Celesteela GX]",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "sm4-smp066",
+        "sm4-smp067"
+      ],
+      "price": 440.65,
+      "tcgplayerId": 149375,
+      "released": "2017-11-03",
+      "image": "assets/products/sm4/ultra-beasts-premium-pheromosa-celesteela.webp"
+    },
+    {
+      "id": "ultra-beasts-premium-buzzwole-xurkitree",
+      "name": "Ultra Beasts GX Premium Collection [Buzzwole GX & Xurkitree GX]",
+      "kind": "premium",
+      "packs": 8,
+      "promos": [
+        "sm4-smp068",
+        "sm4-smp069"
+      ],
+      "price": 275.0,
+      "tcgplayerId": 149376,
+      "released": "2017-11-03",
+      "image": "assets/products/sm4/ultra-beasts-premium-buzzwole-xurkitree.webp"
+    },
+    {
+      "id": "shiny-silvally-gx-box",
+      "name": "Shiny Silvally GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs.",
+      "promos": [
+        "sm4-smp091"
+      ],
+      "price": 299.99,
+      "tcgplayerId": 152598,
+      "released": "2017-11-16",
+      "image": "assets/products/sm4/shiny-silvally-gx-box.webp"
+    },
+    {
+      "id": "marshadow-figure-collection",
+      "name": "Marshadow Figure Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs.",
+      "promos": [
+        "sm4-smp085"
+      ],
+      "price": 278.0,
+      "tcgplayerId": 152602,
+      "released": "2017-11-16",
+      "image": "assets/products/sm4/marshadow-figure-collection.webp"
+    },
+    {
+      "id": "guzzlord-gx-box",
+      "name": "Guzzlord GX Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Its promo is the alternate-art Guzzlord-GX, Crimson Invasion 63a. The pack mix is not documented; shown as Crimson Invasion packs.",
+      "promos": [
+        "sm4-63a"
+      ],
+      "price": 299.99,
+      "tcgplayerId": 155061,
+      "released": "2018-01-05",
+      "image": "assets/products/sm4/guzzlord-gx-box.webp"
+    },
+    {
+      "id": "pikachu-sidekick-collection",
+      "name": "Pikachu Sidekick Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs.",
+      "promos": [
+        "sm4-smp098"
+      ],
+      "price": 210.97,
+      "tcgplayerId": 166409,
+      "image": "assets/products/sm4/pikachu-sidekick-collection.webp"
+    },
+    {
+      "id": "mimikyu-sidekick-collection",
+      "name": "Mimikyu Sidekick Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "The pack mix is not documented; shown as Crimson Invasion packs.",
+      "promos": [
+        "sm4-smp099"
+      ],
+      "price": 184.28,
+      "tcgplayerId": 166410,
+      "image": "assets/products/sm4/mimikyu-sidekick-collection.webp"
+    }
+  ],
+  "sm5": [
+    {
+      "id": "etb-dawn-wings-necrozma",
+      "name": "Elite Trainer Box [Dawn Wings Necrozma]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 711.99,
+      "tcgplayerId": 155663,
+      "image": "assets/products/sm5/etb-dawn-wings-necrozma.webp"
+    },
+    {
+      "id": "etb-dusk-mane-necrozma",
+      "name": "Elite Trainer Box [Dusk Mane Necrozma]",
+      "kind": "etb",
+      "packs": 8,
+      "promos": [],
+      "price": 741.96,
+      "tcgplayerId": 155664,
+      "image": "assets/products/sm5/etb-dusk-mane-necrozma.webp"
+    },
+    {
+      "id": "necrozma-prism-tin-dawn-wings",
+      "name": "Necrozma Prism Tin [Dawn Wings Necrozma GX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "The pack mix is not documented; shown as Ultra Prism packs.",
+      "promos": [
+        "sm5-smp101"
+      ],
+      "price": 240.0,
+      "tcgplayerId": 162046,
+      "released": "2018-03-16",
+      "image": "assets/products/sm5/necrozma-prism-tin-dawn-wings.webp"
+    },
+    {
+      "id": "legends-of-johto-gx-premium-collection",
+      "name": "Legends of Johto GX Premium Collection Box",
+      "kind": "premium",
+      "packs": 6,
+      "note": "The pack mix is not documented; shown as Ultra Prism packs.",
+      "promos": [
+        "sm5-smp121",
+        "sm5-10a"
+      ],
+      "price": 323.92,
+      "tcgplayerId": 164232,
+      "image": "assets/products/sm5/legends-of-johto-gx-premium-collection.webp"
+    },
+    {
+      "id": "ultra-prism-3-pack-hanger-box",
+      "name": "3 Pack Hanger Box",
+      "kind": "bundle",
+      "packs": 3,
+      "promos": [],
+      "price": 139.98,
+      "tcgplayerId": 232314,
+      "image": "assets/products/sm5/ultra-prism-3-pack-hanger-box.webp"
     }
   ]
 }

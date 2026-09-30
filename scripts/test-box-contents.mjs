@@ -44,7 +44,7 @@ for(const file of readdirSync(new URL('../data/',import.meta.url))){
   if(Array.isArray(rows))for(const row of rows)if(row?.id)cardIds.add(row.id);
 }
 for(const type of ['grass','fire','water','lightning','psychic','fighting','darkness','metal'])
-  for(const suffix of ['','-tera','-unova','-swsh','-mee'])cardIds.add(`energy-${type}${suffix}`);
+  for(const suffix of ['','-tera','-unova','-swsh','-mee','-sm17','-sm19'])cardIds.add(`energy-${type}${suffix}`);
 const offers=new Map();
 for(const [setId,rows] of Object.entries(products)){if(setId.startsWith('_'))continue;for(const row of rows)offers.set(`${setId}/${row.id}`,row);}
 for(const [setId,prices] of Object.entries(sealed))for(const id of ['boosterBox','eliteTrainerBox','boosterBundle'])if(prices?.[id]>0&&!offers.has(`${setId}/${id}`))offers.set(`${setId}/${id}`,{promos:[]});
@@ -120,6 +120,23 @@ for(const card of response.body.boxCards){
   assert.equal(owned(card.id),(owned1[card.id]||0)+card.n+(pulled2[card.id]||0));
   assert.equal(card.wasNew,!owned1[card.id],`${card.id}: new only when it was not owned before`);
 }
+// Sun & Moon: an ETB holds 5 of each basic Energy in the set's own print (the nine-type box's Fairy is not on the site),
+// and a premium collection its reprinted cards.
+for(const [product,print] of [['sm10/elite-trainer-box','sm19'],['sm11/elite-trainer-box','sm19']]) {
+  const [sm,id]=product.split('/');
+  assert.deepEqual(box[product]?.spread,{total:40,print},`${product} deals 40 Energy in the ${print} print`);
+  response=await request('/api/sealed/open','POST',{setId:sm,product:id});
+  assert.equal(response.status,200,JSON.stringify(response.body));
+  assert.equal(response.body.boxCards.length,8,'one row per basic Energy type');
+  for(const card of response.body.boxCards){
+    assert.equal(card.n,5);
+    assert.ok(card.id.endsWith('-'+print)&&card.id.startsWith('energy-'),`${card.id} is ${print} Energy`);
+    assert.ok(card.image&&card.name,'an Energy card the opening can draw');
+  }
+}
+response=await request('/api/sealed/open','POST',{setId:'sm10',product:'blastoise-gx-premium-collection'});
+assert.equal(response.status,200,JSON.stringify(response.body));
+assert.deepEqual(response.body.boxCards.map(card=>card.id).sort(),['sm10-33','sm10-34']);
 // A product with no list still opens as before.
 response=await request('/api/sealed/open','POST',{setId:'me5',product:'boosterBundle'});
 assert.equal(response.status,200);

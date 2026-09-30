@@ -27,17 +27,30 @@ one of the standard products: eliteTrainerBox, boosterBox, boosterBundle).
                 boxCardList in js/catalog.js for how it is read.
 
 Card ids are the site's own (`sv2-58`), or a shared basic Energy
-(`energy-fire`, `energy-fire-tera`, `energy-fire-swsh`, `energy-fire-mee`).
+(`energy-fire`, `energy-fire-tera`, `energy-fire-swsh`, `energy-fire-mee`,
+`energy-fire-sm17`, `energy-fire-sm19`).
+
+Sun & Moon is not in the project files: its research is committed in
+scripts/box-research/sun-moon.json (sources, confidence and notes per row; the
+write-up is .claude/skills/card-textures/reference/sun-moon-box-contents.md) and
+folded in by sun_moon() below. Its products are matched by set + TCGplayer id,
+so a set's rows appear when its products and cards are in the data: re-run the
+script after a set lands.
+
+    python3 scripts/build_box_contents.py /path/to/deck-boxes/parts
+    python3 scripts/build_box_contents.py /path/to/deck-boxes/parts --trial   # single-source rows too, scratch file
 """
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 OUT = DATA / "box-contents.json"
+SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
 # --trial ships single-source rows too, to a scratch file, to exercise the deal.
 ALLOW_SINGLE = False
 # Second-source check found these still in conflict (see verify-decks.md): held back until settled.
@@ -94,13 +107,23 @@ def load_offers() -> dict[str, dict]:
         if set_id.startswith("_"):
             continue
         for row in rows:
-            out[f"{set_id}/{row['id']}"] = {"promos": row.get("promos") or []}
+            out[f"{set_id}/{row['id']}"] = {
+                "promos": row.get("promos") or [],
+                "set": set_id,
+                "id": row["id"],
+                "kind": row.get("kind"),
+                "tcgplayerId": row.get("tcgplayerId"),
+                "note": row.get("note") or "",
+            }
     for set_id, prices in sealed.items():
         if not isinstance(prices, dict):
             continue
         for product in STANDARD:
             if isinstance(prices.get(product), (int, float)) and f"{set_id}/{product}" not in out:
-                out[f"{set_id}/{product}"] = {"promos": []}
+                out[f"{set_id}/{product}"] = {
+                    "promos": [], "set": set_id, "id": product, "note": "",
+                    "kind": "etb" if product == "eliteTrainerBox" else None, "tcgplayerId": None,
+                }
     return out
 
 
@@ -127,10 +150,11 @@ def pairs(rows, cards: set[str], key: str, rep: Report) -> list[list]:
 
 
 def merge(rows: list[list]) -> list[list]:
-    seen: dict[str, int] = {}
+    seen: dict[str | tuple, int] = {}
     for card_id, n in rows:
-        seen[card_id] = seen.get(card_id, 0) + n
-    return [[card_id, n] for card_id, n in seen.items()]
+        key = tuple(card_id) if isinstance(card_id, list) else card_id  # [a, b] = one of the two, at random
+        seen[key] = seen.get(key, 0) + n
+    return [[list(card_id) if isinstance(card_id, tuple) else card_id, n] for card_id, n in seen.items()]
 
 
 def mee_energy(missing: list[dict]) -> tuple[list[list], list[dict]]:
@@ -402,8 +426,145 @@ def build(parts_dir: Path) -> int:
             more = sum(n for _, n in rows)
             out[key] = {"label": f"{more} extra card{'s' if more != 1 else ''}", "cards": merge(rows)}
 
+    if SM_RESEARCH.exists():
+        sun_moon(json.loads(SM_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards, meta)
+
     write(out, rep, offers)
     return 0
+
+
+def catalog_prints() -> dict[str, str]:
+    """set id -> energyPrint, read from js/catalog.js (what the set's own packs carry)."""
+    out: dict[str, str] = {}
+    for block in (ROOT / "js" / "catalog.js").read_text(encoding="utf-8").split("\nexport const ")[1:]:
+        set_id = re.search(r'\n  id: "([^"]+)"', block)
+        print_ = re.search(r'\n  energyPrint: "([^"]+)"', block)
+        if set_id and print_:
+            out[set_id.group(1)] = print_.group(1)
+    return out
+
+
+def find_offer(offers: dict[str, dict], set_id: str, tcgplayer_id, kind: str | None = None) -> tuple[str, dict] | None:
+    """The product a research row is about: by TCGplayer id, or the set's only product of that kind."""
+    rows = [(k, o) for k, o in offers.items() if o.get("set") == set_id]
+    if tcgplayer_id:
+        rows = [(k, o) for k, o in rows if o.get("tcgplayerId") == tcgplayer_id]
+    elif kind:
+        rows = [(k, o) for k, o in rows if o.get("kind") == kind]
+    else:
+        return None
+    return rows[0] if len(rows) == 1 else None
+
+
+def sm_cards(rows: list[dict], cards: set[str], promos: list[str]) -> tuple[list[list], set[str]]:
+    """Research card rows -> [[id | [ids], n]], and the ids (by set) the site does not have yet.
+    A card the product already deals as a promo is dealt once, not twice."""
+    out: list[list] = []
+    missing: set[str] = set()
+    for item in rows:
+        ids = item.get("oneOf") or [item["id"]]
+        gone = [i for i in ids if i not in cards]
+        if gone:
+            missing.update(i.rsplit("-", 1)[0] for i in gone)
+            continue
+        n = int(item.get("n") or 1)
+        if len(ids) == 1 and ids[0] in promos:
+            n -= 1
+        if n > 0:
+            out.append([ids[0] if len(ids) == 1 else ids, n])
+    return out, missing
+
+
+def sun_moon(research: dict, out: dict, rep: Report, offers: dict, cards: set[str], meta) -> None:
+    """Sun & Moon sealed products: ETB Energy, reprint cards, Evolution packs (scripts/box-research/sun-moon.json)."""
+    def shippable(entry: dict, key: str) -> bool:
+        if entry.get("confidence") == "verified" or (ALLOW_SINGLE and entry.get("confidence") == "single-source"):
+            return True
+        rep.skipped.append(f"{key}: {entry.get('confidence')}, not confirmed by a second source")
+        return False
+
+    waiting: dict[str, int] = {}
+
+    def no_product(item: dict) -> None:
+        waiting[item["set"]] = waiting.get(item["set"], 0) + 1
+
+    def stale_note(key: str, offer: dict) -> None:
+        if "simulated" in offer.get("note", ""):
+            rep.notes.append(f"{key}: its note in data/sets/{offer['set']}.json says cards are not simulated; update it")
+
+    # Elite Trainer Boxes: 5 of each basic Energy, the set's own print. The 45th-card Fairy is not on the site.
+    etb = research["etb"]
+    in_catalog = catalog_prints()
+    per_type = etb["total"] // etb["types"]
+    for key, offer in sorted(offers.items()):
+        print_ = etb["print"].get(offer["set"])
+        if not print_ or offer.get("kind") != "etb":
+            continue
+        if in_catalog.get(offer["set"], print_) != print_:
+            rep.problem(key, f"research says {print_}, js/catalog.js energyPrint is {in_catalog[offer['set']]}")
+            continue
+        if shippable(etb, key):
+            out[key] = {"label": f"{per_type * len(ENERGY_TYPES)} basic Energy", "spread": {"total": per_type * len(ENERGY_TYPES), "print": print_}}
+    for set_id in sorted({o["set"] for o in offers.values()} & {s for s in etb["print"]}):
+        if not any(k.startswith(set_id + "/") and k in out and "spread" in out[k] for k in out) and not in_catalog.get(set_id):
+            rep.notes.append(f"{set_id}: no ETB row (set is not in js/catalog.js yet, or its ETB product is missing)")
+
+    # Products that hold extra set cards (reprints, Stage 1 lines).
+    for item in research["products"]:
+        found = find_offer(offers, item["set"], item["tcgplayerId"])
+        if not found:
+            no_product(item)
+            continue
+        key, offer = found
+        if not shippable(item, key):
+            continue
+        rows, need = sm_cards(item["cards"], cards, offer["promos"])
+        if need:
+            rep.skipped.append(f"{key}: waiting for {', '.join(sorted(need))}")
+            continue
+        if not rows:
+            continue
+        more = sum(n for _, n in rows)
+        out[key] = {"label": f"{more} extra card{'s' if more != 1 else ''}", "cards": merge(rows)}
+        stale_note(key, offer)
+
+    # Build & Battle Boxes / Prerelease Kits: a 23-card Evolution pack (promo group + a random group + random Trainers).
+    for item in research["buildBattle"]:
+        found = find_offer(offers, item["set"], item["tcgplayerId"], "battle")
+        if not found:
+            no_product(item)
+            continue
+        key, offer = found
+        if not shippable(item, key):
+            continue
+        by_number = {int(re.sub(r"\D", "", p.rsplit("-", 1)[-1]) or 0): p for p in offer["promos"]}
+        groups: dict[str, dict] = {}
+        need: set[str] = set()
+        for g in item["groups"]:
+            promo = by_number.get(g["promo"])
+            if not promo:
+                rep.problem(key, f"group {g['name']}: SM{g['promo']} is not one of the product's promos")
+                break
+            rows, gone = sm_cards(g["cards"], cards, [])
+            need |= gone
+            groups[promo] = {"cards": rows, "types": group_types(rows, meta)}
+        else:
+            pool = []
+            for c in item["pool"]:
+                if c["id"] in cards:
+                    pool.append([c["id"], 0, int(c["max"])])
+                else:
+                    need.add(c["id"].rsplit("-", 1)[0])
+            if need:
+                rep.skipped.append(f"{key}: waiting for {', '.join(sorted(need))}")
+                continue
+            out[key] = {
+                "label": f"{item['total']}-card Evolution pack",
+                "recipe": {"total": item["total"], "groups": groups, "trainers": {"fillTo": item["total"], "pool": pool}},
+            }
+            stale_note(key, offer)
+    if waiting:
+        rep.notes.append("Sun & Moon research rows waiting for their product: " + ", ".join(f"{k} ({v})" for k, v in sorted(waiting.items())))
 
 
 def write(out: dict, rep: Report, offers: dict) -> None:

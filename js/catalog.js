@@ -6,12 +6,18 @@ export const RARITY_ORDER = [
   // Sword & Shield: the holo Rare is its own rarity (the plain Rare is not
   // foil), then the V line, the special sets' finishes and the secret rares.
   "Rare Holo",
+  // Sun & Moon: the GX and the Prism Star sit just above the holo Rare, the
+  // Shining Pokémon and the two Shiny Vault finishes beside Rare Shiny.
+  "Rare Holo GX",
+  "Rare Prism Star",
   "Rare Holo V",
   "Rare Holo VMAX",
   "Rare Holo VSTAR",
   "Amazing Rare",
   "Radiant Rare",
+  "Rare Shining",
   "Rare Shiny",
+  "Rare Shiny GX",
   "Trainer Gallery Rare Holo",
   "Rare Ultra",
   "Rare Rainbow",
@@ -45,6 +51,10 @@ export const RARITY_LABEL = {
   Uncommon: "Uncommon",
   Rare: "Rare",
   "Rare Holo": "Rare holo",
+  "Rare Holo GX": "Pokémon-GX",
+  "Rare Prism Star": "Prism Star",
+  "Rare Shining": "Shining Pokémon",
+  "Rare Shiny GX": "Shiny Vault GX",
   "Rare Holo V": "Pokémon V",
   "Rare Holo VMAX": "Pokémon VMAX",
   "Rare Holo VSTAR": "Pokémon VSTAR",
@@ -107,6 +117,12 @@ export const RARITY_MARK = {
   // Sword & Shield printed one black star on every rare-or-better card;
   // the hollow and coloured pips here tell the finishes apart in filters.
   "Rare Holo": { pips: [["★", "ink"]], group: "expanded" },
+  // Sun & Moon: a black star on every rare-or-better card, a hollow shiny one
+  // on the Shiny Vault, as Sword & Shield filed them.
+  "Rare Holo GX": { pips: [["★", "ink"]], group: "expanded" },
+  "Rare Prism Star": { pips: [["★", "silver"]], group: "expanded" },
+  "Rare Shining": { pips: [["☆", "shiny"]], group: "expanded" },
+  "Rare Shiny GX": { pips: [["☆", "shiny"]], group: "expanded" },
   "Rare Holo V": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Holo VMAX": { pips: [["★", "ink"]], group: "expanded" },
   "Rare Holo VSTAR": { pips: [["★", "ink"]], group: "expanded" },
@@ -141,6 +157,10 @@ export const SELL_VALUE = {
   Rare: 0.18,
   "Double Rare": 0.61,
   "Rare Holo": 0.4,
+  "Rare Holo GX": 6.8,
+  "Rare Prism Star": 5,
+  "Rare Shining": 34,
+  "Rare Shiny GX": 26,
   "Rare Holo V": 1.2,
   "Rare Holo VMAX": 3,
   "Rare Holo VSTAR": 3,
@@ -681,14 +701,19 @@ function swshSlots({ holo, v, vmax = 0, vstar = 0, ultra, rainbow = 0, secret = 
  * Star, a full art (`Rare Ultra`: full-art GX, Tag Team or Supporter), a
  * rainbow or a gold. `reverseSpecial` names the reverse-slot replacements a
  * set has, as [pool, rate] pairs: Hidden Fates' Shiny Vault tiers (shinyBaby,
- * shinyGX, shinyUltra, shinyGold) or the Shiny Vault of Shining Legends.
+ * shinyGX, shinyUltra, shinyGold), Prism Stars (`["prismStar", rate]`: they
+ * replace the reverse holo, research in /mnt/project-files/sun-moon/research)
+ * or a reverse basic Energy (`["reverseEnergy", rate]`). `prism` is the rare
+ * slot's Prism Star rate and is not used by any real pack. Shining Legends'
+ * Shining Pokémon (`shining`) fill its rare slot.
  */
-function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, ultra = 0, rainbow = 0, secret = 0, reverseSpecial = [] }) {
+function smSlots({ commons = 5, uncommons = 3, energy = 1, holo, gx, prism = 0, ultra = 0, rainbow = 0, secret = 0, shining = 0, reverseSpecial = [] }) {
   const reverse = reverseSpecial.filter(([, p]) => p > 0);
   const special = reverse.reduce((sum, [, p]) => sum + p, 0);
   const rare = [
     ["gx", gx],
     ["prismStar", prism],
+    ["shining", shining],
     ["rareUltra", ultra],
     ["rainbow", rainbow],
     ["secret", secret],
@@ -2554,6 +2579,558 @@ export const MCDONALDS_2024 = {
   ]),
 };
 
+/**
+ * SM Black Star Promos. Like the SWSH and SV promo pages there is no booster:
+ * each card comes in a product that holds packs from several sets (a collection
+ * box, a premium collection), in a deck or trainer kit, or at an event
+ * (a launch, the Worlds, a prerelease, a film release). A promo one set's own
+ * boxes carry (blisters, tins, Build & Battle Boxes, its GX boxes) stays filed
+ * under that set, and this page lists those too. Sources and gaps:
+ * .claude/skills/card-textures/reference/sun-moon-smp.md.
+ */
+export const SM_PROMOS = {
+  id: "smp",
+  tcgId: "smp",
+  name: "SM Black Star Promos",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "November 18, 2016",
+  live: true,
+  promoSet: true,
+  promoPrefix: "SM ",
+  totalCount: 33,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/smp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Sun & Moon, 2016 to 2021. The black star promos from premium and TAG TEAM collections, decks, the Alolan Sandslash trainer kit and events.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Sun & Moon black star promo that isn't in a set's own boxes: the TAG TEAM Powers and Premium Collections with their real packs, the theme and league decks, and the prerelease, Worlds and movie giveaways on their own.",
+  slots: [],
+  heroIds: ["smp-smp241", "smp-smp240", "smp-smp248", "smp-smp247"],
+  wrappers: [],
+};
+
+/**
+ * McDonald's Happy Meal promos of 2017, 2018 and 2019 (English): twelve
+ * reprints of Sun & Moon cards in Confetti Holofoil, one random card to a
+ * Happy Meal with a toy (Bulbapedia; TCGplayer lists every card as foil only).
+ * Nobody sold a pack and TCGplayer has no listing for one, so a "pack" here is
+ * one card priced at the average market price of the twelve (a fair draw),
+ * in a pouch drawn for the site (scripts/make_mcd_sm_wrappers.py).
+ */
+function happyMeal2017to2019(id, year, released, cost, heroIds, cardId) {
+  return {
+    id,
+    name: `McDonald's Collection ${year}`,
+    edition: "McDonald's",
+    era: "Sun & Moon",
+    released,
+    live: true,
+    printedTotal: 12,
+    totalCount: 12,
+    packSize: 1,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `Happy Meal promos, ${year}. Twelve Sun & Moon reprints in Confetti Holofoil, one card to a meal.`,
+    oddsLine: "1 card · always a Confetti holo · 12 cards",
+    lede: `One Happy Meal, one Confetti holo out of twelve. The Pikachu in each set is the one people chase.`,
+    slots: [{ pool: "printedHolo", count: 1 }],
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: "happy-meal", name: "Happy Meal pouch", cardId, tag: `${year} Collection` }]),
+  };
+}
+
+export const MCDONALDS_2017 = happyMeal2017to2019("mcd17", "2017", "November 7, 2017", 8.5, ["mcd17-5", "mcd17-3", "mcd17-1", "mcd17-12"], "mcd17-5");
+export const MCDONALDS_2018 = happyMeal2017to2019("mcd18", "2018", "October 16, 2018", 27.7, ["mcd18-2", "mcd18-11", "mcd18-4", "mcd18-5"], "mcd18-4");
+export const MCDONALDS_2019 = happyMeal2017to2019("mcd19", "2019", "October 15, 2019", 15.47, ["mcd19-6", "mcd19-12", "mcd19-5", "mcd19-1"], "mcd19-6");
+export const SUN_MOON = {
+  id: "sm1",
+  tcgId: "sm1",
+  name: "Sun & Moon",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "February 3, 2017",
+  live: true,
+  printedTotal: 149,
+  totalCount: 178,
+  packSize: 11,
+  cost: 22.97,
+  dataFile: "data/sm1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, February 2017. The first Pokémon-GX set, with Solgaleo-GX and Lunala-GX on five wrappers.",
+  oddsLine: "GX 1/9 · full art 1/24 · rainbow 1/72 · gold 1/109",
+  lede: "Solgaleo-GX and Lunala-GX lead the first GX set, with the rainbow Solgaleo, Lunala and Umbreon the chase. GX 1 in 9 packs, a full art 1 in 24, a rainbow 1 in 72.",
+  // Elite Fourum tallies, about 8,300 packs (sturzflugbombardieru, burpies, Derium, Danny Phantump); a holo or better fills 12 of every 36 rare slots. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1567, gx: 0.1114, ultra: 0.0421, rainbow: 0.0139, secret: 0.0092 }),
+  heroIds: ["sm1-155", "sm1-153", "sm1-154", "sm1-161"],
+  wrappers: boosterWrappers("sm1", [
+    { id: "solgaleo", name: "Solgaleo", cardId: "sm1-89", tag: "Legendary" },
+    { id: "lunala", name: "Lunala", cardId: "sm1-66", tag: "Legendary" },
+    { id: "incineroar", name: "Incineroar", cardId: "sm1-27", tag: "Starter" },
+    { id: "decidueye", name: "Decidueye", cardId: "sm1-12", tag: "Starter" },
+    { id: "primarina", name: "Primarina", cardId: "sm1-42", tag: "Starter" },
+  ]),
+};
+
+export const GUARDIANS_RISING = {
+  id: "sm2",
+  tcgId: "sm2",
+  name: "Guardians Rising",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "May 5, 2017",
+  live: true,
+  printedTotal: 145,
+  totalCount: 198,
+  packSize: 11,
+  cost: 35.92,
+  dataFile: "data/sm2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, May 2017. Tapu Koko-GX and Tapu Lele-GX with the rainbow Sylveon-GX, four wrappers.",
+  oddsLine: "GX 1/9 · full art 1/24 · rainbow 1/70 · gold 1/118",
+  lede: "Fifteen rainbow GX, the Tapu Koko, Sylveon and Lycanroc among them, sit above twelve GX. GX 1 in 9 packs, a full art 1 in 24, a rainbow 1 in 70.",
+  // Elite Fourum tallies, about 8,350 packs (sturzflugbombardieru, burpies, Derium, Danny Phantump); a holo or better fills 12 of every 36 rare slots. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1577, gx: 0.1112, ultra: 0.0417, rainbow: 0.0142, secret: 0.0085 }),
+  heroIds: ["sm2-153", "sm2-158", "sm2-156", "sm2-146"],
+  wrappers: boosterWrappers("sm2", [
+    { id: "alolan-ninetales", name: "Alolan Ninetales", cardId: "sm2-22", tag: "Alolan" },
+    { id: "tapu-koko", name: "Tapu Koko", cardId: "sm2-47", tag: "Guardian" },
+    { id: "lycanroc", name: "Lycanroc", cardId: "sm2-74", tag: "Midnight" },
+    { id: "kommo-o", name: "Kommo-o", cardId: "sm2-100", tag: "Dragon" },
+  ]),
+};
+
+export const BURNING_SHADOWS = {
+  id: "sm3",
+  tcgId: "sm3",
+  name: "Burning Shadows",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "August 4, 2017",
+  live: true,
+  printedTotal: 147,
+  totalCount: 191,
+  packSize: 11,
+  cost: 31.02,
+  dataFile: "data/sm3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, August 2017. Charizard-GX, Ho-Oh-GX and the Necrozma and Marshadow rainbows, four wrappers.",
+  oddsLine: "GX 1/9 · full art 1/24 · rainbow 1/73 · gold 1/105",
+  lede: "The rainbow Charizard-GX is the chase, with Necrozma, Marshadow and Tapu Bulu behind it. GX 1 in 9 packs, a full art 1 in 24, a rainbow 1 in 73.",
+  // Elite Fourum tallies, about 8,000 packs (sturzflugbombardieru, burpies, Derium, Danny Phantump); a holo or better fills 12 of every 36 rare slots. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1579, gx: 0.1098, ultra: 0.0424, rainbow: 0.0137, secret: 0.0095 }),
+  heroIds: ["sm3-150", "sm3-153", "sm3-156", "sm3-149"],
+  wrappers: boosterWrappers("sm3", [
+    { id: "marshadow", name: "Marshadow", cardId: "sm3-80", tag: "Mythical" },
+    { id: "tapu-fini", name: "Tapu Fini", cardId: "sm3-39", tag: "Guardian" },
+    { id: "necrozma", name: "Necrozma", cardId: "sm3-63", tag: "Dusk Mane" },
+    { id: "ho-oh", name: "Ho-Oh", cardId: "sm3-21", tag: "Rainbow" },
+  ]),
+};
+
+export const LOST_THUNDER = {
+  id: "sm8",
+  tcgId: "sm8",
+  name: "Lost Thunder",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "November 2, 2018",
+  live: true,
+  printedTotal: 214,
+  totalCount: 246,
+  packSize: 11,
+  cost: 59.36,
+  dataFile: "data/sm8.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, November 2018. Seven Prism Stars in the reverse slot, Blacephalon-GX and the Ultra Beasts, four wrappers.",
+  oddsLine: "GX 1/10 · full art 1/23 · rainbow 1/80 · gold 1/109 · Prism Star 1/8",
+  lede: "Lugia-GX, Zeraora-GX and Mimikyu-GX in rainbow are the chase. A Prism Star takes the reverse slot about 1 pack in 8; the rare slot is a GX 1 in 10.",
+  // Elite Fourum's box tallies (burpies n=1,274, sturzflugbombardieru n=3,168, Derium n=1,008, Danny Phantump), pooled n=5,450; Prism Stars replace the reverse holo (Elite Fourum, PrimetimePokemon, Dripshop). Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1659, gx: 0.1017, ultra: 0.044, rainbow: 0.0125, secret: 0.0092, reverseSpecial: [["prismStar", 0.1246]] }),
+  heroIds: ["sm8-226", "sm8-227", "sm8-206", "sm8-221"],
+  wrappers: boosterWrappers("sm8", [
+    { id: "celebi", name: "Celebi", cardId: "sm8-19", tag: "Prism Star" },
+    { id: "blacephalon", name: "Blacephalon", cardId: "sm8-52", tag: "Ultra Beast" },
+    { id: "zeraora", name: "Zeraora", cardId: "sm8-86", tag: "Lightning" },
+    { id: "lugia", name: "Lugia", cardId: "sm8-159", tag: "Psychic" },
+  ], 2),
+};
+
+export const TEAM_UP = {
+  id: "sm9",
+  tcgId: "sm9",
+  name: "Team Up",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "February 1, 2019",
+  live: true,
+  printedTotal: 181,
+  totalCount: 204,
+  packSize: 11,
+  cost: 300.96,
+  dataFile: "data/sm9.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, February 2019. The first TAG TEAM GX, with Latias & Latios and Gengar & Mimikyu alternate arts, four wrappers.",
+  oddsLine: "GX 1/10 · full art 1/24 · rainbow 1/74 · gold 1/98 · Prism Star 1/18",
+  lede: "The first TAG TEAM GX. Gengar & Mimikyu and Latias & Latios have alternate full arts, and every TAG TEAM has a rainbow. Full art 1 in 24, rainbow 1 in 74.",
+  // Elite Fourum's box tallies (sturzflugbombardieru n=2,016, burpies n=872, Derium n=2,999, Danny Phantump), pooled n=5,887; Prism Stars replace the reverse holo. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.165, gx: 0.102, ultra: 0.0425, rainbow: 0.0136, secret: 0.0102, reverseSpecial: [["prismStar", 0.0562]] }),
+  heroIds: ["sm9-170", "sm9-165", "sm9-161", "sm9-191"],
+  wrappers: boosterWrappers("sm9", [
+    { id: "eevee-snorlax", name: "Eevee & Snorlax", cardId: "sm9-120", tag: "Tag Team" },
+    { id: "gengar-mimikyu", name: "Gengar & Mimikyu", cardId: "sm9-53", tag: "Tag Team" },
+    { id: "pikachu-zekrom", name: "Pikachu & Zekrom", cardId: "sm9-33", tag: "Tag Team" },
+    { id: "venusaur-celebi", name: "Venusaur & Celebi", cardId: "sm9-1", tag: "Tag Team" },
+  ], 2),
+};
+
+export const UNBROKEN_BONDS = {
+  id: "sm10",
+  tcgId: "sm10",
+  name: "Unbroken Bonds",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "May 3, 2019",
+  live: true,
+  printedTotal: 214,
+  totalCount: 245,
+  packSize: 11,
+  cost: 68.67,
+  dataFile: "data/sm10.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, May 2019. Twelve TAG TEAM full arts, the Reshiram & Charizard-GX rainbow and six gold cards, four wrappers.",
+  oddsLine: "GX 1/10 · full art 1/24 · rainbow 1/69 · gold 1/110",
+  lede: "Gardevoir & Sylveon-GX full art and the Reshiram & Charizard-GX rainbow are the chase. GX 1 in 10 packs, a full art 1 in 24, a rainbow 1 in 69.",
+  // Elite Fourum tallies, about 10,400 packs (burpies, sturzflugbombardieru, Derium, TheGameCapital, Danny Phantump); no Prism Stars. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1667, gx: 0.0985, ultra: 0.0411, rainbow: 0.0144, secret: 0.0091 }),
+  heroIds: ["sm10-217", "sm10-205", "sm10-201", "sm10-199"],
+  wrappers: boosterWrappers("sm10", [
+    { id: "machamp-marshadow", name: "Machamp & Marshadow", cardId: "sm10-82", tag: "Tag Team" },
+    { id: "reshiram-charizard", name: "Reshiram & Charizard", cardId: "sm10-20", tag: "Tag Team" },
+    { id: "gardevoir-sylveon", name: "Gardevoir & Sylveon", cardId: "sm10-130", tag: "Tag Team" },
+    { id: "lucario-melmetal", name: "Lucario & Melmetal", cardId: "sm10-120", tag: "Tag Team" },
+  ], 2),
+};
+
+export const UNIFIED_MINDS = {
+  id: "sm11",
+  tcgId: "sm11",
+  name: "Unified Minds",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "August 2, 2019",
+  live: true,
+  printedTotal: 236,
+  totalCount: 270,
+  packSize: 11,
+  cost: 79.75,
+  dataFile: "data/sm11.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, August 2019. Mewtwo & Mew-GX leads eight TAG TEAM, four wrappers.",
+  oddsLine: "GX 1/8 · full art 1/23 · rainbow 1/74 · gold 1/112",
+  lede: "The Mewtwo & Mew-GX rainbow is the chase, with Mega Sableye & Tyranitar, Raichu & Alolan Raichu and Slowpoke & Psyduck full arts behind it. GX 1 in 8 packs, a rainbow 1 in 74.",
+  // Elite Fourum tallies, about 11,600 packs (burpies, sturzflugbombardieru, Derium, TheGameCapital, Danny Phantump); no Prism Stars. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1389, gx: 0.1278, ultra: 0.0429, rainbow: 0.0136, secret: 0.0089 }),
+  heroIds: ["sm11-242", "sm11-226", "sm11-222", "sm11-221"],
+  wrappers: boosterWrappers("sm11", [
+    { id: "garchomp-giratina", name: "Garchomp & Giratina", cardId: "sm11-146", tag: "Tag Team" },
+    { id: "umbreon-darkrai", name: "Umbreon & Darkrai", cardId: "sm11-125", tag: "Tag Team" },
+    { id: "espeon-deoxys", name: "Espeon & Deoxys", cardId: "sm11-72", tag: "Tag Team" },
+    { id: "mewtwo-mew", name: "Mewtwo & Mew", cardId: "sm11-71", tag: "Tag Team" },
+  ], 2),
+};
+
+export const FORBIDDEN_LIGHT = {
+  id: "sm6",
+  tcgId: "sm6",
+  name: "Forbidden Light",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "May 4, 2018",
+  live: true,
+  printedTotal: 131,
+  totalCount: 149,
+  packSize: 11,
+  cost: 47.22,
+  dataFile: "data/sm6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, May 2018. The Ultra Beasts and Necrozma: Greninja-GX, Zygarde-GX and the rainbow Lucario-GX, four wrappers.",
+  oddsLine: "GX 1/13 · Prism Star 1/12 · full art 1/26 · rainbow 1/81 · gold 1/111",
+  lede: "Nine Pokémon-GX get a full art and a rainbow print, and the Lucario-GX and Greninja-GX rainbows are the chase. The gold cards are all Trainers and Energy, and a Prism Star takes the reverse slot about 1 pack in 12.",
+  // Elite Fourum tallies pooled, n=3,668 (research/second-source-check.md); plain Rare is 2/3 of packs (direct count), holo = 1/3 minus the hits. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1937, gx: 0.0794, ultra: 0.039, rainbow: 0.0123, secret: 0.009, reverseSpecial: [["prismStar", 0.0804]] }),
+  heroIds: ["sm6-135", "sm6-133", "sm6-138", "sm6-136"],
+  wrappers: boosterWrappers("sm6", [
+    { id: "naganadel", name: "Naganadel", cardId: "sm6-56", tag: "Ultra Beast" },
+    { id: "greninja", name: "Greninja", cardId: "sm6-24", tag: "Ninja" },
+    { id: "necrozma", name: "Ultra Necrozma", cardId: "sm6-95", tag: "Ultra" },
+    { id: "zygarde", name: "Zygarde", cardId: "sm6-73", tag: "Complete" },
+  ], 2),
+};
+
+export const CELESTIAL_STORM = {
+  id: "sm7",
+  tcgId: "sm7",
+  name: "Celestial Storm",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "August 3, 2018",
+  live: true,
+  printedTotal: 168,
+  totalCount: 195,
+  packSize: 11,
+  cost: 65.83,
+  dataFile: "data/sm7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, August 2018. Rayquaza-GX, Blaziken-GX and Jirachi Prism Star, four wrappers.",
+  oddsLine: "GX 1/9 · Prism Star 1/18 · full art 1/27 · rainbow 1/76 · gold 1/118",
+  lede: "Rayquaza-GX is the chase, with a full art and the rainbow above it; the Lisia and TV Reporter full arts are close behind. Gold is Trainers and Energy only.",
+  // Four tallies pooled, n=4,720 (research/second-source-check.md); plain Rare is 2/3 of packs, holo = 1/3 minus the hits. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1631, gx: 0.1114, ultra: 0.0371, rainbow: 0.0132, secret: 0.0085, reverseSpecial: [["prismStar", 0.0551]] }),
+  heroIds: ["sm7-177", "sm7-160", "sm7-170", "sm7-175"],
+  wrappers: boosterWrappers("sm7", [
+    { id: "stakataka", name: "Stakataka", cardId: "sm7-102", tag: "Ultra Beast" },
+    { id: "blaziken", name: "Blaziken", cardId: "sm7-28", tag: "Blaze" },
+    { id: "jirachi", name: "Jirachi", cardId: "sm7-97", tag: "Wish" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "sm7-109", tag: "Sky" },
+  ], 2),
+};
+
+export const DRAGON_MAJESTY = {
+  id: "sm75",
+  tcgId: "sm75",
+  name: "Dragon Majesty",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "September 7, 2018",
+  live: true,
+  printedTotal: 70,
+  totalCount: 88,
+  packSize: 11,
+  cost: 107.42,
+  dataFile: "data/sm75.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, September 2018. A 70-card dragon set with no booster box and no plain Rares: Charizard, Dragonite, Reshiram and Salamence on the wrappers.",
+  oddsLine: "GX 1/6.7 · Prism Star 1/10 · full art 1/16 · rainbow 1/40 · gold 1/68",
+  lede: "Every rare slot is a holo or better. Ultra Necrozma-GX gold is the chase, one of four golds sharing 1 pack in 68, and a Prism Star takes the reverse slot 1 pack in 10.",
+  // Two tallies pooled, n=949 (research/second-source-check.md); no plain Rare exists, so holo = 1 minus the hits. Reverse Energy (6.7%, a sheet model) is not wired: the set data holds no reverse Energy cards. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.7471, gx: 0.1496, ultra: 0.0632, rainbow: 0.0253, secret: 0.0148, reverseSpecial: [["prismStar", 0.1022]] }),
+  heroIds: ["sm75-78", "sm75-71", "sm75-73", "sm75-67"],
+  wrappers: boosterWrappers("sm75", [
+    { id: "charizard", name: "Charizard", cardId: "sm75-3", tag: "Flame" },
+    { id: "dragonite", name: "Dragonite", cardId: "sm75-37", tag: "Dragon" },
+    { id: "reshiram", name: "Reshiram", cardId: "sm75-11", tag: "Vermilion" },
+    { id: "salamence", name: "Salamence", cardId: "sm75-44", tag: "Storm" },
+  ], 2),
+};
+
+export const HIDDEN_FATES = {
+  id: "sm115",
+  tcgId: "sm115",
+  name: "Hidden Fates",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "August 23, 2019",
+  live: true,
+  printedTotal: 68,
+  totalCount: 171,
+  packSize: 11,
+  cost: 49.15,
+  dataFile: "data/sm115.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, August 2019. A 69-card special set with the 94-card Shiny Vault, sold only in tins, pins and boxes: shiny Charizard-GX, four wrappers.",
+  oddsLine: "GX 1/7 · full art 1/27 · rainbow 1/58 · Shiny Vault 1/3 · shiny gold 1/57",
+  lede: "Hidden Fates never came in a booster box. The Shiny Vault takes the reverse slot in about one pack in three: a shiny Pokémon 1 in 5, a shiny GX 1 in 10, a gold Tapu or Stadium 1 in 57.",
+  // burpies, 1,580 packs (Elite Fourum; ThePriceDex for the holo rate and the main/vault full-art split); the Shiny Vault takes the reverse slot. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.2, gx: 0.1506, ultra: 0.0373, rainbow: 0.0171, reverseSpecial: [["shinyBaby", 0.212], ["shinyGX", 0.1019], ["shinyUltra", 0.0114], ["shinyGold", 0.0177]] }),
+  heroIds: ["sm115-SV49", "sm115-69", "sm115-SV59", "sm115-SV94"],
+  wrappers: boosterWrappers("sm115", [
+    { id: "mew", name: "Mew", cardId: "sm115-32", tag: "Mythical" },
+    { id: "legendary-birds", name: "Articuno, Zapdos & Moltres", cardId: "sm115-44", tag: "Legendary" },
+    { id: "shiny-mewtwo", name: "Shiny Mewtwo", cardId: "sm115-SV59", tag: "Shiny" },
+    { id: "shiny-charizard", name: "Shiny Charizard", cardId: "sm115-SV49", tag: "Shiny chase" },
+  ]),
+};
+
+export const COSMIC_ECLIPSE = {
+  id: "sm12",
+  tcgId: "sm12",
+  name: "Cosmic Eclipse",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "November 1, 2019",
+  live: true,
+  printedTotal: 236,
+  totalCount: 284,
+  packSize: 11,
+  cost: 73.81,
+  dataFile: "data/sm12.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm19",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, November 2019. The last Sun & Moon set: 27 full-art TAG TEAMs and Trainers, 14 rainbows, Character Rares and gold Trainers, four wrappers.",
+  oddsLine: "GX 1/8 · full art 1/27 · rainbow 1/67 · gold 1/112 · Character Rare 1/10",
+  lede: "Twelve Character Rares take the reverse slot about one pack in ten. The rainbow TAG TEAMs are 1 in 67, and each of the 27 full arts about 1 in 720 packs.",
+  // Elite Fourum: sturzflugbombardieru's 3,024 packs and burpies' 3,136 (rainbow and gold split from burpies). Character Rares sit in the reverse slot. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1431, gx: 0.1237, ultra: 0.0374, rainbow: 0.015, secret: 0.0089, reverseSpecial: [["character", 0.1035]] }),
+  heroIds: ["sm12-251", "sm12-254", "sm12-253", "sm12-258"],
+  wrappers: boosterWrappers("sm12", [
+    { id: "togepi-cleffa-igglybuff", name: "Togepi, Cleffa & Igglybuff", cardId: "sm12-143", tag: "Fairy" },
+    { id: "solgaleo-lunala", name: "Solgaleo & Lunala", cardId: "sm12-216", tag: "Cosmic" },
+    { id: "blastoise-piplup", name: "Blastoise & Piplup", cardId: "sm12-214", tag: "Water" },
+    { id: "arceus-dialga-palkia", name: "Arceus, Dialga & Palkia", cardId: "sm12-220", tag: "Legendary" },
+  ]),
+};
+
+/**
+ * Detective Pikachu: a four-card pack of holofoil cards (three Commons and a
+ * Rare, no Energy, no reverse), sold only inside the set's Case Files, tins and
+ * chests. Every card is foil, the Commons through `foilAs`.
+ */
+export const DETECTIVE_PIKACHU = {
+  id: "det1",
+  tcgId: "det1",
+  name: "Detective Pikachu",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "April 5, 2019",
+  live: true,
+  printedTotal: 18,
+  totalCount: 26,
+  packSize: 4,
+  cost: 24.56,
+  dataFile: "data/det1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, April 2019. An 18-card movie set, all holofoil, four cards a pack, sold only in Case Files, tins and chests.",
+  oddsLine: "3 holo Commons + 1 holo Rare · each Rare 1 in 10 packs",
+  lede: "Every card is foil. The rare slot is uniform: each of the ten Rares, Charizard and Mewtwo among them, turns up in about one pack in ten.",
+  // Three Common Holo and one Rare Holo a pack, the rare uniform over the ten (sturzflugbombardieru's 75 pulls, Elite Fourum; ThePriceDex; Bulbapedia). Sources in data/pullrates.json.
+  slots: [
+    { pool: "common", count: 3 },
+    { pool: "rare-slot", count: 1, table: [["holo", 1]] },
+  ],
+  heroIds: ["det1-5", "det1-9", "det1-12", "det1-10"],
+  wrappers: boosterWrappers("det1", [
+    { id: "poke-ball", name: "Detective Pikachu", cardId: "det1-10", tag: "Case File" },
+  ]),
+};
+
+export const ULTRA_PRISM = {
+  id: "sm5",
+  tcgId: "sm5",
+  name: "Ultra Prism",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "February 2, 2018",
+  live: true,
+  printedTotal: 156,
+  totalCount: 176,
+  packSize: 11,
+  cost: 49.67,
+  dataFile: "data/sm5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, February 2018. Necrozma in two forms, Giratina and Leafeon on the wrappers, and the first Prism Star cards, four wrappers.",
+  oddsLine: "GX 1/12 · Prism Star 1/12 · full art 1/24 · rainbow 1/68 · gold 1/123",
+  lede: "The first Prism Star cards take the reverse holo slot 1 pack in 12. GX come 1 in 12 packs, full arts 1 in 23, and the Lillie and Cynthia full-art Trainers are the chase.",
+  // Elite Fourum (E2, burpies, Derium) and Flipside Gaming, 6,246 packs; the Prism Star replaces the reverse holo; holo Rare is 1/3 minus the hits (plain Rare is 2/3 of packs, counted). Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1875, gx: 0.0817, ultra: 0.0414, rainbow: 0.0147, secret: 0.0081, reverseSpecial: [["prismStar", 0.085]] }),
+  heroIds: ["sm5-151", "sm5-148", "sm5-153", "sm5-157"],
+  wrappers: boosterWrappers("sm5", [
+    { id: "giratina", name: "Giratina", cardId: "sm5-58", tag: "Chaotic star" },
+    { id: "leafeon", name: "Leafeon", cardId: "sm5-13", tag: "Grand Bloom" },
+    { id: "dawn-wings", name: "Dawn Wings Necrozma", cardId: "sm5-63", tag: "Moon's Eclipse" },
+    { id: "dusk-mane", name: "Dusk Mane Necrozma", cardId: "sm5-90", tag: "Sun's Eclipse" },
+  ], 2),
+};
+
+export const CRIMSON_INVASION = {
+  id: "sm4",
+  tcgId: "sm4",
+  name: "Crimson Invasion",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "November 3, 2017",
+  live: true,
+  printedTotal: 111,
+  totalCount: 140,
+  packSize: 11,
+  cost: 18.22,
+  dataFile: "data/sm4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, November 2017. The Ultra Beasts land in Alola: Guzzlord, Kartana, Buzzwole and Silvally, four wrappers.",
+  oddsLine: "GX 1/12 · full art 1/23 · rainbow 1/96 · gold 1/92",
+  lede: "Gyarados-GX leads the Ultra Beast invasion. GX come 1 in 12 packs, full arts 1 in 23, a rainbow GX 1 in 96 and a gold item or Energy 1 in 92.",
+  // Elite Fourum: sturzflugbombardieru's boxes (1,981 packs), burpies (1,530) and Derium (1,008); holo Rare is 1/3 of the rare slot minus the hits. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.1842, gx: 0.0835, ultra: 0.0443, rainbow: 0.0104, secret: 0.0109 }),
+  heroIds: ["sm4-112", "sm4-110", "sm4-101", "sm4-38"],
+  wrappers: boosterWrappers("sm4", [
+    { id: "guzzlord", name: "Guzzlord", cardId: "sm4-63", tag: "Glutton" },
+    { id: "kartana", name: "Kartana", cardId: "sm4-70", tag: "Blade" },
+    { id: "buzzwole", name: "Buzzwole", cardId: "sm4-57", tag: "Knuckle impact" },
+    { id: "silvally", name: "Silvally", cardId: "sm4-90", tag: "Rebel" },
+  ], 2),
+};
+
+export const SHINING_LEGENDS = {
+  id: "sm35",
+  tcgId: "sm35",
+  name: "Shining Legends",
+  edition: "Sun & Moon",
+  era: "Sun & Moon",
+  released: "October 6, 2017",
+  live: true,
+  printedTotal: 73,
+  totalCount: 101,
+  packSize: 11,
+  cost: 109.79,
+  dataFile: "data/sm35.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "sm17",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Sun & Moon, October 2017. A 73-card special set that only came in boxes and tins: six Shining Pokémon, the tube Mewtwo-GX, four wrappers.",
+  oddsLine: "Shining 1/11 · GX 1/8 · full art 1/24 · rainbow 1/64 · gold 1/114",
+  lede: "Every rare slot is a holo or better, and there is no plain Rare. A Shining Pokémon lands 1 pack in 11, a GX 1 in 8, and the gold Mewtwo-GX in a tube 1 in 114; a reverse holo Energy takes the reverse slot 1 time in 14.",
+  // Elite Fourum: burpies (1,536 packs), Derium (1,002) and sturzflugbombardieru's boxes (330); Shining sit in the rare slot, reverse basic Energy in the reverse slot. Sources in data/pullrates.json.
+  slots: smSlots({ holo: 0.7255, gx: 0.1189, ultra: 0.0425, rainbow: 0.0157, secret: 0.0088, shining: 0.0886, reverseSpecial: [["reverseEnergy", 0.07]] }),
+  heroIds: ["sm35-78", "sm35-40", "sm35-56", "sm35-76"],
+  wrappers: boosterWrappers("sm35", [
+    { id: "genesect", name: "Genesect", cardId: "sm35-9", tag: "Shining" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "sm35-39", tag: "Psystrike" },
+    { id: "mew", name: "Mew", cardId: "sm35-40", tag: "Shining" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "sm35-56", tag: "Shining" },
+  ], 2),
+};
+
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -2601,6 +3178,27 @@ export const PLAYABLE_SETS = [
   TRICK_OR_TRADE_2024,
   MCDONALDS_2023,
   TRICK_OR_TRADE_2023,
+  COSMIC_ECLIPSE,
+  HIDDEN_FATES,
+  UNIFIED_MINDS,
+  UNBROKEN_BONDS,
+  DETECTIVE_PIKACHU,
+  TEAM_UP,
+  LOST_THUNDER,
+  DRAGON_MAJESTY,
+  CELESTIAL_STORM,
+  FORBIDDEN_LIGHT,
+  ULTRA_PRISM,
+  CRIMSON_INVASION,
+  SHINING_LEGENDS,
+  BURNING_SHADOWS,
+  GUARDIANS_RISING,
+  SUN_MOON,
+
+  SM_PROMOS,
+  MCDONALDS_2017,
+  MCDONALDS_2018,
+  MCDONALDS_2019,
 ];
 
 /**
@@ -2639,9 +3237,10 @@ export function erasWithSets() {
     liveByEra.delete(block.era);
     return { era: block.era, live, queued: block.sets, sets: [...live, ...block.sets] };
   });
-  for (const [era, live] of liveByEra) {
-    blocks.unshift({ era, live, queued: [], sets: live });
-  }
+  // Eras the roadmap has no row for (Sword & Shield, Sun & Moon) go in front in
+  // the order the catalog lists them.
+  const extra = [...liveByEra].map(([era, live]) => ({ era, live, queued: [], sets: live }));
+  blocks.unshift(...extra);
   return blocks.filter((block) => block.sets.length);
 }
 
@@ -2658,10 +3257,8 @@ export const ROADMAP = [
     ],
   },
   {
-    era: "Sun & Moon → XY → BW",
+    era: "XY → BW",
     sets: [
-      { id: "sm12", name: "Cosmic Eclipse", released: "Nov 2019", cards: "—" },
-      { id: "sm1", name: "Sun & Moon", released: "Feb 2017", cards: "—" },
       { id: "xy12", name: "Evolutions", released: "Nov 2016", cards: "—" },
       { id: "xy1", name: "XY", released: "Feb 2014", cards: "—" },
       { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },
@@ -2742,6 +3339,13 @@ const POKESYMBOLS_SLUG = {
   sm2: "guardians-rising",
   sm3: "burning-shadows",
   sm12: "cosmic-eclipse",
+  sm8: "lost-thunder",
+  sm9: "team-up",
+  sm115: "hidden-fates",
+  det1: "detective-pikachu",
+  sm35: "shining-legends",
+  sm4: "crimson-invasion",
+  sm5: "ultra-prism",
   swsh1: "sword-and-shield",
   swsh2: "rebel-clash",
   swsh3: "darkness-ablaze",
@@ -2777,9 +3381,13 @@ const POKESYMBOLS_SLUG = {
   rsv10pt5: "white-flare",
   svp: "_promo",
   swshp: "_promo",
+  smp: "_promo",
   sve: "scarlet-and-violet-energies",
   mcd23: "mcdonalds-collection-2023",
   mcd24: "mcdonalds-collection-dragon-discovery-2024",
+  mcd17: "mcdonalds-collection-2017",
+  mcd18: "mcdonalds-collection-2018",
+  mcd19: "mcdonalds-collection-2019",
   me1: "mega-evolution",
   me2: "phantasmal-flames",
   me2pt5: "ascended-heroes",
@@ -2787,6 +3395,11 @@ const POKESYMBOLS_SLUG = {
   me4: "chaos-rising",
   me5: "pitch-black",
   me55: "30th-celebration",
+  sm10: "unbroken-bonds",
+  sm11: "unified-minds",
+  sm6: "forbidden-light",
+  sm7: "celestial-storm",
+  sm75: "dragon-majesty",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

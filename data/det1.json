@@ -1,0 +1,1066 @@
+[
+  {
+    "id": "det1-1",
+    "name": "Bulbasaur",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "MPC Film",
+    "flavorText": "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.",
+    "image": "assets/cards/det1/1.webp",
+    "imageSmall": "assets/cards/det1/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Find a Friend",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Grass Pokémon, reveal it, and put it into your hand. Then, shuffle your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-1/large",
+    "tcgplayerId": 186001,
+    "market": 1.39,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-2",
+    "name": "Ludicolo",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "Framestore",
+    "flavorText": "If it hears festive music, all its muscles fill with energy. It can't help breaking out into a dance.",
+    "evolvesFrom": "Lombre",
+    "image": "assets/cards/det1/2.webp",
+    "imageSmall": "assets/cards/det1/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Punch and Run",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Table Service",
+        "text": "Once during your turn (before your attack), you may heal 30 damage from 1 of your Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-2/large",
+    "tcgplayerId": 186003,
+    "market": 0.95,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-3",
+    "name": "Morelull",
+    "number": "3",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "MPC Film",
+    "flavorText": "It scatters its shining spores around itself. Even though they're dangerous, nighttime tours of forests where Morelull live are popular.",
+    "image": "assets/cards/det1/3.webp",
+    "imageSmall": "assets/cards/det1/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Spore",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-3/large",
+    "tcgplayerId": 186004,
+    "market": 0.38,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-4",
+    "name": "Charmander",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "MPC Film",
+    "flavorText": "The flame on its tail indicates Charmander's life force. If it is healthy, the flame burns brightly.",
+    "image": "assets/cards/det1/4.webp",
+    "imageSmall": "assets/cards/det1/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-4/large",
+    "tcgplayerId": 186005,
+    "market": 0.74,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-5",
+    "name": "Charizard",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "Framestore",
+    "flavorText": "When expelling a blast of superhot fire, the red flame at the tip of its tail burns more intensely.",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/det1/5.webp",
+    "imageSmall": "assets/cards/det1/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Wild Tackle",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "This Pokémon does 50 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-5/large",
+    "tcgplayerId": 186007,
+    "market": 13.94,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-6",
+    "name": "Arcanine",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "MPC Film",
+    "flavorText": "Legends tell of its fighting alongside a general and conquering a whole country.",
+    "evolvesFrom": "Growlithe",
+    "image": "assets/cards/det1/6.webp",
+    "imageSmall": "assets/cards/det1/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Security Guard",
+        "text": "As long as this Pokémon is your Active Pokémon, all of your Pokémon take 30 less damage from your opponent's attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-6/large",
+    "tcgplayerId": 186009,
+    "market": 4.46,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-7",
+    "name": "Psyduck",
+    "number": "7",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Framestore",
+    "flavorText": "Using psychokinesis gives it a headache, so it normally passes the time spacing out and doing as little as possible.",
+    "image": "assets/cards/det1/7.webp",
+    "imageSmall": "assets/cards/det1/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Panic",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "This Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-7/large",
+    "tcgplayerId": 186010,
+    "market": 1.34,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-8",
+    "name": "Magikarp",
+    "number": "8",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Framestore",
+    "flavorText": "In the distant past, they were fairly strong, but they have become gradually weaker over time.",
+    "image": "assets/cards/det1/8.webp",
+    "imageSmall": "assets/cards/det1/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Hold Still",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Heal 10 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-8/large",
+    "tcgplayerId": 186012,
+    "market": 0.78,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-9",
+    "name": "Greninja",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "MPC Film",
+    "flavorText": "It creates throwing stars out of compressed water. When it spins them and throws them at high speed, these stars can split metal in two.",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/det1/9.webp",
+    "imageSmall": "assets/cards/det1/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Furious Shurikens",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Evasion Jutsu",
+        "text": "If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-9/large",
+    "tcgplayerId": 186013,
+    "market": 10.46,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-10",
+    "name": "Detective Pikachu",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "MPC Film",
+    "flavorText": "He loves to show off his vast knowledge. This expressive Pikachu is like a middle-aged man.",
+    "image": "assets/cards/det1/10.webp",
+    "imageSmall": "assets/cards/det1/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Scout",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals their hand."
+      },
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-10/large",
+    "tcgplayerId": 186015,
+    "market": 15.8,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-11",
+    "name": "Mr. Mime",
+    "number": "11",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "MPC Film",
+    "flavorText": "Its pantomime skills are wonderful. You may become enraptured while watching it, but next thing you know, Mr. Mime has made a real wall.",
+    "image": "assets/cards/det1/11.webp",
+    "imageSmall": "assets/cards/det1/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Juggling",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 4 coins. This attack does 20 damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Pantomime",
+        "text": "When you play this Pokémon from your hand onto your Bench during your turn, you may switch 1 of your face-down Prize cards with the top card of your deck.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-11/large",
+    "tcgplayerId": 186019,
+    "market": 3.2,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-12",
+    "name": "Mewtwo",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "MPC Film",
+    "flavorText": "This Pokémon was created by years of horrific gene splicing and DNA engineering experiments.",
+    "image": "assets/cards/det1/12.webp",
+    "imageSmall": "assets/cards/det1/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyjack",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Choose 1 of your opponent's Active Pokémon's attacks. That Pokémon can't use that attack during your opponent's next turn."
+      },
+      {
+        "name": "Break Burn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard 2 Psychic Energy from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-12/large",
+    "tcgplayerId": 186020,
+    "market": 10.31,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-13",
+    "name": "Machamp",
+    "number": "13",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "160",
+    "artist": "MPC Film",
+    "flavorText": "It grasps its opponents with its four arms and twists them up in an intricate hold. People call it \"the Machamp special.\"",
+    "evolvesFrom": "Machoke",
+    "image": "assets/cards/det1/13.webp",
+    "imageSmall": "assets/cards/det1/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Directing Traffic",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Look at the top 5 cards of your deck and put them back in any order."
+      },
+      {
+        "name": "Cross Chop",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "80+",
+        "text": "Flip a coin. If heads, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-13/large",
+    "tcgplayerId": 186021,
+    "market": 2.13,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-14",
+    "name": "Jigglypuff",
+    "number": "14",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "60",
+    "artist": "Framestore",
+    "flavorText": "Recordings of Jigglypuff's strange lullabies can be purchased from department stores. These CDs can be found near the bedding area.",
+    "image": "assets/cards/det1/14.webp",
+    "imageSmall": "assets/cards/det1/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Healing Melody",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Heal 10 damage from each of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-14/large",
+    "tcgplayerId": 186022,
+    "market": 0.7,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-15",
+    "name": "Snubbull",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "70",
+    "artist": "Framestore",
+    "flavorText": "It grows close to others easily and is also easily spoiled. The disparity between its face and its actions makes many young people wild about it.",
+    "image": "assets/cards/det1/15.webp",
+    "imageSmall": "assets/cards/det1/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-15/large",
+    "tcgplayerId": 186023,
+    "market": 0.5,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-16",
+    "name": "Lickitung",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "MPC Film",
+    "flavorText": "It checks out whatever's around it by licking everything. If you don't clean off a spot where it's licked you, you'll break out in a rash!",
+    "image": "assets/cards/det1/16.webp",
+    "imageSmall": "assets/cards/det1/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Continuous Lick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-16/large",
+    "tcgplayerId": 186024,
+    "market": 0.33,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-17",
+    "name": "Ditto",
+    "number": "17",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "MPC Film",
+    "flavorText": "While it can transform into anything, each Ditto apparently has its own strengths and weaknesses when it comes to transformations.",
+    "image": "assets/cards/det1/17.webp",
+    "imageSmall": "assets/cards/det1/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Copy Anything",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon's attacks and use it as this attack. If this Pokémon doesn't have the necessary Energy to use that attack, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-17/large",
+    "tcgplayerId": 186025,
+    "market": 13.79,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-18",
+    "name": "Slaking",
+    "number": "18",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "180",
+    "artist": "Framestore",
+    "flavorText": "The world's laziest Pokémon. It moves to another spot when there's no food left within its reach.",
+    "evolvesFrom": "Vigoroth",
+    "image": "assets/cards/det1/18.webp",
+    "imageSmall": "assets/cards/det1/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Pitch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Your opponent switches their Active Pokémon with 1 of their Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/det1-18/large",
+    "tcgplayerId": 186026,
+    "market": 1.44,
+    "foilAs": "Rare Holo",
+    "era": "sm"
+  },
+  {
+    "id": "det1-smp170",
+    "name": "Detective Pikachu",
+    "number": "smp170",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "flavorText": "He loves to show off his vast knowledge. This expressive Pikachu is like a middle-aged man.",
+    "image": "assets/cards/det1/smp170.webp",
+    "imageSmall": "assets/cards/det1/smp170-sm.webp",
+    "attacks": [
+      {
+        "name": "Scout",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Your opponent reveals their hand."
+      },
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM170/large",
+    "printedNumber": "SM 170",
+    "tcgplayerId": 190940,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 41.0,
+    "foilMap": "assets/foil/maps/det1/smp170.webp"
+  },
+  {
+    "id": "det1-smp194",
+    "name": "Detective Pikachu",
+    "number": "smp194",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "MPC Film",
+    "flavorText": "Skilled in deduction, he's a self-proclaimed \"great detective.\" His detective hat is his trademark.",
+    "image": "assets/cards/det1/smp194.webp",
+    "imageSmall": "assets/cards/det1/smp194-sm.webp",
+    "attacks": [
+      {
+        "name": "Brilliant Deduction",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Look at the top 4 cards of your deck and put 1 of them into your hand. Shuffle the other cards back into your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM194/large",
+    "printedNumber": "SM 194",
+    "tcgplayerId": 185254,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 12.14,
+    "foilMap": "assets/foil/maps/det1/smp194.webp"
+  },
+  {
+    "id": "det1-smp195",
+    "name": "Charizard-GX",
+    "number": "smp195",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "250",
+    "artist": "Framestore",
+    "evolvesFrom": "Charmeleon",
+    "image": "assets/cards/det1/smp195.webp",
+    "imageSmall": "assets/cards/det1/smp195-sm.webp",
+    "attacks": [
+      {
+        "name": "Raging Destruction",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard the top 8 cards of your deck. If any of those cards are Fire Energy cards, attach them to this Pokémon."
+      },
+      {
+        "name": "Steam Artillery",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": ""
+      },
+      {
+        "name": "Dreadful Flames-GX",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "250",
+        "text": "Discard an Energy from each of your opponent's Pokémon. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM195/large",
+    "printedNumber": "SM 195",
+    "tcgplayerId": 185253,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 26.38,
+    "foilMap": "assets/foil/maps/det1/smp195.webp"
+  },
+  {
+    "id": "det1-smp196",
+    "name": "Mewtwo-GX",
+    "number": "smp196",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "GX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "190",
+    "artist": "MPC Film",
+    "image": "assets/cards/det1/smp196.webp",
+    "imageSmall": "assets/cards/det1/smp196-sm.webp",
+    "attacks": [
+      {
+        "name": "Telekinesis",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 50 damage to 1 of your opponent's Pokémon. This damage isn't affected by Weakness or Resistance."
+      },
+      {
+        "name": "Reigning Pulse",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Psychic Nova-GX",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "180",
+        "text": "Prevent all damage done to this Pokémon by attacks during your opponent's next turn. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM196/large",
+    "printedNumber": "SM 196",
+    "tcgplayerId": 188165,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 19.45,
+    "foilMap": "assets/foil/maps/det1/smp196.webp"
+  },
+  {
+    "id": "det1-smp197",
+    "name": "Greninja-GX",
+    "number": "smp197",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2",
+      "GX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "230",
+    "artist": "MPC Film",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/det1/smp197.webp",
+    "imageSmall": "assets/cards/det1/smp197-sm.webp",
+    "attacks": [
+      {
+        "name": "Mist Slash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Dark Mist-GX",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Put 1 of your opponent's Benched Pokémon and all cards attached to it into your opponent's hand. (You can't use more than 1 GX attack in a game.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Elusive Master",
+        "text": "Once during your turn (before your attack), if this Pokémon is the last card in your hand, you may play it onto your Bench. If you do, draw 3 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM197/large",
+    "printedNumber": "SM 197",
+    "tcgplayerId": 185250,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo GX",
+    "market": 34.73,
+    "foilMap": "assets/foil/maps/det1/smp197.webp"
+  },
+  {
+    "id": "det1-smp198",
+    "name": "Bulbasaur",
+    "number": "smp198",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "MPC Film",
+    "flavorText": "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.",
+    "image": "assets/cards/det1/smp198.webp",
+    "imageSmall": "assets/cards/det1/smp198-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM198/large",
+    "printedNumber": "SM 198",
+    "tcgplayerId": 206824,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 20.51,
+    "foilMap": "assets/foil/maps/det1/smp198.webp"
+  },
+  {
+    "id": "det1-smp199",
+    "name": "Psyduck",
+    "number": "smp199",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Framestore",
+    "flavorText": "Using psychokinesis gives it a headache, so it normally passes the time spacing out and doing as little as possible.",
+    "image": "assets/cards/det1/smp199.webp",
+    "imageSmall": "assets/cards/det1/smp199-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM199/large",
+    "printedNumber": "SM 199",
+    "tcgplayerId": 206825,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 38.32,
+    "foilMap": "assets/foil/maps/det1/smp199.webp"
+  },
+  {
+    "id": "det1-smp200",
+    "name": "Snubbull",
+    "number": "smp200",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "60",
+    "artist": "Framestore",
+    "flavorText": "It grows close to others easily and is also easily spoiled. The disparity between its face and its actions makes many young people wild about it.",
+    "image": "assets/cards/det1/smp200.webp",
+    "imageSmall": "assets/cards/det1/smp200-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Paralyzing Gaze",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/smp-SM200/large",
+    "printedNumber": "SM 200",
+    "tcgplayerId": 206826,
+    "era": "sm",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.89,
+    "foilMap": "assets/foil/maps/det1/smp200.webp"
+  }
+]

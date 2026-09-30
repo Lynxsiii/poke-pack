@@ -21,7 +21,8 @@
       "tcgplayerGroup": 1861,
       "printed": "SM",
       "pkmnKey": "SM{n:03d}",
-      "era": "sm"
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
     }
   },
   "skipNumbers": [
@@ -34,5 +35,270 @@
     "170",
     "171",
     "172"
-  ]
+  ],
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Sun & Moon Elite Trainer Box [Solgaleo]",
+      "kind": "etb",
+      "tcgplayerId": 126089,
+      "packs": 8,
+      "promos": [],
+      "note": "Two art variants (Solgaleo 126089, Lunala 126091), same contents."
+    },
+    {
+      "id": "lunala-elite-trainer-box",
+      "name": "Sun & Moon Elite Trainer Box [Lunala]",
+      "kind": "etb",
+      "tcgplayerId": 126091,
+      "packs": 8,
+      "promos": [],
+      "note": "Art variant of eliteTrainerBox."
+    },
+    {
+      "id": "prerelease-kit",
+      "name": "Sun & Moon Prerelease Kit",
+      "kind": "battle",
+      "tcgplayerId": 206409,
+      "packs": 4,
+      "promos": [
+        "smp010",
+        "smp011",
+        "smp012",
+        "smp013"
+      ],
+      "pick": 1,
+      "note": "Event kit, sold on TCGplayer as a sealed kit; no retail Build & Battle Box exists for this set. One promo per kit."
+    },
+    {
+      "id": "rockruff-single-pack-blister",
+      "name": "Sun & Moon Single Blister Pack [Rockruff]",
+      "kind": "blister",
+      "tcgplayerId": 231689,
+      "packs": 1,
+      "promos": [
+        "smp006"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "pikipek-single-pack-blister",
+      "name": "Sun & Moon Single Blister Pack [Pikipek]",
+      "kind": "blister",
+      "tcgplayerId": 231690,
+      "packs": 1,
+      "promos": [
+        "smp007"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "litten-3-pack-blister",
+      "name": "Sun & Moon Base Set 3 Pack Blister [Litten]",
+      "kind": "blister",
+      "tcgplayerId": 126054,
+      "packs": 3,
+      "promos": [
+        "smp008"
+      ]
+    },
+    {
+      "id": "togedemaru-3-pack-blister",
+      "name": "Sun & Moon Base Set 3 Pack Blister [Togedemaru]",
+      "kind": "blister",
+      "tcgplayerId": 126052,
+      "packs": 3,
+      "promos": [
+        "smp009"
+      ]
+    },
+    {
+      "id": "zygarde-complete-pin-collection",
+      "name": "Zygarde Complete Forme Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 455776,
+      "packs": 3,
+      "promos": [
+        "smp015"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "mimikyu-pin-collection",
+      "name": "Mimikyu Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 129895,
+      "packs": 3,
+      "promos": [
+        "smp029"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "lycanroc-gx-box",
+      "name": "Lycanroc GX Box",
+      "kind": "collection",
+      "tcgplayerId": 131865,
+      "packs": 4,
+      "promos": [
+        "smp014"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "legends-of-alola-tin-solgaleo",
+      "name": "Legends of Alola Tin [Solgaleo GX]",
+      "kind": "tin",
+      "tcgplayerId": 129309,
+      "packs": 4,
+      "promos": [
+        "smp016"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "legends-of-alola-tin-lunala",
+      "name": "Legends of Alola Tin [Lunala GX]",
+      "kind": "tin",
+      "tcgplayerId": 129310,
+      "packs": 4,
+      "promos": [
+        "smp017"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "spring-2017-collector-chest",
+      "name": "Spring 2017 Collector's Chest Tin",
+      "kind": "tin",
+      "tcgplayerId": 267958,
+      "packs": 5,
+      "promos": [
+        "smp022",
+        "smp023",
+        "smp024"
+      ],
+      "note": "Pack set/mix not documented; assumed own set."
+    },
+    {
+      "id": "incineroar-gx-challenge-box",
+      "name": "Incineroar GX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 209655,
+      "packs": 2,
+      "promos": [],
+      "note": "Promo is a reprint of SM1 27; no SM Black Star number."
+    },
+    {
+      "id": "decidueye-gx-challenge-box",
+      "name": "Decidueye GX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 230425,
+      "packs": 2,
+      "promos": [],
+      "note": "No SM number."
+    },
+    {
+      "id": "primarina-gx-challenge-box",
+      "name": "Primarina GX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 656924,
+      "packs": 2,
+      "promos": [],
+      "note": "No SM number."
+    },
+    {
+      "id": "incineroar-gx-challenge-box-2020",
+      "name": "Sun & Moon GX Challenge Box [Incineroar]",
+      "kind": "collection",
+      "tcgplayerId": 244313,
+      "packs": 2,
+      "promos": [],
+      "note": "No SM number."
+    },
+    {
+      "id": "decidueye-gx-challenge-box-2020",
+      "name": "Sun & Moon GX Challenge Box [Decidueye]",
+      "kind": "collection",
+      "tcgplayerId": 244314,
+      "packs": 2,
+      "promos": [],
+      "note": "No SM number."
+    },
+    {
+      "id": "primarina-gx-challenge-box-2020",
+      "name": "Sun & Moon GX Challenge Box [Primarina]",
+      "kind": "collection",
+      "tcgplayerId": 656996,
+      "packs": 2,
+      "promos": [],
+      "note": "No SM number."
+    }
+  ],
+  "promoCards": {
+    "smp006": {
+      "foilAs": "Rare Holo",
+      "notes": "Rockruff"
+    },
+    "smp007": {
+      "foilAs": "Rare Holo",
+      "notes": "Pikipek"
+    },
+    "smp008": {
+      "foilAs": "Rare Holo",
+      "notes": "Litten"
+    },
+    "smp009": {
+      "foilAs": "Rare Holo",
+      "notes": "Togedemaru"
+    },
+    "smp010": {
+      "foilAs": "Rare Holo",
+      "notes": "Shiinotic"
+    },
+    "smp011": {
+      "foilAs": "Rare Holo",
+      "notes": "Bruxish"
+    },
+    "smp012": {
+      "foilAs": "Rare Holo",
+      "notes": "Passimian"
+    },
+    "smp013": {
+      "foilAs": "Rare Holo",
+      "notes": "Oranguru"
+    },
+    "smp014": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Lycanroc-GX"
+    },
+    "smp015": {
+      "foilAs": "Rare Holo",
+      "notes": "Zygarde"
+    },
+    "smp016": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Solgaleo-GX"
+    },
+    "smp017": {
+      "foilAs": "Rare Holo GX",
+      "notes": "Lunala-GX"
+    },
+    "smp022": {
+      "foilAs": "Rare Holo",
+      "notes": "Rowlet"
+    },
+    "smp023": {
+      "foilAs": "Rare Holo",
+      "notes": "Litten"
+    },
+    "smp024": {
+      "foilAs": "Rare Holo",
+      "notes": "Popplio"
+    },
+    "smp029": {
+      "foilAs": "Rare Holo",
+      "notes": "Mimikyu"
+    }
+  }
 }

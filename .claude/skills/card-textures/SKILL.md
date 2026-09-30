@@ -419,6 +419,9 @@ Shared finishes:
   Rare tuning.
 - [reference/sv-tera-acespec.md](reference/sv-tera-acespec.md): Tera ex
   and ACE SPEC (`sv-finishes.css`).
+- [reference/sun-moon-gx.md](reference/sun-moon-gx.md): Sun & Moon
+  Pokémon-GX, TAG TEAM GX and Prism Star (`sm-gx.css`,
+  `assets/foil/sm-peel.webp`, the text-safe fallback maps).
 - [reference/sv-reverse.md](reference/sv-reverse.md): the Scarlet & Violet
   reverse holos, one pattern per type, and the Mega Evolution mirror
   (`sv-reverse.css`, `scripts/make_sv_reverse.py`).

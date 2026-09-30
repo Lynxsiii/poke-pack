@@ -18,8 +18,10 @@ import {
   readyToClaim,
 } from "../js/achievements.js";
 import { AWARD_TITLES, TITLES, isTitleUnlocked, titleContext, masteryTitle } from "../js/titles.js";
-import { nameHas } from "../js/achievement-kit.js";
+import { nameHas, isTagTeamName, SM_FINISHES } from "../js/achievement-kit.js";
+import { FINISH_PRINTERS, RARITIES_IN_PRINT, isPrinted } from "../js/achievement-eras.js";
 import { halfCoins, masteryCoins } from "../js/achievement-sets.js";
+import { eraTotal as setsEraTotal } from "../js/achievement-eras.js";
 
 // The 30 achievements that shipped before the remaster, from
 // `git show origin/master:js/achievements.js`: id, goal, coins. Players have
@@ -131,6 +133,49 @@ for (const row of ACHIEVEMENTS) {
   assert.ok(Number.isFinite(at), `${row.id}: at() must be finite on a maxed context`);
   assert.ok(isAchievementDone(row, maxedCtx), `${row.id} should be done for a player who owns everything (at ${at}, goal ${row.goal})`);
 }
+// Every finish a set prints has a place in RARITY_ORDER (the binder, best pull and
+// "full spectrum" read it) and counts as printed, and a finish held back until
+// its sets arrive (FINISH_PRINTERS) is printed by at least one playable set.
+{
+  const inData = new Set(cards.map((card) => card.rarity));
+  for (const rarity of inData) {
+    assert.ok(RARITY_ORDER.includes(rarity), `rarity "${rarity}" is in a data file but not in RARITY_ORDER (js/catalog.js)`);
+    assert.ok(isPrinted(rarity), `rarity "${rarity}" is printed but FINISH_PRINTERS does not list its sets`);
+  }
+  for (const rarity of Object.keys(FINISH_PRINTERS)) {
+    assert.equal(RARITIES_IN_PRINT.includes(rarity), inData.has(rarity), `${rarity}: FINISH_PRINTERS and the data files disagree`);
+  }
+  assert.ok(RARITIES_IN_PRINT.every((rarity) => inData.has(rarity)), "full spectrum asks for a rarity no playable card has");
+  for (const rarity of SM_FINISHES) assert.ok(RARITY_ORDER.includes(rarity), `${rarity} missing from RARITY_ORDER`);
+}
+
+// Sun & Moon: a Tag Team is named by its two Pokémon and ends in -GX.
+assert.equal(isTagTeamName("Pheromosa & Buzzwole-GX"), true);
+assert.equal(isTagTeamName("Reshiram & Charizard-GX"), true);
+assert.equal(isTagTeamName("Buzzwole-GX"), false);
+assert.equal(isTagTeamName("Cynthia & Caitlin"), false);
+assert.equal(isTagTeamName("Tapu Koko-GX"), false);
+assert.equal(isTagTeamName(""), false);
+{
+  const list = [
+    { id: "a-1", name: "Pheromosa & Buzzwole-GX", rarity: "Rare Holo GX" },
+    { id: "a-2", name: "Pheromosa & Buzzwole-GX", rarity: "Rare Ultra" },
+    { id: "a-3", name: "Buzzwole-GX", rarity: "Rare Holo GX" },
+    { id: "a-4", name: "Cynthia & Caitlin", rarity: "Rare Ultra" },
+  ];
+  const ctx = achievementContext({ collection: { "a-1": 1, "a-2": 1, "a-3": 1, "a-4": 1 } }, { cards: list });
+  assert.equal(ctx.tagTeams, 2, "two different Tag Team cards, the Supporter and the plain GX do not count");
+  assert.equal(ctx.count("Rare Holo GX"), 2);
+  assert.equal(isAchievementDone(achievementById("tag-team"), ctx), true);
+  assert.equal(isAchievementDone(achievementById("rare-gx"), ctx), true);
+  assert.equal(isAchievementDone(achievementById("tag-team-10"), ctx), false);
+  assert.equal(achievementContext({}, {}).tagTeams, 0);
+}
+// The Sun & Moon era rung ids follow the slug rule and never outgrow the era.
+for (const row of ACHIEVEMENTS.filter((r) => r.id.startsWith("era-sun-moon-"))) {
+  assert.ok(row.goal <= setsEraTotal("Sun & Moon"), `${row.id} asks for more cards than the era has`);
+}
+
 // findCard works as well as cards, and the two agree.
 const byId = new Map(cards.map((card) => [card.id, card]));
 const viaFind = achievementContext(maxedSave, { signed: true, findCard: (id) => byId.get(id) });
@@ -192,6 +237,13 @@ for (const set of PLAYABLE_SETS) {
   assert.equal(master.coins, masteryCoins(set.totalCount));
   assert.ok(master.name.startsWith(set.name) && half.name.startsWith(set.name));
   assert.equal(master.title, masteryTitle(set.name));
+  // A set name that cannot fit "<name> Master" in 32 characters (even without a
+  // McDonald's brand) gets cut mid-word: name the set shorter, the way the
+  // promo sets are ("SM Black Star Promos").
+  assert.ok(
+    master.title === `${set.name} Master` || master.title === `${set.name.replace(/^McDonald's\s+/, "")} Master`,
+    `${set.id}: "${set.name} Master" is too long for a title and would be cut (${master.title})`
+  );
   const award = AWARD_TITLES.find((row) => row.ach === master.id);
   assert.ok(award, `${set.id} needs an award title`);
   assert.equal(award.name, master.title);
