@@ -22,7 +22,7 @@
  * Shared with the card-textures lab so the lab draws what the site draws.
  */
 
-import { isSm, smPattern, smReverseFinish, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=2";
+import { isSm, smPattern, smReverseFinish, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=3";
 
 export { isSm, smPattern };
 

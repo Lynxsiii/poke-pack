@@ -54,7 +54,7 @@ export function smPattern(card) {
       return "foil-holo sm-prism";
     case "Rare Shining":
       // Shining Legends' Shining Pokémon (finish owner: the shiny family).
-      return "foil-ex sm-shining";
+      return "foil-holo foil-shiny sm-shiny sm-shining";
     case "Rare Shiny":
       return "foil-holo sm-shiny";
     case "Rare Shiny GX":

@@ -51,7 +51,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shiny-gx
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shiny.has-foil-map .foil {
   background-image:
-    var(--etch-map, linear-gradient(transparent, transparent)),
+    var(--etch-soft, var(--etch-map, linear-gradient(transparent, transparent))),
     repeating-linear-gradient(var(--pf-band-angle),
       transparent 0%,
       hsla(0, 90%, 72%, var(--pf-a)) calc(var(--pf-w) * 0.14),
@@ -79,6 +79,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shiny.ha
   background-repeat: no-repeat, repeat, no-repeat, no-repeat, no-repeat;
   background-blend-mode: soft-light, normal, normal, normal, normal;
 }
+/* Shining Legends' Shining Pokemon (`sm-shining`, sm35): the same etched silver,
+   but only on the Pokemon (the foil map is the silhouette), and no sunburst:
+   the photos show the Pokemon turning silver-teal under a fine etch while the
+   art around it stays flat print. More colour in the bands than the window
+   shinies, since the foil area is small. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shining.has-foil-map {
+  --sm-ray-a: 0;
+  --pf-a: 0.6;
+}
 /* Resting: the photos of a flat card are neutral silver with the rays just
    readable and a hint of colour; the rainbow comes with the light. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shiny.has-foil-map:not(.lit):not(.settling) .foil {
@@ -86,6 +95,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shiny.ha
   --sm-ray-a: 0.24;
   filter: saturate(0.4);
   opacity: calc(0.95 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-sm.era-sm.era-sm.era-sm.era-sm.sm-shining.has-foil-map:not(.lit):not(.settling) .foil {
+  --sm-ray-a: 0;
+  --pf-a: 0.45;
 }
 
 /* The fingerprint catching the light (::after) and its dark half
