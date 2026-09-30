@@ -74,6 +74,19 @@ export function smSafeMap(card) {
 }
 
 /**
+ * A regular GX or TAG TEAM GX's baked map (`<n>-gx-v1.webp`, scripts/make_sm_gx_maps.py):
+ * TCG Live's map smoothed to the scan's size with the dark attack bar cut out,
+ * as on the real cards. "" for any other card (or one with no map of its own).
+ */
+export function smGxMap(card) {
+  if (!card.foilMap || card.supertype !== "Pokémon") return "";
+  const k = card.foilAs && !card.reverse ? { ...card, rarity: card.foilAs } : card;
+  const p = smPattern(k);
+  if (!/\bsm-gx\b/.test(p) || /sm-shiny|sm-fa/.test(p)) return "";
+  return card.foilMap.replace(/\.webp$/, "-gx-v1.webp");
+}
+
+/**
  * The finish of a Sun & Moon print, read from its rarity, its GX / TAG TEAM
  * subtype and the Shiny Vault gallery tag (`gallery: "sv"`). An empty string
  * means the generic engine decides; "foil-none" means the card is not foil

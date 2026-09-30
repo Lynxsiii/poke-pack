@@ -22,7 +22,7 @@
  * Shared with the card-textures lab so the lab draws what the site draws.
  */
 
-import { isSm, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=7";
+import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=8";
 
 export { isSm, smPattern };
 
@@ -268,7 +268,7 @@ export function foilExtras(card, url, reverseKind) {
   };
   const swsh = isSwsh(card);
   const sm = isSm(card);
-  if (card.foilMap) add("has-foil-map", "--foil-map", card.foilMap);
+  if (card.foilMap) add("has-foil-map", "--foil-map", (sm && smGxMap(card)) || card.foilMap);
   else if (FULL_ART.has(card.rarity) || (swsh && SWSH_FULL_ART.has(card.rarity) && card.gallery !== "cc") || (sm && SM_FULL_ART.has(card.rarity))) {
     add("has-foil-map", "--foil-map", FULL_MAP);
   } else if (sm && smSafeMap(card)) {
