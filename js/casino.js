@@ -133,12 +133,12 @@ export function initCasino(deps = {}) {
                 if (f.kind === "jackpot") {
                   const w = f.entries.find((e) => e.won)?.player;
                   return `<a class="cs-row cs-row-link" href="/casino/jackpot/${esc(f.id)}" data-hub-link>
-                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><b>${esc(playerName(w))}</b> took the pot of ${coinTag(f.pot)}<small>Jackpot, ${plural(f.entries.length, "player")}</small></span></span></a>`;
+                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took the pot of ${coinTag(f.pot)}</span><small>Jackpot, ${plural(f.entries.length, "player")}</small></span></span></a>`;
                 }
                 const w = f.winner === "host" ? f.host : f.guest;
                 const l = f.winner === "host" ? f.guest : f.host;
                 return `<a class="cs-row cs-row-link" href="/casino/coinflip/${esc(f.id)}" data-hub-link>
-                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><b>${esc(playerName(w))}</b> took ${coinTag(f.hostValue + f.guestValue)} from ${esc(playerName(l))}<small>Coinflip</small></span></span></a>`;
+                  <span class="cs-row-main">${seatAvatar(w)}<span class="cs-row-line"><span><b>${esc(playerName(w))}</b> took ${coinTag(f.hostValue + f.guestValue)} from ${esc(playerName(l))}</span><small>Coinflip</small></span></span></a>`;
               }).join("")
             : emptyLine(hubData ? "It is quiet. Be the first to put up cards." : "Loading the tables.")
         }</div>

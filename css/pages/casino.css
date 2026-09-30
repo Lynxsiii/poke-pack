@@ -332,7 +332,7 @@ body.no-motion .cs-sheet, body.no-motion .cs-scrim { animation: none; }
 .jp-haul .cf-pile { max-width: 640px; }
 .jp-actions { display: grid; gap: 12px; justify-items: center; }
 .jp-actions .cf-btns { justify-content: center; }
-@media (min-width: 900px) { .jp-entries { grid-template-columns: repeat(2, minmax(0, 1fr)); } .jp-page { max-width: 820px; } }
+@media (min-width: 900px) { .jp-entries { grid-template-columns: repeat(2, minmax(0, 1fr)); } .jp-page { max-width: 820px; margin-inline: auto; } }
 @media (prefers-reduced-motion: reduce) { .jp-entry { transition: none; } }
 
 /* ---- Sell all winnings (shared by every casino result) ------------------------ */
