@@ -93,7 +93,7 @@ import {
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
 import { normalizeGear } from "./gear.js";
-import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=2";
+import { cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=4";
 import { initBattles } from "./battles.js?v=2";
 import { initCasino } from "./casino.js";
 

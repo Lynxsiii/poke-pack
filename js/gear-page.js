@@ -52,10 +52,10 @@ export function coinHtml(coin, { side = "front", cls = "", label = "" } = {}) {
   const name = label || c.name || "Coin";
   if (c.house || !c.front) {
     return `<span class="gcoin is-house${flipped} ${cls}" role="img" aria-label="${esc(name)}">
-      <span class="gcoin-face front">${HOUSE_FACE}</span><span class="gcoin-face back">${HOUSE_FACE}</span></span>`;
+      <span class="gcoin-in"><span class="gcoin-face front">${HOUSE_FACE}</span><span class="gcoin-face back">${HOUSE_FACE}</span></span></span>`;
   }
   return `<span class="gcoin${flipped} ${cls}" role="img" aria-label="${esc(name)}" style="--coin:url('${esc(abs(c.front))}');--tint:${esc(c.tint || "#b8a06a")}">
-    <span class="gcoin-face front"></span><span class="gcoin-face back"></span></span>`;
+    <span class="gcoin-in"><span class="gcoin-face front"></span><span class="gcoin-face back"></span></span></span>`;
 }
 
 /** A sleeve is a card back: `.tcg.back` so the site's card motion tilts it like any card. */
@@ -108,6 +108,18 @@ export function giftHtml(granted, gear, { also = true } = {}) {
  * The page. `deps`: root, api, getGear, setGear, user, toast.
  * Returns { show, hide, render }.
  */
+/** Turn a coin over: squeeze to an edge, swap faces, open back out. */
+function turnCoin(coin) {
+  if (!coin) return;
+  const still = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  if (still) return void coin.classList.toggle("flipped");
+  coin.classList.remove("turning");
+  void coin.offsetWidth;
+  coin.classList.add("turning");
+  setTimeout(() => coin.classList.toggle("flipped"), 250);
+  setTimeout(() => coin.classList.remove("turning"), 520);
+}
+
 export function initGear(deps) {
   const root = deps.root;
   if (!root) return { show() {}, hide() {}, render() {} };
@@ -364,7 +376,7 @@ export function initGear(deps) {
     }
     if (t.closest("[data-gear-close]")) sheet?.close();
     const flip = t.closest("[data-gear-flip]");
-    if (flip) flip.querySelector(".gcoin")?.classList.toggle("flipped");
+    if (flip) turnCoin(flip.querySelector(".gcoin"));
     // Leaving for the shop: the sheet is a modal, so it has to close first.
     if (t.closest(".gear-sheet a[href]")) sheet?.close();
     const clear = t.closest(".gear-sheet [data-gear-clear]");
