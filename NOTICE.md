@@ -36,6 +36,14 @@ of Pokémon V in `assets/foil/swsh-streaks-v2.webp` (drawn by
 reverse-holo tiles per type in `assets/foil/swsh-reverse/` (drawn by
 `.claude/skills/card-textures/scripts/make_swsh_reverse.py`).
 
+The Sun & Moon GX and Prism Star textures are our own as well: the facet tile
+`assets/foil/sm-peel.webp` (drawn by
+`.claude/skills/card-textures/scripts/make_sm_peel.py`, procedural noise, no
+photograph) and the text-safe median maps `assets/foil/maps/sm-gx-safe.webp` and
+`sm-prism-safe.webp` (the per-pixel median of the site's own TCG Live maps,
+`.claude/skills/card-textures/scripts/make_sm_safe_maps.py`). Their sheet,
+`css/holo/sm-gx.css`, follows the sunpillar Pokémon V recipe of pokemon-cards-css.
+
 `css/holo/` is adapted rather than copied verbatim: the selectors are remapped
 from simey's `.card__translater / .card__rotator / .card__shine / .card__glare`
 structure onto this project's flatter `.tcg > img + .foil + .glare`, and the

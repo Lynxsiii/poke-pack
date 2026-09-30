@@ -1,0 +1,182 @@
+{
+  "id": "sm115",
+  "name": "Hidden Fates",
+  "series": "sun-moon",
+  "slug": "hidden-fates",
+  "scrydexId": "sm115",
+  "era": "sm",
+  "artSlug": "hidden-fates",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 2480,
+  "subsets": [
+    {
+      "slug": "shiny-vault",
+      "gallery": "sv",
+      "scrydexId": "sma",
+      "tcgplayerGroup": 2594
+    }
+  ],
+  "promoSeries": {
+    "smp": {
+      "series": "sun-moon",
+      "slug": "sm-black-star-promos",
+      "scrydex": "smp",
+      "tcgplayerGroup": 1861,
+      "printed": "SM",
+      "pkmnKey": "SM{n:03d}",
+      "era": "sm",
+      "scrydexKey": "SM{n:02d}"
+    }
+  },
+  "promoCards": {
+    "smp210": {
+      "foilAs": "Rare Ultra",
+      "notes": "special full art (ETB)"
+    },
+    "smp211": {
+      "foilAs": "Rare Holo GX",
+      "notes": "alternate art"
+    },
+    "smp212": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp213": {
+      "foilAs": "Rare Holo GX"
+    },
+    "smp214": {
+      "foilAs": "Rare Holo",
+      "notes": "alternate art"
+    },
+    "smp215": {
+      "foilAs": "Rare Holo",
+      "notes": "alternate art"
+    },
+    "smp103a": {
+      "foilAs": "Rare Ultra",
+      "notes": "gold alternate art"
+    },
+    "smp104a": {
+      "foilAs": "Rare Ultra",
+      "notes": "gold alternate art"
+    }
+  },
+  "products": [
+    {
+      "id": "pin-mew",
+      "name": "Mew Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 193439,
+      "packs": 3,
+      "promos": [
+        "smp215"
+      ]
+    },
+    {
+      "id": "pin-mewtwo",
+      "name": "Mewtwo Pin Collection",
+      "kind": "collection",
+      "tcgplayerId": 193440,
+      "packs": 3,
+      "promos": [
+        "smp214"
+      ]
+    },
+    {
+      "id": "tin-charizard-gx",
+      "name": "Charizard-GX Tin",
+      "kind": "tin",
+      "tcgplayerId": 193437,
+      "packs": 4,
+      "promos": [
+        "smp211"
+      ]
+    },
+    {
+      "id": "tin-gyarados-gx",
+      "name": "Gyarados-GX Tin",
+      "kind": "tin",
+      "tcgplayerId": 193436,
+      "packs": 4,
+      "promos": [
+        "smp212"
+      ]
+    },
+    {
+      "id": "tin-raichu-gx",
+      "name": "Raichu-GX Tin",
+      "kind": "tin",
+      "tcgplayerId": 193438,
+      "packs": 4,
+      "promos": [
+        "smp213"
+      ]
+    },
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 194729,
+      "packs": 10,
+      "promos": [
+        "smp210"
+      ]
+    },
+    {
+      "id": "premium-powers-collection",
+      "name": "Premium Powers Collection",
+      "kind": "premium",
+      "tcgplayerId": 206302,
+      "packs": 7,
+      "promos": [
+        "smp103a",
+        "smp104a"
+      ]
+    },
+    {
+      "id": "ultra-premium-collection",
+      "name": "Ultra-Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 199466,
+      "packs": 15,
+      "promos": [
+        "smp103a",
+        "smp104a"
+      ]
+    },
+    {
+      "id": "collection-charizard-gx",
+      "name": "Charizard-GX Collection",
+      "kind": "collection",
+      "tcgplayerId": 205159,
+      "packs": 4,
+      "promos": [
+        "smp211"
+      ]
+    },
+    {
+      "id": "collection-gyarados-gx",
+      "name": "Gyarados-GX Collection",
+      "kind": "collection",
+      "tcgplayerId": 205160,
+      "packs": 4,
+      "promos": [
+        "smp212"
+      ]
+    },
+    {
+      "id": "collection-raichu-gx",
+      "name": "Raichu-GX Collection",
+      "kind": "collection",
+      "tcgplayerId": 205161,
+      "packs": 4,
+      "promos": [
+        "smp213"
+      ]
+    }
+  ]
+}

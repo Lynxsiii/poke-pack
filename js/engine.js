@@ -63,6 +63,8 @@ export const HIT_RARITIES = new Set([
   "Rare Holo GX",
   "Rare Prism Star",
   "Rare Shiny GX",
+  // Shining Legends' Shining Pokémon.
+  "Rare Shining",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -134,7 +136,8 @@ export function poolsFrom(cards, set) {
     vstar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo VSTAR"),
     rareUltra: pokemonOrTrainer.filter((c) => c.rarity === "Rare Ultra"),
     rainbow: pokemonOrTrainer.filter((c) => c.rarity === "Rare Rainbow"),
-    secret: pokemonOrTrainer.filter((c) => c.rarity === "Rare Secret"),
+    secret: pokemonOrTrainer.filter((c) => c.rarity === "Rare Secret" && !c.character),
+    character: pokemonOrTrainer.filter((c) => c.character),
     amazing: pokemonOrTrainer.filter((c) => c.rarity === "Amazing Rare"),
     radiant: pokemonOrTrainer.filter((c) => c.rarity === "Radiant Rare"),
     trainerGallery: gallery("tg"),
@@ -149,8 +152,9 @@ export function poolsFrom(cards, set) {
     // Fates' Shiny Vault tiers (shiny GX, the full-art shiny Ultra).
     gx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo GX"),
     prismStar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Prism Star"),
+    // Shining Legends' Shining Pokémon fill its rare slot (smSlots `shining`).
+    shining: pokemonOrTrainer.filter((c) => c.rarity === "Rare Shining"),
     shinyGX: gallery("sv").filter((c) => c.rarity === "Rare Shiny GX"),
-    shinyUltra: gallery("sv").filter((c) => c.rarity === "Rare Ultra"),
     classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),
@@ -173,7 +177,10 @@ export function poolsFrom(cards, set) {
     // Paldean Fates' Shiny Vault: baby shinies and shiny ex share the first
     // reverse holo slot.
     shiny: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Rare"),
-    shinyUltra: pokemonOrTrainer.filter((c) => c.rarity === "Shiny Ultra Rare"),
+    shinyUltra: [
+      ...gallery("sv").filter((c) => c.rarity === "Rare Ultra"),
+      ...pokemonOrTrainer.filter((c) => c.rarity === "Shiny Ultra Rare"),
+    ],
     // Trick or Trade and McDonald's packs are filled by print, not rarity:
     // a set number of holo cards, the rest non-holo (data/sets/<set>.json).
     printedHolo: pokemonOrTrainer.filter((c) => c.holo),

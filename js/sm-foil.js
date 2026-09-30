@@ -39,6 +39,22 @@ export const SM_ALT_ART = new Set([
 ]);
 
 /**
+ * The text-safe median map of a GX or Prism Star Pokémon that has no TCG Live
+ * map of its own (an alternate-art promo: sm35-10a, sm4-63a, sm5-10a), so the
+ * finish still gets `has-foil-map`: rules text and a typical Pokémon matte,
+ * not every pixel of the card foiled (css/holo/sm-gx.css, make_sm_safe_maps.py).
+ * "" for any other card.
+ */
+export function smSafeMap(card) {
+  if (card.supertype !== "Pokémon") return "";
+  const p = smPattern(card);
+  if (p.includes("sm-shiny")) return "";
+  if (p.includes("sm-prism")) return "assets/foil/maps/sm-prism-safe.webp";
+  if (p.includes("sm-gx")) return "assets/foil/maps/sm-gx-safe.webp";
+  return "";
+}
+
+/**
  * The finish of a Sun & Moon print, read from its rarity, its GX / TAG TEAM
  * subtype and the Shiny Vault gallery tag (`gallery: "sv"`). An empty string
  * means the generic engine decides; "foil-none" means the card is not foil
@@ -49,10 +65,12 @@ export function smPattern(card) {
   const is = (sub) => subs.some((s) => String(s).toUpperCase() === sub);
   const trainer = card.supertype === "Trainer";
   const tag = is("TAG TEAM");
+  // Hidden Fates' Shiny Vault (gallery "sv"): the Shiny Rares and Shiny GX, the
+  // Supporters; the golds fall through to "Rare Secret" below.
   if (card.gallery === "sv" && card.rarity !== "Rare Secret") {
-    if (card.rarity === "Rare Ultra") return "foil-ultra sm-shiny sm-fa";
-    if (is("GX")) return `foil-ex sm-shiny sm-gx${tag ? " sm-tag" : ""}`;
-    return "foil-holo sm-shiny";
+    if (card.rarity === "Rare Ultra") return "foil-ultra sm-tfa";
+    if (is("GX")) return "foil-ultra foil-shiny sm-shiny sm-shiny-gx";
+    return "foil-holo foil-shiny sm-shiny";
   }
   switch (card.rarity) {
     case "Rare Secret":
@@ -69,10 +87,9 @@ export function smPattern(card) {
       return `foil-ex sm-gx${tag ? " sm-tag" : ""}`;
     case "Rare Prism Star":
       return "foil-holo sm-prism";
-    case "Rare Shiny":
-      return "foil-holo sm-shiny";
-    case "Rare Shiny GX":
-      return `foil-ex sm-shiny sm-gx${tag ? " sm-tag" : ""}`;
+    case "Rare Shining":
+      // Shining Legends' Shining Pokémon (finish owner: the shiny family).
+      return "foil-holo foil-shiny sm-shiny sm-shining";
     case "Rare Holo":
       return "foil-holo sm-holo";
     default:
