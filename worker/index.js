@@ -19,6 +19,7 @@ import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema }
 import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, titleContext } from "../js/titles.js";
+import { ensureQuestSchema } from "./stats.js";
 import { QUESTS, questPeriods } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
 import {
@@ -749,6 +750,7 @@ async function recordQuestEvent(env, userId, kind, amount, at = Date.now()) {
 
 async function questSummary(env, userId) {
   const periods = questPeriods();
+  if (!(await ensureQuestSchema(env))) return { periods, progress: {}, claimed: [], unavailable: true };
   try {
     const packs = await env.DB.prepare(
       "SELECT COUNT(*) AS weekly, SUM(CASE WHEN at >= ? THEN 1 ELSE 0 END) AS daily FROM pack_log WHERE user_id = ? AND at >= ?"
