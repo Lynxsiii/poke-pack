@@ -25,6 +25,22 @@ export const SM_FULL_ART = new Set(["Rare Ultra", "Rare Rainbow", "Rare Secret"]
 export const SM_ETCHED = new Set(["Rare Ultra", "Rare Rainbow", "Rare Secret"]);
 
 /**
+ * The text-safe median map of a GX or Prism Star Pokémon that has no TCG Live
+ * map of its own (an alternate-art promo: sm35-10a, sm4-63a, sm5-10a), so the
+ * finish still gets `has-foil-map`: rules text and a typical Pokémon matte,
+ * not every pixel of the card foiled (css/holo/sm-gx.css, make_sm_safe_maps.py).
+ * "" for any other card.
+ */
+export function smSafeMap(card) {
+  if (card.supertype !== "Pokémon") return "";
+  const p = smPattern(card);
+  if (p.includes("sm-shiny")) return "";
+  if (p.includes("sm-prism")) return "assets/foil/maps/sm-prism-safe.webp";
+  if (p.includes("sm-gx")) return "assets/foil/maps/sm-gx-safe.webp";
+  return "";
+}
+
+/**
  * The finish of a Sun & Moon print, read from its rarity, its GX / TAG TEAM
  * subtype and the Shiny Vault gallery tag (`gallery: "sv"`). An empty string
  * means the generic engine decides; "foil-none" means the card is not foil

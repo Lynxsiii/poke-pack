@@ -22,7 +22,7 @@
  * Shared with the card-textures lab so the lab draws what the site draws.
  */
 
-import { isSm, smPattern, smReverseFinish, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=4";
+import { isSm, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=5";
 
 export { isSm, smPattern };
 
@@ -259,6 +259,9 @@ export function foilExtras(card, url, reverseKind) {
   if (card.foilMap) add("has-foil-map", "--foil-map", card.foilMap);
   else if (FULL_ART.has(card.rarity) || (swsh && SWSH_FULL_ART.has(card.rarity) && card.gallery !== "cc") || (sm && SM_FULL_ART.has(card.rarity))) {
     add("has-foil-map", "--foil-map", FULL_MAP);
+  } else if (sm && smSafeMap(card)) {
+    // A GX or Prism Star with no map of its own takes the text-safe median.
+    add("has-foil-map", "--foil-map", smSafeMap(card));
   }
   if (card.foilMapR && card.foilMapB) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);
