@@ -94,6 +94,31 @@ export const SWSH_FINISHES = [
   "Rare Secret",
 ];
 
+/**
+ * Sun & Moon's finishes (see RARITY_ORDER). Tag Team is a GX subtype, not a
+ * rarity: it shows up as Rare Holo GX, Rare Ultra, Rare Rainbow or Rare Secret.
+ */
+export const SM_FINISHES = [
+  "Rare Holo",
+  "Rare Holo GX",
+  "Rare Prism Star",
+  "Rare Shining",
+  "Rare Shiny",
+  "Rare Shiny GX",
+  "Rare Ultra",
+  "Rare Rainbow",
+  "Rare Secret",
+];
+
+/**
+ * A Tag Team GX is printed "Pheromosa & Buzzwole-GX": two names and a GX. The
+ * Worker only knows a card's id, name and rarity, so the name is the test
+ * (the Tag Team Supporters of Cosmic Eclipse carry no GX and do not count).
+ */
+export function isTagTeamName(name) {
+  return /&.+-GX$/i.test(String(name || "").trim());
+}
+
 /** Scarlet & Violet and Mega Evolution finishes that come out of packs. */
 export const SV_FINISHES = [
   "Double Rare",

@@ -95,6 +95,22 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "mcd17": ("#ffb02e", "#ff4a3d"),     # McDonald's 2017: golden arches to red
     "mcd18": ("#ff5a3d", "#ffd84a"),     # McDonald's 2018: red to fries yellow
     "mcd19": ("#ff3d6a", "#ffc72c"),     # McDonald's 2019: berry red and gold
+    "sm1": ("#f59a2e", "#4aa0e8"),  # Sun & Moon: Solgaleo sun orange to Lunala moon blue
+    "sm2": ("#a45cf0", "#f0c14a"),  # Guardians Rising: island violet to guardian gold
+    "sm3": ("#ff7a2a", "#5aa7e0"),  # Burning Shadows: ember orange to Necrozma blue
+    "sm115": ("#e0a93a", "#7f7cff"),  # Hidden Fates: gold logo to shiny violet
+    "sm12": ("#3fc5d8", "#ff9f3f"),  # Cosmic Eclipse: eclipse teal to sun orange
+    "det1": ("#f4c531", "#e0413f"),  # Detective Pikachu: Pikachu yellow to Poke Ball red
+    "sm10": ("#f2b632", "#8a78e6"),     # Unbroken Bonds: bond yellow to Marshadow violet
+    "sm11": ("#c15bf0", "#59c8f0"),     # Unified Minds: Mewtwo purple to Espeon cyan
+    "sm6": ("#a45cff", "#f2b84a"),       # Forbidden Light: Necrozma violet to gold
+    "sm7": ("#37d6a0", "#ffc83d"),       # Celestial Storm: storm green to star yellow
+    "sm75": ("#ffb62e", "#e6492d"),      # Dragon Majesty: dragon gold to flame red
+    "sm8": ("#ffb02e", "#8a5cff"),     # Lost Thunder: thunder yellow to storm violet
+    "sm9": ("#5aa9ff", "#ff5c8a"),     # Team Up: team blue to logo pink
+    "sm35": ("#f2b53c", "#e2609e"),  # Shining Legends: shining gold to Mew pink
+    "sm4": ("#e8403f", "#ffb347"),  # Crimson Invasion: invasion red to Guzzlord amber
+    "sm5": ("#8a7dff", "#ffb347"),  # Ultra Prism: prism violet to Necrozma gold
 }
 
 # Used when a set has no art at all and no override.
