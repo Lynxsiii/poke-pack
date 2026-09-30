@@ -3112,23 +3112,23 @@ export const PLAYABLE_SETS = [
   TRICK_OR_TRADE_2024,
   MCDONALDS_2023,
   TRICK_OR_TRADE_2023,
-  SUN_MOON,
-  GUARDIANS_RISING,
-  BURNING_SHADOWS,
-  UNBROKEN_BONDS,
-  UNIFIED_MINDS,
-  FORBIDDEN_LIGHT,
-  CELESTIAL_STORM,
-  DRAGON_MAJESTY,
-  LOST_THUNDER,
-  TEAM_UP,
-  HIDDEN_FATES,
+
   COSMIC_ECLIPSE,
+  HIDDEN_FATES,
+  UNIFIED_MINDS,
+  UNBROKEN_BONDS,
   DETECTIVE_PIKACHU,
+  TEAM_UP,
+  LOST_THUNDER,
+  DRAGON_MAJESTY,
+  CELESTIAL_STORM,
+  FORBIDDEN_LIGHT,
   ULTRA_PRISM,
   CRIMSON_INVASION,
   SHINING_LEGENDS,
-];
+  BURNING_SHADOWS,
+  GUARDIANS_RISING,
+  SUN_MOON,];
 
 /**
  * Live once, not any more. Their definitions stay reachable through SET_BY_ID
@@ -3166,9 +3166,10 @@ export function erasWithSets() {
     liveByEra.delete(block.era);
     return { era: block.era, live, queued: block.sets, sets: [...live, ...block.sets] };
   });
-  for (const [era, live] of liveByEra) {
-    blocks.unshift({ era, live, queued: [], sets: live });
-  }
+  // Eras the roadmap has no row for (Sword & Shield, Sun & Moon) go in front in
+  // the order the catalog lists them.
+  const extra = [...liveByEra].map(([era, live]) => ({ era, live, queued: [], sets: live }));
+  blocks.unshift(...extra);
   return blocks.filter((block) => block.sets.length);
 }
 
@@ -3185,9 +3186,8 @@ export const ROADMAP = [
     ],
   },
   {
-    era: "Sun & Moon → XY → BW",
+    era: "XY → BW",
     sets: [
-      { id: "sm12", name: "Cosmic Eclipse", released: "Nov 2019", cards: "—" },
       { id: "xy12", name: "Evolutions", released: "Nov 2016", cards: "—" },
       { id: "xy1", name: "XY", released: "Feb 2014", cards: "—" },
       { id: "bw11", name: "Legendary Treasures", released: "Nov 2013", cards: "—" },
