@@ -73,6 +73,14 @@ const ERA_LADDERS = {
     [1000, 2, 400, "Galar regular"],
     [2000, 3, 1100, "Galar local"],
   ],
+  // The era prints about 3,000 cards (16 sets, Detective Pikachu, the Black
+  // Star promos, three McDonald's boxes); a rung only shows once the playable
+  // sets add up to its goal, so the ladder grows as the sets land.
+  "Sun & Moon": [
+    [250, 1, 100, "Alola bound"],
+    [1000, 2, 400, "Alola regular"],
+    [2000, 3, 1100, "Alola local"],
+  ],
 };
 
 const ERA_ROWS = ERA_NAMES.flatMap((era) =>
@@ -89,7 +97,13 @@ export const SETS_GENERAL = [
   ach("sets", 2, "sets-started-20", "Well travelled", "Own at least one card from 20 different sets.", 20, (c) => c.setsStarted, 400),
   ach("sets", 3, "sets-started-30", "Set tourist", "Own at least one card from 30 different sets.", 30, (c) => c.setsStarted, 900),
   ach("sets", 3, "sets-started-40", "Nearly everywhere", "Own at least one card from 40 different sets.", 40, (c) => c.setsStarted, 1500),
-  ach("sets", 1, "era-all", "Three eras", `Own a card from every era: ${ERA_NAMES.join(", ")}.`, ERA_NAMES.length, (c) => c.erasStarted, 100, { mark: "ERA" }),
+  ...[
+    [50, 4, "sets-started-50", "Fifty sets in", 2000],
+    [60, 4, "sets-started-60", "Sixty sets in", 2500],
+  ]
+    .filter(([goal]) => goal <= PLAYABLE_SETS.length)
+    .map(([goal, tier, id, name, coins]) => ach("sets", tier, id, name, `Own at least one card from ${goal} different sets.`, goal, (c) => c.setsStarted, coins)),
+  ach("sets", 1, "era-all", "Every era", `Own a card from every era: ${ERA_NAMES.join(", ")}.`, ERA_NAMES.length, (c) => c.erasStarted, 100, { mark: "ERA" }),
   ...ERA_ROWS,
   ach("sets", 2, "sets-half-3", "Halfway house", "Reach 50% on 3 different sets.", 3, (c) => c.setsHalf, 250),
   ach("sets", 3, "sets-half-5", "Five halves", "Reach 50% on 5 different sets.", 5, (c) => c.setsHalf, 600),

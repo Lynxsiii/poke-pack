@@ -361,8 +361,8 @@ def build(set_id: str, refresh: bool) -> int:
             key = str(row.get("numberKey") or number).strip()
             if not number or key in seen:
                 continue
-            # A set can leave listed numbers out (sm1's nine unnumbered 2017
-            # basic Energy, which the site deals as its shared sm17 prints).
+            # Prize reprints the checklist lists beside the set (182a League
+            # Cup Pokégear 3.0) are not in its packs or its printed total.
             if number in (cfg.get("skipNumbers") or []):
                 continue
             seen.add(key)
