@@ -185,6 +185,13 @@
   filter: drop-shadow(0 26px 26px rgba(0, 0, 0, 0.6)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
 }
 #view-battles .hl-pack-art .hl-art.is-box { height: 88%; }
+/* The battles mark on the stage: two wrappers clashing (css/pages/casino.css
+   .cs-art-clash). The box sets the size; the shadow on the table is the stage's own. */
+#view-battles .hl-pack-art .cs-art-clash { --s: 178px; max-width: 100%; }
+#view-battles .hl-pack-art .cs-art-clash .cs-art-shadow { display: none; }
+#view-battles .hl-pack-art .cs-art-clash .cs-clash-pack img {
+  filter: drop-shadow(0 26px 26px rgba(0, 0, 0, 0.6)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+}
 #view-battles .hl-pack-art .hl-art.is-fan { height: 94%; width: 230px; max-width: 100%; }
 /* A sweep of light across the wrapper, masked to its outline (fx.js sets
    --pack-mask). The band moves by transform on a sibling of the shadowed img. */
@@ -649,6 +656,7 @@ body.hl-building .friends:not(.is-open) > *, body.hl-building .radio:not(.is-ope
   #view-battles .hl-stage { height: 440px; border-right: 1px solid var(--line); }
   #view-battles .hl-stage::before { bottom: 22px; height: 40px; }
   #view-battles .hl-pack { height: 350px; width: 76%; margin-top: 16px; }
+  #view-battles .hl-pack-art .cs-art-clash { --s: 350px; }
   #view-battles .hl-pack-art .hl-art.is-fan { width: 360px; }
   #view-battles .hl-kicker { left: 22px; top: 20px; }
   #view-battles .hl-you { left: 22px; bottom: 20px; }

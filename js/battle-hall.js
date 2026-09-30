@@ -7,6 +7,7 @@
    and every pull comes from the server; this module only presents them. */
 import { api } from "./api.js";
 import { esc, coins, coinTag, icon, wrapperArt, setById, seatAvatar } from "./battle-kit.js";
+import { battlesArtHTML } from "./casino-kit.js";
 import { setIdentity } from "./catalog.js";
 import { tintFrom } from "./fx.js";
 import { BOT_PERSONAS } from "./battle-rules.js";
@@ -331,6 +332,13 @@ export function createHall(ctx) {
 
   function stagePack(p) {
     if (!p) return `<span class="hl-art is-pack is-ghost"></span>`;
+    // A booster stands on the stage as the battles mark: two of the set's
+    // wrappers clashing (casino-kit.js battlesArtHTML, the hub tile's art),
+    // with the light sweep inside the front one. Boxes and bundles stand as
+    // themselves.
+    if (kindOf(p) === "pack") {
+      return `<div class="hl-pack-art">${battlesArtHTML({ setId: p.setId, art: isWrapper(p.image) ? p.image || "" : "", size: 0, glint: true, eager: true })}</div>`;
+    }
     return `<div class="hl-pack-art">${productArt(p, true)}<span class="hl-glint" aria-hidden="true"></span></div>`;
   }
   function quickCopy(p) {
