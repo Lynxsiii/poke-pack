@@ -1882,15 +1882,16 @@ export const HSP_PROMOS = {
  * Ruby & Sapphire and Sandstorm packs); they are counted, listed and sold under "np", never in the dex of the set whose product
  * carried them (js/card-home.js PROMO_HOMES). The promos no product claims (magazines, DVDs, events) are this set's own file,
  * data/np.json, as `np-npNNN`. `viewOf` names every file the page reads, itself included (the POP Series too: a POP product can
- * hold a promo). Not in PLAYABLE_SETS yet: the promo builder adds it with data/np.json, `totalCount`, `heroIds` and the box
- * notes, once the numbers exist (scripts/test-np.mjs checks them then). The release date is pkmn.gg's (October 1, 2003, a month
- * level date for the first promos): single source. The scan key on scrydex is `np-<n>` UNPADDED ("np-1", not "np-001": that is the
+ * hold a promo). Playable (e5): data/np.json holds the 24 event, magazine, DVD and tin-card promos no EX set's product claims; the six
+ * with no TCGplayer price anywhere (NP6, NP7, NP23, NP27, NP28, NP36) are not built, like DP05, so no product can sell them
+ * (.claude/skills/card-textures/reference/ex-promos-pop-kits.md). The release date is pkmn.gg's (October 1, 2003, a month level date
+ * for the first promos), confirmed by Bulbapedia and the Card Guide wiki ("starting October 2003", via search excerpts). The scan key on scrydex is `np-<n>` UNPADDED ("np-1", not "np-001": that is the
  * card back), the pkmn.gg page key `001`.
  */
 export const NP_PROMOS = {
   id: NP_SET_ID,
   tcgId: NP_SET_ID,
-  name: "Nintendo Black Star Promos",
+  name: "NP Black Star Promos", // pkmn.gg: Nintendo Black Star Promos; shortened so "<name> Master" fits a 32-character title (test-achievements)
   edition: "EX",
   era: "EX",
   released: "October 1, 2003",
@@ -1899,7 +1900,7 @@ export const NP_PROMOS = {
   promoPrefix: "NP ",
   viewNote: "the EX sets' own boxes and tins (collector's tins, value packs, deck tins), the POP Series packs",
   viewOf: ["ex1", "ex2", "ex3", "ex4", "ex5", "ex6", "ex7", "ex8", "ex9", "ex10", "ex11", "ex12", "ex13", "ex14", "ex15", "ex16", "pop1", "pop2", "pop3", "pop4", "pop5", NP_SET_ID],
-  totalCount: 0, // promo builder: homeCards(NP_PROMOS, every viewOf file).length
+  totalCount: 24, // TEMP (e5): homeCards(NP_PROMOS, every viewOf file).length. data/np.json holds 24; the other 10 (NP12 13 20 31-34 37-39) are filed in the ex1-ex16 files when ex/e1-e4 merge: RECOUNT then (scripts/test-np.mjs checks it as soon as every set file is there)
   packSize: 0,
   cost: 0,
   dataFile: "data/np.json",
@@ -1908,9 +1909,108 @@ export const NP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every Nintendo black star promo in one binder: the tin, value pack and magazine promos and the event cards, each one in its real product.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["np-np005", "np-np035", "np-np026", "np-np011"],
   wrappers: [],
 };
+
+/**
+ * POP Series 1 to 5 (Play! Pokémon Organized Play promo boosters, September 2004 to March 2007; EX era): 17 cards each (7, 7, 7, 6
+ * and 6 Rares incl. the Pokémon-ex and POP 5's two Gold Stars, five Uncommons, five or six Commons), TWO cards a pack, no Energy, no
+ * reverse holo, no code card. In-pack cards are not foil (pkmn.gg "normal: Found in Booster Packs", a collector-site excerpt: the
+ * holo versions came from blisters, tins and value packs; whether Armaldo ex or the POP 5 Gold Stars were foil in the pack is not
+ * settled, so none is). The rare sits on its own sheet, about 1 pack in 10, always in the same position: the SECOND card in POP 1 and
+ * POP 2, the first in POP 3 (POP 4 and 5 assumed the same): Elite Fourum posts 45, 53, 56, 59, 63 (one source, a pack-video tally:
+ * low-medium); pack size from the wrapper ("2 ADDITIONAL GAME CARDS") and TCGplayer's "Each POP Series N Pack contains 2 random cards".
+ * Nobody sold a box (two POP 1 packs sit in each EX Collector's Box); the single pack is the product, at TCGplayer's market price
+ * ($100.08, $149.69, $169.68, $171.94 and $2,290.00 for POP 5: thin markets, used as listed). `released` is pkmn.gg's month of first
+ * distribution. Sources and gaps: .claude/skills/card-textures/reference/ex-promos-pop-kits.md, data/pullrates.json.
+ */
+function exPopSeries(n, released, cost, rareAt, heroIds, wrapper, extra) {
+  const id = `pop${n}`;
+  return {
+    id,
+    tcgId: id,
+    name: `POP Series ${n}`,
+    edition: "EX",
+    era: "EX",
+    released,
+    live: true,
+    printedTotal: 17,
+    totalCount: 17,
+    packSize: 2,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: extra.blurb,
+    oddsLine: `2 cards · Rare ~1/10 (card ${rareAt}) · no foil`,
+    lede: extra.lede,
+    slots: popSlots({ rare: 0.1, rareAt }),
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: wrapper.id, name: wrapper.name, cardId: wrapper.cardId, tag: `Series ${n}` }]),
+  };
+}
+
+export const POP_SERIES_1 = exPopSeries(1, "September 1, 2004", 100.08, 2, ["pop1-17", "pop1-3", "pop1-5", "pop1-16"], { id: "blaziken", name: "Blaziken", cardId: "pop1-1" }, {
+  blurb: "Organized Play, September 2004. Two promo cards a pack with Blaziken on the wrapper, and Armaldo ex and Tyranitar ex among the Rares.",
+  lede: "A two-card league pack. The Rare, about one pack in ten, is the second card; Tyranitar ex, Rayquaza and the Hoenn starters are the ones to hope for.",
+});
+export const POP_SERIES_2 = exPopSeries(2, "August 1, 2005", 149.69, 2, ["pop2-17", "pop2-1", "pop2-16", "pop2-7"], { id: "venusaur", name: "Venusaur", cardId: "pop2-6" }, {
+  blurb: "Organized Play, August 2005. Two promo cards a pack, Venusaur on the wrapper, the three legendary beasts and Celebi ex among the Rares.",
+  lede: "Two cards a pack, the Rare about one pack in ten and always the second card. Celebi ex heads six Rares that include Entei, Raikou and Suicune.",
+});
+export const POP_SERIES_3 = exPopSeries(3, "April 1, 2006", 169.68, 1, ["pop3-1", "pop3-17", "pop3-16", "pop3-12"], { id: "eeveelutions", name: "Eeveelutions", cardId: "pop3-3" }, {
+  blurb: "Organized Play, April 2006. Two promo cards a pack, Jolteon, Vaporeon and Flareon on the wrapper, Blastoise and Ho-Oh ex among the Rares.",
+  lede: "The Rare, about one pack in ten, is the first card this time. Blastoise and Ho-Oh ex lead the Rares; Pichu Bros. is the Common worth a second look.",
+});
+export const POP_SERIES_4 = exPopSeries(4, "August 1, 2006", 171.94, 1, ["pop4-1", "pop4-2", "pop4-17", "pop4-5"], { id: "deoxys", name: "Deoxys", cardId: "pop4-2" }, {
+  blurb: "Organized Play, August 2006. Two promo cards a pack, Deoxys on the wrapper, Deoxys ex and the delta Chimecho and Deoxys among the Rares.",
+  lede: "Two cards a pack, the Rare about one pack in ten. Chimecho δ is the priciest card in the set; Deoxys δ and Deoxys ex follow it.",
+});
+export const POP_SERIES_5 = exPopSeries(5, "March 1, 2007", 2290, 1, ["pop5-3", "pop5-16", "pop5-17", "pop5-2"], { id: "ho-oh", name: "Ho-Oh", cardId: "pop5-1" }, {
+  blurb: "Organized Play, March 2007. The last EX-era POP pack: two promo cards, Ho-Oh on the wrapper, Espeon and Umbreon Gold Stars among the Rares.",
+  lede: "Two cards a pack, the Rare about one pack in ten. Espeon and Umbreon Gold Stars share the Rare slot with Mew δ and Lugia: a pack costs what a fair draw is worth, and that is a lot.",
+});
+
+/**
+ * The two EX Trainer Kits (June 2004 Latias & Latios, March 2006 Plusle & Minun): each kit holds two half decks, so each half
+ * deck is a set of its own (extk1a Latias, extk1b Latios, extk2a Plusle, extk2b Minun; pkmn.gg tk1a, tk1b, tk2a, tk2b). Ten cards
+ * a half deck in kit 1, twelve in kit 2 (the copies a deck held are in no source); each has one cosmos-holofoil Pokémon (Latias 4,
+ * Latios 2, Plusle 6, Minun 6). The kit is the two half decks only: the real kits held a booster pack of an EX set no source names
+ * (the research found none), so none is simulated. Sold on both half decks' pages, opening to data/box-contents.json. The kit's
+ * TCGplayer listing has no price: the product price is its different cards added up (a floor). Sources:
+ * .claude/skills/card-textures/reference/ex-promos-pop-kits.md.
+ */
+function exTrainerKit(id, { name, pokemon, rival, released, total, holo, heroIds }) {
+  const year = released.split(", ")[1];
+  return {
+    id,
+    tcgId: id,
+    name,
+    edition: "EX",
+    era: "EX",
+    released,
+    live: true,
+    promoSet: true,
+    promoPrefix: "EXTK ",
+    printedTotal: total,
+    totalCount: total,
+    packSize: 0,
+    cost: 0,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `EX Trainer Kit, ${year}. The ${pokemon} half deck: ${total} different cards, the holofoil ${pokemon} among them.`,
+    oddsLine: "No boosters · the kit holds two half decks",
+    lede: `One half of a two-player learn-to-play kit: ${pokemon} and the ${total - 1} cards that play with it. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card ${holo}.`,
+    slots: [],
+    heroIds,
+    wrappers: [],
+  };
+}
+
+export const EX_TRAINER_KIT_LATIAS = exTrainerKit("extk1a", { name: "EX Trainer Kit Latias", pokemon: "Latias", rival: "Latios", released: "June 1, 2004", total: 10, holo: 4, heroIds: ["extk1a-4", "extk1a-5"] });
+export const EX_TRAINER_KIT_LATIOS = exTrainerKit("extk1b", { name: "EX Trainer Kit Latios", pokemon: "Latios", rival: "Latias", released: "June 1, 2004", total: 10, holo: 2, heroIds: ["extk1b-2", "extk1b-6"] });
+export const EX_TRAINER_KIT_PLUSLE = exTrainerKit("extk2a", { name: "EX Trainer Kit Plusle", pokemon: "Plusle", rival: "Minun", released: "March 1, 2006", total: 12, holo: 6, heroIds: ["extk2a-6", "extk2a-5"] });
+export const EX_TRAINER_KIT_MINUN = exTrainerKit("extk2b", { name: "EX Trainer Kit Minun", pokemon: "Minun", rival: "Plusle", released: "March 1, 2006", total: 12, holo: 6, heroIds: ["extk2b-6", "extk2b-1"] });
 
 // ---- Wizards of the Coast promo sets (wotc/s0) ---------------------------------------------------------------------------------
 
@@ -1948,7 +2048,7 @@ export const BASEP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every Wizards black star promo in one binder: the League and movie cards, the event prizes and the deck exclusives, each one in its real product.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["np-np005", "np-np035", "np-np026", "np-np011"],
   wrappers: [],
 };
 
@@ -1981,7 +2081,7 @@ export const BP_PROMOS = {
   oddsLine: "No boosters · tournament prizes",
   lede: "The nine Best of Game cards, the last Wizards of the Coast prizes.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["np-np005", "np-np035", "np-np026", "np-np011"],
   wrappers: [],
 };
 
@@ -5593,6 +5693,16 @@ export const PLAYABLE_SETS = [
   POP_SERIES_6,
   DP_TRAINER_KIT_MANAPHY,
   DP_TRAINER_KIT_LUCARIO,
+  NP_PROMOS,
+  POP_SERIES_5,
+  POP_SERIES_4,
+  POP_SERIES_3,
+  POP_SERIES_2,
+  POP_SERIES_1,
+  EX_TRAINER_KIT_LATIAS,
+  EX_TRAINER_KIT_LATIOS,
+  EX_TRAINER_KIT_PLUSLE,
+  EX_TRAINER_KIT_MINUN,
 ];
 
 /**
@@ -5878,6 +5988,17 @@ const POKESYMBOLS_SLUG = {
   dptk3b: "diamond-and-pearl-trainer-kit-lucario",
   hgsstk4a: "heartgold-and-soulsilver-trainer-kit-gyarados",
   hgsstk4b: "heartgold-and-soulsilver-trainer-kit-raichu",
+  // EX generation, e5 (pokesymbols has the POP and kit symbols; the Nintendo black star promos use its generic promo star).
+  np: "_promo",
+  pop1: "pop-1",
+  pop2: "pop-2",
+  pop3: "pop-3",
+  pop4: "pop-4",
+  pop5: "pop-5",
+  extk1a: "ex-trainer-kit-latias",
+  extk1b: "ex-trainer-kit-latios",
+  extk2a: "ex-trainer-kit-2-plusle",
+  extk2b: "ex-trainer-kit-2-minun",
   bw10: "plasma-blast",
   bw11: "legendary-treasures",
   bw2: "emerging-powers",

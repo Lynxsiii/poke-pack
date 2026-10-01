@@ -1,0 +1,323 @@
+{
+  "id": "np",
+  "name": "Nintendo Black Star Promos",
+  "series": "np",
+  "slug": "nintendo-black-star-promos",
+  "scrydexId": "np",
+  "era": "ex",
+  "tcgplayerGroup": 1423,
+  "promoSeries": {
+    "np": {
+      "series": "np",
+      "slug": "nintendo-black-star-promos",
+      "scrydex": "np",
+      "tcgplayerGroup": 1423,
+      "printed": "NP",
+      "pkmnKey": "{n:03d}",
+      "scrydexKey": "{n}",
+      "era": "ex"
+    }
+  },
+  "products": [
+    {
+      "id": "event-np001",
+      "name": "Kyogre ex · Nintendo Power magazine",
+      "kind": "event",
+      "tcgplayerId": 86555,
+      "note": "The Nintendo Power promo of October 2003 (the magazine's copy is not holofoil; the holofoil copy went to players of the Pokémon Ruby & Sapphire Challenge in August 2003: Bulbapedia, via search excerpt, and Collexy). The card is shown as the cosmos holo; the price is the magazine print's normal listing (TCGplayer market $43.82 normal, $314.66 holofoil), which is what the daily refresh reads.",
+      "promos": [
+        "np001"
+      ]
+    },
+    {
+      "id": "event-np002",
+      "name": "Groudon ex · Nintendo Power magazine",
+      "kind": "event",
+      "tcgplayerId": 85928,
+      "note": "The Nintendo Power promo of October 2003, the pair of NP 1 (the magazine's copy is not holofoil; the holofoil copy went to Ruby & Sapphire Challenge players). Shown as the cosmos holo, priced at the magazine print's normal listing (TCGplayer market $31.10 normal, $130.75 holofoil).",
+      "promos": [
+        "np002"
+      ]
+    },
+    {
+      "id": "event-np003",
+      "name": "Treecko · e-League 2003",
+      "kind": "event",
+      "tcgplayerId": 90031,
+      "note": "A reverse holo prize of the 2003 e-League (Pokémon League) season. No sealed product.",
+      "promos": [
+        "np003"
+      ]
+    },
+    {
+      "id": "event-np004",
+      "name": "Grovyle · e-League 2003",
+      "kind": "event",
+      "tcgplayerId": 85934,
+      "note": "An e-League 2003 prize. TCGplayer's only listing is the Winner-stamped copy, which is the price here. No sealed product.",
+      "promos": [
+        "np004"
+      ]
+    },
+    {
+      "id": "event-np005",
+      "name": "Mudkip · POP Tournaments",
+      "kind": "event",
+      "tcgplayerId": 87608,
+      "note": "Handed out at the European and US POP (Play! Pokémon) tournaments, in cosmos holo. TCGplayer has no listings for it: its market price is one recorded sale at $1,500 (pkmn.gg shows the same). No sealed product.",
+      "promos": [
+        "np005"
+      ],
+      "price": 1500.0,
+      "priceSource": "TCGplayer's market price for the card (product 87608: $1,500.00, one recorded sale, no live listings; tcgcsv's mirror has no row for it) and pkmn.gg's price for NP 5."
+    },
+    {
+      "id": "event-np008",
+      "name": "Torchic · e-League 2003",
+      "kind": "event",
+      "tcgplayerId": 89948,
+      "note": "A reverse holo prize of the 2003 e-League season. No sealed product.",
+      "promos": [
+        "np008"
+      ]
+    },
+    {
+      "id": "event-np009",
+      "name": "Combusken · e-League 2003",
+      "kind": "event",
+      "tcgplayerId": 84399,
+      "note": "An e-League 2003 prize. TCGplayer's only listing is the Winner-stamped copy, which is the price here (a jumbo print also exists, not modelled). No sealed product.",
+      "promos": [
+        "np009"
+      ]
+    },
+    {
+      "id": "event-np010",
+      "name": "Mudkip · e-League 2003",
+      "kind": "event",
+      "tcgplayerId": 87604,
+      "note": "A reverse holo prize of the 2003 e-League season. No sealed product.",
+      "promos": [
+        "np010"
+      ]
+    },
+    {
+      "id": "event-np011",
+      "name": "Marshtomp · e-League 2003",
+      "kind": "event",
+      "tcgplayerId": 87231,
+      "note": "An e-League 2003 prize. TCGplayer's only listing is the Winner-stamped copy, which is the price here. No sealed product.",
+      "promos": [
+        "np011"
+      ]
+    },
+    {
+      "id": "event-np014",
+      "name": "Latias · Pokémon Heroes DVD",
+      "kind": "event",
+      "tcgplayerId": 86649,
+      "note": "Inserted in the Pokémon Heroes: Latios & Latias DVD (January 2004). No sealed product of its own.",
+      "promos": [
+        "np014"
+      ]
+    },
+    {
+      "id": "event-np015",
+      "name": "Latios · Pokémon Heroes DVD",
+      "kind": "event",
+      "tcgplayerId": 86663,
+      "note": "Inserted in the Pokémon Heroes: Latios & Latias DVD (January 2004). No sealed product of its own.",
+      "promos": [
+        "np015"
+      ]
+    },
+    {
+      "id": "event-np016",
+      "name": "Treecko · EX Deck Tins",
+      "kind": "event",
+      "tcgplayerId": 90035,
+      "note": "The holofoil Treecko of the October 2004 EX Deck Tins (a non-holo copy was a Target snack-bar promotion). What else the tin held is not on record, so the card is sold alone.",
+      "promos": [
+        "np016"
+      ]
+    },
+    {
+      "id": "event-np017",
+      "name": "Torchic · EX Deck Tins",
+      "kind": "event",
+      "tcgplayerId": 89953,
+      "note": "The holofoil Torchic of the October 2004 EX Deck Tins (a non-holo copy was a Target snack-bar promotion). What else the tin held is not on record, so the card is sold alone.",
+      "promos": [
+        "np017"
+      ]
+    },
+    {
+      "id": "event-np018",
+      "name": "Mudkip · EX Deck Tins",
+      "kind": "event",
+      "tcgplayerId": 87609,
+      "note": "The holofoil Mudkip of the October 2004 EX Deck Tins (a non-holo copy was a Target snack-bar promotion). What else the tin held is not on record, so the card is sold alone.",
+      "promos": [
+        "np018"
+      ]
+    },
+    {
+      "id": "event-np019",
+      "name": "Whismur · EX Deck Tins",
+      "kind": "event",
+      "tcgplayerId": 90579,
+      "note": "The holofoil Whismur of the October 2004 EX Deck Tins (a non-holo copy was a Target snack-bar promotion). What else the tin held is not on record, so the card is sold alone.",
+      "promos": [
+        "np019"
+      ]
+    },
+    {
+      "id": "event-np021",
+      "name": "Jirachi · Jirachi: Wish Maker DVD",
+      "kind": "event",
+      "tcgplayerId": 86326,
+      "note": "Inserted in the Jirachi: Wish Maker DVD (June 2004). No sealed product of its own.",
+      "promos": [
+        "np021"
+      ]
+    },
+    {
+      "id": "event-np022",
+      "name": "Beldum · e-League 2004",
+      "kind": "event",
+      "tcgplayerId": 83784,
+      "note": "An e-League 2004 prize. No sealed product.",
+      "promos": [
+        "np022"
+      ]
+    },
+    {
+      "id": "event-np024",
+      "name": "Chimecho · e-League 2004",
+      "kind": "event",
+      "tcgplayerId": 84293,
+      "note": "An e-League 2004 prize (the plain print: the Winner-stamped copy is a separate $34.33 listing). No sealed product.",
+      "promos": [
+        "np024"
+      ]
+    },
+    {
+      "id": "event-np025",
+      "name": "Flygon · e-League 2004",
+      "kind": "event",
+      "tcgplayerId": 85523,
+      "note": "An e-League 2004 prize (a Winner-stamped copy is a separate $119.99 listing, not modelled). No sealed product.",
+      "promos": [
+        "np025"
+      ]
+    },
+    {
+      "id": "event-np026",
+      "name": "Tropical Wind · 2004 World Championships",
+      "kind": "event",
+      "tcgplayerId": 90053,
+      "note": "Handed to every player at the 2004 World Championships (Participation). No sealed product.",
+      "promos": [
+        "np026"
+      ]
+    },
+    {
+      "id": "event-np029",
+      "name": "Celebi · EX Collector's Carry Tin",
+      "kind": "event",
+      "tcgplayerId": 84145,
+      "note": "The holofoil Celebi of the November 2005 EX Collector's Carry Tin. The tin held EX-series packs of a mix no source gives, so the card is sold alone.",
+      "promos": [
+        "np029"
+      ]
+    },
+    {
+      "id": "event-np030",
+      "name": "Suicune · EX Collector's Carry Tin",
+      "kind": "event",
+      "tcgplayerId": 89603,
+      "note": "The holofoil Suicune of the November 2005 EX Collector's Carry Tin. The tin held EX-series packs of a mix no source gives, so the card is sold alone.",
+      "promos": [
+        "np030"
+      ]
+    },
+    {
+      "id": "event-np035",
+      "name": "Pikachu δ · Value Pack",
+      "kind": "event",
+      "tcgplayerId": 88109,
+      "note": "The cosmos-holo Delta Species Pikachu of an EX Value Pack (TCGplayer and Collexy); pkmn.gg also lists a plain copy from a 2007 Pokémon Official Magazine. The pack's contents are not on record, so the card is sold alone.",
+      "promos": [
+        "np035"
+      ]
+    },
+    {
+      "id": "event-np040",
+      "name": "Mew · Trainer's Challenge Set",
+      "kind": "event",
+      "tcgplayerId": 87402,
+      "note": "The holofoil Mew of the October 2006 Value Box / Trainer's Challenge Set. What else the set held is not on record, so the card is sold alone.",
+      "promos": [
+        "np040"
+      ]
+    }
+  ],
+  "promoCards": {
+    "np001": {
+      "foilAs": "Rare Holo"
+    },
+    "np002": {
+      "foilAs": "Rare Holo"
+    },
+    "np003": {
+      "reverse": true
+    },
+    "np004": {},
+    "np005": {
+      "foilAs": "Rare Holo"
+    },
+    "np008": {
+      "reverse": true
+    },
+    "np009": {},
+    "np010": {
+      "reverse": true
+    },
+    "np011": {},
+    "np014": {},
+    "np015": {},
+    "np016": {
+      "foilAs": "Rare Holo"
+    },
+    "np017": {
+      "foilAs": "Rare Holo"
+    },
+    "np018": {
+      "foilAs": "Rare Holo"
+    },
+    "np019": {
+      "foilAs": "Rare Holo"
+    },
+    "np021": {},
+    "np022": {},
+    "np024": {
+      "tcgplayerId": 84293,
+      "priceFromListing": true
+    },
+    "np025": {},
+    "np026": {},
+    "np029": {
+      "foilAs": "Rare Holo"
+    },
+    "np030": {
+      "foilAs": "Rare Holo"
+    },
+    "np035": {
+      "foilAs": "Rare Holo",
+      "priceFromListing": true
+    },
+    "np040": {
+      "foilAs": "Rare Holo"
+    }
+  }
+}
