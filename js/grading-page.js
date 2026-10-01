@@ -28,7 +28,7 @@ import {
 } from "./grading-rules.js";
 import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js";
 import { uuid, slabTileHTML } from "./casino-kit.js";
-import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
+import { gateLock, gateNoticeHTML, gateRefusal, roomLine } from "./gate-notice.js";
 import { esc, coins } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 
@@ -129,6 +129,7 @@ export function initGrading(deps) {
   const coinsNow = () => Number(save().coins || 0);
   const signedIn = () => (deps.user ? Boolean(deps.user()) : !data.signedOut);
   // Level gate (js/levels.js GATES): shut for a level-too-low player who has never graded a card.
+  const slabRoom = () => roomLine("slabs", deps.user?.()?.level, shownCount(), GRADING_LIMITS.maxShown);
   const lock = () => (data.loaded ? gateLock("grading", deps.user?.(), data.slabs.length > 0) : null);
   const motion = () => !matchMedia("(prefers-reduced-motion: reduce)").matches && !document.body.classList.contains("no-motion");
 
@@ -346,7 +347,7 @@ export function initGrading(deps) {
           <li><b>Older sets</b> come back a 10 less often. You see the exact odds for a card before you send it.</li>
         </ol>
         ${fine()}
-        <div class="gd-actions"><a class="solid${lock() ? " is-gated" : ""}" href="/grading/send" data-gd-link>Send a card</a></div>
+        <div class="gd-actions"><a class="solid${lock() ? " is-gated" : ""}"${lock() ? ' aria-disabled="true"' : ""} href="/grading/send" data-gd-link>Send a card</a></div>
       </section>
       <section class="gd-section" aria-labelledby="gd-slabs-h">
         <div class="gd-section-head">
@@ -396,7 +397,7 @@ export function initGrading(deps) {
             <div><dt>Slabs</dt><dd>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs ? ` <small>of ${GRADING_LIMITS.maxSlabs}</small>` : ""}</dd></div>
             <div><dt>Worth together</dt><dd>${coinTag(worth)}</dd></div>
             <div><dt>Best grade</dt><dd>${best ? `${best.grade} ${esc(gradeWord(best.grade))}` : ""}</dd></div>
-            <div><dt>On your profile</dt><dd>${onProfile} of ${GRADING_LIMITS.maxShown}${handle ? ` <small><a href="/u/${esc(handle)}">See your profile</a></small>` : ""}</dd></div>
+            <div><dt>On your profile</dt><dd>${onProfile} of ${slabRoom().cap}${handle ? ` <small><a href="/u/${esc(handle)}">See your profile</a></small>` : ""}</dd></div>
           </dl>
           <div class="gd-graded-tools">
             <span class="gd-words" role="group" aria-label="Sort">${GRADED_SORTS.map(([id, label]) => `<button type="button" data-gd-gsort="${id}" class="${gradedSort === id ? "on" : ""}">${label}</button>`).join("")}</span>
@@ -760,7 +761,7 @@ export function initGrading(deps) {
             <small class="gd-reason">${
               slab.shown
                 ? `In the Graded section of your profile.${handleNow() ? ` <a href="/u/${esc(handleNow())}">See it</a>` : ""}`
-                : `Your profile has room for ${GRADING_LIMITS.maxShown} slabs, ${shownCount()} in use.`
+                : `Your profile has room for ${slabRoom().cap} slabs, ${shownCount()} in use.${slabRoom().more}`
             }</small>
           </div>
           <section class="gd-guardbox" aria-labelledby="gd-guard-h">

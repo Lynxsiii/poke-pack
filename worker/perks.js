@@ -9,6 +9,7 @@
 import { bannerMotionLevel } from "../js/cosmetics.js";
 import { BANNER_MOTION_NAMES, frameInfo, levelPerks, slotMessage } from "../js/levels.js";
 import { playerLevel } from "./xp.js";
+import { ensureQuestSchema, maxStatStmt } from "./stats.js";
 
 /** The stored level, or 1 when it cannot be read (a failure here must not break /api/me). */
 export async function levelOf(env, userId) {
@@ -64,4 +65,26 @@ export function slotError(kind, level, existingCount, nextCount) {
   const allowance = kind === "showcase" ? perks.showcaseSlots : kind === "slabs" ? perks.shownSlabs : perks.binderPages;
   if (nextCount <= Math.max(allowance, existingCount)) return null;
   return { status: 400, error: slotMessage(kind, level), allowance };
+}
+
+/**
+ * The most a player has had in a profile list at once ("showcase", "slabs" or
+ * "pages"), kept as a bookkeeping counter in player_stats. Room to add is
+ * max(level allowance, this peak): lists are edited one click at a time, so
+ * without it a player whose saved list is longer than their level allows could
+ * take one off and never put another on. Nobody gains room by it: the peak can
+ * only come from a list that was already saved. Records `count`, returns the peak.
+ */
+export async function slotPeak(env, userId, kind, count) {
+  const key = `_peak_${kind}`;
+  try {
+    if (!(await ensureQuestSchema(env))) return count;
+    const row = await env.DB.prepare("SELECT value FROM player_stats WHERE user_id = ? AND key = ?").bind(userId, key).first();
+    const stored = Number(row?.value) || 0;
+    if (count > stored) await maxStatStmt(env, userId, key, count).run();
+    return Math.max(stored, count);
+  } catch (err) {
+    console.error("slotPeak", err);
+    return count;
+  }
 }
