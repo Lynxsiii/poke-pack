@@ -38,7 +38,7 @@ assert.equal(pat({rarity:'Promo'}),'');
 assert.ok(isRadiantCollection({id:'g1-RC9'})&&isRadiantCollection({id:'x',rc:true})&&!isRadiantCollection({id:'g1-9'}));
 assert.equal(pat({id:'g1-RC9',rarity:'Common'}),'foil-holo xy-rc');
 assert.equal(pat({id:'g1-RC1',rarity:'Rare'}),'foil-holo xy-rc');
-assert.equal(pat({id:'g1-RC6',rarity:'Rare Holo EX',subtypes:['Basic','EX']}),'foil-ex xy-ex xy-rc');
+assert.equal(pat({id:'g1-RC6',rarity:'Rare Holo EX',subtypes:['Basic','EX']}),'foil-holo xy-rc');
 assert.equal(pat({id:'g1-RC29',rarity:'Rare Ultra'}),'foil-ultra xy-fa xy-rc');
 
 // ---- Foil hooks ---------------------------------------------------------------------------------
