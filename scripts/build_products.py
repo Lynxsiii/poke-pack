@@ -24,6 +24,11 @@ A Black & White set names its promos `bwp003` and its series `"bwp": {"series": 
 An XY set names its promos `xyp003` and its series
 `"xyp": {"series": "xy", "slug": "xy-black-star-promos", "scrydex": "xyp",
 "tcgplayerGroup": 1451, "printed": "XY", "era": "xy"}` (keys: PROMO_FORMATS below).
+A Diamond & Pearl generation set names its promos `dpp01` (DP Black Star Promos, Platinum's DP35-DP56 included: the home set
+is the one whose packs the product holds, dp1-dp7 or pl1-pl4) and `hsp03` (HGSS Black Star Promos; home hgss1-hgss4 or col1):
+`"dpp": {"series": "diamond-pearl", "slug": "dp-black-star-promos", "scrydex": "dpp", "tcgplayerGroup": 1421, "printed": "DP",
+"era": "dp"}` and `"hsp": {"series": "heartgold-soulsilver", "slug": "hgss-black-star-promos", "scrydex": "hsp",
+"tcgplayerGroup": 1453, "printed": "HGSS", "era": "dp"}`.
 
 `packs` counts the set's own booster packs; `special` names extra packs from
 the set's `specialPacks` in js/catalog.js (the Ultra-Premium Collections'
@@ -133,7 +138,17 @@ TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 # the scan under that printed number verbatim (bwp-BW01, bwp-BW004, bwp-BW99, bwp-BW100; the
 # other padding returns the card back). So `scrydexKey` pads to two digits and `scrydexWide`
 # names the numbers printed with three. Probed 2026-10-01 over all 101 numbers. The printed number is "BW 003".
+#
+# The DP Black Star Promos (pkmn.gg series diamond-pearl, slug dp-black-star-promos) and the HGSS Black Star Promos (series
+# heartgold-soulsilver, slug hgss-black-star-promos): pkmn.gg's page key is DP001 / HGSS001 (DP01 is a 404), its printed
+# `number` DP01-DP56 / HGSS01-HGSS25 (DP900 and DP901 are Black & White-era jumbo cards: leave them out), and scrydex files the
+# scan under the printed number: dpp-DP01 ... dpp-DP56, hsp-HGSS01 ... hsp-HGSS25 (DP1 / DP001 return the card back, md5
+# f294d6fb). Probed 2026-10-01 over all 56 + 25 numbers: every one is a scan EXCEPT hsp-HGSS18 (Tropical Tidal Wave), which is the
+# card back under every padding; pkmn.gg's own image for it (assets.pkmn.gg .../hsp/hsp-HGSS018v2.png) is a real scan. The
+# printed number is "DP 01" / "HGSS 01" (`printedWidth` 2).
 PROMO_FORMATS = {
+    "dpp": {"pkmnKey": "DP{n:03d}", "scrydexKey": "DP{n:02d}", "printedWidth": 2},
+    "hsp": {"pkmnKey": "HGSS{n:03d}", "scrydexKey": "HGSS{n:02d}", "printedWidth": 2},
     "smp": {"pkmnKey": "SM{n:03d}", "scrydexKey": "SM{n:02d}"},
     "xyp": {"pkmnKey": "XY{n:03d}", "scrydexKey": "XY{n:02d}"},
     "bwp": {"pkmnKey": "BW{n:03d}", "scrydexKey": "BW{n:02d}", "scrydexWide": [4, 5]},
@@ -354,7 +369,7 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
     if dest.exists() and not refresh:
         return rel
     if not product.get("tcgplayerId"):
-        return None  # a product TCGplayer never listed (most BW blisters and tins) has no photo to cut out
+        return None  # Black & White blisters, decks and boxes TCGplayer never listed: no photo
     try:
         raw = fetch(TCG_IMAGE.format(id=product["tcgplayerId"]))
     except (urllib.error.URLError, OSError) as exc:
@@ -429,7 +444,7 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}{suffix}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
-        record["printedNumber"] = f"{ser['printed']} {n:03d}{suffix}"
+        record["printedNumber"] = f"{ser['printed']} {n:0{fmt.get('printedWidth', 3)}d}{suffix}"
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
         # Sun & Moon's promos are smp-SM01 there but SM001 on pkmn.gg: `scrydexKey`.
         scry_key = scrydex_promo_key(fmt, n) + suffix if fmt.get("scrydexKey") else page_key
@@ -454,8 +469,8 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     if parts and not spec.get("like") and series[parts[0]].get("era"):
         record["era"] = series[parts[0]]["era"]
     # An XY or Black & White promo, a `like` reprint included, takes the era's finish through its foilAs
-    # (js/xy-foil.js and js/bw-foil.js are only asked for a card with foilAs when the card says era "xy" / "bw").
-    if cfg.get("era") in ("xy", "bw") and not record.get("era"):
+    # (js/xy-foil.js, js/bw-foil.js and js/dp-foil.js are only asked for a card with foilAs when the card says era "xy" / "bw").
+    if cfg.get("era") in ("xy", "bw", "dp") and not record.get("era"):
         record["era"] = cfg["era"]
     record["rarity"] = "Promo"
     record["promo"] = True
@@ -510,6 +525,8 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             market_by[group] = tcg_prices(group, refresh=True)
             meta_by[group] = tcg_products(group, refresh)
         pid = product.get("tcgplayerId")
+        if not pid:  # never listed on TCGplayer (see derived_price)
+            return None, {}
         return market_by[group].get(pid), meta_by[group].get(pid) or {}
 
     sealed_row = json.loads((DATA / "sealed.json").read_text(encoding="utf-8")).get(set_id) or {}
@@ -586,7 +603,8 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         # A stamped or product-only print is priced from its own TCGplayer
         # listing, and so is a promo pkmn.gg has no price for.
         listing = spec.get("tcgplayerId") or record.get("tcgplayerId")
-        if listing and (spec.get("like") or not price):
+        # `priceFromListing`: pkmn.gg's price is another print's (the League N is $12.50 holo, $2 plain).
+        if listing and (spec.get("like") or spec.get("priceFromListing") or not price):
             price = tcg_price(listing) or price
         if price is not None:
             record["market"] = price

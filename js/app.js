@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isSm, isSwsh, isXy, bwPattern, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=12";
+import { foilExtras, isBw, isDp, isSm, isSwsh, isXy, bwPattern, dpPattern, smPattern, swshPattern, xyPattern } from "./foil-maps.js?v=13";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
@@ -590,6 +590,8 @@ function foilClass(card) {
     if (bw === "foil-none") return "";
     if (bw.includes("bw-rc") || bw.includes("bw-vault")) return "holo";
   }
+  // The Diamond & Pearl generation's plain Rare is not foil either (js/dp-foil.js).
+  if (isDp(card) && (!card.foilAs || card.era === "dp") && dpPattern(card) === "foil-none") return "";
   if (HIT_RARITIES.has(card.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
@@ -675,6 +677,11 @@ function foilPattern(card) {
   if (isBw(card) && (!card.foilAs || card.era === "bw")) {
     const bw = bwPattern(card);
     if (bw) return bw;
+  }
+  // Diamond & Pearl generation prints (js/dp-foil.js).
+  if (isDp(card) && (!card.foilAs || card.era === "dp")) {
+    const dp = dpPattern(card);
+    if (dp) return dp;
   }
   // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
   // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.

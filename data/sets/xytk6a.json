@@ -1,0 +1,155 @@
+{
+  "id": "xytk6a",
+  "name": "XY Kit Noivern",
+  "side": true,
+  "series": "xy",
+  "slug": "xy-trainer-kit-noivern",
+  "scrydexId": "tk6a",
+  "printedTotal": 30,
+  "tcgplayerGroup": 1532,
+  "era": "xy",
+  "defaults": {
+    "rarity": "Promo",
+    "era": "xy"
+  },
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 97996
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 97997
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 97998
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 97999
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 98000
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 98001
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 98002
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 98003
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 98004
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 98005
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 98006
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 98020
+    },
+    {
+      "number": "13",
+      "tcgplayerId": 98008
+    },
+    {
+      "number": "14",
+      "tcgplayerId": 98009
+    },
+    {
+      "number": "15",
+      "tcgplayerId": 98010
+    },
+    {
+      "number": "16",
+      "tcgplayerId": 98011
+    },
+    {
+      "number": "17",
+      "tcgplayerId": 98012
+    },
+    {
+      "number": "18",
+      "tcgplayerId": 98013
+    },
+    {
+      "number": "19",
+      "tcgplayerId": 98014
+    },
+    {
+      "number": "20",
+      "tcgplayerId": 98018
+    },
+    {
+      "number": "21",
+      "tcgplayerId": 98019
+    },
+    {
+      "number": "22",
+      "tcgplayerId": 98015
+    },
+    {
+      "number": "23",
+      "tcgplayerId": 98020
+    },
+    {
+      "number": "24",
+      "tcgplayerId": 98021
+    },
+    {
+      "number": "25",
+      "tcgplayerId": 98022
+    },
+    {
+      "number": "26",
+      "tcgplayerId": 98016
+    },
+    {
+      "number": "27",
+      "tcgplayerId": 98023
+    },
+    {
+      "number": "28",
+      "tcgplayerId": 98017
+    },
+    {
+      "number": "29",
+      "tcgplayerId": 97969
+    },
+    {
+      "number": "30",
+      "tcgplayerId": 98025,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "promo": true
+    }
+  ],
+  "products": [
+    {
+      "id": "xy-trainer-kit-sylveon-noivern",
+      "name": "XY Trainer Kit: Sylveon & Noivern",
+      "kind": "deck",
+      "tcgplayerId": 97728,
+      "packs": 0,
+      "promos": [
+        "30"
+      ],
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. No booster packs. Opening it from either half-deck page deals both decks.",
+      "price": 110.44,
+      "priceSource": "The kit has no TCGplayer listing; priced at its 60 cards' market prices added up."
+    }
+  ]
+}

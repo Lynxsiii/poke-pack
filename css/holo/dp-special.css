@@ -1,0 +1,28 @@
+/*
+ * Diamond & Pearl generation (2007-2011): LV.X, Prime, LEGEND and the SP cards.
+ *
+ * Draws: dp-lvx (`foil-ex dp-lvx`: cosmos holo in the art plus a shimmer along the frame), dp-prime (`foil-ex dp-prime`:
+ * holofoil frame and GOLD foil name text, the art flat), dp-legend (`foil-ultra dp-legend`, `dp-legend-top` / `dp-legend-bottom`:
+ * the whole face holo, two cards that join) and, for the Platinum SP Pokémon (Dialga G, Palkia G and the rest, printed as
+ * ordinary Rare Holo / LV.X cards), whatever the finish agents find they need.
+ *
+ * Classes come from dpPattern() in js/dp-foil.js; `era-dp` marks every Diamond & Pearl generation
+ * print (js/foil-maps.js): dp1-dp7, pl1-pl4, hgss1-hgss4, col1, the dpp and hsp promos, POP 6-9 and the
+ * Trainer Kits. Finish owners: the DP finish agents. The rarity words, frames and what the generation printed
+ * are in js/dp-foil.js and /mnt/project-files/every-era/dp/SCAFFOLD-NOTES.md (research:
+ * /mnt/project-files/every-era/dp/research/ and /mnt/project-files/every-era/hgss/research/, section 3 of
+ * dp-pack-structure.md, hgss-pack-structure.md and pl-pack-structure.md has the finish vocabulary in plain words).
+ * TCG Live has NO per-card foil maps for this generation (probed 2026-10-01, see the DP block of
+ * fetch_foil_maps.py), so the masks are drawn: hook dpMap() in js/dp-foil.js (the all-white map foilExtras
+ * gives the LEGEND halves meanwhile). Follow SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any
+ * colour dodge with a closing contrast(0.8), no black speckle, no hairline gratings, no foil over text, and run
+ * foil_coverage.mjs plus a WebKit render at phone size before merging.
+ *
+ * Specificity: repeat `era-dp` five times in every selector, like sm.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ * Empty until the finish thread for this family draws it; until then the
+ * cards fall back to the Classic engine's generic finish.
+ */
