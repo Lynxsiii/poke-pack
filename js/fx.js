@@ -86,13 +86,37 @@ function sampleColour(img) {
   return rgb;
 }
 
+// A public profile can paint the room its own colour (js/profile-view.js). While
+// it does, a wrapper that finishes loading elsewhere must not repaint the room:
+// its colour is remembered and put back when the profile is left.
+let room = null; // { prev } while a profile holds the room
+let sampled = ""; // the last wrapper colour that arrived while held
+
+/** Hold the page light at `rgb` ("r g b", or an [r,g,b] array). null gives the room back. */
+export function holdAmbient(rgb) {
+  const style = document.body.style;
+  if (rgb) {
+    if (!room) room = { prev: style.getPropertyValue("--ambient") };
+    style.setProperty("--ambient", Array.isArray(rgb) ? rgb.join(" ") : rgb);
+    return;
+  }
+  if (!room) return;
+  const back = sampled || room.prev;
+  room = null;
+  sampled = "";
+  if (back) style.setProperty("--ambient", back);
+  else style.removeProperty("--ambient");
+}
+
 export function tintFrom(img, glint) {
   if (!img) return;
   // The glint layer is clipped to the wrapper's own outline.
   if (glint) glint.style.setProperty("--pack-mask", `url("${img.currentSrc || img.src}") center / 100% 100% no-repeat`);
   const apply = () => {
     const rgb = sampleColour(img);
-    if (rgb) document.body.style.setProperty("--ambient", rgb.join(" "));
+    if (!rgb) return;
+    if (room) sampled = rgb.join(" ");
+    else document.body.style.setProperty("--ambient", rgb.join(" "));
   };
   if (img.complete && img.naturalWidth) apply();
   else img.addEventListener("load", apply, { once: true });
