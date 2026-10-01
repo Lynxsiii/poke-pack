@@ -4041,5 +4041,717 @@
     "etchMap": "assets/foil/maps/bw1/115-etch.webp",
     "tcgplayerId": 88101,
     "market": 180.92
+  },
+  {
+    "id": "bw1-19-cracked-ice",
+    "name": "Emboar",
+    "number": "19-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "150",
+    "artist": "Kouki Saitou",
+    "flavorText": "It can throw a fire punch by setting its fists on fire with its fiery chin. It cares deeply about its friends.",
+    "evolvesFrom": "Pignite",
+    "image": "assets/cards/bw1/19.webp",
+    "imageSmall": "assets/cards/bw1/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Heat Crash",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Flare Blitz",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard all Fire Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw1-19/large",
+    "printedNumber": "19",
+    "foilMap": "assets/foil/maps/bw1/19.webp",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Red Frenzy Theme Deck)",
+    "tcgplayerId": 155561,
+    "market": 3.22
+  },
+  {
+    "id": "bw1-31-cracked-ice",
+    "name": "Samurott",
+    "number": "31-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Part of the armor on its anterior legs becomes a giant sword. Its cry alone is enough to intimidate most enemies.",
+    "evolvesFrom": "Dewott",
+    "image": "assets/cards/bw1/31.webp",
+    "imageSmall": "assets/cards/bw1/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Pike",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw1-31/large",
+    "printedNumber": "31",
+    "foilMap": "assets/foil/maps/bw1/31.webp",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Blue Assault Theme Deck)",
+    "tcgplayerId": 204231,
+    "market": 3.14
+  },
+  {
+    "id": "bw1-5-cracked-ice",
+    "name": "Serperior",
+    "number": "5-cracked-ice",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "They raise their heads to intimidate opponents but only give it their all when fighting a powerful opponent.",
+    "evolvesFrom": "Servine",
+    "image": "assets/cards/bw1/5.webp",
+    "imageSmall": "assets/cards/bw1/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Leaf Storm",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "60",
+        "text": "Heal 20 damage from each of your Grass Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bw1-5/large",
+    "printedNumber": "5",
+    "foilMap": "assets/foil/maps/bw1/5.webp",
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Cracked Ice Holo (Green Tornado Theme Deck)",
+    "tcgplayerId": 213003,
+    "market": 3.11
+  },
+  {
+    "id": "bw1-bwp001",
+    "name": "Snivy",
+    "number": "bwp001",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "It is very intelligent and calm. Being exposed to lots of sunlight makes its movements swifter.",
+    "image": "assets/cards/bw1/bwp001.webp",
+    "imageSmall": "assets/cards/bw1/bwp001-sm.webp",
+    "attacks": [
+      {
+        "name": "Slam",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "market": 2.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW01/large",
+    "printedNumber": "BW 001",
+    "tcgplayerId": 89377,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp001.webp"
+  },
+  {
+    "id": "bw1-bwp002",
+    "name": "Tepig",
+    "number": "bwp002",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "It blows fire through its nose. When it catches a cold, the fire becomes pitch-black smoke instead.",
+    "image": "assets/cards/bw1/bwp002.webp",
+    "imageSmall": "assets/cards/bw1/bwp002-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "market": 3.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW02/large",
+    "printedNumber": "BW 002",
+    "tcgplayerId": 89881,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp002.webp"
+  },
+  {
+    "id": "bw1-bwp003",
+    "name": "Oshawott",
+    "number": "bwp003",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "It fights using the scalchop on its stomach. In response to an attack, it retaliates immediately by slashing.",
+    "image": "assets/cards/bw1/bwp003.webp",
+    "imageSmall": "assets/cards/bw1/bwp003-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      }
+    ],
+    "market": 11.7,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW03/large",
+    "printedNumber": "BW 003",
+    "tcgplayerId": 87892,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp003.webp"
+  },
+  {
+    "id": "bw1-bwp004",
+    "name": "Reshiram",
+    "number": "bwp004",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon appears in legends. It sends flames into the air from its tail, burning up everything around it.",
+    "image": "assets/cards/bw1/bwp004.webp",
+    "imageSmall": "assets/cards/bw1/bwp004-sm.webp",
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Blue Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 2 Fire Energy attached to this Pokémon."
+      }
+    ],
+    "market": 5.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW004/large",
+    "printedNumber": "BW 004",
+    "tcgplayerId": 88705,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp004.webp"
+  },
+  {
+    "id": "bw1-bwp005",
+    "name": "Zekrom",
+    "number": "bwp005",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon appears in legends. In its tail, it has a giant generator that creates electricity.",
+    "image": "assets/cards/bw1/bwp005.webp",
+    "imageSmall": "assets/cards/bw1/bwp005-sm.webp",
+    "attacks": [
+      {
+        "name": "Outrage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 10 more damage for each damage counter on this Pokémon."
+      },
+      {
+        "name": "Bolt Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon does 40 damage to itself."
+      }
+    ],
+    "market": 8.32,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW005/large",
+    "printedNumber": "BW 005",
+    "tcgplayerId": 90733,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp005.webp"
+  },
+  {
+    "id": "bw1-bwp006",
+    "name": "Snivy",
+    "number": "bwp006",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Shizurow",
+    "flavorText": "They photosynthesize by bathing their tails in sunlight. When they are not feeling well, their tails droop.",
+    "image": "assets/cards/bw1/bwp006.webp",
+    "imageSmall": "assets/cards/bw1/bwp006-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyzing Gaze",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Tail Smack",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 3.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW06/large",
+    "printedNumber": "BW 006",
+    "tcgplayerId": 89379,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp006.webp"
+  },
+  {
+    "id": "bw1-bwp007",
+    "name": "Tepig",
+    "number": "bwp007",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It can deftly dodge its foe's attacks while shooting fireballs from its nose. It roasts berries before it eats them.",
+    "image": "assets/cards/bw1/bwp007.webp",
+    "imageSmall": "assets/cards/bw1/bwp007-sm.webp",
+    "attacks": [
+      {
+        "name": "Singe",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Firebreathing",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 2.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW07/large",
+    "printedNumber": "BW 007",
+    "tcgplayerId": 89883,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp007.webp"
+  },
+  {
+    "id": "bw1-bwp008",
+    "name": "Oshawott",
+    "number": "bwp008",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "The scalchop on its stomach is made from the same elements as claws. It detaches the scalchop for use as a blade.",
+    "image": "assets/cards/bw1/bwp008.webp",
+    "imageSmall": "assets/cards/bw1/bwp008-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleep Pulse",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 5.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW08/large",
+    "printedNumber": "BW 008",
+    "tcgplayerId": 87894,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp008.webp"
+  },
+  {
+    "id": "bw1-bwp009",
+    "name": "Zoroark",
+    "number": "bwp009",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Naoki Saito",
+    "flavorText": "Each has the ability to fool a large group of people simultaneously. They protect their lair with illusory scenery.",
+    "evolvesFrom": "Zorua",
+    "image": "assets/cards/bw1/bwp009.webp",
+    "imageSmall": "assets/cards/bw1/bwp009-sm.webp",
+    "attacks": [
+      {
+        "name": "Nasty Plot",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card and put it into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Foul Play",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of the Defending Pokémon's attacks and use it as this attack."
+      }
+    ],
+    "market": 5.8,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW09/large",
+    "printedNumber": "BW 009",
+    "tcgplayerId": 90751,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp009.webp"
+  },
+  {
+    "id": "bw1-bwp010",
+    "name": "Axew",
+    "number": "bwp010",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "They use their tusks to crush the berries they eat. Repeated regrowth makes their tusks strong and sharp.",
+    "image": "assets/cards/bw1/bwp010.webp",
+    "imageSmall": "assets/cards/bw1/bwp010-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Rage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip 2 coins. If either of them is tails, this attack does nothing."
+      }
+    ],
+    "market": 12.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW10/large",
+    "printedNumber": "BW 010",
+    "tcgplayerId": 83666,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp010.webp"
+  },
+  {
+    "id": "bw1-bwp014",
+    "name": "Pansage",
+    "number": "bwp014",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "It shares the leaf on its head with weary-looking Pokémon. These leaves are known to relieve stress.",
+    "image": "assets/cards/bw1/bwp014.webp",
+    "imageSmall": "assets/cards/bw1/bwp014-sm.webp",
+    "attacks": [
+      {
+        "name": "Bullet Seed",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 4 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 65.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW14/large",
+    "printedNumber": "BW 014",
+    "tcgplayerId": 87935,
+    "era": "bw",
+    "promo": true
+  },
+  {
+    "id": "bw1-bwp015",
+    "name": "Pidove",
+    "number": "bwp015",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Naoki Saito",
+    "flavorText": "Each follows its Trainer's orders as best it can, but they sometimes fail to understand complicated commands.",
+    "image": "assets/cards/bw1/bwp015.webp",
+    "imageSmall": "assets/cards/bw1/bwp015-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 107.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW15/large",
+    "printedNumber": "BW 015",
+    "tcgplayerId": 88057,
+    "era": "bw",
+    "promo": true
+  },
+  {
+    "id": "bw1-bwp016",
+    "name": "Axew",
+    "number": "bwp016",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "They use their tusks to crush the berries they eat. Repeated regrowth makes their tusks strong and sharp.",
+    "image": "assets/cards/bw1/bwp016.webp",
+    "imageSmall": "assets/cards/bw1/bwp016-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Rage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip 2 coins. If either of them is tails, this attack does nothing."
+      }
+    ],
+    "market": 68.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW16/large",
+    "printedNumber": "BW 016",
+    "tcgplayerId": 83667,
+    "era": "bw",
+    "promo": true
+  },
+  {
+    "id": "bw1-bwp017",
+    "name": "Ducklett",
+    "number": "bwp017",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "When attacked, it uses its feathers to splash water, escaping under cover of the spray.",
+    "image": "assets/cards/bw1/bwp017.webp",
+    "imageSmall": "assets/cards/bw1/bwp017-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 1.77,
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW17/large",
+    "printedNumber": "BW 017",
+    "tcgplayerId": 84992,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "foilMap": "assets/foil/maps/bw1/bwp017.webp"
   }
 ]
