@@ -25,11 +25,11 @@
  *
  * Family i1 (ex/i1). Photos, sources and the lessons: .claude/skills/card-textures/reference/ex-holo-reverse.md and
  * /mnt/project-files/every-era/ex/texture-refs/i1/SOURCES.txt. Window masks: assets/foil/ex-win/ (scripts/make_ex_window_masks.py),
- * cosmos tile: assets/foil/ex-cosmos-v1.webp (scripts/make_ex_cosmos.py).
+ * cosmos tile: assets/foil/ex-cosmos-v2.webp (scripts/make_ex_cosmos.py --cell 3 --size 0.5 --density 1.5; v1 was 2x chunkier than the real foil, rv-i1).
  */
 
 body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex {
-  --ex-cosmos: url("/assets/foil/ex-cosmos-v1.webp");
+  --ex-cosmos: url("/assets/foil/ex-cosmos-v2.webp");
   /* the set stamp's hole in a reverse's pattern: a rounded box with a soft edge (the scans carry no logo, so a hard-edged hole read as a
      dark rectangle on the art, rv-i1) */
   --ex-stamp-hole: url("/assets/foil/ex-reverse/stamp-soft-v1.webp");

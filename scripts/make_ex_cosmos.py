@@ -25,6 +25,8 @@ from PIL import Image
 
 W, H = 150, 209
 CELL = 4
+SIZE = 1.0     # shape size multiplier (v1 = 1.0; v2 uses 0.5: the real foil's glints are fine sparkle, rv-i1)
+DENSITY = 1.0  # shape count multiplier per card area
 
 
 def put(c, x, y, v):
@@ -60,8 +62,11 @@ def snowflake(c, cx, cy, arm, v):
 def draw(seed: int) -> np.ndarray:
     rng = np.random.default_rng(seed)
     c = np.zeros((H, W), np.float32)
+    k = W / 150.0                      # cells per v1 cell
+    n = lambda div: int(150 * 209 / div * DENSITY * (W * H) / (150 * 209) * 1.0)  # count scales with the cell grid
+    sz = lambda v: max(1, int(round(v * SIZE * k)))
     # singles and 2-cell specks: about one per 80 cells, half of them dim
-    for _ in range(int(W * H / 70)):
+    for _ in range(n(70)):
         x, y = int(rng.integers(0, W)), int(rng.integers(0, H))
         v = rng.uniform(0.85, 1.0) if rng.random() < 0.5 else rng.uniform(0.4, 0.65)
         put(c, x, y, v)
@@ -70,16 +75,16 @@ def draw(seed: int) -> np.ndarray:
         if rng.random() < 0.12:
             put(c, x, y + 1, v)
     # small pluses (arm 1)
-    for _ in range(int(W * H / 420)):
-        plus(c, int(rng.integers(0, W)), int(rng.integers(0, H)), 1, rng.uniform(0.7, 1.0))
+    for _ in range(n(420)):
+        plus(c, int(rng.integers(0, W)), int(rng.integers(0, H)), sz(1), rng.uniform(0.7, 1.0))
     # snowflakes and big pluses
-    for _ in range(int(W * H / 600)):
-        arm = int(rng.integers(2, 4))
+    for _ in range(n(600)):
+        arm = sz(int(rng.integers(2, 4)))
         x, y = int(rng.integers(0, W)), int(rng.integers(0, H))
         (snowflake if rng.random() < 0.7 else plus)(c, x, y, arm, rng.uniform(0.75, 1.0))
     # dots: mostly 2-3.5 cells radius (about 3% of the width across), a few bigger
-    for _ in range(int(W * H / 520)):
-        r = rng.uniform(1.8, 3.4) if rng.random() < 0.8 else rng.uniform(3.8, 5.2)
+    for _ in range(n(520)):
+        r = (rng.uniform(1.8, 3.4) if rng.random() < 0.8 else rng.uniform(3.8, 5.2)) * SIZE * k
         dot(c, int(rng.integers(0, W)), int(rng.integers(0, H)), r, rng)
     return c.clip(0, 1)
 
@@ -88,7 +93,13 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", required=True)
     ap.add_argument("--seed", type=int, default=2003)
+    ap.add_argument("--cell", type=int, default=4, help="tile cell in px (the tile is 600 px wide)")
+    ap.add_argument("--size", type=float, default=1.0)
+    ap.add_argument("--density", type=float, default=1.0)
     args = ap.parse_args()
+    global W, H, CELL, SIZE, DENSITY
+    CELL, SIZE, DENSITY = args.cell, args.size, args.density
+    W, H = 600 // CELL, round(836 / CELL)
     out = Path(args.out)
     if out.exists():
         raise SystemExit(f"{out} exists: never overwrite a shipped asset, use a new -vN name")
