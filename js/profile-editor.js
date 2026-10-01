@@ -103,7 +103,7 @@ function tintGrid(deps, trainer) {
 function backdropTiles(rgb) {
   return `<div class="pl-tiles pl-tiles-6" role="group" aria-label="Backdrop">${PROFILE_BACKDROPS.map(
     (row) => `<button type="button" class="pl-tile${draft.backdrop === row.id ? " on" : ""}" data-pl="backdrop" data-v="${row.id}" aria-pressed="${draft.backdrop === row.id}">
-      <span class="pl-thumb room-bd" data-backdrop="${row.id}" style="${roomVars(rgb)}"></span>
+      <span class="pl-thumb pl-thumb-room" style="${roomVars(rgb)}"><span class="room-bd pl-thumb-bd" data-backdrop="${row.id}"></span></span>
       <span class="pl-tile-name">${esc(row.name)}</span>
     </button>`
   ).join("")}</div>`;
