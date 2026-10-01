@@ -45,8 +45,6 @@ A product TCGplayer has never priced (most older-era boxes, tins and blisters)
 is still built: `"price": 49.99, "priceSource": "..."` in its config wins,
 else its packs at the set's booster pack price (data/sealed.json) plus its
 promos' market; the entry carries `priceDerived: "manual" | "packs"`.
-A product with no TCGplayer listing at all (the Diamond & Pearl blisters, tins and value packs) leaves `tcgplayerId` out: it is
-priced the same way and has no photo.
 
 A promo set with no boosters of its own (svp, the SV Black Star Promos)
 names the sets its products' packs come from instead of `packs`:
@@ -371,7 +369,7 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
     if dest.exists() and not refresh:
         return rel
     if not product.get("tcgplayerId"):
-        return None  # no TCGplayer listing, so no photo to cut out
+        return None  # Black & White blisters, decks and boxes TCGplayer never listed: no photo
     try:
         raw = fetch(TCG_IMAGE.format(id=product["tcgplayerId"]))
     except (urllib.error.URLError, OSError) as exc:
@@ -522,13 +520,13 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     meta_by: dict[int, dict[int, dict]] = {}
 
     def product_market(product: dict) -> tuple[float | None, dict]:
-        if not product.get("tcgplayerId"):  # no TCGplayer listing (Diamond & Pearl blisters, tins, value packs): `price` or the packs it holds
-            return None, {}
         group = product.get("tcgplayerGroup") or cfg["tcgplayerGroup"]
         if group not in market_by:
             market_by[group] = tcg_prices(group, refresh=True)
             meta_by[group] = tcg_products(group, refresh)
-        pid = product["tcgplayerId"]
+        pid = product.get("tcgplayerId")
+        if not pid:  # never listed on TCGplayer (see derived_price)
+            return None, {}
         return market_by[group].get(pid), meta_by[group].get(pid) or {}
 
     sealed_row = json.loads((DATA / "sealed.json").read_text(encoding="utf-8")).get(set_id) or {}

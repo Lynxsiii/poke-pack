@@ -141,12 +141,35 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xy11": ("#f0a23a", "#4fa3d9"),  # Steam Siege: gear gold to steam blue
     "xy12": ("#f2652d", "#5bb3e8"),  # Evolutions: Charizard orange to Blastoise blue
     "xy0": ("#69c35a", "#f2823a"),  # Kalos Starter Set: Chespin green to Fennekin orange
+    "bw1": ("#4fa8ff", "#ff7a3a"),  # Black & White: Zekrom blue to Reshiram orange
+    "bw2": ("#e5533d", "#8fd04e"),  # Emerging Powers: wrapper red to Tornadus green
+    "bw3": ("#38a8e6", "#f2a93b"),  # Noble Victories: wrapper blue to Victini gold
+    "bw4": ("#f2c23a", "#3f8ff0"),  # Next Destinies: wrapper gold to Zekrom blue
+    "bw5": ("#b45ce6", "#ff9a2e"),  # Dark Explorers: wrapper purple to Scrafty orange
+    "bw6": ("#4cc95a", "#ee4b2b"),  # Dragons Exalted: wrapper green to Rayquaza flame red
+    "dv1": ("#a4d63a", "#f08a24"),  # Dragon Vault: lava-lime to Dragonite orange
+    "bw7": ("#ff6a3d", "#4cc9f0"),  # Boundaries Crossed: Keldeo mane orange to frost cyan
+    "bw8": ("#2f9bff", "#ff8c42"),  # Plasma Storm: storm blue to Charizard orange
+    "bw9": ("#2ed3c6", "#ff5d73"),  # Plasma Freeze: freeze teal to Deoxys red
     # Black & White block (c5): promos, McDonald's 2011-2012, the Trainer Kit half decks
     "bwp": ("#c5d0e6", "#4d8be0"),  # BW promos: silver star to Unova blue
     "mcd11": ("#ffb02e", "#3fbf9a"),  # McDonald's 2011: golden arches to Snivy green
     "mcd12": ("#ffb02e", "#e8663d"),  # McDonald's 2012: golden arches to Tepig orange
     "bwtk5a": ("#e0566c", "#8a6fe0"),  # Zoroark kit: mane red to illusion violet
     "bwtk5b": ("#d0a24a", "#9fb0c4"),  # Excadrill kit: drill gold to steel
+    # Diamond & Pearl generation (d5): promos, POP Series 6-9, the Trainer Kit half decks
+    "dpp": ("#cfd6e8", "#8479e0"),  # DP promos: silver star to Sinnoh violet
+    "hsp": ("#e3c15a", "#c9d3dd"),  # HGSS promos: gold star to silver
+    "pop6": ("#8cc8f2", "#7a86e8"),  # POP 6: Lucario ice blue to periwinkle
+    "pop7": ("#f09a4d", "#46a37a"),  # POP 7: Gallade orange to green
+    "pop8": ("#c4ccd8", "#e5742f"),  # POP 8: Heatran silver to lava orange
+    "pop9": ("#f2c230", "#6f78e0"),  # POP 9: Garchomp yellow to violet-blue
+    "dptk3a": ("#4bb3e0", "#7a8cf0"),  # Manaphy kit: sea blue to periwinkle
+    "dptk3b": ("#e8873a", "#5a8de0"),  # Lucario kit: orange to aura blue
+    "hgsstk4a": ("#2f8fd9", "#e0605a"),  # Gyarados kit: sea blue to coral red
+    "hgsstk4b": ("#f2c230", "#e0793a"),  # Raichu kit: yellow to orange
+    "bw10": ("#ff9a2e", "#3aa0ff"),  # Plasma Blast: wrapper orange to Team Plasma blue
+    "bw11": ("#f2b632", "#8f7be8"),  # Legendary Treasures: Radiant gold to Mewtwo violet
     # Diamond & Pearl block (d1)
     "dp1": ("#4f8fe8", "#d96ad0"),   # Diamond & Pearl: Dialga blue to Palkia pink
     "dp2": ("#ff7a2e", "#3aa8d8"),   # Mysterious Treasures: Magmortar orange to lake-trio blue
