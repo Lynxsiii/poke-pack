@@ -125,7 +125,8 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   filter: saturate(1.1) brightness(0.88);
-  opacity: calc(0.6 + var(--pointer-from-center) * 0.28);
+  /* Intense (foil-strength 1.5) is read here: .foil's own opacity is already 1 when lit, so the layers carry it. */
+  opacity: min(1, calc((0.6 + var(--pointer-from-center) * 0.28) * max(1, var(--foil-strength, 1))));
 }
 /* The foil "EX" logo sits on the name bar and is gold ink over silver: screened bars, pearl and dust all
    push it towards white, so at most tilts it went pale against the pale bar (review rv-g2). The name
@@ -153,14 +154,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.
   background-position: var(--bw-seed);
   mix-blend-mode: screen;
   filter: brightness(1.3) contrast(1.7);
-  opacity: calc(0.3 + var(--pointer-from-center) * 0.35);
+  opacity: min(1, calc((0.3 + var(--pointer-from-center) * 0.35) * max(1, var(--foil-strength, 1))));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc) .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
   mix-blend-mode: overlay;
   filter: brightness(0.8) contrast(1.5);
-  opacity: calc(var(--card-opacity) * 0.32);
+  opacity: calc(var(--card-opacity) * 0.32 * max(1, var(--foil-strength, 1)));
 }
 
 /* ---- Ace Spec: brushed tinsel -------------------------------------------------------
@@ -181,7 +182,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .foi
   background-size: 100% 200%;
   background-position: 0% var(--background-y);
   background-repeat: repeat;
-  filter: brightness(0.55) contrast(1.5) saturate(1.2) contrast(0.8);
+  filter: brightness(calc(0.55 * max(1, var(--foil-strength, 1)))) contrast(1.5) saturate(1.2) contrast(0.8);
   mix-blend-mode: color-dodge;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace:not(.lit):not(.settling) .foil {
@@ -217,7 +218,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .foi
   -webkit-mask-repeat: repeat;
   mask-repeat: repeat;
   mix-blend-mode: screen;
-  opacity: calc(0.5 + var(--pointer-from-center) * 0.4);
+  opacity: min(1, calc((0.5 + var(--pointer-from-center) * 0.4) * max(1, var(--foil-strength, 1))));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
