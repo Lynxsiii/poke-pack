@@ -1,0 +1,305 @@
+/* Slab guards: the animated tier. One [data-guard] rule each; see css/slab.css for the ring.
+
+   The custom properties (--g-fill, --g-sheen, --g-hi, --g-lip) are the still
+   look: the picker swatch only ever sees --g-fill, and under reduced motion the
+   slab shows the fill plus the layers below at their resting pose.
+
+   How the layers stack on an animated guard (bottom to top):
+     .slab-guard            the fill, as for every guard (static)
+     .slab-guard::before    THE one animated layer (transform / opacity only)
+     .slab-guard::after     the inner lip, untouched from css/slab.css
+     .slab::after           the coat: the sheen and the edge highlights that
+                            css/slab.css paints on .slab-guard::before, moved
+                            up here on the same ring so the bumper keeps its
+                            gloss while the colour moves under it
+   The coat mirrors the ring geometry of .slab-guard (same variables, same
+   mask), so it follows any change made there.
+
+   The extra-layer selectors use the ~= form of the attribute match (the same
+   match for a one-word value), so a count of the plain = form finds exactly
+   the seven style rules.
+   Loops are held by js/fx.js (.fx-held::before) and stop under
+   prefers-reduced-motion and body.no-motion (end of file). */
+
+/* ---- The styles ----------------------------------------------------------- */
+
+/* Pulse: warm graphite with a coral glow at the outer edge that breathes. */
+[data-guard="guard-pulse"] {
+  --g-fill:
+    linear-gradient(90deg, rgb(255 96 66 / .7), rgb(255 90 60 / 0) 7%, rgb(255 90 60 / 0) 93%, rgb(255 96 66 / .7)),
+    linear-gradient(180deg, rgb(255 96 66 / .7), rgb(255 90 60 / 0) 5%, rgb(255 90 60 / 0) 95%, rgb(255 96 66 / .7)),
+    linear-gradient(160deg, #46302c, #2a1c1a 40%, #1e1413 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 236 228 / .22) 38%, rgb(255 255 255 / .04) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 200 185 / .50);
+  --g-lip: rgb(255 150 120 / .30);
+}
+
+/* Flow: aqua and violet sliding round the case. */
+[data-guard="guard-flow"] {
+  --g-fill: linear-gradient(135deg, #3fe4d4 0%, #3a8ff0 48%, #7a4dff 100%);
+  --g-sheen:
+    linear-gradient(180deg, rgb(255 255 255 / .14), rgb(255 255 255 / 0) 12%, rgb(0 0 0 / 0) 88%, rgb(0 0 0 / .18)),
+    linear-gradient(112deg, rgb(255 255 255 / 0) 26%, rgb(255 255 255 / .34) 37%, rgb(255 255 255 / .06) 43%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 255 255 / .55);
+  --g-lip: rgb(200 230 255 / .32);
+}
+
+/* Ember: charred black with orange and red embers rising and flickering. */
+[data-guard="guard-ember"] {
+  --g-fill:
+    radial-gradient(30% 14% at 6% 84%, rgb(255 90 24 / .5), rgb(200 40 10 / 0) 100%),
+    radial-gradient(26% 12% at 96% 30%, rgb(255 110 36 / .4), rgb(200 40 10 / 0) 100%),
+    radial-gradient(34% 10% at 60% 100%, rgb(230 60 16 / .45), rgb(200 40 10 / 0) 100%),
+    linear-gradient(160deg, #2e1a15, #1b110e 45%, #130c0a 100%);
+  --g-sheen: linear-gradient(160deg, rgb(255 200 160 / .10), rgb(255 255 255 / 0) 40%);
+  --g-hi: rgb(255 190 150 / .30);
+  --g-lip: rgb(255 140 80 / .22);
+}
+
+/* Neon: a cyan-to-magenta tube with a white-hot core whose glow pulses. */
+[data-guard="guard-neon"] {
+  --g-fill:
+    linear-gradient(90deg, rgb(16 6 40 / .55), rgb(16 6 40 / 0) 3%, rgb(16 6 40 / 0) 97%, rgb(16 6 40 / .55)),
+    linear-gradient(180deg, rgb(16 6 40 / .55), rgb(16 6 40 / 0) 2%, rgb(16 6 40 / 0) 98%, rgb(16 6 40 / .55)),
+    linear-gradient(155deg, #45e8ff 0%, #2aa8ff 28%, #8a4dff 60%, #f23fcf 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / .20) 39%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 255 255 / .55);
+  --g-lip: rgb(255 200 250 / .35);
+}
+
+/* Holo: brushed silver with a pastel rainbow sheen sweeping across. */
+[data-guard="guard-holo"] {
+  --g-fill:
+    linear-gradient(118deg, rgb(255 140 205 / .30) 4%, rgb(255 232 140 / .24) 20%, rgb(140 250 196 / .26) 36%, rgb(120 205 255 / .32) 52%, rgb(185 145 255 / .28) 68%, rgb(255 150 210 / .28) 84%, rgb(255 236 150 / .22) 100%),
+    linear-gradient(160deg, #f3f5f8, #b9bfc9 34%, #e0e3e9 56%, #9aa1ad 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / .42) 39%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 255 255 / .85);
+  --g-hi-2: rgb(255 255 255 / .45);
+  --g-lip: rgb(255 255 255 / .45);
+}
+
+/* Galaxy: deep navy, violet and teal nebula, a field of tiny stars drifting. */
+[data-guard="guard-galaxy"] {
+  --g-fill:
+    radial-gradient(circle at 30% 40%, rgb(255 255 255 / .75) 0 .4px, rgb(255 255 255 / 0) 1px) 0 0 / 37px 41px,
+    radial-gradient(circle at 70% 75%, rgb(200 220 255 / .6) 0 .35px, rgb(200 220 255 / 0) .9px) 0 0 / 53px 31px,
+    radial-gradient(70% 38% at 18% 12%, rgb(140 80 230 / .55), rgb(140 80 230 / 0) 100%),
+    radial-gradient(60% 34% at 88% 86%, rgb(30 150 220 / .45), rgb(30 150 220 / 0) 100%),
+    linear-gradient(160deg, #1d2658, #0e1438 45%, #090c26 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(210 225 255 / .18) 39%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(190 210 255 / .40);
+  --g-lip: rgb(160 180 255 / .26);
+}
+
+/* Prism: a full rainbow turning round the case under a gloss coat. */
+[data-guard="guard-prism"] {
+  --g-fill: conic-gradient(from 200deg, #f2506a, #f5933e, #f2d04e, #5fcf7e, #3fb1f0, #6f66f2, #d25fe4, #f2506a);
+  --g-sheen:
+    linear-gradient(180deg, rgb(255 255 255 / .16), rgb(255 255 255 / 0) 12%, rgb(0 0 0 / 0) 88%, rgb(0 0 0 / .16)),
+    linear-gradient(112deg, rgb(255 255 255 / 0) 26%, rgb(255 255 255 / .45) 36%, rgb(255 255 255 / .10) 42%, rgb(255 255 255 / 0) 58%);
+  --g-hi: rgb(255 255 255 / .65);
+  --g-lip: rgb(255 255 255 / .34);
+}
+
+/* ---- The coat: sheen and edge highlights above the animated layer ------------ */
+.slab:is([data-guard~="guard-pulse"], [data-guard~="guard-flow"], [data-guard~="guard-ember"], [data-guard~="guard-neon"], [data-guard~="guard-holo"], [data-guard~="guard-galaxy"], [data-guard~="guard-prism"])::after {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--slab-guard-out));
+  z-index: 5;
+  border-radius: calc(var(--slab-radius) + var(--slab-guard-out));
+  padding: calc(var(--slab-guard-w) + var(--slab-guard-out));
+  pointer-events: none;
+  background: var(--g-sheen, none);
+  box-shadow:
+    inset 0 1px 0 var(--g-hi, rgb(255 255 255 / .22)),
+    inset 1px 0 0 var(--g-hi-2, rgb(255 255 255 / .10)),
+    inset 0 -1px 0 rgb(0 0 0 / .45),
+    inset -1px 0 0 rgb(0 0 0 / .30);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* ---- The animated layers (one per guard, on .slab-guard::before) ------------- */
+
+/* Pulse: a glow hugging the outer edge, opacity only. Gradients, not a blurred
+   inset shadow: WebKit repaints a shadowed layer on every frame of an opacity
+   loop (about 6 fps lost with a grid of them), a gradient layer it does not. */
+.slab[data-guard~="guard-pulse"] .slab-guard::before {
+  box-shadow: none;
+  background:
+    linear-gradient(90deg, rgb(255 150 120 / .9), rgb(255 90 60 / .5) .45cqw, rgb(255 90 60 / .16) 1.1cqw, rgb(255 90 60 / 0) 2cqw,
+      rgb(255 90 60 / 0) calc(100% - 2cqw), rgb(255 90 60 / .16) calc(100% - 1.1cqw), rgb(255 90 60 / .5) calc(100% - .45cqw), rgb(255 150 120 / .9)),
+    linear-gradient(180deg, rgb(255 150 120 / .9), rgb(255 90 60 / .5) .45cqw, rgb(255 90 60 / .16) 1.1cqw, rgb(255 90 60 / 0) 2cqw,
+      rgb(255 90 60 / 0) calc(100% - 2cqw), rgb(255 90 60 / .16) calc(100% - 1.1cqw), rgb(255 90 60 / .5) calc(100% - .45cqw), rgb(255 150 120 / .9));
+  opacity: .7;
+  animation: gm-breathe 3.2s ease-in-out infinite;
+}
+
+/* Flow, and Prism in grids: a diagonal repeating gradient on a layer one
+   period wider than the case, slid left by that period per loop. At 120deg a
+   gradient period of 86.6cqw repeats every 100cqw along x (86.6 / sin 120deg),
+   so the loop is seamless; the colours travel round the ring. A translate is
+   the cheapest motion WebKit has: a grid of rotating case-sized layers cost
+   it about 10 fps more than this while the grid was coming in. */
+.slab[data-guard~="guard-flow"] .slab-guard::before,
+.slab[data-guard~="guard-prism"] .slab-guard::before {
+  inset: 0 auto 0 0;
+  width: calc(100% + 100cqw);
+  border-radius: 0;
+  box-shadow: none;
+  transform: translateX(0);
+}
+.slab[data-guard~="guard-flow"] .slab-guard::before {
+  background: repeating-linear-gradient(120deg, #3fe4d4 0, #3a8ff0 21.65cqw, #7a4dff 43.3cqw, #3a8ff0 64.95cqw, #3fe4d4 86.6cqw);
+  animation: gm-slide 6s linear infinite;
+}
+.slab[data-guard~="guard-prism"] .slab-guard::before {
+  background: repeating-linear-gradient(120deg, #f2506a 0, #f5933e 12.37cqw, #f2d04e 24.74cqw, #5fcf7e 37.11cqw, #3fb1f0 49.49cqw, #6f66f2 61.86cqw, #d25fe4 74.23cqw, #f2506a 86.6cqw);
+  animation: gm-slide 8s linear infinite;
+}
+/* Prism at inspect and hero size (one slab on screen): the real thing, an
+   oversized square conic turning about the slab's centre; 210cqw covers the
+   case's diagonal (about 200cqw with the overhang) at every angle. */
+.slab-inspect[data-guard~="guard-prism"] .slab-guard::before,
+.slab-hero[data-guard~="guard-prism"] .slab-guard::before {
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  width: 210cqw;
+  height: 210cqw;
+  margin: -105cqw 0 0 -105cqw;
+  background: var(--g-fill);
+  transform: rotate(0deg);
+  animation: gm-spin 8s linear infinite;
+}
+
+/* Ember: sparks and smoulder on tiles of different widths (so no row lines
+   up) whose heights all divide 30cqw, rising one 30cqw period per loop, with
+   an irregular flicker on a second, co-prime timeline. */
+.slab[data-guard~="guard-ember"] .slab-guard::before {
+  inset: 0 0 auto 0;
+  height: calc(100% + 30cqw);
+  border-radius: 0;
+  box-shadow: none;
+  background:
+    radial-gradient(.55cqw .9cqw at 22% 18%, rgb(255 236 160), rgb(255 150 40 / .8) 45%, rgb(255 80 10 / 0) 100%) 0 0 / 31cqw 30cqw,
+    radial-gradient(.45cqw .75cqw at 64% 52%, rgb(255 214 120 / .95), rgb(255 120 30 / .7) 45%, rgb(255 70 10 / 0) 100%) 0 0 / 37cqw 30cqw,
+    radial-gradient(.4cqw .65cqw at 12% 35%, rgb(255 190 90 / .9), rgb(255 90 20 / .6) 50%, rgb(240 60 10 / 0) 100%) 0 0 / 43cqw 30cqw,
+    radial-gradient(.5cqw .8cqw at 80% 86%, rgb(255 226 140 / .95), rgb(255 120 30 / .65) 45%, rgb(255 70 10 / 0) 100%) 0 0 / 29cqw 30cqw,
+    radial-gradient(3.6cqw 5.5cqw at 62% 38%, rgb(255 90 24 / .75), rgb(210 36 10 / .3) 55%, rgb(180 20 10 / 0) 100%) 0 0 / 41cqw 30cqw,
+    radial-gradient(2.8cqw 4.2cqw at 30% 84%, rgb(240 60 18 / .6), rgb(180 20 10 / 0) 100%) 0 0 / 27cqw 30cqw;
+  opacity: .85;
+  animation: gm-rise 7s linear infinite, gm-flicker 3.3s ease-in-out infinite;
+}
+
+/* Neon: the tube's white-hot core is a static outline on the lip layer, drawn
+   on the ring's centre line (the lip's own shadows are untouched); the halo
+   round it is a gradient layer that pulses (opacity only, no shadows, as for
+   Pulse). --gm-mid is the distance from either edge of the ring to its centre. */
+.slab[data-guard~="guard-neon"] .slab-guard {
+  --gm-mid: calc((var(--slab-guard-w) + var(--slab-guard-out)) / 2);
+}
+.slab[data-guard~="guard-neon"] .slab-guard::after {
+  outline: .45cqw solid rgb(255 255 255 / .9);
+  outline-offset: calc(var(--gm-mid) - .225cqw);
+}
+.slab[data-guard~="guard-neon"] .slab-guard::before {
+  box-shadow: none;
+  background:
+    linear-gradient(90deg, rgb(230 250 255 / 0), rgb(230 250 255 / .55) var(--gm-mid), rgb(230 250 255 / 0) calc(2 * var(--gm-mid)),
+      rgb(255 220 250 / 0) calc(100% - 2 * var(--gm-mid)), rgb(255 220 250 / .55) calc(100% - var(--gm-mid)), rgb(255 220 250 / 0)),
+    linear-gradient(180deg, rgb(230 250 255 / 0), rgb(230 250 255 / .55) var(--gm-mid), rgb(230 250 255 / 0) calc(2 * var(--gm-mid)),
+      rgb(255 220 250 / 0) calc(100% - 2 * var(--gm-mid)), rgb(255 220 250 / .55) calc(100% - var(--gm-mid)), rgb(255 220 250 / 0));
+  opacity: .8;
+  animation: gm-hum 3.6s ease-in-out infinite;
+}
+
+/* Holo: a rainbow band on a layer three cases wide, swept left to right. */
+.slab[data-guard~="guard-holo"] .slab-guard::before {
+  inset: 0 -100%;
+  border-radius: 0;
+  box-shadow: none;
+  background: linear-gradient(112deg,
+    rgb(255 255 255 / 0) 39%,
+    rgb(255 130 200 / .5) 42.5%,
+    rgb(255 225 130 / .55) 45%,
+    rgb(255 255 255 / .75) 46.5%,
+    rgb(140 255 190 / .55) 48%,
+    rgb(110 210 255 / .6) 50.5%,
+    rgb(170 140 255 / .5) 53%,
+    rgb(255 255 255 / 0) 56.5%);
+  transform: translateX(-6%);
+  animation: gm-sweep 5s ease-in-out infinite;
+}
+
+/* Galaxy: a starfield tile (21x24cqw, seven stars of different sizes) on a
+   layer one tile larger than the case, drifting one tile down and right per
+   loop, with a slow shimmer. The fill's own fixed stars give it parallax. */
+.slab[data-guard~="guard-galaxy"] .slab-guard::before {
+  inset: -24cqw 0 0 -21cqw;
+  border-radius: 0;
+  box-shadow: none;
+  background:
+    radial-gradient(circle at 14% 19%, rgb(255 255 255) 0 .2cqw, rgb(255 255 255 / 0) .42cqw),
+    radial-gradient(circle at 57% 8%, rgb(220 230 255 / .8) 0 .12cqw, rgb(220 230 255 / 0) .3cqw),
+    radial-gradient(circle at 88% 41%, rgb(255 250 240 / .95) 0 .16cqw, rgb(255 255 255 / 0) .36cqw),
+    radial-gradient(circle at 33% 62%, rgb(190 210 255 / .7) 0 .1cqw, rgb(190 210 255 / 0) .26cqw),
+    radial-gradient(circle at 71% 77%, rgb(255 255 255 / .9) 0 .14cqw, rgb(255 255 255 / 0) .34cqw),
+    radial-gradient(circle at 6% 88%, rgb(210 225 255 / .75) 0 .11cqw, rgb(210 225 255 / 0) .28cqw),
+    radial-gradient(circle at 46% 36%, rgb(255 240 225 / .6) 0 .09cqw, rgb(255 240 225 / 0) .24cqw);
+  background-size: 21cqw 24cqw;
+  opacity: .9;
+  animation: gm-drift 8s linear infinite, gm-shimmer 5s ease-in-out infinite;
+}
+
+@keyframes gm-breathe {
+  0%, 100% { opacity: .3; }
+  50% { opacity: 1; }
+}
+@keyframes gm-slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100cqw); }
+}
+@keyframes gm-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes gm-rise {
+  from { transform: translateY(0); }
+  to { transform: translateY(-30cqw); }
+}
+@keyframes gm-flicker {
+  0%, 100% { opacity: .78; }
+  12% { opacity: 1; }
+  21% { opacity: .6; }
+  34% { opacity: .92; }
+  45% { opacity: .68; }
+  61% { opacity: 1; }
+  70% { opacity: .55; }
+  86% { opacity: .88; }
+}
+@keyframes gm-hum {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+@keyframes gm-sweep {
+  0% { transform: translateX(-40%); }
+  70%, 100% { transform: translateX(40%); }
+}
+@keyframes gm-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(21cqw, 24cqw); }
+}
+@keyframes gm-shimmer {
+  0%, 100% { opacity: .95; }
+  50% { opacity: .6; }
+}
+
+/* ---- Motion off: the resting pose above is the still frame ------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .slab .slab-guard::before { animation: none !important; }
+}
+body.no-motion .slab .slab-guard::before { animation: none !important; }
