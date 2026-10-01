@@ -206,9 +206,9 @@ export async function playerLevel(env, userId, helpers = {}) {
  * nothing to pay (a double click, the loser of a race) answers with an empty
  * `paid.levels`. On failure returns { error, status }.
  *
- * helpers: { request, loadSave, maxCoins }
+ * helpers: { request, loadSave }
  */
-export async function claimLevels(env, userId, { request, loadSave, maxCoins = 1_000_000 }) {
+export async function claimLevels(env, userId, { request, loadSave }) {
   const empty = (save) => ({ save, paid: { levels: [], coins: 0, gear: [] } });
   if (!(await ensureXpSchema(env))) return { error: "Levels are being prepared. Try again shortly.", status: 503 };
   const before = await loadSave(env, userId);
@@ -238,12 +238,9 @@ export async function claimLevels(env, userId, { request, loadSave, maxCoins = 1
   const stmts = [
     env.DB.prepare("UPDATE player_xp SET claimed_level = ? WHERE user_id = ? AND claimed_level = ?").bind(target, userId, xp.claimedLevel),
     env.DB.prepare(
-      // Never lowers a wallet that is already over the cap (sales and winnings can push past it);
-      // `granted` counts only what was credited. Every right-hand side reads the old coins.
-      `UPDATE profiles SET coins = MAX(coins, MIN(coins + ?1, ?2)),
-         granted = granted + (MAX(coins, MIN(coins + ?1, ?2)) - coins)
-       WHERE user_id = ?3 AND changes() = 1`
-    ).bind(payout.coins, maxCoins, userId),
+      // No wallet cap: free coins never stop at a limit and never lower a wallet.
+      "UPDATE profiles SET coins = coins + ?1, granted = granted + ?1 WHERE user_id = ?2 AND changes() = 1"
+    ).bind(payout.coins, userId),
   ];
   if (gifts.length) {
     // changes() is the coin update's: 1 only for the request that won the swap.
@@ -260,6 +257,5 @@ export async function claimLevels(env, userId, { request, loadSave, maxCoins = 1
   const won = Boolean(results[0]?.meta?.changes);
   const save = await loadSave(env, userId);
   if (!won) return empty(save);
-  const credited = Math.max(0, Math.min(payout.coins, maxCoins - whole(before.coins)));
-  return { save, paid: { levels, coins: credited, gear: gear.map((item) => ({ kind: item.kind, id: item.id })) } };
+  return { save, paid: { levels, coins: payout.coins, gear: gear.map((item) => ({ kind: item.kind, id: item.id })) } };
 }

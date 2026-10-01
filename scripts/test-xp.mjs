@@ -6,7 +6,7 @@ import {playerLevel,playerXp,resetXpSchemaCache} from '../worker/xp.js';
 import {CURVE,LEVEL_CAP,computeXp,levelFromXp,xpForLevel,xpSummary,xpToNext} from '../js/xp.js';
 import {levelCoins,levelPayout} from '../js/levels.js';
 // Server side of XP and levels: the curve, XP derived from the save, the stored
-// high-water mark, POST /api/levels/claim (once, parallel-safe, capped), the new
+// high-water mark, POST /api/levels/claim (once, parallel-safe, uncapped), the new
 // table-counted counters, the profile level, reset and deletion. Runs the real
 // Worker against in-memory sqlite, like test-quests-backend.mjs.
 // Run: node scripts/test-xp.mjs
@@ -244,32 +244,29 @@ let vetBefore;
   assert.equal(row('par').claimed,level.level);
 }
 
-// ---- Coins stop at the wallet cap ----
+// ---- No wallet cap: level coins are paid in full, whatever the wallet holds ----
 {
   addVeteran('rich','richone','sid-rich',MAX_COINS-10);
   const pending=(await me('sid-rich')).xp.pending.coins;
   assert.ok(pending>10);
   const out=await claim('sid-rich');
   assert.equal(out.status,200);
-  assert.equal(coinsOf('rich'),MAX_COINS,'coins are capped like quest and achievement claims');
+  assert.equal(coinsOf('rich'),MAX_COINS-10+pending,'a wallet near a million keeps growing');
   assert.ok(out.body.paid.levels.length>0);
-  assert.equal(out.body.paid.coins,10,'paid.coins is what was credited, not what the levels were worth');
-  assert.equal(db.prepare("SELECT granted FROM profiles WHERE user_id='rich'").get().granted,MAX_COINS-10+10,'granted counts only the credit');
+  assert.equal(out.body.paid.coins,pending,'paid.coins is what the levels were worth');
+  assert.equal(db.prepare("SELECT granted FROM profiles WHERE user_id='rich'").get().granted,MAX_COINS-10+pending,'granted counts the credit');
   assert.equal((await claim('sid-rich')).body.paid.levels.length,0);
-}
 
-// ---- A wallet already over the cap is never lowered ----
-{
   addVeteran('whale','whaleone','sid-whale',MAX_COINS+500_000);
   db.prepare("UPDATE profiles SET granted = 7 WHERE user_id='whale'").run();
-  const out=await claim('sid-whale');
-  assert.equal(out.status,200,JSON.stringify(out.body));
-  assert.ok(out.body.paid.levels.length>0,'the levels are still claimed');
-  assert.equal(coinsOf('whale'),MAX_COINS+500_000,'coins above the cap stay as they were');
-  assert.equal(out.body.paid.coins,0);
-  assert.equal(db.prepare("SELECT granted FROM profiles WHERE user_id='whale'").get().granted,7,'nothing credited, nothing granted');
-  assert.equal(out.body.save.coins,MAX_COINS+500_000);
-  assert.ok(Object.keys(gearOf('whale')).length>0,'gifts are still handed over');
+  const big=await claim('sid-whale');
+  assert.equal(big.status,200,JSON.stringify(big.body));
+  assert.ok(big.body.paid.levels.length>0,'the levels are claimed');
+  assert.equal(coinsOf('whale'),MAX_COINS+500_000+pending,'a wallet over a million is paid too, never lowered');
+  assert.equal(big.body.paid.coins,pending);
+  assert.equal(db.prepare("SELECT granted FROM profiles WHERE user_id='whale'").get().granted,7+pending);
+  assert.equal(big.body.save.coins,MAX_COINS+500_000+pending);
+  assert.ok(Object.keys(gearOf('whale')).length>0,'gifts are handed over');
 }
 
 // ---- Counters counted from the casino and grading tables ----
@@ -371,4 +368,4 @@ let vetBefore;
   assert.equal(row('par').claimed,1,'a new table starts every player at nothing claimed');
 }
 
-console.log('XP checks passed: curve, derived XP, veteran start, high-water mark, claim once, parallel claims, forged body, coin cap, gear, new counters, profile level, reset, deletion, lazy schema.');
+console.log('XP checks passed: curve, derived XP, veteran start, high-water mark, claim once, parallel claims, forged body, no coin cap, gear, new counters, profile level, reset, deletion, lazy schema.');
