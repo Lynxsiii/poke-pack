@@ -259,3 +259,60 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-rc.foil-holo.has-foil-map .glare::after {
   background-image: none;
 }
+
+/* ======================================================================== */
+/* Yellow-bordered secrets (bw-yellow): the Pokémon is the only foil          */
+/* ======================================================================== */
+/* Photos (Pikachu 115, Meowth 102, Emboar, Zoroark, the shiny reprints): the scenery, text and border stay
+   matte, the Pokémon (and the type symbol) flashes pearl and rainbow as the card tilts. A colour dodge
+   does nothing to a yellow Pikachu, so the foil here is a soft rainbow laid in with `overlay` (it
+   tints bright yellow instead of whitening it), a pearl pool under the pointer in `soft-light`. The map
+   TCG Live shipped is the whole of it (silhouette + symbol); no etch lines (flat prints). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-yellow.foil-ultra.has-foil-map .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.95) 0%, hsla(0, 0%, 100%, 0.35) 28%, hsla(0, 0%, 100%, 0) 62%),
+    repeating-linear-gradient(115deg,
+      hsl(330, 85%, 62%) 0%, hsl(40, 95%, 60%) 12%, hsl(120, 70%, 52%) 24%,
+      hsl(190, 90%, 58%) 36%, hsl(262, 80%, 64%) 48%, hsl(330, 85%, 62%) 60%);
+  background-size: 100% 100%, 260% 260%;
+  background-position: center, var(--background-x) var(--background-y);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: overlay;
+  filter: saturate(1.15) contrast(1.15) brightness(1.1);
+  opacity: calc(0.65 + var(--card-opacity) * 0.35);
+  -webkit-mask-image: var(--foil-map);
+  mask-image: var(--foil-map);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-yellow.foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: saturate(0.9) contrast(1.1) brightness(1.05);
+  opacity: 0.55;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-yellow.foil-ultra.has-foil-map .foil::after {
+  background-image: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-yellow.foil-ultra.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 0%, hsla(0, 0%, 100%, 0) 55%);
+  mix-blend-mode: soft-light;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.8);
+  -webkit-mask-image: var(--foil-map);
+  mask-image: var(--foil-map);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-yellow.foil-ultra.has-foil-map .glare::after {
+  background-image: none;
+}
