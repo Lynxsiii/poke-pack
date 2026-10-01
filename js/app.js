@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isSm, isSwsh, smPattern, swshPattern } from "./foil-maps.js?v=10";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=29";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
@@ -28,7 +28,7 @@ import {
   dataSetsOf,
   homeCards,
 } from "./catalog.js";
-import { homeSetId, isMepCardId } from "./card-home.js";
+import { homeSetId, promoHomeOf } from "./card-home.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { createTear } from "./tear.js";
@@ -73,7 +73,7 @@ import { masteryShelfProfileHtml } from "./mastery-shelf.js";
 import * as questArea from "./quest-area.js?v=4";
 import * as levelUi from "./level-ui.js";
 import { createXpFeed } from "./level-feed.js";
-import { startLivePrices, applyCachedPrices } from "./liveprices.js";
+import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=3";
 import {
   loadPriceHistory,
   priceHistoryReady,
@@ -616,6 +616,28 @@ function foilClass(card) {
   // Sword & Shield's plain Rare is not a foil card.
   if (isSwsh(card) && (!card.foilAs || card.era === "swsh") && swshPattern(card) === "foil-none") return "";
   if (isSm(card) && (!card.foilAs || card.era === "sm") && smPattern(card) === "foil-none") return "";
+  // XY's plain Rare is not foil either; every Radiant Collection card is (js/xy-foil.js).
+  if (isXy(card) && (!card.foilAs || card.era === "xy")) {
+    const xy = xyPattern(card);
+    if (xy === "foil-none") return "";
+    if (xy.includes("xy-rc")) return "holo";
+  }
+  // Black & White's plain Rare is not foil either; every Radiant Collection card is (js/bw-foil.js).
+  if (isBw(card) && (!card.foilAs || card.era === "bw")) {
+    const bw = bwPattern(card);
+    if (bw === "foil-none") return "";
+    if (bw.includes("bw-rc") || bw.includes("bw-vault")) return "holo";
+  }
+  // The Diamond & Pearl generation's plain Rare is not foil either (js/dp-foil.js).
+  if (isDp(card) && (!card.foilAs || card.era === "dp") && dpPattern(card) === "foil-none") return "";
+  // The EX generation's plain Rare is not foil either; its holo Energy, Unown Collection and kit holos are (js/ex-foil.js).
+  if (isEx(card) && (!card.foilAs || card.era === "ex")) {
+    const ex = exPattern(card);
+    if (ex === "foil-none") return "";
+    if (/\bex-(energy|unown|kit)\b/.test(ex)) return "holo";
+  }
+  // The Wizards of the Coast generation's plain Rare is not foil either (js/wotc-foil.js).
+  if (isWotc(card) && (!card.foilAs || card.era === "wotc") && wotcPattern(card) === "foil-none") return "";
   if (HIT_RARITIES.has(card.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
   if (isAllFoil(card)) return "holo";
   return "";
@@ -691,6 +713,31 @@ function foilPattern(card) {
   if (isSm(card) && (!card.foilAs || card.era === "sm")) {
     const sm = smPattern(card);
     if (sm) return sm;
+  }
+  // XY era prints (js/xy-foil.js).
+  if (isXy(card) && (!card.foilAs || card.era === "xy")) {
+    const xy = xyPattern(card);
+    if (xy) return xy;
+  }
+  // Black & White era prints (js/bw-foil.js).
+  if (isBw(card) && (!card.foilAs || card.era === "bw")) {
+    const bw = bwPattern(card);
+    if (bw) return bw;
+  }
+  // Diamond & Pearl generation prints (js/dp-foil.js).
+  if (isDp(card) && (!card.foilAs || card.era === "dp")) {
+    const dp = dpPattern(card);
+    if (dp) return dp;
+  }
+  // EX generation prints (js/ex-foil.js).
+  if (isEx(card) && (!card.foilAs || card.era === "ex")) {
+    const ex = exPattern(card);
+    if (ex) return ex;
+  }
+  // Wizards of the Coast generation prints (js/wotc-foil.js).
+  if (isWotc(card) && (!card.foilAs || card.era === "wotc")) {
+    const wotc = wotcPattern(card);
+    if (wotc) return wotc;
   }
   // Paldean Fates (css/holo/shiny-vault.css): the Shiny Vault's silver
   // fingerprint-etched foil, and its gold cards' glitter and raised Scodix.
@@ -1375,9 +1422,7 @@ function renderPromoProducts() {
     els.promoBlockSub.textContent = grouped
       ? `Every product opens with its real packs, named on each box, and its promos land in your binder with them. Priced at TCGplayer market.${waitingLine()}`
       : `Boxes, tins and premium collections with the promo cards no pack has. The promos land in your binder with the packs, priced at TCGplayer market.${
-          offers.some((offer) => offer.promos.some(isMepCardId))
-            ? " The black star promos (MEP) are filed under ME Black Star Promos."
-            : ""
+          promoHomeNote(offers)
         }`;
   }
   const faces = [];
@@ -1433,6 +1478,13 @@ function renderPromoProducts() {
   renderPromoElsewhere();
 }
 
+/** "The black star promos (MEP) are filed under ME Black Star Promos." for a set whose boxes carry promos counted under a promo set (js/card-home.js). */
+function promoHomeNote(offers) {
+  const home = offers.flatMap((offer) => offer.promos).map(promoHomeOf).find(Boolean);
+  const promoSet = home && PLAYABLE_SETS.find((set) => set.id === home);
+  return promoSet ? ` The black star promos (${String(promoSet.promoPrefix || "").trim()}) are filed under ${promoSet.name}.` : "";
+}
+
 /**
  * On a promo set's page, the promos that come in a set's own boxes (its ETB,
  * Build & Battle Box, blisters). They are that set's cards and are bought
@@ -1466,7 +1518,7 @@ function renderPromoElsewhere() {
         <h2>${liveSet.viewOf ? "Where they come from" : "In the sets' own boxes"}</h2>
         <p>${
           liveSet.viewOf
-            ? `All ${total} come in the Mega Evolution sets' own boxes (Elite Trainer Boxes, Build &amp; Battle Boxes, blisters, tins and First Partner collections), so each box is sold on its set's page. You have ${owned}.`
+            ? `All ${total} come in ${esc(liveSet.viewNote || "the Mega Evolution sets' own boxes (Elite Trainer Boxes, Build & Battle Boxes, blisters, tins and First Partner collections)")}, so each box is sold on its set's page. You have ${owned}.`
             : `${total} more ${esc(liveSet.name)} come in a set's Elite Trainer Box, Build &amp; Battle Box or blisters, so they're sold on that set's page. You have ${owned}.`
         }</p>
       </div>
@@ -2164,7 +2216,9 @@ function renderBinder() {
 function renderCatalog() {
   const eras = erasWithSets();
   const queued = eras.reduce((total, block) => total + block.queued.length, 0);
-  const summary = `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`;
+  const summary = queued
+    ? `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`
+    : `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live: every English set from Base Set to ${esc(eras[0]?.era || "today")}.</p>`;
 
   const blocks = eras
     .map((block) => {
@@ -2431,7 +2485,9 @@ function siteCompletion() {
   let total = 0;
   for (const set of PLAYABLE_SETS) {
     const list = setCache[set.id];
-    total += (list ? homeCards(set, [list]).length : 0) || set.totalCount || 0;
+    // A promo set that reads other sets' files counts its promos from all of them (dataSetsOf).
+    const lists = dataSetsOf(set).map((source) => setCache[source.id]);
+    total += (lists.every(Boolean) ? homeCards(set, lists).length : 0) || set.totalCount || 0;
     owned += ownedInSet(set);
   }
   return { owned, total, pct: total ? Math.round((owned / total) * 100) : 0 };
@@ -2731,11 +2787,11 @@ function renderHome() {
       <div class="home-block-head">
         <div>
           <h2>The long game</h2>
-          <p>${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.</p>
+          <p>${queued ? `${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.` : `${PLAYABLE_SETS.length} sets live, newest first, all the way back to Base Set: every English set ever printed.`}</p>
         </div>
         <button type="button" class="text-btn" data-goto="catalog">Full catalog</button>
       </div>
-      <div class="home-road">${upcomingChips}${originChip}</div>
+      ${queued ? `<div class="home-road">${upcomingChips}${originChip}</div>` : ""}
     </section>`;
 
   const worthChart = els.homeBody.querySelector("#home-worth-chart");

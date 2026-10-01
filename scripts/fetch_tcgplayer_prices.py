@@ -42,11 +42,11 @@ NOT_RETAIL = re.compile(r"\b(Case|Display|Code Card|Sleeved|Half|Art Bundle|Set 
 SEALED_NAMES = [
     ("pcEliteTrainerBox", re.compile(r"Pok[eé]mon Center Elite Trainer Box", re.I)),
     ("eliteTrainerBox", re.compile(r"(?<!Center )Elite Trainer Box$", re.I)),
-    ("boosterBox", re.compile(r"Booster Box$", re.I)),
+    ("boosterBox", re.compile(r"Booster Box( \[Unlimited Edition\])?$", re.I)),
     # Retail and local-store bundles are the same six packs; retail wins.
     ("boosterBundle", re.compile(r"Booster Bundle( \(Retail\))?$", re.I)),
     ("buildBattleBox", re.compile(r"Build (&|and) Battle Box$", re.I)),
-    ("boosterPack", re.compile(r"Booster Pack$", re.I)),
+    ("boosterPack", re.compile(r"Booster Pack( \[Unlimited Edition\])?$", re.I)),
 ]
 
 
@@ -64,6 +64,20 @@ def fetch(group: int, what: str) -> list[dict]:
 
 def norm(name: str) -> str:
     name = PATTERN.sub("", name)
+    name = re.sub(r"^(Unown) \(([A-Z?!]+)\)$", r"\1 \2", name)  # Legends Awakened lists "Unown (J)" (the generic bracket strip below would drop the letter)
+    # XY Evolutions #109 is printed "ナッシー[Exeggutor]"; TCGplayer lists "Exeggutor".
+    bilingual = re.match(r"^[^\x00-\x7f]+\[([^\]]+)\]$", name)
+    if bilingual:
+        name = bilingual.group(1)
+    # Diamond & Pearl generation: TCGplayer files the Unown by letter in brackets ("Unown [A]") where we print "Unown A",
+    # and the Pokédex HANDY910is Trainer's model in parentheses.
+    name = re.sub(r"^(Unown) \[([A-Z?!]+)\]$", r"\1 \2", name)
+    name = re.sub(r"^(Unown) \[([A-Z?!]+)\] \(\d+\)$", r"\1 \2", name)  # Neo Discovery lists the letter and the card number: "Unown [A] (14)"
+    name = name.replace("Exeggcutor", "Exeggutor")  # Neo Destiny #33: TCGplayer misspells "Dark Exeggcutor"
+    name = re.sub(r"\((HANDY910is)\)", r"\1", name)
+    name = re.sub(r"\((HANDY909)\)", r"\1", name)  # EX FireRed & LeafGreen: "PokeDex (HANDY909)"
+    # Skyridge's Miracle Spheres and Mystery Plates print a Greek letter, TCGplayer spells it out.
+    name = name.replace("\u03b1", "Alpha").replace("\u03b2", "Beta").replace("\u03b3", "Gamma").replace("\u03b4", "Delta")
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
@@ -75,9 +89,15 @@ def norm(name: str) -> str:
         name = re.sub(r"(\s+\([^)]*\))+$", "", name)
         name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
+    # Nidoran: pkmn.gg keeps the gender sign, TCGplayer writes "(F)" / "(M)" (stripped above).
+    name = name.replace("\u2640", "").replace("\u2642", "").strip()
+    # Black & White's Plasma Freeze lists them "Nidoran F" / "Nidoran M".
+    name = re.sub(r"\b(Nidoran)\s+[FM]$", r"\1", name)  # also Gym Challenge's "Giovanni's Nidoran F"
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
+    # Black & White Blend Energy: pkmn.gg spells the types out, TCGplayer uses letters ("Blend Energy GFPD").
+    name = re.sub(r"^(Blend Energy)\s+\S+$", r"\1", name)
     # Special Energy by type letter ("Speed L Energy" for Speed Lightning Energy).
     name = re.sub(r"\b([GRWLPFDMNC]) Energy$", lambda m: {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "C": "Colorless"}[m.group(1)] + " Energy", name)
     # Sun & Moon: Prism Stars print a diamond ("Celebi ◇", TCGplayer says "Celebi
@@ -91,6 +111,15 @@ def norm(name: str) -> str:
     # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
     name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "").replace("◇", " Prism Star")
     name = re.sub(r"_+", "_", name)
+    name = name.replace("Drowsee", "Drowzee")  # EX FireRed & LeafGreen #32: TCGplayer's typo
+    # EX Ruby & Sapphire lists one Makuhita with the slash missing ("Makuhita - 56109" for 56/109).
+    name = re.sub(r"\s+-\s*\d{4,}$", "", name)
+    # EX era: "δ Rainbow Energy" (ours, a leading delta) is "Delta Rainbow Energy" on TCGplayer.
+    name = re.sub(r"^δ\s+", "Delta ", name)
+    # Wizards of the Coast: TCGplayer spells it "Imposter Professor Oak" (Base Set 73), the card prints "Impostor".
+    name = name.replace("Imposter", "Impostor")
+    # EX era: "δ Rainbow Energy" (ours, a leading delta) is "Delta Rainbow Energy" on TCGplayer.
+    name = re.sub(r"^δ\s+", "Delta ", name)
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
     return re.sub(r"\s+", " ", name).strip().lower()
@@ -100,6 +129,12 @@ def market(rows: list[dict], sub: str) -> float | None:
     for row in rows:
         if row.get("subTypeName") == sub and row.get("marketPrice"):
             return round(float(row["marketPrice"]), 2)
+    # Wizards of the Coast groups list a card as "1st Edition" and "Unlimited" (plus "... Holofoil"): the site deals Unlimited.
+    unlimited = {"Normal": "Unlimited", "Holofoil": "Unlimited Holofoil"}.get(sub)
+    if unlimited:
+        for row in rows:
+            if row.get("subTypeName") == unlimited and row.get("marketPrice"):
+                return round(float(row["marketPrice"]), 2)
     return None
 
 
@@ -121,10 +156,26 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
             continue
         # Sword & Shield's sub-galleries number their cards TG01/TG30,
         # SV001/SV122, GG01/GG70; the site keeps those numbers as printed.
-        gallery = re.fullmatch(r"(TG|SV|GG)(\d+)/(?:TG|SV|GG)?\d+", number)
+        gallery = re.fullmatch(r"(TG|SV|GG|RC)(\d+)/(?:TG|SV|GG|RC)?\d+", number)
         if gallery:
             number = ""
             by_number[gallery.group(1) + gallery.group(2)] = product
+        # Call of Legends' Shiny Legendaries (SL1-SL11) and the Alph Lithograph (ONE-FOUR) keep their printed numbers.
+        if re.fullmatch(r"SL\d+|ONE|TWO|THREE|FOUR", number):
+            by_number[number] = product
+        # The e-Card sets' separately numbered holos print "H08/H32" (ours H8), and Aquapolis' four e-reader variants "050a/147" (our
+        # 50, 74, 95, 103 take the "a" print's listing below).
+        holo = re.fullmatch(r"H(\d+)/H\d+", number)
+        if holo:
+            by_number["H" + str(int(holo.group(1)))] = product
+        variant = re.fullmatch(r"(\d+)([ab])/\d+", number)
+        if variant:
+            by_number[str(int(variant.group(1))) + variant.group(2)] = product
+        # EX Unseen Forces' 28 Unown are "Unown (A)" numbered "A/28" ("!/28", "?/28"); the site files them ex10-A, ex10-EXCL, ex10-QUES, named "Unown".
+        unown = re.fullmatch(r"([A-Z!?])/28", number)
+        if unown:
+            by_number[{"!": "EXCL", "?": "QUES"}.get(unown.group(1), unown.group(1))] = dict(product, name="Unown")
+            continue
         if re.fullmatch(r"\d+/\d+", number):
             pattern = PATTERN.search(product["name"])
             suffix = f"-{PATTERN_SUFFIX[pattern.group(1).lower()]}" if pattern else ""
@@ -162,12 +213,18 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         key = card.get("number")
         if key not in by_number and re.fullmatch(r"\d+a", str(key)):
             key = str(key)[:-1]
+        if key not in by_number and str(key) + "a" in by_number:
+            key = str(key) + "a"
         if card.get("promo") or key not in by_number:
             continue
         product = by_number[key]
         rows = prices.get(product["productId"], [])
         first = "Normal" if card["rarity"] in ("Common", "Uncommon") else "Holofoil"
-        value = market(rows, first) or market(rows, "Normal") or market(rows, "Holofoil")
+        value = market(rows, first) or market(rows, "Normal") or market(rows, "Holofoil") or market(rows, "Reverse Holofoil")  # a card TCGplayer lists only as a reverse holo (Southern Islands 1, 4, 7, 11, 14, 17)
+        # Jungle and Fossil list a 1st Edition and an Unlimited price for every card ("Unlimited", "Unlimited Holofoil"): the site
+        # deals the Unlimited print (the 1st Edition rows are never read).
+        if any(str(r.get("subTypeName", "")).startswith("Unlimited") for r in rows):
+            value = market(rows, "Unlimited Holofoil" if card["rarity"] == "Rare Holo" else "Unlimited") or market(rows, "Unlimited Holofoil") or market(rows, "Unlimited")
         card["tcgplayerId"] = product["productId"]
         if value:
             card["market"] = value

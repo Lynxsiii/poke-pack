@@ -543,5 +543,1054 @@
       "rainbow": 0.0137,
       "secret": 0.0095
     }
+  },
+  "xy1": {
+    "name": "XY",
+    "printedTotal": 146,
+    "released": "2014-02-05",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 cards plus a code card, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no separate basic Energy card (the Energy slot began with Sun & Moon: Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'; E2's sheet tables list C 5, U 3, reverse 1, rare slot 1 per pack). The rare slot holds a plain Rare unless it rolls a holo Rare, a Pokémon-EX, a Mega Pokémon-EX, a full art (Rare Ultra); XY has no secret rares. Its basic Energy are printed on the commons sheet, so they take common slots. Rates are per pack from Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762 (his 360-pack sheet model, set post https://www.elitefourum.com/t/39762/121, with his own tally of 29 (1,044 packs; 8.34 holo, 2.93 EX, 1.03 full art per box) complete boxes) cross-checked against PokeBeach's 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-33 (about 24 posted boxes: EX about 2.7, full art about 1.1 per box). The Mega share of the EX sheet is card share (every EX card prints equally on the sheet), an assumption: low confidence. Cross-check only (not independent, copies E2): ThePriceDex. Confidence: medium. Basic Energy per pack: E2's commons-sheet model (8 basic Energy x1 and Fairy Energy x3 on the 121-position commons sheet, 11/121 of the 5 common slots = 0.455 per pack); ThePriceDex copies E2, so this is a single source: low confidence.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/121",
+    "rates": {
+      "holo": 0.2333,
+      "ex": 0.0625,
+      "megaEx": 0.0208,
+      "ultra": 0.0278,
+      "secret": 0.0,
+      "commonEnergy": 0.455
+    }
+  },
+  "xy2": {
+    "name": "Flashfire",
+    "printedTotal": 106,
+    "released": "2014-05-07",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 cards plus a code card, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no separate basic Energy card (the Energy slot began with Sun & Moon: Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'; E2's sheet tables list C 5, U 3, reverse 1, rare slot 1 per pack). The rare slot holds a plain Rare unless it rolls a holo Rare, a Pokémon-EX, a Mega Pokémon-EX, a full art (Rare Ultra) or a gold Mega secret (printed on the EX sheet, about 3 prints each; one box in three). Rates are per pack from Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762 (his 360-pack sheet model, set post https://www.elitefourum.com/t/39762/122, with his own tally of 28 (1,008 packs; 7.07 holo, 3.36 EX, 1.43 full art per box) complete boxes) cross-checked against PokeBeach's 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-35 (44 posted boxes: EX 3.11, full art 1.50, secret 0.32 per box). The Mega share of the EX sheet is card share (every EX card prints equally on the sheet), an assumption: low confidence. Cross-check only (not independent, copies E2): ThePriceDex. Confidence: medium.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/122",
+    "rates": {
+      "holo": 0.1972,
+      "ex": 0.0553,
+      "megaEx": 0.0332,
+      "ultra": 0.0389,
+      "secret": 0.0087
+    }
+  },
+  "xy3": {
+    "name": "Furious Fists",
+    "printedTotal": 111,
+    "released": "2014-08-13",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 cards plus a code card, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no separate basic Energy card (the Energy slot began with Sun & Moon: Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'; E2's sheet tables list C 5, U 3, reverse 1, rare slot 1 per pack). The rare slot holds a plain Rare unless it rolls a holo Rare, a Pokémon-EX, a Mega Pokémon-EX, a full art (Rare Ultra) or a gold Mega secret (printed on the EX sheet). Rates are per pack from Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762 (his 360-pack sheet model, set post https://www.elitefourum.com/t/39762/123, with his own tally of 28 (1,008 packs; 7.14 holo, 3.54 EX, 1.25 full art per box) complete boxes) cross-checked against PokeBeach's 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-40 (20 posted boxes: EX 3.05, full art 1.60, secret 0.30 per box). The Mega share of the EX sheet is card share (every EX card prints equally on the sheet), an assumption: low confidence. Cross-check only (not independent, copies E2): ThePriceDex. Confidence: medium.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/123",
+    "rates": {
+      "holo": 0.1972,
+      "ex": 0.0625,
+      "megaEx": 0.025,
+      "ultra": 0.0389,
+      "secret": 0.0097
+    }
+  },
+  "xy6": {
+    "name": "Roaring Skies",
+    "printedTotal": 108,
+    "released": "2015-05-06",
+    "updated": "2026-10-01",
+    "source": "Pack: 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, no basic Energy and no Energy card in the set (E2 sheet tables list per pack C 5, U 3, RE 1, rare slot 1: Elite Fourum, sturzflugbombardieru, 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762; Bulbapedia Booster pack (TCG): 'starting in the Sun & Moon expansion there is also a basic Energy card in every booster pack' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); pokemontcg.io lists no basic Energy in the set; the wrapper prints '10 ADDITIONAL GAME CARDS'). Rates are E2's sheet model (360-pack sequence, equal prints per card on each sheet: plain Rare 240, holo 56 to 64, EX sheet 32 to 40, full-art sheet 24 of which 12% are secrets) checked against independent tallies. The Mega share of the EX roll is the card share (no source counts Megas apart): low confidence. The secret rate is the E2 model (about 0.3 a box): low confidence. ThePriceDex reproduces E2's numbers exactly and was not used as a source. Roaring Skies: E2's own tally of 31 complete boxes (1,116 packs): holo 5.48, EX 4.06 (Mega included), full art 2.42 per 36 packs, model 5.6 / 4.0 / 2.4 (https://www.elitefourum.com/t/39762/129); PokeBeach 'The English Booster Box Pull Rates Thread' pages 49-50, 9 hand-tallied boxes: EX 3.67, full art 2.11, secret 0.33 per box, Mega 13 of 33 EX pulls (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-49); Flipside Gaming's rarity review puts EX at 1 in 6 and full arts at 1 in 12 from Ancient Origins on, 1 in 72 for secrets (generic). Confidence: medium (holo, EX, full art).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/129",
+    "rates": {
+      "holo": 0.1556,
+      "ex": 0.0707,
+      "megaEx": 0.0404,
+      "ultra": 0.0587,
+      "secret": 0.008
+    }
+  },
+  "xy7": {
+    "name": "Ancient Origins",
+    "printedTotal": 98,
+    "released": "2015-08-12",
+    "updated": "2026-10-01",
+    "source": "Pack: 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, no basic Energy and no Energy card in the set (E2 sheet tables list per pack C 5, U 3, RE 1, rare slot 1: Elite Fourum, sturzflugbombardieru, 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762; Bulbapedia Booster pack (TCG): 'starting in the Sun & Moon expansion there is also a basic Energy card in every booster pack' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); pokemontcg.io lists no basic Energy in the set; the wrapper prints '10 ADDITIONAL GAME CARDS'). Rates are E2's sheet model (360-pack sequence, equal prints per card on each sheet: plain Rare 240, holo 56 to 64, EX sheet 32 to 40, full-art sheet 24 of which 12% are secrets) checked against independent tallies. The Mega share of the EX roll is the card share (no source counts Megas apart): low confidence. The secret rate is the E2 model (about 0.3 a box): low confidence. ThePriceDex reproduces E2's numbers exactly and was not used as a source. Ancient Origins: E2's own tally of 28 complete boxes (1,008 packs): holo 5.64, EX 4.11, full art 2.32 per 36 packs, model 5.6 / 4.0 / 2.4 (https://www.elitefourum.com/t/39762/130); PokeBeach thread pages 50-51, 7 hand-tallied boxes: EX 4.71, full art 2.00, secret 0.43 per box, Mega 10 of 33 EX pulls (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-50); Flipside Gaming's rarity review (generic). The set holds five Rare Secret cards (three shiny full arts and two Trainers); E2 measures 0.29 secrets a box for the full-art sheet's two secret Trainers, and the roll is uniform over the five. Confidence: medium (holo, EX, full art).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/130",
+    "rates": {
+      "holo": 0.1556,
+      "ex": 0.0808,
+      "megaEx": 0.0303,
+      "ultra": 0.0587,
+      "secret": 0.008
+    }
+  },
+  "xy8": {
+    "name": "BREAKthrough",
+    "printedTotal": 162,
+    "released": "2015-11-04",
+    "updated": "2026-10-01",
+    "source": "Pack: 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, no basic Energy and no Energy card in the set (E2 sheet tables list per pack C 5, U 3, RE 1, rare slot 1: Elite Fourum, sturzflugbombardieru, 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762; Bulbapedia Booster pack (TCG): 'starting in the Sun & Moon expansion there is also a basic Energy card in every booster pack' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); pokemontcg.io lists no basic Energy in the set; the wrapper prints '10 ADDITIONAL GAME CARDS'). Rates are E2's sheet model (360-pack sequence, equal prints per card on each sheet: plain Rare 240, holo 56 to 64, EX sheet 32 to 40, full-art sheet 24 of which 12% are secrets) checked against independent tallies. The Mega share of the EX roll is the card share (no source counts Megas apart): low confidence. The secret rate is the E2 model (about 0.3 a box): low confidence. ThePriceDex reproduces E2's numbers exactly and was not used as a source. BREAKthrough: E2's own tally of 30 complete boxes (1,080 packs): holo 6.53, EX 3.07, full art and secret 2.47, BREAK 2.90 per 36 packs, model 6.4 / 3.2 / 2.4 / 2.8 (https://www.elitefourum.com/t/39762/132); Danny Phantump (EX 3.12, full art 1.81, secret 0.35 per box, https://www.youtube.com/watch?v=4TCjfoHoUqk) and Derium (1,008 packs: EX 3.29, full art 1.89, secret 0.14, BREAK 2.71, https://www.youtube.com/watch?v=yC8Sw8euGwE), both via E2 post 131. BREAK cards take the reverse-holo slot, not the rare slot: E2 ('they took the place of the reverse holo', https://www.elitefourum.com/t/are-break-cards-the-same-pull-rates-as-ultra-rares/30934) and PokeBeach box report 1025 ('the usual 12 premium cards in this box (Breaks don't count toward that because they're in the reverse holo slot)', thread page 51), Dripshop's BREAKpoint article says the same. Confidence: high (holo, EX, full art, BREAK).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/132",
+    "rates": {
+      "holo": 0.1778,
+      "ex": 0.0444,
+      "megaEx": 0.0444,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0778
+    }
+  },
+  "xy4": {
+    "name": "Phantom Forces",
+    "printedTotal": 119,
+    "released": "2014-11-05",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum E2 sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762, npack 10: C 5, U 3, RE 1 per pack, plus the rare slot), Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl; a basic Energy only from Sun & Moon, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), the wrapper text '10 ADDITIONAL GAME CARDS' and the pokemontcg.io card list (no basic Energy in the set). Rare-slot rates are E2's 360-pack sheet counts (plain Rare 240/360, Rare Holo 70/360 including the two Team Flare Hyper Gear red-border holos, EX sheet 35/360 split by card count into 6 EX and 2 Mega EX, full-art sheet 15/360 x 0.93, secrets on the EX sheet and the silver Dialga-EX on the full-art sheet), against E2's own tally of 28 complete boxes (holo 6.14, EX 3.5, full art 1.57 per 36 packs; https://www.elitefourum.com/t/39762/125) and a hand tally of 30 boxes in PokeBeach's 'The English Booster Box Pull Rates Thread' (EX 3.63, full art about 1.33, gold about 0.27 per box; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-43). Confidence medium; the Mega / regular EX split is a card-share assumption (low) and the secret rate rests on thin counts (low). ThePriceDex copies E2 and was not counted. The 2017 'Yellow A Alternate' full arts 24a and 65a are prize-product reprints and are not in packs.",
+    "rates": {
+      "holo": 0.1944,
+      "ex": 0.0685,
+      "megaEx": 0.0228,
+      "ultra": 0.0387,
+      "secret": 0.0088
+    }
+  },
+  "xy5": {
+    "name": "Primal Clash",
+    "printedTotal": 160,
+    "released": "2015-02-04",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum E2 sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762, npack 10: C 5, U 3, RE 1 per pack, plus the rare slot), Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl; a basic Energy only from Sun & Moon, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), the wrapper text '10 ADDITIONAL GAME CARDS' and the pokemontcg.io card list (no basic Energy in the set). Rare-slot rates are E2's 360-pack sheet counts (plain Rare 240/360, Rare Holo 56/360, EX sheet 40/360 split 10 EX : 2 Mega EX by card count, full-art sheet 24/360 x 0.88 with the four gold secrets taking the rest), against E2's own tally of 28 complete boxes (holo 5.5, EX 4.07, full art 2.29 per 36 packs; https://www.elitefourum.com/t/39762/126) and a hand tally of 30 boxes in PokeBeach's box thread (EX 3.83, full art 2.13, secret 0.40 per box; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-46). Confidence medium; the Mega split and the secret rate are low.",
+    "rates": {
+      "holo": 0.1556,
+      "ex": 0.0926,
+      "megaEx": 0.0185,
+      "ultra": 0.0587,
+      "secret": 0.008
+    }
+  },
+  "dc1": {
+    "name": "Double Crisis",
+    "printedTotal": 34,
+    "released": "2015-03-25",
+    "updated": "2026-10-01",
+    "source": "Seven cards (3 Commons, 2 Uncommons, a reverse holo and a holo-or-full-art slot; no plain Rare exists and there is no Energy), sold only in the Team Magma and Team Aqua blisters, never in a booster box: Bulbapedia 'Double Crisis (TCG)' ('Each booster pack contained seven cards', https://bulbapedia.bulbagarden.net/wiki/Double_Crisis_(TCG)), Elite Fourum E2 post 127 sheet model (npack 7: holo sheet 320/360, full-art sheet 40/360; https://www.elitefourum.com/t/39762/127), TCGplayer group 1525 (no box listed, 7 random cards per pack). The full-art rate (1 pack in 9) is one source with a thin sample (E2's own 14 full arts in 116 packs = 12.1%); confidence low. A second tally was not found.",
+    "rates": {
+      "holo": 0.8889,
+      "ultra": 0.1111
+    }
+  },
+  "xy9": {
+    "name": "BREAKpoint",
+    "printedTotal": 122,
+    "released": "2016-02-03",
+    "updated": "2026-10-01",
+    "source": "Pack structure (all XY sets): 10 cards = 5 Commons + 3 Uncommons + 1 reverse holo + 1 rare slot, no basic Energy card (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): the Energy card began with Sun & Moon; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum 'The English Pokemon card rarity guide' sheet models). Rates: Elite Fourum E2's own tally of 28 complete boxes (n=1,008 packs: holo 6.18, EX 3.68, full art 1.96, secret 0.29, BREAK 2.39 per 36 packs; https://www.elitefourum.com/t/39762/133), Danny Phantump (EX 3.33, FA 1.72, secret 0.30 per box; https://www.youtube.com/watch?v=4TCjfoHoUqk), Derium (1,008 packs: EX 3.54, FA 2.00, secret 0.36; https://www.youtube.com/watch?v=yC8Sw8euGwE) and TCAGaming's first blister case (n=288 packs: FA 6.9%, BREAK 6.9%, EX 10.1%, secret 1.4%; https://www.elitefourum.com/t/14067). The rates are the E2 360-pack sheet model (holo 60, EX sheet 36, full-art sheet 24 with one secret in eight of it, BREAK 24 per 360). BREAK cards take the reverse-holo slot (E2; PokeBeach pull-rate thread report 1025 https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52; Dripshop BREAKpoint article). The Mega share of the EX sheet (2 of 11 cards) is a card-share assumption. Confidence: high for holo, EX, full art and BREAK; low for the Mega split and the secret.",
+    "rates": {
+      "holo": 0.1667,
+      "ex": 0.0818,
+      "megaEx": 0.0182,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
+  },
+  "g1": {
+    "name": "Generations",
+    "printedTotal": 83,
+    "released": "2016-02-22",
+    "updated": "2026-10-01",
+    "source": "Pack structure: 10 cards, 8 from the main set and 2 from the Radiant Collection (Bulbapedia 'Generations (TCG)' https://bulbapedia.bulbagarden.net/wiki/Generations_(TCG); Elite Fourum E2 post https://www.elitefourum.com/t/39762/134): 4 commons (the nine basic Energy are printed on that sheet), 2 uncommons, 1 reverse holo, 1 Radiant common (sheet SPb), 1 Radiant uncommon or ultra (sheet SPa: 12 uncommons x6 + 7 ultras x4 per 100), 1 rare slot. Never sold as a booster box. Rates: E2 triple sample (170 ETB packs, 516 loose packs, Derium's 500-pack ultra summary): 3.8 holo, 7.4 EX, 0.8 full art per 36 packs; Radiant ultra 28% of packs by the sheet photo, 208 of 686 sampled packs (30.3%); Elite Fourum thread 14096 (https://www.elitefourum.com/t/14096): 33 Mythical boxes (66 packs) held 32 ultra-class hits (0.485 per pack against the model's 0.508), and a 36-pack opening had 18 EX. The two full arts of the main set are the embossed non-EX Articuno 25 and Zapdos 29 (pkmn.gg and TCGplayer file them as Rare Holo; the data files them as Rare Ultra, rarityOverrides in data/sets/g1.json). Basic Energy 0.893 per pack (4 x 27/121 sheet model, E2 only) is low confidence. Confidence: medium for holo, EX, full art and Radiant ultra; low for the Mega split.",
+    "rates": {
+      "holo": 0.1056,
+      "ex": 0.1542,
+      "megaEx": 0.0514,
+      "ultra": 0.0222,
+      "radiantUltra": 0.28,
+      "commonEnergy": 0.893
+    }
+  },
+  "xy10": {
+    "name": "Fates Collide",
+    "printedTotal": 124,
+    "released": "2016-05-02",
+    "updated": "2026-10-01",
+    "source": "Pack structure (all XY sets): 10 cards = 5 Commons + 3 Uncommons + 1 reverse holo + 1 rare slot, no basic Energy card (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): the Energy card began with Sun & Moon; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum 'The English Pokemon card rarity guide' sheet models). Rates: Elite Fourum E2's own tally of 29 complete boxes (n=1,044 packs: holo 5.28, EX 4.38, full art 1.97, secret 0.45, BREAK 2.48 per 36 packs; https://www.elitefourum.com/t/39762/136), Danny Phantump (EX 4.12, FA 1.81, secret 0.32 per box; https://www.youtube.com/watch?v=4TCjfoHoUqk) and two PokeBeach box reports (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52, reports 1031-1032). The rates are the E2 360-pack sheet model (holo 52, EX sheet 44, full-art sheet 24 with one secret in eight of it, BREAK 24 per 360); BREAK takes the reverse slot. The Mega share of the EX sheet (3 of 13 cards) is a card-share assumption. Confidence: medium for holo, EX, full art and BREAK; low for the Mega split and the secret.",
+    "rates": {
+      "holo": 0.1444,
+      "ex": 0.094,
+      "megaEx": 0.0282,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
+  },
+  "xy11": {
+    "name": "Steam Siege",
+    "printedTotal": 114,
+    "released": "2016-08-03",
+    "updated": "2026-10-01",
+    "source": "Per-pack rates from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, https://www.elitefourum.com/t/39762/137: 360-pack sequence, own tally of 28 complete boxes, 1,008 packs: holo 7.29, EX 2.39, full art 2.07, secret 0.46, BREAK 2.39 per 36 packs) cross-checked by Derium (1,008 packs: EX 2.35, full art 2.11, secret 0.29 per box, https://www.youtube.com/watch?v=yC8Sw8euGwE) and Danny Phantump (EX 2.44, full art 2.19, secret 0.30 per box, https://www.youtube.com/watch?v=4TCjfoHoUqk), both read through the guide's post 131 comparison table. Pack: 10 cards, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, no basic Energy (Bulbapedia Booster pack (TCG) https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'). BREAK cards take the reverse slot (Elite Fourum https://www.elitefourum.com/t/are-break-cards-the-same-pull-rates-as-ultra-rares/30934, PokeBeach report https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52). Plain Rare is 2/3 of packs. The Mega share of the EX sheet is the card share (2 of 6), an assumption; the secret rate rests on the sheet model. Confidence: high for holo, EX, full art and BREAK; low for the Mega split and the secrets. Not independent, not used: ThePriceDex.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/137",
+    "rates": {
+      "holo": 0.2,
+      "ex": 0.0444,
+      "megaEx": 0.0222,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
+  },
+  "xy12": {
+    "name": "Evolutions",
+    "printedTotal": 108,
+    "released": "2016-11-02",
+    "updated": "2026-10-01",
+    "source": "Per-pack rates from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, https://www.elitefourum.com/t/39762/139: own tally of 30 complete boxes, 1,080 packs: holo 5.13, EX 4.4, full art 2.47, BREAK 2.13 per 36 packs) cross-checked by Derium (1,008 packs 2016: EX 4.46, full art 2.18, BREAK 1.93, https://www.youtube.com/watch?v=yC8Sw8euGwE; 9,000 packs 2020: EX 4.16, full art 2.17, BREAK 1.84, https://www.youtube.com/watch?v=Gl--QqrkRsE) and The PokeCapital (1,080 packs: EX 4.37, full art 2.37, BREAK 1.97, https://www.youtube.com/watch?v=pIXdfQn7NAQ). Pack: 10 cards, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot (Bulbapedia Booster pack (TCG)). BREAK cards take the reverse slot. The five secret rares (Exeggutor, Flying Pikachu, Surfing Pikachu, Imakuni?'s Doduo, Here Comes Team Rocket!) are printed on the UNCOMMON sheet, one print each on a 121-position sheet: 15/121 = 12.4% of packs (the guide's sheet model; Flipside's review says secrets come 'at a rate similar to uncommon cards'). The nine basic Energy are on the commons sheet, 9/121 per common slot, about 0.37 per pack (sheet model only, ThePriceDex copies it): the site deals the XY 2013 print for them and leaves the Evolutions-numbered Energy out of the card list. Confidence: high for holo, EX, full art and BREAK; low for the Mega split, the secret rate and the Energy rate.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/139",
+    "rates": {
+      "holo": 0.1444,
+      "ex": 0.0713,
+      "megaEx": 0.0509,
+      "ultra": 0.0667,
+      "break": 0.0556,
+      "uncommonSecret": 0.124,
+      "commonEnergy": 0.372
+    }
+  },
+  "bw10": {
+    "name": "Plasma Blast",
+    "printedTotal": 101,
+    "released": "2013-08-14",
+    "updated": "2026-10-01",
+    "source": "Pack structure: 10 game cards (5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot, no Energy; the code card is not one of the 10): Elite Fourum rarity guide per-set table, post #118 (https://www.elitefourum.com/t/39762/118: C 5, U 3, RE 1 per pack plus one rare slot), Bulbapedia 'Booster pack (TCG)' (https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): 10-card packs since Diamond & Pearl, 36 packs a box), ToyWiz 'Plasma Blast Booster Pack [10 Cards]' and the wrapper text '10 ADDITIONAL GAME CARDS'. Rates are Elite Fourum's 216-pack case model (posts #113 and #118: plain Rare 144, Rare Holo 52, regular-art EX 12, full art + secret 8 on one 10x10 sheet of which the four gold secrets take 24%, Ace Spec 9 in the reverse slot) checked against its tally of 29 boxes (holos 8.83, EX 1.86, full art + secret 1.31 and Ace Spec 1.52 per 36 packs), PokeBeach box reports (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-30 and page-37: 2 EX and 1-2 Ace Specs a box) and Flipside Part Two (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: EX about 1:18 packs, ultra rares 1:36, secret 1:2 boxes). The Ace Specs (G Booster, G Scope, Master Ball, Scoop Up Cyclone) take the reverse slot (Elite Fourum #113/#114; pkmn.gg shows no reverse print for them), so that pack has no reverse card. The Team Plasma blue-border sub-sheets (1 Team Plasma uncommon + 2 regular in every pack) are not modelled; the combined rates are used. Confidence: medium-high for EX, medium for holo and the Ace Spec rate, medium-low for the full art / secret split (EF 'just an assumption'). Elite Fourum is the only tallied source; PokeBeach and Flipside are coarse cross-checks.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/118",
+    "rates": {
+      "holo": 0.2407,
+      "ex": 0.0556,
+      "ultra": 0.0281,
+      "secret": 0.0089,
+      "aceSpec": 0.0417
+    }
+  },
+  "bw11": {
+    "name": "Legendary Treasures",
+    "printedTotal": 113,
+    "released": "2013-11-06",
+    "updated": "2026-10-01",
+    "source": "Pack structure: 10 game cards, a layout unlike any other Black & White set: 4 Commons, 2 Uncommons, 1 reverse-or-holo slot (a reverse holo or a Rare Holo, equally likely), 1 rare slot (plain Rare, regular-art Pokemon-EX or a gold secret) and 2 Radiant Collection cards (RC1-RC25, all holofoil): the first an RC uncommon or an RC ultra (RC11 Meloetta-EX and the full arts RC21-RC25), the second always an RC common. Elite Fourum post #119 (https://www.elitefourum.com/t/39762/119: 'each pack contains 4 commons, 2 uncommons, a reverse slot, a rare slot, and 2 cards from the Radiant Collection subset'), PokeBeach box reports page 32 (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-32: complete Radiant Collection sets in one box, 10-11 RC ultras a box), Bulbapedia 'Legendary Treasures (TCG)' and ToyWiz '[10 Cards]'. Rates: EF's 216-pack case model (plain Rare 178, EX 36, gold Reshiram/Zekrom 2; reverse/holo 108/108; RC slot A on a 10x10 sheet: 70 uncommon positions, 6 ultras x 5 = 30) against PokeBeach's three boxes (6 / 5 / 7 regular EX = 6.0 a box, 11 / 10 / 11 RC ultras = 10.7 a box against the model's 10.8) and Flipside Part Two (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: EX '1:9', 4 a box, which dissents). Confidence: medium-high for EX, high for the RC ultra total, medium for the 50/50 reverse-or-holo slot, medium-low for the gold secrets (anecdotal boxes). Dealt through bwSlots (holoReverse, rcSlots); RC11 is filed as Rare Holo EX by rarityOverrides in data/sets/bw11.json.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/119",
+    "rates": {
+      "holo": 0.5,
+      "ex": 0.1667,
+      "secret": 0.0093,
+      "radiantUltra": 0.3
+    }
+  },
+  "bw4": {
+    "name": "Next Destinies",
+    "printedTotal": 99,
+    "released": "2012-02-08",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum per-set rarity table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/104: C 5, U 3, RE 1 per pack plus one rare slot), ToyWiz's '[10 Cards]' pack title, Bulbapedia 'Booster pack (TCG)' (10-card packs; https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)) and the wrapper text '10 ADDITIONAL GAME CARDS'. Rare-slot rates are Elite Fourum's 216-pack case model (plain Rare 144, Rare Holo 52, EX 12, full art 6, secret 2 of 216) against its own tally of 28 boxes (observed per 36-pack box: holos 8.57, EX 2.00, full art 1.11, secret 0.36; https://www.elitefourum.com/t/39762/104), PokeBeach's English Booster Box Pull Rates Thread ('12 exs (including FAs) in 198 packs' at the prerelease, a case with 2 EX and 1 full art a box, shinies 1 in 3 boxes; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/) and Flipside Gaming's rarity review part two (EX about 1:18 packs, full arts about 1:36, secrets about 1 box in 2; https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two). Confidence: EX and full art high (three sources), holo medium-high, secret medium (Elite Fourum and PokeBeach say 1 box in 3, Flipside 1 in 2). ThePriceDex copies Elite Fourum and was not counted. The six regular Pokemon-EX and six textured full arts are the first of the era; the four secrets are shiny reprints.",
+    "rates": {
+      "holo": 0.2407,
+      "ex": 0.0556,
+      "ultra": 0.0278,
+      "secret": 0.0093
+    }
+  },
+  "bw5": {
+    "name": "Dark Explorers",
+    "printedTotal": 108,
+    "released": "2012-05-09",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum per-set rarity table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/105: C 5, U 3, RE 1 per pack plus one rare slot), ToyWiz's '[10 Cards]' pack title, Bulbapedia 'Booster pack (TCG)' (10-card packs; https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)) and the wrapper text '10 ADDITIONAL GAME CARDS'. Rare-slot rates are Elite Fourum's 216-pack case model (plain Rare 144, Rare Holo 52, EX 12, full art 6, secret 2 of 216) against its own tally of 28 boxes (observed per box: holos 8.54, EX 2.00, full art 1.07, secret 0.36; https://www.elitefourum.com/t/39762/104), PokeBeach's English Booster Box Pull Rates Thread (a sealed Dark Explorers case with 12 regular EX and 6 full arts in 6 boxes, 'roughly one in every 12 packs' for EX plus full art; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/) and Flipside Gaming's rarity review part two (EX about 1:18 packs, full arts about 1:36, secrets about 1 box in 2; https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two). Confidence: EX and full art high (three sources), holo medium-high, secret medium (Elite Fourum and PokeBeach say 1 box in 3, Flipside 1 in 2). ThePriceDex copies Elite Fourum and was not counted. Elite Fourum: 'Dark Explorers has the same box ratios as Next Destinies' (post 105). Three secrets (shiny Gardevoir and Archeops, Pokemon Catcher) share the same 2 slots in 216, so each is a little likelier than in Next Destinies.",
+    "rates": {
+      "holo": 0.2407,
+      "ex": 0.0556,
+      "ultra": 0.0278,
+      "secret": 0.0093
+    }
+  },
+  "bw6": {
+    "name": "Dragons Exalted",
+    "printedTotal": 124,
+    "released": "2012-08-15",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum per-set rarity table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/106: C 5, U 3, RE 1 per pack plus one rare slot), ToyWiz's '[10 Cards]' pack title, Bulbapedia 'Booster pack (TCG)' (10-card packs; https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)) and the wrapper text '10 ADDITIONAL GAME CARDS'. Rare-slot rates are Elite Fourum's 216-pack case model (plain Rare 144, Rare Holo 52, EX 12, full art 6, secret 2 of 216) against its own tally of 43 boxes (observed per box: holos 8.58, EX 2.00, full art 1.07, secret 0.26; https://www.elitefourum.com/t/39762/104), PokeBeach's English Booster Box Pull Rates Thread (judges' boxes with 1 or 2 EX and no full art, and 'some Dragons Exalted boxes went as far as having no Holos or EXs', so single boxes vary a lot; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/) and Flipside Gaming's rarity review part two (EX about 1:18 packs, full arts about 1:36, secrets about 1 box in 2; https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two). Confidence: EX and full art high (three sources), holo medium-high, secret medium (Elite Fourum and PokeBeach say 1 box in 3, Flipside 1 in 2). ThePriceDex copies Elite Fourum and was not counted. The 43-box tally is the largest of the three sets; its 0.26 secrets a box sits below the model's 0.33.",
+    "rates": {
+      "holo": 0.2407,
+      "ex": 0.0556,
+      "ultra": 0.0278,
+      "secret": 0.0093
+    }
+  },
+  "dv1": {
+    "name": "Dragon Vault",
+    "printedTotal": 20,
+    "released": "2012-10-05",
+    "updated": "2026-10-01",
+    "source": "Five holofoil cards a pack, sold only in the three-pack Dragon Vault blister, never singly or in a box: Bulbapedia 'Dragon Vault (TCG)' ('Each booster pack contained 5 Holofoil cards'; https://bulbapedia.bulbagarden.net/wiki/Dragon_Vault_(TCG)), the Pokemon.com blurb quoted there ('special 5-card booster packs ... ALL of them foil!'), the wrapper text '5 ADDITIONAL GAME CARDS' and TCGplayer's blister text ('3 Pokemon TCG Booster packs and 1 promotional card'). Per-card odds come from one source, Elite Fourum post 107 (https://www.elitefourum.com/t/39762/107): a single 121-position sheet on which 5 cards print 7 times, 10 cards 6 times, 5 cards (Latias, Latios, Rayquaza, Haxorus, Druddigon) 5 times and Kyurem once, each pack being 5 cards from it; Kyurem is therefore 5 in 121, 0.0413 a pack. No tally or second quantitative source exists (PokeBeach and Flipside say nothing on Dragon Vault), so confidence is low; the other 20 cards are dealt uniformly. The five Dragon Vault stamped Mirror Holo promos (Latias, Latios, Rayquaza, Haxorus, Druddigon) come one per blister, never from a pack.",
+    "rates": {
+      "scarce": 0.0413
+    }
+  },
+  "bw7": {
+    "name": "Boundaries Crossed",
+    "printedTotal": 149,
+    "released": "2012-11-07",
+    "updated": "2026-10-01",
+    "source": "EF = Elite Fourum 'The English Pokemon card rarity guide' by sturzflugbombardieru (https://www.elitefourum.com/t/39762, YouTube box tallies plus reconstructed print sheets, a 216-pack case). Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot), no basic Energy slot and a code card that is not one of the ten: EF's per-set table lists C 5, U 3, RE 1 and one rare slot per pack; Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl, 36-pack boxes, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); ToyWiz '[10 Cards]' product titles (https://toywiz.com/pokemon-black-white-boundaries-crossed-booster-pack/); the wrapper text '10 ADDITIONAL GAME CARDS'. Ace Spec cards take the REVERSE slot, not the rare slot (EF #113 'they come in the reverse slot'; pkmn.gg lists every Ace Spec as holofoil only, with no reverse print; PokeBeach box reports). Rare-slot rates are EF's 216-pack case counts (plain Rare 144, Rare Holo 49, regular Pokemon-EX 12, full art and secret rare on one shared sheet of 11 packs, 4 gold secrets taking 20% of it) and the reverse slot holds an Ace Spec in 12 of 216 packs, against EF's own tally of 28 boxes (holos 8.25, EX 1.93, full art plus secret 1.79, Ace Spec 2.04 per 36-pack box; https://www.elitefourum.com/t/39762/114) and PokeBeach's box reports ('2-3 EXs, 1-2 Full Arts, 2 Ace Specs with a 1/3 chance of a secret rare', pages 38-39 of the thread, PokeBeach 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/). Flipside's coarse figures (EX about 1 in 18 packs, ultra rares 1 in 36, secret rares 1 in 2 boxes; Flipside Gaming 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two) fit EX and agree on the secret, and put the Ace Specs 'on par with UR cards' (about one a box), which EF and PokeBeach do not. ThePriceDex copies EF and was not counted. Confidence: EX high, Ace Spec medium-high, holo and the full art / secret split medium (one modelled source for the numbers).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/114",
+    "rates": {
+      "holo": 0.2269,
+      "ex": 0.0556,
+      "ultra": 0.0407,
+      "secret": 0.0102,
+      "aceSpec": 0.0556
+    }
+  },
+  "bw8": {
+    "name": "Plasma Storm",
+    "printedTotal": 135,
+    "released": "2013-02-06",
+    "updated": "2026-10-01",
+    "source": "EF = Elite Fourum 'The English Pokemon card rarity guide' by sturzflugbombardieru (https://www.elitefourum.com/t/39762, YouTube box tallies plus reconstructed print sheets, a 216-pack case). Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot), no basic Energy slot and a code card that is not one of the ten: EF's per-set table lists C 5, U 3, RE 1 and one rare slot per pack; Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl, 36-pack boxes, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); ToyWiz '[10 Cards]' product titles (https://toywiz.com/pokemon-black-white-plasma-storm-booster-pack/); the wrapper text '10 ADDITIONAL GAME CARDS'. Ace Spec cards take the REVERSE slot, not the rare slot (EF #113 'they come in the reverse slot'; pkmn.gg lists every Ace Spec as holofoil only, with no reverse print; PokeBeach box reports). First set with blue-bordered Team Plasma cards: every pack holds exactly 1 Team Plasma uncommon and 2 regular ones, and the rare, holo and reverse sheets are split into regular and Team Plasma halves (EF #113 and #116, and the PokeRev error-box video https://www.youtube.com/watch?v=1tyxCpSYcmc); the site deals the combined rates. Rare-slot rates are EF's 216-pack case counts (plain Rare 144, Rare Holo 48, regular Pokemon-EX 16, full art and secret rare on one shared sheet of 8 packs with the 3 gold secrets taking 36% of it) and the reverse slot holds an Ace Spec in 9 of 216 packs, against EF's own tally of 28 boxes (holos 8.11, EX 2.68, full art plus secret 1.43, Ace Spec 1.46 per box; https://www.elitefourum.com/t/39762/116) and PokeBeach's box reports (1 to 2 EX, 1 to 3 full arts and 1 Ace Spec a box, pages 19-22; PokeBeach 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/). EF flags small irregularities in this set's full arts and secrets and PokeBeach says the rates are 'all over the place'; Flipside's coarse figures (Flipside Gaming 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two) fit EX. ThePriceDex copies EF and was not counted. Confidence: medium for EX and Ace Spec, low-medium for the full art / secret split.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/116",
+    "rates": {
+      "holo": 0.2222,
+      "ex": 0.0741,
+      "ultra": 0.0237,
+      "secret": 0.0133,
+      "aceSpec": 0.0417
+    }
+  },
+  "bw9": {
+    "name": "Plasma Freeze",
+    "printedTotal": 116,
+    "released": "2013-05-08",
+    "updated": "2026-10-01",
+    "source": "EF = Elite Fourum 'The English Pokemon card rarity guide' by sturzflugbombardieru (https://www.elitefourum.com/t/39762, YouTube box tallies plus reconstructed print sheets, a 216-pack case). Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot), no basic Energy slot and a code card that is not one of the ten: EF's per-set table lists C 5, U 3, RE 1 and one rare slot per pack; Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl, 36-pack boxes, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); ToyWiz '[10 Cards]' product titles (https://toywiz.com/pokemon-black-white-plasma-freeze-booster-pack/); the wrapper text '10 ADDITIONAL GAME CARDS'. Ace Spec cards take the REVERSE slot, not the rare slot (EF #113 'they come in the reverse slot'; pkmn.gg lists every Ace Spec as holofoil only, with no reverse print; PokeBeach box reports). The Team Plasma sheet split is the same as Plasma Storm's (1 Team Plasma and 2 regular uncommons a pack; combined rates dealt). Rare-slot rates are EF's 216-pack case counts (plain Rare 144, Rare Holo 50, regular Pokemon-EX 12, full art and secret rare on one shared sheet of 10 packs with the 6 secrets taking 18% of it, so each about 1 pack in 720) and the reverse slot holds an Ace Spec in 6 of 216 packs, against EF's own tally of 69 boxes (holos 8.30, EX 1.97, full art plus secret 1.71, Ace Spec 1.03 per box; https://www.elitefourum.com/t/39762/117) and PokeBeach's box reports (2 EX a box, a secret in 2 of 2 and 2 of 3 boxes, 2 / 1 / 1 Ace Specs in three boxes, pages 25, 28 and 35; PokeBeach 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/). PokeBeach's anecdotes run richer in secrets than EF's model (small samples). Flipside's coarse figures (Flipside Gaming 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two) fit EX. ThePriceDex copies EF and was not counted. Confidence: EX high, others medium.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/117",
+    "rates": {
+      "holo": 0.2315,
+      "ex": 0.0556,
+      "ultra": 0.038,
+      "secret": 0.0083,
+      "aceSpec": 0.0278
+    }
+  },
+  "bw1": {
+    "name": "Black & White",
+    "printedTotal": 114,
+    "released": "2011-04-25",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards plus a code card (the first Black & White print run had none), 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no basic Energy slot (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): 10 cards since Diamond & Pearl, 36 packs a box; ToyWiz's pack titles '[10 Cards]' https://toywiz.com/pokemon-black-white-black-white-booster-pack/ ; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum's per-set table https://www.elitefourum.com/t/39762/99: C 5, U 3, RE 1, one rare slot per pack). The rare slot is mutually exclusive: plain Rare, Rare Holo, a full art (Reshiram or Zekrom) or the secret Pikachu. Rates are per pack from Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/99 (216-pack case model: Rare Holo 57, full art 12, secret 3 packs of 216; his YouTube sample gave 7 Pikachu in 14 boxes) against PokeBeach's 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-1 (the two full arts come 'one of each' in a box; holo-or-better about 1 in 3 packs) and Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two (secret rares about 1:72). Full art high confidence (2 per box in both counts); secret medium (14 boxes; PokeBeach's 2011 rumour of 1 in 108 dissents); holo medium-high. The eight basic Energy (cards 105-112) are printed once each on the commons sheet (Elite Fourum only); the research file's derived figure is about 1 pack in 18 per Energy, so 0.444 Energy per pack: low confidence, no tally. Cross-check only (not independent, copies Elite Fourum): ThePriceDex https://www.thepricedex.com/set/bw1/black-white/pull-rates.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/99",
+    "rates": {
+      "holo": 0.2639,
+      "ex": 0.0,
+      "ultra": 0.0556,
+      "secret": 0.0139,
+      "commonEnergy": 0.4444
+    }
+  },
+  "bw2": {
+    "name": "Emerging Powers",
+    "printedTotal": 98,
+    "released": "2011-08-31",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards plus a code card (the first Black & White print run had none), 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no basic Energy slot (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): 10 cards since Diamond & Pearl, 36 packs a box; ToyWiz's pack titles '[10 Cards]' https://toywiz.com/pokemon-black-white-emerging-powers-booster-pack/ ; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum's per-set table https://www.elitefourum.com/t/39762/100: C 5, U 3, RE 1, one rare slot per pack). The rare slot is mutually exclusive: plain Rare, Rare Holo or a full art (Thundurus or Tornadus); the set has no secret rare and no Energy. Rates are per pack from Elite Fourum sturzflugbombardieru's rarity guide https://www.elitefourum.com/t/39762/100 ('the box ratios for this set are basically the same as for Black & White, except the set has no secret rares'; 216-pack case model: Rare Holo 60, full art 12) checked against PokeBeach's box thread https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-3 (holo-or-better about 1 in 3 packs, 'two, three if you're lucky' full arts a box; Emerging Powers pulls such as a Thundurus full art in 25 packs) and Flipside's 1:18 full arts for the era https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two . Only Elite Fourum gives per-set numbers: confidence medium. Cross-check only (not independent, copies Elite Fourum): ThePriceDex https://www.thepricedex.com/set/bw2/emerging-powers/pull-rates.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/100",
+    "rates": {
+      "holo": 0.2778,
+      "ex": 0.0,
+      "ultra": 0.0556,
+      "secret": 0.0
+    }
+  },
+  "bw3": {
+    "name": "Noble Victories",
+    "printedTotal": 101,
+    "released": "2011-11-16",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards plus a code card (the first Black & White print run had none), 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no basic Energy slot (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): 10 cards since Diamond & Pearl, 36 packs a box; ToyWiz's pack titles '[10 Cards]' https://toywiz.com/pokemon-black-white-noble-victories-booster-pack/ ; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum's per-set table https://www.elitefourum.com/t/39762/101: C 5, U 3, RE 1, one rare slot per pack). The rare slot is mutually exclusive: plain Rare, Rare Holo, one of the five full arts (Virizion, Victini, Terrakion, Cobalion, N) or the secret Meowth; no Energy. Rates are per pack from Elite Fourum sturzflugbombardieru's rarity guide https://www.elitefourum.com/t/39762/101 ('the same box ratios as Black & White'; 216-pack case model: Rare Holo 57, full art 12, secret 3; 6 Meowth in 14 boxes quoted in post 99) against Flipside Gaming's review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two (Noble Victories ultra rares 'approximately 1:18 packs', Meowth and Pikachu secrets 'approximately 1:72') and PokeBeach's box thread https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-3 ('two, three if you're lucky' full arts a box; about 1 holo per 3-4 packs). Full art high confidence (three sources); secret medium (PokeBeach's 2011 '108 to 1' dissents); holo medium-high. Cross-check only (not independent, copies Elite Fourum): ThePriceDex https://www.thepricedex.com/set/bw3/noble-victories/pull-rates.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/101",
+    "rates": {
+      "holo": 0.2639,
+      "ex": 0.0,
+      "ultra": 0.0556,
+      "secret": 0.0139
+    }
+  },
+  "pop6": {
+    "name": "POP Series 6",
+    "printedTotal": 17,
+    "released": "2007-09-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack, and by a production error every pack holds exactly one Rare plus one Common-or-Uncommon: Bulbapedia POP Series pages (search excerpts; the site is blocked from the build sandbox) and the wrapper text ('Due to a production error, every POP 6 pack contains one rare, and one common or uncommon card', https://bulbapedia.bulbagarden.net/wiki/POP_Series_6_(TCG)), Elite Fourum post 66 ('instead of inserting a rare every 10 packs ... they inserted one in every pack', https://www.elitefourum.com/t/39762/66) and the wrapper text '2 ADDITIONAL PROMO CARDS'. The second card is an Uncommon with the sheet share 20/121 = 0.1653 (Elite Fourum E2 sheet model (121 sheet positions per sheet; https://www.elitefourum.com/t/39762, POP tables: pop6 https://efour.b-cdn.net/uploads/default/original/3X/3/6/368d495af0fdb802f052c0728e8278b2a27b346a.png , pop7 .../7/4/74beb4851ccf3c6cefc98728302009d02aa2ab86.png , pop8 and pop9 .../6/3/636410996098e22bfc01f37a522ac2f03cb01483.png)). Confidence high for the Rare in every pack (two sources), medium for the Uncommon share. No box exists: TCGplayer sells single packs only (https://tcgcsv.com/tcgplayer/3/1432/products). In-pack cards are never foil (Bulbapedia: the holo versions came in value packs and blisters; Collexy lists every POP holo as a product extra).",
+    "rates": {
+      "rare": 1.0,
+      "cuUncommon": 0.1653
+    }
+  },
+  "pop7": {
+    "name": "POP Series 7",
+    "printedTotal": 17,
+    "released": "2008-03-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack ('2 ADDITIONAL PROMO CARDS' on the wrapper, Bulbapedia POP Series pages (search excerpts; the site is blocked from the build sandbox) and the wrapper text); a Rare about one pack in ten, which is Elite Fourum's assumption for the series (observed across POP 1-5 and 7: 93 Rares in 846 packs = 0.11; POP 7 alone 7 in 92 = 0.076; Elite Fourum E2 sheet model (121 sheet positions per sheet; https://www.elitefourum.com/t/39762, POP tables: pop6 https://efour.b-cdn.net/uploads/default/original/3X/3/6/368d495af0fdb802f052c0728e8278b2a27b346a.png , pop7 .../7/4/74beb4851ccf3c6cefc98728302009d02aa2ab86.png , pop8 and pop9 .../6/3/636410996098e22bfc01f37a522ac2f03cb01483.png)). One source for the rate; confidence low to medium. The other card is a Common or an Uncommon (sheet share 20/121). No box exists: TCGplayer sells single packs only (https://tcgcsv.com/tcgplayer/3/1414/products). In-pack cards are never foil (Bulbapedia: the holo versions came in value packs and blisters; Collexy lists every POP holo as a product extra).",
+    "rates": {
+      "rare": 0.1,
+      "cuUncommon": 0.1653
+    }
+  },
+  "pop8": {
+    "name": "POP Series 8",
+    "printedTotal": 17,
+    "released": "2008-09-01",
+    "updated": "2026-10-01",
+    "source": "Three cards a pack, 'the first POP set to include 3 cards per pack': two promo cards and one basic Energy (wrapper text '2 PROMO CARDS & 1 ENERGY CARD', Bulbapedia, Elite Fourum post 73 'Each pack includes a Basic Energy Card, for a total of three cards per pack', https://www.elitefourum.com/t/39762/73; confidence high). Rates: one Common, one Energy, and a third card from a combined Rare + Uncommon sheet (40 Rares and 81 Uncommons of 121) half the time, a Common otherwise: Rare 0.165 (1 pack in 6.1), Uncommon 0.335 per pack (Elite Fourum E2 sheet model (121 sheet positions per sheet; https://www.elitefourum.com/t/39762, POP tables: pop6 https://efour.b-cdn.net/uploads/default/original/3X/3/6/368d495af0fdb802f052c0728e8278b2a27b346a.png , pop7 .../7/4/74beb4851ccf3c6cefc98728302009d02aa2ab86.png , pop8 and pop9 .../6/3/636410996098e22bfc01f37a522ac2f03cb01483.png)); one source and a hypothesis it says fits the observed counts, confidence low. The eight basic Energy are not shown on any source I could read: the site deals its own Diamond & Pearl print (dp1 123-130 art; confidence low). No box exists: TCGplayer sells single packs only (https://tcgcsv.com/tcgplayer/3/1450/products). In-pack cards are never foil (Bulbapedia: the holo versions came in value packs and blisters; Collexy lists every POP holo as a product extra).",
+    "rates": {
+      "rare": 0.165,
+      "uncommon": 0.335,
+      "energy": 1.0
+    }
+  },
+  "pop9": {
+    "name": "POP Series 9",
+    "printedTotal": 17,
+    "released": "2009-03-01",
+    "updated": "2026-10-01",
+    "source": "The same three-card pack as POP 8 (wrapper text '2 PROMO CARDS & 1 ENERGY CARD'; Bulbapedia 'each pack includes 3 cards; two Pokemon and one basic Energy card'; Elite Fourum post 73), with Elite Fourum's POP 8/9 sheet table (one table covers both series, which EF treats as alike: Rare 0.165, Uncommon 0.335 per pack, low confidence, Elite Fourum E2 sheet model (121 sheet positions per sheet; https://www.elitefourum.com/t/39762, POP tables: pop6 https://efour.b-cdn.net/uploads/default/original/3X/3/6/368d495af0fdb802f052c0728e8278b2a27b346a.png , pop7 .../7/4/74beb4851ccf3c6cefc98728302009d02aa2ab86.png , pop8 and pop9 .../6/3/636410996098e22bfc01f37a522ac2f03cb01483.png)). Energy art as POP 8 (low). No box exists: TCGplayer sells single packs only (https://tcgcsv.com/tcgplayer/3/1446/products). In-pack cards are never foil (Bulbapedia: the holo versions came in value packs and blisters; Collexy lists every POP holo as a product extra).",
+    "rates": {
+      "rare": 0.165,
+      "uncommon": 0.335,
+      "energy": 1.0
+    }
+  },
+  "dp1": {
+    "name": "Diamond & Pearl",
+    "printedTotal": 130,
+    "released": "2007-05-23",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot), no code card, boxes of 36 packs: Bulbapedia 'Diamond & Pearl (TCG)' / 'Booster pack (TCG)' (https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG), search excerpt: '5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card'), Potomac Distributing and Josh's Cards product text (36 packs, 10 cards: https://www.potomacdist.com/detail.asp?ItemId=pokemonexdpbb), the wrapper text '10 ADDITIONAL GAME CARDS' and the Elite Fourum sheet tables. Rare slot per 216 packs from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, post ##64; 121-position sheets read from its tables, every row sums to 121; a model built on YouTube box samples): Rare 144 (0.6667), Rare Holo 66 (0.3056), LV.X 6 (0.0278, one a box); LV.X second source: Flipside Gaming, 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: LV.X about 1:36 packs in the first Diamond & Pearl sets, 1:18 later; a holo '1 in 3'). The eight basic Energy 123-130 sit on the commons sheet at 1 position of 121 each, so a pack carries 5 x 8/121 = 0.33 basic Energy (Elite Fourum #64; ThePriceDex 'Energy 1 in 3.0 packs', which copies Elite Fourum; the pkmn.gg Common count of 47 includes them). Confidence: LV.X medium-high, the holo split medium-low (no second tally), Energy medium-high.",
+    "rates": {
+      "holo": 0.3056,
+      "lvx": 0.0278,
+      "commonEnergy": 0.3306
+    }
+  },
+  "dp2": {
+    "name": "Mysterious Treasures",
+    "printedTotal": 123,
+    "released": "2007-08-22",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot), no code card, boxes of 36 packs: Bulbapedia 'Diamond & Pearl (TCG)' / 'Booster pack (TCG)' (https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG), search excerpt: '5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card'), Potomac Distributing and Josh's Cards product text (36 packs, 10 cards: https://www.potomacdist.com/detail.asp?ItemId=pokemonexdpbb), the wrapper text '10 ADDITIONAL GAME CARDS' and the Elite Fourum sheet tables. Rare slot per 216 packs from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, post ##65; 121-position sheets read from its tables, every row sums to 121; a model built on YouTube box samples): Rare 144 (0.6667), Rare Holo 66 (0.3056, of which Time-Space Distortion printed twice on the holo sheet, 2/121 of it, 0.0051), LV.X 6 (0.0278, one a box, 'a bit less consistently than in Diamond & Pearl'); LV.X second source: Flipside Gaming, 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: LV.X about 1:36 packs in the first Diamond & Pearl sets, 1:18 later; a holo '1 in 3'). The set has no basic Energy. The Time-Space Distortion rate is a guess and the sources disagree: Elite Fourum saw one in 10 YouTube boxes (about 1 in 360 packs) and models 1 in 198, Flipside reports 1 in 72; the model's 0.0051 sits between them. Confidence: LV.X medium-high, holo split medium-low, secret low.",
+    "rates": {
+      "holo": 0.3005,
+      "lvx": 0.0278,
+      "secret": 0.0051
+    }
+  },
+  "dp3": {
+    "name": "Secret Wonders",
+    "printedTotal": 132,
+    "released": "2007-11-07",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, 1 reverse holo, 1 rare slot), no code card, boxes of 36 packs: Bulbapedia 'Diamond & Pearl (TCG)' / 'Booster pack (TCG)' (https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG), search excerpt: '5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card'), Potomac Distributing and Josh's Cards product text (36 packs, 10 cards: https://www.potomacdist.com/detail.asp?ItemId=pokemonexdpbb), the wrapper text '10 ADDITIONAL GAME CARDS' and the Elite Fourum sheet tables. Rare slot per 216 packs from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, post ##67; 121-position sheets read from its tables, every row sums to 121; a model built on YouTube box samples): Rare 144 (0.6667), Rare Holo 69 (0.3194), LV.X 3 (0.0139, half a box: Elite Fourum's own sample was 4 LV.X in 8 boxes, 2 in 3 boxes also fits); LV.X second source: Flipside Gaming, 'A Comprehensive Review of Rarity in the Pokemon TCG, Part Two' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two: LV.X about 1:36 packs in the first Diamond & Pearl sets, 1:18 later; a holo '1 in 3') (fewest LV.X of the era: Serebii). The set has no basic Energy. Confidence: LV.X medium-low (the half-box figure has no second source), holo split medium-low.",
+    "rates": {
+      "holo": 0.3194,
+      "lvx": 0.0139
+    }
+  },
+  "pl1": {
+    "name": "Platinum",
+    "printedTotal": 127,
+    "released": "2009-02-11",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards, 5 Common, 3 Uncommon, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy card at all in Platinum, Rising Rivals, Supreme Victors or Arceus (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/64: np 10, C 5, U 3; SixPrizes 'Money and Mathematics: Booster Packs' https://sixprizes.com/2011/04/10/money-and-mathematics-booster/: five commons, three uncommons, one rare and one random card; Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) (search excerpt): 10 cards since Diamond & Pearl; the wrapper prints '10 ADDITIONAL GAME CARDS'; 36 packs a box: ToyWiz and Collector's Cache box titles). The rare slot is mutually exclusive: plain Rare, Rare Holo (17 regular holos), a Pokemon LV.X (6) or one of the three secret Haymaker reprints (Electabuzz, Hitmonchan, Scyther). The reverse slot is a Mirror reverse, or one of the three Shining Pokemon (Lotad, Swablu, Vulpix; SH4-SH6) on a sheet of their own that replaces it. Rates are per pack from Elite Fourum's Platinum table https://www.elitefourum.com/t/39762/76 (216-pack sheet model: holo sheet 60 positions including the 3 secrets, rares 144, LV.X 12; reverse slot 210 reverses and 6 Shining; EF: 'Pokemon LV.X appear to be about two per box', Shining 1 per box, observed in a video sample of 10 pulls). Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two gives Level X cards about 1 pack in 36 for the first Diamond & Pearl sets and 1 in 18 for later ones (no Shining, Rotom or Arceus-subset rates). Finishes: Collexy's Platinum holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-platinum-era/ (cosmos holo on every Holo Rare, Ultra Rare and Secret Rare; mirror reverse; cracked ice on the Rotom subset). LV.X medium-high (EF's two per box and Flipside's 1:18 agree); Shining medium (EF chose one of two sheet layouts, 10 pulls); secrets low-medium (EF assumes 4 prints each on the holo sheet, no second measurement); the holo and plain split is the sheet model's.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/76",
+    "rates": {
+      "holo": 0.2502,
+      "lvx": 0.0556,
+      "secret": 0.0275,
+      "shining": 0.0278
+    }
+  },
+  "pl2": {
+    "name": "Rising Rivals",
+    "printedTotal": 111,
+    "released": "2009-05-16",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards, 5 Common, 3 Uncommon, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy card at all in Platinum, Rising Rivals, Supreme Victors or Arceus (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/64: np 10, C 5, U 3; SixPrizes 'Money and Mathematics: Booster Packs' https://sixprizes.com/2011/04/10/money-and-mathematics-booster/: five commons, three uncommons, one rare and one random card; Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) (search excerpt): 10 cards since Diamond & Pearl; the wrapper prints '10 ADDITIONAL GAME CARDS'; 36 packs a box: ToyWiz and Collector's Cache box titles). The rare slot is mutually exclusive: plain Rare, Rare Holo (13 regular holos), a Pokemon LV.X (9) or one of the three secret Pikachu (Pikachu, Flying Pikachu, Surfing Pikachu). The reverse slot is a Mirror reverse or one of the six Rotom subset cards (RT1-RT6, the five Rotom and Charon's Choice; a cracked-ice reverse foil on a separate sheet: Collexy and EF 'they will have been printed on a separate sheet'). Rates are per pack from Elite Fourum's Rising Rivals table https://www.elitefourum.com/t/39762/80 (216-pack sheet model: holo sheet 60 including the 3 secrets, rares 144, LV.X 12; reverse slot 204 reverses and 12 Rotom; EF text: 'two Pokemon LV.X, two Rotom subset cards and one secret rare per box'). Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two gives Level X cards about 1 pack in 36 for the first Diamond & Pearl sets and 1 in 18 for later ones (no Shining, Rotom or Arceus-subset rates). Finishes: Collexy's Platinum holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-platinum-era/ (cosmos holo on every Holo Rare, Ultra Rare and Secret Rare; mirror reverse; cracked ice on the Rotom subset). LV.X medium-high (EF 2 per box, Flipside 1:18); Rotom medium (EF only, from a stated model); secrets low-medium (assumed on the holo sheet).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/80",
+    "rates": {
+      "holo": 0.2502,
+      "lvx": 0.0556,
+      "secret": 0.0275,
+      "rotom": 0.0556
+    }
+  },
+  "pl3": {
+    "name": "Supreme Victors",
+    "printedTotal": 147,
+    "released": "2009-08-19",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards, 5 Common, 3 Uncommon, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy card at all in Platinum, Rising Rivals, Supreme Victors or Arceus (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/64: np 10, C 5, U 3; SixPrizes 'Money and Mathematics: Booster Packs' https://sixprizes.com/2011/04/10/money-and-mathematics-booster/: five commons, three uncommons, one rare and one random card; Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) (search excerpt): 10 cards since Diamond & Pearl; the wrapper prints '10 ADDITIONAL GAME CARDS'; 36 packs a box: ToyWiz and Collector's Cache box titles). The rare slot is mutually exclusive: plain Rare, Rare Holo (14 regular holos), a Pokemon LV.X (7) or one of the three secret Legendary Bird reprints (Articuno, Moltres, Zapdos). The reverse slot is a Mirror reverse of which the three Shining Pokemon (Milotic, Relicanth, Yanma; SH7-SH9) are ordinary members: 2 of 242 positions each on EF's two reverse sheets. Rates are per pack from Elite Fourum's Supreme Victors table https://www.elitefourum.com/t/39762/81 (216-pack sheet model: holo sheet 51 including the 3 secrets, rares 144, LV.X 21; EF's sample of 28 boxes (over 1,000 packs) gave 3.75 LV.X per box, 19 boxes with four, 8 with three, 1 with five, against its modelled 3.5; secrets 'very close to 1 per box'). Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two gives Level X cards about 1 pack in 36 for the first Diamond & Pearl sets and 1 in 18 for later ones (no Shining, Rotom or Arceus-subset rates). Finishes: Collexy's Platinum holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-platinum-era/ (cosmos holo on every Holo Rare, Ultra Rare and Secret Rare; mirror reverse; cracked ice on the Rotom subset). LV.X medium (EF's measured 3.75 a box is almost double Flipside's generic 1:18, so Flipside is a conflicting second source); Shining low-medium (3 of 121 from the model, no tally); secrets medium-low.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/81",
+    "rates": {
+      "holo": 0.2068,
+      "lvx": 0.0972,
+      "secret": 0.0293,
+      "shining": 0.0248
+    }
+  },
+  "pl4": {
+    "name": "Arceus",
+    "printedTotal": 99,
+    "released": "2009-11-04",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards, 5 Common, 3 Uncommon, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy card at all in Platinum, Rising Rivals, Supreme Victors or Arceus (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/64: np 10, C 5, U 3; SixPrizes 'Money and Mathematics: Booster Packs' https://sixprizes.com/2011/04/10/money-and-mathematics-booster/: five commons, three uncommons, one rare and one random card; Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) (search excerpt): 10 cards since Diamond & Pearl; the wrapper prints '10 ADDITIONAL GAME CARDS'; 36 packs a box: ToyWiz and Collector's Cache box titles). The rare slot is mutually exclusive: plain Rare, Rare Holo (12 regular holos) or a Pokemon LV.X (6: three Arceus, Gengar, Salamence, Tangrowth); the set has no secret rare (Flipside: the reprint secrets were discontinued with Arceus; pkmn.gg lists none). The reverse slot is a Mirror reverse, one of the nine Arceus AR1-AR9 holofoils in about 1 pack in 4 (a different foil, so a different sheet: EF), or one of the three Shining Pokemon (Bagon, Ponyta, Shinx; SH10-SH12) inside the reverse sheet. Rates are per pack from Elite Fourum's Arceus table https://www.elitefourum.com/t/39762/82 (216-pack sheet model: holo 54, rares 144, LV.X 18; reverse slot 162 reverses and 54 Arceus AR; EF's sample of 14 boxes: LV.X 3.00, Arceus 8.86 and Shining 0.71 per box against a model of 3, 9 and 0.67). Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two gives Level X cards about 1 pack in 36 for the first Diamond & Pearl sets and 1 in 18 for later ones (no Shining, Rotom or Arceus-subset rates). Finishes: Collexy's Platinum holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-platinum-era/ (cosmos holo on every Holo Rare, Ultra Rare and Secret Rare; mirror reverse; cracked ice on the Rotom subset). LV.X and Arceus medium-high (EF measured and modelled figures agree); Shining low-medium (0.71 observed vs 0.67 modelled).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/82",
+    "rates": {
+      "holo": 0.25,
+      "lvx": 0.0833,
+      "secret": 0.0,
+      "arceus": 0.25,
+      "shining": 0.0186
+    }
+  },
+  "hgss1": {
+    "name": "HeartGold & SoulSilver",
+    "printedTotal": 123,
+    "released": "2010-02-10",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/86; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of 25 boxes (900 packs): holo 8.36, LEGEND 3.20, secret 0.52, Prime 5.92 per 36 packs against the model's 8.5 / 3 / 0.5 / 6. Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. Sheet table per 216 packs: Rare Holo 51, plain Rare 144, LEGEND 18, Alph 3; reverse 180, Prime 36. LEGEND halves and the Alph sit in the rare slot, Primes replace the reverse (Bulbapedia 'Pokemon Prime replaced the Reverse Holofoil'). The eight basic Energy (115-122) are printed once each on the 121-card commons sheet (EF /86), so a pack averages 5 x 8/121 = 0.33 Energy (ThePriceDex: Energy 1 in 3.0 packs). PackRip's 'guaranteed Energy slot' model contradicts both and is not used. Confidence: Prime high, LEGEND medium-high, holo medium-high, Alph medium (EF saw 13 secrets in 25 boxes; Flipside's generic 1:108 dissents). Red Gyarados 123 is in the holo pool at an equal share (EF's sheet gives it about half a regular holo's share).",
+    "rates": {
+      "holo": 0.2361,
+      "legend": 0.0833,
+      "alph": 0.0139,
+      "prime": 0.1667,
+      "energy": 0.3306
+    }
+  },
+  "hgss2": {
+    "name": "HS Unleashed",
+    "printedTotal": 95,
+    "released": "2010-05-12",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/87; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of 15 boxes (540 packs): holo 8.80, LEGEND 3.00, secret 0.20, Prime 5.07 per 36 packs against the model's 8.83 / 3 / 0.17 / 5. Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. Sheet table per 216: Rare Holo 53, plain Rare 144, LEGEND 18, Alph 1; reverse 186, Prime 30. No basic Energy. Prime high, LEGEND medium-high, Alph low-medium (one pull in 15 boxes; the model's 1 in 216 is a guess).",
+    "rates": {
+      "holo": 0.2454,
+      "legend": 0.0833,
+      "alph": 0.0046,
+      "prime": 0.1389
+    }
+  },
+  "hgss3": {
+    "name": "HS Undaunted",
+    "printedTotal": 90,
+    "released": "2010-08-18",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/88; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of 10 boxes (360 packs): holo 9.30, LEGEND 2.60, secret 0.10, Prime 5.00 per 36 packs against the model's 9.33 / 2.5 / 0.17 / 5. Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. Sheet table per 216: Rare Holo 56, plain Rare 144, LEGEND 15, Alph 1; reverse 186, Prime 30. No basic Energy. Prime high-medium, LEGEND medium, Alph low-medium (one in 10 boxes).",
+    "rates": {
+      "holo": 0.2593,
+      "legend": 0.0694,
+      "alph": 0.0046,
+      "prime": 0.1389
+    }
+  },
+  "hgss4": {
+    "name": "HS Triumphant",
+    "printedTotal": 102,
+    "released": "2010-11-03",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/97; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of 10 boxes (360 packs), a small sample: holo 9.40, LEGEND 2.40, secret 0.10, Prime 5.10 per 36 packs against the model's 9.33 / 2.5 / 0.17 / 5. Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. Sheet table per 216: Rare Holo 56, plain Rare 144, LEGEND 15, Alph 1; reverse 186, Prime 30 (eight Primes, so each is rarer). No basic Energy. Prime medium, LEGEND medium, Alph low-medium (one in 10 boxes).",
+    "rates": {
+      "holo": 0.2593,
+      "legend": 0.0694,
+      "alph": 0.0046,
+      "prime": 0.1389
+    }
+  },
+  "col1": {
+    "name": "Call of Legends",
+    "printedTotal": 95,
+    "released": "2011-02-09",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse slot, a rare slot), no code card: Elite Fourum's sheet table (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762/98; np 10, one rare-slot and one reverse-slot column each summing to a 216-pack sequence), SixPrizes 'Money and Mathematics: Booster Packs' (2011-04-10) and Bulbapedia 'Booster pack (TCG)' (search excerpt) for the structure, the wrapper text '10 ADDITIONAL GAME CARDS'. Observed against EF's own tally of the reverse sheet and box mapped from video: Shiny Legendaries 'very consistently two per box' (12 of 216 reverse slots), a holo exactly every third pack (72 of 216 rare slots, 'each of the two stacks of packs seem to get cut exactly once'). Second source for the chase rates: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two): Primes about 1 in 6-7 packs, LEGEND 1 in 12-18, Alph Lithographs about 1 in 108 packs, Call of Legends shinies 1 in 18. No LEGEND, Prime or secret. The eight basic Energy (88-95) are reverse-holo only (EF /98 'only as reverses'; pkmn.gg lists no non-holo print): 8 of the 204 reverse positions, 8/216 = 0.037 a pack. Shiny Legendary high (two sources agree), holo 1 in 3 medium-high (the Rare/Holo split is derived from the sheet).",
+    "rates": {
+      "holo": 0.3333,
+      "shinyLegend": 0.0556,
+      "reverseEnergy": 0.037
+    }
+  },
+  "dp4": {
+    "name": "Great Encounters",
+    "printedTotal": 106,
+    "released": "2008-02-13",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a Mirror reverse holo, a rare slot) and no code card or basic Energy: Bulbapedia 'Booster pack (TCG)' and 'Diamond & Pearl (TCG)' (search excerpts: 'Each booster pack in the Diamond & Pearl series included 5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card', https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG)), Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, packs of 10: C 5, U 3, RE 1 plus the rare slot) and the wrapper text '10 ADDITIONAL GAME CARDS'. Rare slot per Elite Fourum post 69's 216-pack sheet table (https://efour.b-cdn.net/uploads/default/original/3X/0/c/0cbf62f22ddf78f775db3bd669a7d6a53dd1f199.png): Rare Holo 66/216, plain Rare 144/216, LV.X 6/216 (one a box); Flipside Gaming's review gives LV.X at about 1:36 packs for the first Diamond & Pearl sets (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two) and a search summary says one LV.X a box for the first sets; pullrates.com's generic 'Holo Rare 1 in 3'. Confidence: LV.X medium, holo split medium-low (no second tally; Elite Fourum is a model built on box samples).",
+    "rates": {
+      "holo": 0.3056,
+      "lvx": 0.0278
+    }
+  },
+  "dp5": {
+    "name": "Majestic Dawn",
+    "printedTotal": 100,
+    "released": "2008-05-21",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a Mirror reverse holo, a rare slot) and no code card or basic Energy: Bulbapedia 'Booster pack (TCG)' and 'Diamond & Pearl (TCG)' (search excerpts: 'Each booster pack in the Diamond & Pearl series included 5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card', https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG)), Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, packs of 10: C 5, U 3, RE 1 plus the rare slot) and the wrapper text '10 ADDITIONAL GAME CARDS'. Rare slot per Elite Fourum post 71's 216-pack sheet table (https://efour.b-cdn.net/uploads/default/original/3X/a/4/a499fdd5036d9acec1392afa69a8dcb33c19eaeb.png): Rare Holo 66/216, plain Rare 144/216, LV.X 6/216 (one a box); Flipside Gaming's LV.X 1:36 for the early sets (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two); pullrates.com's generic 'Holo Rare 1 in 3'. Confidence: LV.X medium, holo split medium-low.",
+    "rates": {
+      "holo": 0.3056,
+      "lvx": 0.0278
+    }
+  },
+  "dp6": {
+    "name": "Legends Awakened",
+    "printedTotal": 146,
+    "released": "2008-08-20",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a Mirror reverse holo, a rare slot) and no code card or basic Energy: Bulbapedia 'Booster pack (TCG)' and 'Diamond & Pearl (TCG)' (search excerpts: 'Each booster pack in the Diamond & Pearl series included 5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card', https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG)), Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, packs of 10: C 5, U 3, RE 1 plus the rare slot) and the wrapper text '10 ADDITIONAL GAME CARDS'. Rare slot per Elite Fourum post 72's 216-pack sheet table (https://efour.b-cdn.net/uploads/default/original/3X/d/f/df8413081ddcbf27571a19b2efe1acf6d849fb29.png): Rare Holo 60/216, plain Rare 144/216, LV.X 12/216 (two a box, seven LV.X in the set); Flipside Gaming's 'a more favorable 1:18 pull rate for later sets' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two) and a search summary of two a box by the Platinum block. Confidence: LV.X medium, holo split medium-low.",
+    "rates": {
+      "holo": 0.2778,
+      "lvx": 0.0556
+    }
+  },
+  "dp7": {
+    "name": "Stormfront",
+    "printedTotal": 106,
+    "released": "2008-11-05",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a Mirror reverse holo, a rare slot) and no code card or basic Energy: Bulbapedia 'Booster pack (TCG)' and 'Diamond & Pearl (TCG)' (search excerpts: 'Each booster pack in the Diamond & Pearl series included 5 Common, 3 Uncommon, 1 Reverse Holofoil, and 1 Rare or Rare Holo card', https://bulbapedia.bulbagarden.net/wiki/Diamond_&_Pearl_(TCG)), Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762, packs of 10: C 5, U 3, RE 1 plus the rare slot) and the wrapper text '10 ADDITIONAL GAME CARDS'. Rare slot per Elite Fourum post 75's 216-pack sheet table (https://efour.b-cdn.net/uploads/default/original/3X/2/7/270b198a86a07289bad220318d1a31dfc1e60e70.png): the holo sheet (60/216 = 0.2778) carries the three Charmander-line secrets 4 times each (12/121 of it, 0.0276 a pack, about one in 36 packs for any of them; Elite Fourum's stated guess), leaving 0.2502 for the eleven plain holos; plain Rare 144/216, LV.X 12/216 (two a box). The Shining Pokemon SH1-SH3 each take one position of the 121-card reverse sheet (3/121 = 0.0248 a pack, replacing the reverse card: Elite Fourum post 75, Collexy's Diamond & Pearl holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-diamond-pearl-era/); Flipside Gaming puts shinies at about 1:36 packs and LV.X at 1:18 for the later sets. A PokeBeach box thread excerpt says two Charizard-line cards a box (conflict, not used). Confidence: LV.X medium, holo split medium-low, secrets and Shining low-medium (sheet-position assumptions).",
+    "rates": {
+      "holo": 0.2502,
+      "lvx": 0.0556,
+      "secret": 0.0276,
+      "shining": 0.0248
+    }
+  },
+  "base5": {
+    "name": "Team Rocket",
+    "printedTotal": 82,
+    "released": "2000-04-24",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (7 Commons, 3 Uncommons, a rare slot), no basic Energy and no reverse holo: PSA Set Registry article 9247 (https://www.psacard.com/articles/articleview/9247: 7+3+1, holo about 1 in 3) and Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: photographed uncut sheets and box-opening tallies, a 216-pack sheet model) (Team Rocket post: np 11, 1 rare slot / 3 U / 7 C). A Rare Holo in one pack in three: PSA 9247, WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872: \"Basically a 1 in 3 chance of a foil card in a booster pack\", \"One rare card in each booster\"), Flipside Gaming's rarity review (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg) ('1:3') and the Elite Fourum sheet model. Dark Raichu (83, Rare Secret) is printed on the holo sheet at x6 (Elite Fourum, 1 pack in 55.0 against two cards at x7 in 47.1) and Flipside gives 'Dark Raichu about 1:54-108': the order of magnitude agrees, medium. holo 0.3151 = 2/47.1 + 15/55.0 (the 17 regular holos), secret 0.0182 = 1/55, plain Rare the remaining 0.6667. Unlimited only (the 1st Edition run and the Dark Dragonite 5/82 error print are not modelled). Confidence: holo 1/3 high, the Dark Raichu rate medium.",
+    "rates": {
+      "holo": 0.3151,
+      "secret": 0.0182
+    }
+  },
+  "gym1": {
+    "name": "Gym Heroes",
+    "printedTotal": 132,
+    "released": "2000-08-14",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (6 Commons, 3 Uncommons, 1 basic Energy, a rare slot), no reverse holo: Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: photographed uncut sheets and box-opening tallies, a 216-pack sheet model) (Gym Heroes post: np 11, H/R 1, U 3, C 6, E 1; uncut commons and uncommons sheets photographed, edited 2023/10/27) and PSA article 9353 (https://www.psacard.com/articles/articleview/9353: 7 commons including the Energy, 3 uncommons, 1 rare; holo about 1 in 3; released 14 August 2000). A Rare Holo in one pack in three: PSA 9353, WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872: \"Basically a 1 in 3 chance of a foil card in a booster pack\", \"One rare card in each booster\"), Flipside Gaming's rarity review (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg), Elite Fourum (15 holos at x6 and 4 at x5 of a 110-position sheet: 0.333 a pack). The Energy slot count rests on Elite Fourum (PSA's '7 commons' is consistent); the six basic Energy (127-132) are near-uniform (one at x21, five at x20 of 121), dealt uniformly here. Unlimited only. Confidence: holo high, the Energy slot medium-high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "gym2": {
+    "name": "Gym Challenge",
+    "printedTotal": 132,
+    "released": "2000-10-16",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (6 Commons, 3 Uncommons, 1 basic Energy, a rare slot), no reverse holo: Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: photographed uncut sheets and box-opening tallies, a 216-pack sheet model) (Gym Challenge post: np 11, H/R 1, U 3, C 6, E 1; a 216-pack sequence from 11 tallied boxes, the commons sheet reconstructed incompletely from video) and PSA article 9378 (https://www.psacard.com/articles/articleview/9378: 7 commons, 3 uncommons, 1 rare; holo about 1 in 3; released 16 October 2000). A Rare Holo in one pack in three: PSA 9378, WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872: \"Basically a 1 in 3 chance of a foil card in a booster pack\", \"One rare card in each booster\"), Flipside Gaming's rarity review (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg), Elite Fourum (10 holos at x6, 10 at x5). Basic Energy 127-132 dealt uniformly (Elite Fourum's sheet model for Gym Heroes; this set not investigated further). Unlimited only. Confidence: holo high, the Energy slot medium-high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "base6": {
+    "name": "Legendary Collection",
+    "printedTotal": 110,
+    "released": "2002-05-24",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, the first set with a reverse holo in every pack: PSA article 9582 (https://www.psacard.com/articles/articleview/9582: 'Each booster pack offers 11 cards, including one reverse foil card, one rare single, three uncommon cards, and six commons. The regular holographic cards were inserted at a rate of one in every three packs'), Bulbapedia's Booster pack (TCG) page (a reverse holo in every booster since this set; 'each card in the set also available as Reverse Foils') and Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: photographed uncut sheets and box-opening tallies, a 216-pack sheet model) (Legendary Collection post: one 110-position common/uncommon sheet giving 2.95 uncommons and 6.06 commons a pack, and a reverse sheet with each of the 110 cards once, 1 pack in 110 each: a holo's reverse can come out). No Energy. Slots: 6 Commons, 3 Uncommons, one reverse of any of the 110 cards (uniform, medium), a rare slot (holo 1 in 3: PSA 9582, WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872: \"Basically a 1 in 3 chance of a foil card in a booster pack\", \"One rare card in each booster\"), Flipside Gaming's rarity review (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg); Elite Fourum 15 holos at x6 and 4 at x5). The oversize reverse-holo box toppers (S1 Charizard, S2 Dark Blastoise, S3 Dark Raichu, S4 Mewtwo; one of four per box, PSA 9582 and Bulbapedia Box Topper) are not simulated. Unlimited only (no 1st Edition exists). Confidence: structure and holo high, the uniform reverse medium.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "neo1": {
+    "name": "Neo Genesis",
+    "printedTotal": 111,
+    "released": "2000-12-16",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (6 Commons, 3 Uncommons, 1 basic Energy, a rare slot) and no reverse holo (the reverse arrived with Legendary Collection): Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); PSA Set Registry article 9409 (https://www.psacard.com/articles/articleview/9409: 7 commons, 3 uncommons, 1 rare, 'approximately one in every three packs' holo); Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762; a sheet model built from photographed uncut sheets and tallies of YouTube box openings, 216-pack sequences), Neo Genesis post (np 11: H/R 1, U 3, C 6, E 1; 'the last WotC era set to feature Basic Energy cards in booster packs'). Holo 1 pack in 3: Wizards of the Coast's live chat of 3 Feb 2000 ('Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872); PSA 9409; Flipside Gaming's rarity review (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg) ('1:3'); Elite Fourum (72 holos in 216 packs). The plain Rare takes the other two packs in three. Confidence: pack shape and holo rate high; the one-Energy slot is Elite Fourum's alone (PSA's '7 commons' agrees with 6 + 1), medium. Not modelled: Elite Fourum's per-card holo weights (the six starter finals Feraligatr 4/5, Meganium 10/11 and Typhlosion 17/18 at 1 pack in 82.5, the others 1 in 47 to 55; one source) and the 1st Edition run.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "neo2": {
+    "name": "Neo Discovery",
+    "printedTotal": 75,
+    "released": "2001-06-01",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (7 Commons, 3 Uncommons, a rare slot), no Energy in the set and no reverse holo: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); PSA Set Registry article 9436 (https://www.psacard.com/articles/articleview/9436: 7 commons, 3 uncommons, 1 rare, holo about 1 in 3); Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762; a sheet model built from photographed uncut sheets and tallies of YouTube box openings, 216-pack sequences), Neo Discovery post (np 11: 1/3/7). Holo 1 pack in 3: Wizards of the Coast's live chat of 3 Feb 2000 ('Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872); PSA 9436; Flipside Gaming's rarity review (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg); Elite Fourum (17 holos at 1 pack in 47.1 to 55.0). A retailer listing that claims two Energy a pack is wrong (the set has no basic Energy; Energy Ark 75 is a Trainer). Confidence high for the pack shape and holo rate. Not modelled: per-card weights (Elite Fourum only) and the small Belgian 'purple sticker' striped-collation run.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "neo3": {
+    "name": "Neo Revelation",
+    "printedTotal": 64,
+    "released": "2001-09-21",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (7 Commons, 3 Uncommons, a rare slot), no Energy and no reverse holo: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); PSA Set Registry article 9458 (https://www.psacard.com/articles/articleview/9458: 7+3+1, holo about 1 in 3, box of 36 packs); Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762; a sheet model built from photographed uncut sheets and tallies of YouTube box openings, 216-pack sequences), Neo Revelation post (np 11: 1/3/7). Rare slot: Elite Fourum's sheet model puts the 14 regular holos at x7 on the 110-position holo sheet (1 pack in 47.1 each, 14/47.1 = 0.2972) and the two Shining Pokemon (Gyarados 65, Magikarp 66) ASSUMED at x6 (1 pack in 55.0 each, 2/55 = 0.0364, about 1.3 a box); Elite Fourum marks that placement uncertain. The sources disagree on the Shining rate: PSA 9458 says 'probably one per box' (0.028 a pack, a collector's opinion), Flipside Gaming says 'about 1:18' (0.056, https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg), and Elite Fourum's box tallies (https://www.elitefourum.com/t/26810) say 0 to 2 a box. The research file takes the sheet model, 0.0364, as the middle value; it lies between the two ends (0.028 and 0.056; their plain midpoint would be 0.042) and so does this site. Confidence: holo medium-high, Shining medium-low.",
+    "rates": {
+      "holo": 0.2972,
+      "shining": 0.0364
+    }
+  },
+  "neo4": {
+    "name": "Neo Destiny",
+    "printedTotal": 105,
+    "released": "2002-02-28",
+    "updated": "2026-10-01",
+    "source": "Eleven cards (7 Commons, 3 Uncommons, a rare slot), no Energy and no reverse holo: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)); PSA Set Registry article 9498 (https://www.psacard.com/articles/articleview/9498: 7+3+1 nominal, holo about 1 in 3, 'one to three Shining cards per box'); Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762; a sheet model built from photographed uncut sheets and tallies of YouTube box openings, 216-pack sequences), Neo Destiny post. The rare slot is a Rare, a Rare Holo or a Shining from its own sheet: Elite Fourum's 216-pack sequence has 54 holos, 144 Rares and 18 Shinings (0.25, 0.667, 0.0833), and its tallies of 14 whole boxes average 3.00 Shinings a box (4 1st Edition boxes 3.00, 6 Unlimited boxes 3.00, an 'error box' run 4.5), which is the same 0.0833 a pack. Independent: Flipside Gaming's 'about 1:12' (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg), Elite Fourum thread 26810 ('2-3 per box' 1st Edition, '2-5' Unlimited, https://www.elitefourum.com/t/26810) and PSA's 'one to three'. Confidence high. Not modelled: the late 'error packs' where a Shining takes a Common slot (Elite Fourum's 'error box' tally, 4.5 Shinings and 37.75 hits a box) and per-card weights (the eight Shinings at 1 pack in 94.3 or 101.5).",
+    "rates": {
+      "holo": 0.25,
+      "shining": 0.0833
+    }
+  },
+  "ecard1": {
+    "name": "Expedition Base Set",
+    "printedTotal": 165,
+    "released": "2002-09-15",
+    "updated": "2026-10-01",
+    "source": "Nine cards (5 Commons, 2 Uncommons, a reverse holo and one plain Rare; a holo takes the place of one Common): Bulbapedia 'Booster pack (TCG)' (\"Beginning with the e-Card Series ... 9 cards\", https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry articles 9581, 9721 and 9747, and the wrapper text '9 ADDITIONAL GAME CARDS'. One plain Rare is guaranteed and the holo replaces a Common: Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: 'Every pack now contains a regular rare. Holos are still one in every three packs, and they take the place of a common') and PSA 9747 ('the regular holographic card takes the place of one of the common cards (and reduces the number of common cards in a pack to four)'); Bulbapedia's and PSA 9581/9721's '1 Rare or Rare Holo' is the nominal text and conflicts. Holo 1 pack in 3: WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872), PSA, Flipside Gaming ('1:3') and Elite Fourum's 216-pack sheet (72 holos). Expedition: holo 72/216 = 0.3333 (Elite Fourum's Expedition post; PSA 9581 'approximately one in every three packs'). Reverse: 159 prints (every card but the six basic Energy; Bulbapedia, Elite Fourum), one per pack, uniform here (Elite Fourum's reverse sheets weight them, not modelled). Confidence: holo rate high, guaranteed-rare-plus-holo structure medium-high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "ecard2": {
+    "name": "Aquapolis",
+    "printedTotal": 147,
+    "released": "2003-01-15",
+    "updated": "2026-10-01",
+    "source": "Nine cards (5 Commons, 2 Uncommons, a reverse holo and one plain Rare; a holo takes the place of one Common): Bulbapedia 'Booster pack (TCG)' (\"Beginning with the e-Card Series ... 9 cards\", https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry articles 9581, 9721 and 9747, and the wrapper text '9 ADDITIONAL GAME CARDS'. One plain Rare is guaranteed and the holo replaces a Common: Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: 'Every pack now contains a regular rare. Holos are still one in every three packs, and they take the place of a common') and PSA 9747 ('the regular holographic card takes the place of one of the common cards (and reduces the number of common cards in a pack to four)'); Bulbapedia's and PSA 9581/9721's '1 Rare or Rare Holo' is the nominal text and conflicts. Holo 1 pack in 3: WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872), PSA, Flipside Gaming ('1:3') and Elite Fourum's 216-pack sheet (72 holos). Aquapolis: the holo sheet carries the 32 holos (H1-H32) and the three Crystal Pokemon; Elite Fourum's sheet model puts the Crystal Types at x3 each (3/110 = 0.0273 a pack, about 1 a box; the placement is flagged 'not enough information') and the regular holos at 0.3061 (0.3333 x 101/110). Independent checks: Flipside Gaming 'Aquapolis Crystal about 1:36', Elite Fourum's 7 tallied boxes (3, 2, 2, 0, 0, 0, 0 Crystals: 1.0 a box), PSA 9721 'one to three per box'. Reverse prints for rares, uncommons and commons only (none of the holos or Crystals). Confidence: medium (the sheet model is Elite Fourum's alone; tallies agree on about 1 a box).",
+    "rates": {
+      "holo": 0.3061,
+      "crystal": 0.0273
+    }
+  },
+  "ecard3": {
+    "name": "Skyridge",
+    "printedTotal": 144,
+    "released": "2003-05-12",
+    "updated": "2026-10-01",
+    "source": "Nine cards (5 Commons, 2 Uncommons, a reverse holo and one plain Rare; a holo takes the place of one Common): Bulbapedia 'Booster pack (TCG)' (\"Beginning with the e-Card Series ... 9 cards\", https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry articles 9581, 9721 and 9747, and the wrapper text '9 ADDITIONAL GAME CARDS'. One plain Rare is guaranteed and the holo replaces a Common: Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: 'Every pack now contains a regular rare. Holos are still one in every three packs, and they take the place of a common') and PSA 9747 ('the regular holographic card takes the place of one of the common cards (and reduces the number of common cards in a pack to four)'); Bulbapedia's and PSA 9581/9721's '1 Rare or Rare Holo' is the nominal text and conflicts. Holo 1 pack in 3: WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872), PSA, Flipside Gaming ('1:3') and Elite Fourum's 216-pack sheet (72 holos). Skyridge: holo sheet of 38 (32 holos plus 6 Crystal Pokemon): 34 cards at x3 and 4 at x2 on the 110-position sheet; the four x2 cards are ASSUMED to be Crystal Types, giving Crystal 4 x 1/165 + 2 x 1/110 = 0.0424 a pack (1.5 a box) and holos 32/110 = 0.2909. Independent checks: 9 YouTube boxes tallied 1.66 Crystal a box (Elite Fourum 30299, https://www.elitefourum.com/t/30299), Flipside Gaming 'Skyridge Crystal 1:12-18' (higher), PSA 9747 'one to three per box'. Reverses: every card but the 32 holos, the Crystal Pokemon included. Confidence: medium.",
+    "rates": {
+      "holo": 0.2909,
+      "crystal": 0.0424
+    }
+  },
+  "si1": {
+    "name": "Southern Islands",
+    "printedTotal": 18,
+    "released": "2001-07-31",
+    "updated": "2026-10-01",
+    "source": "Not a booster set: the English Southern Islands Collection folder holds all 18 cards (always the same), a card list, six postcards and three booster packs of a set neither source names (TCGplayer product 610709 text; Bulbapedia 'Southern Islands (TCG)'; PSA Set Registry article 10154). The 18 cards are never found in boosters, so there are no pack rates: the set sells the one collection product.",
+    "rates": {}
+  },
+  "ex9": {
+    "name": "EX Emerald",
+    "printedTotal": 106,
+    "released": "2005-05-09",
+    "updated": "2026-10-01",
+    "source": "Nine cards a pack (5 Commons, 2 Uncommons, a reverse slot, a rare slot), no code card and no Energy slot: Potomac Distribution's box pages ('Each box contains 36 packs. Each pack contains 9 cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb and the set's own page), ToyWiz's 'Booster Pack [9 Cards]', the wrapper text '9 ADDITIONAL GAME CARDS' and Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/39762, a hand tally of YouTube box openings over a 216-pack sheet model) post 51; the holo, Pokémon-ex, Gold Star and secret rares replace the plain Rare in the rare slot (EF post 38, PokeGym thread 19395 '3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). Holo 9 a box (0.25) and Pokémon-ex 3 a box (0.0833) per EF post 51 (7 boxes tallied) and PokeGym 19395 ('3 ex in a box'); the six holofoil basic Energy (Grass, Fire, Water, Lightning, Psychic, Fighting) are one pack in three, 12 a box, in the reverse slot (EF post 51: 6 of 7 boxes had exactly 12; PokeGym 19395: '12 matrix energy per box ... replaces reverse foil', one store box 3 Lightning, 3 Fire, 1 Grass, 1 Water, 2 Psychic, 2 Fighting). Release date: Serebii and TCGplayer group 1410 agree. Confidence: Energy and ex counts high (two sources), holo medium-high (the guide's, one box report). The Farfetch'd secret rare is a box topper (EF post 51) and is in no pack.",
+    "rates": {
+      "holo": 0.25,
+      "ex": 0.0833,
+      "holoEnergy": 0.3333
+    }
+  },
+  "ex10": {
+    "name": "EX Unseen Forces",
+    "printedTotal": 115,
+    "released": "2005-08-22",
+    "updated": "2026-10-01",
+    "source": "Nine cards a pack (5 Commons, 2 Uncommons, a reverse slot, a rare slot), no code card and no Energy slot: Potomac Distribution's box pages ('Each box contains 36 packs. Each pack contains 9 cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb and the set's own page), ToyWiz's 'Booster Pack [9 Cards]', the wrapper text '9 ADDITIONAL GAME CARDS' and Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/39762, a hand tally of YouTube box openings over a 216-pack sheet model) post 52; the holo, Pokémon-ex, Gold Star and secret rares replace the plain Rare in the rare slot (EF post 38, PokeGym thread 19395 '3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). Ten boxes tallied on YouTube: 3 of 9 holos + 3 ex, 3 of 9 holos + 2 ex + 1 Gold Star, 1 of 8 holos + 3 ex + 1 Gold Star, and single boxes of 10 and 11 holos, so 9 holos a box (0.25), about 2 2/3 Pokémon-ex and 1/3 Gold Star a box (the guide's average, EF post 52, with its 104-box overall Gold Star tally in post 46). The 12 plain Pokémon-ex are 0.0687 a pack and Celebi ex (secret, in packs) 0.0054, the guide's assumed 1 in 185.6 (its model gives it the EX8 rarity of 7 of the 13 ex); Gold Stars 0.0093 (1 in 108). The Unown Collection (28 cards) takes the reverse slot in 72 of 360 packs, exactly 1 in 5 (EF post 52; the 216-pack model fixes it at 43 a sequence, 1 in 5.02, so 0.1991); no second tally was found (one source). Rocket's Persian ex (116) is the box topper (EF post 52) and is in no pack. Release date: Serebii and TCGplayer group 1398 agree. Confidence: holo and ex medium, Gold Star and Celebi ex low-medium, Unown low-medium (one source).",
+    "rates": {
+      "holo": 0.25,
+      "ex": 0.0687,
+      "goldStar": 0.0093,
+      "secret": 0.0054,
+      "unown": 0.1991
+    }
+  },
+  "ex11": {
+    "name": "EX Delta Species",
+    "printedTotal": 113,
+    "released": "2005-10-31",
+    "updated": "2026-10-01",
+    "source": "Nine cards a pack (5 Commons, 2 Uncommons, a reverse slot, a rare slot), no code card and no Energy slot: Potomac Distribution's box pages ('Each box contains 36 packs. Each pack contains 9 cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb and the set's own page), ToyWiz's 'Booster Pack [9 Cards]', the wrapper text '9 ADDITIONAL GAME CARDS' and Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/39762, a hand tally of YouTube box openings over a 216-pack sheet model) post 54; the holo, Pokémon-ex, Gold Star and secret rares replace the plain Rare in the rare slot (EF post 38, PokeGym thread 19395 '3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). A box is 11 holos + 1 Pokémon-ex, or 10 holos + 1 ex + 1 Gold Star (the stars replace a holo because they are on their own cosmos sheet while the holos are refractor): holo 10.67 a box (0.2963), the three ex one a box (0.0278; the same guide's thread https://www.elitefourum.com/t/ex-power-keepers-pull-rate/28369 says the 3-ex sets, Holon Phantoms and Delta Species, had one a box), Gold Stars 1 in 3 boxes (0.0093), the guide's assumed average for all the sets with them (2 of each of the three pulled in its sample). Azumarill (114) is the box topper (EF post 54) and is in no pack. Release date: Serebii and TCGplayer group 1429 agree. Confidence: ex high on 1 a box (two Elite Fourum sources), holo medium, Gold Star low-medium.",
+    "rates": {
+      "holo": 0.2963,
+      "ex": 0.0278,
+      "goldStar": 0.0093
+    }
+  },
+  "ex12": {
+    "name": "EX Legend Maker",
+    "printedTotal": 92,
+    "released": "2006-02-13",
+    "updated": "2026-10-01",
+    "source": "Nine cards a pack (5 Commons, 2 Uncommons, a reverse slot, a rare slot), no code card and no Energy slot: Potomac Distribution's box pages ('Each box contains 36 packs. Each pack contains 9 cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb and the set's own page), ToyWiz's 'Booster Pack [9 Cards]', the wrapper text '9 ADDITIONAL GAME CARDS' and Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/39762, a hand tally of YouTube box openings over a 216-pack sheet model) post 55; the holo, Pokémon-ex, Gold Star and secret rares replace the plain Rare in the rare slot (EF post 38, PokeGym thread 19395 '3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). Twenty complete English box openings tallied on YouTube: a box is 10 holos + 2 Pokémon-ex or 9 holos + 2 ex + 1 Gold Star, 0.35 Gold Stars a box (4 Regice, 3 Registeel, 0 Regirock), about one box in three: holo 9.67 a box (0.2685), ex 2 a box (0.0556), Gold Star 0.0093; Flipside Gaming's general Gold Star rate 'about 1:72' packs (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg) is the second source for the stars. The reverse sheet fits a model with all 27 Commons and one of the 26 Uncommons printed twice (EF post 55: observed 144 reverses against a 10x11 sheet model; 'not enough information on individual cards'), so the 27 Commons sit twice on the site's reverse list and the Uncommon, whose name the post does not give, is not doubled. Pikachu delta (93) is the box topper (EF post 55) and is in no pack. Release date: Serebii and TCGplayer group 1378 agree. Confidence: holo medium-high, ex medium (the guide's alone), Gold Star medium-high.",
+    "rates": {
+      "holo": 0.2685,
+      "ex": 0.0556,
+      "goldStar": 0.0093
+    }
+  },
+  "ex13": {
+    "name": "EX Holon Phantoms",
+    "printedTotal": 110,
+    "released": "2006-05-03",
+    "updated": "2026-10-01",
+    "source": "Pack: 9 game cards (wrapper text '9 ADDITIONAL GAME CARDS'; Potomac Distribution box page 'Each box contains 36 packs. Each pack contains 9 cards.', https://www.potomacdist.com/; ToyWiz and TCGplayer pack text), 5 Commons, 2 Uncommons, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy slot (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762, the late layout from Team Magma vs Team Aqua on: 'holos and Pokémon-ex started appearing in the rare slot again instead of in the last commons slot', post 38; PokeGym 19395 '3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). The rare slot is mutually exclusive: plain Rare, Rare Holo (17 Delta Species Pokémon), Pokémon-ex (3), or a Gold Star; the six sheen holofoil basic Energy (105-110) replace the reverse slot, 12 a box. Rates are per pack from Elite Fourum post 57's 216-pack table (https://www.elitefourum.com/t/39762/57): holo 64/216, ex 6/216, the Mewtwo and Pikachu Gold Stars 2/216 plus an assumed single print of the Gyarados Star (0.012 together), holofoil Energy 72/216; PokeGym 33957 (https://pokegym.net/community/index.php?threads/holon-phantom-number-of-exs-and-s-per-box.33957/, 34250, 36795: about 1 ex and a third of a star a box, 'twelve holofoil Energy per box') and Elite Fourum thread 28369 ('Holon Phantoms ... one per box'). The Mew secret rare (111) is a box topper and is in no pack. Release date: Serebii and TCGplayer group 1379 agree. ex high (three sources), holofoil Energy high (two), holo medium-high, Gold Stars medium (the Gyarados Star's share is Elite Fourum's guess).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/57",
+    "rates": {
+      "holo": 0.2936,
+      "ex": 0.0278,
+      "goldStar": 0.012,
+      "holoEnergy": 0.3333
+    }
+  },
+  "ex14": {
+    "name": "EX Crystal Guardians",
+    "printedTotal": 100,
+    "released": "2006-08-30",
+    "updated": "2026-10-01",
+    "source": "Pack: 9 game cards (wrapper text '9 ADDITIONAL GAME CARDS'; Potomac Distribution box page 'Each box contains 36 packs. Each pack contains 9 cards.', https://www.potomacdist.com/; ToyWiz and TCGplayer pack text), 5 Commons, 2 Uncommons, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy slot (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762, the late layout from Team Magma vs Team Aqua on: 'holos and Pokémon-ex started appearing in the rare slot again instead of in the last commons slot', post 38; PokeGym 19395 '3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). The rare slot is mutually exclusive: plain Rare, Rare Holo (10 cosmos holos, sheet Ha), the three Delta Species Rare Holos (sheet Hb), Pokémon-ex (9 cosmos, sheet EXa), Sceptile ex delta (sheet EXb) or a Gold Star (Alakazam, Celebi; printed twice each on the holo sheet). Rates are per pack from Elite Fourum post 58's 216-pack model (https://www.elitefourum.com/t/39762/58: sheets inserted 42 / 12 / 16 / 2 times a case, so holo 0.1873 after the Gold Stars, deltaHolo 0.0556, ex 0.0741, deltaEx 0.0093, Gold Stars 0.0071) built on a seven-box video sample (8.43 holos, 2.43 ex and 0.57 stars a box); PokeGym 41117 and 40141 (https://pokegym.net/community/index.php?threads/how-many-ex-cards-per-booster-box-in-crystal-guardians.41117/, https://pokegym.net/community/index.php?threads/cg-exs-and-s-per-box.40141/: 24 boxes, 73 ex and 4 stars, so 3.04 ex a box and 0.17 stars). Boxes run from 1 to 6 ex. No secret rare, no holofoil Energy, no box topper. ex medium-high on average, holo medium, the Delta sheets and Gold Stars low-medium (a model; the two samples disagree on stars).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/58",
+    "rates": {
+      "holo": 0.1873,
+      "deltaHolo": 0.0556,
+      "ex": 0.0741,
+      "deltaEx": 0.0093,
+      "goldStar": 0.0071
+    }
+  },
+  "ex15": {
+    "name": "EX Dragon Frontiers",
+    "printedTotal": 101,
+    "released": "2006-11-08",
+    "updated": "2026-10-01",
+    "source": "Pack: 9 game cards (wrapper text '9 ADDITIONAL GAME CARDS'; Potomac Distribution box page 'Each box contains 36 packs. Each pack contains 9 cards.', https://www.potomacdist.com/; ToyWiz and TCGplayer pack text), 5 Commons, 2 Uncommons, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy slot (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762, the late layout from Team Magma vs Team Aqua on: 'holos and Pokémon-ex started appearing in the rare slot again instead of in the last commons slot', post 38; PokeGym 19395 '3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). The rare slot is mutually exclusive: plain Rare, Rare Holo (12 Delta Species refractor holos), Pokémon-ex (10) or a Gold Star (Charizard, Mew; each twice on the 121-cell holo sheet). Rates are per pack from Elite Fourum post 60's 216-pack table (https://www.elitefourum.com/t/39762/60: holo 54/216, ex 18/216, Gold Stars 2 x 2/121 of the holo sheet, 0.0083) with six boxes tallied (5 of 6 held 9 holos and 3 ex; one held 8 holos, 3 ex and a Gold Star) and an uncut-sheet photo (a miscut German Charizard Gold Star above Feraligatr proves the stars share the holo sheet); Elite Fourum thread 28369 recalls 2-3 ex a box from Hidden Legends on. No secret rare, no holofoil Energy, no box topper. Holo and ex medium (one tally source, a sheet photo), Gold Stars low-medium.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/60",
+    "rates": {
+      "holo": 0.2417,
+      "ex": 0.0833,
+      "goldStar": 0.0083
+    }
+  },
+  "ex16": {
+    "name": "EX Power Keepers",
+    "printedTotal": 108,
+    "released": "2007-02-14",
+    "updated": "2026-10-01",
+    "source": "Pack: 9 game cards (wrapper text '9 ADDITIONAL GAME CARDS'; Potomac Distribution box page 'Each box contains 36 packs. Each pack contains 9 cards.', https://www.potomacdist.com/; ToyWiz and TCGplayer pack text), 5 Commons, 2 Uncommons, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy slot (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762, the late layout from Team Magma vs Team Aqua on: 'holos and Pokémon-ex started appearing in the rare slot again instead of in the last commons slot', post 38; PokeGym 19395 '3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). The rare slot is mutually exclusive: plain Rare, Rare Holo (13), Pokémon-ex (8) or a Gold Star (Flareon, Jolteon, Vaporeon); the six sheen holofoil basic Energy (103-108) replace the reverse slot (5 of 121 positions each on the reverse sheet, about 1 pack in 4). Rates are per pack from Elite Fourum post 62 (https://www.elitefourum.com/t/39762/62: holo 0.2376, ex 3 a box, Gold Stars 2 x 3 / 121 x 9 = 0.446 a box, holofoil Energy 0.2479; 15 boxes tallied, 6 stars of which 4 in one box) and PokeGym 48790 (https://pokegym.net/community/index.php?threads/pk-ex-stars-per-box.48790/: 10 boxes, 30 ex and 5 stars; usually 3 ex or 2 ex and a star; about 1 star in 2 boxes). A 2020 Elite Fourum recollection of 5-7 ex a box (thread 28369) disagrees and is not used. Release date: Serebii Feb 14 2007 (TCGplayer says Feb 1, pkmn.gg Feb 2: conflict recorded). ex and Gold Stars medium (two tallies agree), holofoil Energy low-medium (one source).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/62",
+    "rates": {
+      "holo": 0.2376,
+      "ex": 0.0833,
+      "goldStar": 0.0124,
+      "holoEnergy": 0.2479
+    }
+  },
+  "base1": {
+    "name": "Base Set",
+    "printedTotal": 102,
+    "released": "1999-01-09",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, no reverse holo and no code card: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry's Base Set article 8911 ('7 commons including two Basic Energy, 3 uncommons, 1 rare, holo about 1 in 3, 36 packs a box'; https://www.psacard.com/articles/articleview/8911) and the wrapper text; one rare-slot card a pack, a Rare Holo in one pack in three (Wizards of the Coast's live chat of 3 Feb 2000, 'Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872; PSA; Flipside Gaming '1:3', https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg; Elite Fourum's rarity guide sheet model, 72 holos in a 216-pack sequence, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762). Two basic Energy a pack (PSA 8911 plus Elite Fourum's 121-position Energy sheet; 5 Commons + 2 Energy + 3 Uncommons + the rare slot). The Energy are the set's own 97-102; Elite Fourum's uneven weights (Lightning 1 pack in 1.7, Fire and Fighting 1 in 6.7) are one source and are not modelled. Machamp 8 is in the 2-Player Starter Set and Trainer Deck A, never in a booster, so it is left out of the pool (Bulbapedia '2-Player Starter Set (TCG)', TCGplayer product 136400). The Unlimited run is dealt; 1st Edition and Shadowless are not separate cards. Confidence: holo 1/3 high, Energy slot high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "base2": {
+    "name": "Jungle",
+    "printedTotal": 64,
+    "released": "1999-06-16",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, no reverse holo and no code card: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry's Jungle article 9327 ('7 commons, 3 uncommons, 1 rare, holo about 1 in 3, 36 packs a box'; https://www.psacard.com/articles/articleview/9327) and the wrapper text; one rare-slot card a pack, a Rare Holo in one pack in three (Wizards of the Coast's live chat of 3 Feb 2000, 'Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872; PSA; Flipside Gaming '1:3', https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg; Elite Fourum's rarity guide sheet model, 72 holos in a 216-pack sequence, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762). No basic Energy in the set (7 Commons + 3 Uncommons + the rare slot; Elite Fourum's Jungle post, PSA 9327, TCGplayer 138128/138129 text '11 random cards'). Elite Fourum's per-card holo weights (14 holos at x7, Victreebel and Wigglytuff at x6) are one source and are not modelled. The Unlimited run is dealt; the 1st Edition Ivy Pikachu error packs (Wizards Black Star Promo 1, pokemon1999.org and Elite Fourum) are not modelled. Confidence: high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "base3": {
+    "name": "Fossil",
+    "printedTotal": 62,
+    "released": "1999-10-10",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, no reverse holo and no code card: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry's Fossil article 9301 ('7 commons, 3 uncommons, 1 rare, holo about 1 in 3, 36 packs a box'; https://www.psacard.com/articles/articleview/9301) and the wrapper text; one rare-slot card a pack, a Rare Holo in one pack in three (Wizards of the Coast's live chat of 3 Feb 2000, 'Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872; PSA; Flipside Gaming '1:3', https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg; Elite Fourum's rarity guide sheet model, 72 holos in a 216-pack sequence, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762). No basic Energy in the set (Energy Search 59 is a Trainer common): 7 Commons + 3 Uncommons + the rare slot (Elite Fourum's Fossil post, PSA 9301). Ditto 3 is a plain Rare (Elite Fourum R9, pkmn.gg). Elite Fourum's per-card holo weights are one source and are not modelled. The Unlimited run is dealt. Confidence: high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "base4": {
+    "name": "Base Set 2",
+    "printedTotal": 130,
+    "released": "2000-02-24",
+    "updated": "2026-10-01",
+    "source": "Eleven cards, no reverse holo and no code card: Bulbapedia 'Booster pack (TCG)' ('From the first Base Set through to Neo Destiny ... 11 cards', https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), TCGplayer product 138149 and the neighbouring sets' PSA articles (8911, 9327, 9301); one rare-slot card a pack, a Rare Holo in one pack in three (Wizards of the Coast's live chat of 3 Feb 2000, 'Basically a 1 in 3 chance of a foil card in a booster pack', 'One rare card in each booster', https://www.elitefourum.com/t/16872; PSA's articles for the other sets; Flipside Gaming '1:3', https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg; Elite Fourum's rarity guide sheet model, 72 holos in a 216-pack sequence, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762). Two basic Energy a pack (Elite Fourum's Base Set 2 post, np 11: H/R 1, U 3, C 5, E 2, the same 121-position Energy sheet as Base Set; Pokemon Wizard's set page 'Energy 2 per pack (100%), holo 1 in 3', https://www.pokemonwizard.com/sets/605/base-set-2). The Energy are the set's own 125-130. The set is Unlimited only (no 1st Edition print: Bulbapedia 'Base Set 2 (TCG)' and pkmn.gg). Confidence: medium (two weak sources for the Energy slot, no PSA or chat statement for this set's holo rate).",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "ex5": {
+    "name": "EX Hidden Legends",
+    "printedTotal": 101,
+    "released": "2004-06-14",
+    "updated": "2026-10-01",
+    "source": "Nine cards, no code card and no basic Energy: Potomac Distribution's booster box page ('Each box contains 36 packs. Each pack contains 9 cards.' and 'Each booster pack contains 1 foil card, 1 rare card, 5 common cards, and 2 uncommon cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb), the wrapper text '9 ADDITIONAL GAME CARDS' and PokeGym 264 (pack order C C C C [C/H/EX] U U RH R, https://pokegym.net/community/index.php?threads/weird-ruby-and-sapphire-collation.264/); from Team Magma vs Team Aqua on the holo, Pokemon-ex, Gold Star and secret rares replace the plain Rare in the rare slot and slot 5 is a Common (Elite Fourum post 38). Rare slot per Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/39762, \"1) Unlimited\" 216-pack table) post 40 (https://efour.b-cdn.net/uploads/default/original/3X/b/0/b01ada10c70df8492effdf5e2421099dbff7e2ec.png): holo 54/216 = 0.25 (9 a box), cosmos Pokemon-ex EXa 12/216 = 0.0556 (2 a box), cracked-ice Regirock, Regice and Registeel ex EXb 6/216 = 0.0278 (1 a box), plain Rare 144/216; the sample is 8 boxes (7 for the reverses). PokeGym 19395 ('3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/) agrees on 3 ex a box; the cracked-ice share of them has no second tally. The Groudon secret is the box topper (Elite Fourum post 40) and is never dealt. Confidence: holo and Pokemon-ex medium-high, the cracked-ice split medium-low (one source).",
+    "rates": {
+      "holo": 0.25,
+      "ex": 0.0556,
+      "exCracked": 0.0278
+    }
+  },
+  "ex6": {
+    "name": "EX FireRed & LeafGreen",
+    "printedTotal": 112,
+    "released": "2004-08-30",
+    "updated": "2026-10-01",
+    "source": "Nine cards, no code card and no basic Energy: Potomac Distribution's booster box page ('Each box contains 36 packs. Each pack contains 9 cards.' and 'Each booster pack contains 1 foil card, 1 rare card, 5 common cards, and 2 uncommon cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb), the wrapper text '9 ADDITIONAL GAME CARDS' and PokeGym 264 (pack order C C C C [C/H/EX] U U RH R, https://pokegym.net/community/index.php?threads/weird-ruby-and-sapphire-collation.264/); from Team Magma vs Team Aqua on the holo, Pokemon-ex, Gold Star and secret rares replace the plain Rare in the rare slot and slot 5 is a Common (Elite Fourum post 38). Rare slot per Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/39762, \"1) Unlimited\" 216-pack table) post 44 (https://efour.b-cdn.net/uploads/default/original/3X/7/8/784e1e99b007c9602181326af59b6ebc68f213b1.png): holo 48/216 = 0.2222 (8 a box, cut from 9 because the set has more Pokemon-ex), Pokemon-ex 18/216 = 0.0833 (3 a box), secret cracked-ice bird ex (Articuno, Moltres, Zapdos) 6/216 = 0.0278 (1 a box for the three together), plain Rare 144/216; PokeGym 19395 ('3 ex in a box ever since MvA, bar FR/LG with an extra secret rare ex') gives the 3 + 1 ex a box. The Charmander secret is the box topper (post 44) and is never dealt. Confidence: Pokemon-ex and secret medium to medium-high, the holo count medium-low (no second tally).",
+    "rates": {
+      "holo": 0.2222,
+      "ex": 0.0833,
+      "secret": 0.0278
+    }
+  },
+  "ex7": {
+    "name": "EX Team Rocket Returns",
+    "printedTotal": 109,
+    "released": "2004-11-08",
+    "updated": "2026-10-01",
+    "source": "Nine cards, no code card and no basic Energy: Potomac Distribution's booster box page ('Each box contains 36 packs. Each pack contains 9 cards.' and 'Each booster pack contains 1 foil card, 1 rare card, 5 common cards, and 2 uncommon cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb), the wrapper text '9 ADDITIONAL GAME CARDS' and PokeGym 264 (pack order C C C C [C/H/EX] U U RH R, https://pokegym.net/community/index.php?threads/weird-ruby-and-sapphire-collation.264/); from Team Magma vs Team Aqua on the holo, Pokemon-ex, Gold Star and secret rares replace the plain Rare in the rare slot and slot 5 is a Common (Elite Fourum post 38). Rare slot per Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/39762, \"1) Unlimited\" 216-pack table) posts 46 and 47 (https://efour.b-cdn.net/uploads/default/original/3X/4/e/4ef26b99e7995e79ceb1abd3648392956909517c.png, 14 boxes): holos 14 cards 0.2455, Pokemon-ex 16/216 = 0.0741 (2.67 a box), the three Gold Stars (Treecko, Torchic, Mudkip) 2/216 = 0.0093 combined (1 in 108 packs, an ex they replace; the sample gave 2 stars, both Mudkip, so the post assumes 1:108), Here Comes Team Rocket! on the holo sheet as an H2 card 0.0045 (1 in 220; 1 seen in 14 boxes, an assumption), plain Rare 144/216. PokeGym 11875 (Oct 2004, https://pokegym.net/community/index.php?threads/how-rare-is-too-rare.11875/) gives 6 stars in 18 boxes at one prerelease and 2 in 432 packs at another: the Gold Star rate is a small-sample estimate between about 1 in 6 boxes and 1 in 3. The Charmeleon secret is the box topper (post 47 and https://www.elitefourum.com/t/discussion-on-pull-rates-for-team-rocket-returns-secret-rares/47490) and is never dealt. Confidence: holo and Pokemon-ex medium, Gold Star medium-low, the secret low.",
+    "rates": {
+      "holo": 0.2455,
+      "ex": 0.0741,
+      "goldStar": 0.0093,
+      "secret": 0.0045
+    }
+  },
+  "ex8": {
+    "name": "EX Deoxys",
+    "printedTotal": 107,
+    "released": "2005-02-14",
+    "updated": "2026-10-01",
+    "source": "Nine cards, no code card and no basic Energy: Potomac Distribution's booster box page ('Each box contains 36 packs. Each pack contains 9 cards.' and 'Each booster pack contains 1 foil card, 1 rare card, 5 common cards, and 2 uncommon cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb), the wrapper text '9 ADDITIONAL GAME CARDS' and PokeGym 264 (pack order C C C C [C/H/EX] U U RH R, https://pokegym.net/community/index.php?threads/weird-ruby-and-sapphire-collation.264/); from Team Magma vs Team Aqua on the holo, Pokemon-ex, Gold Star and secret rares replace the plain Rare in the rare slot and slot 5 is a Common (Elite Fourum post 38). Rare slot per Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/39762, \"1) Unlimited\" 216-pack table) posts 46 and 48 (https://efour.b-cdn.net/uploads/default/original/3X/3/0/30a95d6180917e682afe72a8ba02e2d0cc195985.png): only 4 complete box openings exist on YouTube and all four held 9 holos (0.25), 3 Pokemon-ex and no Gold Star; the post models the set like Team Rocket Returns minus the secret: Pokemon-ex 16/216 = 0.0741 and the three Gold Stars (Latias, Latios, Rayquaza) 2/216 = 0.0093 combined, an assumed 1 in 3 boxes borrowed from the other sets (104-box tally, post 46), the star replacing an ex; plain Rare 144/216. No second tally exists for this set. The Rocket's Raikou ex secret is the box topper (post 48) and is never dealt. Confidence: low-medium (4-box sample, the Gold Star rate an assumption).",
+    "rates": {
+      "holo": 0.25,
+      "ex": 0.0741,
+      "goldStar": 0.0093
+    }
+  },
+  "ex1": {
+    "name": "EX Ruby & Sapphire",
+    "printedTotal": 109,
+    "released": "2003-06-18",
+    "updated": "2026-10-01",
+    "source": "Nine cards (4 Commons, a fifth slot, 2 Uncommons, a Mirror reverse holo, a Rare that is never holo), no code card: Potomac Distribution box page ('Each box contains 36 packs. Each pack contains 9 cards.', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb) and the wrapper text '9 ADDITIONAL GAME CARDS'; PokeGym thread 264 (Aug 2003, https://pokegym.net/community/index.php?threads/weird-ruby-and-sapphire-collation.264/: pack order C C C C [C/holo/ex] U U reverse Rare). Per-pack rates from Elite Fourum, sturzflugbombardieru, 'The English Pokemon card rarity guide' (https://www.elitefourum.com/t/39762/35), a hand tally of YouTube box openings plus a 216-pack sheet model (36 holos, 36 Pokemon-ex and 72 basic Energy per 216 packs, all in the fifth slot): holo 0.1667, ex 0.1667, Energy 0.3333. Second source for holo and ex: PokeGym 317 (https://pokegym.net/community/index.php?threads/nintendos-big-r-s-switcheroo-snafoo.317/, 2003: 6 holos and 6 ex a box after the first print run was corrected, 'every 3rd booster a rare holo OR holo EX'). The Energy rate (1 pack in 3, last common slot) is Elite Fourum alone: medium-low. Dealt: the regular run; the first run's error distribution (12 holos in slot 5 and 12 ex in the rare slot, from one box video and PokeGym 317) is not dealt. Reverse sheet: 101 cards including the six basic Energy; EF's 'twice' cards are not named (table image), so none are doubled. Confidence: holo and ex medium-high on the per-box count, medium on the per-card split.",
+    "rates": {
+      "holo": 0.1667,
+      "ex": 0.1667,
+      "energy": 0.3333
+    }
+  },
+  "ex2": {
+    "name": "EX Sandstorm",
+    "printedTotal": 100,
+    "released": "2003-09-17",
+    "updated": "2026-10-01",
+    "source": "Nine cards, same layout as Ruby & Sapphire (fifth slot holo or Pokemon-ex, always a plain Rare, a Mirror reverse), no Energy and no code card: Potomac Distribution box page ('Each box contains 36 packs. Each pack contains 9 cards.', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb) and the wrapper text '9 ADDITIONAL GAME CARDS'; PokeGym thread 264 (Aug 2003, https://pokegym.net/community/index.php?threads/weird-ruby-and-sapphire-collation.264/: pack order C C C C [C/holo/ex] U U reverse Rare). Elite Fourum, sturzflugbombardieru, 'The English Pokemon card rarity guide' (https://www.elitefourum.com/t/39762/36), a hand tally of YouTube box openings plus a 216-pack sheet model: 36 holos and 36 Pokemon-ex per 216 packs ('basically the same as Ruby & Sapphire'). Second source: Flipside Gaming (https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg) early EX holos and Pokemon-ex about 1:12-18 packs. Confidence medium (a 252-pack tally, no direct second tally).",
+    "rates": {
+      "holo": 0.1667,
+      "ex": 0.1667
+    }
+  },
+  "ex3": {
+    "name": "EX Dragon",
+    "printedTotal": 97,
+    "released": "2003-11-24",
+    "updated": "2026-10-01",
+    "source": "Nine cards, early layout (fifth slot holo, Pokemon-ex or secret, always a plain Rare), no Energy: Potomac Distribution box page ('Each box contains 36 packs. Each pack contains 9 cards.', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb) and the wrapper text '9 ADDITIONAL GAME CARDS'; PokeGym thread 264 (Aug 2003, https://pokegym.net/community/index.php?threads/weird-ruby-and-sapphire-collation.264/: pack order C C C C [C/holo/ex] U U reverse Rare). Elite Fourum, sturzflugbombardieru, 'The English Pokemon card rarity guide' (https://www.elitefourum.com/t/39762/37), a hand tally of YouTube box openings plus a 216-pack sheet model: holo sheet 36/216 = 0.1667 including the three secret rares (Charmander, Charmeleon, Charizard, 98-100) at an assumed H7 share each (7 x 3 / 110 x 6 per box = 1.145 a box): holo 0.1349 + secret 0.0318; Pokemon-ex 36/216. Second source: PokeGym 2667 (https://pokegym.net/community/index.php?threads/do-u-get-only-one-of-charmander-charmelon-or-charizard-in-dragon-set-one-per-box.2667/, Nov 2003: 6 ex per box in a commons slot; the secrets about as rare as other holos) and EF's own 3-box tally (1.33 secrets a box). Confidence: holo and ex medium; secret medium-low (tiny tally, assumed share). Run 2 dealt (reverse TV Reporter on the sheet).",
+    "rates": {
+      "holo": 0.1349,
+      "ex": 0.1667,
+      "secret": 0.0318
+    }
+  },
+  "ex4": {
+    "name": "EX Team Magma vs Team Aqua",
+    "printedTotal": 95,
+    "released": "2004-03-15",
+    "updated": "2026-10-01",
+    "source": "Nine cards, the first late layout (5 Commons, 2 Uncommons, a Mirror reverse, a rare slot that takes the holo, Pokemon-ex and secret): Potomac's Magma/Aqua page ('1 foil card, 1 rare card, 5 common cards, and 2 uncommon cards', https://www.potomacdist.com/detail.asp?itemid=pokemonextbb), PokeGym 19395 ('3 ex in a box ever since MvA', https://pokegym.net/community/index.php?threads/contents-of-my-ex-emerald-booster-box.19395/). Elite Fourum, sturzflugbombardieru, 'The English Pokemon card rarity guide' (https://www.elitefourum.com/t/39762/38), a hand tally of YouTube box openings plus a 216-pack sheet model: a box holds 24 non-holo rares, 9 holos and 3 Pokemon-ex; Jirachi (secret) sits on the holo sheet at H8 (about 1 in 55 packs; a 3-box tally had 2, both from one box; PokeGym 5106 https://pokegym.net/community/index.php?threads/the-so-called-secret-rare.5106/ 'secret rare, not super rare'). Absol (96) is the box topper and is not dealt. The reverse sheet repeats Double Rainbow Energy (one reverse rare printed twice, EF text). Confidence: holo and ex medium-high on the per-box count, Jirachi medium-low.",
+    "rates": {
+      "holo": 0.2318,
+      "ex": 0.0833,
+      "secret": 0.0182
+    }
+  },
+  "pop1": {
+    "name": "POP Series 1",
+    "printedTotal": 17,
+    "released": "2004-09-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack; the Rare sits on its own sheet and appears in about 1 pack in 10 in the second card: Elite Fourum rarity guide posts 45 (https://www.elitefourum.com/t/39762/45; a YouTube pack-video tally, the rare 'in about 1 pack in 10, always in the same position': second card) and the overview post 73 (https://www.elitefourum.com/t/39762/73). Pack size from the wrapper text '2 ADDITIONAL GAME CARDS' and TCGplayer's product text 'Each POP Series 1 Pack contains 2 random cards' (https://tcgcsv.com/tcgplayer/3/1422/products). The other card is a Common or an Uncommon (sheet share 20/121 = 0.1653, EF's sheet model). Rates: one source, confidence low-medium (EF says 1 in 10 may be low and might be revised to 1 in 8; 364 packs for POP 5). No box exists: TCGplayer sells single packs only (two POP Series 1 packs sit in each EX Collector's Box, TCGplayer text only). In-pack cards are not foil (pkmn.gg 'normal: Found in Booster Packs' and a collector-site excerpt: the holo versions came from blisters, tins and value packs; Collexy lists exactly the Rares as cosmos holo products); whether Armaldo ex or POP 5's Espeon and Umbreon Gold Stars were foil in the pack is unresolved, none is modelled.",
+    "rates": {
+      "rare": 0.1,
+      "cuUncommon": 0.1653,
+      "rareAt": 2
+    }
+  },
+  "pop2": {
+    "name": "POP Series 2",
+    "printedTotal": 17,
+    "released": "2005-08-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack; the Rare sits on its own sheet and appears in about 1 pack in 10 in the second card: Elite Fourum rarity guide posts 53 (https://www.elitefourum.com/t/39762/53; a YouTube pack-video tally, the rare 'in about 1 pack in 10, always in the same position': second card) and the overview post 73 (https://www.elitefourum.com/t/39762/73). Pack size from the wrapper text '2 ADDITIONAL GAME CARDS' and TCGplayer's product text 'Each POP Series 2 Pack contains 2 random cards' (https://tcgcsv.com/tcgplayer/3/1447/products). The other card is a Common or an Uncommon (sheet share 20/121 = 0.1653, EF's sheet model). Rates: one source, confidence low-medium (EF says 1 in 10 may be low and might be revised to 1 in 8; 364 packs for POP 5). No box exists: TCGplayer sells single packs only (two POP Series 1 packs sit in each EX Collector's Box, TCGplayer text only). In-pack cards are not foil (pkmn.gg 'normal: Found in Booster Packs' and a collector-site excerpt: the holo versions came from blisters, tins and value packs; Collexy lists exactly the Rares as cosmos holo products); whether Armaldo ex or POP 5's Espeon and Umbreon Gold Stars were foil in the pack is unresolved, none is modelled.",
+    "rates": {
+      "rare": 0.1,
+      "cuUncommon": 0.1653,
+      "rareAt": 2
+    }
+  },
+  "pop3": {
+    "name": "POP Series 3",
+    "printedTotal": 17,
+    "released": "2006-04-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack; the Rare sits on its own sheet and appears in about 1 pack in 10 in the first card: Elite Fourum rarity guide posts 56 (https://www.elitefourum.com/t/39762/56; a YouTube pack-video tally, the rare 'in about 1 pack in 10, always in the same position': first card) and the overview post 73 (https://www.elitefourum.com/t/39762/73). Pack size from the wrapper text '2 ADDITIONAL GAME CARDS' and TCGplayer's product text 'Each POP Series 3 Pack contains 2 random cards' (https://tcgcsv.com/tcgplayer/3/1442/products). The other card is a Common or an Uncommon (sheet share 20/121 = 0.1653, EF's sheet model). Rates: one source, confidence low-medium (EF says 1 in 10 may be low and might be revised to 1 in 8; 364 packs for POP 5). No box exists: TCGplayer sells single packs only (two POP Series 1 packs sit in each EX Collector's Box, TCGplayer text only). In-pack cards are not foil (pkmn.gg 'normal: Found in Booster Packs' and a collector-site excerpt: the holo versions came from blisters, tins and value packs; Collexy lists exactly the Rares as cosmos holo products); whether Armaldo ex or POP 5's Espeon and Umbreon Gold Stars were foil in the pack is unresolved, none is modelled.",
+    "rates": {
+      "rare": 0.1,
+      "cuUncommon": 0.1653,
+      "rareAt": 1
+    }
+  },
+  "pop4": {
+    "name": "POP Series 4",
+    "printedTotal": 17,
+    "released": "2006-08-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack; the Rare sits on its own sheet and appears in about 1 pack in 10 in the first card (assumed the same as POP 3): Elite Fourum rarity guide posts 59 (https://www.elitefourum.com/t/39762/59; a YouTube pack-video tally, the rare 'in about 1 pack in 10, always in the same position': first card (assumed the same as POP 3)) and the overview post 73 (https://www.elitefourum.com/t/39762/73). Pack size from the wrapper text '2 ADDITIONAL PROMO CARDS' and TCGplayer's product text 'Each POP Series 4 Pack contains 2 random cards' (https://tcgcsv.com/tcgplayer/3/1452/products). The other card is a Common or an Uncommon (sheet share 20/121 = 0.1653, EF's sheet model). Rates: one source, confidence low-medium (EF says 1 in 10 may be low and might be revised to 1 in 8; 364 packs for POP 5). No box exists: TCGplayer sells single packs only (two POP Series 1 packs sit in each EX Collector's Box, TCGplayer text only). In-pack cards are not foil (pkmn.gg 'normal: Found in Booster Packs' and a collector-site excerpt: the holo versions came from blisters, tins and value packs; Collexy lists exactly the Rares as cosmos holo products); whether Armaldo ex or POP 5's Espeon and Umbreon Gold Stars were foil in the pack is unresolved, none is modelled.",
+    "rates": {
+      "rare": 0.1,
+      "cuUncommon": 0.1653,
+      "rareAt": 1
+    }
+  },
+  "pop5": {
+    "name": "POP Series 5",
+    "printedTotal": 17,
+    "released": "2007-03-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack; the Rare sits on its own sheet and appears in about 1 pack in 10 in the first card (assumed the same as POP 3): Elite Fourum rarity guide posts 63 (https://www.elitefourum.com/t/39762/63; a YouTube pack-video tally, the rare 'in about 1 pack in 10, always in the same position': first card (assumed the same as POP 3)) and the overview post 73 (https://www.elitefourum.com/t/39762/73). Pack size from the wrapper text '2 ADDITIONAL PROMO CARDS' and TCGplayer's product text 'Each POP Series 5 Pack contains 2 random cards' (https://tcgcsv.com/tcgplayer/3/1439/products). The other card is a Common or an Uncommon (sheet share 20/121 = 0.1653, EF's sheet model). Rates: one source, confidence low-medium (EF says 1 in 10 may be low and might be revised to 1 in 8; 364 packs for POP 5). No box exists: TCGplayer sells single packs only (two POP Series 1 packs sit in each EX Collector's Box, TCGplayer text only). In-pack cards are not foil (pkmn.gg 'normal: Found in Booster Packs' and a collector-site excerpt: the holo versions came from blisters, tins and value packs; Collexy lists exactly the Rares as cosmos holo products); whether Armaldo ex or POP 5's Espeon and Umbreon Gold Stars were foil in the pack is unresolved, none is modelled.",
+    "rates": {
+      "rare": 0.1,
+      "cuUncommon": 0.1653,
+      "rareAt": 1
+    }
   }
 }

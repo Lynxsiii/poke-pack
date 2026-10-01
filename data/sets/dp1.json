@@ -1,0 +1,130 @@
+{
+  "id": "dp1",
+  "name": "Diamond & Pearl",
+  "series": "diamond-pearl",
+  "slug": "diamond-pearl",
+  "scrydexId": "dp1",
+  "era": "dp",
+  "artSlug": "diamond-and-pearl",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1430,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "promoCards": {
+    "dpp01": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp02": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp03": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp09": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp10": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp11": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp04": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "blister-turtwig",
+      "name": "Diamond & Pearl Three Pack Blister [Turtwig]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp01"
+      ],
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Turtwig promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles)."
+    },
+    {
+      "id": "blister-chimchar",
+      "name": "Diamond & Pearl Three Pack Blister [Chimchar]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp02"
+      ],
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Chimchar promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles)."
+    },
+    {
+      "id": "blister-piplup",
+      "name": "Diamond & Pearl Three Pack Blister [Piplup]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp03"
+      ],
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Piplup promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles)."
+    },
+    {
+      "id": "collectors-tin-torterra",
+      "name": "Diamond & Pearl Collector's Tin [Torterra LV.X]",
+      "kind": "tin",
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "promos": [
+        "dpp09"
+      ],
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Torterra LV.X promo."
+    },
+    {
+      "id": "collectors-tin-infernape",
+      "name": "Diamond & Pearl Collector's Tin [Infernape LV.X]",
+      "kind": "tin",
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "promos": [
+        "dpp10"
+      ],
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Infernape LV.X promo."
+    },
+    {
+      "id": "collectors-tin-empoleon",
+      "name": "Diamond & Pearl Collector's Tin [Empoleon LV.X]",
+      "kind": "tin",
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "promos": [
+        "dpp11"
+      ],
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Empoleon LV.X promo."
+    },
+    {
+      "id": "blister-pachirisu",
+      "name": "Diamond & Pearl Two Pack Blister [Pachirisu]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp04"
+      ],
+      "note": "Two Diamond & Pearl packs and a cosmos holofoil Pachirisu promo. One source only (Collector's Cache lists DP04 as the Diamond & Pearl blister exclusive; Bulbapedia's blister excerpt does not name it), so the contents are medium-low confidence."
+    }
+  ]
+}

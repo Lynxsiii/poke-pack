@@ -1,0 +1,69 @@
+{
+  "id": "hgss4",
+  "name": "HS Triumphant",
+  "series": "heartgold-soulsilver",
+  "slug": "hs-triumphant",
+  "scrydexId": "hgss4",
+  "era": "dp",
+  "artSlug": "triumphant",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1381,
+  "promoSeries": {
+    "hsp": {
+      "series": "heartgold-soulsilver",
+      "slug": "hgss-black-star-promos",
+      "scrydex": "hsp",
+      "tcgplayerGroup": 1453,
+      "printed": "HGSS",
+      "era": "dp"
+    }
+  },
+  "cardFlags": {
+    "FOUR": {
+      "alph": true
+    }
+  },
+  "promoCards": {
+    "hsp22": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp23": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "three-pack-blister-porygon",
+      "name": "HS Triumphant Three Pack Blister [Porygon]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss4": 2,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp22"
+      ],
+      "note": "Two Triumphant packs, a Platinum pack (Bulbapedia excerpt, thewarpgate listing), a coin and the Porygon promo (HGSS22). The coin is not simulated."
+    },
+    {
+      "id": "three-pack-blister-porygon2",
+      "name": "HS Triumphant Three Pack Blister [Porygon2]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss4": 2,
+        "pl1": 1
+      },
+      "promos": [
+        "hsp23"
+      ],
+      "note": "Two Triumphant packs, a Platinum pack, a coin and the Porygon2 promo (HGSS23)."
+    }
+  ]
+}

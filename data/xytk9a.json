@@ -1,0 +1,919 @@
+[
+  {
+    "id": "xytk9a-1",
+    "name": "Glameow",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Saya Tsuruta",
+    "flavorText": "When it's happy, Glameow demonstrates beautiful movements of its tail, like a dancing ribbon.",
+    "image": "assets/cards/xytk9a/1.webp",
+    "imageSmall": "assets/cards/xytk9a/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Act Cute",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent puts a card from his or her hand on the bottom of his or her deck."
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-1/large",
+    "printedNumber": "001/030",
+    "era": "xy",
+    "tcgplayerId": 118798
+  },
+  {
+    "id": "xytk9a-2",
+    "name": "Lightning Energy",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/2.webp",
+    "imageSmall": "assets/cards/xytk9a/2-sm.webp",
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-2/large",
+    "printedNumber": "002/030",
+    "era": "xy",
+    "tcgplayerId": 118800
+  },
+  {
+    "id": "xytk9a-3",
+    "name": "Lightning Energy",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/3.webp",
+    "imageSmall": "assets/cards/xytk9a/3-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-3/large",
+    "printedNumber": "003/030",
+    "era": "xy",
+    "tcgplayerId": 118801
+  },
+  {
+    "id": "xytk9a-4",
+    "name": "Electivire",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It pushes the tips of its two tails against the foe, then lets loose with over 20,000 volts of power.",
+    "evolvesFrom": "Electabuzz",
+    "image": "assets/cards/xytk9a/4.webp",
+    "imageSmall": "assets/cards/xytk9a/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Knuckle Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Electroslug",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-4/large",
+    "printedNumber": "004/030",
+    "era": "xy",
+    "tcgplayerId": 118810
+  },
+  {
+    "id": "xytk9a-5",
+    "name": "Lightning Energy",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/5.webp",
+    "imageSmall": "assets/cards/xytk9a/5-sm.webp",
+    "market": 0.13,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-5/large",
+    "printedNumber": "005/030",
+    "era": "xy",
+    "tcgplayerId": 118802
+  },
+  {
+    "id": "xytk9a-6",
+    "name": "Lightning Energy",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/6.webp",
+    "imageSmall": "assets/cards/xytk9a/6-sm.webp",
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-6/large",
+    "printedNumber": "006/030",
+    "era": "xy",
+    "tcgplayerId": 118803
+  },
+  {
+    "id": "xytk9a-7",
+    "name": "Taillow",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It dislikes cold seasons. They migrate to other lands in search of warmth, flying over 180 miles a day.",
+    "image": "assets/cards/xytk9a/7.webp",
+    "imageSmall": "assets/cards/xytk9a/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-7/large",
+    "printedNumber": "007/030",
+    "era": "xy",
+    "tcgplayerId": 118812
+  },
+  {
+    "id": "xytk9a-8",
+    "name": "Lightning Energy",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/8.webp",
+    "imageSmall": "assets/cards/xytk9a/8-sm.webp",
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-8/large",
+    "printedNumber": "008/030",
+    "era": "xy",
+    "tcgplayerId": 118804
+  },
+  {
+    "id": "xytk9a-9",
+    "name": "Lightning Energy",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/9.webp",
+    "imageSmall": "assets/cards/xytk9a/9-sm.webp",
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-9/large",
+    "printedNumber": "009/030",
+    "era": "xy",
+    "tcgplayerId": 118805
+  },
+  {
+    "id": "xytk9a-10",
+    "name": "Lightning Energy",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/10.webp",
+    "imageSmall": "assets/cards/xytk9a/10-sm.webp",
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-10/large",
+    "printedNumber": "010/030",
+    "era": "xy",
+    "tcgplayerId": 118806
+  },
+  {
+    "id": "xytk9a-11",
+    "name": "Electrike",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "It stores static electricity in its fur for discharging. It gives off sparks if a storm approaches.",
+    "image": "assets/cards/xytk9a/11.webp",
+    "imageSmall": "assets/cards/xytk9a/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-11/large",
+    "printedNumber": "011/030",
+    "era": "xy",
+    "tcgplayerId": 118813
+  },
+  {
+    "id": "xytk9a-12",
+    "name": "Blitzle",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Aya Kusube",
+    "flavorText": "Its mane shines when it discharges electricity. They use the frequency and rhythm of these flashes to communicate.",
+    "image": "assets/cards/xytk9a/12.webp",
+    "imageSmall": "assets/cards/xytk9a/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-12/large",
+    "printedNumber": "012/030",
+    "era": "xy",
+    "tcgplayerId": 118815
+  },
+  {
+    "id": "xytk9a-13",
+    "name": "Manectric",
+    "number": "13",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Naoki Saito",
+    "flavorText": "It discharges electricity from its mane. It creates a thundercloud overhead to drop lightning bolts.",
+    "evolvesFrom": "Electrike",
+    "image": "assets/cards/xytk9a/13.webp",
+    "imageSmall": "assets/cards/xytk9a/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Turn",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Electric Shock",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Discard all Lightning Energy attached to this Pokémon. Your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 0.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-13/large",
+    "printedNumber": "013/030",
+    "era": "xy",
+    "tcgplayerId": 118817
+  },
+  {
+    "id": "xytk9a-14",
+    "name": "Pikachu Libre",
+    "number": "14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Yoshinobu Saito",
+    "flavorText": "It has small electric sacs on both its cheeks. If threatened, it looses electric charges from the sacs.",
+    "image": "assets/cards/xytk9a/14.webp",
+    "imageSmall": "assets/cards/xytk9a/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Flying Elekick",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 22.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-14/large",
+    "printedNumber": "014/030",
+    "era": "xy",
+    "tcgplayerId": 118819
+  },
+  {
+    "id": "xytk9a-15",
+    "name": "Electabuzz",
+    "number": "15",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It loves to feed on strong electricity. It occasionally appears around large power plants and so on.",
+    "image": "assets/cards/xytk9a/15.webp",
+    "imageSmall": "assets/cards/xytk9a/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Knuckle Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-15/large",
+    "printedNumber": "015/030",
+    "era": "xy",
+    "tcgplayerId": 118821
+  },
+  {
+    "id": "xytk9a-16",
+    "name": "Fletchling",
+    "number": "16",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Kanako Eo",
+    "flavorText": "Despite the beauty of its lilting voice, it's merciless to intruders that enter its territory.",
+    "image": "assets/cards/xytk9a/16.webp",
+    "imageSmall": "assets/cards/xytk9a/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Acrobatics",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip 2 coins. This attack does 10 more damage for each heads."
+      }
+    ],
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-16/large",
+    "printedNumber": "016/030",
+    "era": "xy",
+    "tcgplayerId": 118823
+  },
+  {
+    "id": "xytk9a-17",
+    "name": "Lightning Energy",
+    "number": "17",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/17.webp",
+    "imageSmall": "assets/cards/xytk9a/17-sm.webp",
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-17/large",
+    "printedNumber": "017/030",
+    "era": "xy",
+    "tcgplayerId": 118807
+  },
+  {
+    "id": "xytk9a-18",
+    "name": "Lightning Energy",
+    "number": "18",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/18.webp",
+    "imageSmall": "assets/cards/xytk9a/18-sm.webp",
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-18/large",
+    "printedNumber": "018/030",
+    "era": "xy",
+    "tcgplayerId": 118808
+  },
+  {
+    "id": "xytk9a-19",
+    "name": "Purugly",
+    "number": "19",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "To make itself appear intimidatingly beefy, it tightly cinches its waist with its twin tails.",
+    "evolvesFrom": "Glameow",
+    "image": "assets/cards/xytk9a/19.webp",
+    "imageSmall": "assets/cards/xytk9a/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Nyan Press",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 0.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-19/large",
+    "printedNumber": "019/030",
+    "era": "xy",
+    "tcgplayerId": 118824
+  },
+  {
+    "id": "xytk9a-20",
+    "name": "Tierno",
+    "number": "20",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/xytk9a/20.webp",
+    "imageSmall": "assets/cards/xytk9a/20-sm.webp",
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-20/large",
+    "printedNumber": "020/030",
+    "era": "xy",
+    "tcgplayerId": 118856
+  },
+  {
+    "id": "xytk9a-21",
+    "name": "Potion",
+    "number": "21",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk9a/21.webp",
+    "imageSmall": "assets/cards/xytk9a/21-sm.webp",
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-21/large",
+    "printedNumber": "021/030",
+    "era": "xy",
+    "tcgplayerId": 118827
+  },
+  {
+    "id": "xytk9a-22",
+    "name": "Manectric",
+    "number": "22",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Naoki Saito",
+    "flavorText": "It discharges electricity from its mane. It creates a thundercloud overhead to drop lightning bolts.",
+    "evolvesFrom": "Electrike",
+    "image": "assets/cards/xytk9a/22.webp",
+    "imageSmall": "assets/cards/xytk9a/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Turn",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Electric Shock",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Discard all Lightning Energy attached to this Pokémon. Your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 0.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-22/large",
+    "printedNumber": "022/030",
+    "era": "xy",
+    "tcgplayerId": 118818
+  },
+  {
+    "id": "xytk9a-23",
+    "name": "Electabuzz",
+    "number": "23",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It loves to feed on strong electricity. It occasionally appears around large power plants and so on.",
+    "image": "assets/cards/xytk9a/23.webp",
+    "imageSmall": "assets/cards/xytk9a/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Knuckle Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-23/large",
+    "printedNumber": "023/030",
+    "era": "xy",
+    "tcgplayerId": 118822
+  },
+  {
+    "id": "xytk9a-24",
+    "name": "Purugly",
+    "number": "24",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "To make itself appear intimidatingly beefy, it tightly cinches its waist with its twin tails.",
+    "evolvesFrom": "Glameow",
+    "image": "assets/cards/xytk9a/24.webp",
+    "imageSmall": "assets/cards/xytk9a/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Nyan Press",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-24/large",
+    "printedNumber": "024/030",
+    "era": "xy",
+    "tcgplayerId": 118825
+  },
+  {
+    "id": "xytk9a-25",
+    "name": "Electivire",
+    "number": "25",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "110",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It pushes the tips of its two tails against the foe, then lets loose with over 20,000 volts of power.",
+    "evolvesFrom": "Electabuzz",
+    "image": "assets/cards/xytk9a/25.webp",
+    "imageSmall": "assets/cards/xytk9a/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Knuckle Punch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Electroslug",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "market": 0.48,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-25/large",
+    "printedNumber": "025/030",
+    "era": "xy",
+    "tcgplayerId": 118811
+  },
+  {
+    "id": "xytk9a-26",
+    "name": "Blitzle",
+    "number": "26",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Aya Kusube",
+    "flavorText": "Its mane shines when it discharges electricity. They use the frequency and rhythm of these flashes to communicate.",
+    "image": "assets/cards/xytk9a/26.webp",
+    "imageSmall": "assets/cards/xytk9a/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-26/large",
+    "printedNumber": "026/030",
+    "era": "xy",
+    "tcgplayerId": 118816
+  },
+  {
+    "id": "xytk9a-27",
+    "name": "Glameow",
+    "number": "27",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Saya Tsuruta",
+    "flavorText": "When it's happy, Glameow demonstrates beautiful movements of its tail, like a dancing ribbon.",
+    "image": "assets/cards/xytk9a/27.webp",
+    "imageSmall": "assets/cards/xytk9a/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Act Cute",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent puts a card from his or her hand on the bottom of his or her deck."
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-27/large",
+    "printedNumber": "027/030",
+    "era": "xy",
+    "tcgplayerId": 118799
+  },
+  {
+    "id": "xytk9a-28",
+    "name": "Electrike",
+    "number": "28",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "It stores static electricity in its fur for discharging. It gives off sparks if a storm approaches.",
+    "image": "assets/cards/xytk9a/28.webp",
+    "imageSmall": "assets/cards/xytk9a/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.32,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-28/large",
+    "printedNumber": "028/030",
+    "era": "xy",
+    "tcgplayerId": 118814
+  },
+  {
+    "id": "xytk9a-29",
+    "name": "Lightning Energy",
+    "number": "29",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/xytk9a/29.webp",
+    "imageSmall": "assets/cards/xytk9a/29-sm.webp",
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-29/large",
+    "printedNumber": "029/030",
+    "era": "xy",
+    "tcgplayerId": 118809
+  },
+  {
+    "id": "xytk9a-30",
+    "name": "Pikachu Libre",
+    "number": "30",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Yoshinobu Saito",
+    "flavorText": "It has small electric sacs on both its cheeks. If threatened, it looses electric charges from the sacs.",
+    "image": "assets/cards/xytk9a/30.webp",
+    "imageSmall": "assets/cards/xytk9a/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Flying Elekick",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 65.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9a-30/large",
+    "printedNumber": "030/030",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 118820,
+    "promo": true
+  }
+]

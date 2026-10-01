@@ -127,6 +127,57 @@ const ERA_LADDERS = {
     [1000, 2, 400, "Alola regular"],
     [2000, 3, 1100, "Alola local"],
   ],
+  // XY (2014-2016): about 2,300 cards once the 16 sets, the Black Star promos,
+  // McDonald's 2014-2016 and the eight Trainer Kits are in; a rung shows once
+  // the playable sets add up to its goal. TODO(lead): re-check the goals when
+  // the set builders report the real totalCounts.
+  XY: [
+    [250, 1, 100, "Kalos bound"],
+    [1000, 2, 400, "Kalos regular"],
+    [1800, 3, 1100, "Kalos local"],
+  ],
+  // Black & White (2011-2013): 1,336 cards in the 12 sets (pkmn.gg totals: bw1 115, bw2 98,
+  // bw3 102, bw4 103, bw5 111, bw6 128, dv1 21, bw7 153, bw8 138, bw9 122, bw10 105, bw11 140),
+  // about 1,500 with the BW Black Star Promos, McDonald's 2011-2012 and the two Trainer Kits. A rung
+  // shows once the playable sets add up to its goal. TODO(lead): re-check against the real totalCounts.
+  "Black & White": [
+    [250, 1, 100, "Unova bound"],
+    [750, 2, 400, "Unova regular"],
+    [1200, 3, 1100, "Unova local"],
+  ],
+  // Wizards of the Coast (1999-2003): 1,728 cards in the 16 sets (pkmn.gg totals: base1 102, base2 64, base3 62, base4 130, base5 83, gym1
+  // 132, gym2 132, neo1 111, neo2 75, si1 18, neo3 66, neo4 113, base6 110, ecard1 165, ecard2 183, ecard3 182), 1,790 with the Wizards Black
+  // Star Promos (53) and Best of Game (9). The Johto rungs belong to the HeartGold & SoulSilver ladder below, so this one is all Kanto.
+  // TODO(lead): re-check against the real totalCounts (Aquapolis is 183 on pkmn.gg, 186 on PSA with the four a/b e-reader variants).
+  "Wizards of the Coast": [
+    [250, 1, 100, "Kanto bound"],
+    [750, 2, 400, "Kanto regular"],
+    [1400, 3, 1100, "Kanto local"],
+  ],
+  // Diamond & Pearl and Platinum (2007-2009): 1,361 cards in the 11 sets (pkmn.gg totals: dp1 130, dp2 124, dp3 132, dp4 106,
+  // dp5 100, dp6 146, dp7 106, pl1 133, pl2 120, pl3 153, pl4 111), about 1,500 with the DP Black Star Promos (56), POP
+  // Series 6-9 (68) and the two DP Trainer Kits (23). TODO(lead): re-check against the real totalCounts.
+  "Diamond & Pearl": [
+    [250, 1, 100, "Sinnoh bound"],
+    [750, 2, 400, "Sinnoh regular"],
+    [1300, 3, 1100, "Sinnoh local"],
+  ],
+  // HeartGold & SoulSilver (2010-2011): 520 cards in the 5 sets (hgss1 124, hgss2 96, hgss3 91, hgss4 103, col1 106),
+  // about 605 with the HGSS Black Star Promos (25) and the two Trainer Kits (60). TODO(lead): re-check against the real totalCounts.
+  "HeartGold & SoulSilver": [
+    [100, 1, 100, "Johto bound"],
+    [250, 2, 400, "Johto regular"],
+    [500, 3, 1100, "Johto local"],
+  ],
+  // EX (2003-2007): 1,722 cards in the 16 sets (pkmn.gg totals: ex1 109, ex2 100, ex3 100, ex4 97, ex5 102, ex6 116, ex7 111,
+  // ex8 108, ex9 107, ex10 145, ex11 114, ex12 93, ex13 111, ex14 100, ex15 101, ex16 108), about 1,890 with the Nintendo Black
+  // Star Promos (40), POP Series 1-5 (85) and the four EX Trainer Kit halves (44). A rung shows once the playable sets add up to its
+  // goal. TODO(lead): re-check against the real totalCounts.
+  EX: [
+    [250, 1, 100, "Hoenn bound"],
+    [800, 2, 400, "Hoenn regular"],
+    [1500, 3, 1100, "Hoenn local"],
+  ],
 };
 
 const ERA_ROWS = ERA_NAMES.flatMap((era) =>
@@ -182,7 +233,8 @@ export const SETS_GENERAL = [
   ach("sets", 4, "sets-done-5", "High five", "Complete 5 sets.", 5, (c) => c.setsDone, 3500, { mark: "x5" }),
   ach("sets", 4, "sets-done-10", "Ten sets deep", "Complete 10 sets.", 10, (c) => c.setsDone, 4000, { mark: "x10", title: "Grand Master" }),
   ach("sets", 4, "sets-done-25", "Quarter century", "Complete 25 sets.", 25, (c) => c.setsDone, 4500, { mark: "x25" }),
-  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
+  // A listed set with no cards yet (a promo set whose carriers are still landing) cannot be completed, so it is not counted.
+  ach("sets", 4, "sets-done-all", "Every last set", "Complete every playable set.", PLAYABLE_SETS.filter((set) => set.totalCount > 0).length, (c) => c.setsDone, 5000, { mark: "ALL", title: "Pokémon Master" }),
 
   ach("sets", 1, "happy-meal", "Happy meal", "Own a card from a McDonald's set.", 1, (c) => c.editionOwned("McDonald's"), 60, { mark: "M" }),
   ach("sets", 1, "trick-or-treat", "Trick or treat", "Own a card from a Trick or Trade set.", 1, (c) => c.editionOwned("Trick or Trade"), 60, { mark: "TT" }),

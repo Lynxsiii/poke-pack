@@ -18,6 +18,7 @@ import {
   readyToClaim,
 } from "../js/achievements.js";
 import { AWARD_TITLES, TITLES, isTitleUnlocked, titleContext, masteryTitle } from "../js/titles.js";
+import { masteryGear } from "../js/achievement-sets.js";
 import { nameHas, isTagTeamName, SM_FINISHES } from "../js/achievement-kit.js";
 import { FINISH_PRINTERS, RARITIES_IN_PRINT, isPrinted } from "../js/achievement-eras.js";
 import { halfCoins, masteryCoins } from "../js/achievement-sets.js";
@@ -316,9 +317,15 @@ for (const row of ACHIEVEMENTS) {
     assert.equal(row.title, `${row.era} Champion`.length <= 32 ? `${row.era} Champion` : row.title);
     assert.ok(row.title.length <= 32 && row.title.endsWith("Champion"), `${row.id} title ${row.title}`);
     assert.ok(AWARD_TITLES.some((award) => award.ach === row.id && award.name === row.title), `${row.id} has an award title`);
-    assert.ok(row.coins > masteryCoins(1000), `${row.id} pays more than any single mastery`);
+    // More than the biggest mastery of its own era (a four-set era like Platinum pays less than the 4,000 cap).
+    const biggestSet = Math.max(...sets.map((set) => set.totalCount || 1));
+    assert.ok(row.coins > masteryCoins(biggestSet), `${row.id} pays more than any single mastery of the era`);
     assert.ok(row.coins <= 12000, `${row.id} coins`);
-    assert.ok(row.reward && Array.isArray(row.reward.gear) && row.reward.gear.length > 0, `${row.id} gifts gear`);
+    // A crown gifts gear when its era has any sleeve or coin in data/gear.json. The eras older
+    // than Sun & Moon have no gear filed yet, so their crowns pay coins and the title only.
+    assert.ok(row.reward && Array.isArray(row.reward.gear), `${row.id} carries reward.gear`);
+    const eraHasGear = sets.some((set) => masteryGear(set.id).length > 0);
+    if (eraHasGear) assert.ok(row.reward.gear.length > 0, `${row.id} gifts gear`);
     assert.ok(!row.set, "a crown is not tied to one set, so it never shows up under achievementsBySet");
     // Not done until every set of the era is complete; done the moment the last card lands.
     const owned = {};

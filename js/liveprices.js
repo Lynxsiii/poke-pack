@@ -44,7 +44,41 @@ const TCGDEX_SET = {
   // Sun & Moon: TCGdex's ids (the half sets use a dot; Shiny Vault rides Hidden Fates).
   sm1: "sm1", sm2: "sm2", sm3: "sm3", sm35: "sm3.5", sm4: "sm4", sm5: "sm5", sm6: "sm6", sm7: "sm7", sm75: "sm7.5",
   sm8: "sm8", sm9: "sm9", det1: "det1", sm10: "sm10", sm11: "sm11", sm115: "sm11.5", sm12: "sm12", smp: "smp",
+  // XY: TCGdex keeps the era's ids (checked 2026-10-01: /v2/en/series/xy lists xyp, xy0, xy1 to xy12, dc1, g1).
+  xy0: "xy0", xy1: "xy1", xy2: "xy2", xy3: "xy3", xy4: "xy4", xy5: "xy5", dc1: "dc1", xy6: "xy6", xy7: "xy7",
+  xy8: "xy8", xy9: "xy9", g1: "g1", xy10: "xy10", xy11: "xy11", xy12: "xy12", xyp: "xyp",
+  // Black & White: TCGdex keeps the era's ids (checked 2026-10-01: /v2/en/series/bw lists bw1 to bw11, dv1, bwp;
+  // Legendary Treasures' Radiant Collection is inside bw11 as bw11-RC1 to RC25).
+  bw1: "bw1", bw2: "bw2", bw3: "bw3", bw4: "bw4", bw5: "bw5", bw6: "bw6", dv1: "dv1", bw7: "bw7", bw8: "bw8",
+  bw9: "bw9", bw10: "bw10", bw11: "bw11", bwp: "bwp",
+  // Diamond & Pearl generation: TCGdex keeps the era's ids (checked 2026-10-01: /v2/en/series/dp, pl, hgss, col, pop; the
+  // HGSS Black Star Promos are "hgssp", the Trainer Kits "tk-dp-m", "tk-dp-l", "tk-hs-g", "tk-hs-r" and are not mapped here).
+  dp1: "dp1", dp2: "dp2", dp3: "dp3", dp4: "dp4", dp5: "dp5", dp6: "dp6", dp7: "dp7", dpp: "dpp",
+  pl1: "pl1", pl2: "pl2", pl3: "pl3", pl4: "pl4",
+  hgss1: "hgss1", hgss2: "hgss2", hgss3: "hgss3", hgss4: "hgss4", hsp: "hgssp", col1: "col1",
+  pop6: "pop6", pop7: "pop7", pop8: "pop8", pop9: "pop9",
+  // EX generation: TCGdex keeps the era's ids, unpadded (checked 2026-10-01: /v2/en/series/ex and /series/pop; "ex1-1" is a card, "ex1-001"
+  // a 404; the Nintendo promos are "np-1", unpadded and without a prefix, listed under the POP series; the Trainer Kits are
+  // "tk-ex-latia", "tk-ex-latio", "tk-ex-p" (Plusle) and "tk-ex-m" (Minun), cards "tk-ex-latia-4"; Unseen Forces' Unown A-Z, ! and ?
+  // are NOT on TCGdex: ex10 stops at 117, so those 28 stay on the site's own prices).
+  ex1: "ex1", ex2: "ex2", ex3: "ex3", ex4: "ex4", ex5: "ex5", ex6: "ex6", ex7: "ex7", ex8: "ex8", ex9: "ex9", ex10: "ex10",
+  ex11: "ex11", ex12: "ex12", ex13: "ex13", ex14: "ex14", ex15: "ex15", ex16: "ex16", np: "np",
+  pop1: "pop1", pop2: "pop2", pop3: "pop3", pop4: "pop4", pop5: "pop5",
+  extk1a: "tk-ex-latia", extk1b: "tk-ex-latio", extk2a: "tk-ex-p", extk2b: "tk-ex-m",
+  // Wizards of the Coast: TCGdex keeps the era's ids (checked 2026-10-01: /v2/en/series/base, gym, neo, lc, ecard; "base1-4", "neo1-1",
+  // "ecard1-1", "basep-1" are 200s). Legendary Collection is its own series "lc" (set "lc", not base6) and Best of Game is set "bog" in
+  // the e-Card series. Southern Islands is "si1" in the Neo series. The e-Card holos are zero-padded there ("ecard2-H01", `tcgdexId`).
+  base1: "base1", base2: "base2", base3: "base3", base4: "base4", base5: "base5", basep: "basep", gym1: "gym1", gym2: "gym2",
+  neo1: "neo1", neo2: "neo2", si1: "si1", neo3: "neo3", neo4: "neo4", base6: "lc", ecard1: "ecard1", ecard2: "ecard2", ecard3: "ecard3", bp: "bog",
 };
+
+/**
+ * TCGdex zero-pads only the Scarlet & Violet, Mega Evolution and Crown Zenith ids ("sv01-001", "me01-001", "swsh12.5-001").
+ * Every older set is unpadded as printed: "swsh1-1", "cel25-1", "sm1-1", "sm3.5-1", "det1-1", "xy1-1", "g1-1", "dc1-1", "bw1-1",
+ * "bw11-RC1", "dv1-1", "dp1-1", "hgss1-ONE", "dp7-SH1", "dpp-DP01", "hgssp-HGSS01" (probed 2026-10-01; "sm1-001" and "xy5-001"
+ * are 404s). tcgdexId() pads by prefix.
+ */
+const TCGDEX_PADDED = /^(?:sv|me|swsh12\.5)/;
 
 /** pokemontcg.io is flaky on new sets; one 5xx and we stop asking for this session. */
 let ptcgioOk = true;
@@ -150,18 +184,30 @@ function pickPtcgio(card) {
 
 function numKey(value) {
   const n = Number(String(value).replace(/^#/, ""));
-  return Number.isFinite(n) ? String(n) : String(value);
+  if (Number.isFinite(n)) return String(n);
+  // TCGdex pads the e-Card holos ("H01") where the site and pokemontcg.io write "H1".
+  const lettered = /^([A-Za-z]+)0*(\d+)$/.exec(String(value));
+  return lettered ? `${lettered[1]}${Number(lettered[2])}` : String(value);
 }
 
 function namesMatch(a, b) {
   return String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
 }
 
-function tcgdexId(setId, number) {
+export function tcgdexId(setId, number) {
   const prefix = TCGDEX_SET[setId];
   if (!prefix) return "";
   const n = String(number).replace(/^0+/, "") || "0";
-  return `${prefix}-${n.padStart(3, "0")}`;
+  if (TCGDEX_PADDED.test(prefix)) return `${prefix}-${n.padStart(3, "0")}`;
+  // A promo's number is "dpp01" on the site and "DP01" on TCGdex; a subset's is "SH1", "RT1", "AR1", "SL1"; Alph's is "ONE".
+  // The Nintendo promos' number is "np012" on the site and "12" on TCGdex ("np-12").
+  if (/^np\d/i.test(String(number))) return `${prefix}-${String(number).replace(/^np0*/i, "")}`;
+  // A Wizards promo's is "basep21" / "bp03" (TCGdex "basep-21", "bog-3") and an e-Card holo's "H1" ("ecard2-H01").
+  const wizards = String(number).replace(/^(?:basep|bp)0*(?=\d)/i, "");
+  if (wizards !== String(number)) return `${prefix}-${wizards}`;
+  const holo = /^H(\d)$/i.exec(String(number));
+  if (holo && /^ecard[23]$/.test(setId)) return `${prefix}-H0${holo[1]}`;
+  return `${prefix}-${/^(?:dpp|hsp)\d/i.test(String(number)) ? String(number).replace(/^dpp/i, "DP").replace(/^hsp/i, "HGSS") : String(number)}`;
 }
 
 async function fetchJson(url, timeoutMs = 20000) {

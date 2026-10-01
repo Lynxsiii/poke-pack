@@ -1,0 +1,282 @@
+{
+  "id": "g1",
+  "name": "Generations",
+  "series": "xy",
+  "slug": "generations",
+  "scrydexId": "g1",
+  "era": "xy",
+  "artSlug": "generations",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1728,
+  "subsets": [
+    {
+      "inline": true,
+      "gallery": "RC",
+      "scrydexId": "g1",
+      "tcgplayerGroup": 1729
+    }
+  ],
+  "rcNumbers": "^RC\\d+$",
+  "skipNumbers": [
+    "28a",
+    "73a",
+    "75",
+    "76",
+    "77",
+    "78",
+    "79",
+    "80",
+    "81",
+    "82",
+    "83"
+  ],
+  "rarityOverrides": {
+    "25": "Rare Ultra",
+    "29": "Rare Ultra"
+  },
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "promoCards": {
+    "xyp110": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp111": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp112": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp113": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp114": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp115": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp116": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp117": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp118": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp119": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp120": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp121": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp122": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp123": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp124": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp125": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp126": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp148": {
+      "foilAs": "Rare Holo EX"
+    }
+  },
+  "products": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "tcgplayerId": 123741,
+      "packs": 10,
+      "promos": [
+        "xyp148"
+      ],
+      "note": "The 20th Anniversary Pokemon Center exclusive: 10 Generations packs, not 8."
+    },
+    {
+      "id": "mythical-mew",
+      "name": "Mythical Pokémon Collection (Mew)",
+      "kind": "collection",
+      "tcgplayerId": 113774,
+      "packs": 2,
+      "promos": [
+        "xyp110"
+      ]
+    },
+    {
+      "id": "mythical-celebi",
+      "name": "Mythical Pokémon Collection (Celebi)",
+      "kind": "collection",
+      "tcgplayerId": 114525,
+      "packs": 2,
+      "promos": [
+        "xyp111"
+      ]
+    },
+    {
+      "id": "mythical-jirachi",
+      "name": "Mythical Pokémon Collection (Jirachi)",
+      "kind": "collection",
+      "tcgplayerId": 116999,
+      "packs": 2,
+      "promos": [
+        "xyp112"
+      ]
+    },
+    {
+      "id": "mythical-manaphy",
+      "name": "Mythical Pokémon Collection (Manaphy)",
+      "kind": "collection",
+      "tcgplayerId": 118796,
+      "packs": 2,
+      "promos": [
+        "xyp113"
+      ]
+    },
+    {
+      "id": "mythical-darkrai",
+      "name": "Mythical Pokémon Collection (Darkrai)",
+      "kind": "collection",
+      "tcgplayerId": 118342,
+      "packs": 2,
+      "promos": [
+        "xyp114"
+      ]
+    },
+    {
+      "id": "mythical-shaymin",
+      "name": "Mythical Pokémon Collection (Shaymin)",
+      "kind": "collection",
+      "tcgplayerId": 120114,
+      "packs": 2,
+      "promos": [
+        "xyp115"
+      ]
+    },
+    {
+      "id": "mythical-arceus",
+      "name": "Mythical Pokémon Collection (Arceus)",
+      "kind": "collection",
+      "tcgplayerId": 121363,
+      "packs": 2,
+      "promos": [
+        "xyp116"
+      ]
+    },
+    {
+      "id": "mythical-victini",
+      "name": "Mythical Pokémon Collection (Victini)",
+      "kind": "collection",
+      "tcgplayerId": 123433,
+      "packs": 2,
+      "promos": [
+        "xyp117"
+      ]
+    },
+    {
+      "id": "mythical-keldeo",
+      "name": "Mythical Pokémon Collection (Keldeo)",
+      "kind": "collection",
+      "tcgplayerId": 123740,
+      "packs": 2,
+      "promos": [
+        "xyp118"
+      ]
+    },
+    {
+      "id": "mythical-genesect",
+      "name": "Mythical Pokémon Collection (Genesect)",
+      "kind": "collection",
+      "tcgplayerId": 126569,
+      "packs": 2,
+      "promos": [
+        "xyp119"
+      ]
+    },
+    {
+      "id": "mythical-meloetta",
+      "name": "Mythical Pokémon Collection (Meloetta)",
+      "kind": "collection",
+      "tcgplayerId": 126568,
+      "packs": 2,
+      "promos": [
+        "xyp120"
+      ]
+    },
+    {
+      "id": "red-blue-charizard",
+      "name": "Red & Blue Collection (Charizard-EX)",
+      "kind": "collection",
+      "tcgplayerId": 115598,
+      "packs": 4,
+      "promos": [
+        "xyp121"
+      ]
+    },
+    {
+      "id": "red-blue-blastoise",
+      "name": "Red & Blue Collection (Blastoise-EX)",
+      "kind": "collection",
+      "tcgplayerId": 118795,
+      "packs": 4,
+      "promos": [
+        "xyp122"
+      ]
+    },
+    {
+      "id": "red-blue-venusaur",
+      "name": "Red & Blue Collection (Venusaur-EX)",
+      "kind": "collection",
+      "tcgplayerId": 120700,
+      "packs": 4,
+      "promos": [
+        "xyp123"
+      ]
+    },
+    {
+      "id": "red-blue-pikachu",
+      "name": "Red & Blue Collection (Pikachu-EX)",
+      "kind": "collection",
+      "tcgplayerId": 123432,
+      "packs": 4,
+      "promos": [
+        "xyp124"
+      ]
+    },
+    {
+      "id": "super-premium-mew-mewtwo",
+      "name": "Super-Premium Collection (Mew & Mewtwo)",
+      "kind": "premium",
+      "tcgplayerId": 147223,
+      "packs": 10,
+      "promos": [
+        "xyp125",
+        "xyp126"
+      ]
+    }
+  ]
+}

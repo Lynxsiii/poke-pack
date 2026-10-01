@@ -112,6 +112,131 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "sm35": ("#f2b53c", "#e2609e"),  # Shining Legends: shining gold to Mew pink
     "sm4": ("#e8403f", "#ffb347"),  # Crimson Invasion: invasion red to Guzzlord amber
     "sm5": ("#8a7dff", "#ffb347"),  # Ultra Prism: prism violet to Necrozma gold
+    "xy9": ("#f29a2e", "#4d84e8"),  # BREAKpoint: BREAK orange to wrapper blue
+    "g1": ("#e8473f", "#f2c14e"),  # Generations: Charizard red to Pikachu gold
+    "xy10": ("#e6b84a", "#5f8fe0"),  # Fates Collide: chrome gold to Lugia blue
+    "xy4": ("#d24fbf", "#ff8a3d"),  # Phantom Forces: phantom magenta to logo orange
+    "xy5": ("#ff7a3a", "#4aa3ff"),  # Primal Clash: Primal Groudon orange to Primal Kyogre blue
+    "dc1": ("#e5484d", "#27b3c9"),  # Double Crisis: Team Magma red to Team Aqua teal
+    "xy1": ("#4aa3ec", "#e8453c"),  # XY: Xerneas blue to Yveltal red
+    "xy2": ("#ff8a2a", "#4ab3ff"),  # Flashfire: flame orange to Mega Charizard X blue flame
+    "xy3": ("#e8503a", "#38b6a0"),  # Furious Fists: fist red to Hawlucha teal
+    # XY block (b3)
+    "xy6": ("#7fd04e", "#f2c542"),
+    "xy7": ("#a46be0", "#e8b84a"),
+    "xy8": ("#e5533d", "#4db3ea"),
+    # XY block (b6): promos, McDonald's 2014-2016, the Trainer Kit half decks
+    "xyp": ("#c5d0e6", "#ff7ab6"),       # XY promos: silver star, Fairy pink
+    "mcd14": ("#ffb02e", "#4aa3ec"),     # McDonald's 2014: golden arches to Kalos blue
+    "mcd15": ("#ffb02e", "#e8453c"),     # McDonald's 2015: golden arches to Omega Ruby red
+    "mcd16": ("#ffb02e", "#59c8f0"),     # McDonald's 2016: golden arches to sky blue
+    "xytk6a": ("#9a7bf0", "#45b6d0"),    # Noivern kit: bat violet to echo teal
+    "xytk6b": ("#ff8fc8", "#8ad0ff"),    # Sylveon kit: ribbon pink to fairy blue
+    "xytk7a": ("#e0566c", "#9fb0c4"),    # Bisharp kit: blade red to steel
+    "xytk7b": ("#ff8fc8", "#ffd36b"),    # Wigglytuff kit: balloon pink to gold
+    "xytk8a": ("#4aa3ff", "#c9b3ff"),    # Latios kit: sky blue to lavender
+    "xytk8b": ("#ff6f86", "#ffc4cf"),    # Latias kit: red to blush
+    "xytk9a": ("#ffd23f", "#ff6a4a"),    # Pikachu Libre kit: electric yellow to mask red
+    "xytk9b": ("#4fc3f7", "#a6e1ff"),    # Suicune kit: aurora blue
+    "xy11": ("#f0a23a", "#4fa3d9"),  # Steam Siege: gear gold to steam blue
+    "xy12": ("#f2652d", "#5bb3e8"),  # Evolutions: Charizard orange to Blastoise blue
+    "xy0": ("#69c35a", "#f2823a"),  # Kalos Starter Set: Chespin green to Fennekin orange
+    "bw1": ("#4fa8ff", "#ff7a3a"),  # Black & White: Zekrom blue to Reshiram orange
+    "bw2": ("#e5533d", "#8fd04e"),  # Emerging Powers: wrapper red to Tornadus green
+    "bw3": ("#38a8e6", "#f2a93b"),  # Noble Victories: wrapper blue to Victini gold
+    "bw4": ("#f2c23a", "#3f8ff0"),  # Next Destinies: wrapper gold to Zekrom blue
+    "bw5": ("#b45ce6", "#ff9a2e"),  # Dark Explorers: wrapper purple to Scrafty orange
+    "bw6": ("#4cc95a", "#ee4b2b"),  # Dragons Exalted: wrapper green to Rayquaza flame red
+    "dv1": ("#a4d63a", "#f08a24"),  # Dragon Vault: lava-lime to Dragonite orange
+    "bw7": ("#ff6a3d", "#4cc9f0"),  # Boundaries Crossed: Keldeo mane orange to frost cyan
+    "bw8": ("#2f9bff", "#ff8c42"),  # Plasma Storm: storm blue to Charizard orange
+    "bw9": ("#2ed3c6", "#ff5d73"),  # Plasma Freeze: freeze teal to Deoxys red
+    # Black & White block (c5): promos, McDonald's 2011-2012, the Trainer Kit half decks
+    "bwp": ("#c5d0e6", "#4d8be0"),  # BW promos: silver star to Unova blue
+    "mcd11": ("#ffb02e", "#3fbf9a"),  # McDonald's 2011: golden arches to Snivy green
+    "mcd12": ("#ffb02e", "#e8663d"),  # McDonald's 2012: golden arches to Tepig orange
+    "bwtk5a": ("#e0566c", "#8a6fe0"),  # Zoroark kit: mane red to illusion violet
+    "bwtk5b": ("#d0a24a", "#9fb0c4"),  # Excadrill kit: drill gold to steel
+    "hgss1": ("#f0a33a", "#7fb4e8"),  # HeartGold & SoulSilver: Ho-Oh gold-orange to Lugia silver-blue
+    "hgss2": ("#2fb7a6", "#f0803a"),  # HS Unleashed: teal wrapper to Entei orange
+    "hgss3": ("#d8483a", "#e8b04a"),  # HS Undaunted: red foil to amber
+    "hgss4": ("#3b8fd9", "#f0a52f"),  # HS Triumphant: Palkia blue to Magmortar amber
+    "col1": ("#e8453c", "#9bb6d8"),  # Call of Legends: legend red to silver blue
+    # Diamond & Pearl generation (d5): promos, POP Series 6-9, the Trainer Kit half decks
+    "dpp": ("#cfd6e8", "#8479e0"),  # DP promos: silver star to Sinnoh violet
+    "hsp": ("#e3c15a", "#c9d3dd"),  # HGSS promos: gold star to silver
+    "pop6": ("#8cc8f2", "#7a86e8"),  # POP 6: Lucario ice blue to periwinkle
+    "pop7": ("#f09a4d", "#46a37a"),  # POP 7: Gallade orange to green
+    "pop8": ("#c4ccd8", "#e5742f"),  # POP 8: Heatran silver to lava orange
+    "pop9": ("#f2c230", "#6f78e0"),  # POP 9: Garchomp yellow to violet-blue
+    "dptk3a": ("#4bb3e0", "#7a8cf0"),  # Manaphy kit: sea blue to periwinkle
+    "dptk3b": ("#e8873a", "#5a8de0"),  # Lucario kit: orange to aura blue
+    "hgsstk4a": ("#2f8fd9", "#e0605a"),  # Gyarados kit: sea blue to coral red
+    "hgsstk4b": ("#f2c230", "#e0793a"),  # Raichu kit: yellow to orange
+    # EX generation (e5): promos, POP Series 1-5, the Trainer Kit half decks
+    "np": ("#e65a5a", "#c9cfdc"),  # Nintendo promos: Nintendo red to silver star
+    "pop1": ("#f09a3a", "#f2d04a"),  # POP 1: Blaziken orange to yellow
+    "pop2": ("#5ec05a", "#d9d04a"),  # POP 2: Venusaur green to yellow
+    "pop3": ("#4fb0e0", "#e8a23a"),  # POP 3: Vaporeon blue to Flareon orange
+    "pop4": ("#a06fd8", "#f0a050"),  # POP 4: Deoxys violet to orange
+    "pop5": ("#e0504a", "#f2c230"),  # POP 5: Ho-Oh red to gold
+    "extk1a": ("#e05a4a", "#f0d9c8"),  # Latias kit: red to cream
+    "extk1b": ("#4a7fe0", "#c8d8f0"),  # Latios kit: blue to pale blue
+    "extk2a": ("#f2c230", "#e0524a"),  # Plusle kit: yellow to red
+    "extk2b": ("#4a9de0", "#f2c230"),  # Minun kit: blue to yellow
+    "bw10": ("#ff9a2e", "#3aa0ff"),  # Plasma Blast: wrapper orange to Team Plasma blue
+    "bw11": ("#f2b632", "#8f7be8"),  # Legendary Treasures: Radiant gold to Mewtwo violet
+    # Diamond & Pearl block (d1)
+    "dp1": ("#4f8fe8", "#d96ad0"),   # Diamond & Pearl: Dialga blue to Palkia pink
+    "dp2": ("#ff7a2e", "#3aa8d8"),   # Mysterious Treasures: Magmortar orange to lake-trio blue
+    "dp3": ("#58c25a", "#d4508f"),   # Secret Wonders: wrapper green to Honchkrow magenta
+    "pl1": ("#4aa3e0", "#e8a33a"),  # Platinum: Shaymin sky blue to Giratina gold
+    "pl2": ("#f08a2a", "#3f9be0"),  # Rising Rivals: Rotom orange to wrapper blue
+    "pl3": ("#d24a3f", "#6f7fd1"),  # Supreme Victors: wrapper red to Absol night violet
+    "pl4": ("#e8c04a", "#5fb7e8"),  # Arceus: ring gold to ice-water blue
+    "dp4": ("#7a6be0", "#e3b94a"),  # Great Encounters: Darkrai violet to Dialga gold
+    "dp5": ("#2f9be0", "#f2c744"),  # Majestic Dawn: Empoleon blue to logo gold
+    "dp6": ("#f08a1c", "#3b82d9"),  # Legends Awakened: wrapper orange to Lucario blue
+    "dp7": ("#9a63d6", "#e5533d"),  # Stormfront: storm purple to Infernape red
+    # EX era (e2)
+    "ex5": ("#5aa9d8", "#d9473f"),  # EX Hidden Legends: Metagross steel blue to wrapper logo red
+    "ex6": ("#f08a2a", "#7fcf3c"),  # EX FireRed & LeafGreen: FireRed orange to LeafGreen
+    "ex7": ("#e5532d", "#8a68c8"),  # EX Team Rocket Returns: Rocket R red to wrapper violet
+    "ex8": ("#d7e03a", "#e0483c"),  # EX Deoxys: wrapper lime to logo red
+    "neo1": ("#8cc152", "#d9534a"),  # Neo Genesis: Meganium green to the red neo logo
+    "neo2": ("#d6a352", "#567ab8"),  # Neo Discovery: temple sand to night blue
+    "neo3": ("#d9573a", "#4a86c8"),  # Neo Revelation: wrapper red to ruin blue
+    "neo4": ("#9a69cf", "#d6c14a"),  # Neo Destiny: Dark violet to Light gold
+    "ex1": ("#d9433f", "#4a74d9"),  # EX Ruby & Sapphire: ruby red to sapphire blue, the wrapper rays
+    "ex2": ("#e0b43c", "#b8743a"),  # EX Sandstorm: swirling desert gold to bronze foil
+    "ex3": ("#f08a2c", "#6fb4d8"),  # EX Dragon: Rayquaza flame orange to the icy Latios wrapper
+    "ex4": ("#e0553a", "#2f9fd0"),  # EX Team Magma vs Team Aqua: magma red to aqua blue
+    # EX era (e4)
+    "ex13": ("#b665d4", "#e8742f"),  # Holon Phantoms: Mewtwo wrapper violet to Zangoose orange
+    "ex14": ("#46b4e0", "#ee8a2e"),  # Crystal Guardians: ice-crystal blue to Charizard flame orange
+    "ex15": ("#e8a22a", "#9576e0"),  # Dragon Frontiers: gold frame to Salamence violet
+    "ex16": ("#2fa88c", "#e8a53a"),  # Power Keepers: wrapper teal to Raichu gold
+    # Wizards of the Coast block (w2)
+    "base5": ("#e0463a", "#f2c744"),  # Team Rocket: Rocket red to the gold Pokémon logo
+    "gym1": ("#f08a2a", "#27b3a6"),  # Gym Heroes: wrapper orange rays to teal
+    "gym2": ("#9b5de0", "#7cc83e"),  # Gym Challenge: wrapper violet to green
+    "base6": ("#5a86e6", "#f2b632"),  # Legendary Collection: wrapper blue to the logo gold
+    "base1": ("#e8b23a", "#5f86e6"),  # Base Set: Charizard gold-orange to wrapper blue
+    "base2": ("#4fb04a", "#f2c744"),  # Jungle: wrapper green to logo gold
+    "base3": ("#d9b48a", "#3f8fd0"),  # Fossil: parchment tan to logo blue
+    "base4": ("#d9543e", "#3d8bd9"),  # Base Set 2: Charizard red to wrapper blue
+    "ecard1": ("#e0a82e", "#3f78c8"),  # Expedition: logo gold to e-Card blue
+    "ecard2": ("#35a7d6", "#6b6fd6"),  # Aquapolis: wrapper water blue to logo violet
+    "ecard3": ("#3fb86a", "#d8d23a"),  # Skyridge: wrapper green to logo lime
+    "si1": ("#f08a2c", "#3aa0c8"),  # Southern Islands: logo orange to lagoon blue
+    # Wizards of the Coast promo sets (w5)
+    "basep": ("#e0b94a", "#7f8fb8"),  # Wizards Black Star Promos: black-star gold to slate
+    "bp": ("#d9503a", "#8a70d4"),  # Best of Game: Rocket red to Dark violet
+    # EX era (e3)
+    "ex9": ("#3fbf6a", "#4aa8e0"),  # Emerald: logo green to Deoxys sky blue
+    "ex10": ("#d24fa8", "#3f78d9"),  # Unseen Forces: Raikou magenta to logo blue
+    "ex11": ("#f2a02e", "#7e8aa0"),  # Delta Species: Dragonite orange to logo steel
+    "ex12": ("#c4a46a", "#7aa86a"),  # Legend Maker: logo stone to wrapper green
 }
 
 # Used when a set has no art at all and no override.

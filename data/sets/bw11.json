@@ -1,0 +1,183 @@
+{
+  "id": "bw11",
+  "name": "Legendary Treasures",
+  "series": "black-white",
+  "slug": "legendary-treasures",
+  "scrydexId": "bw11",
+  "era": "bw",
+  "artSlug": "legendary-treasures",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1409,
+  "subsets": [
+    {
+      "inline": true,
+      "gallery": "RC",
+      "scrydexId": "bw11",
+      "tcgplayerGroup": 1465
+    }
+  ],
+  "rcNumbers": "^RC\\d+$",
+  "rarityOverrides": {
+    "RC11": "Rare Holo EX"
+  },
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  },
+  "promoCards": {
+    "bwp097": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp098": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "sleeved-art-bundle",
+      "name": "Legendary Treasures Sleeved Booster Pack Art Bundle [Set of 4]",
+      "kind": "bundle",
+      "tcgplayerId": 276608,
+      "packs": 4,
+      "promos": [],
+      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\")."
+    },
+    {
+      "id": "blister-eevee",
+      "name": "Legendary Treasures Three Pack Blister [Eevee]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp097"
+      ],
+      "note": "Three packs, a coin and BW97 Eevee, the first promo on Smooth Cosmos Holofoil (Bulbapedia merchandise page and pkmn.gg variant text)."
+    },
+    {
+      "id": "blister-mew",
+      "name": "Legendary Treasures Three Pack Blister [Mew]",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "bwp098"
+      ],
+      "note": "Three packs, a coin and BW98 Mew in Smooth Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text)."
+    },
+    {
+      "id": "blister-aggron",
+      "name": "Legendary Treasures Single Pack Blister [Aggron]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Aggron (single source; the reprint card is not simulated)."
+    },
+    {
+      "id": "blister-ampharos",
+      "name": "Legendary Treasures Single Pack Blister [Ampharos]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [],
+      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Ampharos (single source; the reprint card is not simulated)."
+    },
+    {
+      "id": "legendary-dragons-of-unova-collection",
+      "name": "Legendary Dragons of Unova Collection",
+      "kind": "collection",
+      "tcgplayerId": 206316,
+      "packs": 4,
+      "promos": [],
+      "note": "Four Black & White Series packs (set not named: dealt as Legendary Treasures), three figures and Cosmos Holo reprints of Reshiram, Zekrom and Kyurem (not simulated). TCGplayer id and Bulbapedia."
+    },
+    {
+      "id": "two-pack-blister-legendary-birds",
+      "name": "Black & White Two Pack Blister [Legendary Birds]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [],
+      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Moltres, Articuno and Zapdos (not simulated). Bulbapedia only, December 2013."
+    },
+    {
+      "id": "two-pack-blister-swords-of-justice",
+      "name": "Black & White Two Pack Blister [Swords of Justice]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [],
+      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Virizion, Terrakion and Cobalion (not simulated). Bulbapedia only, December 2013."
+    },
+    {
+      "id": "best-of-bw-tin-mewtwo",
+      "name": "Best of Black & White Tin [Mewtwo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "promos": [],
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated."
+    },
+    {
+      "id": "best-of-bw-tin-darkrai",
+      "name": "Best of Black & White Tin [Darkrai-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "promos": [],
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated."
+    },
+    {
+      "id": "best-of-bw-tin-rayquaza",
+      "name": "Best of Black & White Tin [Rayquaza-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "promos": [],
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated."
+    },
+    {
+      "id": "best-of-bw-tin-black-kyurem",
+      "name": "Best of Black & White Tin [Black Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "promos": [],
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated."
+    },
+    {
+      "id": "best-of-bw-tin-white-kyurem",
+      "name": "Best of Black & White Tin [White Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "promos": [],
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated."
+    }
+  ]
+}

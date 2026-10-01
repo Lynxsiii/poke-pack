@@ -1,0 +1,27 @@
+{
+  "id": "ex3",
+  "name": "EX Dragon",
+  "series": "ex",
+  "slug": "dragon",
+  "scrydexId": "ex3",
+  "era": "ex",
+  "artSlug": "ex-dragon",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1376,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Dragon Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98518,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text)."
+    }
+  ]
+}

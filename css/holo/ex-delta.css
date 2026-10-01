@@ -1,0 +1,211 @@
+/*
+ * EX generation (2003-2007): the refractor holos and the sheen Energy.
+ *
+ * Draws: ex-refractor (`ex-refractor` on `foil-holo`, `foil-ex` or `foil-ultra`: the POKÉMON itself is shiny, the background has
+ * no foil; every Delta Species holo, Holon Phantoms holos but the Energy, Crystal Guardians' Delta holos and Sceptile ex delta,
+ * all of Dragon Frontiers; exRefractor() in js/ex-foil.js) and ex-sheen (`foil-holo ex-sheen ex-energy`: the plain reflective
+ * foil with no pattern of the Holon Phantoms and Power Keepers holo basic Energy; Emerald's holo Energy are `ex-cosmos
+ * ex-energy`, drawn in ex.css).
+ *
+ * Classes come from exPattern() in js/ex-foil.js; `era-ex` marks every EX generation print (js/foil-maps.js): ex1-ex16, the np
+ * promos, POP Series 1-5 and the Trainer Kits. Finish owners: the EX finish agents. The rarity words, the foil vocabulary
+ * (cosmos, refractor, cracked ice, sheen, the dot strip, the reverse families) and the research are in js/ex-foil.js and
+ * /mnt/project-files/every-era/ex/SCAFFOLD-NOTES.md (research: /mnt/project-files/every-era/ex/research/, ex-finish-types.md has
+ * the finish vocabulary in plain words; written descriptions only, no photo was examined: do the photo work first).
+ * TCG Live has NO per-card foil maps for this generation (probed 2026-10-01, see the EX block of fetch_foil_maps.py), so the
+ * masks are drawn: hook exMap() in js/ex-foil.js. Follow SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any
+ * colour dodge with a closing contrast(0.8), no black speckle, no hairline gratings, no foil over text or over the dot strip
+ * at the card's foot, and run foil_coverage.mjs plus a WebKit render at phone size before merging.
+ *
+ * Specificity: repeat `era-ex` five times in every selector, like sm.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-cosmos .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ * Family i3 (ex/i3). Photos, sources and the recipe: .claude/skills/card-textures/reference/ex-delta.md and
+ * /mnt/project-files/every-era/ex/texture-refs/i3/SOURCES.txt. Masks: assets/foil/ex-delta/ (scripts/make_ex_delta_masks.py).
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex {
+  /* the refractor's colours: a smooth oil-slick sweep, every hue lit at moderate saturation (the clips show red, orange, yellow,
+     green, cyan and violet patches lying side by side on the Pokémon) */
+  --exd-bx: calc(50% + (50% - var(--background-x)) * 0.76); /* where the band sits: across the art (a clamp() in mask-position mis-paints in Chromium) */
+  --exd-by: calc(50% + (50% - var(--background-y)) * 0.76);
+  --exs-x: calc(50% + (50% - var(--background-x)) * 1.1); /* the Energy band's position: x of a 300% wide layer, 0 to 100 */
+  --exd-spectrum: hsl(2, 92%, 62%), hsl(32, 100%, 62%), hsl(58, 96%, 62%), hsl(128, 80%, 56%), hsl(176, 90%, 56%),
+    hsl(214, 92%, 64%), hsl(268, 86%, 68%), hsl(322, 90%, 66%), hsl(2, 92%, 62%), hsl(32, 100%, 62%), hsl(58, 96%, 62%), hsl(128, 80%, 56%), hsl(176, 90%, 56%),
+    hsl(214, 92%, 64%), hsl(268, 86%, 68%), hsl(322, 90%, 66%), hsl(2, 92%, 62%);
+  --exd-spectrum-b: hsl(176, 90%, 56%), hsl(214, 92%, 64%), hsl(268, 86%, 68%), hsl(322, 90%, 66%), hsl(2, 92%, 62%),
+    hsl(32, 100%, 62%), hsl(58, 96%, 62%), hsl(128, 80%, 56%), hsl(176, 90%, 56%);
+}
+
+/* clear what the older recipes (foil-holo, foil-ex, foil-ultra) paint on every layer of a refractor or sheen print */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-refractor, .ex-sheen) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-refractor, .ex-sheen) .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex:is(.ex-refractor, .ex-sheen) .glare::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+
+/* ---- Refractor ("Holon") holo: the Pokémon shines, the background stays matte ---------------------------
+   Real card (Collexy's flat scans of 17 refractor prints, Grazskin's tilt clips of Latias, Latios, Feraligatr, Typhlosion, Rayquaza,
+   Flareon, Flygon, Gyarados): the Pokémon carries a smooth reflective foil, no pattern and no grain, and a bright specular glare
+   (red-white on Latias, orange on Latios, cyan on Feraligatr, rainbow on Typhlosion) lies across its body and moves with the tilt;
+   the art background stays flat print. The yellow border of a Delta Species holo takes a soft sheen (medium-low confidence: three
+   clips); a Pokémon-ex's and a Gold Star's border is plain. `.foil` is cut to the card's drawn silhouette (assets/foil/ex-delta/,
+   alpha: the Pokémon, 0.3 on the Delta Species border) and screened onto the print. `.foil::before` is the glare: a band of the
+   spectrum, slanted, that slides with the tilt and always crosses the art (the thumb on the text box still lights the Pokémon);
+   `.foil::after` a faint all-over sweep of the same spectrum; `.glare` pushes the print's own colours towards the band inside the
+   same silhouette (overlay). Light only (screen, overlay): no dodge chain, no dark layer. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor .foil {
+  background-image: none;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.7 + var(--card-opacity) * 0.3) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(112deg, var(--exd-spectrum));
+  background-size: 190% 190%;
+  background-position: 30% 40%;
+  background-repeat: repeat;
+  opacity: calc(0.2 * var(--foil-strength, 1));
+}
+/* the Pokémon keeps its printed colours: away from the highlight only a faint tint (--exd-soft, a hue sweep at 0.1 alpha) lies on it.
+   The glare is a narrow soft band (about a fifth of the card: the layer is 200% wide, so a 7% stop span is 14% of the layer's diagonal) of the spectrum, a white specular streak in its middle, and the print's
+   own colours shift only inside that band (rv-i3: the first recipe painted a quarter of the card at 0.5 and the art's colours vanished) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor {
+  --exd-band: linear-gradient(118deg, transparent 46%, rgba(0, 0, 0, 0.12) 47.2%, rgba(0, 0, 0, 0.5) 48.7%, #000 50%, rgba(0, 0, 0, 0.5) 51.3%, rgba(0, 0, 0, 0.12) 52.8%, transparent 54%);
+  --exd-streak: linear-gradient(118deg, transparent 48.6%, rgba(0, 0, 0, 0.55) 49.5%, #000 50%, rgba(0, 0, 0, 0.55) 50.5%, transparent 51.4%);
+  --exd-soft: hsla(2, 92%, 62%, 0.1), hsla(32, 100%, 62%, 0.1), hsla(58, 96%, 62%, 0.1), hsla(128, 80%, 56%, 0.1), hsla(176, 90%, 56%, 0.1),
+    hsla(214, 92%, 64%, 0.1), hsla(268, 86%, 68%, 0.1), hsla(322, 90%, 66%, 0.1), hsla(2, 92%, 62%, 0.1);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.lit .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor.settling .foil {
+  background-image: linear-gradient(112deg, var(--exd-soft));
+  background-size: 190% 190%;
+  background-position:
+    clamp(0%, calc(((50% - var(--background-x)) * 1.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.6) + 50%), 100%);
+  background-repeat: repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor .foil::after {
+  background-image: linear-gradient(68deg, hsla(0, 0%, 100%, 0.85), hsla(48, 100%, 92%, 0.75), hsla(190, 100%, 94%, 0.85));
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--exd-streak);
+  mask-image: var(--exd-streak);
+  -webkit-mask-size: 200% 200%;
+  mask-size: 200% 200%;
+  -webkit-mask-position: var(--exd-bx) var(--exd-by);
+  mask-position: var(--exd-bx) var(--exd-by);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0.62;
+}
+/* the glare: a narrow band of the spectrum that lies across the body and slides with the tilt (it always crosses the art, so the
+   Pokémon shines with the thumb on the text box too) */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor .foil::before {
+  background-image: linear-gradient(68deg, var(--exd-spectrum-b));
+  background-size: 110% 110%;
+  background-position:
+    clamp(0%, calc(((50% - var(--background-x)) * -1.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: repeat;
+  -webkit-mask-image: var(--exd-band);
+  mask-image: var(--exd-band);
+  -webkit-mask-size: 200% 200%;
+  mask-size: 200% 200%;
+  -webkit-mask-position: var(--exd-bx) var(--exd-by);
+  mask-position: var(--exd-bx) var(--exd-by);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: saturate(0.9);
+  opacity: 0.32;
+}
+/* the gloss shifts the print's own colours towards the band's, inside the same silhouette and only within the band */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-refractor .glare {
+  background-image: linear-gradient(68deg, var(--exd-spectrum-b));
+  background-size: 110% 110%;
+  background-position:
+    clamp(0%, calc(((50% - var(--background-x)) * -1.4) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: repeat;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--exd-band);
+  mask-image: var(--art), var(--foil-map), var(--exd-band);
+  -webkit-mask-composite: source-in, source-in;
+  mask-composite: intersect, intersect;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%, 200% 200%;
+  mask-size: contain, 100% 100%, 200% 200%;
+  -webkit-mask-position:
+    center, center,
+    var(--exd-bx) var(--exd-by);
+  mask-position:
+    center, center,
+    var(--exd-bx) var(--exd-by);
+  -webkit-mask-repeat: no-repeat, no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat, no-repeat;
+  mix-blend-mode: overlay;
+  filter: saturate(1.1);
+  opacity: calc(var(--card-opacity) * 0.55);
+}
+
+/* ---- Sheen Energy (Holon Phantoms 105-110, Power Keepers 103-108): a smooth rainbow band across the picture --------
+   Real card (Collexy's flat scans, Pokemon Holo's tilt clips of the Psychic, Fighting, Lightning, Grass, Fire Energy): plain
+   reflective foil, no pattern. At any tilt a band of the full rainbow, about a fifth of the card wide with a white-hot core, lies
+   across the picture, slightly slanted, and slides sideways as the card turns; away from it the picture shows only a faint sheen.
+   The header bar, the yellow border and the footer strip are plain print (the map is the picture alone: energy-art.webp). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-sheen .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(190, 100%, 94%, 0.16) 0%, hsla(200, 90%, 78%, 0.06) 30%, hsla(220, 80%, 60%, 0) 62%),
+    linear-gradient(112deg, hsla(172, 100%, 62%, 0.07), hsla(236, 95%, 70%, 0.06) 30%, hsla(318, 95%, 68%, 0.07) 60%, hsla(52, 100%, 62%, 0.06));
+  background-size: 100% 100%, 100% 100%;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.6 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-sheen:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(104deg, transparent 38%, hsla(180, 100%, 70%, 0.5) 44%, hsla(300, 90%, 72%, 0.5) 50%, hsla(55, 100%, 66%, 0.5) 56%, transparent 62%);
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-sheen .foil::before {
+  background-image:
+    linear-gradient(90deg, transparent 0%, transparent 44.5%, hsla(0, 0%, 100%, 0.35) 47%, hsla(0, 0%, 100%, 0.6) 50%, hsla(0, 0%, 100%, 0.35) 52.4%, transparent 54.8%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, transparent 44%, hsl(348, 95%, 62%) 45.9%, hsl(34, 100%, 60%) 47.3%, hsl(58, 96%, 58%) 48.5%,
+      hsl(128, 85%, 54%) 49.6%, hsl(184, 95%, 56%) 50.8%, hsl(222, 95%, 64%) 52%, hsl(286, 88%, 66%) 53.4%, transparent 55.6%, transparent 100%);
+  background-size: 200% 100%;
+  background-position:
+    var(--exs-x) 0%,
+    var(--exs-x) 0%;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  transform: skewX(-9deg);
+  filter: saturate(1.1);
+  opacity: calc(0.62 * min(1, var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-sheen .foil::after {
+  background-image: linear-gradient(112deg, var(--exd-spectrum));
+  background-size: 190% 190%;
+  background-position:
+    clamp(0%, calc(((50% - var(--background-x)) * 1.6) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.6) + 50%), 100%);
+  background-repeat: repeat;
+  opacity: 0.09;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-ex.era-ex.era-ex.era-ex.era-ex.ex-sheen .glare {
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--card-opacity) * 0.3);
+}

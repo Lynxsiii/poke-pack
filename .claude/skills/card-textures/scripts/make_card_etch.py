@@ -70,7 +70,7 @@ from scipy import ndimage
 
 ROOT = Path(__file__).resolve().parents[4]
 WIDTH = 400
-ETCHED = ("Special Illustration Rare", "Ultra Rare", "Hyper Rare", "Mega Hyper Rare")
+ETCHED = ("Special Illustration Rare", "Ultra Rare", "Hyper Rare", "Mega Hyper Rare", "Rare Ultra", "Rare Secret")  # + the XY rarity words (2026-10-01)
 PITCH = 2.6       # ridge spacing in px at 400 px wide (Live's etches: 2 to 3 px)
 INK = 40          # luma under which near-neutral print is ink and stays smooth
 CHROMA = 40       # max-min of RGB above which a dark pixel is colour, not ink

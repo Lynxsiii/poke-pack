@@ -1,0 +1,97 @@
+{
+  "id": "hgss2",
+  "name": "HS Unleashed",
+  "series": "heartgold-soulsilver",
+  "slug": "hs-unleashed",
+  "scrydexId": "hgss2",
+  "era": "dp",
+  "artSlug": "unleashed",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1399,
+  "promoSeries": {
+    "hsp": {
+      "series": "heartgold-soulsilver",
+      "slug": "hgss-black-star-promos",
+      "scrydex": "hsp",
+      "tcgplayerGroup": 1453,
+      "printed": "HGSS",
+      "era": "dp"
+    }
+  },
+  "cardFlags": {
+    "TWO": {
+      "alph": true
+    }
+  },
+  "promoCards": {
+    "hsp10": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp11": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp12": {
+      "foilAs": "Rare Holo"
+    },
+    "hsp13": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "three-pack-blister-latias",
+      "name": "HS Unleashed Three Pack Blister [Latias]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss2": 2,
+        "dp7": 1
+      },
+      "promos": [
+        "hsp10"
+      ],
+      "note": "Two Unleashed packs, one Stormfront pack (a PokeBeach/Bulbapedia search excerpt, one source: medium-low), a Jirachi or Shaymin coin and the Latias promo (HGSS10, Cosmos Holo). The coin is not simulated."
+    },
+    {
+      "id": "three-pack-blister-latios",
+      "name": "HS Unleashed Three Pack Blister [Latios]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "hgss2": 2,
+        "dp7": 1
+      },
+      "promos": [
+        "hsp11"
+      ],
+      "note": "Two Unleashed packs, one Stormfront pack, a coin and the Latios promo (HGSS11, Cosmos Holo)."
+    },
+    {
+      "id": "two-pack-blister-cleffa",
+      "name": "HS Unleashed Two Pack Blister [Cleffa]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "promos": [
+        "hsp12"
+      ],
+      "packs": 2,
+      "note": "Two packs and the Cleffa promo (HGSS12). No source gives the pack mix; opened here as two Unleashed packs."
+    },
+    {
+      "id": "two-pack-blister-smoochum",
+      "name": "HS Unleashed Two Pack Blister [Smoochum]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "promos": [
+        "hsp13"
+      ],
+      "packs": 2,
+      "note": "Two packs and the Smoochum promo (HGSS13). No source gives the pack mix; opened here as two Unleashed packs."
+    }
+  ]
+}

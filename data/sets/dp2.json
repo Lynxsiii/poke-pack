@@ -1,0 +1,121 @@
+{
+  "id": "dp2",
+  "name": "Mysterious Treasures",
+  "series": "diamond-pearl",
+  "slug": "mysterious-treasures",
+  "scrydexId": "dp2",
+  "era": "dp",
+  "artSlug": "mysterious-treasures",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1368,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "promoCards": {
+    "dpp07": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp08": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp12": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "33-theme": {
+      "like": "33",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Theme Deck cosmos holo",
+      "printedNumber": "33/123"
+    },
+    "21-theme": {
+      "like": "21",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Theme Deck cosmos holo",
+      "printedNumber": "21/123"
+    },
+    "dpp06": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "theme-deck-skull-charge",
+      "name": "Theme Deck \"Skull Charge\"",
+      "kind": "deck",
+      "tcgplayerId": 229176,
+      "packs": 0,
+      "promos": [
+        "33-theme"
+      ],
+      "note": "A 60-card Fighting and Grass deck with a deck-exclusive cosmos holofoil Rampardos (a plain Rare in packs; one source, Collexy). The deck list itself is not simulated."
+    },
+    {
+      "id": "theme-deck-armor-fortress",
+      "name": "Theme Deck \"Armor Fortress\"",
+      "kind": "deck",
+      "tcgplayerId": 229177,
+      "packs": 0,
+      "promos": [
+        "21-theme"
+      ],
+      "note": "A 60-card Water and Metal deck with a deck-exclusive cosmos holofoil Bastiodon (a plain Rare in packs; one source, Collexy). The deck list itself is not simulated."
+    },
+    {
+      "id": "blister-cranidos",
+      "name": "Mysterious Treasures Three Pack Blister [Cranidos]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp07"
+      ],
+      "note": "Two Mysterious Treasures packs, a cosmos holofoil Cranidos promo and a Cranidos coin. The real blister also held one late EX-series pack (not simulated; Bulbapedia excerpt and Collector's Cache listing titles)."
+    },
+    {
+      "id": "blister-shieldon",
+      "name": "Mysterious Treasures Three Pack Blister [Shieldon]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp08"
+      ],
+      "note": "Two Mysterious Treasures packs, a cosmos holofoil Shieldon promo and a Shieldon coin. The real blister also held one late EX-series pack (not simulated; Bulbapedia excerpt and Collector's Cache listing titles)."
+    },
+    {
+      "id": "collectors-tin-lucario",
+      "name": "Lucario Collector's Tin",
+      "kind": "tin",
+      "from": {
+        "dp3": 3,
+        "dp2": 1
+      },
+      "promos": [
+        "dpp12"
+      ],
+      "note": "Three Secret Wonders packs and one Mysterious Treasures pack (Bulbapedia and retailer excerpts, medium-high) and the cosmos holofoil Lucario LV.X promo, a reprint of Mysterious Treasures 122. Filed under Mysterious Treasures by the promo claim table; priced at the Mysterious Treasures pack."
+    },
+    {
+      "id": "blister-buneary",
+      "name": "Mysterious Treasures Three Pack Blister [Buneary]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "dpp06"
+      ],
+      "note": "Two Mysterious Treasures packs and a cosmos holofoil Buneary promo. The real blister also held one late EX-series pack (not simulated). One source only (Collector's Cache lists DP06 as the Mysterious Treasures blister exclusive; Bulbapedia's excerpt names only the Shieldon and Cranidos versions), so medium-low confidence."
+    }
+  ]
+}

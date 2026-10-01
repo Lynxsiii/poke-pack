@@ -1,0 +1,684 @@
+[
+  {
+    "id": "pop9-1",
+    "name": "Garchomp",
+    "number": "1",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It flies at speeds equal to a jet fighter plane. It never allows its prey to escape.",
+    "evolvesFrom": "Gabite",
+    "image": "assets/cards/pop9/1.webp",
+    "imageSmall": "assets/cards/pop9/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Rage",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip 2 coins. If either of them is tails, this attack does nothing."
+      },
+      {
+        "name": "Jet Sword",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard 2 Energy attached to Garchomp and this attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-1/large",
+    "tcgplayerId": 85622,
+    "market": 64.88
+  },
+  {
+    "id": "pop9-2",
+    "name": "Manaphy",
+    "number": "2",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It is born with a wondrous power that lets it bond with any kind of Pokémon.",
+    "image": "assets/cards/pop9/2.webp",
+    "imageSmall": "assets/cards/pop9/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Dive",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Look at the top 7 cards of your deck, choose 1 of them, and put it into your hand. Put the other cards back on top of your deck. Shuffle your deck afterward."
+      },
+      {
+        "name": "Water Glow",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 20 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) Remove from Manaphy the number of damage counters equal to the damage you did to that Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-2/large",
+    "tcgplayerId": 87147,
+    "market": 10.99
+  },
+  {
+    "id": "pop9-3",
+    "name": "Raichu",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Midori Harada",
+    "flavorText": "It can loose 100,000-volt bursts of electricity, instantly downing foes several times its size.",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/pop9/3.webp",
+    "imageSmall": "assets/cards/pop9/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Slam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "High Volt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "60",
+        "text": "If Raichu evolved from Pikachu during this turn, this attack's base damage is 100 instead of 60."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-3/large",
+    "tcgplayerId": 88514,
+    "market": 17.14
+  },
+  {
+    "id": "pop9-4",
+    "name": "Regigigas",
+    "number": "4",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "There is an enduring legend that states this Pokémon towed continents with ropes.",
+    "image": "assets/cards/pop9/4.webp",
+    "imageSmall": "assets/cards/pop9/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Double Stomp",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip 2 coins. This attack does 50 damage plus 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-4/large",
+    "tcgplayerId": 88664,
+    "market": 7.4
+  },
+  {
+    "id": "pop9-5",
+    "name": "Rotom",
+    "number": "5",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its electric-like body can enter some kinds of machines and take control in order to make mischief.",
+    "image": "assets/cards/pop9/5.webp",
+    "imageSmall": "assets/cards/pop9/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Poltergeist",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Look at your opponent's hand. This attack does 30 damage plus 10 more damage for each Trainer, Supporter, and Stadium card in your opponent's hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Type Shift",
+        "text": "Once during your turn (before your attack), you may use this power. Rotom's type is Psychic until the end of your turn.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-5/large",
+    "tcgplayerId": 88837,
+    "market": 6.71
+  },
+  {
+    "id": "pop9-6",
+    "name": "Buizel",
+    "number": "6",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "It swims by rotating its two tails like a screw. When it dives, its flotation sac collapses.",
+    "image": "assets/cards/pop9/6.webp",
+    "imageSmall": "assets/cards/pop9/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Whirlpool",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, discard an Energy attached to the Defending Pokémon."
+      },
+      {
+        "name": "Super Fast",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "If you have Pachirisu in play, flip a coin. If heads, prevent all effects of an attack, including damage, done to Buizel during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-6/large",
+    "tcgplayerId": 84020,
+    "market": 7.78
+  },
+  {
+    "id": "pop9-7",
+    "name": "Croagunk",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "Inflating its poison sacs, it makes an eerie blubbering sound for intimidation.",
+    "image": "assets/cards/pop9/7.webp",
+    "imageSmall": "assets/cards/pop9/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Off",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, choose 1 card from your opponent's hand without looking and discard it."
+      },
+      {
+        "name": "Nimble",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "If you have Turtwig in play, remove from Croagunk the number of damage counters equal to the damage you did to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-7/large",
+    "tcgplayerId": 84476,
+    "market": 4.78
+  },
+  {
+    "id": "pop9-8",
+    "name": "Gabite",
+    "number": "8",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It habitually digs up and hoards gems in its nest. Its loot is constantly targeted by thieves.",
+    "evolvesFrom": "Gible",
+    "image": "assets/cards/pop9/8.webp",
+    "imageSmall": "assets/cards/pop9/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Burrow",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all damage done to Gabite by attacks during your opponent's next turn."
+      },
+      {
+        "name": "Distored Wave",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Before doing damage, remove 2 damage counters from the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-8/large",
+    "tcgplayerId": 85598,
+    "market": 3.57
+  },
+  {
+    "id": "pop9-9",
+    "name": "Lopunny",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It is very conscious of its looks and never fails to groom its ears. It runs with sprightly jumps.",
+    "evolvesFrom": "Buneary",
+    "image": "assets/cards/pop9/9.webp",
+    "imageSmall": "assets/cards/pop9/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Jump Kick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Jazzed",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "If Lopunny evolved from Buneary during this turn, remove all damage counters from Lopunny."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-9/large",
+    "tcgplayerId": 86825,
+    "market": 2.1
+  },
+  {
+    "id": "pop9-10",
+    "name": "Pachirisu",
+    "number": "10",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "flavorText": "It makes electricity with pouches in its cheeks and shoots charges from its tail. It live atop trees.",
+    "image": "assets/cards/pop9/10.webp",
+    "imageSmall": "assets/cards/pop9/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Poison Berry",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If you have Croagunk in play, this attack does 20 damage plus 20 more damage and the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-10/large",
+    "tcgplayerId": 87902,
+    "market": 6.25
+  },
+  {
+    "id": "pop9-11",
+    "name": "Pichu",
+    "number": "11",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Midori Harada",
+    "flavorText": "It plays with others by touching tails and setting off sparks. This appears to be a test of courage.",
+    "image": "assets/cards/pop9/11.webp",
+    "imageSmall": "assets/cards/pop9/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Find a Friend",
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for a Pokémon, show it to your opponent, and put it into your hand. Shuffle your deck afterward."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Baby Evolution",
+        "text": "Once during your turn (before your attack), you may put Pikachu from your hand onto Pichu (this counts as evolving Pichu) and remove all damage counters from Pichu.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-11/large",
+    "tcgplayerId": 88020,
+    "market": 21.44
+  },
+  {
+    "id": "pop9-12",
+    "name": "Buneary",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Midori Harada",
+    "flavorText": "When it senses danger, it perks up its ears. On cold nights, it sleeps with its head tucked into its fur.",
+    "image": "assets/cards/pop9/12.webp",
+    "imageSmall": "assets/cards/pop9/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Dizzy Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      },
+      {
+        "name": "Defense Curl",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all damage done to Buneary by attacks during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-12/large",
+    "tcgplayerId": 84042,
+    "market": 0.8
+  },
+  {
+    "id": "pop9-13",
+    "name": "Chimchar",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "40",
+    "artist": "Midori Harada",
+    "flavorText": "Its fiery rear end is fueled by gas made in its belly. Even rain can't extinguish the fire.",
+    "image": "assets/cards/pop9/13.webp",
+    "imageSmall": "assets/cards/pop9/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Serial Swipes",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10×",
+        "text": "Flip 4 coins. This attack does 10 damage times the number of heads."
+      },
+      {
+        "name": "Sleepy",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "If you have Piplup in play, this attack does 40 damage plus 20 more damage and the Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-13/large",
+    "tcgplayerId": 84289,
+    "market": 1.03
+  },
+  {
+    "id": "pop9-14",
+    "name": "Gible",
+    "number": "14",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Hiroki Fuchino",
+    "flavorText": "Its nests is small, horizontal holes in cave walls. It pounces to catch prey that stray too close.",
+    "image": "assets/cards/pop9/14.webp",
+    "imageSmall": "assets/cards/pop9/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Push Down",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-14/large",
+    "tcgplayerId": 85700,
+    "market": 0.68
+  },
+  {
+    "id": "pop9-15",
+    "name": "Pikachu",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "If it looses crackling power from the electric pouches on its cheeks, it is being wary.",
+    "image": "assets/cards/pop9/15.webp",
+    "imageSmall": "assets/cards/pop9/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Numb",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "If Pikachu evolved from Pichu during this turn, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-15/large",
+    "tcgplayerId": 88092,
+    "market": 21.57
+  },
+  {
+    "id": "pop9-16",
+    "name": "Piplup",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Midori Harada",
+    "flavorText": "It lives along shores in northern countries. A skilled swimmer, it dives for over 10 minutes to hunt.",
+    "image": "assets/cards/pop9/16.webp",
+    "imageSmall": "assets/cards/pop9/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Sport",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "If Piplup has less Energy attached to it than the Defending Pokémon, this attack does 10 damage plus more 10 more damage."
+      },
+      {
+        "name": "Wavelet",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "If you have Buizel in play, this attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-16/large",
+    "tcgplayerId": 88150,
+    "market": 10.04
+  },
+  {
+    "id": "pop9-17",
+    "name": "Turtwig",
+    "number": "17",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "It undertakes photosynthesis with its body, making oxygen. The leaf on its head wilts if it is thirsty.",
+    "image": "assets/cards/pop9/17.webp",
+    "imageSmall": "assets/cards/pop9/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Absorb",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Remove 1 damage counter from Turtwig."
+      },
+      {
+        "name": "Parboil",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "If you have Chimchar in play, this attack does 40 damage plus 20 more damage and the Defending Pokémon is now Burned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop9-17/large",
+    "tcgplayerId": 90078,
+    "market": 2.14
+  }
+]

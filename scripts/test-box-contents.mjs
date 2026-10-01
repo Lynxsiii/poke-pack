@@ -44,7 +44,8 @@ for(const file of readdirSync(new URL('../data/',import.meta.url))){
   if(Array.isArray(rows))for(const row of rows)if(row?.id)cardIds.add(row.id);
 }
 for(const type of ['grass','fire','water','lightning','psychic','fighting','darkness','metal'])
-  for(const suffix of ['','-tera','-unova','-swsh','-mee','-sm17','-sm19'])cardIds.add(`energy-${type}${suffix}`);
+  for(const suffix of ['','-tera','-unova','-swsh','-mee','-sm17','-sm19','-xy','-bw','-dp'])cardIds.add(`energy-${type}${suffix}`);
+cardIds.add('energy-fairy-xy');
 const offers=new Map();
 for(const [setId,rows] of Object.entries(products)){if(setId.startsWith('_'))continue;for(const row of rows)offers.set(`${setId}/${row.id}`,row);}
 for(const [setId,prices] of Object.entries(sealed))for(const id of ['boosterBox','eliteTrainerBox','boosterBundle'])if(prices?.[id]>0&&!offers.has(`${setId}/${id}`))offers.set(`${setId}/${id}`,{promos:[]});

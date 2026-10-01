@@ -1,0 +1,273 @@
+/*
+ * XY era: window holo, plain-card glare and the reverse holo.
+ *
+ * Draws: xy-holo (`foil-holo xy-holo`, Bulbapedia's "Sheen Holofoil": the Rare Holo of xy1 to xy11,
+ * Generations, Double Crisis and the promos that print it), xy-starlight (Evolutions' star field), the
+ * era-wide variables, the plain Rare's glare, and the reverse holo (`.rev-mirror.era-xy.xy-rev`,
+ * one symbol tile per type in assets/foil/xy-reverse/).
+ * Classes come from xyPattern() / xyReverseExtras() (js/xy-foil.js) and foilExtras() (js/foil-maps.js);
+ * `era-xy` marks every XY print. Finish owner: f1 (xy/f1). Research, photos and the recipes are in
+ * .claude/skills/card-textures/reference/xy-holo-reverse.md and
+ * /mnt/project-files/every-era/xy/texture-refs/f1-holo-reverse/SOURCES.txt.
+ * TCG Live serves per-card XY maps for xy1-xy12, g1, dc1 and the promos (assets/foil/maps/<set>/); the window masks
+ * of assets/foil/xy-win/ (xyHoloMap()) are only the fallback for prints with none (xy0, McDonald's, kits).
+ *
+ * Specificity: repeat `era-xy` five times in every selector, like sm.css, so the rule beats the shared
+ * sheets; a resting card paints `.foil` alone. Bump this sheet's ?v= tag in index.html on every change.
+ */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy {
+  --xy-flecks: url("/assets/foil/glitter-fine.webp");
+  --xy-spectrum: hsl(2, 100%, 73%), hsl(53, 100%, 69%), hsl(93, 100%, 69%),
+    hsl(176, 100%, 76%), hsl(228, 100%, 74%), hsl(283, 100%, 73%), hsl(2, 100%, 73%);
+  --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* ---- Shared shape of the window holo ---------------------------------------------
+   Clear what the older recipes paint on the pseudo layers; each variant sets its own. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo .foil {
+  background-repeat: repeat;
+  opacity: calc((0.42 + var(--card-opacity) * 0.58) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo:not(.lit):not(.settling) .foil {
+  opacity: calc(0.22 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Rare Holo: Sheen ---------------------------------------------------------------
+   Photos (Delphox xy10 13, Gengar g1 35, Salamence xy6 57; flat scans Gogoat, Meloetta, Furfrou,
+   Aegislash): the whole art window is foil, Pokemon included, a smooth silver-rainbow sheen with a
+   fine sand over it. Tilted, broad saturated bands (cyan, green, magenta, yellow) cross it on a rising
+   diagonal with dark gaps, a few starry glints ride on them. No cosmos dots, no brushed lines.
+   Bands are one repeating gradient, colour-dodged onto the print under a pointer pool; the sand and
+   glints are screened (light only). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo:not(.xy-starlight) .foil {
+  background-image:
+    repeating-linear-gradient(140deg,
+      hsl(0, 0%, 12%) 0%, var(--violet) 3%, var(--blue) 6%, var(--green) 9%, var(--yellow) 12%, var(--red) 15%, hsl(0, 0%, 12%) 18%,
+      hsl(0, 0%, 12%) 24%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 80%) 0%, hsl(0, 0%, 50%) 45%, hsl(0, 0%, 30%) 100%);
+  background-position:
+    clamp(0%, calc(((50% - var(--background-x)) * 1.2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%),
+    center;
+  background-size: 170% 170%, 100% 100%;
+  background-blend-mode: multiply;
+  filter: brightness(0.8) contrast(1.5) saturate(1.8) contrast(0.8);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo:not(.xy-starlight):not(.lit):not(.settling) .foil {
+  filter: brightness(0.9) contrast(1.15) saturate(0.7) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo:not(.xy-starlight) .foil::before {
+  background-image: var(--xy-flecks), var(--xy-flecks);
+  background-size: 60% auto, 38% auto;
+  background-position: var(--seed-pos), calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%);
+  mix-blend-mode: screen;
+  filter: brightness(1.4) contrast(1.7);
+  opacity: calc(0.3 + var(--pointer-from-center) * 0.35);
+}
+/* Soft rays from the light, the radiating streaks the scans show (broad, never a hairline). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo:not(.xy-starlight) .foil::after {
+  background-image: repeating-conic-gradient(from 8deg at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 8%) 0deg, hsl(0, 0%, 36%) 9deg, hsl(0, 0%, 8%) 18deg);
+  mix-blend-mode: screen;
+  opacity: 0.35;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-holo:not(.xy-starlight) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.45);
+}
+
+/* ---- Rare Holo of Evolutions: Starlight ------------------------------------------------
+   The reprint holos of xy12 (photos: Charizard, Blastoise, Venusaur, Pikachu; Collexy flat scans) glitter
+   like Base Set: a fine star-glint field over the whole picture, warm gold-and-silver with a soft
+   rainbow in the broad light, no bands. Two glitter tiles at different scales are screened over a
+   warm broad gradient (light only), under a colour-dodge chain closed with contrast(0.8). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-starlight .foil {
+  background-image:
+    var(--xy-flecks), var(--xy-flecks),
+    linear-gradient(115deg, hsl(48, 90%, 62%) 0%, hsl(200, 70%, 66%) 30%, hsl(330, 70%, 68%) 55%, hsl(48, 90%, 62%) 80%, hsl(150, 70%, 60%) 100%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 80%) 0%, hsl(0, 0%, 48%) 45%, hsl(0, 0%, 28%) 100%);
+  background-size: 70% auto, 42% auto, 220% 220%, 100% 100%;
+  background-position:
+    var(--seed-pos),
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 1.1) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.1) + 50%), 100%),
+    center;
+  background-blend-mode: screen, screen, multiply, normal;
+  filter: brightness(0.6) contrast(1.35) saturate(1.1) contrast(0.8);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-starlight:not(.lit):not(.settling) .foil {
+  filter: brightness(0.9) contrast(1.15) saturate(0.7) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-starlight .foil::before {
+  background-image: var(--xy-flecks);
+  background-size: 28% auto;
+  background-position: calc(var(--pointer-from-left) * 100%) calc(var(--pointer-from-top) * 100%);
+  mix-blend-mode: screen;
+  filter: brightness(1.5) contrast(1.8);
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-starlight .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(45, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.45);
+}
+
+/* Colour-dodge cannot brighten white, and the art windows of Evolutions' Mew, Chansey, Poliwrath ... print
+   white or near it: the foil above shows only on the darker parts, so those windows read as plain print (review
+   rv-f1). The real foil shows through the white as a pastel shimmer, so the gloss layer multiplies a pastel
+   band (cyan, gold, pink, mint) onto the window: strongest at the light, white (no change) far from it, inside
+   the card's own foil map so the Pokemon, frame and text stay untouched. Multiply floor: every stop stays
+   above 70% lightness, so a dark picture loses at most a few percent, and it never makes a speck. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-starlight.has-foil-map .glare {
+  background-image:
+    radial-gradient(ellipse 90% 90% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0) 0%, hsl(0, 0%, 100%) 100%),
+    linear-gradient(115deg, hsl(185, 85%, 76%) 0%, hsl(48, 90%, 80%) 24%, hsl(330, 75%, 84%) 48%, hsl(150, 70%, 78%) 72%, hsl(185, 85%, 76%) 100%);
+  background-size: 100% 100%, 240% 240%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.1) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.1) + 50%), 100%);
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  mix-blend-mode: multiply;
+  filter: none;
+  opacity: var(--card-opacity);
+}
+
+/* ---- Reverse holo: the Energy pattern -------------------------------------------------
+   Reverse holos of the standard sets (Collexy and Cardveil photos): the whole body but the art window
+   is mirror foil, mottled, with large ghosted outlines of the card's type symbol (Poke Balls on
+   Trainers) in 2-3 sizes. The tile (assets/foil/xy-reverse/<type>.webp, make_xy_reverse.py) is the
+   foil's texture, multiplied with a broad moving rainbow band and a pointer pool, colour-dodged, so
+   symbols and mottling catch the light and the mirror's grey carries it. Mask: the card, less the
+   layout's window (--xy-win from xyReverseExtras) and, on a basic Energy, the name bar and footer. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .foil {
+  background-image:
+    var(--rev-pattern),
+    linear-gradient(-50deg, hsl(0, 0%, 62%) 14%, hsl(190, 80%, 82%) 32%, hsl(120, 70%, 80%) 42%, hsl(50, 90%, 84%) 50%, hsl(330, 80%, 84%) 58%, hsl(0, 0%, 62%) 78%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 78%) 35%, hsl(0, 0%, 56%) 100%);
+  background-size: 100% 100%, 260% 260%, 100% 100%;
+  background-position:
+    center,
+    clamp(0%, calc(100% * var(--pointer-from-left)), 100%) clamp(0%, calc(100% * var(--pointer-from-top)), 100%),
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, multiply, normal;
+  filter: brightness(0.95) contrast(2) saturate(1.2) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.45 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--art), var(--xy-win);
+  mask-image: var(--art), var(--xy-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, contain;
+  mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  clip-path: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev:not(.lit):not(.settling) .foil {
+  opacity: calc(0.42 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .foil::before {
+  background-image: none;
+}
+/* A dark body (Darkness, Metal) is black to a colour-dodge: the symbols are screened on as light too. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .foil::after {
+  background-image: var(--rev-pattern);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: brightness(0.42) contrast(3.5);
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.3);
+}
+/* A Trainer's title and name plate stay plain: the foil starts at the picture (the plate is pale, a ball
+   screened onto it reads as a smudge). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-trainer :is(.foil, .glare) {
+  clip-path: inset(15.8% 0 0 0);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-trainer.xy-rev-evo12 :is(.foil, .glare) {
+  clip-path: inset(22.5% 0 0 0);
+}
+/* Basic Energy: a full picture, foil from under the name bar to above the footer. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-energy .foil {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  clip-path: inset(7.2% 3.4% 4.6% 3.4%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.7) 8%, hsla(0, 0%, 100%, 0.5) 22%, hsla(0, 0%, 0%, 0.3) 90%);
+  -webkit-mask-image: var(--art), var(--xy-win);
+  mask-image: var(--art), var(--xy-win);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, contain;
+  mask-size: contain, contain;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+/* A basic Energy has no --xy-win (the var() is undefined, so the whole mask declaration above is dropped and the
+   glare was unmasked): give its glare the same picture box as its foil. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-energy .glare {
+  -webkit-mask-image: var(--art);
+  mask-image: var(--art);
+  -webkit-mask-composite: add;
+  mask-composite: add;
+  clip-path: inset(7.2% 3.4% 4.6% 3.4%);
+}
+
+/* ---- Plain cards: a glare that reads ------------------------------------------------
+   Not foil. The standard overlay glare, its dark end kept at 0.3 so the thumb pose does not
+   shade the card (same call as swsh.css and sm.css). */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-none.era-xy .glare {
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%,
+    hsla(0, 0%, 100%, 0.65) 20%,
+    hsla(0, 0%, 0%, 0.3) 90%
+  );
+}

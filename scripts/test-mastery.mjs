@@ -196,7 +196,8 @@ for (const total of [12, 33, 99, 100, 101, 370]) {
   const oldHalves = PLAYABLE_SETS.reduce((n, set) => n + OLD_HALF(set.totalCount), 0);
   console.log(`mastery coins ${sum(masters)} (was ${oldMasters}), half ${sum(halves)} (was ${oldHalves}), crowns ${sum(crowns)} (new), all achievements ${sum(ACHIEVEMENTS)}`);
   ok(sum(masters) > oldMasters && sum(masters) < oldMasters * 2, "mastery pay grew, by less than double");
-  ok(sum(ACHIEVEMENTS) < 600_000, "the whole achievement economy stays under 600k");
+  // 600k with the 71 sets of 2026-10-01 morning; every era back to Base Set (171 sets) sits near 660k.
+  ok(sum(ACHIEVEMENTS) < 1_000_000, "the whole achievement economy stays under 1M");
 }
 
 // ---- ids: nothing renamed, nothing duplicated ------------------------------------
@@ -279,7 +280,9 @@ eq(giftJson, { sets: MASTERY_GIFTS, crowns: CROWN_GIFTS }, "js/mastery-gifts.js 
   for (const era of CROWN_ERAS) {
     const eraSets = new Set(setsInEra(era).map((set) => set.id));
     const picks = CROWN_GIFTS[eraSlug(era)];
-    ok(picks.length >= 1, `${era} crown gifts something`);
+    // An era with no sleeve or coin in data/gear.json yet (XY and older) has a gearless crown.
+    const eraHasGear = [...eraSets].some((id) => (MASTERY_GIFTS[id] || []).length > 0);
+    if (eraHasGear) ok(picks.length >= 1, `${era} crown gifts something`);
     for (const g of picks) {
       const real = (g.kind === "sleeve" ? gearCatalog.sleeves : gearCatalog.coins)[g.id];
       ok(real && real.sets.some((id) => eraSets.has(id)), `${era} crown gift ${g.id} belongs to the era`);
@@ -313,7 +316,8 @@ eq(giftJson, { sets: MASTERY_GIFTS, crowns: CROWN_GIFTS }, "js/mastery-gifts.js 
     eq(eraCrownRewards(crown.slug), crown);
     eq([crown.sets, crown.xp], [setsInEra(crown.era).length, XP_WEIGHTS.crown]);
     ok(crown.title.endsWith("Champion") && crown.title.length <= 32, `${crown.era} title`);
-    ok(crown.gear.length > 0 && crown.gear.every((g) => g.name), `${crown.era} gear`);
+    ok(crown.gear.every((g) => g.name), `${crown.era} gear`);
+    if ((CROWN_GIFTS[crown.slug] || []).length) ok(crown.gear.length > 0, `${crown.era} gear`);
   }
   eq(eraCrownRewards("nope"), null);
   eq(eraCrownRewards(undefined), null);
@@ -494,7 +498,8 @@ const items = (set) => masteryRowFor(set.id).reward.gear.map(({ kind, id }) => (
 
 {
   // An era crown: own every set of the era and the crown (with its title and gear) can be claimed.
-  const era = [...CROWN_ERAS].sort((a, b) => eraTotal(a) - eraTotal(b))[0];
+  // The smallest era whose crown gifts gear (the eras older than Sun & Moon have no gear filed yet).
+  const era = [...CROWN_ERAS].filter((e) => (CROWN_GIFTS[eraSlug(e)] || []).length).sort((a, b) => eraTotal(a) - eraTotal(b))[0];
   const crown = ACHIEVEMENTS.find((row) => row.kind === "crown" && row.era === era);
   const u = addUser();
   const sets = setsInEra(era);

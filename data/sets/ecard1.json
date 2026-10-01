@@ -1,0 +1,79 @@
+{
+  "id": "ecard1",
+  "name": "Expedition Base Set",
+  "series": "e-card",
+  "slug": "expedition-base-set",
+  "scrydexId": "ecard1",
+  "era": "wotc",
+  "artSlug": "expedition",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1375,
+  "promoSeries": {
+    "basep": {
+      "series": "base",
+      "slug": "wizards-black-star-promos",
+      "scrydex": "basep",
+      "tcgplayerGroup": 1418,
+      "printed": "Promo",
+      "era": "wotc"
+    }
+  },
+  "promoCards": {
+    "basep51": {},
+    "basep52": {}
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Expedition Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated."
+    },
+    {
+      "id": "scan-tastic-spectacular",
+      "name": "Scan-Tastic Spectacular Promo Pack [Ho-oh & Rapidash]",
+      "kind": "collection",
+      "tcgplayerId": 477048,
+      "packs": 0,
+      "promos": [
+        "basep51",
+        "basep52"
+      ],
+      "note": "Nintendo Power's e-Reader product (2002): the Rapidash and Ho-oh Wizards Black Star Promos, each with e-Reader dot codes for the Fire Hoops mini-game. No booster packs. TCGplayer listing (group 1418).",
+      "tcgplayerGroup": 1418
+    },
+    {
+      "id": "deck-electric-garden",
+      "name": "Theme Deck \"Electric Garden\"",
+      "kind": "deck",
+      "tcgplayerId": 234504,
+      "packs": 0,
+      "promos": [
+        "61"
+      ],
+      "note": "A 60-card Expedition theme deck, featuring Raichu (Expedition 61); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Expedition theme-deck page (they differ by a card in places).",
+      "price": 550.0,
+      "priceSource": "TCGplayer's product page market price (product 234504 on 2026-10-01: $550.00, no live listing); tcgcsv's mirror has no row for it."
+    },
+    {
+      "id": "deck-echo",
+      "name": "Theme Deck \"Echo\"",
+      "kind": "deck",
+      "tcgplayerId": 451096,
+      "packs": 0,
+      "promos": [
+        "33"
+      ],
+      "note": "A 60-card Expedition theme deck, featuring Alakazam (Expedition 33); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Expedition theme-deck page (they differ by a card in places).",
+      "price": 274.33,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    }
+  ]
+}

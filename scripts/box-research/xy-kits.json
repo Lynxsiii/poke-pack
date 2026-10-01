@@ -1,0 +1,42 @@
+{
+ "_about": "XY Trainer Kits: what each kit holds. Sources (research/trainer-kits-and-energy.md, written 2026-10-01): TCGplayer product text 97728 ('2 pre-constructed half decks ... 2 guides, a coin, an exclusive deck box, and a code') and 118797 ('Two 30-card decks, each with its own specially selected foil ... 2-player playmat ... damage counters'), TCGplayer card listings (each half deck's 30 cards by kit number, #30 the Holo), pkmn.gg's kit pages (tk6a ... tk9b, 30 cards each, #30 holofoil), Bulbapedia 'XY Trainer Kit (TCG)' and the per-kit pages and pokemon.com via search extracts (same two half decks per kit). Cards 1-30 of each half deck are the site's own xytk<N><a|b> sets.",
+ "confidence": "verified for the structure (two sources), single-source family (TCGplayer/pkmn.gg) for the card-by-card lists",
+ "kits": [
+  {
+   "product": "xy-trainer-kit-sylveon-noivern",
+   "halves": [
+    "xytk6a",
+    "xytk6b"
+   ],
+   "cardsPerHalf": 30,
+   "tcgplayerId": 97728
+  },
+  {
+   "product": "xy-trainer-kit-bisharp-wigglytuff",
+   "halves": [
+    "xytk7a",
+    "xytk7b"
+   ],
+   "cardsPerHalf": 30,
+   "tcgplayerId": 97792
+  },
+  {
+   "product": "xy-trainer-kit-latias-latios",
+   "halves": [
+    "xytk8a",
+    "xytk8b"
+   ],
+   "cardsPerHalf": 30,
+   "tcgplayerId": 98317
+  },
+  {
+   "product": "xy-trainer-kit-pikachu-libre-suicune",
+   "halves": [
+    "xytk9a",
+    "xytk9b"
+   ],
+   "cardsPerHalf": 30,
+   "tcgplayerId": 118797
+  }
+ ]
+}

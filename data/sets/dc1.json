@@ -1,0 +1,33 @@
+{
+  "id": "dc1",
+  "name": "Double Crisis",
+  "series": "xy",
+  "slug": "double-crisis",
+  "scrydexId": "dc1",
+  "era": "xy",
+  "artSlug": "double-crisis",
+  "packs": [
+    "pack-0",
+    "pack-1"
+  ],
+  "tcgplayerGroup": 1525,
+  "promoCards": {},
+  "products": [
+    {
+      "id": "team-magma-blister",
+      "name": "Double Crisis: Team Magma Blister",
+      "kind": "blister",
+      "tcgplayerId": 97764,
+      "packs": 4,
+      "promos": []
+    },
+    {
+      "id": "team-aqua-blister",
+      "name": "Double Crisis: Team Aqua Blister",
+      "kind": "blister",
+      "tcgplayerId": 97765,
+      "packs": 4,
+      "promos": []
+    }
+  ]
+}

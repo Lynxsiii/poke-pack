@@ -1,0 +1,586 @@
+[
+  {
+    "id": "pop2-1",
+    "name": "Entei",
+    "number": "1",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/pop2/1.webp",
+    "imageSmall": "assets/cards/pop2/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Stomp",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage."
+      },
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard 2 Basic Energy cards attached to Entei or this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-1/large",
+    "tcgplayerId": 85271,
+    "market": 55.66
+  },
+  {
+    "id": "pop2-2",
+    "name": "Pidgeot",
+    "number": "2",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "evolvesFrom": "Pidgeotto",
+    "image": "assets/cards/pop2/2.webp",
+    "imageSmall": "assets/cards/pop2/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Beak",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 30 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Beating Wings",
+        "text": "Once during your turn (before your attack), if Pidgeot is your Active Pokémon, you may shuffle 1 of your Benched Pokémon and all cards attached to it into your deck. This power can't be used if Pidgeot is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-2/large",
+    "tcgplayerId": 88032,
+    "market": 8.27
+  },
+  {
+    "id": "pop2-3",
+    "name": "Raikou",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/pop2/3.webp",
+    "imageSmall": "assets/cards/pop2/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Roar",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon, if any."
+      },
+      {
+        "name": "Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, Raikou does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-3/large",
+    "tcgplayerId": 88533,
+    "market": 39.93
+  },
+  {
+    "id": "pop2-4",
+    "name": "Suicune",
+    "number": "4",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/pop2/4.webp",
+    "imageSmall": "assets/cards/pop2/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubblebeam",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mirror Coat",
+        "text": "If Suicune is Burned or Poisoned by an opponent's attack (even if Suicune is Knocked Out), the Attacking Pokémon is now affected by the same Special Conditions (1 if there is only 1).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-4/large",
+    "tcgplayerId": 89602,
+    "market": 46.65
+  },
+  {
+    "id": "pop2-5",
+    "name": "Tauros",
+    "number": "5",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/pop2/5.webp",
+    "imageSmall": "assets/cards/pop2/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Rage",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 10 more damage for each damage counter on Tauros."
+      },
+      {
+        "name": "Take Down",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Tauros does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-5/large",
+    "tcgplayerId": 89762,
+    "market": 5.18
+  },
+  {
+    "id": "pop2-6",
+    "name": "Venusaur",
+    "number": "6",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Ivysaur",
+    "image": "assets/cards/pop2/6.webp",
+    "imageSmall": "assets/cards/pop2/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Wide Solarbeam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Does 20 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Hard Plant",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Venusaur can't use Hard Plant during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-6/large",
+    "tcgplayerId": 90317,
+    "market": 33.61
+  },
+  {
+    "id": "pop2-7",
+    "name": "Ivysaur",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "evolvesFrom": "Bulbasaur",
+    "image": "assets/cards/pop2/7.webp",
+    "imageSmall": "assets/cards/pop2/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Seed",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-7/large",
+    "tcgplayerId": 86298,
+    "market": 56.31
+  },
+  {
+    "id": "pop2-8",
+    "name": "Mr. Briney's Compassion",
+    "number": "8",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/pop2/8.webp",
+    "imageSmall": "assets/cards/pop2/8-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-8/large",
+    "tcgplayerId": 87586,
+    "market": 14.77
+  },
+  {
+    "id": "pop2-9",
+    "name": "Multi Technical Machine 01",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Technical Machine"
+    ],
+    "artist": "\"Big Mama\" Tagawa",
+    "image": "assets/cards/pop2/9.webp",
+    "imageSmall": "assets/cards/pop2/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyzing Gaze",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-9/large",
+    "tcgplayerId": 87636,
+    "market": 3.61
+  },
+  {
+    "id": "pop2-10",
+    "name": "Pokémon Park",
+    "number": "10",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Kazuo Yazawa",
+    "image": "assets/cards/pop2/10.webp",
+    "imageSmall": "assets/cards/pop2/10-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-10/large",
+    "tcgplayerId": 88231,
+    "market": 47.74
+  },
+  {
+    "id": "pop2-11",
+    "name": "TV Reporter",
+    "number": "11",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/pop2/11.webp",
+    "imageSmall": "assets/cards/pop2/11-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-11/large",
+    "tcgplayerId": 90084,
+    "market": 6.42
+  },
+  {
+    "id": "pop2-12",
+    "name": "Bulbasaur",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Midori Harada",
+    "image": "assets/cards/pop2/12.webp",
+    "imageSmall": "assets/cards/pop2/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-12/large",
+    "tcgplayerId": 84031,
+    "market": 48.25
+  },
+  {
+    "id": "pop2-13",
+    "name": "Cacnea",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/pop2/13.webp",
+    "imageSmall": "assets/cards/pop2/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-13/large",
+    "tcgplayerId": 84072,
+    "market": 1.04
+  },
+  {
+    "id": "pop2-14",
+    "name": "Luvdisc",
+    "number": "14",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/pop2/14.webp",
+    "imageSmall": "assets/cards/pop2/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyzing Kiss",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If there are 2 Defending Pokémon in play, choose 1 of the Defending Pokémon. That Pokémon is now Paralyzed. (If there is only 1 Defending Pokémon, this attack does nothing.)"
+      },
+      {
+        "name": "Fast Stream",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Move 1 Energy card attached to the Defending Pokémon to the other Defending Pokémon. (Ignore this effect if your opponent has only 1 Defending Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-14/large",
+    "tcgplayerId": 86934,
+    "market": 2.67
+  },
+  {
+    "id": "pop2-15",
+    "name": "Phanpy",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/pop2/15.webp",
+    "imageSmall": "assets/cards/pop2/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Spin",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      },
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-15/large",
+    "tcgplayerId": 88000,
+    "market": 18.93
+  },
+  {
+    "id": "pop2-16",
+    "name": "Pikachu",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/pop2/16.webp",
+    "imageSmall": "assets/cards/pop2/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Thunder Jolt",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, Pikachu does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-16/large",
+    "tcgplayerId": 88081,
+    "market": 57.64
+  },
+  {
+    "id": "pop2-17",
+    "name": "Celebi ex",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/pop2/17.webp",
+    "imageSmall": "assets/cards/pop2/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Shield",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Prevent all effects of attacks, including damage, done to Celebi ex by your opponent's Pokémon-ex during your opponent's next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Time Reversal",
+        "text": "Once during your turn, when you put Celebi ex from your hand onto your Bench, you may search your discard pile for a card, show it to your opponent, and put it on top of your deck.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop2-17/large",
+    "tcgplayerId": 84151,
+    "market": 66.48
+  }
+]

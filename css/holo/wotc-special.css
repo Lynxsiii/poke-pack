@@ -1,0 +1,251 @@
+/*
+ * Wizards of the Coast (1999-2003): Shining Pokémon, the Legendary Collection reverse, Southern Islands.
+ *
+ * Draws: wotc-shining (`foil-holo wotc-shining`: Neo Revelation 65-66 and Neo Destiny 106-113: a glossy metallic coating on the Pokémon
+ * figure only, the background NOT foil), wotc-rev-legendary (`.rev-mirror.era-wotc.wotc-rev.wotc-rev-legendary`: Legendary Collection's
+ * "fireworks" / "wheel" reverse over the whole card but the art window, new in base6) and, if a photo shows it is real, Southern Islands'
+ * six "Reverse Holofoil" cards (1 Mew, 4 Togepi, 7 Ledyba, 11 Marill, 14 Slowking, 17 Vileplume; one labelling source, LOW confidence).
+ *
+ * Classes come from wotcPattern() and wotcReverseFinish() in js/wotc-foil.js; `era-wotc` marks every Wizards of the Coast print
+ * (js/foil-maps.js): base1-base6, gym1-gym2, neo1-neo4, si1, ecard1-ecard3 and the promo sets basep and bp. ENGLISH UNLIMITED prints
+ * only (1st Edition and Shadowless are not separate cards here). Finish owners: the WotC finish agents. The rarity words, the foil
+ * vocabulary and what each set printed are in js/wotc-foil.js and /mnt/project-files/every-era/wotc/SCAFFOLD-NOTES.md (research:
+ * /mnt/project-files/every-era/wotc/research/, "Foil types in plain words" in wotc-pack-structure.md).
+ * TCG Live has NO per-card foil maps for this generation (probed 2026-10-01, see the WOTC block of fetch_foil_maps.py), so the masks
+ * are drawn: hook wotcMap() in js/wotc-foil.js. Follow SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
+ * dodge with a closing contrast(0.8), no black speckle, no hairline gratings, no foil over text or stamps, and run foil_coverage.mjs
+ * plus a WebKit render at phone size before merging.
+ *
+ * Specificity: repeat `era-wotc` five times in every selector, like sm.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-cosmos .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ */
+
+/* ---- What is drawn here ----------------------------------------------------------------------------------------------------
+   wotc-shining      `foil-holo wotc-shining` (neo4 106-113): the Pokémon FIGURE is the foil, the background is plain card. The foil
+                     is a smooth metal that reads gunmetal dark at rest and lights in broad rainbow bands (Charizard: yellow, red,
+                     magenta, blue along the body; Mewtwo cyan-white; Celebi copper; Noctowl gold) with one fine foil grain.
+   wotc-shining-bg   `foil-holo wotc-shining wotc-shining-bg` (neo3 65-66, Neo Revelation): the OTHER way round: silver star-field
+                     foil on the BACKGROUND of the art window, the Pokémon figure plain print.
+   wotc-rev-promo    `rev-mirror era-wotc wotc-rev-promo wotc-rev-<frame>` (basep 34, 35; bp 1, 2, 3, 8, 9): reverse holo, silver
+                     mirror with a star field over the card face inside the yellow border, the art window and its banner matte.
+   wotc-stamp        `foil-holo wotc-stamp` (basep 2-5, the Kids WB First Movie promos): not holo; only the gold logo stamp glints.
+   Masks (assets/foil/wotc-shining/, assets/foil/wotc-promo/) arrive as `--foil-map`; the scan's own alpha rounds the corners.
+   Photos and sources: /mnt/project-files/every-era/wotc/texture-refs/j3/SOURCES.txt, notes in reference/wotc-special.md. */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-shining, .wotc-rev-promo, .wotc-stamp) {
+  --ws-stars: url("/assets/foil/wotc-stars-v1.webp");
+  --ws-grain: url("/assets/foil/glitter-fine.webp");
+  --ws-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* The foil is cut to the scan (rounded corners) intersected with the drawn mask. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-shining, .wotc-stamp) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-rev-promo .foil {
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-mode: alpha, luminance;
+  mask-mode: alpha, luminance;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* Reset what the shared holo sheets put on the pseudo layers and the glare's second layer. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-shining, .wotc-rev-promo, .wotc-stamp) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-shining, .wotc-rev-promo, .wotc-stamp) .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-shining, .wotc-rev-promo, .wotc-stamp) .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Shining Pokémon, Neo Destiny (neo4 106-113): the figure is the foil, a SMOOTH mirror metal ----------------------------
+   Photos (nerdventure Charizard, PSA Japanese Charizard): a continuous rainbow gradient with a crisp soft highlight and the
+   drawing's black lines over it, no grain. The scans carry the foil baked in as a sandy grain, and lighting the scan (colour-dodge,
+   screen) amplifies it into glitter (Noah's lead, 2026-10-01), so `.foil` is painted OPAQUE and smooth on the figure mask:
+   ink map (neo4-<n>-ink.webp, black lines on white, multiplied) / light-dark shading sweep / the rainbow band (118% of the card,
+   so a whole figure shows red, yellow, green, blue; 150% showed one pink) / a gunmetal ground. Rest = the same stack at
+   brightness .5 (dark mirror metal, as the PSA photo); the tilt slides the band and the shading and lifts the brightness.
+   `::before` is not used (no grain); `::after` is a soft silver specular sweep. Normal blend, so no dodge chain to close. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-shining:not(.wotc-shining-bg) .foil {
+  background-image: var(--ws-ink),
+    linear-gradient(104deg, hsla(250, 20%, 4%, 0.5) 0%, hsla(250, 20%, 4%, 0) 26%, hsla(0, 0%, 100%, 0.55) 45%, hsla(0, 0%, 100%, 0) 58%, hsla(250, 20%, 4%, 0.5) 100%),
+    linear-gradient(112deg, transparent 10%, hsl(335, 100%, 52%) 22%, hsl(28, 100%, 52%) 32%, hsl(56, 100%, 54%) 40%,
+      hsl(148, 90%, 46%) 48%, hsl(188, 100%, 52%) 56%, hsl(232, 100%, 60%) 65%, hsl(286, 90%, 60%) 74%, transparent 90%),
+    linear-gradient(hsl(262, 12%, 22%), hsl(262, 12%, 22%));
+  background-size: 100% 100%, 200% 100%, 118% 118%, 100% 100%;
+  background-position: center,
+    clamp(0%, calc(((50% - var(--background-x)) * 2.2) + 50%), 100%) 0%,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.7) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.3) + 50%), 100%),
+    center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, normal, normal, normal;
+  filter: brightness(1) saturate(1.1);
+  mix-blend-mode: normal;
+  opacity: min(1, calc(0.95 * var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-shining:not(.wotc-shining-bg):not(.lit):not(.settling) .foil {
+  filter: brightness(0.5) saturate(0.4);
+  opacity: min(1, calc(0.9 * var(--foil-strength, 1)));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-shining:not(.wotc-shining-bg) .foil::before {
+  display: none;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-shining:not(.wotc-shining-bg) .foil::after {
+  background-image: linear-gradient(104deg, transparent 38%, hsla(190, 40%, 92%, 0.4) 48%, hsla(0, 0%, 100%, 0.55) 50%, hsla(40, 40%, 90%, 0.3) 52%, transparent 62%);
+  background-size: 300% 100%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 2.4) + 50%), 100%) 0%;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: calc(0.15 + var(--pointer-from-center) * 0.3);
+}
+
+/* ---- Shining Pokémon, Neo Revelation (neo3 65-66): the background is the foil --------------------------------------------
+   Photos: Gyarados is a silvery mirror swirl behind a plain serpent, Magikarp a glitter of stars behind a plain yellow fish.
+   The mask is the art window minus the figure. `.foil` the same rainbow band, cooler; `::before` the star field lit by a
+   spectrum (the stars that catch the light change with the tilt). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-shining-bg .foil {
+  background-image: linear-gradient(112deg, transparent 8%, hsl(190, 100%, 60%) 24%, hsl(232, 100%, 68%) 36%, hsl(286, 90%, 68%) 48%,
+    hsl(332, 95%, 66%) 58%, hsl(40, 100%, 62%) 68%, transparent 90%);
+  background-size: 220% 220%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 1.7) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.3) + 50%), 100%);
+  background-repeat: no-repeat;
+  filter: brightness(0.62) contrast(1.4) saturate(1.3) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-shining-bg:not(.lit):not(.settling) .foil {
+  opacity: calc(0.28 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-shining-bg .foil::before {
+  background-image: linear-gradient(120deg, hsl(186, 100%, 78%), hsl(232, 100%, 80%), hsl(300, 90%, 80%), hsl(350, 95%, 78%), hsl(50, 100%, 76%), hsl(186, 100%, 78%));
+  background-size: 300% 300%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  -webkit-mask-image: var(--ws-stars), var(--art), var(--foil-map);
+  mask-image: var(--ws-stars), var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-mode: alpha, alpha, luminance;
+  mask-mode: alpha, alpha, luminance;
+  -webkit-mask-size: 100% auto, contain, 100% 100%;
+  mask-size: 100% auto, contain, 100% 100%;
+  -webkit-mask-position: var(--ws-seed), center, center;
+  mask-position: var(--ws-seed), center, center;
+  -webkit-mask-repeat: repeat, no-repeat, no-repeat;
+  mask-repeat: repeat, no-repeat, no-repeat;
+  mix-blend-mode: screen;
+  filter: brightness(1.15) saturate(1.2);
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.45);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-shining-bg .foil::after {
+  background-image: linear-gradient(104deg, transparent 38%, hsla(200, 50%, 92%, 0.55) 49%, hsla(0, 0%, 100%, 0.7) 50%, hsla(40, 40%, 90%, 0.4) 52%, transparent 63%);
+  background-size: 300% 100%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 2.4) + 50%), 100%) 0%;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: calc(0.12 + var(--pointer-from-center) * 0.22);
+}
+
+/* A Shining's glare is the plain card's: a soft white pool, its dark end held at 0.3 so a thumb low on the card does not shade it. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-shining, .wotc-stamp) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 10%, hsla(0, 0%, 100%, 0.2) 25%, hsla(0, 0%, 0%, 0.3) 80%);
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+
+/* ---- Reverse holo promos (basep 34, 35; bp 1, 2, 3, 8, 9) ---------------------------------------------------------------
+   Photos (PSA 9 Entei #34, an Entei scan, the Best of Game scans): everything inside the yellow border except the art window
+   and its banner is a dark silver mirror with a scatter of bright stars; the border and the picture stay plain. The scans
+   already carry the stars they were photographed with, so this lights them: a lamp pool and a broad spectrum on the mirror,
+   colour-dodged (black ink stays black), and the star tile (assets/foil/wotc-stars-v1.webp) lit by a moving spectrum. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-rev-promo .foil {
+  background-image:
+    radial-gradient(ellipse 70% 55% at var(--pointer-x) var(--pointer-y), hsla(210, 30%, 92%, 0.62) 0%, hsla(210, 30%, 80%, 0.22) 55%, hsla(0, 0%, 0%, 0) 100%),
+    linear-gradient(112deg, transparent 14%, hsl(190, 90%, 52%) 30%, hsl(236, 90%, 62%) 42%, hsl(300, 80%, 60%) 54%, hsl(350, 90%, 58%) 64%, hsl(40, 100%, 56%) 74%, transparent 90%);
+  background-size: 100% 100%, 230% 230%;
+  background-position: center, clamp(0%, calc(((50% - var(--background-x)) * 1.8) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: no-repeat;
+  filter: brightness(0.6) contrast(1.3) saturate(1.2) contrast(0.8);
+  mix-blend-mode: color-dodge;
+  opacity: calc((0.34 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-rev-promo:not(.lit):not(.settling) .foil {
+  opacity: calc(0.3 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-rev-promo .foil::before {
+  background-image: linear-gradient(118deg, hsl(186, 100%, 80%), hsl(236, 100%, 82%), hsl(300, 90%, 82%), hsl(352, 95%, 80%), hsl(50, 100%, 78%), hsl(150, 90%, 78%), hsl(186, 100%, 80%));
+  background-size: 260% 260%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 2.2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.6) + 50%), 100%);
+  -webkit-mask-image: var(--ws-stars), var(--art), var(--foil-map);
+  mask-image: var(--ws-stars), var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  -webkit-mask-mode: alpha, alpha, luminance;
+  mask-mode: alpha, alpha, luminance;
+  -webkit-mask-size: 100% auto, contain, 100% 100%;
+  mask-size: 100% auto, contain, 100% 100%;
+  -webkit-mask-position: var(--ws-seed), center, center;
+  mask-position: var(--ws-seed), center, center;
+  -webkit-mask-repeat: repeat, no-repeat, no-repeat;
+  mask-repeat: repeat, no-repeat, no-repeat;
+  mix-blend-mode: screen;
+  filter: brightness(1.1) saturate(1.2);
+  opacity: calc(0.4 + var(--pointer-from-center) * 0.45);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-rev-promo .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.5) 10%, hsla(0, 0%, 100%, 0.2) 25%, hsla(0, 0%, 0%, 0.25) 80%);
+  mix-blend-mode: overlay;
+  opacity: calc(var(--card-opacity) * 0.6);
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in, source-over;
+  mask-composite: intersect, add;
+  -webkit-mask-mode: alpha, luminance;
+  mask-mode: alpha, luminance;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* ---- First Movie promos (basep 2-5): the gold stamp is the only foil -----------------------------------------------------
+   Photos: "Kids WB Presents / Pokémon / The First Movie" in gold foil on the top right of the art, glinting as the card
+   turns; the card itself is flat. The mask is the stamp's letters (scripts/make_wotc_promo_masks.py). A gold ramp slid across
+   it, screened, so the lettering lights and nothing else does. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-stamp .foil {
+  background-image: linear-gradient(112deg, hsl(36, 70%, 34%) 10%, hsl(44, 95%, 62%) 28%, hsl(52, 100%, 86%) 40%, hsl(40, 90%, 52%) 52%,
+    hsl(30, 80%, 36%) 66%, hsl(46, 100%, 70%) 80%, hsl(36, 70%, 34%) 92%);
+  background-size: 260% 260%;
+  background-position: clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.4) + 50%), 100%);
+  background-repeat: no-repeat;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.45 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-stamp:not(.lit):not(.settling) .foil {
+  opacity: calc(0.4 * var(--foil-strength, 1));
+}

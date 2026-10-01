@@ -1,0 +1,3532 @@
+[
+  {
+    "id": "hgss3-1",
+    "name": "Bellossom",
+    "number": "1",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Bellossom gather at times and seem to dance. They say that the dance is a ritual to summon the sun.",
+    "evolvesFrom": "Gloom",
+    "image": "assets/cards/hgss3/1.webp",
+    "imageSmall": "assets/cards/hgss3/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Dance 'til Dawn",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads. Bellossom is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Hustle Step",
+        "text": "Once during your turn (before your attack), you may remove 1 damage counter from each of your Pokémon. This power can't be used if Bellossom is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-1/large",
+    "tcgplayerId": 83801,
+    "market": 8.22
+  },
+  {
+    "id": "hgss3-2",
+    "name": "Espeon",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "match",
+    "flavorText": "It uses the fine hair that covers its body to sense air currents and predict its enemy's actions.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/hgss3/2.webp",
+    "imageSmall": "assets/cards/hgss3/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Suggestion",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Move up to 4 damage counters from any of your Pokémon to any of your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Psybeam",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-2/large",
+    "tcgplayerId": 85322,
+    "market": 82.55
+  },
+  {
+    "id": "hgss3-3",
+    "name": "Forretress",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "Its entire body is shielded by a steel-hard shell. What lurks inside this shell is a total mystery.",
+    "evolvesFrom": "Pineco",
+    "image": "assets/cards/hgss3/3.webp",
+    "imageSmall": "assets/cards/hgss3/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Mirror Shot",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, this attack does nothing."
+      },
+      {
+        "name": "Everyone Explode Now",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Does 30 damage times the number of Pineco and Forretress you have in play. This attack does 30 damage to each of your Pineco and Forretress in play."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-3/large",
+    "tcgplayerId": 85551,
+    "market": 3.82
+  },
+  {
+    "id": "hgss3-4",
+    "name": "Gliscor",
+    "number": "4",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Naoki Saito",
+    "flavorText": "Its flight is soundless. It uses its lengthy tail to carry off its prey… Then its elongated fangs do the rest.",
+    "evolvesFrom": "Gligar",
+    "image": "assets/cards/hgss3/4.webp",
+    "imageSmall": "assets/cards/hgss3/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Ninja Fang",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "If, before Gliscor does damage, the Defending Pokémon has no damage counters on it and is then damaged by this attack (after applying Weakness and Resistance), the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Poison Jab",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-4/large",
+    "tcgplayerId": 85774,
+    "market": 10.96
+  },
+  {
+    "id": "hgss3-5",
+    "name": "Houndoom",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Upon hearing its eerie howls, other Pokémon get the shivers and head straight back to their nests.",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/hgss3/5.webp",
+    "imageSmall": "assets/cards/hgss3/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Counterattack",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "20+",
+        "text": "If your opponent has any Fighting Pokémon in play, this attack does 20 damage plus 60 more damage."
+      },
+      {
+        "name": "Dark Roar",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "50",
+        "text": "Your opponent discards a card from his or her hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-5/large",
+    "tcgplayerId": 86209,
+    "market": 21.85
+  },
+  {
+    "id": "hgss3-6",
+    "name": "Magcargo",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "Yuka Morii",
+    "flavorText": "Its brittle shell occasionally spouts intense flames that circulate throughout its body.",
+    "evolvesFrom": "Slugma",
+    "image": "assets/cards/hgss3/6.webp",
+    "imageSmall": "assets/cards/hgss3/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Lava Flow",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "You may discard any number of Fire Energy cards attached to Magcargo. If you do , this attack does 60 damage plus 20 more damage for each Fire Energy card you discarded."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-6/large",
+    "tcgplayerId": 87017,
+    "market": 27.89
+  },
+  {
+    "id": "hgss3-7",
+    "name": "Scizor",
+    "number": "7",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Kent Kanetsuna/Direc. Shinji Higuchi",
+    "flavorText": "Its wings are not used for flying. They are flapped at high speed to adjust its body temperature.",
+    "evolvesFrom": "Scyther",
+    "image": "assets/cards/hgss3/7.webp",
+    "imageSmall": "assets/cards/hgss3/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Cut",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-7/large",
+    "tcgplayerId": 88963,
+    "market": 66.14
+  },
+  {
+    "id": "hgss3-8",
+    "name": "Smeargle",
+    "number": "8",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "flavorText": "Once it becomes an adult, it has a tendency to let its comrades plant footprints on its back.",
+    "image": "assets/cards/hgss3/8.webp",
+    "imageSmall": "assets/cards/hgss3/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Rap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Portrait",
+        "text": "Once during your turn (before your attack), if Smeargle is your Active Pokémon, you may look at your opponent's hand. If you do, choose a Supporter card you find there and use the effect of that card as the effect of this power. This power can't be used if Smeargle is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-8/large",
+    "tcgplayerId": 89356,
+    "market": 8.63
+  },
+  {
+    "id": "hgss3-9",
+    "name": "Togekiss",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Atsuko Nishida",
+    "flavorText": "As everyone knows, it visits peaceful regions, bringing them gifts of kindness and sweet blessings.",
+    "evolvesFrom": "Togetic",
+    "image": "assets/cards/hgss3/9.webp",
+    "imageSmall": "assets/cards/hgss3/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Blessed Wings",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Remove all damage counters from each of your Pokémon. Shuffle Togekiss and all cards attached to it back into your deck."
+      },
+      {
+        "name": "Air Cutter",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-9/large",
+    "tcgplayerId": 89924,
+    "market": 17.18
+  },
+  {
+    "id": "hgss3-10",
+    "name": "Umbreon",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "When agitated, this Pokémon protects itself by spraying poisonous sweat from its pores.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/hgss3/10.webp",
+    "imageSmall": "assets/cards/hgss3/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Moonlight Fang",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, prevent all effects, including damage, done to Umbreon by attacks from your opponent's Pokémon that has any Poké-Powers or Poké-Bodies."
+      },
+      {
+        "name": "Quick Blow",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 damage plus 30 damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-10/large",
+    "tcgplayerId": 90145,
+    "market": 96.83
+  },
+  {
+    "id": "hgss3-11",
+    "name": "Dodrio",
+    "number": "11",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Yukiko Baba",
+    "flavorText": "It collects data and plans three times as wisely, but it may think too much and fall into a state of immobility.",
+    "evolvesFrom": "Doduo",
+    "image": "assets/cards/hgss3/11.webp",
+    "imageSmall": "assets/cards/hgss3/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Incessant Peck",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin until you get tails. This attack does 20 damage plus 20 more damage for each heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Retreat Aid",
+        "text": "As long as Dodrio is on your Bench, your Active Pokémon's Retreat Cost is ColorlessColorless less.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-11/large",
+    "tcgplayerId": 84854,
+    "market": 0.73
+  },
+  {
+    "id": "hgss3-12",
+    "name": "Drifblim",
+    "number": "12",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It can generate and release gas within its body. That's how it can control the altitude of its drift.",
+    "evolvesFrom": "Drifloon",
+    "image": "assets/cards/hgss3/12.webp",
+    "imageSmall": "assets/cards/hgss3/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Balloon Tackle",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Drifblim does 20 damage to itself."
+      },
+      {
+        "name": "Take Away",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle Drifblim and all cards attached to it back into your deck. Then, your opponent shuffles the Defending Pokémon and all cards attached to it into his or her deck. (You choose your new Active Pokémon first.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-12/large",
+    "tcgplayerId": 84948,
+    "market": 0.84
+  },
+  {
+    "id": "hgss3-13",
+    "name": "Forretress",
+    "number": "13",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It remains immovably rooted to its tree. It scatters pieces of its hard shell to drive its enemies away.",
+    "evolvesFrom": "Pineco",
+    "image": "assets/cards/hgss3/13.webp",
+    "imageSmall": "assets/cards/hgss3/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Spike Spread",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "This attack does 10 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Gyro Ball",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "You may switch Forretress with 1 of your Benched Pokémon. If you do, your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-13/large",
+    "tcgplayerId": 85552,
+    "market": 0.75
+  },
+  {
+    "id": "hgss3-14",
+    "name": "Hariyama",
+    "number": "14",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It loves challenging others to tests of strength. It has the power to stop a train with a slap.",
+    "evolvesFrom": "Makuhita",
+    "image": "assets/cards/hgss3/14.webp",
+    "imageSmall": "assets/cards/hgss3/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      },
+      {
+        "name": "Backward Belt Throw",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "You may do 80 damage plus 20 more damage. If you do, Hariyama does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-14/large",
+    "tcgplayerId": 86016,
+    "market": 5.31
+  },
+  {
+    "id": "hgss3-15",
+    "name": "Honchkrow",
+    "number": "15",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "kawayoo",
+    "flavorText": "It is merciless by nature. It is said that it never forgives the mistakes of its Murkrow followers.",
+    "evolvesFrom": "Murkrow",
+    "image": "assets/cards/hgss3/15.webp",
+    "imageSmall": "assets/cards/hgss3/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Whirlwind",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."
+      },
+      {
+        "name": "Blindside",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon that has any damage counters on it. This attack does 50 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-15/large",
+    "tcgplayerId": 86161,
+    "market": 0.95
+  },
+  {
+    "id": "hgss3-16",
+    "name": "Honchkrow",
+    "number": "16",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It is merciless by nature. It is said that it never forgives the mistakes of its Murkrow followers.",
+    "evolvesFrom": "Murkrow",
+    "image": "assets/cards/hgss3/16.webp",
+    "imageSmall": "assets/cards/hgss3/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Bind",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Vengeance",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 10 more damage for each Darkness Pokémon in your discard pile."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-16/large",
+    "tcgplayerId": 86162,
+    "market": 0.5
+  },
+  {
+    "id": "hgss3-17",
+    "name": "Leafeon",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Noriko Hotta",
+    "flavorText": "When you see Leafeon asleep in a patch of sunshine, you'll know it is using photosynthesis to produce clean air.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/hgss3/17.webp",
+    "imageSmall": "assets/cards/hgss3/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Miasma Wind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Does 50 damage damage times the number of Special Conditions affecting the Defending Pokémon."
+      },
+      {
+        "name": "Soothing Scent",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-17/large",
+    "tcgplayerId": 86680,
+    "market": 16.67
+  },
+  {
+    "id": "hgss3-18",
+    "name": "Metagross",
+    "number": "18",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "130",
+    "artist": "TOKIYA",
+    "flavorText": "It folds its four legs when flying. Its four brains are said to be superior to a supercomputer.",
+    "evolvesFrom": "Metang",
+    "image": "assets/cards/hgss3/18.webp",
+    "imageSmall": "assets/cards/hgss3/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Strength",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      },
+      {
+        "name": "Quad Smash",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Flip 4 coins. This attack does 50 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-18/large",
+    "tcgplayerId": 87341,
+    "market": 2.85
+  },
+  {
+    "id": "hgss3-19",
+    "name": "Mismagius",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Suwama Chiaki",
+    "flavorText": "Its cries sound like incantations to torment the foe. It appears where you least expect it.",
+    "evolvesFrom": "Misdreavus",
+    "image": "assets/cards/hgss3/19.webp",
+    "imageSmall": "assets/cards/hgss3/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Sleeping Spell",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Poltergeist",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Look at your opponent's hand. This attack does 30 damage times the number of Trainer, Supporter, and Stadium cards in your opponent's hand.]"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-19/large",
+    "tcgplayerId": 87518,
+    "market": 2.47
+  },
+  {
+    "id": "hgss3-20",
+    "name": "Rotom",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "MAHOU",
+    "flavorText": "Research continues on this Pokémon, which could be the power source of a unique motor.",
+    "image": "assets/cards/hgss3/20.webp",
+    "imageSmall": "assets/cards/hgss3/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Plasma Arrow",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 20 damage for each Energy attached to that Pokémon. This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mischievous Trick",
+        "text": "Once during your turn (before your attack), you may switch 1 of your face-down Prize cards with the top card of your deck. This power can't be used if Rotom is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-20/large",
+    "tcgplayerId": 88839,
+    "market": 10.96
+  },
+  {
+    "id": "hgss3-21",
+    "name": "Skarmory",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "After nesting in bramble bushes, the wings of its chicks grow hard from scratches by thorns.",
+    "image": "assets/cards/hgss3/21.webp",
+    "imageSmall": "assets/cards/hgss3/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Steel Coat",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Metal Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Razor Wing",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-21/large",
+    "tcgplayerId": 89242,
+    "market": 0.49
+  },
+  {
+    "id": "hgss3-22",
+    "name": "Tropius",
+    "number": "22",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "The bunch of fruit around its neck ripens twice a year and is delicious. It's a highly favored tropical snack.",
+    "image": "assets/cards/hgss3/22.webp",
+    "imageSmall": "assets/cards/hgss3/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Fresh-Picked Fruit",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Remove 6 damage counters from 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Cutting Wind",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-22/large",
+    "tcgplayerId": 90062,
+    "market": 1.02
+  },
+  {
+    "id": "hgss3-23",
+    "name": "Vespiquen",
+    "number": "23",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Naoyo Kimura",
+    "flavorText": "It raises grubs in the holes in its body. It secretes pheromones to control Combee.",
+    "evolvesFrom": "Combee",
+    "image": "assets/cards/hgss3/23.webp",
+    "imageSmall": "assets/cards/hgss3/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Mach Wind",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your next turn, Vespiquen's Retreat Cost is 0."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Defense Sign",
+        "text": "Prevent all damage done to your Benched Grass Pokémon by attacks.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-23/large",
+    "tcgplayerId": 90329,
+    "market": 0.86
+  },
+  {
+    "id": "hgss3-24",
+    "name": "Vileplume",
+    "number": "24",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It has the world's largest petals. With every step, the petals shake out heavy clouds of toxic pollen.",
+    "evolvesFrom": "Gloom",
+    "image": "assets/cards/hgss3/24.webp",
+    "imageSmall": "assets/cards/hgss3/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Dazzling Pollen",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 50 damage plus 20 more damage. If tails, the Defending Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Allergy Flower",
+        "text": "Each player can't play any Trainer cards from his or her hand.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-24/large",
+    "tcgplayerId": 90381,
+    "market": 7.78
+  },
+  {
+    "id": "hgss3-25",
+    "name": "Weavile",
+    "number": "25",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Aya Kusube",
+    "flavorText": "It lives in snowy regions. It carves patterns in trees with its claws as a signal to others.",
+    "evolvesFrom": "Sneasel",
+    "image": "assets/cards/hgss3/25.webp",
+    "imageSmall": "assets/cards/hgss3/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Feint Attack",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 30 damage to that Pokémon. This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on that Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Claw Snag",
+        "text": "Once during your turn, when you play Weavile from your hand to evolve 1 of your Pokémon, you may look at your opponent's hand. Choose a card from your opponent's hand and discard it.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-25/large",
+    "tcgplayerId": 90533,
+    "market": 2.14
+  },
+  {
+    "id": "hgss3-26",
+    "name": "Flareon",
+    "number": "26",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "kawayoo",
+    "flavorText": "It stores some of the air it inhales in its internal flame pouch, which heats it to over 3,000 degrees Fahrenheit.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/hgss3/26.webp",
+    "imageSmall": "assets/cards/hgss3/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard an Energy attached to Flareon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-26/large",
+    "tcgplayerId": 85498,
+    "market": 12.33
+  },
+  {
+    "id": "hgss3-27",
+    "name": "Gloom",
+    "number": "27",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "What appears to be drool is actually sweet honey. It is very sticky and clings stubbornly if touched.",
+    "evolvesFrom": "Oddish",
+    "image": "assets/cards/hgss3/27.webp",
+    "imageSmall": "assets/cards/hgss3/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Miracle Powder",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, choose 1 Special Condition. The Defending Pokémon is now affected by that Special Condition."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-27/large",
+    "tcgplayerId": 85786,
+    "market": 1.09
+  },
+  {
+    "id": "hgss3-28",
+    "name": "Jolteon",
+    "number": "28",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It concentrates the weak electric charges emitted by its cells and launches wicked lightning bolts.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/hgss3/28.webp",
+    "imageSmall": "assets/cards/hgss3/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Agility",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to Jolteon during your opponent's next turn."
+      },
+      {
+        "name": "Mach Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-28/large",
+    "tcgplayerId": 86345,
+    "market": 7.07
+  },
+  {
+    "id": "hgss3-29",
+    "name": "Lairon",
+    "number": "29",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "match",
+    "flavorText": "It loves iron ore. Groups of them fight for territory by bashing one another with their steel bodies.",
+    "evolvesFrom": "Aron",
+    "image": "assets/cards/hgss3/29.webp",
+    "imageSmall": "assets/cards/hgss3/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Scrap Attack",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, search your discard pile for a Metal Energy card and attach it to Lairon."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-29/large",
+    "tcgplayerId": 86582,
+    "market": 0.45
+  },
+  {
+    "id": "hgss3-30",
+    "name": "Metang",
+    "number": "30",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "TOKIYA",
+    "flavorText": "When two Beldum fuse together, a magnetic nervous system places their brains in union.",
+    "evolvesFrom": "Beldum",
+    "image": "assets/cards/hgss3/30.webp",
+    "imageSmall": "assets/cards/hgss3/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Double Smash",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Flip 2 coins. This attack does 50 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-30/large",
+    "tcgplayerId": 87382,
+    "market": 0.41
+  },
+  {
+    "id": "hgss3-31",
+    "name": "Muk",
+    "number": "31",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Midori Harada",
+    "flavorText": "Its body is made of a powerful poison. Touching it accidentally will cause a fever that requires bed rest.",
+    "evolvesFrom": "Grimer",
+    "image": "assets/cards/hgss3/31.webp",
+    "imageSmall": "assets/cards/hgss3/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Sludge Drag",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Switch the Defending Pokémon with 1 of your opponent's Benched Pokémon. The new Defending Pokémon is now Confused and Poisoned."
+      },
+      {
+        "name": "Pester",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If the Defending Pokémon is affected by a Special Condition, this attack does 50 damage plus 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-31/large",
+    "tcgplayerId": 87625,
+    "market": 0.61
+  },
+  {
+    "id": "hgss3-32",
+    "name": "Pinsir",
+    "number": "32",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "match",
+    "flavorText": "With its horns, it digs burrows to sleep in at night. In the morning, damp soil clings to its body.",
+    "image": "assets/cards/hgss3/32.webp",
+    "imageSmall": "assets/cards/hgss3/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Charging Horn",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage."
+      },
+      {
+        "name": "Guillotine",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-32/large",
+    "tcgplayerId": 88139,
+    "market": 0.66
+  },
+  {
+    "id": "hgss3-33",
+    "name": "Raichu",
+    "number": "33",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "flavorText": "When its electricity builds, its muscles are stimulated, and it becomes more aggressive than usual.",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/hgss3/33.webp",
+    "imageSmall": "assets/cards/hgss3/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Pain-full Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Spark",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-33/large",
+    "tcgplayerId": 88518,
+    "market": 7.21
+  },
+  {
+    "id": "hgss3-34",
+    "name": "Raticate",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Sachiko Adachi",
+    "flavorText": "Its whiskers help it to maintain balance. Its fangs never stop growing, so it gnaws to pare them down.",
+    "evolvesFrom": "Rattata",
+    "image": "assets/cards/hgss3/34.webp",
+    "imageSmall": "assets/cards/hgss3/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Razor-Sharp Incisors",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Does 10 damage times the number of damage counters on the Defending Pokémon."
+      },
+      {
+        "name": "Gnaw Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Discard a Special Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-34/large",
+    "tcgplayerId": 88606,
+    "market": 0.76
+  },
+  {
+    "id": "hgss3-35",
+    "name": "Sableye",
+    "number": "35",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "It dwells in the darkness of caves. It uses its sharp claws to dig up gems to nourish itself.",
+    "image": "assets/cards/hgss3/35.webp",
+    "imageSmall": "assets/cards/hgss3/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Pull Out",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Search your discard pile for any 1 card, show it to your opponent, and put it on top of your deck."
+      },
+      {
+        "name": "Dark Hand",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If you have more cards in your hand than your opponent, this attack does 20 damage plus 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-35/large",
+    "tcgplayerId": 88854,
+    "market": 0.73
+  },
+  {
+    "id": "hgss3-36",
+    "name": "Scyther",
+    "number": "36",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Wataru Kawahara/Direc. Shinji Higuchi",
+    "flavorText": "When it moves, it leaves only a blur. If it hides in grass, its protective colors make it invisible.",
+    "image": "assets/cards/hgss3/36.webp",
+    "imageSmall": "assets/cards/hgss3/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Afterimage Strike",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, if Scyther would be damaged by an attack, flip a coin. If heads, prevent that attack's damage done to Scyther."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-36/large",
+    "tcgplayerId": 89003,
+    "market": 1.52
+  },
+  {
+    "id": "hgss3-37",
+    "name": "Skuntank",
+    "number": "37",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Naoyo Kimura",
+    "flavorText": "It attacks by spraying a repugnant fluid from its tail, but the stench dulls after a few squirts.",
+    "evolvesFrom": "Stunky",
+    "image": "assets/cards/hgss3/37.webp",
+    "imageSmall": "assets/cards/hgss3/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Stun Gas",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned. If tails, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-37/large",
+    "tcgplayerId": 89282,
+    "market": 0.37
+  },
+  {
+    "id": "hgss3-38",
+    "name": "Slowbro",
+    "number": "38",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Naturally dull to begin with, it lost its ability to feel pain due to Shellder's seeping poison.",
+    "evolvesFrom": "Slowpoke",
+    "image": "assets/cards/hgss3/38.webp",
+    "imageSmall": "assets/cards/hgss3/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Full-Belly Refresh",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Remove all Special Conditions and 3 damage counters from Slowbro."
+      },
+      {
+        "name": "Startling Trip",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused. If tails, Slowbro is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-38/large",
+    "tcgplayerId": 89308,
+    "market": 15.99
+  },
+  {
+    "id": "hgss3-39",
+    "name": "Togetic",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It grows dispirited if it is not with kind people. It can float in midair without moving its wings.",
+    "evolvesFrom": "Togepi",
+    "image": "assets/cards/hgss3/39.webp",
+    "imageSmall": "assets/cards/hgss3/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Chase Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for any 1 card and put it into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Fly",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing. If heads, prevent all effects of attacks, including damage done to Togetic during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-39/large",
+    "tcgplayerId": 89944,
+    "market": 0.79
+  },
+  {
+    "id": "hgss3-40",
+    "name": "Unown",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Hideaki Hakozaki",
+    "flavorText": "Their shapes look like hieroglyphs on ancient tablets. It is said that the two are somehow related.",
+    "image": "assets/cards/hgss3/40.webp",
+    "imageSmall": "assets/cards/hgss3/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "DARK",
+        "text": "Once during your turn, when you put Unown from your hand onto your Bench, you may search your deck for a Darkness Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-40/large",
+    "tcgplayerId": 90164,
+    "market": 1.3
+  },
+  {
+    "id": "hgss3-41",
+    "name": "Vaporeon",
+    "number": "41",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "sui",
+    "flavorText": "When Vaporeon's fins begin to vibrate, it is a sign that rain will come within a few hours.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/hgss3/41.webp",
+    "imageSmall": "assets/cards/hgss3/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Drain",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Remove 2 damage counters from Vaporeon."
+      },
+      {
+        "name": "Dual Splash",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 2 of your opponent's Pokémon. This attack does 30 damage to each of them. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-41/large",
+    "tcgplayerId": 90286,
+    "market": 10.72
+  },
+  {
+    "id": "hgss3-42",
+    "name": "Aron",
+    "number": "42",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "50",
+    "artist": "match",
+    "flavorText": "When it evolves, it sheds the steel carapace that covered its whole body and develops a new one.",
+    "image": "assets/cards/hgss3/42.webp",
+    "imageSmall": "assets/cards/hgss3/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Sound",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-42/large",
+    "tcgplayerId": 83638,
+    "market": 0.34
+  },
+  {
+    "id": "hgss3-43",
+    "name": "Beldum",
+    "number": "43",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "50",
+    "artist": "TOKIYA",
+    "flavorText": "The magnetic force generated by its body repels the ground's natural magnetism, letting it float.",
+    "image": "assets/cards/hgss3/43.webp",
+    "imageSmall": "assets/cards/hgss3/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge Out",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Single Smash",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-43/large",
+    "tcgplayerId": 83792,
+    "market": 0.43
+  },
+  {
+    "id": "hgss3-44",
+    "name": "Combee",
+    "number": "44",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "30",
+    "artist": "Naoyo Kimura",
+    "flavorText": "At night, Combee sleep in a group of about a thousand, packed closely together in a lump.",
+    "image": "assets/cards/hgss3/44.webp",
+    "imageSmall": "assets/cards/hgss3/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Enraged Assault",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If Vespiquen is on your Bench and has any damage counters on it, this attack does 20 damage plus 60 more damage and the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-44/large",
+    "tcgplayerId": 84397,
+    "market": 0.36
+  },
+  {
+    "id": "hgss3-45",
+    "name": "Doduo",
+    "number": "45",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Yukiko Baba",
+    "flavorText": "By alternately raising and lowering its two heads, it balances itself to be more stable while running.",
+    "image": "assets/cards/hgss3/45.webp",
+    "imageSmall": "assets/cards/hgss3/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Double Headstrike",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip 2 coins. If either of them is tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-45/large",
+    "tcgplayerId": 84865,
+    "market": 0.42
+  },
+  {
+    "id": "hgss3-46",
+    "name": "Drifloon",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It is whispered that any child who mistakes Drifloon for a balloon and holds on to it could wind up missing.",
+    "image": "assets/cards/hgss3/46.webp",
+    "imageSmall": "assets/cards/hgss3/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Minimize",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done to Drifloon by attacks is reduced by 20 (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Pull",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, switch the Defending Pokémon with 1 of your opponent's Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-46/large",
+    "tcgplayerId": 84960,
+    "market": 0.4
+  },
+  {
+    "id": "hgss3-47",
+    "name": "Eevee",
+    "number": "47",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Kanako Eo",
+    "flavorText": "It has the ability to alter the composition of its body to suit its surrounding environment.",
+    "image": "assets/cards/hgss3/47.webp",
+    "imageSmall": "assets/cards/hgss3/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-47/large",
+    "tcgplayerId": 85087,
+    "market": 3.09
+  },
+  {
+    "id": "hgss3-48",
+    "name": "Eevee",
+    "number": "48",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Noriko Hotta",
+    "flavorText": "Its irregularly configured DNA is affected by its surroundings. It evolves if its environment changes.",
+    "image": "assets/cards/hgss3/48.webp",
+    "imageSmall": "assets/cards/hgss3/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward."
+      },
+      {
+        "name": "Tickle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-48/large",
+    "tcgplayerId": 85088,
+    "market": 4.65
+  },
+  {
+    "id": "hgss3-49",
+    "name": "Gligar",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Naoki Saito",
+    "flavorText": "It flies straight at its target's face then clamps down on the startled victim to inject poison.",
+    "image": "assets/cards/hgss3/49.webp",
+    "imageSmall": "assets/cards/hgss3/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Stun Poison",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed and Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-49/large",
+    "tcgplayerId": 85768,
+    "market": 0.38
+  },
+  {
+    "id": "hgss3-50",
+    "name": "Grimer",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "Wherever Grimer has passed, so many germs are left behind that no plants will ever grow again.",
+    "image": "assets/cards/hgss3/50.webp",
+    "imageSmall": "assets/cards/hgss3/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Sticky Liquid",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, the Defending Pokémon's Retreat Cost is Colorless more."
+      },
+      {
+        "name": "Sludge Toss",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-50/large",
+    "tcgplayerId": 85913,
+    "market": 0.37
+  },
+  {
+    "id": "hgss3-51",
+    "name": "Hitmonchan",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "Its punches slice the air. However, it seems to need a short break after fighting for three minutes.",
+    "image": "assets/cards/hgss3/51.webp",
+    "imageSmall": "assets/cards/hgss3/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Detect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all effects of attack, including damage, done to Hitmonchan during your opponent's next turn."
+      },
+      {
+        "name": "Sky Uppercut",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-51/large",
+    "tcgplayerId": 86095,
+    "market": 0.42
+  },
+  {
+    "id": "hgss3-52",
+    "name": "Hitmonlee",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "flavorText": "If it starts kicking repeatedly, both legs will stretch even longer to strike a fleeing foe.",
+    "image": "assets/cards/hgss3/52.webp",
+    "imageSmall": "assets/cards/hgss3/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Kick",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "High Jump Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-52/large",
+    "tcgplayerId": 86107,
+    "market": 0.68
+  },
+  {
+    "id": "hgss3-53",
+    "name": "Houndour",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "50",
+    "artist": "kawayoo",
+    "flavorText": "It uses different kinds of cries for communicating with others of its kind and for pursuing its prey.",
+    "image": "assets/cards/hgss3/53.webp",
+    "imageSmall": "assets/cards/hgss3/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-53/large",
+    "tcgplayerId": 86230,
+    "market": 0.79
+  },
+  {
+    "id": "hgss3-54",
+    "name": "Houndour",
+    "number": "54",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "To corner prey, they check each other's location using barks that only they can understand.",
+    "image": "assets/cards/hgss3/54.webp",
+    "imageSmall": "assets/cards/hgss3/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Jump On",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-54/large",
+    "tcgplayerId": 86231,
+    "market": 0.5
+  },
+  {
+    "id": "hgss3-55",
+    "name": "Makuhita",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It toughens up by slamming into thick trees over and over. It gains a sturdy body and dauntless spirit.",
+    "image": "assets/cards/hgss3/55.webp",
+    "imageSmall": "assets/cards/hgss3/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Slap Down",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip 2 coins. This attack does 20 damage plus 10 more damage for each heads."
+      },
+      {
+        "name": "Slap Push",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-55/large",
+    "tcgplayerId": 87133,
+    "market": 1.42
+  },
+  {
+    "id": "hgss3-56",
+    "name": "Mawile",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "TOKIYA",
+    "flavorText": "It chomps with its gaping mouth. Its huge jaws are actually steel horns that have been transformed.",
+    "image": "assets/cards/hgss3/56.webp",
+    "imageSmall": "assets/cards/hgss3/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Selfish Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top card of your deck. You may put it into your hand. If not, discard it and draw a card."
+      },
+      {
+        "name": "Destructive Jaw",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed and discard an Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-56/large",
+    "tcgplayerId": 87263,
+    "market": 0.53
+  },
+  {
+    "id": "hgss3-57",
+    "name": "Misdreavus",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Suwama Chiaki",
+    "flavorText": "It loves to bite and yank people's hair from behind without warning, just to see their shocked reactions.",
+    "image": "assets/cards/hgss3/57.webp",
+    "imageSmall": "assets/cards/hgss3/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Mumble",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Dual Draw",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Each player draws 3 cards."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-57/large",
+    "tcgplayerId": 87511,
+    "market": 0.41
+  },
+  {
+    "id": "hgss3-58",
+    "name": "Murkrow",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "kawayoo",
+    "flavorText": "Feared and loathed by many, it is believed to bring misfortune to all those who see it at night.",
+    "image": "assets/cards/hgss3/58.webp",
+    "imageSmall": "assets/cards/hgss3/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Astonish",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, choose 1 card from your opponent's hand without looking. Look at the card you chose, then have your opponent shuffle that card into his or her deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-58/large",
+    "tcgplayerId": 87655,
+    "market": 0.44
+  },
+  {
+    "id": "hgss3-59",
+    "name": "Murkrow",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It is said that when chased, it lures its attacker onto dark mountain trails where the foe will get lost.",
+    "image": "assets/cards/hgss3/59.webp",
+    "imageSmall": "assets/cards/hgss3/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Glide",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Dark Cutter",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-59/large",
+    "tcgplayerId": 87656,
+    "market": 0.47
+  },
+  {
+    "id": "hgss3-60",
+    "name": "Oddish",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Awakened by moonlight, it roams actively at night. In the day it stays quietly underground.",
+    "image": "assets/cards/hgss3/60.webp",
+    "imageSmall": "assets/cards/hgss3/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Find a Friend",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for a Grass Pokémon, show it to your opponent, and put it into your hand. Shuffle your deck afterward."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-60/large",
+    "tcgplayerId": 87845,
+    "market": 0.88
+  },
+  {
+    "id": "hgss3-61",
+    "name": "Pikachu",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "flavorText": "This intelligent Pokémon roasts hard berries with electricity to make them tender enough to eat.",
+    "image": "assets/cards/hgss3/61.webp",
+    "imageSmall": "assets/cards/hgss3/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Slam",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-61/large",
+    "tcgplayerId": 88097,
+    "market": 13.09
+  },
+  {
+    "id": "hgss3-62",
+    "name": "Pineco",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It hangs and waits for flying insect prey to come near. It does not move about much on its own.",
+    "image": "assets/cards/hgss3/62.webp",
+    "imageSmall": "assets/cards/hgss3/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-62/large",
+    "tcgplayerId": 88129,
+    "market": 0.32
+  },
+  {
+    "id": "hgss3-63",
+    "name": "Pineco",
+    "number": "63",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "It likes to make its shell thicker by adding layers of tree bark. The additional weight doesn't bother it.",
+    "image": "assets/cards/hgss3/63.webp",
+    "imageSmall": "assets/cards/hgss3/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Focus Energy",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your next turn, Pineco's Surprise Attack attack's base damage is 80."
+      },
+      {
+        "name": "Surprise Attack",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-63/large",
+    "tcgplayerId": 88130,
+    "market": 0.34
+  },
+  {
+    "id": "hgss3-64",
+    "name": "Rattata",
+    "number": "64",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Sachiko Adachi",
+    "flavorText": "Living wherever there is food available, it ceaselessly scavenges for edibles the entire day.",
+    "image": "assets/cards/hgss3/64.webp",
+    "imageSmall": "assets/cards/hgss3/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-64/large",
+    "tcgplayerId": 88621,
+    "market": 0.63
+  },
+  {
+    "id": "hgss3-65",
+    "name": "Scyther",
+    "number": "65",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It slashes through grass with its sharp scythes, moving too fast for the human eye to track.",
+    "image": "assets/cards/hgss3/65.webp",
+    "imageSmall": "assets/cards/hgss3/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Cut",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Slashing Strike",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "During your next turn, Scyther can't use Slashing Strike."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-65/large",
+    "tcgplayerId": 89004,
+    "market": 0.94
+  },
+  {
+    "id": "hgss3-66",
+    "name": "Slowpoke",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "A sweet sap leaks from its tail's tip. Although not nutritious, the tail is pleasant to chew on.",
+    "image": "assets/cards/hgss3/66.webp",
+    "imageSmall": "assets/cards/hgss3/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Rambunctious Party",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 5 cards of your deck. Choose as many Basic Pokémon as you like and put them onto your Bench. Shuffle the other cards back into your deck."
+      },
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-66/large",
+    "tcgplayerId": 89333,
+    "market": 26.68
+  },
+  {
+    "id": "hgss3-67",
+    "name": "Slugma",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Yuka Morii",
+    "flavorText": "A common sight in volcanic areas, it slowly slithers around in a constant search for warm places.",
+    "image": "assets/cards/hgss3/67.webp",
+    "imageSmall": "assets/cards/hgss3/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Active Volcano",
+        "text": "Once during your turn (before your attack), you may discard the top card of your deck. If that card is a Fire Energy card, attach it to Slugma. This power can't be used if Slugma is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-67/large",
+    "tcgplayerId": 89346,
+    "market": 4.27
+  },
+  {
+    "id": "hgss3-68",
+    "name": "Sneasel",
+    "number": "68",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Aya Kusube",
+    "flavorText": "Vicious in nature, it drives Pidgey from their nests and scavenges any leftovers it can find.",
+    "image": "assets/cards/hgss3/68.webp",
+    "imageSmall": "assets/cards/hgss3/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      },
+      {
+        "name": "Beat Up",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin for each of your Pokémon in play. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-68/large",
+    "tcgplayerId": 89371,
+    "market": 0.48
+  },
+  {
+    "id": "hgss3-69",
+    "name": "Stunky",
+    "number": "69",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Naoyo Kimura",
+    "flavorText": "The foul fluid from its rear is so revolting that it can make people feel queasy up to a mile and a quarter away.",
+    "image": "assets/cards/hgss3/69.webp",
+    "imageSmall": "assets/cards/hgss3/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 2 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-69/large",
+    "tcgplayerId": 89587,
+    "market": 0.35
+  },
+  {
+    "id": "hgss3-70",
+    "name": "Togepi",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "flavorText": "A proverb claims that happiness will come to anyone who can make a sleeping Togepi stand up.",
+    "image": "assets/cards/hgss3/70.webp",
+    "imageSmall": "assets/cards/hgss3/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Plead",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Ask your opponent if you may draw 2 cards. If yes, draw 2 cards. If no, this attack does 20 damage to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-70/large",
+    "tcgplayerId": 89935,
+    "market": 2.74
+  },
+  {
+    "id": "hgss3-71",
+    "name": "Burned Tower",
+    "number": "71",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/hgss3/71.webp",
+    "imageSmall": "assets/cards/hgss3/71-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-71/large",
+    "tcgplayerId": 84058,
+    "market": 2.45
+  },
+  {
+    "id": "hgss3-72",
+    "name": "Defender",
+    "number": "72",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/hgss3/72.webp",
+    "imageSmall": "assets/cards/hgss3/72-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-72/large",
+    "tcgplayerId": 84727,
+    "market": 0.25
+  },
+  {
+    "id": "hgss3-73",
+    "name": "Energy Exchanger",
+    "number": "73",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/hgss3/73.webp",
+    "imageSmall": "assets/cards/hgss3/73-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-73/large",
+    "tcgplayerId": 85212,
+    "market": 0.33
+  },
+  {
+    "id": "hgss3-74",
+    "name": "Flower Shop Lady",
+    "number": "74",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Kanako Eo",
+    "image": "assets/cards/hgss3/74.webp",
+    "imageSmall": "assets/cards/hgss3/74-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-74/large",
+    "tcgplayerId": 85519,
+    "market": 3.74
+  },
+  {
+    "id": "hgss3-75",
+    "name": "Legend Box",
+    "number": "75",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Shizurow",
+    "image": "assets/cards/hgss3/75.webp",
+    "imageSmall": "assets/cards/hgss3/75-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-75/large",
+    "tcgplayerId": 86709,
+    "market": 0.36
+  },
+  {
+    "id": "hgss3-76",
+    "name": "Ruins of Alph",
+    "number": "76",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/hgss3/76.webp",
+    "imageSmall": "assets/cards/hgss3/76-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-76/large",
+    "tcgplayerId": 88846,
+    "market": 0.54
+  },
+  {
+    "id": "hgss3-77",
+    "name": "Sage's Training",
+    "number": "77",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/hgss3/77.webp",
+    "imageSmall": "assets/cards/hgss3/77-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-77/large",
+    "tcgplayerId": 88893,
+    "market": 0.34
+  },
+  {
+    "id": "hgss3-78",
+    "name": "Team Rocket's Trickery",
+    "number": "78",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Takao Unno",
+    "image": "assets/cards/hgss3/78.webp",
+    "imageSmall": "assets/cards/hgss3/78-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-78/large",
+    "tcgplayerId": 89852,
+    "market": 0.43
+  },
+  {
+    "id": "hgss3-79",
+    "name": "Darkness Energy",
+    "number": "79",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "artist": "Kent Kanetsuna",
+    "image": "assets/cards/hgss3/79.webp",
+    "imageSmall": "assets/cards/hgss3/79-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-79/large",
+    "tcgplayerId": 84693,
+    "market": 0.75
+  },
+  {
+    "id": "hgss3-80",
+    "name": "Metal Energy",
+    "number": "80",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "artist": "Kent Kanetsuna",
+    "image": "assets/cards/hgss3/80.webp",
+    "imageSmall": "assets/cards/hgss3/80-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-80/large",
+    "tcgplayerId": 87366,
+    "market": 0.69
+  },
+  {
+    "id": "hgss3-81",
+    "name": "Espeon",
+    "number": "81",
+    "rarity": "Rare Prime",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Prime"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Hideaki Hakozaki",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/hgss3/81.webp",
+    "imageSmall": "assets/cards/hgss3/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Ray",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Remove 1 damage counter from each of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Evolution Memories",
+        "text": "Espeon can use the attacks of all Pokémon you have in play that evolve from Eevee as its own. (You still need the necessary Energy to use each attack.)",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-81/large",
+    "tcgplayerId": 85323,
+    "market": 360.3
+  },
+  {
+    "id": "hgss3-82",
+    "name": "Houndoom",
+    "number": "82",
+    "rarity": "Rare Prime",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Prime"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "110",
+    "artist": "Hideaki Hakozaki",
+    "evolvesFrom": "Houndour",
+    "image": "assets/cards/hgss3/82.webp",
+    "imageSmall": "assets/cards/hgss3/82-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Clamp",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fire Breath",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, the Defending Pokémon is now Burned. This power can't be used if Houndoom is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-82/large",
+    "tcgplayerId": 86210,
+    "market": 297.4
+  },
+  {
+    "id": "hgss3-83",
+    "name": "Raichu",
+    "number": "83",
+    "rarity": "Rare Prime",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Prime"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Takashi Yamaguchi",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/hgss3/83.webp",
+    "imageSmall": "assets/cards/hgss3/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard all Energy attached to Raichu."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Voltage Increase",
+        "text": "As often as you like during your turn (before your attack), you may move a Lightning Energy attached to 1 of your Pokémon to Raichu. This power can't be used if Raichu is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-83/large",
+    "tcgplayerId": 88519,
+    "market": 138.33
+  },
+  {
+    "id": "hgss3-84",
+    "name": "Scizor",
+    "number": "84",
+    "rarity": "Rare Prime",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Prime"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Noriko Hotta",
+    "evolvesFrom": "Scyther",
+    "image": "assets/cards/hgss3/84.webp",
+    "imageSmall": "assets/cards/hgss3/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Scissors",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Does 30 damage plus 20 more damage for each Metal Energy attached to Scizor."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Red Armor",
+        "text": "Prevent all damage done to Scizor by attacks from your opponent's Pokémon that have any Special Energy cards attached to them.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-84/large",
+    "tcgplayerId": 88964,
+    "market": 120.07
+  },
+  {
+    "id": "hgss3-85",
+    "name": "Slowking",
+    "number": "85",
+    "rarity": "Rare Prime",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Prime"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Noriko Hotta",
+    "evolvesFrom": "Slowpoke",
+    "image": "assets/cards/hgss3/85.webp",
+    "imageSmall": "assets/cards/hgss3/85-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Opponent's Choice",
+        "text": "Once during your turn (before your attack), you may reveal the top 2 cards of your deck and your opponent chooses 1 of them. Put that card into your hand and the other card on the bottom of your deck. This power can't be used if Slowking is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-85/large",
+    "tcgplayerId": 89318,
+    "market": 83.19
+  },
+  {
+    "id": "hgss3-86",
+    "name": "Umbreon",
+    "number": "86",
+    "rarity": "Rare Prime",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1",
+      "Prime"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "Hideaki Hakozaki",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/hgss3/86.webp",
+    "imageSmall": "assets/cards/hgss3/86-sm.webp",
+    "attacks": [
+      {
+        "name": "Evoblast",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Does 50 damage plus 10 more damage for each of your Pokémon in play that evolves from Eevee."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cloud-Covered Moon",
+        "text": "Once during your turn (before your attack), if Umbreon is your Active Pokémon, you may flip a coin. If heads, return Umbreon and all cards attached to it to your hand. This power can't be used if Umbreon is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-86/large",
+    "tcgplayerId": 90146,
+    "market": 575.3
+  },
+  {
+    "id": "hgss3-87",
+    "name": "Kyogre & Groudon LEGEND",
+    "number": "87",
+    "rarity": "LEGEND",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "LEGEND"
+    ],
+    "types": [
+      "Water",
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Shinji Higuchi + Sachiko Eba",
+    "image": "assets/cards/hgss3/87.webp",
+    "imageSmall": "assets/cards/hgss3/87-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Tidal Wave",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard the top 5 cards from your opponent's deck. This attack does 30 damage times the number of Energy cards you discarded to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Massive Eruption",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100×",
+        "text": "Discard the top 5 cards from your deck. This attack does 100 damage times the number of Energy cards you discarded."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-87/large",
+    "tcgplayerId": 86554,
+    "market": 290.77
+  },
+  {
+    "id": "hgss3-88",
+    "name": "Kyogre & Groudon LEGEND",
+    "number": "88",
+    "rarity": "LEGEND",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "LEGEND"
+    ],
+    "types": [
+      "Water",
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Shinji Higuchi + Sachiko Eba",
+    "image": "assets/cards/hgss3/88.webp",
+    "imageSmall": "assets/cards/hgss3/88-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Tidal Wave",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard the top 5 cards from your opponent's deck. This attack does 30 damage times the number of Energy cards you discarded to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Massive Eruption",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100×",
+        "text": "Discard the top 5 cards from your deck. This attack does 100 damage times the number of Energy cards you discarded."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-88/large",
+    "tcgplayerId": 86553,
+    "market": 406.5
+  },
+  {
+    "id": "hgss3-89",
+    "name": "Rayquaza & Deoxys LEGEND",
+    "number": "89",
+    "rarity": "LEGEND",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "LEGEND"
+    ],
+    "types": [
+      "Colorless",
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Shinji Higuchi + Sachiko Eba",
+    "image": "assets/cards/hgss3/89.webp",
+    "imageSmall": "assets/cards/hgss3/89-sm.webp",
+    "attacks": [
+      {
+        "name": "Ozone Buster",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard all Fire Energy attached to Rayquaza & Deoxys LEGEND."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Space Virus",
+        "text": "If your opponent's Pokémon is Knocked Out by damage from an attack of Rayquaza & Deoxys LEGEND, take 1 more Prize card.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-89/large",
+    "tcgplayerId": 88638,
+    "market": 599.14
+  },
+  {
+    "id": "hgss3-90",
+    "name": "Rayquaza & Deoxys LEGEND",
+    "number": "90",
+    "rarity": "LEGEND",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "LEGEND"
+    ],
+    "types": [
+      "Colorless",
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Shinji Higuchi + Sachiko Eba",
+    "image": "assets/cards/hgss3/90.webp",
+    "imageSmall": "assets/cards/hgss3/90-sm.webp",
+    "attacks": [
+      {
+        "name": "Ozone Buster",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Discard all Fire Energy attached to Rayquaza & Deoxys LEGEND."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Space Virus",
+        "text": "If your opponent's Pokémon is Knocked Out by damage from an attack of Rayquaza & Deoxys LEGEND, take 1 more Prize card.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-90/large",
+    "tcgplayerId": 88637,
+    "market": 476.19
+  },
+  {
+    "id": "hgss3-THREE",
+    "name": "Alph Lithograph",
+    "number": "THREE",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Milky Isobe",
+    "image": "assets/cards/hgss3/THREE.webp",
+    "imageSmall": "assets/cards/hgss3/THREE-sm.webp",
+    "alph": true,
+    "imageRemote": "https://images.scrydex.com/pokemon/hgss3-THREE/large",
+    "tcgplayerId": 83511,
+    "market": 135.07
+  },
+  {
+    "id": "hgss3-hsp14",
+    "name": "Lapras",
+    "number": "hsp14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It ferries people across the sea on its back. It may sing an enchanting cry if it is in a good mood.",
+    "image": "assets/cards/hgss3/hsp14.webp",
+    "imageSmall": "assets/cards/hgss3/hsp14-sm.webp",
+    "attacks": [
+      {
+        "name": "Ferry",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Search your discard pile for a Supporter card, show it to your opponent, and put it into your hand."
+      },
+      {
+        "name": "Surf",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hsp-HGSS14/large",
+    "printedNumber": "HGSS 14",
+    "tcgplayerId": 86621,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 32.72
+  },
+  {
+    "id": "hgss3-hsp15",
+    "name": "Shuckle",
+    "number": "hsp15",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "match",
+    "flavorText": "It stores berries inside its shell. To avoid attacks, it hides beneath rocks and remains completely still.",
+    "image": "assets/cards/hgss3/hsp15.webp",
+    "imageSmall": "assets/cards/hgss3/hsp15-sm.webp",
+    "attacks": [
+      {
+        "name": "Shell Stunner",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, prevent all damage done to Shuckle by attacks during your opponent's next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Fermenting Liquid",
+        "text": "Whenever you attach an Energy card from your hand to Shuckle, draw a card.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hsp-HGSS15/large",
+    "printedNumber": "HGSS 15",
+    "tcgplayerId": 89193,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 51.2
+  },
+  {
+    "id": "hgss3-hsp16",
+    "name": "Plusle",
+    "number": "hsp16",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "It absorbs electricity from telephone poles. It shorts out its body to create crackling noises.",
+    "image": "assets/cards/hgss3/hsp16.webp",
+    "imageSmall": "assets/cards/hgss3/hsp16-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw 2 cards."
+      },
+      {
+        "name": "Thunder Jolt",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, Plusle does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hsp-HGSS16/large",
+    "printedNumber": "HGSS 16",
+    "tcgplayerId": 88172,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 38.47
+  },
+  {
+    "id": "hgss3-hsp17",
+    "name": "Minun",
+    "number": "hsp17",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "Exposure to electricity from Minun and Plusle promotes blood circulation and relaxes muscles.",
+    "image": "assets/cards/hgss3/hsp17.webp",
+    "imageSmall": "assets/cards/hgss3/hsp17-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterward."
+      },
+      {
+        "name": "Tag Team Boost",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10+",
+        "text": "If Plusle is on your Bench, this attack does 10 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/hsp-HGSS17/large",
+    "printedNumber": "HGSS 17",
+    "tcgplayerId": 87492,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 26.42
+  }
+]

@@ -1,0 +1,224 @@
+/*
+ * Mega Evolution finishes that TCG Live's maps now make possible: the Mega ex
+ * Double Rare (SV_ULTRA / ETCHED) and the Mega Attack Rare (SV_ULTRA /
+ * ETCHED). The regular-frame Double Rare (SUN_PILLAR + SouthernCross) rides
+ * on sv-double-rare.css (`era-me`), and the holo Rare on celebration.css's
+ * `foil-svholo`; both took the maps alone. Write-up and the photos each was
+ * judged against: .claude/skills/card-textures/reference/me-holo-fixes.md.
+ *
+ * - Mega ex Double Rare: `foil-ex foil-sunpillar has-foil-map has-etch-map`
+ *   (foilPattern() gives every Double Rare with a map the sun pillar class;
+ *   only the etched ones, the Mega ex and Tera ex, ship an etch map). The
+ *   whole card is foil, the Pokémon at part strength, and the real card is a
+ *   fine multicolour glitter under a broad saturated rainbow patch.
+ * - Mega Attack Rare: `foil-mega-attack has-foil-map has-etch-map`. Etched
+ *   foil over the whole card with the lines catching the light; the art keeps
+ *   its own colours (cream stays cream), the Japanese attack lettering and
+ *   the stars sparkle.
+ *
+ * Each rule is written at a higher specificity than the older recipes it
+ * replaces (celebration.css, rarities.css, realism.css). Nothing here darkens
+ * the print in specks: glitter only ever screens or adds light. Every
+ * colour-dodged chain ends in contrast(0.8)-safe filters (verify.md).
+ * Rest state (PR 5): a resting card paints `.foil` alone.
+ */
+
+/* ---- Shared: clear what the older recipes put on the pseudo layers --------- */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map {
+  --me-spectrum: hsl(2, 100%, 73%), hsl(53, 100%, 69%), hsl(93, 100%, 69%),
+    hsl(176, 100%, 76%), hsl(228, 100%, 74%), hsl(283, 100%, 73%), hsl(2, 100%, 73%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .foil {
+  background-repeat: repeat;
+  border-radius: 0;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map:not(.lit):not(.settling) .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map:not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .foil::after,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  opacity: 1;
+}
+/* The Mega ex Double Rare carries no star coat: TCG Live prints it SV_ULTRA
+   with no cast-and-cure pattern (the glitter is in the foil). */
+body.fx-holo.fx-holo.fx-holo .tcg.cure-stars.has-etch-map .cure {
+  display: none;
+}
+
+/* ---- Mega ex Double Rare: SV_ULTRA / ETCHED ---------------------------------
+   v1: the Tera ex recipe (sv-finishes.css), the same TCG Live foil. */
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .foil {
+  background-image: repeating-linear-gradient(15deg, var(--me-spectrum), var(--me-spectrum), var(--me-spectrum));
+  background-size: 240% 240%;
+  background-position: var(--background-x) var(--background-y);
+  background-blend-mode: normal;
+  filter: brightness(0.72) contrast(1.5) saturate(1.3) contrast(0.8);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.7) contrast(1.5) saturate(0.5) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .foil::before {
+  background-image:
+    linear-gradient(calc(var(--rotate-x) * -0.25), #000 18%, #8a8a8a 30%, #000 42%),
+    linear-gradient(calc(var(--rotate-x) * 0.25), #000 18%, #8a8a8a 30%, #000 42%);
+  background-size: 300% 300%;
+  background-position: 50% min(100%, calc(var(--background-y) * 1.7)), 50% calc(100% - (var(--background-y) * 1.3));
+  background-blend-mode: exclusion;
+  filter: contrast(0.75);
+  mix-blend-mode: hard-light;
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .foil::after {
+  --shift: 3px;
+  background-image: var(--holo-glitter);
+  background-size: 25% auto;
+  background-position: calc(50% + var(--pointer-from-left) * var(--shift))
+    calc(50% + var(--pointer-from-top) * var(--shift));
+  filter: brightness(1.4) contrast(2) saturate(1.2);
+  mix-blend-mode: plus-lighter;
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.5);
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 90%) 10%, hsl(0, 0%, 72%) 70%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  filter: contrast(1.4);
+  opacity: calc(var(--card-opacity) * 0.75);
+}
+body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.95) 0%, hsla(0, 0%, 100%, 0.45) 25%, hsla(0, 0%, 100%, 0) 60%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.45);
+}
+
+/* ---- Mega Attack Rare: SV_ULTRA / ETCHED -------------------------------------
+   Photos of Mega Dragonite ex 271 (a PSA 10 slab and a hand-held card, the
+   Ascended Heroes "every MAR" pull video): the art keeps every colour of the
+   print, cream stays cream and the pink and teal swooshes stay pink and
+   teal. The foil is a fine glitter, densest low on the card, a rainbow
+   shimmer that sits across the lower third and moves with the tilt, a
+   shine in the blue attack lettering and white sparkle on the stars. The
+   first recipe (the SIR's colour-dodged rainbow over the whole face) bleached
+   the cream to white and washed the art pastel at 30:25.
+
+   So the rainbow is tinted on, not dodged: `.foil` is one band of spectrum
+   over 50% grey, hard-lit onto the print (grey is neutral, the band tints
+   the art under it without hiding it, as foil-svholo does), cut to the Live
+   map and the etch with a floor. The glitter only ever screens. The etch
+   lines are lit faintly near the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .foil {
+  --sir-floor: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  background-image:
+    linear-gradient(168deg,
+      #808080 0%, #808080 43.5%, hsla(0, 0%, 50%, 0) 47.5%, hsla(0, 0%, 50%, 0) 52.5%,
+      #808080 56.5%, #808080 100%),
+    linear-gradient(95deg,
+      hsla(0, 95%, 60%, 0.62), hsla(28, 95%, 58%, 0.62), hsla(52, 95%, 56%, 0.62), hsla(100, 85%, 55%, 0.62),
+      hsla(175, 90%, 55%, 0.62), hsla(215, 95%, 62%, 0.62), hsla(270, 90%, 64%, 0.62), hsla(320, 95%, 62%, 0.62),
+      hsla(360, 95%, 60%, 0.62), hsla(28, 95%, 58%, 0.62), hsla(52, 95%, 56%, 0.62), hsla(100, 85%, 55%, 0.62),
+      hsla(175, 90%, 55%, 0.62));
+  background-size: 100% 300%, 160% 100%;
+  background-position:
+    50% calc((0.85 - var(--py, 0.5) * 0.5) * 100%),
+    calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: saturate(0.85);
+  mix-blend-mode: hard-light;
+  -webkit-mask-image: var(--art), var(--foil-map), var(--etch-map), var(--sir-floor);
+  -webkit-mask-composite: source-in, source-in, source-over, source-over;
+  mask-image: var(--art), var(--foil-map), var(--etch-map), var(--sir-floor);
+  mask-composite: intersect, intersect, add, add;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: saturate(0.5);
+}
+/* The glitter: sparse white points over a dense field of pale flecks, sized
+   to the card, brightest under the light and densest low on the card. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .foil::before {
+  background-image: url("/assets/foil/glitter.png"), url("/assets/foil/glitter-flecks.webp");
+  background-size: 38% auto, 33% auto;
+  background-position: var(--seed-pos), calc(var(--seed-x, 0.5) * -100%) calc(var(--seed-y, 0.5) * 100%);
+  background-blend-mode: screen, normal;
+  filter: saturate(0.3) brightness(1.45);
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.75) 40%, hsla(0, 0%, 0%, 0.5) 100%);
+  mask-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    #000 0%, hsla(0, 0%, 0%, 0.75) 40%, hsla(0, 0%, 0%, 0.5) 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.3) 0%, hsla(0, 0%, 100%, 0) 35%, hsla(0, 0%, 0%, 0.12) 100%);
+}
+/* Soft gloss on the varnish: nothing darkens the art away from the light. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 5%, hsla(0, 0%, 100%, 0.2) 30%, hsla(0, 0%, 0%, 0.1) 95%);
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: overlay;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 0%, hsla(0, 0%, 100%, 0.3) 25%, hsla(0, 0%, 100%, 0.1) 60%, hsla(0, 0%, 100%, 0.05) 100%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--etch-map);
+  mask-image: var(--etch-map);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Rare: SV_HOLO / HOLO ----------------------------------------------------
+   The shared band (celebration.css) follows the pointer from the top edge of
+   the card down to 70% of its height, so over most of the tilt it crosses the
+   title bar or the text box, not the art window the Live map leaves as foil,
+   and a Mega Evolution Rare reads as plain silver print (Meganium 010, Gengar
+   050: the photographed band sits across the art window). Here it travels
+   within the art window and the border beside it (about 4% to 56% of the
+   card's height); the colours, glitter and hot spot stay the shared ones. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo.era-me.has-foil-map .foil {
+  background-position:
+    50% calc((0.72 - var(--py, 0.5) * 0.2) * 100%),
+    calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
+}

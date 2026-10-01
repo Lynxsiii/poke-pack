@@ -65,6 +65,29 @@ export const HIT_RARITIES = new Set([
   "Rare Shiny GX",
   // Shining Legends' Shining Pokémon.
   "Rare Shining",
+  // XY: a Pokémon-EX (Mega EX included) and a BREAK. The holo Rare is the rare
+  // slot's ordinary card; Rare Ultra (full art) and Rare Secret are listed above.
+  "Rare Holo EX",
+  "Rare BREAK",
+  // Black & White's Ace Spec (it takes the reverse slot, bwSlots).
+  "Rare ACE",
+  // Diamond & Pearl to Call of Legends (dpSlots): the Level-Up and the LEGEND halves take the rare slot, the Prime, the
+  // Shining Pokémon ("Rare Shining", listed above), Rotom, Arceus AR and Shiny Legendary the reverse slot. The holo Rare is
+  // the rare slot's ordinary card, as in Sword & Shield.
+  "Rare Holo LV.X",
+  "Rare Prime",
+  "LEGEND",
+  "Rare Rotom",
+  "Rare Arceus",
+  "Rare Shiny Legendary",
+  // EX (exSlots in js/catalog.js): the Gold Star takes the rare slot, the Unown Collection the reverse slot (Pokémon-ex are
+  // "Rare Holo EX", listed above). The holo Rare is the rare slot's ordinary card.
+  "Rare Holo Star",
+  "Rare Unown",
+  // Wizards of the Coast (wotcSlots): the Shining Pokémon ("Rare Shining", listed above) and the e-Card Crystal Pokémon take the
+  // rare slot (Neo Revelation, Neo Destiny) or the holo slot that replaces a common (Aquapolis, Skyridge). The holo Rare is the
+  // rare slot's ordinary card, as in Sword & Shield.
+  "Rare Crystal",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -82,17 +105,37 @@ function isExCard(card) {
   );
 }
 
+/** A Mega EX: subtype "MEGA" or a name that starts "M " (M Venusaur-EX). */
+function isMegaCard(card) {
+  return (
+    card?.subtypes?.some((s) => String(s).toUpperCase() === "MEGA") || /^M\s/.test(card?.name || "")
+  );
+}
+
 export function poolsFrom(cards, set) {
   // Promo cards come in collection boxes (data/products.json), never in packs.
-  const everyCard = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo);
+  // EX box toppers (a set file's `boxTopper: true`, one extra card per booster box, never in packs) are kept out the same way.
+  // `noPack: true` marks a card the set holds but its booster packs never do (Base Set's Machamp 8, which ships only in the 2-Player
+  // Starter Set and Trainer Deck A): it stays out of every pool.
+  const everyCard = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo && !c.noPack && !c.boxTopper);
   // A Sword & Shield sub-gallery (Trainer Gallery, Shiny Vault, Galarian
   // Gallery, Classic Collection) has its own slot, so its cards keep out of
   // the main pools even where they share a rarity name (a TG Pokémon V).
-  const pokemonOrTrainer = everyCard.filter((c) => !c.gallery);
+  // Generations' Radiant Collection (`rc: true`) is dealt from its own pool too.
+  const pokemonOrTrainer = everyCard.filter((c) => !c.gallery && !c.rc);
   const gallery = (tag) => everyCard.filter((c) => c.gallery === tag);
   const reverseRarities = set?.reverseRarities || ["Common", "Uncommon", "Rare"];
   const pokeballRarities = set?.pokeballRarities || reverseRarities;
-  const reversePool = pokemonOrTrainer.filter((c) => reverseRarities.includes(c.rarity));
+  // EX (js/ex-foil.js): a set file's `reverseTwice` lists the card numbers (or ids) that sit twice on the reverse sheet (EF's
+  // 110-cell sheets repeat some commons), and `reverseOwnEnergy: true` puts the set's own basic Energy on the reverse list
+  // (ex1's six, the reverse prints of 104-109). Both are off by default, so every other era is unchanged.
+  const twice = new Set((set?.reverseTwice || []).map(String));
+  const reverseOwnEnergy = set?.reverseOwnEnergy
+    ? cards.filter((c) => c.rarity === "Energy" && !c.holoEnergy && !c.reverse && !String(c.id).startsWith("energy-"))
+    : [];
+  const reversePool = [...pokemonOrTrainer.filter((c) => reverseRarities.includes(c.rarity)), ...reverseOwnEnergy].flatMap(
+    (c) => (twice.has(String(c.number)) || twice.has(String(c.id)) ? [c, c] : [c])
+  );
   // A set that files its pattern prints as cards of their own (Prismatic
   // Evolutions, scripts/build_patterns.py) deals those. Otherwise the ball
   // is a reverse finish on a pool card.
@@ -118,6 +161,7 @@ export function poolsFrom(cards, set) {
         (c.rarity === "Energy" || c.energy) &&
         !c.reverse &&
         !c.foilAs &&
+        !c.holoEnergy &&
         (!String(c.id).startsWith("energy-") || (c.energyPrint || "") === energyPrint)
     ),
     // Shrouded Fable's reverse holo basic Energy: set cards that are always
@@ -130,13 +174,13 @@ export function poolsFrom(cards, set) {
     uncommon: pokemonOrTrainer.filter((c) => c.rarity === "Uncommon"),
     rare: pokemonOrTrainer.filter((c) => c.rarity === "Rare"),
     // Sword & Shield (swshSlots in js/catalog.js).
-    holo: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo"),
+    holo: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo" && !c.deltaSheet),
     v: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo V"),
     vmax: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo VMAX"),
     vstar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo VSTAR"),
     rareUltra: pokemonOrTrainer.filter((c) => c.rarity === "Rare Ultra"),
     rainbow: pokemonOrTrainer.filter((c) => c.rarity === "Rare Rainbow"),
-    secret: pokemonOrTrainer.filter((c) => c.rarity === "Rare Secret" && !c.character),
+    secret: pokemonOrTrainer.filter((c) => c.rarity === "Rare Secret" && !c.character && !c.alph),
     character: pokemonOrTrainer.filter((c) => c.character),
     amazing: pokemonOrTrainer.filter((c) => c.rarity === "Amazing Rare"),
     radiant: pokemonOrTrainer.filter((c) => c.rarity === "Radiant Rare"),
@@ -155,6 +199,51 @@ export function poolsFrom(cards, set) {
     // Shining Legends' Shining Pokémon fill its rare slot (smSlots `shining`).
     shining: pokemonOrTrainer.filter((c) => c.rarity === "Rare Shining"),
     shinyGX: gallery("sv").filter((c) => c.rarity === "Rare Shiny GX"),
+    // XY (xySlots in js/catalog.js): a Pokémon-EX, a Mega EX (subtype "MEGA" or a
+    // name starting "M "), the two together, a BREAK, and Generations' Radiant
+    // Collection (cards flagged `rc: true`; `radiant` is Sword & Shield's Radiant Rare).
+    ex: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && !isMegaCard(c)),
+    megaEx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && isMegaCard(c)),
+    exAll: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX"),
+    break: pokemonOrTrainer.filter((c) => c.rarity === "Rare BREAK"),
+    radiantCollection: everyCard.filter((c) => c.rc),
+    // Generations' pack deals two Radiant cards: a common, then an uncommon or an ultra (EX or full art).
+    rcCommon: everyCard.filter((c) => c.rc && c.rarity === "Common"),
+    rcUncommon: everyCard.filter((c) => c.rc && c.rarity === "Uncommon"),
+    rcUltra: everyCard.filter((c) => c.rc && (c.rarity === "Rare Ultra" || c.rarity === "Rare Holo EX")),
+    // Black & White (bwSlots in js/catalog.js): the Ace Spec ("Rare ACE", not SV's "ACE SPEC Rare"), and
+    // Dragon Vault's five-holo pack (`vault`: every card; `scarce`: the flagged ones, Kyurem). Legendary
+    // Treasures deals the same rcCommon / rcUncommon / rcUltra pools as Generations, but its RC11 (the
+    // regular-art Meloetta-EX) is "Rare" on pkmn.gg: the set config's `rarityOverrides` makes it "Rare Holo EX".
+    aceSpec: pokemonOrTrainer.filter((c) => c.rarity === "Rare ACE"),
+    vault: pokemonOrTrainer.filter((c) => !c.scarce),
+    scarce: pokemonOrTrainer.filter((c) => c.scarce),
+    // Diamond & Pearl generation (dpSlots in js/catalog.js): the Level-Up and the LEGEND halves (rare slot); the Prime, the
+    // Rotom and Arceus subsets and the Shiny Legendaries (reverse slot; the Shining Pokémon reuse the `shining` pool above,
+    // rarity "Rare Shining"); the Alph Lithograph, a "Rare Secret" flagged `alph: true` that the `secret` pool leaves out.
+    // pkmn.gg files the subsets as plain "Rare" / "Rare Holo": the set config's `rarityOverrides` gives them these rarities.
+    lvx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo LV.X"),
+    prime: pokemonOrTrainer.filter((c) => c.rarity === "Rare Prime"),
+    legend: pokemonOrTrainer.filter((c) => c.rarity === "LEGEND"),
+    rotom: pokemonOrTrainer.filter((c) => c.rarity === "Rare Rotom"),
+    ar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Arceus"),
+    shinyLegend: pokemonOrTrainer.filter((c) => c.rarity === "Rare Shiny Legendary"),
+    alph: pokemonOrTrainer.filter((c) => c.alph),
+    // EX (exSlots in js/catalog.js): the Gold Star ("Rare Holo Star"); Unseen Forces' Unown Collection ("Rare Unown", reverse
+    // slot); the holo basic Energy of Emerald, Holon Phantoms and Power Keepers (`holoEnergy: true`, reverse slot); the
+    // Pokémon-ex without the cracked-ice ones (`crackedIce: true`, Hidden Legends' three Regi ex, their own rate) and without
+    // Crystal Guardians' separate sheet (`deltaSheet: true`: its three Delta holos and Sceptile ex delta, EF post 58).
+    goldStar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo Star"),
+    unown: pokemonOrTrainer.filter((c) => c.rarity === "Rare Unown"),
+    holoEnergy: cards.filter((c) => c.holoEnergy),
+    exPlain: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && !c.crackedIce && !c.deltaSheet),
+    crackedIce: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && c.crackedIce),
+    deltaHolo: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo" && c.deltaSheet),
+    deltaEx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && c.deltaSheet),
+    // Wizards of the Coast (wotcSlots): the e-Card Crystal Pokémon (pkmn.gg's "Rare Secret" 148-150 / 145-150, moved to "Rare Crystal"
+    // by the set config's rarityOverrides). The Shining Pokémon of Neo Revelation and Neo Destiny reuse the `shining` pool above and
+    // Team Rocket's Dark Raichu the `secret` pool.
+    crystal: pokemonOrTrainer.filter((c) => c.rarity === "Rare Crystal"),
     classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),

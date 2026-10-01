@@ -1,0 +1,249 @@
+/*
+ * Black & White era: Pokémon-EX and Ace Spec.
+ *
+ * Draws: bw-ex (`foil-ex bw-ex`: the regular-art Pokémon-EX of Next Destinies on, holofoil on
+ * part of the art, the rule box and the border, glossy all over) and bw-ace (`foil-holo bw-ace`:
+ * holofoil on the border, name strip, ACE SPEC box and the artwork background). A full art EX
+ * (`foil-ultra bw-fa`) and a Radiant Collection card (`bw-rc` added) belong to bw-fullart.css
+ * and are never matched here.
+ *
+ * Classes come from bwPattern() in js/bw-foil.js; `era-bw` marks every Black & White
+ * print (js/foil-maps.js). Finish owners: the BW finish agents. The rarity words, frames and
+ * what Black & White printed are in js/bw-foil.js and
+ * /mnt/project-files/every-era/bw/SCAFFOLD-NOTES.md (research: /mnt/project-files/every-era/bw/research/,
+ * bw-pack-structure.md section 3 has the finish vocabulary in plain words).
+ * TCG Live DOES serve per-card foil maps for the holo prints of bw1-bw11, Dragon Vault (key bw6-5)
+ * and the promos (bwbsp), see the BW block of fetch_foil_maps.py. Hook: bwMap() in
+ * js/bw-foil.js (or the all-white map foilExtras gives full arts). Follow
+ * SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
+ * dodge with a closing contrast(0.8), no black speckle, no hairline gratings,
+ * no foil over text, and run foil_coverage.mjs plus a WebKit render at phone
+ * size before merging.
+ *
+ * Specificity: repeat `era-bw` five times in every selector, like sm.css
+ * (body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil),
+ * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Bump this sheet's ?v= tag in index.html on every change.
+ *
+ */
+
+/* ===========================================================================
+   Photos: /mnt/project-files/every-era/bw/texture-refs/g2-ex-ace/SOURCES.txt
+   (Bleeding Cool's Chandelure-EX; Pokemon Holo's tilt clips of Victini-EX, Kyurem-EX,
+   Reshiram-EX, Team Plasma Lugia-EX and of Computer Search, Master Ball, G Booster, G Scope
+   and Scramble Switch). Write-up: .claude/skills/card-textures/reference/bw-ex.md.
+   TCG Live has a map for every EX and Ace Spec (no etch maps); both finishes cut to it.
+   =========================================================================== */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-ex:not(.bw-rc), .bw-ace) {
+  --bw-flecks: url("/assets/foil/glitter-fine.webp");
+  --bw-brush: url("/assets/foil/bw-brush-v1.webp");
+  --bw-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* ---- Shared shape ---------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-ex:not(.bw-rc), .bw-ace) .foil {
+  background-repeat: repeat;
+  opacity: calc((0.18 + var(--card-opacity) * 0.82) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-ex:not(.bw-rc), .bw-ace):not(.lit):not(.settling) .foil {
+  opacity: calc(0.18 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-ex:not(.bw-rc), .bw-ace) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-ex:not(.bw-rc), .bw-ace) .foil::after {
+  /* Clear what the older recipes put here; each finish sets its own. */
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw:is(.bw-ex:not(.bw-rc), .bw-ace) .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Pokémon-EX: the prism-bar foil ------------------------------------------------
+   Foil on the art's ground, the frame and the rule box; the Pokémon, the text box
+   and the printed text matte (the map). Tall narrow rainbow prism bars flash where the
+   light finds them (the Lugia-EX clip: green, yellow and magenta patches behind the
+   head, a row of cyan, magenta and yellow blocks along the foot of the frame), fine
+   gold sparkle dust over the art, a pearl sheen between. Built to ADD light, never to
+   bleach: `.foil` is screened onto the print (no colour dodge, so pale art cannot blow
+   out and Safari has no divide by zero to draw), and the bars are a spectrum gated by
+   two broad lobes that move against each other, so a card shows bars where the light
+   is and a quiet sheen elsewhere; never a hairline grating. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc) {
+  --bx-prism: repeating-linear-gradient(90deg,
+    hsl(335, 100%, 58%) 0%, hsl(38, 100%, 56%) 2.2%, hsl(100, 92%, 52%) 4.4%,
+    hsl(172, 100%, 56%) 6.6%, hsl(214, 100%, 60%) 8.8%, hsl(280, 96%, 60%) 11%, hsl(335, 100%, 58%) 13.2%);
+  /* one lobe (alpha), about a tenth of the card wide with soft edges, centred in an image
+     twice the card's width, so it travels the whole card as the position goes 0 to 100% */
+  --bx-gate: linear-gradient(90deg,
+    transparent 0%, transparent 41%, rgba(0, 0, 0, 0.6) 44.5%, #000 47.5%, #000 52.5%, rgba(0, 0, 0, 0.6) 55.5%, transparent 59%, transparent 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc) .foil {
+  background-image:
+    linear-gradient(115deg, transparent 28%, hsla(210, 14%, 80%, 0.22) 46%, hsla(38, 22%, 84%, 0.22) 54%, transparent 72%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.14) 0%, hsla(0, 0%, 100%, 0.06) 35%, hsla(0, 0%, 100%, 0) 70%);
+  background-size: 260% 100%, 100% 100%;
+  background-position: calc(100% - var(--background-x)) 0, center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+}
+/* The bars. No clamp(): Chromium mis-resolves clamp() with percentages in mask-position
+   (lobes pile onto the edges); --background-x is 37..63% so these stay inside 0..100%. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc) .foil::before {
+  background-image: var(--bx-prism);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--bx-gate), var(--bx-gate);
+  mask-image: var(--bx-gate), var(--bx-gate);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 200% 100%, 260% 100%;
+  mask-size: 200% 100%, 260% 100%;
+  -webkit-mask-position:
+    calc((50% - var(--background-x)) * 3 + 50%) 0,
+    calc((var(--background-x) - 50%) * 2.2 + 50%) 0;
+  mask-position:
+    calc((50% - var(--background-x)) * 3 + 50%) 0,
+    calc((var(--background-x) - 50%) * 2.2 + 50%) 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: saturate(1.1) brightness(0.88);
+  /* Intense (foil-strength 1.5) is read here: .foil's own opacity is already 1 when lit, so the layers carry it. */
+  opacity: min(1, calc((0.6 + var(--pointer-from-center) * 0.28) * max(1, var(--foil-strength, 1))));
+}
+/* The foil "EX" logo sits on the name bar and is gold ink over silver: screened bars, pearl and dust all
+   push it towards white, so at most tilts it went pale against the pale bar (review rv-g2). The name
+   band keeps part of the foil (the Lugia-EX photo shows the tab glowing at its edges) but a third mask
+   layer takes it down to 15% there, enough for the logo to stay gold and legible. Same stack as maps.css's
+   (art and map) with the band between. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc).has-foil-map .foil {
+  --bx-namefade: linear-gradient(180deg, #000 0%, #000 2%, rgba(0, 0, 0, 0.15) 4.5%, rgba(0, 0, 0, 0.15) 8.5%, #000 11%, #000 100%);
+  -webkit-mask-image: var(--art), var(--bx-namefade), var(--foil-map);
+  mask-image: var(--art), var(--bx-namefade), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* Sparkle dust: pinpoints, screened, so they only add light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc) .foil::after {
+  background-image: var(--bw-flecks);
+  background-size: 62% auto;
+  background-position: var(--bw-seed);
+  mix-blend-mode: screen;
+  filter: brightness(1.3) contrast(1.7);
+  opacity: min(1, calc((0.3 + var(--pointer-from-center) * 0.35) * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ex:not(.bw-rc) .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.32 * max(1, var(--foil-strength, 1)));
+}
+
+/* ---- Ace Spec: brushed tinsel -------------------------------------------------------
+   Foil on the border all round, the name strip, the ACE SPEC lettering and the art's ground;
+   the object, the rules box (printed brushed metal) and the TRAINER bar are matte (the map
+   draws exactly that). The foil is the era's tinsel: fine horizontal brushed lines whose
+   colour slides up and down the card as it tilts (blue, violet, magenta, green), loudest on
+   the border (G Booster, G Scope) and quiet on a dark one (Master Ball). The colour is IN the
+   lines, not a wash: a dim tint on `.foil` itself (all a resting card paints) and the
+   colour-dodged streaks of the brush tile on top. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace {
+  --ba-ramp: repeating-linear-gradient(0deg,
+    hsl(212, 100%, 56%) 0%, hsl(262, 100%, 62%) 4%, hsl(318, 100%, 60%) 8%,
+    hsl(42, 100%, 56%) 11%, hsl(150, 90%, 50%) 14.5%, hsl(190, 100%, 54%) 17.5%, hsl(212, 100%, 56%) 20%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .foil {
+  background-image: var(--ba-ramp);
+  background-size: 100% 200%;
+  background-position: 0% var(--background-y);
+  background-repeat: repeat;
+  filter: brightness(calc(0.55 * max(1, var(--foil-strength, 1)))) contrast(1.5) saturate(1.2) contrast(0.8);
+  mix-blend-mode: color-dodge;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace:not(.lit):not(.settling) .foil {
+  filter: brightness(0.5) contrast(1.4) saturate(0.7) contrast(0.8);
+}
+/* The streaks: the ramp's colour through the brush tile, dodged brighter than the base. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .foil::before {
+  background-image: var(--ba-ramp);
+  background-size: 100% 200%;
+  background-position: 0% var(--background-y);
+  -webkit-mask-image: var(--bw-brush);
+  mask-image: var(--bw-brush);
+  -webkit-mask-size: 100% auto;
+  mask-size: 100% auto;
+  -webkit-mask-position: 0% calc(var(--background-y) * 0.6);
+  mask-position: 0% calc(var(--background-y) * 0.6);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  filter: brightness(1.1) saturate(1.3);
+  opacity: 1;
+}
+/* A second brush sliding the other way, light only: glints at the lamp. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .foil::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 100%) 0%, hsl(200, 100%, 88%) 30%, hsla(280, 100%, 80%, 0.8) 62%, hsla(210, 100%, 70%, 0.4) 100%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--bw-brush);
+  mask-image: var(--bw-brush);
+  -webkit-mask-size: 100% auto;
+  mask-size: 100% auto;
+  -webkit-mask-position: 30% calc(var(--background-y) * -0.4 + 40%);
+  mask-position: 30% calc(var(--background-y) * -0.4 + 40%);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  mix-blend-mode: screen;
+  opacity: min(1, calc((0.5 + var(--pointer-from-center) * 0.4) * max(1, var(--foil-strength, 1))));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.35) 5%, hsla(210, 5%, 50%, 0.09) 55%, hsla(0, 0%, 20%, 0.14) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.4);
+  opacity: var(--card-opacity);
+}
+/* The tinsel lines on the art's saturated ground. A colour dodge cannot touch a pink or red that is
+   already at full strength, so the lines that read on the art are light laid on the varnish: the brush
+   tile in white, brightest at the lamp, cut to the foil map so the text box and the object stay clean. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace.has-foil-map .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.95) 0%, hsla(200, 60%, 96%, 0.7) 35%, hsla(260, 60%, 92%, 0.42) 70%, hsla(220, 60%, 90%, 0.3) 100%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--bw-brush), var(--foil-map);
+  mask-image: var(--bw-brush), var(--foil-map);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% auto, 100% 100%;
+  mask-size: 100% auto, 100% 100%;
+  -webkit-mask-position: 12% calc(var(--background-y) * 0.5 + 20%), center;
+  mask-position: 12% calc(var(--background-y) * 0.5 + 20%), center;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  opacity: 1;
+}

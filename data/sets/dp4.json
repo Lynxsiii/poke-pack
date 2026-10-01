@@ -1,0 +1,118 @@
+{
+  "id": "dp4",
+  "name": "Great Encounters",
+  "series": "diamond-pearl",
+  "slug": "great-encounters",
+  "scrydexId": "dp4",
+  "era": "dp",
+  "artSlug": "great-encounters",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1405,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "promoCards": {
+    "dpp17": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp18": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp19": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp20": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp21": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Great Encounters Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98544,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs."
+    },
+    {
+      "id": "spring-tin-dialga-lvx",
+      "name": "2008 Spring Collector's Tin [Dialga LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 4,
+      "promos": [
+        "dpp17"
+      ],
+      "note": "Four Diamond & Pearl-series packs in the real tin (Mysterious Treasures, Secret Wonders and Great Encounters; Bulbapedia's merchandise page excerpt and Collector's Cache listings; the split is not documented, so it opens here as Great Encounters packs). Tin not simulated."
+    },
+    {
+      "id": "spring-tin-palkia-lvx",
+      "name": "2008 Spring Collector's Tin [Palkia LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 4,
+      "promos": [
+        "dpp18"
+      ],
+      "note": "Four Diamond & Pearl-series packs in the real tin (Mysterious Treasures, Secret Wonders and Great Encounters; Bulbapedia's merchandise page excerpt and Collector's Cache listings; the split is not documented, so it opens here as Great Encounters packs). Tin not simulated."
+    },
+    {
+      "id": "spring-tin-darkrai-lvx",
+      "name": "2008 Spring Collector's Tin [Darkrai LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 4,
+      "promos": [
+        "dpp19"
+      ],
+      "note": "Four Diamond & Pearl-series packs in the real tin (Mysterious Treasures, Secret Wonders and Great Encounters; Bulbapedia's merchandise page excerpt and Collector's Cache listings; the split is not documented, so it opens here as Great Encounters packs). Tin not simulated."
+    },
+    {
+      "id": "three-pack-blister-magmortar",
+      "name": "Great Encounters Three Pack Blister [Magmortar]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "dpp20"
+      ],
+      "note": "Two Great Encounters packs, a third pack from a late EX-series or earlier Diamond & Pearl-series set (not simulated), a coin and the cosmos holo Magmortar promo (DP20). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Great Encounters Blister Exclusive' titles."
+    },
+    {
+      "id": "three-pack-blister-raichu",
+      "name": "Great Encounters Three Pack Blister [Raichu]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "dpp21"
+      ],
+      "note": "Two Great Encounters packs, a third pack from a late EX-series or earlier Diamond & Pearl-series set (not simulated), a coin and the cosmos holo Raichu promo (DP21). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Great Encounters Blister Exclusive' titles."
+    },
+    {
+      "id": "two-pack-blister-riolu",
+      "name": "Great Encounters Two Pack Blister [Riolu]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [],
+      "note": "One Great Encounters pack and one POP Series 5 pack (not simulated) with a cosmos holo Riolu from POP Series 6 (a reprint, not simulated). Bulbapedia's merchandise page, one source."
+    }
+  ]
+}

@@ -83,6 +83,15 @@ ETCH_WIDTH = 400
 # The RGB Mews are 001-003 in me5-5m, red, green, blue (checked by colour).
 SETS = {
     "me55": ("me5-5", {"R": ("me5-5m", 1), "G": ("me5-5m", 2), "B": ("me5-5m", 3)}),
+    # Mega Evolution main sets: the site's id is TCG Live's key, except Ascended Heroes (me2pt5 -> me2-5).
+    # Only holo prints have maps (probed 2026-10-01: me1 010 foil 200, etch 404; me1 003 foil+etch 200;
+    # me2 010 is a non-holo number and 404s).
+    "me1": ("me1", {}),
+    "me2": ("me2", {}),
+    "me2pt5": ("me2-5", {}),
+    "me3": ("me3", {}),
+    "me4": ("me4", {}),
+    "me5": ("me5", {}),
     "sv4pt5": ("sv4-5", {}),
     "sv8pt5": ("sv8-5", {}),
     # Sword & Shield is not in the export index, but its maps are on the CDN
@@ -99,6 +108,38 @@ SETS = {
     "sm35": ("sm3-5", {}),
     "sm75": ("sm7-5", {}),
     "sm115": ("sm11-5", {}),
+    # XY: the numbered sets use their own id as key (xy1..xy12; only the holo
+    # prints have maps; probed 2026-10-01). Generations is "xy9-5" (holos
+    # 001-046, e.g. 025 Articuno and 029 Zapdos; no Radiant Collection and no
+    # 'a' prints), Double Crisis is "xy5-5" (002 005 006 008 011 014 015 021),
+    # and the promos are xybsp (001-0xx, same numbers as the site's xyp<nnn>;
+    # overlay a few on the scans before trusting the numbering). Not found
+    # under any key tried: xy0 (Kalos Starter Set), the Trainer Kits,
+    # McDonald's 2014-16; those keep the generic engine's finish.
+    "g1": ("xy9-5", {}),
+    "dc1": ("xy5-5", {}),
+    # Black & White: the numbered sets bw1..bw11 use their own id as key (every Rare Holo,
+    # Rare Holo EX, Rare Ultra, Rare Secret and Rare ACE card has a map, nothing else does;
+    # probed 2026-10-01 over 001-160). Dragon Vault is "bw6-5" (all 21 cards). Black & White
+    # promos are bwbsp (85 of the 101: the holo ones). Not on the CDN under any key tried:
+    # Legendary Treasures' Radiant Collection RC1-RC25 (bw11, bw11-5, bw11rc, RC01 / RC001
+    # filenames), the BW Energy, the Trainer Kits, McDonald's 2011 and 2012.
+    "dv1": ("bw6-5", {}),
+    # Diamond & Pearl generation (dp1-dp7, pl1-pl4, hgss1-hgss4, col1, dpp, hsp, POP 6-9, Trainer Kits): NO maps,
+    # probed 2026-10-01 (HEAD on .../cards/png/en/<key>/<key>_en_<nnn>_std.foil.png, 001-160, 40 keys: dp1-dp7,
+    # dp1-5, dp3-5, pl1-pl4, pt1-pt4, hgss1-hgss4, hs1-hs4, hgss-1, hgss1-5, col1, cl1, col, dpbsp, hsbsp,
+    # hgssbsp, dpp, hsp, pop6-pop9): every answer 404 (three timeouts re-checked: 404), while the control xy12 001
+    # answers 200. TCG Live never carried these cards. js/dp-foil.js dpMap() is where drawn masks go instead.
+    # EX generation (ex1-ex16, np, POP 1-5, the Trainer Kits): NO maps, probed 2026-10-01 (HEAD on the same URL pattern): keys ex1-ex16, ex-1,
+    # rs1, exbsp and np at the holo numbers 001, 002, 003, 100, 101 (a first sweep also tried ex, rs, rs-1, ex1-1, nsp, np1, pop1-pop5,
+    # tk1a-tk2b, extk1, ex_rs), then every number 001-145 under ex1-ex16 and 001-045 under np, rs1, ex-1, exbsp: 2,500 answers,
+    # all 404 (four timeouts re-checked: 404), control xy12 001 and 002 = 200. TCG Live's export index (en-US) lists only me1-me5,
+    # sv1-sv10, mebsp, svbsp and their sub-sets. js/ex-foil.js exMap() is where drawn masks go instead.
+    # Wizards of the Coast (base1-base6, gym1-2, neo1-4, si1, ecard1-3, basep, bp): NO maps. Probed 2026-10-01
+    # (HEAD on .../cards/png/en/<key>/<key>_en_<nnn>_std.foil.png, 001-165) for base1, base2, base3, base4, base5,
+    # base6, lc, bs, base, gym1, gym2, neo1, neo2, neo3, neo4, si1, ecard1, ecard2, ecard3, basep, bp, bog, wbsp,
+    # basebsp: every number 404s (the xy12 control answered 200 on 39 numbers, so the method works). TCG Live never
+    # carried these cards. js/wotc-foil.js wotcMap() is where drawn masks go instead (it returns "" today).
 }
 
 # A set's sub-gallery is filed on TCG Live either under its own key (the
@@ -148,13 +189,13 @@ def curl(url: str, dest: Path) -> bool:
 
 # Black star promos sold with a set are filed in it as <prefix><number>, with
 # an optional -suffix for a stamped print of the same card (mep101-pc).
-PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp", "smp": "smbsp"}
+PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp", "smp": "smbsp", "xyp": "xybsp", "bwp": "bwbsp"}
 
 
 def source(set_id: str, key: str | None, number: str) -> tuple[str, int] | None:
     main, extra = SETS.get(set_id, (None, {}))
-    # The numbered Sword & Shield sets use the site's own id as their key.
-    if main is None and re.fullmatch(r"(swsh|sm)\d+", set_id):
+    # The numbered Sword & Shield, Sun & Moon, XY and Black & White sets use the site's own id as their key.
+    if main is None and re.fullmatch(r"(swsh|sm|xy|bw)\d+", set_id):
         main = set_id
     if number in extra:
         return extra[number]

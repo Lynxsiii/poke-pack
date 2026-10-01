@@ -1,0 +1,60 @@
+{
+  "id": "ecard3",
+  "name": "Skyridge",
+  "series": "e-card",
+  "slug": "skyridge",
+  "scrydexId": "ecard3",
+  "era": "wotc",
+  "artSlug": "skyridge",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1372,
+  "rarityOverrides": {
+    "145": "Rare Crystal",
+    "146": "Rare Crystal",
+    "147": "Rare Crystal",
+    "148": "Rare Crystal",
+    "149": "Rare Crystal",
+    "150": "Rare Crystal"
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Skyridge Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists no booster box for this set, so it is priced at 36 packs. The real box also held one of four e-Card box toppers, which are not simulated."
+    },
+    {
+      "id": "deck-eeveelution",
+      "name": "Theme Deck \"Eeveelution\"",
+      "kind": "deck",
+      "tcgplayerId": 232867,
+      "packs": 0,
+      "promos": [
+        "8"
+      ],
+      "note": "A 60-card Skyridge theme deck, featuring Flareon (Skyridge 8); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Skyridge theme-deck page (they differ by a card in places).",
+      "price": 896.78,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    },
+    {
+      "id": "deck-mind-machine",
+      "name": "Theme Deck \"Mind Machine\"",
+      "kind": "deck",
+      "tcgplayerId": 232868,
+      "packs": 0,
+      "promos": [
+        "35"
+      ],
+      "note": "A 60-card Skyridge theme deck, featuring Xatu (Skyridge 35); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Skyridge theme-deck page (they differ by a card in places).",
+      "price": 963.17,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    }
+  ]
+}

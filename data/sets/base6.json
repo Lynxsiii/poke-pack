@@ -1,0 +1,53 @@
+{
+  "id": "base6",
+  "name": "Legendary Collection",
+  "series": "other",
+  "slug": "legendary-collection",
+  "scrydexId": "base6",
+  "era": "wotc",
+  "artSlug": "legendary-collection",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1374,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Legendary Collection Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 691155,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs plus one of four oversize reverse-holo box toppers (S1 Charizard, S2 Dark Blastoise, S3 Dark Raichu, S4 Mewtwo; the toppers are not simulated). TCGplayer lists the box (691155) with no price and no sales, so it is priced at 36 packs."
+    },
+    {
+      "id": "deck-lava",
+      "name": "Theme Deck \"Lava\"",
+      "kind": "deck",
+      "tcgplayerId": 450748,
+      "packs": 0,
+      "promos": [
+        "3"
+      ],
+      "note": "A 60-card Legendary Collection theme deck, featuring Charizard (Legendary Collection 3); metal silver Pikachu coin + Poison and generic markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Legendary Collection theme-deck page (they differ by a card in places).",
+      "price": 948.9,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    },
+    {
+      "id": "deck-turmoil",
+      "name": "Theme Deck \"Turmoil\"",
+      "kind": "deck",
+      "tcgplayerId": 451094,
+      "packs": 0,
+      "promos": [
+        "7"
+      ],
+      "note": "A 60-card Legendary Collection theme deck, featuring Dark Raichu (Legendary Collection 7); metal silver Pikachu coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Legendary Collection theme-deck page (they differ by a card in places).",
+      "price": 390.78,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    }
+  ]
+}

@@ -1,0 +1,3740 @@
+[
+  {
+    "id": "dp5-1",
+    "name": "Articuno",
+    "number": "1",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "A legendary bird Pokémon. It can create blizzards by freezing moisture in the air.",
+    "image": "assets/cards/dp5/1.webp",
+    "imageSmall": "assets/cards/dp5/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Blizzard",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, this attack does 10 damage to each of your opponent's Benched Pokémon. If tails, this attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Freezing Screech",
+        "text": "Once during your turn, when you put Articuno from your hand onto your Bench, you may flip a coin. If heads, choose 1 of the Defending Pokémon. That Pokémon is now Paralyzed.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-1/large",
+    "tcgplayerId": 83649,
+    "market": 36.11
+  },
+  {
+    "id": "dp5-2",
+    "name": "Cresselia",
+    "number": "2",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Shiny particles are released from its wings like a veil. It is said to represent the crescent moon.",
+    "image": "assets/cards/dp5/2.webp",
+    "imageSmall": "assets/cards/dp5/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Future Sight",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Look at the top 5 cards of either player's deck and put them back on top of that player's deck in any order."
+      },
+      {
+        "name": "Healing Light",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Remove 1 damage counter from each of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-2/large",
+    "tcgplayerId": 84468,
+    "market": 24.32
+  },
+  {
+    "id": "dp5-3",
+    "name": "Darkrai",
+    "number": "3",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It can lull people to sleep and make them dream. It is active during nights of the new moon.",
+    "image": "assets/cards/dp5/3.webp",
+    "imageSmall": "assets/cards/dp5/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Slumber",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "10",
+        "text": "At the end of your opponent's next turn, the Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Dark Resolve",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "If the Defending Pokémon is Asleep, remove 4 damage counters from Darkrai."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Darkness Shade",
+        "text": "Once during your turn, when you put Darkrai from your hand onto your Bench, you may choose 1 of the Defending Pokémon. That Pokémon is now Asleep.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-3/large",
+    "tcgplayerId": 84700,
+    "market": 62.4
+  },
+  {
+    "id": "dp5-4",
+    "name": "Dialga",
+    "number": "4",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/dp5/4.webp",
+    "imageSmall": "assets/cards/dp5/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Time Shift",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Draw cards until you have 6 cards in your hand."
+      },
+      {
+        "name": "Diamond Blast",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 60 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-4/large",
+    "tcgplayerId": 84800,
+    "market": 55.62
+  },
+  {
+    "id": "dp5-5",
+    "name": "Glaceon",
+    "number": "5",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "As a protective technique, it can completely freeze its fur to make its hairs stand like needles.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/5.webp",
+    "imageSmall": "assets/cards/dp5/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Snow Cloak",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, prevent all effects of an attack, including damage, done to Glaceon during your opponent's next turn."
+      },
+      {
+        "name": "Speed Slide",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "This attack's damage isn't affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-5/large",
+    "tcgplayerId": 85744,
+    "market": 264.0
+  },
+  {
+    "id": "dp5-6",
+    "name": "Kabutops",
+    "number": "6",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Kouki Saitou",
+    "flavorText": "It is thought that this Pokémon came onto land because its prey adapted to life on land.",
+    "evolvesFrom": "Kabuto",
+    "image": "assets/cards/dp5/6.webp",
+    "imageSmall": "assets/cards/dp5/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Chop Up",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Does 10 damage to each of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Primal Shell",
+        "text": "As long as Kabutops is your Active Pokémon, your opponent can't play any Trainer cards from his or her hand.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-6/large",
+    "tcgplayerId": 86399,
+    "market": 35.0
+  },
+  {
+    "id": "dp5-7",
+    "name": "Leafeon",
+    "number": "7",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Kouki Saitou",
+    "flavorText": "Just like a plant, it uses photosynthesis. As a result, it is always enveloped in clear air.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/7.webp",
+    "imageSmall": "assets/cards/dp5/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Bind Down",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Leaf Guard",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, any damage done to Leafeon by attacks is reduced by 20 (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-7/large",
+    "tcgplayerId": 86677,
+    "market": 81.77
+  },
+  {
+    "id": "dp5-8",
+    "name": "Manaphy",
+    "number": "8",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Suwama Chiaki",
+    "flavorText": "Born on a cold seafloor, it will swim great distances to return to its birthplace.",
+    "image": "assets/cards/dp5/8.webp",
+    "imageSmall": "assets/cards/dp5/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Chase Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for any 1 card and put it into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Fountain",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "You may attach up to 2 basic Water Energy cards from your hand to your Benched Pokémon in any way you like."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Aqua Skin",
+        "text": "When you attach a Water Energy card from your hand to Manaphy, remove 2 damage counters from Manaphy.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-8/large",
+    "tcgplayerId": 87146,
+    "market": 11.62
+  },
+  {
+    "id": "dp5-9",
+    "name": "Mewtwo",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "A Pokémon created by recombining Mew's genes. It's said to have the most savage heart among Pokémon.",
+    "image": "assets/cards/dp5/9.webp",
+    "imageSmall": "assets/cards/dp5/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Absorption",
+        "damage": "",
+        "text": "Search your discard pile for up to 2 Energy cards and attach them to Mewtwo."
+      },
+      {
+        "name": "Recover",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Discard a Psychic Energy attached to Mewtwo and remove 6 damage counters from Mewtwo."
+      },
+      {
+        "name": "Psyburn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-9/large",
+    "tcgplayerId": 87421,
+    "market": 148.98
+  },
+  {
+    "id": "dp5-10",
+    "name": "Moltres",
+    "number": "10",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "One of the legendary bird Pokémon. It is said that its appearance indicates the coming of spring.",
+    "image": "assets/cards/dp5/10.webp",
+    "imageSmall": "assets/cards/dp5/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Scorching Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard all Fire Energy attached to Moltres."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Flame Charge",
+        "text": "Once during your turn, when you put Moltres from your hand onto your Bench, you may flip a coin. If heads, search your discard pile for up to 3 Fire Energy cards and attach them to Moltres.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-10/large",
+    "tcgplayerId": 87561,
+    "market": 48.1
+  },
+  {
+    "id": "dp5-11",
+    "name": "Palkia",
+    "number": "11",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/dp5/11.webp",
+    "imageSmall": "assets/cards/dp5/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Zone Shift",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."
+      },
+      {
+        "name": "Pearl Blast",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "You may return an Energy card attached to Palkia to your hand. If you do, choose an Energy card attached to the Defending Pokémon and return it to your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-11/large",
+    "tcgplayerId": 87908,
+    "market": 74.95
+  },
+  {
+    "id": "dp5-12",
+    "name": "Phione",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Daisuke Ito",
+    "flavorText": "A Pokémon that lives in warm seas. It inflates the flotation sac on its head to drift and search for food.",
+    "image": "assets/cards/dp5/12.webp",
+    "imageSmall": "assets/cards/dp5/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Evolution Wish",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward."
+      },
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-12/large",
+    "tcgplayerId": 88007,
+    "market": 8.5
+  },
+  {
+    "id": "dp5-13",
+    "name": "Rotom",
+    "number": "13",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its body is composed of plasma. It is known to infiltrate electronic devices and wreak havoc.",
+    "image": "assets/cards/dp5/13.webp",
+    "imageSmall": "assets/cards/dp5/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Trans",
+        "damage": "",
+        "text": "Search your discard pile for up to 2 basic Energy cards and attach them to 1 of your Pokémon."
+      },
+      {
+        "name": "Reflect Energy",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Move an Energy card attached to Rotom to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-13/large",
+    "tcgplayerId": 88836,
+    "market": 23.01
+  },
+  {
+    "id": "dp5-14",
+    "name": "Zapdos",
+    "number": "14",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A legendary Pokémon that is said to live in thunderclouds. It freely controls lightning bolts.",
+    "image": "assets/cards/dp5/14.webp",
+    "imageSmall": "assets/cards/dp5/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Raging Thunder",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Does 40 damage to 1 of your Pokémon, and don't apply Weakness and Resistance to this damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sheet Lightning",
+        "text": "Once during your turn, when you put Zapdos from your hand onto your Bench, you may flip a coin. If heads, put 1 damage counter on each of your opponent's Pokémon.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-14/large",
+    "tcgplayerId": 90717,
+    "market": 51.0
+  },
+  {
+    "id": "dp5-15",
+    "name": "Aerodactyl",
+    "number": "15",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "flavorText": "A Pokémon that roamed the skies in the dinosaur era. Its teeth are like saw blades.",
+    "evolvesFrom": "Old Amber",
+    "image": "assets/cards/dp5/15.webp",
+    "imageSmall": "assets/cards/dp5/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Primal Claw",
+        "text": "After your opponent's Pokémon uses a Poké-Power, put 2 damage counters on that Pokémon.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-15/large",
+    "tcgplayerId": 83469,
+    "market": 9.46
+  },
+  {
+    "id": "dp5-16",
+    "name": "Bronzong",
+    "number": "16",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Kouki Saitou",
+    "flavorText": "One caused a news sensation when it was dug up at a construction site after a 2,000-year sleep.",
+    "evolvesFrom": "Bronzor",
+    "image": "assets/cards/dp5/16.webp",
+    "imageSmall": "assets/cards/dp5/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Pain Amplifier",
+        "damage": "",
+        "text": "Put 1 damage counter on each of your opponent's Pokémon that already has damage counters on it."
+      },
+      {
+        "name": "Coating",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, any damage done to Bronzong by attacks is reduced by 20 (after applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Cursed Alloy",
+        "text": "As long as Bronzong is your Active Pokémon, put 1 damage counter on each of your opponent's Pokémon that has any Poké-Powers between turns.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-16/large",
+    "tcgplayerId": 83993,
+    "market": 1.78
+  },
+  {
+    "id": "dp5-17",
+    "name": "Empoleon",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "It swims as fast as a jet boat. The edges of its wings are sharp and can slice apart drifting ice.",
+    "evolvesFrom": "Prinplup",
+    "image": "assets/cards/dp5/17.webp",
+    "imageSmall": "assets/cards/dp5/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 2 of your opponent's Pokémon. This attack does 30 damage to each of them. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Surf Together",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Does 50 damage plus 10 more damage for each of your Benched Pokémon. Flip a coin. If tails, this attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-17/large",
+    "tcgplayerId": 85198,
+    "market": 1.41
+  },
+  {
+    "id": "dp5-18",
+    "name": "Espeon",
+    "number": "18",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Naoyo Kimura",
+    "flavorText": "Its fur has the look and feel of velvet. The orb on its forehead glows when it uses psycho-power.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/18.webp",
+    "imageSmall": "assets/cards/dp5/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Morning Sun",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "You may move an Energy card attached to Espeon to 1 of your Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sunlight Veil",
+        "text": "Each of your Pokémon that evolves from Eevee gets +20 HP. You can't use more than 1 Sunlight Veil Poké-Body each turn.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-18/large",
+    "tcgplayerId": 85321,
+    "market": 14.88
+  },
+  {
+    "id": "dp5-19",
+    "name": "Flareon",
+    "number": "19",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It has a flame sac in its body. Its body temperature tops 1,650 degrees Fahrenheit before battle.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/19.webp",
+    "imageSmall": "assets/cards/dp5/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Kindle",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Discard an Energy card attached to Flareon and then discard an Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-19/large",
+    "tcgplayerId": 85496,
+    "market": 14.36
+  },
+  {
+    "id": "dp5-20",
+    "name": "Glaceon",
+    "number": "20",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "As a protective technique, it can completely freeze its fur to make its hairs stand like needles.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/20.webp",
+    "imageSmall": "assets/cards/dp5/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Shot",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Icy Wind",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-20/large",
+    "tcgplayerId": 85745,
+    "market": 18.44
+  },
+  {
+    "id": "dp5-21",
+    "name": "Hippowdon",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "Its huge mouth is almost seven feet across. It has enough power to completely crush a car.",
+    "evolvesFrom": "Hippopotas",
+    "image": "assets/cards/dp5/21.webp",
+    "imageSmall": "assets/cards/dp5/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Vacuum Sand",
+        "damage": "20",
+        "text": "Search your discard pile for a Fighting Energy card and attach it to Hippowdon."
+      },
+      {
+        "name": "Sand Impact",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin for each Fighting Energy attached to Hippowdon. This attack does 50 damage plus 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-21/large",
+    "tcgplayerId": 86084,
+    "market": 1.97
+  },
+  {
+    "id": "dp5-22",
+    "name": "Infernape",
+    "number": "22",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "Daisuke Ito",
+    "flavorText": "Its crown of fire is indicative of its fiery nature. It is beaten by none in terms of quickness.",
+    "evolvesFrom": "Monferno",
+    "image": "assets/cards/dp5/22.webp",
+    "imageSmall": "assets/cards/dp5/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Mach Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Mega Bravo",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "40×",
+        "text": "Discard all Fire Energy attached to Infernape. This attack does 40 damage times the amount of Fire Energy you discarded."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-22/large",
+    "tcgplayerId": 86275,
+    "market": 11.51
+  },
+  {
+    "id": "dp5-23",
+    "name": "Jolteon",
+    "number": "23",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It controls 10,000-volt power and can raise all the furs on its body as if it were sharp needles.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/23.webp",
+    "imageSmall": "assets/cards/dp5/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Fang",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Lightning Strike",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "You may discard 2 Energy attached to Jolteon. If you do, this attack's base damage is 90 instead of 50."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-23/large",
+    "tcgplayerId": 86343,
+    "market": 5.6
+  },
+  {
+    "id": "dp5-24",
+    "name": "Leafeon",
+    "number": "24",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Just like a plant, it uses photosynthesis. As a result, it is always enveloped in clear air.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/24.webp",
+    "imageSmall": "assets/cards/dp5/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Sprial Drain",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Remove 1 damage counter from Leafeon."
+      },
+      {
+        "name": "Leaf Blade",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 50 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-24/large",
+    "tcgplayerId": 86678,
+    "market": 13.92
+  },
+  {
+    "id": "dp5-25",
+    "name": "Minun",
+    "number": "25",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Suwama Chiaki",
+    "flavorText": "It cheers on friends. If its friends are losing, its body lets off more and more sparks.",
+    "image": "assets/cards/dp5/25.webp",
+    "imageSmall": "assets/cards/dp5/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "(+) Spark",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If Plusle is on your Bench, this attack does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-25/large",
+    "tcgplayerId": 87489,
+    "market": 7.53
+  },
+  {
+    "id": "dp5-26",
+    "name": "Omastar",
+    "number": "26",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It is thought that this Pokémon became extinct because its spiral shell grew too large.",
+    "evolvesFrom": "Omanyte",
+    "image": "assets/cards/dp5/26.webp",
+    "imageSmall": "assets/cards/dp5/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Send Back",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Primal Swirl",
+        "text": "Once during your turn, when you play Omastar from your hand to evolve 1 of your Pokémon, you may remove the highest Stage Evolution card from each of your opponent's Benched Evolved Pokémon and put those cards back into his or her hand. You can't use more than 1 Primal Swirl Poké-Power each turn.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-26/large",
+    "tcgplayerId": 87870,
+    "market": 3.1
+  },
+  {
+    "id": "dp5-27",
+    "name": "Phione",
+    "number": "27",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "A Pokémon that lives in warm seas. It inflates the flotation sac on its head to drift and search for food.",
+    "image": "assets/cards/dp5/27.webp",
+    "imageSmall": "assets/cards/dp5/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Charm",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Whirlpool",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-27/large",
+    "tcgplayerId": 88008,
+    "market": 2.3
+  },
+  {
+    "id": "dp5-28",
+    "name": "Plusle",
+    "number": "28",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Suwama Chiaki",
+    "flavorText": "It cheers on friends with pom-poms made of sparks. It drains power from telephone poles.",
+    "image": "assets/cards/dp5/28.webp",
+    "imageSmall": "assets/cards/dp5/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward."
+      },
+      {
+        "name": "– Boost",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If Minun is on your Bench, this attack does 20 damage plus 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-28/large",
+    "tcgplayerId": 88169,
+    "market": 11.54
+  },
+  {
+    "id": "dp5-29",
+    "name": "Scizor",
+    "number": "29",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "90",
+    "artist": "Daisuke Ito",
+    "flavorText": "It has a steel-hard body. It intimidates foes by upraising its eye-patterned pincers.",
+    "evolvesFrom": "Scyther",
+    "image": "assets/cards/dp5/29.webp",
+    "imageSmall": "assets/cards/dp5/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Special Blow",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "30+",
+        "text": "If the Defending Pokémon has any Special Energy cards attached to it, this attack does 30 damage plus 50 more damage."
+      },
+      {
+        "name": "X-Scissor",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 50 damage plus 40 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-29/large",
+    "tcgplayerId": 88961,
+    "market": 15.91
+  },
+  {
+    "id": "dp5-30",
+    "name": "Torterra",
+    "number": "30",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "Daisuke Ito",
+    "flavorText": "Groups of this Pokémon migrating in search of water have been mistaken for \"moving forests.\"",
+    "evolvesFrom": "Grotle",
+    "image": "assets/cards/dp5/30.webp",
+    "imageSmall": "assets/cards/dp5/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Earthquake",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Frenzy Plant",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Torterra can't use Frenzy Plant during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-30/large",
+    "tcgplayerId": 89984,
+    "market": 2.35
+  },
+  {
+    "id": "dp5-31",
+    "name": "Toxicroak",
+    "number": "31",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "The toxin made in its poison sacs is pumped to the knuckle claws through tubes down its arms.",
+    "evolvesFrom": "Croagunk",
+    "image": "assets/cards/dp5/31.webp",
+    "imageSmall": "assets/cards/dp5/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Paralyze Poison",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Poisoned. Flip a coin. If heads, the Defending Pokémon is now Paralyzed and Poisoned."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-31/large",
+    "tcgplayerId": 90008,
+    "market": 1.59
+  },
+  {
+    "id": "dp5-32",
+    "name": "Umbreon",
+    "number": "32",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "The light of the moon changed Eevee's genetic structure. It lurks in darkness for prey.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/32.webp",
+    "imageSmall": "assets/cards/dp5/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "The Defending Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Moonlight Veil",
+        "text": "Each of your Pokémon that evolves from Eevee has no Weakness, and that Pokémon's Retreat Cost is 0.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-32/large",
+    "tcgplayerId": 90144,
+    "market": 71.24
+  },
+  {
+    "id": "dp5-33",
+    "name": "Unown P",
+    "number": "33",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "Shaped like ancient writing, it is a huge mystery whether language or Unown came first.",
+    "image": "assets/cards/dp5/33.webp",
+    "imageSmall": "assets/cards/dp5/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20+",
+        "text": "Each player discards the top card of his or her deck. This attack does 20 damage plus 20 more damage for each Unown discarded in this way."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "PUT",
+        "text": "Once during your turn (before your attack), if Unown P is on your Bench, you may put 1 damage counter on 1 of your Pokémon (excluding any Unown).",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-33/large",
+    "tcgplayerId": 90228,
+    "market": 7.22
+  },
+  {
+    "id": "dp5-34",
+    "name": "Vaporeon",
+    "number": "34",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It has evolved to be suitable for aquatic life. It can invisibly melt away into water.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/dp5/34.webp",
+    "imageSmall": "assets/cards/dp5/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Cleanse Away",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Remove 2 damage counters from each of your Benched Pokémon."
+      },
+      {
+        "name": "Hyper Whirlpool",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Flip a coin until you get tails. For each heads, discard an Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-34/large",
+    "tcgplayerId": 90284,
+    "market": 15.53
+  },
+  {
+    "id": "dp5-35",
+    "name": "Ambipom",
+    "number": "35",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "To eat, it deftly shucks nuts with its two tails. It rarely uses its arms now.",
+    "evolvesFrom": "Aipom",
+    "image": "assets/cards/dp5/35.webp",
+    "imageSmall": "assets/cards/dp5/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Astonish",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Choose 1 card from your opponent's hand without looking. Look at that card you chose, then have your opponent shuffle that card into his or her deck."
+      },
+      {
+        "name": "Hang High",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 40 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-35/large",
+    "tcgplayerId": 83527,
+    "market": 0.33
+  },
+  {
+    "id": "dp5-36",
+    "name": "Fearow",
+    "number": "36",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "It has the stamina to fly all day on its broad wings. It fights by using its sharp beak.",
+    "evolvesFrom": "Spearow",
+    "image": "assets/cards/dp5/36.webp",
+    "imageSmall": "assets/cards/dp5/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 3 coins. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Drill Peck",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-36/large",
+    "tcgplayerId": 85398,
+    "market": 0.4
+  },
+  {
+    "id": "dp5-37",
+    "name": "Grotle",
+    "number": "37",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "Daisuke Ito",
+    "flavorText": "The shell is hardened soil. Some Pokémon come to peck the berries growing on the trees on its back.",
+    "evolvesFrom": "Turtwig",
+    "image": "assets/cards/dp5/37.webp",
+    "imageSmall": "assets/cards/dp5/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Planting",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Attach a Grass Energy card from your hand to 1 of your Pokémon."
+      },
+      {
+        "name": "Body Slam",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-37/large",
+    "tcgplayerId": 85917,
+    "market": 0.65
+  },
+  {
+    "id": "dp5-38",
+    "name": "Kangaskhan",
+    "number": "38",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It raises its offspring in its belly pouch. It lets the baby out to play only when it feels safe.",
+    "image": "assets/cards/dp5/38.webp",
+    "imageSmall": "assets/cards/dp5/38-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Comet Punch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-38/large",
+    "tcgplayerId": 86422,
+    "market": 0.75
+  },
+  {
+    "id": "dp5-39",
+    "name": "Lickitung",
+    "number": "39",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Instead of hands, it uses its tongue, which is twice its height. Its sticky saliva grips anything.",
+    "image": "assets/cards/dp5/39.webp",
+    "imageSmall": "assets/cards/dp5/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Lap Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Slam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-39/large",
+    "tcgplayerId": 86721,
+    "market": 0.64
+  },
+  {
+    "id": "dp5-40",
+    "name": "Manectric",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Daisuke Ito",
+    "flavorText": "It discharges electricity from its mane. It creates a thundercloud overhead to drop lightning bolts.",
+    "evolvesFrom": "Electrike",
+    "image": "assets/cards/dp5/40.webp",
+    "imageSmall": "assets/cards/dp5/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Volt Crush",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a coin. If heads, discard an Energy attached to Manectric and this attack does 40 damage plus 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-40/large",
+    "tcgplayerId": 87161,
+    "market": 0.42
+  },
+  {
+    "id": "dp5-41",
+    "name": "Monferno",
+    "number": "41",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Daisuke Ito",
+    "flavorText": "It uses ceilings and walls to launch aerial attacks. Its fiery tail is but one weapon.",
+    "evolvesFrom": "Chimchar",
+    "image": "assets/cards/dp5/41.webp",
+    "imageSmall": "assets/cards/dp5/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Fang",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon is now Burned."
+      },
+      {
+        "name": "Mid-air Strike",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 damage plus 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-41/large",
+    "tcgplayerId": 87571,
+    "market": 0.85
+  },
+  {
+    "id": "dp5-42",
+    "name": "Mothim",
+    "number": "42",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It loves the honey of flowers and steals honey collected by Combee.",
+    "evolvesFrom": "Burmy",
+    "image": "assets/cards/dp5/42.webp",
+    "imageSmall": "assets/cards/dp5/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Get Help",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30×",
+        "text": "Does 30 damage times the number of different types of Wormadam on your Bench."
+      },
+      {
+        "name": "Quick Touch",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "You may switch Mothim with 1 of your Benched Pokémon. If you do, move as many Energy cards attached to Mothim as you like to the new Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Disturbance Scales",
+        "text": "Any damage done by attacks from your Pokémon to the Defending Pokémon isn't affected by Resistance.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-42/large",
+    "tcgplayerId": 87582,
+    "market": 0.67
+  },
+  {
+    "id": "dp5-43",
+    "name": "Pachirisu",
+    "number": "43",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It makes electricity with pouches in its cheeks and shoots charges from its tail. It lives atop trees.",
+    "image": "assets/cards/dp5/43.webp",
+    "imageSmall": "assets/cards/dp5/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Trans Tail",
+        "damage": "",
+        "text": "Search your discard pile for a Lightning Energy card, show it to your opponent, and put it into your hand."
+      },
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-43/large",
+    "tcgplayerId": 87900,
+    "market": 8.15
+  },
+  {
+    "id": "dp5-44",
+    "name": "Prinplup",
+    "number": "44",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "Its wings deliver wicked blows that snap even the thickest of trees. It searches for prey in icy seas.",
+    "evolvesFrom": "Piplup",
+    "image": "assets/cards/dp5/44.webp",
+    "imageSmall": "assets/cards/dp5/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Blade",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Wash Over",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Does 10 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-44/large",
+    "tcgplayerId": 88370,
+    "market": 0.54
+  },
+  {
+    "id": "dp5-45",
+    "name": "Raichu",
+    "number": "45",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Daisuke Ito",
+    "flavorText": "It can loose 100,000-volt bursts of electricity, instantly downing foes several times its size.",
+    "evolvesFrom": "Pikachu",
+    "image": "assets/cards/dp5/45.webp",
+    "imageSmall": "assets/cards/dp5/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Agility",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, prevent all effects of an attack, including damage, done to Raichu during your opponent's next turn."
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard all Energy cards attached to Raichu."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-45/large",
+    "tcgplayerId": 88511,
+    "market": 2.98
+  },
+  {
+    "id": "dp5-46",
+    "name": "Scyther",
+    "number": "46",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "flavorText": "It is nearly impossible to parry its attacking scythes. Its movements are like a ninja's.",
+    "image": "assets/cards/dp5/46.webp",
+    "imageSmall": "assets/cards/dp5/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fury Cutter",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip 3 coins. If 1 of them is heads, this attack does 10 damage plus 10 more damage. If 2 of them are heads, this attack does 10 damage plus 20 more damage. If all of them are heads, this attack does 10 damage plus 40 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-46/large",
+    "tcgplayerId": 89000,
+    "market": 2.89
+  },
+  {
+    "id": "dp5-47",
+    "name": "Staravia",
+    "number": "47",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "It lives in forests and fields. Squabbles over territory occur when flocks collide.",
+    "evolvesFrom": "Starly",
+    "image": "assets/cards/dp5/47.webp",
+    "imageSmall": "assets/cards/dp5/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 30 more damage."
+      },
+      {
+        "name": "Drill Peck",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-47/large",
+    "tcgplayerId": 89515,
+    "market": 0.48
+  },
+  {
+    "id": "dp5-48",
+    "name": "Sudowoodo",
+    "number": "48",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "flavorText": "It stands along paths pretending to be a tree. If it starts raining, it seems to disappear.",
+    "image": "assets/cards/dp5/48.webp",
+    "imageSmall": "assets/cards/dp5/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Flail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Does 10 damage times the number of damage counters on Sudowoodo."
+      },
+      {
+        "name": "Wood Hammer",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "50",
+        "text": "Sudowoodo does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-48/large",
+    "tcgplayerId": 89595,
+    "market": 0.88
+  },
+  {
+    "id": "dp5-49",
+    "name": "Unown Q",
+    "number": "49",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "30",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "Shaped like ancient writing, it is a huge mystery whether language or Unown came first.",
+    "image": "assets/cards/dp5/49.webp",
+    "imageSmall": "assets/cards/dp5/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Hidden Power",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "QUICK",
+        "text": "Once during your turn (before your attack), if Unown Q is on your Bench, you may discard all cards attached to Unown Q and attach Unown Q to 1 of your Pokémon as a Pokémon Tool card. As long as Unown Q is attached to a Pokémon, you pay Colorless less to retreat that Pokémon.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-49/large",
+    "tcgplayerId": 90230,
+    "market": 6.83
+  },
+  {
+    "id": "dp5-50",
+    "name": "Aipom",
+    "number": "50",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It lives atop giant trees. It wraps its tail around a branch so it won't fall off while asleep.",
+    "image": "assets/cards/dp5/50.webp",
+    "imageSmall": "assets/cards/dp5/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Hand Trick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Return Aipom and all cards attached to it to your hand. (If you don't have any Benched Pokémon, this attack does nothing.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-50/large",
+    "tcgplayerId": 83490,
+    "market": 1.32
+  },
+  {
+    "id": "dp5-51",
+    "name": "Aipom",
+    "number": "51",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "It uses its tail to pluck fruits that are out of reach. Its tail is more adept than its real hands.",
+    "image": "assets/cards/dp5/51.webp",
+    "imageSmall": "assets/cards/dp5/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Last Resort",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-51/large",
+    "tcgplayerId": 83491,
+    "market": 0.4
+  },
+  {
+    "id": "dp5-52",
+    "name": "Bronzor",
+    "number": "52",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Daisuke Ito",
+    "flavorText": "X-ray photos were taken to check its body structure. Nothing appeared, however.",
+    "image": "assets/cards/dp5/52.webp",
+    "imageSmall": "assets/cards/dp5/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Hypnosis",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Asleep."
+      },
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-52/large",
+    "tcgplayerId": 84002,
+    "market": 0.26
+  },
+  {
+    "id": "dp5-53",
+    "name": "Buneary",
+    "number": "53",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "flavorText": "When it senses danger, it perks up its ears. On cold nights, it sleeps with its head tucked into its fur.",
+    "image": "assets/cards/dp5/53.webp",
+    "imageSmall": "assets/cards/dp5/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Drawup Power",
+        "damage": "",
+        "text": "Search your deck for an Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Extend Ears",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Remove 1 damage counter from each of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-53/large",
+    "tcgplayerId": 84039,
+    "market": 0.79
+  },
+  {
+    "id": "dp5-54",
+    "name": "Burmy Sandy Cloak",
+    "number": "54",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "If its cloak is broken in battle, it quickly remakes the cloak with materials nearby.",
+    "image": "assets/cards/dp5/54.webp",
+    "imageSmall": "assets/cards/dp5/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Defense",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all effects of an attack, including damage, done to Burmy Sandy Cloak during your opponent's next turn."
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-54/large",
+    "tcgplayerId": 84054,
+    "market": 0.34
+  },
+  {
+    "id": "dp5-55",
+    "name": "Chatot",
+    "number": "55",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It can learn and speak human words. If they gather, they all learn the same saying.",
+    "image": "assets/cards/dp5/55.webp",
+    "imageSmall": "assets/cards/dp5/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Mimic",
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw a number of cards equal to the number of cards in your opponent's hand."
+      },
+      {
+        "name": "Chatter",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-55/large",
+    "tcgplayerId": 84240,
+    "market": 1.32
+  },
+  {
+    "id": "dp5-56",
+    "name": "Chimchar",
+    "number": "56",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "40",
+    "artist": "Daisuke Ito",
+    "flavorText": "Its fiery rear end is fueled by gas made in its belly. Even rain can't extinguish the fire.",
+    "image": "assets/cards/dp5/56.webp",
+    "imageSmall": "assets/cards/dp5/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-56/large",
+    "tcgplayerId": 84284,
+    "market": 0.5
+  },
+  {
+    "id": "dp5-57",
+    "name": "Chimchar",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/dp5/57.webp",
+    "imageSmall": "assets/cards/dp5/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-57/large",
+    "tcgplayerId": 84285,
+    "market": 1.09
+  },
+  {
+    "id": "dp5-58",
+    "name": "Chingling",
+    "number": "58",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Ken Sugimori",
+    "flavorText": "It emits cries by agitating an orb at the back of its throat. It moves with flouncing hops.",
+    "image": "assets/cards/dp5/58.webp",
+    "imageSmall": "assets/cards/dp5/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Uproar",
+        "damage": "",
+        "text": "Flip a coin. If heads, this attack does 10 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Baby Evolution",
+        "text": "Once during your turn (before your attack), you may put Chimecho from your hand onto Chingling (this counts as evolving Chingling) and remove all damage counters from Chingling.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-58/large",
+    "tcgplayerId": 84314,
+    "market": 4.18
+  },
+  {
+    "id": "dp5-59",
+    "name": "Combee",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Midori Harada",
+    "flavorText": "It collects and delivers honey to its colony. At night, they cluster to form a beehive and sleep.",
+    "image": "assets/cards/dp5/59.webp",
+    "imageSmall": "assets/cards/dp5/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Honey Scent",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Remove 2 damage counters from 1 of your Pokémon."
+      },
+      {
+        "name": "Flitter",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 20 damage to that Pokémon. This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-59/large",
+    "tcgplayerId": 84393,
+    "market": 0.4
+  },
+  {
+    "id": "dp5-60",
+    "name": "Croagunk",
+    "number": "60",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "Inflating its poison sacs, it makes an eerie blubbering sound for intimidation.",
+    "image": "assets/cards/dp5/60.webp",
+    "imageSmall": "assets/cards/dp5/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Light Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Poison Sting",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-60/large",
+    "tcgplayerId": 84474,
+    "market": 0.24
+  },
+  {
+    "id": "dp5-61",
+    "name": "Drifloon",
+    "number": "61",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It tugs on the hands of children to steal them away. However, it gets pulled around instead.",
+    "image": "assets/cards/dp5/61.webp",
+    "imageSmall": "assets/cards/dp5/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Delivery",
+        "damage": "",
+        "text": "Flip a coin. If heads, put any 1 card from your discard pile into your hand."
+      },
+      {
+        "name": "Reaction",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "Switch Drifloon with 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-61/large",
+    "tcgplayerId": 84955,
+    "market": 1.55
+  },
+  {
+    "id": "dp5-62",
+    "name": "Eevee",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "A rare Pokémon that adapts to harsh environments by taking on different evolutionary forms.",
+    "image": "assets/cards/dp5/62.webp",
+    "imageSmall": "assets/cards/dp5/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for as many Eevee as you like and put them onto your Bench. Shuffle your deck afterward."
+      },
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-62/large",
+    "tcgplayerId": 85084,
+    "market": 4.52
+  },
+  {
+    "id": "dp5-63",
+    "name": "Eevee",
+    "number": "63",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "A rare Pokémon that adapts to harsh environments by taking on different evolutionary forms.",
+    "image": "assets/cards/dp5/63.webp",
+    "imageSmall": "assets/cards/dp5/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sand Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-63/large",
+    "tcgplayerId": 85085,
+    "market": 5.17
+  },
+  {
+    "id": "dp5-64",
+    "name": "Electrike",
+    "number": "64",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Daisuke Ito",
+    "flavorText": "Using electricity stored in its fur, it stimulates its muscles to heighten its reaction speed.",
+    "image": "assets/cards/dp5/64.webp",
+    "imageSmall": "assets/cards/dp5/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Random Spark",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-64/large",
+    "tcgplayerId": 85140,
+    "market": 0.29
+  },
+  {
+    "id": "dp5-65",
+    "name": "Glameow",
+    "number": "65",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "With its sharp glare, it puts foes in a mild hypnotic state. It is a very fickle Pokémon.",
+    "image": "assets/cards/dp5/65.webp",
+    "imageSmall": "assets/cards/dp5/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward."
+      },
+      {
+        "name": "Rip Claw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, discard an Energy attached to the Defending Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-65/large",
+    "tcgplayerId": 85760,
+    "market": 0.35
+  },
+  {
+    "id": "dp5-66",
+    "name": "Hippopotas",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "It enshrouds itself with sand to protect itself from germs. It does not enjoy getting wet.",
+    "image": "assets/cards/dp5/66.webp",
+    "imageSmall": "assets/cards/dp5/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Grainy Sand",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      },
+      {
+        "name": "Double-edge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Hippopotas does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-66/large",
+    "tcgplayerId": 86079,
+    "market": 0.27
+  },
+  {
+    "id": "dp5-67",
+    "name": "Kabuto",
+    "number": "67",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It is thought to have inhabited beaches 300 million years ago. It is protected by a stiff shell.",
+    "evolvesFrom": "Dome Fossil",
+    "image": "assets/cards/dp5/67.webp",
+    "imageSmall": "assets/cards/dp5/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Shell Attack",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Ancient Guidance",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, search your deck for Helix Fossil, Dome Fossil, or Old Amber and put it onto your Bench. Shuffle your deck afterward. This power can't be used if Kabuto is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-67/large",
+    "tcgplayerId": 86386,
+    "market": 0.74
+  },
+  {
+    "id": "dp5-68",
+    "name": "Munchlax",
+    "number": "68",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It hides food under its long body hair. However, it forgets it has hidden the food.",
+    "image": "assets/cards/dp5/68.webp",
+    "imageSmall": "assets/cards/dp5/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Lick",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Baby Evolution",
+        "text": "Once during your turn (before your attack), you may put Snorlax from your hand onto Munchlax (this counts as evolving Munchlax) and remove all damage counters from Munchlax.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-68/large",
+    "tcgplayerId": 87638,
+    "market": 16.65
+  },
+  {
+    "id": "dp5-69",
+    "name": "Omanyte",
+    "number": "69",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Suwama Chiaki",
+    "flavorText": "A Pokémon that was resurrected from a fossil using modern science. It swam in ancient seas.",
+    "evolvesFrom": "Helix Fossil",
+    "image": "assets/cards/dp5/69.webp",
+    "imageSmall": "assets/cards/dp5/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Wash Over",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Does 10 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Call Up",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, search your discard pile for Helix Fossil, Dome Fossil, or Old Amber and put it onto your Bench. This power can't be used if Omanyte is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-69/large",
+    "tcgplayerId": 87860,
+    "market": 0.79
+  },
+  {
+    "id": "dp5-70",
+    "name": "Pikachu",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Daisuke Ito",
+    "flavorText": "If it looses crackling power from the electric pouches on its cheeks, it is being wary.",
+    "image": "assets/cards/dp5/70.webp",
+    "imageSmall": "assets/cards/dp5/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      },
+      {
+        "name": "Volt Tackle",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Pikachu does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-70/large",
+    "tcgplayerId": 88088,
+    "market": 7.54
+  },
+  {
+    "id": "dp5-71",
+    "name": "Piplup",
+    "number": "71",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "It lives along shores in northern countries. A skilled swimmer, it dives for over 10 minutes to hunt.",
+    "image": "assets/cards/dp5/71.webp",
+    "imageSmall": "assets/cards/dp5/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-71/large",
+    "tcgplayerId": 88145,
+    "market": 2.2
+  },
+  {
+    "id": "dp5-72",
+    "name": "Piplup",
+    "number": "72",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/dp5/72.webp",
+    "imageSmall": "assets/cards/dp5/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Splatter",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-72/large",
+    "tcgplayerId": 88146,
+    "market": 7.24
+  },
+  {
+    "id": "dp5-73",
+    "name": "Shellos East Sea",
+    "number": "73",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Midori Harada",
+    "flavorText": "It lives along bodies of water. Its body shape changed to suit its habitat.",
+    "image": "assets/cards/dp5/73.webp",
+    "imageSmall": "assets/cards/dp5/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Surf",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Muddy Water",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-73/large",
+    "tcgplayerId": 89142,
+    "market": 0.35
+  },
+  {
+    "id": "dp5-74",
+    "name": "Spearow",
+    "number": "74",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "flavorText": "It flaps its small wings busily to fly. Using its beak, it searches in grass for prey.",
+    "image": "assets/cards/dp5/74.webp",
+    "imageSmall": "assets/cards/dp5/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Claw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-74/large",
+    "tcgplayerId": 89441,
+    "market": 0.32
+  },
+  {
+    "id": "dp5-75",
+    "name": "Starly",
+    "number": "75",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Kent Kanetsuna",
+    "flavorText": "Usually with a large flock, it is barely noticeable when alone. Its cries are very strident.",
+    "image": "assets/cards/dp5/75.webp",
+    "imageSmall": "assets/cards/dp5/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Whirlwind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Your opponent switches the Defending Pokémon with 1 of his or her Benched Pokémon."
+      },
+      {
+        "name": "Flap",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-75/large",
+    "tcgplayerId": 89523,
+    "market": 0.34
+  },
+  {
+    "id": "dp5-76",
+    "name": "Stunky",
+    "number": "76",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "It sprays a nose-curling, stinky fluid from its rear to repel attackers.",
+    "image": "assets/cards/dp5/76.webp",
+    "imageSmall": "assets/cards/dp5/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Gas",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-76/large",
+    "tcgplayerId": 89585,
+    "market": 0.55
+  },
+  {
+    "id": "dp5-77",
+    "name": "Turtwig",
+    "number": "77",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Daisuke Ito",
+    "flavorText": "It undertakes photosynthesis with its body, making oxygen. The leaf on its head wilts if it is thirsty.",
+    "image": "assets/cards/dp5/77.webp",
+    "imageSmall": "assets/cards/dp5/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-77/large",
+    "tcgplayerId": 90073,
+    "market": 0.56
+  },
+  {
+    "id": "dp5-78",
+    "name": "Turtwig",
+    "number": "78",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/dp5/78.webp",
+    "imageSmall": "assets/cards/dp5/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-78/large",
+    "tcgplayerId": 90074,
+    "market": 2.78
+  },
+  {
+    "id": "dp5-79",
+    "name": "Dawn Stadium",
+    "number": "79",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/79.webp",
+    "imageSmall": "assets/cards/dp5/79-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-79/large",
+    "tcgplayerId": 84723,
+    "market": 6.25
+  },
+  {
+    "id": "dp5-80",
+    "name": "Dusk Ball",
+    "number": "80",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/80.webp",
+    "imageSmall": "assets/cards/dp5/80-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-80/large",
+    "tcgplayerId": 85035,
+    "market": 0.54
+  },
+  {
+    "id": "dp5-81",
+    "name": "Energy Restore",
+    "number": "81",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Hideyuki Nakajima",
+    "image": "assets/cards/dp5/81.webp",
+    "imageSmall": "assets/cards/dp5/81-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-81/large",
+    "tcgplayerId": 85228,
+    "market": 0.35
+  },
+  {
+    "id": "dp5-82",
+    "name": "Fossil Excavator",
+    "number": "82",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Kanako Eo",
+    "image": "assets/cards/dp5/82.webp",
+    "imageSmall": "assets/cards/dp5/82-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-82/large",
+    "tcgplayerId": 85557,
+    "market": 1.27
+  },
+  {
+    "id": "dp5-83",
+    "name": "Mom's Kindness",
+    "number": "83",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/dp5/83.webp",
+    "imageSmall": "assets/cards/dp5/83-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-83/large",
+    "tcgplayerId": 87569,
+    "market": 0.63
+  },
+  {
+    "id": "dp5-84",
+    "name": "Old Amber",
+    "number": "84",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "hp": "50",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/84.webp",
+    "imageSmall": "assets/cards/dp5/84-sm.webp",
+    "abilities": [
+      {
+        "name": "Hard Amber",
+        "text": "As long as Old Amber is on your Bench, prevent all damage done to Old Amber by attacks (both yours and your opponent's).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-84/large",
+    "tcgplayerId": 87848,
+    "market": 0.42
+  },
+  {
+    "id": "dp5-85",
+    "name": "Poké Ball",
+    "number": "85",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/85.webp",
+    "imageSmall": "assets/cards/dp5/85-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-85/large",
+    "tcgplayerId": 88187,
+    "market": 0.34
+  },
+  {
+    "id": "dp5-86",
+    "name": "Quick Ball",
+    "number": "86",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/86.webp",
+    "imageSmall": "assets/cards/dp5/86-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-86/large",
+    "tcgplayerId": 88479,
+    "market": 0.51
+  },
+  {
+    "id": "dp5-87",
+    "name": "Super Scoop Up",
+    "number": "87",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Shizurow",
+    "image": "assets/cards/dp5/87.webp",
+    "imageSmall": "assets/cards/dp5/87-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-87/large",
+    "tcgplayerId": 89639,
+    "market": 1.64
+  },
+  {
+    "id": "dp5-88",
+    "name": "Warp Point",
+    "number": "88",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/88.webp",
+    "imageSmall": "assets/cards/dp5/88-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-88/large",
+    "tcgplayerId": 90482,
+    "market": 0.75
+  },
+  {
+    "id": "dp5-89",
+    "name": "Dome Fossil",
+    "number": "89",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "hp": "50",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/89.webp",
+    "imageSmall": "assets/cards/dp5/89-sm.webp",
+    "abilities": [
+      {
+        "name": "Rock Reaction",
+        "text": "When you attach a Fighting Energy card from your hand to Dome Fossil (excluding effects of attacks or Poké-Powers), search your deck for a card that evolves from Dome Fossil and put it onto Dome Fossil (this counts as evolving Dome Fossil). Shuffle your deck afterward.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-89/large",
+    "tcgplayerId": 84868,
+    "market": 0.34
+  },
+  {
+    "id": "dp5-90",
+    "name": "Energy Search",
+    "number": "90",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/90.webp",
+    "imageSmall": "assets/cards/dp5/90-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-90/large",
+    "tcgplayerId": 85248,
+    "market": 0.29
+  },
+  {
+    "id": "dp5-91",
+    "name": "Helix Fossil",
+    "number": "91",
+    "rarity": "Common",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "hp": "50",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dp5/91.webp",
+    "imageSmall": "assets/cards/dp5/91-sm.webp",
+    "abilities": [
+      {
+        "name": "Aqua Reaction",
+        "text": "When you attach a Water Energy card from your hand to Helix Fossil (excluding effects of attacks or Poké-Powers), search your deck for a card that evolves from Helix Fossil and put it onto Helix Fossil (this counts as evolving Helix Fossil). Shuffle your deck afterward.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-91/large",
+    "tcgplayerId": 86057,
+    "market": 0.42
+  },
+  {
+    "id": "dp5-92",
+    "name": "Call Energy",
+    "number": "92",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/dp5/92.webp",
+    "imageSmall": "assets/cards/dp5/92-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-92/large",
+    "tcgplayerId": 84086,
+    "market": 14.75
+  },
+  {
+    "id": "dp5-93",
+    "name": "Darkness Energy",
+    "number": "93",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/dp5/93.webp",
+    "imageSmall": "assets/cards/dp5/93-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-93/large",
+    "tcgplayerId": 84691,
+    "market": 1.12
+  },
+  {
+    "id": "dp5-94",
+    "name": "Health Energy",
+    "number": "94",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/dp5/94.webp",
+    "imageSmall": "assets/cards/dp5/94-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-94/large",
+    "tcgplayerId": 86042,
+    "market": 0.8
+  },
+  {
+    "id": "dp5-95",
+    "name": "Metal Energy",
+    "number": "95",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/dp5/95.webp",
+    "imageSmall": "assets/cards/dp5/95-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-95/large",
+    "tcgplayerId": 87364,
+    "market": 0.41
+  },
+  {
+    "id": "dp5-96",
+    "name": "Recover Energy",
+    "number": "96",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/dp5/96.webp",
+    "imageSmall": "assets/cards/dp5/96-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-96/large",
+    "tcgplayerId": 88651,
+    "market": 0.52
+  },
+  {
+    "id": "dp5-97",
+    "name": "Garchomp LV.X",
+    "number": "97",
+    "rarity": "Rare Holo LV.X",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "140",
+    "artist": "Ryo Ueda",
+    "evolvesFrom": "Garchomp",
+    "image": "assets/cards/dp5/97.webp",
+    "imageSmall": "assets/cards/dp5/97-sm.webp",
+    "attacks": [
+      {
+        "name": "Restore",
+        "damage": "",
+        "text": "Search your discard pile for a Pokémon (excluding Pokémon LV.X) and put it onto your Bench as a Basic Pokémon. Then, you may search your discard pile for up to 3 basic Energy cards and attach them to that Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Pulse",
+        "text": "Once during your turn (before your attack), when you put Garchomp LV.X from your hand onto your Active Garchomp, you may flip 3 coins. For each heads, put 1 damage counter on each of your opponent's Benched Pokémon.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-97/large",
+    "tcgplayerId": 85631,
+    "market": 187.0
+  },
+  {
+    "id": "dp5-98",
+    "name": "Glaceon LV.X",
+    "number": "98",
+    "rarity": "Rare Holo LV.X",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Ryo Ueda",
+    "evolvesFrom": "Glaceon",
+    "image": "assets/cards/dp5/98.webp",
+    "imageSmall": "assets/cards/dp5/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Avalanche",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If heads, this attack does 20 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Chilly Breath",
+        "text": "As long as Glaceon is your Active Pokémon, your opponent's Pokémon can't use any Poké-Powers.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-98/large",
+    "tcgplayerId": 85750,
+    "market": 537.5
+  },
+  {
+    "id": "dp5-99",
+    "name": "Leafeon LV.X",
+    "number": "99",
+    "rarity": "Rare Holo LV.X",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Ryo Ueda",
+    "evolvesFrom": "Leafeon",
+    "image": "assets/cards/dp5/99.webp",
+    "imageSmall": "assets/cards/dp5/99-sm.webp",
+    "attacks": [
+      {
+        "name": "Verdant Dance",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Does 30 damage plus 10 more damage for each Energy attached to all of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Forcing",
+        "text": "Once during your turn (before your attack), you may attach an Energy card from your hand to 1 of your Pokémon. This power can't be used if Leafeon is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-99/large",
+    "tcgplayerId": 86684,
+    "market": 200.0
+  },
+  {
+    "id": "dp5-100",
+    "name": "Porygon-Z LV.X",
+    "number": "100",
+    "rarity": "Rare Holo LV.X",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Ryo Ueda",
+    "evolvesFrom": "Porygon-Z",
+    "image": "assets/cards/dp5/100.webp",
+    "imageSmall": "assets/cards/dp5/100-sm.webp",
+    "abilities": [
+      {
+        "name": "Mode Crash",
+        "text": "Once during your turn (before your attack), when you put Porygon-Z LV.X from your hand onto your Active Porygon-Z, you may discard all of your opponent's Special Energy cards in play.",
+        "type": "Poké-Power"
+      },
+      {
+        "name": "Decode",
+        "text": "Once during your turn (before your attack), you may search your deck for up to any 2 cards and shuffle your deck afterward. Then, put those cards on top of your deck in any order. This power can't be used if Porygon-Z is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dp5-100/large",
+    "tcgplayerId": 88321,
+    "market": 85.35
+  },
+  {
+    "id": "dp5-dpp22",
+    "name": "Mime Jr.",
+    "number": "dpp22",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It habitually mimics foes. Once mimicked, the foe cannot take its eyes off this Pokémon.",
+    "image": "assets/cards/dp5/dpp22.webp",
+    "imageSmall": "assets/cards/dp5/dpp22-sm.webp",
+    "attacks": [
+      {
+        "name": "Mime",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw a number of cards equal to the number of cards in your opponent's hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Baby Evolution",
+        "text": "Once during your turn (before your attack), you may put Mr. Mime from your hand onto Mime Jr. (this counts as evolving Mime Jr.) and remove all damage counters from Mime Jr.",
+        "type": "Poké-Power"
+      }
+    ],
+    "market": 16.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP22/large",
+    "printedNumber": "DP 22",
+    "tcgplayerId": 87470,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "dp5-dpp23",
+    "name": "Glameow",
+    "number": "dpp23",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It claws if displeased and purrs when affectionate. Its fickleness if very popular among some.",
+    "image": "assets/cards/dp5/dpp23.webp",
+    "imageSmall": "assets/cards/dp5/dpp23-sm.webp",
+    "attacks": [
+      {
+        "name": "Charm",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Pose",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 16.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP23/large",
+    "printedNumber": "DP 23",
+    "tcgplayerId": 85761,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "dp5-dpp24",
+    "name": "Darkrai",
+    "number": "dpp24",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "80",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/dp5/dpp24.webp",
+    "imageSmall": "assets/cards/dp5/dpp24-sm.webp",
+    "attacks": [
+      {
+        "name": "Spacial Rend",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Search your deck for a Stadium card, show it to your opponent, and put it into your hand. Shuffle your deck afterward. If there is any Stadium card in play, discard it."
+      },
+      {
+        "name": "Roar of Time",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "80",
+        "text": "Search your discard pile for 3 Pokémon, show them to your opponent, and put them on top of your deck. Shuffle your deck afterward. (If you don't have 3 Pokémon in your discard pile, this attack does nothing.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP24/large",
+    "printedNumber": "DP 24",
+    "tcgplayerId": 84701,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 65.02
+  }
+]

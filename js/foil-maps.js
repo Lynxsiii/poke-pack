@@ -24,7 +24,17 @@
 
 import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=8";
 
-export { isSm, smPattern };
+import { isXy, xyMap, xyPattern, xyReverseExtras, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=5";
+
+import { isBw, bwEtched, bwMap, bwPattern, bwReverseExtras, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=8";
+
+import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=3";
+
+import { isEx, exEtched, exMap, exPattern, exReverseExtras, exReverseFinish, exReversePattern } from "./ex-foil.js?v=8";
+import { isWotc, wotcLegendaryExtras, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=6";
+import { specialInk, specialReverseMap } from "./wotc-special.js?v=3";
+
+export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
 
 export function cureOf(card) {
   if (card?.rarity === "Pikachu Rare") return "rings";
@@ -202,6 +212,16 @@ export function reverseFinish(card, kind = card?.reverseKind) {
   // scripts/make_swsh_reverse.py in the card-textures skill).
   // Sun & Moon's reverse (js/sm-foil.js).
   if (isSm(card)) return smReverseFinish(card);
+  // XY's reverse (js/xy-foil.js).
+  if (isXy(card)) return xyReverseFinish(card);
+  // Black & White's reverse (js/bw-foil.js).
+  if (isBw(card)) return bwReverseFinish(card);
+  // The Diamond & Pearl generation's Mirror reverse (js/dp-foil.js).
+  if (isDp(card)) return dpReverseFinish(card);
+  // The EX generation's reverse holos, a family per set (js/ex-foil.js).
+  if (isEx(card)) return exReverseFinish(card);
+  // The Wizards of the Coast generation's reverse: Legendary Collection's fireworks, the e-Card refractor (js/wotc-foil.js).
+  if (isWotc(card)) return wotcReverseFinish(card);
   if (isSwsh(card)) {
     if (card.supertype === "Trainer") return "swsh-trainer";
     if (card.supertype === "Energy" || card.energy) return "";
@@ -233,6 +253,24 @@ export function foilExtras(card, url, reverseKind) {
     }
     const finish = reverseFinish(card, reverseKind);
     if (finish === "mirror") return { classes: "rev-mirror", style: "", cure: false };
+    // XY: the plain mirror, with the era's hooks for css/holo/xy.css.
+    if (finish === "xy") return { classes: "rev-mirror era-xy xy-rev", style: "", cure: false };
+    // XY's reverse: one tile per type (assets/foil/xy-reverse/, css/holo/xy.css).
+    if (finish.startsWith("xy-")) return xyReverseExtras(card, url, finish);
+    // Black & White: the plain mirror of bw1, the Energy-symbol tile per type of the rest (css/holo/bw.css).
+    if (finish.startsWith("bw-")) return bwReverseExtras(card, url, finish);
+    // Diamond & Pearl generation: the Mirror pattern, the whole card but the art window (css/holo/dp.css).
+    if (finish === "dp") return dpReverseExtras(card, url);
+    // EX generation: the Mirror of the first four sets, the art-box patterns after them; one family class per set (css/holo/ex.css).
+    if (finish === "ex") return exReverseExtras(card, url);
+    // Wizards of the Coast: the e-Card refractor and the promo reverses, and Legendary Collection's fireworks (css/holo/wotc-ecard.css, wotc-special.css).
+    if (finish === "wotc") return { classes: "rev-mirror era-wotc wotc-rev", style: "", cure: false };
+    if (finish === "wotc-ecard") return { classes: "rev-mirror era-wotc wotc-rev wotc-rev-ecard", style: "", cure: false };
+    // The reverse promos of basep and bp: one drawn frame mask each (js/wotc-special.js, css/holo/wotc-special.css).
+    if (finish.startsWith("wotc-promo-")) {
+      return { classes: `rev-mirror era-wotc wotc-rev-promo wotc-rev-${finish.slice(11)}`, style: `--foil-map:url('${url(specialReverseMap(finish))}')`, cure: false };
+    }
+    if (finish === "wotc-legendary") return wotcLegendaryExtras(card, url);
     if (!finish) return { classes: "", style: "", cure: false };
     if (finish.startsWith("sm-")) {
       const type = finish.slice(3);
@@ -268,12 +306,41 @@ export function foilExtras(card, url, reverseKind) {
   };
   const swsh = isSwsh(card);
   const sm = isSm(card);
+  const xy = isXy(card);
+  const bw = isBw(card);
+  const dp = isDp(card);
+  const ex = isEx(card);
+  const wotc = isWotc(card);
   if (card.foilMap) add("has-foil-map", "--foil-map", (sm && smGxMap(card)) || card.foilMap);
   else if (FULL_ART.has(card.rarity) || (swsh && SWSH_FULL_ART.has(card.rarity) && card.gallery !== "cc") || (sm && SM_FULL_ART.has(card.rarity))) {
     add("has-foil-map", "--foil-map", FULL_MAP);
   } else if (sm && smSafeMap(card)) {
     // A GX or Prism Star with no map of its own takes the text-safe median.
     add("has-foil-map", "--foil-map", smGxMap(card) || smSafeMap(card));
+  } else if (xy && XY_FULL_ART.has(card.rarity)) {
+    add("has-foil-map", "--foil-map", FULL_MAP);
+  } else if (xy && xyMap(card)) {
+    // The finish agents return a TCG Live map (fetch_foil_maps.py) or a drawn window / frame mask.
+    add("has-foil-map", "--foil-map", xyMap(card));
+  } else if (bw && BW_FULL_ART.has(card.rarity)) {
+    add("has-foil-map", "--foil-map", FULL_MAP);
+  } else if (bw && bwMap(card)) {
+    // The finish agents return a TCG Live map (fetch_foil_maps.py) or a drawn window / frame mask.
+    add("has-foil-map", "--foil-map", bwMap(card));
+  } else if (dp && DP_FULL_ART.has(card.rarity)) {
+    add("has-foil-map", "--foil-map", FULL_MAP);
+  } else if (dp && dpMap(card)) {
+    // TCG Live has no maps for this generation: the finish agents return a drawn window / frame mask.
+    add("has-foil-map", "--foil-map", dpMap(card));
+  } else if (ex && exMap(card)) {
+    // TCG Live has no maps for this generation either: a drawn window / frame / Pokémon mask.
+    add("has-foil-map", "--foil-map", exMap(card));
+  } else if (wotc && WOTC_FULL_ART.has(card.rarity)) {
+    add("has-foil-map", "--foil-map", FULL_MAP);
+  } else if (wotc && wotcMap(card)) {
+    // The finish agents return a drawn window / figure mask (TCG Live has no maps for this generation).
+    add("has-foil-map", "--foil-map", wotcMap(card));
+    if (specialInk(card)) add("", "--ws-ink", specialInk(card));
   }
   if (card.foilMapR && card.foilMapB) {
     add("has-foil-rgb", "--foil-map-r", card.foilMapR);
@@ -285,7 +352,7 @@ export function foilExtras(card, url, reverseKind) {
     // (scripts/make_card_etch.py): the SIR recipe keeps the flat background
     // weight the tile had, since the print's foil map is the white fallback.
     if (card.etchDrawn) classes.push("has-etch-drawn");
-  } else if (ETCHED.has(card.rarity) || (swsh && SWSH_ETCHED.has(card.rarity) && card.gallery !== "cc") || (sm && SM_ETCHED.has(card.rarity))) {
+  } else if (ETCHED.has(card.rarity) || (swsh && SWSH_ETCHED.has(card.rarity) && card.gallery !== "cc") || (sm && SM_ETCHED.has(card.rarity)) || (xy && XY_ETCHED.has(card.rarity)) || (bw && bwEtched(card)) || (dp && dpEtched(card)) || (ex && exEtched(card))) {
     add("has-etch-tile", "--etch-tile", ETCH_TILE);
   }
   // A gold print's soft engraving (the etch blurred a little, soften_etch.py):
@@ -315,14 +382,30 @@ export function foilExtras(card, url, reverseKind) {
   // finishes the Mega Evolution era prints differently key off this, such as
   // the Double Rare streaks (css/holo/sv-double-rare.css).
   if (/^[zr]?sv\d/.test(String(card.id || ""))) classes.push("era-sv");
+  // Mega Evolution prints (me1-me5, me2pt5; not the 30th Celebration, me55): the same finishes as
+  // Scarlet & Violet's with their own retune (css/holo/me-finishes.css, sv-double-rare.css).
+  if (/^me\d(pt5)?-/.test(String(card.id || ""))) classes.push("era-me");
   // Sword & Shield prints (css/holo/swsh.css): the numbered sets, Champion's
   // Path, Shining Fates, Celebrations, Pokémon GO, Crown Zenith, the promos.
   if (/^(swsh|cel25|pgo)/.test(String(card.id || ""))) classes.push("era-swsh");
   // Sun & Moon prints (css/holo/sm.css and its siblings): the numbered sets,
   // Shiny Vault, Detective Pikachu, the promos.
   if (sm) classes.push("era-sm");
+  // XY prints (css/holo/xy.css and its siblings): the numbered sets, Generations,
+  // Double Crisis, the promos, McDonald's 2014-16, the Trainer Kits.
+  if (xy) classes.push("era-xy");
+  // Black & White prints (css/holo/bw.css and its siblings): the numbered sets,
+  // Dragon Vault, the promos, McDonald's 2011 and 2012, the Trainer Kits.
+  if (bw) classes.push("era-bw");
+  // Diamond & Pearl generation prints (css/holo/dp.css and its siblings): dp1-dp7, Platinum, HeartGold &
+  // SoulSilver, Call of Legends, the dpp and hsp promos, POP 6-9, the Trainer Kits.
+  if (dp) classes.push("era-dp");
+  // EX generation prints (css/holo/ex.css and its siblings): ex1-ex16, the np promos, POP Series 1-5, the Trainer Kits.
+  if (ex) classes.push("era-ex");
+  // Wizards of the Coast prints (css/holo/wotc.css and its siblings): Base Set to Skyridge, Southern Islands, basep and bp.
+  if (wotc) classes.push("era-wotc");
   // Tiled or galaxy textures start somewhere different on every card.
-  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh || sm) {
+  if (cure || ["Classic Collection", "Cosmos", "Confetti"].includes(card.rarity) || ETCHED.has(card.rarity) || swsh || sm || xy || bw || dp || ex || wotc) {
     const [x, y] = seed(card.id);
     vars.push(`--seed-x:${x}`, `--seed-y:${y}`);
   }

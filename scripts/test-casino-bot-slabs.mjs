@@ -16,7 +16,7 @@ import { buildBotStake, BOT_BUILD, BOT_GRADES, rollBotGrade } from '../worker/ca
 import { loadXpCounters } from '../worker/xp.js';
 import { COINFLIP_RULES, JACKPOT_RULES, botStakeWindow } from '../js/casino-rules.js';
 import { gradedValue, gradeMultiplier, bandFor, GRADE_BANDS } from '../js/grading-rules.js';
-import { PLAYABLE_SETS, sellValue, money } from '../js/catalog.js';
+import { PLAYABLE_SETS, BASIC_ENERGY, sellValue, money } from '../js/catalog.js';
 
 const results = [];
 let failed = 0;
@@ -114,11 +114,16 @@ const stakeCents = (stake, slabs) => stake.reduce((n, c) => n + cents(c.value) *
 
 // ---- The catalog: the 100 most valuable cards of all playable sets ------------------------------------------------------
 const catalogCards = [];
+// A promo page (xyp, bwp, dpp, hsp, np, basep, bp) is a view of other files AND the home of its own cards, so a view
+// still reads its own data file; a card listed twice is counted once.
+const seenIds = new Set();
 for (const set of PLAYABLE_SETS) {
-  if (set.viewOf || !set.dataFile) continue;
+  if (!set.dataFile || (set.viewOf && !set.viewOf.includes(set.id) && !['xyp', 'bwp', 'hsp', 'dpp', 'np', 'basep', 'bp'].includes(set.id))) continue;
   let list; try { list = JSON.parse(readFileSync(new URL('../' + set.dataFile, import.meta.url), 'utf8')); } catch { continue; }
-  for (const c of list) catalogCards.push({ id: c.id, cents: Math.round(sellValue(c) * 100), card: c, set });
+  for (const c of list) { if (seenIds.has(c.id)) continue; seenIds.add(c.id); catalogCards.push({ id: c.id, cents: Math.round(sellValue(c) * 100), card: c, set }); }
 }
+// The shared basic Energy (energy-<type>[-print]) are catalog cards too: a bot can stake a slab of one in a low band.
+for (const c of BASIC_ENERGY) if (!seenIds.has(c.id)) { seenIds.add(c.id); catalogCards.push({ id: c.id, cents: Math.round(sellValue(c) * 100), card: c, set: setForCard(c.id) }); }
 catalogCards.sort((x, y) => y.cents - x.cents);
 const TOP = catalogCards.slice(0, 100);
 const byId = new Map(catalogCards.map(c => [c.id, c]));

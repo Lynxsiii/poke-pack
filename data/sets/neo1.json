@@ -1,0 +1,53 @@
+{
+  "id": "neo1",
+  "name": "Neo Genesis",
+  "series": "neo",
+  "slug": "neo-genesis",
+  "scrydexId": "neo1",
+  "era": "wotc",
+  "artSlug": "neo-genesis",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1396,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Neo Genesis Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 193335,
+      "packs": 36,
+      "promos": [],
+      "price": 14000,
+      "priceSource": "TCGplayer price history, Unopened market price $14,000 (3-day buckets 2026-09-14 to 2026-09-29, no sales in the window; tcgcsv lists no market price). Thin: 36 packs at the $632.32 pack price would be $22,763.52.",
+      "note": "Unlimited box, 36 packs of 11 cards (TCGplayer 193335, Elite Fourum, PSA 9409). The 1st Edition box (193334) is not built."
+    },
+    {
+      "id": "deck-cold-fusion",
+      "name": "Theme Deck \"Cold Fusion\"",
+      "kind": "deck",
+      "tcgplayerId": 234505,
+      "packs": 0,
+      "promos": [
+        "8"
+      ],
+      "note": "A 60-card Lightning and Water deck with a holo Kingdra (Neo Genesis 8), the deck's featured card, plus a metal Lugia coin and markers (not simulated). List: Bulbapedia 'Cold Fusion (TCG)' and PokeBeach's Neo Genesis theme-deck page. TCGplayer has no market price for it: the shop price is its mid listing price ($437.50; low $375.00, high $499.99, 2 listings on 2026-10-01)."
+    },
+    {
+      "id": "deck-hotfoot",
+      "name": "Theme Deck \"Hotfoot\"",
+      "kind": "deck",
+      "tcgplayerId": 451098,
+      "packs": 0,
+      "promos": [
+        "7"
+      ],
+      "note": "A 60-card Neo Genesis theme deck, featuring Jumpluff (Neo Genesis 7); metal Lugia coin + markers. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Neo Genesis theme-deck page (they differ by a card in places).",
+      "price": 64.14,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    }
+  ]
+}

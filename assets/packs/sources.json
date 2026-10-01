@@ -554,22 +554,22 @@
         {
           "id": "whimsicott",
           "remote": "brilliant-stars-pack-0.avif",
-          "file": "swsh9/pack-0.avif"
+          "file": "swsh9/pack-0-v2.avif"
         },
         {
           "id": "shaymin",
           "remote": "brilliant-stars-pack-1.avif",
-          "file": "swsh9/pack-1.avif"
+          "file": "swsh9/pack-1-v2.avif"
         },
         {
           "id": "charizard",
           "remote": "brilliant-stars-pack-2.avif",
-          "file": "swsh9/pack-2.avif"
+          "file": "swsh9/pack-2-v2.avif"
         },
         {
           "id": "arceus",
           "remote": "brilliant-stars-pack-3.avif",
-          "file": "swsh9/pack-3.avif"
+          "file": "swsh9/pack-3-v2.avif"
         }
       ]
     },
@@ -580,27 +580,27 @@
         {
           "id": "typhlosion",
           "remote": "astral-radiance-pack-0.avif",
-          "file": "swsh10/pack-0.avif"
+          "file": "swsh10/pack-0-v2.avif"
         },
         {
           "id": "decidueye",
           "remote": "astral-radiance-pack-1.avif",
-          "file": "swsh10/pack-1.avif"
+          "file": "swsh10/pack-1-v2.avif"
         },
         {
           "id": "dialga",
           "remote": "astral-radiance-pack-2.avif",
-          "file": "swsh10/pack-2.avif"
+          "file": "swsh10/pack-2-v2.avif"
         },
         {
           "id": "samurott",
           "remote": "astral-radiance-pack-3.avif",
-          "file": "swsh10/pack-3.avif"
+          "file": "swsh10/pack-3-v2.avif"
         },
         {
           "id": "palkia",
           "remote": "astral-radiance-pack-4.avif",
-          "file": "swsh10/pack-4.avif"
+          "file": "swsh10/pack-4-v2.avif"
         }
       ]
     },
@@ -611,7 +611,7 @@
         {
           "id": "pokemon-go",
           "remote": "pokemon-go-pack-0.avif",
-          "file": "pgo/pack-0.avif"
+          "file": "pgo/pack-0-v2.avif"
         }
       ]
     },
@@ -622,22 +622,22 @@
         {
           "id": "zoroark",
           "remote": "lost-origin-pack-0.avif",
-          "file": "swsh11/pack-0.avif"
+          "file": "swsh11/pack-0-v2.avif"
         },
         {
           "id": "giratina",
           "remote": "lost-origin-pack-1.avif",
-          "file": "swsh11/pack-1.avif"
+          "file": "swsh11/pack-1-v2.avif"
         },
         {
           "id": "kyurem",
           "remote": "lost-origin-pack-2.avif",
-          "file": "swsh11/pack-2.avif"
+          "file": "swsh11/pack-2-v2.avif"
         },
         {
           "id": "enamorus",
           "remote": "lost-origin-pack-3.avif",
-          "file": "swsh11/pack-3.avif"
+          "file": "swsh11/pack-3-v2.avif"
         }
       ]
     },
@@ -648,22 +648,22 @@
         {
           "id": "regidrago",
           "remote": "silver-tempest-pack-0.avif",
-          "file": "swsh12/pack-0.avif"
+          "file": "swsh12/pack-0-v2.avif"
         },
         {
           "id": "regieleki",
           "remote": "silver-tempest-pack-1.avif",
-          "file": "swsh12/pack-1.avif"
+          "file": "swsh12/pack-1-v2.avif"
         },
         {
           "id": "lugia",
           "remote": "silver-tempest-pack-2.avif",
-          "file": "swsh12/pack-2.avif"
+          "file": "swsh12/pack-2-v2.avif"
         },
         {
           "id": "vulpix",
           "remote": "silver-tempest-pack-3.avif",
-          "file": "swsh12/pack-3.avif"
+          "file": "swsh12/pack-3-v2.avif"
         }
       ]
     },
@@ -951,6 +951,287 @@
           "id": "ho-oh",
           "remote": "burning-shadows-pack-3.avif",
           "file": "sm3/pack-3.avif"
+        }
+      ]
+    },
+    "xy9": {
+      "name": "BREAKpoint",
+      "slug": "breakpoint",
+      "packs": [
+        {
+          "id": "greninja-break",
+          "remote": "breakpoint-pack-0.avif",
+          "file": "xy9/pack-0.avif"
+        },
+        {
+          "id": "luxray-break",
+          "remote": "breakpoint-pack-1.avif",
+          "file": "xy9/pack-1.avif"
+        },
+        {
+          "id": "shiny-mega-gyarados",
+          "remote": "breakpoint-pack-2.avif",
+          "file": "xy9/pack-2.avif"
+        },
+        {
+          "id": "mega-scizor",
+          "remote": "breakpoint-pack-3.avif",
+          "file": "xy9/pack-3.avif"
+        }
+      ]
+    },
+    "g1": {
+      "name": "Generations",
+      "slug": "generations",
+      "packs": [
+        {
+          "id": "pikachu",
+          "remote": "generations-pack-0.avif",
+          "file": "g1/pack-0.avif"
+        },
+        {
+          "id": "charizard",
+          "remote": "generations-pack-1.avif",
+          "file": "g1/pack-1.avif"
+        },
+        {
+          "id": "venusaur",
+          "remote": "generations-pack-2.avif",
+          "file": "g1/pack-2.avif"
+        },
+        {
+          "id": "blastoise",
+          "remote": "generations-pack-3.avif",
+          "file": "g1/pack-3.avif"
+        }
+      ]
+    },
+    "xy10": {
+      "name": "Fates Collide",
+      "slug": "fates-collide",
+      "packs": [
+        {
+          "id": "lugia-break",
+          "remote": "fates-collide-pack-0.avif",
+          "file": "xy10/pack-0.avif"
+        },
+        {
+          "id": "delphox-break",
+          "remote": "fates-collide-pack-1.avif",
+          "file": "xy10/pack-1.avif"
+        },
+        {
+          "id": "zygarde",
+          "remote": "fates-collide-pack-2.avif",
+          "file": "xy10/pack-2.avif"
+        },
+        {
+          "id": "mega-alakazam",
+          "remote": "fates-collide-pack-3.avif",
+          "file": "xy10/pack-3.avif"
+        }
+      ]
+    },
+    "pop6": {
+      "name": "POP Series 6",
+      "slug": "pop-series-6",
+      "packs": [
+        {
+          "id": "lucario",
+          "remote": "pop-series-6-pack-0.avif",
+          "file": "pop6/pack-0.avif"
+        }
+      ]
+    },
+    "pop7": {
+      "name": "POP Series 7",
+      "slug": "pop-series-7",
+      "packs": [
+        {
+          "id": "gallade",
+          "remote": "pop-series-7-pack-0.avif",
+          "file": "pop7/pack-0.avif"
+        }
+      ]
+    },
+    "pop8": {
+      "name": "POP Series 8",
+      "slug": "pop-series-8",
+      "packs": [
+        {
+          "id": "heatran",
+          "remote": "pop-series-8-pack-0.avif",
+          "file": "pop8/pack-0.avif"
+        }
+      ]
+    },
+    "pop9": {
+      "name": "POP Series 9",
+      "slug": "pop-series-9",
+      "packs": [
+        {
+          "id": "garchomp",
+          "remote": "pop-series-9-pack-0.avif",
+          "file": "pop9/pack-0.avif"
+        }
+      ]
+    },
+    "ex13": {
+      "name": "EX Holon Phantoms",
+      "slug": "ex-holon-phantoms",
+      "packs": [
+        {
+          "id": "zangoose",
+          "remote": "ex-holon-phantoms-pack-0.avif",
+          "file": "ex13/pack-0.avif"
+        },
+        {
+          "id": "mewtwo",
+          "remote": "ex-holon-phantoms-pack-1.avif",
+          "file": "ex13/pack-1.avif"
+        },
+        {
+          "id": "kabutops",
+          "remote": "ex-holon-phantoms-pack-2.avif",
+          "file": "ex13/pack-2.avif"
+        },
+        {
+          "id": "gyarados",
+          "remote": "ex-holon-phantoms-pack-3.avif",
+          "file": "ex13/pack-3.avif"
+        }
+      ]
+    },
+    "ex14": {
+      "name": "EX Crystal Guardians",
+      "slug": "ex-crystal-guardians",
+      "packs": [
+        {
+          "id": "jirachi",
+          "remote": "ex-crystal-guardians-pack-0.avif",
+          "file": "ex14/pack-0.avif"
+        },
+        {
+          "id": "blaziken",
+          "remote": "ex-crystal-guardians-pack-1.avif",
+          "file": "ex14/pack-1.avif"
+        },
+        {
+          "id": "charizard",
+          "remote": "ex-crystal-guardians-pack-2.avif",
+          "file": "ex14/pack-2.avif"
+        },
+        {
+          "id": "delcatty",
+          "remote": "ex-crystal-guardians-pack-3.avif",
+          "file": "ex14/pack-3.avif"
+        }
+      ]
+    },
+    "ex15": {
+      "name": "EX Dragon Frontiers",
+      "slug": "ex-dragon-frontiers",
+      "packs": [
+        {
+          "id": "latios-latias",
+          "remote": "ex-dragon-frontiers-pack-0.avif",
+          "file": "ex15/pack-0.avif"
+        },
+        {
+          "id": "salamence-dragonair",
+          "remote": "ex-dragon-frontiers-pack-1.avif",
+          "file": "ex15/pack-1.avif"
+        },
+        {
+          "id": "tyranitar-tropius",
+          "remote": "ex-dragon-frontiers-pack-2.avif",
+          "file": "ex15/pack-2.avif"
+        },
+        {
+          "id": "nidoking-arbok",
+          "remote": "ex-dragon-frontiers-pack-3.avif",
+          "file": "ex15/pack-3.avif"
+        }
+      ]
+    },
+    "ex16": {
+      "name": "EX Power Keepers",
+      "slug": "ex-power-keepers",
+      "packs": [
+        {
+          "id": "walrein",
+          "remote": "ex-power-keepers-pack-0.avif",
+          "file": "ex16/pack-0.avif"
+        },
+        {
+          "id": "absol",
+          "remote": "ex-power-keepers-pack-1.avif",
+          "file": "ex16/pack-1.avif"
+        },
+        {
+          "id": "aggron",
+          "remote": "ex-power-keepers-pack-2.avif",
+          "file": "ex16/pack-2.avif"
+        },
+        {
+          "id": "raichu",
+          "remote": "ex-power-keepers-pack-3.avif",
+          "file": "ex16/pack-3.avif"
+        }
+      ]
+    },
+    "pop1": {
+      "name": "POP Series 1",
+      "slug": "pop-series-1",
+      "packs": [
+        {
+          "id": "blaziken",
+          "remote": "pop-series-1-pack-0.avif",
+          "file": "pop1/pack-0.avif"
+        }
+      ]
+    },
+    "pop2": {
+      "name": "POP Series 2",
+      "slug": "pop-series-2",
+      "packs": [
+        {
+          "id": "venusaur",
+          "remote": "pop-series-2-pack-0.avif",
+          "file": "pop2/pack-0.avif"
+        }
+      ]
+    },
+    "pop3": {
+      "name": "POP Series 3",
+      "slug": "pop-series-3",
+      "packs": [
+        {
+          "id": "eeveelutions",
+          "remote": "pop-series-3-pack-0.avif",
+          "file": "pop3/pack-0.avif"
+        }
+      ]
+    },
+    "pop4": {
+      "name": "POP Series 4",
+      "slug": "pop-series-4",
+      "packs": [
+        {
+          "id": "deoxys",
+          "remote": "pop-series-4-pack-0.avif",
+          "file": "pop4/pack-0.avif"
+        }
+      ]
+    },
+    "pop5": {
+      "name": "POP Series 5",
+      "slug": "pop-series-5",
+      "packs": [
+        {
+          "id": "ho-oh",
+          "remote": "pop-series-5-pack-0.avif",
+          "file": "pop5/pack-0.avif"
         }
       ]
     }

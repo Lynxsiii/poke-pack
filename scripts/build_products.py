@@ -18,6 +18,26 @@ A set lists the ones worth opening in data/sets/<id>.json:
                               "slug": "me-black-star-promos", "scrydex": "mep",
                               "tcgplayerGroup": 24451, "printed": "MEP" } }
 
+A Black & White set names its promos `bwp003` and its series `"bwp": {"series": "black-white",
+"slug": "bw-black-star-promos", "scrydex": "bwp", "tcgplayerGroup": 1407, "printed": "BW", "era": "bw"}`
+(1407 is TCGplayer's "Black and White Promos" group, tcgcsv.com/tcgplayer/3/groups, 2026-10-01).
+An XY set names its promos `xyp003` and its series
+`"xyp": {"series": "xy", "slug": "xy-black-star-promos", "scrydex": "xyp",
+"tcgplayerGroup": 1451, "printed": "XY", "era": "xy"}` (keys: PROMO_FORMATS below).
+A Diamond & Pearl generation set names its promos `dpp01` (DP Black Star Promos, Platinum's DP35-DP56 included: the home set
+is the one whose packs the product holds, dp1-dp7 or pl1-pl4) and `hsp03` (HGSS Black Star Promos; home hgss1-hgss4 or col1):
+`"dpp": {"series": "diamond-pearl", "slug": "dp-black-star-promos", "scrydex": "dpp", "tcgplayerGroup": 1421, "printed": "DP",
+"era": "dp"}` and `"hsp": {"series": "heartgold-soulsilver", "slug": "hgss-black-star-promos", "scrydex": "hsp",
+"tcgplayerGroup": 1453, "printed": "HGSS", "era": "dp"}`.
+An EX generation set names its promos `np012` (Nintendo Black Star Promos NP001-NP040: the home set is the EX or POP set whose
+product holds the promo, `ex1-np012`; the magazine, DVD and event promos are data/np.json's own, `np-np001`):
+`"np": {"series": "np", "slug": "nintendo-black-star-promos", "scrydex": "np", "tcgplayerGroup": 1423, "printed": "NP",
+"era": "ex"}` (keys: PROMO_FORMATS below).
+A Wizards of the Coast set names its promos `basep21` (Wizards Black Star Promos; home set the one whose product holds the card, base1-ecard3 or si1,
+the rest are data/basep.json's) and Best of Game `bp01` (data/bp.json only): `"basep": {"series": "base", "slug": "wizards-black-star-promos",
+"scrydex": "basep", "tcgplayerGroup": 1418, "printed": "Promo", "era": "wotc"}` and `"bp": {"series": "other", "slug": "best-of-game",
+"scrydex": "bp", "tcgplayerGroup": 1455, "printed": "BoG", "era": "wotc"}`.
+
 `packs` counts the set's own booster packs; `special` names extra packs from
 the set's `specialPacks` in js/catalog.js (the Ultra-Premium Collections'
 Classic Collection pack). `pick` is how many of `promos` one box holds when it
@@ -29,6 +49,10 @@ set's own (Miscellaneous Cards & Products, 2374). A product whose id matches one
 (eliteTrainerBox) only adds its promos to that product. `gift: true` marks a
 store's gift-with-purchase promo (GameStop and EB Games stamps): no box holds
 it, so it is sold with the product it came free with, at both market prices.
+A product TCGplayer has never priced (most older-era boxes, tins and blisters)
+is still built: `"price": 49.99, "priceSource": "..."` in its config wins,
+else its packs at the set's booster pack price (data/sealed.json) plus its
+promos' market; the entry carries `priceDerived: "manual" | "packs"`.
 
 A promo set with no boosters of its own (svp, the SV Black Star Promos)
 names the sets its products' packs come from instead of `packs`:
@@ -109,7 +133,52 @@ TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 # SM Black Star Promos: scrydex files the scan as smp-SM01 under 100 and
 # smp-SM179 above (smp-SM001 is the card back), while pkmn.gg's page key is
 # always three digits (SM001; SM01 is a 404).
-PROMO_FORMATS = {"smp": {"pkmnKey": "SM{n:03d}", "scrydexKey": "SM{n:02d}"}}
+#
+# The XY Black Star Promos (pkmn.gg series xy, slug xy-black-star-promos): pkmn.gg's
+# page key is XY001 (XY01 is a 404) and scrydex files the scan as xyp-XY01 under 100
+# and xyp-XY124 above (xyp-XY001 is the card back, like smp-SM001); a second print of
+# a number keeps its letter on both (XY67a, XY150a, XY177a, XY198a, XY200a). The
+# printed number is "XY 003". Probed 2026-10-01.
+#
+# The BW Black Star Promos (pkmn.gg series black-white, slug bw-black-star-promos): pkmn.gg's page
+# key is BW001 (BW01 is a 404), its printed `number` is BW01 to BW03, BW004, BW005, BW06 to BW99, BW100,
+# BW101 (BW900-902 are three extra listings scrydex has no scan for: leave them out), and scrydex files
+# the scan under that printed number verbatim (bwp-BW01, bwp-BW004, bwp-BW99, bwp-BW100; the
+# other padding returns the card back). So `scrydexKey` pads to two digits and `scrydexWide`
+# names the numbers printed with three. Probed 2026-10-01 over all 101 numbers. The printed number is "BW 003".
+#
+# The DP Black Star Promos (pkmn.gg series diamond-pearl, slug dp-black-star-promos) and the HGSS Black Star Promos (series
+# heartgold-soulsilver, slug hgss-black-star-promos): pkmn.gg's page key is DP001 / HGSS001 (DP01 is a 404), its printed
+# `number` DP01-DP56 / HGSS01-HGSS25 (DP900 and DP901 are Black & White-era jumbo cards: leave them out), and scrydex files the
+# scan under the printed number: dpp-DP01 ... dpp-DP56, hsp-HGSS01 ... hsp-HGSS25 (DP1 / DP001 return the card back, md5
+# f294d6fb). Probed 2026-10-01 over all 56 + 25 numbers: every one is a scan EXCEPT hsp-HGSS18 (Tropical Tidal Wave), which is the
+# card back under every padding; pkmn.gg's own image for it (assets.pkmn.gg .../hsp/hsp-HGSS018v2.png) is a real scan. The
+# printed number is "DP 01" / "HGSS 01" (`printedWidth` 2).
+#
+# The Wizards Black Star Promos (pkmn.gg series base, slug wizards-black-star-promos) and Best of Game (series other, slug best-of-game):
+# pkmn.gg's page key is the three-digit number (.../wizards-black-star-promos/034, .../best-of-game/001; basep also lists #900, the
+# Warner Bros. jumbo, which has no scrydex scan: leave it out), its `number` 1-53 / 1-9, and scrydex files the scan under the
+# UNPADDED number: basep-1 ... basep-53, bp-1 ... bp-9 (basep-01 / basep-001 and bp-01 return the card back, md5 f294d6fb; basep-900
+# too). Probed 2026-10-01 over all 53 + 9 numbers: every one is a scan. The printed number is "Promo 01" / "BoG 01" (`printedWidth` 2;
+# the physical cards print the word PROMO and the bare number).
+PROMO_FORMATS = {
+    "basep": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 2},
+    "bp": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 2},
+    "np": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 3},
+    "dpp": {"pkmnKey": "DP{n:03d}", "scrydexKey": "DP{n:02d}", "printedWidth": 2},
+    "hsp": {"pkmnKey": "HGSS{n:03d}", "scrydexKey": "HGSS{n:02d}", "printedWidth": 2},
+    "smp": {"pkmnKey": "SM{n:03d}", "scrydexKey": "SM{n:02d}"},
+    "xyp": {"pkmnKey": "XY{n:03d}", "scrydexKey": "XY{n:02d}"},
+    "bwp": {"pkmnKey": "BW{n:03d}", "scrydexKey": "BW{n:02d}", "scrydexWide": [4, 5]},
+}
+
+
+def scrydex_promo_key(fmt: dict, n: int) -> str:
+    """The scrydex key of promo number n: `scrydexKey` formatted, three digits for the numbers in `scrydexWide`."""
+    key = fmt["scrydexKey"]
+    if n in (fmt.get("scrydexWide") or []):
+        key = key.replace("{n:02d}", "{n:03d}")
+    return key.format(n=n)
 PRODUCT_WIDTH = 560
 BLISTER_EXCLUSIVES = 2289
 MISC = 2374
@@ -270,7 +339,7 @@ def convex_hull(points: np.ndarray) -> list[tuple[float, float]]:
     return lower[:-1] + upper[:-1]
 
 
-def cut_out(raw: bytes) -> Image.Image:
+def cut_out(raw: bytes, hull: bool = True) -> Image.Image:
     """A product photo on white, as RGBA with the background removed.
 
     Flood-fills the white in from the edges, then keeps the convex hull of
@@ -296,6 +365,14 @@ def cut_out(raw: bytes) -> Image.Image:
     ys, xs = np.nonzero(fg)
     if not len(xs):
         return img.convert("RGBA")
+    if not hull:
+        # `"hull": false` in a product's config: a concave silhouette (the EX-era display boxes with a tall back panel), cut by the
+        # flood fill alone and edged with a soft alpha, so no white wedge is left between the panel and the sides.
+        alpha = Image.fromarray(fg.astype(np.uint8) * 255).filter(ImageFilter.GaussianBlur(0.7))
+        out = img.convert("RGBA")
+        out.putalpha(alpha)
+        box = alpha.point(lambda v: 255 if v > 8 else 0).getbbox()
+        return out.crop(box) if box else out
     edge = []
     for y in np.unique(ys):
         row = xs[ys == y]
@@ -317,12 +394,16 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
     dest = ROOT / rel
     if dest.exists() and not refresh:
         return rel
+    if product.get("noPhoto"):
+        return None  # TCGplayer's photo shows another product (EX Ruby & Sapphire's booster box listing shows a theme deck display)
+    if not product.get("tcgplayerId"):
+        return None  # Black & White blisters, decks and boxes TCGplayer never listed: no photo
     try:
         raw = fetch(TCG_IMAGE.format(id=product["tcgplayerId"]))
     except (urllib.error.URLError, OSError) as exc:
         print(f"    {product['id']}: no photo ({exc})")
         return None
-    img = cut_out(raw)
+    img = cut_out(raw, product.get("hull", True))
     if img.width > PRODUCT_WIDTH:
         img = img.resize((PRODUCT_WIDTH, round(img.height * PRODUCT_WIDTH / img.width)), Image.LANCZOS)
     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -391,10 +472,10 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
         detail = page_data(fetch(f"{base_url}/{page_key}", f"pkmngg-{prefix}-{n}{suffix}.html", refresh))
         record = card_record({"id": set_id, "scrydexId": ser["scrydex"]}, detail)
         record["id"], record["number"] = card_id, number
-        record["printedNumber"] = f"{ser['printed']} {n:03d}{suffix}"
+        record["printedNumber"] = f"{ser['printed']} {n:0{fmt.get('printedWidth', 3)}d}{suffix}"
         # scrydex answers a bare number with the card back for the Sword & Shield promos.
         # Sun & Moon's promos are smp-SM01 there but SM001 on pkmn.gg: `scrydexKey`.
-        scry_key = fmt["scrydexKey"].format(n=n) + suffix if fmt.get("scrydexKey") else page_key
+        scry_key = scrydex_promo_key(fmt, n) + suffix if fmt.get("scrydexKey") else page_key
         record["image"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scry_key}/large"
         record["imageSmall"] = f"https://images.scrydex.com/pokemon/{ser['scrydex']}-{scry_key}/small"
         remote = record["image"]
@@ -415,10 +496,15 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     parts = split_number(number, series)
     if parts and not spec.get("like") and series[parts[0]].get("era"):
         record["era"] = series[parts[0]]["era"]
+    # An XY or Black & White promo, a `like` reprint included, takes the era's finish through its foilAs
+    # (js/xy-foil.js, js/bw-foil.js, js/dp-foil.js, js/ex-foil.js and js/wotc-foil.js are only asked for a card with foilAs when the card says era "xy" / "bw" / "dp" / "ex" / "wotc").
+    if cfg.get("era") in ("xy", "bw", "dp", "ex", "wotc") and not record.get("era"):
+        record["era"] = cfg["era"]
     record["rarity"] = "Promo"
     record["promo"] = True
     # `foilMap`: a hand-made map for a print TCG Live has none for.
-    for key in ("foilAs", "variant", "tcgplayerId", "printedNumber", "foilMap"):
+    # `holo` / `reverse`: the finish of a Wizards of the Coast promo (js/wotc-foil.js reads them: a cosmos holo, a reverse holo).
+    for key in ("foilAs", "variant", "tcgplayerId", "printedNumber", "foilMap", "holo", "reverse"):
         if spec.get(key):
             record[key] = spec[key]
     record = merge(prior, record) if prior else record
@@ -467,10 +553,32 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         if group not in market_by:
             market_by[group] = tcg_prices(group, refresh=True)
             meta_by[group] = tcg_products(group, refresh)
-        pid = product["tcgplayerId"]
+        pid = product.get("tcgplayerId")
+        if not pid:  # never listed on TCGplayer (see derived_price)
+            return None, {}
         return market_by[group].get(pid), meta_by[group].get(pid) or {}
 
-    sold = {n for product in products if product_market(product)[0] is not None for n in product.get("promos") or []}
+    sealed_row = json.loads((DATA / "sealed.json").read_text(encoding="utf-8")).get(set_id) or {}
+
+    def derived_price(product: dict) -> tuple[float | None, str]:
+        """A product TCGplayer has never priced (most older-era boxes, blisters and
+        tins): `price` in the config (with a `priceSource` note) wins; otherwise the
+        packs it holds at the set's booster pack market price. The entry says so
+        in `priceDerived`, so the shop can mark it. The promos it carries are added
+        below like a gift. None when neither is possible."""
+        if product.get("price"):
+            return round(float(product["price"]), 2), "manual"
+        packs = sum(int(v) for v in (product.get("from") or {}).values()) or int(product.get("packs", 0))
+        pack_price = sealed_row.get("boosterPack")
+        if packs and pack_price:
+            return round(packs * float(pack_price), 2), "packs"
+        return None, ""
+
+    def any_price(product: dict) -> float | None:
+        price = product_market(product)[0]
+        return price if price is not None else derived_price(product)[0]
+
+    sold = {n for product in products if any_price(product) is not None for n in product.get("promos") or []}
     unsold = [n for n in (cfg.get("promoCards") or {}) if n not in sold]
     if unsold:
         print(f"  promos with no priced product, left out: {', '.join(unsold)}")
@@ -504,7 +612,8 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
                 for r in rows if isinstance(r.get("sortPrice"), (int, float)) and r["sortPrice"] > 0
             }
         ser = cfg["promoSeries"][prefix]
-        key = ser.get("scrydexKey", "{n}").format(n=n)
+        fmt = {**ser, **PROMO_FORMATS.get(ser.get("scrydex"), {})}
+        key = scrydex_promo_key(fmt, n) if fmt.get("scrydexKey") else str(n)
         return listings[prefix].get(str(n)) or listings[prefix].get(key)
 
     for number, spec in (cfg.get("promoCards") or {}).items():
@@ -523,7 +632,8 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
         # A stamped or product-only print is priced from its own TCGplayer
         # listing, and so is a promo pkmn.gg has no price for.
         listing = spec.get("tcgplayerId") or record.get("tcgplayerId")
-        if listing and (spec.get("like") or not price):
+        # `priceFromListing`: pkmn.gg's price is another print's (the League N is $12.50 holo, $2 plain).
+        if listing and (spec.get("like") or spec.get("priceFromListing") or not price):
             price = tcg_price(listing) or price
         if price is not None:
             record["market"] = price
@@ -550,15 +660,21 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     out = []
     product_prices: dict[str, float] = {}
     for product in products:
-        pid = product["tcgplayerId"]
+        pid = product.get("tcgplayerId")
         price, info = product_market(product)
+        derived = ""
         if price is None:
-            print(f"    {product['id']}: no TCGplayer price, left out")
+            price, derived = derived_price(product)
+        if price is None:
+            print(f"    {product['id']}: no TCGplayer price and no packs or `price` to derive one from, left out")
             continue
         promos = [f"{set_id}-{n}" for n in product.get("promos") or []]
         missing = [p for p in promos if p not in cards]
         if missing:
             raise RuntimeError(f"{product['id']}: promo card(s) {missing} not built")
+        if derived == "packs" and promos:
+            # Derived from the packs alone, so the promos it carries are added on.
+            price = round(price + sum(cards[p].get("market") or 0 for p in promos), 2)
         if product.get("gift"):
             # A store gave this promo free with the product, so the offer costs
             # both: the product's market price plus the promo's.
@@ -581,7 +697,8 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             **({"pick": int(product["pick"])} if product.get("pick") else {}),
             **({"groupOf": int(product["groupOf"])} if product.get("groupOf") else {}),
             "price": price,
-            "tcgplayerId": pid,
+            **({"priceDerived": derived, **({"priceSource": product["priceSource"]} if product.get("priceSource") else {})} if derived else {}),
+            **({"tcgplayerId": pid} if pid else {}),
             **({"released": released[:10]} if released else {}),
         }
         if entry["kind"] == "event":
@@ -595,7 +712,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             entry["image"] = image
         out.append(entry)
         product_prices[product["id"]] = price
-        print(f"    {product['id']:<24} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}")
+        print(f"    {product['id']:<24} ${price:>8.2f}  {entry['packs']:>2} packs  {', '.join(product.get('promos') or [])}{'  (price derived: ' + derived + ')' if derived else ''}")
     price_history.record(set_id, "sealed", product_prices, today)
     return out
 

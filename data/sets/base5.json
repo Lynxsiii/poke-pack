@@ -1,0 +1,49 @@
+{
+  "id": "base5",
+  "name": "Team Rocket",
+  "series": "base",
+  "slug": "team-rocket",
+  "scrydexId": "base5",
+  "era": "wotc",
+  "artSlug": "team-rocket",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1373,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Team Rocket Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 209437,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of the Unlimited print. TCGplayer lists the Unlimited box (209437) at $36,000 (its low and mid are both $36,000, no market price), which is the price here, against $11,718.72 for 36 packs at the pack's market price."
+    },
+    {
+      "id": "deck-devastation",
+      "name": "Theme Deck \"Devastation\"",
+      "kind": "deck",
+      "tcgplayerId": 176942,
+      "packs": 0,
+      "promos": [
+        "14"
+      ],
+      "note": "A 60-card Team Rocket theme deck, featuring Dark Weezing (Team Rocket 14); silver holographic Meowth coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Team Rocket theme-deck page (they differ by a card in places)."
+    },
+    {
+      "id": "deck-trouble",
+      "name": "Theme Deck \"Trouble\"",
+      "kind": "deck",
+      "tcgplayerId": 176943,
+      "packs": 0,
+      "promos": [
+        "2"
+      ],
+      "note": "A 60-card Team Rocket theme deck, featuring Dark Arbok (Team Rocket 2); silver holographic Meowth coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Team Rocket theme-deck page (they differ by a card in places)."
+    }
+  ]
+}
