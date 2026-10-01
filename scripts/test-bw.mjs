@@ -91,7 +91,7 @@ for(const c of bwEnergy){
   assert.ok(c.id.endsWith('-bw')&&c.energy&&c.supertype==='Energy'&&c.variant==='Black & White 2011');
   for(const path of [c.image,c.imageSmall]) assert.ok(existsSync(new URL(path,root)),path);
 }
-assert.equal(BASIC_ENERGY.length,73,'24 SVE + 8 each of swsh, mee, sm17, sm19, bw + 9 xy');
+assert.equal(BASIC_ENERGY.length,81,'24 SVE + 8 each of swsh, mee, sm17, sm19, bw, dp + 9 xy');
 assert.equal(energySet('energy-fire-bw').released,'2011');
 assert.equal(energySet('energy-fire-xy').released,'2014');
 const fake=(rarity,extra={})=>({id:`bw8-${Math.random().toString(36).slice(2,8)}`,name:'x',number:'1',rarity,supertype:'Pokémon',subtypes:['Basic'],...extra});

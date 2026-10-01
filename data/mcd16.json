@@ -1,0 +1,467 @@
+[
+  {
+    "id": "mcd16-1",
+    "name": "Vulpix",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "kirisAki",
+    "flavorText": "While young, it has six gorgeous tails. When it grows, several new tails are sprouted.",
+    "image": "assets/cards/mcd16/1.webp",
+    "imageSmall": "assets/cards/mcd16/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Roar",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon."
+      },
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 139.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-1/large",
+    "printedNumber": "001/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275057
+  },
+  {
+    "id": "mcd16-2",
+    "name": "Torchic",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "A fire burns inside, so it feels very warm to hug. It launches fireballs of 1,800 degrees Fahrenheit.",
+    "image": "assets/cards/mcd16/2.webp",
+    "imageSmall": "assets/cards/mcd16/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, discard a Fire Energy attached to this Pokémon."
+      }
+    ],
+    "market": 6.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-2/large",
+    "printedNumber": "002/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275058
+  },
+  {
+    "id": "mcd16-3",
+    "name": "Fennekin",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "5ban Graphics",
+    "flavorText": "Eating a twig fills it with energy, and its roomy ears give vent to air hotter than 390 degrees Fahrenheit.",
+    "image": "assets/cards/mcd16/3.webp",
+    "imageSmall": "assets/cards/mcd16/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Will-O-Wisp",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 27.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-3/large",
+    "printedNumber": "003/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275059
+  },
+  {
+    "id": "mcd16-4",
+    "name": "Magikarp",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Akira Komayama",
+    "flavorText": "In the distant past, it was somewhat stronger than the horribly weak descendants that exist today.",
+    "image": "assets/cards/mcd16/4.webp",
+    "imageSmall": "assets/cards/mcd16/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Epic Splash",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Flip 2 coins. If either of them is tails, this attack does nothing."
+      }
+    ],
+    "market": 149.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-4/large",
+    "printedNumber": "004/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275060
+  },
+  {
+    "id": "mcd16-5",
+    "name": "Totodile",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It is small but rough and tough. It won't hesitate to take a bite out of anything that moves.",
+    "image": "assets/cards/mcd16/5.webp",
+    "imageSmall": "assets/cards/mcd16/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Strikes",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 145.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-5/large",
+    "printedNumber": "005/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275061
+  },
+  {
+    "id": "mcd16-6",
+    "name": "Pikachu",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Naoki Saito",
+    "flavorText": "It raises its tail to check its surroundings. The tail is sometimes struck by lightning in this pose.",
+    "image": "assets/cards/mcd16/6.webp",
+    "imageSmall": "assets/cards/mcd16/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Whip",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon can't attack during your opponent's next turn."
+      },
+      {
+        "name": "Electro Ball",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 32.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-6/large",
+    "printedNumber": "006/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275062
+  },
+  {
+    "id": "mcd16-7",
+    "name": "Scraggy",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "60",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "Its skin has a rubbery elasticity, so it can reduce damage by defensively pulling it skin up to its neck.",
+    "image": "assets/cards/mcd16/7.webp",
+    "imageSmall": "assets/cards/mcd16/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Corkscrew Punch",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 199.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-7/large",
+    "printedNumber": "007/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275063
+  },
+  {
+    "id": "mcd16-8",
+    "name": "Jigglypuff",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "60",
+    "artist": "Kanako Eo",
+    "flavorText": "It captivates foes with its huge, round eyes, then lulls them to sleep by singing a soothing melody.",
+    "image": "assets/cards/mcd16/8.webp",
+    "imageSmall": "assets/cards/mcd16/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Heartfelt Song",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "",
+        "text": "Discard a Darkness Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "market": 175.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-8/large",
+    "printedNumber": "008/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275064
+  },
+  {
+    "id": "mcd16-9",
+    "name": "Togepi",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "40",
+    "artist": "HiRON",
+    "flavorText": "A proverb claims that happiness will come to anyone who can make a sleeping Togepi stand up.",
+    "image": "assets/cards/mcd16/9.webp",
+    "imageSmall": "assets/cards/mcd16/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Sweet Kiss",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Your opponent draws a card."
+      }
+    ],
+    "market": 100.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-9/large",
+    "printedNumber": "009/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275065
+  },
+  {
+    "id": "mcd16-10",
+    "name": "Dedenne",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "70",
+    "artist": "5ban Graphics",
+    "flavorText": "Its whiskers serve as antennas. By sending and receiving electrical waves, it can communicate with others over vast distances.",
+    "image": "assets/cards/mcd16/10.webp",
+    "imageSmall": "assets/cards/mcd16/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Nuzzle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Spiral Drain",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Heal 20 damage from this Pokémon."
+      }
+    ],
+    "market": 101.49,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-10/large",
+    "printedNumber": "010/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275066
+  },
+  {
+    "id": "mcd16-11",
+    "name": "Meowth",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kanako Eo",
+    "flavorText": "Adores round objects. It wanders the streets on a nightly basis to look for dropped loose change.",
+    "image": "assets/cards/mcd16/11.webp",
+    "imageSmall": "assets/cards/mcd16/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Act Tough",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "If this Pokémon has any Darkness Energy attached to it, this attack does 20 more damage."
+      }
+    ],
+    "market": 130.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-11/large",
+    "printedNumber": "011/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275067
+  },
+  {
+    "id": "mcd16-12",
+    "name": "Eevee",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "Thanks to its unstable genetic makeup, this special Pokémon conceals many different possible evolutions.",
+    "image": "assets/cards/mcd16/12.webp",
+    "imageSmall": "assets/cards/mcd16/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 115.99,
+    "imageRemote": "https://images.scrydex.com/pokemon/mcd16-12/large",
+    "printedNumber": "012/012",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 275069
+  }
+]

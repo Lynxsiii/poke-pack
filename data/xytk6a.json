@@ -1,0 +1,827 @@
+[
+  {
+    "id": "xytk6a-1",
+    "name": "Spoink",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It bounces constantly, using its tail like a spring. The shock of bouncing keeps its heart beating.",
+    "image": "assets/cards/xytk6a/1.webp",
+    "imageSmall": "assets/cards/xytk6a/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Splash",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.78,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-1/large",
+    "printedNumber": "001/030",
+    "era": "xy",
+    "tcgplayerId": 97996
+  },
+  {
+    "id": "xytk6a-2",
+    "name": "Gourgeist",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "Singing in eerie voices, they wander town streets on the night of the new moon. Anyone who hears their song is cursed.",
+    "evolvesFrom": "Pumpkaboo",
+    "image": "assets/cards/xytk6a/2.webp",
+    "imageSmall": "assets/cards/xytk6a/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Eerie Voice",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put 2 damage counters each of your opponent's Pokémon."
+      },
+      {
+        "name": "Spirit Scream",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Put damage counters on both Active Pokémon until the remaining HP of each Pokémon is 10."
+      }
+    ],
+    "market": 1.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-2/large",
+    "printedNumber": "002/030",
+    "era": "xy",
+    "tcgplayerId": 97997
+  },
+  {
+    "id": "xytk6a-3",
+    "name": "Arbok",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Naoki Saito",
+    "flavorText": "The pattern on its belly appears to be a frightening face. Weak foes will flee just at the sight of the pattern.",
+    "evolvesFrom": "Ekans",
+    "image": "assets/cards/xytk6a/3.webp",
+    "imageSmall": "assets/cards/xytk6a/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Gastro Acid",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon has no Abilities until the end of your next turn."
+      },
+      {
+        "name": "Poison Jab",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "market": 1.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-3/large",
+    "printedNumber": "003/030",
+    "era": "xy",
+    "tcgplayerId": 97998
+  },
+  {
+    "id": "xytk6a-4",
+    "name": "Bunnelby",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "They use their large ears to dig burrows. They will dig the whole night through.",
+    "image": "assets/cards/xytk6a/4.webp",
+    "imageSmall": "assets/cards/xytk6a/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Dig",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      }
+    ],
+    "market": 0.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-4/large",
+    "printedNumber": "004/030",
+    "era": "xy",
+    "tcgplayerId": 97999
+  },
+  {
+    "id": "xytk6a-5",
+    "name": "Psychic Energy",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk6a/5.webp",
+    "imageSmall": "assets/cards/xytk6a/5-sm.webp",
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-5/large",
+    "printedNumber": "005/030",
+    "era": "xy",
+    "tcgplayerId": 98000
+  },
+  {
+    "id": "xytk6a-6",
+    "name": "Psychic Energy",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk6a/6.webp",
+    "imageSmall": "assets/cards/xytk6a/6-sm.webp",
+    "market": 0.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-6/large",
+    "printedNumber": "006/030",
+    "era": "xy",
+    "tcgplayerId": 98001
+  },
+  {
+    "id": "xytk6a-7",
+    "name": "Psychic Energy",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk6a/7.webp",
+    "imageSmall": "assets/cards/xytk6a/7-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-7/large",
+    "printedNumber": "007/030",
+    "era": "xy",
+    "tcgplayerId": 98002
+  },
+  {
+    "id": "xytk6a-8",
+    "name": "Psychic Energy",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk6a/8.webp",
+    "imageSmall": "assets/cards/xytk6a/8-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-8/large",
+    "printedNumber": "008/030",
+    "era": "xy",
+    "tcgplayerId": 98003
+  },
+  {
+    "id": "xytk6a-9",
+    "name": "Psychic Energy",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk6a/9.webp",
+    "imageSmall": "assets/cards/xytk6a/9-sm.webp",
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-9/large",
+    "printedNumber": "009/030",
+    "era": "xy",
+    "tcgplayerId": 98004
+  },
+  {
+    "id": "xytk6a-10",
+    "name": "Psychic Energy",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk6a/10.webp",
+    "imageSmall": "assets/cards/xytk6a/10-sm.webp",
+    "market": 0.28,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-10/large",
+    "printedNumber": "010/030",
+    "era": "xy",
+    "tcgplayerId": 98005
+  },
+  {
+    "id": "xytk6a-11",
+    "name": "Pumpkaboo",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "The pumpkin body is inhabited by a spirit trapped in this world. As the sun sets, it becomes restless and active.",
+    "image": "assets/cards/xytk6a/11.webp",
+    "imageSmall": "assets/cards/xytk6a/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "market": 0.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-11/large",
+    "printedNumber": "011/030",
+    "era": "xy",
+    "tcgplayerId": 98006
+  },
+  {
+    "id": "xytk6a-12",
+    "name": "Noibat",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "They live in pitch black caves. Their enormous ears can emit ultrasonic waves of 200,000 hertz.",
+    "image": "assets/cards/xytk6a/12.webp",
+    "imageSmall": "assets/cards/xytk6a/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Confused. "
+      },
+      {
+        "name": "Wing Attack ",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 5.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-12/large",
+    "printedNumber": "012/030",
+    "era": "xy",
+    "tcgplayerId": 98020
+  },
+  {
+    "id": "xytk6a-13",
+    "name": "Noivern",
+    "number": "13",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "They fly around on moonless nights and attack careless prey. Nothing can beat them in a battle in the dark.",
+    "evolvesFrom": "Noibat",
+    "image": "assets/cards/xytk6a/13.webp",
+    "imageSmall": "assets/cards/xytk6a/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Second Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 10 more damage for each damage counter on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Sonic Bazooka",
+        "cost": [
+          "Psychic",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage and your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "market": 1.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-13/large",
+    "printedNumber": "013/030",
+    "era": "xy",
+    "tcgplayerId": 98008
+  },
+  {
+    "id": "xytk6a-14",
+    "name": "Pokémon Catcher",
+    "number": "14",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk6a/14.webp",
+    "imageSmall": "assets/cards/xytk6a/14-sm.webp",
+    "market": 0.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-14/large",
+    "printedNumber": "014/030",
+    "era": "xy",
+    "tcgplayerId": 98009
+  },
+  {
+    "id": "xytk6a-15",
+    "name": "Potion",
+    "number": "15",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk6a/15.webp",
+    "imageSmall": "assets/cards/xytk6a/15-sm.webp",
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-15/large",
+    "printedNumber": "015/030",
+    "era": "xy",
+    "tcgplayerId": 98010
+  },
+  {
+    "id": "xytk6a-16",
+    "name": "Ekans",
+    "number": "16",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Shigenori Negishi",
+    "flavorText": "The older it gets, the longer it grows. At night, it wraps its long body around tree branches to rest.",
+    "image": "assets/cards/xytk6a/16.webp",
+    "imageSmall": "assets/cards/xytk6a/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-16/large",
+    "printedNumber": "016/030",
+    "era": "xy",
+    "tcgplayerId": 98011
+  },
+  {
+    "id": "xytk6a-17",
+    "name": "Psychic Energy",
+    "number": "17",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk6a/17.webp",
+    "imageSmall": "assets/cards/xytk6a/17-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-17/large",
+    "printedNumber": "017/030",
+    "era": "xy",
+    "tcgplayerId": 98012
+  },
+  {
+    "id": "xytk6a-18",
+    "name": "Pumpkaboo",
+    "number": "18",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "The pumpkin body is inhabited by a spirit trapped in this world. As the sun sets, it becomes restless and active.",
+    "image": "assets/cards/xytk6a/18.webp",
+    "imageSmall": "assets/cards/xytk6a/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Confuse Ray",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "market": 0.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-18/large",
+    "printedNumber": "018/030",
+    "era": "xy",
+    "tcgplayerId": 98013
+  },
+  {
+    "id": "xytk6a-19",
+    "name": "Darkness Energy",
+    "number": "19",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "image": "assets/cards/xytk6a/19.webp",
+    "imageSmall": "assets/cards/xytk6a/19-sm.webp",
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-19/large",
+    "printedNumber": "019/030",
+    "era": "xy",
+    "tcgplayerId": 98014
+  },
+  {
+    "id": "xytk6a-20",
+    "name": "Furfrou",
+    "number": "20",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "5ban Graphics",
+    "flavorText": "Trimming its fluffy fur not only makes it more elegant but also increases the swiftness of its movements.",
+    "image": "assets/cards/xytk6a/20.webp",
+    "imageSmall": "assets/cards/xytk6a/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Tight Jaw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 2.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-20/large",
+    "printedNumber": "020/030",
+    "era": "xy",
+    "tcgplayerId": 98018
+  },
+  {
+    "id": "xytk6a-21",
+    "name": "Poké Ball",
+    "number": "21",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk6a/21.webp",
+    "imageSmall": "assets/cards/xytk6a/21-sm.webp",
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-21/large",
+    "printedNumber": "021/030",
+    "era": "xy",
+    "tcgplayerId": 98019
+  },
+  {
+    "id": "xytk6a-22",
+    "name": "Darkness Energy",
+    "number": "22",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "image": "assets/cards/xytk6a/22.webp",
+    "imageSmall": "assets/cards/xytk6a/22-sm.webp",
+    "market": 0.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-22/large",
+    "printedNumber": "022/030",
+    "era": "xy",
+    "tcgplayerId": 98015
+  },
+  {
+    "id": "xytk6a-23",
+    "name": "Noibat",
+    "number": "23",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "5ban Graphics",
+    "flavorText": "They live in pitch black caves. Their enormous ears can emit ultrasonic waves of 200,000 hertz.",
+    "image": "assets/cards/xytk6a/23.webp",
+    "imageSmall": "assets/cards/xytk6a/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Confused. "
+      },
+      {
+        "name": "Wing Attack ",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 5.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-23/large",
+    "printedNumber": "023/030",
+    "era": "xy",
+    "tcgplayerId": 98020
+  },
+  {
+    "id": "xytk6a-24",
+    "name": "Professor's Letter",
+    "number": "24",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk6a/24.webp",
+    "imageSmall": "assets/cards/xytk6a/24-sm.webp",
+    "market": 0.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-24/large",
+    "printedNumber": "024/030",
+    "era": "xy",
+    "tcgplayerId": 98021
+  },
+  {
+    "id": "xytk6a-25",
+    "name": "Psychic Energy",
+    "number": "25",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk6a/25.webp",
+    "imageSmall": "assets/cards/xytk6a/25-sm.webp",
+    "market": 0.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-25/large",
+    "printedNumber": "025/030",
+    "era": "xy",
+    "tcgplayerId": 98022
+  },
+  {
+    "id": "xytk6a-26",
+    "name": "Darkness Energy",
+    "number": "26",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "image": "assets/cards/xytk6a/26.webp",
+    "imageSmall": "assets/cards/xytk6a/26-sm.webp",
+    "market": 1.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-26/large",
+    "printedNumber": "026/030",
+    "era": "xy",
+    "tcgplayerId": 98016
+  },
+  {
+    "id": "xytk6a-27",
+    "name": "Potion",
+    "number": "27",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk6a/27.webp",
+    "imageSmall": "assets/cards/xytk6a/27-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-27/large",
+    "printedNumber": "027/030",
+    "era": "xy",
+    "tcgplayerId": 98023
+  },
+  {
+    "id": "xytk6a-28",
+    "name": "Darkness Energy",
+    "number": "28",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "image": "assets/cards/xytk6a/28.webp",
+    "imageSmall": "assets/cards/xytk6a/28-sm.webp",
+    "market": 0.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-28/large",
+    "printedNumber": "028/030",
+    "era": "xy",
+    "tcgplayerId": 98017
+  },
+  {
+    "id": "xytk6a-29",
+    "name": "Switch",
+    "number": "29",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk6a/29.webp",
+    "imageSmall": "assets/cards/xytk6a/29-sm.webp",
+    "market": 0.46,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-29/large",
+    "printedNumber": "029/030",
+    "era": "xy",
+    "tcgplayerId": 97969
+  },
+  {
+    "id": "xytk6a-30",
+    "name": "Noivern",
+    "number": "30",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "They fly around on moonless nights and attack careless prey. Nothing can beat them in a battle in the dark.",
+    "evolvesFrom": "Noibat",
+    "image": "assets/cards/xytk6a/30.webp",
+    "imageSmall": "assets/cards/xytk6a/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Second Bite",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "This attack does 10 more damage for each damage counter on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Sonic Bazooka",
+        "cost": [
+          "Psychic",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage and your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "market": 1.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk6a-30/large",
+    "printedNumber": "030/030",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 98025,
+    "promo": true
+  }
+]

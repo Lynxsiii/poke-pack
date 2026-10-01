@@ -99,6 +99,21 @@ const ERA_LADDERS = {
     [750, 2, 400, "Unova regular"],
     [1200, 3, 1100, "Unova local"],
   ],
+  // Diamond & Pearl and Platinum (2007-2009): 1,361 cards in the 11 sets (pkmn.gg totals: dp1 130, dp2 124, dp3 132, dp4 106,
+  // dp5 100, dp6 146, dp7 106, pl1 133, pl2 120, pl3 153, pl4 111), about 1,500 with the DP Black Star Promos (56), POP
+  // Series 6-9 (68) and the two DP Trainer Kits (23). TODO(lead): re-check against the real totalCounts.
+  "Diamond & Pearl": [
+    [250, 1, 100, "Sinnoh bound"],
+    [750, 2, 400, "Sinnoh regular"],
+    [1300, 3, 1100, "Sinnoh local"],
+  ],
+  // HeartGold & SoulSilver (2010-2011): 520 cards in the 5 sets (hgss1 124, hgss2 96, hgss3 91, hgss4 103, col1 106),
+  // about 605 with the HGSS Black Star Promos (25) and the two Trainer Kits (60). TODO(lead): re-check against the real totalCounts.
+  "HeartGold & SoulSilver": [
+    [100, 1, 100, "Johto bound"],
+    [250, 2, 400, "Johto regular"],
+    [500, 3, 1100, "Johto local"],
+  ],
 };
 
 const ERA_ROWS = ERA_NAMES.flatMap((era) =>

@@ -88,7 +88,7 @@ OUTLINE_MAP = "sv1/sv1_en_122_std"
 
 # Fields this script sets from the config; a rebuild drops them from a card
 # whose config no longer has them.
-SPEC_FIELDS = ("printedNumber", "holo", "foilAs", "variant", "tcgplayerId")
+SPEC_FIELDS = ("printedNumber", "holo", "foilAs", "variant", "tcgplayerId", "promo")
 
 
 def get(url: str, cache_name: str | None = None, refresh: bool = False) -> bytes:
