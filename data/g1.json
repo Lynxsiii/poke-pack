@@ -3809,13 +3809,13 @@
         "text": "This attack does 10 more damage for each Energy attached to your opponent's Active Pokémon."
       }
     ],
+    "market": 137.55,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY110/large",
     "printedNumber": "XY 110",
     "tcgplayerId": 114006,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 137.55
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp111",
@@ -3852,13 +3852,13 @@
         "text": "Heal 10 damage from this Pokémon."
       }
     ],
+    "market": 45.55,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY111/large",
     "printedNumber": "XY 111",
     "tcgplayerId": 114526,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 45.55
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp112",
@@ -3896,13 +3896,13 @@
         "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
       }
     ],
+    "market": 107.12,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY112/large",
     "printedNumber": "XY 112",
     "tcgplayerId": 117266,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 107.12
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp113",
@@ -3940,13 +3940,13 @@
         "text": "Switch this Pokémon with 1 of your Benched Pokémon."
       }
     ],
+    "market": 48.68,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY113/large",
     "printedNumber": "XY 113",
     "tcgplayerId": 118861,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 48.68
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp114",
@@ -3986,13 +3986,13 @@
         "text": "Your opponent's Active Pokémon is now Asleep. Your opponent flips 2 coins instead of 1 between turns. If either of them is tails, that Pokémon is still Asleep."
       }
     ],
+    "market": 80.79,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY114/large",
     "printedNumber": "XY 114",
     "tcgplayerId": 121946,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 80.79
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp115",
@@ -4032,13 +4032,13 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon."
       }
     ],
+    "market": 70.89,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY115/large",
     "printedNumber": "XY 115",
     "tcgplayerId": 120115,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 70.89
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp116",
@@ -4078,13 +4078,57 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 55.37,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY116/large",
     "printedNumber": "XY 116",
     "tcgplayerId": 121364,
     "era": "xy",
     "promo": true,
+    "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "g1-xyp117",
+    "name": "Victini",
+    "number": "xyp117",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Atsuko Nishida",
+    "flavorText": "When it shares the infinite energy it creates, that being's entire body will be overflowing with power.",
+    "image": "assets/cards/g1/xyp117.webp",
+    "imageSmall": "assets/cards/g1/xyp117-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Assist",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, attach a basic Energy card from your discard pile to 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Victory Ball",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard a Fire Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY117/large",
+    "printedNumber": "XY 117",
+    "tcgplayerId": 123437,
+    "era": "xy",
+    "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 55.37
+    "market": 47.74
   },
   {
     "id": "g1-xyp118",
@@ -4122,13 +4166,103 @@
         "type": "Ability"
       }
     ],
+    "market": 30.03,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY118/large",
     "printedNumber": "XY 118",
     "tcgplayerId": 126034,
     "era": "xy",
     "promo": true,
+    "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "g1-xyp119",
+    "name": "Genesect",
+    "number": "xyp119",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "110",
+    "artist": "PLANETA",
+    "flavorText": "This Pokémon existed 300 million years ago. Team Plasma altered it and attached a cannon to its back.",
+    "image": "assets/cards/g1/xyp119.webp",
+    "imageSmall": "assets/cards/g1/xyp119-sm.webp",
+    "attacks": [
+      {
+        "name": "Linear Attack",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Destructor Beam",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Metal"
+        ],
+        "damage": "90",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY119/large",
+    "printedNumber": "XY 119",
+    "tcgplayerId": 125322,
+    "era": "xy",
+    "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 30.03
+    "market": 17.47
+  },
+  {
+    "id": "g1-xyp120",
+    "name": "Meloetta",
+    "number": "xyp120",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Megumi Mizutani",
+    "flavorText": "Its melodies are sung with a special vocalization method that can control the feelings of those who hear it.",
+    "image": "assets/cards/g1/xyp120.webp",
+    "imageSmall": "assets/cards/g1/xyp120-sm.webp",
+    "attacks": [
+      {
+        "name": "Soprano Wave",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Entrancing Melody",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY120/large",
+    "printedNumber": "XY 120",
+    "tcgplayerId": 125898,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 23.9
   },
   {
     "id": "g1-xyp121",
@@ -4138,7 +4272,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -4170,13 +4304,59 @@
         "text": "This Pokémon can't use Combustion Blast during your next turn."
       }
     ],
+    "market": 182.85,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY121/large",
     "printedNumber": "XY 121",
     "tcgplayerId": 117267,
     "era": "xy",
     "promo": true,
+    "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "g1-xyp122",
+    "name": "Blastoise-EX",
+    "number": "xyp122",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "kawayoo",
+    "image": "assets/cards/g1/xyp122.webp",
+    "imageSmall": "assets/cards/g1/xyp122-sm.webp",
+    "attacks": [
+      {
+        "name": "Rapid Spin",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon. The, your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon."
+      },
+      {
+        "name": "Splash Bomb",
+        "cost": [
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "120",
+        "text": "Flip a coin. If heads, this Pokémon does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY122/large",
+    "printedNumber": "XY 122",
+    "tcgplayerId": 118862,
+    "era": "xy",
+    "promo": true,
     "foilAs": "Rare Ultra",
-    "market": 182.85
+    "market": 303.98
   },
   {
     "id": "g1-xyp123",
@@ -4186,7 +4366,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Grass"
@@ -4218,13 +4398,13 @@
         "text": "Heal 30 damage from this Pokémon."
       }
     ],
+    "market": 262.73,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY123/large",
     "printedNumber": "XY 123",
     "tcgplayerId": 120701,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 262.73
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp124",
@@ -4234,7 +4414,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -4263,13 +4443,13 @@
         "text": ""
       }
     ],
+    "market": 507.78,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY124/large",
     "printedNumber": "XY 124",
     "tcgplayerId": 123436,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 507.78
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp125",
@@ -4279,7 +4459,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -4310,13 +4490,13 @@
         "text": ""
       }
     ],
+    "market": 145.71,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY125/large",
     "printedNumber": "XY 125",
     "tcgplayerId": 123435,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 145.71
+    "foilAs": "Rare Ultra"
   },
   {
     "id": "g1-xyp126",
@@ -4326,7 +4506,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -4352,12 +4532,56 @@
         "type": "Ability"
       }
     ],
+    "market": 266.68,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY126/large",
     "printedNumber": "XY 126",
     "tcgplayerId": 123434,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Ultra",
-    "market": 266.68
+    "foilAs": "Rare Ultra"
+  },
+  {
+    "id": "g1-xyp148",
+    "name": "Shaymin-EX",
+    "number": "xyp148",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Kanako Eo",
+    "image": "assets/cards/g1/xyp148.webp",
+    "imageSmall": "assets/cards/g1/xyp148-sm.webp",
+    "attacks": [
+      {
+        "name": "Floral Gain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Heal 20 damage and remove all Special Conditions from this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Aroma of Gratitude",
+        "text": "Once during your turn (before your attack), you may heal 20 damage from each of your Benched Basic Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY148/large",
+    "printedNumber": "XY 148",
+    "tcgplayerId": 121947,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 83.38
   }
 ]

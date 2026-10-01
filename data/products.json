@@ -10290,6 +10290,19 @@
       "image": "assets/products/xy9/blister-hydreigon.webp"
     },
     {
+      "id": "blister-umbreon",
+      "name": "3 Pack Blister (Umbreon)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy9-xyp096"
+      ],
+      "price": 262.78,
+      "priceDerived": "packs",
+      "tcgplayerId": 117273,
+      "image": "assets/products/xy9/blister-umbreon.webp"
+    },
+    {
       "id": "blister-pyroar",
       "name": "3 Pack Blister (Pyroar)",
       "kind": "blister",
@@ -10299,6 +10312,44 @@
       "price": 329.95,
       "tcgplayerId": 117272,
       "image": "assets/products/xy9/blister-pyroar.webp"
+    },
+    {
+      "id": "pin-blister-shiny-mega-gyarados",
+      "name": "Collector Pin 3 Pack Blister (Shiny Mega Gyarados)",
+      "kind": "blister",
+      "packs": 3,
+      "note": "One of two pins; the pin isn't simulated.",
+      "promos": [],
+      "price": 139.44,
+      "priceDerived": "packs",
+      "tcgplayerId": 117268,
+      "image": "assets/products/xy9/pin-blister-shiny-mega-gyarados.webp"
+    },
+    {
+      "id": "pin-blister-mega-scizor",
+      "name": "Collector Pin 3 Pack Blister (Mega Scizor)",
+      "kind": "blister",
+      "packs": 3,
+      "note": "One of two pins; the pin isn't simulated.",
+      "promos": [],
+      "price": 139.44,
+      "priceDerived": "packs",
+      "tcgplayerId": 117269,
+      "image": "assets/products/xy9/pin-blister-mega-scizor.webp"
+    },
+    {
+      "id": "shiny-mega-gyarados-collection",
+      "name": "Shiny Mega Gyarados Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "The real box held 2 BREAKpoint, 1 BREAKthrough and 1 Ancient Origins pack and a sculpted figure; opened here as BREAKpoint packs.",
+      "promos": [
+        "xy9-xyp109"
+      ],
+      "price": 252.21,
+      "priceDerived": "packs",
+      "tcgplayerId": 117279,
+      "image": "assets/products/xy9/shiny-mega-gyarados-collection.webp"
     },
     {
       "id": "triple-power-tin-mewtwo",
@@ -10341,6 +10392,20 @@
     }
   ],
   "g1": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 10,
+      "note": "The 20th Anniversary Pokemon Center exclusive: 10 Generations packs, not 8.",
+      "promos": [
+        "g1-xyp148"
+      ],
+      "price": 3197.58,
+      "priceDerived": "packs",
+      "tcgplayerId": 123741,
+      "image": "assets/products/g1/elite-trainer-box.webp"
+    },
     {
       "id": "mythical-mew",
       "name": "Mythical Pokémon Collection (Mew)",
@@ -10426,6 +10491,19 @@
       "image": "assets/products/g1/mythical-arceus.webp"
     },
     {
+      "id": "mythical-victini",
+      "name": "Mythical Pokémon Collection (Victini)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp117"
+      ],
+      "price": 670.58,
+      "priceDerived": "packs",
+      "tcgplayerId": 123433,
+      "image": "assets/products/g1/mythical-victini.webp"
+    },
+    {
       "id": "mythical-keldeo",
       "name": "Mythical Pokémon Collection (Keldeo)",
       "kind": "collection",
@@ -10438,6 +10516,32 @@
       "image": "assets/products/g1/mythical-keldeo.webp"
     },
     {
+      "id": "mythical-genesect",
+      "name": "Mythical Pokémon Collection (Genesect)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp119"
+      ],
+      "price": 640.31,
+      "priceDerived": "packs",
+      "tcgplayerId": 126569,
+      "image": "assets/products/g1/mythical-genesect.webp"
+    },
+    {
+      "id": "mythical-meloetta",
+      "name": "Mythical Pokémon Collection (Meloetta)",
+      "kind": "collection",
+      "packs": 2,
+      "promos": [
+        "g1-xyp120"
+      ],
+      "price": 646.74,
+      "priceDerived": "packs",
+      "tcgplayerId": 126568,
+      "image": "assets/products/g1/mythical-meloetta.webp"
+    },
+    {
       "id": "red-blue-charizard",
       "name": "Red & Blue Collection (Charizard-EX)",
       "kind": "collection",
@@ -10448,6 +10552,19 @@
       "price": 1033.9,
       "tcgplayerId": 115598,
       "image": "assets/products/g1/red-blue-charizard.webp"
+    },
+    {
+      "id": "red-blue-blastoise",
+      "name": "Red & Blue Collection (Blastoise-EX)",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "g1-xyp122"
+      ],
+      "price": 1549.66,
+      "priceDerived": "packs",
+      "tcgplayerId": 118795,
+      "image": "assets/products/g1/red-blue-blastoise.webp"
     },
     {
       "id": "red-blue-venusaur",
@@ -10540,6 +10657,19 @@
       "image": "assets/products/xy10/blister-gastly.webp"
     },
     {
+      "id": "blister-froakie",
+      "name": "3 Pack Blister (Froakie)",
+      "kind": "blister",
+      "packs": 3,
+      "promos": [
+        "xy10-xyp138"
+      ],
+      "price": 138.69,
+      "priceDerived": "packs",
+      "tcgplayerId": 118339,
+      "image": "assets/products/xy10/blister-froakie.webp"
+    },
+    {
       "id": "blister-vivillon",
       "name": "3 Pack Blister (Vivillon)",
       "kind": "blister",
@@ -10550,6 +10680,46 @@
       "price": 199.99,
       "tcgplayerId": 118340,
       "image": "assets/products/xy10/blister-vivillon.webp"
+    },
+    {
+      "id": "pin-blister-mega-alakazam",
+      "name": "Three Pack Pin Blister (Mega Alakazam)",
+      "kind": "blister",
+      "packs": 3,
+      "note": "One of two pins; the pin isn't simulated.",
+      "promos": [],
+      "price": 131.61,
+      "priceDerived": "packs",
+      "tcgplayerId": 118332,
+      "image": "assets/products/xy10/pin-blister-mega-alakazam.webp"
+    },
+    {
+      "id": "pin-blister-zygarde",
+      "name": "Three Pack Pin Blister (Zygarde)",
+      "kind": "blister",
+      "packs": 3,
+      "note": "One of two pins; the pin isn't simulated.",
+      "promos": [],
+      "price": 131.61,
+      "priceDerived": "packs",
+      "tcgplayerId": 118333,
+      "image": "assets/products/xy10/pin-blister-zygarde.webp"
+    },
+    {
+      "id": "mega-mawile-premium-collection",
+      "name": "Mega Mawile-EX Premium Collection",
+      "kind": "premium",
+      "packs": 6,
+      "note": "The real box held 2 Fates Collide, 2 BREAKpoint and 2 BREAKthrough packs; opened here as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp103",
+        "xy10-xyp104",
+        "xy10-xyp105"
+      ],
+      "price": 310.94,
+      "priceDerived": "packs",
+      "tcgplayerId": 118335,
+      "image": "assets/products/xy10/mega-mawile-premium-collection.webp"
     },
     {
       "id": "ash-greninja-ex-box",
@@ -10576,6 +10746,23 @@
       "price": 365.0,
       "tcgplayerId": 121391,
       "image": "assets/products/xy10/zygarde-collection.webp"
+    },
+    {
+      "id": "break-evolution-box",
+      "name": "BREAK Evolution Box (Ho-Oh & Lugia)",
+      "kind": "collection",
+      "packs": 5,
+      "note": "The real box held 2 Fates Collide and 1 each of BREAKpoint, BREAKthrough and Ancient Origins; opened here as Fates Collide packs.",
+      "promos": [
+        "xy10-xyp153",
+        "xy10-xyp154",
+        "xy10-xyp155",
+        "xy10-xyp156"
+      ],
+      "price": 351.43,
+      "priceDerived": "packs",
+      "tcgplayerId": 121392,
+      "image": "assets/products/xy10/break-evolution-box.webp"
     },
     {
       "id": "shiny-kalos-tin-xerneas",

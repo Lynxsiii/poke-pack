@@ -4330,13 +4330,60 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage."
       }
     ],
+    "market": 207.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY95/large",
     "printedNumber": "XY 095",
     "tcgplayerId": 114004,
     "era": "xy",
     "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "xy9-xyp096",
+    "name": "Umbreon",
+    "number": "xyp096",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "kawayoo",
+    "flavorText": "When exposed to the moon's aura, the rings on its body glow faintly and it's filled with a mysterious power.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/xy9/xyp096.webp",
+    "imageSmall": "assets/cards/xy9/xyp096-sm.webp",
+    "attacks": [
+      {
+        "name": "Mach Claw",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Resistance."
+      },
+      {
+        "name": "Lunatic Sense",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Turn 1 of your face-down Prize cards face up. If that Prize card is a Pokémon, this attack does 60 more damage. (That Prize card remains up for the rest of the game.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY96/large",
+    "printedNumber": "XY 096",
+    "tcgplayerId": 114005,
+    "era": "xy",
+    "promo": true,
     "foilAs": "Rare Holo",
-    "market": 207.17
+    "market": 123.34
   },
   {
     "id": "xy9-xyp106",
@@ -4346,7 +4393,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -4376,13 +4423,13 @@
         "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 24.85,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY106/large",
     "printedNumber": "XY 106",
     "tcgplayerId": 117701,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 24.85
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy9-xyp107",
@@ -4392,7 +4439,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Psychic"
@@ -4421,13 +4468,13 @@
         "text": "Switch all damage counters on this Pokémon with those on your opponent's Active Pokémon."
       }
     ],
+    "market": 14.35,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY107/large",
     "printedNumber": "XY 107",
     "tcgplayerId": 117702,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 14.35
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy9-xyp108",
@@ -4437,7 +4484,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fighting"
@@ -4467,12 +4514,61 @@
         "text": "If this Pokémon is affected by a Special Condition, this attack does 80 more damage. Then, remove all Special Conditions from this Pokémon."
       }
     ],
+    "market": 4.05,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY108/large",
     "printedNumber": "XY 108",
     "tcgplayerId": 117703,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 4.05
+    "foilAs": "Rare Holo EX"
+  },
+  {
+    "id": "xy9-xyp109",
+    "name": "Gyarados",
+    "number": "xyp109",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Hajime Kusajima",
+    "flavorText": "Rarely seen in the wild. Huge and vicious, it is capable of destroying entire cities in a rage.",
+    "evolvesFrom": "Magikarp",
+    "image": "assets/cards/xy9/xyp109.webp",
+    "imageSmall": "assets/cards/xy9/xyp109-sm.webp",
+    "attacks": [
+      {
+        "name": "Berserker Splash",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This attack does 10 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Aqua Tail",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "Flip a coin for each Water Energy attached to this Pokémon. This attack does 30 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY109/large",
+    "printedNumber": "XY 109",
+    "tcgplayerId": 177110,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 66.29
   }
 ]

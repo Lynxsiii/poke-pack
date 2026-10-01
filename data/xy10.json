@@ -4190,6 +4190,108 @@
     "etchMap": "assets/foil/maps/xy10/125-etch.webp"
   },
   {
+    "id": "xy10-xyp103",
+    "name": "Mawile-EX",
+    "number": "xyp103",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "150",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/xy10/xyp103.webp",
+    "imageSmall": "assets/cards/xy10/xyp103-sm.webp",
+    "attacks": [
+      {
+        "name": "Smack",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Wonder Bomb",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Fairy"
+        ],
+        "damage": "100",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY103/large",
+    "printedNumber": "XY 103",
+    "tcgplayerId": 118859,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 11.73
+  },
+  {
+    "id": "xy10-xyp104",
+    "name": "M Mawile-EX",
+    "number": "xyp104",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "MEGA",
+      "EX"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "190",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Mawile-EX",
+    "image": "assets/cards/xy10/xyp104.webp",
+    "imageSmall": "assets/cards/xy10/xyp104-sm.webp",
+    "attacks": [
+      {
+        "name": "Twin Grapple",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Fairy"
+        ],
+        "damage": "130",
+        "text": "Flip 2 coins. For each heads, discard an Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY104/large",
+    "printedNumber": "XY 104",
+    "tcgplayerId": 118860,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 31.05
+  },
+  {
+    "id": "xy10-xyp105",
+    "name": "Mawile Spirit Link",
+    "number": "xyp105",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy10/xyp105.webp",
+    "imageSmall": "assets/cards/xy10/xyp105-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY105/large",
+    "printedNumber": "XY 105",
+    "tcgplayerId": 118858,
+    "era": "xy",
+    "promo": true,
+    "market": 4.94
+  },
+  {
     "id": "xy10-xyp127",
     "name": "Moltres",
     "number": "xyp127",
@@ -4227,13 +4329,13 @@
         "text": "You may do 40 more damage. If you do, this Pokémon does 20 damage to itself."
       }
     ],
+    "market": 54.73,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY127/large",
     "printedNumber": "XY 127",
     "tcgplayerId": 118863,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 54.73
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy10-xyp128",
@@ -4273,13 +4375,13 @@
         "text": "This Pokémon can't attack during your next turn."
       }
     ],
+    "market": 22.24,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY128/large",
     "printedNumber": "XY 128",
     "tcgplayerId": 118865,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 22.24
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy10-xyp129",
@@ -4319,13 +4421,13 @@
         "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 90.48,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY129/large",
     "printedNumber": "XY 129",
     "tcgplayerId": 118867,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 90.48
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy10-xyp130",
@@ -4366,13 +4468,13 @@
         "type": "Ability"
       }
     ],
+    "market": 47.73,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY130/large",
     "printedNumber": "XY 130",
     "tcgplayerId": 118869,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 47.73
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy10-xyp131",
@@ -4401,13 +4503,13 @@
         "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
       }
     ],
+    "market": 1.3,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY131/large",
     "printedNumber": "XY 131",
     "tcgplayerId": 118872,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 1.3
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy10-xyp132",
@@ -4436,13 +4538,13 @@
         "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Asleep and Poisoned."
       }
     ],
+    "market": 20.5,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY132/large",
     "printedNumber": "XY 132",
     "tcgplayerId": 118873,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo",
-    "market": 20.5
+    "foilAs": "Rare Holo"
   },
   {
     "id": "xy10-xyp133",
@@ -4452,7 +4554,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -4482,13 +4584,13 @@
         "text": "This Pokémon can't use Ninja Blade during your next turn."
       }
     ],
+    "market": 116.22,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY133/large",
     "printedNumber": "XY 133",
     "tcgplayerId": 118871,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 116.22
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy10-xyp137",
@@ -4526,13 +4628,48 @@
         "text": "This attack does 30 more damage for each Fire Energy attached to your opponent's Active Pokémon."
       }
     ],
+    "market": 3.19,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY137/large",
     "printedNumber": "XY 137",
     "tcgplayerId": 118874,
     "era": "xy",
     "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "xy10-xyp138",
+    "name": "Froakie",
+    "number": "xyp138",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "It protects its skin by covering its body in delicate bubbles. Beneath its happy-go-lucky air, it keeps a watchful eye on its surroundings.",
+    "image": "assets/cards/xy10/xyp138.webp",
+    "imageSmall": "assets/cards/xy10/xyp138-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY138/large",
+    "printedNumber": "XY 138",
+    "tcgplayerId": 118875,
+    "era": "xy",
+    "promo": true,
     "foilAs": "Rare Holo",
-    "market": 3.19
+    "market": 7.08
   },
   {
     "id": "xy10-xyp149",
@@ -4542,7 +4679,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fairy"
@@ -4574,13 +4711,13 @@
         "text": "This Pokémon can't use X Blast during your next turn."
       }
     ],
+    "market": 15.57,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY149/large",
     "printedNumber": "XY 149",
     "tcgplayerId": 121952,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 15.57
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy10-xyp150",
@@ -4590,7 +4727,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Darkness"
@@ -4620,13 +4757,13 @@
         "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
       }
     ],
+    "market": 13.38,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY150/large",
     "printedNumber": "XY 150",
     "tcgplayerId": 121953,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 13.38
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy10-xyp151",
@@ -4636,7 +4773,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fighting"
@@ -4674,13 +4811,13 @@
         "text": ""
       }
     ],
+    "market": 6.03,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY151/large",
     "printedNumber": "XY 151",
     "tcgplayerId": 121954,
     "era": "xy",
     "promo": true,
-    "foilAs": "Rare Holo EX",
-    "market": 6.03
+    "foilAs": "Rare Holo EX"
   },
   {
     "id": "xy10-xyp152",
@@ -4720,12 +4857,180 @@
         "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 5.75,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY152/large",
     "printedNumber": "XY 152",
     "tcgplayerId": 121955,
     "era": "xy",
     "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "xy10-xyp153",
+    "name": "Ho-Oh",
+    "number": "xyp153",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "You Iribi",
+    "flavorText": "It will reveal itself before a pure-hearted Trainer by shining its bright, rainbow-colored wings.",
+    "image": "assets/cards/xy10/xyp153.webp",
+    "imageSmall": "assets/cards/xy10/xyp153-sm.webp",
+    "attacks": [
+      {
+        "name": "Stoke",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, search your deck for up to 2 Fire Energy cards and attach them to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Fire Wing",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY153/large",
+    "printedNumber": "XY 153",
+    "tcgplayerId": 121948,
+    "era": "xy",
+    "promo": true,
     "foilAs": "Rare Holo",
-    "market": 5.75
+    "market": 12.58
+  },
+  {
+    "id": "xy10-xyp154",
+    "name": "Ho-Oh BREAK",
+    "number": "xyp154",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "BREAK"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "150",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Ho-Oh",
+    "image": "assets/cards/xy10/xyp154.webp",
+    "imageSmall": "assets/cards/xy10/xyp154-sm.webp",
+    "attacks": [
+      {
+        "name": "Shining Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This Pokémon can't use Shining Flame during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY154/large",
+    "printedNumber": "XY 154",
+    "tcgplayerId": 121949,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare BREAK",
+    "market": 42.81
+  },
+  {
+    "id": "xy10-xyp155",
+    "name": "Wobbuffet BREAK",
+    "number": "xyp155",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "BREAK"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Wobbuffet",
+    "image": "assets/cards/xy10/xyp155.webp",
+    "imageSmall": "assets/cards/xy10/xyp155-sm.webp",
+    "attacks": [
+      {
+        "name": "Right Back at You",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard all Energy attached to this Pokémon. During your opponent's next turn, if this Pokémon is damaged by an attack (even if this Pokémon is Knocked Out), put damage counters on the Attacking Pokémon equal to the damage done to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY155/large",
+    "printedNumber": "XY 155",
+    "tcgplayerId": 121963,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare BREAK",
+    "market": 26.84
+  },
+  {
+    "id": "xy10-xyp156",
+    "name": "Lugia",
+    "number": "xyp156",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Hajime Kusajima",
+    "flavorText": "It is said to be the guardian of the seas. It is rumored to have been seen on the night of a storm.",
+    "image": "assets/cards/xy10/xyp156.webp",
+    "imageSmall": "assets/cards/xy10/xyp156-sm.webp",
+    "attacks": [
+      {
+        "name": "Gust",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Aeroblast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip 2 coins. This attack does 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY156/large",
+    "printedNumber": "XY 156",
+    "tcgplayerId": 121950,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 49.85
   }
 ]
