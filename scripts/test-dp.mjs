@@ -36,8 +36,8 @@ assert.equal(pat({id:'dp2-124',rarity:'Rare Secret',supertype:'Trainer',subtypes
 assert.equal(pat({id:'dp7-103',rarity:'Rare Secret'}),'foil-holo dp-holo dp-secret','the Stormfront Charizard is a cosmos holo, not a shiny');
 assert.equal(pat({id:'dp7-SH1',rarity:'Rare Shining'}),'foil-holo dp-shining');
 assert.equal(pat({id:'pl2-RT1',rarity:'Rare Rotom'}),'foil-holo dp-rotom');
-assert.equal(pat({id:'pl4-AR1',rarity:'Rare Arceus'}),'foil-holo dp-ar');
-assert.equal(pat({id:'col1-SL1',rarity:'Rare Shiny Legendary'}),'foil-holo dp-shiny-legend');
+assert.equal(pat({id:'pl4-AR1',rarity:'Rare Arceus'}),'foil-holo dp-holo dp-ar');
+assert.equal(pat({id:'col1-SL1',rarity:'Rare Shiny Legendary'}),'foil-holo dp-holo dp-shiny-legend');
 assert.equal(pat({id:'hgss1-ONE',name:'Alph Lithograph',rarity:'Rare Secret',supertype:'Trainer',subtypes:['Item']}),'foil-holo dp-alph','Alph Lithograph by name');
 assert.equal(pat({id:'hgss3-THREE',name:'Alph Lithograph',rarity:'Rare Secret'}),'foil-holo dp-alph');
 assert.equal(pat({id:'hgss2-TWO',rarity:'Rare Secret',alph:true}),'foil-holo dp-alph','Alph Lithograph by the data flag');
