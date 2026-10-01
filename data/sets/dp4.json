@@ -1,0 +1,26 @@
+{
+  "id": "dp4",
+  "name": "Great Encounters",
+  "series": "diamond-pearl",
+  "slug": "great-encounters",
+  "scrydexId": "dp4",
+  "era": "dp",
+  "artSlug": "great-encounters",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1405,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "dp5",
+  "name": "Majestic Dawn",
+  "series": "diamond-pearl",
+  "slug": "majestic-dawn",
+  "scrydexId": "dp5",
+  "era": "dp",
+  "artSlug": "majestic-dawn",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1390,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  }
+}

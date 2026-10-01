@@ -1,0 +1,26 @@
+{
+  "id": "dp6",
+  "name": "Legends Awakened",
+  "series": "diamond-pearl",
+  "slug": "legends-awakened",
+  "scrydexId": "dp6",
+  "era": "dp",
+  "artSlug": "legends-awakened",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1417,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  }
+}
