@@ -1502,7 +1502,7 @@ export const XYP_PROMOS = {
   promoPrefix: "XY ",
   viewNote: "the XY sets' own boxes (Elite Trainer Boxes, tins, premium and special collections, blisters and decks)",
   viewOf: ["xy0", "xy1", "xy2", "xy3", "xy4", "xy5", "dc1", "xy6", "xy7", "xy8", "xy9", "g1", "xy10", "xy11", "xy12", XYP_SET_ID],
-  totalCount: 51, // every XY black star promo in the XY files: homeCards(XYP_PROMOS, dataSetsOf(XYP_PROMOS) lists).length; recount when a set lands (scripts/test-xyp.mjs checks it)
+  totalCount: 209, // every XY black star promo in the XY files: homeCards(XYP_PROMOS, dataSetsOf(XYP_PROMOS) lists).length; recount when a set lands (scripts/test-xyp.mjs checks it)
   packSize: 0,
   cost: 0,
   dataFile: "data/xyp.json",
@@ -2979,7 +2979,7 @@ function xyTrainerKit(id, pokemon, released, heroIds) {
   return {
     id,
     tcgId: id,
-    name: `XY Trainer Kit ${pokemon}`,
+    name: `XY Kit ${pokemon}`,
     edition: "XY",
     era: "XY",
     released,
