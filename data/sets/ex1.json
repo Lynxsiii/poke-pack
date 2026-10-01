@@ -1,0 +1,83 @@
+{
+  "id": "ex1",
+  "name": "EX Ruby & Sapphire",
+  "series": "ex",
+  "slug": "ruby-sapphire",
+  "scrydexId": "ex1",
+  "era": "ex",
+  "artSlug": "ex-ruby-and-sapphire",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1393,
+  "promoSeries": {
+    "np": {
+      "series": "np",
+      "slug": "nintendo-black-star-promos",
+      "scrydex": "np",
+      "tcgplayerGroup": 1423,
+      "printed": "NP",
+      "era": "ex"
+    }
+  },
+  "promoCards": {
+    "np012": {
+      "foilAs": "Rare Holo"
+    },
+    "np013": {
+      "foilAs": "Rare Holo"
+    },
+    "np020": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Ruby & Sapphire Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98559,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text)."
+    },
+    {
+      "id": "single-pack-blister",
+      "name": "Ruby & Sapphire Single Pack Blister",
+      "kind": "blister",
+      "tcgplayerId": 488315,
+      "packs": 1,
+      "promos": [],
+      "note": "One EX Ruby & Sapphire pack (TCGplayer 488315). The research could not identify a promo in it, so none is simulated."
+    },
+    {
+      "id": "ex-series-collectors-tin",
+      "name": "EX Series Collector's Tin",
+      "kind": "tin",
+      "tcgplayerId": 206390,
+      "from": {
+        "ex1": 3,
+        "ex2": 2
+      },
+      "promos": [
+        "np012",
+        "np013"
+      ],
+      "note": "Three EX Ruby & Sapphire and two EX Sandstorm packs, the holo Pikachu (NP12) and Meowth (NP13) and a double-sided poster (TCGplayer's product text for 206390; pkmn.gg's NP12 and NP13 name the same tin). The poster is not simulated."
+    },
+    {
+      "id": "ex-series-value-pack",
+      "name": "EX Series Value Pack",
+      "kind": "collection",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "np020"
+      ],
+      "note": "Three packs from EX Ruby & Sapphire, EX Sandstorm and EX Dragon and the holo Ludicolo (NP20), March 2004 (pkmn.gg NP20; TCGplayer lists the promo as 86896). The split between the three sets is not documented (Bulbapedia excerpt only), so it opens here as three Ruby & Sapphire packs. TCGplayer has no listing: priced from its packs."
+    }
+  ]
+}
