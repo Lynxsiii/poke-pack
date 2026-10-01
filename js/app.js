@@ -2,6 +2,8 @@ import { createCardMotion } from "./card-motion.js";
 import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=21";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
+import * as profileView from "./profile-view.js"; // the public profile page: hero, sections, room
+import * as profileEditor from "./profile-editor.js"; // the Layout tab on the account page
 import {
   ALL_SETS,
   PLAYABLE_SETS,
@@ -30,7 +32,10 @@ import { homeSetId, promoHomeOf } from "./card-home.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge, currentFriends } from "./social.js";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js";
+import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
+import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
+import { roomLine } from "./gate-notice.js";
 import {
   AVATARS,
   avatarSrc,
@@ -63,7 +68,11 @@ import {
 } from "./achievements.js";
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
-import * as questArea from "./quest-area.js?v=3";
+import { bannerBlockHtml } from "./mastery-banner.js";
+import { masteryShelfProfileHtml } from "./mastery-shelf.js";
+import * as questArea from "./quest-area.js?v=4";
+import * as levelUi from "./level-ui.js";
+import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=3";
 import {
   loadPriceHistory,
@@ -98,12 +107,12 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
-import { normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=6";
+import { gearItem, normalizeGear } from "./gear.js";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=6";
 import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js?v=2";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=3";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=4";
 import { coinTag } from "./battle-kit.js";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
@@ -111,6 +120,13 @@ import { initCart } from "./cart-page.js?v=3";
 import { initVault } from "./vault-page.js?v=3";
 import { initBatchOpen } from "./batch-open.js?v=2";
 import { cartEligible } from "./orders-rules.js?v=1";
+// binder looks: the /binder cover, the customiser and the owner's look on a profile
+import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
+import { watchBinderFx } from "./binder-editions.js";
+import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
+import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
+import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
+import { initBinderEditor } from "./binder-editor.js?v=2";
 
 const state = loadState();
 let cloudUser = null;
@@ -147,6 +163,7 @@ function activeTrainer() {
 
 function applyCloudSave(save) {
   if (!save) return;
+  if (cloudUser && save.xp?.level) cloudUser.level = save.xp.level; // the level gates and perks read it (js/gate-notice.js)
   state.coins = save.coins;
   state.collection = save.collection || {};
   state.reverses = save.reverses || {};
@@ -160,6 +177,7 @@ function applyCloudSave(save) {
   state.claimed = Array.isArray(save.claimed) ? save.claimed : [];
   state.quests = save.quests || null;
   state.stats = save.stats || null;
+  state.xp = save.xp || null;
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   state.gear = normalizeGear(save.gear);
@@ -169,6 +187,7 @@ function applyCloudSave(save) {
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
   saveState(state);
+  xpFeed.adopt(save, cloudUser?.id ?? null); // what the save earned, and the header readout
 }
 
 function wipeProgressMemory() {
@@ -186,6 +205,8 @@ function wipeProgressMemory() {
   state.claimed = [];
   state.quests = null;
   state.stats = null;
+  state.xp = null;
+  xpFeed.reset();
   state.worthLog = [];
   state.binder = [];
   state.gear = normalizeGear(null);
@@ -374,6 +395,9 @@ const els = {
   binderBody: document.getElementById("binder-body"),
   binderCount: document.getElementById("binder-count"),
   binderAddPage: document.getElementById("binder-add-page"),
+  binderCustomise: document.getElementById("binder-customise"),
+  binderEditorMount: document.getElementById("binder-editor"),
+  binderLayout: document.getElementById("binder-layout"),
   viewCatalog: document.getElementById("view-catalog"),
   viewAccount: document.getElementById("view-account"),
   viewProfile: document.getElementById("view-profile"),
@@ -525,6 +549,20 @@ function toast(msg) {
   clearTimeout(toast._t);
   toast._t = setTimeout(() => els.toast.classList.remove("show"), 2400);
 }
+
+/** What each adopted save earned (js/level-feed.js): the XP toast, the level-up card, the header readout. */
+const xpFeed = createXpFeed({
+  toast: els.toast,
+  readout: document.getElementById("lvl-read"),
+  isBusy: () => dialogStack.length > 0 || !els.overlay.classList.contains("hidden"),
+  openLevels: () => openLevelsTab(),
+  uiDeps: {
+    esc: (value) => esc(value),
+    num: (value) => num(value),
+    gearName: (kind, id) => gearItem(getGearCatalog(), kind, id)?.name || "",
+  },
+});
+document.getElementById("lvl-read")?.addEventListener("click", () => openLevelsTab());
 
 function esc(value) {
   return String(value ?? "")
@@ -977,6 +1015,7 @@ function renderHeader() {
     els.statPulls.textContent = state.pulls;
   }
   if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
+  xpFeed.paint(trainer ? state : null);
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
   cartStore.setUser(trainer?.id || null);
@@ -1939,12 +1978,138 @@ function binderPocket(index) {
   </div>`;
 }
 
+/* ---- Binder look: the cover, the live preview and the customiser ------------
+   The trainer's binderLook (js/binder-looks.js) dresses the spread in a
+   .binder-object (js/binder-object.js). "cards" colour reads the cards on show;
+   art refinement (js/card-art-accent.js) only ever repaints, never blocks. */
+let binderDraft = null; // the look being tried in the customiser, or null
+let binderEditor = null; // wired up with the click handlers below
+
+const savedBinderLook = () => normalizeBinderLook(activeTrainer()?.binderLook);
+const binderLookNow = () => binderDraft || savedBinderLook();
+
+/** Cards on show, in pocket order (the whole binder, or the slots start..end). */
+function binderCardsOf(start = 0, end = Infinity) {
+  return (state.binder || [])
+    .slice(start, end)
+    .map((slot) => (slot ? findCard(slot.id) : null))
+    .filter(Boolean);
+}
+
+const binderResolved = (look, list) => resolveBinderLook(look, { cards: list, accents: cachedCardAccents(list) });
+
+/**
+ * Paper and pocket tint of one page when the cover follows the cards. The hue is the cover's (one
+ * object, one colour family) and so is the lightness; the page's own cards only nudge saturation.
+ * Returns only the variables that the look actually tints, or null.
+ */
+function pageLookVars(look, list, coverList) {
+  const tintPage = look.page === "tint";
+  const tintPockets = look.pockets === "tint";
+  if (look.color !== COLOR_FROM_CARDS || (!tintPage && !tintPockets) || !list.length) return null;
+  const cover = binderResolved(look, coverList || list).vars["--b-main"];
+  const own = binderResolved(look, list).vars["--b-main"];
+  const [h, sc, l] = hexToHsl(cover);
+  const [, sp] = hexToHsl(own);
+  const main = hslToHex(h, Math.max(0, Math.min(1, sc + (sp - sc) * 0.35)), l);
+  const vars = {};
+  if (tintPage) vars["--b-page"] = mixHex(main, "#0b0b10", 0.72);
+  if (tintPockets) vars["--b-pocket"] = mixHex(main, "#ffffff", 0.2);
+  return vars;
+}
+const pageStyleAttr = (vars) => (vars ? ` style="${Object.entries(vars).map(([k, v]) => `${k}:${v}`).join(";")}"` : "");
+function setPageVars(el, vars) {
+  for (const key of ["--b-page", "--b-pocket"]) {
+    if (vars?.[key]) el.style.setProperty(key, vars[key]);
+    else el.style.removeProperty(key);
+  }
+}
+
+let artBusy = false;
+let artNext = null; // the latest request that arrived while one was sampling
+/** Sharpen "cards" colour from the art: sample in the background, then repaint through `repaint`. */
+function refineArt(list, repaint) {
+  if (!list.length) return;
+  if (artBusy) {
+    artNext = { list, repaint };
+    return;
+  }
+  artBusy = true;
+  sampleCardAccents(list, repaint)
+    .catch(() => {})
+    .finally(() => {
+      artBusy = false;
+      const next = artNext;
+      artNext = null;
+      if (next) refineArt(next.list, next.repaint);
+    });
+}
+
+/** Repaint the binder on screen for the look now showing (a draft while customising) without redrawing the cards. */
+function paintBinderLook() {
+  const object = els.binderBody?.querySelector(".binder-object");
+  if (!object) return;
+  const look = binderLookNow();
+  const all = binderCardsOf();
+  applyBinderLook(object, binderResolved(look, all));
+  object.querySelectorAll(".binder-page[data-page-index]").forEach((el) => {
+    const start = Number(el.dataset.pageIndex) * BINDER_PAGE;
+    setPageVars(el, pageLookVars(look, binderCardsOf(start, start + BINDER_PAGE), all));
+  });
+  binderEditor?.refresh();
+  if (look.color === COLOR_FROM_CARDS || binderEditor?.isOpen()) refineArt(all, paintBinderLook);
+}
+
+function makeRequestId() {
+  if (globalThis.crypto?.randomUUID) return crypto.randomUUID();
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  return [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function saveBinderLook(look) {
+  const data = await api("/api/me", { method: "PATCH", body: JSON.stringify({ binderLook: look }) });
+  if (data?.user) cloudUser = data.user;
+  if (cloudUser && !("binderLook" in cloudUser)) cloudUser.binderLook = look;
+  renderHeader();
+}
+
+const editionAttempts = new Map(); // edition id -> requestId kept while a retry is possible
+async function buyBinderEdition(editionId) {
+  const requestId = editionAttempts.get(editionId) || makeRequestId();
+  editionAttempts.set(editionId, requestId);
+  try {
+    const res = await api("/api/binder/editions/buy", { method: "POST", body: JSON.stringify({ editionId, requestId }) });
+    editionAttempts.delete(editionId);
+    if (typeof res?.coins === "number") {
+      state.coins = res.coins;
+      saveState(state);
+    }
+    if (cloudUser && Array.isArray(res?.binderEditions)) cloudUser.binderEditions = res.binderEditions;
+    renderHeader();
+  } catch (err) {
+    if (err instanceof ApiError) editionAttempts.delete(editionId); // answered: a retry is a new purchase
+    if (err instanceof ApiError && err.status === 409) {
+      // "Already yours": a purchase whose answer got lost. Take the account's word for what it owns.
+      try {
+        const me = await api("/api/me");
+        if (me?.user) cloudUser = me.user;
+        renderHeader();
+        if (cloudUser?.binderEditions?.includes(editionId)) return;
+      } catch {
+        /* fall through to the original refusal */
+      }
+    }
+    throw err;
+  }
+}
+
 function binderPageHtml(page) {
   const start = page * BINDER_PAGE;
   const pockets = Array.from({ length: BINDER_PAGE }, (_, i) => binderPocket(start + i)).join("");
   const shared = (activeTrainer()?.binderPages || []).includes(page);
   const empty = !(state.binder || []).slice(start, start + BINDER_PAGE).some(Boolean);
-  return `<div class="binder-page">
+  const own = pageLookVars(binderLookNow(), binderCardsOf(start, start + BINDER_PAGE), binderCardsOf());
+  return `<div class="binder-page" data-page-index="${page}"${pageStyleAttr(own)}>
     <div class="binder-page-toolbar"><span>Page ${page + 1}</span>
       <button type="button" class="ghost page-share" data-share-page="${page}" aria-pressed="${shared}" ${empty && !shared ? "disabled" : ""}>
         ${shared ? "Remove from profile" : "Display on profile"}
@@ -1995,8 +2160,11 @@ function renderBinder() {
   if (!activeTrainer()) {
     if (els.binderCount) els.binderCount.textContent = "Sign in to keep a binder";
     els.binderBody.innerHTML = accountGateHtml("binder");
+    if (els.binderCustomise) els.binderCustomise.hidden = true;
+    binderEditor?.close();
     return;
   }
+  if (els.binderCustomise) els.binderCustomise.hidden = false;
   if (reconcileBinder(state)) saveState(state);
 
   const pages = binderPageCount();
@@ -2019,11 +2187,14 @@ function renderBinder() {
 
   const options = binderPicking == null ? [] : binderCandidates();
   els.binderBody.innerHTML = `
-    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${PROFILE_PAGE_LIMIT} pages on your profile.</span><small>Shared pages update as you change them.</small></div>
-    <div class="binder-spread">
-      ${binderPageHtml(left)}
-      ${right < pages ? binderPageHtml(right) : ""}
-    </div>
+    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).cap} pages on your profile.${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).more}</span><small>Shared pages update as you change them.</small></div>
+    ${binderObjectHtml({
+      innerHtml: `<div class="binder-spread">
+        ${binderPageHtml(left)}
+        ${right < pages ? binderPageHtml(right) : ""}
+      </div>`,
+      resolved: binderResolved(binderLookNow(), binderCardsOf()),
+    })}
     <div class="binder-nav">
       <button type="button" class="ghost" data-flip="-1" ${left === 0 ? "disabled" : ""}>Back</button>
       <span>${right < pages ? `Pages ${left + 1}–${right + 1}` : `Page ${left + 1}`} of ${pages}</span>
@@ -2038,12 +2209,16 @@ function renderBinder() {
     (card) => tcgFace(card, { small: true, stamp: false, lazy: true }),
     picker
   );
+  binderEditor?.refresh();
+  if (binderLookNow().color === COLOR_FROM_CARDS || binderEditor?.isOpen()) refineArt(binderCardsOf(), paintBinderLook);
 }
 
 function renderCatalog() {
   const eras = erasWithSets();
   const queued = eras.reduce((total, block) => total + block.queued.length, 0);
-  const summary = `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`;
+  const summary = queued
+    ? `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live and <b>${queued}</b> more are on the way.</p>`
+    : `<p class="catalog-summary"><b>${PLAYABLE_SETS.length}</b> sets are live: every English set from Base Set to ${esc(eras[0]?.era || "today")}.</p>`;
 
   const blocks = eras
     .map((block) => {
@@ -2612,11 +2787,11 @@ function renderHome() {
       <div class="home-block-head">
         <div>
           <h2>The long game</h2>
-          <p>${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.</p>
+          <p>${queued ? `${PLAYABLE_SETS.length} sets live now and ${queued} more queued, newest first, all the way back to Base Set.` : `${PLAYABLE_SETS.length} sets live, newest first, all the way back to Base Set: every English set ever printed.`}</p>
         </div>
         <button type="button" class="text-btn" data-goto="catalog">Full catalog</button>
       </div>
-      <div class="home-road">${upcomingChips}${originChip}</div>
+      ${queued ? `<div class="home-road">${upcomingChips}${originChip}</div>` : ""}
     </section>`;
 
   const worthChart = els.homeBody.querySelector("#home-worth-chart");
@@ -2733,6 +2908,7 @@ const areaDeps = {
   achievementsBySet,
   masteryRowFor,
   masteryEmblem,
+  gearArt: (kind, id) => levelDeps.gearArt(kind, id), // levelDeps is declared further down; called lazily
   masteryBannerId,
   bannerVars,
   questRow: questRules.questById,
@@ -2749,7 +2925,9 @@ function colorPicks(selected, attr = "data-color", label = "Avatar colour") {
 function avatarMark(trainer, extraClass = "trainer-mark") {
   const color = avatarColor(trainer?.color);
   const pixel = avatarStyle(trainer?.avatarStyle) === "pixel" ? " pixel" : "";
-  return `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
+  const mark = `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
+  const frame = userFrame(trainer);
+  return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
 }
 
 /** The career figures under the hero: plain numbers with a caption each. */
@@ -2905,11 +3083,13 @@ function renderAuth() {
 
 const ACCOUNT_TABS = [
   { id: "overview", name: "Overview", note: "Career, sets, and what you pulled." },
+  { id: "levels", name: "Levels", note: "Your level, the road ahead and where your XP comes from." },
   { id: "quests", name: "Quests", note: "Daily, weekly and monthly coin rewards." },
   { id: "achievements", name: "Achievements", note: "Badges, secrets, rewards and titles." },
   { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
   { id: "profile", name: "Profile", note: "Name, bio, and what the public sees." },
   { id: "look", name: "Look", note: "Avatar, banner, and title." },
+  { id: "layout", name: "Layout", note: "Room colour, backdrop and the sections of your public profile." },
   { id: "security", name: "Security", note: "Password and deleting the account." },
 ];
 
@@ -2923,12 +3103,18 @@ function bringIntoView(el) {
 /** The little count on a tab: things waiting to be claimed there. */
 function tabDot(id, stats) {
   const n =
-    id === "achievements" ? stats.ready.length : id === "quests" ? questArea.questReadyCount(state.quests, areaDeps) : 0;
+    id === "achievements"
+      ? stats.ready.length
+      : id === "quests"
+        ? questArea.questReadyCount(state.quests, areaDeps)
+        : id === "levels"
+          ? levelUi.levelsReadyCount(levelUi.xpOf(state))
+          : 0;
   return n ? `<i class="acct-dot" aria-hidden="true">${n}</i><span class="sr-only">, ${n} ready to claim</span>` : "";
 }
 
 /** What has focus inside the account page, as an attribute and value that survive a repaint. */
-const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-banner", "data-set-title"];
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past"];
 function focusKey() {
   const el = document.activeElement;
   if (!el || el === document.body || !els.accountBody.contains(el)) return null;
@@ -2965,7 +3151,9 @@ function renderAccountBody() {
   if (!ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
   const stats = achievementStats();
   const body =
-    accountTab === "quests"
+    accountTab === "levels"
+      ? levelsTab()
+      : accountTab === "quests"
       ? questsTab()
       : accountTab === "achievements"
       ? achievementsTab(stats)
@@ -2975,6 +3163,8 @@ function renderAccountBody() {
         ? profileTab(trainer)
         : accountTab === "look"
           ? lookTab(trainer, stats)
+          : accountTab === "layout"
+            ? profileEditor.layoutTab(trainer, layoutDeps())
           : accountTab === "security"
             ? securityTab(trainer)
             : overviewTab(trainer, stats);
@@ -2997,6 +3187,7 @@ function renderAccountBody() {
   if (accountTab === "mastery") placeMasteryDetail();
   for (const on of els.accountBody.querySelectorAll(".acct-tabs .on, .qa-words:not(.qa-words-inline) .on")) bringIntoView(on);
   freshClaims = new Set();
+  freshLevels = new Set();
 }
 
 function signedOutAccount() {
@@ -3037,14 +3228,13 @@ function signedOutAccount() {
 }
 
 function accountHero(trainer, stats) {
-  const banner = bannerVars(trainer.banner);
   const ready = stats.ready.length;
   return `<header class="acct-hero">
-    <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
+    ${bannerBlockHtml(trainer.banner, { className: "acct-banner", eager: true })}
     <div class="acct-hero-body">
       ${avatarMark(trainer, "trainer-mark acct-face")}
       <div class="acct-copy">
-        <h1 class="acct-name">${esc(trainer.name)}</h1>
+        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl" })}</h1>
         <p class="acct-meta">
           <span class="account-handle">@${esc(trainer.handle)}</span>
           ${trainer.createdAt ? `<span>Joined ${esc(joinedOn(trainer.createdAt))}</span>` : ""}
@@ -3375,7 +3565,7 @@ function profileTab(trainer) {
     <div class="acct-sec-head">
       <div>
         <h2>Showcase</h2>
-        <p>${showcase.length} of ${SHOWCASE_MAX} pinned. These sit at the top of your public profile, in this order.</p>
+        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned. These sit at the top of your public profile, in this order.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
       </div>
     </div>
     ${
@@ -3388,11 +3578,20 @@ function profileTab(trainer) {
 
 /* ---- Look --------------------------------------------------------------- */
 
+/** Banner motions with the level each opens at (0 = free). The level-driven ones are listed even before cosmetics.js knows them. */
+function bannerMotionRows() {
+  const rows = BANNER_MOTIONS.map((row) => ({ id: row.id, name: row.name, level: Number(row.level ?? BANNER_MOTION_LEVELS[row.id]) || 0 }));
+  for (const [id, level] of Object.entries(BANNER_MOTION_LEVELS)) {
+    if (!rows.some((row) => row.id === id)) rows.push({ id, name: BANNER_MOTION_NAMES[id] || id, level });
+  }
+  return rows.sort((a, b) => a.level - b.level);
+}
+
 function lookTab(trainer, stats) {
   const avatars = searchAvatars(avatarQuery);
   const banner = parseBanner(trainer.banner);
   const style = avatarStyle(trainer.avatarStyle);
-  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities() });
+  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.level ?? cloudUser?.level });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
   const won = titlesFromClaims(stats.claimed);
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
@@ -3401,10 +3600,10 @@ function lookTab(trainer, stats) {
   return `<div class="look-layout">
     <aside class="look-preview" aria-label="Preview">
       <div class="look-card">
-        <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(bannerVars(trainer.banner).style)}"></div>
+        ${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
         <div class="look-id">
           ${avatarMark(trainer, "trainer-mark look-face")}
-          <b>${esc(trainer.name)}</b>
+          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md" })}</b>
           <small>@${esc(trainer.handle)}</small>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
         </div>
@@ -3447,13 +3646,33 @@ function lookTab(trainer, stats) {
       <section class="acct-sec">
         <div class="acct-sec-head">
           <div>
+            <h2>Frame</h2>
+            <p>A frame around your picture on your profile and in every list. Higher levels open richer ones.</p>
+          </div>
+        </div>
+        ${framePicksHtml({
+          level: trainer.level,
+          frame: trainer.frame,
+          color: avatarColor(trainer.color).hex,
+          avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
+        })}
+      </section>
+      <section class="acct-sec">
+        <div class="acct-sec-head">
+          <div>
             <h2>Banner</h2>
             <p>Two colours and a motion, mixed live behind your name.</p>
           </div>
         </div>
-        <div class="qa-words qa-words-inline" role="group" aria-label="Banner motion">${BANNER_MOTIONS.map(
-          (row) => `<button type="button" class="qa-word${!onMastery && banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${!onMastery && banner.motion === row.id}"><span>${esc(row.name)}</span></button>`
-        ).join("")}</div>
+        <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
+          .map((row) => {
+            const locked = (Number(trainer.level) || 1) < row.level;
+            const on = !onMastery && banner.motion === row.id;
+            return locked
+              ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
+              : `<button type="button" class="qa-word${on ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${on}"><span>${esc(row.name)}</span></button>`;
+          })
+          .join("")}</div>
         <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
         <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
         ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
@@ -3508,6 +3727,7 @@ async function renderProfile() {
   if (!els.profileBody) return;
   if (!handle) {
     els.profileBody.innerHTML = `<p class="panel-empty profile-missing">There is no trainer at this address. Check the handle in the link.</p>`;
+    profileView.leaveProfileRoom();
     return;
   }
   els.profileBody.innerHTML = `<p class="panel-empty profile-loading">Loading @${esc(handle)}…</p>`;
@@ -3527,9 +3747,9 @@ async function renderProfile() {
       profilePageScroll = false;
       replacePath(profilePath(handle, null));
     }
-    profileBinderView = {handle, pages, mine, position:wanted >= 0 ? wanted : preserved >= 0 ? preserved : 0};
+    // look: the owner's binder look (user.binderLook) draws "Inside the binder" in profileBinderPagesHtml.
+    profileBinderView = {handle, pages, mine, look:user.binderLook, position:wanted >= 0 ? wanted : preserved >= 0 ? preserved : 0};
     const signed = Boolean(activeTrainer());
-    const stats = data.stats || {};
     const friendBtn =
       !signed
         ? `<button class="ghost" type="button" data-open-auth="signin">Sign in to add</button>`
@@ -3543,22 +3763,6 @@ async function renderProfile() {
                 ? `<button class="solid" type="button" data-friend-accept="${esc(user.handle)}">Accept friend</button>`
                 : `<button class="solid" type="button" data-friend-add="${esc(user.handle)}">Add friend</button>`;
 
-    // Preserve the collector's chosen order, including favourite commons.
-    const pinned = (data.showcase || []).slice();
-    const showcase = pinned
-      .map((slot, i) => {
-        const known = findCard(slot.id);
-        const face = known
-          ? tcgFace({ ...known, reverse: slot.reverse }, { small: true, stamp: false, lazy: true })
-          : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" />`;
-        const worth = Number(slot.value) > 0 ? `<span>✦ ${coin(slot.value)}</span>` : "";
-        return `<figure class="showcase-slot${i === 0 ? " best" : ""}">
-          <button type="button" class="mini-card" ${known ? inspectAttrs({...known, reverse:slot.reverse}) : ""} aria-label="${esc(slot.name)}">${face}</button>
-          <figcaption><b>${esc(slot.name)}</b>${worth}</figcaption>
-        </figure>`;
-      })
-      .join("");
-
     // The Graded section: slabs the trainer chose to show, drawn with the real face.
     const gradedSlabs = Array.isArray(data.graded) ? data.graded : [];
     const gradedSets = new Map();
@@ -3570,131 +3774,58 @@ async function renderProfile() {
       await Promise.all([...gradedSets.values()].map((set) => loadSetData(set).catch(() => null)));
       if (profileHandle !== handle) return;
     }
-    const graded = gradedSlabs
-      .map((slab) => {
-        const known = findCard(slab.cardId);
-        const set = setForCardId(slab.cardId);
-        const card = known || { id: slab.cardId, name: slab.name, rarity: slab.rarity };
-        const face = known
-          ? tcgFace({ ...known, reverse: slab.reverse }, { small: true, stamp: false, lazy: true })
-          : `<img src="${esc(slab.image)}" alt="${esc(slab.name)}" loading="lazy" />`;
-        const worth = Number(slab.value) > 0 ? `<span class="graded-worth">✦ ${coin(slab.value)}</span>` : "";
-        return `<figure class="graded-slot">
-          ${slabHTML({ face, card, slab, set, size: "grid" })}
-          <figcaption><b>${esc(card.name)}</b><span class="graded-grade">${slab.grade} ${esc(gradeWord(slab.grade))}</span>${worth}${mine ? `<a href="/grading/${Number(slab.id)}">Open slab</a>` : ""}</figcaption>
-        </figure>`;
-      })
-      .join("");
-    const gradedTotal = Number(data.gradedCount) || gradedSlabs.length;
-    const gradedSection =
-      !gradedSlabs.length && !mine
-        ? ""
-        : `<section class="acct-sec profile-graded">
-          <div class="acct-sec-head">
-            <div>
-              <h2>Graded</h2>
-              <p>${
-                gradedSlabs.length
-                  ? `${gradedSlabs.length} of the ${num(gradedTotal)} ${gradedTotal === 1 ? "card" : "cards"} ${esc(user.name)} had slabbed.`
-                  : `Open one of your slabs and choose Show on profile. Up to ${GRADING_LIMITS.maxShown} sit here.`
-              }</p>
-            </div>
-            ${mine ? `<a class="ghost sm" href="/grading/graded">Your slabs</a>` : ""}
-          </div>
-          ${graded ? `<div class="graded-stage"><div class="graded-row">${graded}</div></div>` : ""}
-        </section>`;
-
-    const comments = (data.comments || [])
-      .map(
-        (row) => `<li class="comment-item">
-          <a href="/u/${esc(row.user.handle)}" aria-label="${esc(row.user.name)}">${faceHtml(row.user, "sm")}</a>
-          <div>
-            <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
-            <p>${esc(row.body)}</p>
-          </div>
-        </li>`
-      )
-      .join("");
-
-    const figures = [
-      stats.packs != null ? [num(stats.packs), "Packs ripped"] : null,
-      stats.pulls != null ? [num(stats.pulls), "Cards pulled"] : null,
-      stats.unique != null ? [num(stats.unique), "Unique cards"] : null,
-      stats.coins != null ? [`✦ ${coin(stats.coins)}`, "Coins", "money"] : null,
-      user.createdAt ? [joinedOn(user.createdAt), "Collecting since"] : null,
-    ].filter(Boolean);
-    const friends = Number(data.friends || 0);
-
-    const banner = bannerVars(user.banner);
-    els.profileBody.innerHTML = `
-      <div class="profile-page">
-        <header class="acct-hero profile-hero">
-          <div class="acct-banner profile-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
-          <div class="acct-hero-body profile-id">
-            ${faceHtml({ ...user, online: data.online }, "lg")}
-            <div class="acct-copy profile-copy">
-              <h1 class="acct-name">${esc(user.name)}</h1>
-              <p class="acct-meta">
-                <span class="account-handle">@${esc(user.handle)}</span>
-                <span>${num(friends)} ${friends === 1 ? "friend" : "friends"}</span>
-                ${data.online ? `<span class="live-tag">Online now</span>` : ""}
-              </p>
-              <p class="acct-chips"><span class="account-title">${esc(user.title || "Rookie")}</span></p>
-              ${questArea.masteryStripHtml(data.masteries || [], areaDeps)}
-              ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
-            </div>
-            <div class="acct-hero-actions profile-actions">${friendBtn}</div>
-          </div>
-          ${
-            figures.length
-              ? `<dl class="acct-figures">${figures
-                  .map(([value, label, cls]) => `<div class="acct-fig${cls ? ` ${cls}` : ""}"><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
-                  .join("")}</dl>`
-              : ""
-          }
-        </header>
-        <section class="profile-showcase">
-          <div class="acct-sec-head">
-            <div>
-              <h2>Showcase</h2>
-              <p>${
-                pinned.length
-                  ? `${pinned.length} ${pinned.length === 1 ? "card" : "cards"} ${esc(user.name)} picked to show off.`
-                  : mine
-                    ? "Open any card you own and choose Pin to showcase. Up to six sit here."
-                    : `${esc(user.name)} hasn't pinned any cards yet.`
-              }</p>
-            </div>
-          </div>
-          ${showcase ? `<div class="showcase-stage"><div class="showcase-row">${showcase}</div></div>` : ""}
-        </section>
-        ${gradedSection}
-        ${profileBinderPagesHtml()}
-        <section class="acct-sec profile-wall">
-          <div class="acct-sec-head">
-            <div>
-              <h2>Wall</h2>
-              <p>${mine ? "Notes other trainers left you." : `Leave ${esc(user.name)} a note.`}</p>
-            </div>
-          </div>
-          ${comments ? `<ol class="comment-list">${comments}</ol>` : `<p class="panel-empty">No notes yet.${signed && !mine ? " Be the first." : ""}</p>`}
-          ${
-            signed
-              ? `<form class="comment-form" id="comment-form">
-                  <textarea name="body" maxlength="220" placeholder="${mine ? "Write on your own wall" : `Leave a note for ${esc(user.name)}`}" aria-label="Your note"></textarea>
-                  <button class="ghost" type="submit">Post note</button>
-                </form>`
-              : `<p class="panel-note"><button class="text-btn" type="button" data-open-auth="signin">Sign in</button> to leave a note.</p>`
-          }
-        </section>
-      </div>`;
+    // The page itself (hero, then the trainer's sections in their order) lives in js/profile-view.js.
+    if (view !== "profile") return; // left the profile while it loaded: it must not paint the room
+    const page = profileView.profilePageHtml({ data, mine, signed, friendBtn, gradedSlabs, deps: profileDeps() });
+    els.profileBody.innerHTML = page.html;
+    profileView.applyProfileRoom(page.look, page.cards, { accents: cachedCardAccents(page.cards) });
+    if (page.look.tint === COLOR_FROM_CARDS) {
+      // Refine the room's "cards" colour from the art once it has been read (type colours stand in until then).
+      sampleCardAccents(page.cards, () => {
+        if (view === "profile" && profileHandle === handle) profileView.applyProfileRoom(page.look, page.cards, { accents: cachedCardAccents(page.cards) });
+      });
+    }
     if (profilePageScroll) {
       profilePageScroll = false;
       els.profileBody.querySelector(".profile-binder")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" });
     }
   } catch (err) {
     els.profileBody.innerHTML = `<p class="panel-empty profile-missing">${esc(err.message || "Trainer not found.")} Check the handle in the link.</p>`;
+    profileView.leaveProfileRoom();
   }
+}
+
+/** What the Layout tab (js/profile-editor.js) needs: the trainer's cards for "match my cards", and the save. */
+function layoutDeps() {
+  return {
+    esc, avatarMark, bannerBlock: bannerBlockHtml, findCard, toast, activeTrainer,
+    showcaseIds: () => (activeTrainer()?.showcase || []).map((slot) => slot.id),
+    binderSlots: () => {
+      // The pages this trainer displays, as the public profile will show them.
+      const out = [];
+      for (const page of activeTrainer()?.binderPages || []) {
+        for (const slot of (state.binder || []).slice(page * BINDER_PAGE, (page + 1) * BINDER_PAGE)) if (slot?.id) out.push(slot.id);
+      }
+      return out;
+    },
+    save: async (profileLook) => {
+      const data = await api("/api/me", { method: "PATCH", body: JSON.stringify({ profileLook }) });
+      cloudUser = data.user;
+    },
+  };
+}
+profileEditor.initProfileEditor(els.accountBody, layoutDeps());
+
+/** What js/profile-view.js and js/profile-editor.js need from the app: helpers, never state. */
+function profileDeps() {
+  return {
+    esc, num, coin, joinedOn, formatWhen, faceHtml, findCard, setForCardId, tcgFace, inspectAttrs, slabHTML, gradeWord,
+    bannerBlock: bannerBlockHtml, levelBadge: levelBadgeHtml, levelTag, roomLine,
+    masteryShelf: masteryShelfProfileHtml,
+    binderSection: () => profileBinderPagesHtml(),
+    showcaseMax: SHOWCASE_MAX,
+    gradedMax: GRADING_LIMITS.maxShown,
+  };
 }
 
 async function renderSocial() {
@@ -3731,7 +3862,7 @@ async function renderSocial() {
         const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "No messages yet";
         return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
           ${faceHtml({ ...row.user, online: online.has(row.user.handle) }, "sm")}
-          <span><b>${esc(row.user.name)}</b><small>${preview}</small></span>
+          <span><b>${levelTag(row.user)}${esc(row.user.name)}</b><small>${preview}</small></span>
           ${row.last ? `<time>${esc(formatWhen(row.last.at))}</time>` : ""}
         </a>`;
       })
@@ -3740,7 +3871,7 @@ async function renderSocial() {
     const incomingRows = incoming
       .map(
         (row) => `<div class="friends-row">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>@${esc(row.handle)} wants to be friends</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>@${esc(row.handle)} wants to be friends</small></span></a>
           <div class="friends-row-actions">
             <button type="button" class="ghost sm" data-friend-accept="${esc(row.handle)}">Accept</button>
             <button type="button" class="text-btn" data-friend-deny="${esc(row.handle)}">Decline</button>
@@ -3751,7 +3882,7 @@ async function renderSocial() {
     const outgoingRows = outgoing
       .map(
         (row) => `<div class="friends-row dim">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>Request sent</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>Request sent</small></span></a>
         </div>`
       )
       .join("");
@@ -3772,7 +3903,7 @@ async function renderSocial() {
             </a>
             <a class="dm-who" href="/u/${esc(thread.user.handle)}">
               ${faceHtml({ ...thread.user, online: online.has(thread.user.handle) }, "sm")}
-              <span><b>${esc(thread.user.name)}</b><small>${online.has(thread.user.handle) ? "Online now" : `@${esc(thread.user.handle)}`}</small></span>
+              <span><b>${levelTag(thread.user)}${esc(thread.user.name)}</b><small>${online.has(thread.user.handle) ? "Online now" : `@${esc(thread.user.handle)}`}</small></span>
             </a>
             <a class="text-btn dm-profile" href="/u/${esc(thread.user.handle)}">Profile</a>
           </div>
@@ -4304,8 +4435,10 @@ function applyView(next, hist) {
   if (next !== "battles") battles.hide();
   if (next !== "casino") casino.hide();
   if (next !== "grading") grading.hide(); // grading
+  if (next !== "profile") profileView.leaveProfileRoom(); // the room's tint and backdrop belong to the profile only
   if (next !== "cart") cartPage.hide();
   if (next !== "vault") vaultPage.hide();
+  if (next !== "binder") binderEditor?.close(); // an unsaved draft is dropped when you leave
   if (next !== "auth" && next !== "battles") battleReturnPath = "";
   if (next !== "auth" && next !== "casino") casinoReturnPath = "";
   view = next;
@@ -5918,6 +6051,54 @@ async function sellOwnedCard(card, { extra = false } = {}) {
   }
 }
 
+/* ---- Levels (js/level-ui.js draws it; js/level-feed.js reports what a save earned) ---- */
+
+let roadPast = false; // the Levels tab shows every stop behind you
+let freshLevels = new Set(); // levels just paid, so their tiles stamp in
+
+const levelDeps = {
+  esc,
+  num,
+  gearName: (kind, id) => gearItem(getGearCatalog(), kind, id)?.name || "",
+  gearArt: (kind, id) => {
+    const item = gearItem(getGearCatalog(), kind, id);
+    return item ? (kind === "coin" ? coinHtml(item, { cls: "sm" }) : sleeveHtml(item, { cls: "sm" })) : "";
+  },
+};
+
+function levelsTab() {
+  return levelUi.levelsTabHtml(levelUi.xpOf(state), levelDeps, { past: roadPast, fresh: freshLevels });
+}
+
+function openLevelsTab() {
+  accountTab = "levels";
+  if (view === "account") renderAccount();
+  else setView("account");
+}
+
+let levelClaiming = false;
+async function claimLevelRewards(button) {
+  if (levelClaiming) return;
+  levelClaiming = true;
+  button?.setAttribute("aria-disabled", "true");
+  const focused = focusKey();
+  try {
+    const data = await api("/api/levels/claim", { method: "POST" });
+    afterEconomy(data.save);
+    freshLevels = new Set(data.paid?.levels || []);
+    renderHeader();
+    renderAccount();
+    restoreFocus(focused);
+    toast(levelUi.claimedText(data.paid, levelDeps));
+  } catch (err) {
+    toast(err.message || "Couldn't claim level rewards.");
+    renderAccount();
+    restoreFocus(focused);
+  } finally {
+    levelClaiming = false;
+  }
+}
+
 function questsTab() {
   return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims });
 }
@@ -6077,6 +6258,12 @@ document.addEventListener("click", (e) => {
     setView(jump.dataset.goto);
     return;
   }
+  const gateTab = e.target.closest(".gate-lock [data-acct-tab]"); // the lock notice's link to the Levels tab
+  if (gateTab) {
+    accountTab = gateTab.dataset.acctTab;
+    setView("account");
+    return;
+  }
   const link = e.target.closest("a[href]");
   if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
   let url;
@@ -6192,6 +6379,7 @@ els.settingsBody.addEventListener("click", (e) => {
   api("/api/me/reset", { method: "POST" })
     .then(async (data) => {
       applyCloudSave(data.save);
+      if (data.user) cloudUser = data.user; // the reset takes bought binder editions back
       renderHeader();
       renderShop();
       renderCollection();
@@ -6216,6 +6404,16 @@ els.accountBody.addEventListener("click", async (e) => {
     accountTab = tab.dataset.acctTab;
     renderAccount();
     els.accountBody.querySelector(".acct-tabs")?.scrollIntoView({ block: "nearest" });
+    return;
+  }
+  const claimLevelsBtn = e.target.closest("[data-claim-levels]");
+  if (claimLevelsBtn) {
+    claimLevelRewards(claimLevelsBtn);
+    return;
+  }
+  if (e.target.closest("[data-road-past]")) {
+    roadPast = !roadPast;
+    renderAccount();
     return;
   }
   const filter = e.target.closest("[data-ach-filter]");
@@ -6380,10 +6578,32 @@ els.accountBody.addEventListener("click", async (e) => {
     }
     return;
   }
+  const setFrame = e.target.closest("[data-set-frame]");
+  if (setFrame) {
+    try {
+      await patchLook({ frame: setFrame.dataset.setFrame || null });
+    } catch (err) {
+      toast(err.message || "Couldn't change the frame.");
+    }
+    return;
+  }
+  const lockedFrame = e.target.closest("[data-frame-locked]");
+  if (lockedFrame) {
+    const info = frameInfo(lockedFrame.dataset.frameLocked);
+    if (info) toast(`Reach level ${info.level} to wear the ${info.name} frame.`);
+    return;
+  }
+  const lockedMotion = e.target.closest("[data-motion-locked]");
+  if (lockedMotion) {
+    const level = BANNER_MOTION_LEVELS[lockedMotion.dataset.motionLocked];
+    if (level) toast(`Reach level ${level} to use the ${BANNER_MOTION_NAMES[lockedMotion.dataset.motionLocked]} banner.`);
+    return;
+  }
   const setMotion = e.target.closest("[data-set-motion]");
   if (setMotion) {
     const trainer = activeTrainer();
     if (!trainer) return;
+    if (setMotion.getAttribute("aria-disabled") === "true") return toast(setMotion.title || "That banner is locked.");
     const banner = parseBanner(trainer.banner);
     try {
       await patchLook({ banner: `${setMotion.dataset.setMotion}:${banner.colors.join("+")}` });
@@ -6472,7 +6692,7 @@ async function surpriseLook() {
     await patchLook({
       avatar: String(pick(AVATARS)[0]),
       color: pick(AVATAR_COLORS).id,
-      banner: `${pick(BANNER_MOTIONS).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
+      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || Number(trainer.level) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
     });
     toast("New look rolled.");
   } catch (err) {
@@ -6502,7 +6722,7 @@ async function claimAchievements(body, label) {
     renderHeader();
     renderAccount();
     restoreFocus(focused);
-    rewardFlash(data.rewards || [], data.coins || 0);
+    rewardFlash(data.rewards || [], data.coins || 0, data.gear);
     const titles = data.titles || [];
     const masteries = (data.rewards || []).filter((row) => achievementById(row.id)?.kind === "mastery");
     const won = titles.length === 1 ? ` and the ${titles[0]} title` : titles.length ? ` and ${titles.length} new titles` : "";
@@ -6518,8 +6738,10 @@ async function claimAchievements(body, label) {
 }
 
 /** The little card that drops in when a reward lands; mastery adds the emblem and what it unlocked. */
-function rewardFlash(rewards, coins) {
+function rewardFlash(rewards, coins, gear) {
   if (!rewards.length) return;
+  // Sleeves and coins gifted by a mastery or crown; only the ones that were new count.
+  const gifts = questArea.giftsLine((gear || rewards.flatMap((row) => row.gear || [])).filter((g) => g.wasNew !== false));
   document.querySelector(".reward-flash")?.remove();
   const titles = rewards.filter((row) => row.title);
   const masteries = rewards.map((row) => achievementById(row.id)).filter((row) => row?.kind === "mastery" && row.set);
@@ -6539,13 +6761,15 @@ function rewardFlash(rewards, coins) {
     <span>${rewards.length === 1 ? esc(rewards[0].name) : `${rewards.length} achievements claimed`}</span>
     ${secrets.length ? `<i>${secrets.length === 1 ? "A secret, revealed" : `${secrets.length} secrets, revealed`}</i>` : ""}
     ${titles.length ? `<i>${titles.length === 1 ? "New title" : "New titles"}: ${titles.slice(0, 3).map((row) => esc(row.title)).join(", ")}${titles.length > 3 ? ` and ${titles.length - 3} more` : ""}</i>` : ""}
-    ${perks}`;
+    ${perks}
+    ${gifts ? `<a class="flash-gear" href="/gear">${esc(gifts)}</a>` : ""}`;
   document.body.appendChild(el);
+  el.querySelector(".flash-gear")?.addEventListener("click", () => el.remove());
   requestAnimationFrame(() => el.classList.add("show"));
   window.setTimeout(() => {
     el.classList.remove("show");
     window.setTimeout(() => el.remove(), 400);
-  }, masteries.length ? 4200 : 2800);
+  }, gifts ? 6000 : masteries.length ? 4200 : 2800);
 }
 
 let masteryResize = 0;
@@ -6598,15 +6822,38 @@ async function patchLook(body) {
   renderAccount();
 }
 
+/** The cards of the shared pages (all of them, or one page's slots) as the site's card objects. */
+function profileBinderCards(pages) {
+  return pages.flatMap(pg => pg.slots.map(slot => slot && findCard(slot.id))).filter(Boolean);
+}
+
+/** Repaint "Inside the binder" once art colours have been sampled; touches only variables, never the cards. */
+function paintProfileBinderLook() {
+  const object = els.profileBody?.querySelector(".profile-binder .binder-object");
+  const {pages, look} = profileBinderView;
+  if (!object || !pages.length) return;
+  const mine = normalizeBinderLook(look);
+  applyBinderLook(object, binderResolved(mine, profileBinderCards(pages)));
+  object.querySelectorAll(".binder-page[data-page-index]").forEach(el => {
+    const pg = pages.find(row => row.index === Number(el.dataset.pageIndex));
+    setPageVars(el, pg ? pageLookVars(mine, profileBinderCards([pg]), profileBinderCards(pages)) : null);
+  });
+}
+
 function profileBinderPagesHtml() {
   const {pages, mine, position} = profileBinderView;
   if (!pages.length) return mine ? `<section class="panel profile-binder"><h3>Binder pages</h3><p class="panel-empty">Display up to four favourite pages from your binder.</p><a class="ghost" href="/binder">Choose a binder page</a></section>` : "";
   const page = pages[position];
+  // The owner's look dresses the pages: the cover colour follows the shared pages' cards, each page's tint its own.
+  const ownerLook = normalizeBinderLook(profileBinderView.look);
+  const shared = profileBinderCards(pages);
+  const pageVars = pageLookVars(ownerLook, profileBinderCards([page]), shared);
+  if (ownerLook.color === COLOR_FROM_CARDS) requestAnimationFrame(() => refineArt(shared, paintProfileBinderLook));
   const pockets = page.slots.map(slot => {
-    if (!slot) return `<div class="profile-pocket empty" aria-label="Empty pocket"></div>`;
+    if (!slot) return `<div class="profile-pocket pocket empty" aria-label="Empty pocket"></div>`;
     const known = findCard(slot.id);
     const card = known ? {...known, reverse:slot.reverse} : null;
-    return `<div class="profile-pocket"><button type="button" class="mini-card" ${card ? inspectAttrs(card) : ""} aria-label="${esc(slot.name)}">${card ? tcgFace(card, {small:true, stamp:false, lazy:true}) : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" loading="lazy">`}</button></div>`;
+    return `<div class="profile-pocket pocket"><button type="button" class="mini-card" ${card ? inspectAttrs(card) : ""} aria-label="${esc(slot.name)}">${card ? tcgFace(card, {small:true, stamp:false, lazy:true}) : `<img src="${esc(slot.image)}" alt="${esc(slot.name)}" loading="lazy">`}</button></div>`;
   }).join("");
   return `<section class="panel profile-binder"><div class="profile-section-head"><div><h3>Inside the binder</h3></div><span>${pages.length} shared ${pages.length === 1 ? "page" : "pages"}</span></div>
     <nav class="profile-page-nav" aria-label="Shared binder pages">
@@ -6614,7 +6861,7 @@ function profileBinderPagesHtml() {
       <span role="status" aria-live="polite">${position + 1} of ${pages.length}</span>
       <button type="button" class="ghost" data-profile-page="1" ${position === pages.length - 1 ? "disabled" : ""} aria-label="Next binder page">Next</button>
     </nav>
-    <div class="profile-binder-pages"><article class="profile-binder-page"><header><b>Binder page ${page.index + 1}</b><span class="profile-page-actions"><button type="button" class="link-btn" data-copy-page-link="${page.index}">Copy link</button>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</span></header><div class="binder-pockets">${pockets}</div></article></div></section>`;
+    <div class="profile-binder-pages">${binderObjectHtml({resolved:binderResolved(ownerLook, shared), innerHtml:`<div class="binder-spread single"><article class="profile-binder-page binder-page" data-page-index="${page.index}"${pageStyleAttr(pageVars)}><header><b>Binder page ${page.index + 1}</b><span class="profile-page-actions"><button type="button" class="link-btn" data-copy-page-link="${page.index}">Copy link</button>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</span></header><div class="binder-pockets">${pockets}</div></article></div>`})}</div></section>`;
 }
 
 function turnProfilePage(direction) {
@@ -7161,6 +7408,61 @@ els.binderAddPage?.addEventListener("click", async () => {
   binderSpread = Math.max(0, binderPageCount() - 2);
   renderBinder();
   toast("Page added.");
+});
+
+// Animated binder covers rest while scrolled offscreen (js/binder-editions.js): watch the places binders are drawn.
+for (const host of [els.binderBody, els.profileBody]) {
+  if (!host) continue;
+  watchBinderFx(host);
+  new MutationObserver(() => watchBinderFx(host)).observe(host, { childList: true, subtree: true });
+}
+
+// binder customiser (js/binder-editor.js): a sheet or side panel that edits a draft look
+// live on the binder above it; nothing is stored until Save.
+binderEditor = initBinderEditor({
+  mount: els.binderEditorMount,
+  getLook: savedBinderLook,
+  getOwned: () => activeTrainer()?.binderEditions || [],
+  getCoins: () => state.coins,
+  getCards: () => binderCardsOf(),
+  getAccents: () => cachedCardAccents(binderCardsOf()),
+  onDraft: (look) => {
+    binderDraft = look;
+    paintBinderLook();
+  },
+  onToggle: (open) => {
+    els.binderLayout?.classList.toggle("is-editing", open);
+    document.body.classList.toggle("binder-editing", open);
+    els.binderCustomise?.setAttribute("aria-expanded", String(open));
+    if (open) {
+      requestAnimationFrame(() =>
+        els.binderBody?.querySelector(".binder-object")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" })
+      );
+    }
+  },
+  // Under the sheet only the top of the screen shows the binder: bring the part of the cover that
+  // carries the effect there (ember lives on the foot, the others on the head and sides).
+  onTry: (id) => {
+    if (matchMedia("(min-width: 980px)").matches) return;
+    const object = els.binderBody?.querySelector(".binder-object");
+    if (!object) return;
+    const box = object.getBoundingClientRect();
+    const sheetTop = els.binderEditorMount.getBoundingClientRect().top;
+    const delta = id === "ember" ? box.bottom - (sheetTop - 12) : box.top - 72;
+    window.scrollBy({ top: delta, behavior: reduceMotion() ? "auto" : "smooth" });
+  },
+  save: saveBinderLook,
+  buy: buyBinderEdition,
+  coin,
+  toast,
+});
+els.binderCustomise?.addEventListener("click", () => {
+  if (!activeTrainer()) {
+    openAuth("signin");
+    return;
+  }
+  if (binderEditor.isOpen()) binderEditor.close();
+  else binderEditor.open();
 });
 
 els.dexGrid.addEventListener("click", (e) => {

@@ -1,0 +1,21 @@
+{
+  "_about": "EX generation sealed products with card lists: the two EX Trainer Kits (written 2026-10-01 from /mnt/project-files/every-era/ex/research/trainer-kits-and-energy.md, research by r-ex). Folded into data/box-contents.json by build_box_contents.py (dp_kits() reads this file too). The EX-era theme decks (Ruby, Sapphire, Caravan, FireFang, Team Magma, Forest Guardian, Wish Maker, LeafGreen, James, Jessie, Starcharge, Jetstream, Hydrobloom, Wildfire, Golden Sky, Silvery Ocean, Breakthrough, Steeplechase, FireMist, FloodRush, Earth Shower, Green Cyclone, Storm Surge, Power Wave, Shadow Blaze, Dark Blast, Mind Game, the EX Battle Stadium decks) have NO card lists in the research (names, TCGplayer ids and the deck-exclusive prints only: theme-decks.md), so they have no rows: never invent a list.",
+  "kits": [
+    {
+      "product": "ex-trainer-kit-latias-latios",
+      "tcgplayerId": 98950,
+      "halves": ["extk1a", "extk1b"],
+      "cards": {"extk1a": 10, "extk1b": 10},
+      "label": "one of each of the kit's 20 different cards",
+      "sources": "TCGplayer group 1543 product 98950 (tcgcsv); pkmn.gg tk1a / tk1b (10 cards each, numbered 1-10); CardMavin 'EX Trainer Kit: Latias and Latios' ('each themed deck includes 10 cards') and Bulbapedia via a search excerpt ('two 30-card decks with 10 unique cards'). The copies of each card a half deck held are NOT in any source (the Bulbapedia excerpt implies duplicates), so the row deals one of each different card, a floor. The bonus booster pack (one EX-series pack, set not named by any source) is not simulated. Confidence medium."
+    },
+    {
+      "product": "ex-trainer-kit-2-plusle-minun",
+      "tcgplayerId": 98951,
+      "halves": ["extk2a", "extk2b"],
+      "cards": {"extk2a": 12, "extk2b": 12},
+      "label": "one of each of the kit's 24 different cards",
+      "sources": "TCGplayer group 1542 product 98951 (tcgcsv); pkmn.gg tk2a / tk2b (12 cards each); CardMavin 'EX Trainer Kit 2: Plusle and Minun' (24 cards, 12 per half deck). A second CardMavin listing shows quantities summing to about 20 a deck, not reconciled, so the row deals one of each different card, a floor. The bonus booster pack is not simulated. Confidence medium."
+    }
+  ]
+}

@@ -403,6 +403,25 @@ cure"). The surface gloss throws a soft highlight.
   load `promos.css`, so promos looked nothing like the site; a recipe
   judged there was judged on the wrong render. Check `lab/index.html`'s
   sheet list against `index.html` when a sheet is added.
+- **Older eras (lessons of XY, BW and DP, 2026-10-01; the era notes have
+  the detail).** TCG Live ships per-card foil maps for XY and BW only;
+  DP and older need masks drawn per frame and layout, measured on real
+  scans of every frame variant (a consensus mask misses what varies per
+  card: the Prime HP digit, the SP portrait). Gate an era's reprint rules on
+  `era !== "<era>"`, never on the presence of `foilAs`, or the era's own
+  promos fall to the loud fallback; a reprint with no map takes a per-frame
+  median map. A keep-both merge can let a later sheet override an earlier
+  family that shares a class (the BW Radiant confetti never drew). Screen
+  cannot colour a near-white scan and lifts gold ink to white: paint the
+  Prime frame normal-blend, mask gold lettering out, overlay the gleam. A
+  mirror over ink is multiplied, never dodged. The scans of holo cards
+  carry the printed foil (cosmos dots, Rotom shards, Arceus rings), so
+  judge the added foil against the scan with `.foil, .glare` hidden and
+  measure foil-minus-bare per zone (+20..30 levels in the window is a
+  Rare Holo). `clamp()` in `mask-position` mis-paints in Chromium; an
+  undefined variable in a mask list drops the whole declaration; a
+  `.glare` opacity multiplies its pseudo layers; scale lit layers by
+  `max(1, --foil-strength)` or "intense" does nothing.
 
 ## What has shipped, set by set
 
@@ -429,8 +448,22 @@ Shared finishes:
   Star), [sun-moon-fullart.md](reference/sun-moon-fullart.md),
   [sun-moon-holo-reverse.md](reference/sun-moon-holo-reverse.md) and
   [sun-moon-shiny-vault.md](reference/sun-moon-shiny-vault.md).
-- [reference/bw-fullart.md](reference/bw-fullart.md): Black & White full arts (flat bw1-bw3 and textured bw4-bw10), full-art
-  Supporters, yellow and gold secrets, the gold bw11 Reshiram and Zekrom, the Radiant Collection (`bw-fullart.css`).
+- [reference/xy.md](reference/xy.md): the XY era overview (Sheen holo, not
+  cosmos; Starlight on Evolutions; `xy.css`, `xy-ex.css`, `xy-fullart.css`;
+  what the reviews caught) and the index of its set notes, with the family
+  notes [xy-holo-reverse.md](reference/xy-holo-reverse.md),
+  [xy-ex.md](reference/xy-ex.md) and [xy-fullart.md](reference/xy-fullart.md).
+- [reference/bw.md](reference/bw.md): the Black & White era overview (Tinsel
+  holo, per-type reverse tiles, confetti Radiant Collection; `bw.css`,
+  `bw-ex.css`, `bw-fullart.css`) with
+  [bw-holo-reverse.md](reference/bw-holo-reverse.md),
+  [bw-ex.md](reference/bw-ex.md) and [bw-fullart.md](reference/bw-fullart.md).
+- [reference/dp.md](reference/dp.md): Diamond & Pearl, Platinum, HeartGold &
+  SoulSilver and Call of Legends (no TCG Live maps: every mask is drawn;
+  cosmos window, Mirror reverse, Crosshatch; `dp.css`, `dp-special.css`,
+  `dp-secret.css`) with [dp-holo-reverse.md](reference/dp-holo-reverse.md),
+  [dp-lvx-prime-legend.md](reference/dp-lvx-prime-legend.md) and
+  [dp-secret.md](reference/dp-secret.md).
 - [reference/sv-reverse.md](reference/sv-reverse.md): the Scarlet & Violet
   reverse holos, one pattern per type, and the Mega Evolution mirror
   (`sv-reverse.css`, `scripts/make_sv_reverse.py`).
@@ -509,6 +542,9 @@ gold Hyper Rare), [reference/sv-reverse.md](reference/sv-reverse.md) and
 | `scripts/cosmos_window_maps.py` | Redraws the cosmos promos' drawn window-and-frame maps at TCG Live strength (window at alpha 130, frame full, owner badge cut, the plain print's Live window when it has one); `--all` or `--set <set> --cards <n>` |
 | `scripts/soften_etch.py` | Draws a gold print's soft engraving `assets/foil/maps/<set>/<n>-etch-soft.webp` from its etch map (blurred, curved) and sets `etchSoft` (`--set <set> --all`: every `finish: "scodix"` print) |
 | `scripts/make_glitter_flecks.py` | Draws a seeded glitter tile (`glitter-flecks.webp` dense, `glitter-fine.webp` sparse: `--density 0.03 --seed 4242`) |
+| `scripts/make_xy_window_masks.py`, `make_xy_reverse.py`, `make_xy_safe_maps.py`, `make_xy_ex_safe_maps.py`, `make_xy_mosaic.py`, `make_xy_rc_sparkle.py` | XY era: drawn window masks per frame, the per-type reverse tiles (from Live's `_ph.foil.png`), per-frame median "safe" maps for mapless reprints, the BREAK mosaic and RC sparkle tiles |
+| `scripts/make_bw_tinsel.py`, `make_bw_reverse.py`, `make_bw_brush.py`, `make_bw_ex_safe_maps.py`, `make_bw_rc.py`, `make_bw_rc_matte.py`, `make_bw_rc_sparkle.py` | Black & White era: the Tinsel ridge tile, per-type reverse tiles (`--cache` downloads Live's reverse maps), EX brush streaks and safe maps, the Radiant Collection window and sparkle tiles |
+| `scripts/make_dp_special_masks.py` (and in the repo `scripts/make_dp_window_masks.py`, `make_dp_sp_mask.py`, `make_dp_cosmos.py`, `make_dp_cracked_ice.py`) | Diamond & Pearl generation: LV.X / Prime / LEGEND masks; window masks measured from scan variance, the SP portrait cut, the cosmos and cracked-ice tiles |
 | `scripts/check_asset_overwrites.py` | Lists every file under `assets/` changed in place against master (cached for a year under that name); `--fix` renames each to the next never-used `-vN` and rewrites the references in data, js, css and index.html. The sweep runs it last. |
 | `scripts/check_foil_maps.py` | Flag foil maps that may be swapped between cards |
 | `upstream/` | Unmodified upstream sheets and components, GPL-3 |
@@ -519,6 +555,7 @@ On the site side:
 |---|---|
 | `js/foil-maps.js` | Per-card map, etch, stamp and cast-and-cure classes and variables for `tcgFace()` (shared with the lab) |
 | `css/holo/maps.css` | Foil maps as the mask, the stamp knockout, the `.cure` layer |
+| `js/sm-foil.js`, `js/xy-foil.js`, `js/bw-foil.js`, `js/dp-foil.js`, `js/ex-foil.js`, `js/wotc-foil.js` | One module per older era: `is<Era>`, `<era>Pattern` (the finish classes), `<era>Map` (the map or drawn mask), the reverse finish and extras; hooked from `js/foil-maps.js` and `js/app.js`. Every era-specific rule lives in `css/holo/<era>*.css` keyed by `era-<era>` |
 | `assets/foil/maps/full.webp` | The all-white map full-art prints without a TCG Live map fall back to |
 | `assets/foil/maps/<set>/<n>-etch.webp` | An etched print's etch map: TCG Live's, or drawn from the card (`etchDrawn`, `has-etch-drawn`) |
 | `assets/foil/maps/<set>/<n>-etch-hd.webp` | TCG Live's etch at its native 733 px as a luminance texture (`etchHd`, `--etch-hd`, `has-etch-hd`), for a recipe that draws the rings as an image rather than a mask (Shining Fates' `sf-shiny`) |

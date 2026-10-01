@@ -21,6 +21,258 @@
  * so the rule beats the shared sheets; a resting card paints `.foil` alone.
  * Bump this sheet's ?v= tag in index.html on every change.
  *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
+ * Family j2 (wotc/j2). Photos, sources and the lessons: .claude/skills/card-textures/reference/wotc-ecard-finish.md and
+ * /mnt/project-files/every-era/wotc/texture-refs/j2/SOURCES.txt. Masks: assets/foil/wotc-ecard/ (win-/body-<layout>-v1.webp from
+ * scripts/make_wotc_ecard_masks.py, crystal-<id>-v1.webp from scripts/make_wotc_crystal_masks.py), cosmos tile
+ * assets/foil/wotc-ecard/cosmos-v1.webp (scripts/make_wotc_ecard_cosmos.py). The e-Reader strip, the (c) / illustrator / number line
+ * and the e logo (the bottom 7.5 % of the card) are matte in every finish.
  */
+
+/* ---- shared variables --------------------------------------------------------------------------- */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc {
+  --wotc-cosmos: url("/assets/foil/wotc-ecard/cosmos-v1.webp");
+  --wotc-body: url("/assets/foil/wotc-ecard/body-pokemon-v1.webp");
+  --seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  /* what the dots catch in the tilt clips: cyan and blue lead, white, pink, a little orange and teal */
+  --wotc-spectrum: hsl(188, 100%, 66%), hsl(222, 100%, 74%), hsl(0, 0%, 100%), hsl(320, 95%, 74%), hsl(28, 100%, 68%),
+    hsl(160, 100%, 62%), hsl(188, 100%, 66%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-trainer {
+  --wotc-body: url("/assets/foil/wotc-ecard/body-trainer-v1.webp");
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-energy {
+  --wotc-body: url("/assets/foil/wotc-ecard/body-energy-v1.webp");
+}
+
+/* ---- e-Card Rare Holo: cosmos in the art window -------------------------------------------------
+   Real card (Pokemon Holo tilt clips of Butterfree 5/165, Mewtwo 20/165, Blastoise 4/165, Tentacruel H26, Raichu H25;
+   Collexy flat scans of Alakazam 1/165, Houndoom H11/H32, Butterfree, Crobat): the art window only is foil, frame, name bar,
+   text box and the e-Reader strip stay flat print. The foil is a scatter of small snowflake clusters (plus, asterisk, square,
+   diamond) and single dots, thick in the dark sky and thin over pale ink, each one catching a single colour (cyan, blue, white,
+   pink, orange) that changes as the card tips; between them a faint silver-blue sheen over the window.
+   `.foil` is the group, screened onto the print (light only) and cut to the card's drawn window (has-foil-map, wotcMap()):
+   a pointer pool and a slow colour wash; `::before` the cosmos tile lit in the spectrum; `::after` a white second pass of the
+   same tile gated by a moving band so clusters wink. The scans carry the real card's dots baked in: these layers sit under
+   that, they do not replace it. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-ecard .foil {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(190, 100%, 92%, 0.14) 0%, hsla(205, 90%, 74%, 0.07) 32%, hsla(220, 80%, 60%, 0) 68%),
+    linear-gradient(115deg, hsla(188, 100%, 66%, 0.09), hsla(222, 95%, 72%, 0.07) 30%, hsla(320, 90%, 72%, 0.07) 56%,
+      hsla(28, 100%, 66%, 0.05) 80%, hsla(188, 100%, 66%, 0.09));
+  background-size: 100% 100%, 260% 260%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.2) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal;
+  filter: none;
+  mix-blend-mode: screen;
+  opacity: calc((0.5 + var(--card-opacity) * 0.5) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-ecard:not(.lit):not(.settling) .foil {
+  background-image: linear-gradient(115deg, hsla(190, 90%, 72%, 0.15), hsla(260, 80%, 74%, 0.1) 50%, hsla(188, 100%, 66%, 0.15));
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: calc(0.7 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-ecard .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-ecard .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-ecard .foil::before {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 80%) 40%, hsl(0, 0%, 54%) 100%),
+    linear-gradient(112deg, var(--wotc-spectrum));
+  background-size: 100% 100%, 190% 190%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply;
+  -webkit-mask-image: var(--wotc-cosmos);
+  mask-image: var(--wotc-cosmos);
+  -webkit-mask-size: 140% auto;
+  mask-size: 140% auto;
+  -webkit-mask-position: var(--seed-pos);
+  mask-position: var(--seed-pos);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  filter: brightness(1.25) saturate(1.2);
+  opacity: calc(0.4 + var(--card-opacity) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-ecard .foil::after {
+  background-image: linear-gradient(hsl(0, 0%, 100%), hsl(0, 0%, 100%));
+  -webkit-mask-image: var(--wotc-cosmos), repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  mask-image: var(--wotc-cosmos), repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  -webkit-mask-size: 108% auto, 300% 300%;
+  mask-size: 108% auto, 300% 300%;
+  -webkit-mask-position:
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  mask-position:
+    calc(100% - var(--seed-x, 0.5) * 100%) calc(100% - var(--seed-y, 0.5) * 100%),
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  -webkit-mask-repeat: repeat, repeat;
+  mask-repeat: repeat, repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.4);
+}
+/* the gloss sits on the window only: no sheen over the text box, the strip or the name bar */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-ecard .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(190, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.4);
+  opacity: calc(var(--card-opacity) * 0.4);
+  -webkit-mask-image: var(--art), var(--foil-map);
+  mask-image: var(--art), var(--foil-map);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* ---- e-Card reverse holo: the mirror --------------------------------------------------------------
+   Real card (Pokemon Holo tilt clips of Suicune 37/147, Pinsir 101/147, Mankey 92/147, Venonat and Zubat of Skyridge, the
+   three reverse collections; Collexy flat scans of Butterfree 5/165, Wartortle 92/165, Umbreon 41/147; Bulbapedia's
+   Holofoil page "a flat holographic finish over every aspect of the card aside from its art"): everything but the art window
+   and the matte bottom band is one smooth mirror with no pattern of its own. Tipped, it throws broad smooth bands of colour
+   across the border, the name bar and the text box (violet, blue, cyan, green, yellow, orange, 20 to 30 % of the card each,
+   moving sideways with the tilt, the card's own colour leading: an orange Mankey goes orange and yellow, a water card cyan and
+   violet). Ink stays dark, the picture stays matte, the e-Reader strip stays flat. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-rev-ecard, .wotc-crystal) .foil {
+  background-image:
+    radial-gradient(ellipse 60% 120% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0) 70%),
+    linear-gradient(96deg, transparent 0%, hsla(284, 95%, 68%, 0.6) 3%, hsla(330, 95%, 72%, 0.4) 5%, transparent 9%, transparent 30%,
+      hsla(215, 100%, 70%, 0.5) 33%, hsla(180, 100%, 70%, 0.4) 36%, transparent 40%, transparent 62%, hsla(30, 100%, 68%, 0.5) 66%,
+      hsla(320, 95%, 72%, 0.4) 69%, transparent 73%, transparent 100%),
+    linear-gradient(100deg, hsl(268, 90%, 70%) 0%, hsl(226, 100%, 68%) 13%, hsl(190, 100%, 64%) 27%, hsl(140, 90%, 62%) 41%,
+      hsl(60, 100%, 66%) 55%, hsl(26, 100%, 64%) 69%, hsl(334, 90%, 70%) 84%, hsl(268, 90%, 70%) 100%);
+  background-size: 100% 100%, 330% 100%, 210% 100%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 2.2) + 50%), 100%) 0%,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.6) + 50%), 100%) 0%;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-blend-mode: normal;
+  filter: saturate(1.15);
+  mix-blend-mode: overlay;
+  opacity: calc((0.62 + var(--card-opacity) * 0.38) * var(--foil-strength, 1));
+  clip-path: none;
+  border-radius: 0;
+  -webkit-mask-image: var(--art), var(--wotc-body);
+  mask-image: var(--art), var(--wotc-body);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-rev-ecard, .wotc-crystal):not(.lit):not(.settling) .foil {
+  opacity: calc(0.5 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-rev-ecard, .wotc-crystal) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc:is(.wotc-rev-ecard, .wotc-crystal) .foil::after {
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-rev-ecard .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.55) 8%, hsla(0, 0%, 100%, 0.3) 26%, hsla(0, 0%, 100%, 0.04) 90%);
+  mix-blend-mode: soft-light;
+  filter: none;
+  opacity: calc(var(--card-opacity) * 0.7);
+  -webkit-mask-image: var(--art), var(--wotc-body);
+  mask-image: var(--art), var(--wotc-body);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  mask-mode: alpha, alpha;
+  -webkit-mask-size: contain, 100% 100%;
+  mask-size: contain, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+}
+
+/* ---- Crystal Pokémon (Aquapolis 148-150, Skyridge 145-150) -----------------------------------------
+   Real card (scrydex scans of all nine; Pokemon Holo / PSA / BGS clips of Crystal Charizard 4K, Celebi, Golem, Kingdra,
+   Lugia, Nidoking): the e-Card reverse's mirror runs over the whole card but the art and the strip (the Charizard clip shows the
+   text box throwing a smooth orange / pink / blue rainbow, ink dark) AND the art window carries cosmos, but only in the
+   BACKGROUND: the Pokemon itself is clear (no dots over Charizard's body, Celebi, Kabutops). Each of the nine has its own map,
+   the window times the density of the scan's own sparkle (scripts/make_wotc_crystal_masks.py).
+   `.foil` is the mirror (rule above, shared with the reverse); `.glare` is the cosmos: lit in the spectrum, screened onto the
+   print, cut to the card's map; `.glare::after` winks the same dots white under a moving band. Both show only while the card
+   is lit (the engine hides the glare at rest; the scan's own baked sparkle carries the resting card). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-crystal .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-crystal .foil::after {
+  background-image: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-crystal .glare {
+  background-image:
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 80%) 40%, hsl(0, 0%, 54%) 100%),
+    linear-gradient(112deg, var(--wotc-spectrum));
+  background-size: 100% 100%, 190% 190%;
+  background-position:
+    center,
+    clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 1.5) + 50%), 100%);
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: multiply;
+  mix-blend-mode: screen;
+  filter: brightness(1.25) saturate(1.2);
+  opacity: calc((0.4 + var(--card-opacity) * 0.6) * var(--foil-strength, 1));
+  -webkit-mask-image: var(--wotc-cosmos), var(--foil-map), var(--art);
+  mask-image: var(--wotc-cosmos), var(--foil-map), var(--art);
+  -webkit-mask-composite: source-in, source-in, source-over;
+  mask-composite: intersect, intersect, add;
+  mask-mode: alpha, alpha, alpha;
+  -webkit-mask-size: 140% auto, 100% 100%, contain;
+  mask-size: 140% auto, 100% 100%, contain;
+  -webkit-mask-position: var(--seed-pos), center, center;
+  mask-position: var(--seed-pos), center, center;
+  -webkit-mask-repeat: repeat, no-repeat, no-repeat;
+  mask-repeat: repeat, no-repeat, no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.wotc-crystal .glare::after {
+  background-image: linear-gradient(hsl(0, 0%, 100%), hsl(0, 0%, 100%));
+  -webkit-mask-image: repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  mask-image: repeating-linear-gradient(118deg, transparent 0%, transparent 16%, #000 22%, #000 26%, transparent 32%, transparent 52%);
+  -webkit-mask-size: 300% 300%;
+  mask-size: 300% 300%;
+  -webkit-mask-position: clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  mask-position: clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%);
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: calc(0.5 + var(--pointer-from-center) * 0.4);
+}

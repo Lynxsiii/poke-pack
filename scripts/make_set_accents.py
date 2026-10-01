@@ -173,6 +173,17 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "dptk3b": ("#e8873a", "#5a8de0"),  # Lucario kit: orange to aura blue
     "hgsstk4a": ("#2f8fd9", "#e0605a"),  # Gyarados kit: sea blue to coral red
     "hgsstk4b": ("#f2c230", "#e0793a"),  # Raichu kit: yellow to orange
+    # EX generation (e5): promos, POP Series 1-5, the Trainer Kit half decks
+    "np": ("#e65a5a", "#c9cfdc"),  # Nintendo promos: Nintendo red to silver star
+    "pop1": ("#f09a3a", "#f2d04a"),  # POP 1: Blaziken orange to yellow
+    "pop2": ("#5ec05a", "#d9d04a"),  # POP 2: Venusaur green to yellow
+    "pop3": ("#4fb0e0", "#e8a23a"),  # POP 3: Vaporeon blue to Flareon orange
+    "pop4": ("#a06fd8", "#f0a050"),  # POP 4: Deoxys violet to orange
+    "pop5": ("#e0504a", "#f2c230"),  # POP 5: Ho-Oh red to gold
+    "extk1a": ("#e05a4a", "#f0d9c8"),  # Latias kit: red to cream
+    "extk1b": ("#4a7fe0", "#c8d8f0"),  # Latios kit: blue to pale blue
+    "extk2a": ("#f2c230", "#e0524a"),  # Plusle kit: yellow to red
+    "extk2b": ("#4a9de0", "#f2c230"),  # Minun kit: blue to yellow
     "bw10": ("#ff9a2e", "#3aa0ff"),  # Plasma Blast: wrapper orange to Team Plasma blue
     "bw11": ("#f2b632", "#8f7be8"),  # Legendary Treasures: Radiant gold to Mewtwo violet
     # Diamond & Pearl block (d1)
@@ -187,10 +198,19 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "dp5": ("#2f9be0", "#f2c744"),  # Majestic Dawn: Empoleon blue to logo gold
     "dp6": ("#f08a1c", "#3b82d9"),  # Legends Awakened: wrapper orange to Lucario blue
     "dp7": ("#9a63d6", "#e5533d"),  # Stormfront: storm purple to Infernape red
+    # EX era (e2)
+    "ex5": ("#5aa9d8", "#d9473f"),  # EX Hidden Legends: Metagross steel blue to wrapper logo red
+    "ex6": ("#f08a2a", "#7fcf3c"),  # EX FireRed & LeafGreen: FireRed orange to LeafGreen
+    "ex7": ("#e5532d", "#8a68c8"),  # EX Team Rocket Returns: Rocket R red to wrapper violet
+    "ex8": ("#d7e03a", "#e0483c"),  # EX Deoxys: wrapper lime to logo red
     "neo1": ("#8cc152", "#d9534a"),  # Neo Genesis: Meganium green to the red neo logo
     "neo2": ("#d6a352", "#567ab8"),  # Neo Discovery: temple sand to night blue
     "neo3": ("#d9573a", "#4a86c8"),  # Neo Revelation: wrapper red to ruin blue
     "neo4": ("#9a69cf", "#d6c14a"),  # Neo Destiny: Dark violet to Light gold
+    "ex1": ("#d9433f", "#4a74d9"),  # EX Ruby & Sapphire: ruby red to sapphire blue, the wrapper rays
+    "ex2": ("#e0b43c", "#b8743a"),  # EX Sandstorm: swirling desert gold to bronze foil
+    "ex3": ("#f08a2c", "#6fb4d8"),  # EX Dragon: Rayquaza flame orange to the icy Latios wrapper
+    "ex4": ("#e0553a", "#2f9fd0"),  # EX Team Magma vs Team Aqua: magma red to aqua blue
     # EX era (e4)
     "ex13": ("#b665d4", "#e8742f"),  # Holon Phantoms: Mewtwo wrapper violet to Zangoose orange
     "ex14": ("#46b4e0", "#ee8a2e"),  # Crystal Guardians: ice-crystal blue to Charizard flame orange

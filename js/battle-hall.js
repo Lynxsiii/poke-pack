@@ -10,6 +10,7 @@ import { esc, coins, coinTag, icon, wrapperArt, setById, seatAvatar } from "./ba
 import { battlesArtHTML } from "./casino-kit.js";
 import { setIdentity } from "./catalog.js";
 import { tintFrom } from "./fx.js";
+import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 import { BOT_PERSONAS } from "./battle-rules.js";
 
 const POLL_MS = 5000;
@@ -182,6 +183,19 @@ export function createHall(ctx) {
   let shownEntry = 0;
 
   const user = () => (typeof ctx.user === "function" ? ctx.user() : null);
+  // Level gate (js/levels.js GATES): shut for a level-too-low player who is not seated at any table listed.
+  const lock = () => (Array.isArray(listing) ? gateLock("battles", user(), listing.some((b) => isMine(b))) : null);
+  // The notice follows the table list: it can only be right once we know whether the player sits at any table.
+  let gateSig = "";
+  const sigOf = (lk) => (lk ? `${lk.key}:${lk.level}` : "");
+  function paintGate() {
+    const head = root.querySelector(".hl-hall > .hl-head");
+    const lk = lock();
+    if (!head || sigOf(lk) === gateSig) return;
+    gateSig = sigOf(lk);
+    head.parentElement.querySelector(":scope > .gate-lock")?.remove();
+    head.insertAdjacentHTML("afterend", gateNoticeHTML(lk));
+  }
   const signedIn = () => Boolean(user()?.id);
   const balance = () => Number(ctx.coins?.() ?? 0);
   const track = (anim) => {
@@ -278,11 +292,13 @@ export function createHall(ctx) {
 
   function renderHall(entrance) {
     const p = quickProduct();
+    gateSig = sigOf(lock());
     root.innerHTML = `<div class="hl-hall">
       <header class="hl-head">
         <h1 class="page-title">Pack battles</h1>
         <p class="hl-lede">Same packs for everyone. Best pulls take the lot.</p>
       </header>
+      ${gateNoticeHTML(lock())}
       <section class="hl-quick bleed" aria-labelledby="hl-quick-name">
         <div class="hl-quick-inner">
           <div class="hl-stage${entrance && motion() ? " is-entering" : ""}">
@@ -513,6 +529,11 @@ export function createHall(ctx) {
       ctx.signIn?.();
       return;
     }
+    if (lock()) {
+      quick.msg = esc(gateRefusal(lock()));
+      paintQuickMsg();
+      return;
+    }
     if (balance() + 1e-9 < Number(p.price)) {
       quick.msg = `You need ${coinTag(Number(p.price) - balance())} more for this entry. Try a cheaper pack, or come back after your daily claim.`;
       paintQuickMsg();
@@ -582,6 +603,7 @@ export function createHall(ctx) {
       if (listInFlight === token) listInFlight = 0;
     }
     paintTables();
+    if (token === gen && visible && mode === "list") paintGate();
     if (token === gen && visible && mode === "list") {
       stopPoll();
       pollTimer = setTimeout(tick, POLL_MS);
@@ -759,6 +781,7 @@ export function createHall(ctx) {
         <h1 class="page-title">Build a battle</h1>
         <p class="hl-lede">Pick what everyone opens. Same lineup, same odds.</p>
       </header>
+      ${gateNoticeHTML(lock())}
       <nav class="hl-words hl-steps" aria-label="Builder steps">
         <button type="button" class="hl-word${step === "shelf" ? " on" : ""}" data-hall="step" data-step="shelf" aria-current="${step === "shelf" ? "step" : "false"}">Lineup${count ? ` <span class="hl-step-n">${count}</span>` : ""}</button>
         <button type="button" class="hl-word${step === "rules" ? " on" : ""}" data-hall="step" data-step="rules" aria-current="${step === "rules" ? "step" : "false"}" ${builder.lineup.length ? "" : "disabled"}>Rules</button>
@@ -1035,6 +1058,11 @@ export function createHall(ctx) {
     if (create.busy || !catalog || !builder.lineup.length) return;
     if (!signedIn()) {
       ctx.signIn?.();
+      return;
+    }
+    if (lock()) {
+      create.msg = esc(gateRefusal(lock()));
+      paintTray();
       return;
     }
     const t = totals();

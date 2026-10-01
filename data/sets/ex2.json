@@ -1,0 +1,27 @@
+{
+  "id": "ex2",
+  "name": "EX Sandstorm",
+  "series": "ex",
+  "slug": "sandstorm",
+  "scrydexId": "ex2",
+  "era": "ex",
+  "artSlug": "ex-sandstorm",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1392,
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Sandstorm Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98564,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text)."
+    }
+  ]
+}

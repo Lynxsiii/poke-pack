@@ -1,0 +1,140 @@
+/* The mastery banner: a set's logo, wrapper and chase card laid out like the
+   pack wall, lit in the set's two colours. Markup comes from
+   js/mastery-banner.js (masteryBannerHtml, bannerBlockHtml).
+
+   Sizing is in container units (cqh, cqw) of the banner itself, so one set of
+   rules reads at 72px (a picker thumbnail), 150px (a phone header) and 210px
+   (a desktop header). The host gives the banner its height; everything else
+   follows. Colour comes from --b1 and --b2 like every banner.
+
+   Cheap to paint: images are lazy, the only moving parts are two transforms,
+   and nothing uses blend modes or SVG filters. Both loops are off under
+   body.no-motion and prefers-reduced-motion. */
+
+.mbn {
+  --bed: color-mix(in oklab, var(--b1, #9b6dff) 17%, #0a0910);
+  --bed-2: color-mix(in oklab, var(--b2, #5fd4ff) 11%, #0a0910);
+  position: relative; display: block; min-height: 44px; overflow: hidden; isolation: isolate;
+  container-type: size; contain: paint;
+  background: linear-gradient(180deg, var(--bed), var(--bed-2));
+}
+.mbn-bed { position: absolute; inset: 0; z-index: 0; }
+
+/* The chase card, cropped to its illustration and let go to the left. */
+.mbn-card {
+  position: absolute; z-index: 1; top: -38cqh; right: -14cqh; width: max(190cqh, 44cqw); height: auto;
+  opacity: 0.74; transform: rotate(6deg); transform-origin: 50% 40%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 2%, #000 50%);
+  mask-image: linear-gradient(90deg, transparent 2%, #000 50%);
+  pointer-events: none; user-select: none;
+}
+
+/* The light: a dark ramp under the logo, the set's colours spilling up from the
+   floor and down from the top right corner. */
+.mbn-light {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--bed) 0%, color-mix(in oklab, var(--bed) 78%, transparent) 24%, transparent 60%),
+    radial-gradient(72cqh 104cqh at 82% 114%, color-mix(in oklab, var(--b1, #9b6dff) 74%, transparent), transparent 72%),
+    radial-gradient(64cqh 92cqh at 100% -6%, color-mix(in oklab, var(--b2, #5fd4ff) 58%, transparent), transparent 74%);
+}
+
+/* The wrapper, standing on the shelf and leaning like a pack that has been picked up and put back. */
+.mbn-pack {
+  position: absolute; z-index: 3; display: block; right: 15cqh; bottom: -2cqh; height: 86cqh; aspect-ratio: 180 / 323;
+  transform: rotate(7deg); transform-origin: 50% 100%;
+  animation: mbn-lean 9s ease-in-out infinite alternate;
+}
+.mbn-pack::before {
+  content: ""; position: absolute; z-index: -1; left: -34%; right: -34%; bottom: -3%; height: 16%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--b1, #9b6dff) 70%, #000), transparent);
+  opacity: 0.8;
+}
+.mbn-pack img {
+  display: block; width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 1.4cqh 2cqh rgba(0, 0, 0, 0.6));
+  pointer-events: none; user-select: none;
+}
+
+.mbn-logo {
+  position: absolute; z-index: 4; left: 7cqh; top: 13cqh; width: auto; height: 27cqh;
+  max-width: min(46cqw, 120cqh); object-fit: contain; object-position: left center;
+  filter: drop-shadow(0 0.4cqh 1.2cqh rgba(0, 0, 0, 0.75));
+  pointer-events: none; user-select: none;
+}
+
+/* A rubber stamp: square, double-ruled, slightly crooked. */
+.mbn-stamp {
+  position: absolute; z-index: 5; right: 66cqh; bottom: 40cqh; padding: 0.16em 0.5em 0.2em;
+  border: 0.14em solid currentColor; border-radius: 2px;
+  box-shadow: inset 0 0 0 0.11em color-mix(in oklab, var(--bed) 80%, transparent), inset 0 0 0 0.16em currentColor;
+  color: color-mix(in oklab, var(--b1, #f2c14e) 62%, #fff);
+  background: color-mix(in oklab, var(--bed) 70%, transparent);
+  font: 800 clamp(9px, 9.5cqh, 15px) / 1 "Bricolage Grotesque", system-ui, sans-serif;
+  font-variation-settings: "opsz" 24, "wdth" 82;
+  text-transform: uppercase; transform: rotate(-6deg); transform-origin: 100% 100%;
+  pointer-events: none;
+}
+
+/* A slow band of light, once in a while. */
+.mbn::after {
+  content: ""; position: absolute; z-index: 6; inset: 0 auto 0 0; width: 30%; pointer-events: none;
+  background: linear-gradient(105deg, transparent 22%, rgba(255, 255, 255, 0.13) 50%, transparent 78%);
+  transform: translate3d(-150%, 0, 0) skewX(-18deg);
+  will-change: transform;
+  animation: mbn-sweep 13s cubic-bezier(0.45, 0, 0.3, 1) infinite;
+}
+@keyframes mbn-sweep {
+  0%, 58% { transform: translate3d(-150%, 0, 0) skewX(-18deg); }
+  100% { transform: translate3d(420%, 0, 0) skewX(-18deg); }
+}
+@keyframes mbn-lean {
+  from { transform: rotate(7deg) translate3d(0, 0, 0); }
+  to { transform: rotate(6deg) translate3d(0, -1.4cqh, 0); }
+}
+
+/* ---- No wrapper (promo sets): the card carries the right side ------------- */
+.mbn[data-pack="0"] .mbn-card { top: -44cqh; right: 4cqh; width: max(200cqh, 46cqw); opacity: 0.86; }
+
+/* ---- No card art (a set that is not in set-chase.js yet) -------------------- */
+.mbn[data-card="0"] .mbn-light {
+  background:
+    linear-gradient(90deg, var(--bed) 0%, transparent 70%),
+    radial-gradient(90cqh 130cqh at 76% 118%, color-mix(in oklab, var(--b1, #9b6dff) 80%, transparent), transparent 74%),
+    radial-gradient(80cqh 110cqh at 100% -6%, color-mix(in oklab, var(--b2, #5fd4ff) 64%, transparent), transparent 74%);
+}
+
+/* ---- Wide: a banner on a shelf, a little lower than a header ----------------- */
+.mbn[data-variant="wide"] .mbn-logo { top: 14cqh; height: 34cqh; }
+.mbn[data-variant="wide"] .mbn-stamp { bottom: 34cqh; }
+/* No wrapper: the stamp sits at the foot of the card instead. */
+.mbn[data-pack="0"] .mbn-stamp { right: 8cqh; bottom: 36cqh; }
+
+/* ---- Tile: card and logo only. A shelf of these has to stay cheap. ------------ */
+.mbn[data-variant="tile"] .mbn-card { top: -44cqh; right: -10cqh; width: 232cqh; opacity: 0.8; transform: rotate(4deg); }
+.mbn[data-variant="tile"] .mbn-logo { top: 12cqh; left: 8cqh; height: 34cqh; max-width: 50cqw; }
+.mbn[data-variant="tile"]::after { display: none; }
+
+/* ---- Hosts ------------------------------------------------------------------- */
+/* The account and profile header: account.css fades the foot into the page. The
+   composed banner needs a longer hold before the fade so the wrapper reads. */
+:is(#view-account, #view-profile) .acct-banner.mbn {
+  -webkit-mask-image: linear-gradient(180deg, #000 56%, rgba(0, 0, 0, 0.5) 82%, transparent);
+  mask-image: linear-gradient(180deg, #000 56%, rgba(0, 0, 0, 0.5) 82%, transparent);
+}
+.tip-banner.mbn { height: 84px; }
+.tip-banner.mbn .mbn-stamp { display: none; }
+/* A swatch holds still. */
+.mbn.is-still::after, .mbn.is-still .mbn-pack { animation: none; }
+.mbn.is-still::after { display: none; }
+
+/* ---- Motion off ----------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .mbn::after { display: none; animation: none; }
+  .mbn-pack { animation: none; }
+}
+body.no-motion .mbn::after { display: none; animation: none; }
+body.no-motion .mbn-pack { animation: none; }
+
+/* Banners that end in a hard edge (the Mastery panel, a profile shelf) let the wrapper stand clear of it. */
+.qm-hero-art .mbn-pack, .msh-art .mbn-pack { bottom: 7cqh; height: 80cqh; }

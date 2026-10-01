@@ -1,0 +1,574 @@
+/* The binder as an object: cover materials, hardware, name plate, sleeves and page tones.
+   Loads after css/pages/collection.css and css/binder/textures.css (the generated SVG tiles
+   as --bt-* variables), before css/binder/editions.css. Everything here is painted once and
+   left still: gradients, a few tiny filter-free SVG tiles, no animation, no will-change, no
+   backdrop-filter. The cards inside are real .tcg faces: nothing here puts an outline, shadow
+   or transform on one.
+
+   Markup (js/binder-object.js):
+     .binder-object[data-material][data-hardware][data-pockets][data-page][data-edition][data-plate]
+       .binder-cover      all material art; .binder-fx (animated editions) sits inside it
+       .binder-hardware   the spine: crease and rings on a facing spread, the zip pull
+       .binder-plate      the name label
+       .binder-spread     the .binder-page blocks
+   Variables (resolveBinderLook): --b-main --b-deep --b-light --b-accent --b-on --b-page --b-pocket,
+   and --b-plate / --b-plate-ink from binder-object.js (a label that reads on any cover).
+
+   A "bare" binder (material classic, no edition) matches none of the cover rules, so the
+   classic look is exactly the nine-pocket page in its well, as it always was. Below,
+   :not([data-material="classic"][data-edition=""]) means "has a cover".
+
+   The cover is the star: it shows as a wide frame round the pages. On a phone the leaves
+   stack inside it, each with its own ring edge on the left (the rings sit on the spine side
+   of the cover, a slim arch just crossing onto the page); from 860px the two pages face each
+   other with the rings down the gutter. data-leaves="1" asks for the stacked layout at any
+   width (a single page on a profile). */
+
+/* ---- The cover: a frame round the pages ---------------------------------------------------- */
+.binder-object:not([data-material="classic"][data-edition=""]) {
+  --cv-r: 18px;          /* cover corner */
+  --pg-r: 8px;           /* page corner */
+  --f-t: 30px;           /* the cover showing above, right, below and left of the pages */
+  --f-r: 22px;
+  --f-b: 34px;
+  --f-l: 22px;
+  --stitch: 10px;        /* how far in the stitching runs */
+  --gut: 30px;           /* gap between facing pages: the spine */
+  --stitch-c: var(--b-accent);
+  /* shading: black at a few strengths. On a pale cover (--b-lum high) the shade turns into a deep
+     tone of the cover and thins out, so Bone stays bone and not a grey stone; --veil washes the
+     cover colour back over a grained texture for the same reason. */
+  --ease: 0;
+  --sh12: rgba(0, 0, 0, 0.12);
+  --sh22: rgba(0, 0, 0, 0.22);
+  --sh26: rgba(0, 0, 0, 0.26);
+  --sh34: rgba(0, 0, 0, 0.34);
+  --sh50: rgba(0, 0, 0, 0.5);
+  --veil: transparent;
+  --wash: rgba(7, 7, 10, 0.5);
+  position: relative;
+  isolation: isolate;
+  padding: var(--f-t) var(--f-r) var(--f-b) var(--f-l);
+  border-radius: var(--cv-r);
+}
+@supports (color: color-mix(in srgb, red, blue)) {
+  .binder-object:not([data-material="classic"][data-edition=""]) {
+    /* 0 on a dark cover, 1 from about Sky up */
+    --ease: clamp(0, calc((var(--b-lum, 0) - 0.05) / 0.4), 1);
+    --sh: color-mix(in srgb, var(--b-deep) calc(var(--ease) * 100%), #000);
+    --shf: calc(1 - 0.7 * var(--ease));
+    --sh12: color-mix(in srgb, var(--sh) calc(12% * var(--shf)), transparent);
+    --sh22: color-mix(in srgb, var(--sh) calc(22% * var(--shf)), transparent);
+    --sh26: color-mix(in srgb, var(--sh) calc(26% * var(--shf)), transparent);
+    --sh34: color-mix(in srgb, var(--sh) calc(34% * var(--shf)), transparent);
+    --sh50: color-mix(in srgb, var(--sh) calc(50% * var(--shf)), transparent);
+    --veil: color-mix(in srgb, var(--b-main) calc(var(--ease) * 64%), transparent);
+    --wash: color-mix(in srgb, #07070a calc(50% * (1 - 0.9 * var(--ease))), transparent);
+    /* a stitch in a mix of the accent and the cover, so a loud accent never shouts; on a pale cover
+       it leans on the deep tone instead, so the thread still reads */
+    --stitch-c: color-mix(in srgb, var(--b-accent) calc(55% - 10% * var(--ease)), color-mix(in srgb, var(--b-deep) calc(var(--ease) * 100%), var(--b-main)));
+  }
+}
+.binder-object[data-plate]:not([data-material="classic"][data-edition=""]) { --f-t: 56px; }
+.binder-object[data-hardware="rings"]:not([data-material="classic"][data-edition=""]),
+.binder-object[data-hardware="brass"]:not([data-material="classic"][data-edition=""]),
+.binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]) { --f-l: 34px; }
+@media (max-width: 374px) {
+  .binder-object:not([data-material="classic"][data-edition=""]) { --f-r: 16px; }
+  .binder-object[data-hardware="rings"]:not([data-material="classic"][data-edition=""]),
+  .binder-object[data-hardware="brass"]:not([data-material="classic"][data-edition=""]),
+  .binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]) { --f-l: 30px; }
+}
+
+.binder-object[data-material="classic"][data-edition=""] > .binder-cover,
+.binder-object[data-material="classic"][data-edition=""] > .binder-hardware,
+.binder-object[data-material="classic"][data-edition=""] > .binder-plate { display: none; }
+
+.binder-object > .binder-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+  background-color: var(--b-main);
+  box-shadow: 0 14px 22px -12px rgba(0, 0, 0, 0.8), 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+.binder-object > .binder-cover::before,
+.binder-object > .binder-cover::after { content: ""; position: absolute; pointer-events: none; }
+/* stitching and trim sit above an animated edition's layer, the way thread sits on a print */
+.binder-object > .binder-cover::before { z-index: 2; }
+.binder-object > .binder-cover > .binder-fx { position: absolute; inset: 0; }
+.binder-object:not([data-material="classic"][data-edition=""]) > .binder-spread { position: relative; z-index: 2; gap: 20px; }
+
+/* ---- Leather: big pebbled grain, a pressed channel, stitching ------------------------------- */
+.binder-object[data-material="leather"] { --cv-r: 18px; }
+.binder-object[data-material="leather"] > .binder-cover {
+  background:
+    linear-gradient(var(--veil), var(--veil)),
+    var(--bt-pebble) 0 0 / 72px 72px,
+    radial-gradient(120% 70% at 15% 0%, rgba(255, 255, 255, 0.14), transparent 60%),
+    radial-gradient(140% 100% at 50% 50%, transparent 55%, var(--sh26)),
+    var(--b-main);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.34),
+    inset 0 0 0 1px var(--sh50),
+    inset 0 0 0 3px var(--sh12),
+    inset 0 -4px 7px var(--sh34),
+    0 14px 22px -12px rgba(0, 0, 0, 0.8), 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+.binder-object[data-material="leather"] > .binder-cover::before {
+  inset: var(--stitch);
+  border: 1.7px dashed var(--stitch-c);
+  border-radius: 6px;
+}
+/* the channel pressed into the hide beside the stitching */
+.binder-object[data-material="leather"] > .binder-cover::after {
+  inset: calc(var(--stitch) - 5px);
+  border: 2px solid var(--sh26);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 1px 2px var(--sh34), inset 0 -1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* ---- Cloth: woven linen, a sewn binding tape on the edge --------------------------------------- */
+.binder-object[data-material="cloth"] { --cv-r: 14px; --stitch: 4px; }
+.binder-object[data-material="cloth"] > .binder-cover {
+  background:
+    var(--bt-weave) 0 0 / 16px 16px,
+    var(--bt-slub) 0 0 / 96px 96px,
+    linear-gradient(160deg, rgba(255, 255, 255, 0.1), transparent 45%, rgba(0, 0, 0, 0.2)),
+    var(--b-main);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4), 0 14px 22px -12px rgba(0, 0, 0, 0.8), 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+.binder-object[data-material="cloth"] > .binder-cover::before {
+  inset: var(--stitch);
+  border: 1.6px dashed var(--stitch-c);
+  border-radius: 6px;
+}
+.binder-object[data-material="cloth"] > .binder-cover::after {
+  inset: 0;
+  border: 9px solid rgba(0, 0, 0, 0.24);
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14), inset 0 2px 3px rgba(0, 0, 0, 0.28);
+}
+
+/* ---- Soft-touch: matte plastic, a moulded rim, no grain --------------------------------------- */
+.binder-object[data-material="matte"] { --cv-r: 24px; --pg-r: 12px; }
+.binder-object[data-material="matte"] > .binder-cover {
+  background:
+    radial-gradient(130% 80% at 18% 0%, rgba(255, 255, 255, 0.12), transparent 62%),
+    linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.22)),
+    var(--b-main);
+  box-shadow:
+    inset 0 3px 7px rgba(255, 255, 255, 0.07),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 14px 22px -12px rgba(0, 0, 0, 0.8), 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+.binder-object[data-material="matte"] > .binder-cover::before {
+  inset: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  border-radius: calc(var(--cv-r) - 7px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* ---- Gloss: lacquer, hard reflections, a bright rim ------------------------------------------- */
+.binder-object[data-material="gloss"] { --cv-r: 22px; --pg-r: 10px; }
+.binder-object[data-material="gloss"] > .binder-cover {
+  /* lacquer shows one soft window of light, and a faint ghost of it further over */
+  background:
+    linear-gradient(112deg, transparent 56%, rgba(255, 255, 255, 0.05) 62%, rgba(255, 255, 255, 0.05) 68%, transparent 74%),
+    linear-gradient(112deg, transparent 14%, rgba(255, 255, 255, 0.18) 24%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0.18) 38%, transparent 48%),
+    linear-gradient(112deg, rgba(255, 255, 255, 0.16), transparent 20%),
+    linear-gradient(180deg, transparent 45%, var(--sh34)),
+    var(--b-main);
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 -4px 7px var(--sh34),
+    0 14px 22px -12px rgba(0, 0, 0, 0.8), 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+.binder-object[data-material="gloss"] > .binder-cover::before {
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.6), transparent 30%) top / 100% 2px no-repeat,
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 24%) left / 2px 100% no-repeat;
+}
+
+/* ---- Suede: a napped surface that catches light one way, worn dark at the edge ------------------ */
+.binder-object[data-material="suede"] { --cv-r: 18px; }
+.binder-object[data-material="suede"] > .binder-cover {
+  /* no contrast thread on suede: the nap does the talking, lit from the upper left and brushed one way */
+  background:
+    linear-gradient(var(--veil), var(--veil)),
+    var(--bt-nap) 0 0 / 96px 96px,
+    linear-gradient(104deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04) 30%, transparent 46%, var(--sh12) 78%, var(--sh22)),
+    var(--b-main);
+  box-shadow:
+    inset 0 0 22px var(--sh50),
+    inset 0 0 0 2px var(--sh26),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.1),
+    0 14px 22px -12px rgba(0, 0, 0, 0.8), 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+/* a few long strokes of the nap, laid the same way, catching the light */
+.binder-object[data-material="suede"] > .binder-cover::before {
+  inset: 0;
+  border-radius: inherit;
+  background: repeating-linear-gradient(104deg, transparent 0 11px, rgba(255, 255, 255, 0.045) 11px 12px, transparent 12px 19px, rgba(0, 0, 0, 0.04) 19px 20px);
+}
+
+/* ---- Carbon: fine 2x2 twill under clear coat, hard glints, a pinstripe ----------------------------- */
+.binder-object[data-material="carbon"] { --cv-r: 12px; --pg-r: 6px; }
+.binder-object[data-material="carbon"] > .binder-cover {
+  /* the cover colour is the clear coat's tint: the weave stays dark under a wash of it */
+  background:
+    linear-gradient(118deg, transparent 52%, rgba(255, 255, 255, 0.14) 52.3%, rgba(255, 255, 255, 0.14) 57%, transparent 57.3%),
+    linear-gradient(118deg, transparent 20%, rgba(255, 255, 255, 0.26) 22%, rgba(255, 255, 255, 0.06) 27%, transparent 31%),
+    var(--bt-twill) 0 0 / 16px 16px,
+    linear-gradient(160deg, rgba(255, 255, 255, 0.1), transparent 40%),
+    linear-gradient(var(--wash), var(--wash)),
+    var(--b-main);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.7),
+    inset 0 2px 5px rgba(255, 255, 255, 0.2),
+    0 14px 22px -12px rgba(0, 0, 0, 0.85), 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+.binder-object[data-material="carbon"] > .binder-cover::before {
+  inset: 8px;
+  border: 1.5px solid var(--stitch-c);
+  border-radius: 6px;
+  opacity: 0.95;
+}
+
+/* ---- Denim: diagonal twill and yarn streaks, a double row of contrast thread ------------------------ */
+.binder-object[data-material="denim"] { --cv-r: 16px; --stitch: 9px; }
+.binder-object[data-material="denim"] > .binder-cover {
+  background:
+    linear-gradient(var(--veil), var(--veil)),
+    var(--bt-denim-streak) 0 0 / 128px 128px,
+    var(--bt-denim-twill) 0 0 / 24px 48px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09), transparent 24%, transparent 76%, rgba(255, 255, 255, 0.09)),
+    var(--b-main);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.34), inset 0 0 14px rgba(0, 0, 0, 0.22), 0 14px 22px -12px rgba(0, 0, 0, 0.8), 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+.binder-object[data-material="denim"] > .binder-cover::before,
+.binder-object[data-material="denim"] > .binder-cover::after {
+  border: 2.3px dashed color-mix(in srgb, var(--b-accent) 78%, var(--b-main));
+  border: 2.3px dashed var(--stitch-c);
+}
+.binder-object[data-material="denim"] > .binder-cover::before {
+  inset: var(--stitch);
+  border-radius: 6px;
+}
+.binder-object[data-material="denim"] > .binder-cover::after {
+  inset: calc(var(--stitch) + 6px);
+  border-radius: 5px;
+  z-index: 2;
+}
+
+/* ---- Brushed metal: anodised aluminium, bands of light across the grain, a machined edge, screws -- */
+.binder-object[data-material="brushed"] { --cv-r: 10px; --pg-r: 4px; }
+.binder-object[data-material="brushed"] > .binder-cover {
+  background:
+    var(--bt-brush) 0 0 / 256px 96px,
+    conic-gradient(from 195deg at 20% 118%, transparent 0deg, rgba(255, 255, 255, 0.38) 20deg, transparent 44deg, var(--sh26) 78deg, rgba(255, 255, 255, 0.28) 112deg, transparent 150deg, var(--sh12) 176deg),
+    conic-gradient(from 165deg at 88% -18%, transparent 0deg, rgba(255, 255, 255, 0.34) 18deg, transparent 42deg, var(--sh22) 76deg, rgba(255, 255, 255, 0.2) 104deg, transparent 138deg),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 45%, var(--sh22)),
+    var(--b-main);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    inset 0 0 0 2px var(--sh50),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.2),
+    inset 0 -4px 5px var(--sh26),
+    0 14px 22px -12px rgba(0, 0, 0, 0.8), 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+.binder-object[data-material="brushed"] > .binder-cover::before {
+  inset: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.36);
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.binder-object[data-material="brushed"] > .binder-cover::after {
+  inset: 0;
+  background:
+    radial-gradient(circle 5px at 15px 15px, #f4f5f7 0 1px, #a3a8b0 2.2px, #4c5058 4px, transparent 5px),
+    radial-gradient(circle 5px at calc(100% - 15px) 15px, #f4f5f7 0 1px, #a3a8b0 2.2px, #4c5058 4px, transparent 5px),
+    radial-gradient(circle 5px at 15px calc(100% - 15px), #f4f5f7 0 1px, #a3a8b0 2.2px, #4c5058 4px, transparent 5px),
+    radial-gradient(circle 5px at calc(100% - 15px) calc(100% - 15px), #f4f5f7 0 1px, #a3a8b0 2.2px, #4c5058 4px, transparent 5px);
+}
+
+/* ---- Pages inside a cover: sheets lying on the material --------------------------------------- */
+.binder-object:not([data-material="classic"][data-edition=""]) .binder-page {
+  padding: 14px 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--pg-r);
+  background: var(--b-page);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 2px 0 rgba(0, 0, 0, 0.4), 0 8px 14px -8px rgba(0, 0, 0, 0.75);
+}
+/* hardware-less and zipped leaves still fold at their left edge */
+.binder-object[data-hardware="none"]:not([data-material="classic"][data-edition=""]) .binder-page,
+.binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) .binder-page {
+  box-shadow: inset 7px 0 8px -6px rgba(0, 0, 0, 0.55), 0 2px 0 rgba(0, 0, 0, 0.4), 0 8px 14px -8px rgba(0, 0, 0, 0.75);
+}
+
+/* ---- Hardware ---------------------------------------------------------------------------------- */
+/* Stacked leaves: each page carries its own ring edge, three rings down its left. The rings sit
+   on the cover's spine side and just cross onto the page, so the pockets keep their width. */
+.binder-object > .binder-hardware { display: none; }
+.binder-object[data-hardware="rings"]:not([data-material="classic"][data-edition=""]) .binder-page,
+.binder-object[data-hardware="brass"]:not([data-material="classic"][data-edition=""]) .binder-page,
+.binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]) .binder-page { padding-left: 17px; }
+.binder-object[data-hardware="rings"]:not([data-material="classic"][data-edition=""]) .binder-page::before,
+.binder-object[data-hardware="brass"]:not([data-material="classic"][data-edition=""]) .binder-page::before,
+.binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]) .binder-page::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 8px;
+  bottom: 8px;
+  left: calc(var(--f-l) * -1 - 1px);   /* the tile starts at the cover's edge; its page edge falls at 34px */
+  width: 44px;
+  pointer-events: none;
+  background-repeat: repeat-y;
+  background-size: 44px 33.3333%;
+}
+.binder-object[data-hardware="rings"]:not([data-material="classic"][data-edition=""]) .binder-page::before { background-image: var(--bt-ring-silver); }
+.binder-object[data-hardware="brass"]:not([data-material="classic"][data-edition=""]) .binder-page::before { background-image: var(--bt-ring-brass); }
+.binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]) .binder-page::before { background-image: var(--bt-ring-black); }
+
+/* Zip around: a woven tape 8px wide, in a deep tone of the cover, round the edge, a chain of teeth
+   down its middle, tight coil at the corners, and the pull lying along the top right. The cover's
+   own stitching steps aside; its grain, light and edge show on both sides of the tape.
+     cover::before  the tape (a border) and the corner coils
+     cover::after   the four straight runs of teeth, the corners masked out
+     .binder-hardware  the slider and pull */
+.binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) {
+  --cv-r: 12px;
+  --zip-tape: #1b1b20;
+}
+@supports (color: color-mix(in srgb, red, blue)) {
+  .binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) {
+    --zip-tape: color-mix(in srgb, var(--b-deep) 80%, #0e0e12);
+  }
+}
+.binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) > .binder-cover::before,
+.binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) > .binder-cover::after {
+  opacity: 1;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) > .binder-cover::before {
+  inset: 3px;
+  z-index: 3;
+  border: 8px solid var(--zip-tape);
+  border-radius: calc(var(--cv-r) - 3px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.55), 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+.binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) > .binder-cover::after {
+  inset: 0;
+  z-index: 4;
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 14px 6px, 14px 6px, 6px 14px, 6px 14px;
+  background-position: 0 4px, 0 calc(100% - 4px), 4px 0, calc(100% - 4px) 0;
+  background-image: var(--bt-zip-h), var(--bt-zip-h), var(--bt-zip-v), var(--bt-zip-v);
+  /* straights only: the corner squares are left to the coils */
+  -webkit-mask: linear-gradient(#000, #000) var(--cv-r) 0 / calc(100% - 2 * var(--cv-r)) 100% no-repeat, linear-gradient(#000, #000) 0 var(--cv-r) / 100% calc(100% - 2 * var(--cv-r)) no-repeat;
+  mask: linear-gradient(#000, #000) var(--cv-r) 0 / calc(100% - 2 * var(--cv-r)) 100% no-repeat, linear-gradient(#000, #000) 0 var(--cv-r) / 100% calc(100% - 2 * var(--cv-r)) no-repeat;
+}
+.binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) > .binder-hardware {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: var(--bt-zip-pull) right 30px top 0 / 48px 22px no-repeat;
+}
+/* the chain turning each corner: a coil, the arc 9px across, over the tape's corner */
+.binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]) > .binder-hardware::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background-repeat: no-repeat;
+  background-size: 9px 9px;
+  background-position: left top, right top, left bottom, right bottom;
+  background-image:
+    radial-gradient(circle at 100% 100%, transparent 1.8px, #2c2f35 2.1px, #9aa0a9 3px, #f1f3f6 4.4px, #b4bac2 5.6px, #5d626b 7.2px, #23252a 7.9px, transparent 8.3px),
+    radial-gradient(circle at 0 100%, transparent 1.8px, #2c2f35 2.1px, #9aa0a9 3px, #f1f3f6 4.4px, #b4bac2 5.6px, #5d626b 7.2px, #23252a 7.9px, transparent 8.3px),
+    radial-gradient(circle at 100% 0, transparent 1.8px, #2c2f35 2.1px, #9aa0a9 3px, #f1f3f6 4.4px, #b4bac2 5.6px, #5d626b 7.2px, #23252a 7.9px, transparent 8.3px),
+    radial-gradient(circle at 0 0, transparent 1.8px, #2c2f35 2.1px, #9aa0a9 3px, #f1f3f6 4.4px, #b4bac2 5.6px, #5d626b 7.2px, #23252a 7.9px, transparent 8.3px);
+}
+
+/* ---- Name plate: a label in the top band, never over the pages --------------------------------- */
+.binder-object > .binder-plate {
+  position: absolute;
+  z-index: 4;
+  top: 15px;
+  left: calc(var(--f-l) + 2px);
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  max-width: calc(100% - var(--f-l) - var(--f-r) - 4px);
+  height: 26px;
+  padding: 0 12px;
+  border-radius: 3px;
+  background: var(--b-plate, var(--b-on));
+  background: color-mix(in srgb, var(--b-plate, var(--b-on)) 90%, var(--b-main));
+  color: var(--b-plate-ink, var(--b-deep));
+  font-size: 14px;
+  font-weight: 640;
+  line-height: 1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+.binder-object > .binder-plate > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.binder-object[data-hardware="zip"] > .binder-plate { top: 19px; left: calc(var(--f-l) + 2px); }
+.binder-object[data-material="leather"] > .binder-plate,
+.binder-object[data-material="suede"] > .binder-plate,
+.binder-object[data-material="cloth"] > .binder-plate {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+.binder-object[data-material="leather"] > .binder-plate { border-radius: 4px; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18); }
+.binder-object[data-material="suede"] > .binder-plate { border-radius: 3px; background: var(--bt-nap) 0 0 / 96px 96px, color-mix(in srgb, var(--b-plate) 90%, var(--b-main)); }
+.binder-object[data-material="cloth"] > .binder-plate { border-radius: 2px; background: var(--bt-weave) 0 0 / 16px 16px, color-mix(in srgb, var(--b-plate) 90%, var(--b-main)); }
+.binder-object[data-material="matte"] > .binder-plate { border-radius: 3px; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); }
+.binder-object[data-material="gloss"] > .binder-plate {
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 52%), var(--b-plate);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.22), 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+.binder-object[data-material="carbon"] > .binder-plate,
+.binder-object[data-material="brushed"] > .binder-plate {
+  border-radius: 2px;
+  background: var(--bt-brush) 0 0 / 256px 96px, linear-gradient(180deg, #e9ebef, #b4b8bf 55%, #d5d8dd);
+  color: #22242a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4), inset 0 0 0 2px rgba(255, 255, 255, 0.4), 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+.binder-object[data-material="denim"] > .binder-plate {
+  border-radius: 3px;
+  background: var(--bt-pebble) 0 0 / 72px 72px, #b98d5c;
+  color: #2a1a0e;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+  outline: 1px dashed rgba(42, 26, 14, 0.7);
+  outline-offset: -4px;
+}
+
+/* ---- Sleeves: the pocket plastic ---------------------------------------------------------------
+   "clear" is the original still highlight, from collection.css. */
+.binder-object[data-pockets="frosted"] .pocket::after {
+  background: linear-gradient(158deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.17) 42%, rgba(255, 255, 255, 0.24) 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+.binder-object[data-pockets="smoke"] .pocket::after {
+  background: linear-gradient(158deg, rgba(255, 255, 255, 0.13) 0%, transparent 38%), rgba(9, 9, 14, 0.36);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+}
+.binder-object[data-pockets="tint"] .pocket::after {
+  background: linear-gradient(158deg, rgba(255, 255, 255, 0.14) 0%, transparent 48%), rgba(255, 255, 255, 0.1);
+  background: linear-gradient(158deg, rgba(255, 255, 255, 0.14) 0%, transparent 48%), color-mix(in srgb, var(--b-pocket) 24%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--b-pocket) 38%, transparent);
+}
+
+/* ---- Page tones --------------------------------------------------------------------------------- */
+.binder-object[data-page="black"] .binder-page,
+.binder-object[data-page="tint"] .binder-page { background: var(--b-page); }
+.binder-object[data-page="cream"] .binder-page {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 36%, rgba(120, 90, 40, 0.07)), var(--b-page);
+  border-color: rgba(90, 68, 30, 0.28);
+}
+/* ink on paper: the toolbar, its button, the empty pocket and the sleeve edges */
+.binder-object[data-page="cream"] .binder-page-toolbar { color: #6b5c40; }
+.binder-object[data-page="cream"] .binder-page-toolbar > span { color: #35291a; }
+.binder-object[data-page="cream"] .binder-page .page-share { background: rgba(70, 52, 20, 0.1); color: #35291a; }
+.binder-object[data-page="cream"] .binder-page .page-share:hover:not(:disabled) { background: rgba(70, 52, 20, 0.18); color: #1d160b; }
+.binder-object[data-page="cream"] .binder-page .page-share[aria-pressed="true"] { background: transparent; border-color: rgba(70, 52, 20, 0.4); color: #1d160b; }
+.binder-object[data-page="cream"] .binder-page .page-share:disabled { background: rgba(70, 52, 20, 0.05); color: rgba(70, 52, 20, 0.45); }
+.binder-object[data-page="cream"] .pocket.empty {
+  border-color: rgba(70, 52, 20, 0.5);
+  background: rgba(70, 52, 20, 0.07);
+  color: rgba(53, 41, 26, 0.7);
+}
+.binder-object[data-page="cream"] .pocket.empty:hover { border-color: #35291a; color: #1d160b; background: rgba(70, 52, 20, 0.13); }
+.binder-object[data-page="cream"] .pocket.filled { box-shadow: 0 1px 2px rgba(60, 42, 12, 0.4), 0 4px 7px -3px rgba(60, 42, 12, 0.4); }
+.binder-object[data-page="cream"][data-pockets="clear"] .pocket::after { box-shadow: inset 0 0 0 1px rgba(70, 52, 20, 0.18); }
+.binder-object[data-page="cream"][data-pockets="frosted"] .pocket::after { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 0 1px rgba(70, 52, 20, 0.2); }
+.binder-object[data-page="black"] .pocket.empty { border-color: rgba(255, 255, 255, 0.2); }
+
+/* ---- Facing spread (wide screens): pages meet at a spine with the rings down the gutter ----------- */
+@media (min-width: 860px) {
+  .binder-object:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) {
+    --f-t: 28px;
+    --f-r: 28px;
+    --f-b: 34px;
+    --f-l: 28px;
+    --stitch: 12px;
+  }
+  .binder-object[data-plate]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) { --f-t: 46px; }
+  .binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) { --f-t: 34px; }
+  .binder-object[data-hardware="zip"][data-plate]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) { --f-t: 58px; }
+  .binder-object[data-material="cloth"]:not([data-leaves="1"]) { --stitch: 4px; }
+  .binder-object[data-material="denim"]:not([data-leaves="1"]) { --stitch: 10px; }
+  .binder-object:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-spread { gap: var(--gut); }
+  .binder-object:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page,
+  .binder-object[data-hardware="rings"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page,
+  .binder-object[data-hardware="brass"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page,
+  .binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page { padding: 18px 18px 20px; }
+  .binder-object:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page:first-child { border-radius: var(--pg-r) 3px 3px var(--pg-r); }
+  .binder-object:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page:last-child { border-radius: 3px var(--pg-r) var(--pg-r) 3px; }
+  .binder-object:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page:only-child { border-radius: var(--pg-r) 3px 3px var(--pg-r); }
+  .binder-object[data-hardware]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page::before { content: none; }
+  .binder-object[data-hardware="none"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page,
+  .binder-object[data-hardware="zip"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) .binder-page { box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 2px 0 rgba(0, 0, 0, 0.4), 0 8px 14px -8px rgba(0, 0, 0, 0.75); }
+
+  /* the spine: a crease over the cover and the pages' inner edges, rings across it */
+  .binder-object:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .binder-object:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 34px);
+    width: 68px;
+    background: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, 0.16) 26%, rgba(0, 0, 0, 0.4) 43%, rgba(255, 255, 255, 0.07) 50%, rgba(0, 0, 0, 0.4) 57%, rgba(0, 0, 0, 0.16) 74%, transparent 100%);
+  }
+  .binder-object[data-hardware="rings"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware::after,
+  .binder-object[data-hardware="brass"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware::after,
+  .binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--f-t) + 8px);
+    bottom: calc(var(--f-b) + 8px);
+    left: calc(50% - 32px);
+    width: 64px;
+    background-repeat: repeat-y;
+    background-size: 64px 33.3333%;
+  }
+  .binder-object[data-hardware="rings"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware::after { background-image: var(--bt-gutter-silver); }
+  .binder-object[data-hardware="brass"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware::after { background-image: var(--bt-gutter-brass); }
+  .binder-object[data-hardware="black"]:not([data-material="classic"][data-edition=""]):not([data-leaves="1"]) > .binder-hardware::after { background-image: var(--bt-gutter-black); }
+
+  /* the plate sits above the spine */
+  .binder-object:not([data-leaves="1"]) > .binder-plate {
+    top: 10px;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    max-width: min(440px, calc(100% - 160px));
+  }
+  .binder-object[data-hardware="zip"]:not([data-leaves="1"]) > .binder-plate { top: 24px; }
+}

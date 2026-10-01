@@ -58,12 +58,12 @@ assert.ok(/era-wotc/.test(holo.classes)&&!/has-foil-map/.test(holo.classes)&&!/h
 assert.match(holo.style,/--seed-x/,'tiled textures start somewhere different on every card');
 assert.ok(!/era-dp|era-bw|era-xy/.test(holo.classes));
 const rev=foilExtras({id:'ecard1-30',rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
-assert.equal(rev.classes,'rev-mirror era-wotc wotc-rev','the e-Card reverse');
+assert.equal(rev.classes,'rev-mirror era-wotc wotc-rev wotc-rev-ecard','the e-Card reverse');
 assert.equal(foilExtras({id:'base6-30',rarity:'Uncommon',supertype:'Pokémon',types:['Fire'],reverse:true},url).classes,'rev-mirror era-wotc wotc-rev wotc-rev-legendary','Legendary Collection\'s fireworks');
 assert.equal(foilExtras({id:'base6-3',rarity:'Rare Holo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev wotc-rev-legendary','a Rare Holo\'s reverse takes the same');
 assert.equal(foilExtras({id:'basep-basep34',rarity:'Promo',supertype:'Pokémon',reverse:true},url).classes,'rev-mirror era-wotc wotc-rev','Entei\'s promo reverse');
-assert.equal(wotcReverseFinish({id:'base6-1'}),'wotc-legendary');assert.equal(wotcReverseFinish({id:'ecard2-5'}),'wotc');
-assert.equal(reverseFinish({id:'ecard3-30',reverse:true,rarity:'Common'}),'wotc');
+assert.equal(wotcReverseFinish({id:'base6-1'}),'wotc-legendary');assert.equal(wotcReverseFinish({id:'ecard2-5'}),'wotc-ecard');
+assert.equal(reverseFinish({id:'ecard3-30',reverse:true,rarity:'Common'}),'wotc-ecard');
 assert.equal(reverseFinish({id:'base6-30',reverse:true,rarity:'Common'}),'wotc-legendary');
 for(const id of ['xy1-1','sm1-1','bw1-1','sv1-1','swsh1-1','dp1-1','hgss1-1']) assert.equal(foilExtras({id,rarity:'Rare Holo',supertype:'Pokémon'},url).classes.includes('era-wotc'),false,`${id} is not Wizards of the Coast`);
 assert.match(foilExtras({id:'dp1-2',rarity:'Common',supertype:'Pokémon',reverse:true},url).classes,/^rev-mirror era-dp dp-rev\b/,'the DP reverse is untouched');

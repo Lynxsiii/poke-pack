@@ -20,7 +20,8 @@ import {
 import { drawPromos, isHit, ripPack } from "../js/engine.js";
 import { homeSetId, PROMO_HOME_LIKE } from "../js/card-home.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
-import { DEFAULT_BANNER } from "../js/cosmetics.js";
+import { DEFAULT_BANNER, SHOWCASE_MAX, bannerId } from "../js/cosmetics.js";
+import { levelFields, levelOf, frameChoice, bannerMotionError, slotError, slotPeak } from "./perks.js";
 import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, ownedMap, titleContext } from "../js/titles.js";
@@ -41,12 +42,15 @@ import {
 } from "./stats.js";
 import { activeChests, activeQuests, activeRowById, questPeriods, streakFromDays } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
-import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
+import { ensureGearSchema, gearSummary, prepareRewardGear, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
+import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
+import { applyRestores } from "./restores.js";
+import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, readXpRow, syncXp } from "./xp.js";
 import {
   achievementById,
   achievementContext,
@@ -68,12 +72,13 @@ const QUEST_CLAIM_KEEP_MS = 400 * DAY_MS;
 const COUNTER_KEYS = [
   "sold", "bonus", "sealed", "battles", "battleWins", "questsClaimed", "chests",
   "hitsPulled", "maxDrought", "streak", "streakBest",
+  // Counted from the casino and grading tables at read time (worker/xp.js loadXpCounters).
+  "casinoPlayed", "casinoWon", "graded", "gemMint",
 ];
 const PBKDF2_ITERS = 12_000;
 const BINDER_PAGE = 9;
 const BINDER_MAX_SLOTS = BINDER_PAGE * 40;
 const MAX_CLAIM_CARDS = 8000;
-const MAX_COINS = 1_000_000;
 // Ceilings for an unverifiable guest save handed to signup — see sanitizeClaim.
 const CLAIM_MAX_COINS = 250_000;
 const CLAIM_PACK_YIELD = 60;
@@ -159,6 +164,10 @@ export async function handleApi(request, env, url) {
     return handleGrading(path, method, request, env, { json, requireUser, readJson, loadSave, findCatalogCard, recordQuestEvent });
   }
 
+  if (path.startsWith('/api/binder/editions')) {
+    return handleBinderLook(path, method, request, env, { json, requireUser, readJson, money });
+  }
+
   if (path === "/api/health" && method === "GET") {
     return json({ ok: true });
   }
@@ -210,6 +219,9 @@ export async function handleApi(request, env, url) {
   if (path === "/api/quests/claim" && method === "POST") {
     return claimQuest(request, env);
   }
+  if (path === "/api/levels/claim" && method === "POST") {
+    return claimLevelRewards(request, env);
+  }
   if (path === "/api/cards/sell" && method === "POST") {
     return sell(request, env);
   }
@@ -235,6 +247,7 @@ export async function handleApi(request, env, url) {
     ownedWithSlabs,
     shownSlabs,
     gradedTotal,
+    loadSave,
   });
   if (social) return social;
 
@@ -307,7 +320,7 @@ async function signup(request, env) {
   const token = await createSession(env, id, now);
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
-  return json({ user: publicUser(user), save }, 201, sessionCookie(request, token));
+  return json({ user: await trainerUser(env, user, save), save }, 201, sessionCookie(request, token));
 }
 
 async function signin(request, env) {
@@ -323,7 +336,7 @@ async function signin(request, env) {
   await env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, user.id).run();
   const token = await createSession(env, user.id, now);
   const save = await loadSave(env, user.id);
-  return json({ user: publicUser({ ...user, last_played: now }), save }, 200, sessionCookie(request, token));
+  return json({ user: await trainerUser(env, { ...user, last_played: now }, save), save }, 200, sessionCookie(request, token));
 }
 
 async function signout(request, env) {
@@ -344,8 +357,10 @@ async function deleteAccount(request, env) {
   }
   const id = auth.user.id;
   const statsReady = await ensureQuestSchema(env);
+  const xpReady = await ensureXpSchema(env);
   await env.DB.batch([
     ...(statsReady ? clearStatsStmts(env, id) : []),
+    ...(xpReady ? clearXpStmts(env, id) : []),
     env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM history WHERE user_id = ?").bind(id),
     env.DB.prepare("DELETE FROM pack_log WHERE user_id = ?").bind(id),
@@ -359,8 +374,9 @@ async function deleteAccount(request, env) {
 async function me(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
+  await applyRestores(env, auth.user.id);
   const save = await loadSave(env, auth.user.id);
-  return json({ user: publicUser(auth.user), save });
+  return json({ user: await trainerUser(env, auth.user, save), save });
 }
 
 async function patchMe(request, env) {
@@ -376,13 +392,27 @@ async function patchMe(request, env) {
   let color = user.color;
   let title = user.title;
   let passwordHash = user.password_hash;
+  // The stored level, read once and only when a field below needs it (level perks: js/levels.js).
+  let levelNow = null;
+  const level = async () => (levelNow ??= await levelOf(env, user.id));
   // A mastery banner is a reward: only for a set whose mastery is claimed.
-  if (looksLikeMasteryBanner(body.banner)) {
+  // A banner is a string; anything else (an array that bannerId would coerce) is refused.
+  if (body.banner != null && typeof body.banner !== "string") return json({ error: "That banner does not exist." }, 400);
+  if (looksLikeMasteryBanner(body.banner) || (body.banner != null && bannerId(body.banner).startsWith("mastery:"))) {
     await ensureAchievementSchema(env);
     const refusal = await masteryBannerError(env, user.id, body.banner);
     if (refusal) return json({ error: refusal.error }, refusal.status);
   }
   const social = patchSocialFields(body, user);
+  if (body.banner != null) {
+    const refusal = bannerMotionError(bannerId(body.banner), user.banner, await level());
+    if (refusal) return json({ error: refusal.error, needLevel: refusal.needLevel }, refusal.status);
+  }
+  if (Object.prototype.hasOwnProperty.call(body, "frame")) {
+    const choice = frameChoice(body.frame, await level());
+    if (choice.error) return json({ error: choice.error, needLevel: choice.needLevel }, choice.status);
+    social.frame = choice.value;
+  }
 
   if (body.name != null) {
     name = String(body.name || "").trim().slice(0, 24);
@@ -409,7 +439,7 @@ async function patchMe(request, env) {
     const nextTitle = String(body.title || "").slice(0, 32);
     const save = await loadSave(env, user.id);
     const rarities = await rarityCountsFor(env, request, ownedMap(save));
-    const ctx = titleContext(save, { signed: true, rarities });
+    const ctx = titleContext(save, { signed: true, rarities, level: await level() });
     if (!isTitleUnlocked(nextTitle, ctx)) return json({ error: "That title is locked." }, 400);
     title = nextTitle;
   }
@@ -428,17 +458,28 @@ async function patchMe(request, env) {
     const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?").bind(user.id).first();
     const error = validateProfilePages(body.binderPages, parseJson(profile?.binder, []), social.binderPages);
     if (error) return json({error}, 400);
+    const room = slotError("pages", await level(), await slotPeak(env, user.id, "pages", social.binderPages.length), body.binderPages.length);
+    if (room) return json({ error: room.error }, room.status);
+    await slotPeak(env, user.id, "pages", body.binderPages.length);
     social.binderPages = body.binderPages;
   }
 
   if (Array.isArray(body.showcase)) {
     const { collection } = await inventoryMap(env, user.id);
     social.showcase = social.showcase.filter((slot) => (collection[slot.id] || 0) > 0);
+    const room = slotError("showcase", await level(), await slotPeak(env, user.id, "showcase", savedShowcaseCount(user.showcase)), social.showcase.length);
+    if (room) return json({ error: room.error }, room.status);
+    await slotPeak(env, user.id, "showcase", social.showcase.length);
   }
+
+  // Binder look and profile look: normalised, and an animated edition only if the account owns it.
+  const looks = await lookColumns(env, user, body);
+  if (looks.error) return json({ error: looks.error }, looks.status);
 
   await env.DB.prepare(
     `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?,
-       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?
+       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?, frame = ?,
+       binder_look = CASE WHEN ? THEN ? ELSE binder_look END, profile_look = CASE WHEN ? THEN ? ELSE profile_look END
      WHERE id = ?`
   )
     .bind(
@@ -455,6 +496,11 @@ async function patchMe(request, env) {
       JSON.stringify(social.showcase),
       JSON.stringify(social.shownStats),
       JSON.stringify(social.binderPages),
+      social.frame,
+      looks.setBinder ? 1 : 0,
+      looks.binderLook,
+      looks.setProfile ? 1 : 0,
+      looks.profileLook,
       user.id
     )
     .run();
@@ -471,7 +517,7 @@ async function patchMe(request, env) {
 
   const nextUser = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(user.id).first();
   const save = await loadSave(env, user.id);
-  return json({ user: publicUser(nextUser), save });
+  return json({ user: await trainerUser(env, nextUser, save, levelNow), save });
 }
 
 async function resetMe(request, env) {
@@ -483,12 +529,15 @@ async function resetMe(request, env) {
   await ensureOrdersSchema(env);
   await ensureSocialSchema(env);
   const statsReady = await ensureQuestSchema(env);
+  const editionResetStmts = await resetEditionStmts(env, auth.user.id);
+  const xpReady = await ensureXpSchema(env);
   const now = Date.now();
   const profile = await env.DB.prepare("SELECT active_set_id FROM profiles WHERE user_id = ?")
     .bind(auth.user.id)
     .first();
   await env.DB.batch([
     ...(statsReady ? clearStatsStmts(env, auth.user.id) : []),
+    ...(xpReady ? clearXpStmts(env, auth.user.id) : []),
     // A reset drops every claimed mastery, so a mastery banner goes with them.
     env.DB.prepare("UPDATE users SET banner = ? WHERE id = ? AND banner LIKE 'mastery:%'").bind(DEFAULT_BANNER, auth.user.id),
     env.DB.prepare("DELETE FROM cards WHERE user_id = ?").bind(auth.user.id),
@@ -498,6 +547,8 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM graded_cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM gear_purchases WHERE user_id = ?").bind(auth.user.id),
+    // Binder editions were bought with the coins that just went back to the start.
+    ...editionResetStmts,
     // Kept sealed product and past orders go too (an order's chunk markers with it).
     env.DB.prepare("DELETE FROM sealed_vault WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM sealed_order_chunks WHERE order_id IN (SELECT id FROM sealed_orders WHERE user_id = ?)").bind(auth.user.id),
@@ -520,11 +571,13 @@ async function resetMe(request, env) {
   if (statsReady) await skipSettledBattles(env, auth.user.id);
   const save = await loadSave(env, auth.user.id);
   // A title that came from what was just wiped goes back to Rookie.
-  if (!isTitleUnlocked(auth.user.title, titleContext(save, { signed: true, rarities: {} }))) {
+  if (!isTitleUnlocked(auth.user.title, titleContext(save, { signed: true, rarities: {}, level: await levelOf(env, auth.user.id) }))) {
     await env.DB.prepare("UPDATE users SET title = 'Rookie' WHERE id = ?").bind(auth.user.id).run();
   }
   if (profile?.active_set_id) save.activeSetId = profile.active_set_id;
-  return json({ save });
+  // The trainer too, so a page that kept the owned editions and the look can drop what the reset took.
+  const trainer = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(auth.user.id).first();
+  return json({ save, user: await trainerUser(env, trainer) });
 }
 
 async function rip(request, env) {
@@ -702,10 +755,10 @@ async function daily(request, env) {
   const now = Date.now();
   const cutoff = now - DAILY_COOLDOWN_MS;
   const updated = await env.DB.prepare(
-    `UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ?, last_daily = ?
-     WHERE user_id = ? AND (last_daily IS NULL OR last_daily <= ?)`
+    `UPDATE profiles SET coins = coins + ?1, granted = granted + ?1, last_daily = ?2
+     WHERE user_id = ?3 AND (last_daily IS NULL OR last_daily <= ?4)`
   )
-    .bind(DAILY_BONUS, MAX_COINS, DAILY_BONUS, now, auth.user.id, cutoff)
+    .bind(DAILY_BONUS, now, auth.user.id, cutoff)
     .run();
   if (!updated.meta?.changes) {
     return json({ error: "Hourly bonus is not ready yet." }, 400);
@@ -758,11 +811,18 @@ async function claimAchievement(request, env) {
     const titles = rewards.map((row) => row.title).filter(Boolean);
     for (const id of ids) claimed.add(id);
 
+    // Set masteries and era crowns gift gear. The gift is one more statement of
+    // this batch, tied to the swap through changes() (worker/gear.js), so it is
+    // paid with the claim or not at all. If the gear catalogue did not load the
+    // claim waits (503) instead of spending the id on a gift it cannot hand over.
+    const gifts = await prepareRewardGear(env, request, auth.user.id, rewards);
+    if (gifts.unavailable) return json({ error: "Gifts are unavailable right now. Try again shortly." }, 503);
     const results = await env.DB.batch([
       env.DB.prepare(
-        `UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ?, claimed = ?
-         WHERE user_id = ? AND claimed IS ?`
-      ).bind(coins, MAX_COINS, coins, JSON.stringify([...claimed]), auth.user.id, raw),
+        `UPDATE profiles SET coins = coins + ?1, granted = granted + ?1, claimed = ?2
+         WHERE user_id = ?3 AND claimed IS ?4`
+      ).bind(coins, JSON.stringify([...claimed]), auth.user.id, raw),
+      ...(gifts.stmt ? [gifts.stmt] : []), // must follow the swap: it reads its changes()
       env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(Date.now(), auth.user.id),
     ]);
     if (!results[0]?.meta?.changes) continue;
@@ -773,10 +833,25 @@ async function claimAchievement(request, env) {
       coins,
       titles,
       claimed: ids,
-      rewards: rewards.map((row) => ({ id: row.id, name: row.name, coins: row.coins, title: row.title || null })),
+      gear: gifts.gear,
+      rewards: rewards.map((row) => ({
+        id: row.id,
+        name: row.name,
+        coins: row.coins,
+        title: row.title || null,
+        gear: gifts.byRow[row.id] || [],
+      })),
     });
   }
   return json({ error: "Your claims collided. Try again." }, 409);
+}
+
+/** POST /api/levels/claim. No body is read: what is owed comes from the stored save (worker/xp.js). */
+async function claimLevelRewards(request, env) {
+  const auth = await requireUser(request, env);
+  if (auth.response) return auth.response;
+  const out = await claimLevels(env, auth.user.id, { request, loadSave });
+  return out.error ? json({ error: out.error }, out.status || 400) : json(out);
 }
 
 /**
@@ -809,8 +884,8 @@ async function claimQuest(request, env) {
       "INSERT OR IGNORE INTO quest_claims (user_id, quest_id, period_start, claimed_at) VALUES (?, ?, ?, ?)"
     ).bind(auth.user.id, row.id, period, now),
     env.DB.prepare(
-      "UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ? WHERE user_id = ? AND changes() = 1"
-    ).bind(row.coins, MAX_COINS, row.coins, auth.user.id),
+      "UPDATE profiles SET coins = coins + ?1, granted = granted + ?1 WHERE user_id = ?2 AND changes() = 1"
+    ).bind(row.coins, auth.user.id),
   ]);
   if (!results[0]?.meta?.changes) return json({ error: "Already claimed this period." }, 400);
 
@@ -1133,7 +1208,7 @@ async function loadSave(env, userId) {
   await ensureQuestSchema(env);
   // Independent reads, run together: this is called on every rip.
   // Battle results are folded into the counters here, at read time (no triggers).
-  const [profile, inventory, historyRows, counters, setPacks, friends] = await Promise.all([
+  const [profile, inventory, historyRows, counters, setPacks, friends, xpRow] = await Promise.all([
     env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first(),
     inventoryMap(env, userId),
     env.DB.prepare(
@@ -1143,14 +1218,19 @@ async function loadSave(env, userId) {
       .bind(userId)
       .all()
       .then((res) => res.results || []),
-    loadCounters(env, userId).then((stored) => syncBattleStats(env, userId, stored)),
+    // Casino and grading counts come from their own tables (worker/xp.js).
+    Promise.all([
+      loadCounters(env, userId).then((stored) => syncBattleStats(env, userId, stored)),
+      loadXpCounters(env, userId),
+    ]).then(([stored, tables]) => ({ ...stored, ...tables })),
     setPacksFor(env, userId),
     friendsCount(env, userId),
+    readXpRow(env, userId),
   ]);
   if (!profile) fail("Missing profile.", 500);
   const { collection, reverses } = inventory;
   const quests = await questSummary(env, userId, counters);
-  return {
+  const save = {
     coins: money(profile.coins),
     collection,
     reverses,
@@ -1183,6 +1263,9 @@ async function loadSave(env, userId) {
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),
     worthLog: Array.isArray(parseJson(profile.worth_log, [])) ? parseJson(profile.worth_log, []).slice(-200) : [],
   };
+  // XP is worked out from the finished save (slabs and all), then kept as a high-water mark.
+  save.xp = await syncXp(env, userId, save, xpRow);
+  return save;
 }
 
 /** Counters as the client sees them: no bookkeeping keys, the live streak, the known keys always present. */
@@ -1446,6 +1529,16 @@ function reconcileBinder(binder, collection) {
   });
 }
 
+/** The signed-in account about itself: publicUser plus its level, both looks and the binder editions it owns (looks and editions are never sent about anyone else). */
+async function trainerUser(env, row, save, levelHint = null) {
+  const base = { ...withLevel(publicUser(row), save), ...(await levelFields(env, row, levelHint ?? save?.xp?.level ?? null)) };
+  return { ...base, ...(await trainerLookFields(env, row)) };
+}
+
+function withLevel(user, save) {
+  return save?.xp ? { ...user, level: save.xp.level, xp: save.xp.total } : user;
+}
+
 function publicUser(row) {
   return {
     id: row.id,
@@ -1527,6 +1620,12 @@ async function readJson(request) {
   } catch {
     return null;
   }
+}
+
+/** How many cards a player has pinned already, so a level check never cuts a saved showcase. */
+function savedShowcaseCount(raw) {
+  const saved = parseJson(raw, []);
+  return Array.isArray(saved) ? Math.min(SHOWCASE_MAX, saved.length) : 0;
 }
 
 function parseJson(text, fallback) {

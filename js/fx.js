@@ -86,13 +86,37 @@ function sampleColour(img) {
   return rgb;
 }
 
+// A public profile can paint the room its own colour (js/profile-view.js). While
+// it does, a wrapper that finishes loading elsewhere must not repaint the room:
+// its colour is remembered and put back when the profile is left.
+let room = null; // { prev } while a profile holds the room
+let sampled = ""; // the last wrapper colour that arrived while held
+
+/** Hold the page light at `rgb` ("r g b", or an [r,g,b] array). null gives the room back. */
+export function holdAmbient(rgb) {
+  const style = document.body.style;
+  if (rgb) {
+    if (!room) room = { prev: style.getPropertyValue("--ambient") };
+    style.setProperty("--ambient", Array.isArray(rgb) ? rgb.join(" ") : rgb);
+    return;
+  }
+  if (!room) return;
+  const back = sampled || room.prev;
+  room = null;
+  sampled = "";
+  if (back) style.setProperty("--ambient", back);
+  else style.removeProperty("--ambient");
+}
+
 export function tintFrom(img, glint) {
   if (!img) return;
   // The glint layer is clipped to the wrapper's own outline.
   if (glint) glint.style.setProperty("--pack-mask", `url("${img.currentSrc || img.src}") center / 100% 100% no-repeat`);
   const apply = () => {
     const rgb = sampleColour(img);
-    if (rgb) document.body.style.setProperty("--ambient", rgb.join(" "));
+    if (!rgb) return;
+    if (room) sampled = rgb.join(" ");
+    else document.body.style.setProperty("--ambient", rgb.join(" "));
   };
   if (img.complete && img.naturalWidth) apply();
   else img.addEventListener("load", apply, { once: true });
@@ -125,6 +149,17 @@ function pauseOffscreen() {
     for (const entry of entries) entry.target.classList.toggle("fx-paused", !entry.isIntersecting);
   });
   loops.forEach((el) => io.observe(el));
+  // Level cosmetics are drawn into pages after load (banners with a moving
+  // motion, big avatar frames), so look for new ones now and then.
+  const LEVEL_LOOPS = '.banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"]), .lvl-frame[data-s="md"], .lvl-frame[data-s="lg"], .lvl-frame[data-s="xl"]';
+  const watched = new WeakSet();
+  setInterval(() => {
+    document.querySelectorAll(LEVEL_LOOPS).forEach((el) => {
+      if (watched.has(el)) return;
+      watched.add(el);
+      io.observe(el);
+    });
+  }, 1500);
 }
 
 // Every endless loop holds still while the window is in the background or

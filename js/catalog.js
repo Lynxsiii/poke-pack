@@ -1882,15 +1882,16 @@ export const HSP_PROMOS = {
  * Ruby & Sapphire and Sandstorm packs); they are counted, listed and sold under "np", never in the dex of the set whose product
  * carried them (js/card-home.js PROMO_HOMES). The promos no product claims (magazines, DVDs, events) are this set's own file,
  * data/np.json, as `np-npNNN`. `viewOf` names every file the page reads, itself included (the POP Series too: a POP product can
- * hold a promo). Not in PLAYABLE_SETS yet: the promo builder adds it with data/np.json, `totalCount`, `heroIds` and the box
- * notes, once the numbers exist (scripts/test-np.mjs checks them then). The release date is pkmn.gg's (October 1, 2003, a month
- * level date for the first promos): single source. The scan key on scrydex is `np-<n>` UNPADDED ("np-1", not "np-001": that is the
+ * hold a promo). Playable (e5): data/np.json holds the 22 event, magazine, DVD and tin-card promos no EX set's product claims; the six
+ * with no TCGplayer price anywhere (NP6, NP7, NP23, NP27, NP28, NP36) are not built, like DP05, so no product can sell them
+ * (.claude/skills/card-textures/reference/ex-promos-pop-kits.md). The release date is pkmn.gg's (October 1, 2003, a month level date
+ * for the first promos), confirmed by Bulbapedia and the Card Guide wiki ("starting October 2003", via search excerpts). The scan key on scrydex is `np-<n>` UNPADDED ("np-1", not "np-001": that is the
  * card back), the pkmn.gg page key `001`.
  */
 export const NP_PROMOS = {
   id: NP_SET_ID,
   tcgId: NP_SET_ID,
-  name: "Nintendo Black Star Promos",
+  name: "NP Black Star Promos", // pkmn.gg: Nintendo Black Star Promos; shortened so "<name> Master" fits a 32-character title (test-achievements)
   edition: "EX",
   era: "EX",
   released: "October 1, 2003",
@@ -1899,7 +1900,7 @@ export const NP_PROMOS = {
   promoPrefix: "NP ",
   viewNote: "the EX sets' own boxes and tins (collector's tins, value packs, deck tins), the POP Series packs",
   viewOf: ["ex1", "ex2", "ex3", "ex4", "ex5", "ex6", "ex7", "ex8", "ex9", "ex10", "ex11", "ex12", "ex13", "ex14", "ex15", "ex16", "pop1", "pop2", "pop3", "pop4", "pop5", NP_SET_ID],
-  totalCount: 0, // promo builder: homeCards(NP_PROMOS, every viewOf file).length
+  totalCount: 34, // homeCards(NP_PROMOS, every viewOf file).length: data/np.json 22 + ex1 3 + ex4 1 (e1) + ex9 3 + ex11 5 (e3); NP6 7 23 27 28 36 are unbuilt (no price), #900 jumbo out; scripts/test-np.mjs checks it
   packSize: 0,
   cost: 0,
   dataFile: "data/np.json",
@@ -1908,9 +1909,108 @@ export const NP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every Nintendo black star promo in one binder: the tin, value pack and magazine promos and the event cards, each one in its real product.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["np-np005", "ex9-np039", "np-np035", "ex11-np032"],
   wrappers: [],
 };
+
+/**
+ * POP Series 1 to 5 (Play! Pokémon Organized Play promo boosters, September 2004 to March 2007; EX era): 17 cards each (7, 7, 7, 6
+ * and 6 Rares incl. the Pokémon-ex and POP 5's two Gold Stars, five Uncommons, five or six Commons), TWO cards a pack, no Energy, no
+ * reverse holo, no code card. In-pack cards are not foil (pkmn.gg "normal: Found in Booster Packs", a collector-site excerpt: the
+ * holo versions came from blisters, tins and value packs; whether Armaldo ex or the POP 5 Gold Stars were foil in the pack is not
+ * settled, so none is). The rare sits on its own sheet, about 1 pack in 10, always in the same position: the SECOND card in POP 1 and
+ * POP 2, the first in POP 3 (POP 4 and 5 assumed the same): Elite Fourum posts 45, 53, 56, 59, 63 (one source, a pack-video tally:
+ * low-medium); pack size from the wrapper ("2 ADDITIONAL GAME CARDS") and TCGplayer's "Each POP Series N Pack contains 2 random cards".
+ * Nobody sold a box (two POP 1 packs sit in each EX Collector's Box); the single pack is the product, at TCGplayer's market price
+ * ($100.08, $149.69, $169.68, $171.94 and $2,290.00 for POP 5: thin markets, used as listed). `released` is pkmn.gg's month of first
+ * distribution. Sources and gaps: .claude/skills/card-textures/reference/ex-promos-pop-kits.md, data/pullrates.json.
+ */
+function exPopSeries(n, released, cost, rareAt, heroIds, wrapper, extra) {
+  const id = `pop${n}`;
+  return {
+    id,
+    tcgId: id,
+    name: `POP Series ${n}`,
+    edition: "EX",
+    era: "EX",
+    released,
+    live: true,
+    printedTotal: 17,
+    totalCount: 17,
+    packSize: 2,
+    cost,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: extra.blurb,
+    oddsLine: `2 cards · Rare ~1/10 (card ${rareAt}) · no foil`,
+    lede: extra.lede,
+    slots: popSlots({ rare: 0.1, rareAt }),
+    heroIds,
+    wrappers: boosterWrappers(id, [{ id: wrapper.id, name: wrapper.name, cardId: wrapper.cardId, tag: `Series ${n}` }]),
+  };
+}
+
+export const POP_SERIES_1 = exPopSeries(1, "September 1, 2004", 100.08, 2, ["pop1-17", "pop1-3", "pop1-5", "pop1-16"], { id: "blaziken", name: "Blaziken", cardId: "pop1-1" }, {
+  blurb: "Organized Play, September 2004. Two promo cards a pack with Blaziken on the wrapper, and Armaldo ex and Tyranitar ex among the Rares.",
+  lede: "A two-card league pack. The Rare, about one pack in ten, is the second card; Tyranitar ex, Rayquaza and the Hoenn starters are the ones to hope for.",
+});
+export const POP_SERIES_2 = exPopSeries(2, "August 1, 2005", 149.69, 2, ["pop2-17", "pop2-1", "pop2-16", "pop2-7"], { id: "venusaur", name: "Venusaur", cardId: "pop2-6" }, {
+  blurb: "Organized Play, August 2005. Two promo cards a pack, Venusaur on the wrapper, the three legendary beasts and Celebi ex among the Rares.",
+  lede: "Two cards a pack, the Rare about one pack in ten and always the second card. Celebi ex heads six Rares that include Entei, Raikou and Suicune.",
+});
+export const POP_SERIES_3 = exPopSeries(3, "April 1, 2006", 169.68, 1, ["pop3-1", "pop3-17", "pop3-16", "pop3-12"], { id: "eeveelutions", name: "Eeveelutions", cardId: "pop3-3" }, {
+  blurb: "Organized Play, April 2006. Two promo cards a pack, Jolteon, Vaporeon and Flareon on the wrapper, Blastoise and Ho-Oh ex among the Rares.",
+  lede: "The Rare, about one pack in ten, is the first card this time. Blastoise and Ho-Oh ex lead the Rares; Pichu Bros. is the Common worth a second look.",
+});
+export const POP_SERIES_4 = exPopSeries(4, "August 1, 2006", 171.94, 1, ["pop4-1", "pop4-2", "pop4-17", "pop4-5"], { id: "deoxys", name: "Deoxys", cardId: "pop4-2" }, {
+  blurb: "Organized Play, August 2006. Two promo cards a pack, Deoxys on the wrapper, Deoxys ex and the delta Chimecho and Deoxys among the Rares.",
+  lede: "Two cards a pack, the Rare about one pack in ten. Chimecho δ is the priciest card in the set; Deoxys δ and Deoxys ex follow it.",
+});
+export const POP_SERIES_5 = exPopSeries(5, "March 1, 2007", 2290, 1, ["pop5-3", "pop5-16", "pop5-17", "pop5-2"], { id: "ho-oh", name: "Ho-Oh", cardId: "pop5-1" }, {
+  blurb: "Organized Play, March 2007. The last EX-era POP pack: two promo cards, Ho-Oh on the wrapper, Espeon and Umbreon Gold Stars among the Rares.",
+  lede: "Two cards a pack, the Rare about one pack in ten. Espeon and Umbreon Gold Stars share the Rare slot with Mew δ and Lugia: a pack costs what a fair draw is worth, and that is a lot.",
+});
+
+/**
+ * The two EX Trainer Kits (June 2004 Latias & Latios, March 2006 Plusle & Minun): each kit holds two half decks, so each half
+ * deck is a set of its own (extk1a Latias, extk1b Latios, extk2a Plusle, extk2b Minun; pkmn.gg tk1a, tk1b, tk2a, tk2b). Ten cards
+ * a half deck in kit 1, twelve in kit 2 (the copies a deck held are in no source); each has one cosmos-holofoil Pokémon (Latias 4,
+ * Latios 2, Plusle 6, Minun 6). The kit is the two half decks only: the real kits held a booster pack of an EX set no source names
+ * (the research found none), so none is simulated. Sold on both half decks' pages, opening to data/box-contents.json. The kit's
+ * TCGplayer listing has no price: the product price is its different cards added up (a floor). Sources:
+ * .claude/skills/card-textures/reference/ex-promos-pop-kits.md.
+ */
+function exTrainerKit(id, { name, pokemon, rival, released, total, holo, heroIds }) {
+  const year = released.split(", ")[1];
+  return {
+    id,
+    tcgId: id,
+    name,
+    edition: "EX",
+    era: "EX",
+    released,
+    live: true,
+    promoSet: true,
+    promoPrefix: "EXTK ",
+    printedTotal: total,
+    totalCount: total,
+    packSize: 0,
+    cost: 0,
+    dataFile: `data/${id}.json`,
+    cardBack: "assets/cards/shared/card-back.webp",
+    blurb: `EX Trainer Kit, ${year}. The ${pokemon} half deck: ${total} different cards, the holofoil ${pokemon} among them.`,
+    oddsLine: "No boosters · the kit holds two half decks",
+    lede: `One half of a two-player learn-to-play kit: ${pokemon} and the ${total - 1} cards that play with it. The kit opens both half decks, ${pokemon}'s and ${rival}'s, and the holofoil ${pokemon} is card ${holo}.`,
+    slots: [],
+    heroIds,
+    wrappers: [],
+  };
+}
+
+export const EX_TRAINER_KIT_LATIAS = exTrainerKit("extk1a", { name: "EX Trainer Kit Latias", pokemon: "Latias", rival: "Latios", released: "June 1, 2004", total: 10, holo: 4, heroIds: ["extk1a-4", "extk1a-5"] });
+export const EX_TRAINER_KIT_LATIOS = exTrainerKit("extk1b", { name: "EX Trainer Kit Latios", pokemon: "Latios", rival: "Latias", released: "June 1, 2004", total: 10, holo: 2, heroIds: ["extk1b-2", "extk1b-6"] });
+export const EX_TRAINER_KIT_PLUSLE = exTrainerKit("extk2a", { name: "EX Trainer Kit Plusle", pokemon: "Plusle", rival: "Minun", released: "March 1, 2006", total: 12, holo: 6, heroIds: ["extk2a-6", "extk2a-5"] });
+export const EX_TRAINER_KIT_MINUN = exTrainerKit("extk2b", { name: "EX Trainer Kit Minun", pokemon: "Minun", rival: "Plusle", released: "March 1, 2006", total: 12, holo: 6, heroIds: ["extk2b-6", "extk2b-1"] });
 
 // ---- Wizards of the Coast promo sets (wotc/s0) ---------------------------------------------------------------------------------
 
@@ -6169,6 +6269,247 @@ export const BASE_SET_2 = {
   ]),
 };
 
+// EX era (2003-2007), builder e2: ex5 Hidden Legends, ex6 FireRed & LeafGreen, ex7 Team Rocket Returns, ex8 Deoxys. Sources: /mnt/project-files/every-era/ex/research/ex5.md-ex8.md, second-source-check.md, ex-pack-structure.md; rates in data/pullrates.json.
+export const EX_HIDDEN_LEGENDS = {
+  id: "ex5",
+  tcgId: "ex5",
+  name: "EX Hidden Legends",
+  edition: "EX",
+  era: "EX",
+  released: "June 14, 2004",
+  live: true,
+  printedTotal: 101,
+  totalCount: 102,
+  packSize: 9,
+  cost: 800,
+  dataFile: "data/ex5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, June 2004. Metagross, Regirock, Registeel and Regice on the wrappers, the first cracked ice holofoil, four wrappers.",
+  oddsLine: "ex 1/18 · cracked ice 1/36 · holo 1/4",
+  lede: "Regirock ex, Regice ex and Registeel ex come in cracked ice foil, one in every 36 packs. The six cosmos Pokémon-ex and a holo in one pack in four make up the rest of the rare slot.",
+  // Elite Fourum post 40 (8 boxes: 9 holos, 2 cosmos ex and 1 cracked-ice ex a box, 216-pack table) with PokeGym 19395 ("3 ex in a box ever since MvA"); nine cards (5 Commons, 2 Uncommons, a reverse, a rare slot), no Energy, no code card. The cracked-ice split is one source (medium-low). The Groudon secret is a box topper and is never dealt. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.25, ex: 0.0556, exCracked: 0.0278 }),
+  heroIds: ["ex5-98", "ex5-99", "ex5-97", "ex5-93"],
+  wrappers: boosterWrappers("ex5", [
+    { id: "metagross", name: "Metagross", cardId: "ex5-11", tag: "Alloy" },
+    { id: "regirock", name: "Regirock", cardId: "ex5-98", tag: "Boulder" },
+    { id: "registeel", name: "Registeel", cardId: "ex5-99", tag: "Iron" },
+    { id: "regice", name: "Regice", cardId: "ex5-97", tag: "Glacier" },
+  ]),
+};
+
+export const EX_FIRERED_LEAFGREEN = {
+  id: "ex6",
+  tcgId: "ex6",
+  name: "EX FireRed & LeafGreen",
+  edition: "EX",
+  era: "EX",
+  released: "August 30, 2004",
+  live: true,
+  printedTotal: 112,
+  totalCount: 116,
+  packSize: 9,
+  cost: 1009.96,
+  dataFile: "data/ex6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, August 2004. Pikachu, Charizard, Blastoise and Venusaur on the wrappers, a Kanto remake with secret cracked ice birds, four wrappers.",
+  oddsLine: "ex 1/12 · secret bird 1/36 · holo 1/4.5",
+  lede: "Articuno ex, Moltres ex and Zapdos ex are secret rares in cracked ice foil, one in every 36 packs. Charizard ex, Blastoise ex and Venusaur ex lead the nine Pokémon-ex.",
+  // Elite Fourum post 44 (box tally: 8 holos, 3 ex and 1 secret cracked-ice ex a box) with PokeGym 19395 ("4 ex per box in FR/LG"); nine cards (5 Commons, 2 Uncommons, a reverse, a rare slot), no Energy, no code card. Holo split medium-low (no second tally). The Charmander secret is a box topper and is never dealt. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2222, ex: 0.0833, secret: 0.0278 }),
+  heroIds: ["ex6-105", "ex6-116", "ex6-114", "ex6-115"],
+  wrappers: boosterWrappers("ex6", [
+    { id: "pikachu", name: "Pikachu", cardId: "ex6-74", tag: "Static" },
+    { id: "charizard", name: "Charizard", cardId: "ex6-105", tag: "Flame" },
+    { id: "blastoise", name: "Blastoise", cardId: "ex6-104", tag: "Torrent" },
+    { id: "venusaur", name: "Venusaur", cardId: "ex6-112", tag: "Overgrow" },
+  ]),
+};
+
+export const EX_TEAM_ROCKET_RETURNS = {
+  id: "ex7",
+  tcgId: "ex7",
+  name: "EX Team Rocket Returns",
+  edition: "EX",
+  era: "EX",
+  released: "November 8, 2004",
+  live: true,
+  printedTotal: 109,
+  totalCount: 111,
+  packSize: 9,
+  cost: 3000,
+  dataFile: "data/ex7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, November 2004. Tyranitar, Mewtwo, Gyarados and Scyther on the wrappers, eleven Rocket's ex and the first three Gold Stars, four wrappers.",
+  oddsLine: "Gold Star 1/108 · ex 1/13.5 · holo 1/4",
+  lede: "Treecko, Torchic and Mudkip are the first English Gold Stars, about one in every 108 packs. Here Comes Team Rocket! is a secret rare, and eleven Rocket's ex fill the Pokémon-ex slot.",
+  // Elite Fourum posts 46-47 (14 boxes: 9 holos and 3 ex a box, a Gold Star taking an ex in one box in three; the secret one in 220 packs, an assumption) with PokeGym 11875 (6 stars in 18 boxes at one prerelease, 2 in 432 packs at another); nine cards (5 Commons, 2 Uncommons, a reverse, a rare slot), no Energy, no code card. Gold Star and secret rates low-medium. The Charmeleon secret is a box topper and is never dealt. A pack is $3,000 on TCGplayer's price history (no market price listed): thin. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2455, ex: 0.0741, goldStar: 0.0093, secret: 0.0045 }),
+  heroIds: ["ex7-109", "ex7-107", "ex7-108", "ex7-99"],
+  wrappers: boosterWrappers("ex7", [
+    { id: "tyranitar", name: "Tyranitar", cardId: "ex7-19", tag: "Sandstorm" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "ex7-99", tag: "Psychic" },
+    { id: "gyarados", name: "Gyarados", cardId: "ex7-36", tag: "Rage" },
+    { id: "scyther", name: "Scyther", cardId: "ex7-102", tag: "Blade" },
+  ]),
+};
+
+export const EX_DEOXYS = {
+  id: "ex8",
+  tcgId: "ex8",
+  name: "EX Deoxys",
+  edition: "EX",
+  era: "EX",
+  released: "February 14, 2005",
+  live: true,
+  printedTotal: 107,
+  totalCount: 108,
+  packSize: 9,
+  cost: 1699.99,
+  dataFile: "data/ex8.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, February 2005. Three Deoxys forms and Rayquaza on the wrappers, with the Gold Star Rayquaza, four wrappers.",
+  oddsLine: "Gold Star 1/108 · ex 1/13.5 · holo 1/4",
+  lede: "Rayquaza ★ is the chase, with Latias ★ and Latios ★. Three Deoxys ex, Rayquaza ex and Salamence ex fill the Pokémon-ex slot.",
+  // Elite Fourum posts 46 and 48 (only 4 boxes tallied, all 9 holos, 3 ex and no Gold Star; the star rate is borrowed from the other sets, an assumption) with the same sheet design as Team Rocket Returns; nine cards (5 Commons, 2 Uncommons, a reverse, a rare slot), no Energy, no code card. Low-medium throughout. The Rocket's Raikou ex secret is a box topper and is never dealt. A pack is $1,699.99 on TCGplayer's price history (no market price listed): thin. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.25, ex: 0.0741, goldStar: 0.0093 }),
+  heroIds: ["ex8-107", "ex8-105", "ex8-106", "ex8-102"],
+  wrappers: boosterWrappers("ex8", [
+    { id: "deoxys-attack", name: "Deoxys", cardId: "ex8-98", tag: "Attack Forme" },
+    { id: "deoxys-normal", name: "Deoxys", cardId: "ex8-97", tag: "Normal Forme" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "ex8-102", tag: "Sky High" },
+    { id: "deoxys-defense", name: "Deoxys", cardId: "ex8-99", tag: "Defense Forme" },
+  ]),
+};
+
+// EX era: EX Ruby & Sapphire, EX Sandstorm, EX Dragon, EX Team Magma vs Team Aqua (builder e1). Sources: /mnt/project-files/every-era/ex/research/ (ex1-ex4 and their -products files, ex-pack-structure, ex-finish-types, second-source-check, np); data/pullrates.json. Pack prices are TCGplayer's (thin listings: ex2's is the latest market bucket of its price history, ex4 has no market price at all and takes TCGplayer's lowest listing).
+export const EX_RUBY_SAPPHIRE = {
+  id: "ex1",
+  tcgId: "ex1",
+  name: "EX Ruby & Sapphire",
+  edition: "EX",
+  era: "EX",
+  released: "June 18, 2003",
+  live: true,
+  printedTotal: 109,
+  totalCount: 109,
+  packSize: 9,
+  cost: 799.99,
+  dataFile: "data/ex1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "own",
+  reverseOwnEnergy: true,
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX Ruby & Sapphire, June 2003. The first set under Nintendo: Hoenn, eight Pokémon-ex and six basic Energy in the packs, four wrappers.",
+  oddsLine: "Holo 1/6 · Pokémon-ex 1/6 · Energy 1/3",
+  lede: "Mewtwo ex, Scyther ex and Lapras ex are the chase; Blaziken, Swampert and Sceptile are the holos. The holo or the Pokémon-ex takes the fifth card slot (together about 1 pack in 3), a plain Rare always sits at the end of the pack.",
+  // Elite Fourum post 35 (216-pack sheet model: 36 holos, 36 Pokémon-ex, 72 Energy) with PokeGym 264 and 317 (2003: 6 holos and 6 Pokémon-ex a box, in the common slot) as the second source; the Energy 1 pack in 3 is Elite Fourum alone (medium-low). Nine cards: 4 Commons, the fifth slot, 2 Uncommons, a Mirror reverse and a Rare that is never holo. Regular print run (the first run's 12 holos + 12 ex in the rare slot is not dealt). Sources in data/pullrates.json.
+  slots: exSlots({ early: true, holo: 0.1667, ex: 0.1667, energy: 0.3333 }),
+  slotsNote: "Medium: Elite Fourum's sheet table with PokeGym's per-box counts; the Energy rate is Elite Fourum alone (medium-low).",
+  heroIds: ["ex1-101", "ex1-3", "ex1-13", "ex1-11"],
+  wrappers: boosterWrappers("ex1", [
+    { id: "manectric", name: "Manectric", cardId: "ex1-9", tag: "Static" },
+    { id: "lairon", name: "Lairon", cardId: "ex1-36", tag: "Iron armor" },
+    { id: "mightyena", name: "Mightyena", cardId: "ex1-10", tag: "Pack hunter" },
+    { id: "sceptile", name: "Sceptile", cardId: "ex1-11", tag: "Forest" },
+  ]),
+};
+
+export const EX_SANDSTORM = {
+  id: "ex2",
+  tcgId: "ex2",
+  name: "EX Sandstorm",
+  edition: "EX",
+  era: "EX",
+  released: "September 17, 2003",
+  live: true,
+  printedTotal: 100,
+  totalCount: 100,
+  packSize: 9,
+  cost: 498.75,
+  dataFile: "data/ex2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX Sandstorm, September 2003. Seven Pokémon-ex, Dusclops, Seviper, Zangoose and Shiftry on the wrappers, with the Eeveelutions Flareon and Jolteon.",
+  oddsLine: "Holo 1/6 · Pokémon-ex 1/6",
+  lede: "Raichu ex, Gardevoir ex and Typhlosion ex lead the set. As in Ruby & Sapphire the holo or the Pokémon-ex takes the fifth card slot, together about 1 pack in 3, and the last card is always a plain Rare.",
+  // Elite Fourum post 36 ("basically the same as Ruby & Sapphire", 36 holos and 36 ex per 216 packs; no Energy) with Flipside Gaming's 1:12-18 for early EX holos and Pokémon-ex and PokeGym 264 for the layout. Medium. Sources in data/pullrates.json.
+  slots: exSlots({ early: true, holo: 0.1667, ex: 0.1667 }),
+  slotsNote: "Medium: Elite Fourum's sheet table (252-pack tally), Flipside Gaming's 1:12-18 as the second source.",
+  heroIds: ["ex2-98", "ex2-96", "ex2-99", "ex2-95"],
+  wrappers: boosterWrappers("ex2", [
+    { id: "dusclops", name: "Dusclops", cardId: "ex2-4", tag: "Beckon" },
+    { id: "seviper", name: "Seviper", cardId: "ex2-11", tag: "Fang" },
+    { id: "zangoose", name: "Zangoose", cardId: "ex2-14", tag: "Rivalry" },
+    { id: "shiftry", name: "Shiftry", cardId: "ex2-12", tag: "Wind" },
+  ]),
+};
+
+export const EX_DRAGON = {
+  id: "ex3",
+  tcgId: "ex3",
+  name: "EX Dragon",
+  edition: "EX",
+  era: "EX",
+  released: "November 24, 2003",
+  live: true,
+  printedTotal: 97,
+  totalCount: 100,
+  packSize: 9,
+  cost: 1250,
+  dataFile: "data/ex3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX Dragon, November 2003. Rayquaza, Latios, Latias and Absol on the wrappers, nine Pokémon-ex and the first secret rares: Charmander, Charmeleon and Charizard.",
+  oddsLine: "Holo 1/7 · Pokémon-ex 1/6 · Secret 1/31",
+  lede: "Charizard, Charmeleon and Charmander are the secret rares, numbered past the set, and they sit on the holo sheet at about 1 pack in 31 for the three of them. Rayquaza ex and Dragonite ex are the Pokémon-ex.",
+  // Elite Fourum post 37 (holo sheet 36/216 including the three secrets at H7 each: 0.1349 holo + 0.0318 secret; Pokémon-ex 36/216) with PokeGym 2667 (Nov 2003: 6 ex per box in a common slot; the secrets as rare as the other holos); the secret split is Elite Fourum's assumption over a 3-box tally (1.33 a box): medium-low. Run 2 (reverse TV Reporter on the sheet). Sources in data/pullrates.json.
+  slots: exSlots({ early: true, holo: 0.1349, ex: 0.1667, secret: 0.0318 }),
+  slotsNote: "Medium for holo and Pokémon-ex (Elite Fourum with PokeGym 2667); the secret rate is medium-low (a 3-box tally and an assumed H7 share).",
+  heroIds: ["ex3-100", "ex3-97", "ex3-90", "ex3-99"],
+  wrappers: boosterWrappers("ex3", [
+    { id: "rayquaza", name: "Rayquaza", cardId: "ex3-97", tag: "Sky high" },
+    { id: "latios", name: "Latios", cardId: "ex3-94", tag: "Eon" },
+    { id: "latias", name: "Latias", cardId: "ex3-93", tag: "Eon" },
+    { id: "absol", name: "Absol", cardId: "ex3-1", tag: "Disaster" },
+  ]),
+};
+
+export const EX_TEAM_MAGMA_VS_TEAM_AQUA = {
+  id: "ex4",
+  tcgId: "ex4",
+  name: "Team Magma vs Team Aqua", // the printed logo; "EX Team Magma vs Team Aqua Master" is over the 32-character title limit
+  edition: "EX",
+  era: "EX",
+  released: "March 15, 2004",
+  live: true,
+  printedTotal: 95,
+  totalCount: 97,
+  packSize: 9,
+  cost: 1000,
+  dataFile: "data/ex4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseTwice: ["88"],
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX Team Magma vs Team Aqua, March 2004. Houndoom, Walrein, Aggron and Sharpedo on the wrappers, the two teams' Pokémon, seven Pokémon-ex and a secret Jirachi.",
+  oddsLine: "Holo 1/4 · Pokémon-ex 1/12 · Jirachi 1/55",
+  lede: "Blaziken ex, Swampert ex and Sceptile ex are the Pokémon-ex, Suicune ex the one to find, and Jirachi is the secret rare. From this set the holo takes the rare slot, so the last card is a plain Rare only 2 packs in 3. Absol, the box topper, is never in a pack.",
+  // Elite Fourum post 38 (24 non-holo rares, 9 holos and 3 Pokémon-ex a box; Jirachi on the holo sheet at H8) with Potomac Distribution's "1 foil card, 1 rare card, 5 common, 2 uncommon" and PokeGym 19395 ("3 ex in a box ever since MvA"); Jirachi is a 3-box tally (medium-low). Reverse list of 88 with Double Rainbow Energy printed twice on the reverse sheet (post 38: "one reverse rare (Double Rainbow Energy) printed twice"); the 21 reverse uncommons that also sit twice are not named in the post (a table image), so they are not listed. Absol (96) is a box topper and is never dealt. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2318, ex: 0.0833, secret: 0.0182 }),
+  slotsNote: "Medium: the layout has two sources, the per-box counts are Elite Fourum's with PokeGym 19395 for the ex; Jirachi's rate is a 3-box tally (medium-low). The pack price is TCGplayer's lowest listing: it has no market price.",
+  heroIds: ["ex4-97", "ex4-94", "ex4-89", "ex4-95"],
+  wrappers: boosterWrappers("ex4", [
+    { id: "houndoom", name: "Houndoom", cardId: "ex4-10", tag: "Team Magma" },
+    { id: "walrein", name: "Walrein", cardId: "ex4-6", tag: "Team Aqua" },
+    { id: "aggron", name: "Aggron", cardId: "ex4-7", tag: "Team Magma" },
+    { id: "sharpedo", name: "Sharpedo", cardId: "ex4-5", tag: "Team Aqua" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -6312,37 +6653,50 @@ export const PLAYABLE_SETS = [
   POP_SERIES_6,
   DP_TRAINER_KIT_MANAPHY,
   DP_TRAINER_KIT_LUCARIO,
-  // EX era (2003-2007), e4: the last four main sets, newest first.
+  // EX era (2003-2007), newest first; the Nintendo Black Star promos, POP Series 1-5 and the EX Trainer Kits follow (builder e5).
   POWER_KEEPERS,
   DRAGON_FRONTIERS,
   CRYSTAL_GUARDIANS,
   HOLON_PHANTOMS,
-  // Wizards of the Coast era (1999-2003), newest first (builder w2: base6, gym2, gym1, base5; the other builders append their sets here).
-  LEGENDARY_COLLECTION,
-  GYM_CHALLENGE,
-  GYM_HEROES,
-  TEAM_ROCKET,
-  // Wizards of the Coast era (1999-2003), the Neo sets (w3), newest first.
-  NEO_DESTINY,
-  NEO_REVELATION,
-  NEO_DISCOVERY,
-  NEO_GENESIS,
-  // Wizards of the Coast era (1999-2003), newest first: Skyridge, Aquapolis, Expedition Base Set, Southern Islands (w4).
-  SKYRIDGE,
-  AQUAPOLIS,
-  EXPEDITION_BASE_SET,
-  SOUTHERN_ISLANDS,
-  // EX era (2003-2007), builder e3: Legend Maker, Delta Species, Unseen Forces, Emerald (newest first; the lead orders the era).
   EX_LEGEND_MAKER,
   EX_DELTA_SPECIES,
   EX_UNSEEN_FORCES,
   EX_EMERALD,
-  // Wizards of the Coast, w1.
-  BASE_SET,
-  JUNGLE,
-  FOSSIL,
+  EX_DEOXYS,
+  EX_TEAM_ROCKET_RETURNS,
+  EX_FIRERED_LEAFGREEN,
+  EX_HIDDEN_LEGENDS,
+  EX_TEAM_MAGMA_VS_TEAM_AQUA,
+  EX_DRAGON,
+  EX_SANDSTORM,
+  EX_RUBY_SAPPHIRE,
+  NP_PROMOS,
+  POP_SERIES_5,
+  POP_SERIES_4,
+  POP_SERIES_3,
+  POP_SERIES_2,
+  POP_SERIES_1,
+  EX_TRAINER_KIT_LATIAS,
+  EX_TRAINER_KIT_LATIOS,
+  EX_TRAINER_KIT_PLUSLE,
+  EX_TRAINER_KIT_MINUN,
+  // Wizards of the Coast era (1999-2003), newest first; then the Southern Islands folder, the Wizards Black Star promos and Best of Game.
+  SKYRIDGE,
+  AQUAPOLIS,
+  EXPEDITION_BASE_SET,
+  LEGENDARY_COLLECTION,
+  NEO_DESTINY,
+  NEO_REVELATION,
+  NEO_DISCOVERY,
+  NEO_GENESIS,
+  GYM_CHALLENGE,
+  GYM_HEROES,
+  TEAM_ROCKET,
   BASE_SET_2,
-  // Wizards of the Coast era (1999-2003): the promo sets (w5), after the numbered sets.
+  FOSSIL,
+  JUNGLE,
+  BASE_SET,
+  SOUTHERN_ISLANDS,
   BASEP_PROMOS,
   BP_PROMOS,
 ];
@@ -6439,26 +6793,8 @@ export const ROADMAP = [
   { era: "HeartGold & SoulSilver", sets: [] },
   { era: "Platinum", sets: [] },
   { era: "Diamond & Pearl", sets: [] },
-  {
-    era: "EX",
-    sets: [
-      { id: "ex16", name: "EX Power Keepers", released: "Feb 2007", cards: 108 },
-      { id: "ex1", name: "EX Ruby & Sapphire", released: "Jun 2003", cards: 109 },
-    ],
-  },
-  {
-    era: "Wizards of the Coast",
-    sets: [
-      { id: "skyridge", name: "Skyridge", released: "May 2003", cards: 182 },
-      { id: "aquapolis", name: "Aquapolis", released: "Jan 2003", cards: 183 },
-      { id: "expedition", name: "Expedition Base Set", released: "Sep 2002", cards: 165 },
-      { id: "neogenesis", name: "Neo Genesis", released: "Dec 2000", cards: 111 },
-      { id: "teamrocket", name: "Team Rocket", released: "Apr 2000", cards: 83 },
-      { id: "fossil", name: "Fossil", released: "Oct 1999", cards: 62 },
-      { id: "jungle", name: "Jungle", released: "Jun 1999", cards: 64 },
-      { id: "base1", name: "Base Set", released: "Jan 1999", cards: 102 },
-    ],
-  },
+  { era: "EX", sets: [] },
+  { era: "Wizards of the Coast", sets: [] },
 ];
 
 /** ROADMAP ids that are not pokemontcg.io set ids. */
@@ -6634,6 +6970,17 @@ const POKESYMBOLS_SLUG = {
   dptk3b: "diamond-and-pearl-trainer-kit-lucario",
   hgsstk4a: "heartgold-and-soulsilver-trainer-kit-gyarados",
   hgsstk4b: "heartgold-and-soulsilver-trainer-kit-raichu",
+  // EX generation, e5 (pokesymbols has the POP and kit symbols; the Nintendo black star promos use its generic promo star).
+  np: "_promo",
+  pop1: "pop-1",
+  pop2: "pop-2",
+  pop3: "pop-3",
+  pop4: "pop-4",
+  pop5: "pop-5",
+  extk1a: "ex-trainer-kit-latias",
+  extk1b: "ex-trainer-kit-latios",
+  extk2a: "ex-trainer-kit-2-plusle",
+  extk2b: "ex-trainer-kit-2-minun",
   bw10: "plasma-blast",
   bw11: "legendary-treasures",
   bw2: "emerging-powers",
@@ -6659,9 +7006,17 @@ const POKESYMBOLS_SLUG = {
   ex10: "unseen-forces",
   ex11: "delta-species",
   ex12: "legend-maker",
+  ex5: "hidden-legends",
+  ex6: "firered-leafgreen",
+  ex7: "team-rocket-returns",
+  ex8: "deoxys",
   // Wizards of the Coast promo sets (w5): pokesymbols has no Wizards promo symbol (its generic promo star), and a Best of Game one.
   basep: "_promo",
   bp: "best-of-game",
+  // EX era, e1.
+  ex2: "sandstorm",
+  ex3: "dragon",
+  ex4: "team-magma-vs-team-aqua",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

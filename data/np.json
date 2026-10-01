@@ -1,0 +1,901 @@
+[
+  {
+    "id": "np-np001",
+    "name": "Kyogre ex",
+    "number": "np001",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Hiromichi Sugiyama",
+    "image": "assets/cards/np/np001.webp",
+    "imageSmall": "assets/cards/np/np001-sm.webp",
+    "attacks": [
+      {
+        "name": "Major Flood",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "60",
+        "text": "Discard a Water Energy card attached to Kyogre ex. Does 10 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 43.82,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-1/large",
+    "printedNumber": "NP 001",
+    "tcgplayerId": 86555,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "np-np002",
+    "name": "Groudon ex",
+    "number": "np002",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Kazuo Yazawa",
+    "image": "assets/cards/np/np002.webp",
+    "imageSmall": "assets/cards/np/np002-sm.webp",
+    "attacks": [
+      {
+        "name": "Major Earthquake",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "80",
+        "text": "Discard a Fighting Energy card attached to Groudon ex. Does 10 damage to your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 33.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-2/large",
+    "printedNumber": "NP 002",
+    "tcgplayerId": 85928,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "np-np003",
+    "name": "Treecko",
+    "number": "np003",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/np/np003.webp",
+    "imageSmall": "assets/cards/np/np003-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Slap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Razor Leaf",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 72.05,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-3/large",
+    "printedNumber": "NP 003",
+    "tcgplayerId": 90031,
+    "era": "ex",
+    "promo": true,
+    "reverse": true
+  },
+  {
+    "id": "np-np004",
+    "name": "Grovyle",
+    "number": "np004",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "evolvesFrom": "Treecko",
+    "image": "assets/cards/np/np004.webp",
+    "imageSmall": "assets/cards/np/np004-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Breath",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "The Defending Pokémon is now Poisoned."
+      },
+      {
+        "name": "Swift",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "market": 100.67,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-4/large",
+    "printedNumber": "NP 004",
+    "tcgplayerId": 85934,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np005",
+    "name": "Mudkip",
+    "number": "np005",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/np/np005.webp",
+    "imageSmall": "assets/cards/np/np005-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 1500.0,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-5/large",
+    "printedNumber": "NP 005",
+    "tcgplayerId": 87608,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "np-np008",
+    "name": "Torchic",
+    "number": "np008",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/np/np008.webp",
+    "imageSmall": "assets/cards/np/np008-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fireworks",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, discard a Fire Energy card attached to Torchic."
+      }
+    ],
+    "market": 63.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-8/large",
+    "printedNumber": "NP 008",
+    "tcgplayerId": 89948,
+    "era": "ex",
+    "promo": true,
+    "reverse": true
+  },
+  {
+    "id": "np-np009",
+    "name": "Combusken",
+    "number": "np009",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "evolvesFrom": "Torchic",
+    "image": "assets/cards/np/np009.webp",
+    "imageSmall": "assets/cards/np/np009-sm.webp",
+    "attacks": [
+      {
+        "name": "Flare",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Double Kick",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "market": 107.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-9/large",
+    "printedNumber": "NP 009",
+    "tcgplayerId": 84399,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np010",
+    "name": "Mudkip",
+    "number": "np010",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/np/np010.webp",
+    "imageSmall": "assets/cards/np/np010-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 137.69,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-10/large",
+    "printedNumber": "NP 010",
+    "tcgplayerId": 87604,
+    "era": "ex",
+    "promo": true,
+    "reverse": true
+  },
+  {
+    "id": "np-np011",
+    "name": "Marshtomp",
+    "number": "np011",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Mudkip",
+    "image": "assets/cards/np/np011.webp",
+    "imageSmall": "assets/cards/np/np011-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 228.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-11/large",
+    "printedNumber": "NP 011",
+    "tcgplayerId": 87231,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np014",
+    "name": "Latias",
+    "number": "np014",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/np/np014.webp",
+    "imageSmall": "assets/cards/np/np014-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Water"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Burned."
+      }
+    ],
+    "market": 27.92,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-14/large",
+    "printedNumber": "NP 014",
+    "tcgplayerId": 86649,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np015",
+    "name": "Latios",
+    "number": "np015",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/np/np015.webp",
+    "imageSmall": "assets/cards/np/np015-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Freeze Dry",
+        "cost": [
+          "Water",
+          "Psychic",
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 29.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-15/large",
+    "printedNumber": "NP 015",
+    "tcgplayerId": 86663,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np016",
+    "name": "Treecko",
+    "number": "np016",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "40",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/np/np016.webp",
+    "imageSmall": "assets/cards/np/np016-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Sporadic Sponging",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, remove 1 damage counter from Treecko."
+      }
+    ],
+    "market": 47.46,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-16/large",
+    "printedNumber": "NP 016",
+    "tcgplayerId": 90035,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "np-np017",
+    "name": "Torchic",
+    "number": "np017",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/np/np017.webp",
+    "imageSmall": "assets/cards/np/np017-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Discard a Fire Energy card attached to Torchic."
+      }
+    ],
+    "market": 23.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-17/large",
+    "printedNumber": "NP 017",
+    "tcgplayerId": 89953,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "np-np018",
+    "name": "Mudkip",
+    "number": "np018",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/np/np018.webp",
+    "imageSmall": "assets/cards/np/np018-sm.webp",
+    "attacks": [
+      {
+        "name": "Surf",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Whirlpool",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon."
+      }
+    ],
+    "market": 31.81,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-18/large",
+    "printedNumber": "NP 018",
+    "tcgplayerId": 87609,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "np-np019",
+    "name": "Whismur",
+    "number": "np019",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/np/np019.webp",
+    "imageSmall": "assets/cards/np/np019-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      },
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 13.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-19/large",
+    "printedNumber": "NP 019",
+    "tcgplayerId": 90579,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "np-np021",
+    "name": "Jirachi",
+    "number": "np021",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/np/np021.webp",
+    "imageSmall": "assets/cards/np/np021-sm.webp",
+    "attacks": [
+      {
+        "name": "The Third Eye",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard an Energy card attached to Jirachi and draw 3 cards."
+      },
+      {
+        "name": "Psywave",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10×",
+        "text": "Does 10 damage times the amount of Energy attached to the Defending Pokémon."
+      }
+    ],
+    "market": 58.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-21/large",
+    "printedNumber": "NP 021",
+    "tcgplayerId": 86326,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np022",
+    "name": "Beldum",
+    "number": "np022",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/np/np022.webp",
+    "imageSmall": "assets/cards/np/np022-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Charge",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Put 1 damage counter on Beldum."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Magnetic Call",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, search your deck for a Metal Basic Pokémon and put it onto your Bench. Shuffle your deck afterward. This power can't be used if Beldum is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "market": 6.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-22/large",
+    "printedNumber": "NP 022",
+    "tcgplayerId": 83784,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np024",
+    "name": "Chimecho",
+    "number": "np024",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/np/np024.webp",
+    "imageSmall": "assets/cards/np/np024-sm.webp",
+    "attacks": [
+      {
+        "name": "Resonate",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent switches each Defending Pokémon with his or her Benched Pokémon. If your opponent has only 1 Benched Pokémon, you choose the Defending Pokémon to switch."
+      },
+      {
+        "name": "Healing Sound",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Remove 3 damage counters from each of your Active Pokémon. Each Defending Pokémon is now Asleep."
+      }
+    ],
+    "market": 11.9,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-24/large",
+    "printedNumber": "NP 024",
+    "tcgplayerId": 84293,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np025",
+    "name": "Flygon",
+    "number": "np025",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Kouki Saitou",
+    "evolvesFrom": "Vibrava",
+    "image": "assets/cards/np/np025.webp",
+    "imageSmall": "assets/cards/np/np025-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Pit",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon can't retreat until the end of your opponent's next turn."
+      },
+      {
+        "name": "Dragonbreath",
+        "cost": [
+          "Grass",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed. If tails, this attack does nothing."
+      }
+    ],
+    "market": 47.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-25/large",
+    "printedNumber": "NP 025",
+    "tcgplayerId": 85523,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np026",
+    "name": "Tropical Wind",
+    "number": "np026",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/np/np026.webp",
+    "imageSmall": "assets/cards/np/np026-sm.webp",
+    "market": 223.5,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-26/large",
+    "printedNumber": "NP 026",
+    "tcgplayerId": 90053,
+    "era": "ex",
+    "promo": true
+  },
+  {
+    "id": "np-np035",
+    "name": "Pikachu δ",
+    "number": "np035",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "40",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/np/np035.webp",
+    "imageSmall": "assets/cards/np/np035-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Iron Tail",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip a coin until you get tails. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "market": 261.08,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-35/large",
+    "printedNumber": "NP 035",
+    "tcgplayerId": 88109,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "np-np040",
+    "name": "Mew",
+    "number": "np040",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/np/np040.webp",
+    "imageSmall": "assets/cards/np/np040-sm.webp",
+    "attacks": [
+      {
+        "name": "Psywave",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Does 10 damage times the amount of Energy attached to the Defending Pokémon."
+      },
+      {
+        "name": "Devolution Beam",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, choose 1 of either player's Evolved Pokémon, remove the highest stage Evolution card from that Pokémon, and put it into that player's hand."
+      }
+    ],
+    "market": 123.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-40/large",
+    "printedNumber": "NP 040",
+    "tcgplayerId": 87402,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  }
+]

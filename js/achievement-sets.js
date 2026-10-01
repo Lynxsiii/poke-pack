@@ -8,20 +8,66 @@
  */
 import { PLAYABLE_SETS } from "./catalog.js";
 import { ach, fmt } from "./achievement-kit.js";
-import { ERA_NAMES, eraTotal } from "./achievement-eras.js";
-import { masteryTitle } from "./titles.js";
+import { CROWN_ERAS, ERA_NAMES, eraSlug, eraTotal, setsInEra } from "./achievement-eras.js";
+import { crownTitle, masteryTitle } from "./titles.js";
+import { CROWN_GIFTS, MASTERY_GIFTS } from "./mastery-gifts.js";
 
-const slug = (text) => String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const slug = eraSlug;
 
-/** Coins for half a set: 1.5 per card, rounded to ten, never under ten (a 2-card promo set still pays). */
+/**
+ * What the set rows pay, in one place. Coins grow with the size of the set so
+ * a 370-card master is worth more than a 12-card McDonald's box, with a floor
+ * (small sets still pay something worth a claim) and a ceiling (so one row can
+ * never dwarf the economy). These numbers only decide what an UNCLAIMED row
+ * pays: a row already in someone's `claimed` list was paid once at the old
+ * amount and is never paid again.
+ *
+ *   half    base + perCard x cards, rounded to `step`      (the 50% row)
+ *   master  base + perCard x cards, rounded, floor base, ceiling max
+ *   crown   base + perCard x the era's cards, rounded, ceiling max
+ *
+ * Before the remaster: half = 1.5 x cards, master = 500 + 5 x cards.
+ */
+export const HALF_COIN = { base: 40, perCard: 2, step: 10 };
+export const MASTERY_COIN = { base: 600, perCard: 7, step: 50, max: 4000 };
+export const CROWN_COIN = { base: 3000, perCard: 1.5, step: 100, max: 10000 };
+
+function scaled(rule, total) {
+  const cards = Math.max(0, Math.floor(Number(total) || 0));
+  const coins = Math.round((rule.base + cards * rule.perCard) / rule.step) * rule.step;
+  return Math.min(rule.max ?? Infinity, Math.max(rule.base, coins));
+}
+
+/** Coins for half a set. */
 export function halfCoins(total) {
-  return Math.max(10, Math.round((total * 1.5) / 10) * 10);
+  return scaled(HALF_COIN, total);
 }
 
-/** Coins for a whole set: 500 plus 5 per card, rounded to fifty. */
+/** Coins for a whole set. */
 export function masteryCoins(total) {
-  return Math.round((500 + total * 5) / 50) * 50;
+  return scaled(MASTERY_COIN, total);
 }
+
+/** Coins for an era crown, from the era's total card count. */
+export function crownCoins(total) {
+  return scaled(CROWN_COIN, total);
+}
+
+const plainGear = (list) => (Array.isArray(list) ? list : []).map(({ kind, id }) => ({ kind, id }));
+
+/** The sleeve and coin a set's mastery gifts: [{kind, id}], [] for a set with no gear. */
+export function masteryGear(setId) {
+  return plainGear(Object.prototype.hasOwnProperty.call(MASTERY_GIFTS, setId) ? MASTERY_GIFTS[setId] : []);
+}
+
+/** The sleeve and coin an era crown gifts, by era name. */
+export function crownGear(era) {
+  const key = eraSlug(era);
+  return plainGear(Object.prototype.hasOwnProperty.call(CROWN_GIFTS, key) ? CROWN_GIFTS[key] : []);
+}
+
+/** A half row asking this many cards or more is a tier 3 row (more XP) instead of tier 2. */
+export const HALF_TIER3_GOAL = 75;
 
 export function halfGoal(total) {
   return Math.ceil(total / 2);
@@ -34,7 +80,7 @@ export const SET_ROWS = PLAYABLE_SETS.flatMap((set) => {
   return [
     ach(
       "sets",
-      2,
+      half >= HALF_TIER3_GOAL ? 3 : 2, // 120 XP once half a set is 75 cards or more, else 50
       `set-${set.id}-half`,
       `${set.name}, halfway`,
       `Own half of ${set.name}: ${fmt(half)} of its ${fmt(total)} cards.`,
@@ -48,11 +94,11 @@ export const SET_ROWS = PLAYABLE_SETS.flatMap((set) => {
       4,
       `set-${set.id}-master`,
       `${set.name} mastery`,
-      `Complete ${set.name}: own all ${fmt(total)} cards. Unlocks the ${masteryTitle(set.name)} title, an emblem and a banner.`,
+      `Complete ${set.name}: own all ${fmt(total)} cards. Unlocks the ${masteryTitle(set.name)} title, an emblem, a banner${masteryGear(set.id).length ? " and the set's own gear" : ""}.`,
       total,
       (c) => c.setOwned(set.id),
       masteryCoins(total),
-      { mark: "100%", set: set.id, kind: "mastery", title: masteryTitle(set.name), reward: {} }
+      { mark: "100%", set: set.id, kind: "mastery", title: masteryTitle(set.name), reward: { gear: masteryGear(set.id) } }
     ),
   ];
 });
@@ -142,6 +188,28 @@ const ERA_ROWS = ERA_NAMES.flatMap((era) =>
     )
 );
 
+/**
+ * One crown per big era: master every playable set of it. Generated from the
+ * set data (CROWN_ERAS), so an era that grows or appears needs no edit here
+ * (re-run scripts/make_mastery_gifts.py to give it gear). Tier 4, plus the
+ * crown bonus in js/xp.js.
+ */
+export const CROWN_ROWS = CROWN_ERAS.map((era) => {
+  const sets = setsInEra(era);
+  const gear = crownGear(era);
+  return ach(
+    "sets",
+    4,
+    `era-${slug(era)}-crown`,
+    `${era} crown`,
+    `Master all ${fmt(sets.length)} ${era} sets. Unlocks the ${crownTitle(era)} title${gear.length ? " and gear picked for the era" : ""}.`,
+    sets.length,
+    (c) => c.eraSetsDone(era),
+    crownCoins(eraTotal(era)),
+    { mark: "CROWN", kind: "crown", era, title: crownTitle(era), reward: { gear } }
+  );
+});
+
 export const SETS_GENERAL = [
   ach("sets", 1, "sets-started-5", "Window shopping", "Own at least one card from 5 different sets.", 5, (c) => c.setsStarted, 60),
   ach("sets", 1, "sets-started-10", "Set sampler", "Own at least one card from 10 different sets.", 10, (c) => c.setsStarted, 150),
@@ -156,6 +224,7 @@ export const SETS_GENERAL = [
     .map(([goal, tier, id, name, coins]) => ach("sets", tier, id, name, `Own at least one card from ${goal} different sets.`, goal, (c) => c.setsStarted, coins)),
   ach("sets", 1, "era-all", "Every era", `Own a card from every era: ${ERA_NAMES.join(", ")}.`, ERA_NAMES.length, (c) => c.erasStarted, 100, { mark: "ERA" }),
   ...ERA_ROWS,
+  ...CROWN_ROWS,
   ach("sets", 2, "sets-half-3", "Halfway house", "Reach 50% on 3 different sets.", 3, (c) => c.setsHalf, 250),
   ach("sets", 3, "sets-half-5", "Five halves", "Reach 50% on 5 different sets.", 5, (c) => c.setsHalf, 600),
   ach("sets", 3, "sets-half-10", "Ten halves", "Reach 50% on 10 different sets.", 10, (c) => c.setsHalf, 1200),
