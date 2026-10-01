@@ -159,7 +159,12 @@ export function dpWindow(card) {
  */
 export function dpMap(card) {
   if (isAlph(card)) return "";
-  if (card?.rarity === "Rare Holo" || card?.rarity === "Rare Secret") return dpWindow(card);
+  if (card?.rarity === "Rare Holo" || card?.rarity === "Rare Secret") {
+    // A Platinum SP Pokemon's trainer portrait breaks out of its medallion into the bottom-right of the picture: the window
+    // with the portrait cut out (scripts/make_dp_sp_mask.py), so the cosmos does not land on the face.
+    if ((card.subtypes || []).includes("SP") && dpLayout(card) === "basic") return "assets/foil/dp-win/dp-basic-sp.webp";
+    return dpWindow(card);
+  }
   return "";
 }
 
