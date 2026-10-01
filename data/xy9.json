@@ -3471,9 +3471,7 @@
     "artist": "Sanosuke Sakuma",
     "image": "assets/cards/xy9/98b.webp",
     "imageSmall": "assets/cards/xy9/98b-sm.webp",
-    "imageRemote": "https://images.scrydex.com/pokemon/xy9-98b/large",
-    "etchMap": "assets/foil/maps/xy9/98b-etch.webp",
-    "etchDrawn": true
+    "imageRemote": "https://images.scrydex.com/pokemon/xy9-98b/large"
   },
   {
     "id": "xy9-99",
@@ -3738,8 +3736,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-114/large",
-    "etchMap": "assets/foil/maps/xy9/114-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/114.webp",
+    "etchMap": "assets/foil/maps/xy9/114-etch.webp"
   },
   {
     "id": "xy9-115",
@@ -3773,8 +3771,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-115/large",
-    "etchMap": "assets/foil/maps/xy9/115-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/115.webp",
+    "etchMap": "assets/foil/maps/xy9/115-etch.webp"
   },
   {
     "id": "xy9-116",
@@ -3812,8 +3810,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-116/large",
-    "etchMap": "assets/foil/maps/xy9/116-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/116.webp",
+    "etchMap": "assets/foil/maps/xy9/116-etch.webp"
   },
   {
     "id": "xy9-117",
@@ -3853,8 +3851,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-117/large",
-    "etchMap": "assets/foil/maps/xy9/117-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/117.webp",
+    "etchMap": "assets/foil/maps/xy9/117-etch.webp"
   },
   {
     "id": "xy9-118",
@@ -3895,8 +3893,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-118/large",
-    "etchMap": "assets/foil/maps/xy9/118-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/118.webp",
+    "etchMap": "assets/foil/maps/xy9/118-etch.webp"
   },
   {
     "id": "xy9-119",
@@ -3935,8 +3933,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-119/large",
-    "etchMap": "assets/foil/maps/xy9/119-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/119.webp",
+    "etchMap": "assets/foil/maps/xy9/119-etch.webp"
   },
   {
     "id": "xy9-120",
@@ -3968,8 +3966,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-120/large",
-    "etchMap": "assets/foil/maps/xy9/120-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/120.webp",
+    "etchMap": "assets/foil/maps/xy9/120-etch.webp"
   },
   {
     "id": "xy9-121",
@@ -4008,8 +4006,8 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-121/large",
-    "etchMap": "assets/foil/maps/xy9/121-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/121.webp",
+    "etchMap": "assets/foil/maps/xy9/121-etch.webp"
   },
   {
     "id": "xy9-122",
@@ -4024,8 +4022,8 @@
     "image": "assets/cards/xy9/122.webp",
     "imageSmall": "assets/cards/xy9/122-sm.webp",
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-122/large",
-    "etchMap": "assets/foil/maps/xy9/122-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/122.webp",
+    "etchMap": "assets/foil/maps/xy9/122-etch.webp"
   },
   {
     "id": "xy9-123",
@@ -4066,7 +4064,7 @@
       }
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy9-123/large",
-    "etchMap": "assets/foil/maps/xy9/123-etch.webp",
-    "etchDrawn": true
+    "foilMap": "assets/foil/maps/xy9/123.webp",
+    "etchMap": "assets/foil/maps/xy9/123-etch.webp"
   }
 ]
