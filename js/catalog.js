@@ -2052,7 +2052,7 @@ export const SILVER_TEMPEST = {
     { id: "regieleki", name: "Regieleki", cardId: "swsh12-198", tag: "Titan" },
     { id: "lugia", name: "Lugia", cardId: "swsh12-186", tag: "The chase" },
     { id: "vulpix", name: "Alolan Vulpix", cardId: "swsh12-197", tag: "Snow" },
-  ]),
+  ], 2),
 };
 
 export const LOST_ORIGIN = {
@@ -2082,7 +2082,7 @@ export const LOST_ORIGIN = {
     { id: "giratina", name: "Giratina", cardId: "swsh11-186", tag: "The chase" },
     { id: "kyurem", name: "Kyurem", cardId: "swsh11-197", tag: "Lost zone" },
     { id: "enamorus", name: "Enamorus", cardId: "swsh11-178", tag: "Lost zone" },
-  ]),
+  ], 2),
 };
 
 export const POKEMON_GO = {
@@ -2109,7 +2109,7 @@ export const POKEMON_GO = {
   heroIds: ["pgo-72", "pgo-79", "pgo-81", "pgo-86"],
   wrappers: boosterWrappers("pgo", [
     { id: "pokemon-go", name: "Pokémon GO", cardId: "pgo-72", tag: "Go" },
-  ]),
+  ], 2),
 };
 
 export const ASTRAL_RADIANCE = {
@@ -2140,7 +2140,7 @@ export const ASTRAL_RADIANCE = {
     { id: "dialga", name: "Origin Forme Dialga", cardId: "swsh10-177", tag: "Star portal" },
     { id: "samurott", name: "Hisuian Samurott", cardId: "swsh10-209", tag: "Hisui" },
     { id: "palkia", name: "Origin Forme Palkia", cardId: "swsh10-167", tag: "Star portal" },
-  ]),
+  ], 2),
 };
 
 export const BRILLIANT_STARS = {
@@ -2170,7 +2170,7 @@ export const BRILLIANT_STARS = {
     { id: "shaymin", name: "Shaymin", cardId: "swsh9-173", tag: "Sky forme" },
     { id: "charizard", name: "Charizard", cardId: "swsh9-154", tag: "VSTAR" },
     { id: "arceus", name: "Arceus", cardId: "swsh9-166", tag: "The chase" },
-  ]),
+  ], 2),
 };
 
 export const FUSION_STRIKE = {
