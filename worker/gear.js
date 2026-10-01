@@ -158,6 +158,39 @@ export async function grantGear(env, request, userId, items) {
   return granted;
 }
 
+/**
+ * The gear an achievement claim gifts (`row.reward.gear` on set masteries and
+ * era crowns). Call it only after the claim's compare-and-swap succeeded, so a
+ * row's gift is handed out once, by the single request that won the claim. A
+ * failure is retried once and then logged, never thrown: the coins are already
+ * paid and the claim must not look failed.
+ * Returns { gear: [{ kind, id, name, wasNew }], byRow: { [rowId]: [{ kind, id, name }] } }.
+ */
+export async function grantRewardGear(env, request, userId, rows) {
+  const wanted = [];
+  for (const row of rows || []) {
+    for (const item of row?.reward?.gear || []) wanted.push({ rowId: row.id, kind: item.kind, id: item.id });
+  }
+  if (!wanted.length) return { gear: [], byRow: {} };
+  const catalog = await loadGearCatalog(env, request);
+  const known = wanted.filter((item) => gearItem(catalog, item.kind, item.id));
+  let granted = [];
+  for (let attempt = 0; attempt < 2 && known.length; attempt += 1) {
+    try {
+      granted = await grantGear(env, request, userId, known);
+      break;
+    } catch (err) {
+      console.error("grantRewardGear", userId, JSON.stringify(known), err);
+    }
+  }
+  if (!granted.length) return { gear: [], byRow: {} };
+  const nameOf = (kind, id) => gearItem(catalog, kind, id)?.name || id;
+  const byRow = {};
+  for (const item of known) (byRow[item.rowId] ||= []).push({ kind: item.kind, id: item.id, name: nameOf(item.kind, item.id) });
+  const gear = granted.map(({ kind, id, wasNew }) => ({ kind, id, name: nameOf(kind, id), wasNew }));
+  return { gear, byRow };
+}
+
 /** The items one opened copy of a product hands out, as { kind, id } rows. */
 export async function productItems(env, request, setId, productId) {
   const catalog = await loadGearCatalog(env, request);

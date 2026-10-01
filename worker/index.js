@@ -41,7 +41,7 @@ import {
 } from "./stats.js";
 import { activeChests, activeQuests, activeRowById, questPeriods, streakFromDays } from "../js/quests.js";
 import { handleBattles, maintainBattles } from "./battles.js";
-import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
+import { ensureGearSchema, gearSummary, grantRewardGear, handleGear, loadGearCatalog, prepareGrant } from "./gear.js";
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
@@ -767,13 +767,23 @@ async function claimAchievement(request, env) {
     ]);
     if (!results[0]?.meta?.changes) continue;
 
+    // Won the compare-and-swap, so only this request hands out the gear gifts
+    // (set masteries and era crowns carry reward.gear).
+    const gifts = await grantRewardGear(env, request, auth.user.id, rewards);
     const next = await loadSave(env, auth.user.id);
     return json({
       save: next,
       coins,
       titles,
       claimed: ids,
-      rewards: rewards.map((row) => ({ id: row.id, name: row.name, coins: row.coins, title: row.title || null })),
+      gear: gifts.gear,
+      rewards: rewards.map((row) => ({
+        id: row.id,
+        name: row.name,
+        coins: row.coins,
+        title: row.title || null,
+        gear: gifts.byRow[row.id] || [],
+      })),
     });
   }
   return json({ error: "Your claims collided. Try again." }, 409);

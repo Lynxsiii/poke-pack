@@ -62,3 +62,14 @@ export function isPrinted(rarity) {
 
 /** RARITY_ORDER without the finishes no playable set prints yet. */
 export const RARITIES_IN_PRINT = RARITY_ORDER.filter(isPrinted);
+
+/** "Scarlet & Violet" to "scarlet-violet": the era's part of an achievement id. */
+export function eraSlug(era) {
+  return String(era).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+/** An era needs this many playable sets before finishing all of them earns a crown. */
+export const CROWN_MIN_SETS = 3;
+
+/** Eras with a crown (`era-<slug>-crown`): every era of at least CROWN_MIN_SETS sets, so a new era appears on its own. */
+export const CROWN_ERAS = ERA_NAMES.filter((era) => setsInEra(era).length >= CROWN_MIN_SETS);
