@@ -110,6 +110,17 @@ export const SET_ACCENTS = {
   "mcd12": { a: "#ffb02e", b: "#e8663d" },
   "bwtk5a": { a: "#e0566c", b: "#8a6fe0" },
   "bwtk5b": { a: "#d0a24a", b: "#9fb0c4" },
+  // Diamond & Pearl generation, d5: promos, POP 6-9, Trainer Kits.
+  "dpp": { a: "#cfd6e8", b: "#8479e0" },
+  "hsp": { a: "#e3c15a", b: "#c9d3dd" },
+  "pop6": { a: "#8cc8f2", b: "#7a86e8" },
+  "pop7": { a: "#f09a4d", b: "#46a37a" },
+  "pop8": { a: "#c4ccd8", b: "#e5742f" },
+  "pop9": { a: "#f2c230", b: "#6f78e0" },
+  "dptk3a": { a: "#4bb3e0", b: "#7a8cf0" },
+  "dptk3b": { a: "#e8873a", b: "#5a8de0" },
+  "hgsstk4a": { a: "#2f8fd9", b: "#e0605a" },
+  "hgsstk4b": { a: "#f2c230", b: "#e0793a" },
   "bw10": { a: "#ff9a2e", b: "#3aa0ff" },
   "bw11": { a: "#f2b632", b: "#8f7be8" },
 };

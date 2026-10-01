@@ -1,0 +1,33 @@
+{
+  "_about": "Diamond & Pearl generation sealed products with card lists: the two Trainer Kits (written 2026-10-01 from /mnt/project-files/every-era/dp/research/trainer-kits-and-energy.md and hgss/research/hgss-trainer-kits-and-energy.md, research by r-dp). Folded into data/box-contents.json by build_box_contents.py (dp_kits()). The DP-era theme decks (Terra Firma, Inferno Zone, Royal Frost, Skull Charge, Armor Fortress, Polar Frost, Forest Force, Metal Surge, the Platinum and HGSS decks) have NO card lists in the research (names, TCGplayer ids and the deck-exclusive holo only), so they have no rows: never invent a list.",
+  "kits": [
+    {
+      "product": "hgss-trainer-kit-gyarados-raichu",
+      "tcgplayerId": 98731,
+      "halves": [
+        "hgsstk4a",
+        "hgsstk4b"
+      ],
+      "cards": {
+        "hgsstk4a": 30,
+        "hgsstk4b": 30
+      },
+      "label": "2 × 30-card half deck",
+      "sources": "TCGplayer group 1540 product 98731 (tcgcsv); pkmn.gg tk4a / tk4b lists (30 cards each, numbered 1-30); Bulbapedia 'HS Trainer Kit (TCG)' and PokeBeach 2010-03 (two sources for the two 30-card decks); retailer text (thewarpgate, skyfoxgames, Previews World JAN108177): 'two 30-card decks each with a specially selected holographic foil card'. Confidence high; the bonus booster pack is one source (not simulated)."
+    },
+    {
+      "product": "dp-trainer-kit-manaphy-lucario",
+      "tcgplayerId": 98949,
+      "halves": [
+        "dptk3a",
+        "dptk3b"
+      ],
+      "cards": {
+        "dptk3a": 12,
+        "dptk3b": 11
+      },
+      "label": "one of each of the kit's 23 different cards",
+      "sources": "TCGplayer group 1541 product 98949 (tcgcsv); pkmn.gg tk3a / tk3b (12 and 11 cards); TCGCollector and PokemonWizard card lists agree on 12 + 11; Bulbapedia 'Diamond & Pearl Trainer Kit (TCG)' excerpt. The copies a half deck held are NOT in any source, so the row deals one of each different card (a floor, not the real 2 × deck). Confidence medium."
+    }
+  ]
+}
