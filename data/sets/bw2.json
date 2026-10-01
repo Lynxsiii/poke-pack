@@ -1,0 +1,26 @@
+{
+  "id": "bw2",
+  "name": "Emerging Powers",
+  "series": "black-white",
+  "slug": "emerging-powers",
+  "scrydexId": "bw2",
+  "era": "bw",
+  "artSlug": "emerging-powers",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1424,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}
