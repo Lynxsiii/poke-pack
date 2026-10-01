@@ -386,6 +386,8 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
     dest = ROOT / rel
     if dest.exists() and not refresh:
         return rel
+    if product.get("noPhoto"):
+        return None  # TCGplayer's photo shows another product (EX Ruby & Sapphire's booster box listing shows a theme deck display)
     if not product.get("tcgplayerId"):
         return None  # Black & White blisters, decks and boxes TCGplayer never listed: no photo
     try:

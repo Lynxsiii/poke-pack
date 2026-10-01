@@ -42,7 +42,8 @@
       "tcgplayerId": 98559,
       "packs": 36,
       "promos": [],
-      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text)."
+      "note": "36 packs of nine cards, no code card (Potomac Distribution box page; TCGplayer text). TCGplayer's photo for this listing shows a theme deck display, so no photo is used.",
+      "noPhoto": true
     },
     {
       "id": "single-pack-blister",
@@ -66,7 +67,9 @@
         "np012",
         "np013"
       ],
-      "note": "Three EX Ruby & Sapphire and two EX Sandstorm packs, the holo Pikachu (NP12) and Meowth (NP13) and a double-sided poster (TCGplayer's product text for 206390; pkmn.gg's NP12 and NP13 name the same tin). The poster is not simulated."
+      "note": "Three EX Ruby & Sapphire and two EX Sandstorm packs, the holo Pikachu (NP12) and Meowth (NP13) and a double-sided poster (TCGplayer's product text for 206390; pkmn.gg's NP12 and NP13 name the same tin). The poster is not simulated. TCGplayer has no market price for the tin, so it is priced from its real pack mix (the script's packs-only derivation would price all five at the Ruby & Sapphire pack).",
+      "price": 3598.22,
+      "priceSource": "3 x EX Ruby & Sapphire pack ($799.99) + 2 x EX Sandstorm pack ($498.75), TCGplayer market prices, plus NP12 Pikachu ($156.58) and NP13 Meowth ($44.17) at TCGplayer market; TCGplayer has no market price for the tin itself (206390)."
     },
     {
       "id": "ex-series-value-pack",

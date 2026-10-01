@@ -3771,5 +3771,135 @@
     "imageRemote": "https://images.scrydex.com/pokemon/ex1-109/large",
     "tcgplayerId": 86761,
     "market": 0.32
+  },
+  {
+    "id": "ex1-np012",
+    "name": "Pikachu",
+    "number": "np012",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex1/np012.webp",
+    "imageSmall": "assets/cards/ex1/np012-sm.webp",
+    "attacks": [
+      {
+        "name": "Agility",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all effects of an attack, including damage, done to Pikachu during your opponent's next turn."
+      },
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "market": 156.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-12/large",
+    "printedNumber": "NP 012",
+    "tcgplayerId": 88067,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "ex1-np013",
+    "name": "Meowth",
+    "number": "np013",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/ex1/np013.webp",
+    "imageSmall": "assets/cards/ex1/np013-sm.webp",
+    "attacks": [
+      {
+        "name": "Plunder",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Before doing damage, discard all Trainer cards attached to the Defending Pokémon (before they affect the damage.)."
+      },
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 44.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-13/large",
+    "printedNumber": "NP 013",
+    "tcgplayerId": 87310,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
+  },
+  {
+    "id": "ex1-np020",
+    "name": "Ludicolo",
+    "number": "np020",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kouki Saitou",
+    "evolvesFrom": "Lombre",
+    "image": "assets/cards/ex1/np020.webp",
+    "imageSmall": "assets/cards/ex1/np020-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rain Dish",
+        "text": "At any time between turns, remove 1 damage counter from Ludicolo.",
+        "type": "Poké-Body"
+      }
+    ],
+    "market": 18.7,
+    "imageRemote": "https://images.scrydex.com/pokemon/np-20/large",
+    "printedNumber": "NP 020",
+    "tcgplayerId": 86896,
+    "era": "ex",
+    "promo": true,
+    "foilAs": "Rare Holo"
   }
 ]
