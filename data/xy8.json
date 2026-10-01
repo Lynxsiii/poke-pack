@@ -5778,5 +5778,325 @@
     "market": 201.15,
     "imageRemote": "https://images.scrydex.com/pokemon/xy8-164/large",
     "tcgplayerId": 107283
+  },
+  {
+    "id": "xy8-xyp067",
+    "name": "Jirachi",
+    "number": "xyp067",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "It is said to have the ability to grant any wish for just one week every thousand years.",
+    "image": "assets/cards/xy8/xyp067.webp",
+    "imageSmall": "assets/cards/xy8/xyp067-sm.webp",
+    "attacks": [
+      {
+        "name": "Stardust",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Discard a Special Energy attached to your opponent's Active Pokémon. If you do, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      },
+      {
+        "name": "Dream Dance",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Both Active Pokémon are now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY67/large",
+    "printedNumber": "XY 067",
+    "tcgplayerId": 108596,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 25.3
+  },
+  {
+    "id": "xy8-xyp088",
+    "name": "Chespin",
+    "number": "xyp088",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "Such a thick shell of wood covers its head and back that even a direct hit from a truck wouldn't faze it.",
+    "image": "assets/cards/xy8/xyp088.webp",
+    "imageSmall": "assets/cards/xy8/xyp088-sm.webp",
+    "attacks": [
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY88/large",
+    "printedNumber": "XY 088",
+    "tcgplayerId": 108618,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.47
+  },
+  {
+    "id": "xy8-xyp089",
+    "name": "Pikachu",
+    "number": "xyp089",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It has small electric sacs on both its cheeks. If threatened, it looses electric charges from the sacs.",
+    "image": "assets/cards/xy8/xyp089.webp",
+    "imageSmall": "assets/cards/xy8/xyp089-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Wave",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Electric Ring",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If Hoopa is on your Bench, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY89/large",
+    "printedNumber": "XY 089",
+    "tcgplayerId": 108619,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 40.96
+  },
+  {
+    "id": "xy8-xyp090",
+    "name": "Hoopa",
+    "number": "xyp090",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It gathers things it likes and pushes them through its loop to teleport them to a secret place.",
+    "image": "assets/cards/xy8/xyp090.webp",
+    "imageSmall": "assets/cards/xy8/xyp090-sm.webp",
+    "attacks": [
+      {
+        "name": "Summoning Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If Pikachu is on your Bench, draw 3 cards."
+      },
+      {
+        "name": "Double Spin",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY90/large",
+    "printedNumber": "XY 090",
+    "tcgplayerId": 108620,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 4.39
+  },
+  {
+    "id": "xy8-xyp097",
+    "name": "Aerodactyl-EX",
+    "number": "xyp097",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "170",
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/xy8/xyp097.webp",
+    "imageSmall": "assets/cards/xy8/xyp097-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Smash",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Land Crush",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY97/large",
+    "printedNumber": "XY 097",
+    "tcgplayerId": 114007,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 5.83
+  },
+  {
+    "id": "xy8-xyp098",
+    "name": "M Aerodactyl-EX",
+    "number": "xyp098",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "MEGA",
+      "EX"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Aerodactyl-EX",
+    "image": "assets/cards/xy8/xyp098.webp",
+    "imageSmall": "assets/cards/xy8/xyp098-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Drill Dive",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "110",
+        "text": "This attack does 10 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY98/large",
+    "printedNumber": "XY 098",
+    "tcgplayerId": 114008,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 23.66
+  },
+  {
+    "id": "xy8-xyp099",
+    "name": "Aerodactyl Spirit Link",
+    "number": "xyp099",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy8/xyp099.webp",
+    "imageSmall": "assets/cards/xy8/xyp099-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY99/large",
+    "printedNumber": "XY 099",
+    "tcgplayerId": 114009,
+    "era": "xy",
+    "promo": true,
+    "market": 2.16
+  },
+  {
+    "id": "xy8-xyp100",
+    "name": "Mewtwo",
+    "number": "xyp100",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "match",
+    "flavorText": "A Pokémon created by recombining Mew's genes. It's said to have the most savage heart among Pokémon.",
+    "image": "assets/cards/xy8/xyp100.webp",
+    "imageSmall": "assets/cards/xy8/xyp100-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Zen Blade",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This Pokémon can't use Zen Blade during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY100/large",
+    "printedNumber": "XY 100",
+    "tcgplayerId": 108623,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 28.42
   }
 ]

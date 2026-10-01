@@ -15,5 +15,320 @@
   "tcgplayerGroup": 1661,
   "skipNumbers": [
     "146a"
-  ]
+  ],
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "products": [
+    {
+      "id": "etb-mewtwo-x",
+      "name": "Elite Trainer Box [Mewtwo X]",
+      "kind": "etb",
+      "tcgplayerId": 107106,
+      "packs": 8,
+      "promos": [],
+      "note": "Eight BREAKthrough packs, 65 sleeves, 45 basic Energy and dice; no promo."
+    },
+    {
+      "id": "etb-mewtwo-y",
+      "name": "Elite Trainer Box [Mewtwo Y]",
+      "kind": "etb",
+      "tcgplayerId": 107107,
+      "packs": 8,
+      "promos": [],
+      "note": "The same contents as the Mewtwo X box."
+    },
+    {
+      "id": "blister-sableye",
+      "name": "3 Pack Blister [Sableye]",
+      "kind": "blister",
+      "tcgplayerId": 108635,
+      "packs": 3,
+      "promos": [
+        "xyp092"
+      ]
+    },
+    {
+      "id": "blister-celebi",
+      "name": "3 Pack Blister [Celebi]",
+      "kind": "blister",
+      "tcgplayerId": 108636,
+      "packs": 3,
+      "promos": [
+        "xyp093"
+      ]
+    },
+    {
+      "id": "single-blister-jirachi",
+      "name": "Single Pack Blister [Jirachi]",
+      "kind": "blister",
+      "tcgplayerId": 108637,
+      "packs": 1,
+      "promos": [
+        "xyp067"
+      ]
+    },
+    {
+      "id": "single-blister-hawlucha",
+      "name": "Single Pack Blister [Hawlucha]",
+      "kind": "blister",
+      "tcgplayerId": 108638,
+      "packs": 1,
+      "promos": [],
+      "note": "Its promo is a reprint of Hawlucha 87/162 with no XY promo number, which isn't built."
+    },
+    {
+      "id": "pin-blister-mega-evolution",
+      "name": "Mega Evolution 3 Pin Blister",
+      "kind": "blister",
+      "tcgplayerId": 107111,
+      "packs": 3,
+      "promos": [],
+      "note": "Three BREAKthrough packs and three pins (Mega Charizard X, Mega Charizard Y, Mega Lucario)."
+    },
+    {
+      "id": "pin-blister-mega-mewtwo-x",
+      "name": "Three Pack Pin Blister [Mega Mewtwo X]",
+      "kind": "blister",
+      "tcgplayerId": 107112,
+      "packs": 3,
+      "promos": []
+    },
+    {
+      "id": "pin-blister-mega-mewtwo-y",
+      "name": "Three Pack Pin Blister [Mega Mewtwo Y]",
+      "kind": "blister",
+      "tcgplayerId": 107113,
+      "packs": 3,
+      "promos": []
+    },
+    {
+      "id": "pin-collection-zoroark",
+      "name": "Pin Collection [Zoroark]",
+      "kind": "collection",
+      "tcgplayerId": 229477,
+      "packs": 3,
+      "promos": []
+    },
+    {
+      "id": "mega-blaziken-premium-collection",
+      "name": "Mega Blaziken EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 107104,
+      "packs": 2,
+      "promos": [
+        "xyp086"
+      ],
+      "note": "Two packs each of Primal Clash, Roaring Skies, Ancient Origins and BREAKthrough, a jumbo card, a coin and a playmat in the real box; only the BREAKthrough packs are shown. It also held Blaziken-EX XY54, filed under the Hoenn Power Tin in Roaring Skies."
+    },
+    {
+      "id": "mega-swampert-premium-collection",
+      "name": "Mega Swampert EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 107105,
+      "packs": 2,
+      "promos": [
+        "xyp087"
+      ],
+      "note": "Two packs each of Primal Clash, Roaring Skies, Ancient Origins and BREAKthrough, a jumbo card, a coin and a playmat in the real box; only the BREAKthrough packs are shown. It also held Swampert-EX XY55, filed under the Hoenn Power Tin in Roaring Skies."
+    },
+    {
+      "id": "pikachu-ex-legendary-collection",
+      "name": "Pikachu EX Legendary Collection",
+      "kind": "collection",
+      "tcgplayerId": 107114,
+      "packs": 2,
+      "promos": [
+        "xyp075",
+        "xyp076",
+        "xyp078",
+        "xyp080",
+        "xyp082",
+        "xyp084"
+      ],
+      "note": "Two BREAKthrough, one Ancient Origins, one Roaring Skies and one Primal Clash pack and a Pikachu pin in the real box, with five full-art legendaries and the EX; only the BREAKthrough packs are shown. Sources disagree on which box holds which five."
+    },
+    {
+      "id": "hoopa-ex-legendary-collection",
+      "name": "Hoopa EX Legendary Collection",
+      "kind": "collection",
+      "tcgplayerId": 107115,
+      "packs": 2,
+      "promos": [
+        "xyp074",
+        "xyp077",
+        "xyp079",
+        "xyp081",
+        "xyp083",
+        "xyp085"
+      ],
+      "note": "Two BREAKthrough, one Ancient Origins, one Roaring Skies and one Primal Clash pack and a Hoopa pin in the real box, with five full-art legendaries and the EX; only the BREAKthrough packs are shown. Sources disagree on which box holds which five."
+    },
+    {
+      "id": "collector-chest",
+      "name": "BREAKthrough Collector Chest",
+      "kind": "collection",
+      "tcgplayerId": 107109,
+      "packs": 2,
+      "promos": [
+        "xyp088",
+        "xyp089",
+        "xyp090"
+      ],
+      "note": "Two BREAKthrough, one Ancient Origins, one Roaring Skies and one Primal Clash pack in the real chest; only the BREAKthrough packs are shown."
+    },
+    {
+      "id": "mega-mewtwo-collection-x",
+      "name": "Mega Mewtwo Collection [Mega Mewtwo X]",
+      "kind": "collection",
+      "tcgplayerId": 107118,
+      "packs": 2,
+      "promos": [
+        "xyp100"
+      ],
+      "note": "Four packs and a figure in the real box, two of them BREAKthrough (the other two are not documented); only the BREAKthrough packs are shown."
+    },
+    {
+      "id": "mega-mewtwo-collection-y",
+      "name": "Mega Mewtwo Collection [Mega Mewtwo Y]",
+      "kind": "collection",
+      "tcgplayerId": 107119,
+      "packs": 2,
+      "promos": [
+        "xyp101"
+      ],
+      "note": "Four packs and a figure in the real box, two of them BREAKthrough (the other two are not documented); only the BREAKthrough packs are shown."
+    },
+    {
+      "id": "mega-aerodactyl-premium-collection",
+      "name": "Mega Aerodactyl EX Premium Collection",
+      "kind": "premium",
+      "tcgplayerId": 117277,
+      "packs": 2,
+      "promos": [
+        "xyp097",
+        "xyp098",
+        "xyp099"
+      ],
+      "note": "Two BREAKthrough, two Ancient Origins, one Roaring Skies and one Furious Fists pack in the real box; only the BREAKthrough packs are shown."
+    },
+    {
+      "id": "aurorus-ex-box",
+      "name": "Aurorus EX Box",
+      "kind": "collection",
+      "tcgplayerId": 117278,
+      "packs": 4,
+      "promos": [
+        "xyp102"
+      ],
+      "note": "The pack mix is not documented; shown as BREAKthrough packs."
+    },
+    {
+      "id": "break-evolution-box-empoleon",
+      "name": "BREAK Evolution Box [Empoleon]",
+      "kind": "collection",
+      "tcgplayerId": 117274,
+      "packs": 5,
+      "promos": [
+        "xyp134",
+        "xyp135",
+        "xyp136"
+      ],
+      "note": "The pack mix is not documented; shown as BREAKthrough packs."
+    }
+  ],
+  "promoCards": {
+    "xyp067": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp088": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp089": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp090": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp092": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp093": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp100": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp101": {
+      "foilAs": "Rare Holo"
+    },
+    "xyp074": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp075": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp076": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp077": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp078": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp079": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp080": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp081": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp082": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp083": {
+      "foilAs": "Rare Ultra"
+    },
+    "xyp084": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp085": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp086": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp087": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp097": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp098": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp099": {},
+    "xyp102": {
+      "foilAs": "Rare Holo EX"
+    },
+    "xyp134": {
+      "foilAs": "Rare BREAK"
+    },
+    "xyp135": {
+      "foilAs": "Rare BREAK"
+    },
+    "xyp136": {
+      "foilAs": "Rare BREAK"
+    }
+  }
 }
