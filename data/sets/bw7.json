@@ -1,0 +1,26 @@
+{
+  "id": "bw7",
+  "name": "Boundaries Crossed",
+  "series": "black-white",
+  "slug": "boundaries-crossed",
+  "scrydexId": "bw7",
+  "era": "bw",
+  "artSlug": "boundaries-crossed",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1408,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}

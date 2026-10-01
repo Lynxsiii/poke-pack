@@ -1,0 +1,26 @@
+{
+  "id": "bw9",
+  "name": "Plasma Freeze",
+  "series": "black-white",
+  "slug": "plasma-freeze",
+  "scrydexId": "bw9",
+  "era": "bw",
+  "artSlug": "plasma-freeze",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1382,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  }
+}
