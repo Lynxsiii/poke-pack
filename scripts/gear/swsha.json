@@ -14,22 +14,25 @@
     "swsh2/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/cleanup-swsha/swsh2__eliteTrainerBox__sleeve__magicmadhouse.jpg"
+    "file": "refs/psdb/img/fd21a751-b8fa-4faa-8ba6-0fcfc7310fb7.jpg"
    },
    "crop": [
-    161,
-    103,
-    427,
-    473
+    0,
+    0,
+    1147,
+    1579
    ],
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=fd21a751-b8fa-4faa-8ba6-0fcfc7310fb7",
     "https://www.tcgplayer.com/product/220674",
     "https://moonshotgamestore.com/products/rebel-clash-elite-trainer-box",
     "https://www.kasecollect.com/products/pokemon-rebel-clash-elite-trainer-box",
     "https://magicmadhouse.co.uk/pokemon-rebel-clash-copperajah-sleeves-65"
-   ]
+   ],
+   "quad": null,
+   "psdb": "fd21a751-b8fa-4faa-8ba6-0fcfc7310fb7"
   },
   {
    "kind": "sleeve",
@@ -45,36 +48,24 @@
     "swsh3/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/hunt-pc/da-eternatus__justahobby-P6379_174-80731_05.jpg"
+    "file": "refs/psdb/img/8236068f-3845-42e0-90c7-72e15b537473.jpg"
    },
-   "crop": null,
-   "v": 4,
+   "crop": [
+    0,
+    0,
+    1567,
+    2141
+   ],
+   "v": 5,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=8236068f-3845-42e0-90c7-72e15b537473",
     "https://www.tcgplayer.com/product/220675",
     "https://facetofacegames.com/en-us/products/pokemon-tcg-sword-shield-darkness-ablaze-elite-trainer-box",
     "https://www.justahobby.store/products/pokemon-darkness-ablaze-elite-trainer-box"
    ],
-   "quad": [
-    [
-     568,
-     406
-    ],
-    [
-     1000,
-     338
-    ],
-    [
-     1104,
-     936
-    ],
-    [
-     664,
-     1022
-    ]
-   ],
-   "snap": false,
-   "quadInset": 0.03
+   "quad": null,
+   "psdb": "8236068f-3845-42e0-90c7-72e15b537473"
   },
   {
    "kind": "sleeve",
@@ -90,36 +81,24 @@
     "swsh35/eliteTrainerBox"
    ],
    "src": {
-    "tcgplayer": 224095
+    "file": "refs/psdb/img/ca7b63bf-d49e-4dfb-b1b5-847e2d7c1739.jpg"
    },
-   "crop": null,
-   "v": 3,
+   "crop": [
+    0,
+    0,
+    1568,
+    2162
+   ],
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=ca7b63bf-d49e-4dfb-b1b5-847e2d7c1739",
     "https://www.tcgplayer.com/product/224095",
     "https://toywiz.com/pokemon-trading-card-game-champions-path-elite-trainer-box/",
     "https://facetofacegames.com/en-us/collections/pokemon-sealed/products/pokemon-tcg-champions-path-elite-trainer-box"
    ],
-   "quad": [
-    [
-     456,
-     278
-    ],
-    [
-     872,
-     197
-    ],
-    [
-     982,
-     766
-    ],
-    [
-     566,
-     846
-    ]
-   ],
-   "snap": false,
-   "quadInset": 0.018
+   "quad": null,
+   "psdb": "ca7b63bf-d49e-4dfb-b1b5-847e2d7c1739"
   },
   {
    "kind": "sleeve",
@@ -135,16 +114,24 @@
     "swsh4/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/cleanup-swsha/swsh4__eliteTrainerBox__sleeve__toywiz.jpg"
+    "file": "refs/psdb/img/48d17d6c-9072-4055-a23b-d4e7d3c8cef6.jpg"
    },
-   "crop": null,
-   "v": 2,
+   "crop": [
+    0,
+    0,
+    657,
+    908
+   ],
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=48d17d6c-9072-4055-a23b-d4e7d3c8cef6",
     "https://www.tcgplayer.com/product/227647",
     "https://toywiz.com/pokemon-trading-card-game-sword-shield-vivid-voltage-elite-trainer-box/",
     "https://toywiz.com/pokemon-sword-shield-vivid-voltage-gigantamax-pikachu-card-sleeves-65-count/"
-   ]
+   ],
+   "quad": null,
+   "psdb": "48d17d6c-9072-4055-a23b-d4e7d3c8cef6"
   },
   {
    "kind": "sleeve",
@@ -160,37 +147,25 @@
     "swsh45/eliteTrainerBox"
    ],
    "src": {
-    "file": "refs/hunt-pc/sf-eevee__pokeguardian-593042.jpg"
+    "file": "refs/psdb/img/b543defd-64b0-4871-a75f-24a8f698a750.jpg"
    },
-   "crop": null,
-   "v": 3,
+   "crop": [
+    0,
+    0,
+    1582,
+    2193
+   ],
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=b543defd-64b0-4871-a75f-24a8f698a750",
     "https://www.tcgplayer.com/product/232635",
     "https://marriland.com/updates/shining-fates-elite-trainer-box-review/",
     "https://facetofacegames.com/en-us/products/pokemon-tcg-shining-fates-elite-trainer-box",
     "https://www.pokeguardian.com/593042_more-shining-fates-elite-trainer-box-product-images-revealed-close-up-of-english-eevee-vmax"
    ],
-   "quad": [
-    [
-     612,
-     452
-    ],
-    [
-     1072,
-     368
-    ],
-    [
-     1196,
-     996
-    ],
-    [
-     720,
-     1090
-    ]
-   ],
-   "snap": false,
-   "quadInset": 0.02
+   "quad": null,
+   "psdb": "b543defd-64b0-4871-a75f-24a8f698a750"
   },
   {
    "kind": "sleeve",
@@ -206,36 +181,24 @@
     "swsh6/pc-etb"
    ],
    "src": {
-    "tcgplayer": 248790
+    "file": "refs/psdb/img/5121793c-0469-42ab-a0ff-89ecfd41b8eb.jpg"
    },
-   "crop": null,
-   "v": 3,
+   "crop": [
+    0,
+    0,
+    1807,
+    2520
+   ],
+   "v": 4,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=5121793c-0469-42ab-a0ff-89ecfd41b8eb",
     "https://www.tcgplayer.com/product/248790",
     "https://www.pokeguardian.com/639913_sword-shield-chilling-reign-product-line-up-revealed",
     "https://pack-fresh.com/products/chilling-reign-pokemon-center-elite-trainer-box-ice-calyrex"
    ],
-   "quad": [
-    [
-     416,
-     362
-    ],
-    [
-     798,
-     290
-    ],
-    [
-     895,
-     802
-    ],
-    [
-     513,
-     875
-    ]
-   ],
-   "snap": false,
-   "quadInset": 0.02
+   "quad": null,
+   "psdb": "5121793c-0469-42ab-a0ff-89ecfd41b8eb"
   },
   {
    "kind": "coin",

@@ -15,11 +15,12 @@
     "rsv10pt5/pc-etb"
    ],
    "src": {
-    "file": "refs/cleanup-svb/rsv10pt5__eliteTrainerBox__sleeve-stack__obsidia.jpg"
+    "file": "refs/psdb/img/98ca77f6-cd93-4194-8351-2d2e1056982d.jpg"
    },
-   "v": 4,
+   "v": 5,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=98ca77f6-cd93-4194-8351-2d2e1056982d",
     "https://www.tcgplayer.com/product/630689/pokemon-sv-white-flare-white-flare-elite-trainer-box",
     "https://www.tcgplayer.com/product/647648",
     "https://obsidia-tcg.store/products/pokemon-tcg-black-white-flare-elite-trainer-box",
@@ -28,25 +29,14 @@
     "https://smokeandmirrorshobby.com/products/white-flare-pokemon-center-elite-trainer-box-exclusive",
     "https://cdn.shopify.com/s/files/1/0866/6441/3526/files/Whiteflaresleeves.webp"
    ],
-   "quad": [
-    [
-     684,
-     508
-    ],
-    [
-     1280,
-     397
-    ],
-    [
-     1429,
-     1217
-    ],
-    [
-     836,
-     1323
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1462,
+    2016
    ],
-   "snap": false
+   "psdb": "98ca77f6-cd93-4194-8351-2d2e1056982d"
   },
   {
    "kind": "sleeve",
@@ -63,11 +53,12 @@
     "zsv10pt5/pc-etb"
    ],
    "src": {
-    "file": "refs/cleanup-svb/zsv10pt5__eliteTrainerBox__sleeve-stack__obsidia.jpg"
+    "file": "refs/psdb/img/b36d710d-ca30-46ed-b585-003c364f1dc1.jpg"
    },
-   "v": 4,
+   "v": 5,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=b36d710d-ca30-46ed-b585-003c364f1dc1",
     "https://www.tcgplayer.com/product/630686/pokemon-sv-black-bolt-black-bolt-elite-trainer-box",
     "https://www.tcgplayer.com/product/647650",
     "https://obsidia-tcg.store/products/pokemon-tcg-black-bolt-elite-trainer-box",
@@ -75,25 +66,14 @@
     "https://smokeandmirrorshobby.com/products/black-bolt-pokemon-center-elite-trainer-box-exclusive",
     "https://cdn.shopify.com/s/files/1/0866/6441/3526/files/blackboltsleeves.webp"
    ],
-   "quad": [
-    [
-     684,
-     562
-    ],
-    [
-     1280,
-     451
-    ],
-    [
-     1430,
-     1275
-    ],
-    [
-     836,
-     1378
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1553,
+    2168
    ],
-   "snap": false
+   "psdb": "b36d710d-ca30-46ed-b585-003c364f1dc1"
   },
   {
    "kind": "sleeve",
@@ -110,17 +90,18 @@
     "sv10/pc-etb"
    ],
    "src": {
-    "tcgplayer": 637450
+    "file": "refs/psdb/img/1480660c-d1ca-4618-8eb6-24987b7edf5a.jpg"
    },
    "crop": [
-    137,
     0,
-    863,
-    1000
+    0,
+    1534,
+    2114
    ],
-   "v": 1,
+   "v": 2,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=1480660c-d1ca-4618-8eb6-24987b7edf5a",
     "https://www.tcgplayer.com/product/624676/pokemon-sv10-destined-rivals-destined-rivals-elite-trainer-box",
     "https://www.tcgplayer.com/product/637450",
     "https://obsidia-tcg.store/products/pokemon-tcg-destined-rivals-elite-trainer-box",
@@ -128,7 +109,9 @@
     "https://victoryroadcollections.com/products/scarlet-and-violet-destined-rivals-elite-trainer-box",
     "https://www.tcgplayer.com/product/624675/pokemon-sv10-destined-rivals-destined-rivals-pokemon-center-elite-trainer-box-exclusive",
     "https://elite4tradingcards.com/products/destined-rivals-pokemon-center-elite-trainer-box"
-   ]
+   ],
+   "quad": null,
+   "psdb": "1480660c-d1ca-4618-8eb6-24987b7edf5a"
   },
   {
    "kind": "sleeve",
@@ -145,17 +128,18 @@
     "sv5/pc-etb-iron-leaves"
    ],
    "src": {
-    "file": "refs/sv-b/svb-rect-544188.png"
+    "file": "refs/psdb/img/17e0c631-695f-46d5-ba36-a5703d4bd5c6.jpg"
    },
    "crop": [
-    3,
     0,
-    630,
-    878
+    0,
+    1569,
+    2200
    ],
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=17e0c631-695f-46d5-ba36-a5703d4bd5c6",
     "https://www.tcgplayer.com/product/532848/pokemon-sv05-temporal-forces-temporal-forces-elite-trainer-box-iron-leaves-ex",
     "https://www.tcgplayer.com/product/544188",
     "https://www.amazon.com/dp/B0CS7P4W8C",
@@ -166,7 +150,9 @@
     "https://adtcg.com/products/temporal-forces-pokemon-center-elite-trainer-box-iron-leaves",
     "https://www.pokeguardian.com/1589671_scarlet-violet-temporal-forces-officially-revealed",
     "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/96rxhm/pokemon_tcg_scarlet_violettemporal_f_center_etb_components_iron_leaves_png_jpgcopy.jpg"
-   ]
+   ],
+   "quad": null,
+   "psdb": "17e0c631-695f-46d5-ba36-a5703d4bd5c6"
   },
   {
    "kind": "sleeve",
@@ -183,17 +169,18 @@
     "sv5/pc-etb-walking-wake"
    ],
    "src": {
-    "file": "refs/sv-b/svb-rect-544189.png"
+    "file": "refs/psdb/img/d85b6a7d-d040-40d5-8ece-b04165adc7dd.jpg"
    },
    "crop": [
-    3,
     0,
-    630,
-    878
+    0,
+    1669,
+    2314
    ],
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=d85b6a7d-d040-40d5-8ece-b04165adc7dd",
     "https://www.tcgplayer.com/product/532845/pokemon-sv05-temporal-forces-temporal-forces-elite-trainer-box-walking-wake",
     "https://www.tcgplayer.com/product/544189",
     "https://obsidia-tcg.store/products/pokemon-tcg-temporal-forces-elite-trainer-box-walking-wake",
@@ -204,7 +191,9 @@
     "https://www.tcgplayer.com/product/544188",
     "https://www.pokeguardian.com/1589671_scarlet-violet-temporal-forces-officially-revealed",
     "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/og1rnm/pokemon_tcg_scarlet_violettemporal_f_enter_etb_components_walking_wake_png_jpgcopy.jpg"
-   ]
+   ],
+   "quad": null,
+   "psdb": "d85b6a7d-d040-40d5-8ece-b04165adc7dd"
   },
   {
    "kind": "sleeve",
@@ -221,17 +210,18 @@
     "sv6/pc-etb"
    ],
    "src": {
-    "file": "refs/sv-b/svb-rect-552790.png"
+    "file": "refs/psdb/img/a9f37e13-21aa-4fa4-a9e9-98c1070e271b.jpg"
    },
    "crop": [
-    1,
     0,
-    630,
-    877
+    0,
+    1581,
+    2176
    ],
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=a9f37e13-21aa-4fa4-a9e9-98c1070e271b",
     "https://www.tcgplayer.com/product/543845/pokemon-sv06-twilight-masquerade-twilight-masquerade-elite-trainer-box",
     "https://www.tcgplayer.com/product/552790",
     "https://www.amazon.com/dp/B0CXY99B6D",
@@ -240,7 +230,9 @@
     "https://obsidia-tcg.store/products/pokemon-tcg-twilight-masquerade-elite-trainer-box",
     "https://pkmn.store/products/pokemon-tcg-twilight-masquerade-elite-trainer-box",
     "https://www.tcgplayer.com/product/543844/pokemon-sv06-twilight-masquerade-twilight-masquerade-pokemon-center-elite-trainer-box-exclusive"
-   ]
+   ],
+   "quad": null,
+   "psdb": "a9f37e13-21aa-4fa4-a9e9-98c1070e271b"
   },
   {
    "kind": "sleeve",
@@ -257,11 +249,12 @@
     "sv6pt5/pc-etb"
    ],
    "src": {
-    "file": "refs/cleanup-svb/sv6pt5__pc-etb__sleeve-stack__pokeguardian.jpg"
+    "file": "refs/psdb/img/3533fed0-b6c1-408d-b072-fbdf181fdbdd.jpg"
    },
-   "v": 4,
+   "v": 5,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=3533fed0-b6c1-408d-b072-fbdf181fdbdd",
     "https://www.tcgplayer.com/product/552999/pokemon-sv-shrouded-fable-shrouded-fable-elite-trainer-box",
     "https://www.tcgplayer.com/product/575150",
     "https://obsidia-tcg.store/products/pokemon-tcg-shrouded-fable-elite-trainer-box",
@@ -272,25 +265,14 @@
     "https://www.pokeguardian.com/1824651_scarlet-violet-shrouded-fable-special-set-revealed-ukiyo-e-woodblock-art-style-cards",
     "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/p9506_290-85854_06-high.jpg"
    ],
-   "quad": [
-    [
-     552,
-     416
-    ],
-    [
-     998,
-     334
-    ],
-    [
-     1110,
-     946
-    ],
-    [
-     664,
-     1028
-    ]
+   "quad": null,
+   "crop": [
+    0,
+    0,
+    1577,
+    2187
    ],
-   "snap": false
+   "psdb": "3533fed0-b6c1-408d-b072-fbdf181fdbdd"
   },
   {
    "kind": "sleeve",
@@ -307,17 +289,18 @@
     "sv7/pc-etb"
    ],
    "src": {
-    "file": "refs/sv-b/svb-rect-583520.png"
+    "file": "refs/psdb/img/88a8eb1d-bbb8-4d60-921b-8f6610365de4.jpg"
    },
    "crop": [
     0,
     0,
-    626,
-    880
+    1474,
+    2067
    ],
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=88a8eb1d-bbb8-4d60-921b-8f6610365de4",
     "https://www.tcgplayer.com/product/557350/pokemon-sv07-stellar-crown-stellar-crown-elite-trainer-box",
     "https://www.tcgplayer.com/product/583520",
     "https://www.amazon.com/dp/B0D894GL5B",
@@ -326,7 +309,9 @@
     "https://hobby-addicts.com/products/pokemon-stellar-crown-elite-trainer-box",
     "https://www.tcgplayer.com/product/557340/pokemon-sv07-stellar-crown-stellar-crown-pokemon-center-elite-trainer-box-exclusive",
     "https://pack-fresh.com/products/stellar-crown-pokemon-center-elite-trainer-box"
-   ]
+   ],
+   "quad": null,
+   "psdb": "88a8eb1d-bbb8-4d60-921b-8f6610365de4"
   },
   {
    "kind": "sleeve",
@@ -343,11 +328,12 @@
     "sv8/pc-etb"
    ],
    "src": {
-    "file": "refs/cleanup-svb/sv8__eliteTrainerBox__sleeve-flat__pokeguardian.jpg"
+    "file": "refs/psdb/img/9f319eef-029a-47bb-b935-0423b5e99fc6.jpg"
    },
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=9f319eef-029a-47bb-b935-0423b5e99fc6",
     "https://www.tcgplayer.com/product/565630/pokemon-sv08-surging-sparks-surging-sparks-elite-trainer-box",
     "https://www.tcgplayer.com/product/598076",
     "https://obsidia-tcg.store/products/pokemon-tcg-surging-sparks-elite-trainer-box",
@@ -358,7 +344,15 @@
     "https://www.pokeguardian.com/2001573_scarlet-violet-surging-sparks-officially-revealed",
     "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/3c7d94f9-26be-46b3-9d93-c61a8bc9127e-high.jpg",
     "https://www.chiefcards.co.uk/products/pokemon-surging-sparks-lightning-bolt-card-sleeves"
-   ]
+   ],
+   "crop": [
+    0,
+    0,
+    1508,
+    2111
+   ],
+   "quad": null,
+   "psdb": "9f319eef-029a-47bb-b935-0423b5e99fc6"
   },
   {
    "kind": "sleeve",
@@ -375,17 +369,18 @@
     "sv8pt5/pc-etb"
    ],
    "src": {
-    "file": "refs/sv-b/svb-rect-614504.png"
+    "file": "refs/psdb/img/ba1fbc21-baea-4330-90d5-03e9b6f500d7.jpg"
    },
    "crop": [
     0,
     0,
-    626,
-    880
+    1445,
+    2011
    ],
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=ba1fbc21-baea-4330-90d5-03e9b6f500d7",
     "https://www.tcgplayer.com/product/593355/pokemon-sv-prismatic-evolutions-prismatic-evolutions-elite-trainer-box",
     "https://www.tcgplayer.com/product/614504",
     "https://obsidia-tcg.store/products/pokemon-tcg-prismatic-evolution-elite-trainer-box",
@@ -394,7 +389,9 @@
     "https://www.tcgplayer.com/product/593324/pokemon-sv-prismatic-evolutions-prismatic-evolutions-pokemon-center-elite-trainer-box-exclusive",
     "https://zulusgames.com/products/pokemon-tcg-prismatic-evolutions-elite-trainer-box-pokemon-center-edition",
     "https://763collectibles.com/products/pokemon-prismatic-evolutions-elite-trainer-box-pokemon-center-exclusive"
-   ]
+   ],
+   "quad": null,
+   "psdb": "ba1fbc21-baea-4330-90d5-03e9b6f500d7"
   },
   {
    "kind": "sleeve",
@@ -410,17 +407,26 @@
     "sv8pt5/super-premium"
    ],
    "src": {
-    "url": "https://primary.jwwb.nl/public/h/t/i/temp-zjpebgcobmaxydcmrfwb/1-12-high-nwxfbh.jpg"
+    "file": "refs/psdb/img/4099ad84-6f11-4e89-84ac-7b2f6524b1e9.jpg"
    },
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=4099ad84-6f11-4e89-84ac-7b2f6524b1e9",
     "https://www.tcgplayer.com/product/622770/pokemon-sv-prismatic-evolutions-prismatic-evolutions-super-premium-collection",
     "https://www.tcgplayer.com/product/634175",
     "https://obsidia-tcg.store/products/pokemon-tcg-prismatic-evolutions-super-premium-collection",
     "https://hobby-addicts.com/products/pokemon-prismatic-evolutions-super-premium-collection",
     "https://www.pokeguardian.com/2352757_prismatic-evolutions-super-premium-collection-revealed"
-   ]
+   ],
+   "crop": [
+    0,
+    0,
+    694,
+    958
+   ],
+   "quad": null,
+   "psdb": "4099ad84-6f11-4e89-84ac-7b2f6524b1e9"
   },
   {
    "kind": "sleeve",
@@ -436,38 +442,26 @@
     "sv8pt5/premium-figure"
    ],
    "src": {
-    "tcgplayer": 666507
+    "file": "refs/psdb/img/8de0463a-847b-4835-9139-204e9df6bc2b.jpg"
    },
-   "v": 4,
+   "v": 5,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=8de0463a-847b-4835-9139-204e9df6bc2b",
     "https://www.tcgplayer.com/product/650799/pokemon-sv-prismatic-evolutions-prismatic-evolutions-premium-figure-collection",
     "https://www.tcgplayer.com/product/666507",
     "https://hobby-addicts.com/products/pokemon-prismatic-evolutions-premium-figure-collection",
     "https://obsidia-tcg.store/products/pokemon-tcg-prismatic-evolutions-premium-figure-collection",
     "https://www.pokeguardian.com/2604312_prismatic-evolutions-premium-figure-collection-revealed"
    ],
-   "crop": null,
-   "quad": [
-    [
-     12,
-     10
-    ],
-    [
-     700,
-     8
-    ],
-    [
-     704,
-     992
-    ],
-    [
-     10,
-     994
-    ]
+   "crop": [
+    0,
+    0,
+    738,
+    1018
    ],
-   "snap": false,
-   "quadInset": 0.025
+   "quad": null,
+   "psdb": "8de0463a-847b-4835-9139-204e9df6bc2b"
   },
   {
    "kind": "sleeve",
@@ -484,17 +478,18 @@
     "sv9/pc-etb"
    ],
    "src": {
-    "file": "refs/sv-b/svb-rect-639448.png"
+    "file": "refs/psdb/img/deb3117d-6c75-4e07-9cb3-3febeb52af75.jpg"
    },
    "crop": [
     0,
     0,
-    625,
-    880
+    1493,
+    2092
    ],
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=deb3117d-6c75-4e07-9cb3-3febeb52af75",
     "https://www.tcgplayer.com/product/610930/pokemon-sv09-journey-together-journey-together-elite-trainer-box",
     "https://www.tcgplayer.com/product/639448",
     "https://obsidia-tcg.store/products/pokemon-tcg-journey-together-elite-trainer-box",
@@ -502,7 +497,9 @@
     "https://www.tcgplayer.com/product/610929/pokemon-sv09-journey-together-journey-together-pokemon-center-elite-trainer-box-exclusive",
     "https://763collectibles.com/products/pokemon-journey-together-elite-trainer-box-pokemon-center-exclusive-w-magnetic-acrylic-copy",
     "https://common-lands.com/products/journey-together-pokemon-center-elite-trainer-box"
-   ]
+   ],
+   "quad": null,
+   "psdb": "deb3117d-6c75-4e07-9cb3-3febeb52af75"
   },
   {
    "kind": "sleeve",
@@ -518,11 +515,12 @@
     "sv9/ptc-lillie"
    ],
    "src": {
-    "file": "refs/cleanup-svb/sv9__ptc-lillie__sleeve-flat__pokeguardian.jpg"
+    "file": "refs/psdb/img/666cd473-3574-4e0a-be6a-551a251c064f.jpg"
    },
-   "v": 2,
+   "v": 3,
    "evidence": "verified",
    "sources": [
+    "https://pokemon-sleeve-database.com/sleeve?id=666cd473-3574-4e0a-be6a-551a251c064f",
     "https://www.tcgplayer.com/product/626605/pokemon-miscellaneous-cards-and-products-lillie-premium-tournament-collection-box",
     "https://www.tcgplayer.com/product/681600",
     "https://pack-fresh.com/products/lillie-premium-tournament-collection-box",
@@ -530,7 +528,15 @@
     "https://obsidia-tcg.store/products/pokemon-tcg-lillie-premium-tournament-collection",
     "https://www.pokebeach.com/2025/02/lillie-premium-tournament-collection-revealed-for-april",
     "https://www.pokeguardian.com/2311404_lillie-premium-tournament-collection-revealed-new-lillie-s-clefairy-ex-full-art-promo"
-   ]
+   ],
+   "crop": [
+    0,
+    0,
+    990,
+    1386
+   ],
+   "quad": null,
+   "psdb": "666cd473-3574-4e0a-be6a-551a251c064f"
   },
   {
    "kind": "coin",
