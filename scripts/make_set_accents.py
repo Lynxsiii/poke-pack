@@ -210,6 +210,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "ex10": ("#d24fa8", "#3f78d9"),  # Unseen Forces: Raikou magenta to logo blue
     "ex11": ("#f2a02e", "#7e8aa0"),  # Delta Species: Dragonite orange to logo steel
     "ex12": ("#c4a46a", "#7aa86a"),  # Legend Maker: logo stone to wrapper green
+    "base1": ("#e8b23a", "#5f86e6"),  # Base Set: Charizard gold-orange to wrapper blue
+    "base2": ("#4fb04a", "#f2c744"),  # Jungle: wrapper green to logo gold
+    "base3": ("#d9b48a", "#3f8fd0"),  # Fossil: parchment tan to logo blue
+    "base4": ("#d9543e", "#3d8bd9"),  # Base Set 2: Charizard red to wrapper blue
 }
 
 # Used when a set has no art at all and no override.

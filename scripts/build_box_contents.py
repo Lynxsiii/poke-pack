@@ -54,6 +54,7 @@ SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
 XY_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "xy-kits.json"
 BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
 DP_RESEARCH = ROOT / "scripts" / "box-research" / "dp.json"
+WOTC_W1_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-w1.json"
 WOTC_NEO_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-neo.json"
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
@@ -447,6 +448,8 @@ def build(parts_dir: Path) -> int:
     if DP_RESEARCH.exists():
         dp_kits(json.loads(DP_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
+    if WOTC_W1_RESEARCH.exists():
+        wotc_w1(json.loads(WOTC_W1_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
     if WOTC_NEO_RESEARCH.exists():
         wotc_decks(json.loads(WOTC_NEO_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
@@ -614,6 +617,27 @@ def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[
         rows = [r for r in rows if r[1] > 0]
         out[key] = {"label": "60-card deck", "cards": merge(rows)}
         rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards + {len(offer['promos'])} promo(s) ({dealt} counted inside the list)")
+
+
+def wotc_w1(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
+    """Wizards of the Coast theme decks (60 cards each) and 2-Player Starter Sets of Base Set, Jungle, Fossil and Base Set 2
+    (scripts/box-research/wotc-w1.json): the deck's fixed list, the featured holo is the product's promo and is left out of the row (a starter set, whose only itemised card is that Machamp, has no row)."""
+    for deck in research["decks"] + research["starters"]:
+        key = f"{deck['set']}/{deck['product']}"
+        if key not in offers:
+            rep.skipped.append(f"{key}: not a product the site sells yet")
+            continue
+        promo = set(offers[key]["promos"])
+        rows = []
+        for item in deck["cards"]:
+            if item["id"] not in cards:
+                rep.problem(key, f"unknown card {item['id']}")
+            else:
+                n = int(item["n"]) - (1 if item["id"] in promo else 0)  # the featured card is the product's promo, dealt separately
+                if n > 0:
+                    rows.append([item["id"], n])
+        if rows:
+            out[key] = {"label": deck.get("label") or "60-card deck", "cards": merge(rows)}
 
 
 def catalog_prints() -> dict[str, str]:

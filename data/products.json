@@ -16565,5 +16565,234 @@
       "tcgplayerId": 616213,
       "image": "assets/products/ex16/single-blister-pack.webp"
     }
+  ],
+  "base1": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. The Unlimited box has no TCGplayer market price (the one listing asks $100,000), so it is priced at 36 packs; the 1st Edition and Shadowless boxes are not separate here. (TCGplayer product 185731.)",
+      "promos": [],
+      "price": 33392.16,
+      "priceDerived": "manual",
+      "priceSource": "36 packs at TCGplayer's Unlimited booster pack market price ($927.56); TCGplayer lists the box with no market price and only an asking mid of $100,000, a single listing",
+      "image": "assets/products/base1/booster-box.webp"
+    },
+    {
+      "id": "starter-2player",
+      "name": "2-Player Starter Set",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two 30-card half decks (Fighting and Fire, 14 Energy each) and a 1st Edition holo Machamp, the only holo of the set and not in any booster pack; rulebook and 10 damage counters, no coin (Bulbapedia '2-Player Starter Set (TCG)', TCGplayer 136400 and 107602). TCGplayer's Revised reprint run listing; the deck lists are not on record.",
+      "promos": [
+        "base1-8"
+      ],
+      "price": 257.66,
+      "tcgplayerId": 136400,
+      "image": "assets/products/base1/starter-2player.webp"
+    },
+    {
+      "id": "deck-blackout",
+      "name": "Theme Deck \"Blackout\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Hitmonchan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136401).",
+      "promos": [
+        "base1-7"
+      ],
+      "price": 424.95,
+      "tcgplayerId": 136401,
+      "image": "assets/products/base1/deck-blackout.webp"
+    },
+    {
+      "id": "deck-brushfire",
+      "name": "Theme Deck \"Brushfire\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Ninetales (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136403).",
+      "promos": [
+        "base1-12"
+      ],
+      "price": 374.89,
+      "tcgplayerId": 136403,
+      "image": "assets/products/base1/deck-brushfire.webp"
+    },
+    {
+      "id": "deck-overgrowth",
+      "name": "Theme Deck \"Overgrowth\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Gyarados (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136404).",
+      "promos": [
+        "base1-6"
+      ],
+      "price": 567.48,
+      "tcgplayerId": 136404,
+      "image": "assets/products/base1/deck-overgrowth.webp"
+    },
+    {
+      "id": "deck-zap",
+      "name": "Theme Deck \"Zap!\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Mewtwo (Bulbapedia and PokeBeach theme deck lists, TCGplayer 136402).",
+      "promos": [
+        "base1-10"
+      ],
+      "price": 499.95,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)",
+      "tcgplayerId": 136402,
+      "image": "assets/products/base1/deck-zap.webp"
+    }
+  ],
+  "base2": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. The Unlimited box has no TCGplayer market price (the one listing asks $34,400), so it is priced at 36 packs; the 1st Edition box is not a separate product here. (TCGplayer product 107599.)",
+      "promos": [],
+      "price": 11935.8,
+      "priceDerived": "manual",
+      "priceSource": "36 packs at TCGplayer's Unlimited booster pack market price ($331.55); TCGplayer lists the box with no market price and only an asking mid of $37,200, a single listing",
+      "image": "assets/products/base2/booster-box.webp"
+    },
+    {
+      "id": "deck-power-reserve",
+      "name": "Theme Deck \"Power Reserve\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Kangaskhan (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234498).",
+      "promos": [
+        "base2-5"
+      ],
+      "price": 218.68,
+      "tcgplayerId": 234498,
+      "image": "assets/products/base2/deck-power-reserve.webp"
+    },
+    {
+      "id": "deck-water-blast",
+      "name": "Theme Deck \"Water Blast\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Vaporeon (Bulbapedia and PokeBeach theme deck lists, TCGplayer 234499).",
+      "promos": [
+        "base2-12"
+      ],
+      "price": 399.99,
+      "tcgplayerId": 234499,
+      "image": "assets/products/base2/deck-water-blast.webp"
+    }
+  ],
+  "base3": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists the Unlimited box without a market price, so it is priced at 36 packs; the 1st Edition box is not a separate product here.",
+      "promos": [],
+      "price": 12193.56,
+      "priceDerived": "packs",
+      "tcgplayerId": 107600,
+      "image": "assets/products/base3/booster-box.webp"
+    },
+    {
+      "id": "deck-bodyguard",
+      "name": "Theme Deck \"BodyGuard\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Muk (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107607).",
+      "promos": [
+        "base3-13"
+      ],
+      "price": 195.16,
+      "tcgplayerId": 107607,
+      "image": "assets/products/base3/deck-bodyguard.webp"
+    },
+    {
+      "id": "deck-lockdown",
+      "name": "Theme Deck \"LockDown\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Lapras (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107608).",
+      "promos": [
+        "base3-10"
+      ],
+      "price": 208.73,
+      "tcgplayerId": 107608,
+      "image": "assets/products/base3/deck-lockdown.webp"
+    }
+  ],
+  "base4": [
+    {
+      "id": "booster-box",
+      "name": "Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs. Base Set 2 has no 1st Edition print.",
+      "promos": [],
+      "price": 15722.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 107610,
+      "image": "assets/products/base4/booster-box.webp"
+    },
+    {
+      "id": "starter-2player-cdrom",
+      "name": "2-Player CD-ROM Starter Set",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two 30-card half decks (Fighting and Water) and a 1st Edition Base Set Machamp holo on cosmos foil (some copies Starlight), with the Pokémon Play It! CD-ROM, rulebook, damage counters, a custom coin, a card list and a playmat; released 2000-02-28 (Bulbapedia '2-Player CD-ROM Starter Set (TCG)', TCGplayer 107609, PokeBeach). The deck lists are not on record.",
+      "promos": [
+        "base4-cdrom8"
+      ],
+      "price": 170.76,
+      "tcgplayerId": 107609,
+      "image": "assets/products/base4/starter-2player-cdrom.webp"
+    },
+    {
+      "id": "deck-grass-chopper",
+      "name": "Theme Deck \"Grass Chopper\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Clefairy (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107611).",
+      "promos": [
+        "base4-6"
+      ],
+      "price": 220.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's price history (the latest market bucket, no sale in the last months: TCGplayer lists no current market price)",
+      "tcgplayerId": 107611,
+      "image": "assets/products/base4/deck-grass-chopper.webp"
+    },
+    {
+      "id": "deck-hot-water",
+      "name": "Theme Deck \"Hot Water\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Poliwrath (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107612).",
+      "promos": [
+        "base4-15"
+      ],
+      "price": 200.0,
+      "tcgplayerId": 107612,
+      "image": "assets/products/base4/deck-hot-water.webp"
+    },
+    {
+      "id": "deck-lightning-bug",
+      "name": "Theme Deck \"Lightning Bug\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "60-card deck with a holofoil Chansey (Bulbapedia and PokeBeach theme deck lists, TCGplayer 107613).",
+      "promos": [
+        "base4-3"
+      ],
+      "price": 235.0,
+      "tcgplayerId": 107613,
+      "image": "assets/products/base4/deck-lightning-bug.webp"
+    }
   ]
 }

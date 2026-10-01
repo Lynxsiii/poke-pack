@@ -160,4 +160,8 @@ export const SET_ACCENTS = {
   "ex10": { a: "#d24fa8", b: "#3f78d9" },
   "ex11": { a: "#f2a02e", b: "#7e8aa0" },
   "ex12": { a: "#c4a46a", b: "#7aa86a" },
+  "base1": { a: "#e8b23a", b: "#5f86e6" },
+  "base2": { a: "#4fb04a", b: "#f2c744" },
+  "base3": { a: "#d9b48a", b: "#3f8fd0" },
+  "base4": { a: "#d9543e", b: "#3d8bd9" },
 };
