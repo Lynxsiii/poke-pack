@@ -20,9 +20,10 @@ for(const file of readdirSync(new URL('../worker/migrations/',import.meta.url)).
 // by one, so batches take turns here: two claims then cannot interleave between
 // the swap and the statements that hang off it through changes().
 let lock=Promise.resolve();
+const sqlLog=[];
 const DB={
   exec:async sql=>{db.exec(sql);return {};},
-  prepare(sql) { let params=[];const statement={
+  prepare(sql) { sqlLog.push(sql);let params=[];const statement={
     bind(...values){assert.ok(values.length<=100,'D1 allows at most 100 bound parameters');params=values;return statement;},
     async all(){return {results:db.prepare(sql).all(...params)};},
     async first(column){const r=db.prepare(sql).get(...params);return column?r?.[column]:r || null;},
@@ -34,9 +35,19 @@ const DB={
     return run;
   },
 };
+// gear.json can be made to fail, or to lack one gift the levels hand out (the Worker caches the first good copy).
+const OMIT='swshb-toolkit-2023-sleeves';
+let gearFeed='down';
+const served=gifts=>gifts.filter(g=>g.id!==OMIT);
 const env={DB,SITE_ORIGIN:'https://poke-pack.rip',ASSETS:{fetch:async request=>{
   const path=new URL(request.url).pathname;
   if(!path.startsWith('/data/'))return new Response('',{status:404});
+  if(path==='/data/gear.json'){
+    if(gearFeed==='down')return new Response('',{status:503});
+    const gear=JSON.parse(readFileSync(new URL('..'+path,import.meta.url),'utf8'));
+    delete gear.sleeves[OMIT];
+    return new Response(JSON.stringify(gear),{headers:{'content-type':'application/json'}});
+  }
   try{return new Response(readFileSync(new URL('..'+path,import.meta.url)),{headers:{'content-type':'application/json'}});}catch{return new Response('',{status:404});}
 }}};
 
@@ -131,13 +142,20 @@ let vetBefore;
   assert.equal(profile.user.xp,vetBefore.total);
   addUser('ghost','ghostuser','sid-ghost');
   const ghost=(await request('/api/u/ghostuser')).body;
-  assert.equal(ghost.user.level,1,'a trainer who has not loaded a save yet reads as level 1');
+  assert.equal(ghost.user.level,1,'a brand new trainer is level 1');
   assert.equal(ghost.user.xp,0);
-  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM player_xp WHERE user_id='ghost'").get().n,0,'a profile view writes nothing');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM player_xp WHERE user_id='ghost'").get().n,1,'the first view of a row-less trainer works their level out once');
   assert.equal(await playerLevel(env,'ghost'),1);
+  // A veteran nobody has loaded yet does not read as level 1 on their profile.
+  addVeteran('lone','loneone','sid-lone');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM player_xp WHERE user_id='lone'").get().n,0);
+  const lone=(await request('/api/u/loneone')).body;
+  assert.ok(lone.user.level>=20,`a veteran's profile shows level ${lone.user.level}`);
+  assert.equal(lone.user.xp,db.prepare("SELECT xp FROM player_xp WHERE user_id='lone'").get().xp);
+  assert.equal((await request('/api/u/loneone')).body.user.level,lone.user.level,'the second view reads the stored mark');
   assert.equal(await playerLevel(env,'vet'),vetBefore.level);
   assert.deepEqual(await playerXp(env,'vet'),{xp:vetBefore.total,level:vetBefore.level});
-  assert.equal((await playerXp(env,'ghost',{loadSave:async()=>({xp:{total:240,level:5}})})).level,5,'a row-less player is worked out once when a loader is given');
+  assert.equal((await playerXp(env,'no-row-yet',{loadSave:async()=>({xp:{total:240,level:5}})})).level,5,'a row-less player is worked out once when a loader is given');
   assert.equal(await playerLevel(env,'nobody-at-all'),1);
 }
 
@@ -160,13 +178,22 @@ let vetBefore;
 // ---- The claim: pays once, ignores the body, grants gear, adds to the wallet ----
 {
   assert.equal((await claim(undefined)).status,401,'sign in first');
+  // gear.json is down: the claim must not advance past gifts it cannot hand over.
+  const down=await claim('sid-vet');
+  assert.equal(down.status,503,JSON.stringify(down.body));
+  assert.equal(coinsOf('vet'),500);
+  assert.equal(row('vet').claimed,1,'nothing was claimed');
+  assert.deepEqual(gearOf('vet'),{});
+  // Back up, but the catalogue lacks one gift: that id is skipped, the rest is paid.
+  gearFeed='partial';
   const forged={level:100,levels:[2,100],coins:999_999,claimedLevel:1,paid:{coins:999_999},gear:[{kind:'sleeve',id:'me-pikachu-30-etb-sleeves'}]};
   const first=await claim('sid-vet',forged);
   assert.equal(first.status,200,JSON.stringify(first.body));
   const expected=levelPayout(2,vetBefore.level);
   assert.deepEqual(first.body.paid.levels,vetBefore.claimable,'a forged body changes nothing');
   assert.equal(first.body.paid.coins,expected.coins);
-  assert.deepEqual(gearKeys(first.body.paid.gear),gearKeys(expected.gear));
+  assert.deepEqual(gearKeys(first.body.paid.gear),gearKeys(served(expected.gear)));
+  assert.ok(expected.gear.some(g=>g.id===OMIT)&&!first.body.paid.gear.some(g=>g.id===OMIT),'an id the loaded catalogue lacks is skipped');
   assert.equal(coinsOf('vet'),500+expected.coins);
   assert.equal(db.prepare("SELECT granted FROM profiles WHERE user_id='vet'").get().granted,500+expected.coins,'paid coins count as granted, like quest claims');
   assert.equal(first.body.save.coins,500+expected.coins);
@@ -175,8 +202,8 @@ let vetBefore;
   assert.equal(first.body.save.xp.pending.levels,0);
   assert.equal(first.body.save.xp.pending.coins,0);
   const gear=gearOf('vet');
-  for(const item of expected.gear) assert.equal(gear[`${item.kind}:${item.id}`],1,`${item.id} granted once`);
-  assert.equal(Object.keys(gear).length,expected.gear.length);
+  for(const item of served(expected.gear)) assert.equal(gear[`${item.kind}:${item.id}`],1,`${item.id} granted once`);
+  assert.equal(Object.keys(gear).length,served(expected.gear).length);
   assert.ok(first.body.save.gear.sleeves['psv-toolkit-2024-teal']>0,'the level 10 sleeve shows in save.gear');
   assert.deepEqual(row('vet'),{xp:vetBefore.total,claimed:vetBefore.level});
 
@@ -213,7 +240,7 @@ let vetBefore;
   for(const r of results.filter(r=>!r.body.paid.levels.length)) assert.deepEqual(r.body.paid,{levels:[],coins:0,gear:[]});
   assert.equal(coinsOf('par'),100+expected.coins,'the wallet got one payout');
   const gear=gearOf('par');
-  for(const item of expected.gear) assert.equal(gear[`${item.kind}:${item.id}`],1,'each gift once');
+  for(const item of served(expected.gear)) assert.equal(gear[`${item.kind}:${item.id}`],1,'each gift once');
   assert.equal(row('par').claimed,level.level);
 }
 
@@ -225,8 +252,24 @@ let vetBefore;
   const out=await claim('sid-rich');
   assert.equal(out.status,200);
   assert.equal(coinsOf('rich'),MAX_COINS,'coins are capped like quest and achievement claims');
-  assert.ok(out.body.paid.levels.length>0&&out.body.paid.coins===pending,'the claim still reports what the levels were worth');
+  assert.ok(out.body.paid.levels.length>0);
+  assert.equal(out.body.paid.coins,10,'paid.coins is what was credited, not what the levels were worth');
+  assert.equal(db.prepare("SELECT granted FROM profiles WHERE user_id='rich'").get().granted,MAX_COINS-10+10,'granted counts only the credit');
   assert.equal((await claim('sid-rich')).body.paid.levels.length,0);
+}
+
+// ---- A wallet already over the cap is never lowered ----
+{
+  addVeteran('whale','whaleone','sid-whale',MAX_COINS+500_000);
+  db.prepare("UPDATE profiles SET granted = 7 WHERE user_id='whale'").run();
+  const out=await claim('sid-whale');
+  assert.equal(out.status,200,JSON.stringify(out.body));
+  assert.ok(out.body.paid.levels.length>0,'the levels are still claimed');
+  assert.equal(coinsOf('whale'),MAX_COINS+500_000,'coins above the cap stay as they were');
+  assert.equal(out.body.paid.coins,0);
+  assert.equal(db.prepare("SELECT granted FROM profiles WHERE user_id='whale'").get().granted,7,'nothing credited, nothing granted');
+  assert.equal(out.body.save.coins,MAX_COINS+500_000);
+  assert.ok(Object.keys(gearOf('whale')).length>0,'gifts are still handed over');
 }
 
 // ---- Counters counted from the casino and grading tables ----
@@ -238,7 +281,7 @@ let vetBefore;
   const flip=db.prepare('INSERT INTO coinflips(id,host_id,request_id,status,bot,host_stake,host_value,guest_id,guest_stake,guest_value,winner,created_at,expires_at,flipped_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
   const at=now-DAY;
   const done=(id,host,guest,winner,flipped=at,bot=0)=>flip.run(id,host,`r-${id}`,'done',bot,'[]',100,guest,'[]',100,winner,flipped-5,flipped+DAY,flipped);
-  done('f1','gam','house','host',at,1);   // played, won
+  done('f1','gam','house','host',at,1);   // against the house: not counted
   done('f2','gam','opp','guest');         // played, lost
   done('f3','opp','gam','guest');         // played as guest, won
   done('f4','opp','gam','host');          // played as guest, lost
@@ -252,6 +295,8 @@ let vetBefore;
   entry.run('p1',0,'opp',0,null,'[]',100,at);entry.run('p1',1,'gam',0,null,'[]',100,at);entry.run('p1',2,null,1,'bot-a','[]',90,at);
   pot.run('p2','gam','rp2','done',3,100,1,at,at+DAY,at);
   entry.run('p2',0,'gam',0,null,'[]',100,at);entry.run('p2',1,'opp',0,null,'[]',100,at);
+  pot.run('p4','gam','rp4','done',3,100,0,at,at+DAY,at); // one human and two bots: not counted
+  entry.run('p4',0,'gam',0,null,'[]',100,at);entry.run('p4',1,null,1,'bot-a','[]',90,at);entry.run('p4',2,null,1,'bot-b','[]',90,at);
   pot.run('p3','gam','rp3','open',3,100,null,at,at+DAY*2,null);
   entry.run('p3',0,'gam',0,null,'[]',100,at);
   const grade=db.prepare("INSERT INTO graded_cards(user_id,card_id,reverse,grade,band,fee_cents,request_id,status,created_at) VALUES(?,?,0,?,'me',541,?,?,?)");
@@ -260,19 +305,25 @@ let vetBefore;
   grade.run('gam','me5-89',9,'g3','cracked',at);
   grade.run('gam','me5-90',8,'g4','slabbed',at);
   grade.run('opp','me5-91',10,'g5','slabbed',at);
+  grade.run('gam','me5-92',10,'won:77','slabbed',at); // won in a casino game, not graded by this player
+  grade.run('gam','me5-93',10,'g7','cracked',at);     // cracked: a regrade would count it twice
   const save=await me('sid-gam');
   const c=save.stats.counters;
-  assert.equal(c.casinoPlayed,6,'4 flips and 2 settled pots');
-  assert.equal(c.casinoWon,3,'2 flips and 1 pot');
-  assert.equal(c.graded,4,'every card sent to grading, whatever became of it');
+  assert.equal(c.casinoPlayed,5,'3 flips against people and 2 pots with two humans; the house flip and the bot pot do not count');
+  assert.equal(c.casinoWon,2,'one flip and one pot');
+  assert.equal(c.graded,3,'slabbed and sold; not cracked, not won in the casino');
   assert.equal(c.gemMint,2);
   const parts=Object.fromEntries(save.xp.parts.map(p=>[p.id,p]));
-  assert.equal(parts.casino.xp,6*15+3*30);
-  assert.equal(parts.grading.xp,4*25+2*100);
+  assert.equal(parts.casino.xp,5*15+2*30);
+  assert.equal(parts.grading.xp,3*25+2*100);
   const opp=(await me('sid-opp')).stats.counters;
-  assert.equal(opp.casinoPlayed,6,'flips f2, f3, f4, f8 (not the pre-account f7) and pots p1, p2');
+  assert.equal(opp.casinoPlayed,5,'flips f2, f3, f4 (not the house flip f8, not the pre-account f7) and pots p1, p2');
+  assert.equal(opp.graded,1);
   for(const key of ['casinoPlayed','casinoWon','graded','gemMint']) assert.equal(typeof save.stats.counters[key],'number');
   assert.equal(db.prepare("SELECT COUNT(*) AS n FROM sqlite_master WHERE type='trigger' AND (name LIKE '%xp%' OR sql LIKE '%player_xp%')").get().n,0,'no trigger is put on any table');
+  // The counters read the account's start by subquery, in the same round as everything else.
+  const casinoSql=sqlLog.filter(q=>q.includes('FROM coinflips')&&q.includes('guest_id != \'house\''));
+  assert.ok(casinoSql.length>0&&casinoSql.every(q=>q.includes('SELECT created_at FROM profiles')),'no separate read of the profile for the start date');
   // A fresh account sees zeros, never missing keys.
   const fresh=(await me('sid-ghost')).stats.counters;
   assert.deepEqual([fresh.casinoPlayed,fresh.casinoWon,fresh.graded,fresh.gemMint],[0,0,0,0]);

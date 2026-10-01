@@ -391,8 +391,8 @@ async function publicProfile(request, env, helpers, rawHandle) {
     user.id
   );
   const seen = await queryFirst(env, "SELECT seen_at FROM presence WHERE user_id = ?", user.id);
-  // Level and total XP from the stored high-water mark: one row read, never a rebuilt save.
-  const levelRow = await playerXp(env, user.id).catch(() => ({ xp: 0, level: 1 }));
+  // Level and total XP from the stored high-water mark: one row read; a player with no row yet is worked out once.
+  const levelRow = await playerXp(env, user.id, { loadSave: helpers.loadSave }).catch(() => ({ xp: 0, level: 1 }));
 
   const shown = normalizeStats(parseJson(user.shown_stats, null));
   const stats = {};

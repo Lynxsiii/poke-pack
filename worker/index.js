@@ -242,6 +242,7 @@ export async function handleApi(request, env, url) {
     ownedWithSlabs,
     shownSlabs,
     gradedTotal,
+    loadSave,
   });
   if (social) return social;
 
@@ -1177,9 +1178,8 @@ async function loadSave(env, userId) {
   await ensureQuestSchema(env);
   // Independent reads, run together: this is called on every rip.
   // Battle results are folded into the counters here, at read time (no triggers).
-  const profileRead = env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first();
   const [profile, inventory, historyRows, counters, setPacks, friends, xpRow] = await Promise.all([
-    profileRead,
+    env.DB.prepare("SELECT * FROM profiles WHERE user_id = ?").bind(userId).first(),
     inventoryMap(env, userId),
     env.DB.prepare(
       `SELECT card_id AS id, name, rarity, reverse, was_new AS wasNew, pack_id AS packId, at
@@ -1188,10 +1188,10 @@ async function loadSave(env, userId) {
       .bind(userId)
       .all()
       .then((res) => res.results || []),
-    // Casino and grading counts come from their own tables, counted since the account (re)started.
+    // Casino and grading counts come from their own tables (worker/xp.js).
     Promise.all([
       loadCounters(env, userId).then((stored) => syncBattleStats(env, userId, stored)),
-      profileRead.then((row) => loadXpCounters(env, userId, row?.created_at || 0)),
+      loadXpCounters(env, userId),
     ]).then(([stored, tables]) => ({ ...stored, ...tables })),
     setPacksFor(env, userId),
     friendsCount(env, userId),

@@ -56,18 +56,28 @@ export function clearXpStmts(env, userId) {
 /**
  * Counters that live in tables other than player_stats, counted at READ time
  * with simple indexed queries (never triggers: a trigger once broke battles).
+ * Every one of them is XP, so each is limited to what cannot be farmed:
  *
- *   casinoPlayed / casinoWon  settled coinflips and jackpots the player was in,
- *                             and the ones they won, since `since` (the account's
- *                             start, which a reset moves forward)
- *   graded / gemMint          cards ever sent to grading, and the Gem Mint 10s
+ *   casinoPlayed / casinoWon  settled coinflips and jackpots against real
+ *                             people, and the ones the player won. A flip with
+ *                             the house (bot) and a pot with fewer than two
+ *                             human entries do not count. Only games since the
+ *                             account (re)started, `profiles.created_at`, which
+ *                             a reset moves forward; read by subquery so there
+ *                             is no second round trip.
+ *   graded / gemMint          slabs the player sent to grading and still holds
+ *                             or sold ('slabbed', 'sold'). A cracked slab does
+ *                             not count (a regrade would multiply it) and a slab
+ *                             won in the casino ("won:<id>" request ids) is not
+ *                             the winner's grading.
  *
  * A table that does not exist yet reads as zero.
  */
-export async function loadXpCounters(env, userId, since = 0) {
-  const run = async (sql, ...binds) => {
+const SINCE = "COALESCE((SELECT created_at FROM profiles WHERE user_id = ?1), 0)";
+export async function loadXpCounters(env, userId) {
+  const run = async (sql) => {
     try {
-      return (await env.DB.prepare(sql).bind(...binds).first()) || {};
+      return (await env.DB.prepare(sql).bind(userId).first()) || {};
     } catch (err) {
       if (!isMissing(err)) throw err;
       return {};
@@ -81,19 +91,21 @@ export async function loadXpCounters(env, userId, since = 0) {
   const [flips, pots, graded] = await Promise.all([
     run(
       `SELECT
-         (SELECT COUNT(*) FROM coinflips WHERE host_id = ? AND status = 'done' AND flipped_at >= ?)
-         + (SELECT COUNT(*) FROM coinflips WHERE guest_id = ? AND status = 'done' AND flipped_at >= ?) AS played,
-         (SELECT COUNT(*) FROM coinflips WHERE host_id = ? AND status = 'done' AND winner = 'host' AND flipped_at >= ?)
-         + (SELECT COUNT(*) FROM coinflips WHERE guest_id = ? AND status = 'done' AND winner = 'guest' AND flipped_at >= ?) AS won`,
-      userId, since, userId, since, userId, since, userId, since
+         (SELECT COUNT(*) FROM coinflips WHERE host_id = ?1 AND status = 'done' AND bot = 0 AND guest_id != 'house' AND flipped_at >= ${SINCE})
+         + (SELECT COUNT(*) FROM coinflips WHERE guest_id = ?1 AND status = 'done' AND bot = 0 AND flipped_at >= ${SINCE}) AS played,
+         (SELECT COUNT(*) FROM coinflips WHERE host_id = ?1 AND status = 'done' AND bot = 0 AND guest_id != 'house' AND winner = 'host' AND flipped_at >= ${SINCE})
+         + (SELECT COUNT(*) FROM coinflips WHERE guest_id = ?1 AND status = 'done' AND bot = 0 AND winner = 'guest' AND flipped_at >= ${SINCE}) AS won`
     ),
     run(
       `SELECT COUNT(*) AS played, COALESCE(SUM(j.winner_seat = e.seat), 0) AS won
        FROM jackpot_entries e JOIN jackpots j ON j.id = e.jackpot_id
-       WHERE e.user_id = ? AND j.status = 'done' AND j.drawn_at >= ?`,
-      userId, since
+       WHERE e.user_id = ?1 AND j.status = 'done' AND j.drawn_at >= ${SINCE}
+         AND (SELECT COUNT(*) FROM jackpot_entries h WHERE h.jackpot_id = j.id AND h.user_id IS NOT NULL) >= 2`
     ),
-    run("SELECT COUNT(*) AS n, COALESCE(SUM(grade = 10), 0) AS gem FROM graded_cards WHERE user_id = ?", userId),
+    run(
+      `SELECT COUNT(*) AS n, COALESCE(SUM(grade = 10), 0) AS gem FROM graded_cards
+       WHERE user_id = ?1 AND status IN ('slabbed', 'sold') AND request_id NOT LIKE 'won:%'`
+    ),
   ]);
   return {
     casinoPlayed: whole(flips.played) + whole(pots.played),
@@ -208,9 +220,13 @@ export async function claimLevels(env, userId, { request, loadSave, maxCoins = 1
   const payout = levelPayout(levels[0], target);
   const now = Date.now();
 
-  // Only gifts the catalogue knows, as grantGear does: a stale id never blocks the coins.
+  // Only gifts the catalogue knows, as grantGear does. But if the catalogue itself
+  // did not load, nothing is known and the claim must not advance past a gift it
+  // cannot hand over: answer 503 and let the player try again.
   await ensureGearSchema(env);
   const catalog = await loadGearCatalog(env, request);
+  const loaded = Object.keys(catalog?.sleeves || {}).length + Object.keys(catalog?.coins || {}).length > 0;
+  if (payout.gear.length && !loaded) return { error: "Gifts are unavailable right now. Try again shortly.", status: 503 };
   const gear = payout.gear.filter((item) => gearItem(catalog, item.kind, item.id));
   const counts = new Map();
   for (const item of gear) counts.set(`${item.kind}:${item.id}`, (counts.get(`${item.kind}:${item.id}`) || 0) + 1);
@@ -222,8 +238,12 @@ export async function claimLevels(env, userId, { request, loadSave, maxCoins = 1
   const stmts = [
     env.DB.prepare("UPDATE player_xp SET claimed_level = ? WHERE user_id = ? AND claimed_level = ?").bind(target, userId, xp.claimedLevel),
     env.DB.prepare(
-      "UPDATE profiles SET coins = MIN(coins + ?, ?), granted = granted + ? WHERE user_id = ? AND changes() = 1"
-    ).bind(payout.coins, maxCoins, payout.coins, userId),
+      // Never lowers a wallet that is already over the cap (sales and winnings can push past it);
+      // `granted` counts only what was credited. Every right-hand side reads the old coins.
+      `UPDATE profiles SET coins = MAX(coins, MIN(coins + ?1, ?2)),
+         granted = granted + (MAX(coins, MIN(coins + ?1, ?2)) - coins)
+       WHERE user_id = ?3 AND changes() = 1`
+    ).bind(payout.coins, maxCoins, userId),
   ];
   if (gifts.length) {
     // changes() is the coin update's: 1 only for the request that won the swap.
@@ -240,5 +260,6 @@ export async function claimLevels(env, userId, { request, loadSave, maxCoins = 1
   const won = Boolean(results[0]?.meta?.changes);
   const save = await loadSave(env, userId);
   if (!won) return empty(save);
-  return { save, paid: { levels, coins: payout.coins, gear: gear.map((item) => ({ kind: item.kind, id: item.id })) } };
+  const credited = Math.max(0, Math.min(payout.coins, maxCoins - whole(before.coins)));
+  return { save, paid: { levels, coins: credited, gear: gear.map((item) => ({ kind: item.kind, id: item.id })) } };
 }
