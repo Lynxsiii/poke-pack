@@ -31,8 +31,8 @@ assert.equal(pat({rarity:'Rare BREAK',subtypes:['BREAK']}),'foil-ex xy-break');
 assert.equal(pat({rarity:'Rare Ultra',subtypes:['Basic','EX']}),'foil-ultra xy-fa');
 assert.equal(pat({rarity:'Rare Ultra',subtypes:['MEGA','EX'],name:'M Gardevoir-EX'}),'foil-ultra xy-fa xy-mega');
 assert.equal(pat({rarity:'Rare Ultra',supertype:'Trainer',subtypes:['Supporter']}),'foil-ultra xy-fa xy-tfa');
-assert.equal(pat({rarity:'Rare Secret',subtypes:['Basic','EX']}),'foil-gold xy-secret');
-assert.equal(pat({rarity:'Rare Secret',supertype:'Trainer',subtypes:['Item']}),'foil-gold xy-secret');
+assert.equal(pat({rarity:'Rare Secret',subtypes:['Basic','EX']}),'foil-ultra xy-fa xy-secret xy-secret-ex');
+assert.equal(pat({rarity:'Rare Secret',supertype:'Trainer',subtypes:['Item']}),'foil-gold xy-secret xy-item');
 assert.equal(pat({rarity:'Promo'}),'');
 // Generations' Radiant Collection: every RC card is foil, whatever its print's rarity.
 assert.ok(isRadiantCollection({id:'g1-RC9'})&&isRadiantCollection({id:'x',rc:true})&&!isRadiantCollection({id:'g1-9'}));

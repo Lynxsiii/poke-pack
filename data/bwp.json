@@ -1,0 +1,559 @@
+[
+  {
+    "id": "bwp-bwp028",
+    "name": "Tropical Beach",
+    "number": "bwp028",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/bwp/bwp028.webp",
+    "imageSmall": "assets/cards/bwp/bwp028-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW28/large",
+    "printedNumber": "BW 028",
+    "tcgplayerId": 96874,
+    "era": "bw",
+    "promo": true,
+    "market": 800.0,
+    "foilMap": "assets/foil/maps/bwp/bwp028.webp"
+  },
+  {
+    "id": "bwp-bwp029",
+    "name": "Victory Cup",
+    "number": "bwp029",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/bwp/bwp029.webp",
+    "imageSmall": "assets/cards/bwp/bwp029-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW29/large",
+    "printedNumber": "BW 029",
+    "tcgplayerId": 90355,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 74.43
+  },
+  {
+    "id": "bwp-bwp030",
+    "name": "Victory Cup",
+    "number": "bwp030",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/bwp/bwp030.webp",
+    "imageSmall": "assets/cards/bwp/bwp030-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW30/large",
+    "printedNumber": "BW 030",
+    "tcgplayerId": 90354,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 86.42
+  },
+  {
+    "id": "bwp-bwp031",
+    "name": "Victory Cup",
+    "number": "bwp031",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/bwp/bwp031.webp",
+    "imageSmall": "assets/cards/bwp/bwp031-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW31/large",
+    "printedNumber": "BW 031",
+    "tcgplayerId": 90353,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 399.99
+  },
+  {
+    "id": "bwp-bwp050",
+    "name": "Tropical Beach",
+    "number": "bwp050",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/bwp/bwp050.webp",
+    "imageSmall": "assets/cards/bwp/bwp050-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW50/large",
+    "printedNumber": "BW 050",
+    "tcgplayerId": 90049,
+    "era": "bw",
+    "promo": true,
+    "market": 849.99,
+    "foilMap": "assets/foil/maps/bwp/bwp050.webp"
+  },
+  {
+    "id": "bwp-bwp087",
+    "name": "Leafeon",
+    "number": "bwp087",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "90",
+    "artist": "The Pokémon Company Art Team",
+    "flavorText": "It basically does not fight. With cells similar to those of plants, it can perform photosynthesis.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bwp/bwp087.webp",
+    "imageSmall": "assets/cards/bwp/bwp087-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Energy Assist",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW87/large",
+    "printedNumber": "BW 087",
+    "tcgplayerId": 91600,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 81.74,
+    "foilMap": "assets/foil/maps/bwp/bwp087.webp"
+  },
+  {
+    "id": "bwp-bwp088",
+    "name": "Flareon",
+    "number": "bwp088",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "The Pokémon Company Art Team",
+    "flavorText": "Inhaled air is heated in the flame sac in its body to an intense fire over 3,000 degrees Fahrenheit.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bwp/bwp088.webp",
+    "imageSmall": "assets/cards/bwp/bwp088-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand-Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      },
+      {
+        "name": "Fire Slash",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "You may discard a Fire Energy attached to this Pokémon. If you do, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW88/large",
+    "printedNumber": "BW 088",
+    "tcgplayerId": 91599,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 63.69,
+    "foilMap": "assets/foil/maps/bwp/bwp088.webp"
+  },
+  {
+    "id": "bwp-bwp089",
+    "name": "Vaporeon",
+    "number": "bwp089",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "The Pokémon Company Art Team",
+    "flavorText": "Its cell composition is similar to water molecules. As a result, it can melt away into water.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bwp/bwp089.webp",
+    "imageSmall": "assets/cards/bwp/bwp089-sm.webp",
+    "attacks": [
+      {
+        "name": "Muddy Water",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Does 20 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Spiral Drain",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Recover 20 damage from this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW89/large",
+    "printedNumber": "BW 089",
+    "tcgplayerId": 90289,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 86.72,
+    "foilMap": "assets/foil/maps/bwp/bwp089.webp"
+  },
+  {
+    "id": "bwp-bwp090",
+    "name": "Glaceon",
+    "number": "bwp090",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "The Pokémon Company Art Team",
+    "flavorText": "By controlling its body heat, it can freeze the atmosphere around it to make a diamond-dust flurry.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bwp/bwp090.webp",
+    "imageSmall": "assets/cards/bwp/bwp090-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Reflect Energy",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW90/large",
+    "printedNumber": "BW 090",
+    "tcgplayerId": 85748,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 70.8,
+    "foilMap": "assets/foil/maps/bwp/bwp090.webp"
+  },
+  {
+    "id": "bwp-bwp091",
+    "name": "Jolteon",
+    "number": "bwp091",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "The Pokémon Company Art Team",
+    "flavorText": "If agitated, it uses electricity to straighten out its fur and launch it in small bunches.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bwp/bwp091.webp",
+    "imageSmall": "assets/cards/bwp/bwp091-sm.webp",
+    "attacks": [
+      {
+        "name": "Electrigun",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "You may discard a Lightning Energy attached to this Pokémon. If you do, this attack does 40 more damage."
+      },
+      {
+        "name": "Pin Missile",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 4 coins. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW91/large",
+    "printedNumber": "BW 091",
+    "tcgplayerId": 86348,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 68.39,
+    "foilMap": "assets/foil/maps/bwp/bwp091.webp"
+  },
+  {
+    "id": "bwp-bwp092",
+    "name": "Espeon",
+    "number": "bwp092",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "The Pokémon Company Art Team",
+    "flavorText": "Its fur is so sensitive, it can sense minute shifts in the air and predict the weather.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bwp/bwp092.webp",
+    "imageSmall": "assets/cards/bwp/bwp092-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Report",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent reveals his or her hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Solar Revelation",
+        "text": "Prevent all effects of your opponent's attacks, except damage, done to each of your Pokémon that has any Energy attached to it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW92/large",
+    "printedNumber": "BW 092",
+    "tcgplayerId": 85326,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 100.32,
+    "foilMap": "assets/foil/maps/bwp/bwp092.webp"
+  },
+  {
+    "id": "bwp-bwp093",
+    "name": "Umbreon",
+    "number": "bwp093",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "100",
+    "artist": "The Pokémon Company Art Team",
+    "flavorText": "When exposed to the moon's aura, the rings on its body glow faintly and it gains a mysterious power.",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/bwp/bwp093.webp",
+    "imageSmall": "assets/cards/bwp/bwp093-sm.webp",
+    "attacks": [
+      {
+        "name": "Shadow Drain",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Heal from this Pokémon the same amount of damage you did to the Defending Pokémon."
+      },
+      {
+        "name": "Slashing Strike",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon can't use Slashing Strike during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW93/large",
+    "printedNumber": "BW 093",
+    "tcgplayerId": 90150,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 227.87,
+    "foilMap": "assets/foil/maps/bwp/bwp093.webp"
+  },
+  {
+    "id": "bwp-bwp094",
+    "name": "Eevee",
+    "number": "bwp094",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "The Pokémon Company Art Team",
+    "flavorText": "Thanks to its unstable genetic makeup, this special Pokémon conceals many different possible evolutions.",
+    "image": "assets/cards/bwp/bwp094.webp",
+    "imageSmall": "assets/cards/bwp/bwp094-sm.webp",
+    "attacks": [
+      {
+        "name": "Growl",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW94/large",
+    "printedNumber": "BW 094",
+    "tcgplayerId": 85095,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 124.82,
+    "foilMap": "assets/foil/maps/bwp/bwp094.webp"
+  },
+  {
+    "id": "bwp-bwp095",
+    "name": "Champions Festival",
+    "number": "bwp095",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Naoki Saito",
+    "image": "assets/cards/bwp/bwp095.webp",
+    "imageSmall": "assets/cards/bwp/bwp095-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW95/large",
+    "printedNumber": "BW 095",
+    "tcgplayerId": 84162,
+    "era": "bw",
+    "promo": true,
+    "market": 170.0,
+    "foilMap": "assets/foil/maps/bwp/bwp095.webp"
+  },
+  {
+    "id": "bwp-bwp100",
+    "name": "N",
+    "number": "bwp100",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yusuke Ohmura",
+    "image": "assets/cards/bwp/bwp100.webp",
+    "imageSmall": "assets/cards/bwp/bwp100-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW100/large",
+    "printedNumber": "BW 100",
+    "tcgplayerId": 87677,
+    "era": "bw",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 12.5
+  },
+  {
+    "id": "bwp-bwp101",
+    "name": "Genesect",
+    "number": "bwp101",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "5ban Graphics",
+    "flavorText": "This Pokémon existed 300 million years ago. Team Plasma altered it and attached a cannon to its back.",
+    "image": "assets/cards/bwp/bwp101.webp",
+    "imageSmall": "assets/cards/bwp/bwp101-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Beam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy attached to the Defending Pokémon."
+      },
+      {
+        "name": "Breaker Bazooka",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard all Grass Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/bwp-BW101/large",
+    "printedNumber": "BW 101",
+    "tcgplayerId": 108421,
+    "era": "bw",
+    "promo": true,
+    "market": 59.51
+  }
+]
