@@ -1,0 +1,547 @@
+[
+  {
+    "id": "pop5-1",
+    "name": "Ho-Oh",
+    "number": "1",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/pop5/1.webp",
+    "imageSmall": "assets/cards/pop5/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Fire Wing",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Fire Blast",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Discard a Fire Energy attached to Ho-Oh."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-1/large",
+    "tcgplayerId": 86123,
+    "market": 62.06
+  },
+  {
+    "id": "pop5-2",
+    "name": "Lugia",
+    "number": "2",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/pop5/2.webp",
+    "imageSmall": "assets/cards/pop5/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Aerowing",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Before doing damage, you may flip a coin. If tails, this attack does nothing. If heads, this attack does 60 damage instead."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-2/large",
+    "tcgplayerId": 86907,
+    "market": 125.0
+  },
+  {
+    "id": "pop5-3",
+    "name": "Mew δ",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/pop5/3.webp",
+    "imageSmall": "assets/cards/pop5/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Copy",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of the Defending Pokémon's attacks. Copy copies that attack. This attack does nothing if Mew doesn't have the Energy necessary to use that attack. (You must still do anything else required for that attack.) Mew performs that attack."
+      },
+      {
+        "name": "Extra Draw",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "If your opponent has any Pokémon-ex in play, search your deck for up to 2 basic Energy cards and attach them to Mew. Shuffle your deck afterward."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-3/large",
+    "tcgplayerId": 87407,
+    "market": 507.21
+  },
+  {
+    "id": "pop5-4",
+    "name": "Double Rainbow Energy",
+    "number": "4",
+    "rarity": "Rare",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/pop5/4.webp",
+    "imageSmall": "assets/cards/pop5/4-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-4/large",
+    "tcgplayerId": 84894,
+    "market": 44.99
+  },
+  {
+    "id": "pop5-5",
+    "name": "Charmeleon δ",
+    "number": "5",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Charmander",
+    "image": "assets/cards/pop5/5.webp",
+    "imageSmall": "assets/cards/pop5/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Thunder Jolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Flip a coin. If tails, Charmeleon does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-5/large",
+    "tcgplayerId": 84237,
+    "market": 89.99
+  },
+  {
+    "id": "pop5-6",
+    "name": "Bill's Maintenance",
+    "number": "6",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/pop5/6.webp",
+    "imageSmall": "assets/cards/pop5/6-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-6/large",
+    "tcgplayerId": 83840,
+    "market": 15.33
+  },
+  {
+    "id": "pop5-7",
+    "name": "Rare Candy",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/pop5/7.webp",
+    "imageSmall": "assets/cards/pop5/7-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-7/large",
+    "tcgplayerId": 88592,
+    "market": 25.66
+  },
+  {
+    "id": "pop5-8",
+    "name": "Boost Energy",
+    "number": "8",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Shin-ichi Yoshikawa",
+    "image": "assets/cards/pop5/8.webp",
+    "imageSmall": "assets/cards/pop5/8-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-8/large",
+    "tcgplayerId": 83941,
+    "market": 6.96
+  },
+  {
+    "id": "pop5-9",
+    "name": "δ Rainbow Energy",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/pop5/9.webp",
+    "imageSmall": "assets/cards/pop5/9-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-9/large",
+    "tcgplayerId": 84756,
+    "market": 14.38
+  },
+  {
+    "id": "pop5-10",
+    "name": "Charmander δ",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/pop5/10.webp",
+    "imageSmall": "assets/cards/pop5/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-10/large",
+    "tcgplayerId": 84221,
+    "market": 42.85
+  },
+  {
+    "id": "pop5-11",
+    "name": "Meowth δ",
+    "number": "11",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "40",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/pop5/11.webp",
+    "imageSmall": "assets/cards/pop5/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Feint Attack",
+        "cost": [
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage to that Pokémon. This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on that Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-11/large",
+    "tcgplayerId": 87330,
+    "market": 22.66
+  },
+  {
+    "id": "pop5-12",
+    "name": "Pikachu",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Naoyo Kimura",
+    "image": "assets/cards/pop5/12.webp",
+    "imageSmall": "assets/cards/pop5/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Ball",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Thunderbolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard all Energy cards attached to Pikachu."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-12/large",
+    "tcgplayerId": 88085,
+    "market": 64.39
+  },
+  {
+    "id": "pop5-13",
+    "name": "Pikachu δ",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "40",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/pop5/13.webp",
+    "imageSmall": "assets/cards/pop5/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Electric Punch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Heavy Metal",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin for each Metal Energy attached to Pikachu. This attack does 10 damage plus 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-13/large",
+    "tcgplayerId": 88110,
+    "market": 65.13
+  },
+  {
+    "id": "pop5-14",
+    "name": "Pelipper δ",
+    "number": "14",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Wingull",
+    "image": "assets/cards/pop5/14.webp",
+    "imageSmall": "assets/cards/pop5/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Wing",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Does 10 damage to 1 of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Mist",
+        "text": "Any damage done to Pelipper by attacks from Stage 2 Evolved Pokémon (both yours and your opponent's) is reduced by 30 (after applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-14/large",
+    "tcgplayerId": 87981,
+    "market": 4.7
+  },
+  {
+    "id": "pop5-15",
+    "name": "Zangoose δ",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/pop5/15.webp",
+    "imageSmall": "assets/cards/pop5/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Detect",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all effects of an attack, including damage, done to Zangoose during your opponent's next turn."
+      },
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-15/large",
+    "tcgplayerId": 90709,
+    "market": 5.2
+  },
+  {
+    "id": "pop5-16",
+    "name": "Espeon ★",
+    "number": "16",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Star"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/pop5/16.webp",
+    "imageSmall": "assets/cards/pop5/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Boom",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Does 30 damage plus 10 more damage for each Energy attached to the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Purple Ray",
+        "text": "Once during your turn, when you put Espeon Star from your hand onto your Bench, you may use this power. Each Active Pokémon (both yours and your opponent's) is now Confused.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-16/large",
+    "tcgplayerId": 85329
+  },
+  {
+    "id": "pop5-17",
+    "name": "Umbreon ★",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "Star"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/pop5/17.webp",
+    "imageSmall": "assets/cards/pop5/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Feint Attack",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 30 damage to that Pokémon. This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on that Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dark Ray",
+        "text": "Once during your turn, when you put Umbreon Star from your hand onto your Bench, you may choose 1 card from your opponent's hand without looking and discard it.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop5-17/large",
+    "tcgplayerId": 90153
+  }
+]

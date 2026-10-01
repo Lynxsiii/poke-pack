@@ -18032,5 +18032,341 @@
       "price": 3046.88,
       "priceDerived": "packs"
     }
+  ],
+  "extk1a": [
+    {
+      "id": "ex-trainer-kit-latias-latios",
+      "name": "EX Trainer Kit: Latias & Latios",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Latias and Latios, each with one cosmos-holofoil Pokémon (Latias 4, Latios 2), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "extk1a-4"
+      ],
+      "price": 13.62,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing (product 98950) has no price; priced at its 20 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted).",
+      "tcgplayerId": 98950,
+      "image": "assets/products/extk1a/ex-trainer-kit-latias-latios.webp"
+    }
+  ],
+  "extk1b": [
+    {
+      "id": "ex-trainer-kit-latias-latios",
+      "name": "EX Trainer Kit: Latias & Latios",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Latias and Latios, each with one cosmos-holofoil Pokémon (Latias 4, Latios 2), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "extk1b-2"
+      ],
+      "price": 13.62,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing (product 98950) has no price; priced at its 20 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted).",
+      "tcgplayerId": 98950,
+      "image": "assets/products/extk1b/ex-trainer-kit-latias-latios.webp"
+    }
+  ],
+  "extk2a": [
+    {
+      "id": "ex-trainer-kit-2-plusle-minun",
+      "name": "EX Trainer Kit 2: Plusle & Minun",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Plusle and Minun, each with one cosmos-holofoil Pokémon (Plusle 6, Minun 6), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "extk2a-6"
+      ],
+      "price": 21.27,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing (product 98951) has no price; priced at its 24 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted).",
+      "tcgplayerId": 98951,
+      "image": "assets/products/extk2a/ex-trainer-kit-2-plusle-minun.webp"
+    }
+  ],
+  "extk2b": [
+    {
+      "id": "ex-trainer-kit-2-plusle-minun",
+      "name": "EX Trainer Kit 2: Plusle & Minun",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Plusle and Minun, each with one cosmos-holofoil Pokémon (Plusle 6, Minun 6), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "extk2b-6"
+      ],
+      "price": 21.27,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing (product 98951) has no price; priced at its 24 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted).",
+      "tcgplayerId": 98951,
+      "image": "assets/products/extk2b/ex-trainer-kit-2-plusle-minun.webp"
+    }
+  ],
+  "np": [
+    {
+      "id": "event-np001",
+      "name": "Kyogre ex · Nintendo Power magazine",
+      "kind": "event",
+      "packs": 0,
+      "note": "The Nintendo Power promo of October 2003 (the magazine's copy is not holofoil; the holofoil copy went to players of the Pokémon Ruby & Sapphire Challenge in August 2003: Bulbapedia, via search excerpt, and Collexy). The card is shown as the cosmos holo; the price is the magazine print's normal listing (TCGplayer market $43.82 normal, $314.66 holofoil), which is what the daily refresh reads.",
+      "promos": [
+        "np-np001"
+      ],
+      "price": 43.82,
+      "tcgplayerId": 86555
+    },
+    {
+      "id": "event-np002",
+      "name": "Groudon ex · Nintendo Power magazine",
+      "kind": "event",
+      "packs": 0,
+      "note": "The Nintendo Power promo of October 2003, the pair of NP 1 (the magazine's copy is not holofoil; the holofoil copy went to Ruby & Sapphire Challenge players). Shown as the cosmos holo, priced at the magazine print's normal listing (TCGplayer market $31.10 normal, $130.75 holofoil).",
+      "promos": [
+        "np-np002"
+      ],
+      "price": 31.1,
+      "tcgplayerId": 85928
+    },
+    {
+      "id": "event-np003",
+      "name": "Treecko · e-League 2003",
+      "kind": "event",
+      "packs": 0,
+      "note": "A reverse holo prize of the 2003 e-League (Pokémon League) season. No sealed product.",
+      "promos": [
+        "np-np003"
+      ],
+      "price": 72.05,
+      "tcgplayerId": 90031
+    },
+    {
+      "id": "event-np004",
+      "name": "Grovyle · e-League 2003",
+      "kind": "event",
+      "packs": 0,
+      "note": "An e-League 2003 prize. TCGplayer's only listing is the Winner-stamped copy, which is the price here. No sealed product.",
+      "promos": [
+        "np-np004"
+      ],
+      "price": 100.67,
+      "tcgplayerId": 85934
+    },
+    {
+      "id": "event-np005",
+      "name": "Mudkip · POP Tournaments",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the European and US POP (Play! Pokémon) tournaments, in cosmos holo. TCGplayer has no listings for it: its market price is one recorded sale at $1,500 (pkmn.gg shows the same). No sealed product.",
+      "promos": [
+        "np-np005"
+      ],
+      "price": 1500.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's market price for the card (product 87608: $1,500.00, one recorded sale, no live listings; tcgcsv's mirror has no row for it) and pkmn.gg's price for NP 5.",
+      "tcgplayerId": 87608
+    },
+    {
+      "id": "event-np008",
+      "name": "Torchic · e-League 2003",
+      "kind": "event",
+      "packs": 0,
+      "note": "A reverse holo prize of the 2003 e-League season. No sealed product.",
+      "promos": [
+        "np-np008"
+      ],
+      "price": 63.15,
+      "tcgplayerId": 89948
+    },
+    {
+      "id": "event-np009",
+      "name": "Combusken · e-League 2003",
+      "kind": "event",
+      "packs": 0,
+      "note": "An e-League 2003 prize. TCGplayer's only listing is the Winner-stamped copy, which is the price here (a jumbo print also exists, not modelled). No sealed product.",
+      "promos": [
+        "np-np009"
+      ],
+      "price": 107.5,
+      "tcgplayerId": 84399
+    },
+    {
+      "id": "event-np010",
+      "name": "Mudkip · e-League 2003",
+      "kind": "event",
+      "packs": 0,
+      "note": "A reverse holo prize of the 2003 e-League season. No sealed product.",
+      "promos": [
+        "np-np010"
+      ],
+      "price": 130.33,
+      "tcgplayerId": 87604
+    },
+    {
+      "id": "event-np011",
+      "name": "Marshtomp · e-League 2003",
+      "kind": "event",
+      "packs": 0,
+      "note": "An e-League 2003 prize. TCGplayer's only listing is the Winner-stamped copy, which is the price here. No sealed product.",
+      "promos": [
+        "np-np011"
+      ],
+      "price": 217.94,
+      "tcgplayerId": 87231
+    },
+    {
+      "id": "event-np014",
+      "name": "Latias · Pokémon Heroes DVD",
+      "kind": "event",
+      "packs": 0,
+      "note": "Inserted in the Pokémon Heroes: Latios & Latias DVD (January 2004). No sealed product of its own.",
+      "promos": [
+        "np-np014"
+      ],
+      "price": 27.92,
+      "tcgplayerId": 86649
+    },
+    {
+      "id": "event-np015",
+      "name": "Latios · Pokémon Heroes DVD",
+      "kind": "event",
+      "packs": 0,
+      "note": "Inserted in the Pokémon Heroes: Latios & Latias DVD (January 2004). No sealed product of its own.",
+      "promos": [
+        "np-np015"
+      ],
+      "price": 29.15,
+      "tcgplayerId": 86663
+    },
+    {
+      "id": "event-np016",
+      "name": "Treecko · EX Deck Tins",
+      "kind": "event",
+      "packs": 0,
+      "note": "The holofoil Treecko of the October 2004 EX Deck Tins (a non-holo copy was a Target snack-bar promotion). What else the tin held is not on record, so the card is sold alone.",
+      "promos": [
+        "np-np016"
+      ],
+      "price": 44.66,
+      "tcgplayerId": 90035
+    },
+    {
+      "id": "event-np017",
+      "name": "Torchic · EX Deck Tins",
+      "kind": "event",
+      "packs": 0,
+      "note": "The holofoil Torchic of the October 2004 EX Deck Tins (a non-holo copy was a Target snack-bar promotion). What else the tin held is not on record, so the card is sold alone.",
+      "promos": [
+        "np-np017"
+      ],
+      "price": 25.78,
+      "tcgplayerId": 89953
+    },
+    {
+      "id": "event-np018",
+      "name": "Mudkip · EX Deck Tins",
+      "kind": "event",
+      "packs": 0,
+      "note": "The holofoil Mudkip of the October 2004 EX Deck Tins (a non-holo copy was a Target snack-bar promotion). What else the tin held is not on record, so the card is sold alone.",
+      "promos": [
+        "np-np018"
+      ],
+      "price": 31.81,
+      "tcgplayerId": 87609
+    },
+    {
+      "id": "event-np019",
+      "name": "Whismur · EX Deck Tins",
+      "kind": "event",
+      "packs": 0,
+      "note": "The holofoil Whismur of the October 2004 EX Deck Tins (a non-holo copy was a Target snack-bar promotion). What else the tin held is not on record, so the card is sold alone.",
+      "promos": [
+        "np-np019"
+      ],
+      "price": 13.42,
+      "tcgplayerId": 90579
+    },
+    {
+      "id": "event-np021",
+      "name": "Jirachi · Jirachi: Wish Maker DVD",
+      "kind": "event",
+      "packs": 0,
+      "note": "Inserted in the Jirachi: Wish Maker DVD (June 2004). No sealed product of its own.",
+      "promos": [
+        "np-np021"
+      ],
+      "price": 58.17,
+      "tcgplayerId": 86326
+    },
+    {
+      "id": "event-np022",
+      "name": "Beldum · e-League 2004",
+      "kind": "event",
+      "packs": 0,
+      "note": "An e-League 2004 prize. No sealed product.",
+      "promos": [
+        "np-np022"
+      ],
+      "price": 6.73,
+      "tcgplayerId": 83784
+    },
+    {
+      "id": "event-np024",
+      "name": "Chimecho · e-League 2004",
+      "kind": "event",
+      "packs": 0,
+      "note": "An e-League 2004 prize (the plain print: the Winner-stamped copy is a separate $34.33 listing). No sealed product.",
+      "promos": [
+        "np-np024"
+      ],
+      "price": 11.9,
+      "tcgplayerId": 84293
+    },
+    {
+      "id": "event-np025",
+      "name": "Flygon · e-League 2004",
+      "kind": "event",
+      "packs": 0,
+      "note": "An e-League 2004 prize (a Winner-stamped copy is a separate $119.99 listing, not modelled). No sealed product.",
+      "promos": [
+        "np-np025"
+      ],
+      "price": 47.54,
+      "tcgplayerId": 85523
+    },
+    {
+      "id": "event-np026",
+      "name": "Tropical Wind · 2004 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed to every player at the 2004 World Championships (Participation). No sealed product.",
+      "promos": [
+        "np-np026"
+      ],
+      "price": 223.5,
+      "tcgplayerId": 90053
+    },
+    {
+      "id": "event-np035",
+      "name": "Pikachu δ · Value Pack",
+      "kind": "event",
+      "packs": 0,
+      "note": "The cosmos-holo Delta Species Pikachu of an EX Value Pack (TCGplayer and Collexy); pkmn.gg also lists a plain copy from a 2007 Pokémon Official Magazine. The pack's contents are not on record, so the card is sold alone.",
+      "promos": [
+        "np-np035"
+      ],
+      "price": 261.08,
+      "tcgplayerId": 88109
+    },
+    {
+      "id": "event-np040",
+      "name": "Mew · Trainer's Challenge Set",
+      "kind": "event",
+      "packs": 0,
+      "note": "The holofoil Mew of the October 2006 Value Box / Trainer's Challenge Set. What else the set held is not on record, so the card is sold alone.",
+      "promos": [
+        "np-np040"
+      ],
+      "price": 123.55,
+      "tcgplayerId": 87402
+    }
   ]
 }

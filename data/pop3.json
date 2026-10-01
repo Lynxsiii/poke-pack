@@ -1,0 +1,651 @@
+[
+  {
+    "id": "pop3-1",
+    "name": "Blastoise",
+    "number": "1",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Wartortle",
+    "image": "assets/cards/pop3/1.webp",
+    "imageSmall": "assets/cards/pop3/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Smash Turn",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "After your attack, you may switch Blastoise with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Rocket Tackle",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Blastoise does 10 damage to itself. Flip a coin. If heads, prevent all damage done to Blastoise by attacks during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-1/large",
+    "tcgplayerId": 83891,
+    "market": 217.5
+  },
+  {
+    "id": "pop3-2",
+    "name": "Flareon",
+    "number": "2",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/pop3/2.webp",
+    "imageSmall": "assets/cards/pop3/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 20 more damage."
+      },
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Discard 2 basic Energy cards attached to Flareon or this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-2/large",
+    "tcgplayerId": 85495,
+    "market": 44.39
+  },
+  {
+    "id": "pop3-3",
+    "name": "Jolteon",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/pop3/3.webp",
+    "imageSmall": "assets/cards/pop3/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Thundershock",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Pin Missile",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 4 coins. This attack does 20 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-3/large",
+    "tcgplayerId": 86342,
+    "market": 41.15
+  },
+  {
+    "id": "pop3-4",
+    "name": "Minun",
+    "number": "4",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/pop3/4.webp",
+    "imageSmall": "assets/cards/pop3/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Cheer Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card. If you have Plusle in play, draw 2 cards instead."
+      },
+      {
+        "name": "Negative Ion",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 10 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Power Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon that has any Poké-Powers. This attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-4/large",
+    "tcgplayerId": 87487,
+    "market": 46.73
+  },
+  {
+    "id": "pop3-5",
+    "name": "Plusle",
+    "number": "5",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Sumiyoshi Kizuki",
+    "image": "assets/cards/pop3/5.webp",
+    "imageSmall": "assets/cards/pop3/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Cheer Up",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Draw a card. If you have Minun in play, draw 2 cards instead."
+      },
+      {
+        "name": "Positive Ion",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage."
+      },
+      {
+        "name": "Body Bolt",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon that has any Poké-Bodies. This attack does 30 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-5/large",
+    "tcgplayerId": 88167,
+    "market": 44.84
+  },
+  {
+    "id": "pop3-6",
+    "name": "Vaporeon",
+    "number": "6",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "evolvesFrom": "Eevee",
+    "image": "assets/cards/pop3/6.webp",
+    "imageSmall": "assets/cards/pop3/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Does 30 damage plus 20 more damage for each Water Energy attached to Vaporeon but not used to pay for this attack's Energy cost. You can't add more than 40 damage in this way."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-6/large",
+    "tcgplayerId": 90283,
+    "market": 34.69
+  },
+  {
+    "id": "pop3-7",
+    "name": "Combusken",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Torchic",
+    "image": "assets/cards/pop3/7.webp",
+    "imageSmall": "assets/cards/pop3/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard a Fire Energy attached to Combusken."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-7/large",
+    "tcgplayerId": 84405,
+    "market": 27.63
+  },
+  {
+    "id": "pop3-8",
+    "name": "Donphan",
+    "number": "8",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Tomoaki Imakuni",
+    "evolvesFrom": "Phanpy",
+    "image": "assets/cards/pop3/8.webp",
+    "imageSmall": "assets/cards/pop3/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Sniff Out",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Put any 1 card from your discard pile into your hand."
+      },
+      {
+        "name": "Fury Attack",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-8/large",
+    "tcgplayerId": 84874,
+    "market": 23.32
+  },
+  {
+    "id": "pop3-9",
+    "name": "Forretress",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "evolvesFrom": "Pineco",
+    "image": "assets/cards/pop3/9.webp",
+    "imageSmall": "assets/cards/pop3/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Toxic",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on the Defending Pokémon between turns."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-9/large",
+    "tcgplayerId": 85549,
+    "market": 19.17
+  },
+  {
+    "id": "pop3-10",
+    "name": "High Pressure System",
+    "number": "10",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Ken Ikuji",
+    "image": "assets/cards/pop3/10.webp",
+    "imageSmall": "assets/cards/pop3/10-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-10/large",
+    "tcgplayerId": 86077,
+    "market": 4.98
+  },
+  {
+    "id": "pop3-11",
+    "name": "Low Pressure System",
+    "number": "11",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Shin-ichi Yoshikawa",
+    "image": "assets/cards/pop3/11.webp",
+    "imageSmall": "assets/cards/pop3/11-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-11/large",
+    "tcgplayerId": 86847,
+    "market": 7.8
+  },
+  {
+    "id": "pop3-12",
+    "name": "Ditto",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Yuka Morii",
+    "image": "assets/cards/pop3/12.webp",
+    "imageSmall": "assets/cards/pop3/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Psybeam",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Duplicate",
+        "text": "Once during your turn (before your attack), you may search your deck for another Ditto and switch it with Ditto. (Any cards attached to Ditto, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Ditto on top of your deck. Shuffle your deck afterward. You can't use more than 1 Duplicate Poké-Power each turn.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-12/large",
+    "tcgplayerId": 84842,
+    "market": 67.72
+  },
+  {
+    "id": "pop3-13",
+    "name": "Eevee",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/pop3/13.webp",
+    "imageSmall": "assets/cards/pop3/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Take Down",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Eevee does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-13/large",
+    "tcgplayerId": 85083,
+    "market": 36.68
+  },
+  {
+    "id": "pop3-14",
+    "name": "Ivysaur",
+    "number": "14",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "evolvesFrom": "Bulbasaur",
+    "image": "assets/cards/pop3/14.webp",
+    "imageSmall": "assets/cards/pop3/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Gouge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      },
+      {
+        "name": "Poisonpowder",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "The Defending Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-14/large",
+    "tcgplayerId": 86299,
+    "market": 13.61
+  },
+  {
+    "id": "pop3-15",
+    "name": "Marshtomp",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Midori Harada",
+    "evolvesFrom": "Mudkip",
+    "image": "assets/cards/pop3/15.webp",
+    "imageSmall": "assets/cards/pop3/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Mud Slap",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Double-edge",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Marshtomp does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-15/large",
+    "tcgplayerId": 87236,
+    "market": 12.26
+  },
+  {
+    "id": "pop3-16",
+    "name": "Pichu Bros.",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/pop3/16.webp",
+    "imageSmall": "assets/cards/pop3/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Bustle",
+        "cost": [
+          "Lightning",
+          "Lightning"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads. If either coin is heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-16/large",
+    "tcgplayerId": 88024,
+    "market": 103.23
+  },
+  {
+    "id": "pop3-17",
+    "name": "Ho-Oh ex",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/pop3/17.webp",
+    "imageSmall": "assets/cards/pop3/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Rainbow Burn",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Does 10 damage plus 20 more damage for each type of basic Energy card attached to Ho-Oh ex."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Golden Wing",
+        "text": "If Ho-Oh ex would be Knocked Out by damage from an opponent's attack, you may move up to 2 Energy attached to Ho-Oh ex to your Pokémon in any way you like.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop3-17/large",
+    "tcgplayerId": 86129,
+    "market": 125.0
+  }
+]

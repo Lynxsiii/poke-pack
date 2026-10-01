@@ -175,4 +175,15 @@ export const SET_ACCENTS = {
   "ex10": { a: "#d24fa8", b: "#3f78d9" },
   "ex11": { a: "#f2a02e", b: "#7e8aa0" },
   "ex12": { a: "#c4a46a", b: "#7aa86a" },
+  // EX generation, e5: Nintendo promos, POP Series 1-5, the Trainer Kit half decks.
+  "np": { a: "#e65a5a", b: "#c9cfdc" },
+  "pop1": { a: "#f09a3a", b: "#f2d04a" },
+  "pop2": { a: "#5ec05a", b: "#d9d04a" },
+  "pop3": { a: "#4fb0e0", b: "#e8a23a" },
+  "pop4": { a: "#a06fd8", b: "#f0a050" },
+  "pop5": { a: "#e0504a", b: "#f2c230" },
+  "extk1a": { a: "#e05a4a", b: "#f0d9c8" },
+  "extk1b": { a: "#4a7fe0", b: "#c8d8f0" },
+  "extk2a": { a: "#f2c230", b: "#e0524a" },
+  "extk2b": { a: "#4a9de0", b: "#f2c230" },
 };

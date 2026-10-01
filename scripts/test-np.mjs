@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
 import worker from '../worker/index.js';
 import {ALL_SETS,PLAYABLE_SETS,SET_BY_ID,NP_PROMOS,dataSetsOf,getSet,hasCardData,homeCards,promoOffers} from '../js/catalog.js';
+import {ripPack} from '../js/engine.js';
 import {PROMO_HOMES,PROMO_HOME_LIKE,homeSetId,inHomeSet,isMepCardId,isXypCardId,isBwpCardId,isDppCardId,isHspCardId,isNpCardId,promoHomeOf} from '../js/card-home.js';
 import {ownedPerSet} from '../js/titles.js';
 import {achievementContext} from '../js/achievements.js';
@@ -144,6 +145,8 @@ for(const cfg of CONFIGS){
   const promos=homeCards(s,Object.values(files));
   assert.equal(promos.length,s.totalCount,`${t}: totalCount is every black star promo in the files`);
   assert.equal(new Set(promos.map(c=>c.id)).size,promos.length,'ids are unique');
+  const printed=promos.map(c=>c.printedNumber);
+  assert.equal(new Set(printed).size,printed.length,`${t}: no promo number is built twice (${printed.filter((n,i)=>printed.indexOf(n)!==i).join(', ')})`);
   for(const c of promos){
     assert.ok(c.promo&&c.rarity==='Promo',`${c.id} is a promo`);
     assert.match(c.printedNumber,new RegExp(`^${cfg.prefix}\\d{2,3}[a-z]?$`),`${c.id} prints its number`);
@@ -175,6 +178,78 @@ for(const cfg of CONFIGS){
       seen.set(c.id,set.id);
     }
   }
+}
+
+// ---- np's own file, POP Series 1-5 and the four EX Trainer Kit half decks (e5) ---------------------------------------
+{
+  const sealed=read('data/sealed.json'),prod=read('data/products.json'),boxes=read('data/box-contents.json');
+  const np=read('data/np.json');
+  // data/np.json: the 22 promos no EX set's product claims (NP29 and NP30 are ex11's, filed by e3); the six with no TCGplayer price anywhere are not built.
+  assert.equal(np.length,22,'np.json holds 22 promos');
+  const nums=np.map(c=>Number(c.number.slice(2)));
+  assert.deepEqual(nums,[1,2,3,4,5,8,9,10,11,14,15,16,17,18,19,21,22,24,25,26,35,40],'the home-only promos');
+  for(const n of [6,7,23,27,28,36]) assert.ok(!nums.includes(n),`NP${n} has no price anywhere and is not built`);
+  const holo=new Set([1,2,5,16,17,18,19,35,40]),rev=new Set([3,8,10]);
+  for(const c of np){
+    const n=Number(c.number.slice(2));
+    assert.equal(c.id,`np-${c.number}`);assert.match(c.number,/^np\d{3}$/);assert.equal(c.printedNumber,`NP ${String(n).padStart(3,'0')}`);
+    assert.equal(c.era,'ex');assert.ok(c.market>0,`${c.id}: priced`);
+    assert.equal(c.foilAs==='Rare Holo',holo.has(n),`${c.id}: cosmos holo only on the listed promos`);
+    assert.equal(!!c.reverse,rev.has(n),`${c.id}: reverse holo only on the e-League prizes`);
+  }
+  const events=prod.np;
+  assert.equal(events.length,22);
+  for(const e of events){
+    assert.equal(e.kind,'event');assert.equal(e.packs,0);assert.equal(e.promos.length,1);assert.ok(np.some(c=>c.id===e.promos[0]),`${e.id}: its card is built`);assert.ok(e.price>0);
+    if(e.priceDerived) assert.ok(e.priceSource,`${e.id}: a hand price names its source`);
+  }
+  assert.equal(events.find(e=>e.id==='event-np005').price,1500);
+  assert.equal(NP_PROMOS.released,'October 1, 2003');
+  // POP Series 1-5: two cards a pack, the Rare on its own position, no foil, no Energy.
+  for(const [n,at,cost] of [[1,2,100.08],[2,2,149.69],[3,1,169.68],[4,1,171.94],[5,1,2290]]){
+    const id=`pop${n}`,set=getSet(id),cards=read(`data/${id}.json`);
+    assert.ok(PLAYABLE_SETS.includes(set)&&set.era==='EX'&&set.edition==='EX'&&set.packSize===2&&!set.promoSet,`${id} is a playable EX set`);
+    assert.equal(cards.length,17);assert.equal(set.totalCount,17);assert.equal(set.printedTotal,17);
+    assert.equal(cards.filter(c=>c.rarity==='Rare').length,n<=3?7:6,`${id}: Rares`);
+    assert.equal(cards.filter(c=>c.rarity==='Uncommon').length,5);
+    assert.ok(cards.every(c=>c.image&&c.imageSmall&&existsSync(new URL(c.image,root))&&existsSync(new URL(c.imageSmall,root))),`${id}: scans`);
+    const unpriced=cards.filter(c=>!(c.market>0)).map(c=>c.id);
+    assert.deepEqual(unpriced,n===5?['pop5-16','pop5-17']:[],`${id}: only the two POP 5 Gold Stars have no price anywhere`);
+    assert.equal(set.cost,cost);assert.equal(sealed[id].boosterPack,cost);
+    assert.equal(set.wrappers.length,1);assert.ok(existsSync(new URL(set.wrappers[0].art,root))&&existsSync(new URL(set.wrappers[0].artFallback,root)),`${id}: wrapper art`);
+    assert.ok(cards.some(c=>c.id===set.wrappers[0].cardId),`${id}: wrapper card`);
+    for(const hero of set.heroIds) assert.ok(cards.some(c=>c.id===hero),`${id}: hero ${hero}`);
+    assert.ok(!set.energyPrint);
+    const N=4000;let rares=0;const atRare=[0,0];
+    for(let i=0;i<N;i++){
+      const pack=ripPack(set,cards);
+      assert.equal(pack.length,2,`${id}: two cards a pack`);assert.equal(new Set(pack.map(c=>c.id)).size,2);
+      assert.ok(pack.every(c=>c.id.startsWith(id+'-')&&!c.promo),`${id}: only its own cards`);
+      pack.forEach((c,k)=>{if(c.rarity==='Rare'){rares++;atRare[k]++;}});
+    }
+    assert.ok(Math.abs(rares/N-0.1)<0.03,`${id}: rare rate ${rares/N}`);
+    assert.equal(atRare[at===2?0:1],0,`${id}: the Rare is never in card ${at===2?1:2}`);assert.ok(atRare[at-1]>0);
+  }
+  // The four half decks and the two kit products.
+  for(const [id,total,holoNo,energyKind,productId] of [['extk1a',10,4,'Fire','ex-trainer-kit-latias-latios'],['extk1b',10,2,'Lightning','ex-trainer-kit-latias-latios'],['extk2a',12,6,'Lightning','ex-trainer-kit-2-plusle-minun'],['extk2b',12,6,'Fire','ex-trainer-kit-2-plusle-minun']]){
+    const set=getSet(id),cards=read(`data/${id}.json`);
+    assert.ok(PLAYABLE_SETS.includes(set)&&set.promoSet&&set.packSize===0&&set.wrappers.length===0&&set.era==='EX',`${id} sells no boosters`);
+    assert.equal(cards.length,total,`${id}: ${total} cards`);assert.equal(set.totalCount,total);
+    assert.ok(cards.every(c=>c.era==='ex'&&c.rarity==='Promo'&&c.market>0&&existsSync(new URL(c.image,root))&&existsSync(new URL(c.imageSmall,root))),`${id}: ex kit cards with scans and prices`);
+    const holos=cards.filter(c=>c.holo);
+    assert.deepEqual(holos.map(c=>c.number),[String(holoNo)],`${id}: one holo`);assert.ok(holos[0].promo&&holos[0].foilAs==='Rare Holo');
+    for(const hero of set.heroIds) assert.ok(cards.some(c=>c.id===hero));
+    assert.ok(cards.some(c=>c.name===`${energyKind} Energy`),`${id}: its Energy`);
+    const kit=promoOffers(prod[id]);
+    assert.equal(kit.length,1);assert.equal(kit[0].packs,0);assert.deepEqual(kit[0].promos,[`${id}-${holoNo}`]);assert.equal(kit[0].id,productId);
+    assert.ok(prod[id][0].price>0&&prod[id][0].priceSource,`${id}: a sourced price`);
+    const row=boxes[`${id}/${productId}`];
+    assert.ok(row,`${id}: kit contents row`);
+    const other=id.endsWith('a')?id.slice(0,-1)+'b':id.slice(0,-1)+'a';
+    assert.equal(row.cards.length,total+read(`data/${other}.json`).length-1,`${id}: both halves beside its own promo`);
+    assert.ok(row.cards.every(([c,n])=>n===1&&c!==`${id}-${holoNo}`&&new RegExp(`^${id.slice(0,-1)}[ab]-\\d+$`).test(c)),`${id}: only kit cards, one each`);
+  }
+  assert.equal(prod.extk1a[0].price,prod.extk1b[0].price);assert.equal(prod.extk2a[0].price,prod.extk2b[0].price,'one kit product on both half decks');
 }
 
 const realCount=CONFIGS.filter(c=>PLAYABLE_SETS.includes(c.set)).length;

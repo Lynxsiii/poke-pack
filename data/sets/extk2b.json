@@ -1,0 +1,83 @@
+{
+  "id": "extk2b",
+  "name": "EX Trainer Kit Minun",
+  "side": true,
+  "series": "ex",
+  "slug": "ex-trainer-kit-2-minun",
+  "scrydexId": "tk2b",
+  "printedTotal": 12,
+  "tcgplayerGroup": 1542,
+  "era": "ex",
+  "defaults": {
+    "rarity": "Promo",
+    "era": "ex"
+  },
+  "products": [
+    {
+      "id": "ex-trainer-kit-2-plusle-minun",
+      "name": "EX Trainer Kit 2: Plusle & Minun",
+      "kind": "deck",
+      "tcgplayerId": 98951,
+      "packs": 0,
+      "promos": [
+        "6"
+      ],
+      "note": "Two half decks, Plusle and Minun, each with one cosmos-holofoil Pokémon (Plusle 6, Minun 6), plus rule books, a playmat, damage and status counters and a coin, and one booster pack of an EX-series set that no source names. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "price": 21.27,
+      "priceSource": "The kit's own TCGplayer listing (product 98951) has no price; priced at its 24 different cards' market prices added up, one of each (a floor: the real decks held more copies, and the booster pack is not counted)."
+    }
+  ],
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 83583
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 84212
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 84228
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 85956
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 87200
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 87486,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "promo": true
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 90439
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 84155
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 85243
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 88340
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 85460
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 86764
+    }
+  ]
+}

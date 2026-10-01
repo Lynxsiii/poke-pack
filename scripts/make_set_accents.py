@@ -173,6 +173,17 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "dptk3b": ("#e8873a", "#5a8de0"),  # Lucario kit: orange to aura blue
     "hgsstk4a": ("#2f8fd9", "#e0605a"),  # Gyarados kit: sea blue to coral red
     "hgsstk4b": ("#f2c230", "#e0793a"),  # Raichu kit: yellow to orange
+    # EX generation (e5): promos, POP Series 1-5, the Trainer Kit half decks
+    "np": ("#e65a5a", "#c9cfdc"),  # Nintendo promos: Nintendo red to silver star
+    "pop1": ("#f09a3a", "#f2d04a"),  # POP 1: Blaziken orange to yellow
+    "pop2": ("#5ec05a", "#d9d04a"),  # POP 2: Venusaur green to yellow
+    "pop3": ("#4fb0e0", "#e8a23a"),  # POP 3: Vaporeon blue to Flareon orange
+    "pop4": ("#a06fd8", "#f0a050"),  # POP 4: Deoxys violet to orange
+    "pop5": ("#e0504a", "#f2c230"),  # POP 5: Ho-Oh red to gold
+    "extk1a": ("#e05a4a", "#f0d9c8"),  # Latias kit: red to cream
+    "extk1b": ("#4a7fe0", "#c8d8f0"),  # Latios kit: blue to pale blue
+    "extk2a": ("#f2c230", "#e0524a"),  # Plusle kit: yellow to red
+    "extk2b": ("#4a9de0", "#f2c230"),  # Minun kit: blue to yellow
     "bw10": ("#ff9a2e", "#3aa0ff"),  # Plasma Blast: wrapper orange to Team Plasma blue
     "bw11": ("#f2b632", "#8f7be8"),  # Legendary Treasures: Radiant gold to Mewtwo violet
     # Diamond & Pearl block (d1)

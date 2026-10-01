@@ -54,6 +54,7 @@ SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
 XY_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "xy-kits.json"
 BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
 DP_RESEARCH = ROOT / "scripts" / "box-research" / "dp.json"
+EX_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "ex-kits.json"  # e5: the two EX Trainer Kits (same shape as dp.json)
 WOTC_RESEARCH = ROOT / "scripts" / "box-research" / "wotc.json"
 WOTC_W1_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-w1.json"
 WOTC_NEO_RESEARCH = ROOT / "scripts" / "box-research" / "wotc-neo.json"
@@ -449,6 +450,8 @@ def build(parts_dir: Path) -> int:
     if DP_RESEARCH.exists():
         dp_kits(json.loads(DP_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
+    if EX_KITS_RESEARCH.exists():
+        dp_kits(json.loads(EX_KITS_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
     if WOTC_W1_RESEARCH.exists():
         wotc_w1(json.loads(WOTC_W1_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
     if WOTC_NEO_RESEARCH.exists():

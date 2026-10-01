@@ -1179,6 +1179,61 @@
           "file": "ex16/pack-3.avif"
         }
       ]
+    },
+    "pop1": {
+      "name": "POP Series 1",
+      "slug": "pop-series-1",
+      "packs": [
+        {
+          "id": "blaziken",
+          "remote": "pop-series-1-pack-0.avif",
+          "file": "pop1/pack-0.avif"
+        }
+      ]
+    },
+    "pop2": {
+      "name": "POP Series 2",
+      "slug": "pop-series-2",
+      "packs": [
+        {
+          "id": "venusaur",
+          "remote": "pop-series-2-pack-0.avif",
+          "file": "pop2/pack-0.avif"
+        }
+      ]
+    },
+    "pop3": {
+      "name": "POP Series 3",
+      "slug": "pop-series-3",
+      "packs": [
+        {
+          "id": "eeveelutions",
+          "remote": "pop-series-3-pack-0.avif",
+          "file": "pop3/pack-0.avif"
+        }
+      ]
+    },
+    "pop4": {
+      "name": "POP Series 4",
+      "slug": "pop-series-4",
+      "packs": [
+        {
+          "id": "deoxys",
+          "remote": "pop-series-4-pack-0.avif",
+          "file": "pop4/pack-0.avif"
+        }
+      ]
+    },
+    "pop5": {
+      "name": "POP Series 5",
+      "slug": "pop-series-5",
+      "packs": [
+        {
+          "id": "ho-oh",
+          "remote": "pop-series-5-pack-0.avif",
+          "file": "pop5/pack-0.avif"
+        }
+      ]
     }
   }
 }
