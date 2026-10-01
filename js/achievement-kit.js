@@ -118,6 +118,20 @@ export const SM_FINISHES = [
 export const XY_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare BREAK", "Rare Ultra", "Rare Secret"];
 
 /**
+ * Black & White's finishes: the holo, the regular-art Pokémon-EX, the Ace Spec (the reverse
+ * slot's chase, Boundaries Crossed to Plasma Blast), the full art and the secret rare.
+ */
+export const BW_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare ACE", "Rare Ultra", "Rare Secret"];
+
+/**
+ * The Diamond & Pearl and Platinum finishes (Sinnoh, 2007-2009): the holo, the Level-Up, the Shining Pokémon, the Rotom and
+ * Arceus subsets and the secret rares. The HeartGold & SoulSilver finishes (Johto, 2010-2011): the holo, the Prime, the
+ * LEGEND, the Shiny Legendary and the secret rare (the Alph Lithograph).
+ */
+export const SINNOH_FINISHES = ["Rare Holo", "Rare Holo LV.X", "Rare Shining", "Rare Rotom", "Rare Arceus", "Rare Secret"];
+export const JOHTO_FINISHES = ["Rare Holo", "Rare Prime", "LEGEND", "Rare Shiny Legendary", "Rare Secret"];
+
+/**
  * A Tag Team GX is printed "Pheromosa & Buzzwole-GX": two names and a GX. The
  * Worker only knows a card's id, name and rarity, so the name is the test
  * (the Tag Team Supporters of Cosmic Eclipse carry no GX and do not count).

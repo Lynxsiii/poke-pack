@@ -112,6 +112,12 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "sm35": ("#f2b53c", "#e2609e"),  # Shining Legends: shining gold to Mew pink
     "sm4": ("#e8403f", "#ffb347"),  # Crimson Invasion: invasion red to Guzzlord amber
     "sm5": ("#8a7dff", "#ffb347"),  # Ultra Prism: prism violet to Necrozma gold
+    "xy9": ("#f29a2e", "#4d84e8"),  # BREAKpoint: BREAK orange to wrapper blue
+    "g1": ("#e8473f", "#f2c14e"),  # Generations: Charizard red to Pikachu gold
+    "xy10": ("#e6b84a", "#5f8fe0"),  # Fates Collide: chrome gold to Lugia blue
+    "xy4": ("#d24fbf", "#ff8a3d"),  # Phantom Forces: phantom magenta to logo orange
+    "xy5": ("#ff7a3a", "#4aa3ff"),  # Primal Clash: Primal Groudon orange to Primal Kyogre blue
+    "dc1": ("#e5484d", "#27b3c9"),  # Double Crisis: Team Magma red to Team Aqua teal
     "xy1": ("#4aa3ec", "#e8453c"),  # XY: Xerneas blue to Yveltal red
     "xy2": ("#ff8a2a", "#4ab3ff"),  # Flashfire: flame orange to Mega Charizard X blue flame
     "xy3": ("#e8503a", "#38b6a0"),  # Furious Fists: fist red to Hawlucha teal
@@ -119,6 +125,28 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xy6": ("#7fd04e", "#f2c542"),
     "xy7": ("#a46be0", "#e8b84a"),
     "xy8": ("#e5533d", "#4db3ea"),
+    # XY block (b6): promos, McDonald's 2014-2016, the Trainer Kit half decks
+    "xyp": ("#c5d0e6", "#ff7ab6"),       # XY promos: silver star, Fairy pink
+    "mcd14": ("#ffb02e", "#4aa3ec"),     # McDonald's 2014: golden arches to Kalos blue
+    "mcd15": ("#ffb02e", "#e8453c"),     # McDonald's 2015: golden arches to Omega Ruby red
+    "mcd16": ("#ffb02e", "#59c8f0"),     # McDonald's 2016: golden arches to sky blue
+    "xytk6a": ("#9a7bf0", "#45b6d0"),    # Noivern kit: bat violet to echo teal
+    "xytk6b": ("#ff8fc8", "#8ad0ff"),    # Sylveon kit: ribbon pink to fairy blue
+    "xytk7a": ("#e0566c", "#9fb0c4"),    # Bisharp kit: blade red to steel
+    "xytk7b": ("#ff8fc8", "#ffd36b"),    # Wigglytuff kit: balloon pink to gold
+    "xytk8a": ("#4aa3ff", "#c9b3ff"),    # Latios kit: sky blue to lavender
+    "xytk8b": ("#ff6f86", "#ffc4cf"),    # Latias kit: red to blush
+    "xytk9a": ("#ffd23f", "#ff6a4a"),    # Pikachu Libre kit: electric yellow to mask red
+    "xytk9b": ("#4fc3f7", "#a6e1ff"),    # Suicune kit: aurora blue
+    "xy11": ("#f0a23a", "#4fa3d9"),  # Steam Siege: gear gold to steam blue
+    "xy12": ("#f2652d", "#5bb3e8"),  # Evolutions: Charizard orange to Blastoise blue
+    "xy0": ("#69c35a", "#f2823a"),  # Kalos Starter Set: Chespin green to Fennekin orange
+    # Black & White block (c5): promos, McDonald's 2011-2012, the Trainer Kit half decks
+    "bwp": ("#c5d0e6", "#4d8be0"),  # BW promos: silver star to Unova blue
+    "mcd11": ("#ffb02e", "#3fbf9a"),  # McDonald's 2011: golden arches to Snivy green
+    "mcd12": ("#ffb02e", "#e8663d"),  # McDonald's 2012: golden arches to Tepig orange
+    "bwtk5a": ("#e0566c", "#8a6fe0"),  # Zoroark kit: mane red to illusion violet
+    "bwtk5b": ("#d0a24a", "#9fb0c4"),  # Excadrill kit: drill gold to steel
 }
 
 # Used when a set has no art at all and no override.

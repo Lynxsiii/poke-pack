@@ -20,7 +20,16 @@ A set is declared in data/sets/<id>.json:
     }
 
 An XY set also sets `"era": "xy"` (pkmn.gg's "Rare Holo" is then kept as the card's rarity),
-and Generations adds `"rcNumbers": "^RC\\d+$"` for its Radiant Collection cards.
+and Generations adds `"rcNumbers": "^RC\\d+$"` for its Radiant Collection cards. A Black & White set
+sets `"era": "bw"` (the same "Rare Holo" and basic Energy rules) and may add `"rarityOverrides": {"RC11":
+"Rare Holo EX"}` (a card's rarity by number, for a label pkmn.gg gets wrong or leaves empty: Dragon
+Vault's Kyurem and Trainers) and `"cardFlags": {"21": {"scarce": true}}` (extra fields by number:
+the engine's `scarce` pool, js/engine.js); Legendary Treasures uses `"rcNumbers": "^RC\\d+$"` too.
+A Diamond & Pearl generation set (dp1-dp7, pl1-pl4, hgss1-hgss4, col1, POP 6-9, the Trainer Kits) sets `"era": "dp"` (the same "Rare Holo"
+and basic Energy rules) and gives its subsets rarities of their own with `rarityOverrides` by number, because pkmn.gg files them
+as plain "Rare" / "Rare Holo": `{"SH1": "Rare Shining", "RT1": "Rare Rotom", "AR1": "Rare Arceus", "SL1": "Rare Shiny
+Legendary"}`; the Alph Lithograph (number ONE to FOUR, "Rare Secret") gets `"cardFlags": {"ONE": {"alph": true}}` and Call of
+Legends' eight reverse-only basic Energy (88-95) `{"88": {"reverse": true}}` each (js/engine.js `reverseEnergy`).
 
 Re-running is safe: fields owned by other scripts (`market` from
 fetch_prices.py, and the mirrored `image` / `imageSmall` / `imageRemote` paths
@@ -164,10 +173,13 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # Sword & Shield prints its holo Rares as a rarity of their own ("Rare
     # Holo", the art background foil), separate from the plain Rare, so the
     # alias that folds the two together is for the Scarlet & Violet feeds only.
-    # Sun & Moon and XY keep "Rare Holo" too (the XY window holo, pkmn.gg's
-    # own word for it next to "Rare Holo EX", "Rare BREAK" and "Rare Ultra").
-    if not (cfg.get("era") in ("swsh", "sm", "xy") and rarity == "Rare Holo"):
+    # Sun & Moon, XY and Black & White keep "Rare Holo" too (the XY window holo, pkmn.gg's
+    # own word for it next to "Rare Holo EX", "Rare BREAK", "Rare ACE" and "Rare Ultra").
+    if not (cfg.get("era") in ("swsh", "sm", "xy", "bw", "dp") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
+    # Prints the feed files under the wrong rarity (Generations' embossed full-art
+    # Articuno 25 and Zapdos 29 are "Rare Holo" there): `"rarityOverrides": {"25": "Rare Ultra"}`.
+    rarity = (cfg.get("rarityOverrides") or {}).get(number, rarity)
     if (subset or {}).get("gallery") == "cc":
         # Celebrations' Classic Collection reprints keep their original
         # numbers (4/102, 17/17), which collide with the set's own 1-25, so
@@ -231,8 +243,18 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # for those three sets deal Energy through xySlots' `commonEnergy` from the shared
     # print `xy` (energy-<type>-xy), so the set's own Energy rows are filed as "Energy",
     # which keeps them out of the Common pool; a builder may `skipNumbers` them.
-    if cfg.get("era") == "xy" and card["supertype"] == "Energy" and "basic" in subtypes:
+    # Black & White's own Energy 105-112 are "Common" on pkmn.gg and sit on the commons sheet
+    # (bwSlots, `commonEnergy`), so the same rule applies to the era "bw".
+    # The Diamond & Pearl generation's dp1 123-130 and hgss1 115-122 are "Common" on pkmn.gg and sit on the commons sheet (dpSlots
+    # `commonEnergy`); the same rule applies to the era "dp". Call of Legends' 88-95 are reverse-only: add `reverse: true` by cardFlags.
+    if cfg.get("era") in ("xy", "bw", "dp") and card["supertype"] == "Energy" and "basic" in subtypes:
         card["rarity"] = "Energy"
+    # Per-number fixes from the set's config (Black & White: RC11 is "Rare" on pkmn.gg but a Pokémon-EX,
+    # Dragon Vault's three cards have no rarity at all; `cardFlags` sets extra fields such as `scarce`).
+    if number in (cfg.get("rarityOverrides") or {}):
+        card["rarity"] = cfg["rarityOverrides"][number]
+    for field, value in ((cfg.get("cardFlags") or {}).get(number) or {}).items():
+        card[field] = value
     return card
 
 
@@ -363,7 +385,10 @@ def build(set_id: str, refresh: bool) -> int:
     # Shiny Vault, Crown Zenith's Galarian Gallery, Celebrations' Classic
     # Collection) are checklists of their own on pkmn.gg but one product, so
     # they build into the same data file, each card tagged with `gallery`.
-    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or []]
+    # An `inline` subset (Generations' Radiant Collection RC1-RC32) is listed in
+    # the main checklist already (`rcNumbers` flags the cards); it only names the
+    # TCGplayer group the prices come from.
+    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or [] if not sub.get("inline")]
     for slug, subset in sources:
         base = f"https://www.pkmn.gg/series/{cfg['series']}/{slug}"
         tag = f"{set_id}-{subset['gallery']}" if subset else set_id

@@ -112,7 +112,7 @@ export function bandFor(set) {
 export function energySet(cardId) {
   const id = String(cardId || "");
   if (!id.startsWith("energy-")) return null;
-  const year = /-swsh$/.test(id) ? 2020 : /-sm17$/.test(id) ? 2017 : /-sm19$/.test(id) ? 2019 : /-xy$/.test(id) ? 2014 : /-mee$/.test(id) ? 2025 : 2023;
+  const year = /-swsh$/.test(id) ? 2020 : /-sm17$/.test(id) ? 2017 : /-sm19$/.test(id) ? 2019 : /-xy$/.test(id) ? 2014 : /-bw$/.test(id) ? 2011 : /-dp$/.test(id) ? 2007 : /-mee$/.test(id) ? 2025 : 2023;
   return { id: "energy", name: "Basic Energy", released: String(year) };
 }
 

@@ -635,5 +635,122 @@
       "secret": 0.008,
       "break": 0.0778
     }
+  },
+  "xy4": {
+    "name": "Phantom Forces",
+    "printedTotal": 119,
+    "released": "2014-11-05",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum E2 sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762, npack 10: C 5, U 3, RE 1 per pack, plus the rare slot), Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl; a basic Energy only from Sun & Moon, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), the wrapper text '10 ADDITIONAL GAME CARDS' and the pokemontcg.io card list (no basic Energy in the set). Rare-slot rates are E2's 360-pack sheet counts (plain Rare 240/360, Rare Holo 70/360 including the two Team Flare Hyper Gear red-border holos, EX sheet 35/360 split by card count into 6 EX and 2 Mega EX, full-art sheet 15/360 x 0.93, secrets on the EX sheet and the silver Dialga-EX on the full-art sheet), against E2's own tally of 28 complete boxes (holo 6.14, EX 3.5, full art 1.57 per 36 packs; https://www.elitefourum.com/t/39762/125) and a hand tally of 30 boxes in PokeBeach's 'The English Booster Box Pull Rates Thread' (EX 3.63, full art about 1.33, gold about 0.27 per box; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-43). Confidence medium; the Mega / regular EX split is a card-share assumption (low) and the secret rate rests on thin counts (low). ThePriceDex copies E2 and was not counted. The 2017 'Yellow A Alternate' full arts 24a and 65a are prize-product reprints and are not in packs.",
+    "rates": {
+      "holo": 0.1944,
+      "ex": 0.0685,
+      "megaEx": 0.0228,
+      "ultra": 0.0387,
+      "secret": 0.0088
+    }
+  },
+  "xy5": {
+    "name": "Primal Clash",
+    "printedTotal": 160,
+    "released": "2015-02-04",
+    "updated": "2026-10-01",
+    "source": "Ten cards (5 Commons, 3 Uncommons, a reverse holo, a rare slot) and no basic Energy: Elite Fourum E2 sheet model (sturzflugbombardieru, 'The English Pokemon card rarity guide', https://www.elitefourum.com/t/39762, npack 10: C 5, U 3, RE 1 per pack, plus the rare slot), Bulbapedia 'Booster pack (TCG)' (10 cards since Diamond & Pearl; a basic Energy only from Sun & Moon, https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), the wrapper text '10 ADDITIONAL GAME CARDS' and the pokemontcg.io card list (no basic Energy in the set). Rare-slot rates are E2's 360-pack sheet counts (plain Rare 240/360, Rare Holo 56/360, EX sheet 40/360 split 10 EX : 2 Mega EX by card count, full-art sheet 24/360 x 0.88 with the four gold secrets taking the rest), against E2's own tally of 28 complete boxes (holo 5.5, EX 4.07, full art 2.29 per 36 packs; https://www.elitefourum.com/t/39762/126) and a hand tally of 30 boxes in PokeBeach's box thread (EX 3.83, full art 2.13, secret 0.40 per box; https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-46). Confidence medium; the Mega split and the secret rate are low.",
+    "rates": {
+      "holo": 0.1556,
+      "ex": 0.0926,
+      "megaEx": 0.0185,
+      "ultra": 0.0587,
+      "secret": 0.008
+    }
+  },
+  "dc1": {
+    "name": "Double Crisis",
+    "printedTotal": 34,
+    "released": "2015-03-25",
+    "updated": "2026-10-01",
+    "source": "Seven cards (3 Commons, 2 Uncommons, a reverse holo and a holo-or-full-art slot; no plain Rare exists and there is no Energy), sold only in the Team Magma and Team Aqua blisters, never in a booster box: Bulbapedia 'Double Crisis (TCG)' ('Each booster pack contained seven cards', https://bulbapedia.bulbagarden.net/wiki/Double_Crisis_(TCG)), Elite Fourum E2 post 127 sheet model (npack 7: holo sheet 320/360, full-art sheet 40/360; https://www.elitefourum.com/t/39762/127), TCGplayer group 1525 (no box listed, 7 random cards per pack). The full-art rate (1 pack in 9) is one source with a thin sample (E2's own 14 full arts in 116 packs = 12.1%); confidence low. A second tally was not found.",
+    "rates": {
+      "holo": 0.8889,
+      "ultra": 0.1111
+    }
+  },
+  "xy9": {
+    "name": "BREAKpoint",
+    "printedTotal": 122,
+    "released": "2016-02-03",
+    "updated": "2026-10-01",
+    "source": "Pack structure (all XY sets): 10 cards = 5 Commons + 3 Uncommons + 1 reverse holo + 1 rare slot, no basic Energy card (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): the Energy card began with Sun & Moon; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum 'The English Pokemon card rarity guide' sheet models). Rates: Elite Fourum E2's own tally of 28 complete boxes (n=1,008 packs: holo 6.18, EX 3.68, full art 1.96, secret 0.29, BREAK 2.39 per 36 packs; https://www.elitefourum.com/t/39762/133), Danny Phantump (EX 3.33, FA 1.72, secret 0.30 per box; https://www.youtube.com/watch?v=4TCjfoHoUqk), Derium (1,008 packs: EX 3.54, FA 2.00, secret 0.36; https://www.youtube.com/watch?v=yC8Sw8euGwE) and TCAGaming's first blister case (n=288 packs: FA 6.9%, BREAK 6.9%, EX 10.1%, secret 1.4%; https://www.elitefourum.com/t/14067). The rates are the E2 360-pack sheet model (holo 60, EX sheet 36, full-art sheet 24 with one secret in eight of it, BREAK 24 per 360). BREAK cards take the reverse-holo slot (E2; PokeBeach pull-rate thread report 1025 https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52; Dripshop BREAKpoint article). The Mega share of the EX sheet (2 of 11 cards) is a card-share assumption. Confidence: high for holo, EX, full art and BREAK; low for the Mega split and the secret.",
+    "rates": {
+      "holo": 0.1667,
+      "ex": 0.0818,
+      "megaEx": 0.0182,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
+  },
+  "g1": {
+    "name": "Generations",
+    "printedTotal": 83,
+    "released": "2016-02-22",
+    "updated": "2026-10-01",
+    "source": "Pack structure: 10 cards, 8 from the main set and 2 from the Radiant Collection (Bulbapedia 'Generations (TCG)' https://bulbapedia.bulbagarden.net/wiki/Generations_(TCG); Elite Fourum E2 post https://www.elitefourum.com/t/39762/134): 4 commons (the nine basic Energy are printed on that sheet), 2 uncommons, 1 reverse holo, 1 Radiant common (sheet SPb), 1 Radiant uncommon or ultra (sheet SPa: 12 uncommons x6 + 7 ultras x4 per 100), 1 rare slot. Never sold as a booster box. Rates: E2 triple sample (170 ETB packs, 516 loose packs, Derium's 500-pack ultra summary): 3.8 holo, 7.4 EX, 0.8 full art per 36 packs; Radiant ultra 28% of packs by the sheet photo, 208 of 686 sampled packs (30.3%); Elite Fourum thread 14096 (https://www.elitefourum.com/t/14096): 33 Mythical boxes (66 packs) held 32 ultra-class hits (0.485 per pack against the model's 0.508), and a 36-pack opening had 18 EX. The two full arts of the main set are the embossed non-EX Articuno 25 and Zapdos 29 (pkmn.gg and TCGplayer file them as Rare Holo; the data files them as Rare Ultra, rarityOverrides in data/sets/g1.json). Basic Energy 0.893 per pack (4 x 27/121 sheet model, E2 only) is low confidence. Confidence: medium for holo, EX, full art and Radiant ultra; low for the Mega split.",
+    "rates": {
+      "holo": 0.1056,
+      "ex": 0.1542,
+      "megaEx": 0.0514,
+      "ultra": 0.0222,
+      "radiantUltra": 0.28,
+      "commonEnergy": 0.893
+    }
+  },
+  "xy10": {
+    "name": "Fates Collide",
+    "printedTotal": 124,
+    "released": "2016-05-02",
+    "updated": "2026-10-01",
+    "source": "Pack structure (all XY sets): 10 cards = 5 Commons + 3 Uncommons + 1 reverse holo + 1 rare slot, no basic Energy card (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): the Energy card began with Sun & Moon; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum 'The English Pokemon card rarity guide' sheet models). Rates: Elite Fourum E2's own tally of 29 complete boxes (n=1,044 packs: holo 5.28, EX 4.38, full art 1.97, secret 0.45, BREAK 2.48 per 36 packs; https://www.elitefourum.com/t/39762/136), Danny Phantump (EX 4.12, FA 1.81, secret 0.32 per box; https://www.youtube.com/watch?v=4TCjfoHoUqk) and two PokeBeach box reports (https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52, reports 1031-1032). The rates are the E2 360-pack sheet model (holo 52, EX sheet 44, full-art sheet 24 with one secret in eight of it, BREAK 24 per 360); BREAK takes the reverse slot. The Mega share of the EX sheet (3 of 13 cards) is a card-share assumption. Confidence: medium for holo, EX, full art and BREAK; low for the Mega split and the secret.",
+    "rates": {
+      "holo": 0.1444,
+      "ex": 0.094,
+      "megaEx": 0.0282,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
+  },
+  "xy11": {
+    "name": "Steam Siege",
+    "printedTotal": 114,
+    "released": "2016-08-03",
+    "updated": "2026-10-01",
+    "source": "Per-pack rates from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, https://www.elitefourum.com/t/39762/137: 360-pack sequence, own tally of 28 complete boxes, 1,008 packs: holo 7.29, EX 2.39, full art 2.07, secret 0.46, BREAK 2.39 per 36 packs) cross-checked by Derium (1,008 packs: EX 2.35, full art 2.11, secret 0.29 per box, https://www.youtube.com/watch?v=yC8Sw8euGwE) and Danny Phantump (EX 2.44, full art 2.19, secret 0.30 per box, https://www.youtube.com/watch?v=4TCjfoHoUqk), both read through the guide's post 131 comparison table. Pack: 10 cards, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, no basic Energy (Bulbapedia Booster pack (TCG) https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG); the wrapper prints '10 ADDITIONAL GAME CARDS'). BREAK cards take the reverse slot (Elite Fourum https://www.elitefourum.com/t/are-break-cards-the-same-pull-rates-as-ultra-rares/30934, PokeBeach report https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-52). Plain Rare is 2/3 of packs. The Mega share of the EX sheet is the card share (2 of 6), an assumption; the secret rate rests on the sheet model. Confidence: high for holo, EX, full art and BREAK; low for the Mega split and the secrets. Not independent, not used: ThePriceDex.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/137",
+    "rates": {
+      "holo": 0.2,
+      "ex": 0.0444,
+      "megaEx": 0.0222,
+      "ultra": 0.0587,
+      "secret": 0.008,
+      "break": 0.0667
+    }
+  },
+  "xy12": {
+    "name": "Evolutions",
+    "printedTotal": 108,
+    "released": "2016-11-02",
+    "updated": "2026-10-01",
+    "source": "Per-pack rates from the Elite Fourum rarity guide's sheet model (sturzflugbombardieru, https://www.elitefourum.com/t/39762/139: own tally of 30 complete boxes, 1,080 packs: holo 5.13, EX 4.4, full art 2.47, BREAK 2.13 per 36 packs) cross-checked by Derium (1,008 packs 2016: EX 4.46, full art 2.18, BREAK 1.93, https://www.youtube.com/watch?v=yC8Sw8euGwE; 9,000 packs 2020: EX 4.16, full art 2.17, BREAK 1.84, https://www.youtube.com/watch?v=Gl--QqrkRsE) and The PokeCapital (1,080 packs: EX 4.37, full art 2.37, BREAK 1.97, https://www.youtube.com/watch?v=pIXdfQn7NAQ). Pack: 10 cards, 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot (Bulbapedia Booster pack (TCG)). BREAK cards take the reverse slot. The five secret rares (Exeggutor, Flying Pikachu, Surfing Pikachu, Imakuni?'s Doduo, Here Comes Team Rocket!) are printed on the UNCOMMON sheet, one print each on a 121-position sheet: 15/121 = 12.4% of packs (the guide's sheet model; Flipside's review says secrets come 'at a rate similar to uncommon cards'). The nine basic Energy are on the commons sheet, 9/121 per common slot, about 0.37 per pack (sheet model only, ThePriceDex copies it): the site deals the XY 2013 print for them and leaves the Evolutions-numbered Energy out of the card list. Confidence: high for holo, EX, full art and BREAK; low for the Mega split, the secret rate and the Energy rate.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/139",
+    "rates": {
+      "holo": 0.1444,
+      "ex": 0.0713,
+      "megaEx": 0.0509,
+      "ultra": 0.0667,
+      "break": 0.0556,
+      "uncommonSecret": 0.124,
+      "commonEnergy": 0.372
+    }
   }
 }

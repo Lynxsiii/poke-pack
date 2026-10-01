@@ -953,6 +953,84 @@
           "file": "sm3/pack-3.avif"
         }
       ]
+    },
+    "xy9": {
+      "name": "BREAKpoint",
+      "slug": "breakpoint",
+      "packs": [
+        {
+          "id": "greninja-break",
+          "remote": "breakpoint-pack-0.avif",
+          "file": "xy9/pack-0.avif"
+        },
+        {
+          "id": "luxray-break",
+          "remote": "breakpoint-pack-1.avif",
+          "file": "xy9/pack-1.avif"
+        },
+        {
+          "id": "shiny-mega-gyarados",
+          "remote": "breakpoint-pack-2.avif",
+          "file": "xy9/pack-2.avif"
+        },
+        {
+          "id": "mega-scizor",
+          "remote": "breakpoint-pack-3.avif",
+          "file": "xy9/pack-3.avif"
+        }
+      ]
+    },
+    "g1": {
+      "name": "Generations",
+      "slug": "generations",
+      "packs": [
+        {
+          "id": "pikachu",
+          "remote": "generations-pack-0.avif",
+          "file": "g1/pack-0.avif"
+        },
+        {
+          "id": "charizard",
+          "remote": "generations-pack-1.avif",
+          "file": "g1/pack-1.avif"
+        },
+        {
+          "id": "venusaur",
+          "remote": "generations-pack-2.avif",
+          "file": "g1/pack-2.avif"
+        },
+        {
+          "id": "blastoise",
+          "remote": "generations-pack-3.avif",
+          "file": "g1/pack-3.avif"
+        }
+      ]
+    },
+    "xy10": {
+      "name": "Fates Collide",
+      "slug": "fates-collide",
+      "packs": [
+        {
+          "id": "lugia-break",
+          "remote": "fates-collide-pack-0.avif",
+          "file": "xy10/pack-0.avif"
+        },
+        {
+          "id": "delphox-break",
+          "remote": "fates-collide-pack-1.avif",
+          "file": "xy10/pack-1.avif"
+        },
+        {
+          "id": "zygarde",
+          "remote": "fates-collide-pack-2.avif",
+          "file": "xy10/pack-2.avif"
+        },
+        {
+          "id": "mega-alakazam",
+          "remote": "fates-collide-pack-3.avif",
+          "file": "xy10/pack-3.avif"
+        }
+      ]
     }
   }
 }

@@ -90,6 +90,30 @@ const ERA_LADDERS = {
     [1000, 2, 400, "Kalos regular"],
     [1800, 3, 1100, "Kalos local"],
   ],
+  // Black & White (2011-2013): 1,336 cards in the 12 sets (pkmn.gg totals: bw1 115, bw2 98,
+  // bw3 102, bw4 103, bw5 111, bw6 128, dv1 21, bw7 153, bw8 138, bw9 122, bw10 105, bw11 140),
+  // about 1,500 with the BW Black Star Promos, McDonald's 2011-2012 and the two Trainer Kits. A rung
+  // shows once the playable sets add up to its goal. TODO(lead): re-check against the real totalCounts.
+  "Black & White": [
+    [250, 1, 100, "Unova bound"],
+    [750, 2, 400, "Unova regular"],
+    [1200, 3, 1100, "Unova local"],
+  ],
+  // Diamond & Pearl and Platinum (2007-2009): 1,361 cards in the 11 sets (pkmn.gg totals: dp1 130, dp2 124, dp3 132, dp4 106,
+  // dp5 100, dp6 146, dp7 106, pl1 133, pl2 120, pl3 153, pl4 111), about 1,500 with the DP Black Star Promos (56), POP
+  // Series 6-9 (68) and the two DP Trainer Kits (23). TODO(lead): re-check against the real totalCounts.
+  "Diamond & Pearl": [
+    [250, 1, 100, "Sinnoh bound"],
+    [750, 2, 400, "Sinnoh regular"],
+    [1300, 3, 1100, "Sinnoh local"],
+  ],
+  // HeartGold & SoulSilver (2010-2011): 520 cards in the 5 sets (hgss1 124, hgss2 96, hgss3 91, hgss4 103, col1 106),
+  // about 605 with the HGSS Black Star Promos (25) and the two Trainer Kits (60). TODO(lead): re-check against the real totalCounts.
+  "HeartGold & SoulSilver": [
+    [100, 1, 100, "Johto bound"],
+    [250, 2, 400, "Johto regular"],
+    [500, 3, 1100, "Johto local"],
+  ],
 };
 
 const ERA_ROWS = ERA_NAMES.flatMap((era) =>

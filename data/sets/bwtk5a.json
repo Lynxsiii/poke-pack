@@ -1,0 +1,155 @@
+{
+  "id": "bwtk5a",
+  "name": "BW Trainer Kit Zoroark",
+  "side": true,
+  "series": "black-white",
+  "slug": "black-white-trainer-kit-zoroark",
+  "scrydexId": "tk5a",
+  "printedTotal": 30,
+  "tcgplayerGroup": 1538,
+  "era": "bw",
+  "defaults": {
+    "rarity": "Promo",
+    "era": "bw"
+  },
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 98703
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 98705
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 98718
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 98706
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 98719
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 98720
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 98721
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 98722
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 98723
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 98724
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 98694
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 98708
+    },
+    {
+      "number": "13",
+      "tcgplayerId": 98710
+    },
+    {
+      "number": "14",
+      "tcgplayerId": 98712
+    },
+    {
+      "number": "15",
+      "tcgplayerId": 98714
+    },
+    {
+      "number": "16",
+      "tcgplayerId": 98717
+    },
+    {
+      "number": "17",
+      "tcgplayerId": 98715
+    },
+    {
+      "number": "18",
+      "tcgplayerId": 98700
+    },
+    {
+      "number": "19",
+      "tcgplayerId": 98707
+    },
+    {
+      "number": "20",
+      "tcgplayerId": 98725
+    },
+    {
+      "number": "21",
+      "tcgplayerId": 98713
+    },
+    {
+      "number": "22",
+      "tcgplayerId": 98726
+    },
+    {
+      "number": "23",
+      "tcgplayerId": 98711
+    },
+    {
+      "number": "24",
+      "tcgplayerId": 98727
+    },
+    {
+      "number": "25",
+      "tcgplayerId": 98704
+    },
+    {
+      "number": "26",
+      "tcgplayerId": 98728
+    },
+    {
+      "number": "27",
+      "tcgplayerId": 98698
+    },
+    {
+      "number": "28",
+      "tcgplayerId": 98729
+    },
+    {
+      "number": "29",
+      "tcgplayerId": 98709
+    },
+    {
+      "number": "30",
+      "tcgplayerId": 98716,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "promo": true
+    }
+  ],
+  "products": [
+    {
+      "id": "bw-trainer-kit-excadrill-zoroark",
+      "name": "BW Trainer Kit: Excadrill & Zoroark",
+      "kind": "deck",
+      "tcgplayerId": 98640,
+      "packs": 0,
+      "promos": [
+        "30"
+      ],
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), a deck box, playmat and coin. The real kit also held one booster pack (Black & White or Emerging Powers: the sources disagree), so no pack is simulated. Opening it from either half-deck page deals both decks.",
+      "price": 34.58,
+      "priceSource": "The kit's own listing has no price; priced at its 60 cards' market prices added up."
+    }
+  ]
+}

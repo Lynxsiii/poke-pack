@@ -21,7 +21,7 @@ Usage:
     py scripts/mirror_images.py me5           # one set
     py scripts/mirror_images.py --fix-local    # re-round/un-matte files already on disk
     py scripts/mirror_images.py --photos sv10  # re-trim cards scanned from TCGplayer photos
-    py scripts/mirror_images.py --energy xy    # one basic Energy print (ENERGY_RUNS), nothing else
+    py scripts/mirror_images.py --energy xy    # one basic Energy print (ENERGY_RUNS: xy, bw, dp), nothing else
 """
 from __future__ import annotations
 
@@ -92,6 +92,30 @@ ENERGY_RUNS = {
         "darkness": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/xye13/xye13-darknessv1.png?signature=49ac40cb71f6d4d9f396b42f81582e067c16059e9dab98a1c30e229b68663a3c",
         "metal": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/xye13/xye13-metalv1.png?signature=0ab0cc11da764c78ea13946aaaa5d2aff98628ce00c4fcb4a52fcba05c77d855",
         "fairy": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/xye13/xye13-fairyv1.png?signature=adc1a3a012418d311da16b7cedb1399ff4cf05a8df706baacd2be4d58f882f78",
+    },
+    # Black & White's (2011, pkmn.gg's black-white-energy-2011 / bwe13): eight types, no Fairy.
+    "bw": {
+        "grass": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/bwe13/bwe13-grassv1.png?signature=603e521f060819ef5a47f380ee94ee2b6c81e894cc0f4fe34f125d6fd4926885",
+        "fire": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/bwe13/bwe13-firev1.png?signature=9e1ab82956e6e1c4691212e7986fad87fea4e83e8c70b3134bb15e055c66a05c",
+        "water": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/bwe13/bwe13-waterv1.png?signature=1dc1174b117a1df7d201e75886af3d57fb437d3745aa8e47662212d836612d4a",
+        "lightning": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/bwe13/bwe13-lightningv1.png?signature=6fdfbf5748807226d24d55b20e7e0a5e03d556decc2c62859b2726c7d6b7528a",
+        "psychic": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/bwe13/bwe13-psychicv1.png?signature=a8eed3641c8942987b9f6850ee37b6b09bb7621151ba39394c2797d87429c3a3",
+        "fighting": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/bwe13/bwe13-fightingv1.png?signature=3d5bc482f9e1cdf3b1d843da4ec53b82ea7eca8e7e7bc8b3c2427c706e4f6397",
+        "darkness": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/bwe13/bwe13-darknessv1.png?signature=fe55a20dedc391d4bc577792f389c769249dd6820c74e68cf8eee2348d8f67ba",
+        "metal": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/bwe13/bwe13-metalv1.png?signature=9c42569322a5e4c9b833beaf19f01f7b8c90cee32a956854150719bccebafa3c",
+    },
+    # The Diamond & Pearl generation's (2007): pkmn.gg has no unnumbered Energy set for it, so this is the art of
+    # dp1's own numbered Energy 123-130 (pkmn.gg images dp1-123 ... dp1-130), the print POP Series 8 and 9 deal in every
+    # pack (EF: "E: 8 Basic Energy Cards"; Collexy lists a "Diamond & Pearl Energies" set; art unconfirmed, low).
+    "dp": {
+        "grass": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-123.png?signature=2e79cc96596743f459d7d930548cacb30417b9ddc15e8e2da35eb271178b3132",
+        "fire": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-124.png?signature=fea7b33c93a87680d7c38fc8c321ca2717db3c5eba1e46efa4b02bd09123b1b2",
+        "water": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-125.png?signature=c3ca8169e8005be3d77b4851b41467841c64e094f6c9255404ef3aff42fdff8b",
+        "lightning": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-126.png?signature=d610237b22092b7a96e721f38499b1dbd556f2710b4ec9043e28dc0be8da9d14",
+        "psychic": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-127.png?signature=b4e05dc8a041bc5ef136a2536a219581de74ad494d2eb4e754277e7168f0d1b9",
+        "fighting": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-128.png?signature=c6cf0d92f8a2753246de46707e7de723aacfc7715f719545b61b0fa6c3f045d8",
+        "darkness": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-129.png?signature=5b8e33928676fdf6d06a435f0bdc1f2279dfa9ecac82854f2d4e646ac2c63d98",
+        "metal": "https://assets.pkmn.gg/fit-in/600x836/filters:format(webp)/images/cards/dp1/dp1-130.png?signature=d058dcd4669815343050b114969fff90bddf85176cbccc8622939ab21abebd9e",
     },
 }
 
