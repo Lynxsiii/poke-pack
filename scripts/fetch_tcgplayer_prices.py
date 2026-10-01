@@ -106,6 +106,8 @@ def norm(name: str) -> str:
     # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
     name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "").replace("◇", " Prism Star")
     name = re.sub(r"_+", "_", name)
+    # Wizards of the Coast: TCGplayer spells it "Imposter Professor Oak" (Base Set 73), the card prints "Impostor".
+    name = name.replace("Imposter", "Impostor")
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
     return re.sub(r"\s+", " ", name).strip().lower()
@@ -186,6 +188,10 @@ def price_singles(set_id: str, products: list[dict], prices: dict[int, list[dict
         rows = prices.get(product["productId"], [])
         first = "Normal" if card["rarity"] in ("Common", "Uncommon") else "Holofoil"
         value = market(rows, first) or market(rows, "Normal") or market(rows, "Holofoil")
+        # Jungle and Fossil list a 1st Edition and an Unlimited price for every card ("Unlimited", "Unlimited Holofoil"): the site
+        # deals the Unlimited print (the 1st Edition rows are never read).
+        if any(str(r.get("subTypeName", "")).startswith("Unlimited") for r in rows):
+            value = market(rows, "Unlimited Holofoil" if card["rarity"] == "Rare Holo" else "Unlimited") or market(rows, "Unlimited Holofoil") or market(rows, "Unlimited")
         card["tcgplayerId"] = product["productId"]
         if value:
             card["market"] = value
