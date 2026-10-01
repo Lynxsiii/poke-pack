@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="css/pages/home.css?v=1" />
     <link rel="stylesheet" href="css/pages/packs.css?v=2" />
     <link rel="stylesheet" href="css/pages/collection.css?v=3" />
+    <link rel="stylesheet" href="css/binder/editor.css?v=1" />
     <link rel="stylesheet" href="css/pages/account.css?v=4" />
     <link rel="stylesheet" href="css/pages/extras.css?v=2" />
     <link rel="stylesheet" href="css/pages/quests.css?v=2" />
@@ -293,6 +294,8 @@
             <p id="binder-count">0 cards on show</p>
           </div>
           <div class="binder-actions">
+            <!-- binder customiser (js/binder-editor.js) -->
+            <button class="ghost" type="button" id="binder-customise" aria-expanded="false" aria-controls="binder-editor" hidden>Customise</button>
             <button class="ghost" type="button" id="binder-add-page">Add page</button>
           </div>
         </div>
@@ -302,7 +305,10 @@
           <button type="button" class="link-btn" data-goto="collection">collection</button>,
           not sold.
         </p>
-        <div id="binder-body"></div>
+        <div class="binder-layout" id="binder-layout">
+          <div id="binder-body"></div>
+          <div id="binder-editor" hidden></div>
+        </div>
       </section>
 
       <section id="view-catalog" class="hidden">
@@ -483,6 +489,6 @@
       <a href="/notes">Patch notes</a>
     </footer>
     <script type="module" src="js/etch.js?v=1"></script>
-    <script type="module" src="js/app.js?v=109"></script>
+    <script type="module" src="js/app.js?v=110"></script>
   </body>
 </html>
