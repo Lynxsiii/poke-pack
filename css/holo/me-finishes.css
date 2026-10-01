@@ -96,7 +96,7 @@ body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map
 }
 body.fx-holo.fx-holo.fx-holo .tcg:is(.foil-sunpillar.foil-sunpillar.has-etch-map, .foil-tera.foil-tera.era-me).has-foil-map .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 90%) 10%, hsl(0, 0%, 62%) 70%);
+    hsl(0, 0%, 90%) 10%, hsl(0, 0%, 72%) 70%);
   background-size: cover;
   background-position: center;
   mix-blend-mode: multiply;
@@ -137,13 +137,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map
   --sir-floor: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
   background-image:
     linear-gradient(168deg,
-      #808080 0%, #808080 41%, hsla(0, 0%, 50%, 0) 45%, hsla(0, 0%, 50%, 0) 55%,
-      #808080 59%, #808080 100%),
+      #808080 0%, #808080 43.5%, hsla(0, 0%, 50%, 0) 47.5%, hsla(0, 0%, 50%, 0) 52.5%,
+      #808080 56.5%, #808080 100%),
     linear-gradient(95deg,
-      hsl(0, 95%, 60%), hsl(28, 95%, 58%), hsl(52, 95%, 56%), hsl(100, 85%, 55%),
-      hsl(175, 90%, 55%), hsl(215, 95%, 62%), hsl(270, 90%, 64%), hsl(320, 95%, 62%),
-      hsl(360, 95%, 60%), hsl(28, 95%, 58%), hsl(52, 95%, 56%), hsl(100, 85%, 55%),
-      hsl(175, 90%, 55%));
+      hsla(0, 95%, 60%, 0.62), hsla(28, 95%, 58%, 0.62), hsla(52, 95%, 56%, 0.62), hsla(100, 85%, 55%, 0.62),
+      hsla(175, 90%, 55%, 0.62), hsla(215, 95%, 62%, 0.62), hsla(270, 90%, 64%, 0.62), hsla(320, 95%, 62%, 0.62),
+      hsla(360, 95%, 60%, 0.62), hsla(28, 95%, 58%, 0.62), hsla(52, 95%, 56%, 0.62), hsla(100, 85%, 55%, 0.62),
+      hsla(175, 90%, 55%, 0.62));
   background-size: 100% 300%, 160% 100%;
   background-position:
     50% calc((0.85 - var(--py, 0.5) * 0.5) * 100%),
@@ -207,4 +207,18 @@ body.fx-holo.fx-holo.fx-holo .tcg.foil-mega-attack.foil-mega-attack.has-foil-map
   mix-blend-mode: normal;
   filter: none;
   opacity: 1;
+}
+
+/* ---- Rare: SV_HOLO / HOLO ----------------------------------------------------
+   The shared band (celebration.css) follows the pointer from the top edge of
+   the card down to 70% of its height, so over most of the tilt it crosses the
+   title bar or the text box, not the art window the Live map leaves as foil,
+   and a Mega Evolution Rare reads as plain silver print (Meganium 010, Gengar
+   050: the photographed band sits across the art window). Here it travels
+   within the art window and the border beside it (about 4% to 56% of the
+   card's height); the colours, glitter and hot spot stay the shared ones. */
+body.fx-holo.fx-holo.fx-holo .tcg.foil-svholo.era-me.has-foil-map .foil {
+  background-position:
+    50% calc((0.72 - var(--py, 0.5) * 0.2) * 100%),
+    calc((0.1 + var(--px, 0.5) * 0.8) * 100%) 50%;
 }
