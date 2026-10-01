@@ -114,7 +114,7 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "sm5": ("#8a7dff", "#ffb347"),  # Ultra Prism: prism violet to Necrozma gold
     "xy4": ("#d24fbf", "#ff8a3d"),  # Phantom Forces: phantom magenta to logo orange
     "xy5": ("#ff7a3a", "#4aa3ff"),  # Primal Clash: Primal Groudon orange to Primal Kyogre blue
-    "dc1": ("#d93a3a", "#27b3c9"),  # Double Crisis: Team Magma red to Team Aqua teal
+    "dc1": ("#e5484d", "#27b3c9"),  # Double Crisis: Team Magma red to Team Aqua teal
 }
 
 # Used when a set has no art at all and no override.
