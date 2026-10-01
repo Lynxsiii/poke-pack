@@ -8,7 +8,7 @@
  * has no sign the player already uses the feature (`used`). When the level is
  * not known the controls stay as they were and the server decides.
  */
-import { GATES, GATE_NAMES, gateMessage } from "./levels.js";
+import { GATES, GATE_NAMES, gateMessage, levelPerks, nextSlotLevel, slotMessage } from "./levels.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
@@ -37,3 +37,19 @@ export function gateNoticeHTML(lock) {
 
 /** Why a locked control did nothing. */
 export const gateRefusal = (lock) => (lock ? gateMessage(lock.key) : "");
+
+const ROOM_KEYS = { showcase: "showcaseSlots", slabs: "shownSlabs", pages: "binderPages" };
+
+/**
+ * What a profile list can hold for this level: { cap, more }. `cap` is the
+ * level's allowance, never below what is already in the list (saved data is
+ * never cut) and never above the hard cap `hardMax`; `more` is " Reach level N
+ * for more slots." while a bigger step is ahead, otherwise "". With no known
+ * level the cap is the hard cap, and the Worker decides.
+ */
+export function roomLine(kind, level, used, hardMax) {
+  const lv = Math.floor(Number(level));
+  if (!Number.isFinite(lv) || lv < 1) return { cap: hardMax, more: "" };
+  const cap = Math.min(hardMax, Math.max(levelPerks(lv)[ROOM_KEYS[kind]] || 0, Math.floor(Number(used)) || 0));
+  return { cap, more: cap < hardMax && nextSlotLevel(kind, lv) ? ` ${slotMessage(kind, lv)}` : "" };
+}

@@ -98,8 +98,8 @@ export function createJackpot(ctx) {
       </header>
       ${gateNoticeHTML(lock())}
       <div class="cf-actions">
-        <button class="solid${lock() ? " is-gated" : ""}" type="button" data-new>${casinoIcon("pot")}Start a pot</button>
-        <button class="ghost${lock() ? " is-gated" : ""}" type="button" data-quick>${icon("bot")}Quick pot with bots</button>
+        <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>${casinoIcon("pot")}Start a pot</button>
+        <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-quick>${icon("bot")}Quick pot with bots</button>
       </div>
       <p class="cs-fine">Bots are free to call and put in cards worth a little less than the pot's minimum, so they never hand out value. A bot never puts in slabs. ${
         rec ? `You have played ${plural(rec.played, "pot")} and won ${rec.won}.` : ""}</p>

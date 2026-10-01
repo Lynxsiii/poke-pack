@@ -21,7 +21,7 @@ import { drawPromos, isHit, ripPack } from "../js/engine.js";
 import { homeSetId } from "../js/card-home.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER, SHOWCASE_MAX, bannerId } from "../js/cosmetics.js";
-import { levelFields, levelOf, frameChoice, bannerMotionError, slotError } from "./perks.js";
+import { levelFields, levelOf, frameChoice, bannerMotionError, slotError, slotPeak } from "./perks.js";
 import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, ownedMap, titleContext } from "../js/titles.js";
@@ -390,7 +390,9 @@ async function patchMe(request, env) {
   let levelNow = null;
   const level = async () => (levelNow ??= await levelOf(env, user.id));
   // A mastery banner is a reward: only for a set whose mastery is claimed.
-  if (looksLikeMasteryBanner(body.banner)) {
+  // A banner is a string; anything else (an array that bannerId would coerce) is refused.
+  if (body.banner != null && typeof body.banner !== "string") return json({ error: "That banner does not exist." }, 400);
+  if (looksLikeMasteryBanner(body.banner) || (body.banner != null && bannerId(body.banner).startsWith("mastery:"))) {
     await ensureAchievementSchema(env);
     const refusal = await masteryBannerError(env, user.id, body.banner);
     if (refusal) return json({ error: refusal.error }, refusal.status);
@@ -450,16 +452,18 @@ async function patchMe(request, env) {
     const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?").bind(user.id).first();
     const error = validateProfilePages(body.binderPages, parseJson(profile?.binder, []), social.binderPages);
     if (error) return json({error}, 400);
-    const room = slotError("pages", await level(), social.binderPages.length, body.binderPages.length);
+    const room = slotError("pages", await level(), await slotPeak(env, user.id, "pages", social.binderPages.length), body.binderPages.length);
     if (room) return json({ error: room.error }, room.status);
+    await slotPeak(env, user.id, "pages", body.binderPages.length);
     social.binderPages = body.binderPages;
   }
 
   if (Array.isArray(body.showcase)) {
     const { collection } = await inventoryMap(env, user.id);
     social.showcase = social.showcase.filter((slot) => (collection[slot.id] || 0) > 0);
-    const room = slotError("showcase", await level(), savedShowcaseCount(user.showcase), social.showcase.length);
+    const room = slotError("showcase", await level(), await slotPeak(env, user.id, "showcase", savedShowcaseCount(user.showcase)), social.showcase.length);
     if (room) return json({ error: room.error }, room.status);
+    await slotPeak(env, user.id, "showcase", social.showcase.length);
   }
 
   await env.DB.prepare(

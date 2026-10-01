@@ -33,6 +33,7 @@ import { createTear } from "./tear.js";
 import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js";
 import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
 import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
+import { roomLine } from "./gate-notice.js";
 import {
   AVATARS,
   avatarSrc,
@@ -1994,7 +1995,7 @@ function renderBinder() {
 
   const options = binderPicking == null ? [] : binderCandidates();
   els.binderBody.innerHTML = `
-    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${PROFILE_PAGE_LIMIT} pages on your profile.</span><small>Shared pages update as you change them.</small></div>
+    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).cap} pages on your profile.${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).more}</span><small>Shared pages update as you change them.</small></div>
     <div class="binder-spread">
       ${binderPageHtml(left)}
       ${right < pages ? binderPageHtml(right) : ""}
@@ -3360,7 +3361,7 @@ function profileTab(trainer) {
     <div class="acct-sec-head">
       <div>
         <h2>Showcase</h2>
-        <p>${showcase.length} of ${SHOWCASE_MAX} pinned. These sit at the top of your public profile, in this order.</p>
+        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned. These sit at the top of your public profile, in this order.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
       </div>
     </div>
     ${
@@ -3386,7 +3387,7 @@ function lookTab(trainer, stats) {
   const avatars = searchAvatars(avatarQuery);
   const banner = parseBanner(trainer.banner);
   const style = avatarStyle(trainer.avatarStyle);
-  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities() });
+  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.level ?? cloudUser?.level });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
   const won = titlesFromClaims(stats.claimed);
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
@@ -3610,7 +3611,7 @@ async function renderProfile() {
               <p>${
                 gradedSlabs.length
                   ? `${gradedSlabs.length} of the ${num(gradedTotal)} ${gradedTotal === 1 ? "card" : "cards"} ${esc(user.name)} had slabbed.`
-                  : `Open one of your slabs and choose Show on profile. Up to ${GRADING_LIMITS.maxShown} sit here.`
+                  : `Open one of your slabs and choose Show on profile. Up to ${roomLine("slabs", user.level, gradedSlabs.length, GRADING_LIMITS.maxShown).cap} sit here.${roomLine("slabs", user.level, gradedSlabs.length, GRADING_LIMITS.maxShown).more}`
               }</p>
             </div>
             ${mine ? `<a class="ghost sm" href="/grading/graded">Your slabs</a>` : ""}

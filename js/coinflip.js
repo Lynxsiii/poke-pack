@@ -102,8 +102,8 @@ export function createCoinflip(ctx) {
       </header>
       ${gateNoticeHTML(lock())}
       <div class="cf-actions">
-        <button class="solid${lock() ? " is-gated" : ""}" type="button" data-new>${casinoIcon("coin")}Put up cards</button>
-        <button class="ghost${lock() ? " is-gated" : ""}" type="button" data-bot>${icon("bot")}Flip a bot</button>
+        <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>${casinoIcon("coin")}Put up cards</button>
+        <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-bot>${icon("bot")}Flip a bot</button>
       </div>
       <p class="cs-fine">Calling a bot is free. It puts up cards worth a little less than yours, so it can never hand out value. A bot never puts up slabs. ${
         rec ? `You have flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>

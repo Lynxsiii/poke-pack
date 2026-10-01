@@ -55,6 +55,7 @@ const check = (name, ok) => { assert.ok(ok, name); passed++; };
     check(`${row.name} locked at level ${row.level - 1}`, !isTitleUnlocked(row.name, titleContext({}, { level: row.level - 1 })));
     check(`${row.name} open at level ${row.level}`, isTitleUnlocked(row.name, titleContext({}, { level: row.level })));
   }
+  check('titleContext with no level option and no xp reads as level 1 (the Look tab passes state.xp?.level ?? user.level)', titleContext({ xp: null }, { level: undefined }).level === 1 && titleContext({ xp: { level: 40 } }, { level: undefined }).level === 40 && titleContext({}, { level: 40 }).level === 40);
   check('titleContext reads save.xp.level', titleContext({ xp: { level: 12 } }).level === 12 && titleContext({}).level === 1);
   check('the options level wins over save.xp.level', titleContext({ xp: { level: 12 } }, { level: 3 }).level === 3);
   check('unlockedTitles lists a level title', unlockedTitles(titleContext({}, { level: 10 })).some((t) => t.id === 'level-10'));
@@ -262,7 +263,12 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
   const less = await patch('s2', { showcase: showcaseOf(CARDS.slice(0, 2)) });
   check('showcase: shortening is always allowed', less.status === 200 && less.user.showcase.length === 2);
   const regrow = await patch('s2', { showcase: showcaseOf(CARDS.slice(0, perks1.showcaseSlots + 1)) });
-  check('showcase: once shortened, adding past the allowance is refused', regrow.status === 400);
+  check('showcase: a saved six can go back up to six after being shortened (one click at a time), never past it', regrow.status === 200 && regrow.user.showcase.length === perks1.showcaseSlots + 1);
+  // A player who never saved more than the allowance gets no extra room from shortening.
+  addUser('s3', 1);
+  await patch('s3', { showcase: showcaseOf(CARDS.slice(0, perks1.showcaseSlots)) });
+  await patch('s3', { showcase: showcaseOf(CARDS.slice(0, 1)) });
+  check('showcase: no free room from shortening a list that was within the allowance', (await patch('s3', { showcase: showcaseOf(CARDS.slice(0, perks1.showcaseSlots + 1)) })).status === 400);
 
   // Binder pages.
   addUser('p1', 1);
@@ -277,6 +283,7 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
   const keep = await patch('pages2', { binderPages: [3, 2, 1, 0] });
   check('pages: four saved pages at level 1 are kept and can be reordered', keep.status === 200 && keep.user.binderPages.length === 4);
   { const pub = await api('/api/u/pages2', 'GET', undefined, null); check('pages: the public profile still shows all four ' + JSON.stringify(pub).slice(0, 300), pub.binderPages?.length === 4); }
+  check('pages: after removing pages one by one, the saved four can be put back', (await patch('pages2', { binderPages: [3, 2, 1] })).status === 200 && (await patch('pages2', { binderPages: [3] })).status === 200 && (await patch('pages2', { binderPages: [3, 2, 1, 0] })).status === 200);
   check('pages: the hard cap of four is unchanged', (await patch('pages2', { binderPages: [0, 1, 2, 3, 4] })).status === 400);
 
   // Slabs shown on the profile.
@@ -300,7 +307,18 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
   setLevel('slabber', 1);
   const profile = await api('/api/u/slabber', 'GET', undefined, null);
   check('slabs: a profile already showing six shows all six at level 1', profile.graded.length === 6);
-  check('slabs: unshowing one is allowed; showing it back is not (no room)', (await show(slabs[0], false)).status === 200 && (await show(slabs[0])).status === 400);
+  // A swap keeps working: the profile showed six, so after one comes off another can go on, up to six again and no further.
+  check('slabs: six shown at level 1: one comes off, another goes on (a swap)', (await show(slabs[0], false)).status === 200 && (await show(slabs[0])).status === 200);
+  check('slabs: two come off, a different one can replace each', (await show(slabs[1], false)).status === 200 && (await show(slabs[2], false)).status === 200 && (await show(slabs[2])).status === 200 && (await show(slabs[1])).status === 200);
+  addUser('capped', 20);
+  const cs = [];
+  for (let i = 0; i < 6; i++) { const r = await api('/api/grading/submit', 'POST', { cardId: CARDS[i], reverse: false, requestId: rid() }, 'capped'); cs.push(r.slab.id); }
+  const cshow = (id, shown = true) => api('/api/grading/show', 'POST', { slabId: id, shown }, 'capped');
+  const allowed20 = levelPerks(20).shownSlabs;
+  for (let i = 0; i < allowed20; i++) assert.equal((await cshow(cs[i])).status, 200);
+  check('slabs: a level-20 player who never showed more stays at the allowance', (await cshow(cs[allowed20])).status === 400);
+  db.prepare("UPDATE graded_cards SET shown = 1 WHERE user_id = 'capped'").run(); // six shown, the old flat cap allowed this
+  check('slabs: level 20, six shown: take one off and put another on', (await cshow(cs[0], false)).status === 200 && (await cshow(cs[0])).status === 200);
 }
 
 // ---- Cosmetics: frames, banner motions, titles ---------------------------------------------------------------------------
@@ -346,6 +364,15 @@ const showcaseOf = (ids) => ids.map((id) => ({ id }));
   check('motion: a saved banner never changes under the player', (await patch('m2', { bio: 'hi' })).user.banner === 'holo:gold+violet' && (await api('/api/me', 'GET', undefined, 'm2')).user.banner === 'holo:gold+violet');
   check('motion: its colours can be changed while the motion is kept', (await patch('m2', { banner: 'holo:red+blue' })).status === 200);
   check('motion: but another locked motion is still refused', (await patch('m2', { banner: 'foil:red+blue' })).status === 403);
+
+  // An array (or any non-string) banner cannot slip past the mastery check.
+  addUser('arr', 100);
+  const arr = await patch('arr', { banner: ['mastery:me5'] });
+  check('banner: an array body is a 400, not a stored mastery banner', arr.status === 400 && db.prepare("SELECT banner FROM users WHERE id = 'arr'").get().banner !== 'mastery:me5');
+  check('banner: an object or number is a 400 too', (await patch('arr', { banner: { toString: () => 'mastery:me5' } })).status === 400 && (await patch('arr', { banner: 7 })).status === 400);
+  check('banner: a mastery banner nobody earned is a 403 (string form)', (await patch('arr', { banner: 'mastery:me5' })).status === 403);
+  check('banner: spelling variants of a mastery banner still do not pass', (await patch('arr', { banner: ' Mastery : me5' })).status !== 200);
+  check('banner: ordinary banners still save', (await patch('arr', { banner: 'drift:red+blue' })).status === 200);
 
   // Titles.
   addUser('t1', 4);
