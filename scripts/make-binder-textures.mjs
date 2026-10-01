@@ -123,7 +123,7 @@ function pebble() {
 
 // ---- Cloth: plain weave (3px threads, over/under) and linen slubs -----------------------------
 function weave() {
-  const T = 3;
+  const T = 4;
   const N = 4;
   let body = `<defs><linearGradient id='v' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.2'/><stop offset='.5' stop-color='#fff' stop-opacity='0'/><stop offset='1' stop-color='#000' stop-opacity='.3'/></linearGradient>`;
   body += `<linearGradient id='h' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#000' stop-opacity='.26'/><stop offset='.45' stop-color='#fff' stop-opacity='.02'/><stop offset='1' stop-color='#fff' stop-opacity='.14'/></linearGradient></defs>`;
@@ -157,12 +157,12 @@ function nap() {
   const W = 96;
   const rand = rng(23);
   const groups = { "#fff": [[], [], []], "#000": [[], [], []] };
-  const alphas = [0.06, 0.1, 0.14];
-  for (let i = 0; i < 900; i++) {
+  const alphas = [0.08, 0.13, 0.19];
+  for (let i = 0; i < 760; i++) {
     const x = rand() * W;
     const y = rand() * W;
     const angle = ((62 + (rand() - 0.5) * 70) * Math.PI) / 180;
-    const len = 0.7 + rand() * 1.5;
+    const len = 1.1 + rand() * 1.6;
     const dx = Math.cos(angle) * len;
     const dy = -Math.sin(angle) * len;
     const colour = rand() > 0.5 ? "#fff" : "#000";
@@ -180,7 +180,7 @@ function nap() {
 
 // ---- Carbon: 2x2 twill, tows lit differently, gaps in shadow ----------------------------------
 function twill() {
-  const C = 5;
+  const C = 4;
   const N = 4;
   let body = `<defs><linearGradient id='a' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.14'/><stop offset='.5' stop-color='#fff' stop-opacity='.02'/><stop offset='1' stop-color='#000' stop-opacity='.17'/></linearGradient>`;
   body += `<linearGradient id='b' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#000' stop-opacity='.08'/><stop offset='.55' stop-color='#fff' stop-opacity='.04'/><stop offset='1' stop-color='#000' stop-opacity='.22'/></linearGradient></defs>`;
@@ -198,9 +198,9 @@ function twill() {
 // ---- Denim: steep twill ridges, and uneven yarn streaks ---------------------------------------
 function denimTwill() {
   const body =
-    `<path d='M0 6L3 0M-3 6L0 0M3 6L6 0' stroke='#fff' stroke-opacity='.1' stroke-width='1.1' fill='none'/>` +
-    `<path d='M1.5 6L4.5 0M-1.5 6L1.5 0M4.5 6L7.5 0' stroke='#000' stroke-opacity='.13' stroke-width='1' fill='none'/>`;
-  return uri(svg(3, 6, body));
+    `<path d='M0 8L4 0M-4 8L0 0M4 8L8 0' stroke='#fff' stroke-opacity='.15' stroke-width='1.5' fill='none'/>` +
+    `<path d='M2 8L6 0M-2 8L2 0M6 8L10 0' stroke='#000' stroke-opacity='.2' stroke-width='1.3' fill='none'/>`;
+  return uri(svg(4, 8, body));
 }
 function denimStreak() {
   const W = 128;
@@ -276,9 +276,9 @@ function ring(metal, { w, rx, edges, mount, k = 1 }) {
   // contact shadow on the paper, the riveted base, then the ring itself
   body += `<ellipse cx='${cx + 1.2}' cy='${cy + 2.4}' rx='${rx}' ry='${ry}' fill='none' stroke='#000' stroke-opacity='.32' stroke-width='${3 * k}'/>`;
   if (mount) {
-    body += `<rect x='1.5' y='${cy - 6.5}' width='7.5' height='13' rx='2' fill='#000' fill-opacity='.35' transform='translate(.8 1.4)'/>`;
-    body += `<rect x='1.5' y='${cy - 6.5}' width='7.5' height='13' rx='2' fill='url(#p)' stroke='${m.line}' stroke-width='.8'/>`;
-    body += `<circle cx='5.25' cy='${cy - 3}' r='.9' fill='${m.line}' fill-opacity='.7'/><circle cx='5.25' cy='${cy + 3}' r='.9' fill='${m.line}' fill-opacity='.7'/>`;
+    body += `<rect x='3' y='${cy - 6.5}' width='8' height='13' rx='2' fill='#000' fill-opacity='.35' transform='translate(.8 1.4)'/>`;
+    body += `<rect x='3' y='${cy - 6.5}' width='8' height='13' rx='2' fill='url(#p)' stroke='${m.line}' stroke-width='.8'/>`;
+    body += `<circle cx='7' cy='${cy - 3}' r='.9' fill='${m.line}' fill-opacity='.7'/><circle cx='7' cy='${cy + 3}' r='.9' fill='${m.line}' fill-opacity='.7'/>`;
   }
   body += `<ellipse cx='${cx}' cy='${cy}' rx='${rx}' ry='${ry}' fill='none' stroke='${m.line}' stroke-width='${3 * k}'/>`;
   body += `<ellipse cx='${cx}' cy='${cy}' rx='${rx}' ry='${ry}' fill='none' stroke='url(#g)' stroke-width='${2.2 * k}'/>`;
@@ -296,8 +296,8 @@ const tiles = {
   brush: brush(),
 };
 for (const metal of Object.keys(METALS)) {
-  // 28 wide: a base on the cover, the page edge at x=11, the ring's right part over the page
-  tiles[`ring-${metal}`] = ring(metal, { w: 28, rx: 10, edges: [[11, 28]], mount: true });
+  // 34 wide: a base on the cover, the page edge at x=29, the ring just crossing onto the page
+  tiles[`ring-${metal}`] = ring(metal, { w: 34, rx: 11, edges: [[29, 34]], mount: true });
   // 52 wide: centred on a 30px gutter, the page edges at x=11 and x=41
   tiles[`gutter-${metal}`] = ring(metal, { w: 52, rx: 22.5, edges: [[0, 11], [41, 52]], k: 1.3 });
 }
