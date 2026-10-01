@@ -32,6 +32,7 @@ import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_
 
 import { isEx, exEtched, exMap, exPattern, exReverseFinish, exReversePattern } from "./ex-foil.js?v=1";
 import { isWotc, wotcMap, wotcPattern, wotcReverseFinish, WOTC_FULL_ART } from "./wotc-foil.js?v=2";
+import { specialReverseMap } from "./wotc-special.js?v=1";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern, isEx, exPattern, isWotc, wotcPattern };
 
@@ -268,6 +269,10 @@ export function foilExtras(card, url, reverseKind) {
     // Wizards of the Coast: the e-Card refractor and the promo reverses, and Legendary Collection's fireworks (css/holo/wotc-ecard.css, wotc-special.css).
     if (finish === "wotc") return { classes: "rev-mirror era-wotc wotc-rev", style: "", cure: false };
     if (finish === "wotc-ecard") return { classes: "rev-mirror era-wotc wotc-rev wotc-rev-ecard", style: "", cure: false };
+    // The reverse promos of basep and bp: one drawn frame mask each (js/wotc-special.js, css/holo/wotc-special.css).
+    if (finish.startsWith("wotc-promo-")) {
+      return { classes: `rev-mirror era-wotc wotc-rev-promo wotc-rev-${finish.slice(11)}`, style: `--foil-map:url('${url(specialReverseMap(finish))}')`, cure: false };
+    }
     if (finish === "wotc-legendary") return { classes: "rev-mirror era-wotc wotc-rev wotc-rev-legendary", style: "", cure: false };
     if (!finish) return { classes: "", style: "", cure: false };
     if (finish.startsWith("sm-")) {

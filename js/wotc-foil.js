@@ -75,6 +75,7 @@
  */
 
 import { ecardMap } from "./wotc-ecard-maps.js?v=1";
+import { specialMap, specialPattern, specialReverseFinish } from "./wotc-special.js?v=1";
 
 /** A Wizards of the Coast generation print: the numbered sets, Southern Islands, the promo sets. */
 export function isWotc(card) {
@@ -110,6 +111,9 @@ export function wotcMap(card) {
   // The e-Card sets' art window and the Crystal Pokémon's window-minus-figure (js/wotc-ecard-maps.js, finish agent j2).
   const ecard = ecardMap(card);
   if (ecard) return ecard;
+  // Shining Pokémon figures and the First Movie stamp (js/wotc-special.js, finish agent j3).
+  const special = specialMap(card);
+  if (special) return special;
   void card;
   return "";
 }
@@ -119,6 +123,8 @@ export function wotcMap(card) {
  * "foil-none" means the card is not foil (the plain Rare, the common, the flat promo).
  */
 export function wotcPattern(card) {
+  const special = specialPattern(card); // Shining, First Movie stamp (js/wotc-special.js, finish agent j3)
+  if (special !== null) return special;
   if (isCrystal(card)) return "foil-holo wotc-crystal";
   switch (card.rarity) {
     case "Rare Shining":
@@ -154,5 +160,7 @@ export function wotcPattern(card) {
  */
 export function wotcReverseFinish(card) {
   if (isEcard(card)) return "wotc-ecard"; // the e-Card mirror (css/holo/wotc-ecard.css), finish agent j2
+  const promo = specialReverseFinish(card); // basep / bp reverse promos (js/wotc-special.js, finish agent j3)
+  if (promo) return promo;
   return /^base6-/.test(String(card?.id || "")) ? "wotc-legendary" : "wotc";
 }
