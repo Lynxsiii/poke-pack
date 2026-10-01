@@ -139,6 +139,10 @@ export const SET_ACCENTS = {
   "dp5": { a: "#2f9be0", b: "#f2c744" },
   "dp6": { a: "#f08a1c", b: "#3b82d9" },
   "dp7": { a: "#9a63d6", b: "#e5533d" },
+  "ecard1": { a: "#e0a82e", b: "#3f78c8" },
+  "ecard2": { a: "#35a7d6", b: "#6b6fd6" },
+  "ecard3": { a: "#3fb86a", b: "#d8d23a" },
+  "si1": { a: "#f08a2c", b: "#3aa0c8" },
   // Wizards of the Coast promo sets (w5).
   "basep": { a: "#e0b94a", b: "#7f8fb8" },
   "bp": { a: "#d9503a", b: "#8a70d4" },

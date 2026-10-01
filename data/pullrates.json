@@ -1167,5 +1167,45 @@
       "secret": 0.0276,
       "shining": 0.0248
     }
+  },
+  "ecard1": {
+    "name": "Expedition Base Set",
+    "printedTotal": 165,
+    "released": "2002-09-15",
+    "updated": "2026-10-01",
+    "source": "Nine cards (5 Commons, 2 Uncommons, a reverse holo and one plain Rare; a holo takes the place of one Common): Bulbapedia 'Booster pack (TCG)' (\"Beginning with the e-Card Series ... 9 cards\", https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry articles 9581, 9721 and 9747, and the wrapper text '9 ADDITIONAL GAME CARDS'. One plain Rare is guaranteed and the holo replaces a Common: Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: 'Every pack now contains a regular rare. Holos are still one in every three packs, and they take the place of a common') and PSA 9747 ('the regular holographic card takes the place of one of the common cards (and reduces the number of common cards in a pack to four)'); Bulbapedia's and PSA 9581/9721's '1 Rare or Rare Holo' is the nominal text and conflicts. Holo 1 pack in 3: WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872), PSA, Flipside Gaming ('1:3') and Elite Fourum's 216-pack sheet (72 holos). Expedition: holo 72/216 = 0.3333 (Elite Fourum's Expedition post; PSA 9581 'approximately one in every three packs'). Reverse: 159 prints (every card but the six basic Energy; Bulbapedia, Elite Fourum), one per pack, uniform here (Elite Fourum's reverse sheets weight them, not modelled). Confidence: holo rate high, guaranteed-rare-plus-holo structure medium-high.",
+    "rates": {
+      "holo": 0.3333
+    }
+  },
+  "ecard2": {
+    "name": "Aquapolis",
+    "printedTotal": 147,
+    "released": "2003-01-15",
+    "updated": "2026-10-01",
+    "source": "Nine cards (5 Commons, 2 Uncommons, a reverse holo and one plain Rare; a holo takes the place of one Common): Bulbapedia 'Booster pack (TCG)' (\"Beginning with the e-Card Series ... 9 cards\", https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry articles 9581, 9721 and 9747, and the wrapper text '9 ADDITIONAL GAME CARDS'. One plain Rare is guaranteed and the holo replaces a Common: Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: 'Every pack now contains a regular rare. Holos are still one in every three packs, and they take the place of a common') and PSA 9747 ('the regular holographic card takes the place of one of the common cards (and reduces the number of common cards in a pack to four)'); Bulbapedia's and PSA 9581/9721's '1 Rare or Rare Holo' is the nominal text and conflicts. Holo 1 pack in 3: WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872), PSA, Flipside Gaming ('1:3') and Elite Fourum's 216-pack sheet (72 holos). Aquapolis: the holo sheet carries the 32 holos (H1-H32) and the three Crystal Pokemon; Elite Fourum's sheet model puts the Crystal Types at x3 each (3/110 = 0.0273 a pack, about 1 a box; the placement is flagged 'not enough information') and the regular holos at 0.3061 (0.3333 x 101/110). Independent checks: Flipside Gaming 'Aquapolis Crystal about 1:36', Elite Fourum's 7 tallied boxes (3, 2, 2, 0, 0, 0, 0 Crystals: 1.0 a box), PSA 9721 'one to three per box'. Reverse prints for rares, uncommons and commons only (none of the holos or Crystals). Confidence: medium (the sheet model is Elite Fourum's alone; tallies agree on about 1 a box).",
+    "rates": {
+      "holo": 0.3061,
+      "crystal": 0.0273
+    }
+  },
+  "ecard3": {
+    "name": "Skyridge",
+    "printedTotal": 144,
+    "released": "2003-05-12",
+    "updated": "2026-10-01",
+    "source": "Nine cards (5 Commons, 2 Uncommons, a reverse holo and one plain Rare; a holo takes the place of one Common): Bulbapedia 'Booster pack (TCG)' (\"Beginning with the e-Card Series ... 9 cards\", https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG)), PSA Set Registry articles 9581, 9721 and 9747, and the wrapper text '9 ADDITIONAL GAME CARDS'. One plain Rare is guaranteed and the holo replaces a Common: Elite Fourum's rarity guide (sturzflugbombardieru, https://www.elitefourum.com/t/the-english-pokemon-card-rarity-guide/39762: 'Every pack now contains a regular rare. Holos are still one in every three packs, and they take the place of a common') and PSA 9747 ('the regular holographic card takes the place of one of the common cards (and reduces the number of common cards in a pack to four)'); Bulbapedia's and PSA 9581/9721's '1 Rare or Rare Holo' is the nominal text and conflicts. Holo 1 pack in 3: WotC's live chat of 3 Feb 2000 (https://www.elitefourum.com/t/16872), PSA, Flipside Gaming ('1:3') and Elite Fourum's 216-pack sheet (72 holos). Skyridge: holo sheet of 38 (32 holos plus 6 Crystal Pokemon): 34 cards at x3 and 4 at x2 on the 110-position sheet; the four x2 cards are ASSUMED to be Crystal Types, giving Crystal 4 x 1/165 + 2 x 1/110 = 0.0424 a pack (1.5 a box) and holos 32/110 = 0.2909. Independent checks: 9 YouTube boxes tallied 1.66 Crystal a box (Elite Fourum 30299, https://www.elitefourum.com/t/30299), Flipside Gaming 'Skyridge Crystal 1:12-18' (higher), PSA 9747 'one to three per box'. Reverses: every card but the 32 holos, the Crystal Pokemon included. Confidence: medium.",
+    "rates": {
+      "holo": 0.2909,
+      "crystal": 0.0424
+    }
+  },
+  "si1": {
+    "name": "Southern Islands",
+    "printedTotal": 18,
+    "released": "2001-07-31",
+    "updated": "2026-10-01",
+    "source": "Not a booster set: the English Southern Islands Collection folder holds all 18 cards (always the same), a card list, six postcards and three booster packs of a set neither source names (TCGplayer product 610709 text; Bulbapedia 'Southern Islands (TCG)'; PSA Set Registry article 10154). The 18 cards are never found in boosters, so there are no pack rates: the set sells the one collection product.",
+    "rates": {}
   }
 }

@@ -187,6 +187,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "dp5": ("#2f9be0", "#f2c744"),  # Majestic Dawn: Empoleon blue to logo gold
     "dp6": ("#f08a1c", "#3b82d9"),  # Legends Awakened: wrapper orange to Lucario blue
     "dp7": ("#9a63d6", "#e5533d"),  # Stormfront: storm purple to Infernape red
+    "ecard1": ("#e0a82e", "#3f78c8"),  # Expedition: logo gold to e-Card blue
+    "ecard2": ("#35a7d6", "#6b6fd6"),  # Aquapolis: wrapper water blue to logo violet
+    "ecard3": ("#3fb86a", "#d8d23a"),  # Skyridge: wrapper green to logo lime
+    "si1": ("#f08a2c", "#3aa0c8"),  # Southern Islands: logo orange to lagoon blue
     # Wizards of the Coast promo sets (w5)
     "basep": ("#e0b94a", "#7f8fb8"),  # Wizards Black Star Promos: black-star gold to slate
     "bp": ("#d9503a", "#8a70d4"),  # Best of Game: Rocket red to Dark violet

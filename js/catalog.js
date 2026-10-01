@@ -5449,6 +5449,129 @@ export const STORMFRONT = {
   ], 2),
 };
 
+// Wizards of the Coast era: Expedition Base Set, Aquapolis, Skyridge, Southern Islands (builder w4). Sources: /mnt/project-files/every-era/wotc/research/ (ecard1-ecard3, si1, their -products files, wotc-pack-structure.md, second-source-check.md); data/pullrates.json. Pack prices are thin: TCGplayer has no market price for the Expedition and Skyridge packs (only a $4,800 low listing for Expedition), one $1,999.99 sale for Aquapolis; see each set's slotsNote and .claude/skills/card-textures/reference/wotc-<id>.md.
+export const EXPEDITION_BASE_SET = {
+  id: "ecard1",
+  tcgId: "ecard1",
+  name: "Expedition Base Set",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "September 15, 2002",
+  live: true,
+  printedTotal: 165,
+  totalCount: 165, // the two Scan-Tastic promos (basep 51, 52) are filed under ecard1 but counted under the Wizards Black Star Promos
+  packSize: 9,
+  cost: 1499.99,
+  dataFile: "data/ecard1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Wizards of the Coast, September 2002. The first e-Card set: Charizard, Blastoise, Venusaur and Feraligatr on the wrappers, a dot-code strip on every card, and a reverse holo in every pack.",
+  oddsLine: "Holo 1/3 · reverse every pack · 9 cards",
+  lede: "The first e-Card expansion has no 1st Edition and no basic Energy in its packs. Every pack carries a plain Rare and a reverse holo, and about one pack in three swaps a Common for a holo, with Charizard, Dragonite, Gengar and Mew the chase.",
+  // Elite Fourum's sheet model (holo 72/216 packs, a guaranteed plain Rare, the holo replaces a Common) with PSA 9581 / 9747, WotC's 'a 1 in 3 chance of a foil card' and Flipside's 1:3; nine cards (5 Commons, 2 Uncommons, a reverse, a Rare). The pack price is PriceCharting's sealed ('new') $1,499.99: TCGplayer lists the pack only at a $4,800 low. Sources in data/pullrates.json.
+  slotsNote: "Holo rate high (four sources); the guaranteed Rare plus holo-replaces-a-Common structure medium-high (Elite Fourum and PSA 9747 against the nominal '1 Rare or Rare Holo' of Bulbapedia and PSA 9581).",
+  slots: wotcSlots({ commons: 5, uncommons: 2, reverseSlot: true, commonHolo: [["holo", 0.3333]] }),
+  heroIds: ["ecard1-9", "ecard1-13", "ecard1-19", "ecard1-6"],
+  wrappers: boosterWrappers("ecard1", [
+    { id: "feraligatr", name: "Feraligatr", cardId: "ecard1-12", tag: "Water" },
+    { id: "venusaur", name: "Venusaur", cardId: "ecard1-30", tag: "Grass" },
+    { id: "charizard", name: "Charizard", cardId: "ecard1-6", tag: "Fire" },
+    { id: "blastoise", name: "Blastoise", cardId: "ecard1-4", tag: "Water" },
+  ]),
+};
+
+export const AQUAPOLIS = {
+  id: "ecard2",
+  tcgId: "ecard2",
+  name: "Aquapolis",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "January 15, 2003",
+  live: true,
+  printedTotal: 147,
+  totalCount: 182,
+  packSize: 9,
+  cost: 1999.99,
+  dataFile: "data/ecard2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare"],
+  blurb: "Wizards of the Coast, January 2003. Tyranitar, Entei, Scizor and Arcanine on the wrappers, 32 separately numbered holos and the first Crystal Pokémon: Kingdra, Lugia and Nidoking.",
+  oddsLine: "Holo 1/3 · Crystal 1/37 · reverse every pack",
+  lede: "The Crystal Pokémon turn up about once a box, and Crystal Lugia is the card of the set. Every pack carries a plain Rare and a reverse holo, and one pack in three swaps a Common for a holo.",
+  // Elite Fourum's sheet model (Crystal Types at x3 on the 110-position holo sheet: 3/110 = 0.0273, holo 0.3061) checked against Flipside's 1:36, Elite Fourum's 7 tallied boxes (1.0 a box) and PSA 9721; nine cards. The e-reader variants of Golduck, Drowzee, Mr. Mime and Porygon (a/b) are one card each here. The pack price is TCGplayer's one recorded sale, $1,999.99 (PriceCharting's sealed price is $1,033.15). Sources in data/pullrates.json.
+  slotsNote: "Medium: the Crystal rate is Elite Fourum's sheet placement (flagged 'not enough information') confirmed by a 7-box tally, Flipside and PSA; the holo split of the remaining 0.3061 is medium-low.",
+  slots: wotcSlots({ commons: 5, uncommons: 2, reverseSlot: true, commonHolo: [["holo", 0.3061], ["crystal", 0.0273]] }),
+  heroIds: ["ecard2-149", "ecard2-H29", "ecard2-H25", "ecard2-150"],
+  wrappers: boosterWrappers("ecard2", [
+    { id: "tyranitar", name: "Tyranitar", cardId: "ecard2-H28", tag: "Darkness" },
+    { id: "entei", name: "Entei", cardId: "ecard2-H8", tag: "Fire" },
+    { id: "scizor", name: "Scizor", cardId: "ecard2-H21", tag: "Metal" },
+    { id: "arcanine", name: "Arcanine", cardId: "ecard2-H2", tag: "Fire" },
+  ]),
+};
+
+export const SKYRIDGE = {
+  id: "ecard3",
+  tcgId: "ecard3",
+  name: "Skyridge",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "May 12, 2003",
+  live: true,
+  printedTotal: 144,
+  totalCount: 182,
+  packSize: 9,
+  cost: 743.5,
+  dataFile: "data/ecard3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Crystal"],
+  blurb: "Wizards of the Coast, May 2003. The last Wizards set: Ho-Oh, Kabutops, Vaporeon and Poliwrath on the wrappers, six Crystal Pokémon with Charizard on top.",
+  oddsLine: "Holo 1/3 · Crystal 1/24 · reverse every pack",
+  lede: "Crystal Charizard, Celebi, Crobat, Golem, Ho-oh and Kabutops come about once and a half a box, and unlike Aquapolis their reverse holos exist too. One pack in three swaps a Common for a holo.",
+  // Elite Fourum's sheet model (the four x2 cards of the 110-position holo sheet ASSUMED to be Crystal Types: 0.0424 a pack, holo 0.2909) checked against 9 YouTube boxes (1.66 Crystals a box, Elite Fourum 30299), Flipside's 1:12-18 (higher) and PSA 9747; nine cards. TCGplayer lists the pack with no price at all; $743.50 is PriceCharting's sealed price. Sources in data/pullrates.json.
+  slotsNote: "Medium: the sheet placement of the Crystal Types is an assumption (Elite Fourum 'uncertain') that the 9-box tally supports; Flipside's rate is higher.",
+  slots: wotcSlots({ commons: 5, uncommons: 2, reverseSlot: true, commonHolo: [["holo", 0.2909], ["crystal", 0.0424]] }),
+  heroIds: ["ecard3-146", "ecard3-H1", "ecard3-150", "ecard3-149"],
+  wrappers: boosterWrappers("ecard3", [
+    { id: "ho-oh", name: "Ho-Oh", cardId: "ecard3-149", tag: "Rainbow" },
+    { id: "kabutops", name: "Kabutops", cardId: "ecard3-H13", tag: "Fossil" },
+    { id: "vaporeon", name: "Vaporeon", cardId: "ecard3-H31", tag: "Water" },
+    { id: "poliwrath", name: "Poliwrath", cardId: "ecard3-H24", tag: "Fighting" },
+  ]),
+};
+
+/**
+ * Southern Islands (si1, July 2001): eighteen cards that never came in a booster. The English release is one folder, the Southern
+ * Islands Collection (all 18 cards, a card list, six postcards and three booster packs of an unrecorded set), so like Kalos Starter
+ * Set it sells that one product and has no booster (`promoSet`, `kitSet`, packSize 0, no wrappers, no slots): opening it deals all
+ * 18 cards. The cards carry no rarity ("Promo" here, like the kit half decks); pkmn.gg and TCGplayer list 1, 4, 7, 11, 14 and 17
+ * as reverse holofoil prints, which the scans show (the foil is in the image), so none takes a reverse flag. The packs inside are not
+ * simulated: neither TCGplayer's text nor Bulbapedia names their set. Sources: research/si1.md, si1-products.md.
+ */
+export const SOUTHERN_ISLANDS = {
+  id: "si1",
+  tcgId: "si1",
+  name: "Southern Islands",
+  edition: "Wizards of the Coast",
+  era: "Wizards of the Coast",
+  released: "July 31, 2001",
+  live: true,
+  promoSet: true,
+  kitSet: true, // sells like a promo set, but its cards are not Black Star promos (achievements)
+  printedTotal: 18,
+  totalCount: 18,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/si1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Wizards of the Coast, July 2001. Eighteen island Pokémon in one collector's folder with no booster: Mew, Togepi, Marill and Slowking lead it, six of them reverse holofoils.",
+  oddsLine: "No boosters · one fixed folder of 18",
+  lede: "The Southern Islands Collection came as a folder: all 18 cards, always the same, with a card list and postcards. Open it and you get every card, Mew first.",
+  slots: [],
+  heroIds: ["si1-1", "si1-14", "si1-4", "si1-11"],
+  wrappers: [],
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -5592,6 +5715,11 @@ export const PLAYABLE_SETS = [
   POP_SERIES_6,
   DP_TRAINER_KIT_MANAPHY,
   DP_TRAINER_KIT_LUCARIO,
+  // Wizards of the Coast era (1999-2003), newest first: Skyridge, Aquapolis, Expedition Base Set, Southern Islands (w4).
+  SKYRIDGE,
+  AQUAPOLIS,
+  EXPEDITION_BASE_SET,
+  SOUTHERN_ISLANDS,
   // Wizards of the Coast era (1999-2003): the promo sets (w5); the sixteen numbered sets are added by w1-w4 above this line, newest first.
   BASEP_PROMOS,
   BP_PROMOS,
@@ -5891,6 +6019,7 @@ const POKESYMBOLS_SLUG = {
   pl2: "rising-rivals",
   pl3: "supreme-victors",
   pl4: "arceus",
+  si1: "southern-islands",
   // Wizards of the Coast promo sets (w5): pokesymbols has no Wizards promo symbol (its generic promo star), and a Best of Game one.
   basep: "_promo",
   bp: "best-of-game",
