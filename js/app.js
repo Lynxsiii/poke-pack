@@ -64,7 +64,7 @@ import {
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import * as questArea from "./quest-area.js?v=3";
-import { startLivePrices, applyCachedPrices } from "./liveprices.js";
+import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=2";
 import {
   loadPriceHistory,
   priceHistoryReady,
