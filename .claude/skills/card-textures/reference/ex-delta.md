@@ -17,9 +17,10 @@ plus `photo-vs-site-webkit.png`): /mnt/project-files/every-era/ex/finish-sheets/
 ## Recipe (ex-delta.css)
 - `.foil` is cut to the card's mask (has-foil-map, assets/foil/ex-delta/) and screened on; no pattern tile, nothing grained, nothing dark, no colour dodge
   (so no closing contrast chain is needed; light layers only: screen and overlay).
-- Refractor: `.foil::before` is a slanted band of the spectrum (a 118deg mask band, 200% wide, 40% of the card wide) whose centre follows the pointer
-  through `--exd-bx/--exd-by` (kept inside 12-88% so the thumb on the text box still lights the Pokémon); `.foil::after` a faint all-over sweep; `.glare`
-  overlays the same band cut to the silhouette so the print's own colours are pushed towards it. Rest: a faint static spectrum on `.foil` (opacity 0.2).
+- Refractor (as reviewed, rv-i3): `.foil::before` is a narrow soft band of the spectrum (a 118deg mask, 7% stop span on a 200% layer = about a fifth of the
+  card, opacity 0.32) whose centre follows the pointer through `--exd-bx/--exd-by` (kept inside 12-88% so the thumb on the text box still lights the Pokémon);
+  `.foil::after` is the specular: a 3% white streak in the band's core (opacity 0.62); `.glare` overlays the same band cut to the silhouette (overlay 0.55)
+  so the print's colours shift only at the highlight; `.foil` itself carries a 0.1-alpha hue sweep (`--exd-soft`) lit, and the 0.2 static spectrum at rest.
 - Sheen Energy: `.foil::before` is a rainbow band (stripes red, orange, yellow, green, cyan, blue, violet) over a white-hot core, 200% wide layer, skewed
   -9deg, position `--exs-x` (50% + (50% - background-x) x 1.1); `.foil::after` a very faint sweep; the rest state shows a thin band.
 - `clamp()` in `mask-position` mis-paints in Chromium: the band position is a plain calc().
@@ -45,3 +46,26 @@ plus `photo-vs-site-webkit.png`): /mnt/project-files/every-era/ex/finish-sheets/
 - The glare's colours were tuned against low-resolution frames; whether a given real copy shows red-white or cyan depends on the lamp, so the band
   carries the whole spectrum and the pointer decides.
 - Promos: np/ex-set promos with a cosmos `foilAs` stay cosmos; no refractor promo was found (np035 Pikachu delta holo is cosmos per research np.md).
+
+## Review (rv-i3, fresh-context reviewer, 2026-10-01)
+Checked: photo-vs-site sheets in Chromium and WebKit (Latias, Latios, Feraligatr, Typhlosion, Flygon, Gyarados, six Energy; rest, 30:25, -30:-20, 50:78)
+in /mnt/project-files/every-era/ex/finish-sheets/i3-review/; the class of every card of ex11/13/14/15/16 (64 refractor prints, 12 sheen Energy, nothing
+falls through); foil_coverage.mjs over every EX set (silent); sweep_finishes.py ex11-ex16 (dark specks ok; its exit 1 is the repo's old duplicate-rule list and
+assets/packs/sources.json, none in ex-delta); promos and kits with `foilAs` (ex11 np029 Celebi, np031 Moltres ex, extk1a Latias: cosmos in the window, text clean);
+settings through the real app at 390 x 844 (foil-strength 0.55 and 1.5, no-shine, no-tilt, classic, reduced motion) and a pack of ex13 and of ex15 ripped in
+Chromium (ex15 also WebKit); all 64 masks on a darkened overlay, 12 of them at phone size.
+Found and fixed:
+- THE LEAD'S FINDING (confirmed): at tilt the band painted a quarter of the card at 0.5 opacity in screen, plus an overlay at 0.7 and an all-over sweep; the Pokémon's
+  own colours vanished (Latios a rainbow smear, Feraligatr pink, Typhlosion red). A mask band's width is a share of the LAYER, and the layer is 200% wide: a 14% stop
+  span is 28% of the card. Now the band is a fifth of the card, softer and weaker, with a white specular streak in its core, and the print stays readable
+  (before/after-ex15-webkit.png). The sheen Energy band had the same arithmetic (two fifths of the card); compressed to a fifth.
+- Four masks lit background or lost the Pokémon: ex15-100 Charizard star (lit its black background, lost both wings), ex13-4 Deoxys delta (tendril cut by a straight edge),
+  ex15-8 Ninetales (lit the water between the legs, no mane), ex13-9 Kabutops (a grey block at the scythe joint). Redrawn with new hints as -v2 files; exDeltaMap points
+  at them through DELTA_V2. ex15-95 Latias ex was redrawn as well (a few fire sparks above the back stay lit: 1-2 px at phone size).
+- GrabCut's k-means made every redraw differ (ex13-4 differed by 16/255 on average): cv2.setRNGSeed(7) now makes a redraw repeatable. Note that the OTHER 59 shipped masks
+  were drawn before the seed; a `--force=-v2` redraw of any of them can differ from the shipped file.
+Remains (small): the 59 other masks are good at phone size but a few have straight edges where a hint polygon met the window edge (ex15-10 Snorlax, ex13-5 Deoxys,
+ex14-96 Sceptile ex's leaf swirl); the Pokémon's rest-state spectrum tints a white body (Latias) a little pink; the border sheen still rests on three clips; the
+unused first-draft files ex13-4, ex13-9, ex15-8, ex15-95, ex15-100 (.webp, without -v2) are now dead weight if nothing was served from them: delete them before the push
+if i3's masks never reached origin.
+Lesson: judge a glare by the share of the PRINT it covers at tilt, not by how it looks at rest; a mask band of N% on a layer of 200% covers 2N% of the card.
