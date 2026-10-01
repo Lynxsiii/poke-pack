@@ -124,8 +124,9 @@ import { cartEligible } from "./orders-rules.js?v=1";
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
 import { watchBinderFx } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
+import { hexToHsl, hslToHex, mixHex } from "./card-accent.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
-import { initBinderEditor } from "./binder-editor.js?v=1";
+import { initBinderEditor } from "./binder-editor.js?v=2";
 
 const state = loadState();
 let cloudUser = null;
@@ -1945,16 +1946,29 @@ function binderCardsOf(start = 0, end = Infinity) {
 
 const binderResolved = (look, list) => resolveBinderLook(look, { cards: list, accents: cachedCardAccents(list) });
 
-/** Paper and pocket tint of one page of cards, when the cover follows the cards (each page leans on its own). */
-function pageLookVars(look, list) {
-  if (look.color !== COLOR_FROM_CARDS || (look.page !== "tint" && look.pockets !== "tint") || !list.length) return null;
-  const { vars } = binderResolved(look, list);
-  return { "--b-page": vars["--b-page"], "--b-pocket": vars["--b-pocket"] };
+/**
+ * Paper and pocket tint of one page when the cover follows the cards. The hue is the cover's (one
+ * object, one colour family) and so is the lightness; the page's own cards only nudge saturation.
+ * Returns only the variables that the look actually tints, or null.
+ */
+function pageLookVars(look, list, coverList) {
+  const tintPage = look.page === "tint";
+  const tintPockets = look.pockets === "tint";
+  if (look.color !== COLOR_FROM_CARDS || (!tintPage && !tintPockets) || !list.length) return null;
+  const cover = binderResolved(look, coverList || list).vars["--b-main"];
+  const own = binderResolved(look, list).vars["--b-main"];
+  const [h, sc, l] = hexToHsl(cover);
+  const [, sp] = hexToHsl(own);
+  const main = hslToHex(h, Math.max(0, Math.min(1, sc + (sp - sc) * 0.35)), l);
+  const vars = {};
+  if (tintPage) vars["--b-page"] = mixHex(main, "#0b0b10", 0.72);
+  if (tintPockets) vars["--b-pocket"] = mixHex(main, "#ffffff", 0.2);
+  return vars;
 }
-const pageStyleAttr = (vars) => (vars ? ` style="--b-page:${vars["--b-page"]};--b-pocket:${vars["--b-pocket"]}"` : "");
+const pageStyleAttr = (vars) => (vars ? ` style="${Object.entries(vars).map(([k, v]) => `${k}:${v}`).join(";")}"` : "");
 function setPageVars(el, vars) {
   for (const key of ["--b-page", "--b-pocket"]) {
-    if (vars) el.style.setProperty(key, vars[key]);
+    if (vars?.[key]) el.style.setProperty(key, vars[key]);
     else el.style.removeProperty(key);
   }
 }
@@ -1988,7 +2002,7 @@ function paintBinderLook() {
   applyBinderLook(object, binderResolved(look, all));
   object.querySelectorAll(".binder-page[data-page-index]").forEach((el) => {
     const start = Number(el.dataset.pageIndex) * BINDER_PAGE;
-    setPageVars(el, pageLookVars(look, binderCardsOf(start, start + BINDER_PAGE)));
+    setPageVars(el, pageLookVars(look, binderCardsOf(start, start + BINDER_PAGE), all));
   });
   binderEditor?.refresh();
   if (look.color === COLOR_FROM_CARDS || binderEditor?.isOpen()) refineArt(all, paintBinderLook);
@@ -2042,7 +2056,7 @@ function binderPageHtml(page) {
   const pockets = Array.from({ length: BINDER_PAGE }, (_, i) => binderPocket(start + i)).join("");
   const shared = (activeTrainer()?.binderPages || []).includes(page);
   const empty = !(state.binder || []).slice(start, start + BINDER_PAGE).some(Boolean);
-  const own = pageLookVars(binderLookNow(), binderCardsOf(start, start + BINDER_PAGE));
+  const own = pageLookVars(binderLookNow(), binderCardsOf(start, start + BINDER_PAGE), binderCardsOf());
   return `<div class="binder-page" data-page-index="${page}"${pageStyleAttr(own)}>
     <div class="binder-page-toolbar"><span>Page ${page + 1}</span>
       <button type="button" class="ghost page-share" data-share-page="${page}" aria-pressed="${shared}" ${empty && !shared ? "disabled" : ""}>
@@ -6766,7 +6780,7 @@ function paintProfileBinderLook() {
   applyBinderLook(object, binderResolved(mine, profileBinderCards(pages)));
   object.querySelectorAll(".binder-page[data-page-index]").forEach(el => {
     const pg = pages.find(row => row.index === Number(el.dataset.pageIndex));
-    setPageVars(el, pg ? pageLookVars(mine, profileBinderCards([pg])) : null);
+    setPageVars(el, pg ? pageLookVars(mine, profileBinderCards([pg]), profileBinderCards(pages)) : null);
   });
 }
 
@@ -6777,7 +6791,7 @@ function profileBinderPagesHtml() {
   // The owner's look dresses the pages: the cover colour follows the shared pages' cards, each page's tint its own.
   const ownerLook = normalizeBinderLook(profileBinderView.look);
   const shared = profileBinderCards(pages);
-  const pageVars = pageLookVars(ownerLook, profileBinderCards([page]));
+  const pageVars = pageLookVars(ownerLook, profileBinderCards([page]), shared);
   if (ownerLook.color === COLOR_FROM_CARDS) requestAnimationFrame(() => refineArt(shared, paintProfileBinderLook));
   const pockets = page.slots.map(slot => {
     if (!slot) return `<div class="profile-pocket pocket empty" aria-label="Empty pocket"></div>`;
@@ -7369,6 +7383,17 @@ binderEditor = initBinderEditor({
         els.binderBody?.querySelector(".binder-object")?.scrollIntoView({ block: "start", behavior: reduceMotion() ? "auto" : "smooth" })
       );
     }
+  },
+  // Under the sheet only the top of the screen shows the binder: bring the part of the cover that
+  // carries the effect there (ember lives on the foot, the others on the head and sides).
+  onTry: (id) => {
+    if (matchMedia("(min-width: 980px)").matches) return;
+    const object = els.binderBody?.querySelector(".binder-object");
+    if (!object) return;
+    const box = object.getBoundingClientRect();
+    const sheetTop = els.binderEditorMount.getBoundingClientRect().top;
+    const delta = id === "ember" ? box.bottom - (sheetTop - 12) : box.top - 72;
+    window.scrollBy({ top: delta, behavior: reduceMotion() ? "auto" : "smooth" });
   },
   save: saveBinderLook,
   buy: buyBinderEdition,

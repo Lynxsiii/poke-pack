@@ -2,7 +2,7 @@
  * The binder customiser: the "choose your cover" counter.
  *
  * A bottom sheet on a phone, a panel beside the live binder on a laptop. Four
- * short tabs (Cover, Colour, Fittings, Animated) edit a draft look; every
+ * short tabs (Cover, Colour, Details, Animated) edit a draft look; every
  * choice repaints the real binder through `onDraft`, and nothing is stored
  * until Save. Cancel puts the saved look back. Colours and materials are
  * free; an animated edition can always be tried on, and is bought once with
@@ -20,6 +20,7 @@
  *   getAccents()     hexes refined from art, aligned with getCards()
  *   onDraft(look)    called with the look being tried (live preview)
  *   onToggle(open)   the editor opened or closed
+ *   onTry(editionId) an edition is being tried on (scroll its effect into view)
  *   save(look)       async, throws with a readable message on failure
  *   buy(editionId)   async, throws with a readable message on failure (402 "Not enough coins.")
  *   coin(n)          the site's coin formatter
@@ -52,11 +53,18 @@ const esc = (value) =>
 const TABS = [
   ["cover", "Cover"],
   ["colour", "Colour"],
-  ["fittings", "Fittings"],
+  ["details", "Details"],
   ["animated", "Animated"],
 ];
 const HARDWARE_SHORT = { none: "None", rings: "Silver", brass: "Brass", black: "Black", zip: "Zip" };
 const HARDWARE_METAL = { rings: "#c9ccd2", brass: "#c9a24a", black: "#1b1b21" };
+const HARDWARE_NOTE = {
+  none: "The pages sit loose in the cover, like a folder.",
+  rings: "Three silver rings hold the pages.",
+  brass: "Three brass rings hold the pages.",
+  black: "Three black rings hold the pages.",
+  zip: "A zip closes the cover around the pages.",
+};
 const COLOR_NAME = new Map([...BINDER_COLORS, ...BINDER_METALS].map((row) => [row.id, row.name]));
 
 const same = (a, b) => JSON.stringify(normalizeBinderLook(a)) === JSON.stringify(normalizeBinderLook(b));
@@ -70,6 +78,7 @@ export function initBinderEditor(deps) {
   let saved = null;
   let tab = "cover";
   let moreTrim = false;
+  let trimOpen = false;
   let busy = ""; // "save" or an edition id while a request is out
   let problem = "";
   let opener = null;
@@ -139,7 +148,7 @@ export function initBinderEditor(deps) {
             <input type="text" data-be-name maxlength="${BINDER_NAME_MAX}" autocomplete="off" spellcheck="false" placeholder="Eeveelutions" />
             <small data-be-name-help>Up to ${BINDER_NAME_MAX} characters.</small>
           </label>
-          <button type="button" class="text-btn be-reset" data-be-reset>Reset to the default look</button>
+          <button type="button" class="text-btn be-reset" data-be-reset>Reset to default</button>
         </section>
 
         <section class="be-panel" role="tabpanel" id="be-panel-colour" aria-labelledby="be-tab-colour" data-panel="colour" hidden>
@@ -149,13 +158,15 @@ export function initBinderEditor(deps) {
             <span class="be-cards-text"><b>Match my cards</b><small data-be-cards-note></small></span>
           </button>
           <div class="be-grid" role="group" aria-label="Cover colour">${swatches("data-be-color")}</div>
-          <div class="be-line be-trim"><h4 class="be-label">Trim</h4><output class="be-read" data-be-read="accent" aria-live="polite"></output></div>
-          <p class="be-note">Stitching, edges and the plate.</p>
-          <div class="be-words" role="group" aria-label="Trim colour">${trimWords}<button type="button" class="be-word" data-be-more aria-expanded="false" aria-controls="be-trim-grid"><span>More colours</span></button></div>
-          <div class="be-grid be-grid-trim" id="be-trim-grid" role="group" aria-label="Trim colour, more" hidden>${swatches("data-be-accent")}</div>
+          <button type="button" class="be-line be-trim" data-be-trim aria-expanded="false" aria-controls="be-trimbox"><span class="be-label">Trim colour</span><output class="be-read" data-be-read="accent"></output></button>
+          <div class="be-trimbox" id="be-trimbox" hidden>
+            <p class="be-note">Stitching, edges and the plate.</p>
+            <div class="be-words" role="group" aria-label="Trim colour">${trimWords}<button type="button" class="be-word" data-be-more aria-expanded="false" aria-controls="be-trim-grid"><span>More colours</span></button></div>
+            <div class="be-grid be-grid-trim" id="be-trim-grid" role="group" aria-label="Trim colour, more" hidden>${swatches("data-be-accent")}</div>
+          </div>
         </section>
 
-        <section class="be-panel" role="tabpanel" id="be-panel-fittings" aria-labelledby="be-tab-fittings" data-panel="fittings" hidden>
+        <section class="be-panel" role="tabpanel" id="be-panel-details" aria-labelledby="be-tab-details" data-panel="details" hidden>
           <div class="be-set">
             <h4 class="be-label">Hardware</h4>
             ${seg(
@@ -262,8 +273,8 @@ export function initBinderEditor(deps) {
     cardsBtn.style.setProperty("--c1", halves.a);
     cardsBtn.style.setProperty("--c2", halves.b);
     $("[data-be-cards-note]").textContent = dom
-      ? `Follows the ${cards().length} card${cards().length === 1 ? "" : "s"} on show.`
-      : "Follows the cards you put in.";
+      ? "The cover takes the main colour, the trim the second."
+      : "Put cards in the binder and the cover follows them.";
 
     // Trim.
     $$("[data-be-accent]").forEach((btn) => {
@@ -272,6 +283,9 @@ export function initBinderEditor(deps) {
       else press(btn, id === look.accent);
     });
     const isColourAccent = COLOR_NAME.has(look.accent) && !BINDER_METALS.some((row) => row.id === look.accent);
+    const trimBtn = $("[data-be-trim]");
+    trimBtn.setAttribute("aria-expanded", trimOpen ? "true" : "false");
+    $("#be-trimbox").hidden = !trimOpen;
     const more = $("[data-be-more]");
     const showMore = moreTrim || isColourAccent;
     more.setAttribute("aria-expanded", showMore ? "true" : "false");
@@ -286,7 +300,7 @@ export function initBinderEditor(deps) {
     });
     $('[data-be-note="hardware"]').textContent = classic
       ? "Rings and zips need a cover."
-      : BINDER_HARDWARE.find((row) => row.id === look.hardware)?.name || "";
+      : HARDWARE_NOTE[look.hardware] || "";
     $$("[data-be-pockets]").forEach((btn) => press(btn, btn.dataset.bePockets === look.pockets));
     $('[data-be-note="pockets"]').textContent = BINDER_POCKETS.find((row) => row.id === look.pockets)?.note || "";
     $$("[data-be-page]").forEach((btn) => press(btn, btn.dataset.bePage === look.page));
@@ -310,7 +324,7 @@ export function initBinderEditor(deps) {
       const buy = tile.querySelector("[data-be-buy]");
       if (buy) {
         buy.disabled = Boolean(busy);
-        buy.textContent = busy === id ? "Buying…" : `Buy for ✦ ${coin(editionById(id)?.price || 0)}`;
+        buy.textContent = busy === id ? "Buying" : `Buy for ✦ ${coin(editionById(id)?.price || 0)}`;
       }
     });
 
@@ -319,7 +333,7 @@ export function initBinderEditor(deps) {
     const dirty = !same(look, saved);
     const save = $("[data-be-save]");
     save.disabled = !dirty || Boolean(trial) || Boolean(busy);
-    save.textContent = busy === "save" ? "Saving…" : "Save";
+    save.textContent = busy === "save" ? "Saving" : "Save";
     const status = $("[data-be-status]");
     status.textContent = problem || (trial ? `${editionById(look.edition)?.name} is a try-on. Buy it to keep it.` : "");
     status.classList.toggle("bad", Boolean(problem));
@@ -348,6 +362,11 @@ export function initBinderEditor(deps) {
     if (id && draft.material === "classic") pickMaterial("matte");
   }
 
+  /** Tell the page an edition is being tried on, so it can bring the part of the cover with the effect into view. */
+  function showTry() {
+    if (draft?.edition) deps.onTry?.(draft.edition);
+  }
+
   /* ---- events ----------------------------------------------------------- */
 
   function onClick(e) {
@@ -365,7 +384,12 @@ export function initBinderEditor(deps) {
       tab = btn.dataset.beTab;
       paint();
       $(".be-body").scrollTop = 0;
+      if (tab === "animated") showTry();
       return;
+    }
+    if (btn.hasAttribute("data-be-trim")) {
+      trimOpen = !trimOpen;
+      return paint();
     }
     if (btn.hasAttribute("data-be-more")) {
       moreTrim = !(btn.getAttribute("aria-expanded") === "true");
@@ -382,6 +406,7 @@ export function initBinderEditor(deps) {
     else if (btn.hasAttribute("data-be-edition")) pickEdition(btn.dataset.beEdition);
     else return;
     emit();
+    if (btn.hasAttribute("data-be-edition")) showTry();
   }
 
   function onInput(e) {
@@ -431,6 +456,7 @@ export function initBinderEditor(deps) {
         problem = "";
         buildEditions(`[data-be-edition="${id}"]`);
         emit();
+        showTry();
       }
     } catch (err) {
       busy = "";
@@ -493,6 +519,7 @@ export function initBinderEditor(deps) {
     draft = { ...saved };
     tab = "cover";
     moreTrim = false;
+    trimOpen = false;
     busy = "";
     problem = "";
     opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;

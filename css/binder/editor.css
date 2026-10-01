@@ -8,7 +8,7 @@
    decoration (the gradients below are the cloth, grain and lacquer of the
    thumbnails), one 220ms slide on open and nothing else that moves. */
 
-:root { --be-h: min(54dvh, 500px); }
+:root { --be-h: min(48dvh, 500px); }
 
 .binder-layout { min-width: 0; }
 
@@ -113,7 +113,24 @@
 .be-line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .be-read, .be-purse { color: var(--ink-2); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .be-purse { flex: none; color: var(--gold); }
-.be-trim { margin-top: 26px !important; }
+.be-trim {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 18px !important;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  align-items: center;
+}
+.be-trim::after { content: ""; flex: none; width: 7px; height: 7px; margin: 0 4px 3px 2px; border: solid var(--muted); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.be-trim[aria-expanded="true"]::after { transform: rotate(-135deg) translate(-2px, -2px); }
+.be-trim .be-read { margin-left: auto; }
+.be-trimbox[hidden] { display: none; }
+.be-trimbox > * + * { margin-top: 12px; }
 
 /* Every control shows a real focus ring. */
 .be button:focus-visible, .be input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -165,7 +182,7 @@
   background-color: var(--b-page, #0e0e13);
   box-shadow: inset 0 0 0 1px var(--line-2);
 }
-.be-art[data-material="classic"] i { background: rgba(255, 255, 255, 0.16); border-radius: 1px; }
+.be-art[data-material="classic"] i { background: rgba(255, 255, 255, 0.16); border-radius: 2px; }
 .be-art[data-material="leather"] {
   background-image:
     radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.14) 0 1px, transparent 1.6px),
@@ -239,7 +256,7 @@
   aspect-ratio: 1;
   padding: 0;
   border: 0;
-  border-radius: 3px;
+  border-radius: var(--r-sm);
   background: var(--sw);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
 }
@@ -262,7 +279,7 @@
 }
 .be-cards:hover { background: var(--surface-2); }
 .be-cards[aria-pressed="true"] { background: var(--surface-3); border-color: transparent; box-shadow: inset 0 0 0 1.5px var(--ink); }
-.be-halves { flex: none; display: grid; grid-template-columns: 1fr 1fr; width: 88px; height: 44px; border-radius: 3px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
+.be-halves { flex: none; display: grid; grid-template-columns: 1fr 1fr; width: 88px; height: 44px; border-radius: 4px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
 .be-halves i:first-child { background: var(--c1); }
 .be-halves i:last-child { background: var(--c2); }
 .be-cards-text { display: grid; gap: 2px; min-width: 0; }
@@ -291,7 +308,7 @@
 .be-word[aria-pressed="true"], .be-word.on { color: var(--ink); }
 .be-word[aria-pressed="true"]::after, .be-word.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); }
 .be-word[aria-expanded="true"]:not(.on) { color: var(--ink-2); }
-.be-chip { display: block; width: 11px; height: 11px; border-radius: 1px; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
+.be-chip { display: block; width: 11px; height: 11px; border-radius: 2px; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
 
 /* ---- Fittings: square segmented controls --------------------------------------------- */
 .be-set { display: grid; gap: 8px; }
@@ -351,21 +368,25 @@
 /* The thumbnail: C's .edition-swatch when loaded, else a flat tile in the cover colour. */
 .be-thumb { position: relative; display: block; aspect-ratio: 5 / 2; background: var(--b-deep, #15151b); overflow: hidden; }
 .be-thumb .edition-swatch { position: absolute; inset: 0; width: 100%; height: 100%; }
-.be-ed-act { display: flex; align-items: center; justify-content: center; min-height: 44px; border-top: 1px solid var(--line); }
-.be-owned { color: var(--ink-2); font-size: 14px; font-weight: 600; }
+.be-ed-act { display: flex; align-items: center; min-height: 44px; margin: 0 8px 8px; }
+.be-owned { padding: 0 2px; color: var(--ink-2); font-size: 14px; font-weight: 600; }
+/* Gold, because it is money; a hairline box, so it is plainly a button. Save stays the one coral. */
 .be-buy {
+  display: flex;
+  align-items: center;
   width: 100%;
   min-height: 44px;
-  padding: 0 8px;
-  border: 0;
-  border-radius: 0;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--gold) 60%, transparent);
+  border-radius: var(--r-sm);
   background: transparent;
   color: var(--gold);
   font-size: 14px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
+  text-align: left;
 }
-.be-buy:hover:not(:disabled) { background: var(--surface-2); }
+.be-buy:hover:not(:disabled) { background: color-mix(in srgb, var(--gold) 10%, transparent); border-color: var(--gold); }
 .be-buy:disabled { opacity: 0.55; }
 
 /* ---- While editing -------------------------------------------------------------------- */
@@ -419,4 +440,15 @@ body.no-motion .be { animation: none; }
 @media (max-width: 559px) {
   #view-binder .binder-actions { grid-column: 1 / -1; grid-row: 3; margin-top: 10px; }
   #view-binder .binder-actions .ghost { flex: 1; min-height: 44px; }
+}
+
+/* ---- Short phones (360x640 and under): spend the sheet on the controls ---------------------- */
+@media (max-width: 979px) and (max-height: 700px) {
+  .be-head { padding-top: 14px; padding-bottom: 2px; }
+  .be-body { padding-top: 8px; }
+  .be-panel > .be-lede { display: none; }
+  .be-panel > .be-lede.be-keep, .be-line .be-lede { display: block; }
+  .be-cards { min-height: 52px; }
+  .be-set + .be-set { margin-top: 12px; }
+  .be-note { min-height: 0; }
 }
