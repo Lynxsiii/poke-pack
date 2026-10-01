@@ -161,7 +161,9 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # Sword & Shield prints its holo Rares as a rarity of their own ("Rare
     # Holo", the art background foil), separate from the plain Rare, so the
     # alias that folds the two together is for the Scarlet & Violet feeds only.
-    if not (cfg.get("era") in ("swsh", "sm") and rarity == "Rare Holo"):
+    # Sun & Moon and XY keep "Rare Holo" too (the XY window holo, pkmn.gg's
+    # own word for it next to "Rare Holo EX", "Rare BREAK" and "Rare Ultra").
+    if not (cfg.get("era") in ("swsh", "sm", "xy") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
     if (subset or {}).get("gallery") == "cc":
         # Celebrations' Classic Collection reprints keep their original
