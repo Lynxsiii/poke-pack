@@ -141,6 +141,9 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xy11": ("#f0a23a", "#4fa3d9"),  # Steam Siege: gear gold to steam blue
     "xy12": ("#f2652d", "#5bb3e8"),  # Evolutions: Charizard orange to Blastoise blue
     "xy0": ("#69c35a", "#f2823a"),  # Kalos Starter Set: Chespin green to Fennekin orange
+    "bw1": ("#4fa8ff", "#ff7a3a"),  # Black & White: Zekrom blue to Reshiram orange
+    "bw2": ("#e5533d", "#8fd04e"),  # Emerging Powers: wrapper red to Tornadus green
+    "bw3": ("#38a8e6", "#f2a93b"),  # Noble Victories: wrapper blue to Victini gold
     "bw4": ("#f2c23a", "#3f8ff0"),  # Next Destinies: wrapper gold to Zekrom blue
     "bw5": ("#b45ce6", "#ff9a2e"),  # Dark Explorers: wrapper purple to Scrafty orange
     "bw6": ("#4cc95a", "#ee4b2b"),  # Dragons Exalted: wrapper green to Rayquaza flame red

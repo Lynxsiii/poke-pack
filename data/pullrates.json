@@ -875,5 +875,48 @@
       "secret": 0.0083,
       "aceSpec": 0.0278
     }
+  },
+  "bw1": {
+    "name": "Black & White",
+    "printedTotal": 114,
+    "released": "2011-04-25",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards plus a code card (the first Black & White print run had none), 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no basic Energy slot (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): 10 cards since Diamond & Pearl, 36 packs a box; ToyWiz's pack titles '[10 Cards]' https://toywiz.com/pokemon-black-white-black-white-booster-pack/ ; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum's per-set table https://www.elitefourum.com/t/39762/99: C 5, U 3, RE 1, one rare slot per pack). The rare slot is mutually exclusive: plain Rare, Rare Holo, a full art (Reshiram or Zekrom) or the secret Pikachu. Rates are per pack from Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/99 (216-pack case model: Rare Holo 57, full art 12, secret 3 packs of 216; his YouTube sample gave 7 Pikachu in 14 boxes) against PokeBeach's 'The English Booster Box Pull Rates Thread' https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-1 (the two full arts come 'one of each' in a box; holo-or-better about 1 in 3 packs) and Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two (secret rares about 1:72). Full art high confidence (2 per box in both counts); secret medium (14 boxes; PokeBeach's 2011 rumour of 1 in 108 dissents); holo medium-high. The eight basic Energy (cards 105-112) are printed once each on the commons sheet (Elite Fourum only); the research file's derived figure is about 1 pack in 18 per Energy, so 0.444 Energy per pack: low confidence, no tally. Cross-check only (not independent, copies Elite Fourum): ThePriceDex https://www.thepricedex.com/set/bw1/black-white/pull-rates.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/99",
+    "rates": {
+      "holo": 0.2639,
+      "ex": 0.0,
+      "ultra": 0.0556,
+      "secret": 0.0139,
+      "commonEnergy": 0.4444
+    }
+  },
+  "bw2": {
+    "name": "Emerging Powers",
+    "printedTotal": 98,
+    "released": "2011-08-31",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards plus a code card (the first Black & White print run had none), 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no basic Energy slot (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): 10 cards since Diamond & Pearl, 36 packs a box; ToyWiz's pack titles '[10 Cards]' https://toywiz.com/pokemon-black-white-emerging-powers-booster-pack/ ; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum's per-set table https://www.elitefourum.com/t/39762/100: C 5, U 3, RE 1, one rare slot per pack). The rare slot is mutually exclusive: plain Rare, Rare Holo or a full art (Thundurus or Tornadus); the set has no secret rare and no Energy. Rates are per pack from Elite Fourum sturzflugbombardieru's rarity guide https://www.elitefourum.com/t/39762/100 ('the box ratios for this set are basically the same as for Black & White, except the set has no secret rares'; 216-pack case model: Rare Holo 60, full art 12) checked against PokeBeach's box thread https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-3 (holo-or-better about 1 in 3 packs, 'two, three if you're lucky' full arts a box; Emerging Powers pulls such as a Thundurus full art in 25 packs) and Flipside's 1:18 full arts for the era https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two . Only Elite Fourum gives per-set numbers: confidence medium. Cross-check only (not independent, copies Elite Fourum): ThePriceDex https://www.thepricedex.com/set/bw2/emerging-powers/pull-rates.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/100",
+    "rates": {
+      "holo": 0.2778,
+      "ex": 0.0,
+      "ultra": 0.0556,
+      "secret": 0.0
+    }
+  },
+  "bw3": {
+    "name": "Noble Victories",
+    "printedTotal": 101,
+    "released": "2011-11-16",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards plus a code card (the first Black & White print run had none), 5 Common, 3 Uncommon, 1 reverse holo, 1 rare slot, and no basic Energy slot (Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG): 10 cards since Diamond & Pearl, 36 packs a box; ToyWiz's pack titles '[10 Cards]' https://toywiz.com/pokemon-black-white-noble-victories-booster-pack/ ; the wrapper prints '10 ADDITIONAL GAME CARDS'; Elite Fourum's per-set table https://www.elitefourum.com/t/39762/101: C 5, U 3, RE 1, one rare slot per pack). The rare slot is mutually exclusive: plain Rare, Rare Holo, one of the five full arts (Virizion, Victini, Terrakion, Cobalion, N) or the secret Meowth; no Energy. Rates are per pack from Elite Fourum sturzflugbombardieru's rarity guide https://www.elitefourum.com/t/39762/101 ('the same box ratios as Black & White'; 216-pack case model: Rare Holo 57, full art 12, secret 3; 6 Meowth in 14 boxes quoted in post 99) against Flipside Gaming's review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two (Noble Victories ultra rares 'approximately 1:18 packs', Meowth and Pikachu secrets 'approximately 1:72') and PokeBeach's box thread https://www.pokebeach.com/forums/threads/the-english-booster-box-pull-rates-thread.114550/page-3 ('two, three if you're lucky' full arts a box; about 1 holo per 3-4 packs). Full art high confidence (three sources); secret medium (PokeBeach's 2011 '108 to 1' dissents); holo medium-high. Cross-check only (not independent, copies Elite Fourum): ThePriceDex https://www.thepricedex.com/set/bw3/noble-victories/pull-rates.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/101",
+    "rates": {
+      "holo": 0.2639,
+      "ex": 0.0,
+      "ultra": 0.0556,
+      "secret": 0.0139
+    }
   }
 }
