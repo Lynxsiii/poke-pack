@@ -1,0 +1,35 @@
+{
+  "id": "ex13",
+  "name": "EX Holon Phantoms",
+  "series": "ex",
+  "slug": "holon-phantoms",
+  "scrydexId": "ex13",
+  "era": "ex",
+  "artSlug": "ex-holon-phantoms",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1379,
+  "cardFlags": {
+    "111": {
+      "boxTopper": true
+    },
+    "102": {
+      "refractor": true
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "EX Holon Phantoms Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98523,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs of 9 cards, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. Elite Fourum's rarity guide puts a Mew secret rare (111) on top of a box: it is in no pack and is not simulated."
+    }
+  ]
+}
