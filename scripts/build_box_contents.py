@@ -65,7 +65,7 @@ ENERGY_TYPES = ["grass", "fire", "water", "lightning", "psychic", "fighting", "d
 ENERGY_TYPES_XY = [*ENERGY_TYPES, "fairy"]
 STANDARD = {"boosterBox", "eliteTrainerBox", "boosterBundle"}
 # Basic Energy prints (js/catalog.js ENERGY_PRINTS): suffix by the print a box has.
-PRINTS = {"": "", "tera": "-tera", "unova": "-unova", "swsh": "-swsh", "mee": "-mee", "sm17": "-sm17", "sm19": "-sm19", "xy": "-xy"}
+PRINTS = {"": "", "tera": "-tera", "unova": "-unova", "swsh": "-swsh", "mee": "-mee", "sm17": "-sm17", "sm19": "-sm19", "xy": "-xy", "bw": "-bw"}
 
 
 def load_cards() -> set[str]:

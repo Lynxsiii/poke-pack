@@ -525,6 +525,10 @@ const ENERGY_PRINTS = [
   // included, the only print with that type. XY packs carry no Energy card (sources
   // at xySlots); the ETBs, decks and Trainer Kits do. Scans: assets/cards/shared/energy-<type>-xy.webp.
   { print: "xy", suffix: "-xy", label: "XY 2013", fairy: true },
+  // The Black & White era's own (2011, pkmn.gg's black-white-energy-2011 / bwe13): eight
+  // types. BW packs carry no Energy card (sources at bwSlots), except Black & White's own
+  // numbered Energy 105-112 on its commons sheet; the ETBs, theme decks and Trainer Kits do.
+  { print: "bw", suffix: "-bw", label: "Black & White 2011" },
   // The Mega Evolution era's own (MEE 001-008): in the Mega Evolution ETBs and
   // Build & Battle decks. No set's pack Energy slot uses it yet.
   { print: "mee", suffix: "-mee", first: 1, code: "MEE" },
