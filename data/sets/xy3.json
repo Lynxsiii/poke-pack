@@ -1,0 +1,29 @@
+{
+  "id": "xy3",
+  "name": "Furious Fists",
+  "series": "xy",
+  "slug": "furious-fists",
+  "scrydexId": "xy3",
+  "era": "xy",
+  "artSlug": "furious-fists",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1481,
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "skipNumbers": [
+    "55a"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "xy1",
+  "name": "XY",
+  "series": "xy",
+  "slug": "xy",
+  "scrydexId": "xy1",
+  "era": "xy",
+  "artSlug": "x-and-y",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1387,
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  }
+}

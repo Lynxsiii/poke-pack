@@ -1,0 +1,29 @@
+{
+  "id": "xy2",
+  "name": "Flashfire",
+  "series": "xy",
+  "slug": "flashfire",
+  "scrydexId": "xy2",
+  "era": "xy",
+  "artSlug": "flashfire",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1464,
+  "promoSeries": {
+    "xyp": {
+      "series": "xy",
+      "slug": "xy-black-star-promos",
+      "scrydex": "xyp",
+      "tcgplayerGroup": 1451,
+      "printed": "XY",
+      "era": "xy"
+    }
+  },
+  "skipNumbers": [
+    "88a"
+  ]
+}

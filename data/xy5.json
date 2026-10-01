@@ -1,0 +1,5380 @@
+[
+  {
+    "id": "xy5-1",
+    "name": "Weedle",
+    "number": "1",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Midori Harada",
+    "flavorText": "Its poison stinger is very powerful. Its bright-colored body is intended to warn off its enemies.",
+    "image": "assets/cards/xy5/1.webp",
+    "imageSmall": "assets/cards/xy5/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Multiply",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Search your deck for Weedle and put it onto your Bench. Shuffle your deck afterward."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-1/large"
+  },
+  {
+    "id": "xy5-2",
+    "name": "Kakuna",
+    "number": "2",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "While awaiting evolution, it hides from predators under leaves and in nooks of branches.",
+    "evolvesFrom": "Weedle",
+    "image": "assets/cards/xy5/2.webp",
+    "imageSmall": "assets/cards/xy5/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Bug Bite",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-2/large"
+  },
+  {
+    "id": "xy5-3",
+    "name": "Beedrill",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "120",
+    "artist": "Kouki Saitou",
+    "flavorText": "May appear in a swarm. Flies at violent speeds, all the while stabbing with the toxic stinger on its rear.",
+    "evolvesFrom": "Kakuna",
+    "image": "assets/cards/xy5/3.webp",
+    "imageSmall": "assets/cards/xy5/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Allergic Shock",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "During your next turn, if the Defending Pokémon is damaged by an attack, it is Knocked Out."
+      },
+      {
+        "name": "Twineedle",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "50×",
+        "text": "Flip 2 coins. This attack does 50 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-3/large"
+  },
+  {
+    "id": "xy5-4",
+    "name": "Tangela",
+    "number": "4",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "match",
+    "flavorText": "It tangles any moving thing with its vines. Their subtle shaking is ticklish if you get ensnared.",
+    "image": "assets/cards/xy5/4.webp",
+    "imageSmall": "assets/cards/xy5/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Absorb",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-4/large"
+  },
+  {
+    "id": "xy5-5",
+    "name": "Tangrowth",
+    "number": "5",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "MAHOU",
+    "flavorText": "Its vines grow so profusely that, in the warm season, you can't even see its eyes.",
+    "evolvesFrom": "Tangela",
+    "image": "assets/cards/xy5/5.webp",
+    "imageSmall": "assets/cards/xy5/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Grass Knot",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "This attack does 10 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-5/large"
+  },
+  {
+    "id": "xy5-6",
+    "name": "Treecko",
+    "number": "6",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "Small hooks on the bottom of its feet catch on walls and ceilings. That is how it can hang from above.",
+    "image": "assets/cards/xy5/6.webp",
+    "imageSmall": "assets/cards/xy5/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-6/large"
+  },
+  {
+    "id": "xy5-7",
+    "name": "Grovyle",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "match",
+    "flavorText": "It lives in dense jungles. While closing in on its prey, it leaps from branch to branch.",
+    "evolvesFrom": "Treecko",
+    "image": "assets/cards/xy5/7.webp",
+    "imageSmall": "assets/cards/xy5/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Agility",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-7/large"
+  },
+  {
+    "id": "xy5-8",
+    "name": "Sceptile",
+    "number": "8",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Hajime Kusajima",
+    "flavorText": "It agilely leaps about the jungle and uses the sharp leaves on its arms to strike its prey.",
+    "evolvesFrom": "Grovyle",
+    "image": "assets/cards/xy5/8.webp",
+    "imageSmall": "assets/cards/xy5/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Jungle Edge",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Nurture and Heal",
+        "text": "Once during your turn (before your attack), you may attach a Grass Energy card from your hand to 1 of your Pokémon. If you do, heal 30 damage from that Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-8/large"
+  },
+  {
+    "id": "xy5-9",
+    "name": "Sceptile",
+    "number": "9",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "140",
+    "artist": "hatachu",
+    "flavorText": "It agilely leaps about the jungle and uses the sharp leaves on its arms to strike its prey.",
+    "evolvesFrom": "Grovyle",
+    "image": "assets/cards/xy5/9.webp",
+    "imageSmall": "assets/cards/xy5/9-sm.webp",
+    "attacks": [
+      {
+        "name": "Leaf Blade",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Power Poison",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 1 Energy attached to this Pokémon. Your opponent's Active Pokémon is now Poisoned."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-9/large"
+  },
+  {
+    "id": "xy5-10",
+    "name": "Lotad",
+    "number": "10",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kanako Eo",
+    "flavorText": "It searches about for clean water. If it does not drink water for too long, the leaf on its head wilts.",
+    "image": "assets/cards/xy5/10.webp",
+    "imageSmall": "assets/cards/xy5/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-10/large"
+  },
+  {
+    "id": "xy5-11",
+    "name": "Lombre",
+    "number": "11",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Naoyo Kimura",
+    "flavorText": "It has a mischievous spirit. If it spots an angler, it will tug on the fishing line to interfere.",
+    "evolvesFrom": "Lotad",
+    "image": "assets/cards/xy5/11.webp",
+    "imageSmall": "assets/cards/xy5/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Hook",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-11/large"
+  },
+  {
+    "id": "xy5-12",
+    "name": "Ludicolo",
+    "number": "12",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "Mizue",
+    "flavorText": "The rhythm of bright, festive music activates Ludicolo's cells, making it more powerful.",
+    "evolvesFrom": "Lombre",
+    "image": "assets/cards/xy5/12.webp",
+    "imageSmall": "assets/cards/xy5/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Ray",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Heal 20 damage from each of your Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Captivating Rhythm",
+        "text": "Once during your turn (before your attack), you may flip a coin. If heads, switch 1 of your opponent's Benched Pokémon with his or her Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-12/large"
+  },
+  {
+    "id": "xy5-13",
+    "name": "Surskit",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It appears as if it is skating on water. It draws prey with a sweet scent from the tip of its head.",
+    "image": "assets/cards/xy5/13.webp",
+    "imageSmall": "assets/cards/xy5/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-13/large"
+  },
+  {
+    "id": "xy5-14",
+    "name": "Masquerain",
+    "number": "14",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Kanako Eo",
+    "flavorText": "It flaps its four wings to hover and fly freely in any direction–to and fro and sideways.",
+    "evolvesFrom": "Surskit",
+    "image": "assets/cards/xy5/14.webp",
+    "imageSmall": "assets/cards/xy5/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Gyration",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused. Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Air Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-14/large"
+  },
+  {
+    "id": "xy5-15",
+    "name": "Shroomish",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Mizue",
+    "flavorText": "It spouts poison spores from the top of its head. These spores cause pain all over if inhaled.",
+    "image": "assets/cards/xy5/15.webp",
+    "imageSmall": "assets/cards/xy5/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Spore",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-15/large"
+  },
+  {
+    "id": "xy5-16",
+    "name": "Breloom",
+    "number": "16",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Suwama Chiaki",
+    "flavorText": "It scatters poisonous spores and throws powerful punches while its foe is hampered by inhaled spores.",
+    "evolvesFrom": "Shroomish",
+    "image": "assets/cards/xy5/16.webp",
+    "imageSmall": "assets/cards/xy5/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Dynamic Punch",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage and your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Mega Kick",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-16/large"
+  },
+  {
+    "id": "xy5-17",
+    "name": "Volbeat",
+    "number": "17",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It lives around clean ponds. At night, its rear lights up. It converses with others by flashing its light.",
+    "image": "assets/cards/xy5/17.webp",
+    "imageSmall": "assets/cards/xy5/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Acrobatics",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip 2 coins. This attack does 20 more damage for each heads."
+      },
+      {
+        "name": "Pester",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "If your opponent's Active Pokémon is affected by a Special Condition, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-17/large"
+  },
+  {
+    "id": "xy5-18",
+    "name": "Illumise",
+    "number": "18",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "With its sweet aroma, it guides Volbeat to draw signs with light in the night sky.",
+    "image": "assets/cards/xy5/18.webp",
+    "imageSmall": "assets/cards/xy5/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Helping Hand",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Search your deck for a basic Energy card and attach it to 1 of your Benched Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Twirling Sign",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-18/large"
+  },
+  {
+    "id": "xy5-19",
+    "name": "Trevenant-EX",
+    "number": "19",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy5/19.webp",
+    "imageSmall": "assets/cards/xy5/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Forest",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Wood Blast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 20 more damage for each Grass Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-19/large"
+  },
+  {
+    "id": "xy5-20",
+    "name": "Vulpix",
+    "number": "20",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "kirisAki",
+    "flavorText": "While young, it has six gorgeous tails. When it grows, several new tails are sprouted.",
+    "image": "assets/cards/xy5/20.webp",
+    "imageSmall": "assets/cards/xy5/20-sm.webp",
+    "attacks": [
+      {
+        "name": "Roar",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon."
+      },
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-20/large"
+  },
+  {
+    "id": "xy5-21",
+    "name": "Ninetales",
+    "number": "21",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "90",
+    "artist": "Kanako Eo",
+    "flavorText": "Very smart and very vengeful. Grabbing one of its many tails could result in a 1,000-year curse.",
+    "evolvesFrom": "Vulpix",
+    "image": "assets/cards/xy5/21.webp",
+    "imageSmall": "assets/cards/xy5/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Flickering Flames",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Barrier Shrine",
+        "text": "Each player can't play any Stadium cards from his or her hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-21/large"
+  },
+  {
+    "id": "xy5-22",
+    "name": "Slugma",
+    "number": "22",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Miki Tanaka",
+    "flavorText": "Its body is made of magma. If it doesn't keep moving, its body will cool and harden.",
+    "image": "assets/cards/xy5/22.webp",
+    "imageSmall": "assets/cards/xy5/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Grass Fire",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard a Grass Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Ram",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-22/large"
+  },
+  {
+    "id": "xy5-23",
+    "name": "Magcargo",
+    "number": "23",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Shigenori Negishi",
+    "flavorText": "Its body is as hot as lava and is always billowing. Flames will occasionally burst from its shell.",
+    "evolvesFrom": "Slugma",
+    "image": "assets/cards/xy5/23.webp",
+    "imageSmall": "assets/cards/xy5/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Flame Burst",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "This attack does 20 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Flamethrower",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-23/large"
+  },
+  {
+    "id": "xy5-24",
+    "name": "Magcargo",
+    "number": "24",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "110",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "Its body is as hot as lava and is always billowing. Flames will occasionally burst from its shell.",
+    "evolvesFrom": "Slugma",
+    "image": "assets/cards/xy5/24.webp",
+    "imageSmall": "assets/cards/xy5/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Indomitable Blaze",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "If your opponent's Active Pokémon is a Pokémon-EX, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-24/large"
+  },
+  {
+    "id": "xy5-25",
+    "name": "Torchic",
+    "number": "25",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "60",
+    "artist": "sui",
+    "flavorText": "A fire burns inside, so it feels very warm to hug. It launches fireballs of 1,800 degrees Fahrenheit.",
+    "image": "assets/cards/xy5/25.webp",
+    "imageSmall": "assets/cards/xy5/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Ember",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, discard a Fire Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-25/large"
+  },
+  {
+    "id": "xy5-26",
+    "name": "Torchic",
+    "number": "26",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "50",
+    "artist": "5ban Graphics",
+    "flavorText": "A fire burns inside, so it feels very warm to hug. It launches fireballs of 1,800 degrees Fahrenheit.",
+    "image": "assets/cards/xy5/26.webp",
+    "imageSmall": "assets/cards/xy5/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Flare Bonus",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Discard a Fire Energy card from your hand. If you do, draw 2 cards."
+      },
+      {
+        "name": "Claw",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-26/large"
+  },
+  {
+    "id": "xy5-27",
+    "name": "Combusken",
+    "number": "27",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "80",
+    "artist": "kawayoo",
+    "flavorText": "During a battle, the hot flame in its body increases. Its kicks have outstanding destructive power.",
+    "evolvesFrom": "Torchic",
+    "image": "assets/cards/xy5/27.webp",
+    "imageSmall": "assets/cards/xy5/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      },
+      {
+        "name": "Spiral Kick",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-27/large"
+  },
+  {
+    "id": "xy5-28",
+    "name": "Blaziken",
+    "number": "28",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "When facing a tough foe, it looses flames from its wrists. Its powerful legs let it jump clear over buildings.",
+    "evolvesFrom": "Combusken",
+    "image": "assets/cards/xy5/28.webp",
+    "imageSmall": "assets/cards/xy5/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Spreading Flames",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Attach 3 Fire Energy cards from your discard pile to your Pokémon in any way you like."
+      },
+      {
+        "name": "Heat Blow",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-28/large"
+  },
+  {
+    "id": "xy5-29",
+    "name": "Camerupt-EX",
+    "number": "29",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy5/29.webp",
+    "imageSmall": "assets/cards/xy5/29-sm.webp",
+    "attacks": [
+      {
+        "name": "Tumbling Attack",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Explosive Jet",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Discard as many Fire Energy attached to your Pokémon as you like. This attack does 50 damage times the number of Energy cards you discarded."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-29/large"
+  },
+  {
+    "id": "xy5-30",
+    "name": "Horsea",
+    "number": "30",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "kirisAki",
+    "flavorText": "It makes its nest in the shade of corals. If it senses danger, it spits murky ink and flees.",
+    "image": "assets/cards/xy5/30.webp",
+    "imageSmall": "assets/cards/xy5/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-30/large"
+  },
+  {
+    "id": "xy5-31",
+    "name": "Seadra",
+    "number": "31",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "It is capable of swimming backwards by rapidly flapping its winglike pectoral fins and stout tail.",
+    "evolvesFrom": "Horsea",
+    "image": "assets/cards/xy5/31.webp",
+    "imageSmall": "assets/cards/xy5/31-sm.webp",
+    "attacks": [
+      {
+        "name": "Knockout Needle",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "Flip 2 coins. If both of them are heads, this attack does 40 more damage."
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-31/large"
+  },
+  {
+    "id": "xy5-32",
+    "name": "Staryu",
+    "number": "32",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Tomokazu Komiya",
+    "flavorText": "It appears in large numbers by seashores. At night, its central core flashes with a red light.",
+    "image": "assets/cards/xy5/32.webp",
+    "imageSmall": "assets/cards/xy5/32-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-32/large"
+  },
+  {
+    "id": "xy5-33",
+    "name": "Mudkip",
+    "number": "33",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Aya Kusube",
+    "flavorText": "To alert it, the fin on its head senses the flow of water. It has the strength to heft boulders.",
+    "image": "assets/cards/xy5/33.webp",
+    "imageSmall": "assets/cards/xy5/33-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-33/large"
+  },
+  {
+    "id": "xy5-34",
+    "name": "Marshtomp",
+    "number": "34",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "sui",
+    "flavorText": "Living on muddy ground that provides poor footing has made its legs sturdy.",
+    "evolvesFrom": "Mudkip",
+    "image": "assets/cards/xy5/34.webp",
+    "imageSmall": "assets/cards/xy5/34-sm.webp",
+    "attacks": [
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Endeavor",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Flip 2 coins. This attack does 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-34/large"
+  },
+  {
+    "id": "xy5-35",
+    "name": "Swampert",
+    "number": "35",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Shigenori Negishi",
+    "flavorText": "It can swim while towing a large ship. It bashes down foes with a swing of its thick arms.",
+    "evolvesFrom": "Marshtomp",
+    "image": "assets/cards/xy5/35.webp",
+    "imageSmall": "assets/cards/xy5/35-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Arrow",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 60 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Waterfall",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-35/large"
+  },
+  {
+    "id": "xy5-36",
+    "name": "Swampert",
+    "number": "36",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It can swim while towing a large ship. It bashes down foes with a swing of its thick arms.",
+    "evolvesFrom": "Marshtomp",
+    "image": "assets/cards/xy5/36.webp",
+    "imageSmall": "assets/cards/xy5/36-sm.webp",
+    "attacks": [
+      {
+        "name": "Hydro Pump",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 30 more damage for each Water Energy attached to this Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Diving Search",
+        "text": "Once during your turn (before your attack), you may search your deck for a card. Shuffle your deck, then put that card on top of it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-36/large"
+  },
+  {
+    "id": "xy5-37",
+    "name": "Ludicolo",
+    "number": "37",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "kawayoo",
+    "flavorText": "The rhythm of bright, festive music activates Ludicolo's cells, making it more powerful.",
+    "evolvesFrom": "Lombre",
+    "image": "assets/cards/xy5/37.webp",
+    "imageSmall": "assets/cards/xy5/37-sm.webp",
+    "attacks": [
+      {
+        "name": "Astonish",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into his or her deck."
+      },
+      {
+        "name": "Splash Dance",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your next turn, this Pokémon's Splash Dance attack does 60 more damage (before applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-37/large"
+  },
+  {
+    "id": "xy5-38",
+    "name": "Wailord-EX",
+    "number": "38",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "250",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy5/38.webp",
+    "imageSmall": "assets/cards/xy5/38-sm.webp",
+    "attacks": [
+      {
+        "name": "High Breaching",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "120",
+        "text": "This Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Water Veil",
+        "text": "Whenever you attach an Energy card from your hand to this Pokémon, remove all Special Conditions from it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-38/large"
+  },
+  {
+    "id": "xy5-39",
+    "name": "Barboach",
+    "number": "39",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "Its whiskers make a superb radar. They are used to locate prey, even in the murkiest of water.",
+    "image": "assets/cards/xy5/39.webp",
+    "imageSmall": "assets/cards/xy5/39-sm.webp",
+    "attacks": [
+      {
+        "name": "Rain Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-39/large"
+  },
+  {
+    "id": "xy5-40",
+    "name": "Whiscash",
+    "number": "40",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Naoyo Kimura",
+    "flavorText": "It makes its nest at the bottom of swamps. It will eat anything—if it is alive, Whiscash will eat it.",
+    "evolvesFrom": "Barboach",
+    "image": "assets/cards/xy5/40.webp",
+    "imageSmall": "assets/cards/xy5/40-sm.webp",
+    "attacks": [
+      {
+        "name": "Amnesia",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Choose 1 of your opponent's Active Pokémon's attacks. That Pokémon can't use that attack during your opponent's next turn."
+      },
+      {
+        "name": "Rising Lunge",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-40/large"
+  },
+  {
+    "id": "xy5-41",
+    "name": "Whiscash",
+    "number": "41",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "PLANETA",
+    "flavorText": "It makes its nest at the bottom of swamps. It will eat anything—if it is alive, Whiscash will eat it.",
+    "evolvesFrom": "Barboach",
+    "image": "assets/cards/xy5/41.webp",
+    "imageSmall": "assets/cards/xy5/41-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      },
+      {
+        "name": "Earthquake",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This attack does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-41/large"
+  },
+  {
+    "id": "xy5-42",
+    "name": "Corphish",
+    "number": "42",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Shin Nagasawa",
+    "flavorText": "Its hardy vitality enables it to adapt to any environment. Its pincers will never release prey.",
+    "image": "assets/cards/xy5/42.webp",
+    "imageSmall": "assets/cards/xy5/42-sm.webp",
+    "attacks": [
+      {
+        "name": "Vice Grip",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Knock Off",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard a random card from your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-42/large"
+  },
+  {
+    "id": "xy5-43",
+    "name": "Feebas",
+    "number": "43",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "30",
+    "artist": "Suwama Chiaki",
+    "flavorText": "It is the shabbiest Pokémon of all. It forms in schools and lives at the bottom of rivers.",
+    "image": "assets/cards/xy5/43.webp",
+    "imageSmall": "assets/cards/xy5/43-sm.webp",
+    "attacks": [
+      {
+        "name": "Float On",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If tails, this Pokémon does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-43/large"
+  },
+  {
+    "id": "xy5-44",
+    "name": "Milotic",
+    "number": "44",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "110",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "It is the world's most beautiful Pokémon. There are many works of art featuring Milotic.",
+    "evolvesFrom": "Feebas",
+    "image": "assets/cards/xy5/44.webp",
+    "imageSmall": "assets/cards/xy5/44-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Swirl",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "You may have your opponent switch his or her Active Pokémon with 1 of his or her Benched Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sparkling Ripples",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may put a card from your discard pile into your hand.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-44/large"
+  },
+  {
+    "id": "xy5-45",
+    "name": "Spheal",
+    "number": "45",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "TOKIYA",
+    "flavorText": "Its body is covered in fluffy fur. The fur keeps it from feeling cold while it is rolling on ice.",
+    "image": "assets/cards/xy5/45.webp",
+    "imageSmall": "assets/cards/xy5/45-sm.webp",
+    "attacks": [
+      {
+        "name": "Ball Roll",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-45/large"
+  },
+  {
+    "id": "xy5-46",
+    "name": "Spheal",
+    "number": "46",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "They can't swim well yet, and they move much faster by rolling. When they're happy, they clap fins.",
+    "image": "assets/cards/xy5/46.webp",
+    "imageSmall": "assets/cards/xy5/46-sm.webp",
+    "attacks": [
+      {
+        "name": "Ice Ball",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-46/large"
+  },
+  {
+    "id": "xy5-47",
+    "name": "Sealeo",
+    "number": "47",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Be it Spheal or a Poké Ball, it will spin any round object on its nose with the greatest of ease.",
+    "evolvesFrom": "Spheal",
+    "image": "assets/cards/xy5/47.webp",
+    "imageSmall": "assets/cards/xy5/47-sm.webp",
+    "attacks": [
+      {
+        "name": "Freezing Headbutt",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Aurora Beam",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-47/large"
+  },
+  {
+    "id": "xy5-48",
+    "name": "Walrein",
+    "number": "48",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "150",
+    "artist": "Satoshi Shirai",
+    "flavorText": "It shatters drift ice with its strong tusks. Its thick layer of blubber repels enemy attacks.",
+    "evolvesFrom": "Sealeo",
+    "image": "assets/cards/xy5/48.webp",
+    "imageSmall": "assets/cards/xy5/48-sm.webp",
+    "attacks": [
+      {
+        "name": "Knock Over",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "You may discard any Stadium card in play."
+      },
+      {
+        "name": "Frozen Splash",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "If your opponent's Active Pokémon is a Fighting Pokémon, this attack does 70 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-48/large"
+  },
+  {
+    "id": "xy5-49",
+    "name": "Clamperl",
+    "number": "49",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It is protected by a sturdy shell. Once in a lifetime, it makes a magnificent pearl.",
+    "image": "assets/cards/xy5/49.webp",
+    "imageSmall": "assets/cards/xy5/49-sm.webp",
+    "attacks": [
+      {
+        "name": "Shell Protection",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, if this Pokémon would be damaged by an attack, prevent that attack's damage done to this Pokémon if that damage is 50 or less."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-49/large"
+  },
+  {
+    "id": "xy5-50",
+    "name": "Huntail",
+    "number": "50",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It lives deep in the sea. With a tail shaped like a small fish, it attracts unsuspecting prey.",
+    "evolvesFrom": "Clamperl",
+    "image": "assets/cards/xy5/50.webp",
+    "imageSmall": "assets/cards/xy5/50-sm.webp",
+    "attacks": [
+      {
+        "name": "Powerful Storm",
+        "cost": [
+          "Water"
+        ],
+        "damage": "20×",
+        "text": "This attack does 20 damage times the amount of Energy attached to all of your Pokémon."
+      },
+      {
+        "name": "Crunch",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-50/large"
+  },
+  {
+    "id": "xy5-51",
+    "name": "Gorebyss",
+    "number": "51",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Miki Tanaka",
+    "flavorText": "Its swimming form is exquisitely elegant. With its thin mouth, it feeds on seaweed that grows between rocks.",
+    "evolvesFrom": "Clamperl",
+    "image": "assets/cards/xy5/51.webp",
+    "imageSmall": "assets/cards/xy5/51-sm.webp",
+    "attacks": [
+      {
+        "name": "Captivate",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with his or her Active Pokémon."
+      },
+      {
+        "name": "Psychic",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "This attack does 10 more damage for each Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-51/large"
+  },
+  {
+    "id": "xy5-52",
+    "name": "Gorebyss",
+    "number": "52",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kouki Saitou",
+    "flavorText": "Its swimming form is exquisitely elegant. With its thin mouth, it feeds on seaweed that grows between rocks.",
+    "evolvesFrom": "Clamperl",
+    "image": "assets/cards/xy5/52.webp",
+    "imageSmall": "assets/cards/xy5/52-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Bolt",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-52/large"
+  },
+  {
+    "id": "xy5-53",
+    "name": "Kyogre",
+    "number": "53",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "130",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "A mythical Pokémon said to have swelled the seas with rain and tidal waves. It battled with Groudon.",
+    "image": "assets/cards/xy5/53.webp",
+    "imageSmall": "assets/cards/xy5/53-sm.webp",
+    "attacks": [
+      {
+        "name": "Spring Tides",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Ocean Cyclone",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-53/large"
+  },
+  {
+    "id": "xy5-54",
+    "name": "Kyogre-EX",
+    "number": "54",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Ryota Murayama",
+    "image": "assets/cards/xy5/54.webp",
+    "imageSmall": "assets/cards/xy5/54-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Giant Whirlpool",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "Return 2 Water Energy attached to this Pokémon to your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-54/large"
+  },
+  {
+    "id": "xy5-55",
+    "name": "Primal Kyogre-EX",
+    "number": "55",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Kyogre-EX",
+    "image": "assets/cards/xy5/55.webp",
+    "imageSmall": "assets/cards/xy5/55-sm.webp",
+    "attacks": [
+      {
+        "name": "Tidal Storm",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Move 2 Energy from this Pokémon to 1 of your Benched Pokémon. This attack does 30 damage to each of your opponent's Benched Pokémon-EX. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-55/large"
+  },
+  {
+    "id": "xy5-56",
+    "name": "Manaphy",
+    "number": "56",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "sui",
+    "flavorText": "It starts its life with a wondrous power that permits it to bond with any kind of Pokémon.",
+    "image": "assets/cards/xy5/56.webp",
+    "imageSmall": "assets/cards/xy5/56-sm.webp",
+    "attacks": [
+      {
+        "name": "Deep Sea Swirl",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Shuffle your hand into your deck. Then, draw 6 cards."
+      },
+      {
+        "name": "Life Saver",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Put 2 Water Pokémon from your discard pile into your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-56/large"
+  },
+  {
+    "id": "xy5-57",
+    "name": "Chinchou",
+    "number": "57",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "70",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It shoots positive and negative electricity between the tips of its two antennae and zaps its enemies.",
+    "image": "assets/cards/xy5/57.webp",
+    "imageSmall": "assets/cards/xy5/57-sm.webp",
+    "attacks": [
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-57/large"
+  },
+  {
+    "id": "xy5-58",
+    "name": "Lanturn",
+    "number": "58",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "MAHOU",
+    "flavorText": "It blinds prey with an intense burst of light. With the prey incapacitated, the Pokémon swallows it in a single gulp.",
+    "evolvesFrom": "Chinchou",
+    "image": "assets/cards/xy5/58.webp",
+    "imageSmall": "assets/cards/xy5/58-sm.webp",
+    "attacks": [
+      {
+        "name": "Dive",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      },
+      {
+        "name": "Take Down",
+        "cost": [
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-58/large"
+  },
+  {
+    "id": "xy5-59",
+    "name": "Electrike",
+    "number": "59",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "60",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It stores static electricity in its fur for discharging. It gives off sparks if a storm approaches.",
+    "image": "assets/cards/xy5/59.webp",
+    "imageSmall": "assets/cards/xy5/59-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Lightning Energy card and attach it to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-59/large"
+  },
+  {
+    "id": "xy5-60",
+    "name": "Electrike",
+    "number": "60",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "It stores static electricity in its fur for discharging. It gives off sparks if a storm approaches.",
+    "image": "assets/cards/xy5/60.webp",
+    "imageSmall": "assets/cards/xy5/60-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Fang",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-60/large"
+  },
+  {
+    "id": "xy5-61",
+    "name": "Manectric",
+    "number": "61",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "100",
+    "artist": "Naoki Saito",
+    "flavorText": "It discharges electricity from its mane. It creates a thundercloud overhead to drop lightning bolts.",
+    "evolvesFrom": "Electrike",
+    "image": "assets/cards/xy5/61.webp",
+    "imageSmall": "assets/cards/xy5/61-sm.webp",
+    "attacks": [
+      {
+        "name": "Lightning Turn",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Switch this Pokémon with 1 of your Benched Pokémon."
+      },
+      {
+        "name": "Electric Shock",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Discard all Lightning Energy attached to this Pokémon. Your opponent's Active Pokémon is now Paralyzed."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-61/large"
+  },
+  {
+    "id": "xy5-62",
+    "name": "Tynamo",
+    "number": "62",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "flavorText": "One alone can emit only a trickle of electricity, so a group of them gathers to unleash a powerful electric shock.",
+    "image": "assets/cards/xy5/62.webp",
+    "imageSmall": "assets/cards/xy5/62-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Splash",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-62/large"
+  },
+  {
+    "id": "xy5-63",
+    "name": "Eelektrik",
+    "number": "63",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "match",
+    "flavorText": "These Pokémon have a big appetite. When they spot their prey, they attack it and paralyze it with electricity.",
+    "evolvesFrom": "Tynamo",
+    "image": "assets/cards/xy5/63.webp",
+    "imageSmall": "assets/cards/xy5/63-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Buzz Flip",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 4 coins. This attack does 30 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-63/large"
+  },
+  {
+    "id": "xy5-64",
+    "name": "Eelektrik",
+    "number": "64",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "90",
+    "artist": "Naoki Saito",
+    "flavorText": "These Pokémon have a big appetite. When they spot their prey, they attack it and paralyze it with electricity.",
+    "evolvesFrom": "Tynamo",
+    "image": "assets/cards/xy5/64.webp",
+    "imageSmall": "assets/cards/xy5/64-sm.webp",
+    "attacks": [
+      {
+        "name": "Thrash",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-64/large"
+  },
+  {
+    "id": "xy5-65",
+    "name": "Eelektross",
+    "number": "65",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "140",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "They crawl out of the ocean using their arms. They will attack prey on shore and immediately drag it into the ocean.",
+    "evolvesFrom": "Eelektrik",
+    "image": "assets/cards/xy5/65.webp",
+    "imageSmall": "assets/cards/xy5/65-sm.webp",
+    "attacks": [
+      {
+        "name": "Electricannon",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "You may discard all Lightning Energy attached to this Pokémon. If you do, this attack does 50 more damage."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Connect",
+        "text": "As often as you like during your turn (before your attack), you may move a basic Energy attached to 1 of your Benched Pokémon to your Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-65/large"
+  },
+  {
+    "id": "xy5-66",
+    "name": "Nidoran ♀",
+    "number": "66",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Mizue",
+    "flavorText": "Small and very docile, it protects itself with its small, poisonous horn when attacked.",
+    "image": "assets/cards/xy5/66.webp",
+    "imageSmall": "assets/cards/xy5/66-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-66/large"
+  },
+  {
+    "id": "xy5-67",
+    "name": "Nidorina",
+    "number": "67",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "Aya Kusube",
+    "flavorText": "When feeding its young, it first chews the food into a paste, then spits it out for the offspring.",
+    "evolvesFrom": "Nidoran ♀",
+    "image": "assets/cards/xy5/67.webp",
+    "imageSmall": "assets/cards/xy5/67-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Strength",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-67/large"
+  },
+  {
+    "id": "xy5-68",
+    "name": "Nidoqueen",
+    "number": "68",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "The body is covered by stiff, needle-like scales. If it becomes excited, the needles bristle outwards.",
+    "evolvesFrom": "Nidorina",
+    "image": "assets/cards/xy5/68.webp",
+    "imageSmall": "assets/cards/xy5/68-sm.webp",
+    "attacks": [
+      {
+        "name": "Double Kick",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 2 coins. This attack does 40 damage times the number of heads."
+      },
+      {
+        "name": "Poison Fang",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent's Active Pokémon is now Poisoned. Put 2 damage counters instead of 1 on that Pokémon between turns."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-68/large"
+  },
+  {
+    "id": "xy5-69",
+    "name": "Nidoqueen",
+    "number": "69",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "PLANETA",
+    "flavorText": "The body is covered by stiff, needle-like scales. If it becomes excited, the needles bristle outwards.",
+    "evolvesFrom": "Nidorina",
+    "image": "assets/cards/xy5/69.webp",
+    "imageSmall": "assets/cards/xy5/69-sm.webp",
+    "attacks": [
+      {
+        "name": "Poison Jab",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Poisoned."
+      },
+      {
+        "name": "Dynamite Punch",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "This Pokémon does 20 damage to itself. Don't apply Weakness to this damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-69/large"
+  },
+  {
+    "id": "xy5-70",
+    "name": "Tentacool",
+    "number": "70",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "50",
+    "artist": "Yukiko Baba",
+    "flavorText": "Drifts in shallow seas. Anglers who hook them by accident are often punished by their stingers.",
+    "image": "assets/cards/xy5/70.webp",
+    "imageSmall": "assets/cards/xy5/70-sm.webp",
+    "attacks": [
+      {
+        "name": "Lost in the Waves",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": "Return this Pokémon and all cards attached to it to your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-70/large"
+  },
+  {
+    "id": "xy5-71",
+    "name": "Tentacool",
+    "number": "71",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "60",
+    "artist": "Mizue",
+    "flavorText": "Drifts in shallow seas. Anglers who hook them by accident are often punished by their stingers.",
+    "image": "assets/cards/xy5/71.webp",
+    "imageSmall": "assets/cards/xy5/71-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyshot",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-71/large"
+  },
+  {
+    "id": "xy5-72",
+    "name": "Tentacruel",
+    "number": "72",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "match",
+    "flavorText": "It has 80 tentacles that move about freely. They can sting, causing poisoning and sharp, stabbing pain.",
+    "evolvesFrom": "Tentacool",
+    "image": "assets/cards/xy5/72.webp",
+    "imageSmall": "assets/cards/xy5/72-sm.webp",
+    "attacks": [
+      {
+        "name": "Dancing Tentacles",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+      },
+      {
+        "name": "Stick and Absorb",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Heal 30 damage from this Pokémon. The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-72/large"
+  },
+  {
+    "id": "xy5-73",
+    "name": "Starmie",
+    "number": "73",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "90",
+    "artist": "HiRON",
+    "flavorText": "At the center of its body is a red core, which sends mysterious radio signals into the night sky.",
+    "evolvesFrom": "Staryu",
+    "image": "assets/cards/xy5/73.webp",
+    "imageSmall": "assets/cards/xy5/73-sm.webp",
+    "attacks": [
+      {
+        "name": "Synchro Star",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "If this Pokémon and your opponent's Active Pokémon have the same amount of Energy attached to them, this attack does 60 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-73/large"
+  },
+  {
+    "id": "xy5-74",
+    "name": "Rhyhorn",
+    "number": "74",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It is inept at turning because of its four short legs. It can only charge and run in one direction.",
+    "image": "assets/cards/xy5/74.webp",
+    "imageSmall": "assets/cards/xy5/74-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-74/large"
+  },
+  {
+    "id": "xy5-75",
+    "name": "Rhydon",
+    "number": "75",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It begins walking on its hind legs after evolution. It can punch holes through boulders with its horn.",
+    "evolvesFrom": "Rhyhorn",
+    "image": "assets/cards/xy5/75.webp",
+    "imageSmall": "assets/cards/xy5/75-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This Pokémon does 10 damage to itself."
+      },
+      {
+        "name": "Horn Drill",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-75/large"
+  },
+  {
+    "id": "xy5-76",
+    "name": "Rhyperior",
+    "number": "76",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "150",
+    "artist": "Kouki Saitou",
+    "flavorText": "It puts rocks in holes in its palms and uses its muscles to shoot them. Geodude are shot at rare times.",
+    "evolvesFrom": "Rhydon",
+    "image": "assets/cards/xy5/76.webp",
+    "imageSmall": "assets/cards/xy5/76-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Shower",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip 3 coins. This attack does 20 damage times the number of heads to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Stone Edge",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-76/large"
+  },
+  {
+    "id": "xy5-77",
+    "name": "Rhyperior",
+    "number": "77",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "160",
+    "artist": "TOKIYA",
+    "flavorText": "It puts rocks in holes in its palms and uses its muscles to shoot them. Geodude are shot at rare times.",
+    "evolvesFrom": "Rhydon",
+    "image": "assets/cards/xy5/77.webp",
+    "imageSmall": "assets/cards/xy5/77-sm.webp",
+    "attacks": [
+      {
+        "name": "Hammer Arm",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard the top card of your opponent's deck."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Rock Wall",
+        "text": "Any damage done to your Pokémon by an opponent's attack is reduced by 10 (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-77/large"
+  },
+  {
+    "id": "xy5-78",
+    "name": "Nosepass",
+    "number": "78",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Satoshi Shirai",
+    "flavorText": "Its magnetic nose consistently faces north. Travelers check Nosepass to get their bearings.",
+    "image": "assets/cards/xy5/78.webp",
+    "imageSmall": "assets/cards/xy5/78-sm.webp",
+    "attacks": [
+      {
+        "name": "Stiffen",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 40 (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Ram",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-78/large"
+  },
+  {
+    "id": "xy5-79",
+    "name": "Meditite",
+    "number": "79",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "50",
+    "artist": "sui",
+    "flavorText": "It eats just one berry a day. By enduring hunger, its spirit is tempered and made sharper.",
+    "image": "assets/cards/xy5/79.webp",
+    "imageSmall": "assets/cards/xy5/79-sm.webp",
+    "attacks": [
+      {
+        "name": "Smack",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-79/large"
+  },
+  {
+    "id": "xy5-80",
+    "name": "Medicham",
+    "number": "80",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Akira Komayama",
+    "flavorText": "Through yoga training, it gained the psychic power to predict its foe's next move.",
+    "evolvesFrom": "Meditite",
+    "image": "assets/cards/xy5/80.webp",
+    "imageSmall": "assets/cards/xy5/80-sm.webp",
+    "attacks": [
+      {
+        "name": "Pure Power",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Put 4 damage counters on your opponent's Pokémon in any way you like."
+      },
+      {
+        "name": "Windmill Kick",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-80/large"
+  },
+  {
+    "id": "xy5-81",
+    "name": "Medicham",
+    "number": "81",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Through yoga training, it gained the psychic power to predict its foe's next move.",
+    "evolvesFrom": "Meditite",
+    "image": "assets/cards/xy5/81.webp",
+    "imageSmall": "assets/cards/xy5/81-sm.webp",
+    "attacks": [
+      {
+        "name": "Calm Mind",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Heal 30 damage from this Pokémon."
+      },
+      {
+        "name": "Yoga Kick",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-81/large"
+  },
+  {
+    "id": "xy5-82",
+    "name": "Trapinch",
+    "number": "82",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Suwama Chiaki",
+    "flavorText": "It makes an inescapable conical pit and lies in wait at the bottom for prey to come tumbling down.",
+    "image": "assets/cards/xy5/82.webp",
+    "imageSmall": "assets/cards/xy5/82-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Mud-Slap",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-82/large"
+  },
+  {
+    "id": "xy5-83",
+    "name": "Solrock",
+    "number": "83",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It absorbs solar energy during the day. Always expressionless, it can sense what its foe is thinking.",
+    "image": "assets/cards/xy5/83.webp",
+    "imageSmall": "assets/cards/xy5/83-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Generator",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Special Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Knock Away",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-83/large"
+  },
+  {
+    "id": "xy5-84",
+    "name": "Groudon",
+    "number": "84",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "This legendary Pokémon is said to represent the land. It went to sleep after dueling Kyogre.",
+    "image": "assets/cards/xy5/84.webp",
+    "imageSmall": "assets/cards/xy5/84-sm.webp",
+    "attacks": [
+      {
+        "name": "Rock Smash",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      },
+      {
+        "name": "Break Ground",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This attack does 10 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-84/large"
+  },
+  {
+    "id": "xy5-85",
+    "name": "Groudon-EX",
+    "number": "85",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "180",
+    "artist": "Ryota Murayama",
+    "image": "assets/cards/xy5/85.webp",
+    "imageSmall": "assets/cards/xy5/85-sm.webp",
+    "attacks": [
+      {
+        "name": "Rip Claw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Massive Rend",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-85/large"
+  },
+  {
+    "id": "xy5-86",
+    "name": "Primal Groudon-EX",
+    "number": "86",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Groudon-EX",
+    "image": "assets/cards/xy5/86.webp",
+    "imageSmall": "assets/cards/xy5/86-sm.webp",
+    "attacks": [
+      {
+        "name": "Gaia Volcano",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-86/large"
+  },
+  {
+    "id": "xy5-87",
+    "name": "Hippopotas",
+    "number": "87",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Yuka Morii",
+    "flavorText": "It enshrouds itself with sand to protect itself from germs. It does not enjoy getting wet.",
+    "image": "assets/cards/xy5/87.webp",
+    "imageSmall": "assets/cards/xy5/87-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Rolling Tackle",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-87/large"
+  },
+  {
+    "id": "xy5-88",
+    "name": "Hippowdon",
+    "number": "88",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "130",
+    "artist": "Naoyo Kimura",
+    "flavorText": "It blasts internally stored sand from ports on its body to create a towering twister for attack.",
+    "evolvesFrom": "Hippopotas",
+    "image": "assets/cards/xy5/88.webp",
+    "imageSmall": "assets/cards/xy5/88-sm.webp",
+    "attacks": [
+      {
+        "name": "Resistance Desert",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "During your opponent's next turn, prevent all effects of attacks, including damage, done to this Pokémon by Pokémon-EX."
+      },
+      {
+        "name": "Double-Edge",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-88/large"
+  },
+  {
+    "id": "xy5-89",
+    "name": "Drilbur",
+    "number": "89",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "60",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "By spinning its body, it can dig straight through the ground at a speed of 30 mph.",
+    "image": "assets/cards/xy5/89.webp",
+    "imageSmall": "assets/cards/xy5/89-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-89/large"
+  },
+  {
+    "id": "xy5-90",
+    "name": "Diggersby",
+    "number": "90",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "110",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "As powerful as an excavator, its ears can reduce dense bedrock to rubble. When it's finished digging, it lounges lazily.",
+    "evolvesFrom": "Bunnelby",
+    "image": "assets/cards/xy5/90.webp",
+    "imageSmall": "assets/cards/xy5/90-sm.webp",
+    "attacks": [
+      {
+        "name": "Ear Dig",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "",
+        "text": "Flip a coin until you get tails. For each heads, discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Hammer In",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-90/large"
+  },
+  {
+    "id": "xy5-91",
+    "name": "Sharpedo-EX",
+    "number": "91",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy5/91.webp",
+    "imageSmall": "assets/cards/xy5/91-sm.webp",
+    "attacks": [
+      {
+        "name": "Hunt",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with his or her Active Pokémon. This attack does 30 damage to the new Active Pokémon."
+      },
+      {
+        "name": "Jagged Fang",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard an Energy attached to this Pokémon. Then, discard an Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-91/large"
+  },
+  {
+    "id": "xy5-92",
+    "name": "Crawdaunt",
+    "number": "92",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "90",
+    "artist": "Hajime Kusajima",
+    "flavorText": "Loving to battle, this Pokémon pinches all Pokémon that enter its territory with its pincers and throws them out.",
+    "evolvesFrom": "Corphish",
+    "image": "assets/cards/xy5/92.webp",
+    "imageSmall": "assets/cards/xy5/92-sm.webp",
+    "attacks": [
+      {
+        "name": "Crabhammer",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Unruly Claw",
+        "text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may discard an Energy attached to your opponent's Active Pokémon.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-92/large"
+  },
+  {
+    "id": "xy5-93",
+    "name": "Aggron-EX",
+    "number": "93",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "180",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy5/93.webp",
+    "imageSmall": "assets/cards/xy5/93-sm.webp",
+    "attacks": [
+      {
+        "name": "Steel Headbutt",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Raging Hammer",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-93/large"
+  },
+  {
+    "id": "xy5-94",
+    "name": "M Aggron-EX",
+    "number": "94",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Aggron-EX",
+    "image": "assets/cards/xy5/94.webp",
+    "imageSmall": "assets/cards/xy5/94-sm.webp",
+    "attacks": [
+      {
+        "name": "Megaton Slam",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "You may flip a coin. If heads, this attack does 120 more damage. If tails, this attack does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-94/large"
+  },
+  {
+    "id": "xy5-95",
+    "name": "Probopass",
+    "number": "95",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "110",
+    "artist": "TOKIYA",
+    "flavorText": "It freely controls three small units called Mini-Noses using magnetic force.",
+    "evolvesFrom": "Nosepass",
+    "image": "assets/cards/xy5/95.webp",
+    "imageSmall": "assets/cards/xy5/95-sm.webp",
+    "attacks": [
+      {
+        "name": "Triple Smash",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Reinforced Nose",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-95/large"
+  },
+  {
+    "id": "xy5-96",
+    "name": "Excadrill",
+    "number": "96",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Shin Nagasawa",
+    "flavorText": "More than 300 feet below the surface, they build mazelike nests. Their activity can be destructive to subway tunnels.",
+    "evolvesFrom": "Drilbur",
+    "image": "assets/cards/xy5/96.webp",
+    "imageSmall": "assets/cards/xy5/96-sm.webp",
+    "attacks": [
+      {
+        "name": "Drill Run",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Straight Claw",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "You may discard an Energy attached to this Pokémon. If you do, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-96/large"
+  },
+  {
+    "id": "xy5-97",
+    "name": "Excadrill",
+    "number": "97",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "110",
+    "artist": "PLANETA",
+    "flavorText": "More than 300 feet below the surface, they build mazelike nests. Their activity can be destructive to subway tunnels.",
+    "evolvesFrom": "Drilbur",
+    "image": "assets/cards/xy5/97.webp",
+    "imageSmall": "assets/cards/xy5/97-sm.webp",
+    "attacks": [
+      {
+        "name": "Dredge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for 2 Energy cards and attach them to this Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Mach Claw",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-97/large"
+  },
+  {
+    "id": "xy5-98",
+    "name": "Honedge",
+    "number": "98",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "If anyone dares to grab its hilt, it wraps a blue cloth around that person's arm and drains that person's life energy completely.",
+    "image": "assets/cards/xy5/98.webp",
+    "imageSmall": "assets/cards/xy5/98-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Sound",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-98/large"
+  },
+  {
+    "id": "xy5-99",
+    "name": "Doublade",
+    "number": "99",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "80",
+    "artist": "Kanako Eo",
+    "flavorText": "The complex attack patterns of its two swords are unstoppable, even for an opponent greatly accomplished at swordplay.",
+    "evolvesFrom": "Honedge",
+    "image": "assets/cards/xy5/99.webp",
+    "imageSmall": "assets/cards/xy5/99-sm.webp",
+    "attacks": [
+      {
+        "name": "False Swipe",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, put damage counters on your opponent's Active Pokémon until its remaining HP is 10."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-99/large"
+  },
+  {
+    "id": "xy5-100",
+    "name": "Aegislash",
+    "number": "100",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "140",
+    "artist": "Kouki Saitou",
+    "flavorText": "Apparently, it can detect the innate qualities of leadership. According to legend, whoever it recognizes is destined to become king.",
+    "evolvesFrom": "Doublade",
+    "image": "assets/cards/xy5/100.webp",
+    "imageSmall": "assets/cards/xy5/100-sm.webp",
+    "attacks": [
+      {
+        "name": "Protect Charge",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Miracle Guard",
+        "text": "Each of your Pokémon has no Weakness.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-100/large"
+  },
+  {
+    "id": "xy5-101",
+    "name": "Mr. Mime",
+    "number": "101",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "80",
+    "artist": "TOKIYA",
+    "flavorText": "It is adept at conning people. It is said to be able to create walls out of thin air by miming.",
+    "image": "assets/cards/xy5/101.webp",
+    "imageSmall": "assets/cards/xy5/101-sm.webp",
+    "attacks": [
+      {
+        "name": "Trick",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Move a Pokémon Tool card attached to 1 of either player's Pokémon to another of that player's Pokémon that doesn't already have a Pokémon Tool attached to it. If there is no Pokémon to move the Pokémon Tool card to, this attack does nothing."
+      },
+      {
+        "name": "Lock Up",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-101/large"
+  },
+  {
+    "id": "xy5-102",
+    "name": "Marill",
+    "number": "102",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "70",
+    "artist": "Shigenori Negishi",
+    "flavorText": "The tip of its tail is filled with oil that is lighter than water, so it acts as a float.",
+    "image": "assets/cards/xy5/102.webp",
+    "imageSmall": "assets/cards/xy5/102-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Rollout",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-102/large"
+  },
+  {
+    "id": "xy5-103",
+    "name": "Azumarill",
+    "number": "103",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "90",
+    "artist": "MAHOU",
+    "flavorText": "The bubble-like pattern on its stomach helps it camouflage itself when it's in the water.",
+    "evolvesFrom": "Marill",
+    "image": "assets/cards/xy5/103.webp",
+    "imageSmall": "assets/cards/xy5/103-sm.webp",
+    "attacks": [
+      {
+        "name": "Bubble Beam",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Superpower",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "You may do 30 more damage. If you do, this Pokémon does 30 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-103/large"
+  },
+  {
+    "id": "xy5-104",
+    "name": "Azumarill",
+    "number": "104",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "The bubble-like pattern on its stomach helps it camouflage itself when it's in the water.",
+    "evolvesFrom": "Marill",
+    "image": "assets/cards/xy5/104.webp",
+    "imageSmall": "assets/cards/xy5/104-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Rap",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Dwindling Wave",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100-",
+        "text": "This attack does 100 damage minus 10 damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-104/large"
+  },
+  {
+    "id": "xy5-105",
+    "name": "Gardevoir-EX",
+    "number": "105",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy5/105.webp",
+    "imageSmall": "assets/cards/xy5/105-sm.webp",
+    "attacks": [
+      {
+        "name": "Life Leap",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "20",
+        "text": "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Shining Wind",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Fairy"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, this Pokémon has no Weakness."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-105/large"
+  },
+  {
+    "id": "xy5-106",
+    "name": "M Gardevoir-EX",
+    "number": "106",
+    "rarity": "Rare Holo EX",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Gardevoir-EX",
+    "image": "assets/cards/xy5/106.webp",
+    "imageSmall": "assets/cards/xy5/106-sm.webp",
+    "attacks": [
+      {
+        "name": "Brilliant Arrow",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage times the amount of Fairy Energy attached to all of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-106/large"
+  },
+  {
+    "id": "xy5-107",
+    "name": "Kingdra",
+    "number": "107",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "Suwama Chiaki",
+    "flavorText": "It stores energy by sleeping at underwater depths at which no other life forms can survive.",
+    "evolvesFrom": "Seadra",
+    "image": "assets/cards/xy5/107.webp",
+    "imageSmall": "assets/cards/xy5/107-sm.webp",
+    "attacks": [
+      {
+        "name": "Shred",
+        "cost": [
+          "Water"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Twister",
+        "cost": [
+          "Water",
+          "Lightning"
+        ],
+        "damage": "70",
+        "text": "Flip 2 coins. For each heads, discard an Energy attached to your opponent's Active Pokémon. If both of them are tails, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-107/large"
+  },
+  {
+    "id": "xy5-108",
+    "name": "Kingdra",
+    "number": "108",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "130",
+    "artist": "hatachu",
+    "flavorText": "It stores energy by sleeping at underwater depths at which no other life-forms can survive.",
+    "evolvesFrom": "Seadra",
+    "image": "assets/cards/xy5/108.webp",
+    "imageSmall": "assets/cards/xy5/108-sm.webp",
+    "attacks": [
+      {
+        "name": "Gather Strength",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 4 basic Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Dragon Blast",
+        "cost": [
+          "Water",
+          "Water",
+          "Lightning"
+        ],
+        "damage": "150",
+        "text": "Discard a Water Energy and a Lightning Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-108/large"
+  },
+  {
+    "id": "xy5-109",
+    "name": "Vibrava",
+    "number": "109",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "80",
+    "artist": "Yukiko Baba",
+    "flavorText": "It generates ultrasonic waves by violently flapping its wings. After making its prey faint, it melts the prey with acid.",
+    "evolvesFrom": "Trapinch",
+    "image": "assets/cards/xy5/109.webp",
+    "imageSmall": "assets/cards/xy5/109-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      },
+      {
+        "name": "Super Vibration",
+        "cost": [
+          "Grass",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-109/large"
+  },
+  {
+    "id": "xy5-110",
+    "name": "Flygon",
+    "number": "110",
+    "rarity": "Rare Holo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "140",
+    "artist": "kirisAki",
+    "flavorText": "Known as \"The Desert Spirit,\" this Pokémon hides in the sandstorms it causes by beating its wings.",
+    "evolvesFrom": "Vibrava",
+    "image": "assets/cards/xy5/110.webp",
+    "imageSmall": "assets/cards/xy5/110-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Tomb",
+        "cost": [
+          "Grass",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sand Flap",
+        "text": "Once during your turn (before your attack), you may choose either player. That player shuffles his or her hand into his or her deck and draws 4 cards.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-110/large"
+  },
+  {
+    "id": "xy5-111",
+    "name": "Zigzagoon",
+    "number": "111",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "A Pokémon with abundant curiosity. It shows an interest in everything, so it always zigzags.",
+    "image": "assets/cards/xy5/111.webp",
+    "imageSmall": "assets/cards/xy5/111-sm.webp",
+    "attacks": [
+      {
+        "name": "Sand Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      },
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-111/large"
+  },
+  {
+    "id": "xy5-112",
+    "name": "Linoone",
+    "number": "112",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "90",
+    "artist": "match",
+    "flavorText": "It charges prey at speeds over 60 mph. However, because it can only run straight, it often fails.",
+    "evolvesFrom": "Zigzagoon",
+    "image": "assets/cards/xy5/112.webp",
+    "imageSmall": "assets/cards/xy5/112-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip 3 coins. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Dash Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-112/large"
+  },
+  {
+    "id": "xy5-113",
+    "name": "Skitty",
+    "number": "113",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "flavorText": "It shows its cute side by chasing its own tail until it gets dizzy.",
+    "image": "assets/cards/xy5/113.webp",
+    "imageSmall": "assets/cards/xy5/113-sm.webp",
+    "attacks": [
+      {
+        "name": "Charm",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Tail Smack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-113/large"
+  },
+  {
+    "id": "xy5-114",
+    "name": "Delcatty",
+    "number": "114",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It is highly popular among female Trainers for its sublime fur. It does not keep a nest.",
+    "evolvesFrom": "Skitty",
+    "image": "assets/cards/xy5/114.webp",
+    "imageSmall": "assets/cards/xy5/114-sm.webp",
+    "attacks": [
+      {
+        "name": "Replace",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Move as many Energy attached to your Pokémon to your other Pokémon in any way you like."
+      },
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-114/large"
+  },
+  {
+    "id": "xy5-115",
+    "name": "Spinda",
+    "number": "115",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "The chances of two Spinda having identical spot patterns is less than one in four billion.",
+    "image": "assets/cards/xy5/115.webp",
+    "imageSmall": "assets/cards/xy5/115-sm.webp",
+    "attacks": [
+      {
+        "name": "Staggering Steps",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Confused. If tails, this Pokémon is now Confused."
+      },
+      {
+        "name": "Uproar",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 10 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-115/large"
+  },
+  {
+    "id": "xy5-116",
+    "name": "Bidoof",
+    "number": "116",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Akira Komayama",
+    "flavorText": "It constantly gnaws on logs and rocks to whittle down its front teeth. It nests alongside water.",
+    "image": "assets/cards/xy5/116.webp",
+    "imageSmall": "assets/cards/xy5/116-sm.webp",
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Scrunch",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, prevent all damage done to this Pokémon by attacks during your opponent's next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-116/large"
+  },
+  {
+    "id": "xy5-117",
+    "name": "Bidoof",
+    "number": "117",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "PLANETA",
+    "flavorText": "It constantly gnaws on logs and rocks to whittle down its front teeth. It nests alongside water.",
+    "image": "assets/cards/xy5/117.webp",
+    "imageSmall": "assets/cards/xy5/117-sm.webp",
+    "attacks": [
+      {
+        "name": "Drench",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "If this Pokémon has any Water Energy attached to it, this attack does 20 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-117/large"
+  },
+  {
+    "id": "xy5-118",
+    "name": "Bibarel",
+    "number": "118",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "kirisAki",
+    "flavorText": "It makes its nest by damming streams with bark and mud. It is known as an industrious worker.",
+    "evolvesFrom": "Bidoof",
+    "image": "assets/cards/xy5/118.webp",
+    "imageSmall": "assets/cards/xy5/118-sm.webp",
+    "attacks": [
+      {
+        "name": "Yawn",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Continuous Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80×",
+        "text": "Flip a coin until you get tails. This attack does 80 damage times the number of heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-118/large"
+  },
+  {
+    "id": "xy5-119",
+    "name": "Bouffalant",
+    "number": "119",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Hiroki Asanuma",
+    "flavorText": "Their fluffy fur absorbs damage, even if they strike foes with a fierce headbutt.",
+    "image": "assets/cards/xy5/119.webp",
+    "imageSmall": "assets/cards/xy5/119-sm.webp",
+    "attacks": [
+      {
+        "name": "Derail",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Discard a Special Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Sap Sipper",
+        "text": "This Pokémon's attacks do 40 more damage to your opponent's Grass Pokémon (before applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-119/large"
+  },
+  {
+    "id": "xy5-120",
+    "name": "Bunnelby",
+    "number": "120",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "MAHOU",
+    "flavorText": "It has ears like shovels. Digging holes strengthens its ears so much that they can sever thick roots effortlessly.",
+    "image": "assets/cards/xy5/120.webp",
+    "imageSmall": "assets/cards/xy5/120-sm.webp",
+    "attacks": [
+      {
+        "name": "Trip Over",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-120/large"
+  },
+  {
+    "id": "xy5-121",
+    "name": "Bunnelby",
+    "number": "121",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Hitoshi Ariga",
+    "flavorText": "It has ears like shovels. Digging holes strengthens its ears so much that they can sever thick roots effortlessly.",
+    "image": "assets/cards/xy5/121.webp",
+    "imageSmall": "assets/cards/xy5/121-sm.webp",
+    "attacks": [
+      {
+        "name": "Burrow",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard the top card of your opponent's deck."
+      },
+      {
+        "name": "Rototiller",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Shuffle a card from your discard pile into your deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-121/large"
+  },
+  {
+    "id": "xy5-122",
+    "name": "Acro Bike",
+    "number": "122",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/122.webp",
+    "imageSmall": "assets/cards/xy5/122-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-122/large"
+  },
+  {
+    "id": "xy5-123",
+    "name": "Aggron Spirit Link",
+    "number": "123",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/123.webp",
+    "imageSmall": "assets/cards/xy5/123-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-123/large"
+  },
+  {
+    "id": "xy5-124",
+    "name": "Archie's Ace in the Hole",
+    "number": "124",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yusuke Ohmura",
+    "image": "assets/cards/xy5/124.webp",
+    "imageSmall": "assets/cards/xy5/124-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-124/large"
+  },
+  {
+    "id": "xy5-125",
+    "name": "Dive Ball",
+    "number": "125",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/125.webp",
+    "imageSmall": "assets/cards/xy5/125-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-125/large"
+  },
+  {
+    "id": "xy5-126",
+    "name": "Energy Retrieval",
+    "number": "126",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/126.webp",
+    "imageSmall": "assets/cards/xy5/126-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-126/large"
+  },
+  {
+    "id": "xy5-127",
+    "name": "Escape Rope",
+    "number": "127",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/127.webp",
+    "imageSmall": "assets/cards/xy5/127-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-127/large"
+  },
+  {
+    "id": "xy5-128",
+    "name": "Exp. Share",
+    "number": "128",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/128.webp",
+    "imageSmall": "assets/cards/xy5/128-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-128/large"
+  },
+  {
+    "id": "xy5-129",
+    "name": "Fresh Water Set",
+    "number": "129",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/129.webp",
+    "imageSmall": "assets/cards/xy5/129-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-129/large"
+  },
+  {
+    "id": "xy5-130",
+    "name": "Gardevoir Spirit Link",
+    "number": "130",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/130.webp",
+    "imageSmall": "assets/cards/xy5/130-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-130/large"
+  },
+  {
+    "id": "xy5-131",
+    "name": "Groudon Spirit Link",
+    "number": "131",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/131.webp",
+    "imageSmall": "assets/cards/xy5/131-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-131/large"
+  },
+  {
+    "id": "xy5-132",
+    "name": "Kyogre Spirit Link",
+    "number": "132",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/132.webp",
+    "imageSmall": "assets/cards/xy5/132-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-132/large"
+  },
+  {
+    "id": "xy5-133",
+    "name": "Maxie's Hidden Ball Trick",
+    "number": "133",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/xy5/133.webp",
+    "imageSmall": "assets/cards/xy5/133-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-133/large"
+  },
+  {
+    "id": "xy5-134",
+    "name": "Professor Birch's Observations",
+    "number": "134",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Yusuke Ohmura",
+    "image": "assets/cards/xy5/134.webp",
+    "imageSmall": "assets/cards/xy5/134-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-134/large"
+  },
+  {
+    "id": "xy5-135",
+    "name": "Rare Candy",
+    "number": "135",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/135.webp",
+    "imageSmall": "assets/cards/xy5/135-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-135/large"
+  },
+  {
+    "id": "xy5-136",
+    "name": "Repeat Ball",
+    "number": "136",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/136.webp",
+    "imageSmall": "assets/cards/xy5/136-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-136/large"
+  },
+  {
+    "id": "xy5-137",
+    "name": "Rough Seas",
+    "number": "137",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/137.webp",
+    "imageSmall": "assets/cards/xy5/137-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-137/large"
+  },
+  {
+    "id": "xy5-138",
+    "name": "Scorched Earth",
+    "number": "138",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/138.webp",
+    "imageSmall": "assets/cards/xy5/138-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-138/large"
+  },
+  {
+    "id": "xy5-139",
+    "name": "Shrine of Memories",
+    "number": "139",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/139.webp",
+    "imageSmall": "assets/cards/xy5/139-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-139/large"
+  },
+  {
+    "id": "xy5-140",
+    "name": "Silent Lab",
+    "number": "140",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/140.webp",
+    "imageSmall": "assets/cards/xy5/140-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-140/large"
+  },
+  {
+    "id": "xy5-141",
+    "name": "Teammates",
+    "number": "141",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Megumi Mizutani",
+    "image": "assets/cards/xy5/141.webp",
+    "imageSmall": "assets/cards/xy5/141-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-141/large"
+  },
+  {
+    "id": "xy5-142",
+    "name": "Weakness Policy",
+    "number": "142",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/xy5/142.webp",
+    "imageSmall": "assets/cards/xy5/142-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-142/large"
+  },
+  {
+    "id": "xy5-143",
+    "name": "Shield Energy",
+    "number": "143",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/143.webp",
+    "imageSmall": "assets/cards/xy5/143-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-143/large"
+  },
+  {
+    "id": "xy5-144",
+    "name": "Wonder Energy",
+    "number": "144",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/144.webp",
+    "imageSmall": "assets/cards/xy5/144-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-144/large"
+  },
+  {
+    "id": "xy5-145",
+    "name": "Trevenant-EX",
+    "number": "145",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/145.webp",
+    "imageSmall": "assets/cards/xy5/145-sm.webp",
+    "attacks": [
+      {
+        "name": "Dark Forest",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      },
+      {
+        "name": "Wood Blast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "This attack does 20 more damage for each Grass Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-145/large"
+  },
+  {
+    "id": "xy5-146",
+    "name": "Camerupt-EX",
+    "number": "146",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "180",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/146.webp",
+    "imageSmall": "assets/cards/xy5/146-sm.webp",
+    "attacks": [
+      {
+        "name": "Tumbling Attack",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Explosive Jet",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Discard as many Fire Energy attached to your Pokémon as you like. This attack does 50 damage times the number of Energy cards you discarded."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-146/large"
+  },
+  {
+    "id": "xy5-147",
+    "name": "Wailord-EX",
+    "number": "147",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "250",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/147.webp",
+    "imageSmall": "assets/cards/xy5/147-sm.webp",
+    "attacks": [
+      {
+        "name": "High Breaching",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "damage": "120",
+        "text": "This Pokémon is now Asleep."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Water Veil",
+        "text": "Whenever you attach an Energy card from your hand to this Pokémon, remove all Special Conditions from it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-147/large"
+  },
+  {
+    "id": "xy5-148",
+    "name": "Kyogre-EX",
+    "number": "148",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/148.webp",
+    "imageSmall": "assets/cards/xy5/148-sm.webp",
+    "attacks": [
+      {
+        "name": "Water Pulse",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      },
+      {
+        "name": "Giant Whirlpool",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "140",
+        "text": "Return 2 Water Energy attached to this Pokémon to your hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-148/large"
+  },
+  {
+    "id": "xy5-149",
+    "name": "Primal Kyogre-EX",
+    "number": "149",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Kyogre-EX",
+    "image": "assets/cards/xy5/149.webp",
+    "imageSmall": "assets/cards/xy5/149-sm.webp",
+    "attacks": [
+      {
+        "name": "Tidal Storm",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Move 2 Energy from this Pokémon to 1 of your Benched Pokémon. This attack does 30 damage to each of your opponent's Benched Pokémon-EX. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-149/large"
+  },
+  {
+    "id": "xy5-150",
+    "name": "Groudon-EX",
+    "number": "150",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/150.webp",
+    "imageSmall": "assets/cards/xy5/150-sm.webp",
+    "attacks": [
+      {
+        "name": "Rip Claw",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Massive Rend",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-150/large"
+  },
+  {
+    "id": "xy5-151",
+    "name": "Primal Groudon-EX",
+    "number": "151",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Groudon-EX",
+    "image": "assets/cards/xy5/151.webp",
+    "imageSmall": "assets/cards/xy5/151-sm.webp",
+    "attacks": [
+      {
+        "name": "Gaia Volcano",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-151/large"
+  },
+  {
+    "id": "xy5-152",
+    "name": "Sharpedo-EX",
+    "number": "152",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "170",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/152.webp",
+    "imageSmall": "assets/cards/xy5/152-sm.webp",
+    "attacks": [
+      {
+        "name": "Hunt",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Switch 1 of your opponent's Benched Pokémon with his or her Active Pokémon. This attack does 30 damage to the new Active Pokémon."
+      },
+      {
+        "name": "Jagged Fang",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Discard an Energy attached to this Pokémon. Then, discard an Energy attached to your opponent's Active Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-152/large"
+  },
+  {
+    "id": "xy5-153",
+    "name": "Aggron-EX",
+    "number": "153",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "180",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/153.webp",
+    "imageSmall": "assets/cards/xy5/153-sm.webp",
+    "attacks": [
+      {
+        "name": "Steel Headbutt",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      },
+      {
+        "name": "Raging Hammer",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "This attack does 10 more damage for each damage counter on this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-153/large"
+  },
+  {
+    "id": "xy5-154",
+    "name": "M Aggron-EX",
+    "number": "154",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "240",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Aggron-EX",
+    "image": "assets/cards/xy5/154.webp",
+    "imageSmall": "assets/cards/xy5/154-sm.webp",
+    "attacks": [
+      {
+        "name": "Megaton Slam",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120+",
+        "text": "You may flip a coin. If heads, this attack does 120 more damage. If tails, this attack does 20 damage to each of your Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-154/large"
+  },
+  {
+    "id": "xy5-155",
+    "name": "Gardevoir-EX",
+    "number": "155",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "ex"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "170",
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/155.webp",
+    "imageSmall": "assets/cards/xy5/155-sm.webp",
+    "attacks": [
+      {
+        "name": "Life Leap",
+        "cost": [
+          "Fairy"
+        ],
+        "damage": "20",
+        "text": "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Shining Wind",
+        "cost": [
+          "Fairy",
+          "Fairy",
+          "Fairy"
+        ],
+        "damage": "100",
+        "text": "During your opponent's next turn, this Pokémon has no Weakness."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-155/large"
+  },
+  {
+    "id": "xy5-156",
+    "name": "M Gardevoir-EX",
+    "number": "156",
+    "rarity": "Rare Ultra",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Mega",
+      "ex"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Gardevoir-EX",
+    "image": "assets/cards/xy5/156.webp",
+    "imageSmall": "assets/cards/xy5/156-sm.webp",
+    "attacks": [
+      {
+        "name": "Brilliant Arrow",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage times the amount of Fairy Energy attached to all of your Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-156/large"
+  },
+  {
+    "id": "xy5-157",
+    "name": "Archie's Ace in the Hole",
+    "number": "157",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/xy5/157.webp",
+    "imageSmall": "assets/cards/xy5/157-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-157/large"
+  },
+  {
+    "id": "xy5-158",
+    "name": "Maxie's Hidden Ball Trick",
+    "number": "158",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/xy5/158.webp",
+    "imageSmall": "assets/cards/xy5/158-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-158/large"
+  },
+  {
+    "id": "xy5-159",
+    "name": "Professor Birch's Observations",
+    "number": "159",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/xy5/159.webp",
+    "imageSmall": "assets/cards/xy5/159-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-159/large"
+  },
+  {
+    "id": "xy5-160",
+    "name": "Teammates",
+    "number": "160",
+    "rarity": "Rare Ultra",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/xy5/160.webp",
+    "imageSmall": "assets/cards/xy5/160-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-160/large"
+  },
+  {
+    "id": "xy5-161",
+    "name": "Dive Ball",
+    "number": "161",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy5/161.webp",
+    "imageSmall": "assets/cards/xy5/161-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-161/large"
+  },
+  {
+    "id": "xy5-162",
+    "name": "Enhanced Hammer",
+    "number": "162",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/xy5/162.webp",
+    "imageSmall": "assets/cards/xy5/162-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-162/large"
+  },
+  {
+    "id": "xy5-163",
+    "name": "Switch",
+    "number": "163",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy5/163.webp",
+    "imageSmall": "assets/cards/xy5/163-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-163/large"
+  },
+  {
+    "id": "xy5-164",
+    "name": "Weakness Policy",
+    "number": "164",
+    "rarity": "Rare Secret",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Pokémon Tool"
+    ],
+    "artist": "Ayaka Yoshida",
+    "image": "assets/cards/xy5/164.webp",
+    "imageSmall": "assets/cards/xy5/164-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/xy5-164/large"
+  }
+]
