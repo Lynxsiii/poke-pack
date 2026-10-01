@@ -1,4 +1,4 @@
-/* The casino has no coin ceiling, and bots stake graded slabs (slabs-v2, migration 0026).
+/* The casino has no coin ceiling, and bots stake graded slabs (slabs-v2, migration 0027).
    - A 5,000,000-coin stake (raw cards + slabs) plays end to end on BOTH games against a bot and against humans: staking, settle,
      the bot's generated slabs minted for a human winner (and nothing minted when the bot wins), selling every win un-clamped.
    - The bot builder is quantity-based and CPU-bounded: a 5M-coin target and a 50k one are timed and bounded.

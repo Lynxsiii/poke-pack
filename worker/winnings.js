@@ -18,7 +18,7 @@ import { setForCard } from './grading.js';
    'slabbed', and the coin credit is chained on changes(). Its row records the
    sale (sell_request_id 'casino:<source>:<id>', sold_cents). The winner keeps
    a slab by passing slabs: false. A bot's slabs a human won were minted into
-   graded_cards by the settle trigger (migration 0026) and sell like any other. */
+   graded_cards by the settle trigger (migration 0027) and sell like any other. */
 
 const error = (message, status = 400) => { throw Object.assign(new Error(message), { status }); };
 const parse = value => value ? JSON.parse(value) : null;

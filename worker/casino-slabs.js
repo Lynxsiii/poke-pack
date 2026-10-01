@@ -13,7 +13,7 @@ import { ensureGradingSchema } from './grading.js';
         or lacks the slab code (the comment marker is documentation only). Until the batch
         commits the old triggers stay in force, and games that exist already (NULL
         slab columns) behave identically under the new ones. No row is touched.
-   slabs-v2 (migration 0026, BOT_SLABS_DDL) is a fourth part: a second atomic batch replaces
+   slabs-v2 (migration 0027, BOT_SLABS_DDL) is a fourth part: a second atomic batch replaces
    five triggers while any of SLABS_V2_REQUIRED lacks its v2 code. It always runs after
    part 3, so a v1 database (the live one) goes v1 -> v2 in place, and a v2 database is
    never taken back to v1. */
@@ -28,7 +28,7 @@ export const SLABS_REQUIRED = {
   graded_slab_escrow: /OLD\.locked/,
   graded_slab_escrow_delete: /OLD\.locked/,
 };
-// slabs-v2 (migration 0026: bots stake generated slabs and a human winner is minted them). Five triggers are replaced; v2 SQL
+// slabs-v2 (migration 0027: bots stake generated slabs and a human winner is minted them). Five triggers are replaced; v2 SQL
 // is told from v1 by code that only v2 has (the v1 tokens above still hold in v2, so a v2 database is never taken back to v1).
 export const SLABS_V2_REQUIRED = {
   coinflip_settle_check: /\$\.band/,
@@ -74,7 +74,7 @@ const triggersMatch = async (env, required) => {
 };
 /** slabs-v1 (migration 0022) is in: the slab triggers exist and carry its code. */
 export const slabTriggersCurrent = env => triggersMatch(env, SLABS_REQUIRED);
-/** slabs-v2 (migration 0026) is in. */
+/** slabs-v2 (migration 0027) is in. */
 export const botSlabTriggersCurrent = env => triggersMatch(env, SLABS_V2_REQUIRED);
 
 /**

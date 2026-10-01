@@ -1,4 +1,4 @@
-/* Upgrading a LIVE casino to graded slabs (migration 0022) and then to bot slabs (slabs-v2, migration 0026): a database that already holds open, settled and cancelled
+/* Upgrading a LIVE casino to graded slabs (migration 0022) and then to bot slabs (slabs-v2, migration 0027): a database that already holds open, settled and cancelled
    coinflips and jackpots with raw-only stakes (the 0015 to 0020 schema as it was) is upgraded by the Worker's lazy path,
    and every game keeps working: nothing dropped, nothing duplicated, a second upgrade is a no-op, old code's inserts still land.
    Runs the real Worker against SQLite (Node 22+): node scripts/test-casino-slabs-upgrade.mjs */
@@ -289,7 +289,7 @@ await check('old code\'s writes (no slab columns) still work after the upgrade: 
 // ---- Other ways to arrive at the new schema -----------------------------------------------------------------------------
 await check('the migration file applied by hand (wrangler path) leaves the Worker nothing to do; replaying its trigger half is harmless', async () => {
   const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db);
-  w.db.exec(migrationSql('0022_casino_slabs.sql')); w.db.exec(migrationSql('0026_casino_bot_slabs.sql')); assert.ok(hasMarker(w.db) && v2Current(w.db));
+  w.db.exec(migrationSql('0022_casino_slabs.sql')); w.db.exec(migrationSql('0027_casino_bot_slabs.sql')); assert.ok(hasMarker(w.db) && v2Current(w.db));
   resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
   assert.deepEqual(w.log.slice(mark).filter(sql => !/^\s*CREATE (TABLE|INDEX) IF NOT EXISTS/i.test(sql) && /^\s*(ALTER|DROP|CREATE)/i.test(sql)), []); assert.equal(w.DB.batches, batches);
@@ -422,7 +422,7 @@ await check('a slab an old Worker cracked while it sat in a flip (before the tri
   assert.equal(w.db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE user_id = 'o6'").get().n, 0);
 });
 
-// ---- slabs-v1 -> slabs-v2 (migration 0026): the live database is at v1 today --------------------------------------------------
+// ---- slabs-v1 -> slabs-v2 (migration 0027): the live database is at v1 today --------------------------------------------------
 /** A database exactly as the live site is now: migrations through 0022 (columns + the v1 triggers), games and slabs of every kind in it. */
 function v1World() {
   const w = oldWorld([...OLD_FILES, '0022_casino_slabs.sql']); const { db: d } = w;

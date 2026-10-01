@@ -232,8 +232,8 @@ await check('schema: the Worker applied 0022 (columns, marker triggers) and the 
   for (const name of ['coinflip_stake_check', 'graded_slab_escrow', 'graded_slab_escrow_delete']) {
     assert.ok(db.prepare("SELECT sql FROM sqlite_master WHERE name = ?").get(name).sql.includes(SLABS_MARKER), `${name} carries the marker`);
   }
-  // slabs-v2 (0026): the generated DDL matches the migration, and the five triggers it replaces carry its marker and code.
-  assert.deepEqual(splitStatements(migrationSql('0026_casino_bot_slabs.sql')), BOT_SLABS_DDL, 'worker/casino-ddl.js is stale: run node scripts/gen-casino-ddl.mjs');
+  // slabs-v2 (0027): the generated DDL matches the migration, and the five triggers it replaces carry its marker and code.
+  assert.deepEqual(splitStatements(migrationSql('0027_casino_bot_slabs.sql')), BOT_SLABS_DDL, 'worker/casino-ddl.js is stale: run node scripts/gen-casino-ddl.mjs');
   assert.deepEqual(BOT_SLABS_DDL.filter(sql => /^CREATE TRIGGER/.test(sql)).map(sql => sql.match(/^CREATE TRIGGER (\w+)/)[1]).sort(),
     ['coinflip_settle_check', 'coinflip_slab_settle', 'jackpot_entry_check', 'jackpot_settle_check', 'jackpot_slab_settle']);
   for (const name of ['coinflip_settle_check', 'coinflip_slab_settle', 'jackpot_entry_check', 'jackpot_settle_check', 'jackpot_slab_settle']) {
