@@ -49,6 +49,7 @@ import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrad
 import { handleBinderLook, lookColumns, resetEditionStmts, trainerLookFields } from "./binder-look.js";
 import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
 import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
+import { applyRestores } from "./restores.js";
 import { claimLevels, clearXpStmts, ensureXpSchema, loadXpCounters, readXpRow, syncXp } from "./xp.js";
 import {
   achievementById,
@@ -78,13 +79,6 @@ const PBKDF2_ITERS = 12_000;
 const BINDER_PAGE = 9;
 const BINDER_MAX_SLOTS = BINDER_PAGE * 40;
 const MAX_CLAIM_CARDS = 8000;
-const MAX_COINS = 1_000_000;
-// A free handout (hourly bonus, quest, achievement) tops a wallet up to MAX_COINS
-// and never past it. A wallet already above the cap (casino wins, big sales)
-// is left exactly as it is: the cap must never take coins away. ?1 is the
-// amount, ?2 the cap; `granted` records only what was really credited.
-const CREDIT_COINS = "MAX(coins, MIN(coins + ?1, ?2))";
-const CREDITED = `(${CREDIT_COINS} - coins)`;
 // Ceilings for an unverifiable guest save handed to signup — see sanitizeClaim.
 const CLAIM_MAX_COINS = 250_000;
 const CLAIM_PACK_YIELD = 60;
@@ -380,6 +374,7 @@ async function deleteAccount(request, env) {
 async function me(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
+  await applyRestores(env, auth.user.id);
   const save = await loadSave(env, auth.user.id);
   return json({ user: await trainerUser(env, auth.user, save), save });
 }
@@ -760,10 +755,10 @@ async function daily(request, env) {
   const now = Date.now();
   const cutoff = now - DAILY_COOLDOWN_MS;
   const updated = await env.DB.prepare(
-    `UPDATE profiles SET coins = ${CREDIT_COINS}, granted = granted + ${CREDITED}, last_daily = ?3
-     WHERE user_id = ?4 AND (last_daily IS NULL OR last_daily <= ?5)`
+    `UPDATE profiles SET coins = coins + ?1, granted = granted + ?1, last_daily = ?2
+     WHERE user_id = ?3 AND (last_daily IS NULL OR last_daily <= ?4)`
   )
-    .bind(DAILY_BONUS, MAX_COINS, now, auth.user.id, cutoff)
+    .bind(DAILY_BONUS, now, auth.user.id, cutoff)
     .run();
   if (!updated.meta?.changes) {
     return json({ error: "Hourly bonus is not ready yet." }, 400);
@@ -824,9 +819,9 @@ async function claimAchievement(request, env) {
     if (gifts.unavailable) return json({ error: "Gifts are unavailable right now. Try again shortly." }, 503);
     const results = await env.DB.batch([
       env.DB.prepare(
-        `UPDATE profiles SET coins = ${CREDIT_COINS}, granted = granted + ${CREDITED}, claimed = ?3
-         WHERE user_id = ?4 AND claimed IS ?5`
-      ).bind(coins, MAX_COINS, JSON.stringify([...claimed]), auth.user.id, raw),
+        `UPDATE profiles SET coins = coins + ?1, granted = granted + ?1, claimed = ?2
+         WHERE user_id = ?3 AND claimed IS ?4`
+      ).bind(coins, JSON.stringify([...claimed]), auth.user.id, raw),
       ...(gifts.stmt ? [gifts.stmt] : []), // must follow the swap: it reads its changes()
       env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(Date.now(), auth.user.id),
     ]);
@@ -855,7 +850,7 @@ async function claimAchievement(request, env) {
 async function claimLevelRewards(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
-  const out = await claimLevels(env, auth.user.id, { request, loadSave, maxCoins: MAX_COINS });
+  const out = await claimLevels(env, auth.user.id, { request, loadSave });
   return out.error ? json({ error: out.error }, out.status || 400) : json(out);
 }
 
@@ -889,8 +884,8 @@ async function claimQuest(request, env) {
       "INSERT OR IGNORE INTO quest_claims (user_id, quest_id, period_start, claimed_at) VALUES (?, ?, ?, ?)"
     ).bind(auth.user.id, row.id, period, now),
     env.DB.prepare(
-      `UPDATE profiles SET coins = ${CREDIT_COINS}, granted = granted + ${CREDITED} WHERE user_id = ?3 AND changes() = 1`
-    ).bind(row.coins, MAX_COINS, auth.user.id),
+      "UPDATE profiles SET coins = coins + ?1, granted = granted + ?1 WHERE user_id = ?2 AND changes() = 1"
+    ).bind(row.coins, auth.user.id),
   ]);
   if (!results[0]?.meta?.changes) return json({ error: "Already claimed this period." }, 400);
 

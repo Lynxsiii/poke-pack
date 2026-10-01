@@ -2,9 +2,9 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,readdirSync} from 'node:fs';
 import worker from '../worker/index.js';
-// The hourly bonus, quests and achievements top a wallet up to the 1,000,000 cap.
-// They must never lower a wallet that is already over it (casino wins, big sales):
-// a friend with 1.6M claimed the hourly and was reset to exactly 1M.
+// There is no wallet cap: the hourly bonus, quests and achievements add their full
+// reward to any wallet, however rich. They used to stop at 1,000,000 and, worse,
+// reset a bigger wallet to it: a friend with 1.6M claimed the hourly and was cut to 1M.
 // Runs the real Worker against in-memory sqlite. Run: node scripts/test-coin-cap.mjs
 const DAY=86_400_000;
 const MAX_COINS=1_000_000;
@@ -44,16 +44,16 @@ const wallet=id=>db.prepare('SELECT coins,granted FROM profiles WHERE user_id=?'
 // ---- Hourly bonus ----
 for(const [id,start,expectCoins,expectGranted] of [
   ['small',500,600,600],
-  ['edge',MAX_COINS-40,MAX_COINS,MAX_COINS],
-  ['atcap',MAX_COINS,MAX_COINS,MAX_COINS],
-  ['whale',1_600_000,1_600_000,1_600_000],
-  ['cents',1_234_567.89,1_234_567.89,1_234_567.89],
+  ['edge',MAX_COINS-40,MAX_COINS+60,MAX_COINS+60],
+  ['atcap',MAX_COINS,MAX_COINS+100,MAX_COINS+100],
+  ['whale',1_600_000,1_600_100,1_600_100],
+  ['cents',1_234_567.89,1_234_667.89,1_234_667.89],
 ]) {
   addUser(id,start);
   const out=await request('/api/daily','POST',undefined,id);
   assert.equal(out.status,200,`${id}: ${JSON.stringify(out.body)}`);
   assert.equal(wallet(id).coins,expectCoins,`${id}: coins after the hourly bonus`);
-  assert.equal(wallet(id).granted,expectGranted,`${id}: granted counts only what was credited`);
+  assert.equal(wallet(id).granted,expectGranted,`${id}: granted counts the whole credit`);
   assert.equal((await request('/api/daily','POST',undefined,id)).status,400,`${id}: the cooldown still holds`);
 }
 
@@ -64,8 +64,7 @@ for(const [id,start] of [['qsmall',500],['qwhale',1_600_000]]) {
   const before=wallet(id).coins;
   const out=await request('/api/quests/claim','POST',{id:'daily-bonus'},id);
   assert.equal(out.status,200,`${id}: ${JSON.stringify(out.body)}`);
-  if(start>=MAX_COINS) assert.equal(wallet(id).coins,before,`${id}: a quest reward never lowers a wallet over the cap`);
-  else assert.equal(wallet(id).coins,before+25,`${id}: the quest pays in full under the cap`);
+  assert.equal(wallet(id).coins,before+25,`${id}: the quest pays in full, whatever the wallet`);
 }
 
 // ---- Achievements ----
@@ -74,7 +73,26 @@ for(const [id,start] of [['asmall',500],['awhale',1_600_000]]) {
   const out=await request('/api/achievements/claim','POST',{all:true},id);
   assert.equal(out.status,200,`${id}: ${JSON.stringify(out.body)}`);
   assert.ok(out.body.claimed.length>0,`${id}: something was claimed`);
-  if(start>=MAX_COINS) assert.equal(wallet(id).coins,start,`${id}: achievement rewards never lower a wallet over the cap`);
-  else assert.equal(wallet(id).coins,start+out.body.coins,`${id}: achievements pay in full under the cap`);
+  assert.ok(out.body.coins>0);
+  assert.equal(wallet(id).coins,start+out.body.coins,`${id}: achievements pay in full, whatever the wallet`);
+}
+// ---- The one-off restore for the account hit by the bug: paid once, additively ----
+{
+  const {RESTORES}=await import('../worker/restores.js');
+  const [restore]=RESTORES;
+  addUser(restore.userId,1_000_000);
+  addUser('bystander',1_000_000);
+  db.prepare('UPDATE profiles SET coins = 1000250.5 WHERE user_id = ?').run(restore.userId); // played a little since
+  const loads=await Promise.all([1,2,3].map(()=>request('/api/me','GET',undefined,restore.userId)));
+  for(const out of loads) assert.equal(out.status,200);
+  assert.equal(wallet(restore.userId).coins,1_000_250.5+restore.coins,'credited on top of the current balance, once, even in parallel');
+  await request('/api/me','GET',undefined,restore.userId);
+  assert.equal(wallet(restore.userId).coins,1_000_250.5+restore.coins,'later loads pay nothing more');
+  assert.equal(db.prepare('SELECT COUNT(*) AS n FROM coin_restores').get().n,1,'one receipt');
+  assert.equal(wallet(restore.userId).granted,1_000_000,'granted is untouched');
+  await request('/api/me','GET',undefined,'bystander');
+  assert.equal(wallet('bystander').coins,1_000_000,'nobody else is credited');
+  assert.equal((await request('/api/daily','POST',undefined,restore.userId)).status,200);
+  assert.equal(wallet(restore.userId).coins,1_000_250.5+restore.coins+100,'a claim after the restore adds to the whole wallet');
 }
 console.log('coin cap tests passed');
