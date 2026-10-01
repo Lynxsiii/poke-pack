@@ -16051,5 +16051,158 @@
       "price": 1680.4,
       "priceDerived": "packs"
     }
+  ],
+  "ex9": [
+    {
+      "id": "booster-box",
+      "name": "EX Emerald Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Farfetch'd secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack).",
+      "promos": [],
+      "price": 36000.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98547,
+      "image": "assets/products/ex9/booster-box.webp"
+    },
+    {
+      "id": "collectors-tin-kyogre-ex",
+      "name": "EX Collector's Tin [Kyogre ex]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price.",
+      "promos": [
+        "ex9-np037"
+      ],
+      "price": 4183.42,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-groudon-ex",
+      "name": "EX Collector's Tin [Groudon ex]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price.",
+      "promos": [
+        "ex9-np038"
+      ],
+      "price": 4250.83,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-rayquaza-ex",
+      "name": "EX Collector's Tin [Rayquaza ex]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "ex9": 2,
+        "ex14": 2
+      },
+      "note": "Four packs in the real tin, two Emerald and two Crystal Guardians (pkmn.gg's np-37 to np-39 'EX Collector's Tins', October 2006; the pack mix is Bulbapedia's search excerpt only, so low-medium confidence), with the cosmos holo ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Emerald pack price.",
+      "promos": [
+        "ex9-np039"
+      ],
+      "price": 4650.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "ex10": [
+    {
+      "id": "booster-box",
+      "name": "EX Unseen Forces Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Rocket's Persian ex secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack).",
+      "promos": [],
+      "price": 79200.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98576,
+      "image": "assets/products/ex10/booster-box.webp"
+    }
+  ],
+  "ex11": [
+    {
+      "id": "booster-box",
+      "name": "EX Delta Species Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Azumarill secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack).",
+      "promos": [],
+      "price": 35964.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98943,
+      "image": "assets/products/ex11/booster-box.webp"
+    },
+    {
+      "id": "collectors-carry-tin-celebi-suicune",
+      "name": "EX Collector's Carry Tin [Celebi & Suicune]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three EX-series packs (pkmn.gg np-29 and np-30 'EX Collector's Carry Tin', November 2005; the pack count is Bulbapedia's search excerpt and the set mix is not documented, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Celebi and Suicune promos. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price.",
+      "promos": [
+        "ex11-np029",
+        "ex11-np030"
+      ],
+      "price": 3108.65,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-window-tin-moltres-ex",
+      "name": "EX Collector's Window Tin [Moltres ex]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Moltres ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price.",
+      "promos": [
+        "ex11-np031"
+      ],
+      "price": 3106.17,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-window-tin-articuno-ex",
+      "name": "EX Collector's Window Tin [Articuno ex]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Articuno ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price.",
+      "promos": [
+        "ex11-np032"
+      ],
+      "price": 3180.77,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-window-tin-zapdos-ex",
+      "name": "EX Collector's Window Tin [Zapdos ex]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three EX-series packs (pkmn.gg np-31 to np-33 'EX Collector's Window Tins', November 2005; the pack count is Bulbapedia's search excerpt and the mix is only given as Team Rocket Returns through Legend Maker, low-medium confidence, so it opens here as Delta Species packs, the newest set that month) with the cosmos holo Zapdos ex promo. Tin not simulated. TCGplayer lists no tin: priced from its packs at the Delta Species pack price.",
+      "promos": [
+        "ex11-np033"
+      ],
+      "price": 3147.37,
+      "priceDerived": "packs"
+    }
+  ],
+  "ex12": [
+    {
+      "id": "booster-box",
+      "name": "EX Legend Maker Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card (Potomac Distribution box page and TCGplayer's pack text). TCGplayer lists the box without a market price, so it is priced at 36 packs. The Pikachu delta secret rare that Elite Fourum's rarity guide puts on top of a box is not simulated (it is in no pack).",
+      "promos": [],
+      "price": 16704.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98556,
+      "image": "assets/products/ex12/booster-box.webp"
+    }
   ]
 }
