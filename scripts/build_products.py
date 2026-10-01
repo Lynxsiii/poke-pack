@@ -45,6 +45,8 @@ A product TCGplayer has never priced (most older-era boxes, tins and blisters)
 is still built: `"price": 49.99, "priceSource": "..."` in its config wins,
 else its packs at the set's booster pack price (data/sealed.json) plus its
 promos' market; the entry carries `priceDerived: "manual" | "packs"`.
+A product with no TCGplayer listing at all (the Diamond & Pearl blisters, tins and value packs) leaves `tcgplayerId` out: it is
+priced the same way and has no photo.
 
 A promo set with no boosters of its own (svp, the SV Black Star Promos)
 names the sets its products' packs come from instead of `packs`:
