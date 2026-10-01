@@ -68,7 +68,7 @@ import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import { bannerBlockHtml } from "./mastery-banner.js";
 import { masteryShelfProfileHtml } from "./mastery-shelf.js";
-import * as questArea from "./quest-area.js?v=3";
+import * as questArea from "./quest-area.js?v=4";
 import * as levelUi from "./level-ui.js";
 import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
@@ -110,7 +110,7 @@ import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear
 import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js?v=2";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=3";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=4";
 import { coinTag } from "./battle-kit.js";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
