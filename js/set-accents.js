@@ -134,4 +134,5 @@ export const SET_ACCENTS = {
   "pl2": { a: "#f08a2a", b: "#3f9be0" },
   "pl3": { a: "#d24a3f", b: "#6f7fd1" },
   "pl4": { a: "#e8c04a", b: "#5fb7e8" },
+  "hsp": { a: "#e3c15a", b: "#c9d3dd" },
 };
