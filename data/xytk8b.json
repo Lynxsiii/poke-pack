@@ -1,0 +1,929 @@
+[
+  {
+    "id": "xytk8b-1",
+    "name": "Grass Energy",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "image": "assets/cards/xytk8b/1.webp",
+    "imageSmall": "assets/cards/xytk8b/1-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-1/large",
+    "printedNumber": "001/030",
+    "era": "xy",
+    "tcgplayerId": 98318
+  },
+  {
+    "id": "xytk8b-2",
+    "name": "Grass Energy",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "image": "assets/cards/xytk8b/2.webp",
+    "imageSmall": "assets/cards/xytk8b/2-sm.webp",
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-2/large",
+    "printedNumber": "002/030",
+    "era": "xy",
+    "tcgplayerId": 98319
+  },
+  {
+    "id": "xytk8b-3",
+    "name": "Grass Energy",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "image": "assets/cards/xytk8b/3.webp",
+    "imageSmall": "assets/cards/xytk8b/3-sm.webp",
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-3/large",
+    "printedNumber": "003/030",
+    "era": "xy",
+    "tcgplayerId": 98320
+  },
+  {
+    "id": "xytk8b-4",
+    "name": "Fletchling",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "These friendly Pokémon send signals to one another with beautiful chirps and tail-feather movements.",
+    "image": "assets/cards/xytk8b/4.webp",
+    "imageSmall": "assets/cards/xytk8b/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-4/large",
+    "printedNumber": "004/030",
+    "era": "xy",
+    "tcgplayerId": 98329
+  },
+  {
+    "id": "xytk8b-5",
+    "name": "Grass Energy",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "image": "assets/cards/xytk8b/5.webp",
+    "imageSmall": "assets/cards/xytk8b/5-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-5/large",
+    "printedNumber": "005/030",
+    "era": "xy",
+    "tcgplayerId": 98321
+  },
+  {
+    "id": "xytk8b-6",
+    "name": "Lombre",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Naoyo Kimura",
+    "flavorText": "It has a mischievous spirit. If it spots an angler, it will tug on the fishing line to interfere.",
+    "evolvesFrom": "Lotad",
+    "image": "assets/cards/xytk8b/6.webp",
+    "imageSmall": "assets/cards/xytk8b/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Hook",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-6/large",
+    "printedNumber": "006/030",
+    "era": "xy",
+    "tcgplayerId": 98330
+  },
+  {
+    "id": "xytk8b-7",
+    "name": "Treecko",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "Small hooks on the bottom of its feet catch on walls and ceilings. That is how it can hang from above.",
+    "image": "assets/cards/xytk8b/7.webp",
+    "imageSmall": "assets/cards/xytk8b/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "market": 0.52,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-7/large",
+    "printedNumber": "007/030",
+    "era": "xy",
+    "tcgplayerId": 98331
+  },
+  {
+    "id": "xytk8b-8",
+    "name": "Psychic Energy",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8b/8.webp",
+    "imageSmall": "assets/cards/xytk8b/8-sm.webp",
+    "market": 0.14,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-8/large",
+    "printedNumber": "008/030",
+    "era": "xy",
+    "tcgplayerId": 98323
+  },
+  {
+    "id": "xytk8b-9",
+    "name": "Psychic Energy",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8b/9.webp",
+    "imageSmall": "assets/cards/xytk8b/9-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-9/large",
+    "printedNumber": "009/030",
+    "era": "xy",
+    "tcgplayerId": 98324
+  },
+  {
+    "id": "xytk8b-10",
+    "name": "Psychic Energy",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8b/10.webp",
+    "imageSmall": "assets/cards/xytk8b/10-sm.webp",
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-10/large",
+    "printedNumber": "010/030",
+    "era": "xy",
+    "tcgplayerId": 98325
+  },
+  {
+    "id": "xytk8b-11",
+    "name": "Lotad",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kanako Eo",
+    "flavorText": "It searches about for clean water. If it does not drink water for too long, the leaf on its head wilts.",
+    "image": "assets/cards/xytk8b/11.webp",
+    "imageSmall": "assets/cards/xytk8b/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-11/large",
+    "printedNumber": "011/030",
+    "era": "xy",
+    "tcgplayerId": 98332
+  },
+  {
+    "id": "xytk8b-12",
+    "name": "Tangrowth",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "MAHOU",
+    "flavorText": "Its vines grow so profusely that, in the warm season, you can't even see its eyes.",
+    "evolvesFrom": "Tangela",
+    "image": "assets/cards/xytk8b/12.webp",
+    "imageSmall": "assets/cards/xytk8b/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Grass Knot",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "This attack does 10 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ],
+    "market": 0.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-12/large",
+    "printedNumber": "012/030",
+    "era": "xy",
+    "tcgplayerId": 98333
+  },
+  {
+    "id": "xytk8b-13",
+    "name": "Tangela",
+    "number": "13",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "match",
+    "flavorText": "It tangles any moving thing with its vines. Their subtle shaking is ticklish if you get ensnared.",
+    "image": "assets/cards/xytk8b/13.webp",
+    "imageSmall": "assets/cards/xytk8b/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Absorb",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.36,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-13/large",
+    "printedNumber": "013/030",
+    "era": "xy",
+    "tcgplayerId": 98334
+  },
+  {
+    "id": "xytk8b-14",
+    "name": "Latias",
+    "number": "14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It can telepathically communicate with people. It changes its appearance using its down that refracts light.",
+    "image": "assets/cards/xytk8b/14.webp",
+    "imageSmall": "assets/cards/xytk8b/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Sphere",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Psychic Prism",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 0.45,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-14/large",
+    "printedNumber": "014/030",
+    "era": "xy",
+    "tcgplayerId": 98335
+  },
+  {
+    "id": "xytk8b-15",
+    "name": "Potion",
+    "number": "15",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk8b/15.webp",
+    "imageSmall": "assets/cards/xytk8b/15-sm.webp",
+    "market": 0.12,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-15/large",
+    "printedNumber": "015/030",
+    "era": "xy",
+    "tcgplayerId": 98400
+  },
+  {
+    "id": "xytk8b-16",
+    "name": "Surskit",
+    "number": "16",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "50",
+    "artist": "Sumiyoshi Kizuki",
+    "flavorText": "It appears as if it is skating on water. It draws prey with a sweet scent from the tip of its head.",
+    "image": "assets/cards/xytk8b/16.webp",
+    "imageSmall": "assets/cards/xytk8b/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.27,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-16/large",
+    "printedNumber": "016/030",
+    "era": "xy",
+    "tcgplayerId": 98336
+  },
+  {
+    "id": "xytk8b-17",
+    "name": "Psychic Energy",
+    "number": "17",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8b/17.webp",
+    "imageSmall": "assets/cards/xytk8b/17-sm.webp",
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-17/large",
+    "printedNumber": "017/030",
+    "era": "xy",
+    "tcgplayerId": 98326
+  },
+  {
+    "id": "xytk8b-18",
+    "name": "Grovyle",
+    "number": "18",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "match",
+    "flavorText": "It lives in dense jungles. While closing in on its prey, it leaps from branch to branch.",
+    "evolvesFrom": "Treecko",
+    "image": "assets/cards/xytk8b/18.webp",
+    "imageSmall": "assets/cards/xytk8b/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Agility",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      }
+    ],
+    "market": 0.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-18/large",
+    "printedNumber": "018/030",
+    "era": "xy",
+    "tcgplayerId": 98337
+  },
+  {
+    "id": "xytk8b-19",
+    "name": "Grass Energy",
+    "number": "19",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "image": "assets/cards/xytk8b/19.webp",
+    "imageSmall": "assets/cards/xytk8b/19-sm.webp",
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-19/large",
+    "printedNumber": "019/030",
+    "era": "xy",
+    "tcgplayerId": 98322
+  },
+  {
+    "id": "xytk8b-20",
+    "name": "Acro Bike",
+    "number": "20",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xytk8b/20.webp",
+    "imageSmall": "assets/cards/xytk8b/20-sm.webp",
+    "market": 0.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-20/large",
+    "printedNumber": "020/030",
+    "era": "xy",
+    "tcgplayerId": 98375
+  },
+  {
+    "id": "xytk8b-21",
+    "name": "Lombre",
+    "number": "21",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Naoyo Kimura",
+    "flavorText": "It has a mischievous spirit. If it spots an angler, it will tug on the fishing line to interfere.",
+    "evolvesFrom": "Lotad",
+    "image": "assets/cards/xytk8b/21.webp",
+    "imageSmall": "assets/cards/xytk8b/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Hook",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-21/large",
+    "printedNumber": "021/030",
+    "era": "xy",
+    "tcgplayerId": 98339
+  },
+  {
+    "id": "xytk8b-22",
+    "name": "Psychic Energy",
+    "number": "22",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8b/22.webp",
+    "imageSmall": "assets/cards/xytk8b/22-sm.webp",
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-22/large",
+    "printedNumber": "022/030",
+    "era": "xy",
+    "tcgplayerId": 98327
+  },
+  {
+    "id": "xytk8b-23",
+    "name": "Lotad",
+    "number": "23",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Kanako Eo",
+    "flavorText": "It searches about for clean water. If it does not drink water for too long, the leaf on its head wilts.",
+    "image": "assets/cards/xytk8b/23.webp",
+    "imageSmall": "assets/cards/xytk8b/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.86,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-23/large",
+    "printedNumber": "023/030",
+    "era": "xy",
+    "tcgplayerId": 98340
+  },
+  {
+    "id": "xytk8b-24",
+    "name": "Treecko",
+    "number": "24",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "60",
+    "artist": "Akira Komayama",
+    "flavorText": "Small hooks on the bottom of its feet catch on walls and ceilings. That is how it can hang from above.",
+    "image": "assets/cards/xytk8b/24.webp",
+    "imageSmall": "assets/cards/xytk8b/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 more damage."
+      }
+    ],
+    "market": 0.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-24/large",
+    "printedNumber": "024/030",
+    "era": "xy",
+    "tcgplayerId": 98341
+  },
+  {
+    "id": "xytk8b-25",
+    "name": "Tangrowth",
+    "number": "25",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "130",
+    "artist": "MAHOU",
+    "flavorText": "Its vines grow so profusely that, in the warm season, you can't even see its eyes.",
+    "evolvesFrom": "Tangela",
+    "image": "assets/cards/xytk8b/25.webp",
+    "imageSmall": "assets/cards/xytk8b/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Mega Drain",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Grass Knot",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "This attack does 10 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+      }
+    ],
+    "market": 0.35,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-25/large",
+    "printedNumber": "025/030",
+    "era": "xy",
+    "tcgplayerId": 98342
+  },
+  {
+    "id": "xytk8b-26",
+    "name": "Tangela",
+    "number": "26",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "match",
+    "flavorText": "It tangles any moving thing with its vines. Their subtle shaking is ticklish if you get ensnared.",
+    "image": "assets/cards/xytk8b/26.webp",
+    "imageSmall": "assets/cards/xytk8b/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Absorb",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Vine Whip",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-26/large",
+    "printedNumber": "026/030",
+    "era": "xy",
+    "tcgplayerId": 98343
+  },
+  {
+    "id": "xytk8b-27",
+    "name": "Grovyle",
+    "number": "27",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "match",
+    "flavorText": "It lives in dense jungles. While closing in on its prey, it leaps from branch to branch.",
+    "evolvesFrom": "Treecko",
+    "image": "assets/cards/xytk8b/27.webp",
+    "imageSmall": "assets/cards/xytk8b/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Agility",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      }
+    ],
+    "market": 0.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-27/large",
+    "printedNumber": "027/030",
+    "era": "xy",
+    "tcgplayerId": 98344
+  },
+  {
+    "id": "xytk8b-28",
+    "name": "Psychic Energy",
+    "number": "28",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8b/28.webp",
+    "imageSmall": "assets/cards/xytk8b/28-sm.webp",
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-28/large",
+    "printedNumber": "028/030",
+    "era": "xy",
+    "tcgplayerId": 98328
+  },
+  {
+    "id": "xytk8b-29",
+    "name": "Acro Bike",
+    "number": "29",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xytk8b/29.webp",
+    "imageSmall": "assets/cards/xytk8b/29-sm.webp",
+    "market": 0.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-29/large",
+    "printedNumber": "029/030",
+    "era": "xy",
+    "tcgplayerId": 98345
+  },
+  {
+    "id": "xytk8b-30",
+    "name": "Latias",
+    "number": "30",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "100",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It can telepathically communicate with people. It changes its appearance using its down that refracts light.",
+    "image": "assets/cards/xytk8b/30.webp",
+    "imageSmall": "assets/cards/xytk8b/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Psychic Sphere",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Psychic Prism",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 7.41,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8b-30/large",
+    "printedNumber": "030/030",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 98346
+  }
+]

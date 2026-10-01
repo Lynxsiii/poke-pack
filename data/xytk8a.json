@@ -1,0 +1,920 @@
+[
+  {
+    "id": "xytk8a-1",
+    "name": "Skitty",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "flavorText": "It shows its cute side by chasing its own tail until it gets dizzy.",
+    "image": "assets/cards/xytk8a/1.webp",
+    "imageSmall": "assets/cards/xytk8a/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Charm",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Tail Smack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 3.73,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-1/large",
+    "printedNumber": "001/030",
+    "era": "xy",
+    "tcgplayerId": 98347
+  },
+  {
+    "id": "xytk8a-2",
+    "name": "Fighting Energy",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/2.webp",
+    "imageSmall": "assets/cards/xytk8a/2-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-2/large",
+    "printedNumber": "002/030",
+    "era": "xy",
+    "tcgplayerId": 98351
+  },
+  {
+    "id": "xytk8a-3",
+    "name": "Fighting Energy",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/3.webp",
+    "imageSmall": "assets/cards/xytk8a/3-sm.webp",
+    "market": 0.22,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-3/large",
+    "printedNumber": "003/030",
+    "era": "xy",
+    "tcgplayerId": 98352
+  },
+  {
+    "id": "xytk8a-4",
+    "name": "Rhydon",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It begins walking on its hind legs after evolution. It can punch holes through boulders with its horn.",
+    "evolvesFrom": "Rhyhorn",
+    "image": "assets/cards/xytk8a/4.webp",
+    "imageSmall": "assets/cards/xytk8a/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This Pokémon does 10 damage to itself."
+      },
+      {
+        "name": "Horn Drill",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-4/large",
+    "printedNumber": "004/030",
+    "era": "xy",
+    "tcgplayerId": 98349
+  },
+  {
+    "id": "xytk8a-5",
+    "name": "Fighting Energy",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/5.webp",
+    "imageSmall": "assets/cards/xytk8a/5-sm.webp",
+    "market": 0.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-5/large",
+    "printedNumber": "005/030",
+    "era": "xy",
+    "tcgplayerId": 98353
+  },
+  {
+    "id": "xytk8a-6",
+    "name": "Fighting Energy",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/6.webp",
+    "imageSmall": "assets/cards/xytk8a/6-sm.webp",
+    "market": 0.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-6/large",
+    "printedNumber": "006/030",
+    "era": "xy",
+    "tcgplayerId": 98354
+  },
+  {
+    "id": "xytk8a-7",
+    "name": "Fighting Energy",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/7.webp",
+    "imageSmall": "assets/cards/xytk8a/7-sm.webp",
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-7/large",
+    "printedNumber": "007/030",
+    "era": "xy",
+    "tcgplayerId": 98355
+  },
+  {
+    "id": "xytk8a-8",
+    "name": "Fighting Energy",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/8.webp",
+    "imageSmall": "assets/cards/xytk8a/8-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-8/large",
+    "printedNumber": "008/030",
+    "era": "xy",
+    "tcgplayerId": 98356
+  },
+  {
+    "id": "xytk8a-9",
+    "name": "Fighting Energy",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/9.webp",
+    "imageSmall": "assets/cards/xytk8a/9-sm.webp",
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-9/large",
+    "printedNumber": "009/030",
+    "era": "xy",
+    "tcgplayerId": 98357
+  },
+  {
+    "id": "xytk8a-10",
+    "name": "Fighting Energy",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/10.webp",
+    "imageSmall": "assets/cards/xytk8a/10-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-10/large",
+    "printedNumber": "010/030",
+    "era": "xy",
+    "tcgplayerId": 98358
+  },
+  {
+    "id": "xytk8a-11",
+    "name": "Machop",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "It hefts a Graveler repeatedly to strengthen its entire body. It uses every type of martial arts.",
+    "image": "assets/cards/xytk8a/11.webp",
+    "imageSmall": "assets/cards/xytk8a/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Knuckle Punch",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.75,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-11/large",
+    "printedNumber": "011/030",
+    "era": "xy",
+    "tcgplayerId": 98363
+  },
+  {
+    "id": "xytk8a-12",
+    "name": "Solrock",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It absorbs solar energy during the day. Always expressionless, it can sense what its foe is thinking.",
+    "image": "assets/cards/xytk8a/12.webp",
+    "imageSmall": "assets/cards/xytk8a/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Generator",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Special Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Knock Away",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 0.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-12/large",
+    "printedNumber": "012/030",
+    "era": "xy",
+    "tcgplayerId": 98365
+  },
+  {
+    "id": "xytk8a-13",
+    "name": "Latios",
+    "number": "13",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It understands human speech and is highly intelligent. It is a tender Pokémon that dislikes fighting.",
+    "image": "assets/cards/xytk8a/13.webp",
+    "imageSmall": "assets/cards/xytk8a/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic Flight",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      },
+      {
+        "name": "Psyburn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 0.55,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-13/large",
+    "printedNumber": "013/030",
+    "era": "xy",
+    "tcgplayerId": 98367
+  },
+  {
+    "id": "xytk8a-14",
+    "name": "Machoke",
+    "number": "14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Its muscular body is so powerful, it must wear a power-save belt to be able to regulate its motions.",
+    "evolvesFrom": "Machop",
+    "image": "assets/cards/xytk8a/14.webp",
+    "imageSmall": "assets/cards/xytk8a/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Beatdown",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 0.87,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-14/large",
+    "printedNumber": "014/030",
+    "era": "xy",
+    "tcgplayerId": 98369
+  },
+  {
+    "id": "xytk8a-15",
+    "name": "Rhyhorn",
+    "number": "15",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It is inept at turning because of its four short legs. It can only charge and run in one direction.",
+    "image": "assets/cards/xytk8a/15.webp",
+    "imageSmall": "assets/cards/xytk8a/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 0.88,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-15/large",
+    "printedNumber": "015/030",
+    "era": "xy",
+    "tcgplayerId": 98371
+  },
+  {
+    "id": "xytk8a-16",
+    "name": "Psychic Energy",
+    "number": "16",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8a/16.webp",
+    "imageSmall": "assets/cards/xytk8a/16-sm.webp",
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-16/large",
+    "printedNumber": "016/030",
+    "era": "xy",
+    "tcgplayerId": 98360
+  },
+  {
+    "id": "xytk8a-17",
+    "name": "Fighting Energy",
+    "number": "17",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "image": "assets/cards/xytk8a/17.webp",
+    "imageSmall": "assets/cards/xytk8a/17-sm.webp",
+    "market": 0.4,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-17/large",
+    "printedNumber": "017/030",
+    "era": "xy",
+    "tcgplayerId": 98359
+  },
+  {
+    "id": "xytk8a-18",
+    "name": "Psychic Energy",
+    "number": "18",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8a/18.webp",
+    "imageSmall": "assets/cards/xytk8a/18-sm.webp",
+    "market": 0.07,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-18/large",
+    "printedNumber": "018/030",
+    "era": "xy",
+    "tcgplayerId": 98361
+  },
+  {
+    "id": "xytk8a-19",
+    "name": "Delcatty",
+    "number": "19",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It is highly popular among female Trainers for its sublime fur. It does not keep a nest.",
+    "evolvesFrom": "Skitty",
+    "image": "assets/cards/xytk8a/19.webp",
+    "imageSmall": "assets/cards/xytk8a/19-sm.webp",
+    "attacks": [
+      {
+        "name": "Replace",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Move as many Energy attached to your Pokémon to your other Pokémon in any way you like."
+      },
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "market": 0.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-19/large",
+    "printedNumber": "019/030",
+    "era": "xy",
+    "tcgplayerId": 98373
+  },
+  {
+    "id": "xytk8a-20",
+    "name": "Acro Bike",
+    "number": "20",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xytk8a/20.webp",
+    "imageSmall": "assets/cards/xytk8a/20-sm.webp",
+    "market": 0.74,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-20/large",
+    "printedNumber": "020/030",
+    "era": "xy",
+    "tcgplayerId": 98375
+  },
+  {
+    "id": "xytk8a-21",
+    "name": "Potion",
+    "number": "21",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk8a/21.webp",
+    "imageSmall": "assets/cards/xytk8a/21-sm.webp",
+    "market": 0.09,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-21/large",
+    "printedNumber": "021/030",
+    "era": "xy",
+    "tcgplayerId": 98376
+  },
+  {
+    "id": "xytk8a-22",
+    "name": "Machoke",
+    "number": "22",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "Its muscular body is so powerful, it must wear a power-save belt to be able to regulate its motions.",
+    "evolvesFrom": "Machop",
+    "image": "assets/cards/xytk8a/22.webp",
+    "imageSmall": "assets/cards/xytk8a/22-sm.webp",
+    "attacks": [
+      {
+        "name": "Beatdown",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 0.54,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-22/large",
+    "printedNumber": "022/030",
+    "era": "xy",
+    "tcgplayerId": 98370
+  },
+  {
+    "id": "xytk8a-23",
+    "name": "Rhyhorn",
+    "number": "23",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It is inept at turning because of its four short legs. It can only charge and run in one direction.",
+    "image": "assets/cards/xytk8a/23.webp",
+    "imageSmall": "assets/cards/xytk8a/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Fighting",
+          "Fighting"
+        ],
+        "damage": "40",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 0.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-23/large",
+    "printedNumber": "023/030",
+    "era": "xy",
+    "tcgplayerId": 98372
+  },
+  {
+    "id": "xytk8a-24",
+    "name": "Delcatty",
+    "number": "24",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It is highly popular among female Trainers for its sublime fur. It does not keep a nest.",
+    "evolvesFrom": "Skitty",
+    "image": "assets/cards/xytk8a/24.webp",
+    "imageSmall": "assets/cards/xytk8a/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Replace",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Move as many Energy attached to your Pokémon to your other Pokémon in any way you like."
+      },
+      {
+        "name": "Play Rough",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30+",
+        "text": "Flip a coin. If heads, this attack does 30 more damage."
+      }
+    ],
+    "market": 0.95,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-24/large",
+    "printedNumber": "024/030",
+    "era": "xy",
+    "tcgplayerId": 98374
+  },
+  {
+    "id": "xytk8a-25",
+    "name": "Rhydon",
+    "number": "25",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "100",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It begins walking on its hind legs after evolution. It can punch holes through boulders with its horn.",
+    "evolvesFrom": "Rhyhorn",
+    "image": "assets/cards/xytk8a/25.webp",
+    "imageSmall": "assets/cards/xytk8a/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This Pokémon does 10 damage to itself."
+      },
+      {
+        "name": "Horn Drill",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 1.76,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-25/large",
+    "printedNumber": "025/030",
+    "era": "xy",
+    "tcgplayerId": 98350
+  },
+  {
+    "id": "xytk8a-26",
+    "name": "Solrock",
+    "number": "26",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "80",
+    "artist": "Midori Harada",
+    "flavorText": "It absorbs solar energy during the day. Always expressionless, it can sense what its foe is thinking.",
+    "image": "assets/cards/xytk8a/26.webp",
+    "imageSmall": "assets/cards/xytk8a/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Solar Generator",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Special Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Knock Away",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 more damage."
+      }
+    ],
+    "market": 0.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-26/large",
+    "printedNumber": "026/030",
+    "era": "xy",
+    "tcgplayerId": 98366
+  },
+  {
+    "id": "xytk8a-27",
+    "name": "Skitty",
+    "number": "27",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "50",
+    "artist": "Yuka Morii",
+    "flavorText": "It shows its cute side by chasing its own tail until it gets dizzy.",
+    "image": "assets/cards/xytk8a/27.webp",
+    "imageSmall": "assets/cards/xytk8a/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Charm",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your opponent's next turn, any damage done by attacks from the Defending Pokémon is reduced by 20 (before applying Weakness and Resistance)."
+      },
+      {
+        "name": "Tail Smack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.58,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-27/large",
+    "printedNumber": "027/030",
+    "era": "xy",
+    "tcgplayerId": 98348
+  },
+  {
+    "id": "xytk8a-28",
+    "name": "Machop",
+    "number": "28",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "flavorText": "It hefts a Graveler repeatedly to strengthen its entire body. It uses every type of martial arts.",
+    "image": "assets/cards/xytk8a/28.webp",
+    "imageSmall": "assets/cards/xytk8a/28-sm.webp",
+    "attacks": [
+      {
+        "name": "Knuckle Punch",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-28/large",
+    "printedNumber": "028/030",
+    "era": "xy",
+    "tcgplayerId": 98364
+  },
+  {
+    "id": "xytk8a-29",
+    "name": "Psychic Energy",
+    "number": "29",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "image": "assets/cards/xytk8a/29.webp",
+    "imageSmall": "assets/cards/xytk8a/29-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-29/large",
+    "printedNumber": "029/030",
+    "era": "xy",
+    "tcgplayerId": 98362
+  },
+  {
+    "id": "xytk8a-30",
+    "name": "Latios",
+    "number": "30",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It understands human speech and is highly intelligent. It is a tender Pokémon that dislikes fighting.",
+    "image": "assets/cards/xytk8a/30.webp",
+    "imageSmall": "assets/cards/xytk8a/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Supersonic Flight",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      },
+      {
+        "name": "Psyburn",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "market": 5.59,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk8a-30/large",
+    "printedNumber": "030/030",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 98368
+  }
+]

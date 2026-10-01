@@ -1,0 +1,882 @@
+[
+  {
+    "id": "xytk9b-1",
+    "name": "Water Energy",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/1.webp",
+    "imageSmall": "assets/cards/xytk9b/1-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-1/large",
+    "printedNumber": "001/030",
+    "era": "xy",
+    "tcgplayerId": 118828
+  },
+  {
+    "id": "xytk9b-2",
+    "name": "Water Energy",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/2.webp",
+    "imageSmall": "assets/cards/xytk9b/2-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-2/large",
+    "printedNumber": "002/030",
+    "era": "xy",
+    "tcgplayerId": 118829
+  },
+  {
+    "id": "xytk9b-3",
+    "name": "Water Energy",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/3.webp",
+    "imageSmall": "assets/cards/xytk9b/3-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-3/large",
+    "printedNumber": "003/030",
+    "era": "xy",
+    "tcgplayerId": 118830
+  },
+  {
+    "id": "xytk9b-4",
+    "name": "Eevee",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "60",
+    "artist": "Kouki Saitou",
+    "flavorText": "Thanks to its unstable genetic makeup, this special Pokémon conceals many different possible evolutions.",
+    "image": "assets/cards/xytk9b/4.webp",
+    "imageSmall": "assets/cards/xytk9b/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 2.77,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-4/large",
+    "printedNumber": "004/030",
+    "era": "xy",
+    "tcgplayerId": 118839
+  },
+  {
+    "id": "xytk9b-5",
+    "name": "Water Energy",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/5.webp",
+    "imageSmall": "assets/cards/xytk9b/5-sm.webp",
+    "market": 0.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-5/large",
+    "printedNumber": "005/030",
+    "era": "xy",
+    "tcgplayerId": 118831
+  },
+  {
+    "id": "xytk9b-6",
+    "name": "Frogadier",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its swiftness is unparalleled. It can scale a tower of more than 2,000 feet in a minute's time.",
+    "evolvesFrom": "Froakie",
+    "image": "assets/cards/xytk9b/6.webp",
+    "imageSmall": "assets/cards/xytk9b/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Cut",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-6/large",
+    "printedNumber": "006/030",
+    "era": "xy",
+    "tcgplayerId": 118840
+  },
+  {
+    "id": "xytk9b-7",
+    "name": "Ducklett",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "They are better at swimming than flying, and they happily eat their favorite food, peat moss, as they dive underwater.",
+    "image": "assets/cards/xytk9b/7.webp",
+    "imageSmall": "assets/cards/xytk9b/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 0.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-7/large",
+    "printedNumber": "007/030",
+    "era": "xy",
+    "tcgplayerId": 118842
+  },
+  {
+    "id": "xytk9b-8",
+    "name": "Water Energy",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/8.webp",
+    "imageSmall": "assets/cards/xytk9b/8-sm.webp",
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-8/large",
+    "printedNumber": "008/030",
+    "era": "xy",
+    "tcgplayerId": 118832
+  },
+  {
+    "id": "xytk9b-9",
+    "name": "Water Energy",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/9.webp",
+    "imageSmall": "assets/cards/xytk9b/9-sm.webp",
+    "market": 0.17,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-9/large",
+    "printedNumber": "009/030",
+    "era": "xy",
+    "tcgplayerId": 118833
+  },
+  {
+    "id": "xytk9b-10",
+    "name": "Water Energy",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/10.webp",
+    "imageSmall": "assets/cards/xytk9b/10-sm.webp",
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-10/large",
+    "printedNumber": "010/030",
+    "era": "xy",
+    "tcgplayerId": 118834
+  },
+  {
+    "id": "xytk9b-11",
+    "name": "Froakie",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It protects its skin by covering its body in delicate bubbles. Beneath its happy-go-lucky air, it keeps a watchful eye on its surroundings.",
+    "image": "assets/cards/xytk9b/11.webp",
+    "imageSmall": "assets/cards/xytk9b/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-11/large",
+    "printedNumber": "011/030",
+    "era": "xy",
+    "tcgplayerId": 118844
+  },
+  {
+    "id": "xytk9b-12",
+    "name": "Seaking",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "It makes its nest by hollowing out boulders in streams with its horn. It defends its eggs with its life.",
+    "evolvesFrom": "Goldeen",
+    "image": "assets/cards/xytk9b/12.webp",
+    "imageSmall": "assets/cards/xytk9b/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Soaking Horn",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "If this Pokémon was healed during this turn, this attack does 80 more damage."
+      },
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-12/large",
+    "printedNumber": "012/030",
+    "era": "xy",
+    "tcgplayerId": 118846
+  },
+  {
+    "id": "xytk9b-13",
+    "name": "Goldeen",
+    "number": "13",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "MAHOU",
+    "flavorText": "Its dorsal, pectoral and tail fins wave elegantly in water. That is why it is known as the water dancer.",
+    "image": "assets/cards/xytk9b/13.webp",
+    "imageSmall": "assets/cards/xytk9b/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 0.31,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-13/large",
+    "printedNumber": "013/030",
+    "era": "xy",
+    "tcgplayerId": 118848
+  },
+  {
+    "id": "xytk9b-14",
+    "name": "Suicune",
+    "number": "14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Yoshinobu Saito",
+    "flavorText": "Said to be the embodiment of north winds, it can instantly purify filthy, murky water.",
+    "image": "assets/cards/xytk9b/14.webp",
+    "imageSmall": "assets/cards/xytk9b/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Drain",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Aurora Beam",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "market": 0.89,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-14/large",
+    "printedNumber": "014/030",
+    "era": "xy",
+    "tcgplayerId": 118850
+  },
+  {
+    "id": "xytk9b-15",
+    "name": "Potion",
+    "number": "15",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xytk9b/15.webp",
+    "imageSmall": "assets/cards/xytk9b/15-sm.webp",
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-15/large",
+    "printedNumber": "015/030",
+    "era": "xy",
+    "tcgplayerId": 118852
+  },
+  {
+    "id": "xytk9b-16",
+    "name": "Piplup",
+    "number": "16",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Kanako Eo",
+    "flavorText": "Because it is very proud, it hates accepting food from people. Its thick down guards it from cold.",
+    "image": "assets/cards/xytk9b/16.webp",
+    "imageSmall": "assets/cards/xytk9b/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 2.32,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-16/large",
+    "printedNumber": "016/030",
+    "era": "xy",
+    "tcgplayerId": 118853
+  },
+  {
+    "id": "xytk9b-17",
+    "name": "Water Energy",
+    "number": "17",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/17.webp",
+    "imageSmall": "assets/cards/xytk9b/17-sm.webp",
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-17/large",
+    "printedNumber": "017/030",
+    "era": "xy",
+    "tcgplayerId": 118835
+  },
+  {
+    "id": "xytk9b-18",
+    "name": "Swanna",
+    "number": "18",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "sui",
+    "flavorText": "Swanna start to dance at dusk. The one dancing in the middle is the leader of the flock.",
+    "evolvesFrom": "Ducklett",
+    "image": "assets/cards/xytk9b/18.webp",
+    "imageSmall": "assets/cards/xytk9b/18-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Brave Bird",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-18/large",
+    "printedNumber": "018/030",
+    "era": "xy",
+    "tcgplayerId": 118854
+  },
+  {
+    "id": "xytk9b-19",
+    "name": "Water Energy",
+    "number": "19",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/19.webp",
+    "imageSmall": "assets/cards/xytk9b/19-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-19/large",
+    "printedNumber": "019/030",
+    "era": "xy",
+    "tcgplayerId": 118836
+  },
+  {
+    "id": "xytk9b-20",
+    "name": "Tierno",
+    "number": "20",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/xytk9b/20.webp",
+    "imageSmall": "assets/cards/xytk9b/20-sm.webp",
+    "market": 0.3,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-20/large",
+    "printedNumber": "020/030",
+    "era": "xy",
+    "tcgplayerId": 118856
+  },
+  {
+    "id": "xytk9b-21",
+    "name": "Frogadier",
+    "number": "21",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "Its swiftness is unparalleled. It can scale a tower of more than 2,000 feet in a minute's time.",
+    "evolvesFrom": "Froakie",
+    "image": "assets/cards/xytk9b/21.webp",
+    "imageSmall": "assets/cards/xytk9b/21-sm.webp",
+    "attacks": [
+      {
+        "name": "Cut",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "market": 0.34,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-21/large",
+    "printedNumber": "021/030",
+    "era": "xy",
+    "tcgplayerId": 118841
+  },
+  {
+    "id": "xytk9b-22",
+    "name": "Water Energy",
+    "number": "22",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/22.webp",
+    "imageSmall": "assets/cards/xytk9b/22-sm.webp",
+    "market": 0.16,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-22/large",
+    "printedNumber": "022/030",
+    "era": "xy",
+    "tcgplayerId": 118837
+  },
+  {
+    "id": "xytk9b-23",
+    "name": "Froakie",
+    "number": "23",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It protects its skin by covering its body in delicate bubbles. Beneath its happy-go-lucky air, it keeps a watchful eye on its surroundings.",
+    "image": "assets/cards/xytk9b/23.webp",
+    "imageSmall": "assets/cards/xytk9b/23-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.42,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-23/large",
+    "printedNumber": "023/030",
+    "era": "xy",
+    "tcgplayerId": 118845
+  },
+  {
+    "id": "xytk9b-24",
+    "name": "Ducklett",
+    "number": "24",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "They are better at swimming than flying, and they happily eat their favorite food, peat moss, as they dive underwater.",
+    "image": "assets/cards/xytk9b/24.webp",
+    "imageSmall": "assets/cards/xytk9b/24-sm.webp",
+    "attacks": [
+      {
+        "name": "Lunge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If tails, this attack does nothing."
+      }
+    ],
+    "market": 0.79,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-24/large",
+    "printedNumber": "024/030",
+    "era": "xy",
+    "tcgplayerId": 118843
+  },
+  {
+    "id": "xytk9b-25",
+    "name": "Seaking",
+    "number": "25",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Kyoko Umemoto",
+    "flavorText": "It makes its nest by hollowing out boulders in streams with its horn. It defends its eggs with its life.",
+    "evolvesFrom": "Goldeen",
+    "image": "assets/cards/xytk9b/25.webp",
+    "imageSmall": "assets/cards/xytk9b/25-sm.webp",
+    "attacks": [
+      {
+        "name": "Soaking Horn",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "If this Pokémon was healed during this turn, this attack does 80 more damage."
+      },
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 0.25,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-25/large",
+    "printedNumber": "025/030",
+    "era": "xy",
+    "tcgplayerId": 118847
+  },
+  {
+    "id": "xytk9b-26",
+    "name": "Goldeen",
+    "number": "26",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "MAHOU",
+    "flavorText": "Its dorsal, pectoral and tail fins wave elegantly in water. That is why it is known as the water dancer.",
+    "image": "assets/cards/xytk9b/26.webp",
+    "imageSmall": "assets/cards/xytk9b/26-sm.webp",
+    "attacks": [
+      {
+        "name": "Reckless Charge",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-26/large",
+    "printedNumber": "026/030",
+    "era": "xy",
+    "tcgplayerId": 118849
+  },
+  {
+    "id": "xytk9b-27",
+    "name": "Swanna",
+    "number": "27",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "sui",
+    "flavorText": "Swanna start to dance at dusk. The one dancing in the middle is the leader of the flock.",
+    "evolvesFrom": "Ducklett",
+    "image": "assets/cards/xytk9b/27.webp",
+    "imageSmall": "assets/cards/xytk9b/27-sm.webp",
+    "attacks": [
+      {
+        "name": "Wing Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Brave Bird",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-27/large",
+    "printedNumber": "027/030",
+    "era": "xy",
+    "tcgplayerId": 118855
+  },
+  {
+    "id": "xytk9b-28",
+    "name": "Water Energy",
+    "number": "28",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/xytk9b/28.webp",
+    "imageSmall": "assets/cards/xytk9b/28-sm.webp",
+    "market": 0.24,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-28/large",
+    "printedNumber": "028/030",
+    "era": "xy",
+    "tcgplayerId": 118838
+  },
+  {
+    "id": "xytk9b-29",
+    "name": "Tierno",
+    "number": "29",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/xytk9b/29.webp",
+    "imageSmall": "assets/cards/xytk9b/29-sm.webp",
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-29/large",
+    "printedNumber": "029/030",
+    "era": "xy",
+    "tcgplayerId": 118857
+  },
+  {
+    "id": "xytk9b-30",
+    "name": "Suicune",
+    "number": "30",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "100",
+    "artist": "Yoshinobu Saito",
+    "flavorText": "Said to be the embodiment of north winds, it can instantly purify filthy, murky water.",
+    "image": "assets/cards/xytk9b/30.webp",
+    "imageSmall": "assets/cards/xytk9b/30-sm.webp",
+    "attacks": [
+      {
+        "name": "Spiral Drain",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Heal 20 damage from this Pokémon."
+      },
+      {
+        "name": "Aurora Beam",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "market": 1.94,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk9b-30/large",
+    "printedNumber": "030/030",
+    "era": "xy",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 118851
+  }
+]
