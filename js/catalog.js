@@ -6171,6 +6171,123 @@ export const BASE_SET_2 = {
   ]),
 };
 
+// EX era (2003-2007), builder e2: ex5 Hidden Legends, ex6 FireRed & LeafGreen, ex7 Team Rocket Returns, ex8 Deoxys. Sources: /mnt/project-files/every-era/ex/research/ex5.md-ex8.md, second-source-check.md, ex-pack-structure.md; rates in data/pullrates.json.
+export const EX_HIDDEN_LEGENDS = {
+  id: "ex5",
+  tcgId: "ex5",
+  name: "EX Hidden Legends",
+  edition: "EX",
+  era: "EX",
+  released: "June 14, 2004",
+  live: true,
+  printedTotal: 101,
+  totalCount: 102,
+  packSize: 9,
+  cost: 800,
+  dataFile: "data/ex5.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, June 2004. Metagross, Regirock, Registeel and Regice on the wrappers, the first cracked ice holofoil, four wrappers.",
+  oddsLine: "ex 1/18 · cracked ice 1/36 · holo 1/4",
+  lede: "Regirock ex, Regice ex and Registeel ex come in cracked ice foil, one in every 36 packs. The six cosmos Pokémon-ex and a holo in one pack in four make up the rest of the rare slot.",
+  // Elite Fourum post 40 (8 boxes: 9 holos, 2 cosmos ex and 1 cracked-ice ex a box, 216-pack table) with PokeGym 19395 ("3 ex in a box ever since MvA"); nine cards (5 Commons, 2 Uncommons, a reverse, a rare slot), no Energy, no code card. The cracked-ice split is one source (medium-low). The Groudon secret is a box topper and is never dealt. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.25, ex: 0.0556, exCracked: 0.0278 }),
+  heroIds: ["ex5-98", "ex5-99", "ex5-97", "ex5-93"],
+  wrappers: boosterWrappers("ex5", [
+    { id: "metagross", name: "Metagross", cardId: "ex5-11", tag: "Alloy" },
+    { id: "regirock", name: "Regirock", cardId: "ex5-98", tag: "Boulder" },
+    { id: "registeel", name: "Registeel", cardId: "ex5-99", tag: "Iron" },
+    { id: "regice", name: "Regice", cardId: "ex5-97", tag: "Glacier" },
+  ]),
+};
+
+export const EX_FIRERED_LEAFGREEN = {
+  id: "ex6",
+  tcgId: "ex6",
+  name: "EX FireRed & LeafGreen",
+  edition: "EX",
+  era: "EX",
+  released: "August 30, 2004",
+  live: true,
+  printedTotal: 112,
+  totalCount: 116,
+  packSize: 9,
+  cost: 1009.96,
+  dataFile: "data/ex6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, August 2004. Pikachu, Charizard, Blastoise and Venusaur on the wrappers, a Kanto remake with secret cracked ice birds, four wrappers.",
+  oddsLine: "ex 1/12 · secret bird 1/36 · holo 1/4.5",
+  lede: "Articuno ex, Moltres ex and Zapdos ex are secret rares in cracked ice foil, one in every 36 packs. Charizard ex, Blastoise ex and Venusaur ex lead the nine Pokémon-ex.",
+  // Elite Fourum post 44 (box tally: 8 holos, 3 ex and 1 secret cracked-ice ex a box) with PokeGym 19395 ("4 ex per box in FR/LG"); nine cards (5 Commons, 2 Uncommons, a reverse, a rare slot), no Energy, no code card. Holo split medium-low (no second tally). The Charmander secret is a box topper and is never dealt. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2222, ex: 0.0833, secret: 0.0278 }),
+  heroIds: ["ex6-105", "ex6-116", "ex6-114", "ex6-115"],
+  wrappers: boosterWrappers("ex6", [
+    { id: "pikachu", name: "Pikachu", cardId: "ex6-74", tag: "Static" },
+    { id: "charizard", name: "Charizard", cardId: "ex6-105", tag: "Flame" },
+    { id: "blastoise", name: "Blastoise", cardId: "ex6-104", tag: "Torrent" },
+    { id: "venusaur", name: "Venusaur", cardId: "ex6-112", tag: "Overgrow" },
+  ]),
+};
+
+export const EX_TEAM_ROCKET_RETURNS = {
+  id: "ex7",
+  tcgId: "ex7",
+  name: "EX Team Rocket Returns",
+  edition: "EX",
+  era: "EX",
+  released: "November 8, 2004",
+  live: true,
+  printedTotal: 109,
+  totalCount: 111,
+  packSize: 9,
+  cost: 3000,
+  dataFile: "data/ex7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, November 2004. Tyranitar, Mewtwo, Gyarados and Scyther on the wrappers, eleven Rocket's ex and the first three Gold Stars, four wrappers.",
+  oddsLine: "Gold Star 1/108 · ex 1/13.5 · holo 1/4",
+  lede: "Treecko, Torchic and Mudkip are the first English Gold Stars, about one in every 108 packs. Here Comes Team Rocket! is a secret rare, and eleven Rocket's ex fill the Pokémon-ex slot.",
+  // Elite Fourum posts 46-47 (14 boxes: 9 holos and 3 ex a box, a Gold Star taking an ex in one box in three; the secret one in 220 packs, an assumption) with PokeGym 11875 (6 stars in 18 boxes at one prerelease, 2 in 432 packs at another); nine cards (5 Commons, 2 Uncommons, a reverse, a rare slot), no Energy, no code card. Gold Star and secret rates low-medium. The Charmeleon secret is a box topper and is never dealt. A pack is $3,000 on TCGplayer's price history (no market price listed): thin. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2455, ex: 0.0741, goldStar: 0.0093, secret: 0.0045 }),
+  heroIds: ["ex7-109", "ex7-107", "ex7-108", "ex7-99"],
+  wrappers: boosterWrappers("ex7", [
+    { id: "tyranitar", name: "Tyranitar", cardId: "ex7-19", tag: "Sandstorm" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "ex7-99", tag: "Psychic" },
+    { id: "gyarados", name: "Gyarados", cardId: "ex7-36", tag: "Rage" },
+    { id: "scyther", name: "Scyther", cardId: "ex7-102", tag: "Blade" },
+  ]),
+};
+
+export const EX_DEOXYS = {
+  id: "ex8",
+  tcgId: "ex8",
+  name: "EX Deoxys",
+  edition: "EX",
+  era: "EX",
+  released: "February 14, 2005",
+  live: true,
+  printedTotal: 107,
+  totalCount: 108,
+  packSize: 9,
+  cost: 1699.99,
+  dataFile: "data/ex8.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, February 2005. Three Deoxys forms and Rayquaza on the wrappers, with the Gold Star Rayquaza, four wrappers.",
+  oddsLine: "Gold Star 1/108 · ex 1/13.5 · holo 1/4",
+  lede: "Rayquaza ★ is the chase, with Latias ★ and Latios ★. Three Deoxys ex, Rayquaza ex and Salamence ex fill the Pokémon-ex slot.",
+  // Elite Fourum posts 46 and 48 (only 4 boxes tallied, all 9 holos, 3 ex and no Gold Star; the star rate is borrowed from the other sets, an assumption) with the same sheet design as Team Rocket Returns; nine cards (5 Commons, 2 Uncommons, a reverse, a rare slot), no Energy, no code card. Low-medium throughout. The Rocket's Raikou ex secret is a box topper and is never dealt. A pack is $1,699.99 on TCGplayer's price history (no market price listed): thin. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.25, ex: 0.0741, goldStar: 0.0093 }),
+  heroIds: ["ex8-107", "ex8-105", "ex8-106", "ex8-102"],
+  wrappers: boosterWrappers("ex8", [
+    { id: "deoxys-attack", name: "Deoxys", cardId: "ex8-98", tag: "Attack Forme" },
+    { id: "deoxys-normal", name: "Deoxys", cardId: "ex8-97", tag: "Normal Forme" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "ex8-102", tag: "Sky High" },
+    { id: "deoxys-defense", name: "Deoxys", cardId: "ex8-99", tag: "Defense Forme" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -6344,6 +6461,11 @@ export const PLAYABLE_SETS = [
   JUNGLE,
   FOSSIL,
   BASE_SET_2,
+  // EX era (2003-2007): e2's four sets, newest first (the lead orders the era).
+  EX_DEOXYS,
+  EX_TEAM_ROCKET_RETURNS,
+  EX_FIRERED_LEAFGREEN,
+  EX_HIDDEN_LEGENDS,
 ];
 
 /**
@@ -6658,6 +6780,10 @@ const POKESYMBOLS_SLUG = {
   ex10: "unseen-forces",
   ex11: "delta-species",
   ex12: "legend-maker",
+  ex5: "hidden-legends",
+  ex6: "firered-leafgreen",
+  ex7: "team-rocket-returns",
+  ex8: "deoxys",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

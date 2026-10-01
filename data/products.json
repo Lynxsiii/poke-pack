@@ -16794,5 +16794,72 @@
       "tcgplayerId": 107613,
       "image": "assets/products/base4/deck-lightning-bug.webp"
     }
+  ],
+  "ex5": [
+    {
+      "id": "booster-box",
+      "name": "Hidden Legends Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card. Groudon, the secret rare box topper, is not in the packs. TCGplayer has no market price for the box, only a single $52,400 listing (its mid price), which is used as it is: thin (36 packs at the $800 pack would be $28,800).",
+      "promos": [],
+      "price": 52400.0,
+      "tcgplayerId": 98596,
+      "image": "assets/products/ex5/booster-box.webp"
+    }
+  ],
+  "ex6": [
+    {
+      "id": "booster-box",
+      "name": "FireRed & LeafGreen Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card. Charmander, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 36358.56,
+      "priceDerived": "packs",
+      "tcgplayerId": 98945,
+      "image": "assets/products/ex6/booster-box.webp"
+    },
+    {
+      "id": "single-pack-blister",
+      "name": "FireRed & LeafGreen Single Pack Blister",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One FireRed & LeafGreen pack on a card (TCGplayer 488312). TCGplayer lists it without a market price, so it is priced at its pack.",
+      "promos": [],
+      "price": 1009.96,
+      "priceDerived": "packs",
+      "tcgplayerId": 488312,
+      "image": "assets/products/ex6/single-pack-blister.webp"
+    }
+  ],
+  "ex7": [
+    {
+      "id": "booster-box",
+      "name": "Team Rocket Returns Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card. Charmeleon, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 108000.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98579,
+      "image": "assets/products/ex7/booster-box.webp"
+    }
+  ],
+  "ex8": [
+    {
+      "id": "booster-box",
+      "name": "Deoxys Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs, no code card. Rocket's Raikou ex, the secret rare box topper, is not in the packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 61199.64,
+      "priceDerived": "packs",
+      "tcgplayerId": 98563,
+      "image": "assets/products/ex8/booster-box.webp"
+    }
   ]
 }
