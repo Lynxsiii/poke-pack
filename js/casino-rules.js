@@ -11,6 +11,7 @@ export const COINFLIP_RULES = {
   tolerance: 0.05,   // a challenger may be this far above or below the host's value
   toleranceMinCents: 10,
   botEdge: 0.06,     // the bot stakes up to this much less than you, never more
+  maxSlabs: 10,      // graded slabs in one stake (valued at graded value, on top of the cards)
 };
 
 /** The values a challenger's cards may total to match a host's stake, in cents. */
@@ -39,6 +40,7 @@ export const JACKPOT_RULES = {
   defaultPlayers: 6,
   earlyDrawMin: 2,     // the host may draw an unfilled pot once it has this many entries
   maxMultiple: 5,      // a joiner may put up at most this many times the host's entry
+  maxSlabs: 10,        // graded slabs in one entry (valued at graded value, on top of the cards)
   maxOpen: 3,          // open pots one player can host at once
   openHours: 24,       // an undrawn pot returns every pile after this
 };
