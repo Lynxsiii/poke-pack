@@ -19,8 +19,10 @@ for (const [setId, list] of Object.entries(products)) {
   // Promos are part of the set's binder, so its card count includes them, except
   // the ME black star promos, which are counted under ME Black Star Promos.
   // A promo set that reads other sets' files (XY Black Star Promos) counts across all of them.
-  const lists = set.promoSet && set.viewOf ? dataSetsOf(set).map((s) => read(s.dataFile ?? `data/${s.id}.json`)) : [cards];
-  assert.equal(homeCards(set, lists).length - (lists.length === 1 ? BASIC_ENERGY.length : 0), set.totalCount, `${setId}: totalCount counts its promos`);
+  const viewed = Boolean(set.promoSet && set.viewOf);
+  const lists = viewed ? dataSetsOf(set).map((s) => read(s.dataFile ?? `data/${s.id}.json`)) : [cards];
+  // A viewed promo set's lists carry no basic Energy, whatever their number (a promo set whose main sets have not landed reads one file).
+  assert.equal(homeCards(set, lists).length - (viewed ? 0 : BASIC_ENERGY.length), set.totalCount, `${setId}: totalCount counts its promos`);
   const byId = Object.fromEntries(cards.map((c) => [c.id, c]));
   const pools = Object.values(poolsFrom(cards, set)).flat();
   assert.ok(pools.every((c) => !c.promo), `${setId}: no promo is in a pack pool`);
