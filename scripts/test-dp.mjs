@@ -66,8 +66,8 @@ const alph=foilExtras({id:'hgss1-ONE',rarity:'Rare Secret',supertype:'Trainer',n
 assert.ok(/has-etch-tile/.test(alph.classes)&&/era-dp/.test(alph.classes),`Alph Lithograph is textured: ${alph.classes}`);
 assert.equal(dpEtched({id:'dp7-103',rarity:'Rare Secret'}),false,'cosmos secrets are not etched');
 const holo=foilExtras({id:'dp1-1',rarity:'Rare Holo',supertype:'Pokémon'},url);
-assert.ok(/era-dp/.test(holo.classes)&&!/has-foil-map/.test(holo.classes)&&!/has-etch-tile/.test(holo.classes),'no map until a finish agent draws one');
-assert.equal(dpMap({id:'dp1-1',rarity:'Rare Holo'}),'');
+assert.ok(/era-dp/.test(holo.classes)&&/has-foil-map/.test(holo.classes)&&/dp-win\/dp-basic\.webp/.test(holo.style),`a Diamond & Pearl holo takes the drawn window mask: ${holo.classes} ${holo.style}`);
+assert.equal(dpMap({id:'dp1-1',rarity:'Rare Holo'}),'assets/foil/dp-win/dp-basic.webp');assert.equal(dpMap({id:'dp1-5',rarity:'Common'}),'','a plain card has no map');
 const lvx=foilExtras({id:'dp1-120',rarity:'Rare Holo LV.X',supertype:'Pokémon'},url);
 assert.ok(/era-dp/.test(lvx.classes)&&!/has-foil-map/.test(lvx.classes));
 const rev=foilExtras({id:'dp2-30',rarity:'Common',supertype:'Pokémon',types:['Water'],reverse:true},url);
