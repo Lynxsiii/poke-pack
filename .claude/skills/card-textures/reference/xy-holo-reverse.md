@@ -24,7 +24,7 @@ Sheet: `css/holo/xy.css`. Classes from `js/xy-foil.js` (`xyPattern`, `xyHoloPatt
 
 ## Data note
 
-Rare Holo is folded into "Rare" in the xy4, xy5, xy11, xy12 and dc1 data the builders filed (config has `era: "xy"` but pkmn.gg gave no holo split there). `XY_HOLO_FALLBACK` in `js/xy-foil.js` lists the numbers pokemontcg.io calls "Rare Holo" for those sets so they still draw; drop an entry once the data says "Rare Holo". Verified against cardmavin for xy12 only.
+Every non-EX holo of the era is "Rare Holo" in the data (`data/xy*.json`, dc1, g1) and has a TCG Live map (`foilMap`) or, for McDonald's 2014-16 and the trainer kits (rarity "Promo", `foilAs: "Rare Holo"`, `era: "xy"`, no map), the drawn window mask of its frame. The `XY_HOLO_FALLBACK` table the builder first wrote (numbers filed as "Rare" in xy4, xy5, xy11, xy12, dc1) was redundant once the data was merged and was removed in the review; the plain "Rare" of `xyPattern` is `foil-none`. XY set configs list "Rare Holo" in `reverseRarities`, so a Rare Holo can also be the reverse-slot card: it takes the `xy-rev` finish, not the holo.
 
 ## What I would check next / what still looks off
 
@@ -32,3 +32,23 @@ Rare Holo is folded into "Rare" in the xy4, xy5, xy11, xy12 and dc1 data the bui
 - The Sheen bands are one repeating gradient; the real foil has a crisper, more crystalline edge between bands than a CSS gradient can give.
 - Basic Energy reverse is the least evidenced finish (one thumbnail, no text source); Trainer reverse is medium.
 - Some scans (Salamence xy6-57) are posterised in the source image; the foil on them looks harsher than the real card.
+
+## Review (rv-f1, branch xy/rv-f1)
+
+Checked: Sheen Rare Holo (xy1, xy2, xy4, xy5, xy6, xy7, xy10, dc1, g1), Starlight (xy12), reverse holo of Pokemon, Trainer and basic Energy (xy1, xy2, xy7, xy12 sheets), plain glare, the drawn-window fallbacks (xy0 Kalos Starter Set, McDonald's 2014, trainer kit xytk6a, xy12 black-star promos). Foil probe sheets at 220 px, 3x, poses rest, 30:25, -30:-20, 50:78, in Chromium and WebKit; `foil_coverage.mjs` over xy0-xy12, dc1, g1, xyp, mcd14-16, xytk* printed nothing (exit 0); `dark_specks` inside the budget for xy0, xy1, xy2, xy4, xy12, dc1, g1, mcd14, xytk6a; a data survey (every XY card through `xyPattern` / `foilExtras`, with `foilAs` gating) shows no card falling to the generic engine and every non-EX holo with a mask; the real app at iPhone 13 size (ripped packs of xy1 and xy12, reveal and inspector of Vivillon xy1-17 and Delphox xy1-26 reverse in Chromium, Chansey and Mew in WebKit); settings toggled through the settings page on Vivillon (subtle, intense, no shine, classic, reduced motion).
+
+Found and changed (one commit each):
+- `XY_HOLO_FALLBACK` and `XY_HOLO_IDS` removed (redundant once merged, the data says "Rare Holo" everywhere).
+- `isEvolutions` matched every id starting `xy12-`, so the xy12-xyp Black Star promos drew Starlight and the retro window mask. It now matches `xy12-<number>` only.
+- Starlight on a white or very pale window (Chansey, Mew's sky, Poliwrath's water): a colour-dodge cannot brighten white, so the foil read as nothing at tilt. `.xy-starlight.has-foil-map .glare` now multiplies a pastel cyan / yellow / pink wash (lightness 76% or more) through the same mask, the dodge foil stays. Verified in both engines and in the app.
+- Basic Energy reverse: `.xy-rev .glare` masked with the undefined `--xy-win`, which drops the whole mask declaration, so the glare was unmasked. It now has the foil's own `--art` mask and `inset()` clip. No visible change in sheets (the glare is faint there), correctness only.
+
+Judged fine: the McDonald's, kit, xyp and Kalos holos paint the art window only (text, name bar and evolution circle clean); Metal commons show a diagonal hatch, that is the printed frame of the scan, not foil; Sheen reads like SM's envelope; reverse text lift at the thumb pose is comparable to SM; no dodge blotches or specks on the dark cards (Ralts, Goomy, Darkness Energy) in WebKit; foil strength subtle and intense differ only slightly at a lit pose (opacity is capped), classic mode draws the shared classic window stripes, no shine switches the foil off as in every era, reduced motion keeps the lit pose static.
+
+Remains:
+- Radiant Collection (g1-RC*, `xy-rc`, 12 Commons, 12 Uncommons and 2 EX with no map) belongs to f3 (css/holo/xy-fullart.css); not reviewed here.
+- Reverse of basic Energy is the least evidenced finish (one thumbnail, no macro photo); sand grain and glint size are judged from thumbnails only and there is no poke-holo.simey.me side-by-side (no network in the session).
+- Real packs cannot yield a reverse of basic Energy; it only shows through cards with a reverse flag (the inspector, trades).
+- Chromium sweeps hit 30 s screenshot timeouts while the machine ran at load 30; the re-renders with longer timeouts were done by hand and are in the sheets.
+- Tilted 3D screenshots in headless Chromium are rasterised softly (text blurs while the card is moving); at rest the card is crisp. Shared card-motion code, not XY.
+
