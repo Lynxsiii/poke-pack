@@ -4,6 +4,7 @@
  * idea as the TCG catalog). We do not hotlink Serebii.
  */
 import { avatarColor, COLOR_IDS } from "./palette.js";
+import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES } from "./level-data.js";
 import { isMasteryBanner, isMasterySet, masteryBannerId, masteryBannerSet, setAccent } from "./mastery.js";
 
 export const AVATAR_MAX = 1025;
@@ -80,7 +81,15 @@ export const BANNER_MOTIONS = [
   { id: "pulse", name: "Pulse" },
   { id: "beam", name: "Beam" },
   { id: "mist", name: "Mist" },
+  // Level rewards: `level` is the first level that can wear them (js/level-data.js).
+  ...Object.entries(BANNER_MOTION_LEVELS).map(([id, level]) => ({ id, name: BANNER_MOTION_NAMES[id] || id, level })),
 ];
+
+/** The level a banner needs for its motion, 0 for the free motions and the mastery banners (those have their own gate). */
+export function bannerMotionLevel(value) {
+  const motion = parseBanner(value).motion;
+  return BANNER_MOTION_LEVELS[motion] || 0;
+}
 
 const AVATAR_MAP = new Map(AVATARS.map(([id, name]) => [String(id), name]));
 const MOTION_IDS = new Set(BANNER_MOTIONS.map((row) => row.id));

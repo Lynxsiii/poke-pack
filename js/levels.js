@@ -13,8 +13,11 @@
  * so anyone who already uses a feature is far past its gate.
  */
 import { LEVEL_CAP } from "./xp.js";
+import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, levelTitleRows } from "./level-data.js";
 
-export { LEVEL_CAP };
+// The banner motion levels and level titles live in js/level-data.js (no imports) so
+// js/cosmetics.js and js/titles.js can read them without a cycle through js/xp.js.
+export { LEVEL_CAP, BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, LEVEL_TITLES, levelTitleRows };
 
 /** Avatar frames, lowest first. `level` is the first level that can wear it. */
 export const FRAMES = [
@@ -26,28 +29,9 @@ export const FRAMES = [
   { id: "legend", name: "Legend", level: 100 },
 ];
 
-/** New banner motions. The five original motions (aurora, drift, pulse, beam, mist) stay free. */
-export const BANNER_MOTION_LEVELS = { foil: 10, starfall: 25, holo: 40 };
-export const BANNER_MOTION_NAMES = { foil: "Foil", starfall: "Starfall", holo: "Holo" };
-
 /** The level a feature opens at. Numbers only; the checks live next to each feature. */
 export const GATES = { battles: 3, coinflip: 5, jackpot: 8, grading: 10 };
 export const GATE_NAMES = { battles: "pack battles", coinflip: "coinflip", jackpot: "the jackpot", grading: "grading" };
-
-/** Titles that arrive with a level. Ids are `level-<n>`; names are at most 32 characters. */
-export const LEVEL_TITLES = [
-  { level: 5, name: "Apprentice" },
-  { level: 10, name: "Ranger" },
-  { level: 20, name: "Ace Trainer" },
-  { level: 30, name: "Elite" },
-  { level: 40, name: "Veteran" },
-  { level: 50, name: "Elite Four" },
-  { level: 60, name: "Professor" },
-  { level: 70, name: "Frontier Brain" },
-  { level: 80, name: "Hall of Famer" },
-  { level: 90, name: "Master Trainer" },
-  { level: 100, name: "Legend" },
-];
 
 /** Gifts from data/gear.json, handed out with the level's coins (worker/gear.js grantGear). */
 export const LEVEL_GEAR = {
@@ -116,11 +100,6 @@ export function levelTitle(level) {
   return best ? best.name : null;
 }
 
-/** Level titles as title rows ({id, name, note, level}) so js/titles.js can offer them. */
-export function levelTitleRows() {
-  return LEVEL_TITLES.map((row) => ({ id: `level-${row.level}`, name: row.name, note: `Reach level ${row.level}.`, level: row.level }));
-}
-
 export function levelPerks(level) {
   const lv = clampLevel(level);
   return {
@@ -134,6 +113,22 @@ export function levelPerks(level) {
     title: levelTitle(lv),
     gates: Object.fromEntries(Object.entries(GATES).map(([key, min]) => [key, lv >= min])),
   };
+}
+
+const SLOT_STEPS = { showcase: SHOWCASE_STEPS, slabs: SLAB_STEPS, pages: PAGE_STEPS };
+
+/** The first level above `level` with more room for `kind` ("showcase", "slabs" or "pages"), or null at the top step. */
+export function nextSlotLevel(kind, level) {
+  const lv = clampLevel(level);
+  const steps = SLOT_STEPS[kind] || [];
+  const next = steps.find(([from]) => from > lv);
+  return next ? next[0] : null;
+}
+
+/** The refusal for adding past the allowance: "Reach level N for more slots." (the top step has no next level). */
+export function slotMessage(kind, level) {
+  const next = nextSlotLevel(kind, level);
+  return next ? `Reach level ${next} for more slots.` : "That is every slot there is.";
 }
 
 /** The refusal text for a closed gate, shared by the Worker and the lock notices. */

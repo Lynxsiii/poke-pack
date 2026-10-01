@@ -10,6 +10,7 @@ import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, cou
 import { COINFLIP_RULES } from "./casino-rules.js";
 import { coinStageHTML, flipCoin, restCoin } from "./coin.js?v=2";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
+import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 
 const LIST_POLL_MS = 6000;
 const TABLE_POLL_MS = 2500;
@@ -47,6 +48,12 @@ export function createCoinflip(ctx) {
   const clockNow = () => ctx.clock.now();
   const hostSlabs = (flip) => flip?.hostSlabs || [];
   const guestSlabs = (flip) => flip?.guestSlabs || [];
+  // Level gate (js/levels.js GATES): shut for a level-too-low player with no flips of their own on the page.
+  const lock = () => {
+    if (!list) return null;
+    const used = Boolean(list.record?.played) || (list.open || []).some(isMine) || (list.done || []).some((f) => isMine(f) || isGuest(f));
+    return gateLock("coinflip", me(), used);
+  };
   const stakeWord = (flip) => (hostSlabs(flip).length ? "cards and slabs" : "cards");
   const stop = () => { clearTimeout(timer); timer = 0; };
   const later = (fn, ms) => { stop(); timer = setTimeout(fn, ms); };
@@ -93,9 +100,10 @@ export function createCoinflip(ctx) {
         <h1 class="page-title">Coinflip</h1>
         <p class="cs-lede">Put up cards or graded slabs. Someone matches them to within ${Math.round(COINFLIP_RULES.tolerance * 100)}% and one flip of the coin decides who takes both piles.</p>
       </header>
+      ${gateNoticeHTML(lock())}
       <div class="cf-actions">
-        <button class="solid" type="button" data-new>${casinoIcon("coin")}Put up cards</button>
-        <button class="ghost" type="button" data-bot>${icon("bot")}Flip a bot</button>
+        <button class="solid${lock() ? " is-gated" : ""}" type="button" data-new>${casinoIcon("coin")}Put up cards</button>
+        <button class="ghost${lock() ? " is-gated" : ""}" type="button" data-bot>${icon("bot")}Flip a bot</button>
       </div>
       <p class="cs-fine">Calling a bot is free. It puts up cards worth a little less than yours, so it can never hand out value. A bot never puts up slabs. ${
         rec ? `You have flipped ${plural(rec.played, "time")} and won ${rec.won}.` : ""}</p>
@@ -299,6 +307,7 @@ export function createCoinflip(ctx) {
 
   function openCreate({ withBot }) {
     if (needSignIn()) return;
+    if (lock()) return ctx.toast?.(gateRefusal(lock()));
     ctx.picker.open({
       title: withBot ? "Flip a bot" : "Put up cards or slabs",
       lede: withBot ? "Pick the cards or slabs to risk. The bot answers with cards worth a little less. It never puts up slabs." : `Pick the cards or slabs to put on the table. A player matches them within ${Math.round(COINFLIP_RULES.tolerance * 100)}%.`,
@@ -320,6 +329,7 @@ export function createCoinflip(ctx) {
 
   function openMatch(id) {
     if (needSignIn()) return;
+    if (lock()) return ctx.toast?.(gateRefusal(lock()));
     const flip = (table?.flip?.id === id ? table.flip : list?.open?.find((f) => f.id === id));
     if (!flip?.window) return;
     ctx.picker.open({

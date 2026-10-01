@@ -147,6 +147,7 @@ function activeTrainer() {
 
 function applyCloudSave(save) {
   if (!save) return;
+  if (cloudUser && save.xp?.level) cloudUser.level = save.xp.level; // the level gates and perks read it (js/gate-notice.js)
   state.coins = save.coins;
   state.collection = save.collection || {};
   state.reverses = save.reverses || {};
@@ -3398,7 +3399,10 @@ function lookTab(trainer, stats) {
           </div>
         </div>
         <div class="qa-words qa-words-inline" role="group" aria-label="Banner motion">${BANNER_MOTIONS.map(
-          (row) => `<button type="button" class="qa-word${!onMastery && banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${!onMastery && banner.motion === row.id}"><span>${esc(row.name)}</span></button>`
+          (row) => {
+            const locked = row.level && Number(trainer.level) > 0 && Number(trainer.level) < row.level; // level motions (js/levels.js)
+            return `<button type="button" class="qa-word${!onMastery && banner.motion === row.id ? " on" : ""}${locked ? " is-gated" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${!onMastery && banner.motion === row.id}"${locked ? ` aria-disabled="true" title="Reach level ${row.level} to use this banner"` : ""}><span>${esc(row.name)}${locked ? ` · Lv ${row.level}` : ""}</span></button>`;
+          }
         ).join("")}</div>
         <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
         <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
@@ -6023,6 +6027,12 @@ document.addEventListener("click", (e) => {
     setView(jump.dataset.goto);
     return;
   }
+  const gateTab = e.target.closest(".gate-lock [data-acct-tab]"); // the lock notice's link to the Levels tab
+  if (gateTab) {
+    accountTab = gateTab.dataset.acctTab;
+    setView("account");
+    return;
+  }
   const link = e.target.closest("a[href]");
   if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
   let url;
@@ -6330,6 +6340,7 @@ els.accountBody.addEventListener("click", async (e) => {
   if (setMotion) {
     const trainer = activeTrainer();
     if (!trainer) return;
+    if (setMotion.getAttribute("aria-disabled") === "true") return toast(setMotion.title || "That banner is locked.");
     const banner = parseBanner(trainer.banner);
     try {
       await patchLook({ banner: `${setMotion.dataset.setMotion}:${banner.colors.join("+")}` });
@@ -6418,7 +6429,7 @@ async function surpriseLook() {
     await patchLook({
       avatar: String(pick(AVATARS)[0]),
       color: pick(AVATAR_COLORS).id,
-      banner: `${pick(BANNER_MOTIONS).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
+      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || Number(trainer.level) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
     });
     toast("New look rolled.");
   } catch (err) {

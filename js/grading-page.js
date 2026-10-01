@@ -28,6 +28,7 @@ import {
 } from "./grading-rules.js";
 import { slabHTML, revealSlab, guardName, gradeWord } from "./slab.js";
 import { uuid, slabTileHTML } from "./casino-kit.js";
+import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 import { esc, coins } from "./battle-kit.js";
 import { ALL_SETS, sellValue } from "./catalog.js";
 
@@ -127,6 +128,8 @@ export function initGrading(deps) {
   const save = () => deps.getSave?.() || {};
   const coinsNow = () => Number(save().coins || 0);
   const signedIn = () => (deps.user ? Boolean(deps.user()) : !data.signedOut);
+  // Level gate (js/levels.js GATES): shut for a level-too-low player who has never graded a card.
+  const lock = () => (data.loaded ? gateLock("grading", deps.user?.(), data.slabs.length > 0) : null);
   const motion = () => !matchMedia("(prefers-reduced-motion: reduce)").matches && !document.body.classList.contains("no-motion");
 
   function syncFromSave(s) {
@@ -334,6 +337,7 @@ export function initGrading(deps) {
         <h1 class="page-title">Grading</h1>
         <p class="gd-lede">${esc(GRADING_BRAND.tagline)} Send a card from your collection and it comes back sealed in a slab, with a grade on the label and a value to match.</p>
       </header>
+      ${gateNoticeHTML(lock())}
       <section class="gd-how panel" aria-labelledby="gd-how-h">
         <h2 class="gd-panel-h" id="gd-how-h">How it works</h2>
         <ol class="gd-lines">
@@ -342,7 +346,7 @@ export function initGrading(deps) {
           <li><b>Older sets</b> come back a 10 less often. You see the exact odds for a card before you send it.</li>
         </ol>
         ${fine()}
-        <div class="gd-actions"><a class="solid" href="/grading/send" data-gd-link>Send a card</a></div>
+        <div class="gd-actions"><a class="solid${lock() ? " is-gated" : ""}" href="/grading/send" data-gd-link>Send a card</a></div>
       </section>
       <section class="gd-section" aria-labelledby="gd-slabs-h">
         <div class="gd-section-head">
@@ -526,6 +530,7 @@ export function initGrading(deps) {
         <h1 class="page-title">Send a card</h1>
         <p class="gd-lede">Pick a card from your collection. You see the fee and the odds before anything is sent.</p>
       </header>
+      ${gateNoticeHTML(lock())}
       <div class="gd-pick-tools">
         <label class="gd-search"><input type="search" inputmode="search" placeholder="Search your cards" autocomplete="off" enterkeyhint="search" value="${esc(pickQuery)}" data-gd-search /></label>
         <span class="gd-words" role="group" aria-label="Sort">
@@ -611,7 +616,7 @@ export function initGrading(deps) {
           <p class="gd-error" role="alert" ${sendError ? "" : "hidden"}>${esc(sendError)}</p>
           ${
             owns
-              ? `<button type="button" class="solid gd-send-btn" data-gd-submit ${busy || short ? "disabled" : ""}>${busy ? "Sending" : attempt && sendError ? `Try again · ${coinTag(fee)}` : `Send for grading · ${coinTag(fee)}`}</button>
+              ? `${gateNoticeHTML(lock())}<button type="button" class="solid gd-send-btn" data-gd-submit ${busy || short || lock() ? "disabled" : ""}>${busy ? "Sending" : attempt && sendError ? `Try again · ${coinTag(fee)}` : `Send for grading · ${coinTag(fee)}`}</button>
                  ${short ? `<small class="gd-reason">Needs ${coins(fee)} coins, you have ${coins(balance)}.</small>` : ""}`
               : `<p class="gd-reason">You don't own ${reverse ? "a reverse holo" : "a plain"} copy of this card any more.</p>`
           }
@@ -622,6 +627,7 @@ export function initGrading(deps) {
 
   async function submit() {
     if (stage !== "form") return;
+    if (lock()) return toast(gateRefusal(lock()));
     const cardId = route.cardId;
     const isReverse = reverse;
     if (!attempt || attempt.cardId !== cardId || Boolean(attempt.reverse) !== isReverse) {

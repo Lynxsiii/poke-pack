@@ -2,6 +2,7 @@ import { PLAYABLE_SETS } from "./catalog.js";
 import { HIT_RARITIES } from "./engine.js";
 import { homeSetId } from "./card-home.js";
 import { CROWN_ERAS, eraSlug } from "./achievement-eras.js";
+import { levelTitleRows } from "./level-data.js";
 
 export const TITLES = [
   { id: "rookie", name: "Rookie", note: "Everyone starts here.", test: () => true },
@@ -132,7 +133,16 @@ for (const row of AWARD_TITLES) {
   });
 }
 
-export function titleContext(save, { signed = true, rarities = null, findCard = null } = {}) {
+// Level titles: worn once the player reaches the level (js/level-data.js). Ids are `level-<n>`.
+for (const row of levelTitleRows()) {
+  TITLES.push({ ...row, test: (c) => (c.level || 0) >= row.level });
+}
+
+/**
+ * `level` overrides save.xp.level, for the Worker, which has the stored level
+ * and not a computed save. A save without xp (older client) reads as level 1.
+ */
+export function titleContext(save, { signed = true, rarities = null, findCard = null, level = null } = {}) {
   // Raw copies plus graded ones: a card sitting in a slab is still owned.
   const collection = ownedMap(save);
   const reverses = save?.reverses || {};
@@ -154,6 +164,7 @@ export function titleContext(save, { signed = true, rarities = null, findCard = 
     bestSet: bestSetPct(collection),
     hourly: Boolean(save?.lastDaily),
     signed,
+    level: Math.max(1, Math.floor(Number(level ?? save?.xp?.level) || 1)),
     count: (rarity) => counts[rarity] || 0,
   };
 }

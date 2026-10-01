@@ -8,6 +8,7 @@
 import { api, esc, coins, coinTag, icon, casinoIcon, uuid, timeLeft, plural, countLine, stakeStack, pileTiles, playerChip, playerName, emptyLine, seatAvatar } from "./casino-kit.js";
 import { JACKPOT_RULES } from "./casino-rules.js";
 import { mountWinnings, winningsSlot } from "./casino-winnings.js";
+import { gateLock, gateNoticeHTML, gateRefusal } from "./gate-notice.js";
 
 const LIST_POLL_MS = 6000;
 const TABLE_POLL_MS = 2500;
@@ -46,6 +47,12 @@ export function createJackpot(ctx) {
   const inPot = (pot) => Boolean(me() && pot.entries.some((e) => e.player.userId === me().id));
   const isHost = (pot) => Boolean(me() && pot.hostId === me().id);
   const humans = (pot) => pot.entries.filter((e) => !e.player.bot);
+  // Level gate (js/levels.js GATES): shut for a level-too-low player with no pots of their own on the page.
+  const lock = () => {
+    if (!list) return null;
+    const used = Boolean(list.record?.played) || (list.open || []).some((p) => isHost(p) || inPot(p)) || (list.done || []).some(inPot);
+    return gateLock("jackpot", me(), used);
+  };
 
   // ---- Data ---------------------------------------------------------------
   async function loadList() {
@@ -89,9 +96,10 @@ export function createJackpot(ctx) {
         <h1 class="page-title">Jackpot</h1>
         <p class="cs-lede">${JACKPOT_RULES.minPlayers} to ${JACKPOT_RULES.maxPlayers} players toss cards or graded slabs into one pot. One entry is drawn at random, weighted by the value it put up, and that player takes everything in it.</p>
       </header>
+      ${gateNoticeHTML(lock())}
       <div class="cf-actions">
-        <button class="solid" type="button" data-new>${casinoIcon("pot")}Start a pot</button>
-        <button class="ghost" type="button" data-quick>${icon("bot")}Quick pot with bots</button>
+        <button class="solid${lock() ? " is-gated" : ""}" type="button" data-new>${casinoIcon("pot")}Start a pot</button>
+        <button class="ghost${lock() ? " is-gated" : ""}" type="button" data-quick>${icon("bot")}Quick pot with bots</button>
       </div>
       <p class="cs-fine">Bots are free to call and put in cards worth a little less than the pot's minimum, so they never hand out value. A bot never puts in slabs. ${
         rec ? `You have played ${plural(rec.played, "pot")} and won ${rec.won}.` : ""}</p>
@@ -303,6 +311,7 @@ export function createJackpot(ctx) {
 
   function openCreate({ quick }) {
     if (needSignIn()) return;
+    if (lock()) return ctx.toast?.(gateRefusal(lock()));
     ctx.picker.open({
       title: quick ? "Quick pot with bots" : "Start a pot",
       lede: quick ? "Your entry sets the stakes. Bots fill every other seat and it is drawn at once. Bots never put in slabs." : `Your entry is the pot's minimum. Everyone else puts in one to ${JACKPOT_RULES.maxMultiple === 5 ? "five" : JACKPOT_RULES.maxMultiple} times as much.`,
@@ -324,6 +333,7 @@ export function createJackpot(ctx) {
 
   function openJoin(id) {
     if (needSignIn()) return;
+    if (lock()) return ctx.toast?.(gateRefusal(lock()));
     const pot = table?.pot?.id === id ? table.pot : list?.open?.find((p) => p.id === id);
     if (!pot) return;
     ctx.picker.open({

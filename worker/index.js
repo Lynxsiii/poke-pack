@@ -20,7 +20,8 @@ import {
 import { drawPromos, isHit, ripPack } from "../js/engine.js";
 import { homeSetId } from "../js/card-home.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
-import { DEFAULT_BANNER } from "../js/cosmetics.js";
+import { DEFAULT_BANNER, SHOWCASE_MAX, bannerId } from "../js/cosmetics.js";
+import { levelFields, levelOf, frameChoice, bannerMotionError, slotError } from "./perks.js";
 import { handlePrices, recordDailyPrices } from "./prices.js";
 import { COLOR_IDS } from "../js/palette.js";
 import { isTitleUnlocked, ownedMap, titleContext } from "../js/titles.js";
@@ -313,7 +314,7 @@ async function signup(request, env) {
   const token = await createSession(env, id, now);
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
-  return json({ user: withLevel(publicUser(user), save), save }, 201, sessionCookie(request, token));
+  return json({ user: await userWithLevel(env, publicUser(user), user, save), save }, 201, sessionCookie(request, token));
 }
 
 async function signin(request, env) {
@@ -329,7 +330,7 @@ async function signin(request, env) {
   await env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, user.id).run();
   const token = await createSession(env, user.id, now);
   const save = await loadSave(env, user.id);
-  return json({ user: withLevel(publicUser({ ...user, last_played: now }), save), save }, 200, sessionCookie(request, token));
+  return json({ user: await userWithLevel(env, publicUser({ ...user, last_played: now }), user, save), save }, 200, sessionCookie(request, token));
 }
 
 async function signout(request, env) {
@@ -368,7 +369,7 @@ async function me(request, env) {
   const auth = await requireUser(request, env);
   if (auth.response) return auth.response;
   const save = await loadSave(env, auth.user.id);
-  return json({ user: withLevel(publicUser(auth.user), save), save });
+  return json({ user: await userWithLevel(env, publicUser(auth.user), auth.user, save), save });
 }
 
 async function patchMe(request, env) {
@@ -384,6 +385,9 @@ async function patchMe(request, env) {
   let color = user.color;
   let title = user.title;
   let passwordHash = user.password_hash;
+  // The stored level, read once and only when a field below needs it (level perks: js/levels.js).
+  let levelNow = null;
+  const level = async () => (levelNow ??= await levelOf(env, user.id));
   // A mastery banner is a reward: only for a set whose mastery is claimed.
   if (looksLikeMasteryBanner(body.banner)) {
     await ensureAchievementSchema(env);
@@ -391,6 +395,15 @@ async function patchMe(request, env) {
     if (refusal) return json({ error: refusal.error }, refusal.status);
   }
   const social = patchSocialFields(body, user);
+  if (body.banner != null) {
+    const refusal = bannerMotionError(bannerId(body.banner), user.banner, await level());
+    if (refusal) return json({ error: refusal.error, needLevel: refusal.needLevel }, refusal.status);
+  }
+  if (Object.prototype.hasOwnProperty.call(body, "frame")) {
+    const choice = frameChoice(body.frame, await level());
+    if (choice.error) return json({ error: choice.error, needLevel: choice.needLevel }, choice.status);
+    social.frame = choice.value;
+  }
 
   if (body.name != null) {
     name = String(body.name || "").trim().slice(0, 24);
@@ -417,7 +430,7 @@ async function patchMe(request, env) {
     const nextTitle = String(body.title || "").slice(0, 32);
     const save = await loadSave(env, user.id);
     const rarities = await rarityCountsFor(env, request, ownedMap(save));
-    const ctx = titleContext(save, { signed: true, rarities });
+    const ctx = titleContext(save, { signed: true, rarities, level: await level() });
     if (!isTitleUnlocked(nextTitle, ctx)) return json({ error: "That title is locked." }, 400);
     title = nextTitle;
   }
@@ -436,17 +449,21 @@ async function patchMe(request, env) {
     const profile = await env.DB.prepare("SELECT binder FROM profiles WHERE user_id = ?").bind(user.id).first();
     const error = validateProfilePages(body.binderPages, parseJson(profile?.binder, []), social.binderPages);
     if (error) return json({error}, 400);
+    const room = slotError("pages", await level(), social.binderPages.length, body.binderPages.length);
+    if (room) return json({ error: room.error }, room.status);
     social.binderPages = body.binderPages;
   }
 
   if (Array.isArray(body.showcase)) {
     const { collection } = await inventoryMap(env, user.id);
     social.showcase = social.showcase.filter((slot) => (collection[slot.id] || 0) > 0);
+    const room = slotError("showcase", await level(), savedShowcaseCount(user.showcase), social.showcase.length);
+    if (room) return json({ error: room.error }, room.status);
   }
 
   await env.DB.prepare(
     `UPDATE users SET name = ?, handle = ?, bio = ?, color = ?, title = ?, password_hash = ?, last_played = ?,
-       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?
+       avatar = ?, avatar_style = ?, banner = ?, showcase = ?, shown_stats = ?, binder_pages = ?, frame = ?
      WHERE id = ?`
   )
     .bind(
@@ -463,6 +480,7 @@ async function patchMe(request, env) {
       JSON.stringify(social.showcase),
       JSON.stringify(social.shownStats),
       JSON.stringify(social.binderPages),
+      social.frame,
       user.id
     )
     .run();
@@ -479,7 +497,7 @@ async function patchMe(request, env) {
 
   const nextUser = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(user.id).first();
   const save = await loadSave(env, user.id);
-  return json({ user: withLevel(publicUser(nextUser), save), save });
+  return json({ user: { ...withLevel(publicUser(nextUser), save), ...(await levelFields(env, nextUser, levelNow)) }, save });
 }
 
 async function resetMe(request, env) {
@@ -530,7 +548,7 @@ async function resetMe(request, env) {
   if (statsReady) await skipSettledBattles(env, auth.user.id);
   const save = await loadSave(env, auth.user.id);
   // A title that came from what was just wiped goes back to Rookie.
-  if (!isTitleUnlocked(auth.user.title, titleContext(save, { signed: true, rarities: {} }))) {
+  if (!isTitleUnlocked(auth.user.title, titleContext(save, { signed: true, rarities: {}, level: await levelOf(env, auth.user.id) }))) {
     await env.DB.prepare("UPDATE users SET title = 'Rookie' WHERE id = ?").bind(auth.user.id).run();
   }
   if (profile?.active_set_id) save.activeSetId = profile.active_set_id;
@@ -1471,6 +1489,11 @@ function reconcileBinder(binder, collection) {
 }
 
 /** The player's own user object with their level and total XP (from the save loadSave just built). */
+/** A user payload with level, xp (from the fresh save when there is one), the equipped frame and the perks. */
+async function userWithLevel(env, user, row, save) {
+  return { ...withLevel(user, save), ...(await levelFields(env, row, save?.xp?.level ?? null)) };
+}
+
 function withLevel(user, save) {
   return save?.xp ? { ...user, level: save.xp.level, xp: save.xp.total } : user;
 }
@@ -1556,6 +1579,12 @@ async function readJson(request) {
   } catch {
     return null;
   }
+}
+
+/** How many cards a player has pinned already, so a level check never cuts a saved showcase. */
+function savedShowcaseCount(raw) {
+  const saved = parseJson(raw, []);
+  return Array.isArray(saved) ? Math.min(SHOWCASE_MAX, saved.length) : 0;
 }
 
 function parseJson(text, fallback) {

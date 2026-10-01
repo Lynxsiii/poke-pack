@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
 import { randomFillSync, createHash } from 'node:crypto';
+import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { GRADING_COLUMNS, setForCard } from '../worker/grading.js';
 import { CASINO_DDL, JACKPOT_DDL, SLABS_COLUMNS, SLABS_DDL } from '../worker/casino-ddl.js';
@@ -59,7 +60,7 @@ const COLORS = 'gold';
 const addUser = (id, coins = 100) => {
   db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', COLORS, now, now);
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, coins, coins, now, '[]');
-  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
+  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000); seedLevel(db, id);
 };
 const USERS = ['a', 'b', 'c', 'd', 'e', 'f'];
 USERS.forEach(id => addUser(id));
