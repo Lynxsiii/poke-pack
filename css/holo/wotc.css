@@ -178,18 +178,20 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
 
 /* ---- Legendary Collection reverse holo: the fireworks --------------------------------------------------------------
    Real card (Collexy's WOTC-era holofoil overview, Bulbapedia Holofoil "fireworks pattern", PSA 9581; the reverse Charizard,
-   Gengar, Pikachu and Ivysaur scans in texture-refs/j1): a scatter of starbursts, each a hub of thin rays fading out toward
-   their tips, silver over the whole card, the name bar, the attacks, the text box and the border included, the picture window
-   matte. Tipped, the bursts light in a band that slides across the card, pale silver with a gold and a blue edge.
-   `.foil` is the burst sheet as a mask (assets/foil/wotc-rev/fireworks-v1.webp, `--wotc-fw`, alpha: full on the rays, a low
-   floor of sheen between) cut by the card's own alpha and less the layout's window (`--wotc-win`), painted with a pale spectrum
-   under a pointer pool, laid on as a silver veil: the sheen between the bursts greys the pale print a little, the rays lift it. */
+   Gengar, Pikachu and Ivysaur scans in texture-refs/j1): a dense scatter of small starbursts, each a hub of thin straight rays,
+   white on a teal-silver sheen, over the whole card, the name bar, the attacks, the text box and the border included, the
+   picture window matte; tipped, the colour of the sheen slides (aqua, lilac, a gold edge) and the rays flare.
+   `.foil` is the burst sheet as a mask (assets/foil/wotc-rev/fireworks-v2.webp, `--wotc-fw`: alpha is the rays over a sheen floor),
+   cut by the card's own alpha and less the layout's window (`--wotc-win`), painted with a silver-teal spectrum under a pointer
+   pool; `::before` is a white layer masked by the same sheet's colour channels (the rays alone, `mask-mode: luminance`) with a band
+   that slides with the tilt. (Review rv-j1: the first drawing, 150 big hubs on a pale veil, read as a faint shimmer next to the
+   photos; the veil's floor is kept low so the rules text stays legible.) */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil {
   background-image:
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-      hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.22) 34%, hsla(0, 0%, 100%, 0) 76%),
-    linear-gradient(115deg, hsl(200, 40%, 70%), hsl(228, 45%, 82%) 22%, hsl(290, 38%, 80%) 40%, hsl(46, 70%, 76%) 60%,
-      hsl(150, 40%, 72%) 80%, hsl(200, 40%, 70%));
+      hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.2) 34%, hsla(0, 0%, 100%, 0) 76%),
+    linear-gradient(115deg, hsl(194, 60%, 54%), hsl(222, 54%, 68%) 22%, hsl(284, 40%, 70%) 40%, hsl(46, 74%, 66%) 60%,
+      hsl(150, 46%, 58%) 80%, hsl(194, 60%, 54%));
   background-size: 100% 100%, 280% 280%;
   background-position:
     center,
@@ -198,7 +200,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   background-blend-mode: normal;
   filter: none;
   mix-blend-mode: normal;
-  opacity: calc((0.5 + var(--card-opacity) * 0.25) * var(--foil-strength, 1));
+  opacity: calc((0.76 + var(--card-opacity) * 0.16) * var(--foil-strength, 1));
   -webkit-mask-image: var(--art), var(--wotc-fw), var(--wotc-win);
   mask-image: var(--art), var(--wotc-fw), var(--wotc-win);
   -webkit-mask-composite: source-in, source-out;
@@ -213,10 +215,10 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   clip-path: none;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary:not(.lit):not(.settling) .foil {
-  background-image: linear-gradient(115deg, hsl(200, 40%, 74%), hsl(290, 38%, 82%) 50%, hsl(46, 65%, 78%));
+  background-image: linear-gradient(115deg, hsl(198, 44%, 66%), hsl(288, 34%, 74%) 50%, hsl(46, 66%, 72%));
   background-size: 100% 100%;
   background-position: center;
-  opacity: calc(0.7 * var(--foil-strength, 1));
+  opacity: calc(0.85 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::before,
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::after {
@@ -226,6 +228,28 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.f
   filter: none;
   mix-blend-mode: normal;
   opacity: 1;
+}
+/* the rays are white on the teal-silver sheen between them: the asset's colour channels carry the rays alone, so this layer is
+   masked by their luminance (inside the .foil mask above, which also keeps the window matte); a band sliding with the tilt flares
+   them to full white */
+body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .foil::before {
+  background-image:
+    repeating-linear-gradient(118deg, transparent 0%, transparent 16%, hsla(0, 0%, 100%, 0.7) 22%, hsla(0, 0%, 100%, 0.7) 26%,
+      transparent 32%, transparent 52%),
+    linear-gradient(hsl(200, 36%, 94%), hsl(200, 36%, 94%));
+  background-size: 300% 300%, 100% 100%;
+  background-position:
+    clamp(0%, calc(((50% - var(--background-x)) * 2) + 50%), 100%) clamp(0%, calc(((50% - var(--background-y)) * 2) + 50%), 100%),
+    center;
+  background-repeat: repeat, no-repeat;
+  -webkit-mask-image: var(--wotc-fw);
+  mask-image: var(--wotc-fw);
+  mask-mode: luminance;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: calc(0.78 + var(--pointer-from-center) * 0.2);
 }
 /* the glare is the pointer's soft light on the print, kept off the window */
 body.fx-holo.fx-holo.fx-holo .tcg.era-wotc.era-wotc.era-wotc.era-wotc.era-wotc.foil-reverse.wotc-rev.wotc-rev-legendary .glare {
