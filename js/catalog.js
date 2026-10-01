@@ -5450,6 +5450,127 @@ export const STORMFRONT = {
   ], 2),
 };
 
+// EX era, e4: Holon Phantoms, Crystal Guardians, Dragon Frontiers, Power Keepers. Sources: /mnt/project-files/every-era/ex/research/ex13.md to ex16.md, ex-pack-structure.md, ex-finish-types.md, second-source-check.md; data/pullrates.json. Nine cards (5 Commons, 2 Uncommons, a reverse slot, a rare slot), no Energy in the slot and no code card; all four are the late layout (the holo, Pokémon-ex and Gold Star replace the plain Rare in the rare slot). Pack prices are TCGplayer's (thin listings; the Dragon Frontiers pack has no tcgcsv market price, so the latest market bucket of TCGplayer's price history, $1,999.99 with no recent sale, is its cost; its lowest listing is $3,499.99).
+export const POWER_KEEPERS = {
+  id: "ex16",
+  tcgId: "ex16",
+  name: "EX Power Keepers",
+  edition: "EX",
+  era: "EX",
+  released: "February 14, 2007",
+  live: true,
+  printedTotal: 108,
+  totalCount: 108,
+  packSize: 9,
+  cost: 949.99,
+  dataFile: "data/ex16.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, February 2007. The last EX set: Walrein, Absol, Aggron and Raichu on the wrappers, the Flareon, Jolteon and Vaporeon Gold Stars and six holofoil basic Energy.",
+  oddsLine: "ex 1/12 · holo 1/4 · Gold Star 1/81 · holo Energy 1/4",
+  lede: "Flareon, Jolteon and Vaporeon are the Gold Stars, about one a box and a half. A sheen holofoil basic Energy takes the reverse slot in one pack in four.",
+  // Elite Fourum post 62's 216-pack sheet model (holo 0.2376, ex 3 a box, Gold Stars 0.446 a box, holofoil Energy 5 of 121 reverse positions each = 0.2479) with PokeGym 48790 (10 boxes: 30 ex and 5 stars). Medium on ex and Gold Star (two tallies; an EF recollection of 5-7 ex a box disagrees), low-medium on the Energy rate (one source). Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2376, ex: 0.0833, goldStar: 0.0124, holoEnergy: 0.2479 }),
+  slotsNote: "Medium: Elite Fourum's 216-pack sheet model and PokeGym 48790's box tally agree on 3 ex a box and about half a Gold Star a box; the holofoil Energy rate has one source (low-medium).",
+  heroIds: ["ex16-100", "ex16-101", "ex16-102", "ex16-92"],
+  wrappers: boosterWrappers("ex16", [
+    { id: "walrein", name: "Walrein", cardId: "ex16-99", tag: "Ice" },
+    { id: "absol", name: "Absol", cardId: "ex16-92", tag: "Disaster" },
+    { id: "aggron", name: "Aggron", cardId: "ex16-1", tag: "Iron" },
+    { id: "raichu", name: "Raichu", cardId: "ex16-12", tag: "Volt" },
+  ]),
+};
+
+export const DRAGON_FRONTIERS = {
+  id: "ex15",
+  tcgId: "ex15",
+  name: "EX Dragon Frontiers",
+  edition: "EX",
+  era: "EX",
+  released: "November 8, 2006",
+  live: true,
+  printedTotal: 101,
+  totalCount: 101,
+  packSize: 9,
+  cost: 1999.99,
+  dataFile: "data/ex15.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, November 2006. Latios and Latias, Salamence and Dragonair, Tyranitar and Tropius and Nidoking and Arbok on the wrappers, every holo a Delta Species refractor.",
+  oddsLine: "ex 1/12 · holo 1/4 · Gold Star 1/121",
+  lede: "Charizard and Mew are the Gold Stars, one pack in about 120. Ten Delta Species Pokémon-ex, three to a box, and twelve refractor holos.",
+  // Elite Fourum post 60's 216-pack sheet model (holo 54/216, ex 18/216, the two Gold Stars twice each on the 121-cell holo sheet; six boxes tallied plus an uncut-sheet photo): medium on holo and ex, low-medium on the Gold Stars (one sheet reconstruction, a miscut German Charizard Star above Feraligatr is the second hint). Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2417, ex: 0.0833, goldStar: 0.0083 }),
+  slotsNote: "Medium on holo and ex (Elite Fourum's sheet model and six tallied boxes, one source); the Gold Star rate is low-medium (a sheet reconstruction from an uncut photo).",
+  heroIds: ["ex15-100", "ex15-101", "ex15-97", "ex15-95"],
+  wrappers: boosterWrappers("ex15", [
+    { id: "latios-latias", name: "Latios & Latias", cardId: "ex15-96", tag: "Eon" },
+    { id: "salamence-dragonair", name: "Salamence & Dragonair", cardId: "ex15-98", tag: "Dragon" },
+    { id: "tyranitar-tropius", name: "Tyranitar & Tropius", cardId: "ex15-99", tag: "Armor" },
+    { id: "nidoking-arbok", name: "Nidoking & Arbok", cardId: "ex15-6", tag: "Venom" },
+  ]),
+};
+
+export const CRYSTAL_GUARDIANS = {
+  id: "ex14",
+  tcgId: "ex14",
+  name: "EX Crystal Guardians",
+  edition: "EX",
+  era: "EX",
+  released: "August 30, 2006",
+  live: true,
+  printedTotal: 100,
+  totalCount: 100,
+  packSize: 9,
+  cost: 1299.99,
+  dataFile: "data/ex14.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, August 2006. Jirachi, Blaziken, Charizard and Delcatty on the wrappers, ten Pokémon-ex, the Alakazam and Celebi Gold Stars and three Delta Species holos on their own sheet.",
+  oddsLine: "ex 1/12 · holo 1/4 · Delta holo 1/18 · Gold Star 1/141",
+  lede: "Alakazam and Celebi are the Gold Stars. Blastoise, Charizard and Ludicolo come as Delta Species refractor holos, Sceptile ex as the rarest ex.",
+  // Elite Fourum post 58's four rare-slot sheets (42 cosmos holo and Gold Star / 12 Delta holo / 16 cosmos ex / 2 Sceptile ex delta per 216 packs; seven boxes tallied) with PokeGym 41117 and 40141 (24 boxes: 73 ex and 4 stars): ex medium-high on average (boxes run from 1 to 6), holo medium, Gold Stars low-medium (the two samples disagree). The deltaHolo / deltaEx split is Elite Fourum's sheet model over the card counts. Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.1873, deltaHolo: 0.0556, ex: 0.0741, deltaEx: 0.0093, goldStar: 0.0071 }),
+  slotsNote: "Medium: Elite Fourum's sheet model and two PokeGym box tallies for ex; the Delta sheets and the Gold Star rate are low-medium (a model, and the tallies disagree). Real boxes held 1 to 6 ex.",
+  heroIds: ["ex14-99", "ex14-100", "ex14-4", "ex14-96"],
+  wrappers: boosterWrappers("ex14", [
+    { id: "jirachi", name: "Jirachi", cardId: "ex14-94", tag: "Wish" },
+    { id: "blaziken", name: "Blaziken", cardId: "ex14-90", tag: "Blaze" },
+    { id: "charizard", name: "Charizard", cardId: "ex14-4", tag: "Flame" },
+    { id: "delcatty", name: "Delcatty", cardId: "ex14-91", tag: "Graceful" },
+  ]),
+};
+
+export const HOLON_PHANTOMS = {
+  id: "ex13",
+  tcgId: "ex13",
+  name: "EX Holon Phantoms",
+  edition: "EX",
+  era: "EX",
+  released: "May 3, 2006",
+  live: true,
+  printedTotal: 110,
+  totalCount: 111,
+  packSize: 9,
+  cost: 1901.99,
+  dataFile: "data/ex13.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "EX, May 2006. Zangoose, Mewtwo, Kabutops and Gyarados on the wrappers, Delta Species refractor holos, three Gold Stars and six sheen holofoil Energy.",
+  oddsLine: "ex 1/36 · holo 1/3 · Gold Star 1/83 · holo Energy 1/3",
+  lede: "Mewtwo and Pikachu are the Gold Stars, Gyarados the Delta Species star. One Pokémon-ex a box, and a sheen holofoil Energy in the reverse slot of one pack in three.",
+  // Elite Fourum post 57's 216-pack sheet model (holo 64/216, ex 6/216, holofoil Energy 72/216; the Mewtwo and Pikachu Gold Stars 2/216, Gyarados Star 1/216 on the holo sheet as a guess) with PokeGym 33957 (about 1 ex and a third of a star a box; "12 holofoil Energy per box"). ex high (three sources), holo medium-high, holofoil Energy high, Gold Stars medium (Gyarados Star low). Sources in data/pullrates.json.
+  slots: exSlots({ holo: 0.2936, ex: 0.0278, goldStar: 0.012, holoEnergy: 0.3333 }),
+  slotsNote: "Medium-high: Elite Fourum's sheet model and PokeGym 33957's box counts agree on 1 ex a box and 12 holofoil Energy a box; the Gold Star rate is medium (Gyarados Star's share is a guess).",
+  heroIds: ["ex13-102", "ex13-103", "ex13-104", "ex13-100"],
+  wrappers: boosterWrappers("ex13", [
+    { id: "zangoose", name: "Zangoose", cardId: "ex13-34", tag: "Claw" },
+    { id: "mewtwo", name: "Mewtwo", cardId: "ex13-103", tag: "Genetic" },
+    { id: "kabutops", name: "Kabutops", cardId: "ex13-9", tag: "Fossil" },
+    { id: "gyarados", name: "Gyarados", cardId: "ex13-8", tag: "Fury" },
+  ]),
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -5593,6 +5714,11 @@ export const PLAYABLE_SETS = [
   POP_SERIES_6,
   DP_TRAINER_KIT_MANAPHY,
   DP_TRAINER_KIT_LUCARIO,
+  // EX era (2003-2007), e4: the last four main sets, newest first.
+  POWER_KEEPERS,
+  DRAGON_FRONTIERS,
+  CRYSTAL_GUARDIANS,
+  HOLON_PHANTOMS,
 ];
 
 /**
@@ -5889,6 +6015,10 @@ const POKESYMBOLS_SLUG = {
   pl2: "rising-rivals",
   pl3: "supreme-victors",
   pl4: "arceus",
+  // EX era, e4 (ex16 is above).
+  ex13: "holon-phantoms",
+  ex14: "crystal-guardians",
+  ex15: "dragon-frontiers",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
