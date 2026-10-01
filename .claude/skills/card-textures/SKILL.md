@@ -98,7 +98,9 @@ cure"). The surface gloss throws a soft highlight.
   `base.css`, `rarities.css`, `finishes.css`, `realism.css`, `maps.css`,
   `celebration.css`, `sv-fullart.css`, `promos.css`, `sv-finishes.css`,
   `sv-rare.css`, `shrouded-fable.css`, `shiny-vault.css`, `prismatic.css`,
-  `sv151.css`, `side-sets.css`, `sv-reverse.css`, `sv-double-rare.css`.
+  `sv151.css`, `side-sets.css`, `sv-reverse.css`, `sv-double-rare.css`, then the
+  era sheets and last `sleeves.css` (the card sleeves' foil and gloss,
+  [reference/sleeves.md](reference/sleeves.md)).
   Later sheets win ties, which the map rules rely on; the lab loads the
   same list in the same order (check `lab/index.html` against `index.html`
   when a sheet is added).

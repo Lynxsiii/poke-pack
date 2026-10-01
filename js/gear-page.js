@@ -8,6 +8,7 @@
      coinHtml(coin, { side })     a coin as a flippable element (also the house coin)
      sleeveHtml(sleeve)           a sleeve as a card back
      cardBackSrc(gear, fallback)  the picture a face-down card should show
+     cardBackHtml(gear, fallback) a face-down card, the equipped sleeve's foil included
      giftHtml(granted, gear)      the "in the box" strip on the opening spread */
 import { ALL_SETS } from "./catalog.js";
 import { HOUSE_COIN, equippedCoin, equippedSleeve, gearItem, normalizeGear, ownedItems } from "./gear.js";
@@ -60,16 +61,32 @@ export function coinHtml(coin, { side = "front", cls = "", label = "" } = {}) {
     <span class="gcoin-in"><span class="gcoin-face front"></span><span class="gcoin-face back"></span></span></span>`;
 }
 
-/** A sleeve is a card back: `.tcg.back` so the site's card motion tilts it like any card. */
-export function sleeveHtml(sleeve, { cls = "" } = {}) {
+/** A sleeve is a card back: `.tcg.back` so the site's card motion tilts it like any card.
+    Every sleeve is glossy plastic, so each carries a varnish glare; the ones with
+    hot-stamped foil or a holo film (catalog `foil`: metal and a map of where it
+    is, drawn by scripts/gear_foil.py) also carry a `.foil` layer that
+    css/holo/sleeves.css lights with the card engine. */
+export function sleeveHtml(sleeve, { cls = "", alt = "" } = {}) {
   if (!sleeve) return "";
-  return `<div class="tcg back gsleeve ${cls}" style="--tint:${esc(sleeve.tint || "#7a7a88")}">
-    <img src="${esc(sleeve.art)}" alt="${esc(sleeve.name)}" loading="lazy" decoding="async" draggable="false" /></div>`;
+  const foil = sleeve.foil;
+  const style = [`--tint:${esc(sleeve.tint || "#7a7a88")}`];
+  if (foil) style.push(`--art:url('${esc(abs(sleeve.art))}')`, `--foil-map:url('${esc(abs(foil.map))}')`);
+  return `<div class="tcg back gsleeve ${cls} ${foil ? `sleeve-foil sleeve-${esc(foil.metal)}` : "sleeve-plain"}" style="${style.join(";")}">
+    <img src="${esc(sleeve.art)}" alt="${esc(alt || sleeve.name)}" loading="lazy" decoding="async" draggable="false" />
+    ${foil ? `<span class="foil" aria-hidden="true"></span>` : ""}
+    <span class="glare" aria-hidden="true"></span></div>`;
 }
 
 /** Face-down cards show the equipped sleeve, else the set's own back. */
 export function cardBackSrc(gear, fallback) {
   return equippedSleeve(gear, catalog)?.art || fallback;
+}
+
+/** A face-down card as markup: the equipped sleeve with its foil, else the printed back. */
+export function cardBackHtml(gear, fallback, { cls = "" } = {}) {
+  const sleeve = equippedSleeve(gear, catalog);
+  if (sleeve) return sleeveHtml(sleeve, { cls, alt: "Pokémon TCG card back" });
+  return `<div class="tcg back ${cls}"><img src="${esc(fallback)}" alt="Pokémon TCG card back" draggable="false" /></div>`;
 }
 
 const setName = (id) => ALL_SETS.find((set) => set.id === id)?.name || id;

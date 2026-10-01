@@ -16,7 +16,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/me-mega-gardevoir-etb-sleeves-v4.webp"
+   "art": "assets/sleeves/me-mega-gardevoir-etb-sleeves-v4.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/me-mega-gardevoir-etb-sleeves-v41.webp"
+   }
   },
   "me-mega-lucario-etb-sleeves": {
    "id": "me-mega-lucario-etb-sleeves",
@@ -32,7 +36,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/me-mega-lucario-etb-sleeves-v4.webp"
+   "art": "assets/sleeves/me-mega-lucario-etb-sleeves-v4.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/me-mega-lucario-etb-sleeves-v41.webp"
+   }
   },
   "me-mega-charizard-x-etb-sleeves": {
    "id": "me-mega-charizard-x-etb-sleeves",
@@ -133,7 +141,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/me-darkrai-etb-sleeves-v3.webp"
+   "art": "assets/sleeves/me-darkrai-etb-sleeves-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/me-darkrai-etb-sleeves-v31.webp"
+   }
   },
   "me-pikachu-30-etb-sleeves": {
    "id": "me-pikachu-30-etb-sleeves",
@@ -150,7 +162,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/me-pikachu-30-etb-sleeves-v4.webp"
+   "art": "assets/sleeves/me-pikachu-30-etb-sleeves-v4.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/me-pikachu-30-etb-sleeves-v41.webp"
+   }
   },
   "me-upc-day-sleeves": {
    "id": "me-upc-day-sleeves",
@@ -230,7 +246,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/psv-pgo-mewtwo-etb-v4.webp"
+   "art": "assets/sleeves/psv-pgo-mewtwo-etb-v4.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/psv-pgo-mewtwo-etb-v41.webp"
+   }
   },
   "psv-pgo-mewtwo-pc-etb": {
    "id": "psv-pgo-mewtwo-pc-etb",
@@ -326,7 +346,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/psv-toolkit-2024-teal-v3.webp"
+   "art": "assets/sleeves/psv-toolkit-2024-teal-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/psv-toolkit-2024-teal-v31.webp"
+   }
   },
   "psv-toolkit-2025-purple": {
    "id": "psv-toolkit-2025-purple",
@@ -342,7 +366,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/psv-toolkit-2025-purple-v4.webp"
+   "art": "assets/sleeves/psv-toolkit-2025-purple-v4.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/psv-toolkit-2025-purple-v41.webp"
+   }
   },
   "sm-solgaleo-etb": {
    "id": "sm-solgaleo-etb",
@@ -358,7 +386,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-solgaleo-etb-v3.webp"
+   "art": "assets/sleeves/sm-solgaleo-etb-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/sm-solgaleo-etb-v31.webp"
+   }
   },
   "sm-lunala-etb": {
    "id": "sm-lunala-etb",
@@ -374,7 +406,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-lunala-etb-v3.webp"
+   "art": "assets/sleeves/sm-lunala-etb-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/sm-lunala-etb-v31.webp"
+   }
   },
   "sm-tapu-koko-etb": {
    "id": "sm-tapu-koko-etb",
@@ -390,7 +426,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-tapu-koko-etb-v3.webp"
+   "art": "assets/sleeves/sm-tapu-koko-etb-v3.webp",
+   "foil": {
+    "metal": "bronze",
+    "map": "assets/sleeves/foil/sm-tapu-koko-etb-v31.webp"
+   }
   },
   "sm-necrozma-etb": {
    "id": "sm-necrozma-etb",
@@ -406,7 +446,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-necrozma-etb-v3.webp"
+   "art": "assets/sleeves/sm-necrozma-etb-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/sm-necrozma-etb-v31.webp"
+   }
   },
   "sm-ho-oh-etb": {
    "id": "sm-ho-oh-etb",
@@ -422,7 +466,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-ho-oh-etb-v3.webp"
+   "art": "assets/sleeves/sm-ho-oh-etb-v3.webp",
+   "foil": {
+    "metal": "bronze",
+    "map": "assets/sleeves/foil/sm-ho-oh-etb-v31.webp"
+   }
   },
   "sm-silvally-etb": {
    "id": "sm-silvally-etb",
@@ -438,7 +486,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-silvally-etb-v3.webp"
+   "art": "assets/sleeves/sm-silvally-etb-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/sm-silvally-etb-v31.webp"
+   }
   },
   "sm-dusk-mane-necrozma-etb": {
    "id": "sm-dusk-mane-necrozma-etb",
@@ -454,7 +506,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-dusk-mane-necrozma-etb-v3.webp"
+   "art": "assets/sleeves/sm-dusk-mane-necrozma-etb-v3.webp",
+   "foil": {
+    "metal": "bronze",
+    "map": "assets/sleeves/foil/sm-dusk-mane-necrozma-etb-v31.webp"
+   }
   },
   "sm-dawn-wings-necrozma-etb": {
    "id": "sm-dawn-wings-necrozma-etb",
@@ -470,7 +526,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-dawn-wings-necrozma-etb-v3.webp"
+   "art": "assets/sleeves/sm-dawn-wings-necrozma-etb-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/sm-dawn-wings-necrozma-etb-v31.webp"
+   }
   },
   "sm-ultra-necrozma-etb": {
    "id": "sm-ultra-necrozma-etb",
@@ -502,7 +562,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sm-rayquaza-etb-v3.webp"
+   "art": "assets/sleeves/sm-rayquaza-etb-v3.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/sm-rayquaza-etb-v31.webp"
+   }
   },
   "sm-zeraora-etb": {
    "id": "sm-zeraora-etb",
@@ -615,7 +679,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sva-koraidon-etb-v3.webp"
+   "art": "assets/sleeves/sva-koraidon-etb-v3.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/sva-koraidon-etb-v31.webp"
+   }
   },
   "sva-miraidon-etb": {
    "id": "sva-miraidon-etb",
@@ -632,7 +700,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sva-miraidon-etb-v3.webp"
+   "art": "assets/sleeves/sva-miraidon-etb-v3.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/sva-miraidon-etb-v31.webp"
+   }
   },
   "sva-paldea-starters-etb": {
    "id": "sva-paldea-starters-etb",
@@ -733,7 +805,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/sva-shiny-mimikyu-etb-v3.webp"
+   "art": "assets/sleeves/sva-shiny-mimikyu-etb-v3.webp",
+   "foil": {
+    "metal": "rainbow",
+    "map": "assets/sleeves/foil/sva-shiny-mimikyu-etb-v31.webp"
+   }
   },
   "svb-white-flare-reshiram-etb": {
    "id": "svb-white-flare-reshiram-etb",
@@ -835,7 +911,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/svb-twilight-masquerade-ogerpon-etb-v3.webp"
+   "art": "assets/sleeves/svb-twilight-masquerade-ogerpon-etb-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/svb-twilight-masquerade-ogerpon-etb-v31.webp"
+   }
   },
   "svb-shrouded-fable-kitakami-trio-etb": {
    "id": "svb-shrouded-fable-kitakami-trio-etb",
@@ -852,7 +932,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/svb-shrouded-fable-kitakami-trio-etb-v5.webp"
+   "art": "assets/sleeves/svb-shrouded-fable-kitakami-trio-etb-v5.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/svb-shrouded-fable-kitakami-trio-etb-v51.webp"
+   }
   },
   "svb-stellar-crown-terapagos-etb": {
    "id": "svb-stellar-crown-terapagos-etb",
@@ -869,7 +953,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/svb-stellar-crown-terapagos-etb-v3.webp"
+   "art": "assets/sleeves/svb-stellar-crown-terapagos-etb-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/svb-stellar-crown-terapagos-etb-v31.webp"
+   }
   },
   "svb-surging-sparks-lightning-etb": {
    "id": "svb-surging-sparks-lightning-etb",
@@ -886,7 +974,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/svb-surging-sparks-lightning-etb-v3.webp"
+   "art": "assets/sleeves/svb-surging-sparks-lightning-etb-v3.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/svb-surging-sparks-lightning-etb-v31.webp"
+   }
   },
   "svb-prismatic-evolutions-eevee-etb": {
    "id": "svb-prismatic-evolutions-eevee-etb",
@@ -903,7 +995,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/svb-prismatic-evolutions-eevee-etb-v3.webp"
+   "art": "assets/sleeves/svb-prismatic-evolutions-eevee-etb-v3.webp",
+   "foil": {
+    "metal": "film",
+    "map": "assets/sleeves/foil/svb-prismatic-evolutions-eevee-etb-v31.webp"
+   }
   },
   "svb-prismatic-evolutions-eeveelutions-super-premium": {
    "id": "svb-prismatic-evolutions-eeveelutions-super-premium",
@@ -1048,7 +1144,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swsha-gmax-eevee-etb-v4.webp"
+   "art": "assets/sleeves/swsha-gmax-eevee-etb-v4.webp",
+   "foil": {
+    "metal": "bronze",
+    "map": "assets/sleeves/foil/swsha-gmax-eevee-etb-v41.webp"
+   }
   },
   "swsha-ice-rider-calyrex-pc-etb": {
    "id": "swsha-ice-rider-calyrex-pc-etb",
@@ -1064,7 +1164,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swsha-ice-rider-calyrex-pc-etb-v4.webp"
+   "art": "assets/sleeves/swsha-ice-rider-calyrex-pc-etb-v4.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/swsha-ice-rider-calyrex-pc-etb-v41.webp"
+   }
   },
   "swshb-es-pc-eeveelutions-sleeves": {
    "id": "swshb-es-pc-eeveelutions-sleeves",
@@ -1144,7 +1248,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-bs-pc-arceus-sleeves-v4.webp"
+   "art": "assets/sleeves/swshb-bs-pc-arceus-sleeves-v4.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/swshb-bs-pc-arceus-sleeves-v41.webp"
+   }
   },
   "swshb-bs-etb-arceus-sleeves": {
    "id": "swshb-bs-etb-arceus-sleeves",
@@ -1160,7 +1268,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-bs-etb-arceus-sleeves-v2.webp"
+   "art": "assets/sleeves/swshb-bs-etb-arceus-sleeves-v2.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/swshb-bs-etb-arceus-sleeves-v21.webp"
+   }
   },
   "swshb-ar-pc-darkrai-sleeves": {
    "id": "swshb-ar-pc-darkrai-sleeves",
@@ -1208,7 +1320,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-lo-pc-giratina-sleeves-v4.webp"
+   "art": "assets/sleeves/swshb-lo-pc-giratina-sleeves-v4.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/swshb-lo-pc-giratina-sleeves-v41.webp"
+   }
   },
   "swshb-lo-etb-giratina-sleeves": {
    "id": "swshb-lo-etb-giratina-sleeves",
@@ -1224,7 +1340,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-lo-etb-giratina-sleeves-v4.webp"
+   "art": "assets/sleeves/swshb-lo-etb-giratina-sleeves-v4.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/swshb-lo-etb-giratina-sleeves-v41.webp"
+   }
   },
   "swshb-st-pc-alolan-vulpix-sleeves": {
    "id": "swshb-st-pc-alolan-vulpix-sleeves",
@@ -1240,7 +1360,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-st-pc-alolan-vulpix-sleeves-v4.webp"
+   "art": "assets/sleeves/swshb-st-pc-alolan-vulpix-sleeves-v4.webp",
+   "foil": {
+    "metal": "bronze",
+    "map": "assets/sleeves/foil/swshb-st-pc-alolan-vulpix-sleeves-v41.webp"
+   }
   },
   "swshb-st-pc-lugia-sleeves": {
    "id": "swshb-st-pc-lugia-sleeves",
@@ -1256,7 +1380,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-st-pc-lugia-sleeves-v5.webp"
+   "art": "assets/sleeves/swshb-st-pc-lugia-sleeves-v5.webp",
+   "foil": {
+    "metal": "bronze",
+    "map": "assets/sleeves/foil/swshb-st-pc-lugia-sleeves-v51.webp"
+   }
   },
   "swshb-st-etb-alolan-vulpix-sleeves": {
    "id": "swshb-st-etb-alolan-vulpix-sleeves",
@@ -1272,7 +1400,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-st-etb-alolan-vulpix-sleeves-v4.webp"
+   "art": "assets/sleeves/swshb-st-etb-alolan-vulpix-sleeves-v4.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/swshb-st-etb-alolan-vulpix-sleeves-v41.webp"
+   }
   },
   "swshb-cz-pc-lucario-sleeves": {
    "id": "swshb-cz-pc-lucario-sleeves",
@@ -1288,7 +1420,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-cz-pc-lucario-sleeves-v4.webp"
+   "art": "assets/sleeves/swshb-cz-pc-lucario-sleeves-v4.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/swshb-cz-pc-lucario-sleeves-v41.webp"
+   }
   },
   "swshb-cz-etb-lucario-sleeves": {
    "id": "swshb-cz-etb-lucario-sleeves",
@@ -1304,7 +1440,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-cz-etb-lucario-sleeves-v2.webp"
+   "art": "assets/sleeves/swshb-cz-etb-lucario-sleeves-v2.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/swshb-cz-etb-lucario-sleeves-v21.webp"
+   }
   },
   "swshb-zacian-etb-plus-sleeves": {
    "id": "swshb-zacian-etb-plus-sleeves",
@@ -1320,7 +1460,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-zacian-etb-plus-sleeves-v3.webp"
+   "art": "assets/sleeves/swshb-zacian-etb-plus-sleeves-v3.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/swshb-zacian-etb-plus-sleeves-v31.webp"
+   }
   },
   "swshb-marnie-tournament-sleeves": {
    "id": "swshb-marnie-tournament-sleeves",
@@ -1384,7 +1528,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-zamazenta-etb-plus-sleeves-v2.webp"
+   "art": "assets/sleeves/swshb-zamazenta-etb-plus-sleeves-v2.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/swshb-zamazenta-etb-plus-sleeves-v21.webp"
+   }
   },
   "swshb-toolkit-2022-sleeves": {
    "id": "swshb-toolkit-2022-sleeves",
@@ -1400,7 +1548,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-toolkit-2022-sleeves-v3.webp"
+   "art": "assets/sleeves/swshb-toolkit-2022-sleeves-v3.webp",
+   "foil": {
+    "metal": "silver",
+    "map": "assets/sleeves/foil/swshb-toolkit-2022-sleeves-v31.webp"
+   }
   },
   "swshb-toolkit-2023-sleeves": {
    "id": "swshb-toolkit-2023-sleeves",
@@ -1416,7 +1568,11 @@
    ],
    "evidence": "verified",
    "count": 65,
-   "art": "assets/sleeves/swshb-toolkit-2023-sleeves-v2.webp"
+   "art": "assets/sleeves/swshb-toolkit-2023-sleeves-v2.webp",
+   "foil": {
+    "metal": "gold",
+    "map": "assets/sleeves/foil/swshb-toolkit-2023-sleeves-v21.webp"
+   }
   },
   "swshb-cz-shiny-zacian-zamazenta-sleeves": {
    "id": "swshb-cz-shiny-zacian-zamazenta-sleeves",
