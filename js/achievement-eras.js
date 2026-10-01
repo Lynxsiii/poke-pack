@@ -53,7 +53,13 @@ export const FINISH_PRINTERS = {
   "Rare Prism Star": ["sm5", "sm6", "sm7", "sm75", "sm8", "sm9"],
   "Rare Shining": ["sm35"],
   "Rare Shiny GX": ["sm115"],
+  // XY: every numbered set but the Kalos Starter Set prints Pokémon-EX; BREAK starts with BREAKthrough.
+  "Rare Holo EX": ["xy1", "xy2", "xy3", "xy4", "xy5", "dc1", "xy6", "xy7", "xy8", "xy9", "g1", "xy10", "xy11", "xy12"],
+  "Rare BREAK": ["xy8", "xy9", "xy10", "xy11", "xy12"],
 };
+
+/** The XY sets that print Pokémon-EX (what an EX row needs one of). */
+export const XY_EX_SETS = FINISH_PRINTERS["Rare Holo EX"];
 
 export function isPrinted(rarity) {
   const sets = FINISH_PRINTERS[rarity];

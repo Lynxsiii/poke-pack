@@ -81,6 +81,15 @@ const ERA_LADDERS = {
     [1000, 2, 400, "Alola regular"],
     [2000, 3, 1100, "Alola local"],
   ],
+  // XY (2014-2016): about 2,300 cards once the 16 sets, the Black Star promos,
+  // McDonald's 2014-2016 and the eight Trainer Kits are in; a rung shows once
+  // the playable sets add up to its goal. TODO(lead): re-check the goals when
+  // the set builders report the real totalCounts.
+  XY: [
+    [250, 1, 100, "Kalos bound"],
+    [1000, 2, 400, "Kalos regular"],
+    [1800, 3, 1100, "Kalos local"],
+  ],
 };
 
 const ERA_ROWS = ERA_NAMES.flatMap((era) =>
