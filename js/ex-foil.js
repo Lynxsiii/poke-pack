@@ -175,6 +175,10 @@ export function exWindow(card) {
  * cracked-ice prints are the other finish agents'.
  */
 function exWindowMap(card) {
+  // Emerald's holo basic Energy are cosmos over the whole art, under the title to the foot (energy-full-v1.webp: the Special Energy window
+  // runs only to 69 percent, and with no map the old Energy clip cut the foil to a visible rectangle, rv-i1); the sheen Energy of ex13 and
+  // ex16 are the refractor finish agent's.
+  if (card?.holoEnergy && setOf(card) === "ex9") return `${WINDOWS}energy-full-v1.webp`;
   if (!card || exRefractor(card) || isExFrame(card) || card.holoEnergy || card.supertype === "Energy") return "";
   const cosmos = card.rarity === "Rare Holo" || (card.rarity === "Rare Secret" && !isExName(card)) || card.holo || card.foilAs === "Rare Holo";
   return cosmos ? exWindow(card) : "";
