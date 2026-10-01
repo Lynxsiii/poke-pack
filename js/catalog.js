@@ -3285,6 +3285,97 @@ export const SHINING_LEGENDS = {
   ], 2),
 };
 
+// XY block, builder b3: Roaring Skies, Ancient Origins, BREAKthrough. Pack: 5 Common, 3 Uncommon, 1 reverse, 1 rare slot, no basic Energy
+// (E2 "English rarity guide" https://www.elitefourum.com/t/39762, Bulbapedia Booster pack (TCG)); rates in data/pullrates.json.
+export const ROARING_SKIES = {
+  id: "xy6",
+  tcgId: "xy6",
+  name: "Roaring Skies",
+  edition: "XY",
+  era: "XY",
+  released: "May 6, 2015",
+  live: true,
+  printedTotal: 108,
+  totalCount: 112,
+  packSize: 10,
+  cost: 78.12,
+  dataFile: "data/xy6.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, May 2015. Mega Rayquaza-EX in regular and full art, Mega Latios and Mega Gallade, four wrappers.",
+  oddsLine: "EX 1/9 · full art 1/17 · secret 1/125",
+  lede: "Rayquaza-EX and Mega Rayquaza-EX are the chase, in regular art and again in full art. The rare slot is an EX about 1 pack in 9, a full art 1 in 17.",
+  // Elite Fourum E2 sheet model (360-pack sequence) against his own 31-box tally (1,116 packs) and PokeBeach's box thread (n=9 boxes); the Mega share of the EX roll is the card share, 4 of 11. Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.1556, ex: 0.0707, megaEx: 0.0404, ultra: 0.0587, secret: 0.008 }),
+  heroIds: ["xy6-105", "xy6-104", "xy6-61", "xy6-102"],
+  wrappers: boosterWrappers("xy6", [
+    { id: "mega-gallade", name: "Mega Gallade", cardId: "xy6-35", tag: "Mega EX" },
+    { id: "mega-latios", name: "Mega Latios", cardId: "xy6-59", tag: "Mega EX" },
+    { id: "mega-rayquaza", name: "Mega Rayquaza", cardId: "xy6-61", tag: "Mega EX" },
+    { id: "deoxys", name: "Deoxys", cardId: "xy6-33", tag: "Psychic" },
+  ]),
+};
+
+export const ANCIENT_ORIGINS = {
+  id: "xy7",
+  tcgId: "xy7",
+  name: "Ancient Origins",
+  edition: "XY",
+  era: "XY",
+  released: "August 12, 2015",
+  live: true,
+  printedTotal: 98,
+  totalCount: 101,
+  packSize: 10,
+  cost: 143.45,
+  dataFile: "data/xy7.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, August 2015. The shiny full arts of Primal Kyogre, Primal Groudon and Mega Rayquaza-EX, four wrappers.",
+  oddsLine: "EX 1/9 · full art 1/17 · secret 1/125",
+  lede: "Mega Rayquaza-EX, Primal Kyogre-EX and Primal Groudon-EX in shiny full art are the chase, with a gold Trainers' Mail and Energy Retrieval. An EX lands about 1 pack in 9, a full art 1 in 17.",
+  // Elite Fourum E2 sheet model against his own 28-box tally (1,008 packs) and PokeBeach's box thread (n=7); the Mega share of the EX roll is the card share, 3 of 11. Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.1556, ex: 0.0808, megaEx: 0.0303, ultra: 0.0587, secret: 0.008 }),
+  heroIds: ["xy7-98", "xy7-96", "xy7-97", "xy7-94"],
+  wrappers: boosterWrappers("xy7", [
+    { id: "hoopa-unbound", name: "Hoopa Unbound", cardId: "xy7-36", tag: "EX" },
+    { id: "shiny-mega-rayquaza", name: "Shiny Mega Rayquaza", cardId: "xy7-98", tag: "Mega EX" },
+    { id: "shiny-primal-groudon", name: "Shiny Primal Groudon", cardId: "xy7-97", tag: "Primal" },
+    { id: "mega-tyranitar", name: "Mega Tyranitar", cardId: "xy7-43", tag: "Mega EX" },
+  ]),
+};
+
+export const BREAKTHROUGH = {
+  id: "xy8",
+  tcgId: "xy8",
+  name: "BREAKthrough",
+  edition: "XY",
+  era: "XY",
+  released: "November 4, 2015",
+  live: true,
+  printedTotal: 162,
+  totalCount: 165,
+  packSize: 10,
+  cost: 64.5,
+  dataFile: "data/xy8.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "xy",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "XY, November 2015. The first BREAK evolutions, gold Mewtwo-EX secrets and two Mega Mewtwo-EX, four wrappers.",
+  oddsLine: "EX 1/11 · full art 1/17 · BREAK 1/13 · secret 1/125",
+  lede: "The first BREAK Pokémon, with gold Mewtwo-EX at the top. A BREAK takes the reverse slot about 1 pack in 13, so one pack can hold a BREAK and an EX together.",
+  // Elite Fourum E2 sheet model against his own 30-box tally (1,080 packs), Danny Phantump and Derium (1,008 packs); BREAK takes the reverse-holo slot (E2; PokeBeach box report 1025). Sources in data/pullrates.json.
+  slots: xySlots({ holo: 0.1778, ex: 0.0444, megaEx: 0.0444, ultra: 0.0587, secret: 0.008, break: 0.0778 }),
+  heroIds: ["xy8-164", "xy8-163", "xy8-160", "xy8-159"],
+  wrappers: boosterWrappers("xy8", [
+    { id: "mega-mewtwo-x", name: "Mega Mewtwo X", cardId: "xy8-63", tag: "Mega EX" },
+    { id: "mega-mewtwo-y", name: "Mega Mewtwo Y", cardId: "xy8-64", tag: "Mega EX" },
+    { id: "mega-houndoom", name: "Mega Houndoom", cardId: "xy8-22", tag: "Mega EX" },
+    { id: "zoroark-break", name: "Zoroark BREAK", cardId: "xy8-92", tag: "BREAK" },
+  ]),
+};
 
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
@@ -3355,6 +3446,9 @@ export const PLAYABLE_SETS = [
   MCDONALDS_2017,
   MCDONALDS_2018,
   MCDONALDS_2019,
+  BREAKTHROUGH,
+  ANCIENT_ORIGINS,
+  ROARING_SKIES,
 ];
 
 /**
@@ -3591,6 +3685,9 @@ const POKESYMBOLS_SLUG = {
   sm6: "forbidden-light",
   sm7: "celestial-storm",
   sm75: "dragon-majesty",
+  xy6: "roaring-skies",
+  xy7: "ancient-origins",
+  xy8: "breakthrough",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as
