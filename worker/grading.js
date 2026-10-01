@@ -211,7 +211,18 @@ export async function inGameSlabs(env, userId, deps) {
   const out = [];
   for (const row of rows) {
     const [game, ...rest] = String(row.locked).split(":");
-    out.push({ ...slabView(row, await deps.findCatalogCard(env, requestFor(deps), row.card_id)), game, gameId: rest.join(":") });
+    const card = await deps.findCatalogCard(env, requestFor(deps), row.card_id);
+    // The same card fields a stake snapshot carries (stakeSlabView), so the page can draw it without a second lookup.
+    out.push({
+      ...slabView(row, card),
+      name: card?.name ?? null,
+      number: card?.number ?? null,
+      rarity: card?.rarity ?? null,
+      image: card?.image ?? null,
+      small: card ? card.imageSmall || card.image : null,
+      game,
+      gameId: rest.join(":"),
+    });
   }
   return out;
 }

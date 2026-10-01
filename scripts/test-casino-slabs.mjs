@@ -193,7 +193,7 @@ await check('schema: the Worker applied 0021 (columns, marker triggers) and the 
   assert.ok(GRADING_COLUMNS.some(([name, sql]) => name === 'locked' && sql === SLABS_COLUMNS[0][2]), 'grading.js adds the same locked column');
   const cols = t => db.prepare(`PRAGMA table_info(${t})`).all().map(c => c.name);
   assert.ok(cols('graded_cards').includes('locked')); assert.ok(cols('coinflips').includes('host_slabs') && cols('coinflips').includes('guest_slabs')); assert.ok(cols('jackpot_entries').includes('slabs'));
-  for (const name of ['coinflip_stake_check', 'coinflip_settle_check', 'jackpot_entry_check']) {
+  for (const name of ['coinflip_stake_check', 'coinflip_settle_check', 'jackpot_settle_check', 'jackpot_entry_check', 'graded_slab_escrow', 'graded_slab_escrow_delete']) {
     assert.ok(db.prepare("SELECT sql FROM sqlite_master WHERE name = ?").get(name).sql.includes(SLABS_MARKER), `${name} carries the marker`);
   }
   const names = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type = 'trigger'").all().map(r => r.name));
@@ -221,6 +221,9 @@ await check('coinflip: a slab-only stake escrows the slab (locked, shown cleared
   assert.equal(s.status, 'slabbed'); assert.equal(s.user_id, 'a');
   const g = await grading.list('a');
   assert.deepEqual(g.slabs, []); assert.equal(g.inGame.length, 1);
+  // inGame carries what the page needs to draw the slab (the stake snapshot's card fields), not just ids.
+  assert.deepEqual({ name: g.inGame[0].name, number: g.inGame[0].number, rarity: g.inGame[0].rarity, image: g.inGame[0].image, small: g.inGame[0].small, cardId: g.inGame[0].cardId, grade: g.inGame[0].grade, guard: g.inGame[0].guard },
+    { name: 'Goldeen', number: '87', rarity: 'Illustration Rare', image: 'assets/cards/me5/87.webp', small: 'assets/cards/me5/87-sm.webp', cardId: 'me5-87', grade: 9, guard: 'guard-onyx' });
   assert.equal(g.inGame[0].id, g1); assert.equal(g.inGame[0].game, 'coinflip'); assert.equal(g.inGame[0].gameId, g1id); assert.equal(g.inGame[0].value, 8.28);
   assert.equal(g.guards.equipped['guard-onyx'], 1, 'the guard unit is still worn, so not free');
   assert.equal(rawLedger(), beforeCards); audit('after slab-only create');
@@ -1115,6 +1118,158 @@ await check('memory: a maxed pot is built, the draw works, and (with SLAB_MEM_DI
     db.exec(`VACUUM INTO '${dir}/${tag}.db'`);
     console.log(`      ${tag}: jackpot ${made.jackpot.id}`);
   }
+});
+
+// ---- Escrow enforced by the database -------------------------------------------------------------------------
+// graded_slab_escrow / graded_slab_escrow_delete (0021): a slab in a game cannot be changed or deleted by anything that
+// does not also release the lock, whatever Worker version wrote the statement. And a game whose slabs were tampered
+// with can never settle short; it expires and is handed back, and no casino request ever fails because of it.
+const escrowTriggers = SLABS_DDL.filter(sql => /^CREATE TRIGGER graded_slab_escrow/.test(sql));
+assert.equal(escrowTriggers.length, 2);
+const withoutEscrow = async fn => {
+  db.exec('DROP TRIGGER graded_slab_escrow; DROP TRIGGER graded_slab_escrow_delete');
+  try { return await fn(); } finally { for (const sql of escrowTriggers) db.exec(sql); }
+};
+const quiet = async fn => { const log = console.error; console.error = () => {}; try { return await fn(); } finally { console.error = log; } };
+const IN_GAME = /That slab is in a casino game/;
+const snapOf = id => { const r = slab(id); return { id, cardId: r.card_id, name: 'x', number: '1', rarity: 'x', image: '', small: '', grade: r.grade, reverse: r.reverse, guard: r.guard, v: slabCents(r.card_id, r.grade) }; };
+const bumpClock = hours => { now += hours * 3600000; db.prepare('UPDATE sessions SET expires_at = ?').run(now + 864000000); };
+
+await check('escrow in the database: what a Worker that has never heard of `locked` writes (crack, sell, guard, show, hand-over, delete, reset) fails for a slab in a flip or a pot', async () => {
+  gear('b', 'guard-cherry', 3);
+  const sf = mint('b', 'me5-87', 9, { guard: 'guard-cherry' }); const sp = mint('c', 'me5-99', 9, { guard: 'guard-frost' });
+  const flip = await cf.create('b', { slabs: [sf] }); assert.equal(flip.status, 200);
+  const pot = await jp.create('c', { players: 3, slabs: [sp] }); assert.equal(pot.status, 200);
+  assert.equal(slab(sf).locked, `coinflip:${flip.flip.id}`); assert.equal(slab(sp).locked, `jackpot:${pot.jackpot.id}`);
+  for (const id of [sf, sp]) {
+    const owner = slab(id).user_id;
+    // These are the statements of the Worker before slabs, copied from its grading.js (crack, sell, guard, show) plus a reset and some raw edits.
+    const crack = [DB.prepare(`UPDATE graded_cards SET status = 'cracked', closed_at = ?, guard = NULL, shown = 0 WHERE id = ? AND user_id = ? AND status = 'slabbed'`).bind(now, id, owner),
+      DB.prepare(`INSERT INTO cards (user_id, card_id, qty, reverse_qty) SELECT ?, ?, 1, ? WHERE changes() = 1
+        ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + 1, reverse_qty = cards.reverse_qty + excluded.reverse_qty`).bind(owner, slab(id).card_id, 0)];
+    const sell = [DB.prepare(`UPDATE graded_cards SET status = 'sold', closed_at = ?, guard = NULL, shown = 0, sell_request_id = ?, sold_cents = ?
+      WHERE id = ? AND user_id = ? AND status = 'slabbed'`).bind(now, 'old-worker-sell', 828, id, owner),
+      DB.prepare('UPDATE profiles SET coins = coins + ? WHERE user_id = ? AND changes() = 1').bind(8.28, owner)];
+    const one = (sql, ...args) => [DB.prepare(sql).bind(...args)];
+    const attempts = {
+      crack, sell,
+      'guard off': one("UPDATE graded_cards SET guard = NULL WHERE id = ? AND user_id = ? AND status = 'slabbed'", id, owner),
+      'guard on': one("UPDATE graded_cards SET guard = 'guard-onyx' WHERE id = ? AND user_id = ? AND status = 'slabbed'", id, owner),
+      'show': one("UPDATE graded_cards SET shown = 1 WHERE id = ? AND user_id = ? AND status = 'slabbed'", id, owner),
+      'hand over': one("UPDATE graded_cards SET user_id = 'a' WHERE id = ?", id),
+      'regrade': one('UPDATE graded_cards SET grade = 10 WHERE id = ?', id),
+      'new request id': one("UPDATE graded_cards SET request_id = 'swapped' WHERE id = ?", id),
+      'status only': one("UPDATE graded_cards SET status = 'cracked' WHERE id = ?", id),
+      'close': one("UPDATE graded_cards SET status = 'sold', sold_cents = 0 WHERE id = ?", id),
+      'move the lock': one("UPDATE graded_cards SET locked = 'coinflip:elsewhere' WHERE id = ?", id),
+      'delete': one('DELETE FROM graded_cards WHERE id = ?', id),
+      'reset delete': one('DELETE FROM graded_cards WHERE user_id = ?', owner),
+    };
+    const frozen = dump();
+    for (const [label, statements] of Object.entries(attempts)) {
+      await assert.rejects(() => DB.batch(statements), IN_GAME, `${label} on slab ${id}`);
+      assert.equal(dump(), frozen, `${label} changed something`);
+    }
+    // A statement that changes nothing is not a change.
+    db.prepare('UPDATE graded_cards SET shown = shown, guard = guard WHERE id = ?').run(id); assert.equal(dump(), frozen);
+  }
+  // The same slab through the real Worker stays a clean 409 (grading.js knows about `locked`).
+  for (const [id, owner] of [[sf, 'b'], [sp, 'c']]) {
+    assert.equal((await grading.crack(id, owner)).status, 409); assert.equal((await grading.sell(id, owner)).status, 409);
+    assert.equal((await grading.show(id, true, owner)).status, 409); assert.equal((await grading.guard(id, 'guard-cherry', owner)).status, 409);
+  }
+  // An account with an open game cannot be deleted or reset (the cascade into graded_cards is refused too).
+  const frozen = dump();
+  assert.throws(() => db.prepare('DELETE FROM users WHERE id = ?').run('b'), /casino game|Cancel your open/); assert.equal(dump(), frozen);
+  assert.notEqual((await api('/api/me/reset', 'POST', {}, 'c')).status, 200); assert.equal(dump(), frozen);
+  // A slab that is not slabbed can never be locked.
+  const done = mint('b', 'me5-2', 5); assert.equal((await grading.crack(done, 'b')).status, 200);
+  assert.throws(() => db.prepare("UPDATE graded_cards SET locked = 'coinflip:zz' WHERE id = ?").run(done), IN_GAME);
+  // A lock whose game is over (or never was) is a stale marker, not escrow: it never wedges a delete.
+  const stale = mint('b', 'me5-2', 4); db.prepare("UPDATE graded_cards SET locked = 'coinflip:gone' WHERE id = ?").run(stale);
+  db.prepare('DELETE FROM graded_cards WHERE id = ?').run(stale); minted.delete(stale);
+  // ... and a deleted account with finished games and free slabs goes cleanly (the FK cascade fires the delete trigger on every slab).
+  addUser('z9'); const z = mint('z9', 'me5-87', 9); const z2 = mint('z9', 'me5-98', 9);
+  assert.equal((await cf.create('z9', { slabs: [z] })).status, 200); const open = db.prepare("SELECT id FROM coinflips WHERE host_id = 'z9'").get().id;
+  assert.throws(() => db.prepare('DELETE FROM users WHERE id = ?').run('z9'), /casino game|Cancel your open/);
+  assert.equal((await cf.cancel(open, 'z9')).status, 200);
+  db.prepare('DELETE FROM users WHERE id = ?').run('z9'); minted.delete(z); minted.delete(z2);
+  assert.equal(db.prepare('SELECT COUNT(*) n FROM graded_cards WHERE user_id = ?').get('z9').n, 0);
+  assert.equal((await cf.cancel(flip.flip.id, 'b')).status, 200); assert.equal((await jp.cancel(pot.jackpot.id, 'c')).status, 200);
+  // Once the game is over the owner may do anything again.
+  assert.equal((await grading.show(sf, true, 'b')).status, 200); assert.equal((await grading.crack(sf, 'b')).status, 200); assert.equal((await grading.sell(sp, 'c')).status, 200);
+  audit('after the escrow attempts');
+});
+
+await check('poisoned flips: a slab cracked, sold, deleted, handed over or unlocked behind the game\'s back stops the settle; the flip expires, hands back what is left, and no casino request fails', async () => {
+  const modes = {
+    cracked: id => db.prepare("UPDATE graded_cards SET status = 'cracked', closed_at = ?, guard = NULL WHERE id = ?").run(now, id),
+    sold: id => db.prepare("UPDATE graded_cards SET status = 'sold', sold_cents = 828, sell_request_id = 'poison', closed_at = ? WHERE id = ?").run(now, id),
+    deleted: id => { db.prepare('DELETE FROM graded_cards WHERE id = ?').run(id); minted.delete(id); },
+    'handed over': id => db.prepare("UPDATE graded_cards SET user_id = 'f' WHERE id = ?").run(id),
+    unlocked: id => db.prepare('UPDATE graded_cards SET locked = NULL WHERE id = ?').run(id),
+  };
+  for (const [mode, poison] of Object.entries(modes)) {
+    const keep = mint('a', 'me5-98', 9); const hurt = mint('a', 'me5-87', 9);
+    const made = await cf.create('a', { slabs: [keep, hurt] }); assert.equal(made.status, 200, mode);
+    await withoutEscrow(async () => poison(hurt));
+    const mine = mint('d', 'me5-98', 9, { guard: null }); const mine2 = mint('d', 'me5-97', 8); // 7.97 + 4.08 against 8.28 + 7.97 (outside the window): one slab only
+    const guestSlab = mint('d', 'me5-87', 9); const frozen = dump();
+    const r = await cf.join(made.flip.id, 'd', { slabs: [guestSlab, mine] });
+    assert.equal(r.status, 409, `${mode}: ${JSON.stringify(r)}`); assert.match(r.error, /no longer has those slabs|no longer have/);
+    assert.equal(dump(), frozen, `${mode}: a refused join moved nothing`);
+    for (const id of [guestSlab, mine, mine2]) { assert.equal(slab(id).locked, null); assert.equal(slab(id).user_id, 'd'); }
+    // Straight into the table (an old Worker's join statement) it is refused as well.
+    assert.throws(() => db.prepare(`UPDATE coinflips SET status = 'done', guest_id = 'd', guest_stake = ?, guest_value = 828, winner = 'host', flipped_at = ? WHERE id = ? AND status = 'open'`)
+      .run(JSON.stringify([{ id: 'me5-98', qty: 1, rev: 0, v: 797 }]), now, made.flip.id), /no longer has those slabs/);
+    assert.equal(dump(), frozen);
+    // Every casino request keeps working meanwhile.
+    for (const path of ['/api/casino/coinflips', '/api/casino/jackpots', '/api/grading']) assert.equal((await api(path, 'GET', undefined, 'a')).status, 200, `${mode}: ${path}`);
+    assert.equal(db.prepare('SELECT status FROM coinflips WHERE id = ?').get(made.flip.id).status, 'open');
+    // Expiry hands back what is still there, and nothing aborts.
+    bumpClock(COINFLIP_RULES.openHours + 1);
+    assert.equal((await api('/api/casino/coinflips', 'GET', undefined, 'a')).status, 200);
+    assert.equal(db.prepare('SELECT status FROM coinflips WHERE id = ?').get(made.flip.id).status, 'cancelled', mode);
+    assert.equal(slab(keep).locked, null, `${mode}: the intact slab came back`); assert.equal(slab(keep).status, 'slabbed'); assert.equal(slab(keep).user_id, 'a');
+    if (mode !== 'deleted') assert.equal(slab(hurt).locked, null, `${mode}: a lingering lock is cleared with the flip`);
+    audit(`after the poisoned flip (${mode})`);
+  }
+  // The host can cancel a poisoned flip too.
+  const keep = mint('a', 'me5-98', 9); const hurt = mint('a', 'me5-87', 9);
+  const made = await cf.create('a', { slabs: [keep, hurt] }); await withoutEscrow(async () => modes.cracked(hurt));
+  assert.equal((await cf.cancel(made.flip.id, 'a')).status, 200); assert.equal(slab(keep).locked, null); audit('after cancelling a poisoned flip');
+});
+
+await check('poisoned pots: the last seat and an early draw are refused (entry and slabs untouched); a full pot nobody could draw expires and hands every other slab back; maintenance never fails', async () => {
+  const x = mint('a', 'me5-87', 9); const y = mint('b', 'me5-87', 9); const z = mint('c', 'me5-87', 9);
+  const pot = await jp.create('a', { players: 3, slabs: [x] }); assert.equal(pot.status, 200); assert.equal((await jp.join(pot.jackpot.id, 'b', { slabs: [y] })).status, 200);
+  await withoutEscrow(async () => db.prepare("UPDATE graded_cards SET status = 'cracked', closed_at = ? WHERE id = ?").run(now, y));
+  let frozen = dump();
+  const last = await jp.join(pot.jackpot.id, 'c', { slabs: [z] });
+  assert.equal(last.status, 409, JSON.stringify(last)); assert.match(last.error, /cannot be drawn/);
+  assert.equal(dump(), frozen, 'the last seat did not land and nothing moved'); assert.equal(slab(z).locked, null);
+  assert.equal((await jp.draw(pot.jackpot.id, 'a')).status, 409); assert.equal(dump(), frozen, 'an early draw is refused too');
+  assert.throws(() => db.prepare("UPDATE jackpots SET status = 'done', winner_seat = 0, drawn_at = ? WHERE id = ?").run(now, pot.jackpot.id), /cannot be drawn/);
+  assert.equal(dump(), frozen);
+  bumpClock(JACKPOT_RULES.openHours + 1);
+  assert.equal((await api('/api/casino/jackpots', 'GET', undefined, 'a')).status, 200);
+  assert.equal(db.prepare('SELECT status FROM jackpots WHERE id = ?').get(pot.jackpot.id).status, 'cancelled');
+  assert.equal(slab(x).locked, null); assert.equal(slab(x).user_id, 'a'); assert.equal(slab(y).locked, null, 'the lingering lock went with the pot');
+  audit('after a poisoned pot expired');
+  // A pot that filled without its draw (stuck), with one slab poisoned: maintenance logs it and leaves the pot, every request works, the expiry returns the rest.
+  const p = mint('a', 'me5-87', 9); const q = mint('b', 'me5-87', 9); const r = mint('c', 'me5-87', 9);
+  const stuck = await jp.create('a', { players: 3, slabs: [p] }); assert.equal((await jp.join(stuck.jackpot.id, 'b', { slabs: [q] })).status, 200);
+  db.prepare(`INSERT INTO jackpot_entries(jackpot_id, seat, user_id, bot, bot_persona, stake, slabs, value, created_at) VALUES(?, 2, 'c', 0, NULL, '[]', ?, 828, ?)`).run(stuck.jackpot.id, JSON.stringify([snapOf(r)]), now);
+  await withoutEscrow(async () => db.prepare('DELETE FROM graded_cards WHERE id = ?').run(q)); minted.delete(q);
+  frozen = dump();
+  const { maintainJackpots } = await import('../worker/jackpot.js');
+  rig.fraction = 0.5; await quiet(() => maintainJackpots(env, now)); unrig();
+  assert.equal(dump(), frozen, 'the poisoned pot was left alone'); assert.equal(db.prepare('SELECT status FROM jackpots WHERE id = ?').get(stuck.jackpot.id).status, 'open');
+  for (const path of ['/api/casino/jackpots', '/api/casino/coinflips', '/api/grading']) assert.equal((await quiet(() => api(path, 'GET', undefined, 'a'))).status, 200, path);
+  bumpClock(JACKPOT_RULES.openHours + 1); await maintainJackpots(env, now);
+  assert.equal(db.prepare('SELECT status FROM jackpots WHERE id = ?').get(stuck.jackpot.id).status, 'cancelled');
+  for (const id of [p, r]) { assert.equal(slab(id).locked, null); assert.equal(slab(id).status, 'slabbed'); }
+  audit('after a stuck poisoned pot');
 });
 
 console.log(results.join('\n'));
