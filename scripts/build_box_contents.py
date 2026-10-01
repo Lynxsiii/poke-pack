@@ -53,6 +53,7 @@ OUT = DATA / "box-contents.json"
 SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
 XY_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "xy-kits.json"
 BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
+DP_RESEARCH = ROOT / "scripts" / "box-research" / "dp.json"
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -442,6 +443,9 @@ def build(parts_dir: Path) -> int:
     if BW_RESEARCH.exists():
         black_white(json.loads(BW_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
+    if DP_RESEARCH.exists():
+        dp_kits(json.loads(DP_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+
     write(out, rep, offers)
     return 0
 
@@ -555,6 +559,29 @@ def black_white(research: dict, out: dict, rep: Report, offers: dict, cards: set
         rows = [r for r in rows if r[1] > 0]
         out[key] = {"label": "60-card deck", "cards": merge(rows)}
         rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards + {len(offer['promos'])} promo(s) ({dealt} counted inside the list)")
+
+
+def dp_kits(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
+    """Diamond & Pearl and HGSS Trainer Kits (scripts/box-research/dp.json): both half decks, the other half's cards and
+    this half's own, beside the product's own promo (the half's holofoil). The HGSS halves are thirty cards each; the DP
+    halves are the twelve and eleven different cards pkmn.gg lists (one of each, the copies are not on record)."""
+    for kit in research["kits"]:
+        for own in kit["halves"]:
+            found = [(k, o) for k, o in offers.items() if o.get("set") == own and o.get("tcgplayerId") == kit["tcgplayerId"]]
+            if len(found) != 1:
+                rep.skipped.append(f"{own}/{kit['product']}: not a product the site sells yet")
+                continue
+            key, offer = found[0]
+            promo = set(offer["promos"])
+            rows = []
+            for half in kit["halves"]:
+                for number in range(1, int(kit["cards"][half]) + 1):
+                    card_id = f"{half}-{number}"
+                    if card_id not in cards:
+                        rep.problem(key, f"unknown card {card_id}")
+                    elif card_id not in promo:
+                        rows.append([card_id, 1])
+            out[key] = {"label": kit["label"], "cards": rows}
 
 
 def catalog_prints() -> dict[str, str]:
