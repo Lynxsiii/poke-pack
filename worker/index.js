@@ -308,7 +308,7 @@ async function signup(request, env) {
   const token = await createSession(env, id, now);
   const user = await env.DB.prepare("SELECT * FROM users WHERE id = ?").bind(id).first();
   const save = await loadSave(env, id);
-  return json({ user: publicUser(user), save }, 201, sessionCookie(request, token));
+  return json({ user: { ...publicUser(user), ...(await levelFields(env, user)) }, save }, 201, sessionCookie(request, token));
 }
 
 async function signin(request, env) {
@@ -324,7 +324,7 @@ async function signin(request, env) {
   await env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, user.id).run();
   const token = await createSession(env, user.id, now);
   const save = await loadSave(env, user.id);
-  return json({ user: publicUser({ ...user, last_played: now }), save }, 200, sessionCookie(request, token));
+  return json({ user: { ...publicUser({ ...user, last_played: now }), ...(await levelFields(env, user)) }, save }, 200, sessionCookie(request, token));
 }
 
 async function signout(request, env) {
