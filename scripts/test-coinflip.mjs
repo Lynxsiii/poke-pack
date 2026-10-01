@@ -237,7 +237,7 @@ for (const target of [10, 37, 100, 828, 1285, 5000, 25000, 99999]) {
     const built = buildBotStake(pool, target);
     if (!built) continue; // a target the pool cannot reach is refused, not overshot
     assert.ok(built.value >= low && built.value <= high, `${built.value} in [${low}, ${high}] for ${target}`);
-    assert.equal(built.stake.reduce((s, c) => s + c.v * c.qty, 0), built.value);
+    assert.equal(built.stake.reduce((s, c) => s + c.v * c.qty, 0) + built.slabs.reduce((s, c) => s + c.v, 0), built.value);
   }
 }
 assert.ok(buildBotStake(pool, 828), 'a normal stake can always be matched');

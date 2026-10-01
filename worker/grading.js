@@ -162,9 +162,10 @@ export function slabView(row, card) {
 
 /** A slab in a casino stake, from the snapshot frozen when it went in: `value` is its graded value then, in coins. */
 export function stakeSlabView(snap) {
+  // A bot's slab is generated (no graded_cards row until a human wins it): no id, no cert.
   return {
-    id: snap.id,
-    cert: certNumber(snap.id),
+    id: snap.id ?? null,
+    cert: snap.id == null ? null : certNumber(snap.id),
     cardId: snap.cardId,
     name: snap.name,
     number: snap.number,
@@ -235,8 +236,8 @@ export async function gradedSlabs(env, userId, deps) {
   try {
     return await readSlabs(env, userId, deps);
   } catch (err) {
-    // A database swapped underneath a warm isolate (or a restore) loses the tables.
-    if (!/no such table/i.test(String(err?.message || err))) throw err;
+    // A database swapped underneath a warm isolate (or a restore) loses the tables, or the columns added after them (`locked`).
+    if (!/no such (table|column)/i.test(String(err?.message || err))) throw err;
     schemaReady = false;
     return readSlabs(env, userId, deps);
   }

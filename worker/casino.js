@@ -1,5 +1,5 @@
 import { PLAYABLE_SETS, ALL_SETS, money, sellValue } from '../js/catalog.js';
-import { gradedValue } from '../js/grading-rules.js';
+import { gradedValue, gradeMultiplier, rollGrade, bandFor, GRADE_BANDS } from '../js/grading-rules.js';
 import { BOT_PERSONAS } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
 import { COINFLIP_RULES, matchWindow, botStakeWindow } from '../js/casino-rules.js';
@@ -90,7 +90,7 @@ export async function buildStake(env, request, helpers, userId, rawCards, rules 
   const seen = new Set(); const stake = []; let copies = 0; let value = 0;
   for (const row of cardList) {
     const id = String(row?.id || ''); const qty = Number(row?.qty);
-    if (!/^[a-z0-9-]{3,48}$/i.test(id) || !Number.isInteger(qty) || qty < 1 || qty > 999) error('Choose valid cards.');
+    if (!/^[a-z0-9-]{3,48}$/i.test(id) || !Number.isInteger(qty) || qty < 1 || qty > (rules.maxQty || 9999)) error('Choose valid cards.');
     if (seen.has(id)) error('List each card once, with a quantity.');
     seen.add(id);
     const have = collection[id] || 0;
@@ -131,33 +131,129 @@ export async function binderStatement(env, helpers, userId, collection, stake, g
 
 // ---- The bot's stake -------------------------------------------------------
 const randomInt = max => crypto.getRandomValues(new Uint32Array(1))[0] % max;
+const randomUnit = () => randomInt(1 << 24) / (1 << 24);
 export const pick = list => list[randomInt(list.length)];
 export const shuffle = list => { const out = [...list]; for (let i = out.length - 1; i > 0; i--) { const j = randomInt(i + 1); [out[i], out[j]] = [out[j], out[i]]; } return out; };
+
+/** The least index of `list` (ascending by cents) whose cents >= `cents`. */
+const lowerBound = (list, cents) => { let lo = 0; let hi = list.length; while (lo < hi) { const mid = (lo + hi) >> 1; if (list[mid].cents < cents) lo = mid + 1; else hi = mid; } return lo; };
+/** How many cards of `list` (ascending by cents) cost at most `cents`. */
+const upperBound = (list, cents) => { let lo = 0; let hi = list.length; while (lo < hi) { const mid = (lo + hi) >> 1; if (list[mid].cents <= cents) lo = mid + 1; else hi = mid; } return lo; };
+
+/* How hard the bot builder may work. A stake is built by taking QUANTITIES of a few chosen cards (never one copy at a
+   time), so the work is a few dozen picks however many coins the host put up; these bounds only cap the worst case. */
+export const BOT_BUILD = { attempts: 40, steps: 400, naturalDistinct: 40, naturalCopies: 3, maxSlabs: 10 };
+
 /**
- * Cards worth between botStakeWindow(target).low and .high cents (never more
- * than the host put up). Built from the sets the host's own cards come from plus
- * a few random ones, so it looks like what was staked. Pure given `pool`, so the
- * test can drive it with a fixed catalog.
+ * Raw cards worth between `low` and `high` cents (never above `high`): quantity-based. Each pick takes a card from the
+ * sizeable end of what still fits (a card worth at least a quarter of what is left, else the dearest few) and a share of
+ * how many copies fit: a few cards of a small stake, a few dozen deep stacks of a big one. At most rules.maxCards
+ * different cards, rules.maxQty of one and rules.maxCopies in all. `priced` is ascending by cents.
+ * Returns { rows: Map(id -> { ...card, qty, rev }), total } or null, and adds its picks to `stats.steps`.
  */
-export function buildBotStake(pool, targetCents) {
-  const { low, high } = botStakeWindow(targetCents);
-  const priced = pool.filter(c => c.cents >= 1 && c.cents <= high);
-  if (!priced.length) return null;
-  for (let attempt = 0; attempt < 60; attempt++) {
-    const picked = new Map(); let total = 0; let n = 0;
-    while (total < low && n < COINFLIP_RULES.maxCopies) {
-      const remaining = high - total;
-      const fits = priced.filter(c => c.cents <= remaining);
-      if (!fits.length) break;
-      // Aim for a few sizeable cards rather than a fistful of bulk.
-      const big = fits.filter(c => c.cents * 4 >= remaining);
-      const card = pick(big.length ? big : fits);
-      const row = picked.get(card.id);
-      if (row) row.qty++; else picked.set(card.id, { ...card, qty: 1, rev: 0 });
-      total += card.cents; n++;
+function fillRaw(priced, low, high, rules, stats) {
+  const rows = new Map(); let total = 0; let copies = 0;
+  const goal = 6 + randomInt(30); // roughly how many different cards this pile spreads over (a big pile is a few dozen deep stacks)
+  for (let step = 0; total < low; step++) {
+    if (step >= BOT_BUILD.steps) return null;
+    stats.steps++;
+    const rem = high - total;
+    const fit = upperBound(priced, rem);
+    if (!fit) return null;
+    // Cheaper than rem / (copies still allowed) could never reach the target; a quarter of what is left is "sizeable".
+    const floor = lowerBound(priced, Math.ceil(rem / Math.max(1, rules.maxCopies - copies)));
+    const big = lowerBound(priced, Math.ceil(rem / 4));
+    let from = big < fit ? Math.max(big, floor) : Math.max(floor, fit - Math.max(8, Math.ceil((fit - floor) / 2)));
+    if (from >= fit) from = fit - 1; // only the dearest is any use
+    let card = priced[from + randomInt(fit - from)];
+    if (!rows.has(card.id) && rows.size >= rules.maxCards) {
+      // every different card is used: stack more of one already in the pile that still fits
+      const held = [...rows.values()].filter(r => r.cents <= rem && r.qty < rules.maxQty);
+      if (!held.length) return null;
+      card = pick(held);
     }
-    if (total >= low && total <= high && picked.size <= COINFLIP_RULES.maxCards) {
-      return { stake: [...picked.values()].map(({ cents, ...c }) => ({ ...c, v: cents })), value: total };
+    const row = rows.get(card.id);
+    const room = Math.min(Math.floor(rem / card.cents), rules.maxQty - (row ? row.qty : 0), rules.maxCopies - copies);
+    if (room < 1) { if (rules.maxCopies - copies < 1) return null; continue; }
+    // a share of what is left, so the pile spreads over about `goal` cards; the last few picks may take all that fits
+    const share = rem / Math.max(1, goal - rows.size);
+    const qty = Math.max(1, Math.min(room, Math.ceil(share / card.cents * (0.6 + 0.8 * randomUnit()))));
+    if (row) row.qty += qty; else rows.set(card.id, { ...card, qty, rev: 0 });
+    total += card.cents * qty; copies += qty;
+  }
+  return { rows, total };
+}
+
+/** A generated slab of `card`, its grade rolled from the card's band like real grading, worth its graded value: no row, no id. */
+function botSlab(card, band) {
+  const grade = rollGrade(band, randomInt(10000));
+  const v = Math.round(money(card.cents / 100 * gradeMultiplier(grade, band)) * 100);
+  return { cardId: card.id, name: card.name, number: card.number, rarity: card.rarity, image: card.image, small: card.small, grade, reverse: false, guard: null, band: band.id, v };
+}
+
+/**
+ * Up to `count` generated slabs worth about `budget` cents together and never more than `ceiling`: each is aimed at an
+ * equal share of what is left (a card whose graded value should land near it, a little jittered).
+ */
+function fillSlabs(priced, budget, count, ceiling, stats) {
+  const slabs = []; let total = 0;
+  for (let i = 0; i < count; i++) {
+    const avg = Math.max(1, Math.floor((budget - total) / (count - i)));
+    let made = null;
+    for (let tries = 0; tries < 6 && !made; tries++) {
+      stats.steps++;
+      const guess = priced[randomInt(priced.length)];
+      const mult = Math.max(0.01, gradeMultiplier(10, guess.band || GRADE_BANDS[0]));
+      // a base price whose graded value is near avg, then the nearest card to it (a few places of jitter)
+      const aim = avg / mult * (0.85 + 0.3 * randomUnit()) * (0.5 + randomUnit());
+      const card = priced[Math.min(priced.length - 1, Math.max(0, lowerBound(priced, aim) - randomInt(3)))];
+      const slab = botSlab(card, card.band || GRADE_BANDS[0]);
+      if (total + slab.v <= ceiling) made = slab;
+    }
+    if (!made) break;
+    slabs.push(made); total += made.v;
+  }
+  return { slabs, total };
+}
+
+/**
+ * The bot's stake against `targetCents`: raw cards and/or generated slabs worth between botStakeWindow(target).low and
+ * .high cents (never more than the host put up). { stake, slabs, value } or null. Built from the cards of the sets the
+ * host's own cards come from plus a few random ones (`pool`), so it looks like what was staked. Pure given `pool`.
+ * Slabs are used when the host staked slabs (the bot mirrors their share, at least one) or the target is above what
+ * the old stake limits could reach with raw cards (40 different cards, 3 of each); otherwise only cards.
+ * options: { hostSlabs: [snapshot], rules, stats: { attempts, steps } (filled in) }.
+ */
+export function buildBotStake(pool, targetCents, options = {}) {
+  const rules = options.rules || COINFLIP_RULES; const stats = options.stats || {}; stats.attempts = 0; stats.steps = 0;
+  const { low, high } = botStakeWindow(targetCents);
+  const priced = pool.filter(c => c.cents >= 1 && c.cents <= high).sort((a, b) => a.cents - b.cents);
+  if (!priced.length) return null;
+  const hostSlabs = options.hostSlabs || [];
+  const hostSlabValue = hostSlabs.reduce((n, s) => n + (s.v || 0), 0);
+  let comfort = 0; for (let i = Math.max(0, priced.length - BOT_BUILD.naturalDistinct); i < priced.length; i++) comfort += priced[i].cents * BOT_BUILD.naturalCopies;
+  const useSlabs = hostSlabs.length > 0 || high > comfort;
+  for (let attempt = 0; attempt < BOT_BUILD.attempts; attempt++) {
+    stats.attempts++;
+    let slabs = []; let slabTotal = 0;
+    if (useSlabs) {
+      // Mirror the host's slabs (their count and share of the stake), else carry the part of a huge stake that cards alone could not.
+      const count = hostSlabs.length
+        ? Math.min(BOT_BUILD.maxSlabs, Math.max(1, hostSlabs.length + randomInt(3) - 1))
+        : 2 + randomInt(BOT_BUILD.maxSlabs - 1);
+      const share = hostSlabs.length
+        ? Math.min(0.95, Math.max(0.05, hostSlabValue / Math.max(1, targetCents) * (0.8 + 0.4 * randomUnit())))
+        : 0.3 + 0.3 * randomUnit();
+      const built = fillSlabs(priced, Math.floor(high * share), count, high, stats);
+      slabs = built.slabs; slabTotal = built.total;
+      if (!slabs.length) continue;
+    }
+    if (slabTotal > high) continue;
+    let raw = { rows: new Map(), total: 0 };
+    if (slabTotal < low) { raw = fillRaw(priced, low - slabTotal, high - slabTotal, rules, stats); if (!raw) continue; }
+    const value = slabTotal + raw.total;
+    if (value >= low && value <= high) {
+      return { stake: [...raw.rows.values()].map(({ cents, band, ...c }) => ({ ...c, v: cents })), slabs, value };
     }
   }
   return null;
@@ -171,7 +267,7 @@ export async function botPool(env, request, helpers, hostStake, hostSlabs = []) 
   for (const set of sets) {
     for (const c of await helpers.loadSetCards(env, request, set)) {
       pool.push({ id: c.id, name: c.name, number: c.number, rarity: c.rarity, image: c.image, small: c.imageSmall || c.image,
-        cents: Math.round(sellValue(c) * 100) });
+        cents: Math.round(sellValue(c) * 100), band: bandFor(setForCard(c.id)) });
     }
   }
   return pool;
@@ -321,11 +417,11 @@ async function createFlip(env, request, helpers, user, body, withBot) {
   const statements = [insert];
   if (withBot) {
     const pool = await botPool(env, request, helpers, stake, slabs);
-    const bot = buildBotStake(pool, value);
+    const bot = buildBotStake(pool, value, { hostSlabs: slabs, rules: COINFLIP_RULES });
     if (!bot) error('The bot could not match that stake. Try a slightly different one.', 409);
     const persona = pick(BOT_PERSONAS); const winner = crypto.getRandomValues(new Uint8Array(1))[0] & 1 ? 'host' : 'guest';
-    statements.push(env.DB.prepare(`UPDATE coinflips SET status = 'done', guest_id = ?, guest_stake = ?, guest_value = ?, bot_persona = ?,
-      winner = ?, flipped_at = ? WHERE id = ? AND status = 'open'`).bind(HOUSE, JSON.stringify(bot.stake), bot.value, persona.id, winner, now, id));
+    statements.push(env.DB.prepare(`UPDATE coinflips SET status = 'done', guest_id = ?, guest_stake = ?, guest_slabs = ?, guest_value = ?, bot_persona = ?,
+      winner = ?, flipped_at = ? WHERE id = ? AND status = 'open'`).bind(HOUSE, JSON.stringify(bot.stake), bot.slabs.length ? JSON.stringify(bot.slabs) : null, bot.value, persona.id, winner, now, id));
   }
   statements.push(await binderStatement(env, helpers, user.id, collection, stake, { sql: 'AND EXISTS(SELECT 1 FROM coinflips WHERE id = ?)', args: [id] }, slabs));
   try { await env.DB.batch(statements); }

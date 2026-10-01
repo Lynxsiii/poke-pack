@@ -17,7 +17,8 @@ import { setForCard } from './grading.js';
    the UPDATE only lands while it is still the winner's, unlocked and
    'slabbed', and the coin credit is chained on changes(). Its row records the
    sale (sell_request_id 'casino:<source>:<id>', sold_cents). The winner keeps
-   a slab by passing slabs: false. */
+   a slab by passing slabs: false. A bot's slabs a human won were minted into
+   graded_cards by the settle trigger (migration 0026) and sell like any other. */
 
 const error = (message, status = 400) => { throw Object.assign(new Error(message), { status }); };
 const parse = value => value ? JSON.parse(value) : null;
@@ -42,12 +43,22 @@ const add = (map, id, qty, rev = 0) => {
   row.qty += qty; row.rev += rev; map.set(id, row);
 };
 
-/** What `userId` won in a finished game: { cards: Map(cardId -> { qty, rev }), slabIds }. Throws when they did not win it. */
+/**
+ * What `userId` won in a finished game: { cards: Map(cardId -> { qty, rev }), slabIds }. Throws when they did not win it.
+ * A bot's slab has no id (it was generated): when the winner is a human the settle trigger minted it as a graded_cards row
+ * with request_id 'casino:<source>:<gameId>:<n>', and those rows are found by that prefix.
+ */
 async function wonIn(env, source, gameId, userId) {
-  const cards = new Map(); const slabIds = [];
+  const cards = new Map(); const slabIds = []; let generated = false;
   const take = (stake, slabs) => {
     for (const s of stake) add(cards, s.id, s.qty, s.rev);
-    for (const s of slabs || []) slabIds.push(s.id);
+    for (const s of slabs || []) { if (s.id == null) generated = true; else slabIds.push(s.id); }
+  };
+  const minted = async () => {
+    if (!generated) return;
+    const rows = (await env.DB.prepare('SELECT id FROM graded_cards WHERE user_id = ? AND request_id LIKE ?')
+      .bind(userId, `casino:${source}:${gameId}:%`).all()).results || [];
+    for (const row of rows) slabIds.push(row.id);
   };
   if (source === 'coinflip') {
     const row = await env.DB.prepare('SELECT * FROM coinflips WHERE id = ?').bind(gameId).first();
@@ -57,6 +68,7 @@ async function wonIn(env, source, gameId, userId) {
     if (!((hostWon && row.host_id === userId) || (!hostWon && row.guest_id === userId))) error('You did not win that flip.', 403);
     // The winnings are the other side's pile; your own stake was already yours.
     take(parse(hostWon ? row.guest_stake : row.host_stake), parse(hostWon ? row.guest_slabs : row.host_slabs));
+    await minted();
     return { cards, slabIds };
   }
   if (source === 'battle') {
@@ -77,6 +89,7 @@ async function wonIn(env, source, gameId, userId) {
     if (!entries.some(e => e.seat === row.winner_seat && e.user_id === userId)) error('You did not win that jackpot.', 403);
     // The winnings are everyone else's piles; your own entry was already yours.
     for (const e of entries) if (e.seat !== row.winner_seat) take(parse(e.stake), parse(e.slabs));
+    await minted();
     return { cards, slabIds };
   }
   error('Unknown game.', 404);
