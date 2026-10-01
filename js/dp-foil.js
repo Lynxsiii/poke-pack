@@ -161,6 +161,9 @@ export function dpWindow(card) {
 export function dpMap(card) {
   if (isAlph(card)) return "";
   if (card?.rarity === "Rare Holo" || card?.rarity === "Rare Secret") return dpWindow(card);
+  // h3: Arceus AR and the Shiny Legendaries take the cosmos on their frame's window; the Rotom and the Shining Pokemon are
+  // cut AROUND it (the whole card but the art window, css/holo/dp-secret.css subtracts --foil-map from the scan).
+  if (["Rare Arceus", "Rare Shiny Legendary", "Rare Rotom", "Rare Shining"].includes(card?.rarity)) return dpWindow(card);
   return "";
 }
 
@@ -198,9 +201,11 @@ export function dpPattern(card) {
     case "Rare Rotom":
       return "foil-holo dp-rotom";
     case "Rare Arceus":
-      return "foil-holo dp-ar";
+      // the cosmos is dp.css's (dp-holo); dp-ar adds the body's ripple sheen (dp-secret.css)
+      return "foil-holo dp-holo dp-ar";
     case "Rare Shiny Legendary":
-      return "foil-holo dp-shiny-legend";
+      // the cosmos is dp.css's (dp-holo); dp-shiny-legend adds the silver border's glitter (dp-secret.css)
+      return "foil-holo dp-holo dp-shiny-legend";
     case "Rare Secret":
       // Time-Space Distortion, the retro Charizard line, the Haymaker trio, the Pikachus, the Legendary Birds: cosmos holo.
       return "foil-holo dp-holo dp-secret";
