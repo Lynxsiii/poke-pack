@@ -368,6 +368,8 @@ def save_product_image(set_id: str, product: dict, refresh: bool) -> str | None:
     dest = ROOT / rel
     if dest.exists() and not refresh:
         return rel
+    if not product.get("tcgplayerId"):
+        return None  # no TCGplayer listing, so no photo to cut out
     try:
         raw = fetch(TCG_IMAGE.format(id=product["tcgplayerId"]))
     except (urllib.error.URLError, OSError) as exc:
@@ -518,6 +520,8 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     meta_by: dict[int, dict[int, dict]] = {}
 
     def product_market(product: dict) -> tuple[float | None, dict]:
+        if not product.get("tcgplayerId"):  # no TCGplayer listing (Diamond & Pearl blisters, tins, value packs): `price` or the packs it holds
+            return None, {}
         group = product.get("tcgplayerGroup") or cfg["tcgplayerGroup"]
         if group not in market_by:
             market_by[group] = tcg_prices(group, refresh=True)
@@ -627,7 +631,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
     out = []
     product_prices: dict[str, float] = {}
     for product in products:
-        pid = product["tcgplayerId"]
+        pid = product.get("tcgplayerId")
         price, info = product_market(product)
         derived = ""
         if price is None:
@@ -665,7 +669,7 @@ def build(set_id: str, prices_only: bool, refresh: bool) -> list[dict]:
             **({"groupOf": int(product["groupOf"])} if product.get("groupOf") else {}),
             "price": price,
             **({"priceDerived": derived, **({"priceSource": product["priceSource"]} if product.get("priceSource") else {})} if derived else {}),
-            "tcgplayerId": pid,
+            **({"tcgplayerId": pid} if pid else {}),
             **({"released": released[:10]} if released else {}),
         }
         if entry["kind"] == "event":
