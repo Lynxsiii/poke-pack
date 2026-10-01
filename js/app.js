@@ -104,7 +104,7 @@ import { coinTag } from "./battle-kit.js";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore } from "./cart.js?v=1";
 import { initCart } from "./cart-page.js?v=1";
-import { initVault } from "./vault-page.js?v=1";
+import { initVault } from "./vault-page.js?v=2";
 import { initBatchOpen } from "./batch-open.js?v=1";
 import { cartEligible } from "./orders-rules.js?v=1";
 
@@ -362,6 +362,7 @@ const els = {
   cartCount: document.getElementById("cart-count"),
   viewCart: document.getElementById("view-cart"),
   viewVault: document.getElementById("view-vault"),
+  collectionTabs: document.getElementById("collection-tabs"),
   batchOpen: document.getElementById("batch-open"),
   casinoBar: document.getElementById("casino-bar"),
   viewCollection: document.getElementById("view-collection"),
@@ -1678,6 +1679,7 @@ function windowFaces(key, holders, faces, render, root = null) {
 }
 
 function renderCollection({ refreshSets = true } = {}) {
+  if (els.collectionTabs) els.collectionTabs.innerHTML = vaultPage.tabsHtml("cards"); // Cards | Sealed (N)
   const q = (els.search?.value || "").trim().toLowerCase();
   const rarity = rarityMode;
   const { owned, total, pct } = completion();
