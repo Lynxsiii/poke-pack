@@ -187,6 +187,9 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "dp5": ("#2f9be0", "#f2c744"),  # Majestic Dawn: Empoleon blue to logo gold
     "dp6": ("#f08a1c", "#3b82d9"),  # Legends Awakened: wrapper orange to Lucario blue
     "dp7": ("#9a63d6", "#e5533d"),  # Stormfront: storm purple to Infernape red
+    # Wizards of the Coast promo sets (w5)
+    "basep": ("#e0b94a", "#7f8fb8"),  # Wizards Black Star Promos: black-star gold to slate
+    "bp": ("#d9503a", "#8a70d4"),  # Best of Game: Rocket red to Dark violet
 }
 
 # Used when a set has no art at all and no override.

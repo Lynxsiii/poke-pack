@@ -1922,9 +1922,8 @@ export const NP_PROMOS = {
  * theme deck's holo, a starter or gift set, the Southern Islands folder's postcards) are filed in that set's data file as
  * `<set>-basepNN` ("base2-basep01", "neo1-basep22"); they are counted, listed and sold under "basep", never in the dex of the set whose
  * box carried them (js/card-home.js PROMO_HOMES). The promos no product claims (League, movies, events) are this set's own file,
- * data/basep.json, as `basep-basepNN`. `viewOf` names every file the page reads, itself included. Not in PLAYABLE_SETS yet: the promo
- * builder adds it with data/basep.json, `totalCount`, `heroIds` and the box notes, once the numbers exist (scripts/test-basep.mjs checks
- * them then). The release date is pkmn.gg's (1999-07-01; Bulbapedia says "July 1999"). English Unlimited prints only: the 1st Edition
+ * data/basep.json, as `basep-basepNN`. `viewOf` names every file the page reads, itself included. Playable (w5): data/basep.json holds the promos no
+ * set's product claims, one event product each (a Wizards promo was never in a pack); scripts/test-basep.mjs checks `totalCount`. The release date is pkmn.gg's (1999-07-01; Bulbapedia says "July 1999"). English Unlimited prints only: the 1st Edition
  * stamped Pikachu #1, the Pokémon Center NY stamped #51 / #52 and #22 / #23's alternate art are variants of one card each, not extra cards.
  */
 export const BASEP_PROMOS = {
@@ -1939,7 +1938,7 @@ export const BASEP_PROMOS = {
   promoPrefix: "Promo ",
   viewNote: "the Wizards of the Coast sets' own boxes (theme decks, starter and gift sets, collections)",
   viewOf: ["base1", "base2", "base3", "base4", "base5", "gym1", "gym2", "neo1", "neo2", "si1", "neo3", "neo4", "base6", "ecard1", "ecard2", "ecard3", BASEP_SET_ID],
-  totalCount: 0, // promo builder: homeCards(BASEP_PROMOS, every viewOf file).length
+  totalCount: 53, // TEMP (w5): data/basep.json holds all 53 (#1-#53; #900 jumbo left out) until w1-w4 land; recount homeCards(BASEP_PROMOS, every viewOf file).length after the merges, scripts/test-basep.mjs checks it
   packSize: 0,
   cost: 0,
   dataFile: "data/basep.json",
@@ -1948,7 +1947,7 @@ export const BASEP_PROMOS = {
   oddsLine: "No boosters · every promo comes in its box",
   lede: "Every Wizards black star promo in one binder: the League and movie cards, the event prizes and the deck exclusives, each one in its real product.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["basep-basep24", "basep-basep01", "basep-basep09", "basep-basep34"],
   wrappers: [],
 };
 
@@ -1958,7 +1957,7 @@ export const BASEP_PROMOS = {
  * promo set 4271; CardGuide), so there is no home set to file them under and no product row to hang them on. pkmn.gg (series other, slug
  * best-of-game), scrydex (`bp-1` to `bp-9`), TCGplayer (group 1455) and TCGdex (set `bog` in the e-Card series) all keep it apart from
  * the Wizards Black Star Promos. Every card is data/bp.json's `bp-bpNN`. One English print each (the base card; the gold-stamped "Winner"
- * and the Jumbo Winner prints are variants, see SCAFFOLD-NOTES open decisions). Not in PLAYABLE_SETS yet.
+ * and the Jumbo Winner prints are variants, see SCAFFOLD-NOTES open decisions). Playable (w5): one event product per card (TCGplayer group 1455); 8 and 9 exist only as the gold-stamped Winner print, priced from that listing.
  */
 export const BP_PROMOS = {
   id: BP_SET_ID,
@@ -1972,7 +1971,7 @@ export const BP_PROMOS = {
   promoPrefix: "BoG ",
   viewNote: "Best of Game tournament prizes (no product carries them)",
   viewOf: [BP_SET_ID],
-  totalCount: 0, // promo builder: homeCards(BP_PROMOS, [data/bp.json]).length
+  totalCount: 9, // homeCards(BP_PROMOS, [data/bp.json]).length (scripts/test-basep.mjs checks it)
   packSize: 0,
   cost: 0,
   dataFile: "data/bp.json",
@@ -1981,7 +1980,7 @@ export const BP_PROMOS = {
   oddsLine: "No boosters · tournament prizes",
   lede: "The nine Best of Game cards, the last Wizards of the Coast prizes.",
   slots: [],
-  heroIds: [], // promo builder
+  heroIds: ["bp-bp08", "bp-bp01", "bp-bp07", "bp-bp03"],
   wrappers: [],
 };
 
@@ -5593,6 +5592,9 @@ export const PLAYABLE_SETS = [
   POP_SERIES_6,
   DP_TRAINER_KIT_MANAPHY,
   DP_TRAINER_KIT_LUCARIO,
+  // Wizards of the Coast era (1999-2003): the promo sets (w5); the sixteen numbered sets are added by w1-w4 above this line, newest first.
+  BASEP_PROMOS,
+  BP_PROMOS,
 ];
 
 /**
@@ -5889,6 +5891,9 @@ const POKESYMBOLS_SLUG = {
   pl2: "rising-rivals",
   pl3: "supreme-victors",
   pl4: "arceus",
+  // Wizards of the Coast promo sets (w5): pokesymbols has no Wizards promo symbol (its generic promo star), and a Best of Game one.
+  basep: "_promo",
+  bp: "best-of-game",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

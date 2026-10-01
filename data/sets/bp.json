@@ -1,0 +1,154 @@
+{
+  "id": "bp",
+  "name": "Best of Game",
+  "series": "other",
+  "slug": "best-of-game",
+  "scrydexId": "bp",
+  "era": "wotc",
+  "tcgplayerGroup": 1455,
+  "promoSeries": {
+    "bp": {
+      "series": "other",
+      "slug": "best-of-game",
+      "scrydex": "bp",
+      "tcgplayerGroup": 1455,
+      "printed": "BoG",
+      "era": "wotc"
+    }
+  },
+  "products": [
+    {
+      "id": "event-bp01",
+      "name": "Electabuzz #1 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 85106,
+      "note": "BattleZone tournaments, December 2002 (Pokumon has February 2002, likely a slip). Reverse holo. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp01"
+      ]
+    },
+    {
+      "id": "event-bp02",
+      "name": "Hitmonchan #2 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 86098,
+      "note": "BattleZone tournaments, February 2003. Reverse holo. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp02"
+      ]
+    },
+    {
+      "id": "event-bp03",
+      "name": "Professor Elm #3 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 88387,
+      "note": "Gen Con 2003 BattleZone. Reverse holo. No Winner or Jumbo print. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp03"
+      ]
+    },
+    {
+      "id": "event-bp04",
+      "name": "Rocket's Scizor #4 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 88786,
+      "note": "BattleZone tournaments, March 2003. New to English; plain card. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp04"
+      ]
+    },
+    {
+      "id": "event-bp05",
+      "name": "Rocket's Sneasel #5 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 88793,
+      "note": "BattleZone tournaments, January 2003. New to English; plain card. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp05"
+      ]
+    },
+    {
+      "id": "event-bp06",
+      "name": "Dark Ivysaur #6 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 84616,
+      "note": "BattleZone tournaments, April 2003. New to English; plain card. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp06"
+      ]
+    },
+    {
+      "id": "event-bp07",
+      "name": "Dark Venusaur #7 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 84666,
+      "note": "BattleZone tournaments, May 2003. New to English; plain card. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp07"
+      ]
+    },
+    {
+      "id": "event-bp08",
+      "name": "Rocket's Mewtwo #8 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 167080,
+      "note": "BattleZone tournaments, June 2003. Reverse holo. Only the gold-stamped Winner print exists (the scheduled tournaments were cancelled when Wizards lost the licence), so the price is the Winner listing's. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp08"
+      ]
+    },
+    {
+      "id": "event-bp09",
+      "name": "Rocket's Hitmonchan #9 · BattleZone",
+      "kind": "event",
+      "tcgplayerId": 167079,
+      "note": "BattleZone tournaments, July 2003. Reverse holo. Only the gold-stamped Winner print exists (the scheduled tournaments were cancelled when Wizards lost the licence), so the price is the Winner listing's. The Winner and Jumbo prints are variants, not separate cards here.",
+      "promos": [
+        "bp09"
+      ]
+    }
+  ],
+  "promoCards": {
+    "bp01": {
+      "tcgplayerId": 85106,
+      "priceFromListing": true,
+      "reverse": true
+    },
+    "bp02": {
+      "tcgplayerId": 86098,
+      "priceFromListing": true,
+      "reverse": true
+    },
+    "bp03": {
+      "tcgplayerId": 88387,
+      "priceFromListing": true,
+      "reverse": true
+    },
+    "bp04": {
+      "tcgplayerId": 88786,
+      "priceFromListing": true
+    },
+    "bp05": {
+      "tcgplayerId": 88793,
+      "priceFromListing": true
+    },
+    "bp06": {
+      "tcgplayerId": 84616,
+      "priceFromListing": true
+    },
+    "bp07": {
+      "tcgplayerId": 84666,
+      "priceFromListing": true
+    },
+    "bp08": {
+      "tcgplayerId": 167080,
+      "priceFromListing": true,
+      "reverse": true
+    },
+    "bp09": {
+      "tcgplayerId": 167079,
+      "priceFromListing": true,
+      "reverse": true
+    }
+  }
+}
