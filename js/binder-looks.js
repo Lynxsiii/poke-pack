@@ -156,16 +156,20 @@ export function normalizeBinderLook(value) {
   const pick = (given, set, fallback) => (set.has(given) ? given : fallback);
   const colour = String(raw.color || "");
   const accent = String(raw.accent || "");
+  const edition = EDITION_BY_ID.has(raw.edition) ? raw.edition : "";
+  let material = pick(raw.material, MATERIAL_IDS, DEFAULT_BINDER_LOOK.material);
+  // An animated cover needs a cover to play on: the bare page has none.
+  if (edition && material === "classic") material = "matte";
   return {
     v: BINDER_LOOK_VERSION,
     name: cleanBinderName(raw.name),
-    material: pick(raw.material, MATERIAL_IDS, DEFAULT_BINDER_LOOK.material),
+    material,
     color: colour === COLOR_FROM_CARDS || COLOR_BY_ID.has(colour) ? colour : DEFAULT_BINDER_LOOK.color,
     accent: accent === "auto" || COLOR_BY_ID.has(accent) || METAL_BY_ID.has(accent) ? accent : DEFAULT_BINDER_LOOK.accent,
     hardware: pick(raw.hardware, HARDWARE_IDS, DEFAULT_BINDER_LOOK.hardware),
     pockets: pick(raw.pockets, POCKET_IDS, DEFAULT_BINDER_LOOK.pockets),
     page: pick(raw.page, PAGE_IDS, DEFAULT_BINDER_LOOK.page),
-    edition: EDITION_BY_ID.has(raw.edition) ? raw.edition : "",
+    edition,
   };
 }
 

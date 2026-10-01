@@ -115,6 +115,7 @@ import { initBatchOpen } from "./batch-open.js?v=2";
 import { cartEligible } from "./orders-rules.js?v=1";
 // binder looks: the /binder cover, the customiser and the owner's look on a profile
 import { binderObjectHtml, applyBinderLook } from "./binder-object.js";
+import { watchBinderFx } from "./binder-editions.js";
 import { normalizeBinderLook, resolveBinderLook, COLOR_FROM_CARDS } from "./binder-looks.js";
 import { cachedCardAccents, sampleCardAccents } from "./card-art-accent.js?v=1";
 import { initBinderEditor } from "./binder-editor.js?v=1";
@@ -7162,6 +7163,13 @@ els.binderAddPage?.addEventListener("click", async () => {
   renderBinder();
   toast("Page added.");
 });
+
+// Animated binder covers rest while scrolled offscreen (js/binder-editions.js): watch the places binders are drawn.
+for (const host of [els.binderBody, els.profileBody]) {
+  if (!host) continue;
+  watchBinderFx(host);
+  new MutationObserver(() => watchBinderFx(host)).observe(host, { childList: true, subtree: true });
+}
 
 // binder customiser (js/binder-editor.js): a sheet or side panel that edits a draft look
 // live on the binder above it; nothing is stored until Save.
