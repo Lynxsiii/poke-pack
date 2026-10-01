@@ -3965,6 +3965,86 @@
     "foilMap": "assets/foil/maps/xy2/109.webp"
   },
   {
+    "id": "xy2-xyp011",
+    "name": "Skiddo",
+    "number": "xyp011",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "5ban Graphics",
+    "flavorText": "Thought to be one of the first Pokémon to live in harmony with humans, it has a placid disposition.",
+    "image": "assets/cards/xy2/xyp011.webp",
+    "imageSmall": "assets/cards/xy2/xyp011-sm.webp",
+    "attacks": [
+      {
+        "name": "Take Down",
+        "cost": [
+          "Grass",
+          "Grass"
+        ],
+        "damage": "30",
+        "text": "This Pokémon does 10 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY11/large",
+    "printedNumber": "XY 011",
+    "tcgplayerId": 96372,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.25
+  },
+  {
+    "id": "xy2-xyp012",
+    "name": "Honedge",
+    "number": "xyp012",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "50",
+    "artist": "5ban Graphics",
+    "flavorText": "Apparently this Pokémon is born when a departed spirit inhabits a sword. It attaches itself to people and drinks their life force.",
+    "image": "assets/cards/xy2/xyp012.webp",
+    "imageSmall": "assets/cards/xy2/xyp012-sm.webp",
+    "attacks": [
+      {
+        "name": "Swords Dance",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "During your next turn, this Pokémon's Slash attack's base damage is 40."
+      },
+      {
+        "name": "Slash",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY12/large",
+    "printedNumber": "XY 012",
+    "tcgplayerId": 96373,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.32
+  },
+  {
     "id": "xy2-xyp017",
     "name": "Charizard-EX",
     "number": "xyp017",
@@ -3972,7 +4052,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -4003,13 +4083,248 @@
         "text": "This Pokémon does 30 damage to itself."
       }
     ],
+    "market": 31.68,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY17/large",
     "printedNumber": "XY 017",
     "tcgplayerId": 96379,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 31.68,
     "foilMap": "assets/foil/maps/xy2/xyp017.webp"
+  },
+  {
+    "id": "xy2-xyp018",
+    "name": "Chesnaught-EX",
+    "number": "xyp018",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "180",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy2/xyp018.webp",
+    "imageSmall": "assets/cards/xy2/xyp018-sm.webp",
+    "attacks": [
+      {
+        "name": "Pin Missile",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip 4 coins. This attack does 40 damage times the number of heads."
+      },
+      {
+        "name": "Wild Tackle",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY18/large",
+    "printedNumber": "XY 018",
+    "tcgplayerId": 96380,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 7.53
+  },
+  {
+    "id": "xy2-xyp019",
+    "name": "Delphox-EX",
+    "number": "xyp019",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy2/xyp019.webp",
+    "imageSmall": "assets/cards/xy2/xyp019-sm.webp",
+    "attacks": [
+      {
+        "name": "Psybeam",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Wonder Flare",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Your opponent reveals his or her hand. This attack does 40 more damage for each Energy card in your opponent's hand."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY19/large",
+    "printedNumber": "XY 019",
+    "tcgplayerId": 96381,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 8.86
+  },
+  {
+    "id": "xy2-xyp020",
+    "name": "Greninja-EX",
+    "number": "xyp020",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "image": "assets/cards/xy2/xyp020.webp",
+    "imageSmall": "assets/cards/xy2/xyp020-sm.webp",
+    "attacks": [
+      {
+        "name": "Sharpshooting",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Aqua Blast",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 1 Water Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY20/large",
+    "printedNumber": "XY 020",
+    "tcgplayerId": 96382,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 30.0
+  },
+  {
+    "id": "xy2-xyp025",
+    "name": "Krookodile-EX",
+    "number": "xyp025",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Darkness"
+    ],
+    "hp": "180",
+    "artist": "PLANETA",
+    "image": "assets/cards/xy2/xyp025.webp",
+    "imageSmall": "assets/cards/xy2/xyp025-sm.webp",
+    "attacks": [
+      {
+        "name": "Second Bite",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "This attack does 10 more damage for each damage counter on your opponent's Active Pokémon."
+      },
+      {
+        "name": "Megaton Fang",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130",
+        "text": "Discard a card from your hand. If you can't discard a card, this attack does nothing."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY25/large",
+    "printedNumber": "XY 025",
+    "tcgplayerId": 96388,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 11.38
+  },
+  {
+    "id": "xy2-xyp026",
+    "name": "Pyroar",
+    "number": "xyp026",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "100",
+    "artist": "5ban Graphics",
+    "flavorText": "The male with the largest mane of fire is the leader of the pride.",
+    "evolvesFrom": "Litleo",
+    "image": "assets/cards/xy2/xyp026.webp",
+    "imageSmall": "assets/cards/xy2/xyp026-sm.webp",
+    "attacks": [
+      {
+        "name": "Crunch",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Royal Flare",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 2 Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY26/large",
+    "printedNumber": "XY 026",
+    "tcgplayerId": 96389,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 1.15
   }
 ]

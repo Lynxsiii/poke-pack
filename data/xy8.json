@@ -5869,14 +5869,645 @@
         "text": "Both Active Pokémon are now Asleep."
       }
     ],
+    "market": 25.3,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY67/large",
     "printedNumber": "XY 067",
     "tcgplayerId": 108596,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 25.3,
     "foilMap": "assets/foil/maps/xy8/xyp067.webp"
+  },
+  {
+    "id": "xy8-xyp074",
+    "name": "Reshiram",
+    "number": "xyp074",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "When Reshiram's tail flares, the heat energy moves the atmosphere and changes the world's weather.",
+    "image": "assets/cards/xy8/xyp074.webp",
+    "imageSmall": "assets/cards/xy8/xyp074-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Repeater Blaze",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90+",
+        "text": "Flip a coin until you get tails. This attack does 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY74/large",
+    "printedNumber": "XY 074",
+    "tcgplayerId": 108604,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 77.41
+  },
+  {
+    "id": "xy8-xyp075",
+    "name": "Palkia",
+    "number": "xyp075",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "120",
+    "artist": "Naoki Saito",
+    "flavorText": "It has the ability to distort space. It is described as a deity in Sinnoh-region mythology.",
+    "image": "assets/cards/xy8/xyp075.webp",
+    "imageSmall": "assets/cards/xy8/xyp075-sm.webp",
+    "attacks": [
+      {
+        "name": "Wave Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Cross Slicer",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Your opponent can't attach Energy from his or her hand to the Defending Pokémon during his or her next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY75/large",
+    "printedNumber": "XY 075",
+    "tcgplayerId": 108605,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 84.3
+  },
+  {
+    "id": "xy8-xyp076",
+    "name": "Zekrom",
+    "number": "xyp076",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "120",
+    "artist": "Naoki Saito",
+    "flavorText": "Concealing itself in lightning clouds, it flies throughout the Unova region. It creates electricity in its tail.",
+    "image": "assets/cards/xy8/xyp076.webp",
+    "imageSmall": "assets/cards/xy8/xyp076-sm.webp",
+    "attacks": [
+      {
+        "name": "Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Voltage Storm",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "This attack does 10 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY76/large",
+    "printedNumber": "XY 076",
+    "tcgplayerId": 108606,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 111.09
+  },
+  {
+    "id": "xy8-xyp077",
+    "name": "Dialga",
+    "number": "xyp077",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "120",
+    "artist": "TOKIYA",
+    "flavorText": "It has the power to control time. It appears in Sinnoh-region myths as an ancient deity.",
+    "image": "assets/cards/xy8/xyp077.webp",
+    "imageSmall": "assets/cards/xy8/xyp077-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Claw",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Time Freeze",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Your opponent can't play any Pokémon from his or her hand to evolve the Defending Pokémon during his or her next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY77/large",
+    "printedNumber": "XY 077",
+    "tcgplayerId": 108607,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 62.71
+  },
+  {
+    "id": "xy8-xyp078",
+    "name": "Latias",
+    "number": "xyp078",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "90",
+    "artist": "Sanosuke Sakuma",
+    "flavorText": "It can telepathically communicate with people. It changes its appearance using its down that refracts light.",
+    "image": "assets/cards/xy8/xyp078.webp",
+    "imageSmall": "assets/cards/xy8/xyp078-sm.webp",
+    "attacks": [
+      {
+        "name": "Eon Connection",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "",
+        "text": "Draw a card. If Latios is on your Bench, draw 1 more card."
+      },
+      {
+        "name": "Speed Wing",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY78/large",
+    "printedNumber": "XY 078",
+    "tcgplayerId": 108608,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 87.84
+  },
+  {
+    "id": "xy8-xyp079",
+    "name": "Latios",
+    "number": "xyp079",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "100",
+    "artist": "Naoki Saito",
+    "flavorText": "It understands human speech and is highly intelligent. It is a tender Pokémon that dislikes fighting.",
+    "image": "assets/cards/xy8/xyp079.webp",
+    "imageSmall": "assets/cards/xy8/xyp079-sm.webp",
+    "attacks": [
+      {
+        "name": "Glide",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Sky Blade",
+        "cost": [
+          "Water",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70+",
+        "text": "If Latias is on your Bench, this attack does 50 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY79/large",
+    "printedNumber": "XY 079",
+    "tcgplayerId": 108609,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 133.44
+  },
+  {
+    "id": "xy8-xyp080",
+    "name": "Black Kyurem",
+    "number": "xyp080",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "Mitsuhiro Arita",
+    "flavorText": "It generates a powerful, freezing energy inside itself, but its body became frozen when the energy leaked out.",
+    "image": "assets/cards/xy8/xyp080.webp",
+    "imageSmall": "assets/cards/xy8/xyp080-sm.webp",
+    "attacks": [
+      {
+        "name": "Thunder Nail",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Frozen Slice",
+        "cost": [
+          "Water",
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY80/large",
+    "printedNumber": "XY 080",
+    "tcgplayerId": 108610,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 56.41
+  },
+  {
+    "id": "xy8-xyp081",
+    "name": "White Kyurem",
+    "number": "xyp081",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It generates a powerful, freezing energy inside itself, but its body became frozen when the energy leaked out.",
+    "image": "assets/cards/xy8/xyp081.webp",
+    "imageSmall": "assets/cards/xy8/xyp081-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyper Beam",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Flare Blizzard",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "This Pokémon can't use Flare Blizzard during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY81/large",
+    "printedNumber": "XY 081",
+    "tcgplayerId": 108611,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 51.36
+  },
+  {
+    "id": "xy8-xyp082",
+    "name": "Regigigas",
+    "number": "xyp082",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "Shin Nagasawa",
+    "flavorText": "There is an enduring legend that states this Pokémon towed continents with ropes.",
+    "image": "assets/cards/xy8/xyp082.webp",
+    "imageSmall": "assets/cards/xy8/xyp082-sm.webp",
+    "attacks": [
+      {
+        "name": "Gigas Punch",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Flip 2 coins. If both of them are tails, this attack does nothing."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Earthen Awakening",
+        "text": "Whenever you attach an Energy card from your hand to this Pokémon, heal 20 damage from it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY82/large",
+    "printedNumber": "XY 082",
+    "tcgplayerId": 108612,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 47.81
+  },
+  {
+    "id": "xy8-xyp083",
+    "name": "Arceus",
+    "number": "xyp083",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It is told in mythology that this Pokémon was born before the universe even existed.",
+    "image": "assets/cards/xy8/xyp083.webp",
+    "imageSmall": "assets/cards/xy8/xyp083-sm.webp",
+    "attacks": [
+      {
+        "name": "Gather Light",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Move as many Energy as you like from your Benched Pokémon to this Pokémon."
+      },
+      {
+        "name": "Judgment Blast",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "This attack does 30 more damage for each different type of basic Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY83/large",
+    "printedNumber": "XY 083",
+    "tcgplayerId": 108613,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Ultra",
+    "market": 78.37
+  },
+  {
+    "id": "xy8-xyp084",
+    "name": "Pikachu-EX",
+    "number": "xyp084",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/xy8/xyp084.webp",
+    "imageSmall": "assets/cards/xy8/xyp084-sm.webp",
+    "attacks": [
+      {
+        "name": "Iron Tail",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+      },
+      {
+        "name": "Overspark",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Discard all Lightning Energy attached to this Pokémon. This attack does 50 damage times the number of Energy cards you discarded."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY84/large",
+    "printedNumber": "XY 084",
+    "tcgplayerId": 108614,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 82.83
+  },
+  {
+    "id": "xy8-xyp085",
+    "name": "Hoopa-EX",
+    "number": "xyp085",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "140",
+    "artist": "Hitoshi Ariga",
+    "image": "assets/cards/xy8/xyp085.webp",
+    "imageSmall": "assets/cards/xy8/xyp085-sm.webp",
+    "attacks": [
+      {
+        "name": "Hyperspace Ring",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Wonder Trick",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "100",
+        "text": "Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY85/large",
+    "printedNumber": "XY 085",
+    "tcgplayerId": 108615,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 22.06
+  },
+  {
+    "id": "xy8-xyp086",
+    "name": "M Blaziken-EX",
+    "number": "xyp086",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "MEGA",
+      "EX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "210",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Blaziken-EX",
+    "image": "assets/cards/xy8/xyp086.webp",
+    "imageSmall": "assets/cards/xy8/xyp086-sm.webp",
+    "attacks": [
+      {
+        "name": "Moonsault Blaze",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "During your next turn, this Pokémon's Moonsault Blaze attack does 100 more damage (before applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY86/large",
+    "printedNumber": "XY 086",
+    "tcgplayerId": 108616,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 90.8
+  },
+  {
+    "id": "xy8-xyp087",
+    "name": "M Swampert-EX",
+    "number": "xyp087",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "MEGA",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "220",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Swampert-EX",
+    "image": "assets/cards/xy8/xyp087.webp",
+    "imageSmall": "assets/cards/xy8/xyp087-sm.webp",
+    "attacks": [
+      {
+        "name": "Strongarm Impact",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "130+",
+        "text": "You may do 30 more damage. If you do, discard the top 3 cards of each player's deck."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY87/large",
+    "printedNumber": "XY 087",
+    "tcgplayerId": 108617,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 69.31
   },
   {
     "id": "xy8-xyp088",
@@ -5906,13 +6537,13 @@
         "text": ""
       }
     ],
+    "market": 8.47,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY88/large",
     "printedNumber": "XY 088",
     "tcgplayerId": 108618,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 8.47,
     "foilMap": "assets/foil/maps/xy8/xyp088.webp"
   },
   {
@@ -5952,13 +6583,13 @@
         "text": "If Hoopa is on your Bench, this attack does 30 more damage."
       }
     ],
+    "market": 40.96,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY89/large",
     "printedNumber": "XY 089",
     "tcgplayerId": 108619,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 40.96,
     "foilMap": "assets/foil/maps/xy8/xyp089.webp"
   },
   {
@@ -5998,14 +6629,100 @@
         "text": "Flip 2 coins. This attack does 30 damage times the number of heads."
       }
     ],
+    "market": 4.39,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY90/large",
     "printedNumber": "XY 090",
     "tcgplayerId": 108620,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 4.39,
     "foilMap": "assets/foil/maps/xy8/xyp090.webp"
+  },
+  {
+    "id": "xy8-xyp092",
+    "name": "Sableye",
+    "number": "xyp092",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "match",
+    "flavorText": "It dwells in the darkness of caves. It uses its sharp claws to dig up gems to nourish itself.",
+    "image": "assets/cards/xy8/xyp092.webp",
+    "imageSmall": "assets/cards/xy8/xyp092-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Hunt",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "",
+        "text": "Flip 3 coins. For each heads, attach a basic Energy card from your discard pile to your Benched Pokémon-EX in any way you like."
+      },
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY92/large",
+    "printedNumber": "XY 092",
+    "tcgplayerId": 108621,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 29.46
+  },
+  {
+    "id": "xy8-xyp093",
+    "name": "Celebi",
+    "number": "xyp093",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Shin Nagasawa",
+    "flavorText": "It has the power to travel across time, but it is said to appear only in peaceful times.",
+    "image": "assets/cards/xy8/xyp093.webp",
+    "imageSmall": "assets/cards/xy8/xyp093-sm.webp",
+    "attacks": [
+      {
+        "name": "Sparkle Motion",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "",
+        "text": "Put 1 damage counter on each of your opponent's Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Leap Through Time",
+        "text": "When this Pokémon is Knocked Out, flip a coin. If heads, shuffle this Pokémon and all cards attached to it into your deck, and your opponent can't take any Prize cards for it.",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY93/large",
+    "printedNumber": "XY 093",
+    "tcgplayerId": 108622,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 23.29
   },
   {
     "id": "xy8-xyp097",
@@ -6015,7 +6732,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fighting"
@@ -6045,13 +6762,13 @@
         "text": ""
       }
     ],
+    "market": 5.83,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY97/large",
     "printedNumber": "XY 097",
     "tcgplayerId": 114007,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 5.83,
     "foilMap": "assets/foil/maps/xy8/xyp097.webp"
   },
   {
@@ -6061,8 +6778,8 @@
     "rarity": "Promo",
     "supertype": "Pokémon",
     "subtypes": [
-      "MEGA",
-      "EX"
+      "Mega",
+      "ex"
     ],
     "types": [
       "Fighting"
@@ -6084,13 +6801,13 @@
         "text": "This attack does 10 damage to each Benched Pokémon (both yours and your opponent's). (Don't apply Weakness and Resistance for Benched Pokémon.)"
       }
     ],
+    "market": 23.66,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY98/large",
     "printedNumber": "XY 098",
     "tcgplayerId": 114008,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 23.66,
     "foilMap": "assets/foil/maps/xy8/xyp098.webp"
   },
   {
@@ -6105,12 +6822,12 @@
     "artist": "5ban Graphics",
     "image": "assets/cards/xy8/xyp099.webp",
     "imageSmall": "assets/cards/xy8/xyp099-sm.webp",
+    "market": 2.16,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY99/large",
     "printedNumber": "XY 099",
     "tcgplayerId": 114009,
     "era": "xy",
-    "promo": true,
-    "market": 2.16
+    "promo": true
   },
   {
     "id": "xy8-xyp100",
@@ -6151,13 +6868,215 @@
         "text": "This Pokémon can't use Zen Blade during your next turn."
       }
     ],
+    "market": 28.42,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY100/large",
     "printedNumber": "XY 100",
     "tcgplayerId": 108623,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 28.42,
     "foilMap": "assets/foil/maps/xy8/xyp100.webp"
+  },
+  {
+    "id": "xy8-xyp101",
+    "name": "Mewtwo",
+    "number": "xyp101",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "120",
+    "artist": "match",
+    "flavorText": "A Pokémon created by recombining Mew's genes. It's said to have the most savage heart among Pokémon.",
+    "image": "assets/cards/xy8/xyp101.webp",
+    "imageSmall": "assets/cards/xy8/xyp101-sm.webp",
+    "attacks": [
+      {
+        "name": "Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Zen Blade",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "This Pokémon can't use Zen Blade during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY101/large",
+    "printedNumber": "XY 101",
+    "tcgplayerId": 108624,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 39.11
+  },
+  {
+    "id": "xy8-xyp102",
+    "name": "Aurorus-EX",
+    "number": "xyp102",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "180",
+    "artist": "Toyste Beach",
+    "image": "assets/cards/xy8/xyp102.webp",
+    "imageSmall": "assets/cards/xy8/xyp102-sm.webp",
+    "attacks": [
+      {
+        "name": "Crystal Breath",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "160",
+        "text": "This Pokémon can't attack during your next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Frozen Charm",
+        "text": "Each of your Pokémon that has any Water Energy attached to it can't be Paralyzed. (If any of those Pokémon are Paralyzed, remove that Special Condition.)",
+        "type": "Ability"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY102/large",
+    "printedNumber": "XY 102",
+    "tcgplayerId": 114010,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 20.68
+  },
+  {
+    "id": "xy8-xyp134",
+    "name": "Empoleon BREAK",
+    "number": "xyp134",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "BREAK"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "170",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Empoleon",
+    "image": "assets/cards/xy8/xyp134.webp",
+    "imageSmall": "assets/cards/xy8/xyp134-sm.webp",
+    "attacks": [
+      {
+        "name": "Emperor's Command",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30×",
+        "text": "This attack does 30 damage times the number of Pokémon your opponent has in play."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY134/large",
+    "printedNumber": "XY 134",
+    "tcgplayerId": 114011,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare BREAK",
+    "market": 19.21
+  },
+  {
+    "id": "xy8-xyp135",
+    "name": "Beheeyem BREAK",
+    "number": "xyp135",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "BREAK"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Beheeyem",
+    "image": "assets/cards/xy8/xyp135.webp",
+    "imageSmall": "assets/cards/xy8/xyp135-sm.webp",
+    "attacks": [
+      {
+        "name": "Cosmic Circle",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Psychic"
+        ],
+        "damage": "100",
+        "text": "Move as many Psychic Energy attached to your Pokémon to your other Pokémon in any way you like."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY135/large",
+    "printedNumber": "XY 135",
+    "tcgplayerId": 114012,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare BREAK",
+    "market": 14.07
+  },
+  {
+    "id": "xy8-xyp136",
+    "name": "Noctowl BREAK",
+    "number": "xyp136",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "BREAK"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "130",
+    "artist": "5ban Graphics",
+    "evolvesFrom": "Noctowl",
+    "image": "assets/cards/xy8/xyp136.webp",
+    "imageSmall": "assets/cards/xy8/xyp136-sm.webp",
+    "attacks": [
+      {
+        "name": "Night Scan",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60+",
+        "text": "Your opponent reveals his or her hand. This attack does 30 more damage for each Trainer card you find there."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY136/large",
+    "printedNumber": "XY 136",
+    "tcgplayerId": 114013,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare BREAK",
+    "market": 19.89
   }
 ]

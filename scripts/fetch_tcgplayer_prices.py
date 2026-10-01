@@ -75,6 +75,8 @@ def norm(name: str) -> str:
         name = re.sub(r"(\s+\([^)]*\))+$", "", name)
         name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
+    # Nidoran: pkmn.gg keeps the gender sign, TCGplayer writes "(F)" / "(M)" (stripped above).
+    name = name.replace("\u2640", "").replace("\u2642", "").strip()
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)

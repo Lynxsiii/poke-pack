@@ -4080,6 +4080,99 @@
     "foilMap": "assets/foil/maps/xy3/113.webp"
   },
   {
+    "id": "xy3-xyp014",
+    "name": "Trevenant",
+    "number": "xyp014",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Kouki Saitou",
+    "flavorText": "It can control trees at will. It will trap people who harm the forest, so they can never leave.",
+    "evolvesFrom": "Phantump",
+    "image": "assets/cards/xy3/xyp014.webp",
+    "imageSmall": "assets/cards/xy3/xyp014-sm.webp",
+    "attacks": [
+      {
+        "name": "Eerie Wave",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "20",
+        "text": "Your opponent's Active Pokémon is now Confused."
+      },
+      {
+        "name": "Wood Hammer",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "90",
+        "text": "Flip a coin. If tails, this Pokémon does 20 damage to itself."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY14/large",
+    "printedNumber": "XY 014",
+    "tcgplayerId": 96376,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 0.75
+  },
+  {
+    "id": "xy3-xyp015",
+    "name": "Slurpuff",
+    "number": "xyp015",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fairy"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It can distinguish the faintest of scents. It puts its sensitive sense of smell to use by helping pastry chefs in their work.",
+    "evolvesFrom": "Swirlix",
+    "image": "assets/cards/xy3/xyp015.webp",
+    "imageSmall": "assets/cards/xy3/xyp015-sm.webp",
+    "attacks": [
+      {
+        "name": "Cotton Guard",
+        "cost": [
+          "Fairy",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "During your opponent's next turn, any damage done to this Pokémon by attacks is reduced by 30 (after applying Weakness and Resistance)."
+      },
+      {
+        "name": "Sleepy Ball",
+        "cost": [
+          "Fairy",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "Your opponent's Active Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY15/large",
+    "printedNumber": "XY 015",
+    "tcgplayerId": 96377,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 3.91
+  },
+  {
     "id": "xy3-xyp016",
     "name": "Gogoat",
     "number": "xyp016",
@@ -4118,13 +4211,13 @@
         "text": "Flip a coin for each Grass Energy attached to this Pokémon. This attack does 30 more damage for each heads."
       }
     ],
+    "market": 6.16,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY16/large",
     "printedNumber": "XY 016",
     "tcgplayerId": 96378,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 6.16,
     "foilMap": "assets/foil/maps/xy3/xyp016.webp"
   },
   {
@@ -4135,7 +4228,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Grass"
@@ -4167,13 +4260,13 @@
         "text": "Heal 30 damage from this Pokémon."
       }
     ],
+    "market": 5.85,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY28/large",
     "printedNumber": "XY 028",
     "tcgplayerId": 96391,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 5.85,
     "foilMap": "assets/foil/maps/xy3/xyp028.webp"
   },
   {
@@ -4184,7 +4277,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire"
@@ -4214,13 +4307,13 @@
         "text": "Discard an Energy attached to this Pokémon."
       }
     ],
+    "market": 22.15,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY29/large",
     "printedNumber": "XY 029",
     "tcgplayerId": 96392,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 22.15,
     "foilMap": "assets/foil/maps/xy3/xyp029.webp"
   },
   {
@@ -4231,7 +4324,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Water"
@@ -4261,13 +4354,13 @@
         "text": "Flip a coin. If tails, this Pokémon does 30 damage to itself."
       }
     ],
+    "market": 10.17,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY30/large",
     "printedNumber": "XY 030",
     "tcgplayerId": 96393,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 10.17,
     "foilMap": "assets/foil/maps/xy3/xyp030.webp"
   }
 ]
