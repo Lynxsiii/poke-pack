@@ -1,0 +1,289 @@
+/* Slab guards: solid, two-tone/pattern and metal finishes (js/grading-rules.js
+   GUARDS). The ring itself (mask, radius, padding, lip) lives in css/slab.css;
+   every guard here is ONE [data-guard] rule that only sets its custom
+   properties, so the same values also paint the picker swatch:
+     --g-fill   the bumper's paint (background shorthand, may carry size/repeat)
+     --g-sheen  the material's light on top of it (::before)
+     --g-hi     top edge highlight   --g-hi-2  left edge highlight
+     --g-lip    the inner lip catching light
+   Gradients span the whole slab box, so a 160deg fill reads as light from the
+   top left. Patterns size themselves from --g-u, the ring's width on the face
+   (the lip plus whatever reaches past the case); a swatch falls back to px.
+
+   Materials, judged against real bumpers:
+     matte plastic  soft top highlight, little sheen
+     gloss plastic  a sharp diagonal sheen band (Cherry)
+     metal          hairline brushing + a hot highlight band (Gilt) */
+
+[data-guard] { --g-u: calc(var(--slab-guard-w, 5px) + var(--slab-guard-out, 0px)); }
+
+/* ---- Solid ------------------------------------------------------------------
+   Injection-moulded plastic in one colour: matte, satin or gloss. */
+[data-guard="guard-onyx"] {
+  --g-fill: linear-gradient(160deg, #3b3e44, #26282c 45%, #202226 100%);
+  --g-sheen: linear-gradient(160deg, rgb(255 255 255 / .06), rgb(255 255 255 / 0) 40%);
+  --g-hi: rgb(255 255 255 / .16);
+  --g-lip: rgb(255 255 255 / .08);
+}
+[data-guard="guard-snow"] {
+  --g-fill: linear-gradient(160deg, #ffffff, #eeeff1 40%, #d9dce0 75%, #c3c7cd 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .75) 38%, rgb(255 255 255 / .15) 44%, rgb(255 255 255 / 0) 60%), linear-gradient(160deg, rgb(0 0 0 / 0) 55%, rgb(40 50 70 / .10) 100%);
+  --g-hi: rgb(255 255 255 / .95);
+  --g-hi-2: rgb(255 255 255 / .6);
+  --g-lip: rgb(255 255 255 / .55);
+}
+[data-guard="guard-slate"] {
+  --g-fill: linear-gradient(160deg, #7f8995, #5f6873 45%, #4b535c 100%);
+  --g-sheen: linear-gradient(180deg, rgb(255 255 255 / .12), rgb(255 255 255 / 0) 24%);
+  --g-hi: rgb(255 255 255 / .26);
+  --g-lip: rgb(220 230 240 / .14);
+}
+[data-guard="guard-cherry"] {
+  --g-fill: linear-gradient(160deg, #e2505f, #b3202e 42%, #861625 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .30) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 255 255 / .45);
+  --g-lip: rgb(255 210 210 / .28);
+}
+[data-guard="guard-cobalt"] {
+  --g-fill: linear-gradient(160deg, #3d62d6, #1f3f9e 45%, #152c74 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(190 215 255 / .22) 39%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(200 220 255 / .40);
+  --g-lip: rgb(160 190 255 / .28);
+}
+[data-guard="guard-rose"] {
+  --g-fill: linear-gradient(160deg, #eab4bd, #c97d8a 45%, #a9606e 100%);
+  --g-sheen: linear-gradient(160deg, rgb(255 255 255 / .28), rgb(255 255 255 / .04) 45%, rgb(255 255 255 / .10) 100%);
+  --g-hi: rgb(255 255 255 / .55);
+  --g-lip: rgb(255 255 255 / .30);
+}
+[data-guard="guard-forest"] {
+  --g-fill: linear-gradient(160deg, #3b7a53, #24573a 45%, #193f2a 100%);
+  --g-sheen: linear-gradient(180deg, rgb(255 255 255 / .11), rgb(255 255 255 / 0) 24%);
+  --g-hi: rgb(210 255 225 / .24);
+  --g-lip: rgb(190 240 205 / .14);
+}
+[data-guard="guard-teal"] {
+  --g-fill: linear-gradient(160deg, #5ccfc3, #26988f 45%, #18706b 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(235 255 252 / .32) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(225 255 250 / .5);
+  --g-lip: rgb(190 250 240 / .26);
+}
+[data-guard="guard-plum"] {
+  --g-fill: linear-gradient(160deg, #874283, #5e265c 45%, #421941 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 225 252 / .24) 38%, rgb(255 255 255 / .04) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 220 250 / .36);
+  --g-lip: rgb(240 190 235 / .22);
+}
+[data-guard="guard-tangerine"] {
+  --g-fill: linear-gradient(160deg, #ffa451, #f2791b 45%, #c75a0c 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 245 230 / .36) 38%, rgb(255 255 255 / .06) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 240 220 / .55);
+  --g-lip: rgb(255 220 180 / .30);
+}
+[data-guard="guard-lemon"] {
+  --g-fill: linear-gradient(160deg, #fff59a, #f6e43c 45%, #d6c014 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .55) 38%, rgb(255 255 255 / .08) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 255 240 / .7);
+  --g-lip: rgb(255 255 210 / .36);
+}
+[data-guard="guard-mint"] {
+  --g-fill: linear-gradient(160deg, #d2f4e2, #9adcbb 45%, #73bb97 100%);
+  --g-sheen: linear-gradient(160deg, rgb(255 255 255 / .26), rgb(255 255 255 / .03) 45%, rgb(255 255 255 / .08) 100%);
+  --g-hi: rgb(255 255 255 / .55);
+  --g-lip: rgb(255 255 255 / .30);
+}
+[data-guard="guard-sky"] {
+  --g-fill: linear-gradient(160deg, #b2dcff, #70b8f2 45%, #4390d0 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .42) 38%, rgb(255 255 255 / .06) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(240 250 255 / .6);
+  --g-lip: rgb(220 240 255 / .32);
+}
+[data-guard="guard-lilac"] {
+  --g-fill: linear-gradient(160deg, #ddcdf4, #b09adb 45%, #8c74bf 100%);
+  --g-sheen: linear-gradient(160deg, rgb(255 255 255 / .26), rgb(255 255 255 / .03) 45%, rgb(255 255 255 / .09) 100%);
+  --g-hi: rgb(255 255 255 / .55);
+  --g-lip: rgb(255 255 255 / .28);
+}
+[data-guard="guard-cocoa"] {
+  --g-fill: linear-gradient(160deg, #74503b, #513426 45%, #3b251a 100%);
+  --g-sheen: linear-gradient(180deg, rgb(255 240 225 / .10), rgb(255 255 255 / 0) 24%);
+  --g-hi: rgb(255 225 200 / .22);
+  --g-lip: rgb(255 220 190 / .12);
+}
+[data-guard="guard-navy"] {
+  --g-fill: linear-gradient(160deg, #2e3f6e, #1b284c 45%, #121b35 100%);
+  --g-sheen: linear-gradient(180deg, rgb(220 230 255 / .10), rgb(255 255 255 / 0) 24%);
+  --g-hi: rgb(200 215 255 / .24);
+  --g-lip: rgb(180 200 255 / .13);
+}
+[data-guard="guard-frost"] {
+  --g-fill: linear-gradient(160deg, rgb(238 244 252 / .62), rgb(210 222 240 / .40) 45%, rgb(225 234 246 / .52) 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 22%, rgb(255 255 255 / .35) 36%, rgb(255 255 255 / 0) 46%, rgb(247 168 196 / .12) 70%, rgb(168 224 247 / .14) 82%, rgb(201 247 184 / .10) 92%);
+  --g-hi: rgb(255 255 255 / .85);
+  --g-hi-2: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 255 255 / .55);
+}
+
+/* ---- Two-tone / pattern -----------------------------------------------------
+   Moulded two-shot plastic, fades and printed patterns, all from gradients. */
+[data-guard="guard-split"] {
+  --g-fill: linear-gradient(180deg, #e2333a, #c81e27 calc(50% - var(--g-u) * .36), #141416 calc(50% - var(--g-u) * .36 + .5px) calc(50% + var(--g-u) * .36 - .5px), #f4f4f2 calc(50% + var(--g-u) * .36), #dcdcdc);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .32) 38%, rgb(255 255 255 / .06) 44%, rgb(255 255 255 / 0) 60%), linear-gradient(160deg, rgb(0 0 0 / 0) 60%, rgb(0 0 0 / .10));
+  --g-hi: rgb(255 255 255 / .55);
+  --g-lip: rgb(255 255 255 / .26);
+}
+[data-guard="guard-sunset"] {
+  --g-fill: linear-gradient(170deg, #ffb24d, #ff8a3a 30%, #f8606a 62%, #d63f86 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 245 235 / .32) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 240 225 / .5);
+  --g-lip: rgb(255 215 200 / .28);
+}
+[data-guard="guard-ocean"] {
+  --g-fill: linear-gradient(170deg, #42d6c6, #1e9fb6 32%, #1a5fa6 66%, #10306f 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(225 250 255 / .30) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(220 250 255 / .48);
+  --g-lip: rgb(180 230 255 / .26);
+}
+[data-guard="guard-aurora"] {
+  --g-fill: linear-gradient(170deg, #62efa4, #2fc0a0 28%, #3a86d2 58%, #6a45cc 82%, #4c2898 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(235 255 245 / .30) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(230 255 240 / .48);
+  --g-lip: rgb(210 220 255 / .26);
+}
+[data-guard="guard-candy"] {
+  --g-fill:
+    linear-gradient(160deg, rgb(255 255 255 / .10), rgb(0 0 0 / 0) 45%, rgb(60 0 10 / .20) 100%),
+    repeating-linear-gradient(135deg, #d8222f 0 calc(var(--g-u) * .5 - .4px), #f6f3ef calc(var(--g-u) * .5 + .4px) calc(var(--g-u) - .8px), #d8222f var(--g-u));
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .34) 38%, rgb(255 255 255 / .06) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 255 255 / .55);
+  --g-lip: rgb(255 230 230 / .28);
+}
+[data-guard="guard-grape"] {
+  --g-fill: linear-gradient(170deg, #9a5ae0, #7a32b8 36%, #a8309e 70%, #d2408f 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 230 255 / .28) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 225 255 / .45);
+  --g-lip: rgb(240 200 255 / .24);
+}
+[data-guard="guard-lava"] {
+  --g-fill:
+    radial-gradient(30% 12% at 92% 38%, rgb(255 214 74 / .85), rgb(255 150 30 / 0) 100%),
+    radial-gradient(34% 10% at 6% 62%, rgb(255 196 60 / .75), rgb(255 150 30 / 0) 100%),
+    linear-gradient(170deg, #ffe066, #ffab24 22%, #f0561c 48%, #b8231a 74%, #6e1210 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 245 210 / .30) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 240 190 / .55);
+  --g-lip: rgb(255 200 140 / .30);
+}
+[data-guard="guard-camo"] {
+  /* Woodland: four inks over olive, each a blotch on its own tile size so the
+     repeats never line up. */
+  --g-fill:
+    radial-gradient(34% 24% at 38% 46%, #1c1b15 0 90%, transparent 100%) 0 0 / calc(var(--g-u) * 3.7) calc(var(--g-u) * 2.9),
+    radial-gradient(28% 34% at 64% 30%, #1c1b15 0 90%, transparent 100%) 0 0 / calc(var(--g-u) * 5.9) calc(var(--g-u) * 4.3),
+    radial-gradient(42% 30% at 30% 62%, #4b3624 0 90%, transparent 100%) 0 0 / calc(var(--g-u) * 5.1) calc(var(--g-u) * 4.1),
+    radial-gradient(36% 40% at 72% 70%, #4b3624 0 90%, transparent 100%) 0 0 / calc(var(--g-u) * 6.7) calc(var(--g-u) * 7.3),
+    radial-gradient(44% 38% at 50% 50%, #34502a 0 90%, transparent 100%) 0 0 / calc(var(--g-u) * 4.4) calc(var(--g-u) * 5.5),
+    radial-gradient(30% 26% at 20% 24%, #8c8257 0 90%, transparent 100%) 0 0 / calc(var(--g-u) * 3.3) calc(var(--g-u) * 4.7),
+    linear-gradient(#636c3c, #636c3c);
+  --g-sheen: linear-gradient(180deg, rgb(255 255 255 / .10), rgb(255 255 255 / 0) 24%), linear-gradient(160deg, rgb(0 0 0 / 0) 50%, rgb(0 0 0 / .18));
+  --g-hi: rgb(255 255 230 / .22);
+  --g-lip: rgb(230 230 200 / .12);
+}
+[data-guard="guard-checker"] {
+  --g-fill: conic-gradient(#151515 0 25%, #f2f1ee 0 50%, #151515 0 75%, #f2f1ee 0) 0 0 / calc(var(--g-u) * 2 / 3) calc(var(--g-u) * 2 / 3) round;
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .26) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%), linear-gradient(160deg, rgb(0 0 0 / 0) 55%, rgb(0 0 0 / .16));
+  --g-hi: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 255 255 / .22);
+}
+[data-guard="guard-rainbow"] {
+  /* Seven bands of equal length around a 3:5 case, starting at the top-left
+     corner: the angles are that perimeter split in sevenths. */
+  --g-fill:
+    linear-gradient(160deg, rgb(255 255 255 / .12), rgb(0 0 0 / 0) 45%, rgb(0 0 0 / .18) 100%),
+    conic-gradient(from 329deg,
+      #e8342f 0 48deg, #f58a1f 48.6deg 89deg, #f6d324 89.6deg 163deg, #3db54b 163.6deg 203deg,
+      #2f71d8 203.6deg 247deg, #4a3aaa 247.6deg 309deg, #8e40b6 309.6deg 359.4deg, #e8342f 360deg);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .30) 38%, rgb(255 255 255 / .05) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 255 255 / .24);
+}
+[data-guard="guard-carbon"] {
+  /* 2×2 twill: each tow catches the light along its length, the next one
+     across it, under a clear gloss coat. */
+  --g-fill:
+    conic-gradient(from 0deg at 50% 50%, #3c4148 0deg, #121417 90deg, #3c4148 90deg, #121417 180deg, #3c4148 180deg, #121417 270deg, #3c4148 270deg, #121417 360deg) 0 0 / calc(var(--g-u) * .5) calc(var(--g-u) * .5),
+    #17191c;
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .20) 38%, rgb(255 255 255 / .04) 44%, rgb(255 255 255 / 0) 60%), linear-gradient(160deg, rgb(255 255 255 / .05), rgb(0 0 0 / .2));
+  --g-hi: rgb(255 255 255 / .22);
+  --g-lip: rgb(255 255 255 / .10);
+}
+[data-guard="guard-marble"] {
+  --g-fill:
+    linear-gradient(118deg, transparent 21%, rgb(100 102 110 / .7) 21.7%, transparent 22.9%),
+    linear-gradient(64deg, transparent 47%, rgb(110 112 120 / .6) 47.6%, rgb(150 152 158 / .25) 48.6%, transparent 49.2%),
+    linear-gradient(152deg, transparent 63%, rgb(98 100 108 / .62) 63.5%, transparent 64.7%),
+    linear-gradient(28deg, transparent 77%, rgb(130 132 138 / .4) 77.4%, transparent 78.6%),
+    linear-gradient(98deg, transparent 8%, rgb(140 142 148 / .35) 8.5%, transparent 9.6%),
+    radial-gradient(40% 18% at 85% 30%, rgb(170 172 178 / .35), transparent 70%),
+    radial-gradient(45% 15% at 10% 78%, rgb(170 172 178 / .35), transparent 70%),
+    linear-gradient(160deg, #fbfaf7, #efede8 50%, #dedcd6 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 28%, rgb(255 255 255 / .55) 38%, rgb(255 255 255 / .10) 44%, rgb(255 255 255 / 0) 60%);
+  --g-hi: rgb(255 255 255 / .9);
+  --g-hi-2: rgb(255 255 255 / .5);
+  --g-lip: rgb(255 255 255 / .45);
+}
+
+/* ---- Metal ------------------------------------------------------------------
+   Plated or anodised bumpers: hairline brushing over a cool-to-warm body and
+   one hot highlight band. */
+[data-guard="guard-silver"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(255 255 255 / .20) 1px 2px, rgb(0 0 0 / .09) 2px 3px),
+    linear-gradient(160deg, #eef0f3, #bfc4cb 36%, #a3a9b1 55%, #6e747c 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / .55) 38%, rgb(255 255 255 / .8) 39.2%, rgb(255 255 255 / .55) 40.4%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 255 255 / .8);
+  --g-lip: rgb(255 255 255 / .38);
+}
+[data-guard="guard-copper"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(255 225 200 / .16) 1px 2px, rgb(0 0 0 / .10) 2px 3px),
+    linear-gradient(160deg, #f2ae84, #c8713f 38%, #ad5a2f 55%, #6c3317 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 228 205 / .45) 38%, rgb(255 255 255 / .8) 39.2%, rgb(255 228 205 / .45) 40.4%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 215 185 / .65);
+  --g-lip: rgb(255 200 160 / .32);
+}
+[data-guard="guard-gunmetal"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(255 255 255 / .09) 1px 2px, rgb(0 0 0 / .14) 2px 3px),
+    linear-gradient(160deg, #727981, #4a5057 38%, #3c4147 55%, #212428 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(220 232 245 / .32) 38%, rgb(255 255 255 / .8) 39.2%, rgb(220 232 245 / .32) 40.4%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(220 230 240 / .45);
+  --g-lip: rgb(200 215 230 / .2);
+}
+[data-guard="guard-rosegold"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(255 235 228 / .18) 1px 2px, rgb(0 0 0 / .09) 2px 3px),
+    linear-gradient(160deg, #f6d0c0, #daa08e 36%, #c6887b 55%, #8c5951 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 240 232 / .50) 38%, rgb(255 255 255 / .8) 39.2%, rgb(255 240 232 / .50) 40.4%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 232 222 / .7);
+  --g-lip: rgb(255 215 200 / .34);
+}
+[data-guard="guard-gilt"] {
+  --g-fill:
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0) 0 1px, rgb(255 244 200 / .16) 1px 2px, rgb(0 0 0 / .10) 2px 3px),
+    linear-gradient(160deg, #e2c476, #b8923f 38%, #a8843a 55%, #7d5e24 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 246 214 / .40) 39%, rgb(255 255 255 / 0) 50%);
+  --g-hi: rgb(255 240 190 / .7);
+  --g-lip: rgb(255 230 160 / .35);
+}
+[data-guard="guard-chrome"] {
+  /* A mirror: bright sky down to a sharp horizon, near-black ground under it,
+     the room coming back up towards the bottom; on the top and bottom rails
+     the window light shows as vertical bands. */
+  --g-fill:
+    linear-gradient(90deg, rgb(0 0 0 / 0) 14%, rgb(30 33 38 / .55) 17%, rgb(30 33 38 / .55) 22%, rgb(0 0 0 / 0) 25%, rgb(255 255 255 / 0) 52%, rgb(255 255 255 / .7) 56%, rgb(255 255 255 / 0) 60%, rgb(0 0 0 / 0) 74%, rgb(30 33 38 / .5) 79%, rgb(0 0 0 / 0) 86%),
+    linear-gradient(180deg, #fbfcfd 0%, #e4e8ed 10%, #a9b0b9 22%, #f4f6f8 30%, #c4cad2 42%, #8d949d 47.6%, #1d2024 48%, #2e3237 56%, #6d737b 68%, #f2f4f6 80%, #9aa0a8 88%, #3a3e44 95%, #babfc6 100%);
+  --g-sheen: linear-gradient(112deg, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / .5) 36.5%, rgb(255 255 255 / .9) 37.5%, rgb(255 255 255 / .5) 38.5%, rgb(255 255 255 / 0) 42%);
+  --g-hi: rgb(255 255 255 / .95);
+  --g-hi-2: rgb(255 255 255 / .6);
+  --g-lip: rgb(255 255 255 / .5);
+}
