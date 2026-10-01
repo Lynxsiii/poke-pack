@@ -1,4 +1,4 @@
-import { homeSetId, MEP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
+import { BWP_SET_ID, homeSetId, MEP_SET_ID, PROMO_HOMES, promoHomeOf, XYP_SET_ID } from "./card-home.js";
 
 export const RARITY_ORDER = [
   "Energy",
@@ -1512,6 +1512,42 @@ export const XYP_PROMOS = {
   lede: "Every XY black star promo in one binder: the box and tin promos, the deck and event cards, each one in its real product.",
   slots: [],
   heroIds: [], // b6
+  wrappers: [],
+};
+
+/**
+ * BW Black Star Promos (BW01 to BW101). Like the XY and ME Black Star Promos there is no
+ * booster, and the promos a set's own boxes carry are filed in that set's data file as
+ * `<set>-bwpNNN` ("bw5-bwp045", "dv1-bwp012"); they are counted, listed and sold under
+ * "bwp", never in the dex of the set whose box carried them (js/card-home.js PROMO_HOMES).
+ * The promos no set's product claims (events, leagues, giveaways) are this set's own file,
+ * data/bwp.json, as `bwp-bwpNNN`. `viewOf` names every file the page reads, itself
+ * included. Not in PLAYABLE_SETS yet: the promo builder adds it with data/bwp.json,
+ * `totalCount`, `heroIds` and the box notes, once the numbers exist (scripts/test-bwp.mjs
+ * checks them then). The release date is pkmn.gg's (March 1, 2011, the first promo): single source.
+ */
+export const BWP_PROMOS = {
+  id: BWP_SET_ID,
+  tcgId: BWP_SET_ID,
+  name: "BW Black Star Promos",
+  edition: "Black & White",
+  era: "Black & White",
+  released: "March 1, 2011",
+  live: true,
+  promoSet: true,
+  promoPrefix: "BW ",
+  viewNote: "the Black & White sets' own boxes (Elite Trainer Boxes, tins, blisters, theme decks and collections)",
+  viewOf: ["bw1", "bw2", "bw3", "bw4", "bw5", "bw6", "dv1", "bw7", "bw8", "bw9", "bw10", "bw11", BWP_SET_ID],
+  totalCount: 0, // promo builder: homeCards(BWP_PROMOS, every viewOf file).length
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/bwp.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Black & White, 2011 to 2013. The black star promos from the Black & White sets' boxes, tins and blisters, decks and events.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every BW black star promo in one binder: the box and tin promos, the deck and league cards, each one in its real product.",
+  slots: [],
+  heroIds: [], // promo builder
   wrappers: [],
 };
 
@@ -3877,9 +3913,9 @@ export function dataSetsOf(set) {
   return set.viewOf ? set.viewOf.map((id) => SET_BY_ID[id]).filter(Boolean) : [set];
 }
 
-/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067"; numbers without the prefix sort last. */
+/** A black star promo's sort key: "mep009-pc" comes right after "mep009", "xyp67a" after "xyp067", "bwp004" in order; numbers without the prefix sort last. */
 function promoOrder(card) {
-  const m = /^(?:mep|xyp)(\d+)(.*)$/i.exec(String(card?.number || ""));
+  const m = /^(?:mep|xyp|bwp)(\d+)(.*)$/i.exec(String(card?.number || ""));
   return m ? [Number(m[1]), m[2]] : [Infinity, String(card?.number || "")];
 }
 
@@ -3887,7 +3923,7 @@ function promoOrder(card) {
  * A set's own cards out of the lists loaded for dataSetsOf(set). Black star
  * promos are never in a main set's dex (js/card-home.js PROMO_HOMES): a Mega
  * Evolution or XY set keeps every card but the promos filed in its file, and a
- * promo set (MEP_PROMOS, XYP_PROMOS) keeps only the cards counted under its id,
+ * promo set (MEP_PROMOS, XYP_PROMOS, BWP_PROMOS) keeps only the cards counted under its id,
  * in promo-number order.
  */
 export function homeCards(set, lists) {
