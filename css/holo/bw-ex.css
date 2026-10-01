@@ -187,7 +187,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .foi
 /* A second brush sliding the other way, light only: glints at the lamp. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .foil::after {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 100%) 0%, hsl(200, 100%, 88%) 30%, hsl(280, 100%, 80%) 62%, hsla(210, 100%, 62%, 0) 100%);
+    hsl(0, 0%, 100%) 0%, hsl(200, 100%, 88%) 30%, hsla(280, 100%, 80%, 0.8) 62%, hsla(210, 100%, 70%, 0.4) 100%);
   background-size: 100% 100%;
   -webkit-mask-image: var(--bw-brush);
   mask-image: var(--bw-brush);
@@ -202,8 +202,28 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .foi
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsl(0, 0%, 100%) 5%, hsla(210, 5%, 50%, 0.25) 55%, hsla(0, 0%, 20%, 0.4) 110%);
+    hsla(0, 0%, 100%, 0.35) 5%, hsla(210, 5%, 50%, 0.09) 55%, hsla(0, 0%, 20%, 0.14) 110%);
   mix-blend-mode: overlay;
   filter: brightness(0.8) contrast(1.4);
-  opacity: calc(var(--card-opacity) * 0.35);
+  opacity: var(--card-opacity);
+}
+/* The tinsel lines on the art's saturated ground. A colour dodge cannot touch a pink or red that is
+   already at full strength, so the lines that read on the art are light laid on the varnish: the brush
+   tile in white, brightest at the lamp, cut to the foil map so the text box and the object stay clean. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-ace.has-foil-map .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.95) 0%, hsla(200, 60%, 96%, 0.7) 35%, hsla(260, 60%, 92%, 0.42) 70%, hsla(220, 60%, 90%, 0.3) 100%);
+  background-size: 100% 100%;
+  -webkit-mask-image: var(--bw-brush), var(--foil-map);
+  mask-image: var(--bw-brush), var(--foil-map);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  mask-mode: alpha;
+  -webkit-mask-size: 100% auto, 100% 100%;
+  mask-size: 100% auto, 100% 100%;
+  -webkit-mask-position: 12% calc(var(--background-y) * 0.5 + 20%), center;
+  mask-position: 12% calc(var(--background-y) * 0.5 + 20%), center;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  opacity: 1;
 }

@@ -43,8 +43,8 @@ def main():
     env = gaussian_filter1d(rng.standard_normal(n), 14, mode="wrap")
     env = 0.75 + 0.25 * env / env.std()
     v = streak * env[:, None]
-    lo, hi = np.percentile(v, 40), np.percentile(v, 95)
-    alpha = np.clip((v - lo) / (hi - lo), 0, 1) ** 1.2
+    lo, hi = np.percentile(v, 28), np.percentile(v, 92)
+    alpha = np.clip((v - lo) / (hi - lo), 0, 1) ** 0.95
     # a touch of vertical softening so a streak is not a razor-edged 1 px row
     alpha = gaussian_filter1d(alpha, 0.6, axis=0, mode="wrap")
     alpha8 = (np.clip(alpha, 0, 1) * 255).round().astype(np.uint8)
