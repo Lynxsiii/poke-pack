@@ -57,6 +57,14 @@ const TCGDEX_SET = {
   pl1: "pl1", pl2: "pl2", pl3: "pl3", pl4: "pl4",
   hgss1: "hgss1", hgss2: "hgss2", hgss3: "hgss3", hgss4: "hgss4", hsp: "hgssp", col1: "col1",
   pop6: "pop6", pop7: "pop7", pop8: "pop8", pop9: "pop9",
+  // EX generation: TCGdex keeps the era's ids, unpadded (checked 2026-10-01: /v2/en/series/ex and /series/pop; "ex1-1" is a card, "ex1-001"
+  // a 404; the Nintendo promos are "np-1", unpadded and without a prefix, listed under the POP series; the Trainer Kits are
+  // "tk-ex-latia", "tk-ex-latio", "tk-ex-p" (Plusle) and "tk-ex-m" (Minun), cards "tk-ex-latia-4"; Unseen Forces' Unown A-Z, ! and ?
+  // are NOT on TCGdex: ex10 stops at 117, so those 28 stay on the site's own prices).
+  ex1: "ex1", ex2: "ex2", ex3: "ex3", ex4: "ex4", ex5: "ex5", ex6: "ex6", ex7: "ex7", ex8: "ex8", ex9: "ex9", ex10: "ex10",
+  ex11: "ex11", ex12: "ex12", ex13: "ex13", ex14: "ex14", ex15: "ex15", ex16: "ex16", np: "np",
+  pop1: "pop1", pop2: "pop2", pop3: "pop3", pop4: "pop4", pop5: "pop5",
+  extk1a: "tk-ex-latia", extk1b: "tk-ex-latio", extk2a: "tk-ex-p", extk2b: "tk-ex-m",
 };
 
 /**
@@ -184,6 +192,8 @@ function tcgdexId(setId, number) {
   const n = String(number).replace(/^0+/, "") || "0";
   if (TCGDEX_PADDED.test(prefix)) return `${prefix}-${n.padStart(3, "0")}`;
   // A promo's number is "dpp01" on the site and "DP01" on TCGdex; a subset's is "SH1", "RT1", "AR1", "SL1"; Alph's is "ONE".
+  // The Nintendo promos' number is "np012" on the site and "12" on TCGdex ("np-12").
+  if (/^np\d/i.test(String(number))) return `${prefix}-${String(number).replace(/^np0*/i, "")}`;
   return `${prefix}-${/^(?:dpp|hsp)\d/i.test(String(number)) ? String(number).replace(/^dpp/i, "DP").replace(/^hsp/i, "HGSS") : String(number)}`;
 }
 

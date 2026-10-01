@@ -7,7 +7,7 @@
  */
 import { PLAYABLE_SETS } from "./catalog.js";
 import { RARITIES_IN_PRINT, isPrinted } from "./achievement-eras.js";
-import { secret, EEVEELUTIONS, SWSH_FINISHES, SM_FINISHES, SV_FINISHES, XY_FINISHES, BW_FINISHES, SINNOH_FINISHES, JOHTO_FINISHES } from "./achievement-kit.js";
+import { secret, EEVEELUTIONS, SWSH_FINISHES, SM_FINISHES, SV_FINISHES, XY_FINISHES, BW_FINISHES, SINNOH_FINISHES, JOHTO_FINISHES, HOENN_FINISHES } from "./achievement-kit.js";
 
 const GHOSTS = [
   "Gastly", "Haunter", "Gengar", "Mimikyu", "Sableye", "Gholdengo",
@@ -53,6 +53,10 @@ export const SECRETS = [
     : []),
   ...(JOHTO_FINISHES.every(isPrinted)
     ? [secret("rarity", 4, "johto-sweep", "HGSS", "Johto sweep", "Every shine Johto ever printed.", `Own every HeartGold & SoulSilver finish: ${JOHTO_FINISHES.join(", ")}.`, JOHTO_FINISHES.length, (c) => finishesOwned(c, JOHTO_FINISHES), 2000)]
+    : []),
+  // Hoenn needs the Gold Star (ex7 on) and the Unown Collection (ex10): the row appears with those sets.
+  ...(HOENN_FINISHES.every(isPrinted)
+    ? [secret("rarity", 4, "hoenn-sweep", "EX", "Hoenn sweep", "Every shine Hoenn ever printed.", `Own every EX finish: ${HOENN_FINISHES.join(", ")}.`, HOENN_FINISHES.length, (c) => finishesOwned(c, HOENN_FINISHES), 2000)]
     : []),
   secret("rarity", 4, "scarlet-sweep", "SV", "Scarlet sweep", "One era, every finish it ever printed.", `Own every Scarlet & Violet finish: ${SV_FINISHES.join(", ")}.`, SV_FINISHES.length, (c) => finishesOwned(c, SV_FINISHES), 1800),
   secret("rarity", 4, "full-spectrum", "ALL", "Full spectrum", "Every finish there is.", "Own a card of every rarity in the game.", RARITIES_IN_PRINT.length, (c) => c.raritiesOwned, 4000, { title: "Full Spectrum" }),

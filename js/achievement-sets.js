@@ -114,6 +114,15 @@ const ERA_LADDERS = {
     [250, 2, 400, "Johto regular"],
     [500, 3, 1100, "Johto local"],
   ],
+  // EX (2003-2007): 1,722 cards in the 16 sets (pkmn.gg totals: ex1 109, ex2 100, ex3 100, ex4 97, ex5 102, ex6 116, ex7 111,
+  // ex8 108, ex9 107, ex10 145, ex11 114, ex12 93, ex13 111, ex14 100, ex15 101, ex16 108), about 1,890 with the Nintendo Black
+  // Star Promos (40), POP Series 1-5 (85) and the four EX Trainer Kit halves (44). A rung shows once the playable sets add up to its
+  // goal. TODO(lead): re-check against the real totalCounts.
+  EX: [
+    [250, 1, 100, "Hoenn bound"],
+    [800, 2, 400, "Hoenn regular"],
+    [1500, 3, 1100, "Hoenn local"],
+  ],
 };
 
 const ERA_ROWS = ERA_NAMES.flatMap((era) =>
