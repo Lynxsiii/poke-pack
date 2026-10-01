@@ -161,7 +161,7 @@ def card_record(cfg: dict, detail: dict, subset: dict | None = None) -> dict:
     # Sword & Shield prints its holo Rares as a rarity of their own ("Rare
     # Holo", the art background foil), separate from the plain Rare, so the
     # alias that folds the two together is for the Scarlet & Violet feeds only.
-    if not (cfg.get("era") in ("swsh", "sm") and rarity == "Rare Holo"):
+    if not (cfg.get("era") in ("swsh", "sm", "xy") and rarity == "Rare Holo"):
         rarity = RARITY_ALIASES.get(rarity, rarity)
     if (subset or {}).get("gallery") == "cc":
         # Celebrations' Classic Collection reprints keep their original
@@ -346,7 +346,10 @@ def build(set_id: str, refresh: bool) -> int:
     # Shiny Vault, Crown Zenith's Galarian Gallery, Celebrations' Classic
     # Collection) are checklists of their own on pkmn.gg but one product, so
     # they build into the same data file, each card tagged with `gallery`.
-    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or []]
+    # An `inline` subset (Generations' Radiant Collection RC1-RC32) is listed in
+    # the main checklist already: it only tags the cards whose number starts
+    # with its `prefix`, and names the TCGplayer group the prices come from.
+    sources = [(cfg["slug"], None)] + [(sub["slug"], sub) for sub in cfg.get("subsets") or [] if not sub.get("inline")]
     for slug, subset in sources:
         base = f"https://www.pkmn.gg/series/{cfg['series']}/{slug}"
         tag = f"{set_id}-{subset['gallery']}" if subset else set_id
@@ -371,6 +374,9 @@ def build(set_id: str, refresh: bool) -> int:
                 print(f"    #{number}: unexpected page shape, skipped")
                 continue
             card = card_record(cfg, detail, subset)
+            for sub in cfg.get("subsets") or []:
+                if sub.get("inline") and number.startswith(sub["prefix"]):
+                    card["gallery"] = sub["gallery"]
             cards.append(ordered(merge(existing.get(card["id"]), card)))
             if index % 25 == 0:
                 print(f"    {index}/{len(listing)}…")

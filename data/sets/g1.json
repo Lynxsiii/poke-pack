@@ -1,0 +1,25 @@
+{
+  "id": "g1",
+  "name": "Generations",
+  "series": "xy",
+  "slug": "generations",
+  "scrydexId": "g1",
+  "era": "xy",
+  "artSlug": "generations",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1728,
+  "subsets": [
+    {
+      "inline": true,
+      "gallery": "RC",
+      "prefix": "RC",
+      "scrydexId": "g1",
+      "tcgplayerGroup": 1729
+    }
+  ]
+}
