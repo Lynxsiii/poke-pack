@@ -132,7 +132,7 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "bwp": ("#c5d0e6", "#4d8be0"),  # BW promos: silver star to Unova blue
     "mcd11": ("#ffb02e", "#3fbf9a"),  # McDonald's 2011: golden arches to Snivy green
     "mcd12": ("#ffb02e", "#e8663d"),  # McDonald's 2012: golden arches to Tepig orange
-    "bwtk5a": ("#e0566c", "#6b4fb0"),  # Zoroark kit: mane red to illusion violet
+    "bwtk5a": ("#e0566c", "#8a6fe0"),  # Zoroark kit: mane red to illusion violet
     "bwtk5b": ("#d0a24a", "#9fb0c4"),  # Excadrill kit: drill gold to steel
 }
 
