@@ -64,7 +64,15 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-tfa.foil
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
     hsl(0, 0%, 80%) 5%, hsl(200, 5%, 45%) 65%, hsl(320, 20%, 15%) 150%);
   filter: brightness(0.9) contrast(1.1);
-  opacity: calc(var(--card-opacity) * 0.4);
+  opacity: calc(var(--card-opacity) * 0.2);
+}
+/* A full-art Supporter is lit art end to end (the binder photos stay vivid under the lamp): the rainbow dodge
+   and the silver glare together took Bianca's saturation from 78 to 48 (HSV, 0-255) at 30:25, a milky pastel.
+   Dodge a little darker, keep the foil at 70% while held, and halve the glare. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-tfa.foil-ultra.has-foil-map.lit .foil,
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-tfa.foil-ultra.has-foil-map.settling .foil {
+  filter: brightness(calc((var(--pointer-from-center) * 0.3) + 0.3)) contrast(2) saturate(1.1) contrast(0.8);
+  opacity: 0.7;
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-fa.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .foil::before {
   opacity: 0.35;
