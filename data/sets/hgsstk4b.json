@@ -1,0 +1,155 @@
+{
+  "id": "hgsstk4b",
+  "name": "HGSS Trainer Kit Raichu",
+  "side": true,
+  "series": "heartgold-soulsilver",
+  "slug": "hgss-trainer-kit-raichu",
+  "scrydexId": "tk4a",
+  "printedTotal": 30,
+  "tcgplayerGroup": 1540,
+  "era": "dp",
+  "defaults": {
+    "rarity": "Promo",
+    "era": "dp"
+  },
+  "products": [
+    {
+      "id": "hgss-trainer-kit-gyarados-raichu",
+      "name": "HGSS Trainer Kit: Gyarados & Raichu",
+      "kind": "deck",
+      "tcgplayerId": 98731,
+      "packs": 0,
+      "promos": [
+        "30"
+      ],
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), two game booklets, a playmat, counters, a coin and a deck box, released as the HS Trainer Kit in May 2010 (English and European languages only). The real kit also held one bonus booster pack (a HeartGold & SoulSilver pack per one retailer), which is not simulated. Opening it from either half-deck page deals both decks.",
+      "price": 203.04,
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up."
+    }
+  ],
+  "cards": [
+    {
+      "number": "1",
+      "tcgplayerId": 87577
+    },
+    {
+      "number": "2",
+      "tcgplayerId": 88099
+    },
+    {
+      "number": "3",
+      "tcgplayerId": 85483
+    },
+    {
+      "number": "4",
+      "tcgplayerId": 87323
+    },
+    {
+      "number": "5",
+      "tcgplayerId": 86769
+    },
+    {
+      "number": "6",
+      "tcgplayerId": 86770
+    },
+    {
+      "number": "7",
+      "tcgplayerId": 86771
+    },
+    {
+      "number": "8",
+      "tcgplayerId": 86772
+    },
+    {
+      "number": "9",
+      "tcgplayerId": 86773
+    },
+    {
+      "number": "10",
+      "tcgplayerId": 86774
+    },
+    {
+      "number": "11",
+      "tcgplayerId": 86775
+    },
+    {
+      "number": "12",
+      "tcgplayerId": 87324
+    },
+    {
+      "number": "13",
+      "tcgplayerId": 87205
+    },
+    {
+      "number": "14",
+      "tcgplayerId": 86776
+    },
+    {
+      "number": "15",
+      "tcgplayerId": 86777
+    },
+    {
+      "number": "16",
+      "tcgplayerId": 88100
+    },
+    {
+      "number": "17",
+      "tcgplayerId": 85484
+    },
+    {
+      "number": "18",
+      "tcgplayerId": 86778
+    },
+    {
+      "number": "19",
+      "tcgplayerId": 88520
+    },
+    {
+      "number": "20",
+      "tcgplayerId": 87206
+    },
+    {
+      "number": "21",
+      "tcgplayerId": 84427
+    },
+    {
+      "number": "22",
+      "tcgplayerId": 88218
+    },
+    {
+      "number": "23",
+      "tcgplayerId": 86779
+    },
+    {
+      "number": "24",
+      "tcgplayerId": 89720
+    },
+    {
+      "number": "25",
+      "tcgplayerId": 88191
+    },
+    {
+      "number": "26",
+      "tcgplayerId": 87578
+    },
+    {
+      "number": "27",
+      "tcgplayerId": 88219
+    },
+    {
+      "number": "28",
+      "tcgplayerId": 86780
+    },
+    {
+      "number": "29",
+      "tcgplayerId": 85261
+    },
+    {
+      "number": "30",
+      "tcgplayerId": 88521,
+      "holo": true,
+      "foilAs": "Rare Holo",
+      "promo": true
+    }
+  ]
+}
