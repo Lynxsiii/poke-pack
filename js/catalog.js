@@ -3578,7 +3578,7 @@ export const KALOS_STARTER_SET = {
   live: true,
   promoSet: true,
   printedTotal: 39,
-  totalCount: 39,
+  totalCount: 42,
   packSize: 0,
   cost: 0,
   dataFile: "data/xy0.json",
