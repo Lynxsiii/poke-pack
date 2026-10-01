@@ -62,9 +62,9 @@ for(const r of ['Rare Holo EX','Rare BREAK']){
 }
 assert.ok(RARITY_ORDER.indexOf('Rare Holo EX')>RARITY_ORDER.indexOf('Rare Holo')&&RARITY_ORDER.indexOf('Rare Holo EX')<RARITY_ORDER.indexOf('Rare Ultra'));
 assert.ok(isHit({rarity:'Rare BREAK'})&&!isHit({rarity:'Rare Holo EX',reverse:true}));
-// Printed by no playable set until the XY sets land, so "Full spectrum" never asks for them.
-assert.equal(isPrinted('Rare BREAK'),false);
-assert.ok(!RARITIES_IN_PRINT.includes('Rare BREAK'));
+// Steam Siege (xy11) is the first playable set to print a BREAK, so "Full spectrum" asks for it from then on.
+assert.equal(isPrinted('Rare BREAK'),true);
+assert.ok(RARITIES_IN_PRINT.includes('Rare BREAK'));
 
 // ---- XY Energy: nine types, Fairy only in this print -----------------------------------------------
 const xyEnergy=BASIC_ENERGY.filter(c=>c.energyPrint==='xy');

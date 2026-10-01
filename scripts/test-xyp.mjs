@@ -66,7 +66,9 @@ if(!real){
     'data/xy5.json':[card('xy5-1','1',{market:1}),card('xy5-2','2',{market:0.5}),card('xy5-xyp003','xyp003',{rarity:'Promo',promo:true,printedNumber:'XY 003',market:5}),card('xy5-xyp030','xyp030',{rarity:'Promo',promo:true,printedNumber:'XY 030',market:2})],
     'data/xyp.json':[card('xyp-xyp005','xyp005',{rarity:'Promo',promo:true,printedNumber:'XY 005',market:3}),card('xyp-xyp100','xyp100',{rarity:'Promo',promo:true,printedNumber:'XY 100',market:4})],
   };
-  assert.deepEqual(dataSetsOf(SET_BY_ID.xyp).map(s=>s.id),['xy5','xyp'],'dataSetsOf names the XY files it can find, and its own');
+  // Real XY sets built since (xy11, xy12...) take part with an empty file: the fixture is about xy5 and xyp.
+  for(const set of PLAYABLE_SETS) if(set.id!=='xy5'&&set.id!=='xyp'&&set.dataFile&&XYP_PROMOS.viewOf.includes(set.id)) files[set.dataFile]=[];
+  assert.deepEqual(dataSetsOf(SET_BY_ID.xyp).map(s=>s.id),SET_BY_ID.xyp.viewOf.filter(id=>SET_BY_ID[id]),'dataSetsOf names the XY files it can find, and its own');
   assert.deepEqual(homeCards(SET_BY_ID.xyp,dataSetsOf(SET_BY_ID.xyp).map(s=>files[s.dataFile])).map(c=>c.id),['xy5-xyp003','xyp-xyp005','xy5-xyp030','xyp-xyp100']);
   assert.deepEqual(homeCards(SET_BY_ID.xy5,[files['data/xy5.json']]).map(c=>c.id),['xy5-1','xy5-2'],'the dex holds no black star promo');
 
