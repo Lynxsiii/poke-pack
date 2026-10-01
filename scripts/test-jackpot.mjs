@@ -6,7 +6,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import worker from '../worker/index.js';
 import { maintainCoinflips } from '../worker/casino.js';
 import { weightedWinner, viewJackpot, maintainJackpots } from '../worker/jackpot.js';
-import { JACKPOT_DDL } from '../worker/casino-ddl.js';
+import { JACKPOT_DDL, SLABS_DDL } from '../worker/casino-ddl.js';
 import { splitStatements } from './gen-casino-ddl.mjs';
 import { JACKPOT_RULES, jackpotWindow, botStakeWindow } from '../js/casino-rules.js';
 
@@ -73,7 +73,10 @@ async function api(path, method = 'GET', body, user = 'host', headers = {}) {
   return { status: res.status, ...await res.json() };
 }
 assert.equal((await api('/api/casino/jackpots', 'GET', undefined, null)).status, 200); // the first request creates the schema
-assert.equal(db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name LIKE 'jackpot%'").get().n, JACKPOT_DDL.length, 'the Worker applied every table, index and trigger');
+// 0022 (graded slabs) adds jackpot triggers of its own on top of 0016's tables, indexes and triggers.
+const slabTriggers = new Set(SLABS_DDL.map(sql => sql.match(/^CREATE TRIGGER (jackpot_\w+)/)?.[1]).filter(Boolean));
+const jackpotObjects = new Set([...JACKPOT_DDL.map(sql => sql.match(/IF NOT EXISTS (\w+)/)[1]), ...slabTriggers]);
+assert.equal(db.prepare("SELECT COUNT(*) n FROM sqlite_master WHERE name LIKE 'jackpot%'").get().n, jackpotObjects.size, 'the Worker applied every table, index and trigger');
 const rid = () => crypto.randomUUID();
 const create = (cards, user = 'host', extra = {}) => api('/api/casino/jackpots', 'POST', { requestId: rid(), cards, ...extra }, user);
 const join = (id, cards, user = 'p1') => api(`/api/casino/jackpots/${id}/join`, 'POST', { cards }, user);

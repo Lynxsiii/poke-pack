@@ -6,7 +6,9 @@ import { validateProfilePages } from "../js/profile-pages.js";
 import {
   ALL_SETS,
   BASIC_ENERGY,
+  dataSetsOf,
   getSet,
+  homeCards,
   PLAYABLE_SETS,
   RARITY_ORDER,
   boxCardList,
@@ -16,6 +18,7 @@ import {
   sellValue,
 } from "../js/catalog.js";
 import { drawPromos, isHit, ripPack } from "../js/engine.js";
+import { homeSetId } from "../js/card-home.js";
 import { handleSocial, socialUserFields, patchSocialFields, ensureSocialSchema, looksLikeMasteryBanner, masteryBannerError } from "./social.js";
 import { DEFAULT_BANNER } from "../js/cosmetics.js";
 import { handlePrices, recordDailyPrices } from "./prices.js";
@@ -42,6 +45,8 @@ import { ensureGearSchema, gearSummary, handleGear, loadGearCatalog, prepareGran
 import { productGear, rollGear } from "../js/gear.js";
 import { handleCasino, maintainCoinflips } from "./casino.js";
 import { ensureGradingSchema, gradedCounts, gradedSlabs, gradedTotal, handleGrading, shownSlabs } from "./grading.js";
+import { bestHistory, rollSealedProduct, tallyOpened } from "./sealed-roll.js";
+import { ensureOrdersSchema, handleOrders, vaultKept } from "./orders.js";
 import {
   achievementById,
   achievementContext,
@@ -191,6 +196,9 @@ export async function handleApi(request, env, url) {
   }
   if (path === "/api/sealed/open" && method === "POST") {
     return openSealed(request, env);
+  }
+  if (path === "/api/vault" || path.startsWith("/api/vault/") || path === "/api/cart/checkout" || path.startsWith("/api/orders/")) {
+    return handleOrders(path, method, request, env, { json, requireUser, readJson, loadSave, ...SEALED_DEPS });
   }
   if (path === "/api/daily" && method === "POST") {
     return daily(request, env);
@@ -472,6 +480,7 @@ async function resetMe(request, env) {
   await ensureAchievementSchema(env);
   await ensureGearSchema(env);
   await ensureGradingSchema(env);
+  await ensureOrdersSchema(env);
   await ensureSocialSchema(env);
   const statsReady = await ensureQuestSchema(env);
   const now = Date.now();
@@ -489,6 +498,10 @@ async function resetMe(request, env) {
     env.DB.prepare("DELETE FROM gear_equipped WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM graded_cards WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare("DELETE FROM gear_purchases WHERE user_id = ?").bind(auth.user.id),
+    // Kept sealed product and past orders go too (an order's chunk markers with it).
+    env.DB.prepare("DELETE FROM sealed_vault WHERE user_id = ?").bind(auth.user.id),
+    env.DB.prepare("DELETE FROM sealed_order_chunks WHERE order_id IN (SELECT id FROM sealed_orders WHERE user_id = ?)").bind(auth.user.id),
+    env.DB.prepare("DELETE FROM sealed_orders WHERE user_id = ?").bind(auth.user.id),
     env.DB.prepare(
       `UPDATE profiles SET coins = ?, last_daily = NULL, packs_opened = 0, pulls = 0,
         packs_since_hit = 0, pack_trick = 0, granted = ?, binder = ?, worth_log = ?, claimed = ?, created_at = ?
@@ -533,6 +546,9 @@ async function rip(request, env) {
   return json({ save: opened.save, cards: opened.packs[0].cards, cost });
 }
 
+// The asset loaders a sealed roll and the order routes (worker/orders.js) need.
+const SEALED_DEPS = { loadSealed, loadProducts, loadSetCards, loadBoxContents, findCatalogCard };
+
 /**
  * Buy a sealed product and open every pack in it. The price is the product's
  * market price (sealed.json for boxes, ETBs and bundles; products.json for the
@@ -547,58 +563,16 @@ async function openSealed(request, env) {
   const body = await readJson(request);
   if (!body) return json({ error: "Expected JSON." }, 400);
 
-  const live = PLAYABLE_SETS.find((item) => item.id === String(body.setId || ""));
-  if (!live) return json({ error: "Unknown set." }, 400);
-  const offer = findOffer(
-    (await loadSealed(env, request))[live.id],
-    (await loadProducts(env, request))[live.id],
-    body.product
-  );
-  if (!offer) return json({ error: "That product isn't sold for this set." }, 400);
-  // A promo product can hold other sets' packs (the SV Black Star Promos'
-  // tins and ex boxes); it isn't sold until every one of those sets is live.
-  const groups = offerPackSets(offer, live);
-  if (!groups) return json({ error: "That product's packs aren't open yet." }, 400);
-  if (groups.some(({ set }) => !set.wrappers.length)) return json({ error: "Unknown pack art." }, 400);
-
-  const catalog = await loadSetCards(env, request, live);
-  const packs = [];
-  for (const { set, count } of groups) {
-    const cards = set.id === live.id ? catalog : await loadSetCards(env, request, set);
-    for (let i = 0; i < count; i += 1) {
-      packs.push({
-        set,
-        wrapper: set.wrappers[Math.floor(Math.random() * set.wrappers.length)],
-        pulls: ripPack(set, cards),
-      });
-    }
+  // The same roll a checkout and the sealed collection use (worker/sealed-roll.js).
+  let rolled;
+  try {
+    rolled = await rollSealedProduct(env, request, body.setId, body.product, SEALED_DEPS);
+  } catch (err) {
+    if (err?.status === 400) return json({ error: err.message }, 400);
+    throw err;
   }
-  for (const [key, count] of Object.entries(offer.special || {})) {
-    const special = live.specialPacks?.[key];
-    if (!special) fail(`Missing special pack ${key}.`, 500);
-    for (let i = 0; i < count; i += 1) {
-      packs.push({ set: live, wrapper: special.wrapper, pulls: ripPack({ ...live, slots: special.slots }, catalog) });
-    }
-  }
-  const promos = drawPromos(offer).map((id) => {
-    const card = catalog.find((item) => item.id === id);
-    if (!card) fail(`Missing promo card ${id}.`, 500);
-    return { ...card };
-  });
-  // The sleeves and coins in the box come with it. What they are is decided
-  // here, the same way the promo cards are, and saved in the same purchase.
-  const gearItems = rollGear(productGear(await loadGearCatalog(env, request), live.id, offer.id));
+  const { live, offer, packs, promos, boxCards, gearItems } = rolled;
   const grant = await prepareGrant(env, auth.user.id, gearItems);
-  // The rest of the box: a battle deck's other cards, an ETB's Energy. Each
-  // one is the card of its own set (or a shared basic Energy), owned in
-  // copies, and not a pull.
-  const contents = (await loadBoxContents(env, request))[`${live.id}/${offer.id}`];
-  const boxCards = [];
-  for (const { id, n } of boxCardList(contents, promos.map((card) => card.id))) {
-    const card = await findCatalogCard(env, request, id);
-    if (!card) fail(`Missing box card ${id} for ${offer.id}.`, 500);
-    boxCards.push({ ...card, n });
-  }
   const opened = await openPacks(env, auth.user.id, live, packs, offer.price, promos, boxCards, { sealed: true, extraStmts: grant.stmts });
   if (opened.response) return opened.response;
   return json({
@@ -646,47 +620,14 @@ async function openPacks(env, userId, live, packs, cost, promos = [], boxCards =
       ).results || [];
     existing.push(...rows);
   }
-  const qty = Object.fromEntries(existing.map((row) => [row.card_id, row.qty]));
-  const reverseQty = Object.fromEntries(existing.map((row) => [row.card_id, row.reverse_qty]));
-
-  // Promos first: they sit on top of the box, so they are the new copy.
-  const promoCards = promos.map((card) => {
-    const wasNew = !(qty[card.id] > 0);
-    qty[card.id] = (qty[card.id] || 0) + 1;
-    return { ...card, reverse: false, wasNew };
+  const counted = tallyOpened([{ packs, promos, boxCards }], {
+    qty: Object.fromEntries(existing.map((row) => [row.card_id, row.qty])),
+    reverseQty: Object.fromEntries(existing.map((row) => [row.card_id, row.reverse_qty])),
+    run,
   });
-  // The box's other cards come in copies; only the first copy can be new.
-  const boxOut = boxCards.map((card) => {
-    const wasNew = !(qty[card.id] > 0);
-    qty[card.id] = (qty[card.id] || 0) + card.n;
-    return { ...card, reverse: false, wasNew };
-  });
-  let pulled = promoCards.length;
-  let sinceHit = -1;
-  const tally = { hits: 0, fresh: promoCards.filter((card) => card.wasNew).length, reverses: 0, drought: 0 };
-  const opened = packs.map((pack) => {
-    const cards = [];
-    let hits = 0;
-    for (const card of pack.pulls) {
-      const wasNew = !(qty[card.id] > 0);
-      qty[card.id] = (qty[card.id] || 0) + 1;
-      if (card.reverse) reverseQty[card.id] = (reverseQty[card.id] || 0) + 1;
-      if (isHit(card)) hits += 1;
-      if (wasNew) tally.fresh += 1;
-      if (card.reverse) tally.reverses += 1;
-      cards.push({ ...card, reverse: Boolean(card.reverse), wasNew });
-    }
-    tally.hits += hits;
-    if (hits > 0) {
-      tally.drought = Math.max(tally.drought, run);
-      run = 0;
-    } else {
-      run += 1;
-    }
-    pulled += cards.length;
-    sinceHit = hits > 0 ? 0 : sinceHit < 0 ? sinceHit : sinceHit + 1;
-    return { set: pack.set, wrapper: pack.wrapper, cards };
-  });
+  const { qty, reverseQty, pulled, sinceHit } = counted;
+  const { packs: opened, promos: promoCards, boxCards: boxOut } = counted.boxes[0];
+  const tally = { hits: counted.hits, fresh: counted.fresh, reverses: counted.reverses, drought: counted.drought };
 
   // sinceHit is -1 when nothing hit, else the dry packs after the last hit.
   const deducted = await env.DB.prepare(
@@ -713,18 +654,7 @@ async function openPacks(env, userId, live, packs, cost, promos = [], boxCards =
     );
   }
   // History only keeps 24 rows, so a box records its best 24 cards, in pull order.
-  const rank = (card) => RARITY_ORDER.indexOf(card.rarity) + (card.reverse ? 0 : 0.5);
-  const all = [
-    ...promoCards.map((card) => ({ card, wrapperId: "promo" })),
-    ...opened.flatMap((pack) => pack.cards.map((card) => ({ card, wrapperId: pack.wrapper.id }))),
-  ];
-  const kept = new Set(
-    all
-      .map((entry, i) => i)
-      .sort((a, b) => rank(all[b].card) - rank(all[a].card) || a - b)
-      .slice(0, 24)
-  );
-  const recent = all.filter((entry, i) => kept.has(i));
+  const recent = bestHistory(counted.boxes);
   for (const { card, wrapperId } of recent) {
     stmts.push(
       env.DB.prepare(
@@ -754,7 +684,6 @@ async function openPacks(env, userId, live, packs, cost, promos = [], boxCards =
   stmts.push(env.DB.prepare("UPDATE users SET last_played = ? WHERE id = ?").bind(now, userId));
   stmts.push(...extraStmts);
   if (statsReady) {
-    tally.drought = Math.max(tally.drought, run);
     if (tally.hits) stmts.push(eventStmt(env, userId, "hits", tally.hits, now), bumpStatStmt(env, userId, "hitsPulled", tally.hits));
     if (tally.fresh) stmts.push(eventStmt(env, userId, "newcards", tally.fresh, now));
     if (tally.reverses) stmts.push(eventStmt(env, userId, "reverses", tally.reverses, now));
@@ -1048,9 +977,11 @@ async function sellDuplicates(request, env) {
   const set = ALL_SETS.find(row => row.id === setId);
   if (!set) return json({ error: "Unknown set." }, 400);
 
-  const owned = (await env.DB.prepare(
-    "SELECT card_id, qty, reverse_qty FROM cards WHERE user_id = ? AND card_id LIKE ? AND qty > 1"
-  ).bind(auth.user.id, `${setId}-%`).all()).results || [];
+  // The ME black star promos are filed under the Mega Evolution sets' ids
+  // ("me5-mep055") but belong to the "mep" set, so a set sells the rows it owns.
+  const owned = ((await env.DB.prepare(
+    "SELECT card_id, qty, reverse_qty FROM cards WHERE user_id = ? AND (card_id LIKE ? OR card_id LIKE 'me%-mep%') AND qty > 1"
+  ).bind(auth.user.id, `${setId}-%`).all()).results || []).filter(row => homeSetId(row.card_id) === setId);
   if (!owned.length) return json({ error: "No duplicates to sell in this set." }, 400);
 
   const catalog = new Map((await loadSetCards(env, request, set)).map(card => [card.id, card]));
@@ -1189,8 +1120,9 @@ async function ownedCardsFor(env, request, collection) {
     const card = await findCatalogCard(env, request, id);
     if (!card) continue;
     if (card.rarity) rarities[card.rarity] = (rarities[card.rarity] || 0) + 1;
-    const set = ALL_SETS.find((row) => id.startsWith(`${row.id}-`));
-    cards.push({ id: card.id, name: card.name, rarity: card.rarity, setId: set ? set.id : id.split("-")[0] });
+    const setId = homeSetId(id);
+    const set = ALL_SETS.find((row) => row.id === setId);
+    cards.push({ id: card.id, name: card.name, rarity: card.rarity, setId: set ? set.id : setId });
   }
   return { rarities, cards };
 }
@@ -1242,6 +1174,8 @@ async function loadSave(env, userId) {
     // Active slabs, valued at today's market. `collection` stays the raw sellable
     // counts; ownedMap(save) (js/titles.js) unions the two for completion counts.
     graded: await gradedSlabs(env, userId, { findCatalogCard }),
+    // Sealed products kept unopened (the sealed collection), all copies.
+    vaultKept: await vaultKept(env, userId),
     activeSetId: profile.active_set_id || "me5",
     createdAt: profile.created_at,
     binder: normalizeBinder(parseJson(profile.binder, emptyBinder())),
@@ -1282,6 +1216,13 @@ async function inventoryMap(env, userId) {
 
 async function loadSetCards(env, request, set) {
   if (setCache.has(set.id)) return setCache.get(set.id);
+  if (set.viewOf) {
+    // ME Black Star Promos: the promos filed in the Mega Evolution sets' files.
+    const lists = await Promise.all(dataSetsOf(set).map((source) => loadSetCards(env, request, source)));
+    const own = homeCards(set, lists);
+    setCache.set(set.id, own);
+    return own;
+  }
   const path = set.dataFile.startsWith("/") ? set.dataFile : `/${set.dataFile}`;
   const res = await env.ASSETS.fetch(new Request(new URL(path, request.url), { method: "GET" }));
   if (!res.ok) fail(`Missing set data for ${set.id}.`, 500);

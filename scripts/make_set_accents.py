@@ -48,6 +48,7 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "me2pt5": ("#f2a93b", "#d86bd0"),    # Ascended Heroes: amber to orchid
     "me2": ("#a35cff", "#58a8ff"),       # Phantasmal Flames: ghost purple to blue flame
     "me1": ("#59d98a", "#ff9f43"),       # Mega Evolution: the logo's green to orange rim
+    "mep": ("#c5d0e6", "#59d98a"),       # ME promos: silver star, Mega Evolution green
     # Black and White
     "zsv10pt5": ("#5ab8ff", "#b48cff"),  # Black Bolt: electric blue to violet
     "rsv10pt5": ("#ff7a5c", "#ffd9a8"),  # White Flare: flare orange to cream

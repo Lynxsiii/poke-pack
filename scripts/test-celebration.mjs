@@ -2,13 +2,14 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { ripPack, isHit } from "../js/engine.js";
-import { BASIC_ENERGY, findOffer, getSet, promoOffers, sealedOffers } from "../js/catalog.js";
+import { BASIC_ENERGY, findOffer, getSet, homeCards, promoOffers, sealedOffers } from "../js/catalog.js";
 
 const root = new URL("../", import.meta.url);
 const set = getSet("me55");
 assert.equal(set.id, "me55");
 const cards = [...JSON.parse(fs.readFileSync(new URL(set.dataFile, root))), ...BASIC_ENERGY];
-assert.equal(cards.length - BASIC_ENERGY.length, set.totalCount);
+// The ME black star promos in the file are listed under ME Black Star Promos (js/card-home.js).
+assert.equal(homeCards(set, [cards]).length - BASIC_ENERGY.length, set.totalCount);
 assert.equal(new Set(cards.map((c) => c.id)).size, cards.length, "card ids are unique");
 assert.equal(new Set(cards.map((c) => c.number)).size, cards.length - BASIC_ENERGY.length + 1, "mirror stems are unique");
 

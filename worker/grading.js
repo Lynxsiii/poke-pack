@@ -17,7 +17,7 @@
  * what is worn is the `guard` column of each active slab, so a free unit is
  * owned minus worn.
  */
-import { ALL_SETS } from "../js/catalog.js";
+import { ALL_SETS, money } from "../js/catalog.js";
 import {
   GRADING_LIMITS,
   GRADING_RULES_VERSION,
@@ -37,6 +37,7 @@ const error = (message, status = 400) => {
 const REQUEST_ID = /^[a-zA-Z0-9-]{8,80}$/;
 const CARD_ID = /^[a-z0-9-]{3,48}$/i;
 const ACTIVE = "slabbed";
+const IN_GAME = "That slab is in a casino game.";
 // The assets binding serves by path, so any origin does when a save is loaded
 // without a request in hand (loadSave has none).
 const FALLBACK_ORIGIN = "https://poke-pack.rip/";
@@ -85,6 +86,8 @@ export const GRADING_DDL = [
 /** Columns added after 0019, each as (name, ALTER): worker/migrations/0020_grading_shown.sql. */
 export const GRADING_COLUMNS = [
   ["shown", "ALTER TABLE graded_cards ADD COLUMN shown INTEGER NOT NULL DEFAULT 0 CHECK(shown IN (0,1))"],
+  // worker/migrations/0022_casino_slabs.sql: '<game>:<gameId>' while the slab is staked in a casino game.
+  ["locked", "ALTER TABLE graded_cards ADD COLUMN locked TEXT"],
 ];
 
 let schemaWork = null;
@@ -154,12 +157,32 @@ export function slabView(row, card) {
   };
 }
 
+/** A slab in a casino stake, from the snapshot frozen when it went in: `value` is its graded value then, in coins. */
+export function stakeSlabView(snap) {
+  return {
+    id: snap.id,
+    cert: certNumber(snap.id),
+    cardId: snap.cardId,
+    name: snap.name,
+    number: snap.number,
+    rarity: snap.rarity,
+    image: snap.image,
+    small: snap.small,
+    grade: snap.grade,
+    reverse: Boolean(snap.reverse),
+    guard: snap.guard || null,
+    value: money((snap.v || 0) / 100),
+  };
+}
+
 const requestFor = (deps) => deps.request || { url: FALLBACK_ORIGIN };
 
+// A slab staked in a casino game (`locked` set) is in escrow: it is nobody's to show, crack, sell or
+// count until the game returns or pays it, exactly like a staked raw card is not in `cards`.
 async function activeRows(env, userId) {
   return (
     (
-      await env.DB.prepare("SELECT * FROM graded_cards WHERE user_id = ? AND status = ? ORDER BY created_at DESC, id DESC")
+      await env.DB.prepare("SELECT * FROM graded_cards WHERE user_id = ? AND status = ? AND locked IS NULL ORDER BY created_at DESC, id DESC")
         .bind(userId, ACTIVE)
         .all()
     ).results || []
@@ -171,6 +194,36 @@ async function readSlabs(env, userId, deps) {
   const rows = await activeRows(env, userId);
   const out = [];
   for (const row of rows) out.push(slabView(row, await deps.findCatalogCard(env, requestFor(deps), row.card_id)));
+  return out;
+}
+
+/** The caller's slabs that sit in open casino games, valued at today's market, each with its game: GET /api/grading `inGame`. */
+export async function inGameSlabs(env, userId, deps) {
+  await ensureGradingSchema(env);
+  const rows =
+    (
+      await env.DB.prepare(
+        `SELECT * FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' AND locked IS NOT NULL ORDER BY created_at DESC, id DESC`
+      )
+        .bind(userId)
+        .all()
+    ).results || [];
+  const out = [];
+  for (const row of rows) {
+    const [game, ...rest] = String(row.locked).split(":");
+    const card = await deps.findCatalogCard(env, requestFor(deps), row.card_id);
+    // The same card fields a stake snapshot carries (stakeSlabView), so the page can draw it without a second lookup.
+    out.push({
+      ...slabView(row, card),
+      name: card?.name ?? null,
+      number: card?.number ?? null,
+      rarity: card?.rarity ?? null,
+      image: card?.image ?? null,
+      small: card ? card.imageSmall || card.image : null,
+      game,
+      gameId: rest.join(":"),
+    });
+  }
   return out;
 }
 
@@ -191,7 +244,7 @@ export async function gradedSlabs(env, userId, deps) {
 export async function gradedCounts(env, userId) {
   await ensureGradingSchema(env);
   const res = await env.DB.prepare(
-    `SELECT card_id AS id, COUNT(*) AS n FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' GROUP BY card_id`
+    `SELECT card_id AS id, COUNT(*) AS n FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' AND locked IS NULL GROUP BY card_id`
   ).bind(userId).all();
   const out = {};
   for (const row of res.results || []) out[row.id] = Number(row.n) || 0;
@@ -206,7 +259,7 @@ export async function shownSlabs(env, userId, deps) {
   const rows =
     (
       await env.DB.prepare(
-        `SELECT * FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' AND shown = 1
+        `SELECT * FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' AND locked IS NULL AND shown = 1
          ORDER BY grade DESC, created_at DESC, id DESC LIMIT ?`
       )
         .bind(userId, GRADING_LIMITS.maxShown)
@@ -233,11 +286,12 @@ export async function shownSlabs(env, userId, deps) {
 /** How many active slabs a player has: the profile's "N graded" line. */
 export async function gradedTotal(env, userId) {
   await ensureGradingSchema(env);
-  const row = await env.DB.prepare(`SELECT COUNT(*) AS n FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}'`).bind(userId).first();
+  const row = await env.DB.prepare(`SELECT COUNT(*) AS n FROM graded_cards WHERE user_id = ? AND status = '${ACTIVE}' AND locked IS NULL`).bind(userId).first();
   return Number(row?.n) || 0;
 }
 
-/** Guard stock: owned units per guard (user_gear) and how many active slabs wear each. */
+/** Guard stock: owned units per guard (user_gear) and how many active slabs wear each. A slab in a casino
+    game keeps its guard (a cancel returns it intact), so it still counts as wearing one: the unit is not free. */
 export async function guardSummary(env, userId) {
   await ensureGearSchema(env);
   await ensureGradingSchema(env);
@@ -264,7 +318,12 @@ export async function guardSummary(env, userId) {
 
 /** What GET /api/grading answers with. */
 export async function gradedSummary(env, userId, deps) {
-  return { slabs: await gradedSlabs(env, userId, deps), guards: await guardSummary(env, userId), rulesVersion: GRADING_RULES_VERSION };
+  return {
+    slabs: await gradedSlabs(env, userId, deps),
+    inGame: await inGameSlabs(env, userId, deps),
+    guards: await guardSummary(env, userId),
+    rulesVersion: GRADING_RULES_VERSION,
+  };
 }
 
 // ---- Moves --------------------------------------------------------------------
@@ -341,15 +400,22 @@ async function crack(env, user, body) {
   const row = await slabFor(env, user.id, id);
   if (!row) error("Slab not found.", 404);
   if (row.status !== ACTIVE) error(row.status === "sold" ? "That slab was sold." : "That slab is already cracked.", 409);
+  if (row.locked) error(IN_GAME, 409);
   const results = await env.DB.batch([
-    env.DB.prepare(`UPDATE graded_cards SET status = 'cracked', closed_at = ?, guard = NULL, shown = 0 WHERE id = ? AND user_id = ? AND status = '${ACTIVE}'`)
+    env.DB.prepare(
+      `UPDATE graded_cards SET status = 'cracked', closed_at = ?, guard = NULL, shown = 0 WHERE id = ? AND user_id = ? AND status = '${ACTIVE}' AND locked IS NULL`
+    )
       .bind(Date.now(), id, user.id),
     env.DB.prepare(
       `INSERT INTO cards (user_id, card_id, qty, reverse_qty) SELECT ?, ?, 1, ? WHERE changes() = 1
        ON CONFLICT(user_id, card_id) DO UPDATE SET qty = cards.qty + 1, reverse_qty = cards.reverse_qty + excluded.reverse_qty`
     ).bind(user.id, row.card_id, row.reverse ? 1 : 0),
   ]);
-  if (!results[0]?.meta?.changes) error("That slab is already open.", 409);
+  if (!results[0]?.meta?.changes) {
+    // Staked in a game between the read and the write: nothing moved (the card insert is chained on changes()).
+    if ((await slabFor(env, user.id, id))?.locked) error(IN_GAME, 409);
+    error("That slab is already open.", 409);
+  }
   return row;
 }
 
@@ -360,19 +426,21 @@ async function sell(env, request, helpers, user, body) {
   if (!row) error("Slab not found.", 404);
   if (row.status === "sold" && row.sell_request_id === requestId) return { row, cents: row.sold_cents || 0, repeat: true };
   if (row.status !== ACTIVE) error(row.status === "sold" ? "That slab was already sold." : "That slab was cracked.", 409);
+  if (row.locked) error(IN_GAME, 409);
   const card = await helpers.findCatalogCard(env, request, row.card_id);
   if (!card) error("That card has no price right now.", 409);
   const cents = Math.round(gradedValue(card, row.grade, setForCard(row.card_id)) * 100);
   const results = await env.DB.batch([
     env.DB.prepare(
       `UPDATE graded_cards SET status = 'sold', closed_at = ?, guard = NULL, shown = 0, sell_request_id = ?, sold_cents = ?
-       WHERE id = ? AND user_id = ? AND status = '${ACTIVE}'`
+       WHERE id = ? AND user_id = ? AND status = '${ACTIVE}' AND locked IS NULL`
     ).bind(Date.now(), requestId, cents, id, user.id),
     env.DB.prepare("UPDATE profiles SET coins = coins + ? WHERE user_id = ? AND changes() = 1").bind(cents / 100, user.id),
   ]);
   if (!results[0]?.meta?.changes) {
     const again = await slabFor(env, user.id, id);
     if (again?.status === "sold" && again.sell_request_id === requestId) return { row: again, cents: again.sold_cents || 0, repeat: true };
+    if (again?.locked) error(IN_GAME, 409);
     error("That slab already changed. Refresh and look again.", 409);
   }
   return { row, cents, repeat: false };
@@ -385,15 +453,19 @@ async function guard(env, user, body) {
   if (guardId && !item) error("That guard isn't in the catalog.");
   const row = await slabFor(env, user.id, id);
   if (!row || row.status !== ACTIVE) error("Slab not found.", 404);
+  if (row.locked) error(IN_GAME, 409); // the guard travels with the slab through the game
   if ((row.guard || null) === guardId) return row; // already wearing it (or already bare)
   if (!guardId) {
-    await env.DB.prepare(`UPDATE graded_cards SET guard = NULL WHERE id = ? AND user_id = ? AND status = '${ACTIVE}'`).bind(id, user.id).run();
+    const bare = await env.DB.prepare(`UPDATE graded_cards SET guard = NULL WHERE id = ? AND user_id = ? AND status = '${ACTIVE}' AND locked IS NULL`)
+      .bind(id, user.id)
+      .run();
+    if (!bare.meta?.changes && (await slabFor(env, user.id, id))?.locked) error(IN_GAME, 409);
     return slabFor(env, user.id, id);
   }
   await ensureGearSchema(env);
   // Free units = owned - worn by OTHER active slabs; the swap frees this slab's own guard in the same statement.
   const done = await env.DB.prepare(
-    `UPDATE graded_cards SET guard = ?1 WHERE id = ?2 AND user_id = ?3 AND status = '${ACTIVE}'
+    `UPDATE graded_cards SET guard = ?1 WHERE id = ?2 AND user_id = ?3 AND status = '${ACTIVE}' AND locked IS NULL
      AND COALESCE((SELECT qty FROM user_gear WHERE user_id = ?3 AND kind = 'guard' AND item_id = ?1), 0)
        > (SELECT COUNT(*) FROM graded_cards WHERE user_id = ?3 AND status = '${ACTIVE}' AND guard = ?1 AND id != ?2)`
   )
@@ -402,6 +474,7 @@ async function guard(env, user, body) {
   if (!done.meta?.changes) {
     const again = await slabFor(env, user.id, id);
     if (!again || again.status !== ACTIVE) error("Slab not found.", 404);
+    if (again.locked) error(IN_GAME, 409);
     error(`No free ${item.name} guard. Buy one or take it off another slab.`, 409);
   }
   return slabFor(env, user.id, id);
@@ -413,14 +486,15 @@ async function show(env, user, body) {
   const wanted = body.shown === true || body.shown === 1 || body.shown === "1";
   const row = await slabFor(env, user.id, id);
   if (!row || row.status !== ACTIVE) error("Slab not found.", 404);
+  if (row.locked) error(IN_GAME, 409);
   if (Boolean(row.shown) === wanted) return row;
   if (!wanted) {
-    await env.DB.prepare(`UPDATE graded_cards SET shown = 0 WHERE id = ? AND user_id = ? AND status = '${ACTIVE}'`).bind(id, user.id).run();
+    await env.DB.prepare(`UPDATE graded_cards SET shown = 0 WHERE id = ? AND user_id = ? AND status = '${ACTIVE}' AND locked IS NULL`).bind(id, user.id).run();
     return slabFor(env, user.id, id);
   }
   // The cap is checked in the same statement, so two taps at once cannot pass it.
   const done = await env.DB.prepare(
-    `UPDATE graded_cards SET shown = 1 WHERE id = ?1 AND user_id = ?2 AND status = '${ACTIVE}'
+    `UPDATE graded_cards SET shown = 1 WHERE id = ?1 AND user_id = ?2 AND status = '${ACTIVE}' AND locked IS NULL
      AND (SELECT COUNT(*) FROM graded_cards WHERE user_id = ?2 AND status = '${ACTIVE}' AND shown = 1 AND id != ?1) < ?3`
   )
     .bind(id, user.id, GRADING_LIMITS.maxShown)
@@ -428,6 +502,7 @@ async function show(env, user, body) {
   if (!done.meta?.changes) {
     const again = await slabFor(env, user.id, id);
     if (!again || again.status !== ACTIVE) error("Slab not found.", 404);
+    if (again.locked) error(IN_GAME, 409);
     error(`Your profile shows up to ${GRADING_LIMITS.maxShown} slabs. Take one off to add this one.`, 409);
   }
   return slabFor(env, user.id, id);

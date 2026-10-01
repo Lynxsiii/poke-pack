@@ -2,7 +2,7 @@
 // the award titles that ride on it. Run: node scripts/test-achievements.mjs
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { PLAYABLE_SETS, RARITY_ORDER } from "../js/catalog.js";
+import { PLAYABLE_SETS, RARITY_ORDER, dataSetsOf, homeCards } from "../js/catalog.js";
 import {
   ACH_CATEGORIES,
   ACHIEVEMENTS,
@@ -105,7 +105,7 @@ const cards = [];
 const collection = {};
 const reverses = {};
 for (const set of PLAYABLE_SETS) {
-  const list = JSON.parse(readFileSync(new URL(`../${set.dataFile}`, import.meta.url), "utf8"));
+  const list = homeCards(set, dataSetsOf(set).map((source) => JSON.parse(readFileSync(new URL(`../${source.dataFile}`, import.meta.url), "utf8"))));
   assert.equal(list.length, set.totalCount, `${set.id} totalCount matches its data file`);
   for (const card of list) {
     cards.push({ id: card.id, name: card.name, rarity: card.rarity, setId: set.id });

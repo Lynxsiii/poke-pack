@@ -1,3 +1,5 @@
+import { isMepCardId, MEP_SET_ID } from "./card-home.js";
+
 export const RARITY_ORDER = [
   "Energy",
   "Common",
@@ -910,7 +912,7 @@ export const CELEBRATION_30TH = {
   released: "September 16, 2026",
   live: true,
   printedTotal: 128,
-  totalCount: 210,
+  totalCount: 192,
   packSize: 6,
   cost: 16.26,
   allFoil: true,
@@ -965,7 +967,7 @@ export const PITCH_BLACK = {
   released: "July 17, 2026",
   live: true,
   printedTotal: 84,
-  totalCount: 150,
+  totalCount: 130,
   packSize: 11,
   cost: 6.0,
   dataFile: "data/me5.json",
@@ -1020,7 +1022,7 @@ export const CHAOS_RISING = {
   released: "May 22, 2026",
   live: true,
   printedTotal: 86,
-  totalCount: 150,
+  totalCount: 130,
   packSize: 11,
   cost: 5.64,
   dataFile: "data/me4.json",
@@ -1075,7 +1077,7 @@ export const PERFECT_ORDER = {
   released: "March 27, 2026",
   live: true,
   printedTotal: 88,
-  totalCount: 141,
+  totalCount: 132,
   packSize: 11,
   cost: 5.53,
   dataFile: "data/me3.json",
@@ -1131,7 +1133,7 @@ export const ASCENDED_HEROES = {
   released: "January 30, 2026",
   live: true,
   printedTotal: 217,
-  totalCount: 309,
+  totalCount: 302,
   packSize: 11,
   cost: 13.87,
   dataFile: "data/me2pt5.json",
@@ -1164,7 +1166,7 @@ export const PHANTASMAL_FLAMES = {
   released: "November 14, 2025",
   live: true,
   printedTotal: 94,
-  totalCount: 159,
+  totalCount: 143,
   packSize: 11,
   cost: 11.82,
   dataFile: "data/me2.json",
@@ -1219,7 +1221,7 @@ export const MEGA_EVOLUTION = {
   released: "September 26, 2025",
   live: true,
   printedTotal: 132,
-  totalCount: 227,
+  totalCount: 202,
   packSize: 11,
   cost: 8.31,
   dataFile: "data/me1.json",
@@ -1263,6 +1265,38 @@ export const MEGA_EVOLUTION = {
       artFallback: "assets/packs/me1/pack-1.png",
     },
   ],
+};
+
+/**
+ * Mega Evolution Black Star Promos. There is no MEP booster: every card comes
+ * in a box of one of the Mega Evolution sets (its Elite Trainer Box, Build &
+ * Battle Box, blisters, tins and First Partner collections), so the boxes stay
+ * on those sets' pages and are sold there. The cards themselves are this set's:
+ * they sit in the Mega Evolution sets' data files under their old ids
+ * ("me5-mep055"), so every save, binder and product list keeps working, and
+ * `viewOf` names the files this page reads them from (js/card-home.js).
+ */
+export const MEP_PROMOS = {
+  id: MEP_SET_ID,
+  tcgId: MEP_SET_ID,
+  name: "ME Black Star Promos",
+  edition: "Mega Evolution",
+  era: "Mega Evolution",
+  released: "September 26, 2025",
+  live: true,
+  promoSet: true,
+  promoPrefix: "MEP ",
+  viewOf: ["me1", "me2", "me2pt5", "me3", "me4", "me5", "me55"],
+  totalCount: 115,
+  packSize: 0,
+  cost: 0,
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "Mega Evolution, 2025 to 2026. The black star promos from the Mega Evolution sets' boxes, blisters and collections.",
+  oddsLine: "No boosters · every promo comes in its box",
+  lede: "Every Mega Evolution black star promo, in one binder: the starters from the First Partner collections, the Build & Battle Box and blister promos, the Mega ex tin cards and the 30th Celebration Pikachu. Each one comes in a box on its own set's page.",
+  slots: [],
+  heroIds: ["me1-mep011", "me4-mep081", "me5-mep089", "me5-mep090"],
+  wrappers: [],
 };
 
 export const BLACK_BOLT = {
@@ -3139,6 +3173,7 @@ export const PLAYABLE_SETS = [
   ASCENDED_HEROES,
   PHANTASMAL_FLAMES,
   MEGA_EVOLUTION,
+  MEP_PROMOS,
   BLACK_BOLT,
   WHITE_FLARE,
   DESTINED_RIVALS,
@@ -3218,6 +3253,39 @@ export const LIVE_SET = PITCH_BLACK;
 
 export function getSet(id) {
   return SET_BY_ID[id] || SET_BY_ID[DEFAULT_SET_ID];
+}
+
+/** True when a set's cards can be loaded: its own data file, or the files it is a view over. */
+export function hasCardData(set) {
+  return Boolean(set?.dataFile || set?.viewOf);
+}
+
+/** The sets whose data files a set's cards are read from: itself, or the ones its `viewOf` names. */
+export function dataSetsOf(set) {
+  return set.viewOf ? set.viewOf.map((id) => SET_BY_ID[id]).filter(Boolean) : [set];
+}
+
+/** An ME black star promo's sort key: "mep009-pc" comes right after "mep009". */
+function promoOrder(card) {
+  const m = /^mep(\d+)(.*)$/.exec(String(card?.number || ""));
+  return m ? [Number(m[1]), m[2]] : [Infinity, String(card?.number || "")];
+}
+
+/**
+ * A set's own cards out of the lists loaded for dataSetsOf(set): every card but
+ * the ME black star promos for a Mega Evolution set (they are listed under
+ * MEP_PROMOS), and only those for MEP_PROMOS, in promo-number order.
+ */
+export function homeCards(set, lists) {
+  const all = lists.flat();
+  if (set.id !== MEP_SET_ID) return all.filter((card) => !isMepCardId(card.id));
+  return all
+    .filter((card) => isMepCardId(card.id))
+    .sort((a, b) => {
+      const [na, sa] = promoOrder(a);
+      const [nb, sb] = promoOrder(b);
+      return na - nb || (sa < sb ? -1 : sa > sb ? 1 : 0);
+    });
 }
 
 /**

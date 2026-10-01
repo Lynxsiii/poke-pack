@@ -3,12 +3,16 @@ import { BOT_PERSONAS } from '../js/battle-rules.js';
 import { avatarId, avatarStyle } from '../js/cosmetics.js';
 import { JACKPOT_RULES, jackpotWindow } from '../js/casino-rules.js';
 import { JACKPOT_DDL } from './casino-ddl.js';
+import { ensureSlabsSchema, resetSlabsSchemaCache } from './casino-slabs.js';
+import { stakeSlabView } from './grading.js';
 
 /* Casino jackpot (migration 0016). Same shape as the coinflip in worker/casino.js:
    the rules live here and in the triggers of the migration, a client only asks.
    Cards leave a player's inventory when their entry row is inserted and come back
    only through the triggers (a leave, a cancel, or the winner's payout), so they
-   are conserved by construction. worker/casino.js hands in the shared stake
+   are conserved by construction. An entry may also hold graded slabs
+   (migration 0022): they are locked in escrow and move only in the triggers too.
+   worker/casino.js hands in the shared stake
    builders (`shared`); this file never imports it, to avoid an import cycle. */
 
 const error = (message, status = 400) => { throw Object.assign(new Error(message), { status }); };
@@ -19,13 +23,14 @@ const centsToCoins = cents => money((cents || 0) / 100);
 const JACKPOT_OBJECTS = JACKPOT_DDL.map(sql => sql.match(/CREATE (?:UNIQUE )?(?:TABLE|INDEX|TRIGGER) IF NOT EXISTS (\w+)/)[1]);
 let jackpotSchemaReady = false;
 /** Tests only: forget the per-isolate cache so another database is checked. */
-export const resetJackpotSchemaCache = () => { jackpotSchemaReady = false; };
+export const resetJackpotSchemaCache = () => { jackpotSchemaReady = false; resetSlabsSchemaCache(); };
 /** Create the jackpot tables and triggers once per isolate (one atomic D1 batch, all IF NOT EXISTS). */
 export async function ensureJackpotSchema(env) {
   if (jackpotSchemaReady) return;
   const rows = (await env.DB.prepare(`SELECT name FROM sqlite_master WHERE name IN (${JACKPOT_OBJECTS.map(() => '?').join(',')})`)
     .bind(...JACKPOT_OBJECTS).all()).results || [];
   if (rows.length < JACKPOT_OBJECTS.length) await env.DB.batch(JACKPOT_DDL.map(sql => env.DB.prepare(sql)));
+  await ensureSlabsSchema(env); // the slab columns and triggers (migration 0022), also applied lazily
   jackpotSchemaReady = true;
 }
 
@@ -68,6 +73,7 @@ const player = e => {
     avatar: avatarId(e.avatar), avatarStyle: avatarStyle(e.avatar_style) };
 };
 const stakeView = stake => (stake || []).map(({ v, ...s }) => ({ ...s, value: centsToCoins(v) }));
+const slabsView = slabs => (slabs || []).map(stakeSlabView);
 /** One pot as the client sees it. Values are coins; `odds` is an entry's share of the pot's value right now (0..1). */
 export function viewJackpot(row, entries, now = Date.now()) {
   const open = row.status === 'open';
@@ -75,7 +81,7 @@ export function viewJackpot(row, entries, now = Date.now()) {
   const window = jackpotWindow(row.min_value);
   return { id: row.id, status: open && row.expires_at <= now ? 'expired' : row.status, hostId: row.host_id,
     maxPlayers: row.max_players, seatsOpen: Math.max(0, row.max_players - entries.length),
-    entries: entries.map(e => ({ seat: e.seat, player: player(e), stake: stakeView(parse(e.stake)), value: centsToCoins(e.value),
+    entries: entries.map(e => ({ seat: e.seat, player: player(e), stake: stakeView(parse(e.stake)), slabs: slabsView(parse(e.slabs)), value: centsToCoins(e.value),
       odds: total ? Math.round(e.value / total * 10000) / 10000 : 0, won: row.status === 'done' && row.winner_seat === e.seat })),
     pot: centsToCoins(total), minValue: centsToCoins(window.min), maxValue: centsToCoins(window.max),
     winnerSeat: row.winner_seat, createdAt: row.created_at, expiresAt: row.expires_at, drawnAt: row.drawn_at };
@@ -90,13 +96,16 @@ export async function maintainJackpots(env, now = Date.now()) {
   await env.DB.prepare("UPDATE jackpots SET status = 'cancelled' WHERE status = 'open' AND expires_at <= ?").bind(now).run();
   const stuck = (await env.DB.prepare(`SELECT j.id FROM jackpots j WHERE j.status = 'open'
     AND (SELECT COUNT(*) FROM jackpot_entries e WHERE e.jackpot_id = j.id) >= j.max_players LIMIT 20`).all()).results || [];
-  for (const { id } of stuck) await drawPot(env, id, { now });
+  for (const { id } of stuck) {
+    // One pot that cannot be drawn must not fail every casino request: it expires and is handed back instead.
+    try { await drawPot(env, id, { now }); } catch (err) { console.error('maintainJackpots', id, err); }
+  }
 }
 
 // ---- Writing -----------------------------------------------------------------
-const entryInsert = (env, id, seat, userId, persona, stake, value, now) =>
-  env.DB.prepare(`INSERT INTO jackpot_entries(jackpot_id, seat, user_id, bot, bot_persona, stake, value, created_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)`)
-    .bind(id, seat, userId, persona ? 1 : 0, persona, JSON.stringify(stake), value, now);
+const entryInsert = (env, id, seat, userId, persona, stake, value, now, slabs = []) =>
+  env.DB.prepare(`INSERT INTO jackpot_entries(jackpot_id, seat, user_id, bot, bot_persona, stake, slabs, value, created_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+    .bind(id, seat, userId, persona ? 1 : 0, persona, JSON.stringify(stake), slabs.length ? JSON.stringify(slabs) : null, value, now);
 /** The draw, guarded so it only lands on the exact table the winner was rolled for (a leave or join in between voids it). */
 const drawStatement = (env, id, winnerSeat, now, count, sum) =>
   env.DB.prepare(`UPDATE jackpots SET status = 'done', winner_seat = ?, drawn_at = ?
@@ -134,21 +143,21 @@ async function createPot(env, request, helpers, shared, user, body, quick) {
     const open = await env.DB.prepare("SELECT COUNT(*) AS n FROM jackpots WHERE host_id = ? AND status = 'open'").bind(user.id).first();
     if (open.n >= JACKPOT_RULES.maxOpen) error(`You can host ${JACKPOT_RULES.maxOpen} open jackpots at once. Cancel one first.`, 409);
   }
-  const { stake, value, collection } = await shared.buildStake(env, request, helpers, user.id, body.cards, JACKPOT_RULES, 'jackpot');
+  const { stake, slabs, value, collection } = await shared.buildStake(env, request, helpers, user.id, body.cards, JACKPOT_RULES, 'jackpot', body.slabs);
   const now = Date.now(); const id = crypto.randomUUID();
   const entries = [{ seat: 0, value }];
   const statements = [
     env.DB.prepare(`INSERT INTO jackpots(id, host_id, request_id, max_players, min_value, created_at, expires_at) VALUES(?, ?, ?, ?, ?, ?, ?)`)
       .bind(id, user.id, requestId, players, value, now, now + JACKPOT_RULES.openHours * 3600000),
-    entryInsert(env, id, 0, user.id, null, stake, value, now),
+    entryInsert(env, id, 0, user.id, null, stake, value, now, slabs),
   ];
   if (quick) {
-    const bots = await botEntries(env, request, helpers, shared, stake, value, players - 1, []);
+    const bots = await botEntries(env, request, helpers, shared, stake, slabs, value, players - 1, []);
     bots.forEach((bot, i) => { statements.push(entryInsert(env, id, i + 1, null, bot.persona, bot.stake, bot.value, now)); entries.push({ seat: i + 1, value: bot.value }); });
     statements.push(drawWith(env, id, entries, now));
   }
   statements.push(await shared.binderStatement(env, helpers, user.id, collection, stake,
-    { sql: 'AND EXISTS(SELECT 1 FROM jackpot_entries WHERE jackpot_id = ? AND user_id = ?)', args: [id, user.id] }));
+    { sql: 'AND EXISTS(SELECT 1 FROM jackpot_entries WHERE jackpot_id = ? AND user_id = ?)', args: [id, user.id] }, slabs));
   try { await env.DB.batch(statements); }
   catch (err) {
     // A double-tapped create that lost the race: the winner's row is the answer.
@@ -161,8 +170,8 @@ async function createPot(env, request, helpers, shared, user, body, quick) {
 }
 
 /** `count` bot entries worth a little less than `target` each, every one a persona not in `used`. */
-async function botEntries(env, request, helpers, shared, hostStake, target, count, used) {
-  const pool = await shared.botPool(env, request, helpers, hostStake);
+async function botEntries(env, request, helpers, shared, hostStake, hostSlabs, target, count, used) {
+  const pool = await shared.botPool(env, request, helpers, hostStake, hostSlabs);
   const personas = shared.shuffle(BOT_PERSONAS.filter(p => !used.includes(p.id))).slice(0, count);
   return personas.map(persona => {
     const built = shared.buildBotStake(pool, target);
@@ -182,15 +191,15 @@ async function joinPot(env, request, helpers, shared, user, id, body) {
     if (row.status !== 'open' || row.expires_at <= now) error('That jackpot is over.', 409);
     const seats = freeSeats(entries, row.max_players);
     if (!seats.length) error('That jackpot is full.', 409);
-    built ||= await shared.buildStake(env, request, helpers, user.id, body.cards, JACKPOT_RULES, 'jackpot');
-    const { stake, value, collection } = built;
+    built ||= await shared.buildStake(env, request, helpers, user.id, body.cards, JACKPOT_RULES, 'jackpot', body.slabs);
+    const { stake, slabs, value, collection } = built;
     const { min, max } = jackpotWindow(row.min_value);
     if (value < min || value > max) error(`Put up between ${centsToCoins(min)} and ${centsToCoins(max)} coins of cards to join.`);
     const seat = seats[0]; const all = [...entries, { seat, value }];
-    const statements = [entryInsert(env, id, seat, user.id, null, stake, value, now)];
+    const statements = [entryInsert(env, id, seat, user.id, null, stake, value, now, slabs)];
     if (all.length >= row.max_players) statements.push(drawWith(env, id, all, now)); // the last seat: settle in the same transaction
     statements.push(await shared.binderStatement(env, helpers, user.id, collection, stake,
-      { sql: 'AND EXISTS(SELECT 1 FROM jackpot_entries WHERE jackpot_id = ? AND user_id = ?)', args: [id, user.id] }));
+      { sql: 'AND EXISTS(SELECT 1 FROM jackpot_entries WHERE jackpot_id = ? AND user_id = ?)', args: [id, user.id] }, slabs));
     try { await env.DB.batch(statements); }
     catch (err) { if (raceClash(err)) continue; throw err; } // someone took the seat first: read the table again
     if (all.length >= row.max_players) await drawPot(env, id, { now }); // a no-op unless the in-batch draw was voided
@@ -246,8 +255,8 @@ async function addBots(env, request, helpers, shared, user, id, body) {
     if (!seats.length) error('That jackpot is full.', 409);
     if (fill && !entries.some(e => !e.bot && e.user_id !== row.host_id)) error('Wait for another player before filling the pot with bots.', 409);
     const count = fill ? seats.length : 1;
-    const hostStake = parse(entries.find(e => e.seat === 0).stake);
-    const bots = await botEntries(env, request, helpers, shared, hostStake, row.min_value, count,
+    const host = entries.find(e => e.seat === 0);
+    const bots = await botEntries(env, request, helpers, shared, parse(host.stake), parse(host.slabs) || [], row.min_value, count,
       entries.filter(e => e.bot).map(e => e.bot_persona));
     const added = bots.map((bot, i) => ({ seat: seats[i], ...bot }));
     const all = [...entries, ...added];

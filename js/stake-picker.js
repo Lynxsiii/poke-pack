@@ -1,14 +1,23 @@
-/* The stake picker: a sheet where a player chooses which of their cards to put
-   on the table. Used by every casino game. It only builds a list of
-   { id, qty }; the Worker checks ownership, prices the cards and moves them.
+/* The stake picker: a sheet where a player chooses which of their cards, and
+   which of their graded slabs, to put on the table. Used by every casino game.
+   It only builds a list of { id, qty } for cards and a list of slab ids; the
+   Worker checks ownership, prices everything and moves it.
+
+   Slabs are unique (one row each), so a slab tile is a toggle with no stepper.
+   A slab counts at its graded value, the figure the Worker freezes at stake time.
+   onConfirm(cards, totalCoins, choices, slabIds).
 
    Two modes. Free: "put up cards", showing the window a challenger may match.
    Match: a target window (min..max coins) the total has to land in, with an
    auto-fill that reaches it from duplicates first. */
 import { esc, coins, icon, plural } from "./casino-kit.js";
-import { matchWindow } from "./casino-rules.js";
+import { matchWindow, COINFLIP_RULES, JACKPOT_RULES } from "./casino-rules.js";
+import { slabHTML, gradeWord } from "./slab.js?v=1";
 
 const PAGE = 60;
+const SLAB_PAGE = 30;
+/** Most slabs one stake may hold; the Worker and the triggers enforce the same number. */
+const MAX_SLABS = Math.min(COINFLIP_RULES.maxSlabs ?? 10, JACKPOT_RULES.maxSlabs ?? 10);
 const cents = (coinsValue) => Math.round(Number(coinsValue) * 100);
 
 /** Cards to reach `target` cents inside [min, max]: biggest that fit first, then small ones to close the gap. */
@@ -62,17 +71,58 @@ export function createStakePicker(ctx) {
   const totalCents = () => {
     let sum = 0;
     for (const [id, qty] of state.picked) sum += cents(state.byId.get(id)?.value || 0) * qty;
-    return sum;
+    return sum + slabCents();
   };
   const copies = () => [...state.picked.values()].reduce((n, q) => n + q, 0);
+  const slabCents = () => {
+    let sum = 0;
+    for (const id of state.pickedSlabs) sum += cents(state.slabById.get(id)?.value || 0);
+    return sum;
+  };
+  const slabCount = () => state.pickedSlabs.size;
+  const hasSlabs = () => state.slabs.length > 0;
+  const capped = () => slabCount() >= state.maxSlabs;
+  const stakeWords = (n, s) => (s ? (n ? `${plural(n, "card")}, ${plural(s, "slab")}` : plural(s, "slab")) : plural(n, "card"));
 
   function listed() {
     const q = state.query.trim().toLowerCase();
     let list = state.entries;
-    if (state.scope === "dupes") list = list.filter((e) => e.owned > 1);
+    if (state.scope === "graded") list = [];
+    else if (state.scope === "dupes") list = list.filter((e) => e.owned > 1);
     else if (state.scope === "picked") list = list.filter((e) => state.picked.has(e.id));
     if (q) list = list.filter((e) => e.name.toLowerCase().includes(q) || String(e.number).toLowerCase() === q || e.id === q);
     return [...list].sort(state.sort === "name" ? (a, b) => a.name.localeCompare(b.name) : (a, b) => b.value - a.value || a.name.localeCompare(b.name));
+  }
+
+  function listedSlabs() {
+    if (state.scope !== "graded" && state.scope !== "picked") return [];
+    const q = state.query.trim().toLowerCase();
+    let list = state.slabs;
+    if (state.scope === "picked") list = list.filter((e) => state.pickedSlabs.has(String(e.id)));
+    if (q) list = list.filter((e) => e.name.toLowerCase().includes(q) || String(e.number).toLowerCase() === q || e.cert.toLowerCase().includes(q) || String(e.cardId || "").toLowerCase() === q);
+    return [...list].sort(state.sort === "name" ? (a, b) => a.name.localeCompare(b.name) || b.grade - a.grade : (a, b) => b.value - a.value || b.grade - a.grade || a.name.localeCompare(b.name));
+  }
+
+  /** A slab as one flat tile: the real slab frame (js/slab.js, grid size) around the card's picture. */
+  function slabTile(e) {
+    const on = state.pickedSlabs.has(String(e.id));
+    const blocked = !on && capped();
+    const face = `<span class="cs-slabface"><img src="${esc(e.small || e.image)}" alt="" loading="lazy" decoding="async" /></span>`;
+    const label = `${e.name}, RIP ${e.grade} ${gradeWord(e.grade)}${e.reverse ? ", reverse holo" : ""}${e.guard ? ", guarded" : ""}, ${coins(e.value)} coins`;
+    return `<div class="cs-pick cs-slabtile${on ? " is-on" : ""}${blocked ? " is-capped" : ""}" data-slabtile="${esc(e.id)}">
+      <button class="cs-slabtile-art" type="button" data-slabpick="${esc(e.id)}" aria-pressed="${on}" aria-label="${esc(on ? `Take out ${label}` : `Put up ${label}`)}" ${blocked ? "disabled" : ""}>
+        ${slabHTML({ face, card: { name: e.name, number: e.number, rarity: e.rarity }, slab: { id: e.id, cert: e.cert, grade: e.grade, reverse: e.reverse, guard: e.guard }, size: "grid" })}
+        ${on ? `<b class="cs-pick-badge cs-slab-check" aria-hidden="true">${icon("check")}</b>` : ""}
+      </button>
+      <span class="cs-pick-name">${esc(e.name)}</span>
+      <span class="cs-pick-meta"><span class="cs-slab-cert">${esc(e.cert)}</span><b>${coins(e.value)}</b></span>
+      ${e.reverse ? `<span class="cs-slab-rev">Reverse holo</span>` : ""}
+    </div>`;
+  }
+
+  /** One quiet line above the slabs; the cap line only shows once the cap is reached. */
+  function slabNote() {
+    return `<p class="cs-slabnote">The winner takes the slab. A guard stays with you if the slab is lost.<b ${capped() ? "" : "hidden"}> That is the most slabs one stake can hold (${state.maxSlabs}).</b></p>`;
   }
 
   function tile(e) {
@@ -94,13 +144,23 @@ export function createStakePicker(ctx) {
   }
 
   function paintGrid() {
-    const list = listed();
-    const shown = list.slice(0, state.shown);
+    const cardList = listed();
+    const slabList = listedSlabs();
+    const list = [...cardList, ...slabList];
+    const limit = state.scope === "graded" ? SLAB_PAGE : PAGE;
+    const cardsShown = cardList.slice(0, state.shown);
+    const slabsShown = state.scope === "graded" ? slabList.slice(0, state.shown) : slabList;
+    const more = cardList.length - cardsShown.length + slabList.length - slabsShown.length;
     const grid = root.querySelector(".cs-grid");
+    grid.classList.toggle("is-slabs", state.scope === "graded");
     if (state.loading) grid.innerHTML = `<p class="cs-empty">Loading your cards.</p>`;
     else if (!list.length) {
       grid.innerHTML = `<p class="cs-empty">${
-        state.scope === "dupes"
+        state.scope === "graded"
+          ? state.query
+            ? "No slab matches that."
+            : "No graded cards yet. Send one to RIP Grading and it can be put up here."
+          : state.scope === "dupes"
           ? "No duplicates to put up. Switch to Everything to use single copies."
           : state.scope === "picked"
             ? "Nothing picked yet."
@@ -109,8 +169,9 @@ export function createStakePicker(ctx) {
               : "You have no cards yet. Open some packs first."
       }</p>`;
     } else {
-      grid.innerHTML = shown.map(tile).join("") +
-        (list.length > shown.length ? `<button class="cs-more" type="button" data-more>Show ${Math.min(PAGE, list.length - shown.length)} more of ${list.length - shown.length}</button>` : "");
+      const noteAt = state.scope === "graded" || slabList.length ? slabNote() : "";
+      grid.innerHTML = cardsShown.map(tile).join("") + noteAt + slabsShown.map(slabTile).join("") +
+        (more > 0 ? `<button class="cs-more" type="button" data-more>Show ${Math.min(limit, more)} more of ${more}</button>` : "");
     }
   }
 
@@ -119,7 +180,9 @@ export function createStakePicker(ctx) {
     const t = state.target;
     const meter = root.querySelector(".cs-meter");
     const n = copies();
-    const fig = `<b>${coins(total / 100)}</b><span>${plural(n, "card")}</span>`;
+    const s = slabCount();
+    const fig = `<b>${coins(total / 100)}</b><span>${stakeWords(n, s)}</span>`;
+    const slabHint = t && hasSlabs() ? `<p class="cs-meter-hint">Slabs count at graded value.</p>` : "";
     if (t) {
       const lo = cents(t.min); const hi = cents(t.max); const scale = hi * 1.35;
       const at = Math.min(100, (total / scale) * 100);
@@ -130,26 +193,29 @@ export function createStakePicker(ctx) {
           <i class="cs-win" style="left:${(lo / scale) * 100}%;width:${((hi - lo) / scale) * 100}%"></i><i class="cs-dot" style="left:${at}%"></i></div>
         <p class="cs-meter-note">${
           st === "in" ? `On the money. Needs ${coins(t.min)} to ${coins(t.max)}.` : st === "low" ? `Add ${coins((lo - total) / 100)} more. Needs ${coins(t.min)} to ${coins(t.max)}.` : `Take out ${coins((total - hi) / 100)}. Needs ${coins(t.min)} to ${coins(t.max)}.`
-        }</p>`;
+        }</p>${slabHint}`;
     } else {
       meter.dataset.state = total ? "in" : "low";
       const w = total ? matchWindow(total) : null;
       meter.innerHTML = `<div class="cs-meter-fig">${fig}</div>
-        <p class="cs-meter-note">${state.hint ? state.hint(total / 100) : w ? `A challenger can match between ${coins(w.min / 100)} and ${coins(w.max / 100)}.` : `Tap cards to put them up. The cards leave your collection until the ${state.noun} is over.`}</p>`;
+        <p class="cs-meter-note">${state.hint ? state.hint(total / 100) : w ? `A challenger can match between ${coins(w.min / 100)} and ${coins(w.max / 100)}.` : hasSlabs() ? `Tap cards or slabs to put them up. They leave your collection until the ${state.noun} is over.` : `Tap cards to put them up. The cards leave your collection until the ${state.noun} is over.`}</p>`;
     }
     const ok = t ? total >= cents(t.min) && total <= cents(t.max) : total >= (state.minValue || 10);
     const btn = root.querySelector("[data-confirm]");
     btn.disabled = !ok || state.busy;
-    btn.innerHTML = state.busy ? state.busyLabel || "Working" : state.confirmLabel(total / 100, n);
+    btn.innerHTML = state.busy ? state.busyLabel || "Working" : state.confirmLabel(total / 100, n, s);
     root.querySelector("[data-fill]")?.toggleAttribute("hidden", !t);
-    root.querySelector("[data-clear]")?.toggleAttribute("hidden", !n);
+    root.querySelector("[data-clear]")?.toggleAttribute("hidden", !n && !s);
     const pickedSeg = root.querySelector('[data-scope="picked"]');
-    if (pickedSeg) pickedSeg.textContent = n ? `Picked (${n})` : "Picked";
+    if (pickedSeg) pickedSeg.textContent = n + s ? `Picked (${n + s})` : "Picked";
   }
 
   function paintTools() {
     root.querySelectorAll("[data-scope]").forEach((b) => b.classList.toggle("on", b.dataset.scope === state.scope));
     root.querySelectorAll("[data-sort]").forEach((b) => b.classList.toggle("on", b.dataset.sort === state.sort));
+    root.querySelector('[data-scope="graded"]')?.toggleAttribute("hidden", !hasSlabs());
+    const search = root.querySelector(".cs-search input");
+    if (search) search.placeholder = state.scope === "graded" ? "Search your slabs" : "Search your cards";
   }
 
   const setError = (msg) => {
@@ -175,13 +241,44 @@ export function createStakePicker(ctx) {
     paintMeter();
   }
 
+  /** Put a slab up or take it back. Only this tile, the cap state of its neighbours and the meter change. */
+  function toggleSlab(id) {
+    const entry = state.slabById.get(id);
+    if (!entry) return;
+    if (state.pickedSlabs.has(id)) state.pickedSlabs.delete(id);
+    else if (capped()) return;
+    else state.pickedSlabs.add(id);
+    setError("");
+    if (state.scope === "picked") paintGrid();
+    else {
+      const el = root.querySelector(`.cs-slabtile[data-slabtile="${CSS.escape(id)}"]`);
+      if (el) {
+        const hadFocus = el.contains(document.activeElement);
+        const holder = document.createElement("div");
+        holder.innerHTML = slabTile(entry);
+        const next = holder.firstElementChild;
+        el.replaceWith(next);
+        if (hadFocus) next.querySelector("[data-slabpick]")?.focus({ preventScroll: true });
+      }
+      // The cap changes which of the other slabs can still be added.
+      root.querySelectorAll(".cs-slabtile").forEach((t) => {
+        const on = state.pickedSlabs.has(t.dataset.slabtile);
+        t.classList.toggle("is-capped", !on && capped());
+        t.querySelector("[data-slabpick]").disabled = !on && capped();
+      });
+      const note = root.querySelector(".cs-slabnote b");
+      if (note) note.hidden = !capped();
+    }
+    paintMeter();
+  }
+
   async function confirm() {
     if (state.busy) return;
     state.busy = true;
     paintMeter();
     setError("");
     try {
-      await state.onConfirm([...state.picked].map(([id, qty]) => ({ id, qty })), totalCents() / 100, { ...state.choices });
+      await state.onConfirm([...state.picked].map(([id, qty]) => ({ id, qty })), totalCents() / 100, { ...state.choices }, [...state.pickedSlabs].map((id) => state.slabById.get(id).id));
       close();
     } catch (err) {
       state.busy = false;
@@ -193,8 +290,10 @@ export function createStakePicker(ctx) {
   function fill() {
     const t = state.target;
     if (!t) return;
-    const target = cents(t.value ?? (t.min + t.max) / 2);
-    const attempt = (poolOf) => autoFill(state.entries, target, cents(t.min), cents(t.max), poolOf);
+    // Cards only. Slabs already picked stay, and the cards close the rest of the gap.
+    const held = slabCents();
+    const target = cents(t.value ?? (t.min + t.max) / 2) - held;
+    const attempt = (poolOf) => autoFill(state.entries, target, cents(t.min) - held, cents(t.max) - held, poolOf);
     let out = attempt((e) => Math.max(0, e.owned - 1));
     if (!out.ok) out = attempt((e) => e.owned);
     state.picked = out.picked;
@@ -202,7 +301,7 @@ export function createStakePicker(ctx) {
     paintTools();
     paintGrid();
     paintMeter();
-    setError(out.ok ? "" : "Your cards can't reach that exactly. Adjust the picks by hand.");
+    setError(out.ok ? "" : held ? "Your picks can't reach that exactly. Adjust them by hand." : "Your cards can't reach that exactly. Adjust the picks by hand.");
   }
 
   async function open(opts) {
@@ -211,6 +310,7 @@ export function createStakePicker(ctx) {
     state = {
       target: opts.target || null, minValue: opts.minValue || 10, confirmLabel: opts.confirmLabel || (() => "Confirm"),
       busyLabel: opts.busyLabel, onConfirm: opts.onConfirm, hint: opts.hint || null, noun: opts.noun || "flip", entries: [], byId: new Map(), picked: new Map(),
+      slabs: [], slabById: new Map(), pickedSlabs: new Set(), maxSlabs: Math.max(1, Number(opts.maxSlabs) || MAX_SLABS),
       choices: Object.fromEntries((opts.options || []).map((o) => [o.key, o.value])),
       scope: "dupes", sort: "value", query: "", shown: PAGE, loading: true, busy: false,
     };
@@ -227,7 +327,7 @@ export function createStakePicker(ctx) {
           ${(opts.options || []).map((o) => `<div class="cs-opt"><span>${esc(o.label)}</span><div class="cs-seg" role="group" aria-label="${esc(o.label)}" data-option="${esc(o.key)}">${o.values.map((v) => `<button type="button" data-optval="${esc(v)}" class="${String(v) === String(o.value) ? "on" : ""}">${esc(v)}</button>`).join("")}</div></div>`).join("")}
           <label class="cs-search">${icon("search")}<input type="search" inputmode="search" placeholder="Search your cards" autocomplete="off" enterkeyhint="search" /></label>
           <div class="cs-seg" role="group" aria-label="Which cards">
-            <button type="button" data-scope="dupes">Duplicates</button><button type="button" data-scope="all">Everything</button><button type="button" data-scope="picked">Picked</button>
+            <button type="button" data-scope="dupes">Duplicates</button><button type="button" data-scope="all">Everything</button><button type="button" data-scope="graded" hidden>Graded</button><button type="button" data-scope="picked">Picked</button>
           </div>
           <div class="cs-tool-row">
             <span class="cs-words" role="group" aria-label="Sort"><button type="button" data-sort="value">Highest value</button><button type="button" data-sort="name">Name</button></span>
@@ -249,6 +349,8 @@ export function createStakePicker(ctx) {
 
     root.addEventListener("click", (e) => {
       if (e.target.closest("[data-close]")) return close();
+      const slab = e.target.closest("[data-slabpick]");
+      if (slab) return toggleSlab(slab.dataset.slabpick);
       const add = e.target.closest("[data-add]");
       if (add) return change(add.dataset.add, 1);
       const less = e.target.closest("[data-less]");
@@ -261,21 +363,22 @@ export function createStakePicker(ctx) {
         return;
       }
       const scope = e.target.closest("[data-scope]");
-      if (scope) { state.scope = scope.dataset.scope; state.shown = PAGE; paintTools(); paintGrid(); return; }
+      if (scope) { state.scope = scope.dataset.scope; state.shown = scope.dataset.scope === "graded" ? SLAB_PAGE : PAGE; paintTools(); paintGrid(); return; }
       const sort = e.target.closest("[data-sort]");
       if (sort) { state.sort = sort.dataset.sort; paintTools(); paintGrid(); return; }
-      if (e.target.closest("[data-more]")) { state.shown += PAGE; paintGrid(); return; }
+      if (e.target.closest("[data-more]")) { state.shown += state.scope === "graded" ? SLAB_PAGE : PAGE; paintGrid(); return; }
       if (e.target.closest("[data-fill]")) return fill();
-      if (e.target.closest("[data-clear]")) { state.picked.clear(); paintGrid(); paintMeter(); return; }
+      if (e.target.closest("[data-clear]")) { state.picked.clear(); state.pickedSlabs.clear(); paintGrid(); paintMeter(); return; }
       if (e.target.closest("[data-confirm]")) confirm();
     });
     root.querySelector(".cs-search input").addEventListener("input", (e) => {
       state.query = e.target.value;
-      state.shown = PAGE;
+      state.shown = state.scope === "graded" ? SLAB_PAGE : PAGE;
       paintGrid();
     });
     root.querySelector(".cs-sheet").focus?.();
 
+    let cardsOk = false;
     try {
       const entries = await ctx.ownedCards();
       if (!root) return;
@@ -283,6 +386,7 @@ export function createStakePicker(ctx) {
       state.byId = new Map(entries.map((e) => [e.id, e]));
       if (!entries.some((e) => e.owned > 1)) state.scope = "all";
       state.loading = false;
+      cardsOk = true;
       paintTools();
       paintGrid();
       paintMeter();
@@ -290,6 +394,18 @@ export function createStakePicker(ctx) {
       if (!root) return;
       state.loading = false;
       root.querySelector(".cs-grid").innerHTML = `<p class="cs-empty">Couldn't load your cards. Close this and try again.</p>`;
+    }
+    // Slabs load after the cards (the cards call refreshes the save they come from). A failure only hides the Graded choice.
+    try {
+      const slabs = (await (opts.ownedSlabs ?? ctx.ownedSlabs)?.()) || [];
+      if (!root) return;
+      state.slabs = slabs.map((s) => ({ ...s, cert: String(s.cert || ""), guard: s.guard || null, reverse: Boolean(s.reverse) })).filter((s) => s.cert && s.value > 0);
+      state.slabById = new Map(state.slabs.map((s) => [String(s.id), s]));
+      if (cardsOk && !state.entries.length && state.slabs.length && state.scope === "all") { state.scope = "graded"; state.shown = SLAB_PAGE; }
+      paintTools();
+      if (cardsOk || state.slabs.length) { paintGrid(); paintMeter(); }
+    } catch {
+      /* no slabs to offer */
     }
   }
 
