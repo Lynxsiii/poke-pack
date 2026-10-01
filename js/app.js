@@ -110,9 +110,9 @@ import { api, ApiError } from "./api.js";
 import { gearItem, normalizeGear } from "./gear.js";
 import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=6";
 import { initBattles } from "./battles.js?v=3";
-import { initCasino } from "./casino.js?v=2";
+import { initCasino } from "./casino.js?v=4";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=4";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=5";
 import { coinTag } from "./battle-kit.js";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
@@ -6861,7 +6861,7 @@ function profileBinderPagesHtml() {
       <span role="status" aria-live="polite">${position + 1} of ${pages.length}</span>
       <button type="button" class="ghost" data-profile-page="1" ${position === pages.length - 1 ? "disabled" : ""} aria-label="Next binder page">Next</button>
     </nav>
-    <div class="profile-binder-pages">${binderObjectHtml({resolved:binderResolved(ownerLook, shared), innerHtml:`<div class="binder-spread single"><article class="profile-binder-page binder-page" data-page-index="${page.index}"${pageStyleAttr(pageVars)}><header><b>Binder page ${page.index + 1}</b><span class="profile-page-actions"><button type="button" class="link-btn" data-copy-page-link="${page.index}">Copy link</button>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</span></header><div class="binder-pockets">${pockets}</div></article></div>`})}</div></section>`;
+    <div class="profile-binder-pages">${binderObjectHtml({leaves:1, resolved:binderResolved(ownerLook, shared), innerHtml:`<div class="binder-spread single"><article class="profile-binder-page binder-page" data-page-index="${page.index}"${pageStyleAttr(pageVars)}><header><b>Binder page ${page.index + 1}</b><span class="profile-page-actions"><button type="button" class="link-btn" data-copy-page-link="${page.index}">Copy link</button>${mine ? `<button type="button" class="link-btn" data-share-page="${page.index}">Remove from profile</button>` : ""}</span></header><div class="binder-pockets">${pockets}</div></article></div>`})}</div></section>`;
 }
 
 function turnProfilePage(direction) {

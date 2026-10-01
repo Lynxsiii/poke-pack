@@ -154,7 +154,7 @@ async function createPot(env, request, helpers, shared, user, body, quick) {
   ];
   if (quick) {
     const bots = await botEntries(env, request, helpers, shared, stake, slabs, value, players - 1, []);
-    bots.forEach((bot, i) => { statements.push(entryInsert(env, id, i + 1, null, bot.persona, bot.stake, bot.value, now)); entries.push({ seat: i + 1, value: bot.value }); });
+    bots.forEach((bot, i) => { statements.push(entryInsert(env, id, i + 1, null, bot.persona, bot.stake, bot.value, now, bot.slabs)); entries.push({ seat: i + 1, value: bot.value }); });
     statements.push(drawWith(env, id, entries, now));
   }
   statements.push(await shared.binderStatement(env, helpers, user.id, collection, stake,
@@ -170,14 +170,17 @@ async function createPot(env, request, helpers, shared, user, body, quick) {
   return id;
 }
 
-/** `count` bot entries worth a little less than `target` each, every one a persona not in `used`. */
+/**
+ * `count` bot entries worth a little less than `target` each, every one a persona not in `used`. A bot may stake generated
+ * slabs (worker/casino.js buildBotStake: when the host's entry holds slabs, or the entry is too big for cards alone).
+ */
 async function botEntries(env, request, helpers, shared, hostStake, hostSlabs, target, count, used) {
   const pool = await shared.botPool(env, request, helpers, hostStake, hostSlabs);
   const personas = shared.shuffle(BOT_PERSONAS.filter(p => !used.includes(p.id))).slice(0, count);
   return personas.map(persona => {
-    const built = shared.buildBotStake(pool, target);
+    const built = shared.buildBotStake(pool, target, { hostSlabs, rules: JACKPOT_RULES });
     if (!built) error('The bots could not match that entry. Try a slightly different one.', 409);
-    return { persona: persona.id, stake: built.stake, value: built.value };
+    return { persona: persona.id, stake: built.stake, slabs: built.slabs, value: built.value };
   });
 }
 
@@ -261,7 +264,7 @@ async function addBots(env, request, helpers, shared, user, id, body) {
       entries.filter(e => e.bot).map(e => e.bot_persona));
     const added = bots.map((bot, i) => ({ seat: seats[i], ...bot }));
     const all = [...entries, ...added];
-    const statements = added.map(b => entryInsert(env, id, b.seat, null, b.persona, b.stake, b.value, now));
+    const statements = added.map(b => entryInsert(env, id, b.seat, null, b.persona, b.stake, b.value, now, b.slabs));
     if (all.length >= row.max_players) statements.push(drawWith(env, id, all, now));
     try { await env.DB.batch(statements); }
     catch (err) { if (raceClash(err)) continue; throw err; }

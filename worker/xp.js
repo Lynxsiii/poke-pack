@@ -68,8 +68,9 @@ export function clearXpStmts(env, userId) {
  *   graded / gemMint          slabs the player sent to grading and still holds
  *                             or sold ('slabbed', 'sold'). A cracked slab does
  *                             not count (a regrade would multiply it) and a slab
- *                             won in the casino ("won:<id>" request ids) is not
- *                             the winner's grading.
+ *                             won in the casino ("won:<id>" request ids) or minted
+ *                             from a bot's stake ("casino:<game>:<id>:<n>", fee 0)
+ *                             is not the winner's grading.
  *
  * A table that does not exist yet reads as zero.
  */
@@ -104,7 +105,7 @@ export async function loadXpCounters(env, userId) {
     ),
     run(
       `SELECT COUNT(*) AS n, COALESCE(SUM(grade = 10), 0) AS gem FROM graded_cards
-       WHERE user_id = ?1 AND status IN ('slabbed', 'sold') AND request_id NOT LIKE 'won:%'`
+       WHERE user_id = ?1 AND status IN ('slabbed', 'sold') AND request_id NOT LIKE 'won:%' AND request_id NOT LIKE 'casino:%'`
     ),
   ]);
   return {

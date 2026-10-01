@@ -18,10 +18,16 @@ const PAGE = 60;
 const SLAB_PAGE = 30;
 /** Most slabs one stake may hold; the Worker and the triggers enforce the same number. */
 const MAX_SLABS = Math.min(COINFLIP_RULES.maxSlabs ?? 10, JACKPOT_RULES.maxSlabs ?? 10);
+/** Different cards one stake may hold: read from the shared rules, never hardcoded (the Worker enforces the same). */
+const MAX_CARDS = Math.min(COINFLIP_RULES.maxCards ?? 100, JACKPOT_RULES.maxCards ?? 100);
+/** Copies of one card, and copies in a whole stake: the shared rules, so the picker never builds a stake the Worker refuses. */
+const MAX_QTY = Math.min(COINFLIP_RULES.maxQty ?? 9999, JACKPOT_RULES.maxQty ?? 9999);
+const MAX_COPIES = Math.min(COINFLIP_RULES.maxCopies ?? 100000, JACKPOT_RULES.maxCopies ?? 100000);
 const cents = (coinsValue) => Math.round(Number(coinsValue) * 100);
+const count = (n) => Number(n).toLocaleString("en-US");
 
 /** Cards to reach `target` cents inside [min, max]: biggest that fit first, then small ones to close the gap. */
-export function autoFill(entries, target, min, max, poolOf) {
+export function autoFill(entries, target, min, max, poolOf, maxCards = MAX_CARDS) {
   const pool = entries
     .map((e) => ({ id: e.id, cents: cents(e.value), avail: poolOf(e) }))
     .filter((e) => e.cents > 0 && e.avail > 0)
@@ -30,6 +36,7 @@ export function autoFill(entries, target, min, max, poolOf) {
   let total = 0;
   const take = (e, n) => {
     if (n <= 0) return;
+    if (!picked.has(e.id) && picked.size >= maxCards) return;
     picked.set(e.id, (picked.get(e.id) || 0) + n);
     e.avail -= n;
     total += n * e.cents;
@@ -39,9 +46,10 @@ export function autoFill(entries, target, min, max, poolOf) {
     if (fit > 0 && total + e.cents <= target) take(e, Math.min(fit, Math.floor((target - total) / e.cents)));
   }
   // Close the gap with the cheapest cards that keep it under max.
+  // One step per card (never one copy at a time): a stack of 9999 stays instant.
   for (const e of [...pool].reverse()) {
-    while (total < min && e.avail > 0 && total + e.cents <= max) take(e, 1);
     if (total >= min) break;
+    take(e, Math.min(e.avail, Math.ceil((min - total) / e.cents), Math.floor((max - total) / e.cents)));
   }
   return { picked, total, ok: total >= min && total <= max };
 }
@@ -131,14 +139,14 @@ export function createStakePicker(ctx) {
     return `<div class="cs-pick${on ? " is-on" : ""}" data-id="${esc(e.id)}">
       <button class="cs-pick-art" type="button" data-add="${esc(e.id)}" aria-label="Add ${esc(e.name)}">
         <img src="${esc(e.small || e.image)}" alt="" loading="lazy" decoding="async" />
-        ${on ? `<b class="cs-pick-badge">${on}</b>` : ""}
+        ${on ? `<b class="cs-pick-badge">${count(on)}</b>` : ""}
       </button>
       <span class="cs-pick-name">${esc(e.name)}</span>
-      <span class="cs-pick-meta"><span>${e.owned > 1 ? `Own ${e.owned}` : "Own 1"}</span><b>${coins(e.value)}</b></span>
+      <span class="cs-pick-meta"><span>${e.owned > 1 ? `Own ${count(e.owned)}` : "Own 1"}</span><b>${coins(e.value)}</b></span>
       ${
         on
-          ? `<span class="cs-step"><button type="button" data-less="${esc(e.id)}" aria-label="Remove one ${esc(e.name)}">${icon("minus")}</button><output>${on}</output><button type="button" data-add="${esc(e.id)}" aria-label="Add one ${esc(e.name)}" ${on >= e.owned ? "disabled" : ""}>${icon("plus")}</button></span>`
-          : `<span class="cs-pick-hint">${max > 1 ? `Up to ${max}` : ""}</span>`
+          ? `<span class="cs-step"><button type="button" data-less="${esc(e.id)}" aria-label="Remove one ${esc(e.name)}">${icon("minus")}</button><output>${count(on)}</output><button type="button" data-add="${esc(e.id)}" aria-label="Add one ${esc(e.name)}" ${on >= Math.min(e.owned, MAX_QTY) ? "disabled" : ""}>${icon("plus")}</button></span>`
+          : `<span class="cs-pick-hint">${max > 1 ? `Up to ${count(max)}` : ""}</span>`
       }
     </div>`;
   }
@@ -207,7 +215,7 @@ export function createStakePicker(ctx) {
     root.querySelector("[data-fill]")?.toggleAttribute("hidden", !t);
     root.querySelector("[data-clear]")?.toggleAttribute("hidden", !n && !s);
     const pickedSeg = root.querySelector('[data-scope="picked"]');
-    if (pickedSeg) pickedSeg.textContent = n + s ? `Picked (${n + s})` : "Picked";
+    if (pickedSeg) pickedSeg.textContent = n + s ? `Picked (${count(n + s)})` : "Picked";
   }
 
   function paintTools() {
@@ -227,7 +235,17 @@ export function createStakePicker(ctx) {
   function change(id, delta) {
     const entry = state.byId.get(id);
     if (!entry) return;
-    const next = Math.max(0, Math.min(entry.owned, (state.picked.get(id) || 0) + delta));
+    if (delta > 0 && !state.picked.has(id) && state.picked.size >= MAX_CARDS) {
+      setError(`One stake can hold ${MAX_CARDS} different cards. Take one out to add this.`);
+      return;
+    }
+    const have = state.picked.get(id) || 0;
+    let next = Math.max(0, Math.min(entry.owned, MAX_QTY, have + delta));
+    if (delta > 0 && copies() - have + next > MAX_COPIES) next = Math.max(0, MAX_COPIES - (copies() - have));
+    if (delta > 0 && next <= have) {
+      setError(next >= MAX_QTY ? `One stake can hold ${count(MAX_QTY)} copies of a card.` : `One stake can hold ${count(MAX_COPIES)} cards in total.`);
+      return;
+    }
     if (next) state.picked.set(id, next);
     else state.picked.delete(id);
     setError("");
@@ -294,8 +312,8 @@ export function createStakePicker(ctx) {
     const held = slabCents();
     const target = cents(t.value ?? (t.min + t.max) / 2) - held;
     const attempt = (poolOf) => autoFill(state.entries, target, cents(t.min) - held, cents(t.max) - held, poolOf);
-    let out = attempt((e) => Math.max(0, e.owned - 1));
-    if (!out.ok) out = attempt((e) => e.owned);
+    let out = attempt((e) => Math.min(MAX_QTY, Math.max(0, e.owned - 1)));
+    if (!out.ok) out = attempt((e) => Math.min(MAX_QTY, e.owned));
     state.picked = out.picked;
     state.shown = PAGE;
     paintTools();

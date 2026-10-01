@@ -363,7 +363,7 @@ export function initGrading(deps) {
       </section>
       <section class="gd-section" aria-labelledby="gd-slabs-h">
         <div class="gd-section-head">
-          <h2 class="gd-h" id="gd-slabs-h">Graded <span>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}</span></h2>
+          <h2 class="gd-h" id="gd-slabs-h">Graded <span>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs && slabs.length <= GRADING_LIMITS.maxSlabs ? ` of ${GRADING_LIMITS.maxSlabs}` : ""}</span></h2>
           ${slabs.length ? `<a class="gd-more-link" href="/grading/graded" data-gd-link>All ${slabs.length} ${slabs.length === 1 ? "slab" : "slabs"}</a>` : ""}
         </div>
         ${
@@ -408,7 +408,7 @@ export function initGrading(deps) {
       ${
         slabs.length
           ? `<dl class="gd-facts gd-facts-graded">
-            <div><dt>Slabs</dt><dd>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs ? ` <small>of ${GRADING_LIMITS.maxSlabs}</small>` : ""}</dd></div>
+            <div><dt>Slabs</dt><dd>${slabs.length}${slabs.length >= GRADING_LIMITS.maxSlabs && slabs.length <= GRADING_LIMITS.maxSlabs ? ` <small>of ${GRADING_LIMITS.maxSlabs}</small>` : ""}</dd></div>
             <div><dt>Worth together</dt><dd>${coinTag(worth)}</dd></div>
             <div><dt>Best grade</dt><dd>${best ? `${best.grade} ${esc(gradeWord(best.grade))}` : ""}</dd></div>
             <div><dt>On your profile</dt><dd>${onProfile} of ${slabRoom().cap}${handle ? ` <small><a href="/u/${esc(handle)}">See your profile</a></small>` : ""}</dd></div>

@@ -101,7 +101,7 @@ export function createJackpot(ctx) {
         <button class="solid${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-new>${casinoIcon("pot")}Start a pot</button>
         <button class="ghost${lock() ? " is-gated" : ""}"${lock() ? " aria-disabled=\"true\"" : ""} type="button" data-quick>${icon("bot")}Quick pot with bots</button>
       </div>
-      <p class="cs-fine">Bots are free to call and put in cards worth a little less than the pot's minimum, so they never hand out value. A bot never puts in slabs. ${
+      <p class="cs-fine">Bots are free to call and put in cards worth a little less than the pot's minimum, so they never hand out value. They may put in graded slabs too. ${
         rec ? `You have played ${plural(rec.played, "pot")} and won ${rec.won}.` : ""}</p>
       <section class="cs-section" aria-labelledby="jp-open">
         <h2 class="cs-h" id="jp-open">Open pots${open.length ? ` <span>${open.length}</span>` : ""}</h2>
@@ -114,8 +114,8 @@ export function createJackpot(ctx) {
       <details class="cs-how"><summary>How the draw stays fair</summary>
         <p>The server draws the winner the moment the pot fills or the host draws it, using its own randomness. Every card and slab moves in the same step, so nothing can be taken back or faked from a browser.</p>
         <p>Odds are each entry's share of the pot's value. Everyone else has to put up between one and ${JACKPOT_RULES.maxMultiple} times the host's entry, so nobody can drown out the table. A graded slab counts at its graded value, what it sells for. A pot that never fills returns every pile after ${JACKPOT_RULES.openHours} hours.</p>
-        <p>A bot puts in new cards worth up to 6% less than the minimum. If it wins, those cards leave the game. If you win, you get them. Either way the bot never gives away value.</p>
-        <p>A bot never puts in slabs. If a bot wins the pot, every slab in it leaves the game. A guard on a lost slab stays with you.</p></details>
+        <p>A bot puts in new cards, and sometimes new graded slabs, worth up to 6% less than the minimum. If it wins, those leave the game. If you win, you receive them, slabs included. Either way the bot never gives away value.</p>
+        <p>If a bot wins the pot, every slab in it leaves the game. A guard on a lost slab stays with you.</p></details>
     </div>`;
     if (Math.abs(window.scrollY - scroll) > 2) window.scrollTo(0, scroll);
   }
@@ -314,7 +314,7 @@ export function createJackpot(ctx) {
     if (lock()) return ctx.toast?.(gateRefusal(lock()));
     ctx.picker.open({
       title: quick ? "Quick pot with bots" : "Start a pot",
-      lede: quick ? "Your entry sets the stakes. Bots fill every other seat and it is drawn at once. Bots never put in slabs." : `Your entry is the pot's minimum. Everyone else puts in one to ${JACKPOT_RULES.maxMultiple === 5 ? "five" : JACKPOT_RULES.maxMultiple} times as much.`,
+      lede: quick ? "Your entry sets the stakes. Bots fill every other seat and it is drawn at once." : `Your entry is the pot's minimum. Everyone else puts in one to ${JACKPOT_RULES.maxMultiple === 5 ? "five" : JACKPOT_RULES.maxMultiple} times as much.`,
       options: seatOption(quick ? [3, 4, 5, 6] : [3, 4, 6, 8, 10], quick ? 4 : JACKPOT_RULES.defaultPlayers),
       confirmLabel: (total) => (quick ? `Play a quick pot for ${coins(total)}` : `Start a pot with ${coins(total)}`),
       busyLabel: quick ? "Drawing" : "Setting the table",

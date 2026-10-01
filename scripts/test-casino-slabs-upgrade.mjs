@@ -1,4 +1,4 @@
-/* Upgrading a LIVE casino to graded slabs (migration 0022): a database that already holds open, settled and cancelled
+/* Upgrading a LIVE casino to graded slabs (migration 0022) and then to bot slabs (slabs-v2, migration 0027): a database that already holds open, settled and cancelled
    coinflips and jackpots with raw-only stakes (the 0015 to 0020 schema as it was) is upgraded by the Worker's lazy path,
    and every game keeps working: nothing dropped, nothing duplicated, a second upgrade is a no-op, old code's inserts still land.
    Runs the real Worker against SQLite (Node 22+): node scripts/test-casino-slabs-upgrade.mjs */
@@ -12,8 +12,9 @@ import { resetCasinoSchemaCache } from '../worker/casino.js';
 import { resetJackpotSchemaCache, maintainJackpots } from '../worker/jackpot.js';
 import { resetGradingSchemaCache } from '../worker/grading.js';
 import { resetXpSchemaCache } from '../worker/xp.js';
-import { SLABS_DDL, SLABS_COLUMNS } from '../worker/casino-ddl.js';
-import { SLABS_MARKER, SLABS_REQUIRED } from '../worker/casino-slabs.js';
+import { SLABS_DDL, SLABS_COLUMNS, BOT_SLABS_DDL } from '../worker/casino-ddl.js';
+import { SLABS_MARKER, SLABS_REQUIRED, SLABS_V2_REQUIRED } from '../worker/casino-slabs.js';
+import { certNumber } from '../js/grading-rules.js';
 import { COINFLIP_RULES } from '../js/casino-rules.js';
 
 const results = [];
@@ -146,6 +147,9 @@ const rawLedger = db => db.prepare('SELECT COALESCE(SUM(qty),0) n FROM cards').g
 const qty = (db, user, card) => db.prepare('SELECT qty FROM cards WHERE user_id = ? AND card_id = ?').get(user, card)?.qty || 0;
 // "Upgraded" means the slab code is in the triggers (the comment marker is only documentation), and the two new graded_cards triggers exist.
 const hasMarker = db => Object.entries(SLABS_REQUIRED).every(([name, token]) => token.test(db.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(name)?.sql || ''));
+
+/** slabs-v2 (bots carry generated slabs, the settle mints them): the v2 trigger code is in. */
+const v2Current = d => Object.entries(SLABS_V2_REQUIRED).every(([name, token]) => token.test(d.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(name)?.sql || ''));
 
 // ---------------------------------------------------------------------------------------------------------------------
 const world = oldWorld(); const { db, DB, log } = world; const env = { DB, ASSETS }; const api = apiFor(env);
@@ -285,12 +289,12 @@ await check('old code\'s writes (no slab columns) still work after the upgrade: 
 // ---- Other ways to arrive at the new schema -----------------------------------------------------------------------------
 await check('the migration file applied by hand (wrangler path) leaves the Worker nothing to do; replaying its trigger half is harmless', async () => {
   const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db);
-  w.db.exec(migrationSql('0022_casino_slabs.sql')); assert.ok(hasMarker(w.db));
+  w.db.exec(migrationSql('0022_casino_slabs.sql')); w.db.exec(migrationSql('0027_casino_bot_slabs.sql')); assert.ok(hasMarker(w.db) && v2Current(w.db));
   resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
   assert.deepEqual(w.log.slice(mark).filter(sql => !/^\s*CREATE (TABLE|INDEX) IF NOT EXISTS/i.test(sql) && /^\s*(ALTER|DROP|CREATE)/i.test(sql)), []); assert.equal(w.DB.batches, batches);
   const frozen = hash(triggerSql(w.db));
-  await w.DB.batch(SLABS_DDL.map(sql => w.DB.prepare(sql))); assert.equal(hash(triggerSql(w.db)), frozen, 'replaying the DROP + CREATE batch changes nothing');
+  await w.DB.batch(SLABS_DDL.map(sql => w.DB.prepare(sql))); await w.DB.batch(BOT_SLABS_DDL.map(sql => w.DB.prepare(sql))); assert.equal(hash(triggerSql(w.db)), frozen, 'replaying the DROP + CREATE batches changes nothing');
   // and the schema the Worker builds by itself is the same schema the migration builds
   const lazy = oldWorld(); lazy.db.exec('PRAGMA foreign_keys = ON'); resetCaches();
   populate(lazy.db); assert.equal((await apiFor({ DB: lazy.DB, ASSETS })('/api/casino/coinflips', 'GET', undefined, null)).status, 200);
@@ -318,7 +322,7 @@ await check('a crash between the column step and the trigger step finishes on th
   rig.coin = 'host'; assert.equal(w.db.prepare("SELECT status FROM coinflips WHERE id = ?").get(wids.F_join).status, 'open'); unrig();
   // The next request completes the upgrade.
   resetCaches();
-  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200); assert.ok(hasMarker(w.db));
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200); assert.ok(hasMarker(w.db) && v2Current(w.db));
   assert.equal(rawLedger(w.db), ledger);
   const j = await a(`/api/casino/coinflips/${wids.F_join}/join`, 'POST', { cards: [{ id: 'me5-87', qty: 1 }] }, 'o7'); assert.equal(j.status, 200, JSON.stringify(j));
 });
@@ -366,20 +370,23 @@ await check('the escrow triggers come with the upgrade: an old Worker\'s crack, 
 await check('a path that strips comments (no marker in the stored SQL) does not make every cold isolate rebuild the triggers', async () => {
   const w = oldWorld(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); populate(w.db);
   for (const [, , sql] of SLABS_COLUMNS) w.db.exec(sql);
-  for (const sql of SLABS_DDL) w.db.exec(sql.replace(/\/\*.*?\*\//g, '').replace(/^\s*--.*$/gm, ''));
+  for (const sql of [...SLABS_DDL, ...BOT_SLABS_DDL]) w.db.exec(sql.replace(/\/\*.*?\*\//g, '').replace(/^\s*--.*$/gm, ''));
   for (const name of ['coinflip_stake_check', 'coinflip_settle_check', 'jackpot_settle_check', 'jackpot_entry_check', 'graded_slab_escrow']) {
     assert.ok(!w.db.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(name).sql.includes(SLABS_MARKER), `${name} has no comment marker`);
   }
-  assert.ok(hasMarker(w.db), 'the slab code itself is what counts');
+  assert.ok(hasMarker(w.db) && v2Current(w.db), 'the slab code itself is what counts');
+  for (const name of Object.keys(SLABS_V2_REQUIRED)) assert.ok(!w.db.prepare('SELECT sql FROM sqlite_master WHERE name = ?').get(name).sql.includes('slabs-v2'), `${name} has no v2 comment marker`);
   resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
   assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200); assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200);
   assert.equal(w.DB.batches, batches, 'no trigger batch ran'); assert.deepEqual(w.log.slice(mark).filter(sql => /DROP\s+TRIGGER/i.test(sql)), []);
   // ... while a half-way state (the old settle trigger, new columns) is still repaired.
   w.db.exec('DROP TRIGGER jackpot_settle_check'); w.db.exec(`CREATE TRIGGER jackpot_settle_check BEFORE UPDATE ON jackpots WHEN OLD.status = 'open' AND NEW.status = 'done' BEGIN SELECT 1; END`);
   assert.equal(hasMarker(w.db), false); resetCaches(); const again = w.DB.batches;
-  assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200); assert.equal(w.DB.batches, again + 1); assert.ok(hasMarker(w.db));
+  assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200); assert.equal(w.DB.batches, again + 2, 'the v1 repair, then the v2 batch'); assert.ok(hasMarker(w.db) && v2Current(w.db));
   w.db.exec('DROP TRIGGER graded_slab_escrow_delete'); assert.equal(hasMarker(w.db), false, 'a missing escrow trigger counts as not upgraded');
-  resetCaches(); assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200); assert.ok(hasMarker(w.db));
+  resetCaches(); assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200); assert.ok(hasMarker(w.db) && v2Current(w.db));
+  w.db.exec('DROP TRIGGER jackpot_slab_settle'); assert.equal(v2Current(w.db), false, 'a missing v2 trigger counts as not upgraded'); resetCaches(); const last = w.DB.batches;
+  assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200); assert.ok(v2Current(w.db) && hasMarker(w.db)); assert.equal(w.DB.batches, last + 1, 'only the v2 batch');
 });
 
 await check('a slab an old Worker cracked while it sat in a flip (before the triggers arrived) cannot wedge the upgrade, the expiry or the account', async () => {
@@ -413,6 +420,144 @@ await check('a slab an old Worker cracked while it sat in a flip (before the tri
   assert.equal(rawLedger(w.db), ledger); void wids;
   assert.equal((await a('/api/me/reset', 'POST', {}, 'o6')).status, 200);
   assert.equal(w.db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE user_id = 'o6'").get().n, 0);
+});
+
+// ---- slabs-v1 -> slabs-v2 (migration 0027): the live database is at v1 today --------------------------------------------------
+/** A database exactly as the live site is now: migrations through 0022 (columns + the v1 triggers), games and slabs of every kind in it. */
+function v1World() {
+  const w = oldWorld([...OLD_FILES, '0022_casino_slabs.sql']); const { db: d } = w;
+  const ids = populate(d);
+  const mint = (user, card, grade, guard = null) => Number(d.prepare(`INSERT INTO graded_cards(user_id,card_id,reverse,grade,band,fee_cents,request_id,guard,status,created_at) VALUES(?,?,0,?,'me',541,?,?,'slabbed',?)`)
+    .run(user, card, grade, rid(), guard, now).lastInsertRowid);
+  const snap = (id, cardId, grade, v, guard = null) => ({ id, cardId, name: CARD[cardId].name, number: CARD[cardId].number, rarity: CARD[cardId].rarity, image: '', small: '', grade, reverse: 0, guard, v });
+  const flip = (name, host, list, slabs, { done = null } = {}) => {
+    const id = rid(); ids[name] = id;
+    const value = stakeValue(list) + slabs.reduce((n, s) => n + s.v, 0);
+    d.prepare(`INSERT INTO coinflips(id,host_id,request_id,bot,host_stake,host_slabs,host_value,host_coin,created_at,expires_at) VALUES(?,?,?,0,?,?,?,NULL,?,?)`)
+      .run(id, host, `req-${name}-0001`, JSON.stringify(rawStake(list)), slabs.length ? JSON.stringify(slabs) : null, value, now - 1000, now + 20 * 3600000);
+    if (done) d.prepare(`UPDATE coinflips SET status = 'done', guest_id = ?, guest_stake = ?, guest_slabs = ?, guest_value = ?, bot_persona = ?, winner = ?, flipped_at = ? WHERE id = ? AND status = 'open'`)
+      .run(done.guest, JSON.stringify(rawStake(done.list || [])), done.slabs?.length ? JSON.stringify(done.slabs) : null, (done.list ? stakeValue(done.list) : 0) + (done.slabs || []).reduce((n, s) => n + s.v, 0), done.guest === 'house' ? 'professor-elm' : null, done.winner, now - 500, id);
+    return id;
+  };
+  const s = {};
+  s.open = mint('o1', 'me5-87', 9, 'guard-onyx'); flip('S_open', 'o1', [['me5-3', 5]], [snap(s.open, 'me5-87', 9, 828, 'guard-onyx')]);
+  s.only = mint('o2', 'me5-98', 9); flip('S_slabonly', 'o2', [], [snap(s.only, 'me5-98', 9, 797)]);
+  s.h3 = mint('o3', 'me5-87', 9, 'guard-gilt'); s.g4 = mint('o4', 'me5-87', 9, 'guard-frost');
+  flip('S_done', 'o3', [], [snap(s.h3, 'me5-87', 9, 828, 'guard-gilt')], { done: { guest: 'o4', list: [], slabs: [snap(s.g4, 'me5-87', 9, 828, 'guard-frost')], winner: 'host' } });
+  s.h5 = mint('o5', 'me5-87', 9); flip('S_done_bot', 'o5', [], [snap(s.h5, 'me5-87', 9, 828)], { done: { guest: 'house', list: [['me5-98', 1]], winner: 'guest' } });
+  // Pots: an open one with two slab entries, a drawn one with slabs and a raw bot entry.
+  const pot = (name, host, max, minValue, entries, drawn = null) => {
+    const id = rid(); ids[name] = id;
+    d.prepare(`INSERT INTO jackpots(id,host_id,request_id,max_players,min_value,created_at,expires_at) VALUES(?,?,?,?,?,?,?)`).run(id, host, `req-${name}-0001`, max, minValue, now - 1000, now + 20 * 3600000);
+    entries.forEach(({ user, list = [], slabs = [], persona }, seat) => d.prepare(`INSERT INTO jackpot_entries(jackpot_id,seat,user_id,bot,bot_persona,stake,slabs,value,created_at) VALUES(?,?,?,?,?,?,?,?,?)`)
+      .run(id, seat, persona ? null : user, persona ? 1 : 0, persona || null, JSON.stringify(rawStake(list)), slabs.length ? JSON.stringify(slabs) : null, stakeValue(list) + slabs.reduce((n, x) => n + x.v, 0), now - 900));
+    if (drawn != null) d.prepare("UPDATE jackpots SET status = 'done', winner_seat = ?, drawn_at = ? WHERE id = ?").run(drawn, now - 400, id);
+    return id;
+  };
+  s.q1 = mint('o1', 'me5-87', 9); s.q2 = mint('o2', 'me5-87', 9, 'guard-cherry');
+  pot('Q_open', 'o1', 4, 828, [{ user: 'o1', slabs: [snap(s.q1, 'me5-87', 9, 828)] }, { user: 'o2', slabs: [snap(s.q2, 'me5-87', 9, 828, 'guard-cherry')] }]);
+  s.q3 = mint('o3', 'me5-87', 9); s.q4 = mint('o4', 'me5-87', 9);
+  pot('Q_done', 'o3', 3, 828, [{ user: 'o3', slabs: [snap(s.q3, 'me5-87', 9, 828)] }, { user: 'o4', slabs: [snap(s.q4, 'me5-87', 9, 828)] }, { persona: 'professor-elm', list: [['me5-98', 1]] }], 1);
+  return { ...w, ids, s };
+}
+const slabRows = d => d.prepare('SELECT id, user_id, status, guard, locked, request_id, shown, sold_cents, sell_request_id FROM graded_cards ORDER BY id').all().map(r => ({ ...r }));
+
+await check('slabs-v1 -> v2: a live (v1) database with open and finished slab games upgrades in place; nothing is touched, finished games still render, the second ensure is a no-op', async () => {
+  const w = v1World(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); const { ids: i, s } = w;
+  assert.ok(hasMarker(w.db), 'it is at v1'); assert.equal(v2Current(w.db), false);
+  assert.equal(w.db.prepare("SELECT locked FROM graded_cards WHERE id = ?").get(s.open).locked, `coinflip:${i.S_open}`, 'escrowed human slabs (v1)');
+  assert.equal(w.db.prepare("SELECT user_id, guard, request_id LIKE 'won:%' AS won FROM graded_cards WHERE id = ?").get(s.g4).user_id, 'o3', 'the finished flip moved its slab');
+  assert.equal(w.db.prepare('SELECT status, sell_request_id FROM graded_cards WHERE id = ?').get(s.h5).status, 'sold', 'a finished bot win closed its slab');
+  const frozenSnapshot = snapshot(w.db); const frozenSlabs = slabRows(w.db); const ledger = rawLedger(w.db); const v1Triggers = triggerSql(w.db);
+  resetCaches();
+  const listed = await a('/api/casino/coinflips', 'GET', undefined, null); assert.equal(listed.status, 200, JSON.stringify(listed));
+  assert.ok(v2Current(w.db) && hasMarker(w.db), 'now v2'); assert.equal(w.DB.batches, 1, 'one atomic trigger batch');
+  const v2Triggers = triggerSql(w.db);
+  assert.deepEqual(Object.keys(v2Triggers).sort(), Object.keys(v1Triggers).sort(), 'no trigger added or dropped');
+  const changed = Object.keys(v2Triggers).filter(name => v2Triggers[name] !== v1Triggers[name]).sort();
+  assert.deepEqual(changed, ['coinflip_settle_check', 'coinflip_slab_settle', 'jackpot_entry_check', 'jackpot_settle_check', 'jackpot_slab_settle'], 'exactly the five replaced triggers changed');
+  for (const name of changed) assert.ok(v2Triggers[name].includes('/* slabs-v2 */'));
+  assert.deepEqual(slabRows(w.db), frozenSlabs, 'no slab changed'); assert.equal(rawLedger(w.db), ledger);
+  for (const t of ['users', 'profiles', 'jackpot_entries']) assert.deepEqual(snapshot(w.db)[t], frozenSnapshot[t], `${t} is unchanged`);
+  // v1-era finished games render: slabs with their ids, a house flip with no slabs
+  const done = listed.done.find(f => f.id === i.S_done); assert.equal(done.hostSlabs.length, 1); assert.equal(done.guestSlabs.length, 1);
+  assert.equal(done.guestSlabs[0].id, s.g4); assert.equal(done.guestSlabs[0].cert, certNumber(s.g4)); assert.equal(done.guestSlabs[0].guard, 'guard-frost'); assert.equal(done.winner, 'host');
+  const bot = listed.done.find(f => f.id === i.S_done_bot); assert.deepEqual(bot.guestSlabs, []); assert.equal(bot.guest.bot, true); assert.equal(bot.winner, 'guest');
+  const pots = await a('/api/casino/jackpots', 'GET', undefined, null); assert.equal(pots.status, 200);
+  const qd = pots.done.find(p => p.id === i.Q_done); assert.equal(qd.entries.length, 3); assert.deepEqual(qd.entries.map(x => x.slabs.map(y => y.id)), [[s.q3], [s.q4], []]); assert.equal(qd.entries[1].won, true);
+  const open = pots.open.find(p => p.id === i.Q_open); assert.deepEqual(open.entries.map(x => x.slabs.map(y => y.id)), [[s.q1], [s.q2]]);
+  // a second ensure (a new isolate) is a no-op
+  const hashed = hash([snapshot(w.db), triggerSql(w.db), slabRows(w.db)]); resetCaches(); const mark = w.log.length; const batches = w.DB.batches;
+  assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200); assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200);
+  assert.deepEqual(w.log.slice(mark).filter(sql => !/^\s*CREATE (TABLE|INDEX) IF NOT EXISTS/i.test(sql) && /^\s*(ALTER|DROP|CREATE)/i.test(sql)), []); assert.equal(w.DB.batches, batches);
+  assert.equal(hash([snapshot(w.db), triggerSql(w.db), slabRows(w.db)]), hashed);
+  // the winner of a v1-era win sells what it won, and a drawn pot's winner too
+  const sell = await a('/api/casino/winnings/sell', 'POST', { source: 'coinflip', id: i.S_done }, 'o3'); assert.equal(sell.status, 200, JSON.stringify(sell)); assert.equal(sell.sold.slabs, 1);
+  assert.equal((await a('/api/casino/winnings/sell', 'POST', { source: 'jackpot', id: i.Q_done }, 'o4')).status, 200);
+});
+
+await check('slabs-v1 -> v2: open v1 games finish under v2: slab players join, bots fill a v1 pot with generated slabs, a human win mints them, a v1-era slab entry cancels and expires', async () => {
+  const w = v1World(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); const { ids: i, s } = w; resetCaches();
+  const mint = (user, card, grade) => Number(w.db.prepare(`INSERT INTO graded_cards(user_id,card_id,reverse,grade,band,fee_cents,request_id,status,created_at) VALUES(?,?,0,?,'me',541,?,'slabbed',?)`).run(user, card, grade, rid(), now).lastInsertRowid);
+  // a human with a slab (and the cards that make up the 8.88) joins the v1-era open flip: both piles go to the winner
+  const j = mint('o7', 'me5-87', 9); rig.coin = 'guest';
+  const joined = await a(`/api/casino/coinflips/${i.S_open}/join`, 'POST', { cards: [{ id: 'me5-3', qty: 5 }], slabs: [j] }, 'o7'); unrig();
+  assert.equal(joined.status, 200, JSON.stringify(joined)); assert.equal(joined.flip.winner, 'guest');
+  assert.equal(w.db.prepare('SELECT user_id, locked, guard FROM graded_cards WHERE id = ?').get(s.open).user_id, 'o7'); assert.equal(w.db.prepare('SELECT guard FROM graded_cards WHERE id = ?').get(s.open).guard, null);
+  // the v1-era slab-only flip cancels and returns its slab with its guard
+  assert.equal((await a(`/api/casino/coinflips/${i.S_slabonly}/cancel`, 'POST', {}, 'o2')).status, 200); assert.equal(w.db.prepare('SELECT locked FROM graded_cards WHERE id = ?').get(s.only).locked, null);
+  // the open v1 pot (two human slab entries): the host fills it with bots, the draw lands on the host: bot slabs minted for them
+  rig.fraction = 0.00001; const filled = await a(`/api/casino/jackpots/${i.Q_open}/bot`, 'POST', { fill: true }, 'o1'); unrig();
+  assert.equal(filled.status, 200, JSON.stringify(filled)); assert.equal(filled.jackpot.status, 'done'); assert.equal(filled.jackpot.winnerSeat, 0);
+  const botSlabs = filled.jackpot.entries.filter(x => x.player.bot).flatMap(x => x.slabs); assert.ok(botSlabs.length >= 2, 'the bots mirror the slab entries'); assert.ok(botSlabs.every(x => x.id === null));
+  const minted = w.db.prepare("SELECT * FROM graded_cards WHERE request_id LIKE ?").all(`casino:jackpot:${i.Q_open}:%`); assert.equal(minted.length, botSlabs.length); assert.ok(minted.every(m => m.user_id === 'o1' && m.status === 'slabbed' && m.fee_cents === 0));
+  assert.equal(w.db.prepare('SELECT user_id FROM graded_cards WHERE id = ?').get(s.q2).user_id, 'o1', 'the human slab of the other entry went to the winner too');
+  const sold = await a('/api/casino/winnings/sell', 'POST', { source: 'jackpot', id: i.Q_open }, 'o1'); assert.equal(sold.status, 200, JSON.stringify(sold)); assert.equal(sold.sold.slabs, botSlabs.length + 1);
+  assert.equal(w.db.prepare("SELECT COUNT(*) n FROM graded_cards WHERE request_id LIKE ? AND status = 'sold'").get(`casino:jackpot:${i.Q_open}:%`).n, minted.length);
+  assert.equal((await a(`/api/casino/winnings/sell`, 'POST', { source: 'jackpot', id: i.Q_open }, 'o1')).status, 409, 'sold once');
+});
+
+await check('slabs-v1 -> v2: an old (v1) Worker writing before, during and after the upgrade window still works (raw bots, no bot slabs, human slab stakes)', async () => {
+  const w = v1World(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); const d = w.db;
+  const mint = (user, card, grade) => Number(d.prepare(`INSERT INTO graded_cards(user_id,card_id,reverse,grade,band,fee_cents,request_id,status,created_at) VALUES(?,?,0,?,'me',541,?,'slabbed',?)`).run(user, card, grade, rid(), now).lastInsertRowid);
+  const v1Writes = () => {
+    // what the v1 Worker's statements are: a slab flip against a raw bot (no guest_slabs column in its UPDATE), a pot with raw bot entries and a draw
+    const x = mint('o6', 'me5-87', 9); const y = mint('o6', 'me5-87', 9); const f = rid(); const g = rid();
+    const snapOf = (id, v) => ({ id, cardId: 'me5-87', name: 'Goldeen', number: '87', rarity: 'x', image: '', small: '', grade: 9, reverse: 0, guard: null, v });
+    for (const [flipId, slabId, winner] of [[f, x, 'host'], [g, y, 'guest']]) {
+      d.prepare(`INSERT INTO coinflips(id,host_id,request_id,bot,host_stake,host_slabs,host_value,host_coin,created_at,expires_at) VALUES(?,?,?,1,'[]',?,828,NULL,?,?)`).run(flipId, 'o6', `v1-${flipId}`.slice(0, 40), JSON.stringify([snapOf(slabId, 828)]), now, now + 3600000);
+      d.prepare(`UPDATE coinflips SET status = 'done', guest_id = 'house', guest_stake = ?, guest_value = 500, bot_persona = 'professor-elm', winner = ?, flipped_at = ? WHERE id = ? AND status = 'open'`)
+        .run(JSON.stringify(rawStake([['me5-3', 41]])), winner, now, flipId);
+    }
+    assert.equal(d.prepare('SELECT status FROM graded_cards WHERE id = ?').get(x).status, 'slabbed', 'the host won: the slab is theirs again');
+    assert.equal(d.prepare('SELECT status FROM graded_cards WHERE id = ?').get(y).status, 'sold', 'the bot won: the slab is closed');
+    assert.equal(d.prepare("SELECT COUNT(*) n FROM graded_cards WHERE request_id LIKE 'casino:%:%:%'").get().n, 0, 'nothing is minted for a v1 bot flip (it has no slabs)');
+    const pot = rid(); const z = mint('o5', 'me5-87', 9);
+    d.prepare('INSERT INTO jackpots(id,host_id,request_id,max_players,min_value,created_at,expires_at) VALUES(?,?,?,3,828,?,?)').run(pot, 'o5', `v1-pot-${pot}`.slice(0, 40), now, now + 3600000);
+    d.prepare(`INSERT INTO jackpot_entries(jackpot_id,seat,user_id,bot,bot_persona,stake,slabs,value,created_at) VALUES(?,0,'o5',0,NULL,'[]',?,828,?)`).run(pot, JSON.stringify([snapOf(z, 828)]), now);
+    for (const [seat, persona] of [[1, 'professor-elm'], [2, 'nurse-joy']]) d.prepare(`INSERT INTO jackpot_entries(jackpot_id,seat,user_id,bot,bot_persona,stake,value,created_at) VALUES(?,?,NULL,1,?,?,800,?)`).run(pot, seat, persona, JSON.stringify(rawStake([['me5-98', 1]]).map(r => ({ ...r, v: 800 }))), now);
+    d.prepare("UPDATE jackpots SET status = 'done', winner_seat = 0, drawn_at = ? WHERE id = ?").run(now, pot);
+    assert.equal(d.prepare('SELECT user_id, status FROM graded_cards WHERE id = ?').get(z).status, 'slabbed'); assert.equal(d.prepare("SELECT COUNT(*) n FROM graded_cards WHERE request_id LIKE 'casino:jackpot:%'").get().n, 0);
+  };
+  v1Writes(); // before the upgrade (v1 triggers)
+  resetCaches(); assert.equal((await a('/api/casino/coinflips', 'GET', undefined, null)).status, 200); assert.ok(v2Current(d));
+  v1Writes(); // after it: the same statements, now meeting the v2 triggers
+  // an isolate that is still v1 keeps its in-memory "ready" flag; the schema under it is v2: writes keep working (above); its reads too
+  assert.equal((await a('/api/casino/jackpots', 'GET', undefined, null)).status, 200);
+});
+
+await check('slabs-v1 -> v2: a failing v2 batch rolls back whole (the v1 triggers stay exactly), the next request finishes it, and requests that arrive together share one upgrade', async () => {
+  const w = v1World(); const e = { DB: w.DB, ASSETS }; const a = apiFor(e); const v1Triggers = triggerSql(w.db); const ledger = rawLedger(w.db); const slabs = slabRows(w.db);
+  resetCaches(); BOT_SLABS_DDL.push('SELECT * FROM no_such_table_for_the_v2_atomicity_test');
+  try { const bad = await a('/api/casino/coinflips', 'GET', undefined, null).catch(err => ({ status: 500, error: String(err) })); assert.notEqual(bad.status, 200); }
+  finally { BOT_SLABS_DDL.pop(); }
+  assert.deepEqual(triggerSql(w.db), v1Triggers, 'every v1 trigger is exactly as it was'); assert.equal(v2Current(w.db), false);
+  // v1 games keep working in that state
+  assert.equal(w.db.prepare("SELECT status FROM coinflips WHERE id = ?").get(w.ids.S_open).status, 'open');
+  resetCaches(); const batches = w.DB.batches;
+  const all = await Promise.all([a('/api/casino/coinflips', 'GET', undefined, null), a('/api/casino/jackpots', 'GET', undefined, null), a('/api/grading', 'GET', undefined, 'o1'), a('/api/casino/coinflips', 'GET', undefined, 'o2')]);
+  assert.deepEqual(all.map(r => r.status), [200, 200, 200, 200]); assert.ok(v2Current(w.db)); assert.equal(w.DB.batches - batches, 1, 'one shared upgrade batch');
+  assert.equal(rawLedger(w.db), ledger); assert.deepEqual(slabRows(w.db), slabs);
 });
 
 console.log(results.join('\n'));
