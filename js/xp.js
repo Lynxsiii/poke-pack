@@ -34,6 +34,7 @@ export const XP_WEIGHTS = {
   friend: 30, // each friend, the first FRIEND_CAP
   achievement: { 1: 20, 2: 50, 3: 120, 4: 300 }, // by tier when claimed
   mastery: 600, // a claimed set mastery
+  crown: 1500, // a claimed era crown (every set of an era mastered), counted with the achievements
 };
 export const FRIEND_CAP = 20;
 
@@ -102,7 +103,7 @@ export function computeXp(save) {
       masteries += 1;
     } else {
       achievements += 1;
-      achievementXp += w.achievement[row.tier] || w.achievement[1];
+      achievementXp += row.kind === "crown" ? w.crown : w.achievement[row.tier] || w.achievement[1];
     }
   }
 

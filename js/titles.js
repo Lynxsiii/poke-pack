@@ -1,6 +1,7 @@
 import { PLAYABLE_SETS } from "./catalog.js";
 import { HIT_RARITIES } from "./engine.js";
 import { homeSetId } from "./card-home.js";
+import { CROWN_ERAS, eraSlug } from "./achievement-eras.js";
 
 export const TITLES = [
   { id: "rookie", name: "Rookie", note: "Everyone starts here.", test: () => true },
@@ -92,6 +93,23 @@ export function masteryTitle(setName) {
   if (`${name} Master`.length > TITLE_MAX) name = name.replace(/^McDonald's\s+/, "");
   if (`${name} Master`.length > TITLE_MAX) name = name.slice(0, TITLE_MAX - " Master".length).trim();
   return `${name} Master`;
+}
+
+/** The title an era crown pays: "<Era> Champion", cut to fit like masteryTitle. */
+export function crownTitle(era) {
+  let name = String(era || "").trim();
+  if (`${name} Champion`.length > TITLE_MAX) name = name.slice(0, TITLE_MAX - " Champion".length).trim();
+  return `${name} Champion`;
+}
+
+// One title per big era, earned by its crown (`era-<slug>-crown`, js/achievement-sets.js).
+for (const era of CROWN_ERAS) {
+  AWARD_TITLES.push({
+    id: `champion-${eraSlug(era)}`,
+    name: crownTitle(era),
+    ach: `era-${eraSlug(era)}-crown`,
+    note: `Master every set of the ${era} era.`,
+  });
 }
 
 // One title per set, earned by claiming that set's mastery achievement
