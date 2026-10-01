@@ -196,7 +196,7 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "gym1": ("#f08a2a", "#27b3a6"),  # Gym Heroes: wrapper orange rays to teal
     "gym2": ("#9b5de0", "#7cc83e"),  # Gym Challenge: wrapper violet to green
     "base6": ("#5a86e6", "#f2b632"),  # Legendary Collection: wrapper blue to the logo gold
-    "base1": ("#e8b23a", "#3d5fc4"),  # Base Set: Charizard gold-orange to wrapper blue
+    "base1": ("#e8b23a", "#5f86e6"),  # Base Set: Charizard gold-orange to wrapper blue
     "base2": ("#4fb04a", "#f2c744"),  # Jungle: wrapper green to logo gold
     "base3": ("#d9b48a", "#3f8fd0"),  # Fossil: parchment tan to logo blue
     "base4": ("#d9543e", "#3d8bd9"),  # Base Set 2: Charizard red to wrapper blue

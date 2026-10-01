@@ -640,30 +640,27 @@ def wotc_decks(research: dict, out: dict, rep: Report, offers: dict, cards: set[
         rows = [r for r in rows if r[1] > 0]
         out[key] = {"label": f"{deck['total']}-card deck", "cards": merge(rows)}
         rep.notes.append(f"{key}: {sum(r[1] for r in rows)} cards + {len(offer.get('promos', []))} promo(s)")
+
+
 def wotc_w1(research: dict, out: dict, rep: Report, offers: dict, cards: set[str]) -> None:
     """Wizards of the Coast theme decks (60 cards each) and 2-Player Starter Sets of Base Set, Jungle, Fossil and Base Set 2
-    (scripts/box-research/wotc-w1.json): the deck's fixed list, or for a starter set the one card the research itemises (Machamp)."""
+    (scripts/box-research/wotc-w1.json): the deck's fixed list, the featured holo is the product's promo and is left out of the row (a starter set, whose only itemised card is that Machamp, has no row)."""
     for deck in research["decks"] + research["starters"]:
         key = f"{deck['set']}/{deck['product']}"
         if key not in offers:
             rep.skipped.append(f"{key}: not a product the site sells yet")
             continue
+        promo = set(offers[key]["promos"])
         rows = []
         for item in deck["cards"]:
             if item["id"] not in cards:
                 rep.problem(key, f"unknown card {item['id']}")
             else:
-                rows.append([item["id"], int(item["n"])])
-        if deck in research["decks"]:
-            # the deck's featured holo is the product's promo, dealt once: it replaces one copy in the list (60 cards in all)
-            for promo in offers[key].get("promos", []):
-                hit = next((r for r in rows if r[0] == promo and r[1] > 0), None)
-                if hit:
-                    hit[1] -= 1
-                else:
-                    rep.problem(key, f"promo {promo} is not a card of the list")
-            rows = [r for r in rows if r[1] > 0]
-        out[key] = {"label": deck.get("label") or "60-card deck", "cards": merge(rows)}
+                n = int(item["n"]) - (1 if item["id"] in promo else 0)  # the featured card is the product's promo, dealt separately
+                if n > 0:
+                    rows.append([item["id"], n])
+        if rows:
+            out[key] = {"label": deck.get("label") or "60-card deck", "cards": merge(rows)}
 
 
 
