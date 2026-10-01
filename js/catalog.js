@@ -3157,6 +3157,7 @@ function xyTrainerKit(id, pokemon, released, heroIds) {
     released,
     live: true,
     promoSet: true,
+    kitSet: true, // sells like a promo set, but its cards are not Black Star promos (achievements)
     promoPrefix: "XYTK ",
     printedTotal: 30,
     totalCount: 30,
@@ -4207,6 +4208,7 @@ function bwTrainerKit(id, pokemon, heroIds) {
     released: "September 12, 2011",
     live: true,
     promoSet: true,
+    kitSet: true,
     promoPrefix: "BWTK ",
     printedTotal: 30,
     totalCount: 30,
