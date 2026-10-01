@@ -5,7 +5,7 @@ English, 4 November 2015 (pokemontcg.io, Bulbapedia and TCGplayer group 1661 agr
 ## Data
 - Cards: pkmn.gg `xy/breakthrough`, scans scrydex `xy8-<n>` (checked: 1, Hippopotas, Chesnaught BREAK, Raichu BREAK, Mewtwo-EX gold 164, the Mega Mewtwo and Houndoom EX). 146a Professor's Letter (A stamp, 2018 copyright) is a prize print in no product: `skipNumbers`, scan not shipped.
 - BREAK scans come from scrydex upright-rotated: the card is printed landscape and the scan is the portrait page with the text running up the side; the TCG Live maps follow the same orientation (checked by overlay), the finish agents should know.
-- Wrappers: pokesymbols `breakthrough-pack-0..3` (Mega Mewtwo X, Mega Mewtwo Y, Mega Houndoom, Zoroark BREAK, from the research's Bulbapedia table; the second wrapper looks to me like plain Mewtwo and the first like a Mega Mewtwo, unresolved).
+- Wrappers: pokesymbols `breakthrough-pack-0..3`: Mega Mewtwo Y, Mega Mewtwo X, Mega Houndoom, Zoroark BREAK. The research (Bulbapedia XY table, order differs there) lists 0 as X and 1 as Y; matching the art to the cards (X has blue eyes and the bulky legs, 63; Y red eyes, 64) puts them the other way round, so catalog.js follows the art (medium confidence; Houndoom and Zoroark agree). Cut out in place.
 - Foil maps: TCG Live key `xy8`. 42 of 42 holo prints have a map (16 Rare Holo, 6 BREAK, 8 EX, 10 full art, 2 secret) and 7 promos (49 files); etch maps on the 12 full art and secret cards. No holo print lacks a map.
 - Prices: tcgcsv group 1661, 165 of 165 singles. Pack $64.50, box $3,248.29.
 

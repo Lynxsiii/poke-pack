@@ -3392,8 +3392,8 @@ export const BREAKTHROUGH = {
   slots: xySlots({ holo: 0.1778, ex: 0.0444, megaEx: 0.0444, ultra: 0.0587, secret: 0.008, break: 0.0778 }),
   heroIds: ["xy8-164", "xy8-163", "xy8-160", "xy8-159"],
   wrappers: boosterWrappers("xy8", [
-    { id: "mega-mewtwo-x", name: "Mega Mewtwo X", cardId: "xy8-63", tag: "Mega EX" },
     { id: "mega-mewtwo-y", name: "Mega Mewtwo Y", cardId: "xy8-64", tag: "Mega EX" },
+    { id: "mega-mewtwo-x", name: "Mega Mewtwo X", cardId: "xy8-63", tag: "Mega EX" },
     { id: "mega-houndoom", name: "Mega Houndoom", cardId: "xy8-22", tag: "Mega EX" },
     { id: "zoroark-break", name: "Zoroark BREAK", cardId: "xy8-92", tag: "BREAK" },
   ]),
