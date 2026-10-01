@@ -1682,7 +1682,7 @@ export const DPP_PROMOS = {
   promoPrefix: "DP ",
   viewNote: "the Diamond & Pearl and Platinum sets' own boxes (blisters, collector's tins, premium and poster boxes, theme decks)",
   viewOf: ["dp1", "dp2", "dp3", "dp4", "dp5", "dp6", "dp7", "pl1", "pl2", "pl3", "pl4", DPP_SET_ID],
-  totalCount: 13, // TEMP until dp4-dp7 and pl1-pl4 land (then 48 or 52, see below). // homeCards(DPP_PROMOS, dataSetsOf(DPP_PROMOS) lists).length once the 11 Diamond & Pearl / Platinum sets are in: data/dpp.json holds 2 (DP41, DP48), the sets file the rest. 48 = DP01-DP56 less DP05, DP25 (no price anywhere), DP54, DP55 (French only) and the 4 no builder had claimed when this was counted (DP04, DP06, DP15, DP16). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
+  totalCount: 31, // TEMP until dp4-dp7 land (then 48 or 52, see below). // homeCards(DPP_PROMOS, dataSetsOf(DPP_PROMOS) lists).length once the 11 Diamond & Pearl / Platinum sets are in: data/dpp.json holds 2 (DP41, DP48), the sets file the rest. 48 = DP01-DP56 less DP05, DP25 (no price anywhere), DP54, DP55 (French only) and the 4 no builder had claimed when this was counted (DP04, DP06, DP15, DP16). RECOUNT when the sets land: scripts/test-dpp.mjs checks it as soon as every set file is there
   packSize: 0,
   cost: 0,
   dataFile: "data/dpp.json",
@@ -4799,6 +4799,124 @@ export const SECRET_WONDERS = {
     { id: "roserade", name: "Roserade", cardId: "dp3-17", tag: "Bouquet" },
     { id: "gallade", name: "Gallade", cardId: "dp3-6", tag: "Blade" },
     { id: "weavile", name: "Weavile", cardId: "dp3-40", tag: "Claws" },
+// Platinum series (builder d3): Platinum, Rising Rivals, Supreme Victors, Arceus. Sources: /mnt/project-files/every-era/hgss/research/pl1.md to pl4.md, pl-pack-structure.md, pl-products.md, pl-dpp-claims.md; data/pullrates.json.
+export const PLATINUM = {
+  id: "pl1",
+  tcgId: "pl1",
+  name: "Platinum",
+  edition: "Platinum",
+  era: "Platinum",
+  released: "February 11, 2009",
+  live: true,
+  printedTotal: 127,
+  totalCount: 133,
+  packSize: 10,
+  cost: 389.74,
+  dataFile: "data/pl1.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "dp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Platinum, February 2009. Giratina, Dialga, Palkia and Shaymin lead the Sinnoh finale: six Pokémon LV.X, the Haymaker secrets and three shiny Pokémon in the reverse slot.",
+  oddsLine: "Holo 1/4 · LV.X 1/18 · Shining 1/36 · Secret 1/36",
+  lede: "Dialga G LV.X and Giratina LV.X are the chase, with the Electabuzz, Hitmonchan and Scyther secrets and a shiny Lotad, Swablu or Vulpix about once a box.",
+  // Elite Fourum's 216-pack sheet model (post 76) with Flipside's 1:18 LV.X as the second source: LV.X medium-high, Shining medium (one box in EF's model, 10 pulls), secrets low-medium (assumed on the holo sheet). Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2502, secret: 0.0275, rareSpecial: [["lvx", 0.0556]], reverseSpecial: [["shining", 0.0278]] }),
+  heroIds: ["pl1-122", "pl1-124", "pl1-SH6", "pl1-126"],
+  wrappers: boosterWrappers("pl1", [
+    { id: "shaymin", name: "Shaymin", cardId: "pl1-14", tag: "Sky Forme" },
+    { id: "giratina", name: "Giratina", cardId: "pl1-9", tag: "Origin Forme" },
+    { id: "palkia", name: "Palkia", cardId: "pl1-12", tag: "Spatial" },
+    { id: "dialga", name: "Dialga", cardId: "pl1-5", tag: "Temporal" },
+  ]),
+};
+
+export const RISING_RIVALS = {
+  id: "pl2",
+  tcgId: "pl2",
+  name: "Rising Rivals",
+  edition: "Platinum",
+  era: "Platinum",
+  released: "May 16, 2009",
+  live: true,
+  printedTotal: 111,
+  totalCount: 120,
+  packSize: 10,
+  cost: 400,
+  dataFile: "data/pl2.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "dp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Platinum, May 2009. Elite Four LV.X cards, three secret Pikachu and the cracked-ice Rotom subset in the reverse slot.",
+  oddsLine: "Holo 1/4 · LV.X 1/18 · Rotom 1/18 · Secret 1/36",
+  lede: "Snorlax LV.X, the Elite Four LV.X cards and the three secret Pikachu are the chase; two cracked-ice Rotom turn up in a box.",
+  // Elite Fourum's sheet model (post 80: two LV.X, two Rotom and one secret a box) with Flipside's 1:18 LV.X: LV.X medium-high, Rotom medium, secrets low-medium. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2502, secret: 0.0275, rareSpecial: [["lvx", 0.0556]], reverseSpecial: [["rotom", 0.0556]] }),
+  heroIds: ["pl2-111", "pl2-114", "pl2-108", "pl2-103"],
+  wrappers: boosterWrappers("pl2", [
+    { id: "rotom", name: "Rotom", cardId: "pl2-RT5", tag: "Plasma" },
+    { id: "leafeon", name: "Leafeon", cardId: "pl2-45", tag: "Verdant" },
+    { id: "scizor", name: "Scizor", cardId: "pl2-48", tag: "Pincer" },
+    { id: "houndoom", name: "Houndoom", cardId: "pl2-65", tag: "Dark fire" },
+  ]),
+};
+
+export const SUPREME_VICTORS = {
+  id: "pl3",
+  tcgId: "pl3",
+  name: "Supreme Victors",
+  edition: "Platinum",
+  era: "Platinum",
+  released: "August 19, 2009",
+  live: true,
+  printedTotal: 147,
+  totalCount: 153,
+  packSize: 10,
+  cost: 716.66,
+  dataFile: "data/pl3.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "dp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Platinum, August 2009. Charizard G LV.X, the Legendary Bird secrets and the most LV.X of the era, about three and a half a box.",
+  oddsLine: "Holo 1/5 · LV.X 1/10 · Shining 1/40 · Secret 1/34",
+  lede: "Charizard G LV.X and the Articuno, Moltres and Zapdos secrets are the chase. LV.X come about 1 pack in 10, and the three shiny Pokémon are ordinary members of the reverse sheet.",
+  // Elite Fourum's sheet model (post 81; its 28-box sample gave 3.75 LV.X a box against the modelled 3.5, and Flipside's generic 1:18 conflicts): LV.X medium, Shining low-medium, secrets medium-low. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.2068, secret: 0.0293, rareSpecial: [["lvx", 0.0972]], reverseSpecial: [["shining", 0.0248]] }),
+  heroIds: ["pl3-143", "pl3-148", "pl3-149", "pl3-SH7"],
+  wrappers: boosterWrappers("pl3", [
+    { id: "garchomp", name: "Garchomp", cardId: "pl3-5", tag: "Dragon" },
+    { id: "rayquaza", name: "Rayquaza", cardId: "pl3-8", tag: "Sky" },
+    { id: "absol", name: "Absol", cardId: "pl3-1", tag: "Disaster" },
+    { id: "charizard", name: "Charizard", cardId: "pl3-143", tag: "Flame" },
+  ]),
+};
+
+export const ARCEUS = {
+  id: "pl4",
+  tcgId: "pl4",
+  name: "Arceus",
+  edition: "Platinum",
+  era: "Platinum",
+  released: "November 4, 2009",
+  live: true,
+  printedTotal: 99,
+  totalCount: 111,
+  packSize: 10,
+  cost: 529.41,
+  dataFile: "data/pl4.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  energyPrint: "dp",
+  reverseRarities: ["Common", "Uncommon", "Rare", "Rare Holo"],
+  blurb: "Platinum, November 2009. The last Sinnoh set: Gengar and Arceus LV.X, nine Arceus holofoils in a quarter of the reverse slots and no secret rare.",
+  oddsLine: "Holo 1/4 · LV.X 1/12 · Arceus AR 1/4 · Shining 1/54",
+  lede: "Gengar LV.X and the three Arceus LV.X are the chase. One pack in four swaps its reverse for an Arceus AR holofoil, and a shiny Bagon, Ponyta or Shinx turns up about 1 pack in 54.",
+  // Elite Fourum's sheet model (post 82; 14 boxes: LV.X 3.00, Arceus 8.86, Shining 0.71 a box against the model's 3, 9, 0.67): LV.X and Arceus medium-high, Shining low-medium; no secret rare. Sources in data/pullrates.json.
+  slots: dpSlots({ holo: 0.25, rareSpecial: [["lvx", 0.0833]], reverseSpecial: [["ar", 0.25], ["shining", 0.0186]] }),
+  heroIds: ["pl4-97", "pl4-95", "pl4-SH11", "pl4-AR1"],
+  wrappers: boosterWrappers("pl4", [
+    { id: "salamence", name: "Salamence", cardId: "pl4-8", tag: "Dragon" },
+    { id: "arceus-ice", name: "Arceus", cardId: "pl4-94", tag: "Ice and water" },
+    { id: "arceus-grass", name: "Arceus", cardId: "pl4-96", tag: "Grass" },
+    { id: "zapdos", name: "Zapdos", cardId: "pl4-12", tag: "Thunder" },
   ]),
 };
 
@@ -4932,6 +5050,10 @@ export const PLAYABLE_SETS = [
   SECRET_WONDERS,
   MYSTERIOUS_TREASURES,
   DIAMOND_PEARL,
+  PLATINUM,
+  RISING_RIVALS,
+  SUPREME_VICTORS,
+  ARCEUS,
 ];
 
 /**
@@ -5222,6 +5344,10 @@ const POKESYMBOLS_SLUG = {
   // Diamond & Pearl generation, d1 (dp1 is in the vintage block above).
   dp2: "mysterious-treasures",
   dp3: "secret-wonders",
+  pl1: "platinum",
+  pl2: "rising-rivals",
+  pl3: "supreme-victors",
+  pl4: "arceus",
 };
 
 /* Bump when the symbol files are re-encoded: the host serves assets as

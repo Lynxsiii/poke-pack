@@ -999,5 +999,62 @@
       "holo": 0.3194,
       "lvx": 0.0139
     }
+  },
+  "pl1": {
+    "name": "Platinum",
+    "printedTotal": 127,
+    "released": "2009-02-11",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards, 5 Common, 3 Uncommon, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy card at all in Platinum, Rising Rivals, Supreme Victors or Arceus (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/64: np 10, C 5, U 3; SixPrizes 'Money and Mathematics: Booster Packs' https://sixprizes.com/2011/04/10/money-and-mathematics-booster/: five commons, three uncommons, one rare and one random card; Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) (search excerpt): 10 cards since Diamond & Pearl; the wrapper prints '10 ADDITIONAL GAME CARDS'; 36 packs a box: ToyWiz and Collector's Cache box titles). The rare slot is mutually exclusive: plain Rare, Rare Holo (17 regular holos), a Pokemon LV.X (6) or one of the three secret Haymaker reprints (Electabuzz, Hitmonchan, Scyther). The reverse slot is a Mirror reverse, or one of the three Shining Pokemon (Lotad, Swablu, Vulpix; SH4-SH6) on a sheet of their own that replaces it. Rates are per pack from Elite Fourum's Platinum table https://www.elitefourum.com/t/39762/76 (216-pack sheet model: holo sheet 60 positions including the 3 secrets, rares 144, LV.X 12; reverse slot 210 reverses and 6 Shining; EF: 'Pokemon LV.X appear to be about two per box', Shining 1 per box, observed in a video sample of 10 pulls). Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two gives Level X cards about 1 pack in 36 for the first Diamond & Pearl sets and 1 in 18 for later ones (no Shining, Rotom or Arceus-subset rates). Finishes: Collexy's Platinum holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-platinum-era/ (cosmos holo on every Holo Rare, Ultra Rare and Secret Rare; mirror reverse; cracked ice on the Rotom subset). LV.X medium-high (EF's two per box and Flipside's 1:18 agree); Shining medium (EF chose one of two sheet layouts, 10 pulls); secrets low-medium (EF assumes 4 prints each on the holo sheet, no second measurement); the holo and plain split is the sheet model's.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/76",
+    "rates": {
+      "holo": 0.2502,
+      "lvx": 0.0556,
+      "secret": 0.0275,
+      "shining": 0.0278
+    }
+  },
+  "pl2": {
+    "name": "Rising Rivals",
+    "printedTotal": 111,
+    "released": "2009-05-16",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards, 5 Common, 3 Uncommon, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy card at all in Platinum, Rising Rivals, Supreme Victors or Arceus (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/64: np 10, C 5, U 3; SixPrizes 'Money and Mathematics: Booster Packs' https://sixprizes.com/2011/04/10/money-and-mathematics-booster/: five commons, three uncommons, one rare and one random card; Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) (search excerpt): 10 cards since Diamond & Pearl; the wrapper prints '10 ADDITIONAL GAME CARDS'; 36 packs a box: ToyWiz and Collector's Cache box titles). The rare slot is mutually exclusive: plain Rare, Rare Holo (13 regular holos), a Pokemon LV.X (9) or one of the three secret Pikachu (Pikachu, Flying Pikachu, Surfing Pikachu). The reverse slot is a Mirror reverse or one of the six Rotom subset cards (RT1-RT6, the five Rotom and Charon's Choice; a cracked-ice reverse foil on a separate sheet: Collexy and EF 'they will have been printed on a separate sheet'). Rates are per pack from Elite Fourum's Rising Rivals table https://www.elitefourum.com/t/39762/80 (216-pack sheet model: holo sheet 60 including the 3 secrets, rares 144, LV.X 12; reverse slot 204 reverses and 12 Rotom; EF text: 'two Pokemon LV.X, two Rotom subset cards and one secret rare per box'). Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two gives Level X cards about 1 pack in 36 for the first Diamond & Pearl sets and 1 in 18 for later ones (no Shining, Rotom or Arceus-subset rates). Finishes: Collexy's Platinum holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-platinum-era/ (cosmos holo on every Holo Rare, Ultra Rare and Secret Rare; mirror reverse; cracked ice on the Rotom subset). LV.X medium-high (EF 2 per box, Flipside 1:18); Rotom medium (EF only, from a stated model); secrets low-medium (assumed on the holo sheet).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/80",
+    "rates": {
+      "holo": 0.2502,
+      "lvx": 0.0556,
+      "secret": 0.0275,
+      "rotom": 0.0556
+    }
+  },
+  "pl3": {
+    "name": "Supreme Victors",
+    "printedTotal": 147,
+    "released": "2009-08-19",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards, 5 Common, 3 Uncommon, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy card at all in Platinum, Rising Rivals, Supreme Victors or Arceus (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/64: np 10, C 5, U 3; SixPrizes 'Money and Mathematics: Booster Packs' https://sixprizes.com/2011/04/10/money-and-mathematics-booster/: five commons, three uncommons, one rare and one random card; Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) (search excerpt): 10 cards since Diamond & Pearl; the wrapper prints '10 ADDITIONAL GAME CARDS'; 36 packs a box: ToyWiz and Collector's Cache box titles). The rare slot is mutually exclusive: plain Rare, Rare Holo (14 regular holos), a Pokemon LV.X (7) or one of the three secret Legendary Bird reprints (Articuno, Moltres, Zapdos). The reverse slot is a Mirror reverse of which the three Shining Pokemon (Milotic, Relicanth, Yanma; SH7-SH9) are ordinary members: 2 of 242 positions each on EF's two reverse sheets. Rates are per pack from Elite Fourum's Supreme Victors table https://www.elitefourum.com/t/39762/81 (216-pack sheet model: holo sheet 51 including the 3 secrets, rares 144, LV.X 21; EF's sample of 28 boxes (over 1,000 packs) gave 3.75 LV.X per box, 19 boxes with four, 8 with three, 1 with five, against its modelled 3.5; secrets 'very close to 1 per box'). Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two gives Level X cards about 1 pack in 36 for the first Diamond & Pearl sets and 1 in 18 for later ones (no Shining, Rotom or Arceus-subset rates). Finishes: Collexy's Platinum holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-platinum-era/ (cosmos holo on every Holo Rare, Ultra Rare and Secret Rare; mirror reverse; cracked ice on the Rotom subset). LV.X medium (EF's measured 3.75 a box is almost double Flipside's generic 1:18, so Flipside is a conflicting second source); Shining low-medium (3 of 121 from the model, no tally); secrets medium-low.",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/81",
+    "rates": {
+      "holo": 0.2068,
+      "lvx": 0.0972,
+      "secret": 0.0293,
+      "shining": 0.0248
+    }
+  },
+  "pl4": {
+    "name": "Arceus",
+    "printedTotal": 99,
+    "released": "2009-11-04",
+    "updated": "2026-10-01",
+    "source": "Pack: 10 game cards, 5 Common, 3 Uncommon, 1 reverse-slot card and 1 rare-slot card, no code card and no basic Energy card at all in Platinum, Rising Rivals, Supreme Victors or Arceus (Elite Fourum sturzflugbombardieru's 'The English Pokemon card rarity guide' https://www.elitefourum.com/t/39762/64: np 10, C 5, U 3; SixPrizes 'Money and Mathematics: Booster Packs' https://sixprizes.com/2011/04/10/money-and-mathematics-booster/: five commons, three uncommons, one rare and one random card; Bulbapedia 'Booster pack (TCG)' https://bulbapedia.bulbagarden.net/wiki/Booster_pack_(TCG) (search excerpt): 10 cards since Diamond & Pearl; the wrapper prints '10 ADDITIONAL GAME CARDS'; 36 packs a box: ToyWiz and Collector's Cache box titles). The rare slot is mutually exclusive: plain Rare, Rare Holo (12 regular holos) or a Pokemon LV.X (6: three Arceus, Gengar, Salamence, Tangrowth); the set has no secret rare (Flipside: the reprint secrets were discontinued with Arceus; pkmn.gg lists none). The reverse slot is a Mirror reverse, one of the nine Arceus AR1-AR9 holofoils in about 1 pack in 4 (a different foil, so a different sheet: EF), or one of the three Shining Pokemon (Bagon, Ponyta, Shinx; SH10-SH12) inside the reverse sheet. Rates are per pack from Elite Fourum's Arceus table https://www.elitefourum.com/t/39762/82 (216-pack sheet model: holo 54, rares 144, LV.X 18; reverse slot 162 reverses and 54 Arceus AR; EF's sample of 14 boxes: LV.X 3.00, Arceus 8.86 and Shining 0.71 per box against a model of 3, 9 and 0.67). Flipside Gaming's rarity review https://flipsidegaming.com/blogs/pokemon-blog/a-comprehensive-review-of-rarity-in-the-pokemon-tcg-part-two gives Level X cards about 1 pack in 36 for the first Diamond & Pearl sets and 1 in 18 for later ones (no Shining, Rotom or Arceus-subset rates). Finishes: Collexy's Platinum holofoil overview https://insights.collexy.com/database-insight-holofoil-overview-platinum-era/ (cosmos holo on every Holo Rare, Ultra Rare and Secret Rare; mirror reverse; cracked ice on the Rotom subset). LV.X and Arceus medium-high (EF measured and modelled figures agree); Shining low-medium (0.71 observed vs 0.67 modelled).",
+    "sourceUrl": "https://www.elitefourum.com/t/39762/82",
+    "rates": {
+      "holo": 0.25,
+      "lvx": 0.0833,
+      "secret": 0.0,
+      "arceus": 0.25,
+      "shining": 0.0186
+    }
   }
 }

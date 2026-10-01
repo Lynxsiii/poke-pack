@@ -1,5 +1,304 @@
 {
   "_fetchedAt": "2026-10-01",
+  "bw10": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Plasma Blast Elite Trainer Box [Genesect]",
+      "kind": "etb",
+      "packs": 8,
+      "note": "Eight packs, 40 basic Energy (5 of each of the eight types), 65 Plasma Blast sleeves, no promo (Bulbapedia merchandise page and ToyWiz, two sources). TCGplayer has no listing: price is its packs.",
+      "promos": [],
+      "price": 2203.6,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "sleeved-art-bundle",
+      "name": "Plasma Blast Sleeved Booster Pack Art Bundle [Set of 4]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
+      "promos": [],
+      "price": 1101.8,
+      "priceDerived": "packs",
+      "tcgplayerId": 276604,
+      "image": "assets/products/bw10/sleeved-art-bundle.webp"
+    },
+    {
+      "id": "blister-lucario",
+      "name": "Plasma Blast Three Pack Blister [Lucario]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW85 Lucario in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw10-bwp085"
+      ],
+      "price": 1158.82,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-genesect",
+      "name": "Plasma Blast Three Pack Blister [Genesect]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW86 Genesect in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw10-bwp086"
+      ],
+      "price": 991.35,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-blaziken",
+      "name": "Plasma Blast Single Pack Blister [Blaziken]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Blaziken (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 275.45,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-krookodile",
+      "name": "Plasma Blast Single Pack Blister [Krookodile]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Krookodile (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 275.45,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "team-plasma-tin-lugia",
+      "name": "Team Plasma Tin [Lugia-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp083"
+      ],
+      "price": 3500.0,
+      "tcgplayerId": 137095,
+      "image": "assets/products/bw10/team-plasma-tin-lugia.webp"
+    },
+    {
+      "id": "team-plasma-tin-deoxys",
+      "name": "Team Plasma Tin [Deoxys-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp082"
+      ],
+      "price": 1000.0,
+      "tcgplayerId": 137096,
+      "image": "assets/products/bw10/team-plasma-tin-deoxys.webp"
+    },
+    {
+      "id": "team-plasma-tin-thundurus",
+      "name": "Team Plasma Tin [Thundurus-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp081"
+      ],
+      "price": 1106.26,
+      "priceDerived": "packs",
+      "tcgplayerId": 137097,
+      "image": "assets/products/bw10/team-plasma-tin-thundurus.webp"
+    },
+    {
+      "id": "red-genesect-collection",
+      "name": "Red Genesect Collection",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named by Bulbapedia, single source: dealt as Plasma Blast), BW99 Red Genesect and a 60-card deck of Parallel Holo cards that is not simulated.",
+      "promos": [
+        "bw10-bwp099"
+      ],
+      "price": 559.73,
+      "priceDerived": "packs"
+    }
+  ],
+  "bw11": [
+    {
+      "id": "sleeved-art-bundle",
+      "name": "Legendary Treasures Sleeved Booster Pack Art Bundle [Set of 4]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
+      "promos": [],
+      "price": 3000.0,
+      "tcgplayerId": 276608,
+      "image": "assets/products/bw11/sleeved-art-bundle.webp"
+    },
+    {
+      "id": "blister-eevee",
+      "name": "Legendary Treasures Three Pack Blister [Eevee]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW97 Eevee, the first promo on Smooth Cosmos Holofoil (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw11-bwp097"
+      ],
+      "price": 1947.29,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-mew",
+      "name": "Legendary Treasures Three Pack Blister [Mew]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW98 Mew in Smooth Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw11-bwp098"
+      ],
+      "price": 1647.28,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-aggron",
+      "name": "Legendary Treasures Single Pack Blister [Aggron]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Aggron (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 382.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-ampharos",
+      "name": "Legendary Treasures Single Pack Blister [Ampharos]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Ampharos (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 382.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "legendary-dragons-of-unova-collection",
+      "name": "Legendary Dragons of Unova Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four Black & White Series packs (set not named: dealt as Legendary Treasures), three figures and Cosmos Holo reprints of Reshiram, Zekrom and Kyurem (not simulated). TCGplayer id and Bulbapedia.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs",
+      "tcgplayerId": 206316,
+      "image": "assets/products/bw11/legendary-dragons-of-unova-collection.webp"
+    },
+    {
+      "id": "two-pack-blister-legendary-birds",
+      "name": "Black & White Two Pack Blister [Legendary Birds]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Moltres, Articuno and Zapdos (not simulated). Bulbapedia only, December 2013.",
+      "promos": [],
+      "price": 764.86,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-swords-of-justice",
+      "name": "Black & White Two Pack Blister [Swords of Justice]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Virizion, Terrakion and Cobalion (not simulated). Bulbapedia only, December 2013.",
+      "promos": [],
+      "price": 764.86,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-mewtwo",
+      "name": "Best of Black & White Tin [Mewtwo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-darkrai",
+      "name": "Best of Black & White Tin [Darkrai-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-rayquaza",
+      "name": "Best of Black & White Tin [Rayquaza-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-black-kyurem",
+      "name": "Best of Black & White Tin [Black Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-white-kyurem",
+      "name": "Best of Black & White Tin [White Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    }
+  ],
   "bwp": [
     {
       "id": "event-bwp028",
@@ -2857,6 +3156,338 @@
       "tcgplayerId": 275842,
       "released": "2022-09-30",
       "image": "assets/products/pgo/dragonite-vstar-premier-deck-holder-collection.webp"
+    }
+  ],
+  "pl1": [
+    {
+      "id": "three-pack-blister-porygon-z",
+      "name": "Platinum Three Pack Blister [Porygon-Z]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl1": 2,
+        "dp2": 1
+      },
+      "note": "Two Platinum packs and one Mysterious Treasures pack, a coin and the Porygon-Z promo (Bulbapedia excerpt, Collector's Cache and PokeBeach titles; the coin is not simulated). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl1-dpp35"
+      ],
+      "price": 1177.96,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-gliscor",
+      "name": "Platinum Three Pack Blister [Gliscor]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl1": 2,
+        "dp2": 1
+      },
+      "note": "Two Platinum packs and one Mysterious Treasures pack, a coin and the Gliscor promo (as the Porygon-Z blister). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl1-dpp36"
+      ],
+      "price": 1176.44,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "spring-2009-tin-dialga",
+      "name": "Spring 2009 Collector's Tin [Dialga LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "note": "Two Platinum packs, one Mysterious Treasures and one Stormfront (Bulbapedia excerpt; loosepacks.com lists two other Diamond & Pearl packs instead): medium confidence.",
+      "promos": [
+        "pl1-dpp37"
+      ],
+      "price": 1609.28,
+      "priceDerived": "packs",
+      "tcgplayerId": 485825,
+      "image": "assets/products/pl1/spring-2009-tin-dialga.webp"
+    },
+    {
+      "id": "spring-2009-tin-giratina",
+      "name": "Spring 2009 Collector's Tin [Giratina LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "note": "As the Dialga tin (medium confidence). TCGplayer lists no Giratina tin: priced from its packs.",
+      "promos": [
+        "pl1-dpp38"
+      ],
+      "price": 1723.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "spring-2009-tin-shaymin",
+      "name": "Spring 2009 Collector's Tin [Shaymin LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "note": "As the Dialga tin (medium confidence).",
+      "promos": [
+        "pl1-dpp39"
+      ],
+      "price": 1611.24,
+      "priceDerived": "packs",
+      "tcgplayerId": 485824,
+      "image": "assets/products/pl1/spring-2009-tin-shaymin.webp"
+    },
+    {
+      "id": "regigigas-colossal-box",
+      "name": "Regigigas Colossal Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three Platinum packs and two other Diamond & Pearl-series packs (Bulbapedia excerpt, eBay titles; which two is not stated, so only the Platinum packs are simulated), the cosmos holo Regigigas and a jumbo Regigigas (the jumbo is not simulated). TCGplayer has no listing: priced from the three packs.",
+      "promos": [
+        "pl1-dpp40"
+      ],
+      "price": 1189.82,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "platinum-poster-pack",
+      "name": "Platinum Poster Pack [Magnezone]",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "pl1": 2,
+        "pop8": 2
+      },
+      "note": "Two Platinum packs, two POP Series 8 packs, a poster and the Magnezone promo (Best Buy exclusive; PokeBeach title, blowoutcards and dacardworld listings). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl1-dpp44"
+      ],
+      "price": 1567.51,
+      "priceDerived": "packs"
+    }
+  ],
+  "pl2": [
+    {
+      "id": "three-pack-blister-carnivine-g",
+      "name": "Rising Rivals Three Pack Blister [Carnivine G]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl2": 2,
+        "dp5": 1
+      },
+      "note": "Two Rising Rivals packs and one Majestic Dawn pack, a coin and the Carnivine G promo (totalcards, joshscards and wholesalegaming listings, Bulbapedia excerpt; the coin is not simulated). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl2-dpp42"
+      ],
+      "price": 1217.85,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-probopass-g",
+      "name": "Rising Rivals Three Pack Blister [Probopass G]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl2": 2,
+        "dp5": 1
+      },
+      "note": "Two Rising Rivals packs and one Majestic Dawn pack, a coin and the Probopass G promo (as the Carnivine G blister). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl2-dpp43"
+      ],
+      "price": 1210.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "pl3": [
+    {
+      "id": "supreme-victors-poster-pack",
+      "name": "Supreme Victors Poster Pack [Dialga]",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "pl3": 2,
+        "pop9": 2
+      },
+      "note": "Two Supreme Victors packs, two POP Series 9 packs, a poster and the Dialga promo (Collector's Cache title, totalcards and thewarpgate listings, PokeBeach; pkmn.gg's 'Found in Booster Packs' for DP49 reads as a data error). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl3-dpp49"
+      ],
+      "price": 2889.05,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "fall-2009-tin-charizard-g",
+      "name": "Fall 2009 Collector's Tin [Charizard G LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "note": "Two Supreme Victors packs, one Rising Rivals and one Diamond & Pearl-series pack (loosepacks.com Tin Contents Database and a Target / blowoutcards listing; a three-pack variant also exists; Stormfront stands in for 'Stormfront or Secret Wonders'): medium confidence. TCGplayer lists no Charizard tin: priced from its packs.",
+      "promos": [
+        "pl3-dpp45"
+      ],
+      "price": 3286.4,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "fall-2009-tin-garchomp-c",
+      "name": "Fall 2009 Collector's Tin [Garchomp C LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "note": "As the Charizard G tin (medium confidence). TCGplayer files it in the Platinum group.",
+      "promos": [
+        "pl3-dpp46"
+      ],
+      "price": 2951.85,
+      "priceDerived": "packs",
+      "tcgplayerId": 485826,
+      "image": "assets/products/pl3/fall-2009-tin-garchomp-c.webp"
+    },
+    {
+      "id": "fall-2009-tin-rayquaza-c",
+      "name": "Fall 2009 Collector's Tin [Rayquaza C LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "note": "As the Charizard G tin (medium confidence). TCGplayer files it in the Platinum group.",
+      "promos": [
+        "pl3-dpp47"
+      ],
+      "price": 3359.35,
+      "priceDerived": "packs",
+      "tcgplayerId": 485827,
+      "image": "assets/products/pl3/fall-2009-tin-rayquaza-c.webp"
+    }
+  ],
+  "pl4": [
+    {
+      "id": "arceus-poster-pack",
+      "name": "Arceus Poster Pack",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "pl4": 2,
+        "pop9": 2
+      },
+      "note": "Two Arceus packs, two POP Series 9 packs, a poster and the Arceus promo (PokeBeach title, blowoutcards listing, tcgcsv).",
+      "promos": [
+        "pl4-dpp50"
+      ],
+      "price": 2171.32,
+      "priceDerived": "packs",
+      "tcgplayerId": 714415,
+      "image": "assets/products/pl4/arceus-poster-pack.webp"
+    },
+    {
+      "id": "arceus-poster-box",
+      "name": "Arceus Poster Box",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Five Arceus packs, a poster, the Arceus promo and a jumbo DP50 (PokeBeach title, toywiz; the jumbo is not simulated).",
+      "promos": [
+        "pl4-dpp50"
+      ],
+      "price": 2700.73,
+      "priceDerived": "packs",
+      "tcgplayerId": 714416,
+      "image": "assets/products/pl4/arceus-poster-box.webp"
+    },
+    {
+      "id": "three-pack-blister-cresselia",
+      "name": "Arceus Three Pack Blister [Cresselia]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl4": 2,
+        "dp2": 1
+      },
+      "note": "Two Arceus packs and one Mysterious Treasures pack, a coin and the Cresselia promo (Collector's Cache product pages, Bulbapedia excerpt, joshscards; the coin is not simulated).",
+      "promos": [
+        "pl4-dpp51"
+      ],
+      "price": 1606.51,
+      "priceDerived": "packs",
+      "tcgplayerId": 617025,
+      "image": "assets/products/pl4/three-pack-blister-cresselia.webp"
+    },
+    {
+      "id": "three-pack-blister-darkrai",
+      "name": "Arceus Three Pack Blister [Darkrai]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl4": 2,
+        "dp2": 1
+      },
+      "note": "Two Arceus packs and one Mysterious Treasures pack, a coin and the Darkrai promo (as the Cresselia blister).",
+      "promos": [
+        "pl4-dpp52"
+      ],
+      "price": 1632.73,
+      "priceDerived": "packs",
+      "tcgplayerId": 659591,
+      "image": "assets/products/pl4/three-pack-blister-darkrai.webp"
+    },
+    {
+      "id": "arceus-collector-tin-green",
+      "name": "Arceus Collector's Tin [Green, Arceus LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl4": 1,
+        "pl3": 1,
+        "pl2": 1,
+        "pl1": 1
+      },
+      "note": "First wave, November 2009: one pack each of Arceus, Supreme Victors, Rising Rivals and Platinum (loosepacks.com Tin Contents Database). PokeBeach's summary says 3 Arceus, 2 Diamond & Pearl or Platinum and 1 POP 9 pack: the two sources conflict, medium-low confidence.",
+      "promos": [
+        "pl4-dpp53"
+      ],
+      "price": 8000.0,
+      "tcgplayerId": 485829,
+      "image": "assets/products/pl4/arceus-collector-tin-green.webp"
+    },
+    {
+      "id": "arceus-collector-tin-blue",
+      "name": "Arceus Collector's Tin [Blue, Arceus LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl4": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "note": "Second wave, December 16, 2009: two Arceus packs, one Rising Rivals (or Supreme Victors) and one Stormfront (or Secret Wonders) pack (loosepacks.com; PokeBeach says two Arceus and two Diamond & Pearl or Platinum packs): medium confidence.",
+      "promos": [
+        "pl4-dpp56"
+      ],
+      "price": 2280.08,
+      "priceDerived": "packs",
+      "tcgplayerId": 485830,
+      "image": "assets/products/pl4/arceus-collector-tin-blue.webp"
     }
   ],
   "rsv10pt5": [
@@ -12756,77 +13387,6 @@
       "image": "assets/products/xy9/triple-power-tin-gyarados.webp"
     }
   ],
-  "zsv10pt5": [
-    {
-      "id": "eliteTrainerBox",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 9,
-      "promos": [
-        "zsv10pt5-svp209"
-      ],
-      "price": 161.32,
-      "tcgplayerId": 630686,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
-    },
-    {
-      "id": "pc-etb",
-      "name": "Pokémon Center Elite Trainer Box",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "zsv10pt5-svp209-pc",
-        "zsv10pt5-svp209"
-      ],
-      "price": 271.77,
-      "tcgplayerId": 630687,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/pc-etb.webp"
-    },
-    {
-      "id": "victini-collection",
-      "name": "Unova Victini Illustration Collection",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "zsv10pt5-svp208",
-        "zsv10pt5-12-pokeball"
-      ],
-      "price": 71.86,
-      "tcgplayerId": 630615,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/victini-collection.webp"
-    },
-    {
-      "id": "tech-reuniclus",
-      "name": "Tech Sticker Collection: Reuniclus",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "zsv10pt5-svp212"
-      ],
-      "price": 50.44,
-      "tcgplayerId": 630614,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
-    },
-    {
-      "id": "heavy-hitters",
-      "name": "Unova Heavy Hitters Premium Collection",
-      "kind": "premium",
-      "packs": 12,
-      "promos": [
-        "zsv10pt5-12-stamp",
-        "zsv10pt5-34-stamp",
-        "zsv10pt5-wht020-stamp",
-        "zsv10pt5-wht062-stamp"
-      ],
-      "price": 180.68,
-      "tcgplayerId": 668632,
-      "image": "assets/products/zsv10pt5/heavy-hitters.webp"
-    }
-  ],
   "xyp": [
     {
       "id": "event-xyp010",
@@ -13293,303 +13853,75 @@
       "image": "assets/products/xytk9a/xy-trainer-kit-pikachu-libre-suicune.webp"
     }
   ],
-  "bw10": [
+  "zsv10pt5": [
     {
-      "id": "elite-trainer-box",
-      "name": "Plasma Blast Elite Trainer Box [Genesect]",
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
       "kind": "etb",
-      "packs": 8,
-      "note": "Eight packs, 40 basic Energy (5 of each of the eight types), 65 Plasma Blast sleeves, no promo (Bulbapedia merchandise page and ToyWiz, two sources). TCGplayer has no listing: price is its packs.",
-      "promos": [],
-      "price": 2203.6,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "sleeved-art-bundle",
-      "name": "Plasma Blast Sleeved Booster Pack Art Bundle [Set of 4]",
-      "kind": "bundle",
-      "packs": 4,
-      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
-      "promos": [],
-      "price": 1101.8,
-      "priceDerived": "packs",
-      "tcgplayerId": 276604,
-      "image": "assets/products/bw10/sleeved-art-bundle.webp"
-    },
-    {
-      "id": "blister-lucario",
-      "name": "Plasma Blast Three Pack Blister [Lucario]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a coin and BW85 Lucario in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "packs": 9,
       "promos": [
-        "bw10-bwp085"
+        "zsv10pt5-svp209"
       ],
-      "price": 1158.82,
-      "priceDerived": "packs"
+      "price": 161.32,
+      "tcgplayerId": 630686,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
     },
     {
-      "id": "blister-genesect",
-      "name": "Plasma Blast Three Pack Blister [Genesect]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a coin and BW86 Genesect in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
       "promos": [
-        "bw10-bwp086"
+        "zsv10pt5-svp209-pc",
+        "zsv10pt5-svp209"
       ],
-      "price": 991.35,
-      "priceDerived": "packs"
+      "price": 271.77,
+      "tcgplayerId": 630687,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/pc-etb.webp"
     },
     {
-      "id": "blister-blaziken",
-      "name": "Plasma Blast Single Pack Blister [Blaziken]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Blaziken (single source; the reprint card is not simulated).",
-      "promos": [],
-      "price": 275.45,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-krookodile",
-      "name": "Plasma Blast Single Pack Blister [Krookodile]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Krookodile (single source; the reprint card is not simulated).",
-      "promos": [],
-      "price": 275.45,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "team-plasma-tin-lugia",
-      "name": "Team Plasma Tin [Lugia-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 2,
-        "bw9": 1,
-        "bw8": 1
-      },
-      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
-      "promos": [
-        "bw10-bwp083"
-      ],
-      "price": 3500.0,
-      "tcgplayerId": 137095,
-      "image": "assets/products/bw10/team-plasma-tin-lugia.webp"
-    },
-    {
-      "id": "team-plasma-tin-deoxys",
-      "name": "Team Plasma Tin [Deoxys-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 2,
-        "bw9": 1,
-        "bw8": 1
-      },
-      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
-      "promos": [
-        "bw10-bwp082"
-      ],
-      "price": 1000.0,
-      "tcgplayerId": 137096,
-      "image": "assets/products/bw10/team-plasma-tin-deoxys.webp"
-    },
-    {
-      "id": "team-plasma-tin-thundurus",
-      "name": "Team Plasma Tin [Thundurus-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 2,
-        "bw9": 1,
-        "bw8": 1
-      },
-      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
-      "promos": [
-        "bw10-bwp081"
-      ],
-      "price": 1106.26,
-      "priceDerived": "packs",
-      "tcgplayerId": 137097,
-      "image": "assets/products/bw10/team-plasma-tin-thundurus.webp"
-    },
-    {
-      "id": "red-genesect-collection",
-      "name": "Red Genesect Collection",
-      "kind": "collection",
-      "packs": 2,
-      "note": "Two Black & White Series packs (set not named by Bulbapedia, single source: dealt as Plasma Blast), BW99 Red Genesect and a 60-card deck of Parallel Holo cards that is not simulated.",
-      "promos": [
-        "bw10-bwp099"
-      ],
-      "price": 559.73,
-      "priceDerived": "packs"
-    }
-  ],
-  "bw11": [
-    {
-      "id": "sleeved-art-bundle",
-      "name": "Legendary Treasures Sleeved Booster Pack Art Bundle [Set of 4]",
-      "kind": "bundle",
-      "packs": 4,
-      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
-      "promos": [],
-      "price": 3000.0,
-      "tcgplayerId": 276608,
-      "image": "assets/products/bw11/sleeved-art-bundle.webp"
-    },
-    {
-      "id": "blister-eevee",
-      "name": "Legendary Treasures Three Pack Blister [Eevee]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a coin and BW97 Eevee, the first promo on Smooth Cosmos Holofoil (Bulbapedia merchandise page and pkmn.gg variant text).",
-      "promos": [
-        "bw11-bwp097"
-      ],
-      "price": 1947.29,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-mew",
-      "name": "Legendary Treasures Three Pack Blister [Mew]",
-      "kind": "blister",
-      "packs": 3,
-      "note": "Three packs, a coin and BW98 Mew in Smooth Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
-      "promos": [
-        "bw11-bwp098"
-      ],
-      "price": 1647.28,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-aggron",
-      "name": "Legendary Treasures Single Pack Blister [Aggron]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Aggron (single source; the reprint card is not simulated).",
-      "promos": [],
-      "price": 382.43,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "blister-ampharos",
-      "name": "Legendary Treasures Single Pack Blister [Ampharos]",
-      "kind": "blister",
-      "packs": 1,
-      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Ampharos (single source; the reprint card is not simulated).",
-      "promos": [],
-      "price": 382.43,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "legendary-dragons-of-unova-collection",
-      "name": "Legendary Dragons of Unova Collection",
+      "id": "victini-collection",
+      "name": "Unova Victini Illustration Collection",
       "kind": "collection",
       "packs": 4,
-      "note": "Four Black & White Series packs (set not named: dealt as Legendary Treasures), three figures and Cosmos Holo reprints of Reshiram, Zekrom and Kyurem (not simulated). TCGplayer id and Bulbapedia.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs",
-      "tcgplayerId": 206316,
-      "image": "assets/products/bw11/legendary-dragons-of-unova-collection.webp"
+      "promos": [
+        "zsv10pt5-svp208",
+        "zsv10pt5-12-pokeball"
+      ],
+      "price": 71.86,
+      "tcgplayerId": 630615,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/victini-collection.webp"
     },
     {
-      "id": "two-pack-blister-legendary-birds",
-      "name": "Black & White Two Pack Blister [Legendary Birds]",
-      "kind": "blister",
-      "packs": 2,
-      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Moltres, Articuno and Zapdos (not simulated). Bulbapedia only, December 2013.",
-      "promos": [],
-      "price": 764.86,
-      "priceDerived": "packs"
+      "id": "tech-reuniclus",
+      "name": "Tech Sticker Collection: Reuniclus",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "zsv10pt5-svp212"
+      ],
+      "price": 50.44,
+      "tcgplayerId": 630614,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
     },
     {
-      "id": "two-pack-blister-swords-of-justice",
-      "name": "Black & White Two Pack Blister [Swords of Justice]",
-      "kind": "blister",
-      "packs": 2,
-      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Virizion, Terrakion and Cobalion (not simulated). Bulbapedia only, December 2013.",
-      "promos": [],
-      "price": 764.86,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-mewtwo",
-      "name": "Best of Black & White Tin [Mewtwo-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-darkrai",
-      "name": "Best of Black & White Tin [Darkrai-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-rayquaza",
-      "name": "Best of Black & White Tin [Rayquaza-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-black-kyurem",
-      "name": "Best of Black & White Tin [Black Kyurem-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
-    },
-    {
-      "id": "best-of-bw-tin-white-kyurem",
-      "name": "Best of Black & White Tin [White Kyurem-EX]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "bw10": 1,
-        "bw9": 1,
-        "bw8": 2
-      },
-      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
-      "promos": [],
-      "price": 1529.72,
-      "priceDerived": "packs"
+      "id": "heavy-hitters",
+      "name": "Unova Heavy Hitters Premium Collection",
+      "kind": "premium",
+      "packs": 12,
+      "promos": [
+        "zsv10pt5-12-stamp",
+        "zsv10pt5-34-stamp",
+        "zsv10pt5-wht020-stamp",
+        "zsv10pt5-wht062-stamp"
+      ],
+      "price": 180.68,
+      "tcgplayerId": 668632,
+      "image": "assets/products/zsv10pt5/heavy-hitters.webp"
     }
   ],
   "bw4": [
