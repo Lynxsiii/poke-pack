@@ -27,6 +27,7 @@ import { ORDER_LIMITS, packsInOffer, newRequestId } from "./orders-rules.js?v=1"
 import { SEALED_PRODUCTS } from "./catalog.js";
 
 const PENDING_KEY = "pokepack.vault.pending";
+const RESEND_WINDOW_MS = 120_000; // an unanswered open this young may still be running on the server
 
 const esc = (value = "") =>
   String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -255,6 +256,24 @@ export function initVault(deps) {
       finish(data, pending.title || "Opened from your sealed collection", pending.remainder || "");
       return "done";
     } catch (err) {
+      // A 404 only means "never happened" once the original request can no longer be
+      // running: a reload can leave it in flight, about to create the order. Within
+      // two minutes send the same id again (the Worker replays or creates it once).
+      if (err?.status === 404 && Date.now() - (Number(pending.at) || 0) < RESEND_WINDOW_MS) {
+        try {
+          const data = await deps.api("/api/vault/open", { method: "POST", body: JSON.stringify({ requestId: pending.requestId, items: pending.items }) });
+          finish(data, pending.title || "Opened from your sealed collection", pending.remainder || "");
+          return "done";
+        } catch (again) {
+          if (!refused(again) && again?.status !== 401) {
+            notice = { tone: "error", retry: true, text: `${errorLine(again)} An earlier open is still waiting to finish, and nothing is lost.` };
+            return "waiting";
+          }
+          pendingStore.clear();
+          if (again?.status === 401) phase = "signedout";
+          return "clear";
+        }
+      }
       if (err?.status === 404) {
         pendingStore.clear(); // it never happened
         return "clear";

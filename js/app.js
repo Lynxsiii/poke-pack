@@ -103,8 +103,8 @@ import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=2";
 import { coinTag } from "./battle-kit.js";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
-import { initCart } from "./cart-page.js?v=2";
-import { initVault } from "./vault-page.js?v=2";
+import { initCart } from "./cart-page.js?v=3";
+import { initVault } from "./vault-page.js?v=3";
 import { initBatchOpen } from "./batch-open.js?v=2";
 import { cartEligible } from "./orders-rules.js?v=1";
 

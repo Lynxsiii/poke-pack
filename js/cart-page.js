@@ -29,6 +29,7 @@ import { ORDER_LIMITS, newRequestId } from "./orders-rules.js?v=1";
 import { cartStore, centsText, coinText, planCart, MINUS, PLUS } from "./cart.js?v=2";
 
 const PENDING_KEY = "pokepack.checkout.pending";
+const RESEND_WINDOW_MS = 120_000; // an unanswered checkout this young may still be running on the server
 
 const esc = (value = "") =>
   String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -291,6 +292,28 @@ export function initCart(deps) {
       finish(await deps.api(`/api/orders/${encodeURIComponent(pending.requestId)}`), pending);
       return "done";
     } catch (err) {
+      // A 404 only means "never happened" once the original request can no longer be
+      // running: a reload can leave it in flight, about to create the order. Within
+      // two minutes send the same id again (the Worker replays or creates it once).
+      if (err.status === 404 && Date.now() - (Number(pending.at) || 0) < RESEND_WINDOW_MS) {
+        try {
+          finish(
+            await deps.api("/api/cart/checkout", {
+              method: "POST",
+              body: JSON.stringify({ requestId: pending.requestId, expectedCents: pending.expectedCents, lines: pending.lines }),
+            }),
+            pending
+          );
+          return "done";
+        } catch (again) {
+          if (again.status >= 400 && again.status < 500) {
+            clearPending();
+            return "gone";
+          }
+          say("We couldn't confirm your last checkout yet. Nothing is lost: check again in a moment.", { key: "recheck", label: "Check again" });
+          return "unknown";
+        }
+      }
       if (err.status === 404) {
         clearPending();
         return "gone";
