@@ -22,6 +22,58 @@
       "packs": 36,
       "promos": [],
       "note": "36 packs of the Unlimited print. TCGplayer lists the box (208708) with no price at all, so it is priced at 36 packs."
+    },
+    {
+      "id": "deck-misty",
+      "name": "Theme Deck \"Misty\"",
+      "kind": "deck",
+      "tcgplayerId": 234501,
+      "packs": 0,
+      "promos": [
+        "10"
+      ],
+      "note": "A 60-card Gym Heroes theme deck, featuring Misty's Tentacruel (Gym Heroes 10); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "price": 115.72,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    },
+    {
+      "id": "deck-brock",
+      "name": "Theme Deck \"Brock\"",
+      "kind": "deck",
+      "tcgplayerId": 234502,
+      "packs": 0,
+      "promos": [
+        "2"
+      ],
+      "note": "A 60-card Gym Heroes theme deck, featuring Brock's Rhydon (Gym Heroes 2); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "price": 600.0,
+      "priceSource": "TCGplayer's lowest listing (product 234502 on 2026-10-01: one listing at $600.00, no market price)."
+    },
+    {
+      "id": "deck-erika",
+      "name": "Theme Deck \"Erika\"",
+      "kind": "deck",
+      "tcgplayerId": 234503,
+      "packs": 0,
+      "promos": [
+        "5"
+      ],
+      "note": "A 60-card Gym Heroes theme deck, featuring Erika's Vileplume (Gym Heroes 5); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "price": 85.98,
+      "priceSource": "No TCGplayer price for the sealed deck: the sum of its 60 cards at the site's card prices (TCGplayer market, Unlimited). A sealed deck sells for more."
+    },
+    {
+      "id": "deck-lt-surge",
+      "name": "Theme Deck \"Lt. Surge\"",
+      "kind": "deck",
+      "tcgplayerId": 451095,
+      "packs": 0,
+      "promos": [
+        "8"
+      ],
+      "note": "A 60-card Gym Heroes theme deck, featuring Lt. Surge's Magneton (Gym Heroes 8); holographic Starmie coin. Not simulated: coin and markers. List: Bulbapedia deck page and PokeBeach's Gym Heroes theme-deck page (they differ by a card in places).",
+      "price": 399.99,
+      "priceSource": "TCGplayer's product page market price (product 451095 on 2026-10-01: $399.99); tcgcsv's mirror has no row for it."
     }
   ]
 }
