@@ -147,6 +147,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "mcd12": ("#ffb02e", "#e8663d"),  # McDonald's 2012: golden arches to Tepig orange
     "bwtk5a": ("#e0566c", "#8a6fe0"),  # Zoroark kit: mane red to illusion violet
     "bwtk5b": ("#d0a24a", "#9fb0c4"),  # Excadrill kit: drill gold to steel
+    "dp4": ("#7a6be0", "#e3b94a"),  # Great Encounters: Darkrai violet to Dialga gold
+    "dp5": ("#2f9be0", "#f2c744"),  # Majestic Dawn: Empoleon blue to logo gold
+    "dp6": ("#f08a1c", "#3b82d9"),  # Legends Awakened: wrapper orange to Lucario blue
+    "dp7": ("#9a63d6", "#e5533d"),  # Stormfront: storm purple to Infernape red
 }
 
 # Used when a set has no art at all and no override.
