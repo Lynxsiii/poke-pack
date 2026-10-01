@@ -456,6 +456,18 @@ const viaVault=async (u,rid)=>{assert.equal((await u('/api/vault','GET')).status
 await crashCase('p1post',()=>crash.after(/INSERT INTO sealed_orders/),viaPost);
 await crashCase('p1get',()=>crash.after(/INSERT INTO sealed_orders/),viaGet);
 await crashCase('p1vault',()=>crash.after(/INSERT INTO sealed_orders/),viaVault);
+// The tab that sent it is gone for good: loading the save finishes an order left a while ago.
+const viaSave=async (u,rid)=>{
+  const fresh=await u('/api/me','GET');
+  assert.equal(fresh.status,200);
+  assert.equal(count("SELECT COUNT(*) AS n FROM sealed_orders WHERE request_id=? AND status='paid'",rid),1,'a fresh order is left to its own request');
+  db.prepare('UPDATE sealed_orders SET created_at=created_at-60000 WHERE request_id=?').run(rid);
+  assert.equal((await u('/api/me','GET')).status,200);
+  assert.equal(count("SELECT COUNT(*) AS n FROM sealed_orders WHERE request_id=? AND status='done'",rid),1,'loading the save finished it');
+  return u('/api/orders/'+rid,'GET');
+};
+await crashCase('p1save',()=>crash.after(/INSERT INTO sealed_orders/),viaSave);
+await crashCase('chunksave',()=>crash.after(/INSERT INTO sealed_order_chunks/),viaSave);
 await crashCase('chunk',()=>crash.after(/INSERT INTO sealed_order_chunks/),viaPost);
 await crashCase('chunkget',()=>crash.before(/INSERT INTO sealed_order_chunks/,{skip:1}),viaGet);
 await crashCase('inside',()=>crash.inside(/INSERT INTO sealed_order_chunks/,2,{skip:1}),viaPost);

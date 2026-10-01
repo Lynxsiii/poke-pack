@@ -73,8 +73,10 @@ const DDL = [
 // Each plan stores the sizing it was made with, so a deploy that changes this
 // never re-cuts the chunks of an order already half applied.
 const CHUNKING = [200, 60, 4, 600, 30];
-// Stale paid orders finished on the way through a vault or order route.
+// Stale paid orders finished on the way through a vault or order route, and
+// how old one must be before loading a save finishes it.
 const RESUME_LIMIT = 2;
+const STALE_MS = 15_000;
 
 let schemaReady = false;
 
@@ -112,9 +114,16 @@ async function withSchema(env, fn) {
 export async function vaultKept(env, userId) {
   try {
     return await withSchema(env, async () => {
-      const row = await env.DB.prepare("SELECT COALESCE(SUM(qty), 0) AS n FROM sealed_vault WHERE user_id = ? AND qty > 0")
-        .bind(userId)
+      // The same read notices an order a dead isolate left half applied a while
+      // ago and finishes it, so a lost checkout tab still gets its cards on the
+      // next page load. A fresh one is left to the request still running it.
+      const row = await env.DB.prepare(
+        `SELECT COALESCE((SELECT SUM(qty) FROM sealed_vault WHERE user_id = ? AND qty > 0), 0) AS n,
+           (SELECT id FROM sealed_orders WHERE user_id = ? AND status = 'paid' AND created_at < ? LIMIT 1) AS stale`
+      )
+        .bind(userId, userId, Date.now() - STALE_MS)
         .first();
+      if (row?.stale) await resumeStale(env, userId);
       return Number(row?.n) || 0;
     });
   } catch (err) {
