@@ -1,0 +1,583 @@
+[
+  {
+    "id": "pop4-1",
+    "name": "Chimecho δ",
+    "number": "1",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "60",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/pop4/1.webp",
+    "imageSmall": "assets/cards/pop4/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Wrap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      },
+      {
+        "name": "Sonicboom",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "This attack's damage isn't affected by Weakness or Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-1/large",
+    "tcgplayerId": 84298,
+    "market": 900.0
+  },
+  {
+    "id": "pop4-2",
+    "name": "Deoxys δ",
+    "number": "2",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/pop4/2.webp",
+    "imageSmall": "assets/cards/pop4/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Crystal Laser",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "During your next turn, Deoxys's attacks do 40 more damage to the Defending Pokémon (before applying Weakness and Resistance)."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Form Change",
+        "text": "Once during your turn (before your attack), you may search your deck for another Deoxys and switch it with Deoxys. (Any cards attached to Deoxys, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-2/large",
+    "tcgplayerId": 84765,
+    "market": 350.0
+  },
+  {
+    "id": "pop4-3",
+    "name": "Flygon",
+    "number": "3",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "120",
+    "artist": "Hisao Nakamura",
+    "evolvesFrom": "Vibrava",
+    "image": "assets/cards/pop4/3.webp",
+    "imageSmall": "assets/cards/pop4/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Sand Pit",
+        "cost": [
+          "Fighting",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "The Defending Pokémon can't retreat during your opponent's next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Levitate",
+        "text": "As long as Flygon has any Energy attached to it, the Retreat Cost for Flygon is 0.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-3/large",
+    "tcgplayerId": 85524,
+    "market": 33.37
+  },
+  {
+    "id": "pop4-4",
+    "name": "Mew",
+    "number": "4",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "70",
+    "artist": "Nakaoka",
+    "image": "assets/cards/pop4/4.webp",
+    "imageSmall": "assets/cards/pop4/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Psyshock",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Reactive Barrier",
+        "text": "As long as Mew has any React Energy cards attached to it, prevent all effects, excluding damage, done to Mew by attacks from your opponent's Pokémon.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-4/large",
+    "tcgplayerId": 87401,
+    "market": 100.0
+  },
+  {
+    "id": "pop4-5",
+    "name": "Sceptile",
+    "number": "5",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "100",
+    "artist": "Atsuko Nishida",
+    "evolvesFrom": "Grovyle",
+    "image": "assets/cards/pop4/5.webp",
+    "imageSmall": "assets/cards/pop4/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Tail Rap",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50×",
+        "text": "Flip 2 coins. This attack does 50 damage times the number of heads."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Energy Trans",
+        "text": "As often as you like during your turn (before your attack), move a Grass Energy card attached to 1 of your Pokémon to another of your Pokémon. This power can't be used if Sceptile is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-5/large",
+    "tcgplayerId": 88948,
+    "market": 229.96
+  },
+  {
+    "id": "pop4-6",
+    "name": "Combusken",
+    "number": "6",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Torchic",
+    "image": "assets/cards/pop4/6.webp",
+    "imageSmall": "assets/cards/pop4/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Smokescreen",
+        "cost": [
+          "Fire"
+        ],
+        "damage": "10",
+        "text": "If the Defending Pokémon tries to attack during your opponent's next turn, your opponent flips a coin. If tails, that attack does nothing."
+      },
+      {
+        "name": "Sky Uppercut",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": "This attack's damage isn't affected by Resistance."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-6/large",
+    "tcgplayerId": 84409,
+    "market": 12.25
+  },
+  {
+    "id": "pop4-7",
+    "name": "Grovyle",
+    "number": "7",
+    "rarity": "Uncommon",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "70",
+    "artist": "Mitsuhiro Arita",
+    "evolvesFrom": "Treecko",
+    "image": "assets/cards/pop4/7.webp",
+    "imageSmall": "assets/cards/pop4/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10+",
+        "text": "Flip a coin. If heads, this attack does 10 damage plus 10 more damage."
+      },
+      {
+        "name": "Blot",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Remove 2 damage counters from Grovyle."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-7/large",
+    "tcgplayerId": 85940,
+    "market": 38.94
+  },
+  {
+    "id": "pop4-8",
+    "name": "Heal Energy",
+    "number": "8",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/pop4/8.webp",
+    "imageSmall": "assets/cards/pop4/8-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-8/large",
+    "tcgplayerId": 86038,
+    "market": 10.23
+  },
+  {
+    "id": "pop4-9",
+    "name": "Pokémon Fan Club",
+    "number": "9",
+    "rarity": "Uncommon",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/pop4/9.webp",
+    "imageSmall": "assets/cards/pop4/9-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-9/large",
+    "tcgplayerId": 88226,
+    "market": 102.0
+  },
+  {
+    "id": "pop4-10",
+    "name": "Scramble Energy",
+    "number": "10",
+    "rarity": "Uncommon",
+    "supertype": "Energy",
+    "subtypes": [
+      "Special"
+    ],
+    "artist": "Takumi Akabane",
+    "image": "assets/cards/pop4/10.webp",
+    "imageSmall": "assets/cards/pop4/10-sm.webp",
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-10/large",
+    "tcgplayerId": 88988,
+    "market": 7.57
+  },
+  {
+    "id": "pop4-11",
+    "name": "Mudkip",
+    "number": "11",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/pop4/11.webp",
+    "imageSmall": "assets/cards/pop4/11-sm.webp",
+    "attacks": [
+      {
+        "name": "Super Hypno Wave",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Asleep."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-11/large",
+    "tcgplayerId": 87613,
+    "market": 37.25
+  },
+  {
+    "id": "pop4-12",
+    "name": "Pidgey",
+    "number": "12",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Hisao Nakamura",
+    "image": "assets/cards/pop4/12.webp",
+    "imageSmall": "assets/cards/pop4/12-sm.webp",
+    "attacks": [
+      {
+        "name": "Quick Attack",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damage plus 10 more damage."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-12/large",
+    "tcgplayerId": 88049,
+    "market": 31.01
+  },
+  {
+    "id": "pop4-13",
+    "name": "Pikachu",
+    "number": "13",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "image": "assets/cards/pop4/13.webp",
+    "imageSmall": "assets/cards/pop4/13-sm.webp",
+    "attacks": [
+      {
+        "name": "Spark",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Does 10 damage to 1 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-13/large",
+    "tcgplayerId": 88083,
+    "market": 36.54
+  },
+  {
+    "id": "pop4-14",
+    "name": "Squirtle",
+    "number": "14",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/pop4/14.webp",
+    "imageSmall": "assets/cards/pop4/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Shell Retreat",
+        "text": "As long as Squirtle has any Energy cards attached to it, damage done to Squirtle by an opponent's attack is reduced by 10 (after applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-14/large",
+    "tcgplayerId": 89493,
+    "market": 68.17
+  },
+  {
+    "id": "pop4-15",
+    "name": "Treecko δ",
+    "number": "15",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "40",
+    "artist": "Masakazu Fukuda",
+    "image": "assets/cards/pop4/15.webp",
+    "imageSmall": "assets/cards/pop4/15-sm.webp",
+    "attacks": [
+      {
+        "name": "Pound",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Shining Claws",
+        "cost": [
+          "Psychic"
+        ],
+        "damage": "10",
+        "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-15/large",
+    "tcgplayerId": 90045,
+    "market": 25.75
+  },
+  {
+    "id": "pop4-16",
+    "name": "Wobbuffet",
+    "number": "16",
+    "rarity": "Common",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "80",
+    "artist": "Kagemaru Himeno",
+    "image": "assets/cards/pop4/16.webp",
+    "imageSmall": "assets/cards/pop4/16-sm.webp",
+    "attacks": [
+      {
+        "name": "Nap",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Remove 2 damage counters from Wobbuffet."
+      },
+      {
+        "name": "Expand",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "During your opponent's next turn, any damage done to Wobbuffet is reduced by 20 (after applying Weakness and Resistance)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-16/large",
+    "tcgplayerId": 90618,
+    "market": 3.79
+  },
+  {
+    "id": "pop4-17",
+    "name": "Deoxys ex",
+    "number": "17",
+    "rarity": "Rare",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "110",
+    "artist": "Hiromichi Sugiyama",
+    "image": "assets/cards/pop4/17.webp",
+    "imageSmall": "assets/cards/pop4/17-sm.webp",
+    "attacks": [
+      {
+        "name": "Fastwave",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "This attack's damage isn't affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Form Change",
+        "text": "Once during your turn (before your attack), you may search your deck for another Deoxys ex and switch it with Deoxys ex. (Any cards attached to Deoxys ex, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) If you do, put Deoxys ex on top of your deck. Shuffle your deck afterward. You can't use more than 1 Form Change Poké-Power each turn.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/pop4-17/large",
+    "tcgplayerId": 84774,
+    "market": 250.0
+  }
+]

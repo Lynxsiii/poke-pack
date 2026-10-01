@@ -106,6 +106,8 @@ def norm(name: str) -> str:
     # "Umbreon ★" vs "Umbreon Star", "_____'s Pikachu" vs "___'s Pikachu".
     name = re.sub(r"-(EX|GX)\b", r" \1", name).replace("★", " Star").replace(" δ", "").replace("◇", " Prism Star")
     name = re.sub(r"_+", "_", name)
+    # EX era: a leading delta is spelled out on TCGplayer ("δ Rainbow Energy" is "Delta Rainbow Energy", POP 5).
+    name = re.sub(r"^δ\s+", "Delta ", name)
     # ...and drops accents ("Flabebe" for Flabébé).
     name = "".join(ch for ch in unicodedata.normalize("NFKD", name) if not unicodedata.combining(ch))
     return re.sub(r"\s+", " ", name).strip().lower()
