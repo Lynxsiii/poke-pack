@@ -54,6 +54,7 @@ SM_RESEARCH = ROOT / "scripts" / "box-research" / "sun-moon.json"
 XY_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "xy-kits.json"
 BW_RESEARCH = ROOT / "scripts" / "box-research" / "bw.json"
 DP_RESEARCH = ROOT / "scripts" / "box-research" / "dp.json"
+EX_KITS_RESEARCH = ROOT / "scripts" / "box-research" / "ex-kits.json"  # e5: the two EX Trainer Kits (same shape as dp.json)
 # Noah chose (2026-09-30) to ship single-source lists too. --verified-only drops them again;
 # --trial writes the same build to a scratch file.
 ALLOW_SINGLE = True
@@ -445,6 +446,9 @@ def build(parts_dir: Path) -> int:
 
     if DP_RESEARCH.exists():
         dp_kits(json.loads(DP_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
+
+    if EX_KITS_RESEARCH.exists():
+        dp_kits(json.loads(EX_KITS_RESEARCH.read_text(encoding="utf-8")), out, rep, offers, cards)
 
     write(out, rep, offers)
     return 0

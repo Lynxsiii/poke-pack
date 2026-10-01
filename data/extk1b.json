@@ -1,0 +1,334 @@
+[
+  {
+    "id": "extk1b-1",
+    "name": "Electrike",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Ken Sugimori",
+    "image": "assets/cards/extk1b/1.webp",
+    "imageSmall": "assets/cards/extk1b/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-1/large",
+    "printedNumber": "001/010",
+    "era": "ex",
+    "tcgplayerId": 85131
+  },
+  {
+    "id": "extk1b-2",
+    "name": "Latios",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "80",
+    "artist": "Kyoko Koizumi",
+    "image": "assets/cards/extk1b/2.webp",
+    "imageSmall": "assets/cards/extk1b/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Gather Energy",
+        "cost": [
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, search your deck for a basic Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward."
+      },
+      {
+        "name": "Dragon Claw",
+        "cost": [
+          "Lightning",
+          "Lightning",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 19.83,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-2/large",
+    "printedNumber": "002/010",
+    "era": "ex",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 86664,
+    "promo": true
+  },
+  {
+    "id": "extk1b-3",
+    "name": "Linoone",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "70",
+    "artist": "Ken Sugimori",
+    "evolvesFrom": "Zigzagoon",
+    "image": "assets/cards/extk1b/3.webp",
+    "imageSmall": "assets/cards/extk1b/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Seek Out",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for up to 2 cards and put them into your hand. Shuffle your deck afterward."
+      },
+      {
+        "name": "Continuous Headbutt",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40×",
+        "text": "Flip a coin until you get tails. This attack does 40 damage times the number of heads."
+      }
+    ],
+    "market": 0.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-3/large",
+    "printedNumber": "003/010",
+    "era": "ex",
+    "tcgplayerId": 86805
+  },
+  {
+    "id": "extk1b-4",
+    "name": "Magnemite",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "40",
+    "artist": "Tomokazu Komiya",
+    "image": "assets/cards/extk1b/4.webp",
+    "imageSmall": "assets/cards/extk1b/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Rollout",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Hook",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "market": 0.44,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-4/large",
+    "printedNumber": "004/010",
+    "era": "ex",
+    "tcgplayerId": 87076
+  },
+  {
+    "id": "extk1b-5",
+    "name": "Magneton",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "80",
+    "artist": "Kyoko Umemoto",
+    "evolvesFrom": "Magnemite",
+    "image": "assets/cards/extk1b/5.webp",
+    "imageSmall": "assets/cards/extk1b/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Triple Smash",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip 3 coins. This attack does 20 damage plus 20 more damage for each heads."
+      }
+    ],
+    "market": 0.51,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-5/large",
+    "printedNumber": "005/010",
+    "era": "ex",
+    "tcgplayerId": 87103
+  },
+  {
+    "id": "extk1b-6",
+    "name": "Pikachu",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "50",
+    "artist": "Mitsuhiro Arita",
+    "image": "assets/cards/extk1b/6.webp",
+    "imageSmall": "assets/cards/extk1b/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Scratch",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Pika Bolt",
+        "cost": [
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "market": 7.23,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-6/large",
+    "printedNumber": "006/010",
+    "era": "ex",
+    "tcgplayerId": 88079
+  },
+  {
+    "id": "extk1b-7",
+    "name": "Zigzagoon",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "40",
+    "artist": "Atsuko Nishida",
+    "image": "assets/cards/extk1b/7.webp",
+    "imageSmall": "assets/cards/extk1b/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Fury Swipes",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Flip 3 coins. This attack does 10 damage times the number of heads."
+      }
+    ],
+    "market": 0.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-7/large",
+    "printedNumber": "007/010",
+    "era": "ex",
+    "tcgplayerId": 90746
+  },
+  {
+    "id": "extk1b-8",
+    "name": "Potion",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Keiji Kinebuchi",
+    "image": "assets/cards/extk1b/8.webp",
+    "imageSmall": "assets/cards/extk1b/8-sm.webp",
+    "market": 0.15,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-8/large",
+    "printedNumber": "008/010",
+    "era": "ex",
+    "tcgplayerId": 88336
+  },
+  {
+    "id": "extk1b-9",
+    "name": "Energy Search",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Kai Ishikawa",
+    "image": "assets/cards/extk1b/9.webp",
+    "imageSmall": "assets/cards/extk1b/9-sm.webp",
+    "market": 0.21,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-9/large",
+    "printedNumber": "009/010",
+    "era": "ex",
+    "tcgplayerId": 85240
+  },
+  {
+    "id": "extk1b-10",
+    "name": "Lightning Energy",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "image": "assets/cards/extk1b/10.webp",
+    "imageSmall": "assets/cards/extk1b/10-sm.webp",
+    "market": 0.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk1b-10/large",
+    "printedNumber": "010/010",
+    "era": "ex",
+    "tcgplayerId": 86760
+  }
+]
