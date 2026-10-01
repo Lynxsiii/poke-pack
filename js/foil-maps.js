@@ -24,11 +24,11 @@
 
 import { isSm, smGxMap, smPattern, smReverseFinish, smSafeMap, SM_FULL_ART, SM_ETCHED } from "./sm-foil.js?v=8";
 
-import { isXy, xyMap, xyPattern, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=1";
+import { isXy, xyMap, xyPattern, xyReverseExtras, xyReverseFinish, XY_FULL_ART, XY_ETCHED } from "./xy-foil.js?v=5";
 
-import { isBw, bwEtched, bwMap, bwPattern, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=1";
+import { isBw, bwEtched, bwMap, bwPattern, bwReverseFinish, BW_FULL_ART } from "./bw-foil.js?v=2";
 
-import { isDp, dpEtched, dpMap, dpPattern, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=1";
+import { isDp, dpEtched, dpMap, dpPattern, dpReverseExtras, dpReverseFinish, DP_FULL_ART } from "./dp-foil.js?v=1";
 
 export { isSm, smPattern, isXy, xyPattern, isBw, bwPattern, isDp, dpPattern };
 
@@ -247,11 +247,13 @@ export function foilExtras(card, url, reverseKind) {
     if (finish === "mirror") return { classes: "rev-mirror", style: "", cure: false };
     // XY: the plain mirror, with the era's hooks for css/holo/xy.css.
     if (finish === "xy") return { classes: "rev-mirror era-xy xy-rev", style: "", cure: false };
+    // XY's reverse: one tile per type (assets/foil/xy-reverse/, css/holo/xy.css).
+    if (finish.startsWith("xy-")) return xyReverseExtras(card, url, finish);
     // Black & White: the plain mirror of bw1, the Energy-symbol reverse of the rest (css/holo/bw.css).
     if (finish === "bw") return { classes: "rev-mirror era-bw bw-rev", style: "", cure: false };
     if (finish === "bw-plain") return { classes: "rev-mirror era-bw bw-rev bw-rev-plain", style: "", cure: false };
     // Diamond & Pearl generation: the Mirror pattern, the whole card but the art window (css/holo/dp.css).
-    if (finish === "dp") return { classes: "rev-mirror era-dp dp-rev", style: "", cure: false };
+    if (finish === "dp") return dpReverseExtras(card, url);
     if (!finish) return { classes: "", style: "", cure: false };
     if (finish.startsWith("sm-")) {
       const type = finish.slice(3);

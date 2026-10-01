@@ -429,6 +429,8 @@ Shared finishes:
   Star), [sun-moon-fullart.md](reference/sun-moon-fullart.md),
   [sun-moon-holo-reverse.md](reference/sun-moon-holo-reverse.md) and
   [sun-moon-shiny-vault.md](reference/sun-moon-shiny-vault.md).
+- [reference/bw-fullart.md](reference/bw-fullart.md): Black & White full arts (flat bw1-bw3 and textured bw4-bw10), full-art
+  Supporters, yellow and gold secrets, the gold bw11 Reshiram and Zekrom, the Radiant Collection (`bw-fullart.css`).
 - [reference/sv-reverse.md](reference/sv-reverse.md): the Scarlet & Violet
   reverse holos, one pattern per type, and the Mega Evolution mirror
   (`sv-reverse.css`, `scripts/make_sv_reverse.py`).

@@ -1,0 +1,72 @@
+{
+  "id": "pl2",
+  "name": "Rising Rivals",
+  "series": "platinum",
+  "slug": "rising-rivals",
+  "scrydexId": "pl2",
+  "era": "dp",
+  "artSlug": "rising-rivals",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1367,
+  "rarityOverrides": {
+    "RT1": "Rare Rotom",
+    "RT2": "Rare Rotom",
+    "RT3": "Rare Rotom",
+    "RT4": "Rare Rotom",
+    "RT5": "Rare Rotom",
+    "RT6": "Rare Rotom"
+  },
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "era": "dp"
+    }
+  },
+  "promoCards": {
+    "dpp42": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp43": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "three-pack-blister-carnivine-g",
+      "name": "Rising Rivals Three Pack Blister [Carnivine G]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "pl2": 2,
+        "dp5": 1
+      },
+      "promos": [
+        "dpp42"
+      ],
+      "note": "Two Rising Rivals packs and one Majestic Dawn pack, a coin and the Carnivine G promo (totalcards, joshscards and wholesalegaming listings, Bulbapedia excerpt; the coin is not simulated). TCGplayer has no listing: priced from its packs."
+    },
+    {
+      "id": "three-pack-blister-probopass-g",
+      "name": "Rising Rivals Three Pack Blister [Probopass G]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "from": {
+        "pl2": 2,
+        "dp5": 1
+      },
+      "promos": [
+        "dpp43"
+      ],
+      "note": "Two Rising Rivals packs and one Majestic Dawn pack, a coin and the Probopass G promo (as the Carnivine G blister). TCGplayer has no listing: priced from its packs."
+    }
+  ]
+}

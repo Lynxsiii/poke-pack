@@ -1,5 +1,304 @@
 {
   "_fetchedAt": "2026-10-01",
+  "bw10": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Plasma Blast Elite Trainer Box [Genesect]",
+      "kind": "etb",
+      "packs": 8,
+      "note": "Eight packs, 40 basic Energy (5 of each of the eight types), 65 Plasma Blast sleeves, no promo (Bulbapedia merchandise page and ToyWiz, two sources). TCGplayer has no listing: price is its packs.",
+      "promos": [],
+      "price": 2203.6,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "sleeved-art-bundle",
+      "name": "Plasma Blast Sleeved Booster Pack Art Bundle [Set of 4]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
+      "promos": [],
+      "price": 1101.8,
+      "priceDerived": "packs",
+      "tcgplayerId": 276604,
+      "image": "assets/products/bw10/sleeved-art-bundle.webp"
+    },
+    {
+      "id": "blister-lucario",
+      "name": "Plasma Blast Three Pack Blister [Lucario]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW85 Lucario in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw10-bwp085"
+      ],
+      "price": 1158.82,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-genesect",
+      "name": "Plasma Blast Three Pack Blister [Genesect]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW86 Genesect in Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw10-bwp086"
+      ],
+      "price": 991.35,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-blaziken",
+      "name": "Plasma Blast Single Pack Blister [Blaziken]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Blaziken (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 275.45,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-krookodile",
+      "name": "Plasma Blast Single Pack Blister [Krookodile]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo reprint of Dark Explorers' Krookodile (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 275.45,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "team-plasma-tin-lugia",
+      "name": "Team Plasma Tin [Lugia-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp083"
+      ],
+      "price": 3500.0,
+      "tcgplayerId": 137095,
+      "image": "assets/products/bw10/team-plasma-tin-lugia.webp"
+    },
+    {
+      "id": "team-plasma-tin-deoxys",
+      "name": "Team Plasma Tin [Deoxys-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp082"
+      ],
+      "price": 1000.0,
+      "tcgplayerId": 137096,
+      "image": "assets/products/bw10/team-plasma-tin-deoxys.webp"
+    },
+    {
+      "id": "team-plasma-tin-thundurus",
+      "name": "Team Plasma Tin [Thundurus-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 2,
+        "bw9": 1,
+        "bw8": 1
+      },
+      "note": "Four packs, typically two Plasma Blast, one Plasma Freeze and one Plasma Storm (Bulbapedia's merchandise page only: medium-low). The tin's code card is not simulated.",
+      "promos": [
+        "bw10-bwp081"
+      ],
+      "price": 1106.26,
+      "priceDerived": "packs",
+      "tcgplayerId": 137097,
+      "image": "assets/products/bw10/team-plasma-tin-thundurus.webp"
+    },
+    {
+      "id": "red-genesect-collection",
+      "name": "Red Genesect Collection",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named by Bulbapedia, single source: dealt as Plasma Blast), BW99 Red Genesect and a 60-card deck of Parallel Holo cards that is not simulated.",
+      "promos": [
+        "bw10-bwp099"
+      ],
+      "price": 559.73,
+      "priceDerived": "packs"
+    }
+  ],
+  "bw11": [
+    {
+      "id": "sleeved-art-bundle",
+      "name": "Legendary Treasures Sleeved Booster Pack Art Bundle [Set of 4]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "One sleeved pack of each of the four wrappers (TCGplayer: \"Collect each of the 4 unique art packs\").",
+      "promos": [],
+      "price": 3000.0,
+      "tcgplayerId": 276608,
+      "image": "assets/products/bw11/sleeved-art-bundle.webp"
+    },
+    {
+      "id": "blister-eevee",
+      "name": "Legendary Treasures Three Pack Blister [Eevee]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW97 Eevee, the first promo on Smooth Cosmos Holofoil (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw11-bwp097"
+      ],
+      "price": 1947.29,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-mew",
+      "name": "Legendary Treasures Three Pack Blister [Mew]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and BW98 Mew in Smooth Cosmos Holo (Bulbapedia merchandise page and pkmn.gg variant text).",
+      "promos": [
+        "bw11-bwp098"
+      ],
+      "price": 1647.28,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-aggron",
+      "name": "Legendary Treasures Single Pack Blister [Aggron]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Aggron (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 382.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-ampharos",
+      "name": "Legendary Treasures Single Pack Blister [Ampharos]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Smooth Cosmos Holo reprint of Dragons Exalted' Ampharos (single source; the reprint card is not simulated).",
+      "promos": [],
+      "price": 382.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "legendary-dragons-of-unova-collection",
+      "name": "Legendary Dragons of Unova Collection",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four Black & White Series packs (set not named: dealt as Legendary Treasures), three figures and Cosmos Holo reprints of Reshiram, Zekrom and Kyurem (not simulated). TCGplayer id and Bulbapedia.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs",
+      "tcgplayerId": 206316,
+      "image": "assets/products/bw11/legendary-dragons-of-unova-collection.webp"
+    },
+    {
+      "id": "two-pack-blister-legendary-birds",
+      "name": "Black & White Two Pack Blister [Legendary Birds]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Moltres, Articuno and Zapdos (not simulated). Bulbapedia only, December 2013.",
+      "promos": [],
+      "price": 764.86,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-swords-of-justice",
+      "name": "Black & White Two Pack Blister [Swords of Justice]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Black & White Series packs (set not named: dealt as Legendary Treasures) and Cosmos Holo reprints of Virizion, Terrakion and Cobalion (not simulated). Bulbapedia only, December 2013.",
+      "promos": [],
+      "price": 764.86,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-mewtwo",
+      "name": "Best of Black & White Tin [Mewtwo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-darkrai",
+      "name": "Best of Black & White Tin [Darkrai-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-rayquaza",
+      "name": "Best of Black & White Tin [Rayquaza-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-black-kyurem",
+      "name": "Best of Black & White Tin [Black Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "best-of-bw-tin-white-kyurem",
+      "name": "Best of Black & White Tin [White Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw10": 1,
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "November 2013 re-release of the first tins: four packs, typically one Plasma Blast, one Plasma Freeze and two Plasma Storm (Bulbapedia only: low). The EX promo is the same card as the first release (filed with that tin's set) and is not simulated.",
+      "promos": [],
+      "price": 1529.72,
+      "priceDerived": "packs"
+    }
+  ],
   "bwp": [
     {
       "id": "event-bwp028",
@@ -431,42 +730,6 @@
       "image": "assets/products/cel25/dark-sylveon-v-tin.webp"
     }
   ],
-  "col1": [
-    {
-      "id": "three-pack-blister-hitmonchan",
-      "name": "Call of Legends Three Pack Blister [Hitmonchan]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "col1": 2,
-        "hgss1": 1
-      },
-      "note": "Two Call of Legends packs, one HeartGold & SoulSilver pack, a Dialga or Palkia coin and the Hitmonchan promo (HGSS24, Cracked Ice Holo). The coin is not simulated.",
-      "promos": [
-        "col1-hsp24"
-      ],
-      "price": 3364.65,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "three-pack-blister-hitmonlee",
-      "name": "Call of Legends Three Pack Blister [Hitmonlee]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "col1": 2,
-        "hgss1": 1
-      },
-      "note": "Two Call of Legends packs, one HeartGold & SoulSilver pack, a coin and the Hitmonlee promo (HGSS25, Cracked Ice Holo).",
-      "promos": [
-        "col1-hsp25"
-      ],
-      "price": 3364.07,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    }
-  ],
   "dc1": [
     {
       "id": "team-magma-blister",
@@ -622,6 +885,68 @@
       "price": 329.96,
       "tcgplayerId": 197563,
       "image": "assets/products/det1/on-the-case-figure-collection.webp"
+    }
+  ],
+  "dpp": [
+    {
+      "id": "event-dpp41",
+      "name": "Toxicroak G · Platinum Player's Guide",
+      "kind": "event",
+      "packs": 0,
+      "note": "Inserted in the Platinum Player's Guide, the strategy book that came out with Rising Rivals in May 2009. Where it came from is not settled: Collector's Cache lists no product and an eBay title calls it a 2009 World Championship card. No sealed product on TCGplayer.",
+      "promos": [
+        "dpp-dpp41"
+      ],
+      "price": 67.53,
+      "tcgplayerId": 90013
+    },
+    {
+      "id": "event-dpp48",
+      "name": "Tropical Wind · 2009 World Championships",
+      "kind": "event",
+      "packs": 0,
+      "note": "Handed out at the 2009 World Championships (players and staff; the staff copy carries a stamp). No sealed product.",
+      "promos": [
+        "dpp-dpp48"
+      ],
+      "price": 249.0,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer's market price for the card (product 90056: $249.00; tcgcsv's mirror has no row for it) and pkmn.gg's price for DP48.",
+      "tcgplayerId": 90056
+    }
+  ],
+  "dptk3a": [
+    {
+      "id": "dp-trainer-kit-manaphy-lucario",
+      "name": "DP Trainer Kit: Manaphy & Lucario",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "dptk3a-4"
+      ],
+      "price": 29.56,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 23 different cards' market prices added up, one of each (a floor: the real decks held more copies).",
+      "tcgplayerId": 98949,
+      "image": "assets/products/dptk3a/dp-trainer-kit-manaphy-lucario.webp"
+    }
+  ],
+  "dptk3b": [
+    {
+      "id": "dp-trainer-kit-manaphy-lucario",
+      "name": "DP Trainer Kit: Manaphy & Lucario",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two half decks, Manaphy (12 different cards) and Lucario (11), each with a holofoil Pokémon in new art (Manaphy 4, Lucario 3), plus one booster pack of a late EX-series or Diamond & Pearl set, damage and status counters, a Manaphy coin and a playmat. The pack is not simulated, and the copies of each card a half deck held are not on record, so opening the kit from either half-deck page deals one of each different card of both decks.",
+      "promos": [
+        "dptk3b-3"
+      ],
+      "price": 29.56,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 23 different cards' market prices added up, one of each (a floor: the real decks held more copies).",
+      "tcgplayerId": 98949,
+      "image": "assets/products/dptk3b/dp-trainer-kit-manaphy-lucario.webp"
     }
   ],
   "g1": [
@@ -837,371 +1162,38 @@
       "image": "assets/products/g1/super-premium-mew-mewtwo.webp"
     }
   ],
-  "hgss1": [
+  "hgsstk4a": [
     {
-      "id": "poster-pack-ho-oh",
-      "name": "HeartGold & SoulSilver Poster Pack [Ho-Oh]",
-      "kind": "collection",
-      "packs": 4,
-      "from": {
-        "hgss1": 2,
-        "pop9": 2
-      },
-      "note": "Two HeartGold & SoulSilver packs, two POP Series 9 packs, a double-sided poster and the Ho-Oh promo (HGSS01); the Lugia version is its own product (Bulbapedia HGSS merchandise, dacardworld and Previews World listings, Pokellector). The poster is not simulated.",
+      "id": "hgss-trainer-kit-gyarados-raichu",
+      "name": "HGSS Trainer Kit: Gyarados & Raichu",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), two game booklets, a playmat, counters, a coin and a deck box, released as the HS Trainer Kit in May 2010 (English and European languages only). The real kit also held one bonus booster pack (a HeartGold & SoulSilver pack per one retailer), which is not simulated. Opening it from either half-deck page deals both decks.",
       "promos": [
-        "hgss1-hsp01"
+        "hgsstk4a-30"
       ],
-      "price": 1913.67,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "poster-pack-lugia",
-      "name": "HeartGold & SoulSilver Poster Pack [Lugia]",
-      "kind": "collection",
-      "packs": 4,
-      "from": {
-        "hgss1": 2,
-        "pop9": 2
-      },
-      "note": "Two HeartGold & SoulSilver packs, two POP Series 9 packs, a double-sided poster and the Lugia promo (HGSS02). The poster is not simulated.",
-      "promos": [
-        "hgss1-hsp02"
-      ],
-      "price": 2127.0,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "three-pack-blister-pikachu",
-      "name": "HeartGold & SoulSilver Three Pack Blister [Pikachu]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "hgss1": 2,
-        "dp6": 1
-      },
-      "note": "Two HeartGold & SoulSilver packs, one Legends Awakened pack, a coin and the Pikachu promo (HGSS03). Collector's Cache and loosepacks agree on the pack mix; the coin is not simulated.",
-      "promos": [
-        "hgss1-hsp03"
-      ],
-      "price": 1444.85,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "three-pack-blister-wobbuffet",
-      "name": "HeartGold & SoulSilver Three Pack Blister [Wobbuffet]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "hgss1": 2,
-        "dp6": 1
-      },
-      "note": "Two HeartGold & SoulSilver packs, one Legends Awakened pack, a coin and the Wobbuffet promo (HGSS04). The coin is not simulated.",
-      "promos": [
-        "hgss1-hsp04"
-      ],
-      "price": 1413.28,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "two-pack-blister-hoothoot-noctowl",
-      "name": "HeartGold & SoulSilver Two Pack Blister [Hoothoot and Noctowl]",
-      "kind": "blister",
-      "packs": 2,
-      "from": {
-        "hgss1": 1,
-        "pop9": 1
-      },
-      "note": "One HeartGold & SoulSilver pack, one POP Series 9 pack and the two promos, Hoothoot (HGSS05) and Noctowl (HGSS06). Pack mix from one Bulbapedia excerpt (medium-low).",
-      "promos": [
-        "hgss1-hsp05",
-        "hgss1-hsp06"
-      ],
-      "price": 952.94,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "collectors-tin-feraligatr",
-      "name": "Spring 2010 Collector's Tin [Feraligatr Prime]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "hgss1": 2,
-        "dp6": 1,
-        "pl1": 1
-      },
-      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum (loosepacks Tin Contents Database; Bulbapedia excerpt) and the Feraligatr Prime promo (HGSS07). The tin is not simulated.",
-      "promos": [
-        "hgss1-hsp07"
-      ],
-      "price": 1945.68,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "collectors-tin-meganium",
-      "name": "Spring 2010 Collector's Tin [Meganium Prime]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "hgss1": 2,
-        "dp6": 1,
-        "pl1": 1
-      },
-      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum, and the Meganium Prime promo (HGSS08).",
-      "promos": [
-        "hgss1-hsp08"
-      ],
-      "price": 1914.03,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "collectors-tin-typhlosion",
-      "name": "Spring 2010 Collector's Tin [Typhlosion Prime]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "hgss1": 2,
-        "dp6": 1,
-        "pl1": 1
-      },
-      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum, and the Typhlosion Prime promo (HGSS09).",
-      "promos": [
-        "hgss1-hsp09"
-      ],
-      "price": 1940.38,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "legendary-beast-tin-raikou",
-      "name": "Fall 2010 Legendary Beast Tin [Raikou]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "hgss1": 1,
-        "hgss3": 1,
-        "pl4": 1,
-        "pl1": 1
-      },
-      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack (loosepacks; the slot is 'Platinum Base or Stormfront', opened here as Platinum; medium-low) and the Raikou promo (HGSS19). The 2012 reissue held three packs.",
-      "promos": [
-        "hgss1-hsp19"
-      ],
-      "price": 1921.74,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "legendary-beast-tin-entei",
-      "name": "Fall 2010 Legendary Beast Tin [Entei]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "hgss1": 1,
-        "hgss3": 1,
-        "pl4": 1,
-        "pl1": 1
-      },
-      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Entei promo (HGSS20).",
-      "promos": [
-        "hgss1-hsp20"
-      ],
-      "price": 1944.19,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "legendary-beast-tin-suicune",
-      "name": "Fall 2010 Legendary Beast Tin [Suicune]",
-      "kind": "tin",
-      "packs": 4,
-      "from": {
-        "hgss1": 1,
-        "hgss3": 1,
-        "pl4": 1,
-        "pl1": 1
-      },
-      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Suicune promo (HGSS21).",
-      "promos": [
-        "hgss1-hsp21"
-      ],
-      "price": 1930.69,
-      "priceDerived": "packs",
-      "tcgplayerId": null
+      "price": 203.04,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98731,
+      "image": "assets/products/hgsstk4a/hgss-trainer-kit-gyarados-raichu.webp"
     }
   ],
-  "hgss2": [
+  "hgsstk4b": [
     {
-      "id": "three-pack-blister-latias",
-      "name": "HS Unleashed Three Pack Blister [Latias]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "hgss2": 2,
-        "dp7": 1
-      },
-      "note": "Two Unleashed packs, one Stormfront pack (a PokeBeach/Bulbapedia search excerpt, one source: medium-low), a Jirachi or Shaymin coin and the Latias promo (HGSS10, Cosmos Holo). The coin is not simulated.",
+      "id": "hgss-trainer-kit-gyarados-raichu",
+      "name": "HGSS Trainer Kit: Gyarados & Raichu",
+      "kind": "deck",
+      "packs": 0,
+      "note": "Two fixed 30-card half decks with a holofoil Pokémon each (card 30), two game booklets, a playmat, counters, a coin and a deck box, released as the HS Trainer Kit in May 2010 (English and European languages only). The real kit also held one bonus booster pack (a HeartGold & SoulSilver pack per one retailer), which is not simulated. Opening it from either half-deck page deals both decks.",
       "promos": [
-        "hgss2-hsp10"
+        "hgsstk4b-30"
       ],
-      "price": 1378.43,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "three-pack-blister-latios",
-      "name": "HS Unleashed Three Pack Blister [Latios]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "hgss2": 2,
-        "dp7": 1
-      },
-      "note": "Two Unleashed packs, one Stormfront pack, a coin and the Latios promo (HGSS11, Cosmos Holo).",
-      "promos": [
-        "hgss2-hsp11"
-      ],
-      "price": 1388.29,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "two-pack-blister-cleffa",
-      "name": "HS Unleashed Two Pack Blister [Cleffa]",
-      "kind": "blister",
-      "packs": 2,
-      "note": "Two packs and the Cleffa promo (HGSS12). No source gives the pack mix; opened here as two Unleashed packs.",
-      "promos": [
-        "hgss2-hsp12"
-      ],
-      "price": 877.64,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "two-pack-blister-smoochum",
-      "name": "HS Unleashed Two Pack Blister [Smoochum]",
-      "kind": "blister",
-      "packs": 2,
-      "note": "Two packs and the Smoochum promo (HGSS13). No source gives the pack mix; opened here as two Unleashed packs.",
-      "promos": [
-        "hgss2-hsp13"
-      ],
-      "price": 888.05,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    }
-  ],
-  "hgss3": [
-    {
-      "id": "three-pack-blister-lapras",
-      "name": "HS Undaunted Three Pack Blister [Lapras]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "hgss3": 2,
-        "pl1": 1
-      },
-      "note": "Two Undaunted packs, one Platinum-era pack (the sources conflict: Platinum, Rising Rivals or Arceus; opened here as Platinum), a coin and the Lapras promo (HGSS14). The coin is not simulated.",
-      "promos": [
-        "hgss3-hsp14"
-      ],
-      "price": 2289.32,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "three-pack-blister-shuckle",
-      "name": "HS Undaunted Three Pack Blister [Shuckle]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "hgss3": 2,
-        "pl1": 1
-      },
-      "note": "Two Undaunted packs, one Platinum-era pack (sources conflict; opened here as Platinum), a coin and the Shuckle promo (HGSS15).",
-      "promos": [
-        "hgss3-hsp15"
-      ],
-      "price": 2307.8,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "two-pack-blister-plusle",
-      "name": "HS Undaunted Two Pack Blister [Plusle]",
-      "kind": "blister",
-      "packs": 2,
-      "from": {
-        "hgss3": 1,
-        "pop9": 1
-      },
-      "note": "One Undaunted pack, one POP Series 9 pack and the Plusle promo (HGSS16, Cracked Ice Holo).",
-      "promos": [
-        "hgss3-hsp16"
-      ],
-      "price": 1542.87,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "two-pack-blister-minun",
-      "name": "HS Undaunted Two Pack Blister [Minun]",
-      "kind": "blister",
-      "packs": 2,
-      "from": {
-        "hgss3": 1,
-        "pop9": 1
-      },
-      "note": "One Undaunted pack, one POP Series 9 pack and the Minun promo (HGSS17, Cracked Ice Holo).",
-      "promos": [
-        "hgss3-hsp17"
-      ],
-      "price": 1530.82,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    }
-  ],
-  "hgss4": [
-    {
-      "id": "three-pack-blister-porygon",
-      "name": "HS Triumphant Three Pack Blister [Porygon]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "hgss4": 2,
-        "pl1": 1
-      },
-      "note": "Two Triumphant packs, a Platinum pack (Bulbapedia excerpt, thewarpgate listing), a coin and the Porygon promo (HGSS22). The coin is not simulated.",
-      "promos": [
-        "hgss4-hsp22"
-      ],
-      "price": 1219.9,
-      "priceDerived": "packs",
-      "tcgplayerId": null
-    },
-    {
-      "id": "three-pack-blister-porygon2",
-      "name": "HS Triumphant Three Pack Blister [Porygon2]",
-      "kind": "blister",
-      "packs": 3,
-      "from": {
-        "hgss4": 2,
-        "pl1": 1
-      },
-      "note": "Two Triumphant packs, a Platinum pack, a coin and the Porygon2 promo (HGSS23).",
-      "promos": [
-        "hgss4-hsp23"
-      ],
-      "price": 1219.51,
-      "priceDerived": "packs",
-      "tcgplayerId": null
+      "price": 203.04,
+      "priceDerived": "manual",
+      "priceSource": "The kit's own TCGplayer listing has no price; priced at its 60 cards' market prices added up.",
+      "tcgplayerId": 98731,
+      "image": "assets/products/hgsstk4b/hgss-trainer-kit-gyarados-raichu.webp"
     }
   ],
   "me1": [
@@ -3164,6 +3156,338 @@
       "tcgplayerId": 275842,
       "released": "2022-09-30",
       "image": "assets/products/pgo/dragonite-vstar-premier-deck-holder-collection.webp"
+    }
+  ],
+  "pl1": [
+    {
+      "id": "three-pack-blister-porygon-z",
+      "name": "Platinum Three Pack Blister [Porygon-Z]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl1": 2,
+        "dp2": 1
+      },
+      "note": "Two Platinum packs and one Mysterious Treasures pack, a coin and the Porygon-Z promo (Bulbapedia excerpt, Collector's Cache and PokeBeach titles; the coin is not simulated). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl1-dpp35"
+      ],
+      "price": 1177.96,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-gliscor",
+      "name": "Platinum Three Pack Blister [Gliscor]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl1": 2,
+        "dp2": 1
+      },
+      "note": "Two Platinum packs and one Mysterious Treasures pack, a coin and the Gliscor promo (as the Porygon-Z blister). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl1-dpp36"
+      ],
+      "price": 1176.44,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "spring-2009-tin-dialga",
+      "name": "Spring 2009 Collector's Tin [Dialga LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "note": "Two Platinum packs, one Mysterious Treasures and one Stormfront (Bulbapedia excerpt; loosepacks.com lists two other Diamond & Pearl packs instead): medium confidence.",
+      "promos": [
+        "pl1-dpp37"
+      ],
+      "price": 1609.28,
+      "priceDerived": "packs",
+      "tcgplayerId": 485825,
+      "image": "assets/products/pl1/spring-2009-tin-dialga.webp"
+    },
+    {
+      "id": "spring-2009-tin-giratina",
+      "name": "Spring 2009 Collector's Tin [Giratina LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "note": "As the Dialga tin (medium confidence). TCGplayer lists no Giratina tin: priced from its packs.",
+      "promos": [
+        "pl1-dpp38"
+      ],
+      "price": 1723.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "spring-2009-tin-shaymin",
+      "name": "Spring 2009 Collector's Tin [Shaymin LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl1": 2,
+        "dp2": 1,
+        "dp7": 1
+      },
+      "note": "As the Dialga tin (medium confidence).",
+      "promos": [
+        "pl1-dpp39"
+      ],
+      "price": 1611.24,
+      "priceDerived": "packs",
+      "tcgplayerId": 485824,
+      "image": "assets/products/pl1/spring-2009-tin-shaymin.webp"
+    },
+    {
+      "id": "regigigas-colossal-box",
+      "name": "Regigigas Colossal Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three Platinum packs and two other Diamond & Pearl-series packs (Bulbapedia excerpt, eBay titles; which two is not stated, so only the Platinum packs are simulated), the cosmos holo Regigigas and a jumbo Regigigas (the jumbo is not simulated). TCGplayer has no listing: priced from the three packs.",
+      "promos": [
+        "pl1-dpp40"
+      ],
+      "price": 1189.82,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "platinum-poster-pack",
+      "name": "Platinum Poster Pack [Magnezone]",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "pl1": 2,
+        "pop8": 2
+      },
+      "note": "Two Platinum packs, two POP Series 8 packs, a poster and the Magnezone promo (Best Buy exclusive; PokeBeach title, blowoutcards and dacardworld listings). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl1-dpp44"
+      ],
+      "price": 1567.51,
+      "priceDerived": "packs"
+    }
+  ],
+  "pl2": [
+    {
+      "id": "three-pack-blister-carnivine-g",
+      "name": "Rising Rivals Three Pack Blister [Carnivine G]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl2": 2,
+        "dp5": 1
+      },
+      "note": "Two Rising Rivals packs and one Majestic Dawn pack, a coin and the Carnivine G promo (totalcards, joshscards and wholesalegaming listings, Bulbapedia excerpt; the coin is not simulated). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl2-dpp42"
+      ],
+      "price": 1217.85,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-probopass-g",
+      "name": "Rising Rivals Three Pack Blister [Probopass G]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl2": 2,
+        "dp5": 1
+      },
+      "note": "Two Rising Rivals packs and one Majestic Dawn pack, a coin and the Probopass G promo (as the Carnivine G blister). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl2-dpp43"
+      ],
+      "price": 1210.0,
+      "priceDerived": "packs"
+    }
+  ],
+  "pl3": [
+    {
+      "id": "supreme-victors-poster-pack",
+      "name": "Supreme Victors Poster Pack [Dialga]",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "pl3": 2,
+        "pop9": 2
+      },
+      "note": "Two Supreme Victors packs, two POP Series 9 packs, a poster and the Dialga promo (Collector's Cache title, totalcards and thewarpgate listings, PokeBeach; pkmn.gg's 'Found in Booster Packs' for DP49 reads as a data error). TCGplayer has no listing: priced from its packs.",
+      "promos": [
+        "pl3-dpp49"
+      ],
+      "price": 2889.05,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "fall-2009-tin-charizard-g",
+      "name": "Fall 2009 Collector's Tin [Charizard G LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "note": "Two Supreme Victors packs, one Rising Rivals and one Diamond & Pearl-series pack (loosepacks.com Tin Contents Database and a Target / blowoutcards listing; a three-pack variant also exists; Stormfront stands in for 'Stormfront or Secret Wonders'): medium confidence. TCGplayer lists no Charizard tin: priced from its packs.",
+      "promos": [
+        "pl3-dpp45"
+      ],
+      "price": 3286.4,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "fall-2009-tin-garchomp-c",
+      "name": "Fall 2009 Collector's Tin [Garchomp C LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "note": "As the Charizard G tin (medium confidence). TCGplayer files it in the Platinum group.",
+      "promos": [
+        "pl3-dpp46"
+      ],
+      "price": 2951.85,
+      "priceDerived": "packs",
+      "tcgplayerId": 485826,
+      "image": "assets/products/pl3/fall-2009-tin-garchomp-c.webp"
+    },
+    {
+      "id": "fall-2009-tin-rayquaza-c",
+      "name": "Fall 2009 Collector's Tin [Rayquaza C LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl3": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "note": "As the Charizard G tin (medium confidence). TCGplayer files it in the Platinum group.",
+      "promos": [
+        "pl3-dpp47"
+      ],
+      "price": 3359.35,
+      "priceDerived": "packs",
+      "tcgplayerId": 485827,
+      "image": "assets/products/pl3/fall-2009-tin-rayquaza-c.webp"
+    }
+  ],
+  "pl4": [
+    {
+      "id": "arceus-poster-pack",
+      "name": "Arceus Poster Pack",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "pl4": 2,
+        "pop9": 2
+      },
+      "note": "Two Arceus packs, two POP Series 9 packs, a poster and the Arceus promo (PokeBeach title, blowoutcards listing, tcgcsv).",
+      "promos": [
+        "pl4-dpp50"
+      ],
+      "price": 2171.32,
+      "priceDerived": "packs",
+      "tcgplayerId": 714415,
+      "image": "assets/products/pl4/arceus-poster-pack.webp"
+    },
+    {
+      "id": "arceus-poster-box",
+      "name": "Arceus Poster Box",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Five Arceus packs, a poster, the Arceus promo and a jumbo DP50 (PokeBeach title, toywiz; the jumbo is not simulated).",
+      "promos": [
+        "pl4-dpp50"
+      ],
+      "price": 2700.73,
+      "priceDerived": "packs",
+      "tcgplayerId": 714416,
+      "image": "assets/products/pl4/arceus-poster-box.webp"
+    },
+    {
+      "id": "three-pack-blister-cresselia",
+      "name": "Arceus Three Pack Blister [Cresselia]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl4": 2,
+        "dp2": 1
+      },
+      "note": "Two Arceus packs and one Mysterious Treasures pack, a coin and the Cresselia promo (Collector's Cache product pages, Bulbapedia excerpt, joshscards; the coin is not simulated).",
+      "promos": [
+        "pl4-dpp51"
+      ],
+      "price": 1606.51,
+      "priceDerived": "packs",
+      "tcgplayerId": 617025,
+      "image": "assets/products/pl4/three-pack-blister-cresselia.webp"
+    },
+    {
+      "id": "three-pack-blister-darkrai",
+      "name": "Arceus Three Pack Blister [Darkrai]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "pl4": 2,
+        "dp2": 1
+      },
+      "note": "Two Arceus packs and one Mysterious Treasures pack, a coin and the Darkrai promo (as the Cresselia blister).",
+      "promos": [
+        "pl4-dpp52"
+      ],
+      "price": 1632.73,
+      "priceDerived": "packs",
+      "tcgplayerId": 659591,
+      "image": "assets/products/pl4/three-pack-blister-darkrai.webp"
+    },
+    {
+      "id": "arceus-collector-tin-green",
+      "name": "Arceus Collector's Tin [Green, Arceus LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl4": 1,
+        "pl3": 1,
+        "pl2": 1,
+        "pl1": 1
+      },
+      "note": "First wave, November 2009: one pack each of Arceus, Supreme Victors, Rising Rivals and Platinum (loosepacks.com Tin Contents Database). PokeBeach's summary says 3 Arceus, 2 Diamond & Pearl or Platinum and 1 POP 9 pack: the two sources conflict, medium-low confidence.",
+      "promos": [
+        "pl4-dpp53"
+      ],
+      "price": 8000.0,
+      "tcgplayerId": 485829,
+      "image": "assets/products/pl4/arceus-collector-tin-green.webp"
+    },
+    {
+      "id": "arceus-collector-tin-blue",
+      "name": "Arceus Collector's Tin [Blue, Arceus LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "pl4": 2,
+        "pl2": 1,
+        "dp7": 1
+      },
+      "note": "Second wave, December 16, 2009: two Arceus packs, one Rising Rivals (or Supreme Victors) and one Stormfront (or Secret Wonders) pack (loosepacks.com; PokeBeach says two Arceus and two Diamond & Pearl or Platinum packs): medium confidence.",
+      "promos": [
+        "pl4-dpp56"
+      ],
+      "price": 2280.08,
+      "priceDerived": "packs",
+      "tcgplayerId": 485830,
+      "image": "assets/products/pl4/arceus-collector-tin-blue.webp"
     }
   ],
   "rsv10pt5": [
@@ -13598,6 +13922,1833 @@
       "price": 180.68,
       "tcgplayerId": 668632,
       "image": "assets/products/zsv10pt5/heavy-hitters.webp"
+    }
+  ],
+  "bw4": [
+    {
+      "id": "mewtwo-collection",
+      "name": "Mewtwo Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three Next Destinies packs and the Battle City promo (Parallel Holo). The oversized Mewtwo-EX, the figure and the code card are not simulated.",
+      "promos": [
+        "bw4-bwp039"
+      ],
+      "price": 1089.87,
+      "priceDerived": "packs",
+      "tcgplayerId": 98635,
+      "image": "assets/products/bw4/mewtwo-collection.webp"
+    },
+    {
+      "id": "ex-tin-reshiram",
+      "name": "EX Tin [Reshiram]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp036"
+      ],
+      "price": 1440.06,
+      "priceDerived": "packs",
+      "tcgplayerId": 98636,
+      "image": "assets/products/bw4/ex-tin-reshiram.webp"
+    },
+    {
+      "id": "ex-tin-kyurem",
+      "name": "EX Tin [Kyurem]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp037"
+      ],
+      "price": 1435.22,
+      "priceDerived": "packs",
+      "tcgplayerId": 98637,
+      "image": "assets/products/bw4/ex-tin-kyurem.webp"
+    },
+    {
+      "id": "ex-tin-zekrom",
+      "name": "EX Tin [Zekrom]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source for pack counts): typically 1 Emerging Powers, 1 Noble Victories and 2 Next Destinies; opened here as Next Destinies packs. Code card and tin not simulated.",
+      "promos": [
+        "bw4-bwp038"
+      ],
+      "price": 1438.1,
+      "priceDerived": "packs",
+      "tcgplayerId": 98638,
+      "image": "assets/products/bw4/ex-tin-zekrom.webp"
+    },
+    {
+      "id": "forces-of-nature-collection",
+      "name": "Forces of Nature Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Thundurus and Tornadus (Mirror Parallel Holo) and the Full Art Landorus, with three packs (typically 2 Emerging Powers and 1 Call of Legends in the real box, one retail source; opened here as Next Destinies packs).",
+      "promos": [
+        "bw4-bwp041",
+        "bw4-bwp042",
+        "bw4-bwp043"
+      ],
+      "price": 1120.3,
+      "priceDerived": "packs",
+      "tcgplayerId": 98639,
+      "image": "assets/products/bw4/forces-of-nature-collection.webp"
+    },
+    {
+      "id": "blister-riolu",
+      "name": "Next Destinies Three Pack Blister [Riolu]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "International three-pack blister: three packs, a Munna coin and a Cosmos Holo Riolu (BW33).",
+      "promos": [
+        "bw4-bwp033"
+      ],
+      "price": 1213.51,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-luxio",
+      "name": "Next Destinies Three Pack Blister [Luxio]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "International three-pack blister: three packs, a Munna coin and a Cosmos Holo Luxio (BW34).",
+      "promos": [
+        "bw4-bwp034"
+      ],
+      "price": 1152.78,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-klinklang",
+      "name": "Next Destinies Stage 2 Blister [Klinklang line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Klink, Klang and Klinklang from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 714.58,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-gigalith",
+      "name": "Next Destinies Stage 2 Blister [Gigalith line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Roggenrola, Boldore and Gigalith from Emerging Powers (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 714.58,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-zoroark",
+      "name": "Next Destinies Stage 1 Blister [Zoroark line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Zorua and Zoroark from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 357.29,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-beartic",
+      "name": "Next Destinies Stage 1 Blister [Beartic line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cracked Ice Holo Cubchoo and Beartic from Emerging Powers (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 357.29,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "bw5": [
+    {
+      "id": "blister-luxray",
+      "name": "Dark Explorers 3 Pack Blister [Luxray]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Zekrom or Reshiram coin and a Cracked Ice Holo Luxray from Next Destinies (the reprint is not simulated).",
+      "promos": [],
+      "price": 1182.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 477179,
+      "image": "assets/products/bw5/blister-luxray.webp"
+    },
+    {
+      "id": "blister-krookodile",
+      "name": "Dark Explorers 3 Pack Blister [Krookodile]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and a Cracked Ice Holo Krookodile from Black & White (the reprint is not simulated).",
+      "promos": [],
+      "price": 1182.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 477180,
+      "image": "assets/products/bw5/blister-krookodile.webp"
+    },
+    {
+      "id": "stage-2-blister-luxray",
+      "name": "Dark Explorers Stage 2 Blister [Luxray line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Shinx, Luxio and Luxray from Next Destinies (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-2-blister-krookodile",
+      "name": "Dark Explorers Stage 2 Blister [Krookodile line]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and a coin, with Cracked Ice Holo Sandile, Krokorok and Krookodile from Black & White (the reprints are not simulated). North America.",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-persian",
+      "name": "Dark Explorers Stage 1 Blister [Persian line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with the Meowth promo (BW35) and a Cosmos Holo Persian from Next Destinies (the reprint is not simulated). North America.",
+      "promos": [
+        "bw5-bwp035"
+      ],
+      "price": 450.28,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-lucario",
+      "name": "Dark Explorers Stage 1 Blister [Lucario line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with a Riolu promo (BW33, filed under Next Destinies) and a Cosmos Holo Lucario from Next Destinies (the reprint is not simulated). North America.",
+      "promos": [],
+      "price": 394.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "kyurem-box",
+      "name": "Kyurem Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four packs, a Kyurem figure and the Cosmos Holo Kyurem promo (BW44, a reprint of the Noble Victories card). Typically 1 Black & White, 2 Emerging Powers and 1 Next Destinies pack in the real box (one retail source); opened here as Dark Explorers packs.",
+      "promos": [
+        "bw5-bwp044"
+      ],
+      "price": 1584.84,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "superb-serperior-box",
+      "name": "Superb Serperior Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Green Tornado theme deck, a Serperior figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Servine (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "excellent-emboar-box",
+      "name": "Excellent Emboar Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Red Frenzy theme deck, an Emboar figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Pignite (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "spectacular-samurott-box",
+      "name": "Spectacular Samurott Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A Blue Assault theme deck, a Samurott figure, two packs (typically a Call of Legends and an Emerging Powers pack) and a Cracked Ice Holo Dewott (a reprint, not simulated).",
+      "promos": [],
+      "price": 788.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "bw6": [
+    {
+      "id": "legendary-ex-tin-mewtwo",
+      "name": "Legendary EX Tin [Mewtwo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp045"
+      ],
+      "price": 1448.18,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-ex-tin-darkrai",
+      "name": "Legendary EX Tin [Darkrai-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp046"
+      ],
+      "price": 1458.17,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-ex-tin-rayquaza",
+      "name": "Legendary EX Tin [Rayquaza-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs. Mix (Bulbapedia's merchandise page, the only source): typically 2 Dragons Exalted, 1 Emerging Powers and 1 Black & White; opened here as Dragons Exalted packs. Code card and tin not simulated.",
+      "promos": [
+        "bw6-bwp047"
+      ],
+      "price": 1471.13,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-chandelure",
+      "name": "Dragons Exalted 3 Pack Blister [Chandelure]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Reshiram or Zekrom coin and a Cracked Ice Holo Chandelure from Next Destinies (the reprint is not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "blister-scolipede",
+      "name": "Dragons Exalted 3 Pack Blister [Scolipede]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a coin and a Cracked Ice Holo Scolipede from Black & White (the reprint is not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-excadrill",
+      "name": "Dragons Exalted Stage 1 Blister [Excadrill line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with Cosmos Holo Drilbur and Excadrill from Emerging Powers (the reprints are not simulated).",
+      "promos": [],
+      "price": 355.4,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "stage-1-blister-lilligant",
+      "name": "Dragons Exalted Stage 1 Blister [Lilligant line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (not simulated), with a Cosmos Holo Petilil from Emerging Powers (a reprint, not simulated) and the Lilligant promo (BW49).",
+      "promos": [
+        "bw6-bwp049"
+      ],
+      "price": 381.07,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "double-album-box",
+      "name": "Double Album Box",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Two 60-card mini albums and five packs (HeartGold SoulSilver, Call of Legends and Black & White packs in the real box, one retail source; opened here as Dragons Exalted packs) with three Energy Reverse Holo reprints (Pansage, Pansear, Panpour, not simulated).",
+      "promos": [],
+      "price": 1777.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 206350,
+      "image": "assets/products/bw6/double-album-box.webp"
+    },
+    {
+      "id": "emerging-challenges-box",
+      "name": "Emerging Challenges Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "A theme deck, two packs (one Black & White and one Emerging Powers or Noble Victories pack in the real box, one retail source; opened here as Dragons Exalted packs) and the Lillipup promo (BW52, Mirror Parallel Holo); the Herdier and Stoutland reprints are not simulated.",
+      "promos": [
+        "bw6-bwp052"
+      ],
+      "price": 719.74,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "variety-blister-meowth",
+      "name": "Black & White Variety Blister [Meowth]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Meowth from Next Destinies (a reprint, not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "variety-blister-scraggy",
+      "name": "Black & White Variety Blister [Scraggy]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs (random Black & White, Emerging Powers and Noble Victories packs in the real blister, one retail source; opened here as Dragons Exalted packs) and a Mirror Parallel Holo Scraggy from Dark Explorers (a reprint, not simulated).",
+      "promos": [],
+      "price": 1066.2,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "dv1": [
+    {
+      "id": "dragon-vault-blister",
+      "name": "Dragon Vault 3 Pack Blister",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three Dragon Vault packs (five holofoil cards each, sold nowhere else), a code card and one of five Dragon Vault stamped Mirror Holo promos: Latias, Latios, Rayquaza, Haxorus or Druddigon (TCGplayer's product text and Bulbapedia).",
+      "promos": [
+        "dv1-9-dvstamp",
+        "dv1-10-dvstamp",
+        "dv1-11-dvstamp",
+        "dv1-16-dvstamp",
+        "dv1-17-dvstamp"
+      ],
+      "pick": 1,
+      "price": 1995.9,
+      "priceDerived": "manual",
+      "priceSource": "TCGplayer market price for product 98947 (mpapi.tcgplayer.com pricepoints, 2026-10-01); tcgcsv's price feed omits it",
+      "tcgplayerId": 98947,
+      "image": "assets/products/dv1/dragon-vault-blister.webp"
+    }
+  ],
+  "bw7": [
+    {
+      "id": "keldeo-box",
+      "name": "Keldeo Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "bw6": 2,
+        "bw3": 1
+      },
+      "note": "Keldeo (Tinsel Holo) and a jumbo Keldeo-EX come with it, and the figure and no code card. Three packs, typically two Dragons Exalted and one Noble Victories (Bulbapedia only: this box came out a month before Boundaries Crossed). The jumbo card is not simulated.",
+      "promos": [
+        "bw7-bwp060"
+      ],
+      "price": 745.87,
+      "priceDerived": "packs",
+      "tcgplayerId": 206308,
+      "image": "assets/products/bw7/keldeo-box.webp"
+    },
+    {
+      "id": "blister-empoleon",
+      "name": "Boundaries Crossed 3 Pack Blister [Empoleon]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Empoleon (BW56) and a Zoroark coin.",
+      "promos": [
+        "bw7-bwp056"
+      ],
+      "price": 747.6,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-haxorus",
+      "name": "Boundaries Crossed 3 Pack Blister [Haxorus]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Haxorus (BW57) and a coin.",
+      "promos": [
+        "bw7-bwp057"
+      ],
+      "price": 754.51,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "stage-1-blister-raichu",
+      "name": "Boundaries Crossed Stage 1 Blister [Raichu line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Pikachu (BW54); the real blister also held a Cosmos Holo Raichu from Next Destinies and a Sampling Pack, which are not simulated.",
+      "promos": [
+        "bw7-bwp054"
+      ],
+      "price": 346.1,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "stage-1-blister-beheeyem",
+      "name": "Boundaries Crossed Stage 1 Blister [Beheeyem line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and an Elgyem (BW55); the real blister also held a Cosmos Holo Beheeyem from Next Destinies and a Sampling Pack, which are not simulated.",
+      "promos": [
+        "bw7-bwp055"
+      ],
+      "price": 260.08,
+      "priceDerived": "packs"
+    }
+  ],
+  "bw8": [
+    {
+      "id": "elite-trainer-box",
+      "name": "Plasma Storm Elite Trainer Box",
+      "kind": "etb",
+      "packs": 7,
+      "note": "The first Elite Trainer Box: seven packs (Bulbapedia, ToyWiz, rarecards.nl), 40 basic Energy, no promo. Never listed on TCGplayer, so priced from its packs.",
+      "promos": [],
+      "price": 3849.72,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-ninetales",
+      "name": "Plasma Storm 3 Pack Blister [Ninetales]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Ninetales (BW66) and a coin.",
+      "promos": [
+        "bw8-bwp066"
+      ],
+      "price": 1686.22,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-ampharos",
+      "name": "Plasma Storm 3 Pack Blister [Ampharos]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Ampharos (BW67) and a coin.",
+      "promos": [
+        "bw8-bwp067"
+      ],
+      "price": 1696.88,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "stage-1-blister-drifblim",
+      "name": "Plasma Storm Stage 1 Blister [Drifblim line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo Drifblim (BW64); the real blister also held a Drifloon from Dragons Exalted and a Sampling Pack, which are not simulated.",
+      "promos": [
+        "bw8-bwp064"
+      ],
+      "price": 558.22,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "stage-1-blister-wigglytuff",
+      "name": "Plasma Storm Stage 1 Blister [Wigglytuff line]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Jigglypuff (BW65); the real blister also held a Cosmos Holo Wigglytuff from Next Destinies and a Sampling Pack, which are not simulated.",
+      "promos": [
+        "bw8-bwp065"
+      ],
+      "price": 624.51,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "legends-of-justice-box",
+      "name": "Legends of Justice Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "bw8": 2,
+        "bw7": 1
+      },
+      "note": "Three Cracked Ice Holo promos (Virizion, Terrakion, Cobalion). Three packs: one Plasma Storm, one Boundaries Crossed and one from Black & White, Emerging Powers or Noble Victories (Bulbapedia only, which one is not stated), dealt as a Plasma Storm pack.",
+      "promos": [
+        "bw8-bwp070",
+        "bw8-bwp071",
+        "bw8-bwp072"
+      ],
+      "price": 1661.34,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "ex-power-tin-keldeo",
+      "name": "EX Power Tin [Keldeo-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "note": "Four packs and an EX promo (BW61). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
+      "promos": [
+        "bw8-bwp061"
+      ],
+      "price": 2202.83,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "ex-power-tin-black-kyurem",
+      "name": "EX Power Tin [Black Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "note": "Four packs and an EX promo (BW62). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
+      "promos": [
+        "bw8-bwp062"
+      ],
+      "price": 2208.59,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "ex-power-tin-white-kyurem",
+      "name": "EX Power Tin [White Kyurem-EX]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "bw8": 3,
+        "bw7": 1
+      },
+      "note": "Four packs and an EX promo (BW63). Typically one Plasma Storm and one Boundaries Crossed pack. Two Black & White packs more (Emerging Powers, Next Destinies or Dragons Exalted, Bulbapedia does not say which) are dealt as Plasma Storm packs. The tin also held one of two Meloetta cards (BW68 or BW69), which are not simulated.",
+      "promos": [
+        "bw8-bwp063"
+      ],
+      "price": 2207.87,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "black-kyurem-box",
+      "name": "Black Kyurem Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "bw8": 1,
+        "bw7": 1,
+        "bw6": 1,
+        "bw2": 1
+      },
+      "note": "A Black Kyurem figure and a Cosmos Holo Black Kyurem (BW58). Four packs, typically one each from Plasma Storm, Boundaries Crossed, Dragons Exalted and Emerging Powers (Bulbapedia only).",
+      "promos": [
+        "bw8-bwp058"
+      ],
+      "price": 2222.13,
+      "priceDerived": "packs",
+      "tcgplayerId": 206306,
+      "image": "assets/products/bw8/black-kyurem-box.webp"
+    },
+    {
+      "id": "white-kyurem-box",
+      "name": "White Kyurem Box",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "bw8": 1,
+        "bw7": 1,
+        "bw6": 1,
+        "bw2": 1
+      },
+      "note": "A White Kyurem figure and a Cosmos Holo White Kyurem (BW59). Four packs, the same mix as the Black Kyurem Box (Bulbapedia gives one mix for both).",
+      "promos": [
+        "bw8-bwp059"
+      ],
+      "price": 2224.56,
+      "priceDerived": "packs",
+      "tcgplayerId": 206307,
+      "image": "assets/products/bw8/white-kyurem-box.webp"
+    }
+  ],
+  "bw9": [
+    {
+      "id": "blister-landorus",
+      "name": "Plasma Freeze 3 Pack Blister [Landorus]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Landorus (BW79) and a Team Plasma coin.",
+      "promos": [
+        "bw9-bwp079"
+      ],
+      "price": 1073.93,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-druddigon",
+      "name": "Plasma Freeze 3 Pack Blister [Druddigon]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Cosmos Holo Druddigon (BW80) and a Team Plasma coin.",
+      "promos": [
+        "bw9-bwp080"
+      ],
+      "price": 955.43,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "checklane-blister-electrode",
+      "name": "Plasma Freeze Single Pack Blister [Electrode]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack, a Cosmos Holo Electrode (BW76), a coin and a TCGO code card.",
+      "promos": [
+        "bw9-bwp076"
+      ],
+      "price": 335.46,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "checklane-blister-moltres",
+      "name": "Plasma Freeze Single Pack Blister [Moltres]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Cosmos Holo reprint of Next Destinies' Moltres (not simulated), a coin and a TCGO code card.",
+      "promos": [],
+      "price": 317.98,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "team-plasma-box",
+      "name": "Team Plasma Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Full-art Darkrai (BW73) and Giratina (BW74) promos, a jumbo Darkrai and a Team Plasma coin (the jumbo is not simulated). Three Black & White series packs (Bulbapedia, which sets is not stated), dealt as Plasma Freeze packs.",
+      "promos": [
+        "bw9-bwp073",
+        "bw9-bwp074"
+      ],
+      "price": 1597.92,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "mewtwo-figure-blister",
+      "name": "Mewtwo Figure Blister",
+      "kind": "blister",
+      "packs": 2,
+      "note": "A Mewtwo figure and two random Black & White series packs (Bulbapedia only), dealt as Plasma Freeze packs.",
+      "promos": [],
+      "price": 635.96,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "deoxys-box",
+      "name": "Deoxys Box",
+      "kind": "collection",
+      "packs": 3,
+      "from": {
+        "bw9": 1,
+        "bw8": 2
+      },
+      "note": "A Deoxys Attack Forme figure, a Tinsel Holo Druddigon (BW80) and a jumbo Deoxys-EX (not simulated). Three packs, typically one Plasma Freeze and two Plasma Storm (or one Plasma Storm and one Boundaries Crossed; Bulbapedia only).",
+      "promos": [
+        "bw9-bwp080"
+      ],
+      "price": 955.43,
+      "priceDerived": "packs"
+    }
+  ],
+  "bw1": [
+    {
+      "id": "theme-deck-green-tornado",
+      "name": "Theme Deck \"Green Tornado\" [Serperior]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw1-5-cracked-ice"
+      ],
+      "price": 24.76,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "tcgplayerId": 98610,
+      "image": "assets/products/bw1/theme-deck-green-tornado.webp"
+    },
+    {
+      "id": "theme-deck-red-frenzy",
+      "name": "Theme Deck \"Red Frenzy\" [Emboar]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw1-19-cracked-ice"
+      ],
+      "price": 110.0,
+      "tcgplayerId": 98611,
+      "image": "assets/products/bw1/theme-deck-red-frenzy.webp"
+    },
+    {
+      "id": "theme-deck-blue-assault",
+      "name": "Theme Deck \"Blue Assault\" [Samurott]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw1-31-cracked-ice"
+      ],
+      "price": 85.0,
+      "tcgplayerId": 98612,
+      "image": "assets/products/bw1/theme-deck-blue-assault.webp"
+    },
+    {
+      "id": "sneak-peek-tin-snivy",
+      "name": "BW Sneak-Peek Tin [Snivy]",
+      "kind": "tin",
+      "packs": 0,
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and a Snivy figure; none of those is a Black & White pack, so only the promo is opened here.",
+      "promos": [
+        "bw1-bwp001"
+      ],
+      "price": 2.87,
+      "priceDerived": "manual",
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "tcgplayerId": 206404,
+      "image": "assets/products/bw1/sneak-peek-tin-snivy.webp"
+    },
+    {
+      "id": "sneak-peek-tin-tepig",
+      "name": "BW Sneak-Peek Tin [Tepig]",
+      "kind": "tin",
+      "packs": 0,
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and a Tepig figure; none of those is a Black & White pack, so only the promo is opened here.",
+      "promos": [
+        "bw1-bwp002"
+      ],
+      "price": 3.34,
+      "priceDerived": "manual",
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "tcgplayerId": 206403,
+      "image": "assets/products/bw1/sneak-peek-tin-tepig.webp"
+    },
+    {
+      "id": "sneak-peek-tin-oshawott",
+      "name": "BW Sneak-Peek Tin [Oshawott]",
+      "kind": "tin",
+      "packs": 0,
+      "note": "The real tin held four Platinum to HeartGold SoulSilver series packs, a Preview Pack and an Oshawott figure; none of those is a Black & White pack, so only the promo is opened here.",
+      "promos": [
+        "bw1-bwp003"
+      ],
+      "price": 11.7,
+      "priceDerived": "manual",
+      "priceSource": "The promo's TCGplayer market price (pkmn.gg, 2026-10-01): TCGplayer has no market price for the tin and its four older-series packs are not simulated.",
+      "tcgplayerId": 206405,
+      "image": "assets/products/bw1/sneak-peek-tin-oshawott.webp"
+    },
+    {
+      "id": "new-legends-tin-reshiram",
+      "name": "New Legends Tin [Reshiram]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs (later retail shipments held three). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp004"
+      ],
+      "price": 819.37,
+      "priceDerived": "packs",
+      "tcgplayerId": 98615,
+      "image": "assets/products/bw1/new-legends-tin-reshiram.webp"
+    },
+    {
+      "id": "new-legends-tin-zekrom",
+      "name": "New Legends Tin [Zekrom]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four packs (later retail shipments held three). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp005"
+      ],
+      "price": 822.28,
+      "priceDerived": "packs",
+      "tcgplayerId": 98616,
+      "image": "assets/products/bw1/new-legends-tin-zekrom.webp"
+    },
+    {
+      "id": "three-pack-blister-snivy",
+      "name": "Black & White Three Pack Blister [Snivy]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp006"
+      ],
+      "price": 614.36,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-tepig",
+      "name": "Black & White Three Pack Blister [Tepig]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp007"
+      ],
+      "price": 612.66,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-oshawott",
+      "name": "Black & White Three Pack Blister [Oshawott]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp008"
+      ],
+      "price": 616.29,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-ducklett",
+      "name": "Black & White Two Pack Blister [Ducklett]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack (the Snivy, Tepig and Oshawott two-pack blisters carried the same promos as the three-pack ones). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp017"
+      ],
+      "price": 205.26,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "booster-two-pack-toys-r-us",
+      "name": "Black & White Booster Two-Pack (Toys R Us)",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and one of three non-holo promos hidden behind a silhouette card, sold at Toys R Us from April 27, 2011. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp014",
+        "bw1-bwp015",
+        "bw1-bwp016"
+      ],
+      "pick": 1,
+      "price": 647.61,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "victini-box",
+      "name": "Victini Box",
+      "kind": "collection",
+      "packs": 5,
+      "note": "Five packs, a Victini figure and the promo (TCGplayer's own text confirms the five packs).",
+      "promos": [
+        "bw1-bwp009"
+      ],
+      "price": 1023.25,
+      "priceDerived": "packs",
+      "tcgplayerId": 98613,
+      "image": "assets/products/bw1/victini-box.webp"
+    },
+    {
+      "id": "collectors-album-box",
+      "name": "Collector's Album Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two packs and a mini album for 60 cards. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw1-bwp010"
+      ],
+      "price": 419.85,
+      "priceDerived": "packs",
+      "tcgplayerId": 98614,
+      "image": "assets/products/bw1/collectors-album-box.webp"
+    }
+  ],
+  "bw2": [
+    {
+      "id": "theme-deck-toxic-tricks",
+      "name": "Theme Deck \"Toxic Tricks\" [Scolipede]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw2-40-cracked-ice"
+      ],
+      "price": 14.08,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "tcgplayerId": 98617,
+      "image": "assets/products/bw2/theme-deck-toxic-tricks.webp"
+    },
+    {
+      "id": "theme-deck-power-play",
+      "name": "Theme Deck \"Power Play\" [Krookodile]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw2-62-cracked-ice"
+      ],
+      "price": 99.0,
+      "tcgplayerId": 98618,
+      "image": "assets/products/bw2/theme-deck-power-play.webp"
+    },
+    {
+      "id": "three-pack-blister-pansage",
+      "name": "Emerging Powers Three Pack Blister [Pansage]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Emerging Powers packs, a Sampling Pack and a Reshiram or Zekrom coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp011"
+      ],
+      "price": 203.19,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-zorua",
+      "name": "Emerging Powers Three Pack Blister [Zorua]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Emerging Powers packs, a Sampling Pack and a Reshiram or Zekrom coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp012"
+      ],
+      "price": 273.02,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-minccino",
+      "name": "Emerging Powers Two Pack Blister [Minccino]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack; the promo came in Cosmos Holo or Cracked Ice Holo (opened here as one print). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp013"
+      ],
+      "price": 121.47,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-album-box",
+      "name": "Emerging Powers Collector's Album Box",
+      "kind": "collection",
+      "packs": 2,
+      "note": "Two packs and a mini album for 60 cards. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp018"
+      ],
+      "price": 217.25,
+      "priceDerived": "packs",
+      "tcgplayerId": 98619,
+      "image": "assets/products/bw2/collectors-album-box.webp"
+    },
+    {
+      "id": "starter-figure-box-snivy",
+      "name": "Starter Figure Box: Super Snivy Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs, a Snivy figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs).",
+      "promos": [
+        "bw2-bw1-1-cosmos"
+      ],
+      "price": 378.94,
+      "priceDerived": "packs",
+      "tcgplayerId": 177530,
+      "image": "assets/products/bw2/starter-figure-box-snivy.webp"
+    },
+    {
+      "id": "starter-figure-box-tepig",
+      "name": "Starter Figure Box: Terrific Tepig Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs, a Tepig figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs).",
+      "promos": [
+        "bw2-bw1-15-cosmos"
+      ],
+      "price": 308.85,
+      "priceDerived": "packs",
+      "tcgplayerId": 177531,
+      "image": "assets/products/bw2/starter-figure-box-tepig.webp"
+    },
+    {
+      "id": "starter-figure-box-oshawott",
+      "name": "Starter Figure Box: Outstanding Oshawott Box",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs, an Oshawott figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs).",
+      "promos": [
+        "bw2-bw1-27-cosmos"
+      ],
+      "price": 358.86,
+      "priceDerived": "packs",
+      "tcgplayerId": 177532,
+      "image": "assets/products/bw2/starter-figure-box-oshawott.webp"
+    },
+    {
+      "id": "zoroark-illusions-collection",
+      "name": "Zoroark-Illusions Collection",
+      "kind": "collection",
+      "packs": 3,
+      "note": "Three packs and a code card; Bulbapedia says typically one Call of Legends and two Emerging Powers packs, all opened here as Emerging Powers packs (single source). The jumbo Zoroark is not simulated.",
+      "promos": [
+        "bw2-bwp019"
+      ],
+      "price": 323.76,
+      "priceDerived": "packs",
+      "tcgplayerId": 98620,
+      "image": "assets/products/bw2/zoroark-illusions-collection.webp"
+    },
+    {
+      "id": "reshiram-box",
+      "name": "Reshiram Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four Black & White Series packs (the mix is not stated, opened here as Emerging Powers packs), a Reshiram figure and a code card. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp023"
+      ],
+      "price": 407.99,
+      "priceDerived": "packs",
+      "tcgplayerId": 98621,
+      "image": "assets/products/bw2/reshiram-box.webp"
+    },
+    {
+      "id": "zekrom-box",
+      "name": "Zekrom Box",
+      "kind": "collection",
+      "packs": 4,
+      "note": "Four Black & White Series packs (the mix is not stated, opened here as Emerging Powers packs), a Zekrom figure and a code card. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp024"
+      ],
+      "price": 410.9,
+      "priceDerived": "packs",
+      "tcgplayerId": 98622,
+      "image": "assets/products/bw2/zekrom-box.webp"
+    },
+    {
+      "id": "evolved-battle-action-tin-serperior",
+      "name": "Evolved Battle Action Tin [Serperior]",
+      "kind": "tin",
+      "packs": 3,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp020"
+      ],
+      "price": 307.38,
+      "priceDerived": "packs",
+      "tcgplayerId": 98623,
+      "image": "assets/products/bw2/evolved-battle-action-tin-serperior.webp"
+    },
+    {
+      "id": "evolved-battle-action-tin-emboar",
+      "name": "Evolved Battle Action Tin [Emboar]",
+      "kind": "tin",
+      "packs": 3,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp021"
+      ],
+      "price": 305.68,
+      "priceDerived": "packs",
+      "tcgplayerId": 98624,
+      "image": "assets/products/bw2/evolved-battle-action-tin-emboar.webp"
+    },
+    {
+      "id": "evolved-battle-action-tin-samurott",
+      "name": "Evolved Battle Action Tin [Samurott]",
+      "kind": "tin",
+      "packs": 3,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw2-bwp022"
+      ],
+      "price": 304.33,
+      "priceDerived": "packs",
+      "tcgplayerId": 98625,
+      "image": "assets/products/bw2/evolved-battle-action-tin-samurott.webp"
+    }
+  ],
+  "bw3": [
+    {
+      "id": "theme-deck-fast-daze",
+      "name": "Theme Deck \"Fast Daze\" [Accelgor]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw3-12-cracked-ice"
+      ],
+      "price": 34.0,
+      "tcgplayerId": 98626,
+      "image": "assets/products/bw3/theme-deck-fast-daze.webp"
+    },
+    {
+      "id": "theme-deck-furious-knights",
+      "name": "Theme Deck \"Furious Knights\" [Escavalier]",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards.",
+      "promos": [
+        "bw3-80-cracked-ice"
+      ],
+      "price": 26.43,
+      "priceDerived": "manual",
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "tcgplayerId": 98627,
+      "image": "assets/products/bw3/theme-deck-furious-knights.webp"
+    },
+    {
+      "id": "three-pack-blister-axew",
+      "name": "Noble Victories Three Pack Blister [Axew]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a Victini coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw3-bwp026"
+      ],
+      "price": 527.79,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-litwick",
+      "name": "Noble Victories Three Pack Blister [Litwick]",
+      "kind": "blister",
+      "packs": 3,
+      "note": "Three packs, a Sampling Pack and a Victini coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw3-bwp027"
+      ],
+      "price": 527.64,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-scraggy",
+      "name": "Noble Victories Two Pack Blister [Scraggy]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One pack and a Sampling Pack; the promo came in Cosmos Holo or Cracked Ice Holo (opened here as one print). Pack count from Bulbapedia's merchandise page only (single source, medium confidence).",
+      "promos": [
+        "bw3-bwp025"
+      ],
+      "price": 182.22,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "v-for-victini-tin",
+      "name": "V for Victini Tin",
+      "kind": "tin",
+      "packs": 5,
+      "note": "Five packs, a Victini figure and the Tinsel Holo promo Victini (TCGplayer lists the tin; the pack count is Bulbapedia's).",
+      "promos": [
+        "bw3-bwp032"
+      ],
+      "price": 856.56,
+      "priceDerived": "packs",
+      "tcgplayerId": 98632,
+      "image": "assets/products/bw3/v-for-victini-tin.webp"
+    }
+  ],
+  "dp1": [
+    {
+      "id": "blister-turtwig",
+      "name": "Diamond & Pearl Three Pack Blister [Turtwig]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Turtwig promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp1-dpp01"
+      ],
+      "price": 421.26,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-chimchar",
+      "name": "Diamond & Pearl Three Pack Blister [Chimchar]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Chimchar promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp1-dpp02"
+      ],
+      "price": 419.11,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-piplup",
+      "name": "Diamond & Pearl Three Pack Blister [Piplup]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Diamond & Pearl packs, a cosmos holofoil Piplup promo and a Palkia coin. The real blister also held one late EX-series pack (not simulated; one Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp1-dpp03"
+      ],
+      "price": 430.94,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-torterra",
+      "name": "Diamond & Pearl Collector's Tin [Torterra LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Torterra LV.X promo.",
+      "promos": [
+        "dp1-dpp09"
+      ],
+      "price": 857.24,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-infernape",
+      "name": "Diamond & Pearl Collector's Tin [Infernape LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Infernape LV.X promo.",
+      "promos": [
+        "dp1-dpp10"
+      ],
+      "price": 876.85,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-empoleon",
+      "name": "Diamond & Pearl Collector's Tin [Empoleon LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "dp1": 2,
+        "dp2": 2
+      },
+      "note": "Two Diamond & Pearl and two Mysterious Treasures packs in the North American tin (one source, medium-low; the international tin held four Diamond & Pearl packs) and the alternate-art cosmos holofoil Empoleon LV.X promo.",
+      "promos": [
+        "dp1-dpp11"
+      ],
+      "price": 875.22,
+      "priceDerived": "packs"
+    }
+  ],
+  "dp2": [
+    {
+      "id": "theme-deck-skull-charge",
+      "name": "Theme Deck \"Skull Charge\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Fighting and Grass deck with a deck-exclusive cosmos holofoil Rampardos (a plain Rare in packs; one source, Collexy). The deck list itself is not simulated.",
+      "promos": [
+        "dp2-33-theme"
+      ],
+      "price": 76.99,
+      "tcgplayerId": 229176,
+      "image": "assets/products/dp2/theme-deck-skull-charge.webp"
+    },
+    {
+      "id": "theme-deck-armor-fortress",
+      "name": "Theme Deck \"Armor Fortress\"",
+      "kind": "deck",
+      "packs": 0,
+      "note": "A 60-card Water and Metal deck with a deck-exclusive cosmos holofoil Bastiodon (a plain Rare in packs; one source, Collexy). The deck list itself is not simulated.",
+      "promos": [
+        "dp2-21-theme"
+      ],
+      "price": 74.96,
+      "tcgplayerId": 229177,
+      "image": "assets/products/dp2/theme-deck-armor-fortress.webp"
+    },
+    {
+      "id": "blister-cranidos",
+      "name": "Mysterious Treasures Three Pack Blister [Cranidos]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Mysterious Treasures packs, a cosmos holofoil Cranidos promo and a Cranidos coin. The real blister also held one late EX-series pack (not simulated; Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp2-dpp07"
+      ],
+      "price": 696.87,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "blister-shieldon",
+      "name": "Mysterious Treasures Three Pack Blister [Shieldon]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Mysterious Treasures packs, a cosmos holofoil Shieldon promo and a Shieldon coin. The real blister also held one late EX-series pack (not simulated; Bulbapedia excerpt and Collector's Cache listing titles).",
+      "promos": [
+        "dp2-dpp08"
+      ],
+      "price": 700.35,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "collectors-tin-lucario",
+      "name": "Lucario Collector's Tin",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "dp3": 3,
+        "dp2": 1
+      },
+      "note": "Three Secret Wonders packs and one Mysterious Treasures pack (Bulbapedia and retailer excerpts, medium-high) and the cosmos holofoil Lucario LV.X promo, a reprint of Mysterious Treasures 122. Filed under Mysterious Treasures by the promo claim table; priced at the Mysterious Treasures pack.",
+      "promos": [
+        "dp2-dpp12"
+      ],
+      "price": 1499.81,
+      "priceDerived": "packs"
+    }
+  ],
+  "dp3": [
+    {
+      "id": "value-pack-2-buizel",
+      "name": "Diamond & Pearl Value Pack 2 [Buizel]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs and an Energy coin in the real pack (Diamond & Pearl, Mysterious Treasures and Secret Wonders; the mix is not recorded, so all four open as Secret Wonders), with a cosmos holofoil Buizel promo and a cosmos holofoil Gible reprint (not simulated). Bulbapedia excerpt and Collector's Cache listing titles.",
+      "promos": [
+        "dp3-dpp13"
+      ],
+      "price": 2293.03,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "value-pack-2-chatot",
+      "name": "Diamond & Pearl Value Pack 2 [Chatot]",
+      "kind": "bundle",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs and an Energy coin in the real pack (Diamond & Pearl, Mysterious Treasures and Secret Wonders; the mix is not recorded, so all four open as Secret Wonders), with a cosmos holofoil Chatot promo and a cosmos holofoil Pikachu reprint (not simulated). Bulbapedia excerpt and Collector's Cache listing titles.",
+      "promos": [
+        "dp3-dpp14"
+      ],
+      "price": 2296.44,
+      "priceDerived": "packs"
+    }
+  ],
+  "hgss1": [
+    {
+      "id": "poster-pack-ho-oh",
+      "name": "HeartGold & SoulSilver Poster Pack [Ho-Oh]",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "pop9": 2
+      },
+      "note": "Two HeartGold & SoulSilver packs, two POP Series 9 packs, a double-sided poster and the Ho-Oh promo (HGSS01); the Lugia version is its own product (Bulbapedia HGSS merchandise, dacardworld and Previews World listings, Pokellector). The poster is not simulated.",
+      "promos": [
+        "hgss1-hsp01"
+      ],
+      "price": 1913.67,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "poster-pack-lugia",
+      "name": "HeartGold & SoulSilver Poster Pack [Lugia]",
+      "kind": "collection",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "pop9": 2
+      },
+      "note": "Two HeartGold & SoulSilver packs, two POP Series 9 packs, a double-sided poster and the Lugia promo (HGSS02). The poster is not simulated.",
+      "promos": [
+        "hgss1-hsp02"
+      ],
+      "price": 2127.0,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-pikachu",
+      "name": "HeartGold & SoulSilver Three Pack Blister [Pikachu]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1
+      },
+      "note": "Two HeartGold & SoulSilver packs, one Legends Awakened pack, a coin and the Pikachu promo (HGSS03). Collector's Cache and loosepacks agree on the pack mix; the coin is not simulated.",
+      "promos": [
+        "hgss1-hsp03"
+      ],
+      "price": 1444.85,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-wobbuffet",
+      "name": "HeartGold & SoulSilver Three Pack Blister [Wobbuffet]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1
+      },
+      "note": "Two HeartGold & SoulSilver packs, one Legends Awakened pack, a coin and the Wobbuffet promo (HGSS04). The coin is not simulated.",
+      "promos": [
+        "hgss1-hsp04"
+      ],
+      "price": 1413.28,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-hoothoot-noctowl",
+      "name": "HeartGold & SoulSilver Two Pack Blister [Hoothoot and Noctowl]",
+      "kind": "blister",
+      "packs": 2,
+      "from": {
+        "hgss1": 1,
+        "pop9": 1
+      },
+      "note": "One HeartGold & SoulSilver pack, one POP Series 9 pack and the two promos, Hoothoot (HGSS05) and Noctowl (HGSS06). Pack mix from one Bulbapedia excerpt (medium-low).",
+      "promos": [
+        "hgss1-hsp05",
+        "hgss1-hsp06"
+      ],
+      "price": 952.94,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "collectors-tin-feraligatr",
+      "name": "Spring 2010 Collector's Tin [Feraligatr Prime]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum (loosepacks Tin Contents Database; Bulbapedia excerpt) and the Feraligatr Prime promo (HGSS07). The tin is not simulated.",
+      "promos": [
+        "hgss1-hsp07"
+      ],
+      "price": 1945.68,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "collectors-tin-meganium",
+      "name": "Spring 2010 Collector's Tin [Meganium Prime]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum, and the Meganium Prime promo (HGSS08).",
+      "promos": [
+        "hgss1-hsp08"
+      ],
+      "price": 1914.03,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "collectors-tin-typhlosion",
+      "name": "Spring 2010 Collector's Tin [Typhlosion Prime]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 2,
+        "dp6": 1,
+        "pl1": 1
+      },
+      "note": "Four packs: two HeartGold & SoulSilver, one Legends Awakened, one Platinum, and the Typhlosion Prime promo (HGSS09).",
+      "promos": [
+        "hgss1-hsp09"
+      ],
+      "price": 1940.38,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-beast-tin-raikou",
+      "name": "Fall 2010 Legendary Beast Tin [Raikou]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack (loosepacks; the slot is 'Platinum Base or Stormfront', opened here as Platinum; medium-low) and the Raikou promo (HGSS19). The 2012 reissue held three packs.",
+      "promos": [
+        "hgss1-hsp19"
+      ],
+      "price": 1921.74,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-beast-tin-entei",
+      "name": "Fall 2010 Legendary Beast Tin [Entei]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Entei promo (HGSS20).",
+      "promos": [
+        "hgss1-hsp20"
+      ],
+      "price": 1944.19,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "legendary-beast-tin-suicune",
+      "name": "Fall 2010 Legendary Beast Tin [Suicune]",
+      "kind": "tin",
+      "packs": 4,
+      "from": {
+        "hgss1": 1,
+        "hgss3": 1,
+        "pl4": 1,
+        "pl1": 1
+      },
+      "note": "Four packs of the 2010 print: HeartGold & SoulSilver, Undaunted, Arceus and a Platinum pack, and the Suicune promo (HGSS21).",
+      "promos": [
+        "hgss1-hsp21"
+      ],
+      "price": 1930.69,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "hgss2": [
+    {
+      "id": "three-pack-blister-latias",
+      "name": "HS Unleashed Three Pack Blister [Latias]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss2": 2,
+        "dp7": 1
+      },
+      "note": "Two Unleashed packs, one Stormfront pack (a PokeBeach/Bulbapedia search excerpt, one source: medium-low), a Jirachi or Shaymin coin and the Latias promo (HGSS10, Cosmos Holo). The coin is not simulated.",
+      "promos": [
+        "hgss2-hsp10"
+      ],
+      "price": 1378.43,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-latios",
+      "name": "HS Unleashed Three Pack Blister [Latios]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss2": 2,
+        "dp7": 1
+      },
+      "note": "Two Unleashed packs, one Stormfront pack, a coin and the Latios promo (HGSS11, Cosmos Holo).",
+      "promos": [
+        "hgss2-hsp11"
+      ],
+      "price": 1388.29,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-cleffa",
+      "name": "HS Unleashed Two Pack Blister [Cleffa]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and the Cleffa promo (HGSS12). No source gives the pack mix; opened here as two Unleashed packs.",
+      "promos": [
+        "hgss2-hsp12"
+      ],
+      "price": 877.64,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-smoochum",
+      "name": "HS Unleashed Two Pack Blister [Smoochum]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two packs and the Smoochum promo (HGSS13). No source gives the pack mix; opened here as two Unleashed packs.",
+      "promos": [
+        "hgss2-hsp13"
+      ],
+      "price": 888.05,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "hgss3": [
+    {
+      "id": "three-pack-blister-lapras",
+      "name": "HS Undaunted Three Pack Blister [Lapras]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss3": 2,
+        "pl1": 1
+      },
+      "note": "Two Undaunted packs, one Platinum-era pack (the sources conflict: Platinum, Rising Rivals or Arceus; opened here as Platinum), a coin and the Lapras promo (HGSS14). The coin is not simulated.",
+      "promos": [
+        "hgss3-hsp14"
+      ],
+      "price": 2289.32,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-shuckle",
+      "name": "HS Undaunted Three Pack Blister [Shuckle]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss3": 2,
+        "pl1": 1
+      },
+      "note": "Two Undaunted packs, one Platinum-era pack (sources conflict; opened here as Platinum), a coin and the Shuckle promo (HGSS15).",
+      "promos": [
+        "hgss3-hsp15"
+      ],
+      "price": 2307.8,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-plusle",
+      "name": "HS Undaunted Two Pack Blister [Plusle]",
+      "kind": "blister",
+      "packs": 2,
+      "from": {
+        "hgss3": 1,
+        "pop9": 1
+      },
+      "note": "One Undaunted pack, one POP Series 9 pack and the Plusle promo (HGSS16, Cracked Ice Holo).",
+      "promos": [
+        "hgss3-hsp16"
+      ],
+      "price": 1542.87,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "two-pack-blister-minun",
+      "name": "HS Undaunted Two Pack Blister [Minun]",
+      "kind": "blister",
+      "packs": 2,
+      "from": {
+        "hgss3": 1,
+        "pop9": 1
+      },
+      "note": "One Undaunted pack, one POP Series 9 pack and the Minun promo (HGSS17, Cracked Ice Holo).",
+      "promos": [
+        "hgss3-hsp17"
+      ],
+      "price": 1530.82,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "hgss4": [
+    {
+      "id": "three-pack-blister-porygon",
+      "name": "HS Triumphant Three Pack Blister [Porygon]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss4": 2,
+        "pl1": 1
+      },
+      "note": "Two Triumphant packs, a Platinum pack (Bulbapedia excerpt, thewarpgate listing), a coin and the Porygon promo (HGSS22). The coin is not simulated.",
+      "promos": [
+        "hgss4-hsp22"
+      ],
+      "price": 1219.9,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-porygon2",
+      "name": "HS Triumphant Three Pack Blister [Porygon2]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "hgss4": 2,
+        "pl1": 1
+      },
+      "note": "Two Triumphant packs, a Platinum pack, a coin and the Porygon2 promo (HGSS23).",
+      "promos": [
+        "hgss4-hsp23"
+      ],
+      "price": 1219.51,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    }
+  ],
+  "col1": [
+    {
+      "id": "three-pack-blister-hitmonchan",
+      "name": "Call of Legends Three Pack Blister [Hitmonchan]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "col1": 2,
+        "hgss1": 1
+      },
+      "note": "Two Call of Legends packs, one HeartGold & SoulSilver pack, a Dialga or Palkia coin and the Hitmonchan promo (HGSS24, Cracked Ice Holo). The coin is not simulated.",
+      "promos": [
+        "col1-hsp24"
+      ],
+      "price": 3364.65,
+      "priceDerived": "packs",
+      "tcgplayerId": null
+    },
+    {
+      "id": "three-pack-blister-hitmonlee",
+      "name": "Call of Legends Three Pack Blister [Hitmonlee]",
+      "kind": "blister",
+      "packs": 3,
+      "from": {
+        "col1": 2,
+        "hgss1": 1
+      },
+      "note": "Two Call of Legends packs, one HeartGold & SoulSilver pack, a coin and the Hitmonlee promo (HGSS25, Cracked Ice Holo).",
+      "promos": [
+        "col1-hsp25"
+      ],
+      "price": 3364.07,
+      "priceDerived": "packs",
+      "tcgplayerId": null
     }
   ]
 }

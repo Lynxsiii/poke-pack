@@ -554,22 +554,22 @@
         {
           "id": "whimsicott",
           "remote": "brilliant-stars-pack-0.avif",
-          "file": "swsh9/pack-0.avif"
+          "file": "swsh9/pack-0-v2.avif"
         },
         {
           "id": "shaymin",
           "remote": "brilliant-stars-pack-1.avif",
-          "file": "swsh9/pack-1.avif"
+          "file": "swsh9/pack-1-v2.avif"
         },
         {
           "id": "charizard",
           "remote": "brilliant-stars-pack-2.avif",
-          "file": "swsh9/pack-2.avif"
+          "file": "swsh9/pack-2-v2.avif"
         },
         {
           "id": "arceus",
           "remote": "brilliant-stars-pack-3.avif",
-          "file": "swsh9/pack-3.avif"
+          "file": "swsh9/pack-3-v2.avif"
         }
       ]
     },
@@ -580,27 +580,27 @@
         {
           "id": "typhlosion",
           "remote": "astral-radiance-pack-0.avif",
-          "file": "swsh10/pack-0.avif"
+          "file": "swsh10/pack-0-v2.avif"
         },
         {
           "id": "decidueye",
           "remote": "astral-radiance-pack-1.avif",
-          "file": "swsh10/pack-1.avif"
+          "file": "swsh10/pack-1-v2.avif"
         },
         {
           "id": "dialga",
           "remote": "astral-radiance-pack-2.avif",
-          "file": "swsh10/pack-2.avif"
+          "file": "swsh10/pack-2-v2.avif"
         },
         {
           "id": "samurott",
           "remote": "astral-radiance-pack-3.avif",
-          "file": "swsh10/pack-3.avif"
+          "file": "swsh10/pack-3-v2.avif"
         },
         {
           "id": "palkia",
           "remote": "astral-radiance-pack-4.avif",
-          "file": "swsh10/pack-4.avif"
+          "file": "swsh10/pack-4-v2.avif"
         }
       ]
     },
@@ -611,7 +611,7 @@
         {
           "id": "pokemon-go",
           "remote": "pokemon-go-pack-0.avif",
-          "file": "pgo/pack-0.avif"
+          "file": "pgo/pack-0-v2.avif"
         }
       ]
     },
@@ -622,22 +622,22 @@
         {
           "id": "zoroark",
           "remote": "lost-origin-pack-0.avif",
-          "file": "swsh11/pack-0.avif"
+          "file": "swsh11/pack-0-v2.avif"
         },
         {
           "id": "giratina",
           "remote": "lost-origin-pack-1.avif",
-          "file": "swsh11/pack-1.avif"
+          "file": "swsh11/pack-1-v2.avif"
         },
         {
           "id": "kyurem",
           "remote": "lost-origin-pack-2.avif",
-          "file": "swsh11/pack-2.avif"
+          "file": "swsh11/pack-2-v2.avif"
         },
         {
           "id": "enamorus",
           "remote": "lost-origin-pack-3.avif",
-          "file": "swsh11/pack-3.avif"
+          "file": "swsh11/pack-3-v2.avif"
         }
       ]
     },
@@ -648,22 +648,22 @@
         {
           "id": "regidrago",
           "remote": "silver-tempest-pack-0.avif",
-          "file": "swsh12/pack-0.avif"
+          "file": "swsh12/pack-0-v2.avif"
         },
         {
           "id": "regieleki",
           "remote": "silver-tempest-pack-1.avif",
-          "file": "swsh12/pack-1.avif"
+          "file": "swsh12/pack-1-v2.avif"
         },
         {
           "id": "lugia",
           "remote": "silver-tempest-pack-2.avif",
-          "file": "swsh12/pack-2.avif"
+          "file": "swsh12/pack-2-v2.avif"
         },
         {
           "id": "vulpix",
           "remote": "silver-tempest-pack-3.avif",
-          "file": "swsh12/pack-3.avif"
+          "file": "swsh12/pack-3-v2.avif"
         }
       ]
     },
@@ -1029,6 +1029,50 @@
           "id": "mega-alakazam",
           "remote": "fates-collide-pack-3.avif",
           "file": "xy10/pack-3.avif"
+        }
+      ]
+    },
+    "pop6": {
+      "name": "POP Series 6",
+      "slug": "pop-series-6",
+      "packs": [
+        {
+          "id": "lucario",
+          "remote": "pop-series-6-pack-0.avif",
+          "file": "pop6/pack-0.avif"
+        }
+      ]
+    },
+    "pop7": {
+      "name": "POP Series 7",
+      "slug": "pop-series-7",
+      "packs": [
+        {
+          "id": "gallade",
+          "remote": "pop-series-7-pack-0.avif",
+          "file": "pop7/pack-0.avif"
+        }
+      ]
+    },
+    "pop8": {
+      "name": "POP Series 8",
+      "slug": "pop-series-8",
+      "packs": [
+        {
+          "id": "heatran",
+          "remote": "pop-series-8-pack-0.avif",
+          "file": "pop8/pack-0.avif"
+        }
+      ]
+    },
+    "pop9": {
+      "name": "POP Series 9",
+      "slug": "pop-series-9",
+      "packs": [
+        {
+          "id": "garchomp",
+          "remote": "pop-series-9-pack-0.avif",
+          "file": "pop9/pack-0.avif"
         }
       ]
     }

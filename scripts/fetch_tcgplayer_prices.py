@@ -68,6 +68,10 @@ def norm(name: str) -> str:
     bilingual = re.match(r"^[^\x00-\x7f]+\[([^\]]+)\]$", name)
     if bilingual:
         name = bilingual.group(1)
+    # Diamond & Pearl generation: TCGplayer files the Unown by letter in brackets ("Unown [A]") where we print "Unown A",
+    # and the Pokédex HANDY910is Trainer's model in parentheses.
+    name = re.sub(r"^(Unown) \[([A-Z?!]+)\]$", r"\1 \2", name)
+    name = re.sub(r"\((HANDY910is)\)", r"\1", name)
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)
@@ -81,11 +85,13 @@ def norm(name: str) -> str:
         name = re.sub(r"\s+\[[^\]]*\]$", "", name)
     # Nidoran: pkmn.gg keeps the gender sign, TCGplayer writes "(F)" / "(M)" (stripped above).
     name = name.replace("\u2640", "").replace("\u2642", "").strip()
-    # HGSS Triumphant lists "Nidoran F" / "Nidoran M" with no parentheses.
+    # Black & White's Plasma Freeze lists them "Nidoran F" / "Nidoran M".
     name = re.sub(r"^(Nidoran)\s+[FM]$", r"\1", name)
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
+    # Black & White Blend Energy: pkmn.gg spells the types out, TCGplayer uses letters ("Blend Energy GFPD").
+    name = re.sub(r"^(Blend Energy)\s+\S+$", r"\1", name)
     # Special Energy by type letter ("Speed L Energy" for Speed Lightning Energy).
     name = re.sub(r"\b([GRWLPFDMNC]) Energy$", lambda m: {"G": "Grass", "R": "Fire", "W": "Water", "L": "Lightning", "P": "Psychic", "F": "Fighting", "D": "Darkness", "M": "Metal", "N": "Dragon", "C": "Colorless"}[m.group(1)] + " Energy", name)
     # Sun & Moon: Prism Stars print a diamond ("Celebi ◇", TCGplayer says "Celebi

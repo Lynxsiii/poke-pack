@@ -1,0 +1,404 @@
+[
+  {
+    "id": "dptk3a-1",
+    "name": "Buizel",
+    "number": "1",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Ken Sugimori",
+    "flavorText": "It has a flotation sac that is like an inflatable collar. It floats on water with its head out.",
+    "image": "assets/cards/dptk3a/1.webp",
+    "imageSmall": "assets/cards/dptk3a/1-sm.webp",
+    "attacks": [
+      {
+        "name": "Splash About",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "If Buizel has less Energy attached to it than the Defending Pokémon, this attack does 10 damage plus 10 more damage."
+      }
+    ],
+    "market": 0.19,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-1/large",
+    "printedNumber": "001/012",
+    "era": "dp",
+    "tcgplayerId": 84017
+  },
+  {
+    "id": "dptk3a-2",
+    "name": "Floatzel",
+    "number": "2",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "90",
+    "artist": "Masahiko Ishii",
+    "flavorText": "It floats using its well-developed floatation sac. It assists in the rescues of drowning people.",
+    "evolvesFrom": "Buizel",
+    "image": "assets/cards/dptk3a/2.webp",
+    "imageSmall": "assets/cards/dptk3a/2-sm.webp",
+    "attacks": [
+      {
+        "name": "Screw Tail",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Flip a coin. If heads, discard an Energy attached to the Defending Pokémon."
+      },
+      {
+        "name": "Water Gun",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "40+",
+        "text": "Does 40 damage plus 20 more damage for each Water Energy attached to Floatzel but not used to pay for this attack's Energy cost. You can't add more than 40 damage in this way."
+      }
+    ],
+    "market": 0.47,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-2/large",
+    "printedNumber": "002/012",
+    "era": "dp",
+    "tcgplayerId": 85512
+  },
+  {
+    "id": "dptk3a-3",
+    "name": "Goldeen",
+    "number": "3",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It swims elegantly by flittering its tail as if it were a dress. It has the look of a queen.",
+    "image": "assets/cards/dptk3a/3.webp",
+    "imageSmall": "assets/cards/dptk3a/3-sm.webp",
+    "attacks": [
+      {
+        "name": "Horn Attack",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Take Down",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Goldeen does 10 damage to itself."
+      }
+    ],
+    "market": 0.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-3/large",
+    "printedNumber": "003/012",
+    "era": "dp",
+    "tcgplayerId": 85808
+  },
+  {
+    "id": "dptk3a-4",
+    "name": "Manaphy",
+    "number": "4",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "70",
+    "artist": "Daisuke Ito",
+    "flavorText": "Born on a cold seafloor, it will swim great distances to return to its birthplace.",
+    "image": "assets/cards/dptk3a/4.webp",
+    "imageSmall": "assets/cards/dptk3a/4-sm.webp",
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Search your deck for a Basic Pokémon and put it onto your Bench. Shuffle your deck afterward."
+      },
+      {
+        "name": "Aqua Ring",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "30",
+        "text": "Switch Manaphy with 1 of your Benched Pokémon."
+      }
+    ],
+    "market": 5.03,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-4/large",
+    "printedNumber": "004/012",
+    "era": "dp",
+    "holo": true,
+    "foilAs": "Rare Holo",
+    "tcgplayerId": 87145,
+    "promo": true
+  },
+  {
+    "id": "dptk3a-5",
+    "name": "Piplup",
+    "number": "5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "60",
+    "artist": "Atsuko Nishida",
+    "flavorText": "Because it is very proud, it hates accepting food from people. Its thick down guards it from cold.",
+    "image": "assets/cards/dptk3a/5.webp",
+    "imageSmall": "assets/cards/dptk3a/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Peck",
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Water Splash",
+        "cost": [
+          "Water",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 20 damange plus 10 more damage."
+      }
+    ],
+    "market": 1.29,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-5/large",
+    "printedNumber": "005/012",
+    "era": "dp",
+    "tcgplayerId": 88144
+  },
+  {
+    "id": "dptk3a-6",
+    "name": "Prinplup",
+    "number": "6",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Ken Sugimori",
+    "flavorText": "It lives alone, away from others. Apparently, every one of them believes it is the most important.",
+    "evolvesFrom": "Piplup",
+    "image": "assets/cards/dptk3a/6.webp",
+    "imageSmall": "assets/cards/dptk3a/6-sm.webp",
+    "attacks": [
+      {
+        "name": "Aqua Shower",
+        "cost": [
+          "Water"
+        ],
+        "damage": "",
+        "text": "Does 10 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Brine",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon that has any damage counters on it. This attack does 40 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      }
+    ],
+    "market": 0.43,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-6/large",
+    "printedNumber": "006/012",
+    "era": "dp",
+    "tcgplayerId": 88369
+  },
+  {
+    "id": "dptk3a-7",
+    "name": "Seaking",
+    "number": "7",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "80",
+    "artist": "Atsuko Nishida",
+    "flavorText": "It makes its nest by hollowing out boulders in streams with its horn. It defends its eggs with its life.",
+    "evolvesFrom": "Goldeen",
+    "image": "assets/cards/dptk3a/7.webp",
+    "imageSmall": "assets/cards/dptk3a/7-sm.webp",
+    "attacks": [
+      {
+        "name": "Flail",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "10×",
+        "text": "Does 10 damage times the number of damage counters on Seaking."
+      },
+      {
+        "name": "Horn Drill",
+        "cost": [
+          "Water",
+          "Water"
+        ],
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "market": 0.33,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-7/large",
+    "printedNumber": "007/012",
+    "era": "dp",
+    "tcgplayerId": 89027
+  },
+  {
+    "id": "dptk3a-8",
+    "name": "Totodile",
+    "number": "8",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "50",
+    "artist": "Kouki Saitou",
+    "flavorText": "It has the habit of biting anything with its developed jaws. Even its Trainer need to be careful.",
+    "image": "assets/cards/dptk3a/8.webp",
+    "imageSmall": "assets/cards/dptk3a/8-sm.webp",
+    "attacks": [
+      {
+        "name": "Bite",
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Shining Fang",
+        "cost": [
+          "Water"
+        ],
+        "damage": "10+",
+        "text": "If the Defending Pokémon already has any damage counters on it, this attack does 10 damage plus 10 more damage."
+      }
+    ],
+    "market": 2.37,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-8/large",
+    "printedNumber": "008/012",
+    "era": "dp",
+    "tcgplayerId": 89999
+  },
+  {
+    "id": "dptk3a-9",
+    "name": "Dusk Ball",
+    "number": "9",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Ryo Ueda",
+    "image": "assets/cards/dptk3a/9.webp",
+    "imageSmall": "assets/cards/dptk3a/9-sm.webp",
+    "market": 0.26,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-9/large",
+    "printedNumber": "009/012",
+    "era": "dp",
+    "tcgplayerId": 85034
+  },
+  {
+    "id": "dptk3a-10",
+    "name": "Energy Search",
+    "number": "10",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Kai Ishikawa",
+    "image": "assets/cards/dptk3a/10.webp",
+    "imageSmall": "assets/cards/dptk3a/10-sm.webp",
+    "market": 0.18,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-10/large",
+    "printedNumber": "010/012",
+    "era": "dp",
+    "tcgplayerId": 85246
+  },
+  {
+    "id": "dptk3a-11",
+    "name": "Potion",
+    "number": "11",
+    "rarity": "Promo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "artist": "Shin-ichi Yoshikawa",
+    "image": "assets/cards/dptk3a/11.webp",
+    "imageSmall": "assets/cards/dptk3a/11-sm.webp",
+    "market": 0.2,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-11/large",
+    "printedNumber": "011/012",
+    "era": "dp",
+    "tcgplayerId": 88344
+  },
+  {
+    "id": "dptk3a-12",
+    "name": "Water Energy",
+    "number": "12",
+    "rarity": "Promo",
+    "supertype": "Energy",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Water"
+    ],
+    "image": "assets/cards/dptk3a/12.webp",
+    "imageSmall": "assets/cards/dptk3a/12-sm.webp",
+    "market": 0.48,
+    "imageRemote": "https://images.scrydex.com/pokemon/tk3a-12/large",
+    "printedNumber": "012/012",
+    "era": "dp",
+    "tcgplayerId": 90511
+  }
+]

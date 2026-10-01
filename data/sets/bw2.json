@@ -1,0 +1,274 @@
+{
+  "id": "bw2",
+  "name": "Emerging Powers",
+  "series": "black-white",
+  "slug": "emerging-powers",
+  "scrydexId": "bw2",
+  "era": "bw",
+  "artSlug": "emerging-powers",
+  "packs": [
+    "pack-0",
+    "pack-1",
+    "pack-2",
+    "pack-3"
+  ],
+  "tcgplayerGroup": 1424,
+  "promoSeries": {
+    "bwp": {
+      "series": "black-white",
+      "slug": "bw-black-star-promos",
+      "scrydex": "bwp",
+      "tcgplayerGroup": 1407,
+      "printed": "BW",
+      "era": "bw"
+    }
+  },
+  "promoCards": {
+    "bwp011": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp012": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp013": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp018": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp019": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp020": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp021": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp022": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp023": {
+      "foilAs": "Rare Holo"
+    },
+    "bwp024": {
+      "foilAs": "Rare Holo"
+    },
+    "40-cracked-ice": {
+      "like": "40",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Toxic Tricks Theme Deck)",
+      "tcgplayerId": 91460,
+      "tcgplayerGroup": 1840
+    },
+    "62-cracked-ice": {
+      "like": "62",
+      "keepScan": true,
+      "keepMaps": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cracked Ice Holo (Power Play Theme Deck)",
+      "tcgplayerId": 173098,
+      "tcgplayerGroup": 1840
+    },
+    "bw1-1-cosmos": {
+      "like": "bw1:1",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cosmos Holo (Super Snivy Box)",
+      "tcgplayerId": 281967
+    },
+    "bw1-15-cosmos": {
+      "like": "bw1:15",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cosmos Holo (Terrific Tepig Box)",
+      "tcgplayerId": 153068,
+      "tcgplayerGroup": 1539
+    },
+    "bw1-27-cosmos": {
+      "like": "bw1:27",
+      "keepScan": true,
+      "foilAs": "Rare Holo",
+      "variant": "Cosmos Holo (Outstanding Oshawott Box)",
+      "tcgplayerId": 211603,
+      "tcgplayerGroup": 1938
+    }
+  },
+  "products": [
+    {
+      "id": "theme-deck-toxic-tricks",
+      "name": "Theme Deck \"Toxic Tricks\" [Scolipede]",
+      "kind": "deck",
+      "tcgplayerId": 98617,
+      "packs": 0,
+      "promos": [
+        "40-cracked-ice"
+      ],
+      "price": 14.08,
+      "priceSource": "Sum of the deck's 42 non-Energy cards at TCGplayer market (the deck lists are Bulbapedia's): the sealed listing has no market price.",
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards."
+    },
+    {
+      "id": "theme-deck-power-play",
+      "name": "Theme Deck \"Power Play\" [Krookodile]",
+      "kind": "deck",
+      "tcgplayerId": 98618,
+      "packs": 0,
+      "promos": [
+        "62-cracked-ice"
+      ],
+      "note": "A 60-card theme deck with no booster pack, sold here with its Cracked Ice Holofoil showcase card; Bulbapedia's deck page is the source for the exclusive prints and TCGplayer's product text names the featured cards."
+    },
+    {
+      "id": "three-pack-blister-pansage",
+      "name": "Emerging Powers Three Pack Blister [Pansage]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "bwp011"
+      ],
+      "note": "Two Emerging Powers packs, a Sampling Pack and a Reshiram or Zekrom coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "three-pack-blister-zorua",
+      "name": "Emerging Powers Three Pack Blister [Zorua]",
+      "kind": "blister",
+      "packs": 2,
+      "promos": [
+        "bwp012"
+      ],
+      "note": "Two Emerging Powers packs, a Sampling Pack and a Reshiram or Zekrom coin. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "two-pack-blister-minccino",
+      "name": "Emerging Powers Two Pack Blister [Minccino]",
+      "kind": "blister",
+      "packs": 1,
+      "promos": [
+        "bwp013"
+      ],
+      "note": "One pack and a Sampling Pack; the promo came in Cosmos Holo or Cracked Ice Holo (opened here as one print). Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "collectors-album-box",
+      "name": "Emerging Powers Collector's Album Box",
+      "kind": "collection",
+      "tcgplayerId": 98619,
+      "packs": 2,
+      "promos": [
+        "bwp018"
+      ],
+      "note": "Two packs and a mini album for 60 cards. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "starter-figure-box-snivy",
+      "name": "Starter Figure Box: Super Snivy Box",
+      "kind": "collection",
+      "tcgplayerId": 177530,
+      "packs": 3,
+      "promos": [
+        "bw1-1-cosmos"
+      ],
+      "note": "Three packs, a Snivy figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs)."
+    },
+    {
+      "id": "starter-figure-box-tepig",
+      "name": "Starter Figure Box: Terrific Tepig Box",
+      "kind": "collection",
+      "tcgplayerId": 177531,
+      "packs": 3,
+      "promos": [
+        "bw1-15-cosmos"
+      ],
+      "note": "Three packs, a Tepig figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs)."
+    },
+    {
+      "id": "starter-figure-box-oshawott",
+      "name": "Starter Figure Box: Outstanding Oshawott Box",
+      "kind": "collection",
+      "tcgplayerId": 177532,
+      "packs": 3,
+      "promos": [
+        "bw1-27-cosmos"
+      ],
+      "note": "Three packs, an Oshawott figure and a code card; the jumbo card is not simulated (TCGplayer's text and Bulbapedia agree on the three packs)."
+    },
+    {
+      "id": "zoroark-illusions-collection",
+      "name": "Zoroark-Illusions Collection",
+      "kind": "collection",
+      "tcgplayerId": 98620,
+      "packs": 3,
+      "promos": [
+        "bwp019"
+      ],
+      "note": "Three packs and a code card; Bulbapedia says typically one Call of Legends and two Emerging Powers packs, all opened here as Emerging Powers packs (single source). The jumbo Zoroark is not simulated."
+    },
+    {
+      "id": "reshiram-box",
+      "name": "Reshiram Box",
+      "kind": "collection",
+      "tcgplayerId": 98621,
+      "packs": 4,
+      "promos": [
+        "bwp023"
+      ],
+      "note": "Four Black & White Series packs (the mix is not stated, opened here as Emerging Powers packs), a Reshiram figure and a code card. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "zekrom-box",
+      "name": "Zekrom Box",
+      "kind": "collection",
+      "tcgplayerId": 98622,
+      "packs": 4,
+      "promos": [
+        "bwp024"
+      ],
+      "note": "Four Black & White Series packs (the mix is not stated, opened here as Emerging Powers packs), a Zekrom figure and a code card. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "evolved-battle-action-tin-serperior",
+      "name": "Evolved Battle Action Tin [Serperior]",
+      "kind": "tin",
+      "tcgplayerId": 98623,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "promos": [
+        "bwp020"
+      ],
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "evolved-battle-action-tin-emboar",
+      "name": "Evolved Battle Action Tin [Emboar]",
+      "kind": "tin",
+      "tcgplayerId": 98624,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "promos": [
+        "bwp021"
+      ],
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    },
+    {
+      "id": "evolved-battle-action-tin-samurott",
+      "name": "Evolved Battle Action Tin [Samurott]",
+      "kind": "tin",
+      "tcgplayerId": 98625,
+      "from": {
+        "bw2": 2,
+        "bw1": 1
+      },
+      "promos": [
+        "bwp022"
+      ],
+      "note": "Five packs: two Emerging Powers, one Black & White, one Call of Legends and one Triumphant. The two HeartGold SoulSilver era packs are not opened here. Pack count from Bulbapedia's merchandise page only (single source, medium confidence)."
+    }
+  ]
+}
