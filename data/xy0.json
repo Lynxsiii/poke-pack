@@ -108,7 +108,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-3/large",
     "tcgplayerId": 84271,
-    "market": 1.08
+    "market": 0.46
   },
   {
     "id": "xy0-4",
@@ -151,7 +151,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-4/large",
     "tcgplayerId": 88490,
-    "market": 2.74
+    "market": 0.98
   },
   {
     "id": "xy0-5",
@@ -196,7 +196,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-5/large",
     "tcgplayerId": 84268,
-    "market": 3.38
+    "market": 2.46
   },
   {
     "id": "xy0-6",
@@ -308,7 +308,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-8/large",
     "tcgplayerId": 85411,
-    "market": 4.8
+    "market": 0.29
   },
   {
     "id": "xy0-9",
@@ -351,7 +351,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-9/large",
     "tcgplayerId": 83949,
-    "market": 1.06
+    "market": 0.44
   },
   {
     "id": "xy0-10",
@@ -395,7 +395,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-10/large",
     "tcgplayerId": 84753,
-    "market": 0.81
+    "market": 1.22
   },
   {
     "id": "xy0-11",
@@ -475,7 +475,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-12/large",
     "tcgplayerId": 85569,
-    "market": 2.0
+    "market": 0.56
   },
   {
     "id": "xy0-13",
@@ -517,7 +517,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-13/large",
     "tcgplayerId": 85571,
-    "market": 2.82
+    "market": 0.61
   },
   {
     "id": "xy0-14",
@@ -559,7 +559,7 @@
     ],
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-14/large",
     "tcgplayerId": 85903,
-    "market": 15.88
+    "market": 5.54
   },
   {
     "id": "xy0-15",
@@ -1324,5 +1324,151 @@
     "imageRemote": "https://images.scrydex.com/pokemon/xy0-39/large",
     "tcgplayerId": 89911,
     "market": 0.09
+  },
+  {
+    "id": "xy0-k10",
+    "name": "Delphox",
+    "number": "k10",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "140",
+    "artist": "5ban Graphics",
+    "flavorText": "It gazes into the flame at the tip of its branch to achieve a focused state, which allows it to see into the future.",
+    "evolvesFrom": "Braixen",
+    "image": "assets/cards/xy0/10.webp",
+    "imageSmall": "assets/cards/xy0/10-sm.webp",
+    "attacks": [
+      {
+        "name": "Will-O-Wisp",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Fire Blast",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard an Energy attached to this Pokémon."
+      }
+    ],
+    "market": 0.81,
+    "imageRemote": "https://images.scrydex.com/pokemon/xy0-10/large",
+    "printedNumber": "10/39",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Holofoil",
+    "tcgplayerId": 84753
+  },
+  {
+    "id": "xy0-k14",
+    "name": "Greninja",
+    "number": "k14",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Water"
+    ],
+    "hp": "140",
+    "artist": "5ban Graphics",
+    "flavorText": "It creates throwing stars out of compressed water. When it spins them and throws them at high speed, these stars can split metal in two.",
+    "evolvesFrom": "Frogadier",
+    "image": "assets/cards/xy0/14.webp",
+    "imageSmall": "assets/cards/xy0/14-sm.webp",
+    "attacks": [
+      {
+        "name": "Mat Block",
+        "cost": [
+          "Water"
+        ],
+        "damage": "40",
+        "text": "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon."
+      },
+      {
+        "name": "Aqua Edge",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": ""
+      }
+    ],
+    "market": 15.88,
+    "imageRemote": "https://images.scrydex.com/pokemon/xy0-14/large",
+    "printedNumber": "14/39",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Holofoil",
+    "tcgplayerId": 85903
+  },
+  {
+    "id": "xy0-k5",
+    "name": "Chesnaught",
+    "number": "k5",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "150",
+    "artist": "5ban Graphics",
+    "flavorText": "Its Tackle is forceful enough to flip a 50-ton tank. It shields its allies from danger with its own body.",
+    "evolvesFrom": "Quilladin",
+    "image": "assets/cards/xy0/5.webp",
+    "imageSmall": "assets/cards/xy0/5-sm.webp",
+    "attacks": [
+      {
+        "name": "Needle Arm",
+        "cost": [
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": ""
+      },
+      {
+        "name": "Tumbling Attack",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage."
+      }
+    ],
+    "market": 3.38,
+    "imageRemote": "https://images.scrydex.com/pokemon/xy0-5/large",
+    "printedNumber": "5/39",
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "variant": "Holofoil",
+    "tcgplayerId": 84268
   }
 ]

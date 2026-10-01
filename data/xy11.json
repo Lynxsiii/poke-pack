@@ -4308,13 +4308,13 @@
         "text": "Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon."
       }
     ],
+    "market": 3.03,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY139/large",
     "printedNumber": "XY 139",
     "tcgplayerId": 123479,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 3.03,
     "foilMap": "assets/foil/maps/xy11/xyp139.webp"
   },
   {
@@ -4355,14 +4355,61 @@
         "text": "This attack's damage isn't affected by Resistance."
       }
     ],
+    "market": 9.94,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY140/large",
     "printedNumber": "XY 140",
     "tcgplayerId": 134921,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 9.94,
     "foilMap": "assets/foil/maps/xy11/xyp140.webp"
+  },
+  {
+    "id": "xy11-xyp141",
+    "name": "Rayquaza",
+    "number": "xyp141",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Dragon"
+    ],
+    "hp": "120",
+    "artist": "Masakazu Fukuda",
+    "flavorText": "It flies in the ozone layer, way up high in the sky. Until recently, no one had ever seen it.",
+    "image": "assets/cards/xy11/xyp141.webp",
+    "imageSmall": "assets/cards/xy11/xyp141-sm.webp",
+    "attacks": [
+      {
+        "name": "Dual Claw",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "20×",
+        "text": "Flip 2 coins. This attack does 20 damage times the number of heads."
+      },
+      {
+        "name": "Dragon Blast",
+        "cost": [
+          "Fire",
+          "Lightning",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "120",
+        "text": "Discard 1 Fire Energy and 1 Lightning Energy attached to this Pokémon."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY141/large",
+    "printedNumber": "XY 141",
+    "tcgplayerId": 134922,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 60.58
   },
   {
     "id": "xy11-xyp142",
@@ -4401,13 +4448,13 @@
         "text": "Your opponent's Active Pokémon is now Confused."
       }
     ],
+    "market": 10.08,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY142/large",
     "printedNumber": "XY 142",
     "tcgplayerId": 123636,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 10.08,
     "foilMap": "assets/foil/maps/xy11/xyp142.webp"
   },
   {
@@ -4447,13 +4494,13 @@
         "type": "Ability"
       }
     ],
+    "market": 11.5,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY144/large",
     "printedNumber": "XY 144",
     "tcgplayerId": 129374,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 11.5,
     "foilMap": "assets/foil/maps/xy11/xyp144.webp"
   },
   {
@@ -4493,13 +4540,13 @@
         "text": ""
       }
     ],
+    "market": 19.81,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY145/large",
     "printedNumber": "XY 145",
     "tcgplayerId": 129376,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 19.81,
     "foilMap": "assets/foil/maps/xy11/xyp145.webp"
   },
   {
@@ -4539,13 +4586,13 @@
         "type": "Ability"
       }
     ],
+    "market": 20.35,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY146/large",
     "printedNumber": "XY 146",
     "tcgplayerId": 129378,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 20.35,
     "foilMap": "assets/foil/maps/xy11/xyp146.webp"
   },
   {
@@ -4585,13 +4632,13 @@
         "text": "This Pokémon can't use Portal Strike during your next turn."
       }
     ],
+    "market": 24.56,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY147/large",
     "printedNumber": "XY 147",
     "tcgplayerId": 129380,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo",
-    "market": 24.56,
     "foilMap": "assets/foil/maps/xy11/xyp147.webp"
   },
   {
@@ -4602,7 +4649,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Fire",
@@ -4631,13 +4678,13 @@
         "type": "Ability"
       }
     ],
+    "market": 4.0,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY173/large",
     "printedNumber": "XY 173",
     "tcgplayerId": 123455,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 4.0,
     "foilMap": "assets/foil/maps/xy11/xyp173.webp"
   },
   {
@@ -4648,7 +4695,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Lightning"
@@ -4678,13 +4725,13 @@
         "text": "Discard all Energy attached to this Pokémon."
       }
     ],
+    "market": 31.33,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY174/large",
     "printedNumber": "XY 174",
     "tcgplayerId": 123454,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 31.33,
     "foilMap": "assets/foil/maps/xy11/xyp174.webp"
   },
   {
@@ -4695,7 +4742,7 @@
     "supertype": "Pokémon",
     "subtypes": [
       "Basic",
-      "EX"
+      "ex"
     ],
     "types": [
       "Metal"
@@ -4723,13 +4770,13 @@
         "type": "Ability"
       }
     ],
+    "market": 2.52,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY175/large",
     "printedNumber": "XY 175",
     "tcgplayerId": 123453,
     "era": "xy",
     "promo": true,
     "foilAs": "Rare Holo EX",
-    "market": 2.52,
     "foilMap": "assets/foil/maps/xy11/xyp175.webp"
   },
   {
@@ -4744,11 +4791,11 @@
     "artist": "You Iribi",
     "image": "assets/cards/xy11/xyp177.webp",
     "imageSmall": "assets/cards/xy11/xyp177-sm.webp",
+    "market": 11.63,
     "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY177/large",
     "printedNumber": "XY 177",
     "tcgplayerId": 123438,
     "era": "xy",
-    "promo": true,
-    "market": 11.63
+    "promo": true
   }
 ]

@@ -121,6 +121,7 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "xy8": ("#e5533d", "#4db3ea"),
     "xy11": ("#f0a23a", "#4fa3d9"),  # Steam Siege: gear gold to steam blue
     "xy12": ("#f2652d", "#5bb3e8"),  # Evolutions: Charizard orange to Blastoise blue
+    "xy0": ("#69c35a", "#f2823a"),  # Kalos Starter Set: Chespin green to Fennekin orange
 }
 
 # Used when a set has no art at all and no override.

@@ -3559,6 +3559,38 @@ export const EVOLUTIONS = {
   ]),
 };
 
+/**
+ * Kalos Starter Set (xy0, November 2013): three fixed 60-card decks (Chespin, Fennekin, Froakie) built
+ * from 39 cards, and no booster. Like the promo sets it sells boxes only (`promoSet`, no wrappers, no
+ * slots): each deck is a `deck` product whose holofoil final evolution is its promo (`xy0-k5`, `k10`,
+ * `k14`, the holofoil print of #5, #10, #14) and whose other cards come from data/box-contents.json
+ * (deck lists: Bulbapedia's deck pages and pokemoncard.io's deck pages, via search extracts; TCGplayer
+ * group 1522 and pkmn.gg for the card pool). TCGplayer has no market price for the sealed decks, so
+ * they are priced at the sum of their non-Energy singles (`priceDerived: "manual"`).
+ */
+export const KALOS_STARTER_SET = {
+  id: "xy0",
+  tcgId: "xy0",
+  name: "Kalos Starter Set",
+  edition: "XY",
+  era: "XY",
+  released: "November 8, 2013",
+  live: true,
+  promoSet: true,
+  printedTotal: 39,
+  totalCount: 39,
+  packSize: 0,
+  cost: 0,
+  dataFile: "data/xy0.json",
+  cardBack: "assets/cards/shared/card-back.webp",
+  blurb: "XY, November 2013. The first XY product: three 60-card starter decks for Chespin, Fennekin and Froakie, with no booster.",
+  oddsLine: "No boosters · three fixed decks",
+  lede: "Chespin, Fennekin and Froakie each came with a ready-to-play deck and a holofoil final evolution. Open one and you get the whole 60 cards.",
+  slots: [],
+  heroIds: ["xy0-14", "xy0-26", "xy0-5", "xy0-10"],
+  wrappers: [],
+};
+
 export const PLAYABLE_SETS = [
   CELEBRATION_30TH,
   PITCH_BLACK,
@@ -3636,6 +3668,7 @@ export const PLAYABLE_SETS = [
   ROARING_SKIES,
   STEAM_SIEGE,
   EVOLUTIONS,
+  KALOS_STARTER_SET,
 ];
 
 /**
@@ -3807,6 +3840,7 @@ const POKESYMBOLS_SLUG = {
   xy1: "xy",
   xy12: "xy-evolutions",
   xy11: "xy-steam-siege",
+  xy0: "kalos-starter-set",
   sm1: "sun-and-moon",
   sm2: "guardians-rising",
   sm3: "burning-shadows",

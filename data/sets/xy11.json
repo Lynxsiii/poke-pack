@@ -173,6 +173,29 @@
       "note": "Pack mix approximate: the real split isn't documented."
     },
     {
+      "id": "mega-gyarados-collection-box",
+      "name": "Mega Gyarados Collection Box",
+      "kind": "collection",
+      "tcgplayerId": 177529,
+      "from": {
+        "xy6": 1,
+        "xy5": 1,
+        "xy11": 1,
+        "xy8": 1
+      },
+      "promos": [],
+      "note": "Roaring Skies, Primal Clash, Steam Siege and BREAKthrough, one pack each (one retailer listing). The foil Mega Gyarados-EX and the figure aren't simulated."
+    },
+    {
+      "id": "hoopa-ex-challenge-box",
+      "name": "Hoopa-EX Challenge Box",
+      "kind": "collection",
+      "tcgplayerId": 693146,
+      "packs": 2,
+      "promos": [],
+      "note": "Two packs (set not stated), a foil Hoopa-EX and the Ring of Lightning deck in the real box; only the packs are simulated."
+    },
+    {
       "id": "battle-arena-decks-keldeo-rayquaza",
       "name": "Battle Arena Decks: Keldeo-EX vs Rayquaza-EX",
       "kind": "deck",
