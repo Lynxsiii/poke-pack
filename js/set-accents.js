@@ -123,4 +123,7 @@ export const SET_ACCENTS = {
   "hgsstk4b": { a: "#f2c230", b: "#e0793a" },
   "bw10": { a: "#ff9a2e", b: "#3aa0ff" },
   "bw11": { a: "#f2b632", b: "#8f7be8" },
+  "dp1": { a: "#4f8fe8", b: "#d96ad0" },
+  "dp2": { a: "#ff7a2e", b: "#3aa8d8" },
+  "dp3": { a: "#58c25a", b: "#d4508f" },
 };
