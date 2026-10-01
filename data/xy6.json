@@ -3014,47 +3014,6 @@
     "tcgplayerId": 98113
   },
   {
-    "id": "xy6-77a",
-    "name": "Shaymin-EX",
-    "number": "77a",
-    "rarity": "Rare Ultra",
-    "supertype": "Pokémon",
-    "subtypes": [
-      "Basic",
-      "ex"
-    ],
-    "types": [
-      "Colorless"
-    ],
-    "hp": "110",
-    "artist": "TOKIYA",
-    "image": "assets/cards/xy6/77a.webp",
-    "imageSmall": "assets/cards/xy6/77a-sm.webp",
-    "attacks": [
-      {
-        "name": "Sky Return",
-        "cost": [
-          "Colorless",
-          "Colorless"
-        ],
-        "damage": "30",
-        "text": "Return this Pokémon and all cards attached to it to your hand."
-      }
-    ],
-    "abilities": [
-      {
-        "name": "Set Up",
-        "text": "When you play this Pokémon from your hand onto your Bench, you may draw cards until you have 6 cards in your hand.",
-        "type": "Ability"
-      }
-    ],
-    "market": 10.71,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy6-77a/large",
-    "tcgplayerId": 98113,
-    "etchMap": "assets/foil/maps/xy6/77a-etch.webp",
-    "etchDrawn": true
-  },
-  {
     "id": "xy6-78",
     "name": "Pidove",
     "number": "78",
@@ -3404,22 +3363,6 @@
     "tcgplayerId": 98128
   },
   {
-    "id": "xy6-92a",
-    "name": "Trainers' Mail",
-    "number": "92a",
-    "rarity": "Uncommon",
-    "supertype": "Trainer",
-    "subtypes": [
-      "Item"
-    ],
-    "artist": "Toyste Beach",
-    "image": "assets/cards/xy6/92a.webp",
-    "imageSmall": "assets/cards/xy6/92a-sm.webp",
-    "market": 2.14,
-    "imageRemote": "https://images.scrydex.com/pokemon/xy6-92a/large",
-    "tcgplayerId": 98128
-  },
-  {
     "id": "xy6-93",
     "name": "Ultra Ball",
     "number": "93",
@@ -3539,9 +3482,7 @@
     ],
     "market": 19.94,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-98/large",
-    "tcgplayerId": 98134,
-    "etchMap": "assets/foil/maps/xy6/98-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98134
   },
   {
     "id": "xy6-99",
@@ -3583,9 +3524,7 @@
     ],
     "market": 18.82,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-99/large",
-    "tcgplayerId": 98135,
-    "etchMap": "assets/foil/maps/xy6/99-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98135
   },
   {
     "id": "xy6-100",
@@ -3619,9 +3558,7 @@
     ],
     "market": 53.08,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-100/large",
-    "tcgplayerId": 98136,
-    "etchMap": "assets/foil/maps/xy6/100-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98136
   },
   {
     "id": "xy6-101",
@@ -3663,9 +3600,7 @@
     ],
     "market": 68.27,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-101/large",
-    "tcgplayerId": 98137,
-    "etchMap": "assets/foil/maps/xy6/101-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98137
   },
   {
     "id": "xy6-102",
@@ -3699,9 +3634,7 @@
     ],
     "market": 100.97,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-102/large",
-    "tcgplayerId": 98138,
-    "etchMap": "assets/foil/maps/xy6/102-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98138
   },
   {
     "id": "xy6-103",
@@ -3741,9 +3674,7 @@
     ],
     "market": 38.47,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-103/large",
-    "tcgplayerId": 98139,
-    "etchMap": "assets/foil/maps/xy6/103-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98139
   },
   {
     "id": "xy6-104",
@@ -3784,9 +3715,7 @@
     ],
     "market": 242.68,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-104/large",
-    "tcgplayerId": 98140,
-    "etchMap": "assets/foil/maps/xy6/104-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98140
   },
   {
     "id": "xy6-105",
@@ -3820,9 +3749,7 @@
     ],
     "market": 527.73,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-105/large",
-    "tcgplayerId": 98141,
-    "etchMap": "assets/foil/maps/xy6/105-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98141
   },
   {
     "id": "xy6-106",
@@ -3861,9 +3788,7 @@
     ],
     "market": 26.87,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-106/large",
-    "tcgplayerId": 98142,
-    "etchMap": "assets/foil/maps/xy6/106-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98142
   },
   {
     "id": "xy6-107",
@@ -3879,9 +3804,7 @@
     "imageSmall": "assets/cards/xy6/107-sm.webp",
     "market": 17.69,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-107/large",
-    "tcgplayerId": 98143,
-    "etchMap": "assets/foil/maps/xy6/107-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98143
   },
   {
     "id": "xy6-108",
@@ -3897,9 +3820,7 @@
     "imageSmall": "assets/cards/xy6/108-sm.webp",
     "market": 36.96,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-108/large",
-    "tcgplayerId": 98144,
-    "etchMap": "assets/foil/maps/xy6/108-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98144
   },
   {
     "id": "xy6-109",
@@ -3915,9 +3836,7 @@
     "imageSmall": "assets/cards/xy6/109-sm.webp",
     "market": 25.0,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-109/large",
-    "tcgplayerId": 98145,
-    "etchMap": "assets/foil/maps/xy6/109-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98145
   },
   {
     "id": "xy6-110",
@@ -3933,8 +3852,98 @@
     "imageSmall": "assets/cards/xy6/110-sm.webp",
     "market": 19.23,
     "imageRemote": "https://images.scrydex.com/pokemon/xy6-110/large",
-    "tcgplayerId": 98146,
-    "etchMap": "assets/foil/maps/xy6/110-etch.webp",
-    "etchDrawn": true
+    "tcgplayerId": 98146
+  },
+  {
+    "id": "xy6-xyp053",
+    "name": "Sceptile-EX",
+    "number": "xyp053",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy6/xyp053.webp",
+    "imageSmall": "assets/cards/xy6/xyp053-sm.webp",
+    "attacks": [
+      {
+        "name": "Agility",
+        "cost": [
+          "Grass"
+        ],
+        "damage": "20",
+        "text": "Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent's next turn."
+      },
+      {
+        "name": "Strong Slash",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass"
+        ],
+        "damage": "130",
+        "text": "This Pokémon can't use Strong Slash during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY53/large",
+    "printedNumber": "XY 053",
+    "tcgplayerId": 100509,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 10.24
+  },
+  {
+    "id": "xy6-xyp054",
+    "name": "Blaziken-EX",
+    "number": "xyp054",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "EX"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "170",
+    "artist": "Eske Yoshinob",
+    "image": "assets/cards/xy6/xyp054.webp",
+    "imageSmall": "assets/cards/xy6/xyp054-sm.webp",
+    "attacks": [
+      {
+        "name": "Fist of Focus",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Attach an Energy card from your discard pile to this Pokémon."
+      },
+      {
+        "name": "Flare Storm",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100+",
+        "text": "Flip a coin for each Fire Energy attached to this Pokémon. This attack does 20 more damage for each heads."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/xyp-XY54/large",
+    "printedNumber": "XY 054",
+    "tcgplayerId": 100510,
+    "era": "xy",
+    "promo": true,
+    "foilAs": "Rare Holo EX",
+    "market": 9.47
   }
 ]
