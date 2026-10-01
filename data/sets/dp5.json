@@ -22,5 +22,71 @@
       "printed": "DP",
       "era": "dp"
     }
-  }
+  },
+  "promoCards": {
+    "dpp22": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp23": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp24": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Majestic Dawn Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98584,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs."
+    },
+    {
+      "id": "three-pack-blister-mime-jr",
+      "name": "Majestic Dawn Three Pack Blister [Mime Jr.]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "dpp22"
+      ],
+      "note": "Two Majestic Dawn packs, a third pack from a late EX-series set (not simulated), a Lucario coin and the cosmos holo Mime Jr. promo (DP22). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Majestic Dawn Blister Exclusive' titles."
+    },
+    {
+      "id": "three-pack-blister-glameow",
+      "name": "Majestic Dawn Three Pack Blister [Glameow]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "dpp23"
+      ],
+      "note": "Two Majestic Dawn packs, a third pack from a late EX-series set (not simulated), a Lucario coin and the cosmos holo Glameow promo (DP23). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Majestic Dawn Blister Exclusive' titles."
+    },
+    {
+      "id": "two-pack-blister-manaphy",
+      "name": "Majestic Dawn Two Pack Blister [Manaphy]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [],
+      "note": "One Majestic Dawn pack and one POP Series 6 pack (not simulated) with a cosmos holo Manaphy from POP Series 6 (a reprint, not simulated). Bulbapedia's merchandise page excerpt, found twice, no second site."
+    },
+    {
+      "id": "darkrai-premium-box",
+      "name": "Darkrai Premium Box",
+      "kind": "premium",
+      "tcgplayerId": null,
+      "packs": 0,
+      "promos": [
+        "dpp24"
+      ],
+      "price": 57.3,
+      "priceSource": "The box has no TCGplayer listing or market price; priced at its cosmos holo Darkrai promo's TCGplayer market price (DP24, listing 84701, $57.30, tcgcsv 2026-10-01)",
+      "note": "The real box (12 May 2008, Bulbapedia's merchandise page and Collector's Cache's 'Darkrai Premium Box Exclusive' titles) held an EX Crystal Guardians pack, an EX Dragon Frontiers pack and a Secret Wonders theme deck with the cosmos holo Darkrai promo (DP24) and a jumbo Darkrai; the pack and deck mix is medium confidence and none of it is a Majestic Dawn pack, so only the promo is opened here (the jumbo and the deck are not simulated)."
+    }
+  ]
 }

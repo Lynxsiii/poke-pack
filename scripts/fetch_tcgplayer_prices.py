@@ -64,10 +64,15 @@ def fetch(group: int, what: str) -> list[dict]:
 
 def norm(name: str) -> str:
     name = PATTERN.sub("", name)
+    name = re.sub(r"^(Unown) \(([A-Z?!]+)\)$", r"\1 \2", name)  # Legends Awakened lists "Unown (J)" (the generic bracket strip below would drop the letter)
     # XY Evolutions #109 is printed "ナッシー[Exeggutor]"; TCGplayer lists "Exeggutor".
     bilingual = re.match(r"^[^\x00-\x7f]+\[([^\]]+)\]$", name)
     if bilingual:
         name = bilingual.group(1)
+    # Diamond & Pearl generation: TCGplayer files the Unown by letter in brackets ("Unown [A]") where we print "Unown A",
+    # and the Pokédex HANDY910is Trainer's model in parentheses.
+    name = re.sub(r"^(Unown) \[([A-Z?!]+)\]$", r"\1 \2", name)
+    name = re.sub(r"\((HANDY910is)\)", r"\1", name)
     # Same-name cards carry their number: "Finizen - 60/197", "Tadbulb 074/197",
     # "Ninetales -199/197".
     name = re.sub(r"\s+-?\s*\d+/\d+$", "", name)

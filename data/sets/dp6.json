@@ -22,5 +22,64 @@
       "printed": "DP",
       "era": "dp"
     }
-  }
+  },
+  "promoCards": {
+    "dpp26": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp27": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Legends Awakened Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98536,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs."
+    },
+    {
+      "id": "three-pack-blister-latias-latios",
+      "name": "Legends Awakened Three Pack Blister [Latias / Latios]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [],
+      "note": "Two Legends Awakened packs, a Secret Wonders pack (not simulated), a Rayquaza coin and a cosmos holo Latias or Latios from POP Series 7 (reprints, not simulated). Bulbapedia's merchandise page excerpt and PokeBeach's 'Holo POP 7 Latios and Latias Promos' post."
+    },
+    {
+      "id": "two-pack-blister-mothim",
+      "name": "Legends Awakened Two Pack Blister [Mothim]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [],
+      "note": "One Legends Awakened pack and one POP Series 6 pack (not simulated) with a cosmos holo Mothim from POP Series 7 (a reprint, not simulated). Bulbapedia's merchandise page, one source."
+    },
+    {
+      "id": "dialga-premium-box",
+      "name": "Dialga Premium Box",
+      "kind": "premium",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "dpp26"
+      ],
+      "note": "Two Diamond & Pearl-series packs (opened here as Legends Awakened packs), a Diamond & Pearl-series theme deck (not simulated), the cosmos holo Dialga promo (DP26) and a jumbo Dialga (not simulated); $19.99 at launch. PokeBeach's 2008 post, an Amazon listing and Collector's Cache."
+    },
+    {
+      "id": "palkia-premium-box",
+      "name": "Palkia Premium Box",
+      "kind": "premium",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "dpp27"
+      ],
+      "note": "Two Diamond & Pearl-series packs (opened here as Legends Awakened packs), a Diamond & Pearl-series theme deck (not simulated), the cosmos holo Palkia promo (DP27) and a jumbo Palkia (not simulated); $19.99 at launch. PokeBeach's 2008 post, an Amazon listing and Collector's Cache."
+    }
+  ]
 }

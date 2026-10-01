@@ -588,6 +588,307 @@
       "image": "assets/products/det1/on-the-case-figure-collection.webp"
     }
   ],
+  "dp4": [
+    {
+      "id": "booster-box",
+      "name": "Great Encounters Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 11639.88,
+      "priceDerived": "packs",
+      "tcgplayerId": 98544,
+      "image": "assets/products/dp4/booster-box.webp"
+    },
+    {
+      "id": "spring-tin-dialga-lvx",
+      "name": "2008 Spring Collector's Tin [Dialga LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs in the real tin (Mysterious Treasures, Secret Wonders and Great Encounters; Bulbapedia's merchandise page excerpt and Collector's Cache listings; the split is not documented, so it opens here as Great Encounters packs). Tin not simulated.",
+      "promos": [
+        "dp4-dpp17"
+      ],
+      "price": 1461.75,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "spring-tin-palkia-lvx",
+      "name": "2008 Spring Collector's Tin [Palkia LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs in the real tin (Mysterious Treasures, Secret Wonders and Great Encounters; Bulbapedia's merchandise page excerpt and Collector's Cache listings; the split is not documented, so it opens here as Great Encounters packs). Tin not simulated.",
+      "promos": [
+        "dp4-dpp18"
+      ],
+      "price": 1363.44,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "spring-tin-darkrai-lvx",
+      "name": "2008 Spring Collector's Tin [Darkrai LV.X]",
+      "kind": "tin",
+      "packs": 4,
+      "note": "Four Diamond & Pearl-series packs in the real tin (Mysterious Treasures, Secret Wonders and Great Encounters; Bulbapedia's merchandise page excerpt and Collector's Cache listings; the split is not documented, so it opens here as Great Encounters packs). Tin not simulated.",
+      "promos": [
+        "dp4-dpp19"
+      ],
+      "price": 1449.57,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-magmortar",
+      "name": "Great Encounters Three Pack Blister [Magmortar]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Great Encounters packs, a third pack from a late EX-series or earlier Diamond & Pearl-series set (not simulated), a coin and the cosmos holo Magmortar promo (DP20). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Great Encounters Blister Exclusive' titles.",
+      "promos": [
+        "dp4-dpp20"
+      ],
+      "price": 667.81,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-raichu",
+      "name": "Great Encounters Three Pack Blister [Raichu]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Great Encounters packs, a third pack from a late EX-series or earlier Diamond & Pearl-series set (not simulated), a coin and the cosmos holo Raichu promo (DP21). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Great Encounters Blister Exclusive' titles.",
+      "promos": [
+        "dp4-dpp21"
+      ],
+      "price": 681.47,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-riolu",
+      "name": "Great Encounters Two Pack Blister [Riolu]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One Great Encounters pack and one POP Series 5 pack (not simulated) with a cosmos holo Riolu from POP Series 6 (a reprint, not simulated). Bulbapedia's merchandise page, one source.",
+      "promos": [],
+      "price": 323.33,
+      "priceDerived": "packs"
+    }
+  ],
+  "dp5": [
+    {
+      "id": "booster-box",
+      "name": "Majestic Dawn Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 16200.0,
+      "priceDerived": "packs",
+      "tcgplayerId": 98584,
+      "image": "assets/products/dp5/booster-box.webp"
+    },
+    {
+      "id": "three-pack-blister-mime-jr",
+      "name": "Majestic Dawn Three Pack Blister [Mime Jr.]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Majestic Dawn packs, a third pack from a late EX-series set (not simulated), a Lucario coin and the cosmos holo Mime Jr. promo (DP22). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Majestic Dawn Blister Exclusive' titles.",
+      "promos": [
+        "dp5-dpp22"
+      ],
+      "price": 916.74,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-glameow",
+      "name": "Majestic Dawn Three Pack Blister [Glameow]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Majestic Dawn packs, a third pack from a late EX-series set (not simulated), a Lucario coin and the cosmos holo Glameow promo (DP23). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Majestic Dawn Blister Exclusive' titles.",
+      "promos": [
+        "dp5-dpp23"
+      ],
+      "price": 916.17,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-manaphy",
+      "name": "Majestic Dawn Two Pack Blister [Manaphy]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One Majestic Dawn pack and one POP Series 6 pack (not simulated) with a cosmos holo Manaphy from POP Series 6 (a reprint, not simulated). Bulbapedia's merchandise page excerpt, found twice, no second site.",
+      "promos": [],
+      "price": 450.0,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "darkrai-premium-box",
+      "name": "Darkrai Premium Box",
+      "kind": "premium",
+      "packs": 0,
+      "note": "The real box (12 May 2008, Bulbapedia's merchandise page and Collector's Cache's 'Darkrai Premium Box Exclusive' titles) held an EX Crystal Guardians pack, an EX Dragon Frontiers pack and a Secret Wonders theme deck with the cosmos holo Darkrai promo (DP24) and a jumbo Darkrai; the pack and deck mix is medium confidence and none of it is a Majestic Dawn pack, so only the promo is opened here (the jumbo and the deck are not simulated).",
+      "promos": [
+        "dp5-dpp24"
+      ],
+      "price": 57.3,
+      "priceDerived": "manual",
+      "priceSource": "The box has no TCGplayer listing or market price; priced at its cosmos holo Darkrai promo's TCGplayer market price (DP24, listing 84701, $57.30, tcgcsv 2026-10-01)"
+    }
+  ],
+  "dp6": [
+    {
+      "id": "booster-box",
+      "name": "Legends Awakened Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 16665.84,
+      "priceDerived": "packs",
+      "tcgplayerId": 98536,
+      "image": "assets/products/dp6/booster-box.webp"
+    },
+    {
+      "id": "three-pack-blister-latias-latios",
+      "name": "Legends Awakened Three Pack Blister [Latias / Latios]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Legends Awakened packs, a Secret Wonders pack (not simulated), a Rayquaza coin and a cosmos holo Latias or Latios from POP Series 7 (reprints, not simulated). Bulbapedia's merchandise page excerpt and PokeBeach's 'Holo POP 7 Latios and Latias Promos' post.",
+      "promos": [],
+      "price": 925.88,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-mothim",
+      "name": "Legends Awakened Two Pack Blister [Mothim]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One Legends Awakened pack and one POP Series 6 pack (not simulated) with a cosmos holo Mothim from POP Series 7 (a reprint, not simulated). Bulbapedia's merchandise page, one source.",
+      "promos": [],
+      "price": 462.94,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "dialga-premium-box",
+      "name": "Dialga Premium Box",
+      "kind": "premium",
+      "packs": 2,
+      "note": "Two Diamond & Pearl-series packs (opened here as Legends Awakened packs), a Diamond & Pearl-series theme deck (not simulated), the cosmos holo Dialga promo (DP26) and a jumbo Dialga (not simulated); $19.99 at launch. PokeBeach's 2008 post, an Amazon listing and Collector's Cache.",
+      "promos": [
+        "dp6-dpp26"
+      ],
+      "price": 946.27,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "palkia-premium-box",
+      "name": "Palkia Premium Box",
+      "kind": "premium",
+      "packs": 2,
+      "note": "Two Diamond & Pearl-series packs (opened here as Legends Awakened packs), a Diamond & Pearl-series theme deck (not simulated), the cosmos holo Palkia promo (DP27) and a jumbo Palkia (not simulated); $19.99 at launch. PokeBeach's 2008 post, an Amazon listing and Collector's Cache.",
+      "promos": [
+        "dp6-dpp27"
+      ],
+      "price": 945.59,
+      "priceDerived": "packs"
+    }
+  ],
+  "dp7": [
+    {
+      "id": "booster-box",
+      "name": "Stormfront Booster Box",
+      "kind": "collection",
+      "packs": 36,
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs.",
+      "promos": [],
+      "price": 19629.72,
+      "priceDerived": "packs",
+      "tcgplayerId": 98588,
+      "image": "assets/products/dp7/booster-box.webp"
+    },
+    {
+      "id": "three-pack-blister-dusknoir",
+      "name": "Stormfront Three Pack Blister [Dusknoir]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Stormfront packs, a Secret Wonders pack (not simulated), a Dialga or Palkia coin and the cosmos holo Dusknoir promo (DP33). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Stormfront Blister Exclusive' titles.",
+      "promos": [
+        "dp7-dpp33"
+      ],
+      "price": 1098.69,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "three-pack-blister-magnezone",
+      "name": "Stormfront Three Pack Blister [Magnezone]",
+      "kind": "blister",
+      "packs": 2,
+      "note": "Two Stormfront packs, a Secret Wonders pack (not simulated), a Dialga or Palkia coin and the cosmos holo Magnezone promo (DP32). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Stormfront Blister Exclusive' titles.",
+      "promos": [
+        "dp7-dpp32"
+      ],
+      "price": 1094.96,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "two-pack-blister-drifblim",
+      "name": "Stormfront Two Pack Blister [Drifblim]",
+      "kind": "blister",
+      "packs": 1,
+      "note": "One Stormfront pack and one POP Series 7 pack (not simulated) with the cosmos holo Drifblim promo (DP34). Collector's Cache's 'Stormfront Blister Exclusive' title only (low confidence).",
+      "promos": [
+        "dp7-dpp34"
+      ],
+      "price": 561.39,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "fall-2008-tin-mewtwo-lvx",
+      "name": "2008 Fall Collector's Tin [Mewtwo LV.X]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three Diamond & Pearl-series packs in the real tin (one each from Diamond & Pearl, Mysterious Treasures and Secret Wonders, plus an EX Power Keepers pack; PokeBeach's tin post excerpt and Collector's Cache titles), opened here as Stormfront packs. Tin not simulated.",
+      "promos": [
+        "dp7-dpp28"
+      ],
+      "price": 1745.81,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "fall-2008-tin-rhyperior-lvx",
+      "name": "2008 Fall Collector's Tin [Rhyperior LV.X]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three Diamond & Pearl-series packs in the real tin (one each from Diamond & Pearl, Mysterious Treasures and Secret Wonders, plus an EX Power Keepers pack; PokeBeach's tin post excerpt and Collector's Cache titles), opened here as Stormfront packs. Tin not simulated.",
+      "promos": [
+        "dp7-dpp29"
+      ],
+      "price": 1685.97,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "holiday-2008-tin-heatran-lvx",
+      "name": "2008 Holiday Collector's Tin [Heatran LV.X]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three Diamond & Pearl-series packs in the real tin (Diamond & Pearl, Mysterious Treasures and Legends Awakened, plus an EX Dragon Frontiers pack; a search excerpt), opened here as Stormfront packs; the mix is low confidence. Tin not simulated.",
+      "promos": [
+        "dp7-dpp31"
+      ],
+      "price": 1689.79,
+      "priceDerived": "packs"
+    },
+    {
+      "id": "holiday-2008-tin-regigigas-lvx",
+      "name": "2008 Holiday Collector's Tin [Regigigas LV.X]",
+      "kind": "tin",
+      "packs": 3,
+      "note": "Three Diamond & Pearl-series packs in the real tin (Diamond & Pearl, Secret Wonders and Majestic Dawn, plus an EX Dragon Frontiers pack; the mix is unresolved between two notes), opened here as Stormfront packs. Tin not simulated.",
+      "promos": [
+        "dp7-dpp30"
+      ],
+      "price": 1680.4,
+      "priceDerived": "packs"
+    }
+  ],
   "g1": [
     {
       "id": "elite-trainer-box",
@@ -12660,77 +12961,6 @@
       "image": "assets/products/xy9/triple-power-tin-gyarados.webp"
     }
   ],
-  "zsv10pt5": [
-    {
-      "id": "eliteTrainerBox",
-      "name": "Elite Trainer Box",
-      "kind": "etb",
-      "packs": 9,
-      "promos": [
-        "zsv10pt5-svp209"
-      ],
-      "price": 161.32,
-      "tcgplayerId": 630686,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
-    },
-    {
-      "id": "pc-etb",
-      "name": "Pokémon Center Elite Trainer Box",
-      "kind": "etb",
-      "packs": 11,
-      "promos": [
-        "zsv10pt5-svp209-pc",
-        "zsv10pt5-svp209"
-      ],
-      "price": 271.77,
-      "tcgplayerId": 630687,
-      "released": "2025-07-18",
-      "image": "assets/products/zsv10pt5/pc-etb.webp"
-    },
-    {
-      "id": "victini-collection",
-      "name": "Unova Victini Illustration Collection",
-      "kind": "collection",
-      "packs": 4,
-      "promos": [
-        "zsv10pt5-svp208",
-        "zsv10pt5-12-pokeball"
-      ],
-      "price": 71.86,
-      "tcgplayerId": 630615,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/victini-collection.webp"
-    },
-    {
-      "id": "tech-reuniclus",
-      "name": "Tech Sticker Collection: Reuniclus",
-      "kind": "collection",
-      "packs": 3,
-      "promos": [
-        "zsv10pt5-svp212"
-      ],
-      "price": 50.44,
-      "tcgplayerId": 630614,
-      "released": "2025-08-01",
-      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
-    },
-    {
-      "id": "heavy-hitters",
-      "name": "Unova Heavy Hitters Premium Collection",
-      "kind": "premium",
-      "packs": 12,
-      "promos": [
-        "zsv10pt5-12-stamp",
-        "zsv10pt5-34-stamp",
-        "zsv10pt5-wht020-stamp",
-        "zsv10pt5-wht062-stamp"
-      ],
-      "price": 180.68,
-      "tcgplayerId": 668632,
-      "image": "assets/products/zsv10pt5/heavy-hitters.webp"
-    }
-  ],
   "xyp": [
     {
       "id": "event-xyp010",
@@ -13195,6 +13425,77 @@
       "price": 415.0,
       "tcgplayerId": 118797,
       "image": "assets/products/xytk9a/xy-trainer-kit-pikachu-libre-suicune.webp"
+    }
+  ],
+  "zsv10pt5": [
+    {
+      "id": "eliteTrainerBox",
+      "name": "Elite Trainer Box",
+      "kind": "etb",
+      "packs": 9,
+      "promos": [
+        "zsv10pt5-svp209"
+      ],
+      "price": 161.32,
+      "tcgplayerId": 630686,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/eliteTrainerBox.webp"
+    },
+    {
+      "id": "pc-etb",
+      "name": "Pokémon Center Elite Trainer Box",
+      "kind": "etb",
+      "packs": 11,
+      "promos": [
+        "zsv10pt5-svp209-pc",
+        "zsv10pt5-svp209"
+      ],
+      "price": 271.77,
+      "tcgplayerId": 630687,
+      "released": "2025-07-18",
+      "image": "assets/products/zsv10pt5/pc-etb.webp"
+    },
+    {
+      "id": "victini-collection",
+      "name": "Unova Victini Illustration Collection",
+      "kind": "collection",
+      "packs": 4,
+      "promos": [
+        "zsv10pt5-svp208",
+        "zsv10pt5-12-pokeball"
+      ],
+      "price": 71.86,
+      "tcgplayerId": 630615,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/victini-collection.webp"
+    },
+    {
+      "id": "tech-reuniclus",
+      "name": "Tech Sticker Collection: Reuniclus",
+      "kind": "collection",
+      "packs": 3,
+      "promos": [
+        "zsv10pt5-svp212"
+      ],
+      "price": 50.44,
+      "tcgplayerId": 630614,
+      "released": "2025-08-01",
+      "image": "assets/products/zsv10pt5/tech-reuniclus.webp"
+    },
+    {
+      "id": "heavy-hitters",
+      "name": "Unova Heavy Hitters Premium Collection",
+      "kind": "premium",
+      "packs": 12,
+      "promos": [
+        "zsv10pt5-12-stamp",
+        "zsv10pt5-34-stamp",
+        "zsv10pt5-wht020-stamp",
+        "zsv10pt5-wht062-stamp"
+      ],
+      "price": 180.68,
+      "tcgplayerId": 668632,
+      "image": "assets/products/zsv10pt5/heavy-hitters.webp"
     }
   ]
 }

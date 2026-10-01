@@ -27,5 +27,116 @@
     "SH1": "Rare Shining",
     "SH2": "Rare Shining",
     "SH3": "Rare Shining"
-  }
+  },
+  "promoCards": {
+    "dpp28": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp29": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp30": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp31": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp32": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp33": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp34": {
+      "foilAs": "Rare Holo"
+    }
+  },
+  "products": [
+    {
+      "id": "booster-box",
+      "name": "Stormfront Booster Box",
+      "kind": "collection",
+      "tcgplayerId": 98588,
+      "packs": 36,
+      "promos": [],
+      "note": "36 packs. TCGplayer lists the box without a market price, so it is priced at 36 packs."
+    },
+    {
+      "id": "three-pack-blister-dusknoir",
+      "name": "Stormfront Three Pack Blister [Dusknoir]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "dpp33"
+      ],
+      "note": "Two Stormfront packs, a Secret Wonders pack (not simulated), a Dialga or Palkia coin and the cosmos holo Dusknoir promo (DP33). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Stormfront Blister Exclusive' titles."
+    },
+    {
+      "id": "three-pack-blister-magnezone",
+      "name": "Stormfront Three Pack Blister [Magnezone]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 2,
+      "promos": [
+        "dpp32"
+      ],
+      "note": "Two Stormfront packs, a Secret Wonders pack (not simulated), a Dialga or Palkia coin and the cosmos holo Magnezone promo (DP32). Bulbapedia's merchandise page excerpt and Collector's Cache's 'Stormfront Blister Exclusive' titles."
+    },
+    {
+      "id": "two-pack-blister-drifblim",
+      "name": "Stormfront Two Pack Blister [Drifblim]",
+      "kind": "blister",
+      "tcgplayerId": null,
+      "packs": 1,
+      "promos": [
+        "dpp34"
+      ],
+      "note": "One Stormfront pack and one POP Series 7 pack (not simulated) with the cosmos holo Drifblim promo (DP34). Collector's Cache's 'Stormfront Blister Exclusive' title only (low confidence)."
+    },
+    {
+      "id": "fall-2008-tin-mewtwo-lvx",
+      "name": "2008 Fall Collector's Tin [Mewtwo LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "dpp28"
+      ],
+      "note": "Three Diamond & Pearl-series packs in the real tin (one each from Diamond & Pearl, Mysterious Treasures and Secret Wonders, plus an EX Power Keepers pack; PokeBeach's tin post excerpt and Collector's Cache titles), opened here as Stormfront packs. Tin not simulated."
+    },
+    {
+      "id": "fall-2008-tin-rhyperior-lvx",
+      "name": "2008 Fall Collector's Tin [Rhyperior LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "dpp29"
+      ],
+      "note": "Three Diamond & Pearl-series packs in the real tin (one each from Diamond & Pearl, Mysterious Treasures and Secret Wonders, plus an EX Power Keepers pack; PokeBeach's tin post excerpt and Collector's Cache titles), opened here as Stormfront packs. Tin not simulated."
+    },
+    {
+      "id": "holiday-2008-tin-heatran-lvx",
+      "name": "2008 Holiday Collector's Tin [Heatran LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "dpp31"
+      ],
+      "note": "Three Diamond & Pearl-series packs in the real tin (Diamond & Pearl, Mysterious Treasures and Legends Awakened, plus an EX Dragon Frontiers pack; a search excerpt), opened here as Stormfront packs; the mix is low confidence. Tin not simulated."
+    },
+    {
+      "id": "holiday-2008-tin-regigigas-lvx",
+      "name": "2008 Holiday Collector's Tin [Regigigas LV.X]",
+      "kind": "tin",
+      "tcgplayerId": null,
+      "packs": 3,
+      "promos": [
+        "dpp30"
+      ],
+      "note": "Three Diamond & Pearl-series packs in the real tin (Diamond & Pearl, Secret Wonders and Majestic Dawn, plus an EX Dragon Frontiers pack; the mix is unresolved between two notes), opened here as Stormfront packs. Tin not simulated."
+    }
+  ]
 }
