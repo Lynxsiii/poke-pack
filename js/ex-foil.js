@@ -187,8 +187,24 @@ function exWindowMap(card) {
  * holo Energy are added by the other finish agents' functions (|| them here).
  */
 export function exMap(card) {
-  // i2's: Pokémon-ex (silver frame and art), Gold Star and Unown; then i1's cosmos window of the other holos.
-  return exExMap(card) || exWindowMap(card);
+  // i2's: Pokémon-ex (silver frame and art), Gold Star and Unown; i1's cosmos window of the other holos; i3's refractor Pokémon and
+  // sheen Energy.
+  return exExMap(card) || exWindowMap(card) || exDeltaMap(card);
+}
+
+/*
+ * i3 (refractor holos, sheen Energy): assets/foil/ex-delta/, drawn by .claude/skills/card-textures/scripts/make_ex_delta_masks.py.
+ *   <card id>.webp   a refractor print: ALPHA is the Pokémon's silhouette inside the art window (the art background, the printed
+ *                    frame, the name bar and the text are 0); a Delta Species holo adds its yellow border at 0.30;
+ *   energy-art.webp  the Holon Phantoms and Power Keepers holo Energy: the picture alone (header bar and footer strip are 0).
+ * Every exRefractor() print has a file; the Emerald Energy (cosmos) are i1's.
+ */
+const DELTA = "assets/foil/ex-delta/";
+
+export function exDeltaMap(card) {
+  if (!card || !isEx(card)) return "";
+  if (card.holoEnergy) return setOf(card) === "ex9" ? "" : `${DELTA}energy-art.webp`;
+  return exRefractor(card) ? `${DELTA}${card.id}.webp` : "";
 }
 
 /*
