@@ -1,28 +1,272 @@
 /*
- * Diamond & Pearl generation (2007-2011): LV.X, Prime, LEGEND and the SP cards.
+ * Diamond & Pearl generation (2007-2011), family h2: Pokémon LV.X, Pokémon Prime and LEGEND (SP LV.X shares the LV.X foil).
  *
- * Draws: dp-lvx (`foil-ex dp-lvx`: cosmos holo in the art plus a shimmer along the frame), dp-prime (`foil-ex dp-prime`:
- * holofoil frame and GOLD foil name text, the art flat), dp-legend (`foil-ultra dp-legend`, `dp-legend-top` / `dp-legend-bottom`:
- * the whole face holo, two cards that join) and, for the Platinum SP Pokémon (Dialga G, Palkia G and the rest, printed as
- * ordinary Rare Holo / LV.X cards), whatever the finish agents find they need.
+ *  dp-lvx     Rare Holo LV.X (dp1-dp7, pl1-pl4; Platinum's SP LV.X use the same foil, their mask only cuts the trainer badge).
+ *             Real card: cosmos holofoil in the art window (multicolour confetti glints over a silver sheen), a silver border
+ *             and strips that sparkle with fine sand and one sliding hot spot, a gold LEVEL-UP rule box, a matte text box.
+ *  dp-prime   Pokémon Prime (hgss1-hgss4, HGSS promos). Real card: the FRAME is foil (cream-silver border, spiky ring round
+ *             the art, plates), glitter dust and a broad pearl/gold/rainbow band across it; the art, the text box and the
+ *             STAGE line are plain print; the name is GOLD foil lettering that gleams.
+ *  dp-legend  LEGEND halves (`dp-legend-top` first card of a pair, `dp-legend-bottom` second). Real card: the whole face is
+ *             galaxy holofoil, text printed over it. The two halves are one picture: a field twice a card wide is laid
+ *             across the pair (--lg-join 0 on the top half, 1 on the bottom), so a glint leaves one card where it enters
+ *             the other.
  *
- * Classes come from dpPattern() in js/dp-foil.js; `era-dp` marks every Diamond & Pearl generation
- * print (js/foil-maps.js): dp1-dp7, pl1-pl4, hgss1-hgss4, col1, the dpp and hsp promos, POP 6-9 and the
- * Trainer Kits. Finish owners: the DP finish agents. The rarity words, frames and what the generation printed
- * are in js/dp-foil.js and /mnt/project-files/every-era/dp/SCAFFOLD-NOTES.md (research:
- * /mnt/project-files/every-era/dp/research/ and /mnt/project-files/every-era/hgss/research/, section 3 of
- * dp-pack-structure.md, hgss-pack-structure.md and pl-pack-structure.md has the finish vocabulary in plain words).
- * TCG Live has NO per-card foil maps for this generation (probed 2026-10-01, see the DP block of
- * fetch_foil_maps.py), so the masks are drawn: hook dpMap() in js/dp-foil.js (the all-white map foilExtras
- * gives the LEGEND halves meanwhile). Follow SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any
- * colour dodge with a closing contrast(0.8), no black speckle, no hairline gratings, no foil over text, and run
- * foil_coverage.mjs plus a WebKit render at phone size before merging.
+ * Where the foil is comes from a drawn mask per frame (assets/foil/dp-special/, scripts/make_dp_special_masks.py; TCG Live
+ * has none for this generation) that js/dp-foil.js hands out through dpMap(): alpha = foil here, luminance = the zone a layer
+ * lights specially (LV.X art window, Prime name box). maps.css cuts `.foil` to it; layers that want only the zone add the same
+ * file as a luminance mask.
  *
- * Specificity: repeat `era-dp` five times in every selector, like sm.css
- * (body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-holo .foil),
- * so the rule beats the shared sheets; a resting card paints `.foil` alone.
+ * Recipe family: screen blend (adds light, never darkens) so no colour-dodge chain is used; a resting card paints `.foil`
+ * alone (sheen + a dim glitter), `::before` / `::after` / `.glare` wake with the pointer. Glare dark ends stay under 0.3 alpha.
+ * Photo references and what each was judged against: /mnt/project-files/every-era/dp/texture-refs/h2/ (SOURCES.txt) and
+ * .claude/skills/card-textures/reference/dp-lvx-prime-legend.md.
+ *
+ * Specificity: `era-dp` five times in every selector (like sm.css) so the rules beat the shared sheets.
  * Bump this sheet's ?v= tag in index.html on every change.
- *
- * Empty until the finish thread for this family draws it; until then the
- * cards fall back to the Classic engine's generic finish.
  */
+
+/* ---- Shared shape ---------------------------------------------------------------
+   Clear what the older recipes (rarities.css, realism.css) put on the pseudo layers; each finish sets its own. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp {
+  --dp-flecks: url("/assets/foil/glitter-fine.webp");
+  --dp-cosmos-mid: url("/assets/foil/promo/cosmos-middle-trans.webp");
+  --dp-cosmos-top: url("/assets/foil/promo/cosmos-top-trans.webp");
+  --dp-seed: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+  --dp-spectrum: linear-gradient(90deg,
+    hsl(2, 100%, 70%) 0%, hsl(53, 100%, 66%) 16%, hsl(93, 90%, 62%) 32%, hsl(176, 100%, 68%) 48%,
+    hsl(228, 100%, 72%) 64%, hsl(283, 100%, 70%) 80%, hsl(2, 100%, 70%) 100%);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp:is(.dp-lvx, .dp-prime, .dp-legend) .foil {
+  background-repeat: repeat;
+  filter: none;
+  opacity: calc((0.3 + var(--card-opacity) * 0.7) * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp:is(.dp-lvx, .dp-prime, .dp-legend):not(.lit):not(.settling) .foil {
+  opacity: calc(0.34 * var(--foil-strength, 1));
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp:is(.dp-lvx, .dp-prime, .dp-legend) .foil::before,
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp:is(.dp-lvx, .dp-prime, .dp-legend) .foil::after {
+  background-image: none;
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: normal;
+  mix-blend-mode: normal;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  clip-path: none;
+  border-radius: 0;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp:is(.dp-lvx, .dp-prime, .dp-legend) .glare::after {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  mix-blend-mode: normal;
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Pokémon LV.X ---------------------------------------------------------------
+   Photos (Bleeding Cool's Mesprit, Uxie, Azelf, Shaymin, Raichu and Leafeon LV.X; Pokemon Holo's clips of Gengar, Palkia G,
+   Dialga G, Absol G, Electivire FB, Garchomp C ...): the art window is cosmos holofoil, a galaxy of confetti glints in
+   cyan, pink and gold over a silver sheen; the silver border, the strips round the window and the bar under it carry
+   a fine multicolour sand and one hot spot that slides with the tilt; the LEVEL-UP ribbon, the name plate, the
+   rules text and the footer are plain print (the mask, dpSpecialMap). `.foil` is the sheen, the hot spot and
+   a dim copy of the galaxy; `::before` the galaxy lit in a moving sweep, window only; `::after` the sand over
+   frame and window. All screened: they only add light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .foil {
+  background-image:
+    var(--dp-flecks),
+    var(--dp-cosmos-mid),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.26) 0%, hsla(0, 0%, 100%, 0.08) 36%, hsla(0, 0%, 100%, 0) 70%),
+    linear-gradient(112deg, hsla(0, 0%, 0%, 0) 26%, hsla(200, 45%, 84%, 0.24) 43%, hsla(46, 70%, 88%, 0.27) 52%,
+      hsla(320, 45%, 86%, 0.2) 61%, hsla(0, 0%, 0%, 0) 76%);
+  background-size: 46% auto, 100% auto, 100% 100%, 300% 100%;
+  background-position: var(--dp-seed), var(--dp-seed), center, calc(100% - var(--background-x)) 0;
+  background-repeat: repeat, repeat, no-repeat, no-repeat;
+  background-blend-mode: screen, screen, normal, normal;
+  mix-blend-mode: screen;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .foil::before {
+  background-image:
+    repeating-linear-gradient(82deg,
+      hsl(53, 100%, 62%) 0%, hsl(93, 85%, 54%) 4%, hsl(176, 90%, 56%) 8%, hsl(228, 95%, 66%) 12%,
+      hsl(283, 90%, 66%) 16%, hsl(326, 90%, 62%) 20%, hsl(326, 90%, 62%) 24%, hsl(283, 90%, 66%) 28%,
+      hsl(228, 95%, 66%) 32%, hsl(176, 90%, 56%) 36%, hsl(93, 85%, 54%) 40%, hsl(53, 100%, 62%) 44%);
+  background-size: 400% 900%;
+  background-position: calc(18% + var(--pointer-from-left, 0.5) * 64%) calc(18% + var(--pointer-from-top, 0.5) * 64%);
+  background-repeat: repeat;
+  filter: brightness(1) saturate(0.9);
+  -webkit-mask-image: var(--foil-map), var(--dp-cosmos-mid), var(--dp-cosmos-top);
+  mask-image: var(--foil-map), var(--dp-cosmos-mid), var(--dp-cosmos-top);
+  -webkit-mask-mode: luminance, alpha, alpha;
+  mask-mode: luminance, alpha, alpha;
+  -webkit-mask-size: 100% 100%, 110% auto, 110% auto;
+  mask-size: 100% 100%, 110% auto, 110% auto;
+  -webkit-mask-position: center, var(--dp-seed), var(--dp-seed);
+  mask-position: center, var(--dp-seed), var(--dp-seed);
+  -webkit-mask-repeat: no-repeat, repeat, repeat;
+  mask-repeat: no-repeat, repeat, repeat;
+  -webkit-mask-composite: source-in, source-over, source-over;
+  mask-composite: intersect, add, add;
+  mix-blend-mode: screen;
+  opacity: calc(0.2 + var(--card-opacity) * 0.4);
+}
+/* Sand: the fine tile tinted by a spectrum (multiplied, so a speck takes one colour), screened over the frame. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .foil::after {
+  background-image: var(--dp-flecks), var(--dp-spectrum);
+  background-size: 30% auto, 300% 100%;
+  background-position: calc(100% - var(--seed-x, 0.4) * 100%) 60%, calc(var(--pointer-from-left, 0.5) * 100%) 0;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply;
+  mix-blend-mode: screen;
+  filter: brightness(1.5) contrast(1.6);
+  opacity: calc(0.28 + var(--pointer-from-center) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-lvx .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.3);
+}
+
+/* ---- Pokémon Prime -------------------------------------------------------------
+   Photos (Bleeding Cool's Mew and Umbreon in hand, Pokemon Holo's Typhlosion promo clip, a Steelix close-up): the holofoil
+   is the FRAME. The silver-yellow border, the spikes round the art window, the name plate and the plates under it
+   are mirror foil that catches a broad band of pearl, gold and rainbow, with a fine multicolour sand over it. The art
+   is plain print (the dark window is matte: no cosmos, no sheen), the text box is matte, and the name is gold foil
+   text: it gleams where the light finds it. The mask (dpSpecialMap) is the frame; its luminance is the name box.
+   `.foil` is the sheen and the hot spot; `::before` a rainbow lobe that slides across the frame with the tilt;
+   `::after` the sand; `.glare::after` the gold on the name. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .foil {
+  background-image:
+    var(--dp-flecks),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.5) 0%, hsla(0, 0%, 100%, 0.16) 36%, hsla(0, 0%, 100%, 0) 70%),
+    linear-gradient(104deg, hsla(0, 0%, 0%, 0) 20%, hsla(48, 80%, 80%, 0.5) 38%, hsla(205, 40%, 92%, 0.55) 49%,
+      hsla(330, 50%, 88%, 0.42) 58%, hsla(0, 0%, 0%, 0) 76%);
+  background-size: 40% auto, 100% 100%, 300% 100%;
+  background-position: var(--dp-seed), center, calc(100% - var(--background-x)) 0;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: screen, normal, normal;
+  mix-blend-mode: screen;
+}
+/* A rainbow lobe, one tenth to a fifth of the card wide, sliding across the frame. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .foil::before {
+  background-image: linear-gradient(115deg,
+    hsl(2, 100%, 70%) 0%, hsl(53, 100%, 66%) 16%, hsl(93, 90%, 62%) 32%, hsl(176, 100%, 68%) 48%,
+    hsl(228, 100%, 72%) 64%, hsl(283, 100%, 70%) 80%, hsl(330, 100%, 70%) 100%);
+  background-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0, 0, 0, 0.7) 44%, #000 50%, rgba(0, 0, 0, 0.7) 56%, transparent 62%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 38%, rgba(0, 0, 0, 0.7) 44%, #000 50%, rgba(0, 0, 0, 0.7) 56%, transparent 62%, transparent 100%);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-position: calc(100% - var(--background-x) * 1) 0;
+  mask-position: calc(100% - var(--background-x) * 1) 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: saturate(1.1) brightness(0.85);
+  opacity: calc(0.4 + var(--pointer-from-center) * 0.3);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .foil::after {
+  background-image: var(--dp-flecks), var(--dp-spectrum);
+  background-size: 30% auto, 300% 100%;
+  background-position: calc(100% - var(--seed-x, 0.4) * 100%) 60%, calc(var(--pointer-from-left, 0.5) * 100%) 0;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply;
+  mix-blend-mode: screen;
+  filter: brightness(1.6) contrast(1.6);
+  opacity: calc(0.34 + var(--pointer-from-center) * 0.4);
+}
+/* Gold foil name: a warm band of light over the name box only, overlaid so that it lifts the gold lettering. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .glare::after {
+  background-image: linear-gradient(100deg, hsla(40, 100%, 45%, 0) 10%, hsla(42, 100%, 52%, 0.8) 36%,
+    hsla(46, 100%, 66%, 1) 48%, hsla(42, 100%, 52%, 0.8) 60%, hsla(40, 100%, 45%, 0) 86%);
+  background-size: 360% 100%;
+  background-position: calc(100% - var(--background-x) * 1) 0;
+  background-repeat: no-repeat;
+  -webkit-mask-image: var(--foil-map);
+  mask-image: var(--foil-map);
+  -webkit-mask-mode: luminance;
+  mask-mode: luminance;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  mix-blend-mode: soft-light;
+  opacity: 1;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-prime .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.3);
+}
+
+/* ---- LEGEND ----------------------------------------------------------------------
+   Photos (Bleeding Cool's Darkrai & Cresselia pair and a binder page of Rayquaza & Deoxys and Kyogre & Groudon; Pokemon
+   Holo-channel clips are all flat): the ENTIRE face is foil, the picture, the gold-dust border and the plates, with
+   the classic galaxy holofoil of the era: a silver-blue sheen veiled over the painting with pastel patches and a few
+   glints, the text printed over it. The two halves are one picture: the top half's right edge is the bottom half's left
+   edge, so a field twice the card wide is laid across the pair, the top showing its left part (`--lg-join: 0`), the bottom
+   its right (`1`), and what one half does at its join the other does at its own. The text (name bar, rules, attacks,
+   stats) is cut out of the foil by the mask (dpSpecialMap). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-legend-top { --lg-join: 0; }
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-legend-bottom { --lg-join: 1; }
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-legend .foil {
+  background-image:
+    var(--dp-flecks),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsla(0, 0%, 100%, 0.2) 0%, hsla(0, 0%, 100%, 0.06) 36%, hsla(0, 0%, 100%, 0) 70%),
+    linear-gradient(112deg, hsla(0, 0%, 0%, 0) 22%, hsla(200, 50%, 80%, 0.26) 38%, hsla(48, 70%, 84%, 0.26) 48%,
+      hsla(320, 50%, 82%, 0.22) 58%, hsla(140, 50%, 80%, 0.2) 68%, hsla(0, 0%, 0%, 0) 84%);
+  background-size: 46% auto, 100% 100%, 300% 100%;
+  background-position: var(--dp-seed), center, calc((var(--pointer-from-left, 0.5) * 0.8 + var(--lg-join, 0)) * 50%) 0;
+  background-repeat: repeat, no-repeat, no-repeat;
+  background-blend-mode: screen, normal, normal;
+  mix-blend-mode: screen;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-legend .foil::before {
+  background-image: repeating-linear-gradient(82deg,
+      hsl(53, 100%, 62%) 0%, hsl(93, 85%, 54%) 4%, hsl(176, 90%, 56%) 8%, hsl(228, 95%, 66%) 12%,
+      hsl(283, 90%, 66%) 16%, hsl(326, 90%, 62%) 20%, hsl(326, 90%, 62%) 24%, hsl(283, 90%, 66%) 28%,
+      hsl(228, 95%, 66%) 32%, hsl(176, 90%, 56%) 36%, hsl(93, 85%, 54%) 40%, hsl(53, 100%, 62%) 44%);
+  background-size: 500% 900%;
+  background-position: calc((var(--pointer-from-left, 0.5) * 0.5 + var(--lg-join, 0)) * 25%) calc(18% + var(--pointer-from-top, 0.5) * 64%);
+  background-repeat: repeat;
+  -webkit-mask-image: var(--dp-cosmos-mid), var(--dp-cosmos-top);
+  mask-image: var(--dp-cosmos-mid), var(--dp-cosmos-top);
+  -webkit-mask-size: 200% auto, 200% auto;
+  mask-size: 200% auto, 200% auto;
+  -webkit-mask-position: calc(var(--lg-join, 0) * 100%) 30%, calc(var(--lg-join, 0) * 100%) 30%;
+  mask-position: calc(var(--lg-join, 0) * 100%) 30%, calc(var(--lg-join, 0) * 100%) 30%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  mix-blend-mode: screen;
+  filter: saturate(1.1);
+  opacity: calc(0.1 + var(--card-opacity) * 0.28);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-legend .foil::after {
+  background-image: var(--dp-flecks), var(--dp-spectrum);
+  background-size: 30% auto, 300% 100%;
+  background-position: calc(100% - var(--seed-x, 0.4) * 100%) 60%, calc(var(--pointer-from-left, 0.5) * 100%) 0;
+  background-repeat: repeat, no-repeat;
+  background-blend-mode: multiply;
+  mix-blend-mode: screen;
+  filter: brightness(1.5) contrast(1.6);
+  opacity: calc(0.26 + var(--pointer-from-center) * 0.4);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-dp.era-dp.era-dp.era-dp.era-dp.dp-legend .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(180, 100%, 95%) 5%, hsla(0, 0%, 39%, 0.25) 55%, hsla(0, 0%, 0%, 0.3) 110%);
+  mix-blend-mode: overlay;
+  filter: brightness(0.8) contrast(1.5);
+  opacity: calc(var(--card-opacity) * 0.3);
+}
