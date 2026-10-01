@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
+import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { maintainCoinflips } from '../worker/casino.js';
 import { weightedWinner, viewJackpot, maintainJackpots } from '../worker/jackpot.js';
@@ -47,7 +48,7 @@ const USERS = ['host', ...Array.from({ length: 10 }, (_, i) => `p${i + 1}`)];
 const addUser = (id, coins = 100) => {
   db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now);
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, coins, coins, now, '[]');
-  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
+  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000); seedLevel(db, id);
 };
 USERS.forEach(id => addUser(id));
 const give = (user, card, qty, rev = 0) => db.prepare(`INSERT INTO cards(user_id,card_id,qty,reverse_qty) VALUES(?,?,?,?)

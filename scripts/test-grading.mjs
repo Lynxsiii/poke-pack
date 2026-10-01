@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
+import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { GRADING_DDL, randomBelow, resetGradingSchemaCache, slabView, setForCard } from '../worker/grading.js';
 import { splitStatements } from './gen-casino-ddl.mjs';
@@ -126,7 +127,7 @@ const now = Date.now();
 const addUser = (id, coins = 100) => {
   db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)').run(id, id, id, 'unused', 'gold', now, now);
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, coins, coins, now, '[]');
-  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
+  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000); seedLevel(db, id);
 };
 ['host', 'poor', 'ace', 'none', 'full'].forEach((id) => addUser(id));
 db.prepare('UPDATE profiles SET coins = 3 WHERE user_id = ?').run('poor');

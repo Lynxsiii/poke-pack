@@ -28,3 +28,8 @@ export async function api(path, opts = {}) {
   if (!res.ok) throw new ApiError(res.status, data);
   return data;
 }
+
+/** Collect the coins and gifts of every level reached and not yet paid. No body: the server decides what is owed. Resolves { save, paid:{ levels, coins, gear } }. */
+export function claimLevels() {
+  return api("/api/levels/claim", { method: "POST" });
+}

@@ -158,6 +158,69 @@ export async function grantGear(env, request, userId, items) {
   return granted;
 }
 
+/**
+ * The gear an achievement claim gifts (`row.reward.gear` on set masteries and
+ * era crowns), as ONE statement for the claim's own env.DB.batch. Put it right
+ * after the statement that wins the compare-and-swap: it is guarded on
+ * changes() = 1, so only the request whose swap landed inserts anything, in the
+ * same transaction as the coins and the claimed list. Nothing is granted
+ * outside the batch, so a gift can neither be lost after the claim nor paid twice.
+ *
+ * Returns { stmt, gear, byRow, unavailable }:
+ *   stmt         the guarded insert, or null when there is nothing to hand out
+ *   gear         [{ kind, id, name, qty, wasNew }] it will grant
+ *   byRow        { [rowId]: [{ kind, id, name }] }
+ *   unavailable  true when the rows have gifts but the gear catalogue did not
+ *                load: the caller answers 503 BEFORE the batch, because claiming
+ *                would spend the id with the gift unpayable. Gifts whose id the
+ *                catalogue lacks are dropped, as grantGear does.
+ */
+export async function prepareRewardGear(env, request, userId, rows, now = Date.now()) {
+  const none = { stmt: null, gear: [], byRow: {}, unavailable: false };
+  const wanted = [];
+  for (const row of rows || []) {
+    for (const item of row?.reward?.gear || []) wanted.push({ rowId: row.id, kind: item.kind, id: item.id });
+  }
+  if (!wanted.length) return none;
+  await ensureGearSchema(env);
+  const catalog = await loadGearCatalog(env, request);
+  if (!Object.keys(catalog?.sleeves || {}).length && !Object.keys(catalog?.coins || {}).length) {
+    console.error("prepareRewardGear: gear catalogue did not load", userId);
+    return { ...none, unavailable: true };
+  }
+  const known = wanted.filter((item) => gearItem(catalog, item.kind, item.id));
+  if (!known.length) return none;
+  const nameOf = (kind, id) => gearItem(catalog, kind, id)?.name || id;
+  const counts = new Map();
+  for (const item of known) counts.set(`${item.kind}:${item.id}`, (counts.get(`${item.kind}:${item.id}`) || 0) + 1);
+  const gifts = [...counts].map(([key, qty]) => {
+    const [kind, ...id] = key.split(":");
+    return { kind, id: id.join(":"), qty };
+  });
+  const owned = new Set(
+    (
+      (
+        await env.DB.prepare(
+          `SELECT kind, item_id FROM user_gear WHERE user_id = ? AND qty > 0 AND (${gifts.map(() => "(kind = ? AND item_id = ?)").join(" OR ")})`
+        )
+          .bind(userId, ...gifts.flatMap((g) => [g.kind, g.id]))
+          .all()
+      ).results || []
+    ).map((row) => `${row.kind}:${row.item_id}`)
+  );
+  const byRow = {};
+  for (const item of known) (byRow[item.rowId] ||= []).push({ kind: item.kind, id: item.id, name: nameOf(item.kind, item.id) });
+  const stmt = env.DB.prepare(
+    // changes() is the claim update's: 1 only for the request that won the swap.
+    `INSERT INTO user_gear (user_id, kind, item_id, qty, first_at, last_at)
+     SELECT ?, json_extract(value, '$.kind'), json_extract(value, '$.id'), json_extract(value, '$.qty'), ?, ?
+     FROM json_each(?) WHERE changes() = 1
+     ON CONFLICT(user_id, kind, item_id) DO UPDATE SET qty = user_gear.qty + excluded.qty, last_at = excluded.last_at`
+  ).bind(userId, now, now, JSON.stringify(gifts));
+  const gear = gifts.map((g) => ({ ...g, name: nameOf(g.kind, g.id), wasNew: !owned.has(`${g.kind}:${g.id}`) }));
+  return { stmt, gear, byRow, unavailable: false };
+}
+
 /** The items one opened copy of a product hands out, as { kind, id } rows. */
 export async function productItems(env, request, setId, productId) {
   const catalog = await loadGearCatalog(env, request);

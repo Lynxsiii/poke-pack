@@ -30,7 +30,10 @@ import { homeSetId, isMepCardId } from "./card-home.js";
 import { HIT_RARITIES, isHit } from "./engine.js";
 import { initRadio } from "./radio.js";
 import { createTear } from "./tear.js";
-import { initSocial, notifySignedIn, faceHtml, sendChat, refreshLounge, currentFriends } from "./social.js";
+import { initSocial, notifySignedIn, faceHtml, levelTag, sendChat, refreshLounge, currentFriends } from "./social.js";
+import { frameHtml, levelBadgeHtml, framePicksHtml, userFrame } from "./level-badge.js";
+import { BANNER_MOTION_LEVELS, BANNER_MOTION_NAMES, frameInfo } from "./levels.js";
+import { roomLine } from "./gate-notice.js";
 import {
   AVATARS,
   avatarSrc,
@@ -63,7 +66,11 @@ import {
 } from "./achievements.js";
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
-import * as questArea from "./quest-area.js?v=3";
+import { bannerBlockHtml } from "./mastery-banner.js";
+import { masteryShelfProfileHtml } from "./mastery-shelf.js";
+import * as questArea from "./quest-area.js?v=4";
+import * as levelUi from "./level-ui.js";
+import { createXpFeed } from "./level-feed.js";
 import { startLivePrices, applyCachedPrices } from "./liveprices.js";
 import {
   loadPriceHistory,
@@ -98,12 +105,12 @@ import {
   trainerCode,
 } from "./accounts.js";
 import { api, ApiError } from "./api.js";
-import { normalizeGear } from "./gear.js";
-import { cardBackHtml, cardBackSrc, getGearCatalog, giftHtml, initGear, loadGearCatalog } from "./gear-page.js?v=6";
+import { gearItem, normalizeGear } from "./gear.js";
+import { cardBackHtml, cardBackSrc, coinHtml, getGearCatalog, giftHtml, initGear, loadGearCatalog, sleeveHtml } from "./gear-page.js?v=6";
 import { initBattles } from "./battles.js?v=3";
 import { initCasino } from "./casino.js?v=2";
 // grading
-import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=3";
+import { initGrading, GRADING_ROUTE } from "./grading-page.js?v=4";
 import { coinTag } from "./battle-kit.js";
 // cart and sealed collection (CONTRACT: /mnt/project-files/cart-sealed/CONTRACT.md)
 import { cartStore, cartControlHtml, cartControlClick, refreshCartControls, mountCartBar } from "./cart.js?v=2";
@@ -147,6 +154,7 @@ function activeTrainer() {
 
 function applyCloudSave(save) {
   if (!save) return;
+  if (cloudUser && save.xp?.level) cloudUser.level = save.xp.level; // the level gates and perks read it (js/gate-notice.js)
   state.coins = save.coins;
   state.collection = save.collection || {};
   state.reverses = save.reverses || {};
@@ -160,6 +168,7 @@ function applyCloudSave(save) {
   state.claimed = Array.isArray(save.claimed) ? save.claimed : [];
   state.quests = save.quests || null;
   state.stats = save.stats || null;
+  state.xp = save.xp || null;
   state.binder = Array.isArray(save.binder) ? save.binder : [];
   state.worthLog = Array.isArray(save.worthLog) ? save.worthLog : [];
   state.gear = normalizeGear(save.gear);
@@ -169,6 +178,7 @@ function applyCloudSave(save) {
   if (save.activeSetId) state.activeSetId = save.activeSetId;
   setPersistProgress(true);
   saveState(state);
+  xpFeed.adopt(save, cloudUser?.id ?? null); // what the save earned, and the header readout
 }
 
 function wipeProgressMemory() {
@@ -186,6 +196,8 @@ function wipeProgressMemory() {
   state.claimed = [];
   state.quests = null;
   state.stats = null;
+  state.xp = null;
+  xpFeed.reset();
   state.worthLog = [];
   state.binder = [];
   state.gear = normalizeGear(null);
@@ -525,6 +537,20 @@ function toast(msg) {
   clearTimeout(toast._t);
   toast._t = setTimeout(() => els.toast.classList.remove("show"), 2400);
 }
+
+/** What each adopted save earned (js/level-feed.js): the XP toast, the level-up card, the header readout. */
+const xpFeed = createXpFeed({
+  toast: els.toast,
+  readout: document.getElementById("lvl-read"),
+  isBusy: () => dialogStack.length > 0 || !els.overlay.classList.contains("hidden"),
+  openLevels: () => openLevelsTab(),
+  uiDeps: {
+    esc: (value) => esc(value),
+    num: (value) => num(value),
+    gearName: (kind, id) => gearItem(getGearCatalog(), kind, id)?.name || "",
+  },
+});
+document.getElementById("lvl-read")?.addEventListener("click", () => openLevelsTab());
 
 function esc(value) {
   return String(value ?? "")
@@ -930,6 +956,7 @@ function renderHeader() {
     els.statPulls.textContent = state.pulls;
   }
   if (els.statOwnedLabel) els.statOwnedLabel.textContent = `${liveSet.name} cards`;
+  xpFeed.paint(trainer ? state : null);
   els.authEntry?.classList.toggle("hidden", Boolean(trainer));
   els.trainerChip?.classList.toggle("hidden", !trainer);
   cartStore.setUser(trainer?.id || null);
@@ -1967,7 +1994,7 @@ function renderBinder() {
 
   const options = binderPicking == null ? [] : binderCandidates();
   els.binderBody.innerHTML = `
-    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${PROFILE_PAGE_LIMIT} pages on your profile.</span><small>Shared pages update as you change them.</small></div>
+    <div class="binder-sharing-note"><span>${(activeTrainer()?.binderPages || []).length} of ${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).cap} pages on your profile.${roomLine("pages", activeTrainer()?.level, (activeTrainer()?.binderPages || []).length, PROFILE_PAGE_LIMIT).more}</span><small>Shared pages update as you change them.</small></div>
     <div class="binder-spread">
       ${binderPageHtml(left)}
       ${right < pages ? binderPageHtml(right) : ""}
@@ -2679,6 +2706,7 @@ const areaDeps = {
   achievementsBySet,
   masteryRowFor,
   masteryEmblem,
+  gearArt: (kind, id) => levelDeps.gearArt(kind, id), // levelDeps is declared further down; called lazily
   masteryBannerId,
   bannerVars,
   questRow: questRules.questById,
@@ -2695,7 +2723,9 @@ function colorPicks(selected, attr = "data-color", label = "Avatar colour") {
 function avatarMark(trainer, extraClass = "trainer-mark") {
   const color = avatarColor(trainer?.color);
   const pixel = avatarStyle(trainer?.avatarStyle) === "pixel" ? " pixel" : "";
-  return `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
+  const mark = `<div class="${extraClass}${pixel}" style="--avatar:${esc(color.hex)}"><img src="${esc(avatarSrc(trainer?.avatar, trainer?.avatarStyle))}" alt="" /></div>`;
+  const frame = userFrame(trainer);
+  return frame ? frameHtml(mark, frame, { size: "xl", color: color.hex }) : mark;
 }
 
 /** The career figures under the hero: plain numbers with a caption each. */
@@ -2851,6 +2881,7 @@ function renderAuth() {
 
 const ACCOUNT_TABS = [
   { id: "overview", name: "Overview", note: "Career, sets, and what you pulled." },
+  { id: "levels", name: "Levels", note: "Your level, the road ahead and where your XP comes from." },
   { id: "quests", name: "Quests", note: "Daily, weekly and monthly coin rewards." },
   { id: "achievements", name: "Achievements", note: "Badges, secrets, rewards and titles." },
   { id: "mastery", name: "Mastery", note: "Complete a set for a title, an emblem and a banner." },
@@ -2869,12 +2900,18 @@ function bringIntoView(el) {
 /** The little count on a tab: things waiting to be claimed there. */
 function tabDot(id, stats) {
   const n =
-    id === "achievements" ? stats.ready.length : id === "quests" ? questArea.questReadyCount(state.quests, areaDeps) : 0;
+    id === "achievements"
+      ? stats.ready.length
+      : id === "quests"
+        ? questArea.questReadyCount(state.quests, areaDeps)
+        : id === "levels"
+          ? levelUi.levelsReadyCount(levelUi.xpOf(state))
+          : 0;
   return n ? `<i class="acct-dot" aria-hidden="true">${n}</i><span class="sr-only">, ${n} ready to claim</span>` : "";
 }
 
 /** What has focus inside the account page, as an attribute and value that survive a repaint. */
-const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-banner", "data-set-title"];
+const FOCUS_ATTRS = ["data-acct-tab", "data-ach-cat", "data-ach-filter", "data-mastery-era", "data-mastery-set", "data-claim", "data-quest-claim", "data-set-motion", "data-set-frame", "data-set-banner", "data-set-title", "data-claim-levels", "data-road-past"];
 function focusKey() {
   const el = document.activeElement;
   if (!el || el === document.body || !els.accountBody.contains(el)) return null;
@@ -2911,7 +2948,9 @@ function renderAccountBody() {
   if (!ACCOUNT_TABS.some((tab) => tab.id === accountTab)) accountTab = "overview";
   const stats = achievementStats();
   const body =
-    accountTab === "quests"
+    accountTab === "levels"
+      ? levelsTab()
+      : accountTab === "quests"
       ? questsTab()
       : accountTab === "achievements"
       ? achievementsTab(stats)
@@ -2943,6 +2982,7 @@ function renderAccountBody() {
   if (accountTab === "mastery") placeMasteryDetail();
   for (const on of els.accountBody.querySelectorAll(".acct-tabs .on, .qa-words:not(.qa-words-inline) .on")) bringIntoView(on);
   freshClaims = new Set();
+  freshLevels = new Set();
 }
 
 function signedOutAccount() {
@@ -2983,14 +3023,13 @@ function signedOutAccount() {
 }
 
 function accountHero(trainer, stats) {
-  const banner = bannerVars(trainer.banner);
   const ready = stats.ready.length;
   return `<header class="acct-hero">
-    <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
+    ${bannerBlockHtml(trainer.banner, { className: "acct-banner", eager: true })}
     <div class="acct-hero-body">
       ${avatarMark(trainer, "trainer-mark acct-face")}
       <div class="acct-copy">
-        <h1 class="acct-name">${esc(trainer.name)}</h1>
+        <h1 class="acct-name">${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "xl" })}</h1>
         <p class="acct-meta">
           <span class="account-handle">@${esc(trainer.handle)}</span>
           ${trainer.createdAt ? `<span>Joined ${esc(joinedOn(trainer.createdAt))}</span>` : ""}
@@ -3321,7 +3360,7 @@ function profileTab(trainer) {
     <div class="acct-sec-head">
       <div>
         <h2>Showcase</h2>
-        <p>${showcase.length} of ${SHOWCASE_MAX} pinned. These sit at the top of your public profile, in this order.</p>
+        <p>${showcase.length} of ${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).cap} pinned. These sit at the top of your public profile, in this order.${roomLine("showcase", trainer.level, showcase.length, SHOWCASE_MAX).more}</p>
       </div>
     </div>
     ${
@@ -3334,11 +3373,20 @@ function profileTab(trainer) {
 
 /* ---- Look --------------------------------------------------------------- */
 
+/** Banner motions with the level each opens at (0 = free). The level-driven ones are listed even before cosmetics.js knows them. */
+function bannerMotionRows() {
+  const rows = BANNER_MOTIONS.map((row) => ({ id: row.id, name: row.name, level: Number(row.level ?? BANNER_MOTION_LEVELS[row.id]) || 0 }));
+  for (const [id, level] of Object.entries(BANNER_MOTION_LEVELS)) {
+    if (!rows.some((row) => row.id === id)) rows.push({ id, name: BANNER_MOTION_NAMES[id] || id, level });
+  }
+  return rows.sort((a, b) => a.level - b.level);
+}
+
 function lookTab(trainer, stats) {
   const avatars = searchAvatars(avatarQuery);
   const banner = parseBanner(trainer.banner);
   const style = avatarStyle(trainer.avatarStyle);
-  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities() });
+  const ctx = titleContext(state, { signed: true, findCard, rarities: ownedRarities(), level: state.xp?.level ?? cloudUser?.level });
   const unlocked = new Set(unlockedTitles(ctx).map((row) => row.name));
   const won = titlesFromClaims(stats.claimed);
   const titleGroups = questArea.titleGroupsHtml(TITLES, trainer.title, unlocked, areaDeps);
@@ -3347,10 +3395,10 @@ function lookTab(trainer, stats) {
   return `<div class="look-layout">
     <aside class="look-preview" aria-label="Preview">
       <div class="look-card">
-        <div class="acct-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(bannerVars(trainer.banner).style)}"></div>
+        ${bannerBlockHtml(trainer.banner, { className: "acct-banner" })}
         <div class="look-id">
           ${avatarMark(trainer, "trainer-mark look-face")}
-          <b>${esc(trainer.name)}</b>
+          <b>${esc(trainer.name)}${levelBadgeHtml(trainer.level, { size: "md" })}</b>
           <small>@${esc(trainer.handle)}</small>
           <span class="account-title">${esc(trainer.title || "Rookie")}</span>
         </div>
@@ -3393,13 +3441,33 @@ function lookTab(trainer, stats) {
       <section class="acct-sec">
         <div class="acct-sec-head">
           <div>
+            <h2>Frame</h2>
+            <p>A frame around your picture on your profile and in every list. Higher levels open richer ones.</p>
+          </div>
+        </div>
+        ${framePicksHtml({
+          level: trainer.level,
+          frame: trainer.frame,
+          color: avatarColor(trainer.color).hex,
+          avatar: faceHtml({ ...trainer, online: false }, "md", { frame: false }),
+        })}
+      </section>
+      <section class="acct-sec">
+        <div class="acct-sec-head">
+          <div>
             <h2>Banner</h2>
             <p>Two colours and a motion, mixed live behind your name.</p>
           </div>
         </div>
-        <div class="qa-words qa-words-inline" role="group" aria-label="Banner motion">${BANNER_MOTIONS.map(
-          (row) => `<button type="button" class="qa-word${!onMastery && banner.motion === row.id ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${!onMastery && banner.motion === row.id}"><span>${esc(row.name)}</span></button>`
-        ).join("")}</div>
+        <div class="qa-words qa-words-inline qa-words-wrap" role="group" aria-label="Banner motion">${bannerMotionRows()
+          .map((row) => {
+            const locked = (Number(trainer.level) || 1) < row.level;
+            const on = !onMastery && banner.motion === row.id;
+            return locked
+              ? `<button type="button" class="qa-word locked" data-motion-locked="${esc(row.id)}" aria-disabled="true"><span>${esc(row.name)}</span><small>Level ${row.level}</small></button>`
+              : `<button type="button" class="qa-word${on ? " on" : ""}" data-set-motion="${esc(row.id)}" aria-pressed="${on}"><span>${esc(row.name)}</span></button>`;
+          })
+          .join("")}</div>
         <div class="field"><span>First colour</span>${colorPicks(onMastery ? "" : banner.colors[0], "data-banner-a", "First banner colour")}</div>
         <div class="field"><span>Second colour</span>${colorPicks(onMastery ? "" : banner.colors[1], "data-banner-b", "Second banner colour")}</div>
         ${questArea.masteryBannersHtml(banner.set ? masteryBannerId(banner.set) : "", stats.claimed, areaDeps)}
@@ -3542,7 +3610,7 @@ async function renderProfile() {
               <p>${
                 gradedSlabs.length
                   ? `${gradedSlabs.length} of the ${num(gradedTotal)} ${gradedTotal === 1 ? "card" : "cards"} ${esc(user.name)} had slabbed.`
-                  : `Open one of your slabs and choose Show on profile. Up to ${GRADING_LIMITS.maxShown} sit here.`
+                  : `Open one of your slabs and choose Show on profile. Up to ${roomLine("slabs", user.level, gradedSlabs.length, GRADING_LIMITS.maxShown).cap} sit here.${roomLine("slabs", user.level, gradedSlabs.length, GRADING_LIMITS.maxShown).more}`
               }</p>
             </div>
             ${mine ? `<a class="ghost sm" href="/grading/graded">Your slabs</a>` : ""}
@@ -3555,7 +3623,7 @@ async function renderProfile() {
         (row) => `<li class="comment-item">
           <a href="/u/${esc(row.user.handle)}" aria-label="${esc(row.user.name)}">${faceHtml(row.user, "sm")}</a>
           <div>
-            <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
+            <p class="comment-by"><a href="/u/${esc(row.user.handle)}"><b>${levelTag(row.user)}${esc(row.user.name)}</b></a> <time>${esc(formatWhen(row.at))}</time></p>
             <p>${esc(row.body)}</p>
           </div>
         </li>`
@@ -3571,22 +3639,20 @@ async function renderProfile() {
     ].filter(Boolean);
     const friends = Number(data.friends || 0);
 
-    const banner = bannerVars(user.banner);
     els.profileBody.innerHTML = `
       <div class="profile-page">
         <header class="acct-hero profile-hero">
-          <div class="acct-banner profile-banner banner-wash" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>
+          ${bannerBlockHtml(user.banner, { className: "acct-banner profile-banner", eager: true })}
           <div class="acct-hero-body profile-id">
             ${faceHtml({ ...user, online: data.online }, "lg")}
             <div class="acct-copy profile-copy">
-              <h1 class="acct-name">${esc(user.name)}</h1>
+              <h1 class="acct-name">${esc(user.name)}${levelBadgeHtml(user.level, { size: "xl" })}</h1>
               <p class="acct-meta">
                 <span class="account-handle">@${esc(user.handle)}</span>
                 <span>${num(friends)} ${friends === 1 ? "friend" : "friends"}</span>
                 ${data.online ? `<span class="live-tag">Online now</span>` : ""}
               </p>
               <p class="acct-chips"><span class="account-title">${esc(user.title || "Rookie")}</span></p>
-              ${questArea.masteryStripHtml(data.masteries || [], areaDeps)}
               ${user.bio ? `<p class="account-bio">${esc(user.bio)}</p>` : ""}
             </div>
             <div class="acct-hero-actions profile-actions">${friendBtn}</div>
@@ -3599,6 +3665,7 @@ async function renderProfile() {
               : ""
           }
         </header>
+        ${masteryShelfProfileHtml(data.masteries || [], { banner: user.banner, mine })}
         <section class="profile-showcase">
           <div class="acct-sec-head">
             <div>
@@ -3677,7 +3744,7 @@ async function renderSocial() {
         const preview = row.last ? `${row.last.mine ? "You: " : ""}${esc(row.last.body)}` : "No messages yet";
         return `<a class="dm-thread${on ? " on" : ""}" href="/social/${esc(row.user.handle)}"${on ? ` aria-current="page"` : ""}>
           ${faceHtml({ ...row.user, online: online.has(row.user.handle) }, "sm")}
-          <span><b>${esc(row.user.name)}</b><small>${preview}</small></span>
+          <span><b>${levelTag(row.user)}${esc(row.user.name)}</b><small>${preview}</small></span>
           ${row.last ? `<time>${esc(formatWhen(row.last.at))}</time>` : ""}
         </a>`;
       })
@@ -3686,7 +3753,7 @@ async function renderSocial() {
     const incomingRows = incoming
       .map(
         (row) => `<div class="friends-row">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>@${esc(row.handle)} wants to be friends</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>@${esc(row.handle)} wants to be friends</small></span></a>
           <div class="friends-row-actions">
             <button type="button" class="ghost sm" data-friend-accept="${esc(row.handle)}">Accept</button>
             <button type="button" class="text-btn" data-friend-deny="${esc(row.handle)}">Decline</button>
@@ -3697,7 +3764,7 @@ async function renderSocial() {
     const outgoingRows = outgoing
       .map(
         (row) => `<div class="friends-row dim">
-          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${esc(row.name)}</b><small>Request sent</small></span></a>
+          <a href="/u/${esc(row.handle)}">${faceHtml(row, "sm")}<span><b>${levelTag(row)}${esc(row.name)}</b><small>Request sent</small></span></a>
         </div>`
       )
       .join("");
@@ -3718,7 +3785,7 @@ async function renderSocial() {
             </a>
             <a class="dm-who" href="/u/${esc(thread.user.handle)}">
               ${faceHtml({ ...thread.user, online: online.has(thread.user.handle) }, "sm")}
-              <span><b>${esc(thread.user.name)}</b><small>${online.has(thread.user.handle) ? "Online now" : `@${esc(thread.user.handle)}`}</small></span>
+              <span><b>${levelTag(thread.user)}${esc(thread.user.name)}</b><small>${online.has(thread.user.handle) ? "Online now" : `@${esc(thread.user.handle)}`}</small></span>
             </a>
             <a class="text-btn dm-profile" href="/u/${esc(thread.user.handle)}">Profile</a>
           </div>
@@ -5864,6 +5931,54 @@ async function sellOwnedCard(card, { extra = false } = {}) {
   }
 }
 
+/* ---- Levels (js/level-ui.js draws it; js/level-feed.js reports what a save earned) ---- */
+
+let roadPast = false; // the Levels tab shows every stop behind you
+let freshLevels = new Set(); // levels just paid, so their tiles stamp in
+
+const levelDeps = {
+  esc,
+  num,
+  gearName: (kind, id) => gearItem(getGearCatalog(), kind, id)?.name || "",
+  gearArt: (kind, id) => {
+    const item = gearItem(getGearCatalog(), kind, id);
+    return item ? (kind === "coin" ? coinHtml(item, { cls: "sm" }) : sleeveHtml(item, { cls: "sm" })) : "";
+  },
+};
+
+function levelsTab() {
+  return levelUi.levelsTabHtml(levelUi.xpOf(state), levelDeps, { past: roadPast, fresh: freshLevels });
+}
+
+function openLevelsTab() {
+  accountTab = "levels";
+  if (view === "account") renderAccount();
+  else setView("account");
+}
+
+let levelClaiming = false;
+async function claimLevelRewards(button) {
+  if (levelClaiming) return;
+  levelClaiming = true;
+  button?.setAttribute("aria-disabled", "true");
+  const focused = focusKey();
+  try {
+    const data = await api("/api/levels/claim", { method: "POST" });
+    afterEconomy(data.save);
+    freshLevels = new Set(data.paid?.levels || []);
+    renderHeader();
+    renderAccount();
+    restoreFocus(focused);
+    toast(levelUi.claimedText(data.paid, levelDeps));
+  } catch (err) {
+    toast(err.message || "Couldn't claim level rewards.");
+    renderAccount();
+    restoreFocus(focused);
+  } finally {
+    levelClaiming = false;
+  }
+}
+
 function questsTab() {
   return questArea.questBoardHtml(state.quests, areaDeps, { fresh: freshClaims });
 }
@@ -6023,6 +6138,12 @@ document.addEventListener("click", (e) => {
     setView(jump.dataset.goto);
     return;
   }
+  const gateTab = e.target.closest(".gate-lock [data-acct-tab]"); // the lock notice's link to the Levels tab
+  if (gateTab) {
+    accountTab = gateTab.dataset.acctTab;
+    setView("account");
+    return;
+  }
   const link = e.target.closest("a[href]");
   if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
   let url;
@@ -6162,6 +6283,16 @@ els.accountBody.addEventListener("click", async (e) => {
     accountTab = tab.dataset.acctTab;
     renderAccount();
     els.accountBody.querySelector(".acct-tabs")?.scrollIntoView({ block: "nearest" });
+    return;
+  }
+  const claimLevelsBtn = e.target.closest("[data-claim-levels]");
+  if (claimLevelsBtn) {
+    claimLevelRewards(claimLevelsBtn);
+    return;
+  }
+  if (e.target.closest("[data-road-past]")) {
+    roadPast = !roadPast;
+    renderAccount();
     return;
   }
   const filter = e.target.closest("[data-ach-filter]");
@@ -6326,10 +6457,32 @@ els.accountBody.addEventListener("click", async (e) => {
     }
     return;
   }
+  const setFrame = e.target.closest("[data-set-frame]");
+  if (setFrame) {
+    try {
+      await patchLook({ frame: setFrame.dataset.setFrame || null });
+    } catch (err) {
+      toast(err.message || "Couldn't change the frame.");
+    }
+    return;
+  }
+  const lockedFrame = e.target.closest("[data-frame-locked]");
+  if (lockedFrame) {
+    const info = frameInfo(lockedFrame.dataset.frameLocked);
+    if (info) toast(`Reach level ${info.level} to wear the ${info.name} frame.`);
+    return;
+  }
+  const lockedMotion = e.target.closest("[data-motion-locked]");
+  if (lockedMotion) {
+    const level = BANNER_MOTION_LEVELS[lockedMotion.dataset.motionLocked];
+    if (level) toast(`Reach level ${level} to use the ${BANNER_MOTION_NAMES[lockedMotion.dataset.motionLocked]} banner.`);
+    return;
+  }
   const setMotion = e.target.closest("[data-set-motion]");
   if (setMotion) {
     const trainer = activeTrainer();
     if (!trainer) return;
+    if (setMotion.getAttribute("aria-disabled") === "true") return toast(setMotion.title || "That banner is locked.");
     const banner = parseBanner(trainer.banner);
     try {
       await patchLook({ banner: `${setMotion.dataset.setMotion}:${banner.colors.join("+")}` });
@@ -6418,7 +6571,7 @@ async function surpriseLook() {
     await patchLook({
       avatar: String(pick(AVATARS)[0]),
       color: pick(AVATAR_COLORS).id,
-      banner: `${pick(BANNER_MOTIONS).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
+      banner: `${pick(BANNER_MOTIONS.filter((m) => !m.level || Number(trainer.level) >= m.level)).id}:${a}+${b === a ? pick(AVATAR_COLORS).id : b}`,
     });
     toast("New look rolled.");
   } catch (err) {
@@ -6448,7 +6601,7 @@ async function claimAchievements(body, label) {
     renderHeader();
     renderAccount();
     restoreFocus(focused);
-    rewardFlash(data.rewards || [], data.coins || 0);
+    rewardFlash(data.rewards || [], data.coins || 0, data.gear);
     const titles = data.titles || [];
     const masteries = (data.rewards || []).filter((row) => achievementById(row.id)?.kind === "mastery");
     const won = titles.length === 1 ? ` and the ${titles[0]} title` : titles.length ? ` and ${titles.length} new titles` : "";
@@ -6464,8 +6617,10 @@ async function claimAchievements(body, label) {
 }
 
 /** The little card that drops in when a reward lands; mastery adds the emblem and what it unlocked. */
-function rewardFlash(rewards, coins) {
+function rewardFlash(rewards, coins, gear) {
   if (!rewards.length) return;
+  // Sleeves and coins gifted by a mastery or crown; only the ones that were new count.
+  const gifts = questArea.giftsLine((gear || rewards.flatMap((row) => row.gear || [])).filter((g) => g.wasNew !== false));
   document.querySelector(".reward-flash")?.remove();
   const titles = rewards.filter((row) => row.title);
   const masteries = rewards.map((row) => achievementById(row.id)).filter((row) => row?.kind === "mastery" && row.set);
@@ -6485,13 +6640,15 @@ function rewardFlash(rewards, coins) {
     <span>${rewards.length === 1 ? esc(rewards[0].name) : `${rewards.length} achievements claimed`}</span>
     ${secrets.length ? `<i>${secrets.length === 1 ? "A secret, revealed" : `${secrets.length} secrets, revealed`}</i>` : ""}
     ${titles.length ? `<i>${titles.length === 1 ? "New title" : "New titles"}: ${titles.slice(0, 3).map((row) => esc(row.title)).join(", ")}${titles.length > 3 ? ` and ${titles.length - 3} more` : ""}</i>` : ""}
-    ${perks}`;
+    ${perks}
+    ${gifts ? `<a class="flash-gear" href="/gear">${esc(gifts)}</a>` : ""}`;
   document.body.appendChild(el);
+  el.querySelector(".flash-gear")?.addEventListener("click", () => el.remove());
   requestAnimationFrame(() => el.classList.add("show"));
   window.setTimeout(() => {
     el.classList.remove("show");
     window.setTimeout(() => el.remove(), 400);
-  }, masteries.length ? 4200 : 2800);
+  }, gifts ? 6000 : masteries.length ? 4200 : 2800);
 }
 
 let masteryResize = 0;

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
+import { seedLevel } from './lib/level-seed.mjs';
 import worker from '../worker/index.js';
 import { battleResult, battleSettings, BOT_PERSONAS, botPersona } from '../js/battle-rules.js';
 import { resetBattleSchemaCache, resetSettleFailures } from '../worker/battles.js';
@@ -39,7 +40,7 @@ function addUser(db, id, balance) {
   db.prepare('INSERT INTO users(id,name,handle,password_hash,color,created_at,last_played) VALUES(?,?,?,?,?,?,?)')
     .run(id, id, id, 'unused', 'gold', now, now);
   db.prepare('INSERT INTO profiles(user_id,coins,granted,created_at,binder) VALUES(?,?,?,?,?)').run(id, balance, balance, now, '[]');
-  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000);
+  db.prepare('INSERT INTO sessions(id,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(id, id, now, now + 864000000); seedLevel(db, id);
 }
 for (const [id, balance] of [['host', 100000], ['rival', 100000], ['third', 100000], ['fourth', 100000], ['poor', 0]]) addUser(db, id, balance);
 const ASSETS = { fetch: async request => {

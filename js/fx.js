@@ -125,6 +125,17 @@ function pauseOffscreen() {
     for (const entry of entries) entry.target.classList.toggle("fx-paused", !entry.isIntersecting);
   });
   loops.forEach((el) => io.observe(el));
+  // Level cosmetics are drawn into pages after load (banners with a moving
+  // motion, big avatar frames), so look for new ones now and then.
+  const LEVEL_LOOPS = '.banner-wash:is([data-motion="foil"], [data-motion="starfall"], [data-motion="holo"]), .lvl-frame[data-s="md"], .lvl-frame[data-s="lg"], .lvl-frame[data-s="xl"]';
+  const watched = new WeakSet();
+  setInterval(() => {
+    document.querySelectorAll(LEVEL_LOOPS).forEach((el) => {
+      if (watched.has(el)) return;
+      watched.add(el);
+      io.observe(el);
+    });
+  }, 1500);
 }
 
 // Every endless loop holds still while the window is in the background or
