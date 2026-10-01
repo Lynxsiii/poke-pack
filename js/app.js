@@ -3742,7 +3742,7 @@ async function renderProfile() {
 /** What the Layout tab (js/profile-editor.js) needs: the trainer's cards for "match my cards", and the save. */
 function layoutDeps() {
   return {
-    esc, avatarMark, bannerVars, findCard, toast, activeTrainer,
+    esc, avatarMark, bannerBlock: bannerBlockHtml, findCard, toast, activeTrainer,
     showcaseIds: () => (activeTrainer()?.showcase || []).map((slot) => slot.id),
     binderSlots: () => {
       // The pages this trainer displays, as the public profile will show them.

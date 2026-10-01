@@ -46,12 +46,15 @@
   mask-image: linear-gradient(180deg, #000 0, rgba(0, 0, 0, 0.12) 85%);
 }
 .room-bd[data-backdrop="grain"] {
-  background: rgb(var(--room-ink, var(--room)) / 0.34);
+  background: rgb(var(--room-ink, var(--room)) / 0.2);
   -webkit-mask-image: var(--pl-grain); mask-image: var(--pl-grain);
   -webkit-mask-size: 180px 180px; mask-size: 180px 180px;
 }
 
 /* ---- 2. The profile ---------------------------------------------------------- */
+/* A tinted room lifts the page's glow, so the muted captions step up a little to keep 4.5:1 on pale rooms. */
+body.profile-roomed #view-profile { --muted: #aaa8b0; }
+
 /* Chasing: one line under the name. */
 .profile-chasing {
   margin: 10px 0 0; max-width: 46ch; color: var(--ink); font-size: 17px; font-weight: 520; line-height: 1.35;
@@ -116,6 +119,7 @@
 .pl-note a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--faint); }
 .pl-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); }
 .pl-controls .acct-sec-head { margin-bottom: 16px; }
+.pl-controls > .pl-open { margin: -36px 0 0; }
 
 /* A picked square or tile: ink, never colour. */
 .pl-sw.on, .pl-wide.on, .pl-tile.on { box-shadow: inset 0 0 0 2px var(--ink); }
@@ -163,7 +167,7 @@
 
 /* The showcase layouts, drawn small. --c is a card's own colour when known. */
 .pl-dia { display: grid; gap: 3px; width: 100%; height: 100%; box-sizing: border-box; padding: 9px; align-content: center; }
-.pl-dia i { display: block; aspect-ratio: 63 / 88; border-radius: 1.5px; background: var(--c, var(--line-2)); opacity: 0.55; }
+.pl-dia i { display: block; aspect-ratio: 63 / 88; border-radius: 4px; background: var(--c, var(--line-2)); opacity: 0.55; }
 .pl-dia[data-style="row"] { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 2px; }
 .pl-dia[data-style="grid"] { grid-template-columns: repeat(3, minmax(0, 1fr)); width: 70%; margin-inline: auto; }
 .pl-dia[data-style="stage"] { grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr; align-content: stretch; padding: 8px 14px; }
@@ -176,11 +180,11 @@
 .pl-seg { display: inline-grid; grid-template-columns: repeat(2, minmax(120px, 1fr)); gap: 2px; padding: 3px; border-radius: var(--r-sm); background: var(--well); }
 .pl-seg button {
   display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 0 16px;
-  border: 0; border-radius: 6px; background: transparent; color: var(--muted); font-size: 15px; font-weight: 600;
+  border: 0; border-radius: 4px; background: transparent; color: var(--muted); font-size: 15px; font-weight: 600;
 }
 .pl-seg button:hover { color: var(--ink); }
 .pl-seg button.on { background: var(--surface-3); color: var(--ink); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset; }
-.pl-hero-dia { position: relative; flex: none; width: 24px; height: 18px; border-radius: 2px; box-shadow: inset 0 0 0 1.5px currentColor; opacity: 0.8; overflow: hidden; }
+.pl-hero-dia { position: relative; flex: none; width: 24px; height: 18px; border-radius: 4px; box-shadow: inset 0 0 0 1.5px currentColor; opacity: 0.8; overflow: hidden; }
 .pl-hero-dia[data-hero="banner"]::before { content: ""; position: absolute; inset: 0 0 9px; background: currentColor; }
 .pl-hero-dia::after { content: ""; position: absolute; left: 4px; bottom: 3px; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
@@ -202,11 +206,11 @@
 .pl-move:disabled { opacity: 0.28; cursor: default; }
 .pl-switch { display: grid; place-items: center; width: 56px; height: 44px; padding: 0; border: 0; background: none; }
 .pl-switch i {
-  position: relative; display: block; width: 48px; height: 28px; border-radius: 6px;
+  position: relative; display: block; width: 48px; height: 28px; border-radius: var(--r-sm);
   background: var(--well); box-shadow: inset 0 0 0 1.5px var(--line-2); transition: background-color 0.15s ease;
 }
 .pl-switch i::after {
-  content: ""; position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 3px;
+  content: ""; position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 4px;
   background: var(--ink-2); transition: transform 0.15s var(--ease-out);
 }
 .pl-switch[aria-checked="true"] i { background: var(--ink); box-shadow: none; }
@@ -228,11 +232,17 @@
 .pl-bar .solid { min-width: 150px; }
 .pl-bar .solid[aria-disabled="true"] { background: var(--surface-2); color: var(--muted); opacity: 1; cursor: default; }
 .pl-bar .text-btn { min-height: 44px; padding: 0 2px; background: none; border: 0; font-size: 15px; }
-.pl-bar .pl-open { margin-left: auto; display: inline-flex; align-items: center; }
+
 
 /* One coral action per screen: here it is Save, so the hero's Claim steps aside (as it does on the badge wall). */
 #view-account:has(.acct-tab.on[data-acct-tab="layout"]) .acct-progress .claim-cta { display: none; }
 #view-account:has(.acct-tab.on[data-acct-tab="layout"]) .acct-progress { grid-template-columns: minmax(0, auto) minmax(120px, 1fr); }
+
+/* Sticky needs a viewport scroller: the page's body clips sideways overflow with `hidden`, which makes it
+   a scroller of its own, so on this tab it clips instead (as the root already does) and the site header,
+   which would then stick over the strip, stays in the flow like everywhere else. */
+body:has(#pl-layout) { overflow-x: clip; }
+body:has(#pl-layout) .site-header { position: static; }
 
 /* The room in miniature */
 .pl-room {
@@ -272,28 +282,49 @@
 .pl-mini-sec .pl-dia[data-style="stage"] { aspect-ratio: 2 / 1; padding: 8px 14%; }
 .pl-mini-sec .pl-dia[data-style="grid"] { width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-inline: 26%; }
 .pl-mini-slabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 8px 18%; border-radius: 4px; background: var(--well); }
-.pl-mini-slabs i { display: block; aspect-ratio: 5 / 8; border-radius: 2px; box-shadow: inset 0 0 0 1.5px var(--line-2); background: var(--surface); }
+.pl-mini-slabs i { display: block; aspect-ratio: 5 / 8; border-radius: 4px; box-shadow: inset 0 0 0 1.5px var(--line-2); background: var(--surface); }
 .pl-mini-pockets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 8px 40%; border-radius: 4px; background: var(--well); }
-.pl-mini-pockets i { display: block; aspect-ratio: 63 / 88; border-radius: 1.5px; box-shadow: inset 0 0 0 1px var(--line-2); }
+.pl-mini-pockets i { display: block; aspect-ratio: 63 / 88; border-radius: 4px; box-shadow: inset 0 0 0 1px var(--line-2); }
+.pl-mini-shelf { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 8px 12%; border-radius: 4px; background: var(--well); }
+.pl-mini-shelf i { display: block; aspect-ratio: 1; border-radius: 4px; box-shadow: inset 0 0 0 1px var(--line-2); background: var(--surface); }
 .pl-mini-lines { display: grid; gap: 6px; padding: 4px 0; }
-.pl-mini-lines i { display: block; height: 5px; border-radius: 1px; background: var(--line-2); }
+.pl-mini-lines i { display: block; height: 5px; border-radius: 0; background: var(--line-2); }
 .pl-mini-lines i:last-child { width: 62%; }
 .pl-mini-empty { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
 
 /* ---- Laptop to phone -------------------------------------------------------- */
 @media (max-width: 1040px) {
-  .pl-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-  .pl-preview { position: static; max-width: 340px; }
+  .pl-layout { display: block; }
+  .pl-controls { margin-top: 24px; }
   .pl-sws { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  /* The preview becomes a strip at the top of the screen that stays while you edit: the room, its
+     backdrop, the header and the chasing line, with the first section peeking out below. */
+  .pl-preview { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; margin-inline: calc(-1 * var(--gutter)); }
+  .pl-preview .pl-note { display: none; }
+  .pl-preview .pl-room { max-height: 104px; border-width: 0 0 1px; border-radius: 0; }
+  .pl-preview .pl-room::after {
+    content: ""; position: absolute; inset: auto 0 0; height: 28px; z-index: 2; pointer-events: none;
+    background: linear-gradient(transparent, color-mix(in oklab, var(--black) 90%, rgb(var(--room))));
+  }
+  #view-account .pl-preview .pl-mini-banner { height: 52px; }
+  .pl-preview .pl-mini-hero[data-hero="banner"] .pl-mini-id { margin-top: -22px; }
+  .pl-preview .pl-mini-face { width: 46px; }
+  .pl-preview .pl-mini-hero[data-hero="plain"] .pl-mini-face { width: 52px; }
+  .pl-preview .pl-mini-hero[data-hero="plain"] .pl-mini-id { padding-top: 12px; }
+  .pl-preview .pl-mini-name b { font-size: 17px; }
+  .pl-preview .pl-mini-hero[data-hero="plain"] .pl-mini-name b { font-size: 20px; }
+  .pl-preview .pl-mini-id { padding-inline: var(--gutter); }
+  .pl-preview .pl-mini-body { padding-inline: var(--gutter); }
 }
 @media (max-width: 720px) {
   .pl-controls { gap: 44px; }
   .pl-sws { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .pl-tiles-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .pl-seg { display: grid; }
-  .pl-bar { margin-inline: -4px; }
+  .pl-bar { margin-inline: -4px; padding: 8px 14px; gap: 0 18px; }
   .pl-bar .solid { flex: 1 1 100%; }
-  .pl-bar .pl-open { margin-left: 0; }
+  .pl-bar .text-btn { min-height: 40px; font-size: 14px; }
+  .pl-preview .pl-note { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pl-switch i, .pl-switch i::after { transition: none; }

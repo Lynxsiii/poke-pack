@@ -153,7 +153,7 @@ function sectionRows() {
 }
 
 function chasingField() {
-  return `<label class="field pl-chasing"><span>Chasing:</span>
+  return `<label class="field pl-chasing"><span>Chasing</span>
     <input data-pl-input="chasing" maxlength="${CHASING_MAX}" value="${esc(draft.chasing)}" placeholder="Umbreon VMAX alt art" autocomplete="off" />
     <span class="hint"><span>Leave it empty to hide the line.</span><output class="pl-count">${draft.chasing.length} / ${CHASING_MAX}</output></span>
   </label>`;
@@ -162,10 +162,9 @@ function chasingField() {
 function actionBar(trainer) {
   const isDirty = dirty();
   return `<div class="pl-bar${isDirty ? " is-dirty" : ""}">
-    <button class="solid" type="button" data-pl="save"${isDirty && !saving ? "" : ' aria-disabled="true"'}>${saving ? "Saving" : isDirty ? "Save layout" : "Saved"}</button>
+    <button class="solid" type="button" data-pl="save"${isDirty && !saving ? "" : ' aria-disabled="true"'}>${saving ? "Saving…" : isDirty ? "Save layout" : "Saved"}</button>
     <button class="text-btn" type="button" data-pl="undo"${isDirty ? "" : " hidden"}>Undo changes</button>
     <button class="text-btn" type="button" data-pl="reset">Reset to default</button>
-    <a class="text-btn pl-open" href="/u/${esc(trainer.handle)}">Open your profile</a>
   </div>`;
 }
 
@@ -174,7 +173,6 @@ function actionBar(trainer) {
 function previewHtml(deps, trainer) {
   const rgb = previewRgb(deps, trainer);
   const cardHex = deps.showcaseIds().slice(0, 6).map((id) => accentForCard(deps.findCard(id) || { id }));
-  const banner = deps.bannerVars(trainer.banner);
   const plain = draft.hero === "plain";
   const parts = draft.sections
     .filter((row) => row.on)
@@ -187,7 +185,9 @@ function previewHtml(deps, trainer) {
             ? `<span class="pl-mini-slabs" aria-hidden="true"><i></i><i></i><i></i></span>`
             : row.id === "binder"
               ? `<span class="pl-mini-pockets" aria-hidden="true">${"<i></i>".repeat(9)}</span>`
-              : row.id === "wall"
+              : row.id === "mastery"
+                ? `<span class="pl-mini-shelf" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>`
+                : row.id === "wall"
                 ? `<span class="pl-mini-lines" aria-hidden="true"><i></i><i></i></span>`
                 : "";
       return `<div class="pl-mini-sec" data-id="${row.id}"><b>${esc(name)}</b>${body}</div>`;
@@ -196,7 +196,7 @@ function previewHtml(deps, trainer) {
   return `<div class="pl-room" style="${roomVars(rgb)}">
     ${draft.backdrop !== "none" ? `<span class="room-bd pl-room-bd" data-backdrop="${draft.backdrop}" style="--bd-step:14px"></span>` : ""}
     <div class="pl-mini-hero" data-hero="${plain ? "plain" : "banner"}">
-      ${plain ? "" : `<div class="acct-banner banner-wash pl-mini-banner" data-motion="${esc(banner.motion)}" style="${esc(banner.style)}"></div>`}
+      ${plain ? "" : deps.bannerBlock(trainer.banner, { className: "acct-banner pl-mini-banner", variant: "wide", still: true })}
       <div class="pl-mini-id">
         ${deps.avatarMark(trainer, "trainer-mark pl-mini-face")}
         <div class="pl-mini-name"><b>${esc(trainer.name)}</b>
@@ -218,7 +218,7 @@ function inner(trainer, deps) {
     </aside>
     <div class="pl-controls">
       <section class="acct-sec">
-        <div class="acct-sec-head"><div><h2>Room colour</h2><p>Tints the page behind your profile, glow and all. My cards takes it from your showcase and the binder pages you display.</p></div></div>
+        <div class="acct-sec-head"><div><h2>Room colour</h2><p>Tints the page behind your profile, or follows the cards you show.</p></div></div>
         ${tintGrid(deps, trainer)}
       </section>
       <section class="acct-sec">
@@ -238,10 +238,11 @@ function inner(trainer, deps) {
         ${sectionRows()}
       </section>
       <section class="acct-sec">
-        <div class="acct-sec-head"><div><h2>Under your name</h2><p>One line about the card you want most.</p></div></div>
+        <div class="acct-sec-head"><div><h2>Chasing</h2><p>One line under your name about the card you want most.</p></div></div>
         ${chasingField()}
       </section>
       ${actionBar(trainer)}
+      <p class="pl-note pl-open">Your saved profile is at <a href="/u/${esc(trainer.handle)}">poke-pack.rip/u/${esc(trainer.handle)}</a>.</p>
     </div>`;
 }
 

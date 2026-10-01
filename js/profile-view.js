@@ -30,7 +30,7 @@ import { normalizeProfileLook } from "./profile-look.js";
  */
 export function roomLight(hex) {
   const [h, s, l] = hexToHsl(hex);
-  const lifted = s > 0.25 ? Math.min(0.6, Math.max(0.4, l)) : Math.min(0.55, l);
+  const lifted = s > 0.25 ? Math.min(0.54, Math.max(0.4, l)) : Math.min(0.5, l);
   return hexToRgb(hslToHex(h, Math.min(1, s * 1.05), lifted));
 }
 
@@ -73,6 +73,7 @@ export function applyProfileRoom(lookValue, cards = [], { accents } = {}) {
   const look = normalizeProfileLook(lookValue);
   const rgb = roomRgb(look, cards, accents);
   holdAmbient(rgb);
+  document.body.classList.toggle("profile-roomed", Boolean(rgb));
   if (look.backdrop === "none") {
     roomEl?.remove();
     roomEl = null;
@@ -92,6 +93,7 @@ export function applyProfileRoom(lookValue, cards = [], { accents } = {}) {
 
 export function leaveProfileRoom() {
   holdAmbient(null);
+  document.body.classList.remove("profile-roomed");
   roomEl?.remove();
   roomEl = null;
 }
