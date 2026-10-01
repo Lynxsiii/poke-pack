@@ -1,0 +1,51 @@
+{
+  "id": "dpp",
+  "name": "DP Black Star Promos",
+  "series": "diamond-pearl",
+  "slug": "dp-black-star-promos",
+  "scrydexId": "dpp",
+  "era": "dp",
+  "tcgplayerGroup": 1421,
+  "promoSeries": {
+    "dpp": {
+      "series": "diamond-pearl",
+      "slug": "dp-black-star-promos",
+      "scrydex": "dpp",
+      "tcgplayerGroup": 1421,
+      "printed": "DP",
+      "pkmnKey": "DP{n:03d}",
+      "scrydexKey": "DP{n:02d}",
+      "era": "dp"
+    }
+  },
+  "products": [
+    {
+      "id": "event-dpp41",
+      "name": "Toxicroak G · Platinum Player's Guide",
+      "kind": "event",
+      "tcgplayerId": 90013,
+      "note": "Inserted in the Platinum Player's Guide, the strategy book that came out with Rising Rivals in May 2009. Where it came from is not settled: Collector's Cache lists no product and an eBay title calls it a 2009 World Championship card. No sealed product on TCGplayer.",
+      "promos": [
+        "dpp41"
+      ]
+    },
+    {
+      "id": "event-dpp48",
+      "name": "Tropical Wind · 2009 World Championships",
+      "kind": "event",
+      "tcgplayerId": 90056,
+      "note": "Handed out at the 2009 World Championships (players and staff; the staff copy carries a stamp). No sealed product.",
+      "promos": [
+        "dpp48"
+      ],
+      "price": 249.0,
+      "priceSource": "TCGplayer's market price for the card (product 90056: $249.00; tcgcsv's mirror has no row for it) and pkmn.gg's price for DP48."
+    }
+  ],
+  "promoCards": {
+    "dpp41": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp48": {}
+  }
+}

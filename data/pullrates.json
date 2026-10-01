@@ -919,6 +919,52 @@
       "secret": 0.0139
     }
   },
+  "pop6": {
+    "name": "POP Series 6",
+    "printedTotal": 17,
+    "released": "2007-09-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack, and by a production error every pack holds exactly one Rare plus one Common-or-Uncommon: Bulbapedia POP Series pages (search excerpts; the site is blocked from the build sandbox) and the wrapper text ('Due to a production error, every POP 6 pack contains one rare, and one common or uncommon card', https://bulbapedia.bulbagarden.net/wiki/POP_Series_6_(TCG)), Elite Fourum post 66 ('instead of inserting a rare every 10 packs ... they inserted one in every pack', https://www.elitefourum.com/t/39762/66) and the wrapper text '2 ADDITIONAL PROMO CARDS'. The second card is an Uncommon with the sheet share 20/121 = 0.1653 (Elite Fourum E2 sheet model (121 sheet positions per sheet; https://www.elitefourum.com/t/39762, POP tables: pop6 https://efour.b-cdn.net/uploads/default/original/3X/3/6/368d495af0fdb802f052c0728e8278b2a27b346a.png , pop7 .../7/4/74beb4851ccf3c6cefc98728302009d02aa2ab86.png , pop8 and pop9 .../6/3/636410996098e22bfc01f37a522ac2f03cb01483.png)). Confidence high for the Rare in every pack (two sources), medium for the Uncommon share. No box exists: TCGplayer sells single packs only (https://tcgcsv.com/tcgplayer/3/1432/products). In-pack cards are never foil (Bulbapedia: the holo versions came in value packs and blisters; Collexy lists every POP holo as a product extra).",
+    "rates": {
+      "rare": 1.0,
+      "cuUncommon": 0.1653
+    }
+  },
+  "pop7": {
+    "name": "POP Series 7",
+    "printedTotal": 17,
+    "released": "2008-03-01",
+    "updated": "2026-10-01",
+    "source": "Two cards a pack ('2 ADDITIONAL PROMO CARDS' on the wrapper, Bulbapedia POP Series pages (search excerpts; the site is blocked from the build sandbox) and the wrapper text); a Rare about one pack in ten, which is Elite Fourum's assumption for the series (observed across POP 1-5 and 7: 93 Rares in 846 packs = 0.11; POP 7 alone 7 in 92 = 0.076; Elite Fourum E2 sheet model (121 sheet positions per sheet; https://www.elitefourum.com/t/39762, POP tables: pop6 https://efour.b-cdn.net/uploads/default/original/3X/3/6/368d495af0fdb802f052c0728e8278b2a27b346a.png , pop7 .../7/4/74beb4851ccf3c6cefc98728302009d02aa2ab86.png , pop8 and pop9 .../6/3/636410996098e22bfc01f37a522ac2f03cb01483.png)). One source for the rate; confidence low to medium. The other card is a Common or an Uncommon (sheet share 20/121). No box exists: TCGplayer sells single packs only (https://tcgcsv.com/tcgplayer/3/1414/products). In-pack cards are never foil (Bulbapedia: the holo versions came in value packs and blisters; Collexy lists every POP holo as a product extra).",
+    "rates": {
+      "rare": 0.1,
+      "cuUncommon": 0.1653
+    }
+  },
+  "pop8": {
+    "name": "POP Series 8",
+    "printedTotal": 17,
+    "released": "2008-09-01",
+    "updated": "2026-10-01",
+    "source": "Three cards a pack, 'the first POP set to include 3 cards per pack': two promo cards and one basic Energy (wrapper text '2 PROMO CARDS & 1 ENERGY CARD', Bulbapedia, Elite Fourum post 73 'Each pack includes a Basic Energy Card, for a total of three cards per pack', https://www.elitefourum.com/t/39762/73; confidence high). Rates: one Common, one Energy, and a third card from a combined Rare + Uncommon sheet (40 Rares and 81 Uncommons of 121) half the time, a Common otherwise: Rare 0.165 (1 pack in 6.1), Uncommon 0.335 per pack (Elite Fourum E2 sheet model (121 sheet positions per sheet; https://www.elitefourum.com/t/39762, POP tables: pop6 https://efour.b-cdn.net/uploads/default/original/3X/3/6/368d495af0fdb802f052c0728e8278b2a27b346a.png , pop7 .../7/4/74beb4851ccf3c6cefc98728302009d02aa2ab86.png , pop8 and pop9 .../6/3/636410996098e22bfc01f37a522ac2f03cb01483.png)); one source and a hypothesis it says fits the observed counts, confidence low. The eight basic Energy are not shown on any source I could read: the site deals its own Diamond & Pearl print (dp1 123-130 art; confidence low). No box exists: TCGplayer sells single packs only (https://tcgcsv.com/tcgplayer/3/1450/products). In-pack cards are never foil (Bulbapedia: the holo versions came in value packs and blisters; Collexy lists every POP holo as a product extra).",
+    "rates": {
+      "rare": 0.165,
+      "uncommon": 0.335,
+      "energy": 1.0
+    }
+  },
+  "pop9": {
+    "name": "POP Series 9",
+    "printedTotal": 17,
+    "released": "2009-03-01",
+    "updated": "2026-10-01",
+    "source": "The same three-card pack as POP 8 (wrapper text '2 PROMO CARDS & 1 ENERGY CARD'; Bulbapedia 'each pack includes 3 cards; two Pokemon and one basic Energy card'; Elite Fourum post 73), with Elite Fourum's POP 8/9 sheet table (one table covers both series, which EF treats as alike: Rare 0.165, Uncommon 0.335 per pack, low confidence, Elite Fourum E2 sheet model (121 sheet positions per sheet; https://www.elitefourum.com/t/39762, POP tables: pop6 https://efour.b-cdn.net/uploads/default/original/3X/3/6/368d495af0fdb802f052c0728e8278b2a27b346a.png , pop7 .../7/4/74beb4851ccf3c6cefc98728302009d02aa2ab86.png , pop8 and pop9 .../6/3/636410996098e22bfc01f37a522ac2f03cb01483.png)). Energy art as POP 8 (low). No box exists: TCGplayer sells single packs only (https://tcgcsv.com/tcgplayer/3/1446/products). In-pack cards are never foil (Bulbapedia: the holo versions came in value packs and blisters; Collexy lists every POP holo as a product extra).",
+    "rates": {
+      "rare": 0.165,
+      "uncommon": 0.335,
+      "energy": 1.0
+    }
+  },
   "pl1": {
     "name": "Platinum",
     "printedTotal": 127,
