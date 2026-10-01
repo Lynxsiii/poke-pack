@@ -7,10 +7,10 @@ pattern sits in the ART WINDOW (the card body is plain), registered to the print
 script draws the patterns that need a picture; the others are CSS (the Mirror of ex1-ex4, the Plain sheen of ex11 and ex13-ex16, the cosmos of
 ex12 reuses ex-cosmos-v1.webp):
 
-  energy-l  ex5  Hidden Legends: a lattice of big type symbols (leaf, flame, drop, bolt, eye, fist, moon, hex, star), 7 percent of the
-                 card wide, 12 percent apart, offset rows, a few six-point stars between them
-  energy-m  ex6  FireRed & LeafGreen: the same symbols at 4.5 percent, tighter, with small four-point stars
-  energy-s  ex7  Team Rocket Returns: pixel symbols at 3 percent, dense, pixel stars between (the photos show a fine, faint mosaic)
+  energy-l  ex5  Hidden Legends: columns of big type symbols (leaf, flame, drop, bolt, eye, fist, moon, hex, star), one symbol per column
+                 repeating down it, 6 percent of the card wide, a few sparkles between
+  energy-m  ex6  FireRed & LeafGreen: the same columns at 4.3 percent, tighter
+  energy-s  ex7  Team Rocket Returns: the same columns at 3.3 percent, dense
   wheel     ex8  Deoxys: a lattice of small triangles whose brightness fans round a centre in ten wedges, a few stars on it
   pokeball  ex9, ex10  Emerald, Unseen Forces: big translucent bubbles, a few Poke Balls (a ring and a band) and starbursts
 
@@ -118,33 +118,25 @@ def paste_max(canvas, g, x0, y0, v):
 WIN = (30, 66, 570, 400)
 
 
-def energy(size: int, pitch: int, stars: float, pixel: bool, seed: int) -> np.ndarray:
+def energy(size: int, colw: int, rowh: int, stars: float, seed: int) -> np.ndarray:
+    """Columns of one type symbol each, the same symbol repeating down the column (Collexy: "energy symbols in a vertical sequence where
+    the same energy symbols appear underneath each other"), a few four-point sparkles between."""
     rng = np.random.default_rng(seed)
     cv = np.zeros((H, W), np.float32)
     gl = {k: np.asarray(glyph(k, size), np.float32) / 255 for k in KINDS}
-    if pixel:  # quantise each glyph to a coarse grid so it reads as a pixel sprite
-        for k in gl:
-            n = max(8, size // 3)
-            small = np.asarray(Image.fromarray((gl[k] * 255).astype(np.uint8)).resize((n, n), Image.BOX), np.float32) / 255
-            small = (small > 0.42).astype(np.float32)
-            gl[k] = np.kron(small, np.ones((size // n + 1, size // n + 1), np.float32))[:size, :size]
     x0, y0, x1, y1 = WIN
-    row = 0
-    y = y0 - pitch // 2
-    while y < y1 + pitch:
-        x = x0 - (pitch // 2 if row % 2 else 0)
-        while x < x1 + pitch:
-            k = KINDS[int(rng.integers(0, len(KINDS)))]
-            paste_max(cv, gl[k], int(x + rng.integers(-3, 4)), int(y + rng.integers(-3, 4)), rng.uniform(0.7, 1.0))
-            x += pitch
-        y += int(pitch * 0.92)
-        row += 1
-    # stars between the symbols
+    ncol = int((x1 - x0) / colw) + 2
+    order = [KINDS[int(i)] for i in rng.permutation(len(KINDS))]
+    for c in range(ncol):
+        kind = order[c % len(order)]
+        x = x0 + c * colw + (colw - size) // 2
+        y = y0 + int(rng.integers(0, rowh // 2))
+        while y < y1 + rowh:
+            paste_max(cv, gl[kind], x, y, rng.uniform(0.75, 1.0))
+            y += rowh
     for _ in range(int((x1 - x0) * (y1 - y0) * stars)):
         sx, sy = int(rng.integers(x0, x1)), int(rng.integers(y0, y1))
-        star4(cv, sx, sy, int(rng.integers(2, 4 if not pixel else 3)), rng.uniform(0.5, 1.0))
-    if pixel:
-        cv = np.kron(cv[::4, ::4], np.ones((4, 4), np.float32))[:H, :W]
+        star4(cv, sx, sy, int(rng.integers(2, 4)), rng.uniform(0.5, 1.0))
     return cv
 
 
@@ -234,9 +226,9 @@ def main():
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     tiles = {
-        "energy-l": lambda: energy(44, 74, 0.00012, False, 5),
-        "energy-m": lambda: energy(28, 44, 0.0003, False, 6),
-        "energy-s": lambda: energy(16, 26, 0.0006, True, 7),
+        "energy-l": lambda: energy(38, 56, 82, 0.00012, 5),
+        "energy-m": lambda: energy(26, 40, 46, 0.0003, 6),
+        "energy-s": lambda: energy(20, 32, 34, 0.0005, 7),
         "wheel": lambda: wheel(8),
         "pokeball": lambda: pokeball(9),
     }
