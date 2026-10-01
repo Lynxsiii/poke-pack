@@ -93,7 +93,7 @@ export function xyPattern(card) {
     case "Rare":
       // The plain Rare is not foil at all, except the 13 holo rares Evolutions
       // files as "Rare" (xyHoloPattern).
-      pattern = XY12_HOLO.has(card.id) ? xyHoloPattern(card) : "foil-none";
+      pattern = XY_HOLO_IDS.has(card.id) ? xyHoloPattern(card) : "foil-none";
       break;
     default:
       break;
@@ -123,8 +123,19 @@ export function xyReverseFinish(card) {
  * Pokémon included), not the cosmos of earlier eras; Evolutions (xy12) is the "Starlight" star field.
  */
 
-/** Evolutions files its 13 holo rares as "Rare" (pkmn.gg folds them); cardmavin and Collexy list these as Rare Holo. */
-const XY12_HOLO = new Set(["11", "15", "25", "34", "36", "38", "42", "45", "53", "59", "62", "63", "70"].map((n) => `xy12-${n}`));
+/**
+ * Holo rares the builders' data files as plain "Rare" (pkmn.gg folds them in xy4, xy5, xy11, xy12, dc1): the numbers
+ * pokemontcg.io lists as "Rare Holo" for those sets (xy12 agrees with cardmavin's list). Drop an entry once
+ * the data says "Rare Holo".
+ */
+const XY_HOLO_FALLBACK = {
+  xy4: "12 17 30 43 45 50 63 69 71 74 77 86 97 98",
+  xy5: "9 12 28 36 44 50 56 61 65 77 80 88 92 97 100 104 108 110",
+  xy11: "11 20 40 50 64 65 73 81 86",
+  xy12: "11 15 25 34 36 38 42 45 53 59 62 63 70",
+  dc1: "2 5 8 11 14 21"
+};
+const XY_HOLO_IDS = new Set(Object.entries(XY_HOLO_FALLBACK).flatMap(([set, nums]) => nums.split(" ").map((n) => `${set}-${n}`)));
 
 const isEvolutions = (card) => /^xy12-/.test(String(card?.id || ""));
 

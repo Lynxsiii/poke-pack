@@ -152,16 +152,16 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-starligh
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .foil {
   background-image:
     var(--rev-pattern),
-    linear-gradient(-50deg, hsl(0, 0%, 10%) 20%, hsl(190, 80%, 70%) 34%, hsl(120, 70%, 70%) 42%, hsl(50, 90%, 72%) 50%, hsl(330, 80%, 72%) 58%, hsl(0, 0%, 10%) 74%),
-    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 55%) 35%, hsl(0, 0%, 30%) 100%);
+    linear-gradient(-50deg, hsl(0, 0%, 62%) 14%, hsl(190, 80%, 82%) 32%, hsl(120, 70%, 80%) 42%, hsl(50, 90%, 84%) 50%, hsl(330, 80%, 84%) 58%, hsl(0, 0%, 62%) 78%),
+    radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 100%) 0%, hsl(0, 0%, 78%) 35%, hsl(0, 0%, 56%) 100%);
   background-size: 100% 100%, 260% 260%, 100% 100%;
   background-position:
     center,
     clamp(0%, calc(100% * var(--pointer-from-left)), 100%) clamp(0%, calc(100% * var(--pointer-from-top)), 100%),
     center;
   background-repeat: no-repeat;
-  background-blend-mode: multiply, screen, normal;
-  filter: brightness(0.62) contrast(1.35) saturate(1.2) contrast(0.8);
+  background-blend-mode: multiply, multiply, normal;
+  filter: brightness(1.05) contrast(2) saturate(1.2) contrast(0.8);
   mix-blend-mode: color-dodge;
   opacity: calc((0.45 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
   -webkit-mask-image: var(--art), var(--xy-win);
@@ -180,9 +180,18 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-revers
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev:not(.lit):not(.settling) .foil {
   opacity: calc(0.42 * var(--foil-strength, 1));
 }
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .foil::before,
-body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .foil::after {
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .foil::before {
   background-image: none;
+}
+/* A dark body (Darkness, Metal) is black to a colour-dodge: the symbols are screened on as light too. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev .foil::after {
+  background-image: var(--rev-pattern);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: brightness(0.55) contrast(3.5);
+  opacity: calc(0.35 + var(--pointer-from-center) * 0.4);
 }
 /* Basic Energy: a full picture, foil from under the name bar to above the footer. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.foil-reverse.xy-rev-energy .foil {

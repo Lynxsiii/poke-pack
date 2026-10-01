@@ -221,7 +221,7 @@ def make_tile(kind: str) -> Image.Image:
     body = ndi.gaussian_filter(body, 1.0)
     # base mirror: broad mottle, never a fine grain
     mott = smooth_noise((H, W), 16, rng) * 0.03 + smooth_noise((H, W), 6, rng) * 0.012
-    grey = 0.50 + mott + body * 0.13 - line * 0.20
+    grey = 0.50 + mott + body * 0.30 - line * 0.34
     return Image.fromarray((np.clip(grey, 0, 1) * 255).astype(np.uint8), "L")
 
 
