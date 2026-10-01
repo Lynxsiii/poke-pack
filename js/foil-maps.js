@@ -284,7 +284,7 @@ export function foilExtras(card, url, reverseKind) {
   } else if (xy && XY_FULL_ART.has(card.rarity)) {
     add("has-foil-map", "--foil-map", FULL_MAP);
   } else if (xy && xyMap(card)) {
-    // TCG Live has no map for XY: the finish agents' drawn window / frame masks.
+    // The finish agents return a TCG Live map (fetch_foil_maps.py) or a drawn window / frame mask.
     add("has-foil-map", "--foil-map", xyMap(card));
   }
   if (card.foilMapR && card.foilMapB) {

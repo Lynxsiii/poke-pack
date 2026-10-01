@@ -9,8 +9,8 @@
  * print (js/foil-maps.js). Finish owner: f3 (xy/f3). The rarity words, frames
  * and what XY printed are in js/xy-foil.js and
  * /mnt/project-files/every-era/xy/SCAFFOLD-NOTES.md (and the skill note of the family, reference/xy-<family>.md).
- * TCG Live has no foil maps for XY: every map is ours (xyMap() in
- * js/xy-foil.js, or the all-white map foilExtras gives full arts). Follow
+ * TCG Live DOES serve XY maps for xy1-xy12, g1 (xy9-5), dc1 (xy5-5) and xybsp (fetch_foil_maps.py), not for xy0/RC. Hook: xyMap() in
+ * js/xy-foil.js (or the all-white map foilExtras gives full arts). Follow
  * SKILL.md: realism first, no outline or box-shadow on `.tcg`, cap any colour
  * dodge with a closing contrast(0.8), no black speckle, no hairline gratings,
  * no foil over text, and run foil_coverage.mjs plus a WebKit render at phone

@@ -99,6 +99,16 @@ SETS = {
     "sm35": ("sm3-5", {}),
     "sm75": ("sm7-5", {}),
     "sm115": ("sm11-5", {}),
+    # XY: the numbered sets use their own id as key (xy1..xy12; only the holo
+    # prints have maps; probed 2026-10-01). Generations is "xy9-5" (holos
+    # 001-046, e.g. 025 Articuno and 029 Zapdos; no Radiant Collection and no
+    # 'a' prints), Double Crisis is "xy5-5" (002 005 006 008 011 014 015 021),
+    # and the promos are xybsp (001-0xx, same numbers as the site's xyp<nnn>;
+    # overlay a few on the scans before trusting the numbering). Not found
+    # under any key tried: xy0 (Kalos Starter Set), the Trainer Kits,
+    # McDonald's 2014-16; those keep the generic engine's finish.
+    "g1": ("xy9-5", {}),
+    "dc1": ("xy5-5", {}),
 }
 
 # A set's sub-gallery is filed on TCG Live either under its own key (the
@@ -148,13 +158,13 @@ def curl(url: str, dest: Path) -> bool:
 
 # Black star promos sold with a set are filed in it as <prefix><number>, with
 # an optional -suffix for a stamped print of the same card (mep101-pc).
-PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp", "smp": "smbsp"}
+PROMO_KEYS = {"mep": "mebsp", "svp": "svbsp", "swshp": "swshbsp", "smp": "smbsp", "xyp": "xybsp"}
 
 
 def source(set_id: str, key: str | None, number: str) -> tuple[str, int] | None:
     main, extra = SETS.get(set_id, (None, {}))
-    # The numbered Sword & Shield sets use the site's own id as their key.
-    if main is None and re.fullmatch(r"(swsh|sm)\d+", set_id):
+    # The numbered Sword & Shield, Sun & Moon and XY sets use the site's own id as their key.
+    if main is None and re.fullmatch(r"(swsh|sm|xy)\d+", set_id):
         main = set_id
     if number in extra:
         return extra[number]
