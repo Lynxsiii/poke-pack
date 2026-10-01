@@ -6,7 +6,8 @@
 import assert from 'node:assert/strict';
 import {RARITY_ORDER,RARITY_LABEL,RARITY_MARK,SELL_VALUE,BASIC_ENERGY,exSlots,popSlots,xySlots,NP_PROMOS} from '../js/catalog.js';
 import {HIT_RARITIES,poolsFrom,ripPack,isHit} from '../js/engine.js';
-import {foilExtras,isEx,isDp,isBw,isXy,isSm,isSwsh,exPattern,reverseFinish} from '../js/foil-maps.js';
+// The era layer only: the holo families (js/holo-fam.js) add their own classes on top.
+import {eraFoilExtras as foilExtras,isEx,isDp,isBw,isXy,isSm,isSwsh,exPattern,reverseFinish} from '../js/foil-maps.js';
 import {exRefractor,isCrackedIce,exEtched,exMap,exReverseFinish,exReversePattern,EX_REVERSE} from '../js/ex-foil.js';
 import {FINISH_PRINTERS,ERA_NAMES} from '../js/achievement-eras.js';
 import {releaseYear,bandFor} from '../js/grading-rules.js';

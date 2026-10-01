@@ -257,8 +257,8 @@ export function foilExtras(card, url, reverseKind) {
   };
 }
 
-/** The era modules' extras for a face (everything but the holo families). */
-function eraFoilExtras(card, url, reverseKind) {
+/** The era modules' extras for a face (everything but the holo families; the era tests assert on these). */
+export function eraFoilExtras(card, url, reverseKind) {
   // The maps describe the holo print; a reverse holo is foil everywhere else,
   // in the reverse's own pattern: TCG Live's map of the reverse print where
   // it ships (`reverseMap`: Prismatic Evolutions prints its reverses with Tera
