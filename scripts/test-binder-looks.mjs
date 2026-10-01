@@ -102,6 +102,21 @@ await check('invalid ids are normalised, text is cleaned, nothing is refused', a
   assert.deepEqual({ ...p, sections: null, chasing: '' }, { ...DEFAULT_PROFILE_LOOK, sections: null, chasing: '' });
 });
 
+await check('hostile values are cleaned, never a 500: objects for strings, control and bidi characters, emoji cut whole', async () => {
+  let r = await host('/api/me', 'PATCH', { binderLook: { name: { toString: 1 }, color: { toString: 1 }, accent: ['navy'], material: ['leather'] }, profileLook: { chasing: { toString: 1 }, tint: { a: 1 } } });
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.deepEqual(r.body.user.binderLook, DEFAULT_BINDER_LOOK);
+  assert.equal(r.body.user.profileLook.chasing, '');
+  r = await host('/api/me', 'PATCH', { binderLook: { name: '\u0000\u202eab\u200bc\u0007' }, profileLook: { chasing: '\u200b\u200b' } });
+  assert.equal(r.body.user.binderLook.name, 'ab c');
+  assert.equal(r.body.user.profileLook.chasing, '');
+  r = await host('/api/me', 'PATCH', { profileLook: { chasing: '\u{1F600}'.repeat(60) } });
+  assert.equal([...r.body.user.profileLook.chasing].length, CHASING_MAX);
+  assert.equal(r.body.user.profileLook.chasing.includes('\ufffd'), false);
+  r = await host('/api/binder/editions/buy', 'POST', { editionId: { toString: 1 }, requestId: { toString: 1 } });
+  assert.equal(r.status, 400, JSON.stringify(r.body));
+});
+
 await check('junk bodies normalise: a string, an array, a JSON string', async () => {
   let r = await host('/api/me', 'PATCH', { binderLook: [1, 2], profileLook: 42 });
   assert.equal(r.status, 200);
