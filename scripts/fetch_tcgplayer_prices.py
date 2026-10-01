@@ -42,11 +42,11 @@ NOT_RETAIL = re.compile(r"\b(Case|Display|Code Card|Sleeved|Half|Art Bundle|Set 
 SEALED_NAMES = [
     ("pcEliteTrainerBox", re.compile(r"Pok[eé]mon Center Elite Trainer Box", re.I)),
     ("eliteTrainerBox", re.compile(r"(?<!Center )Elite Trainer Box$", re.I)),
-    ("boosterBox", re.compile(r"Booster Box$", re.I)),
+    ("boosterBox", re.compile(r"Booster Box( \[Unlimited Edition\])?$", re.I)),
     # Retail and local-store bundles are the same six packs; retail wins.
     ("boosterBundle", re.compile(r"Booster Bundle( \(Retail\))?$", re.I)),
     ("buildBattleBox", re.compile(r"Build (&|and) Battle Box$", re.I)),
-    ("boosterPack", re.compile(r"Booster Pack$", re.I)),
+    ("boosterPack", re.compile(r"Booster Pack( \[Unlimited Edition\])?$", re.I)),
 ]
 
 
@@ -87,7 +87,7 @@ def norm(name: str) -> str:
     # Nidoran: pkmn.gg keeps the gender sign, TCGplayer writes "(F)" / "(M)" (stripped above).
     name = name.replace("\u2640", "").replace("\u2642", "").strip()
     # Black & White's Plasma Freeze lists them "Nidoran F" / "Nidoran M".
-    name = re.sub(r"^(Nidoran)\s+[FM]$", r"\1", name)
+    name = re.sub(r"\b(Nidoran)\s+[FM]$", r"\1", name)  # also Gym Challenge's "Giovanni's Nidoran F"
     # Sun & Moon's Unit Energy: TCGplayer writes the types as letters ("Unit
     # Energy FDY"), pkmn.gg spells them out ("FightingDarknessFairy").
     name = re.sub(r"^(Unit Energy)\s+\S+$", r"\1", name)
@@ -115,6 +115,12 @@ def market(rows: list[dict], sub: str) -> float | None:
     for row in rows:
         if row.get("subTypeName") == sub and row.get("marketPrice"):
             return round(float(row["marketPrice"]), 2)
+    # Wizards of the Coast groups list a card as "1st Edition" and "Unlimited" (plus "... Holofoil"): the site deals Unlimited.
+    unlimited = {"Normal": "Unlimited", "Holofoil": "Unlimited Holofoil"}.get(sub)
+    if unlimited:
+        for row in rows:
+            if row.get("subTypeName") == unlimited and row.get("marketPrice"):
+                return round(float(row["marketPrice"]), 2)
     return None
 
 
