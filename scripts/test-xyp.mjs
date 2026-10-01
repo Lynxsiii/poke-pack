@@ -27,7 +27,7 @@ assert.equal(homeSetId('xy5-12'),'xy5');assert.equal(homeSetId('g1-RC5'),'g1');a
 assert.equal(homeSetId('me5-mep055'),'mep','the ME rule still holds');
 assert.ok(inHomeSet('xy5-xyp003','xyp')&&!inHomeSet('xy5-xyp003','xy5'));
 assert.equal(promoHomeOf('me1-mep009-pc'),'mep');assert.equal(promoHomeOf('xy5-xyp003'),'xyp');assert.equal(promoHomeOf('sv1-1'),'');
-assert.deepEqual(Object.keys(PROMO_HOMES).sort(),['bwp','mep','xyp']);
+assert.ok(['bwp','mep','xyp'].every(k=>k in PROMO_HOMES),'the ME, XY and BW promo homes are all there (other eras add theirs)');
 assert.ok(PROMO_HOME_LIKE.includes('me%-mep%')&&PROMO_HOME_LIKE.includes('xy%-xyp%'));
 
 // ---- The set --------------------------------------------------------------------------------------

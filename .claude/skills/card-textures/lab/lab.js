@@ -25,7 +25,7 @@
 import { createCardMotion } from "/js/card-motion.js";
 import { HIT_RARITIES } from "/js/engine.js";
 import { rarityKey } from "/js/catalog.js";
-import { foilExtras, isBw, isSm, isSwsh, isXy, bwPattern, smPattern, swshPattern, xyPattern } from "/js/foil-maps.js";
+import { foilExtras, isBw, isDp, isSm, isSwsh, isXy, bwPattern, dpPattern, smPattern, swshPattern, xyPattern } from "/js/foil-maps.js";
 
 const params = new URLSearchParams(location.search);
 const setId = params.get("set") || "me55";
@@ -52,6 +52,9 @@ function foilClass(c) {
     if (bw === "foil-none") return "";
     if (bw.includes("bw-rc") || bw.includes("bw-vault")) return "holo";
   }
+  if (isDp(c) && (!c.foilAs || c.era === "dp")) {
+    if (dpPattern(c) === "foil-none") return "";
+  }
   if (HIT_RARITIES.has(c.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos"].includes(c.rarity) || allFoil(c)) return "holo";
   return "";
 }
@@ -70,6 +73,7 @@ function foilPattern(c) {
   if (isSm(c) && (!c.foilAs || c.era === "sm") && smPattern(c)) return smPattern(c);
   if (isXy(c) && (!c.foilAs || c.era === "xy") && xyPattern(c)) return xyPattern(c);
   if (isBw(c) && (!c.foilAs || c.era === "bw") && bwPattern(c)) return bwPattern(c);
+  if (isDp(c) && (!c.foilAs || c.era === "dp") && dpPattern(c)) return dpPattern(c);
   if (r === "Shiny Ultra Rare") return "foil-ultra foil-shiny";
   if (r === "Shiny Rare") return "foil-holo foil-shiny";
   if (c.finish === "scodix") return "foil-gold foil-scodix";

@@ -71,6 +71,15 @@ export const HIT_RARITIES = new Set([
   "Rare BREAK",
   // Black & White's Ace Spec (it takes the reverse slot, bwSlots).
   "Rare ACE",
+  // Diamond & Pearl to Call of Legends (dpSlots): the Level-Up and the LEGEND halves take the rare slot, the Prime, the
+  // Shining Pokémon ("Rare Shining", listed above), Rotom, Arceus AR and Shiny Legendary the reverse slot. The holo Rare is
+  // the rare slot's ordinary card, as in Sword & Shield.
+  "Rare Holo LV.X",
+  "Rare Prime",
+  "LEGEND",
+  "Rare Rotom",
+  "Rare Arceus",
+  "Rare Shiny Legendary",
   // Prismatic Evolutions' Master Ball prints: 1 in 20 packs, and they sell
   // for many times their base card.
   "Master Ball",
@@ -150,7 +159,7 @@ export function poolsFrom(cards, set) {
     vstar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo VSTAR"),
     rareUltra: pokemonOrTrainer.filter((c) => c.rarity === "Rare Ultra"),
     rainbow: pokemonOrTrainer.filter((c) => c.rarity === "Rare Rainbow"),
-    secret: pokemonOrTrainer.filter((c) => c.rarity === "Rare Secret" && !c.character),
+    secret: pokemonOrTrainer.filter((c) => c.rarity === "Rare Secret" && !c.character && !c.alph),
     character: pokemonOrTrainer.filter((c) => c.character),
     amazing: pokemonOrTrainer.filter((c) => c.rarity === "Amazing Rare"),
     radiant: pokemonOrTrainer.filter((c) => c.rarity === "Radiant Rare"),
@@ -188,6 +197,17 @@ export function poolsFrom(cards, set) {
     aceSpec: pokemonOrTrainer.filter((c) => c.rarity === "Rare ACE"),
     vault: pokemonOrTrainer.filter((c) => !c.scarce),
     scarce: pokemonOrTrainer.filter((c) => c.scarce),
+    // Diamond & Pearl generation (dpSlots in js/catalog.js): the Level-Up and the LEGEND halves (rare slot); the Prime, the
+    // Rotom and Arceus subsets and the Shiny Legendaries (reverse slot; the Shining Pokémon reuse the `shining` pool above,
+    // rarity "Rare Shining"); the Alph Lithograph, a "Rare Secret" flagged `alph: true` that the `secret` pool leaves out.
+    // pkmn.gg files the subsets as plain "Rare" / "Rare Holo": the set config's `rarityOverrides` gives them these rarities.
+    lvx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo LV.X"),
+    prime: pokemonOrTrainer.filter((c) => c.rarity === "Rare Prime"),
+    legend: pokemonOrTrainer.filter((c) => c.rarity === "LEGEND"),
+    rotom: pokemonOrTrainer.filter((c) => c.rarity === "Rare Rotom"),
+    ar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Arceus"),
+    shinyLegend: pokemonOrTrainer.filter((c) => c.rarity === "Rare Shiny Legendary"),
+    alph: pokemonOrTrainer.filter((c) => c.alph),
     classicCollection: gallery("cc"),
     double: pokemonOrTrainer.filter((c) => c.rarity === "Double Rare"),
     ultra: pokemonOrTrainer.filter((c) => c.rarity === "Ultra Rare"),
