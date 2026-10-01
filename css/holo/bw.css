@@ -69,14 +69,14 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .fo
   background-image:
     var(--bw-tinsel),
     linear-gradient(90deg,
-      hsl(0, 0%, 8%) 0%, hsl(150, 90%, 62%) 9%, hsl(55, 100%, 78%) 18%, hsl(185, 90%, 74%) 27%, hsl(0, 0%, 12%) 36%,
-      hsl(300, 80%, 72%) 45%, hsl(48, 100%, 74%) 54%, hsl(0, 0%, 90%) 63%, hsl(0, 0%, 8%) 72%,
-      hsl(195, 90%, 70%) 81%, hsl(120, 80%, 66%) 90%, hsl(0, 0%, 8%) 100%),
+      hsl(0, 0%, 6%) 0%, hsl(0, 0%, 10%) 8%, hsl(150, 90%, 60%) 15%, hsl(55, 100%, 78%) 22%, hsl(185, 90%, 76%) 28%,
+      hsl(0, 0%, 92%) 33%, hsl(0, 0%, 8%) 41%, hsl(0, 0%, 6%) 48%, hsl(300, 80%, 72%) 55%, hsl(48, 100%, 76%) 62%,
+      hsl(0, 0%, 90%) 67%, hsl(195, 90%, 72%) 72%, hsl(0, 0%, 8%) 80%, hsl(0, 0%, 6%) 86%, hsl(120, 80%, 66%) 93%, hsl(0, 0%, 8%) 100%),
     radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
       hsl(0, 0%, 90%) 0%, hsl(0, 0%, 58%) 45%, hsl(0, 0%, 36%) 100%);
-  background-size: 100% 96px, 300% 100%, 100% 100%;
+  background-size: 100% 96px, 450% 100%, 100% 100%;
   background-position:
-    0 var(--seed-y-px, 0),
+    0 calc(var(--seed-y, 0.5) * 96px),
     clamp(0%, calc(((50% - var(--background-x)) * 1.5) + 50%), 100%) 0,
     center;
   background-repeat: repeat, no-repeat, no-repeat;
@@ -102,6 +102,13 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .fo
   mix-blend-mode: screen;
   filter: brightness(0.7) contrast(1.4);
   opacity: calc(0.25 + var(--pointer-from-top) * 0.45);
+}
+/* Dragon Vault: the same Tinsel, pushed (stronger, more saturated colour, brighter lines than the BW packs). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo.bw-vault .foil {
+  filter: brightness(1.12) contrast(1.7) saturate(2.1) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo.bw-vault .foil::before {
+  opacity: calc(0.35 + var(--pointer-from-top) * 0.5);
 }
 /* Fine sand, light only. */
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.bw-holo .foil::after {
@@ -138,9 +145,9 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-revers
     center;
   background-repeat: no-repeat;
   background-blend-mode: multiply, multiply, normal;
-  filter: brightness(1.05) contrast(2) saturate(1.2) contrast(0.8);
+  filter: brightness(1.0) contrast(1.7) saturate(1.2) contrast(0.8);
   mix-blend-mode: color-dodge;
-  opacity: calc((0.45 + var(--card-opacity) * 0.55) * var(--foil-strength, 1));
+  opacity: calc((0.35 + var(--card-opacity) * 0.4) * var(--foil-strength, 1));
   -webkit-mask-image: var(--art), var(--bw-layout);
   mask-image: var(--art), var(--bw-layout);
   -webkit-mask-composite: source-in, source-over;
@@ -158,7 +165,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-revers
   --bw-tex: linear-gradient(hsl(0, 0%, 72%), hsl(0, 0%, 72%));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev:not(.lit):not(.settling) .foil {
-  opacity: calc(0.42 * var(--foil-strength, 1));
+  opacity: calc(0.34 * var(--foil-strength, 1));
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev .foil::before {
   background-image: none;
@@ -175,7 +182,7 @@ body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-revers
 }
 body.fx-holo.fx-holo.fx-holo .tcg.era-bw.era-bw.era-bw.era-bw.era-bw.foil-reverse.bw-rev .glare {
   background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
-    hsla(0, 0%, 100%, 0.7) 8%, hsla(0, 0%, 100%, 0.5) 22%, hsla(0, 0%, 0%, 0.3) 90%);
+    hsla(0, 0%, 100%, 0.45) 8%, hsla(0, 0%, 100%, 0.3) 22%, hsla(0, 0%, 0%, 0.3) 90%);
   -webkit-mask-image: var(--art), var(--bw-layout);
   mask-image: var(--art), var(--bw-layout);
   -webkit-mask-composite: source-in, source-over;
