@@ -29,6 +29,10 @@ is the one whose packs the product holds, dp1-dp7 or pl1-pl4) and `hsp03` (HGSS 
 `"dpp": {"series": "diamond-pearl", "slug": "dp-black-star-promos", "scrydex": "dpp", "tcgplayerGroup": 1421, "printed": "DP",
 "era": "dp"}` and `"hsp": {"series": "heartgold-soulsilver", "slug": "hgss-black-star-promos", "scrydex": "hsp",
 "tcgplayerGroup": 1453, "printed": "HGSS", "era": "dp"}`.
+An EX generation set names its promos `np012` (Nintendo Black Star Promos NP001-NP040: the home set is the EX or POP set whose
+product holds the promo, `ex1-np012`; the magazine, DVD and event promos are data/np.json's own, `np-np001`):
+`"np": {"series": "np", "slug": "nintendo-black-star-promos", "scrydex": "np", "tcgplayerGroup": 1423, "printed": "NP",
+"era": "ex"}` (keys: PROMO_FORMATS below).
 A Wizards of the Coast set names its promos `basep21` (Wizards Black Star Promos; home set the one whose product holds the card, base1-ecard3 or si1,
 the rest are data/basep.json's) and Best of Game `bp01` (data/bp.json only): `"basep": {"series": "base", "slug": "wizards-black-star-promos",
 "scrydex": "basep", "tcgplayerGroup": 1418, "printed": "Promo", "era": "wotc"}` and `"bp": {"series": "other", "slug": "best-of-game",
@@ -160,6 +164,7 @@ TCGL_KEYS = {"mep": "mebsp", "svp": "svbsp"}
 PROMO_FORMATS = {
     "basep": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 2},
     "bp": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 2},
+    "np": {"pkmnKey": "{n:03d}", "scrydexKey": "{n}", "printedWidth": 3},
     "dpp": {"pkmnKey": "DP{n:03d}", "scrydexKey": "DP{n:02d}", "printedWidth": 2},
     "hsp": {"pkmnKey": "HGSS{n:03d}", "scrydexKey": "HGSS{n:02d}", "printedWidth": 2},
     "smp": {"pkmnKey": "SM{n:03d}", "scrydexKey": "SM{n:02d}"},
@@ -482,8 +487,8 @@ def promo_record(cfg: dict, number: str, spec: dict, cards: dict[str, dict], ref
     if parts and not spec.get("like") and series[parts[0]].get("era"):
         record["era"] = series[parts[0]]["era"]
     # An XY or Black & White promo, a `like` reprint included, takes the era's finish through its foilAs
-    # (js/xy-foil.js, js/bw-foil.js, js/dp-foil.js and js/wotc-foil.js are only asked for a card with foilAs when the card says era "xy" / "bw" / "dp" / "wotc").
-    if cfg.get("era") in ("xy", "bw", "dp", "wotc") and not record.get("era"):
+    # (js/xy-foil.js, js/bw-foil.js, js/dp-foil.js, js/ex-foil.js and js/wotc-foil.js are only asked for a card with foilAs when the card says era "xy" / "bw" / "dp" / "ex" / "wotc").
+    if cfg.get("era") in ("xy", "bw", "dp", "ex", "wotc") and not record.get("era"):
         record["era"] = cfg["era"]
     record["rarity"] = "Promo"
     record["promo"] = True

@@ -138,6 +138,12 @@ export const SINNOH_FINISHES = ["Rare Holo", "Rare Holo LV.X", "Rare Shining", "
 export const JOHTO_FINISHES = ["Rare Holo", "Rare Prime", "LEGEND", "Rare Shiny Legendary", "Rare Secret"];
 
 /**
+ * The EX finishes (Hoenn, 2003-2007): the holo, the Pokémon-ex, the Gold Star, Unseen Forces' Unown Collection and the secret
+ * rares. The sweep appears once every one of them is printed by a playable set (the Gold Star from ex7, the Unown from ex10).
+ */
+export const HOENN_FINISHES = ["Rare Holo", "Rare Holo EX", "Rare Holo Star", "Rare Unown", "Rare Secret"];
+
+/**
  * A Tag Team GX is printed "Pheromosa & Buzzwole-GX": two names and a GX. The
  * Worker only knows a card's id, name and rarity, so the name is the test
  * (the Tag Team Supporters of Cosmic Eclipse carry no GX and do not count).

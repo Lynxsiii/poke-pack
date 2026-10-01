@@ -70,11 +70,18 @@ export const FINISH_PRINTERS = {
   "Rare Rotom": ["pl2"],
   "Rare Arceus": ["pl4"],
   "Rare Shiny Legendary": ["col1"],
+  // EX (2003-2007): the Gold Star is in Team Rocket Returns, Deoxys and Unseen Forces to Power Keepers (not Emerald); the Unown
+  // Collection is Unseen Forces only. The Pokémon-ex share "Rare Holo EX" with XY and BW: every EX set is appended below.
+  "Rare Holo Star": ["ex7", "ex8", "ex10", "ex11", "ex12", "ex13", "ex14", "ex15", "ex16"],
+  "Rare Unown": ["ex10"],
   // Wizards of the Coast: the e-Card Crystal Pokémon of Aquapolis and Skyridge.
   "Rare Crystal": ["ecard2", "ecard3"],
 };
 
-/** The XY and Black & White sets that print Pokémon-EX (what an EX row needs one of). */
+// The EX generation's Pokémon-ex (ex1 to ex16; pkmn.gg writes "Rare Holo EX" for them too), appended so the XY / BW line stays as it was.
+FINISH_PRINTERS["Rare Holo EX"] = [...FINISH_PRINTERS["Rare Holo EX"], "ex1", "ex2", "ex3", "ex4", "ex5", "ex6", "ex7", "ex8", "ex9", "ex10", "ex11", "ex12", "ex13", "ex14", "ex15", "ex16"];
+
+/** The XY, Black & White and EX sets that print Pokémon-EX (what an EX row needs one of). */
 export const XY_EX_SETS = FINISH_PRINTERS["Rare Holo EX"];
 
 export function isPrinted(rarity) {

@@ -1,5 +1,5 @@
 import { createCardMotion } from "./card-motion.js";
-import { foilExtras, isBw, isDp, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=15";
+import { foilExtras, isBw, isDp, isEx, isSm, isSwsh, isWotc, isXy, bwPattern, dpPattern, exPattern, smPattern, swshPattern, wotcPattern, xyPattern } from "./foil-maps.js?v=16";
 import { initFx, tintFrom } from "./fx.js";
 import { PROFILE_PAGE_LIMIT } from "./profile-pages.js";
 import {
@@ -64,7 +64,7 @@ import {
 import * as questRules from "./quests.js";
 import { masteryEmblemHtml as masteryEmblem, masterySetIds, masteryBannerId } from "./mastery.js";
 import * as questArea from "./quest-area.js?v=3";
-import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=2";
+import { startLivePrices, applyCachedPrices } from "./liveprices.js?v=3";
 import {
   loadPriceHistory,
   priceHistoryReady,
@@ -592,6 +592,12 @@ function foilClass(card) {
   }
   // The Diamond & Pearl generation's plain Rare is not foil either (js/dp-foil.js).
   if (isDp(card) && (!card.foilAs || card.era === "dp") && dpPattern(card) === "foil-none") return "";
+  // The EX generation's plain Rare is not foil either; its holo Energy, Unown Collection and kit holos are (js/ex-foil.js).
+  if (isEx(card) && (!card.foilAs || card.era === "ex")) {
+    const ex = exPattern(card);
+    if (ex === "foil-none") return "";
+    if (/\bex-(energy|unown|kit)\b/.test(ex)) return "holo";
+  }
   // The Wizards of the Coast generation's plain Rare is not foil either (js/wotc-foil.js).
   if (isWotc(card) && (!card.foilAs || card.era === "wotc") && wotcPattern(card) === "foil-none") return "";
   if (HIT_RARITIES.has(card.rarity) || ["Rare", "Rare Holo", "Pikachu Rare", "Cosmos", "Metal", "Confetti"].includes(card.rarity)) return "holo";
@@ -684,6 +690,11 @@ function foilPattern(card) {
   if (isDp(card) && (!card.foilAs || card.era === "dp")) {
     const dp = dpPattern(card);
     if (dp) return dp;
+  }
+  // EX generation prints (js/ex-foil.js).
+  if (isEx(card) && (!card.foilAs || card.era === "ex")) {
+    const ex = exPattern(card);
+    if (ex) return ex;
   }
   // Wizards of the Coast generation prints (js/wotc-foil.js).
   if (isWotc(card) && (!card.foilAs || card.era === "wotc")) {

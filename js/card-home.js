@@ -20,6 +20,7 @@ export const XYP_SET_ID = "xyp";
 export const BWP_SET_ID = "bwp";
 export const DPP_SET_ID = "dpp";
 export const HSP_SET_ID = "hsp";
+export const NP_SET_ID = "np";
 export const BASEP_SET_ID = "basep";
 export const BP_SET_ID = "bp";
 
@@ -38,6 +39,8 @@ export const BP_SET_ID = "bp";
  *  - "dpp": "dp1-dpp01", "pl2-dpp42" (a Diamond & Pearl or Platinum set's file: the DP Black Star Promos' Platinum
  *    numbers DP35-DP56 come with Platinum packs); the rest are data/dpp.json's "dpp-dpp05".
  *  - "hsp": "hgss2-hsp10", "col1-hsp24" (an HGSS set's file, Call of Legends included); the rest are data/hsp.json's "hsp-hsp01".
+ *  - "np": "ex1-np012", "ex9-np037", "pop1-np001" (an EX set's file or a POP Series file: the Nintendo Black Star Promos that came
+ *    in the tins, value packs and blisters of that set); the rest (magazines, DVDs, events) are data/np.json's "np-np001".
  *  - "basep": "base2-basep01", "neo1-basep22" (a Wizards of the Coast set's file: Base Set to Skyridge and Southern Islands carry the
  *    Wizards Black Star Promos their boxes, decks and gift sets held); the rest are data/basep.json's "basep-basep09".
  *  - "bp": Best of Game is its own promo set with no product that carries it (BattleZone tournament prizes), so every card is
@@ -49,6 +52,7 @@ export const PROMO_HOMES = {
   [BWP_SET_ID]: { test: /^(?:bw\d+|dv1)-bwp\d/, like: ["bw%-bwp%", "dv1-bwp%"] },
   [DPP_SET_ID]: { test: /^(?:dp\d+|pl\d+)-dpp\d/, like: ["dp%-dpp%", "pl%-dpp%"] },
   [HSP_SET_ID]: { test: /^(?:hgss\d+|col1)-hsp\d/, like: ["hgss%-hsp%", "col1-hsp%"] },
+  [NP_SET_ID]: { test: /^(?:ex\d+|pop[1-5])-np\d/, like: ["ex%-np%", "pop%-np%"] },
   [BASEP_SET_ID]: { test: /^(?:base\d|gym\d|neo\d|si1|ecard\d)-basep\d/, like: ["base_-basep%", "gym_-basep%", "neo_-basep%", "si1-basep%", "ecard_-basep%"] },
   [BP_SET_ID]: { test: /^(?:base\d|gym\d|neo\d|si1|ecard\d)-bp\d/, like: ["base_-bp%", "gym_-bp%", "neo_-bp%", "si1-bp%", "ecard_-bp%"] },
 };
@@ -81,6 +85,10 @@ export function isDppCardId(cardId) {
 
 export function isHspCardId(cardId) {
   return promoHomeOf(cardId) === HSP_SET_ID;
+}
+
+export function isNpCardId(cardId) {
+  return promoHomeOf(cardId) === NP_SET_ID;
 }
 
 export function isBasepCardId(cardId) {

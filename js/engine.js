@@ -80,6 +80,10 @@ export const HIT_RARITIES = new Set([
   "Rare Rotom",
   "Rare Arceus",
   "Rare Shiny Legendary",
+  // EX (exSlots in js/catalog.js): the Gold Star takes the rare slot, the Unown Collection the reverse slot (Pokémon-ex are
+  // "Rare Holo EX", listed above). The holo Rare is the rare slot's ordinary card.
+  "Rare Holo Star",
+  "Rare Unown",
   // Wizards of the Coast (wotcSlots): the Shining Pokémon ("Rare Shining", listed above) and the e-Card Crystal Pokémon take the
   // rare slot (Neo Revelation, Neo Destiny) or the holo slot that replaces a common (Aquapolis, Skyridge). The holo Rare is the
   // rare slot's ordinary card, as in Sword & Shield.
@@ -110,9 +114,10 @@ function isMegaCard(card) {
 
 export function poolsFrom(cards, set) {
   // Promo cards come in collection boxes (data/products.json), never in packs.
+  // EX box toppers (a set file's `boxTopper: true`, one extra card per booster box, never in packs) are kept out the same way.
   // `noPack: true` marks a card the set holds but its booster packs never do (Base Set's Machamp 8, which ships only in the 2-Player
   // Starter Set and Trainer Deck A): it stays out of every pool.
-  const everyCard = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo && !c.noPack);
+  const everyCard = cards.filter((c) => c.rarity !== "Energy" && !c.energy && !c.promo && !c.noPack && !c.boxTopper);
   // A Sword & Shield sub-gallery (Trainer Gallery, Shiny Vault, Galarian
   // Gallery, Classic Collection) has its own slot, so its cards keep out of
   // the main pools even where they share a rarity name (a TG Pokémon V).
@@ -121,7 +126,16 @@ export function poolsFrom(cards, set) {
   const gallery = (tag) => everyCard.filter((c) => c.gallery === tag);
   const reverseRarities = set?.reverseRarities || ["Common", "Uncommon", "Rare"];
   const pokeballRarities = set?.pokeballRarities || reverseRarities;
-  const reversePool = pokemonOrTrainer.filter((c) => reverseRarities.includes(c.rarity));
+  // EX (js/ex-foil.js): a set file's `reverseTwice` lists the card numbers (or ids) that sit twice on the reverse sheet (EF's
+  // 110-cell sheets repeat some commons), and `reverseOwnEnergy: true` puts the set's own basic Energy on the reverse list
+  // (ex1's six, the reverse prints of 104-109). Both are off by default, so every other era is unchanged.
+  const twice = new Set((set?.reverseTwice || []).map(String));
+  const reverseOwnEnergy = set?.reverseOwnEnergy
+    ? cards.filter((c) => c.rarity === "Energy" && !c.holoEnergy && !c.reverse && !String(c.id).startsWith("energy-"))
+    : [];
+  const reversePool = [...pokemonOrTrainer.filter((c) => reverseRarities.includes(c.rarity)), ...reverseOwnEnergy].flatMap(
+    (c) => (twice.has(String(c.number)) || twice.has(String(c.id)) ? [c, c] : [c])
+  );
   // A set that files its pattern prints as cards of their own (Prismatic
   // Evolutions, scripts/build_patterns.py) deals those. Otherwise the ball
   // is a reverse finish on a pool card.
@@ -147,6 +161,7 @@ export function poolsFrom(cards, set) {
         (c.rarity === "Energy" || c.energy) &&
         !c.reverse &&
         !c.foilAs &&
+        !c.holoEnergy &&
         (!String(c.id).startsWith("energy-") || (c.energyPrint || "") === energyPrint)
     ),
     // Shrouded Fable's reverse holo basic Energy: set cards that are always
@@ -159,7 +174,7 @@ export function poolsFrom(cards, set) {
     uncommon: pokemonOrTrainer.filter((c) => c.rarity === "Uncommon"),
     rare: pokemonOrTrainer.filter((c) => c.rarity === "Rare"),
     // Sword & Shield (swshSlots in js/catalog.js).
-    holo: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo"),
+    holo: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo" && !c.deltaSheet),
     v: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo V"),
     vmax: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo VMAX"),
     vstar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo VSTAR"),
@@ -214,6 +229,17 @@ export function poolsFrom(cards, set) {
     ar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Arceus"),
     shinyLegend: pokemonOrTrainer.filter((c) => c.rarity === "Rare Shiny Legendary"),
     alph: pokemonOrTrainer.filter((c) => c.alph),
+    // EX (exSlots in js/catalog.js): the Gold Star ("Rare Holo Star"); Unseen Forces' Unown Collection ("Rare Unown", reverse
+    // slot); the holo basic Energy of Emerald, Holon Phantoms and Power Keepers (`holoEnergy: true`, reverse slot); the
+    // Pokémon-ex without the cracked-ice ones (`crackedIce: true`, Hidden Legends' three Regi ex, their own rate) and without
+    // Crystal Guardians' separate sheet (`deltaSheet: true`: its three Delta holos and Sceptile ex delta, EF post 58).
+    goldStar: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo Star"),
+    unown: pokemonOrTrainer.filter((c) => c.rarity === "Rare Unown"),
+    holoEnergy: cards.filter((c) => c.holoEnergy),
+    exPlain: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && !c.crackedIce && !c.deltaSheet),
+    crackedIce: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && c.crackedIce),
+    deltaHolo: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo" && c.deltaSheet),
+    deltaEx: pokemonOrTrainer.filter((c) => c.rarity === "Rare Holo EX" && c.deltaSheet),
     // Wizards of the Coast (wotcSlots): the e-Card Crystal Pokémon (pkmn.gg's "Rare Secret" 148-150 / 145-150, moved to "Rare Crystal"
     // by the set config's rarityOverrides). The Shining Pokémon of Neo Revelation and Neo Destiny reuse the `shining` pool above and
     // Team Rocket's Dark Raichu the `secret` pool.
