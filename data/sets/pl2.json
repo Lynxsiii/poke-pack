@@ -32,8 +32,12 @@
     }
   },
   "promoCards": {
-    "dpp42": "Rare Holo",
-    "dpp43": "Rare Holo"
+    "dpp42": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp43": {
+      "foilAs": "Rare Holo"
+    }
   },
   "products": [
     {

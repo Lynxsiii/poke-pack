@@ -5071,5 +5071,331 @@
     "imageRemote": "https://images.scrydex.com/pokemon/pl1-SH6/large",
     "tcgplayerId": 90443,
     "market": 163.37
+  },
+  {
+    "id": "pl1-dpp35",
+    "name": "Porygon-Z",
+    "number": "dpp35",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Porygon2",
+    "image": "assets/cards/pl1/dpp35.webp",
+    "imageSmall": "assets/cards/pl1/dpp35-sm.webp",
+    "attacks": [
+      {
+        "name": "Learning",
+        "damage": "",
+        "text": "Search your deck for a Pokémon LV.X that levels up from 1 of your Pokémon, and put it onto that Pokémon. (This counts as leveling up that Pokémon.) Shuffle your deck afterward."
+      },
+      {
+        "name": "Overload",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "40+",
+        "text": "Does 40 damage plus 20 more damage for each Technical Machine card attached to Porygon-Z."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Install",
+        "text": "As often as you like during your turn (before your attack), move a Technical Machine card attached to 1 of your Pokémon to another of your Pokémon. This power can't be used if Porygon-Z is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP35/large",
+    "printedNumber": "DP 35",
+    "tcgplayerId": 88316,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.74
+  },
+  {
+    "id": "pl1-dpp36",
+    "name": "Gliscor",
+    "number": "dpp36",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Kagemaru Himeno",
+    "evolvesFrom": "Gligar",
+    "image": "assets/cards/pl1/dpp36.webp",
+    "imageSmall": "assets/cards/pl1/dpp36-sm.webp",
+    "attacks": [
+      {
+        "name": "Cutting Turn",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Flip a coin. If heads, put damage counters on the Defending Pokémon until it is 10HP away from being Knocked Out. If you do, shuffle Gliscor and all cards attached to it back into your deck."
+      },
+      {
+        "name": "Friction Heat",
+        "cost": [
+          "Fighting"
+        ],
+        "damage": "20",
+        "text": "The Defending Pokémon is now Burned."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Bind Eye",
+        "text": "As long as Gliscor is your Active Pokémon, your opponent can't remove any Special Conditions by evolving or devolving his or her Pokémon. (This also includes putting a Pokémon Level-Up card onto that Pokémon.)",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP36/large",
+    "printedNumber": "DP 36",
+    "tcgplayerId": 85773,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 7.22
+  },
+  {
+    "id": "pl1-dpp37",
+    "name": "Dialga LV.X",
+    "number": "dpp37",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "110",
+    "artist": "Ryo Ueda",
+    "evolvesFrom": "Dialga",
+    "image": "assets/cards/pl1/dpp37.webp",
+    "imageSmall": "assets/cards/pl1/dpp37-sm.webp",
+    "attacks": [
+      {
+        "name": "Metal Flash",
+        "cost": [
+          "Metal",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "During your next turn, Dialga can't use Metal Flash."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Time Skip",
+        "text": "Once during your turn (before your attack), you may have your opponent flip 2 coins. If both of them are heads, your turn ends. If both of them are tails, after your opponent draws a card at the beginning of his or her next turn, his or her turn ends. This power can't be used if Dialga is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP37/large",
+    "printedNumber": "DP 37",
+    "tcgplayerId": 84814,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo LV.X",
+    "market": 50.32
+  },
+  {
+    "id": "pl1-dpp38",
+    "name": "Giratina LV.X",
+    "number": "dpp38",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up"
+    ],
+    "types": [
+      "Psychic"
+    ],
+    "hp": "130",
+    "artist": "Shizurow",
+    "evolvesFrom": "Giratina",
+    "image": "assets/cards/pl1/dpp38.webp",
+    "imageSmall": "assets/cards/pl1/dpp38-sm.webp",
+    "attacks": [
+      {
+        "name": "Darkness Lost",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 30 damage to each of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) If any of your opponent's Pokémon would be Knocked Out by damage from this attack, put that Pokémon and all cards attached to it in the Lost Zone instead of discarding it."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Invisible Tentacles",
+        "text": "Whenever your opponent's Pokémon tries to attack, your opponent discards 1 card from his or her hand. (If your opponent can't discard 1 card, your opponent's Pokémon can't attack.) You can't use more than 1 Invisible Tentacles Poké-Body each turn.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP38/large",
+    "printedNumber": "DP 38",
+    "tcgplayerId": 85743,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo LV.X",
+    "market": 164.47
+  },
+  {
+    "id": "pl1-dpp39",
+    "name": "Shaymin LV.X",
+    "number": "dpp39",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "110",
+    "artist": "Shizurow",
+    "evolvesFrom": "Shaymin",
+    "image": "assets/cards/pl1/dpp39.webp",
+    "imageSmall": "assets/cards/pl1/dpp39-sm.webp",
+    "attacks": [
+      {
+        "name": "Energy Flare",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "50",
+        "text": "You may move any number of Energy cards attached to your Pokémon to your other Pokémon in any way you like."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Revenge Seed",
+        "text": "If any of your Grass Pokémon were Knocked Out by damage from an opponent's attack during his or her last turn, each of Shaymin's attacks does 60 more damage to the Active Pokémon (before applying Weakness and Resistance).",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP39/large",
+    "printedNumber": "DP 39",
+    "tcgplayerId": 89116,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo LV.X",
+    "market": 52.28
+  },
+  {
+    "id": "pl1-dpp40",
+    "name": "Regigigas",
+    "number": "dpp40",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "There is an enduring legend that states this Pokémon towed continents with ropes.",
+    "image": "assets/cards/pl1/dpp40.webp",
+    "imageSmall": "assets/cards/pl1/dpp40-sm.webp",
+    "attacks": [
+      {
+        "name": "Drag Off",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "30",
+        "text": "Before doing damage, you may choose 1 of your opponent's Benched Pokémon and switch it with the Defending Pokémon."
+      },
+      {
+        "name": "Giga Hammer",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "80",
+        "text": "Regigigas can't use Giga Hammer during your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP40/large",
+    "printedNumber": "DP 40",
+    "tcgplayerId": 88665,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 20.6
+  },
+  {
+    "id": "pl1-dpp44",
+    "name": "Magnezone",
+    "number": "dpp44",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "types": [
+      "Lightning"
+    ],
+    "hp": "130",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It evolved from exposure to a special magnetic field. Three units generate magnetism.",
+    "evolvesFrom": "Magneton",
+    "image": "assets/cards/pl1/dpp44.webp",
+    "imageSmall": "assets/cards/pl1/dpp44-sm.webp",
+    "attacks": [
+      {
+        "name": "Charge Beam",
+        "cost": [
+          "Lightning"
+        ],
+        "damage": "30",
+        "text": "Search your discard pile for an Energy card and attach it to Magnezone."
+      },
+      {
+        "name": "Metallic Bolt",
+        "cost": [
+          "Lightning",
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "60",
+        "text": "You may discard a Lightning Energy and a Metal Energy attached to Magnezone. If you do, this attack's base damage is 120 instead of 60."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP44/large",
+    "printedNumber": "DP 44",
+    "tcgplayerId": 87117,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 8.55
   }
 ]

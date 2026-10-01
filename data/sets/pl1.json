@@ -29,13 +29,27 @@
     }
   },
   "promoCards": {
-    "dpp35": "Rare Holo",
-    "dpp36": "Rare Holo",
-    "dpp37": "Rare Holo LV.X",
-    "dpp38": "Rare Holo LV.X",
-    "dpp39": "Rare Holo LV.X",
-    "dpp40": "Rare Holo",
-    "dpp44": "Rare Holo"
+    "dpp35": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp36": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp37": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp38": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp39": {
+      "foilAs": "Rare Holo LV.X"
+    },
+    "dpp40": {
+      "foilAs": "Rare Holo"
+    },
+    "dpp44": {
+      "foilAs": "Rare Holo"
+    }
   },
   "products": [
     {

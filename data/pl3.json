@@ -5991,5 +5991,188 @@
     "imageRemote": "https://images.scrydex.com/pokemon/pl3-SH9/large",
     "tcgplayerId": 90687,
     "market": 72.75
+  },
+  {
+    "id": "pl3-dpp45",
+    "name": "Charizard G LV.X",
+    "number": "dpp45",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up",
+      "SP"
+    ],
+    "types": [
+      "Fire"
+    ],
+    "hp": "120",
+    "artist": "Wataru Kawahara",
+    "evolvesFrom": "Charizard G",
+    "image": "assets/cards/pl3/dpp45.webp",
+    "imageSmall": "assets/cards/pl3/dpp45-sm.webp",
+    "attacks": [
+      {
+        "name": "Malevolent Fire",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "150",
+        "text": "Flip a coin. If tails, discard all Energy attached to Charizard G."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Call for Power",
+        "text": "As often as you like during your turn (before your attack), you may move an Energy attached to 1 of your Pokémon to Charizard G. This power can't be used if Charizard G is affected by a Special Condition.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP45/large",
+    "printedNumber": "DP 45",
+    "tcgplayerId": 84202,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo LV.X",
+    "market": 419.76
+  },
+  {
+    "id": "pl3-dpp46",
+    "name": "Garchomp C LV.X",
+    "number": "dpp46",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up",
+      "SP"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "110",
+    "artist": "Shizurow",
+    "evolvesFrom": "Garchomp C",
+    "image": "assets/cards/pl3/dpp46.webp",
+    "imageSmall": "assets/cards/pl3/dpp46-sm.webp",
+    "attacks": [
+      {
+        "name": "Dragon Rush",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Discard 2 Energy attached to Garchomp C. Choose 1 of your opponent's Pokémon. This attack does 80 damage to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) Garchomp C can't use Dragon Rush during your next turn."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Healing Breath",
+        "text": "Once during your turn (before your attack), when you put Garchomp C LV.X from your hand onto your Active Garchomp C, you may remove all damage counters from each of your Pokémon SP.",
+        "type": "Poké-Power"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP46/large",
+    "printedNumber": "DP 46",
+    "tcgplayerId": 85630,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo LV.X",
+    "market": 85.21
+  },
+  {
+    "id": "pl3-dpp47",
+    "name": "Rayquaza C LV.X",
+    "number": "dpp47",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Level-Up",
+      "SP"
+    ],
+    "types": [
+      "Colorless"
+    ],
+    "hp": "120",
+    "artist": "Shizurow",
+    "evolvesFrom": "Rayquaza C",
+    "image": "assets/cards/pl3/dpp47.webp",
+    "imageSmall": "assets/cards/pl3/dpp47-sm.webp",
+    "attacks": [
+      {
+        "name": "Final Blowup",
+        "cost": [
+          "Water",
+          "Psychic",
+          "Fighting",
+          "Colorless"
+        ],
+        "damage": "200",
+        "text": "Discard all Energy attached to Rayquaza C. Ignore this effect if you have no cards in your hand."
+      }
+    ],
+    "abilities": [
+      {
+        "name": "Dragon Spirit",
+        "text": "If Rayquaza C is your Active Pokémon and is damaged but not Knocked Out by an opponent's attack, you may search your discard pile for an Energy card and attach it to Rayquaza C.",
+        "type": "Poké-Body"
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP47/large",
+    "printedNumber": "DP 47",
+    "tcgplayerId": 88641,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo LV.X",
+    "market": 492.71
+  },
+  {
+    "id": "pl3-dpp49",
+    "name": "Dialga",
+    "number": "dpp49",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic"
+    ],
+    "types": [
+      "Metal"
+    ],
+    "hp": "100",
+    "artist": "Kagemaru Himeno",
+    "flavorText": "It has the power to control time. It appears in Sinnoh-region myths as an ancient deity.",
+    "image": "assets/cards/pl3/dpp49.webp",
+    "imageSmall": "assets/cards/pl3/dpp49-sm.webp",
+    "attacks": [
+      {
+        "name": "Time Call",
+        "cost": [
+          "Metal"
+        ],
+        "damage": "",
+        "text": "Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward."
+      },
+      {
+        "name": "Time Wager",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "100",
+        "text": "Flip 2 coins. If either of them is tails, this attack's base damage is 50 instead of 100."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP49/large",
+    "printedNumber": "DP 49",
+    "tcgplayerId": 84805,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 22.41
   }
 ]

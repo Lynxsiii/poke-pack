@@ -149,6 +149,10 @@ OVERRIDES: dict[str, tuple[str, str]] = {
     "bwtk5b": ("#d0a24a", "#9fb0c4"),  # Excadrill kit: drill gold to steel
     "bw10": ("#ff9a2e", "#3aa0ff"),  # Plasma Blast: wrapper orange to Team Plasma blue
     "bw11": ("#f2b632", "#8f7be8"),  # Legendary Treasures: Radiant gold to Mewtwo violet
+    "pl1": ("#4aa3e0", "#e8a33a"),  # Platinum: Shaymin sky blue to Giratina gold
+    "pl2": ("#f08a2a", "#3f9be0"),  # Rising Rivals: Rotom orange to wrapper blue
+    "pl3": ("#d24a3f", "#6f7fd1"),  # Supreme Victors: wrapper red to Absol night violet
+    "pl4": ("#e8c04a", "#5fb7e8"),  # Arceus: ring gold to ice-water blue
 }
 
 # Used when a set has no art at all and no override.

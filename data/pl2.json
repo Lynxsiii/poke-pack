@@ -4651,5 +4651,96 @@
     "imageRemote": "https://images.scrydex.com/pokemon/pl2-RT6/large",
     "tcgplayerId": 84238,
     "market": 16.74
+  },
+  {
+    "id": "pl2-dpp42",
+    "name": "Carnivine G",
+    "number": "dpp42",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "SP"
+    ],
+    "types": [
+      "Grass"
+    ],
+    "hp": "80",
+    "artist": "Makoto Imai",
+    "image": "assets/cards/pl2/dpp42.webp",
+    "imageSmall": "assets/cards/pl2/dpp42-sm.webp",
+    "attacks": [
+      {
+        "name": "Power Whip",
+        "cost": [
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "Choose 1 of your opponent's Pokémon. This attack does 10 damage for each Energy attached to Carnivine G to that Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Grass Knot",
+        "cost": [
+          "Grass",
+          "Colorless"
+        ],
+        "damage": "20+",
+        "text": "Does 20 damage plus 10 more damage for each Colorless Energy in the Defending Pokémon's Retreat Cost (after applying effects to the Retreat Cost)."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP42/large",
+    "printedNumber": "DP 42",
+    "tcgplayerId": 84108,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 17.85
+  },
+  {
+    "id": "pl2-dpp43",
+    "name": "Probopass G",
+    "number": "dpp43",
+    "rarity": "Promo",
+    "supertype": "Pokémon",
+    "subtypes": [
+      "Basic",
+      "SP"
+    ],
+    "types": [
+      "Fighting"
+    ],
+    "hp": "90",
+    "artist": "Ryota Saito",
+    "image": "assets/cards/pl2/dpp43.webp",
+    "imageSmall": "assets/cards/pl2/dpp43-sm.webp",
+    "attacks": [
+      {
+        "name": "Nose Unit",
+        "cost": [
+          "Metal",
+          "Colorless"
+        ],
+        "damage": "",
+        "text": "This attack does 20 damage to each of your opponent's Pokémon that has any Poké-Bodies. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+      },
+      {
+        "name": "Loud Snort",
+        "cost": [
+          "Metal",
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "damage": "70",
+        "text": "Probopass G‘s Retreat Cost is 0 until the end of your next turn."
+      }
+    ],
+    "imageRemote": "https://images.scrydex.com/pokemon/dpp-DP43/large",
+    "printedNumber": "DP 43",
+    "tcgplayerId": 88380,
+    "era": "dp",
+    "promo": true,
+    "foilAs": "Rare Holo",
+    "market": 10.0
   }
 ]
