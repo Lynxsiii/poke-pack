@@ -24,3 +24,96 @@
  * Empty until the finish thread for this family draws it; until then the
  * cards fall back to the Classic engine's generic finish.
  */
+
+/* ======================================================================== */
+/* Full art EX, Mega EX, secret EX and Supporter (xy-fa, xy-tfa)            */
+/* ======================================================================== */
+
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy {
+  --xyfa-glitter: url("/assets/foil/glitter.png");
+  --xyfa-flecks: url("/assets/foil/glitter-flecks.webp");
+  --xyfa-seed-pos: calc(var(--seed-x, 0.5) * 100%) calc(var(--seed-y, 0.5) * 100%);
+}
+
+/* The family keeps sv-fullart.css's Ultra Rare layers (the same prismatic stock) and
+   retunes them to the photos: broad near-vertical rainbow bands over the whole card
+   (the bars lean at 100deg, not 128.5deg), the Pokemon keeping its colours, and the
+   attack text calm (the safe map under it). Every colour-dodged chain closes in
+   contrast(0.8) (Safari draws the divide by zero as blue blocks, verify.md). */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, .xy-tfa).foil-ultra.has-foil-map .foil {
+  --fa-bars: repeating-linear-gradient(100deg,
+    #0e152e 0%, hsl(180, 10%, 60%) 4%, hsl(180, 29%, 66%) 5%,
+    hsl(180, 10%, 60%) 6%, #0e152e 15%, #0e152e 18%);
+  filter: brightness(calc((var(--pointer-from-center) * 0.45) + 0.5)) contrast(2) saturate(0.95) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, .xy-tfa).foil-ultra.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.55) contrast(2.5) saturate(0.4) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy:is(.xy-fa, .xy-tfa).foil-ultra.has-foil-map .foil {
+  -webkit-mask-image: var(--art), var(--fa-light), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in, source-in;
+  mask-image: var(--art), var(--fa-light), var(--foil-map);
+  mask-composite: intersect, intersect, intersect;
+  -webkit-mask-size: contain, 100% 100%, 100% 100%;
+  mask-size: contain, 100% 100%, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-fa.foil-ultra.has-foil-map .glare {
+  opacity: calc(var(--card-opacity) * 0.6);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-fa.foil-ultra.has-foil-map:is(.has-etch-map, .has-etch-tile) .foil::before {
+  opacity: 0.35;
+}
+
+/* Full-art Supporter: tall, narrower rainbow columns (TR's Handiwork, Pokemon Ranger,
+   AZ, Lysandre in the photos), the character art readable, flatter light. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-tfa.foil-ultra.has-foil-map .foil {
+  --fa-bars: repeating-linear-gradient(94deg,
+    #0e152e 0%, hsl(180, 10%, 60%) 2.6%, hsl(180, 29%, 66%) 3.2%,
+    hsl(180, 10%, 60%) 3.8%, #0e152e 9%, #0e152e 11%);
+  filter: brightness(calc((var(--pointer-from-center) * 0.15) + 0.5)) contrast(1.9) saturate(1) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-tfa.foil-ultra.has-foil-map .glare {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsl(0, 0%, 80%) 5%, hsl(200, 5%, 45%) 65%, hsl(320, 20%, 15%) 150%);
+  filter: brightness(0.9) contrast(1.1);
+  opacity: calc(var(--card-opacity) * 0.4);
+}
+
+/* ======================================================================== */
+/* Gold Trainer Items and Energy (xy-secret xy-item, `foil-gold`)           */
+/* ======================================================================== */
+/* Photos (Weakness Policy, VS Seeker, Trainers' Mail, Energy Retrieval): the whole card
+   is gold, art and frame; tilted it gives a warm gold shimmer with a soft rainbow only
+   along the lower edge, and the white text box stays a pale satin. Same stock as
+   sv-fullart.css's gold, so its layers stay and are retuned: the dodge chain closes in
+   contrast(0.8) (Eternatus V, Noah 2026-09-29), the header band (TRAINER / ITEM) and the
+   white text box are calmed by the safe map, and the lit etch lines are cut to the map. */
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-item.foil-gold.has-foil-map .foil {
+  filter: brightness(0.62) contrast(1.5) saturate(0.45) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-item.foil-gold.has-foil-map:not(.lit):not(.settling) .foil {
+  filter: brightness(0.6) contrast(1.5) saturate(0.3) contrast(0.8);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-item.foil-gold.has-foil-map:is(.has-etch-map, .has-etch-tile) .glare::after {
+  background-image: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 0%, hsla(0, 0%, 100%, 0.45) 30%, hsla(0, 0%, 100%, 0.25) 80%);
+  -webkit-mask-image: var(--fa-etch), var(--foil-map);
+  -webkit-mask-composite: source-in, source-in;
+  mask-image: var(--fa-etch), var(--foil-map);
+  mask-composite: intersect, intersect;
+  -webkit-mask-size: var(--fa-etch-size), 100% 100%;
+  mask-size: var(--fa-etch-size), 100% 100%;
+  -webkit-mask-position: var(--fa-etch-pos), center;
+  mask-position: var(--fa-etch-pos), center;
+  -webkit-mask-repeat: var(--fa-etch-repeat), no-repeat;
+  mask-repeat: var(--fa-etch-repeat), no-repeat;
+  opacity: calc(0.45 + var(--pointer-from-center) * 0.35);
+}
+body.fx-holo.fx-holo.fx-holo .tcg.era-xy.era-xy.era-xy.era-xy.era-xy.xy-item.foil-gold.has-foil-map .foil::after {
+  opacity: calc(0.25 + var(--pointer-from-center) * 0.4);
+}
+
